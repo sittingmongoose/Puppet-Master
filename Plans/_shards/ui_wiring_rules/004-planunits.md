@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L72-L422
+Source lines: L72-L423
 
-Source SHA256: `7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa`
+Source SHA256: `87574f03b1957e88172a9a9d809b1bbeba5ddc0561f49e6d6adfc64d407a0626`
 
 ---
 
@@ -28,7 +28,7 @@ acceptance_criteria:
   - Product layout, command catalog membership, runtime event schemas, storage projections, and evidence schemas remain with their owner docs.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ui_wiring
@@ -242,6 +242,7 @@ unblocks: []
 acceptance_criteria:
   - Verification runs without paid UI tooling or manual inspection.
   - GATE-010 failures block progression.
+  - Ghost-command findings are derived from current normative command references, catalog rows, and production handler/reverse coverage; no hand-maintained example list can override the live result.
   - Evidence bundles produced by checks conform to Plans/evidence.schema.json.
 validation_surfaces:
   - GATE-010

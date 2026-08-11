@@ -2,19 +2,50 @@
             <style>
               /* ===== USAGE PAGE (PMConcept6) — widget-composed grid ===== */
               .pm6-usage-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden}
-              .pm6-usage-head{display:flex;align-items:center;gap:var(--lg);padding:var(--md) var(--xl);border-bottom:var(--border-width) solid var(--border);background:var(--surface);flex-shrink:0;flex-wrap:wrap}
-              .pm6-usage-headline{display:flex;align-items:baseline;gap:var(--lg);flex-wrap:wrap;min-width:0}
-              .pm6-usage-title{font-family:var(--display-font);font-size:var(--fs-xl);font-weight:800;color:var(--text-primary);line-height:var(--lh-tight);margin:0}
-              .pm6-usage-sub{font-size:var(--fs-sm);color:var(--text-secondary);max-width:none;line-height:var(--lh-body)}
-              .pm6-usage-head-actions{display:flex;gap:var(--sm);margin-left:auto;align-items:center}
-              .pm6-usage-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font-size:var(--fs-xs);font-weight:600;font-family:var(--body-font);background:transparent;color:var(--text-secondary);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--motion-fast) var(--ease-default)}
+              .pm6-usage-head{display:flex;align-items:center;justify-content:space-between;gap:var(--md);padding:0;border-bottom:none;background:transparent;flex-shrink:0;flex-wrap:nowrap}
+              .pm6-usage-headline{display:flex;align-items:baseline;gap:var(--lg);flex-wrap:nowrap;min-width:0;flex:1}
+              .pm6-usage-title{font-family:var(--display-font);font-size:24px;font-weight:700;color:var(--text-primary);line-height:var(--lh-tight);margin:0;letter-spacing:.5px;white-space:nowrap}
+              .pm6-usage-sub{font-size:var(--fs-sm);color:var(--text-secondary);max-width:none;line-height:var(--lh-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+              .pm6-usage-head-actions{display:flex;gap:var(--sm);margin-left:auto;align-items:center;flex:none}
+              .pm6-usage-btn{display:inline-flex;align-items:center;justify-content:center;gap:0;width:32px;height:32px;padding:0;font-size:var(--fs-xs);font-weight:600;font-family:var(--body-font);background:transparent;color:var(--text-secondary);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--motion-fast) var(--ease-default)}
               .pm6-usage-btn:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
               .pm6-usage-btn:focus-visible{outline:2px solid var(--accent-primary);outline-offset:1px}
               .pm6-usage-btn.primary{background:var(--accent-soft);color:var(--accent-primary);border-color:transparent}
               .pm6-usage-btn[disabled]{opacity:.55;cursor:not-allowed}
               .pm6-usage-btn.spinning .pm6-ico{animation:pm6-usage-spin 1s linear infinite}
+              .pm6-usage-btn .pm6-ico{font-size:14px}
+              /* Labeled CTAs — override the 32×32 icon chrome used by refresh/export.
+                 Same class of bug as chat more-menu items squashed by 24×24 header buttons. */
+              .pm6-usage-btn-label{width:auto;height:auto;min-height:28px;padding:6px 12px;gap:6px;white-space:nowrap;flex:0 0 auto}
               @keyframes pm6-usage-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+              /* Retro keeps chrome-bar header */
+              [data-theme^="retro"] .pm6-usage-head{padding:var(--md) var(--xl);border-bottom:var(--border-width) solid var(--border);background:var(--surface);flex-wrap:wrap}
+              /* Friendly: rounded inset header box */
+              [data-theme^="friendly"] .pm6-usage-head{
+                margin:var(--md) var(--xl) 0;padding:var(--md) var(--lg);
+                background:var(--pm6-cozy-card-base,var(--surface-elevated));
+                border:1px solid var(--pm6-cozy-chrome-border,var(--border-light));
+                border-radius:var(--radius-lg);
+              }
+              /* Glass/basic: open Projects-like */
+              :is([data-theme^="glass"],[data-theme^="basic"]) .pm6-usage-head{margin:var(--md) var(--xl) 0;padding:0}
               .pm6-usage-scroll{flex:1;overflow-y:auto;padding:var(--xl)}
+              /* Frosted scroll-under (Task 5): the widget grid scrolls BEHIND
+                 the page head. Measured (PM_FROST -> --pm6-usage-head-h): the
+                 head is a padded chrome bar under retro, a rounded inset card
+                 under friendly, an open title row under glass/basic, and it
+                 re-flows to a column under 768px — four different heights for
+                 one selector. The lift is the head's OWN border box, never its
+                 theme margin, so the var(--md) strip above it stays clean; and
+                 the head's var(--xl) side inset matches .pm6-usage-scroll's
+                 var(--xl) padding, so no widget can slide through a gutter
+                 beside the plate. Selector is .pm6-usage-wrap-scoped purely to
+                 outrank the [data-theme] head rules above. */
+              .pm6-usage-wrap{--pm6-usage-head-h:52px}
+              .pm6-usage-wrap .pm6-usage-head{position:relative;z-index:5;background:color-mix(in srgb,var(--surface) 72%,transparent);-webkit-backdrop-filter:blur(11px) saturate(140%);backdrop-filter:blur(11px) saturate(140%)}
+              /* glass blur budget: no nested backdrop-filter inside the pane */
+              [data-theme^="glass"] .pm6-usage-wrap .pm6-usage-head{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--surface) 88%,transparent)}
+              .pm6-usage-scroll{margin-top:calc(-1 * var(--pm6-usage-head-h,52px));padding-top:calc(var(--pm6-usage-head-h,52px) + var(--xl))}
               .pm6-usage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--grid-gap);align-content:start}
 
               /* Widget shell */
@@ -220,18 +251,18 @@
 
               /* responsive */
               @media(max-width:1200px){.pm6-usage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm6-usage-w.span-4{grid-column:span 2}}
-              @media(max-width:768px){.pm6-usage-grid{grid-template-columns:minmax(0,1fr)}.pm6-usage-w.span-2,.pm6-usage-w.span-4{grid-column:span 1}.pm6-usage-head{flex-direction:column;align-items:flex-start}.pm6-usage-head-actions{margin-left:0}}
+              @media(max-width:768px){.pm6-usage-grid{grid-template-columns:minmax(0,1fr)}.pm6-usage-w.span-2,.pm6-usage-w.span-4{grid-column:span 1}.pm6-usage-head{flex-direction:column;align-items:flex-start;flex-wrap:wrap}.pm6-usage-headline{flex-wrap:wrap}.pm6-usage-sub{white-space:normal}.pm6-usage-head-actions{margin-left:0}}
             </style>
 
             <div class="pm6-usage-wrap">
               <header class="pm6-usage-head">
                 <div class="pm6-usage-headline">
                   <h1 class="pm6-usage-title">Usage</h1>
-                  <div class="pm6-usage-sub">What your AI helpers are spending on <strong>Tastebook</strong> &mdash; quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.</div>
+                  <div class="pm6-usage-sub">AI Cost/usage for <strong>Tastebook</strong> &mdash; quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.</div>
                 </div>
                 <div class="pm6-usage-head-actions">
-                  <button class="pm6-usage-btn" id="pm6UsageRefresh" data-demo-action="usage.refresh" title="Re-read usage from every provider"><span class="pm6-ico" data-pm-ico="restart"></span>Refresh</button>
-                  <button class="pm6-usage-btn primary" id="pm6UsageExport" data-demo-action="usage.export_json" title="Download everything on this page as JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span>Export JSON</button>
+                  <button class="pm6-usage-btn" id="pm6UsageRefresh" data-demo-action="usage.refresh" title="Re-read usage from every provider" aria-label="Refresh usage"><span class="pm6-ico" data-pm-ico="restart"></span></button>
+                  <button class="pm6-usage-btn primary" id="pm6UsageExport" data-demo-action="usage.export_json" title="Download everything on this page as JSON" aria-label="Export usage JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span></button>
                 </div>
               </header>
 
@@ -342,7 +373,7 @@
                         <option value="estimated">Estimated</option>
                         <option value="unsupported">Unsupported</option>
                       </select>
-                      <button class="pm6-usage-btn" id="pm6UsageLedgerJson" data-demo-action="usage.ledger_json" title="Download the filtered ledger as JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span>JSON</button>
+                      <button class="pm6-usage-btn pm6-usage-btn-label" id="pm6UsageLedgerJson" data-demo-action="usage.ledger_json" title="Download the filtered ledger as JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span>JSON</button>
                     </div>
                     <div class="pm6-usage-tblwrap" style="max-height:420px">
                       <table class="pm6-usage-tbl" id="pm6UsageLedgerTbl">
@@ -588,9 +619,9 @@
                     '<div class="pm6-usage-alert-h"><span class="pm6-ico" data-pm-ico="warning"></span>Copilot crossed ' + th + '% &mdash; now at 91% of its 5h window</div>' +
                     '<div class="pm6-usage-alert-body">Suggested action: route new frontend work to Codex (Plus plan) until the window resets at 17:05. Nothing stops on its own &mdash; this is a heads-up.</div>' +
                     '<div class="pm6-usage-alert-actions">' +
-                      '<button class="pm6-usage-btn primary" data-demo-action="usage.alert_route" data-demo-arg="copilot">Route to Codex</button>' +
-                      '<button class="pm6-usage-btn" data-demo-action="usage.alert_ack" data-demo-arg="copilot-80">Acknowledge</button>' +
-                      '<button class="pm6-usage-btn" data-demo-action="usage.alert_snooze" data-demo-arg="copilot-80">Snooze 1h</button>' +
+                      '<button class="pm6-usage-btn pm6-usage-btn-label primary" data-demo-action="usage.alert_route" data-demo-arg="copilot">Route to Codex</button>' +
+                      '<button class="pm6-usage-btn pm6-usage-btn-label" data-demo-action="usage.alert_ack" data-demo-arg="copilot-80">Acknowledge</button>' +
+                      '<button class="pm6-usage-btn pm6-usage-btn-label" data-demo-action="usage.alert_snooze" data-demo-arg="copilot-80">Snooze 1h</button>' +
                     '</div>' +
                   '</div>' +
                   '<div class="pm6-usage-alert">' +
@@ -729,10 +760,10 @@
                   var foot = '';
                   if (a.disabledReason) {
                     foot = '<div class="pm6-usage-acct-foot">' +
-                      '<button class="pm6-usage-btn" disabled title="Unavailable: ' + a.disabledReason + '">Make active</button>' +
+                      '<button class="pm6-usage-btn pm6-usage-btn-label" disabled title="Unavailable: ' + a.disabledReason + '">Make active</button>' +
                       '<span class="pm6-usage-reason"><code>' + a.disabledReason + '</code>' + esc(a.hint) + '</span></div>';
                   } else if (!a.effective) {
-                    foot = '<div class="pm6-usage-acct-foot"><button class="pm6-usage-btn" data-demo-action="usage.switch_account" data-demo-arg="' + a.mail + '">Make active</button></div>';
+                    foot = '<div class="pm6-usage-acct-foot"><button class="pm6-usage-btn pm6-usage-btn-label" data-demo-action="usage.switch_account" data-demo-arg="' + a.mail + '">Make active</button></div>';
                   }
                   var note = a.note ? '<div class="pm6-usage-acct-status" style="color:var(--text-muted)"><span class="pm6-ico" data-pm-ico="info"></span>' + a.note + '</div>' : '';
                   return '<div class="pm6-usage-acct' + (a.effective ? ' effective' : '') + '">' +
@@ -759,8 +790,8 @@
                     }).join('') + '</div></div></div>';
                   var actions = a.state === 'blocked'
                     ? '<div class="pm6-usage-anom-actions">' +
-                        '<button class="pm6-usage-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="' + a.kind + '">Looks right &mdash; keep blocking</button>' +
-                        '<button class="pm6-usage-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="' + a.kind + '">It was expected &mdash; allow once</button>' +
+                        '<button class="pm6-usage-btn pm6-usage-btn-label primary" data-demo-action="usage.anomaly_keep" data-demo-arg="' + a.kind + '">Looks right &mdash; keep blocking</button>' +
+                        '<button class="pm6-usage-btn pm6-usage-btn-label" data-demo-action="usage.anomaly_allow" data-demo-arg="' + a.kind + '">It was expected &mdash; allow once</button>' +
                       '</div>'
                     : '';
                   return '<div class="pm6-usage-anom' + (a.state === 'allowed' ? ' allowed' : '') + '">' +
@@ -808,7 +839,7 @@
                   return '<div class="pm6-usage-di"><b>' + k + '</b><span>' + kv[k] + '</span></div>';
                 }).join('') + '<div class="pm6-usage-di"><b>Latency</b><span>' + r.lat + '</span></div>' +
                   '<div class="pm6-usage-di"><b>usage_event_ref</b><span class="mono" style="font-family:var(--mono-font);font-size:var(--fs-2xs)">' + (r.ref || '&mdash;') + '</span></div>';
-                var drill = '<div style="margin-top:var(--sm)"><button class="pm6-usage-btn" data-demo-action="usage.drill" data-demo-arg="' + (r.ref || '') + '" title="Opens the owning surface; the usage_event_ref travels with the drill-through">Open in Orchestrator &#8627;</button></div>';
+                var drill = '<div style="margin-top:var(--sm)"><button class="pm6-usage-btn pm6-usage-btn-label" data-demo-action="usage.drill" data-demo-arg="' + (r.ref || '') + '" title="Opens the owning surface; the usage_event_ref travels with the drill-through">Open in Orchestrator &#8627;</button></div>';
                 var det = '<tr class="pm6-usage-detailrow" data-ldetail="' + idx + '" hidden><td></td><td colspan="13"><div class="pm6-usage-dgrid">' + cells + '</div>' + drill + '</td></tr>';
                 return main + det;
               }

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/source-snapshot.v1.1.json",
+  "title": "Compact Plan Assurance Source Snapshot Root",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "receipt_id", "snapshot_id", "trial_id", "generation_id", "packet_core_population_sha256", "plans_root", "excluded_future_run_root", "excluded_future_run_root_absent_at_freeze", "created_at_utc", "algorithm", "classifier_binding", "counts", "physical_population_sha256", "classification_population_sha256", "population_sha256", "stable_double_scan", "bucket_shards", "terminal", "snapshot_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "snapshot_id": {"$ref": "#/$defs/sha256"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "packet_core_population_sha256": {"$ref": "#/$defs/sha256"},
+    "plans_root": {"type": "string", "minLength": 1},
+    "excluded_future_run_root": {"type": "string", "minLength": 1},
+    "excluded_future_run_root_absent_at_freeze": {"const": true},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "algorithm": {
+      "type": "object", "additionalProperties": false,
+      "required": ["algorithm_id", "hash", "bucket_count", "receipt_shard_count", "canonical_json", "path_normalization", "filesystem_scan", "merkle_odd_rule", "stable_double_scan_required"],
+      "properties": {
+        "algorithm_id": {"const": "pm.plan_assurance.source_snapshot.merkle.v1.1"},
+        "hash": {"const": "sha256"}, "bucket_count": {"const": 256}, "receipt_shard_count": {"const": 16},
+        "canonical_json": {"const": "pm.plan_assurance.identity.v1.1"},
+        "path_normalization": {"type": "string", "minLength": 1}, "filesystem_scan": {"type": "string", "minLength": 1},
+        "merkle_odd_rule": {"const": "domain-separated promotion"}, "stable_double_scan_required": {"const": true}
+      }
+    },
+    "classifier_binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["classifier_id", "rule_bundle_sha256", "plans_index_sha256", "path_class_enum", "artifact_role_enum", "classifier_binding_sha256"],
+      "properties": {
+        "classifier_id": {"const": "pm.plan_assurance.path_classification.v1.1"},
+        "rule_bundle_sha256": {"$ref": "#/$defs/sha256"}, "plans_index_sha256": {"$ref": "#/$defs/sha256"},
+        "path_class_enum": {"const": ["canonical", "generated", "governance_support", "source_lineage", "audit", "retired", "unknown"]},
+        "artifact_role_enum": {"const": ["active_normative_prose", "active_machine_contract", "acceptance_or_fixture_evidence", "navigation_or_decision_index", "external_reference_or_provenance", "retired_or_source_lineage", "generated_governance_or_projection", "ledger_audit_pipeline_or_concept_source", "unknown"]},
+        "classifier_binding_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "counts": {"$ref": "#/$defs/counts"},
+    "physical_population_sha256": {"$ref": "#/$defs/sha256"},
+    "classification_population_sha256": {"$ref": "#/$defs/sha256"},
+    "population_sha256": {"$ref": "#/$defs/sha256"},
+    "stable_double_scan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scan_a_physical_sha256", "scan_a_classification_sha256", "scan_b_physical_sha256", "scan_b_classification_sha256", "identical"],
+      "properties": {
+        "scan_a_physical_sha256": {"$ref": "#/$defs/sha256"}, "scan_a_classification_sha256": {"$ref": "#/$defs/sha256"},
+        "scan_b_physical_sha256": {"$ref": "#/$defs/sha256"}, "scan_b_classification_sha256": {"$ref": "#/$defs/sha256"},
+        "identical": {"const": true}
+      }
+    },
+    "bucket_shards": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"$ref": "#/$defs/shard_binding"}},
+    "terminal": {"enum": ["PASS", "BLOCKED", "INVALID"]},
+    "snapshot_payload_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "class_count": {"type": "array", "prefixItems": [{"enum": ["canonical", "generated", "governance_support", "source_lineage", "audit", "retired", "unknown"]}, {"type": "integer", "minimum": 0}], "minItems": 2, "maxItems": 2},
+    "role_count": {"type": "array", "prefixItems": [{"enum": ["active_normative_prose", "active_machine_contract", "acceptance_or_fixture_evidence", "navigation_or_decision_index", "external_reference_or_provenance", "retired_or_source_lineage", "generated_governance_or_projection", "ledger_audit_pipeline_or_concept_source", "unknown"]}, {"type": "integer", "minimum": 0}], "minItems": 2, "maxItems": 2},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entry_count", "regular_file_count", "directory_entry_count", "symlink_count", "nonregular_count", "regular_file_bytes", "path_class_counts", "artifact_role_counts", "unknown_classification_count"],
+      "properties": {
+        "entry_count": {"type": "integer", "minimum": 1}, "regular_file_count": {"type": "integer", "minimum": 1},
+        "directory_entry_count": {"type": "integer", "minimum": 1}, "symlink_count": {"type": "integer", "minimum": 0},
+        "nonregular_count": {"type": "integer", "minimum": 0}, "regular_file_bytes": {"type": "integer", "minimum": 0},
+        "path_class_counts": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"$ref": "#/$defs/class_count"}},
+        "artifact_role_counts": {"type": "array", "minItems": 9, "maxItems": 9, "items": {"$ref": "#/$defs/role_count"}},
+        "unknown_classification_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "shard_binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["shard_index", "ref", "first_bucket", "last_bucket", "bucket_count", "bytes", "file_sha256", "payload_sha256"],
+      "properties": {
+        "shard_index": {"type": "integer", "minimum": 0, "maximum": 15},
+        "ref": {"type": "string", "pattern": "^SOURCE_SNAPSHOT_BUCKETS/[0-9a-f]{2}-[0-9a-f]{2}\\.json$"},
+        "first_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"}, "last_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"},
+        "bucket_count": {"const": 16}, "bytes": {"type": "integer", "minimum": 1, "maximum": 24576},
+        "file_sha256": {"$ref": "#/$defs/sha256"}, "payload_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

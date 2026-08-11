@@ -1,0 +1,165 @@
+{
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "title": "Agent Prompt and Work-Packet Hardening Planning",
+  "phase": "course_correction_reconciliation_open",
+  "current_phase": "course_correction_reconciliation_open",
+  "governance_status": "not_started",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "last_event_id": "evt-0026",
+  "cursor": {
+    "last_event_id": "evt-0026",
+    "last_question_id": "q-0046",
+    "last_decision_id": "dec-0051",
+    "next_event_id": "evt-0027",
+    "next_question_id": "q-0047",
+    "next_decision_id": "dec-0052",
+    "next_atom_id": "atom-0064",
+    "next_action": "Resolve q-0045 and q-0046 without changing the fixed profile or exact 8-low/2-high cohort implicitly; then reconcile the accepted course-correction delta against the forthcoming canonical Settings/Assistant Chat/system Plan updates before any compile or test resume."
+  },
+  "last_completed_action": "Read and reconciled the August 5 prompt-complexity automation handoff through twelve bounded GPT-5.6 Sol Medium lanes; verified its ZIP hash and stale validation metadata; classified confirmed, extended, conflicting, and missing canonical contracts; accepted the additive durable-breadth/Context-Admission/PromptCapsule/least-authority/sustainable-wave/migration delta; preserved all preflight evidence; and opened q-0045/q-0046 for the two true conflicts.",
+  "last_known_good_state": "The ledger now contains sixty accepted atoms, two candidate atoms, one superseded atom, fifty-one accepted decisions, two open course-correction questions, one deferred testing question, zero unresolved contradictions, no formal blockers, and no compile queue items. Testing remains STOPPED_BEFORE_SUBJECT_LAUNCH with zero provider/model calls and all prior drafts/failures preserved. The August 5 packet is noncanonical source input, not production or test authority.",
+  "next_action": "Ask Jared to confirm the recommended resolution of q-0045 and q-0046, then re-audit the affected canonical owners after the other project updates Plans. Do not compile or resume testing until those dependencies and explicit future authority exist.",
+  "next_safe_action": "Keep this task ledger-only; preserve the packet, tests, failures, and `/tmp` defect evidence; do not import noncanonical example budgets, silently change the exact cohort, edit Settings/Assistant Chat/PMConcept7/Usage concepts, compile Plans, create governance/build artifacts, or launch tests.",
+  "implementation_readiness": {
+    "implementation_ready_in_ledger": false,
+    "canonical_plans_compiled": false,
+    "code_implementation_ready": false,
+    "needs_more_product_design_before_compile": true,
+      "classification": "course_correction_architecture_shaped_with_two_true_decisions_open_and_testing_deferred"
+  },
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "compiled_plan_unit_ids": [],
+  "open_questions": [
+    {
+      "question_id": "q-0045",
+      "question": "Does the August 5 handoff supersede the fixed one-size-for-low-end profile and no-predicted-budget rule?",
+      "status": "open",
+      "recommendation": "No. Keep one fixed conservative profile; measure InstructionLoad and tokens diagnostically without importing model-specific profiles or numeric example budgets.",
+      "linked_atom_ids": [
+        "atom-0063"
+      ]
+    },
+    {
+      "question_id": "q-0046",
+      "question": "Should the packet's at-least-three-tier test language change the exact eight-low/two-high cohort?",
+      "status": "open",
+      "recommendation": "No implicit change. Keep 8-low/2-high as the primary cohort; authorize any mid-tier calibration later as a separate cohort.",
+      "linked_atom_ids": [
+        "atom-0055",
+        "atom-0062"
+      ]
+    }
+  ],
+  "deferred_questions": [
+    {
+      "question_id": "q-0022",
+      "question": "What behavioral and model-quality test matrix should validate the completed design?",
+      "status": "deferred",
+      "owner": "Jared for any future resume decision and exact roster authorization",
+      "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+      "artifact_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/tests/agent_packet_restrictions/",
+      "terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+      "reason": "Stopped at Jared's request to finish due usage; exact 8-low/2-high roster was never supplied or authorized.",
+      "resume_requirements": "New corrected post-V4 method; exact authorized provider/model/account/route tuple for L01-L08 and H01-H02; final matrix-inclusive freeze; bound controller/scorer/capture qualification; ten nonsemantic route canaries before semantic pilot.",
+      "empirical_claims_supported": false
+    }
+  ],
+  "in_progress_questions": [],
+  "open_blockers": [],
+  "open_questions_count": 2,
+  "deferred_questions_count": 1,
+  "in_progress_questions_count": 0,
+  "open_blockers_count": 0,
+  "ready_for_plan_compile_atoms": 0,
+  "candidate_atoms_count": 2,
+  "design_atoms_total": 63,
+  "accepted_decisions_count": 51,
+  "course_correction_handoff": {
+    "source_path": "/Users/jaredsmacbookair/Downloads/PM_Prompt_Complexity_Automation_Handoff_2026-08-05.zip",
+    "sha256": "d330c74042f52cfccb2835a78fe5960db7bfb5047bcd04373c1fe2294766bf34",
+    "authority": "noncanonical_additive_source_input",
+    "review_status": "read_in_required_order_and_reconciled_against_live_ledger_and_plans",
+    "validation_receipt_status": "stale_inconsistent_non_authoritative",
+    "accepted_atom_range": "atom-0056..atom-0061",
+    "candidate_atom_ids": [
+      "atom-0062",
+      "atom-0063"
+    ],
+    "open_question_ids": [
+      "q-0045",
+      "q-0046"
+    ],
+    "canonical_plan_edits_made": false,
+    "tests_resumed": false
+  },
+  "candidate_owner_docs": [
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Contracts_V0.md",
+    "Plans/agent-rules-context.md",
+    "Plans/Personas.md",
+    "Plans/Skills_System.md",
+    "Plans/Tools.md",
+    "Plans/MCP_Integration.md",
+    "Plans/FileSafe.md",
+    "Plans/Permissions_System.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Planning_Ledger_System.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/PRD_Builder.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/usage-feature.md",
+    "Plans/storage-plan.md"
+  ],
+  "testing_task": {
+    "status": "terminal_preflight_closed",
+    "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+    "host_id": "local",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "execution_environment": "local_dirty_checkout",
+    "exclusive_write_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/tests/agent_packet_restrictions/",
+    "required_low_end_subject_models": 8,
+    "required_high_end_subject_models": 2,
+    "exact_roster_supplied": false,
+    "matrix_frozen": false,
+    "call_counts": {
+      "route_canary": 0,
+      "pilot": 0,
+      "fleet": 0,
+      "total_model_or_provider_calls": 0
+    },
+    "terminal_closeout_ref": "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
+    "control_plane_defect_ref": "tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md",
+    "method_v4_status": "invalidated",
+    "superseded_worktree_client_id": "client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8",
+    "execution_owner": "delegated task",
+    "current_ledger_task_runs_tests": false,
+    "empirical_or_production_enforcement_claim": false
+  },
+  "latest_testing_closeout_ref": "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
+  "latest_testing_closeout_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+  "latest_audit_ref": "",
+  "latest_audit_status": "",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "latest_projection_updated_at_utc": "2026-08-05T19:28:29Z",
+    "ledger_health": "pass",
+    "governance_status": "not_started",
+    "node_readiness_status": "not_started",
+    "runtime_enablement_status": "not_requested",
+    "no_worknodes_created": true,
+    "no_nodeseeds_created": true,
+    "no_executable_queues_created": true,
+    "no_implementation_files_created": true,
+    "no_feature_or_model_tests_run": true,
+    "no_subject_model_or_provider_calls": true,
+    "invalidated_controller_preflight_history_preserved": true
+  }
+}

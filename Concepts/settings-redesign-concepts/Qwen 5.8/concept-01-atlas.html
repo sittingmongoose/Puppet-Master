@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas — Settings Directory — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<style>
+.at-home, .at-work { flex: 1; min-height: 0; overflow-y: auto; scroll-behavior: smooth; }
+[data-reduced-motion="1"] .at-home, [data-reduced-motion="1"] .at-work { scroll-behavior: auto; }
+
+.at-enter { animation: atEnter .42s var(--ease, cubic-bezier(.2,.8,.2,1)) both; }
+@keyframes atEnter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.at-swap { animation: atSwap .3s ease both; }
+@keyframes atSwap { from { opacity: 0; } to { opacity: 1; } }
+
+.at-home-head { padding: 34px 40px 10px; max-width: 1180px; margin: 0 auto; width: 100%; }
+.at-kicker { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+.at-home-title { font-size: 30px; font-weight: 700; color: var(--text-1); margin: 4px 0 2px; letter-spacing: -.01em; }
+.at-home-sub { color: var(--text-2); font-size: 13.5px; max-width: 640px; }
+
+.at-searchwrap { padding: 18px 40px 6px; max-width: 1180px; margin: 0 auto; width: 100%; }
+.at-search {
+  display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-l); padding: 13px 16px; box-shadow: var(--shadow);
+}
+.at-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.at-search input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 15px; }
+.at-search .pm-ico { color: var(--text-3); }
+.at-search-hint { color: var(--text-3); font-size: 11px; white-space: nowrap; }
+
+.at-results { max-width: 1180px; margin: 0 auto; width: 100%; padding: 10px 40px 30px; }
+.at-results-group { margin: 14px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
+.at-result {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 1px solid var(--border);
+  background: var(--surface); border-radius: var(--radius-m); padding: 10px 14px; cursor: pointer; margin-bottom: 6px;
+}
+.at-result:hover, .at-result.active { border-color: var(--accent); background: var(--surface-2); }
+.at-result .at-r-title { color: var(--text-1); font-weight: 600; }
+.at-result .at-r-path { color: var(--text-3); font-size: 11.5px; }
+.at-result .pm-ico { color: var(--text-3); }
+
+.at-cols { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 26px; max-width: 1180px; margin: 0 auto; width: 100%; padding: 16px 40px 46px; align-items: start; }
+.pm-app[data-wtier="squeezed"] .at-cols, .pm-app[data-wtier="narrow"] .at-cols { grid-template-columns: 1fr; }
+
+.at-dir { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-l); background: var(--surface); overflow: hidden; }
+.at-dir-cap { padding: 12px 18px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); border-bottom: 1px solid var(--border); }
+.at-dest {
+  display: grid; grid-template-columns: 34px minmax(0, 1fr) auto 18px; gap: 14px; align-items: center;
+  width: 100%; text-align: left; border: none; border-bottom: 1px solid var(--border); background: none;
+  padding: 15px 18px; cursor: pointer;
+}
+.at-dest:last-child { border-bottom: none; }
+.at-dest { transition: background-color .16s; }
+.at-dest:hover { background: var(--surface-2); }
+.at-dest-ico { transition: color .16s, border-color .16s; }
+.at-dest-ico { width: 34px; height: 34px; border-radius: var(--radius-m); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); }
+.at-dest:hover .at-dest-ico { color: var(--accent); border-color: var(--accent); }
+.at-dest-title { font-size: 14.5px; font-weight: 650; color: var(--text-1); }
+.at-dest-purpose { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.at-dest-status { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.at-dest .pm-ico.chev { color: var(--text-3); }
+
+.at-side { display: flex; flex-direction: column; gap: 18px; }
+.at-side h3 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); font-weight: 650; }
+.at-notice { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 13px 14px; margin-bottom: 10px; }
+.at-notice-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 7px; }
+.at-notice h4 { margin: 0 0 4px; font-size: 13px; color: var(--text-1); font-weight: 650; }
+.at-notice p { margin: 0 0 10px; font-size: 12px; color: var(--text-2); }
+.at-notice-actions { display: flex; gap: 8px; align-items: center; }
+.at-recent { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 9px 2px; cursor: pointer; color: var(--text-2); }
+.at-recent:hover { color: var(--text-1); }
+.at-recent .when { margin-left: auto; color: var(--text-3); font-size: 11px; white-space: nowrap; }
+
+.at-work-head {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px 26px; background: var(--bg-shell); border-bottom: 1px solid var(--border);
+}
+[data-chrome-blur="on"] .at-work-head { backdrop-filter: var(--chrome-blur); }
+.at-work-head .at-cat-title { font-size: 16px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
+.at-work-head .at-search-mini { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 6px 10px; min-width: 200px; flex: 0 1 300px; }
+.at-work-head .at-search-mini input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 12.5px; min-width: 0; }
+.at-work-head .pm-spacer { flex: 1; }
+
+.at-work-body { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 0; align-items: start; }
+.pm-app[data-wtier="squeezed"] .at-work-body { grid-template-columns: 1fr; }
+.at-toc { position: sticky; top: 57px; padding: 18px 10px 18px 22px; max-height: calc(100vh - 140px); overflow-y: auto; }
+.pm-app[data-wtier="squeezed"] .at-toc { position: static; display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; max-height: none; }
+.at-toc-item {
+  position: relative; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: none; background: none;
+  color: var(--text-2); font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap;
+  transition: background-color .18s, color .18s;
+}
+.at-toc-item:hover { color: var(--text-1); background: var(--surface-2); }
+.at-toc-item.active { color: var(--accent); font-weight: 650; background: var(--accent-soft); }
+.at-toc-item .pm-ico { opacity: 0; }
+.at-toc-item.active .pm-ico { opacity: 1; }
+.at-toc-drawer { display: none; }
+.pm-app[data-wtier="squeezed"] .at-toc:not(.open) .at-toc-item { display: none; }
+.pm-app[data-wtier="squeezed"] .at-toc.open { position: fixed; inset: 40px auto 26px 0; width: 250px; background: var(--surface); z-index: 60; border-right: 1px solid var(--border); max-height: none; box-shadow: var(--shadow); }
+.pm-app[data-wtier="squeezed"] .at-toc.open .at-toc-item { display: flex; }
+.at-toc-drawer { margin: 0 16px 8px; }
+.pm-app:not([data-wtier="squeezed"]) .at-toc-drawer { display: none; }
+.pm-app[data-wtier="squeezed"] .at-toc-drawer { display: inline-flex; }
+
+.at-doc { padding: 22px 34px 80px; min-width: 0; max-width: 900px; }
+.at-sub { margin-bottom: 34px; scroll-margin-top: 70px; }
+.at-sub-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+.at-sub-head h2 { font-size: 17px; margin: 0; color: var(--text-1); font-weight: 700; }
+.at-sub-count { color: var(--text-3); font-size: 11.5px; }
+.at-sub-desc { color: var(--text-2); font-size: 12.5px; margin: 0 0 12px; }
+
+.at-row { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 8px; overflow: hidden; }
+.at-row-main { display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; }
+.at-row-label { font-size: 13.5px; font-weight: 600; color: var(--text-1); }
+.at-row-desc { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+.at-row-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.at-row-main > div:first-child { flex: 1; min-width: 0; }
+.at-row-ctl { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex: none; }
+.at-row-ctl-line { display: flex; align-items: center; gap: 8px; }
+.at-row-detail { border-top: 1px solid var(--border); background: var(--surface-3); padding: 11px 16px; font-size: 12px; color: var(--text-2); display: none; }
+.at-row.open .at-row-detail { display: block; animation: pmReveal .22s ease both; }
+.at-row-detail dl { display: grid; grid-template-columns: 150px 1fr; gap: 4px 12px; margin: 0; }
+.at-row-detail dt { color: var(--text-3); }
+.at-row-detail dd { margin: 0; color: var(--text-1); }
+.at-row[data-hidden="true"] { display: none; }
+
+.at-mgr-card { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 14px 16px; margin-bottom: 10px; }
+.at-mgr-card h4 { margin: 0 0 3px; font-size: 13.5px; color: var(--text-1); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.at-mgr-card .sub { font-size: 12px; color: var(--text-2); }
+.at-mgr-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.at-group-cap { margin: 20px 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
+.at-acct { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 12px 14px; margin-bottom: 8px; }
+.at-acct-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.at-acct-head b { color: var(--text-1); font-size: 13px; }
+.at-acct-meta { font-size: 11.5px; color: var(--text-2); margin-top: 5px; display: flex; flex-wrap: wrap; gap: 5px 14px; }
+.at-acct-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.at-model { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 8px; }
+.at-model-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; flex-wrap: wrap; }
+.at-model-head .name { font-weight: 650; color: var(--text-1); font-size: 13px; }
+.at-model-head .alias { color: var(--text-3); font-size: 11.5px; font-family: var(--font-mono); }
+.at-model-head .prio { display: flex; gap: 2px; margin-left: auto; align-items: center; }
+.at-model-body { padding: 0 14px 12px; display: none; }
+.at-model.open .at-model-body { display: block; animation: pmReveal .22s ease both; }
+.at-caps { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.at-fav { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 2px; display: inline-flex; }
+.at-fav.on { color: var(--warn); }
+.at-role { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 10px; padding: 8px 2px; border-bottom: 1px solid var(--border); font-size: 12.5px; align-items: baseline; }
+.at-role:last-child { border-bottom: none; }
+.at-role .lbl { color: var(--text-2); }
+.at-role .eff { color: var(--text-1); font-weight: 600; }
+.at-role .req { color: var(--text-3); }
+.at-role.differs .eff { color: var(--warn); }
+
+.at-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 14px 16px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
+.at-mem { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 12px 14px; margin-bottom: 8px; }
+.at-mem .txt { color: var(--text-1); font-size: 13px; }
+.at-mem .meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.at-mem-actions { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
+.at-mcp-tools { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.at-log { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); padding: 2px 0; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="atlas">
+<div id="app"></div>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-state.js"></script>
+<script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+  var MODEL = "Qwen 5.8";
+  var shell = window.PMShell.mount({ conceptName: "Atlas concept", model: MODEL });
+  var content = shell.content;
+  var INDEX = window.PMCore.buildSearchIndex();
+  var IMPLEMENTED_MANAGERS = { providers: true, memory: true, mcp: true };
+  var MANAGER_HOME = { memory: "context", "context-sources": "context", crew: "planning", mcp: "extensions", skills: "extensions", terminal: "code", lsp: "code", media: "media", personas: "models", providers: "models" };
+  var spy = null;
+  var activeResult = -1;
+  var openModels = {};
+
+  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function route() {
+    var v = window.PMState.state.view;
+    if (spy) { spy.destroy(); spy = null; }
+    if (v.name === "home") renderHome();
+    else renderWorkspace(v);
+  }
+
+  function noticeCard(n) {
+    var icon = n.kind === "attention" ? "alertTriangle" : n.kind === "continue" ? "clock" : "spark";
+    var chip = n.kind === "attention" ? "pm-badge-danger" : n.kind === "continue" ? "pm-badge-info" : "pm-badge-ok";
+    return '<div class="at-notice" data-notice="' + n.id + '">' +
+      '<div class="at-notice-top"><span class="pm-badge ' + chip + '">' + window.PMIcons.get(icon, 11) + " " + esc(n.status) + '</span></div>' +
+      "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
+      '<div class="at-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-notice-action>' + esc(n.action) + "</button>" +
+      (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-notice-secondary>' + esc(n.secondary) + "</button>" : "") +
+      "</div></div>";
+  }
+
+  function renderHome() {
+    var st = window.PMState.state;
+    var notices = st.notices;
+    var html = '<div class="at-home at-enter" id="at-home">' +
+      '<div class="at-home-head">' +
+        '<div class="at-kicker">Settings · Atlas · ' + MODEL + '</div>' +
+        '<h1 class="at-home-title">Where would you like to go?</h1>' +
+        '<p class="at-home-sub">Search anything, or open a destination below. Each destination is a place with its own document — not a filter.</p>' +
+      "</div>" +
+      '<div class="at-searchwrap"><label class="at-search">' + window.PMIcons.get("search", 18) +
+        '<input id="at-q" type="text" placeholder="Search settings, managers, providers, models…" autocomplete="off" aria-label="Search settings">' +
+        '<span class="at-search-hint"><span class="pm-kbd">↑</span> <span class="pm-kbd">↓</span> <span class="pm-kbd">Enter</span></span>' +
+      "</label></div>" +
+      '<div class="at-results" id="at-results" hidden></div>' +
+      '<div class="at-cols" id="at-directory">' +
+        '<div class="at-dir"><div class="at-dir-cap">Destinations</div>' +
+        window.PMDemoData.destinations.map(function (d) {
+          var statusChip = d.status.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " " + esc(d.status.summary) + "</span>"
+            : d.status.kind === "setup" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("clock", 11) + " " + esc(d.status.summary) + "</span>"
+            : '<span class="pm-badge">' + window.PMIcons.get("checkCircle", 11) + " " + esc(d.status.summary) + "</span>";
+          return '<button class="at-dest" data-dest="' + d.id + '">' +
+            '<span class="at-dest-ico">' + window.PMIcons.get(d.icon, 17) + "</span>" +
+            "<span><span class=\"at-dest-title\">" + esc(d.title) + '</span><span class="at-dest-purpose">' + esc(d.purpose) + "</span></span>" +
+            '<span class="at-dest-status">' + statusChip + '<span class="pm-note">' + d.subcategories.length + " sections</span></span>" +
+            '<span class="chev">' + window.PMIcons.get("chevronRight", 16) + "</span></button>";
+        }).join("") +
+        "</div>" +
+        '<div class="at-side">' +
+          (notices.length ? "<div><h3>Needs your attention</h3>" + notices.map(noticeCard).join("") + "</div>"
+            : "<div><h3>All clear</h3><div class=\"at-note-card\">Nothing needs attention right now. This is the calm state.</div></div>") +
+          (st.recents.length ? "<div><h3>Recent changes</h3>" + st.recents.map(function (r) {
+            return '<button class="at-recent" data-recent="' + r.id + '">' + window.PMIcons.get("history", 13) + "<span>" + esc(r.label) + " · " + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span></button>";
+          }).join("") + "</div>" : "") +
+        "</div>" +
+      "</div>" +
+    "</div>";
+    content.innerHTML = html;
+    bindHome();
+  }
+
+  function bindHome() {
+    var q = document.getElementById("at-q");
+    var results = document.getElementById("at-results");
+    var dir = document.getElementById("at-directory");
+    var last = null;
+
+    function run() {
+      var v = q.value.trim();
+      if (!v) {
+        results.hidden = true; dir.hidden = false; activeResult = -1; return;
+      }
+      var hits = window.PMCore.search(v, INDEX);
+      dir.hidden = true; results.hidden = false;
+      if (!hits.length) {
+        results.innerHTML = '<div class="at-note-card">No matches for “' + esc(v) + '”. Try “compaction”, “OAuth”, “spellcheck”, or a provider name.</div>';
+        activeResult = -1; return;
+      }
+      var groups = {};
+      hits.forEach(function (h) {
+        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : h.kind === "provider" || h.kind === "model" ? "Providers & models" : h.kind === "persona" ? "Personas" : "Places";
+        (groups[g] = groups[g] || []).push(h);
+      });
+      var html = "";
+      Object.keys(groups).forEach(function (g) {
+        html += '<div class="at-results-group">' + g + "</div>";
+        groups[g].forEach(function (h) {
+          html += '<button class="at-result" data-hit>' +
+            '<span class="pm-ico">' + window.PMIcons.get(h.kind === "setting" ? "sliders" : h.kind === "manager" ? "grid" : h.kind === "persona" ? "persona" : "plug", 15) + "</span>" +
+            '<span style="flex:1;min-width:0"><span class="at-r-title">' + esc(h.title) + '</span><br><span class="at-r-path">' + esc(h.path.join(" › ")) + "</span></span>" +
+            window.PMIcons.get("arrowRight", 14) + "</button>";
+        });
+      });
+      results.innerHTML = html;
+      results.querySelectorAll("[data-hit]").forEach(function (el, i) {
+        el.addEventListener("click", function () { go(hits[i]); });
+      });
+      last = hits;
+      activeResult = -1;
+    }
+
+    function go(hit) {
+      var t = Object.assign({}, hit.target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    }
+
+    q.addEventListener("input", run);
+    q.addEventListener("keydown", function (e) {
+      var btns = results.querySelectorAll("[data-hit]");
+      if (!btns.length) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); activeResult = Math.min(activeResult + 1, btns.length - 1); mark(btns); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeResult = Math.max(activeResult - 1, 0); mark(btns); }
+      else if (e.key === "Enter" && last && last.length) { e.preventDefault(); go(last[Math.max(activeResult, 0)]); }
+      else if (e.key === "Escape") { q.value = ""; run(); }
+    });
+    function mark(btns) {
+      btns.forEach(function (b, i) { b.classList.toggle("active", i === activeResult); });
+      if (activeResult >= 0 && btns[activeResult]) btns[activeResult].scrollIntoView({ block: "nearest" });
+    }
+
+    content.querySelectorAll("[data-dest]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") });
+      });
+    });
+    content.querySelectorAll("[data-recent]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var r = window.PMState.state.recents.filter(function (x) { return x.id === b.getAttribute("data-recent"); })[0];
+        if (r) window.PMState.navigate(Object.assign({ name: "workspace" }, r.target));
+      });
+    });
+    content.querySelectorAll("[data-notice]").forEach(function (card) {
+      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
+      if (!n) return;
+      var primary = card.querySelector("[data-notice-action]");
+      var secondary = card.querySelector("[data-notice-secondary]");
+      if (primary) primary.addEventListener("click", function () { noticeAction(n, n.action); });
+      if (secondary) secondary.addEventListener("click", function () { noticeAction(n, n.secondary); });
+    });
+  }
+
+  function noticeAction(n, label) {
+    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "continuation" }); return; }
+    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", manager: "mcp" }); return; }
+    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", subcategory: "media-io", setting: "media.io.audio-input" }); return; }
+    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "personas" }); return; }
+    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
+    window.PMState.receipt(label, "Simulated action for this notice.", "sim");
+  }
+
+  function settingRow(s) {
+    var meta = window.PMCore.settingMeta(s);
+    var ctl = "";
+    if (s.type === "toggle") {
+      ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + ' aria-label="' + esc(s.label) + '"></button>';
+    } else if (s.type === "select") {
+      ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" +
+        (s.source === "not-configured" && s.options && s.options[0] === "Not configured" ? "" : "") +
+        (s.options || []).map(function (o) { return '<option ' + (o === s.value ? "selected" : "") + ">" + esc(o) + "</option>"; }).join("") +
+        "</select>";
+    } else if (s.type === "segment") {
+      ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '"' + (meta.disabled ? " disabled" : "") + ">" + esc(o) + "</button>"; }).join("") + "</span>";
+    } else if (s.type === "text") {
+      ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '" ' + (meta.disabled ? "disabled" : "") + ">";
+    } else if (s.type === "action") {
+      ctl = '<button class="pm-btn pm-btn-sm" data-ctl data-action-label="' + esc(s.actionLabel || "Open") + '">' + esc(s.actionLabel || "Open") + "</button>";
+    }
+    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
+    var tierHidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
+    return '<div class="at-row" data-setting-id="' + s.id + '" data-tier="' + s.tier + '" data-hidden="' + tierHidden + '">' +
+      '<div class="at-row-main"><div>' +
+        '<div class="at-row-label">' + esc(s.label) + "</div>" +
+        '<div class="at-row-desc">' + esc(s.desc) + "</div>" +
+        '<div class="at-row-badges">' + badges + "</div>" +
+      "</div>" +
+      '<div class="at-row-ctl"><div class="at-row-ctl-line">' + ctl +
+        (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset title="Reset to default">Reset</button>' : "") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-details aria-expanded="false" title="Details">' + window.PMIcons.get("chevronDown", 13) + "</button>" +
+      "</div>" +
+      '<span class="pm-note">' + esc(meta.sourceLabel) + " · " + esc(s.scope) + " scope</span>" +
+      "</div></div>" +
+      '<div class="at-row-detail"><dl>' +
+        "<dt>Setting</dt><dd>" + esc(s.id) + "</dd>" +
+        "<dt>Value source</dt><dd>" + esc(meta.sourceLabel) + "</dd>" +
+        (s.requested ? "<dt>Requested</dt><dd>" + esc(s.requested) + "</dd>" : "") +
+        (s.effective ? "<dt>Effective</dt><dd>" + esc(s.effective) + (s.reason ? " — " + esc(s.reason) : "") + "</dd>" : "") +
+        (s.inheritedFrom ? "<dt>Inherited from</dt><dd>" + esc(s.inheritedFrom) + "</dd>" : "") +
+        (s.managedBy ? "<dt>Managed by</dt><dd>" + esc(s.managedBy) + "</dd>" : "") +
+        (s.reason && !s.effective ? "<dt>Reason</dt><dd>" + esc(s.reason) + "</dd>" : "") +
+        "<dt>Exposure</dt><dd>" + esc(s.tier) + "</dd>" +
+      "</dl></div>" +
+    "</div>";
+  }
+
+  function managerNote(sub) {
+    var homes = { terminal: "Deck", lsp: "Deck", crew: "Deck", "context-sources": "Ledger", skills: "Ledger", personas: "Spoke", media: "Spoke" };
+    var where = homes[sub.manager] || "another concept";
+    return '<div class="at-note-card">' + window.PMIcons.get("info", 13) +
+      " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> surface is demonstrated in the " + where +
+      " concept of this set. In Atlas it stays reachable through navigation and search, with its surrounding settings shown here.</div>";
+  }
+
+  function providersManager(v) {
+    var st = window.PMState.state;
+    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
+    var html = '<div class="at-mgr-card"><h4>' + window.PMIcons.get("refresh", 15) + " Catalogs" +
+      st.catalogs.map(function (c) {
+        var chip = c.state === "refreshing" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("motion", 11) + " Refreshing — last-known-good active</span>"
+          : '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Up to date</span>";
+        return '<div class="at-acct" style="margin-top:10px"><div class="at-acct-head"><b>' + esc(c.name) + "</b>" + chip + "</div>" +
+          '<div class="at-acct-meta"><span>Last checked: ' + esc(c.lastChecked) + "</span><span>Activated: " + esc(c.lastActivated) + "</span><span>Source: " + esc(c.version) + "</span></div>" +
+          (c.materialChanges.length ? '<div class="at-acct-meta">' + c.materialChanges.map(function (m) { return '<span class="pm-badge pm-badge-warn">' + esc(m) + "</span>"; }).join("") + "</div>" : "") +
+          '<div class="at-acct-actions"><button class="pm-btn pm-btn-sm" data-catalog-refresh="' + c.id + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div></div>";
+      }).join("") +
+      "</div>";
+
+    groups.forEach(function (g) {
+      var ps = st.providers.filter(function (p) { return p.group === g; });
+      if (!ps.length) return;
+      html += '<div class="at-group-cap">' + esc(g) + "</div>";
+      ps.forEach(function (p) { html += providerCard(p, v); });
+    });
+
+    html += '<div class="at-group-cap">Agent role assignments</div><div class="at-mgr-card">' +
+      st.roles.map(function (r) {
+        return '<div class="at-role' + (r.differs ? " differs" : "") + '"><span class="lbl">' + esc(r.label) + '</span><span class="req">Requested: ' + esc(r.requested) +
+          '</span><span class="eff">Effective: ' + esc(r.effective) + (r.note ? ' <span class="pm-note">— ' + esc(r.note) + "</span>" : "") + "</span></div>";
+      }).join("") + "</div>";
+    return html;
+  }
+
+  function providerCard(p, v) {
+    var chip = p.state === "ready" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Connected</span>"
+      : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("alertTriangle", 11) + " Needs a decision</span>"
+      : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " Signed in — invocation failed</span>"
+      : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("clock", 11) + " Setup required</span>"
+      : '<span class="pm-badge">' + window.PMIcons.get("download", 11) + " Not installed</span>";
+    var open = v && v.provider === p.id;
+    var html = '<div class="at-mgr-card" data-provider="' + p.id + '"><h4>' + esc(p.name) + " " + chip +
+      ' <span class="sub" style="font-weight:400">— ' + esc(p.stateLabel) + "</span></h4>";
+    if (p.state === "not-installed") {
+      html += '<div class="sub">' + esc(p.install.note) + '</div><div class="at-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Learn about CLI-owned login</button></div></div>';
+      return html;
+    }
+    if (p.setup) {
+      html += '<div class="sub">' + esc(p.setup.note) + "</div><ol style=\"margin:8px 0 0 18px;padding:0;color:var(--text-2);font-size:12px\">" +
+        p.setup.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>" +
+        '<div class="at-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div></div>';
+      return html;
+    }
+    if (p.state === "signed-out") {
+      html += '<div class="at-acct"><div class="at-acct-head"><b>' + esc(p.name) + " — installed</b>" +
+        '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("key", 11) + " Signed out</span></div>" +
+        '<div class="sub" style="margin-top:5px">' + esc(p.login.note) + "</div>" +
+        '<div class="at-acct-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div></div>';
+    }
+    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
+      var usageBits = [];
+      if (a.usage) {
+        if (a.usage.included === "exhausted") usageBits.push('<span class="pm-badge pm-badge-danger">Included usage exhausted</span>');
+        else if (a.usage.included) usageBits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
+        if (a.usage.remaining && a.usage.included !== "exhausted") usageBits.push('<span class="pm-note">Remaining: ' + esc(a.usage.remaining) + "</span>");
+        if (a.usage.extra) usageBits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
+        if (a.usage.reset) usageBits.push('<span class="pm-note">Reset: ' + esc(a.usage.reset) + "</span>");
+        if (a.usage.pressure) usageBits.push('<span class="pm-note">Pressure: ' + esc(a.usage.pressure) + "</span>");
+      }
+      return '<div class="at-acct" data-account="' + a.id + '"' + (a.enabled === false ? ' style="opacity:.66"' : "") + '>' +
+        '<div class="at-acct-head"><b>' + esc(a.label) + "</b>" +
+          (a.nickname ? '<span class="pm-badge">' + window.PMIcons.get("persona", 10) + " " + esc(a.nickname) + "</span>" : "") +
+          (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") +
+          (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky sessions</span>' : "") +
+          (a.enabled === false ? '<span class="pm-badge pm-badge-warn">Disabled</span>' : "") +
+          (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">Authenticated — not verified ready</span>' : "") +
+          '<span class="pm-note" style="margin-left:auto">priority ' + (a.priority || 1) +
+          ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 11) + "</button></span>" +
+        "</div>" +
+        '<div class="at-acct-meta"><span>Auth owner: ' + esc(a.authOwner) + " (" + esc(a.authKind) + ")</span><span>Transport: " + esc(a.transport) + "</span>" +
+          (a.isolation ? "<span>Isolation: " + esc(a.isolation) + "</span>" : "") +
+          (a.identity ? "<span>Identity: " + esc(a.identity) + "</span>" : "") +
+          (a.health ? "<span>Last catalog: " + esc(a.health.catalog) + " · last generation: " + esc(a.health.generation) + "</span>" : "") +
+        "</div>" +
+        '<div class="at-acct-meta">' + usageBits.join("") + "</div>" +
+        (a.probe ? '<div class="at-acct-meta"><span class="pm-badge pm-badge-danger">Probe failed ' + esc(a.probe.at) + "</span><span>" + esc(a.probe.detail) + "</span></div>" : "") +
+        '<div class="at-acct-actions">' +
+          (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-use-account="' + a.id + '">Use this account for future requests</button>' : "") +
+          (a.preferred ? '<span class="pm-note">Used for future requests — running work is never retargeted.</span>' : "") +
+          '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
+          '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
+          '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
+          '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
+          '<button class="pm-btn pm-btn-sm" data-pa="probe">Run readiness probe</button>' +
+          '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
+          ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
+        "</div>" +
+        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ?
+          '<div class="at-acct-actions"><label style="font-size:12px;color:var(--text-2)">What happens next:</label><select class="pm-select" data-continuation>' +
+          a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
+      "</div>";
+    }).join("");
+
+    if (p.models.length) {
+      html += '<div class="at-group-cap" style="margin-top:14px">Models</div>' + p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
+        var caps = [];
+        if (m.effort.length) caps.push('<span class="pm-badge">Effort: ' + m.effort.length + " levels</span>");
+        caps.push(m.fast ? '<span class="pm-badge pm-badge-info">Normal / Fast supported</span>' : '<span class="pm-badge pm-badge-muted">No Fast variant</span>');
+        caps.push('<span class="pm-badge">In: ' + m.modalities.in.join(", ") + "</span>");
+        caps.push('<span class="pm-badge">Context: ' + esc(m.context) + "</span>");
+        if (m.tools) caps.push('<span class="pm-badge">Tools</span>');
+        if (m.mcp) caps.push('<span class="pm-badge">MCP</span>');
+        if (m.free) caps.push('<span class="pm-badge pm-badge-ok">' + esc(m.free) + "</span>");
+        var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">Available</span>'
+          : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">Unverified</span>'
+          : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Needs setup</span>'
+          : '<span class="pm-badge pm-badge-danger">Unavailable</span>';
+        return '<div class="at-model' + (openModels[p.id + ":" + m.id] ? " open" : "") + '" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
+          '<div class="at-model-head">' +
+            '<button class="at-fav' + (m.favorite ? " on" : "") + '" data-fav aria-label="Favorite ' + esc(m.name) + '" aria-pressed="' + m.favorite + '">' + window.PMIcons.get("star", 15) + "</button>" +
+            '<span class="name">' + esc(m.name) + "</span>" +
+            (m.alias ? '<span class="alias">alias: ' + esc(m.alias) + "</span>" : "") +
+            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") +
+            stateChip +
+            '<span class="prio"><button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 12) + '</button>' +
+            '<span class="pm-note">#' + m.priority + "</span>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 12) + "</button></span>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-model-open aria-expanded="false">Details</button>' +
+          "</div>" +
+          '<div class="at-model-body"><div class="at-caps">' + caps.join("") + "</div>" +
+            '<div class="pm-note" style="margin-top:8px">Evidence: ' + esc(m.evidence) + "</div>" +
+            (m.reason ? '<div class="pm-note" style="margin-top:4px;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
+            '<div class="at-acct-actions"><button class="pm-btn pm-btn-sm" data-alias>Edit alias</button>' +
+            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show in menus" : "Hide from menus") + "</button>" +
+            (m.effort.length ? '<span class="pm-seg">' + m.effort.map(function (e, i) { return '<button data-effort="' + e + '" class="' + (i === 1 ? "active" : "") + '">' + e + "</button>"; }).join("") + "</span>" : "") +
+            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal">Normal</button><button data-speed="Fast">Fast</button></span>' : "") +
+          "</div></div>" +
+        "</div>";
+      }).join("");
+    }
+    html += "</div>";
+    return html;
+  }
+
+  function memoryManager() {
+    var st = window.PMState.state;
+    return '<div class="at-mgr-card"><h4>' + window.PMIcons.get("brain", 15) + " Assistant memory" +
+      ' <span class="sub" style="font-weight:400">— evidence-backed Gists. Half-life means fading from active recall, never deletion or truth decay.</span></h4>' +
+      '<div class="at-acct-actions"><input class="pm-input" placeholder="Search memories…" style="flex:1;min-width:160px" data-mem-q>' +
+      '<button class="pm-btn pm-btn-sm" data-mem-rebuild>Rebuild index</button>' +
+      '<button class="pm-btn pm-btn-sm" data-mem-capsule>Preview context capsule</button></div></div>' +
+      st.memory.map(function (m) {
+        var chips = [
+          m.state === "verified" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Verified</span>" : '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("clock", 11) + " Awaiting review</span>",
+          '<span class="pm-badge">' + esc(m.kind) + "</span>",
+          '<span class="pm-badge">' + esc(m.scope) + " scope</span>",
+          m.halfLife === "Fading" ? '<span class="pm-badge pm-badge-muted">Half-life: fading</span>' : '<span class="pm-badge pm-badge-muted">Half-life: stable</span>',
+          m.pinned ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("pin", 11) + " Pinned</span>" : ""
+        ].join("");
+        return '<div class="at-mem" data-memory="' + m.id + '"><div class="txt">' + esc(m.text) + "</div>" +
+          '<div class="meta">' + chips + '<span class="pm-note">Evidence: ' + esc(m.evidence) + " · " + m.versions + " version(s) · accessed " + esc(m.accessed) + "</span></div>" +
+          '<div class="at-mem-actions">' +
+            (m.state === "awaiting" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-mem-act="verify">Verify</button>' : "") +
+            '<button class="pm-btn pm-btn-sm" data-mem-act="pin">' + (m.pinned ? "Unpin" : "Pin") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-mem-act="edit">Edit</button>' +
+            '<button class="pm-btn pm-btn-sm" data-mem-act="versions">Versions</button>' +
+            '<button class="pm-btn pm-btn-sm pm-btn-danger" data-mem-act="discard">Discard</button>' +
+          "</div></div>";
+      }).join("");
+  }
+
+  function mcpManager() {
+    var st = window.PMState.state;
+    return st.mcpServers.map(function (s) {
+      var chip = s.state === "connected" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Connected</span>"
+        : s.state === "needs-auth" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("key", 11) + " Needs authentication</span>"
+        : s.state === "error" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " Error — disabled</span>"
+        : '<span class="pm-badge pm-badge-muted">Disabled by user</span>';
+      return '<div class="at-mgr-card" data-mcp="' + s.id + '"><h4>' + esc(s.name) + " " + chip + "</h4>" +
+        '<div class="sub">Transport: ' + esc(s.transport) + " · Protocol: " + esc(s.protocol) + " · Scope: " + esc(s.scope) + " · Approval: " + esc(s.approval) + " · Exposure: " + esc(s.exposure) + "</div>" +
+        '<div class="sub" style="margin-top:3px">' + esc(s.freshness) + (s.toolCount ? " · " + s.toolCount + " tools discovered" : "") + "</div>" +
+        (s.tools.length ? '<div class="at-mcp-tools">' + s.tools.map(function (t) { return '<span class="pm-badge">' + esc(t) + "</span>"; }).join("") +
+          (s.toolCount > s.tools.length ? '<span class="pm-badge pm-badge-muted">+' + (s.toolCount - s.tools.length) + " more, lazily exposed</span>" : "") + "</div>" : "") +
+        '<details style="margin-top:9px"><summary class="pm-note" style="cursor:pointer">Logs & diagnostics</summary>' +
+        s.logs.map(function (l) { return '<div class="at-log">' + esc(l) + "</div>"; }).join("") + "</details>" +
+        '<div class="at-mgr-actions">' +
+          (s.state === "needs-auth" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="connect">Connect</button>' : "") +
+          (s.state === "error" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="repair">Repair</button>' : "") +
+          (s.state === "disabled" ? '<button class="pm-btn pm-btn-sm" data-mcp-act="enable">Enable</button>' : "") +
+          (s.state === "connected" ? '<button class="pm-btn pm-btn-sm" data-mcp-act="reconnect">Reconnect</button>' : "") +
+          '<button class="pm-btn pm-btn-sm" data-mcp-act="tools">Inspect tools</button>' +
+        "</div></div>";
+    }).join("");
+  }
+
+  function renderWorkspace(v) {
+    var d = dest(v.category);
+    if (!d) { renderHome(); return; }
+    var st = window.PMState.state;
+    var disc = st.ui.disclosure;
+    var html = '<div class="at-work at-enter" id="at-work">' +
+      '<div class="at-work-head">' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="at-back">' + window.PMIcons.get("arrowLeft", 14) + " Directory</button>" +
+        '<span class="at-cat-title">' + esc(d.title) + "</span>" +
+        '<label class="at-search-mini">' + window.PMIcons.get("search", 14) + '<input id="at-q2" placeholder="Search in Settings…" aria-label="Search in Settings"></label>' +
+        '<span class="pm-spacer"></span>' +
+        '<span class="pm-seg" id="at-disc">' +
+          ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '">' + (x === "standard" ? "Standard" : x === "advanced" ? "Advanced" : "All") + "</button>"; }).join("") +
+        "</span>" +
+      "</div>" +
+      '<button class="pm-btn pm-btn-sm at-toc-drawer" id="at-toc-toggle">' + window.PMIcons.get("list", 13) + " Sections</button>" +
+      '<div class="at-work-body">' +
+        '<nav class="at-toc" id="at-toc" aria-label="Subcategories">' +
+        d.subcategories.map(function (s) {
+          return '<button class="at-toc-item" data-sub="' + s.id + '">' + window.PMIcons.get("compass", 13) + esc(s.title) + "</button>";
+        }).join("") +
+        "</nav>" +
+        '<div class="at-doc" id="at-doc">' +
+        d.subcategories.map(function (sub) {
+          var rows = sub.settings.map(function (s) { return settingRow(s); }).join("");
+          var mgr = "";
+          if (sub.manager) {
+            if (IMPLEMENTED_MANAGERS[sub.manager]) {
+              if (sub.manager === "providers") mgr = providersManager(v);
+              else if (sub.manager === "memory") mgr = memoryManager();
+              else if (sub.manager === "mcp") mgr = mcpManager();
+            } else {
+              mgr = managerNote(sub);
+            }
+          }
+          return '<section class="at-sub" id="sub-' + sub.id + '" data-sub-section="' + sub.id + '">' +
+            '<div class="at-sub-head"><h2>' + esc(sub.title) + '</h2><span class="at-sub-count">' + sub.settings.length + " settings" + (sub.manager ? " · manager" : "") + "</span></div>" +
+            mgr + rows +
+          "</section>";
+        }).join("") +
+        "</div>" +
+      "</div>" +
+    "</div>";
+    content.innerHTML = html;
+    bindWorkspace(v, d);
+  }
+
+  function bindWorkspace(v, d) {
+    var scroller = document.getElementById("at-work");
+    var doc = document.getElementById("at-doc");
+
+    document.getElementById("at-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+
+    var tocItems = content.querySelectorAll(".at-toc-item");
+    spy = window.PMCore.scrollspy(scroller, function () {
+      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
+    }, function (id) {
+      tocItems.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-sub") === id); });
+    }, { offset: 76 });
+
+    tocItems.forEach(function (b) {
+      b.addEventListener("click", function () {
+        spy.jumpTo(b.getAttribute("data-sub"));
+        var toc = document.getElementById("at-toc");
+        if (toc.classList.contains("open")) toc.classList.remove("open");
+      });
+    });
+    var tocToggle = document.getElementById("at-toc-toggle");
+    if (tocToggle) tocToggle.addEventListener("click", function () { document.getElementById("at-toc").classList.toggle("open"); });
+
+    document.getElementById("at-disc").querySelectorAll("[data-disc]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
+        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
+          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+          var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
+          row.setAttribute("data-hidden", hidden);
+        });
+        content.querySelectorAll("#at-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
+        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " settings. Dangerous internals stay behind disclosure.", "info");
+        if (spy) spy.refresh();
+      });
+    });
+
+    var q2 = document.getElementById("at-q2");
+    q2.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var hits = window.PMCore.search(q2.value, INDEX);
+      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found for “" + q2.value + "”.", "info"); return; }
+      var t = Object.assign({}, hits[0].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    });
+
+    doc.addEventListener("click", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      var btn = e.target.closest("button, select");
+      handleRowClick(e, row, btn);
+      handleManagerClick(e);
+    });
+    doc.addEventListener("input", function (e) {
+      if (e.target.matches("[data-mem-q]")) {
+        var qv = e.target.value.trim().toLowerCase();
+        content.querySelectorAll("[data-memory]").forEach(function (card) {
+          card.style.display = (!qv || card.textContent.toLowerCase().indexOf(qv) >= 0) ? "" : "none";
+        });
+      }
+    });
+    doc.addEventListener("change", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      if (row && e.target.matches("[data-ctl]")) {
+        var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+        if (s.type === "select") { window.PMState.setSettingValue(s.id, e.target.value); patchRow(s.id); }
+        if (s.type === "text") { window.PMState.setSettingValue(s.id, e.target.value); patchRow(s.id); }
+      }
+      if (e.target.matches("[data-continuation]")) {
+        window.PMState.receipt("Continuation saved", "Anthropic Max will now: " + e.target.value + ". Applies to future requests.", "ok");
+      }
+    });
+
+    function handleRowClick(e, row, btn) {
+      if (!btn) return;
+      if (row && btn.matches("[data-ctl]") && btn.classList.contains("pm-toggle")) {
+        var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+        window.PMState.setSettingValue(s.id, !(s.value === true));
+        patchRow(s.id);
+        return;
+      }
+      if (row && btn.matches("[data-seg]")) {
+        var s2 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+        window.PMState.setSettingValue(s2.id, btn.getAttribute("data-seg"));
+        patchRow(s2.id);
+        return;
+      }
+      if (row && btn.matches("[data-reset]")) {
+        var s3 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+        window.PMState.resetSetting(s3.id);
+        patchRow(s3.id);
+        return;
+      }
+      if (row && btn.matches("[data-details]")) {
+        row.classList.toggle("open");
+        btn.setAttribute("aria-expanded", row.classList.contains("open"));
+        return;
+      }
+      if (row && btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
+        var s4 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+        if (s4.id === "context.compaction.now") { window.PMState.receipt("Compaction started", "A separately attributed compression helper is running. Simulated.", "sim"); return; }
+        if (s4.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
+        window.PMState.receipt(s4.actionLabel || "Opened", s4.label + ": honest simulated result — no real system was changed.", "sim");
+        return;
+      }
+    }
+
+    function handleManagerClick(e) {
+      var t;
+      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
+      var provCard = e.target.closest("[data-provider]");
+      if (provCard) {
+        var pid = provCard.getAttribute("data-provider");
+        var acctEl = e.target.closest("[data-account]");
+        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
+        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-nickname]"))) {
+          var acc = window.PMState.accountById(pid, aid);
+          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
+          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); rerenderProviders(); }
+          return;
+        }
+        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); rerenderProviders(); return; }
+        if ((t = e.target.closest("[data-pa]"))) {
+          var act = t.getAttribute("data-pa");
+          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral connection setup starts — account creation, key creation, scopes, quota caveats, then back to the model row. Simulated.", "sim"); return; }
+          window.PMState.providerAction(pid, act); return;
+        }
+        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured balances and forecasts. This concept links out rather than recalculating. Simulated navigation.", "info"); return; }
+        var modelEl = e.target.closest("[data-model]");
+        if (modelEl) {
+          var p = window.PMState.providerById(pid);
+          var mid = modelEl.getAttribute("data-model");
+          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-model-open]"))) {
+            modelEl.classList.toggle("open");
+            openModels[pid + ":" + mid] = modelEl.classList.contains("open");
+            t.setAttribute("aria-expanded", modelEl.classList.contains("open"));
+            return;
+          }
+          if ((t = e.target.closest("[data-alias]"))) {
+            var m = p.models.filter(function (x) { return x.id === mid; })[0];
+            var next = window.prompt === undefined ? "" : prompt("Alias for " + m.name + ":", m.alias || "");
+            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); rerenderProviders(); }
+            return;
+          }
+          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-effort]"))) { t.parentNode.querySelectorAll("[data-effort]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Effort preference saved", "Applies when this model is used and effort is supported.", "ok"); return; }
+          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " variant will be requested when genuinely supported.", "ok"); return; }
+        }
+      }
+      var memEl = e.target.closest("[data-memory]");
+      if (memEl) {
+        var mem = window.PMState.state.memory.filter(function (x) { return x.id === memEl.getAttribute("data-memory"); })[0];
+        var actBtn = e.target.closest("[data-mem-act]");
+        if (actBtn && mem) {
+          var a = actBtn.getAttribute("data-mem-act");
+          if (a === "verify") { mem.state = "verified"; window.PMState.receipt("Memory verified", "Evidence checked; the Gist is now trusted.", "ok"); }
+          if (a === "pin") { mem.pinned = !mem.pinned; window.PMState.receipt(mem.pinned ? "Pinned" : "Unpinned", mem.text, "ok"); }
+          if (a === "edit") { window.PMState.receipt("Edit simulated", "Corrections create a new version; the old one stays restorable.", "sim"); }
+          if (a === "versions") { window.PMState.receipt("Version history", mem.versions + " version(s). Restore is simulated in this concept.", "sim"); }
+          if (a === "discard") { window.PMState.state.memory = window.PMState.state.memory.filter(function (x) { return x.id !== mem.id; }); window.PMState.receipt("Memory discarded", "Removed from active recall and index.", "ok"); }
+          rerenderManagerSection("memory");
+          return;
+        }
+      }
+      if ((t = e.target.closest("[data-mem-rebuild]"))) { window.PMState.receipt("Index rebuild queued", "Deduplication and re-embedding will run. Simulated.", "sim"); return; }
+      if ((t = e.target.closest("[data-mem-capsule]"))) { window.PMState.receipt("Capsule preview", "Bounded recall capsule: 3 pinned/verified Gists, ~0.4K tokens. Full sources are never injected.", "info"); return; }
+      var mcpEl = e.target.closest("[data-mcp]");
+      if (mcpEl) {
+        var srv = window.PMState.state.mcpServers.filter(function (x) { return x.id === mcpEl.getAttribute("data-mcp"); })[0];
+        var mact = e.target.closest("[data-mcp-act]");
+        if (mact && srv) {
+          var ma = mact.getAttribute("data-mcp-act");
+          if (ma === "connect") { window.PMState.receipt("Connect started", srv.name + " authorization flow opened. Simulated.", "sim"); }
+          if (ma === "repair") { srv.state = "connected"; srv.freshness = "Repaired just now"; window.PMState.receipt("Repaired", srv.name + " transport fixed and reconnected. Simulated.", "ok"); rerenderManagerSection("mcp"); }
+          if (ma === "enable") { srv.state = "connected"; srv.freshness = "Enabled just now"; window.PMState.receipt("Enabled", srv.name + " reconnected. Simulated.", "ok"); rerenderManagerSection("mcp"); }
+          if (ma === "reconnect") { window.PMState.receipt("Reconnecting", srv.name + " handshake queued. Simulated.", "sim"); }
+          if (ma === "tools") { window.PMState.receipt("Tool inventory", srv.name + ": " + srv.toolCount + " tools, progressively exposed. Schemas are not loaded into every request.", "info"); }
+          return;
+        }
+      }
+    }
+
+    function patchRow(id) {
+      var s = window.PMState.getSetting(id);
+      var el = content.querySelector('[data-setting-id="' + id + '"]');
+      if (!el) return;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = settingRow(s);
+      var fresh = tmp.firstChild;
+      fresh.classList.toggle("open", el.classList.contains("open"));
+      el.replaceWith(fresh);
+    }
+
+    function rerenderProviders() {
+      var section = content.querySelector('[data-sub-section="providers"]');
+      if (!section) return;
+      var head = section.querySelector(".at-sub-head");
+      var keep = section.querySelectorAll(":scope > .at-row");
+      section.innerHTML = "";
+      section.appendChild(head);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = providersManager(window.PMState.state.view);
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      keep.forEach(function (r) { section.appendChild(r); });
+      if (spy) spy.refresh();
+    }
+
+    function rerenderManagerSection(which) {
+      var subId = which === "memory" ? "memory" : "mcp";
+      var section = content.querySelector('[data-sub-section="' + subId + '"]');
+      if (!section) return;
+      var head = section.querySelector(".at-sub-head");
+      var keep = section.querySelectorAll(":scope > .at-row");
+      section.innerHTML = "";
+      section.appendChild(head);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = which === "memory" ? memoryManager() : mcpManager();
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      keep.forEach(function (r) { section.appendChild(r); });
+    }
+
+    window._atlasPatch = { patchRow: patchRow, rerenderProviders: rerenderProviders };
+
+    if (v.manager && v.manager !== "providers") {
+      var subForMgr = null;
+      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
+      if (subForMgr) {
+        spy.jumpTo(subForMgr, function () { maybeFocus(v); });
+        return;
+      }
+    }
+    if (v.subcategory) {
+      spy.jumpTo(v.subcategory, function () { maybeFocus(v); });
+    } else {
+      scroller.scrollTop = 0;
+      maybeFocus(v);
+    }
+  }
+
+  function maybeFocus(v) {
+    if (v.focusSetting) {
+      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
+      if (el) {
+        el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+        window.PMCore.focusFlash(el);
+      }
+    } else if (v.manager === "providers" && v.provider) {
+      var card = content.querySelector('[data-provider="' + v.provider + '"]');
+      if (card) { card.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(card); }
+    }
+  }
+
+  window.PMState.subscribe(function (kind, payload) {
+    if (kind === "navigate") { route(); return; }
+    if (kind === "scenario") {
+      if (window.PMState.state.view.name === "home") renderHome();
+      else route();
+      return;
+    }
+    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._atlasPatch) {
+      window._atlasPatch.rerenderProviders();
+    }
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>

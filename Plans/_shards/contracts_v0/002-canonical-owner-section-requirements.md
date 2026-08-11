@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L224-L321
+Source lines: L224-L303
 
-Source SHA256: `4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5`
+Source SHA256: `9f09a8ab2bed0549cd7c4954ecf837b31885e7dd3804026dc938334e4974dd04`
 
 ---
 
@@ -88,21 +88,3 @@ The minimum serialized shape is:
 ```json
 {"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
 ```
-
-### Concern ownership / authority direction
-
-Concern ownership flows from source event to durable record to projections. Projections may request actions, but record mutation must go through the owning command/contract path and return a typed UICommandResponse or validator closure receipt.
-
-> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
-
-<!--
-PUPPET MASTER -- CANONICAL CONTRACTS
-
-Purpose:
-- This file is the single source of truth for core, cross-cutting **contracts** referenced by other plan documents.
-- Keep it DRY: define only stable envelopes + type contracts; other plans reference these contracts instead of redefining.
-
-ABSOLUTE NAMING RULE:
-- Platform name is "Puppet Master" only.
-- Use "Puppet Master" naming consistently throughout this document.
--->

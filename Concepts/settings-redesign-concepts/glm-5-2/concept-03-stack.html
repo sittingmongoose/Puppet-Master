@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>03 Stack — GLM-5.2 Settings</title>
+  <link rel="stylesheet" href="assets/themes.css">
+  <link rel="stylesheet" href="assets/shell.css">
+  <link rel="stylesheet" href="assets/managers.css">
+  <style>
+    /* ===== CONCEPT 03 STACK — single-surface progressive disclosure ===== */
+    .st-stage { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+
+    /* persistent header: search + theme (search is the HEAD of the single stack) */
+    .st-head { padding: 14px clamp(16px,3vw,40px); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .st-head-inner { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .st-eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .st-h1 { font-size: clamp(22px,2.8vw,32px); font-weight: 800; letter-spacing: -.025em; margin: 0; line-height: 1.1; }
+    .st-h1 .st-thesis { color: var(--accent); }
+    .st-searchrow { display: flex; gap: 10px; align-items: center; }
+    .st-search { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 44px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); flex: 1; transition: border-color var(--t-fast) var(--ease); }
+    .st-search:focus-within { border-color: var(--accent-line); }
+    .st-search input { flex: 1; background: transparent; border: none; outline: none; font-size: 14px; color: var(--ink); }
+    .st-results { position: relative; max-width: 880px; margin: 6px auto 0; }
+    .st-results-inner { background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh-3); max-height: 320px; overflow: auto; padding: 6px; }
+    .st-result { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm); cursor: pointer; }
+    .st-result:hover { background: var(--surface-2); }
+    .st-result .st-rkind { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); width: 74px; flex: none; }
+
+    /* the single stack */
+    .st-body { flex: 1; overflow: auto; padding: 16px clamp(16px,3vw,40px) 40px; }
+    .st-stack { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+    /* notices (status-critical, head of stack) */
+    .st-notice { display: flex; align-items: flex-start; gap: 12px; padding: 14px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); }
+    .st-notice.attention { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+    .st-notice.continue { border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+    .st-notice.recommended { border-color: color-mix(in srgb, var(--info) 40%, var(--line)); }
+    .st-notice-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--r-sm); flex: none; }
+    .st-notice.attention .st-notice-icon { background: var(--bad-soft); color: var(--bad); }
+    .st-notice.continue .st-notice-icon { background: var(--warn-soft); color: var(--warn); }
+    .st-notice.recommended .st-notice-icon { background: var(--info-soft); color: var(--info); }
+    .st-notice-body { flex: 1; min-width: 0; }
+    .st-notice-kind { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .st-notice.attention .st-notice-kind { color: var(--bad); }
+    .st-notice.continue .st-notice-kind { color: var(--warn); }
+    .st-notice.recommended .st-notice-kind { color: var(--info); }
+    .st-notice h3 { margin: 2px 0 2px; font-size: 14px; }
+    .st-notice .muted { font-size: 12px; }
+    .st-notice-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+    /* expandable destination row — the core of the Stack model */
+    .st-item { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; transition: border-color var(--t-fast) var(--ease); }
+    .st-item.expanded { border-color: var(--accent-line); box-shadow: var(--sh-2); }
+    .st-item-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: transparent; border: none; width: 100%; text-align: left; color: inherit; }
+    .st-item-head:hover { background: var(--surface-2); }
+    .st-item-icon { width: 36px; height: 36px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); border-radius: var(--r-sm); flex: none; }
+    .st-item-text { flex: 1; min-width: 0; }
+    .st-item-text h3 { margin: 0; font-size: 15px; }
+    .st-item-text .muted { font-size: 12px; }
+    .st-item-status { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .st-item-chevron { transition: transform var(--t-mid) var(--ease); color: var(--ink-3); flex: none; }
+    .st-item.expanded .st-item-chevron { transform: rotate(90deg); color: var(--accent); }
+
+    /* expanded body = the workspace, in place */
+    .st-item-body { overflow: hidden; max-height: 0; transition: max-height var(--t-mid) var(--ease); }
+    .st-item.expanded .st-item-body { max-height: 70vh; overflow: auto; }
+    .st-item-body-inner { padding: 6px 16px 16px; border-top: 1px solid var(--line-2); }
+    .st-subnav { display: flex; gap: 4px; flex-wrap: wrap; padding: 10px 0; position: sticky; top: 0; background: var(--surface); z-index: 2; }
+    .st-subnav-item { padding: 5px 10px; border-radius: var(--r-pill); border: 1px solid transparent; background: transparent; color: var(--ink-2); cursor: pointer; font-size: 12px; }
+    .st-subnav-item:hover { background: var(--surface-2); }
+    .st-subnav-item.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+    .st-sub-section { padding: 12px 0; scroll-margin-top: 50px; }
+    .st-sub-section + .st-sub-section { border-top: 1px solid var(--line-2); }
+    .st-sub-section h4 { font-size: 14px; margin: 0 0 10px; }
+
+    /* manager inside a stack item */
+    .st-item-manager { padding: 0 16px 16px; }
+
+    .st-config { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* motion: push/pop depth (FLIP on expand) */
+    [data-reduced-motion="0"] .st-item { animation: st-pop 420ms var(--ease-pop) backwards; }
+    .st-item:nth-child(2){animation-delay:40ms}.st-item:nth-child(3){animation-delay:80ms}.st-item:nth-child(4){animation-delay:120ms}
+    .st-item:nth-child(5){animation-delay:160ms}.st-item:nth-child(6){animation-delay:200ms}
+    @keyframes st-pop { from { opacity:0; transform: translateY(10px) scale(.99); } to { opacity:1; transform:none; } }
+
+    @media (max-width: 760px) {
+      .st-item-status .chip:not(.bad):not(.warn) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pm-shell" data-rail="open" data-chat="closed"></div>
+  <noscript>
+    <div style="position:fixed;top:8px;right:12px;z-index:99;padding:3px 9px;border:1px solid #6fc6e8;color:#6fc6e8;border-radius:999px;font:bold 10px sans-serif">GLM-5.2</div>
+  </noscript>
+  <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept"
+     style="position:fixed;bottom:36px;right:12px;z-index:50;display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 10px sans-serif;text-decoration:none">GLM-5.2 · 03</a>
+
+  <script src="assets/icons.svg.js"></script>
+  <script src="assets/demo-data.js"></script>
+  <script src="concept-hub-bridge.js"></script>
+  <script src="assets/state.js"></script>
+  <script src="assets/shared.js"></script>
+  <script src="assets/managers.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      PM.jumpOffset = function () { return 56; };
+      // Stack overrides openSub/openManager/openCategory to drive the expanded item
+      PM.state.expanded = null; // which destination item is open
+
+      function shell() {
+        var s = document.querySelector(".pm-shell");
+        s.innerHTML =
+          PM.shared.topbar('<span data-crumb>Settings</span>', "03 Stack") +
+          '<nav class="pm-activity" aria-label="Surrounding navigation">' + PM.shared.activityButtons(PM.state.rail) + '</nav>' +
+          PM.shared.rail() +
+          '<main class="pm-stage" data-stage></main>' +
+          PM.shared.chat() +
+          PM.shared.footer();
+        PM.shared.wireShell();
+      }
+
+      function destIcon(catId) {
+        return ({ general:"home", appearance:"theme", agents:"pam", permissions:"shield", code:"code",
+          context:"brain", planning:"compass", git:"history", extensions:"mcp", media:"media", system:"server" })[catId] || "grid";
+      }
+
+      function home() {
+        // notices (status-critical at the head)
+        var notices = [];
+        ["attention","continue","recommended"].forEach(function (kind) {
+          PM_DEMO.notices[kind].forEach(function (n) {
+            var kindLabel = { attention:"Needs attention", continue:"Continue setup", recommended:"Recommended" }[kind];
+            var icon = ({ attention:"bad", continue:"warn", recommended:"info" })[kind];
+            notices.push([
+              '<div class="st-notice ' + kind + '">',
+                '<span class="st-notice-icon">' + PM.svg(icon==="bad"?"bad":icon==="warn"?"warn":"info", 18) + '</span>',
+                '<div class="st-notice-body">',
+                  '<span class="st-notice-kind">' + kindLabel + '</span>',
+                  '<h3>' + n.headline + '</h3>',
+                  '<span class="muted">' + n.consequence + '</span>',
+                  '<div class="st-notice-actions"><button class="btn sm primary" data-notice-target="' + n.target + '">' + n.action + '</button>' + (n.secondary?'<button class="btn sm ghost">'+n.secondary+'</button>':'') + '</div>',
+                '</div>',
+              '</div>'
+            ].join(""));
+          });
+        });
+
+        // destinations as expandable rows
+        var items = PM_DEMO.destinations.map(function (d) {
+          var cat = PM.catById(d.target.split(".")[0]);
+          var expanded = PM.state.expanded === d.id;
+          var statusChip = '<span class="chip ' + (d.statusKind!=="neutral"?d.statusKind:"") + '">' + d.status + '</span>';
+          var body = expanded ? expandedBody(cat) : "";
+          return [
+            '<div class="st-item' + (expanded?" expanded":"") + '" data-item="' + d.id + '" data-cat="' + d.target.split(".")[0] + '">',
+              '<button class="st-item-head" data-item-toggle="' + d.id + '" aria-expanded="' + (expanded?"true":"false") + '">',
+                '<span class="st-item-icon">' + PM.svg(destIcon(cat.id), 18) + '</span>',
+                '<div class="st-item-text"><h3>' + d.title + '</h3><span class="muted">' + d.purpose + '</span></div>',
+                '<div class="st-item-status">' + statusChip + '</div>',
+                '<span class="st-item-chevron">' + PM.svg("chevron", 16) + '</span>',
+              '</button>',
+              '<div class="st-item-body"><div class="st-item-body-inner">' + body + '</div></div>',
+            '</div>'
+          ].join("");
+        }).join("");
+
+        var stage = document.querySelector("[data-stage]");
+        stage.innerHTML = [
+          '<div class="st-stage">',
+            '<div class="st-head">',
+              '<div class="st-head-inner">',
+                '<div class="st-eyebrow">Concept 03 · Stack · GLM-5.2</div>',
+                '<h1 class="st-h1">Settings as <span class="st-thesis">one expanding surface.</span></h1>',
+                '<div class="st-searchrow">',
+                  '<div class="st-search"><span class="muted">' + PM.svg("search",16) + '</span><input type="search" placeholder="Search settings…" data-search-input aria-label="Search settings"><span class="muted small">⌘K</span></div>',
+                  '<button class="btn sm" data-expand-all>Browse</button>',
+                '</div>',
+                '<div class="st-config">' + PM.shared.themePicker() + '</div>',
+                '<div class="st-results hidden" data-results><div class="st-results-inner"></div></div>',
+              '</div>',
+            '</div>',
+            '<div class="st-body" data-scroller>',
+              '<div class="st-stack">',
+                notices.join(""),
+                items,
+              '</div>',
+            '</div>',
+          '</div>'
+        ].join("");
+        wireHome();
+        if (PM.state.expanded) {
+          PM.state.activeCat = PM_DEMO.destinations.find(function(d){return d.id===PM.state.expanded;}).target.split(".")[0];
+          PM.initScrollspy();
+        }
+      }
+
+      function expandedBody(cat) {
+        // subnav + continuous document of all subcategories
+        var subnav = cat.sub.map(function (s) {
+          return '<button class="st-subnav-item' + (s.id===PM.state.activeSub?" active":"") + '" data-subnav="' + s.id + '">' + s.title + '</button>';
+        }).join("");
+        var doc = cat.sub.map(function (s) {
+          var body = s.manager ? PM.shared.managerPromo(s.manager) : PM.shared.subList(cat.id, s.id);
+          var managerNote = s.manager ? '<a data-sub-manager="' + s.manager + '" style="float:right;font-size:11px">Open ' + PM.managers[s.manager].title + ' ' + PM.svg("external",11) + '</a>' : "";
+          return '<section class="st-sub-section" data-sub-section="' + s.id + '"><h4>' + s.title + managerNote + '</h4><div class="set-list">' + body + '</div></section>';
+        }).join("");
+        return '<div class="st-subnav">' + subnav + '</div>' + doc;
+      }
+
+      function wireHome() {
+        var inp = document.querySelector("[data-search-input]");
+        var res = document.querySelector("[data-results]");
+        var resInner = res.querySelector(".st-results-inner");
+        inp.addEventListener("input", function () {
+          var results = PM.runSearch(this.value);
+          if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
+          res.classList.remove("hidden");
+          resInner.innerHTML = results.map(function (r) {
+            var kindLabel = ({ setting:"Setting", category:"Area", subcategory:"Section", manager:"Manager", destination:"Area" })[r.kind];
+            var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
+            return '<div class="st-result" ' + target + '><span class="st-rkind">' + kindLabel + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
+          }).join("");
+        });
+        resInner.addEventListener("click", function (e) {
+          var r = e.target.closest(".st-result"); if (!r) return;
+          inp.value = ""; res.classList.add("hidden");
+          var mgr = r.getAttribute("data-r-manager");
+          if (mgr) { openManagerInline(mgr); }
+          else {
+            var cat = r.getAttribute("data-r-cat"), sub = r.getAttribute("data-r-sub");
+            // expand the owning destination
+            var dest = PM_DEMO.destinations.find(function (d) { return d.target.indexOf(cat) === 0; });
+            if (dest) { PM.state.expanded = dest.id; PM.state.activeCat = cat; PM.state.activeSub = sub; PM.render(); setTimeout(function(){ PM.focusSub(sub,{jump:true,flash:true}); }, 80); }
+          }
+        });
+        // expandable items
+        document.querySelectorAll("[data-item-toggle]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var id = this.getAttribute("data-item-toggle");
+            var item = this.closest(".st-item");
+            var cat = item.getAttribute("data-cat");
+            if (PM.state.expanded === id) {
+              // collapse
+              PM.state.expanded = null; PM.state.view = "home";
+              item.classList.remove("expanded"); this.setAttribute("aria-expanded","false");
+            } else {
+              // collapse others, expand this (only one open at a time)
+              document.querySelectorAll(".st-item.expanded").forEach(function (o) { o.classList.remove("expanded"); o.querySelector("[data-item-toggle]").setAttribute("aria-expanded","false"); });
+              PM.state.expanded = id; PM.state.view = "workspace"; PM.state.activeCat = cat;
+              var catObj = PM.catById(cat);
+              PM.state.activeSub = catObj.sub[0].id;
+              // render the body
+              item.querySelector(".st-item-body-inner").innerHTML = expandedBody(catObj);
+              item.classList.add("expanded"); this.setAttribute("aria-expanded","true");
+              PM.initScrollspy();
+              setTimeout(function(){ PM.initScrollspy(); PM.focusSub(PM.state.activeSub,{flash:true}); }, 80);
+            }
+          });
+        });
+        document.querySelectorAll("[data-subnav]").forEach(function (b) {
+          b.addEventListener("click", function () { PM.openSub(this.getAttribute("data-subnav")); });
+        });
+        document.querySelectorAll("[data-sub-manager]").forEach(function (a) {
+          a.addEventListener("click", function (e) { e.preventDefault(); openManagerInline(this.getAttribute("data-sub-manager")); });
+        });
+        document.querySelectorAll("[data-notice-target]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var t = this.getAttribute("data-notice-target");
+            var cat = t.split(".")[0], sub = t.split(".")[1];
+            var dest = PM_DEMO.destinations.find(function (d) { return d.target.indexOf(cat) === 0; });
+            if (dest) { PM.state.expanded = dest.id; PM.state.activeCat = cat; PM.state.activeSub = sub; PM.render(); setTimeout(function(){ PM.focusSub(sub,{jump:true,flash:true}); }, 80); }
+          });
+        });
+        document.querySelector("[data-expand-all]").addEventListener("click", function () {
+          // open the first item as a demo
+          var first = document.querySelector("[data-item-toggle]");
+          if (first) first.click();
+        });
+        PM.shared.wireSettings(document.querySelector(".st-stack"));
+        PM.shared.wireThemePicker();
+        PM.onScrollspy = function (subId) {
+          document.querySelectorAll("[data-subnav]").forEach(function (b) {
+            b.classList.toggle("active", b.getAttribute("data-subnav") === subId);
+          });
+        };
+        PM.shared.wireShell();
+      }
+
+      function openManagerInline(managerId) {
+        var m = PM.managers[managerId];
+        var dest = PM_DEMO.destinations.find(function (d) { return d.target.indexOf(m.managerCat) === 0; });
+        var itemEl = dest ? document.querySelector('[data-item="' + dest.id + '"]') : null;
+        if (!itemEl) return;
+        // ensure expanded
+        if (PM.state.expanded !== dest.id) { itemEl.querySelector("[data-item-toggle]").click(); }
+        var body = itemEl.querySelector(".st-item-body-inner");
+        body.innerHTML = '<div class="st-item-manager" data-manager-id="' + m.id + '"><div class="st-backbar" style="display:flex;gap:10px;align-items:center;padding:8px 0"><button class="btn sm ghost" data-back-to-area>' + PM.svg("back",13) + 'Back to ' + PM.catById(m.managerCat).title + '</button><span class="muted small">' + m.title + '</span></div><div style="overflow:auto;max-height:60vh">' + PM.managers_lib.render(m.id) + '</div></div>';
+        PM.managers_lib.wire(body.querySelector(".mgr"));
+        body.querySelector("[data-back-to-area]").addEventListener("click", function () {
+          var cat = PM.catById(m.managerCat);
+          body.innerHTML = expandedBody(cat);
+          PM.shared.wireSettings(body);
+          PM.initScrollspy(); setTimeout(function(){ PM.initScrollspy(); }, 60);
+          wireBody(body);
+        });
+      }
+
+      function wireBody(scope) {
+        scope.querySelectorAll("[data-subnav]").forEach(function (b) {
+          b.addEventListener("click", function () { PM.openSub(this.getAttribute("data-subnav")); });
+        });
+        scope.querySelectorAll("[data-sub-manager]").forEach(function (a) {
+          a.addEventListener("click", function (e) { e.preventDefault(); openManagerInline(this.getAttribute("data-sub-manager")); });
+        });
+      }
+
+      function render() {
+        var crumb = document.querySelector("[data-crumb]");
+        if (crumb) crumb.innerHTML = PM.state.expanded ? 'Settings · <b>' + (PM.catById(PM.state.activeCat)||{}).title + '</b>' : "Settings";
+        home();
+      }
+
+      PM.render = render;
+      PM.init();
+      shell();
+      render();
+    })();
+  </script>
+</body>
+</html>

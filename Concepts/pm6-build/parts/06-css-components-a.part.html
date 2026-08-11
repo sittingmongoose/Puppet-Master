@@ -58,14 +58,22 @@
       gap: var(--md);
     }
     .message {
-      max-width: 90%;
+      max-width: min(90%, 100%);
       font-size: 13px;
+      min-width: 0;
+      box-sizing: border-box;
     }
     .message.assistant { align-self: flex-start; }
     .message.user { align-self: flex-end; }
     .msg-body {
       padding: var(--xs) var(--md) var(--md);
       border-radius: var(--border-radius);
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      box-sizing: border-box;
     }
     .message.assistant .msg-body {
       background: var(--surface-elevated);
@@ -319,6 +327,12 @@
     }
     .bottom-panel.collapsed .bottom-tabs-content { display: none; }
 
+    /* Task 5: .bottom-tabs deliberately gets NO frost/scroll-under —
+       its tab panes swap as siblings and each pane scrolls internally,
+       so content never passes under the strip. The terminal subdock /
+       workgroup cluster lives INSIDE this strip (horizontal chrome),
+       not above a vertical scroller. The one real terminal header-over-
+       scroller surface is .pm-editor-term-dock-bar (frosted below). */
     .bottom-tabs {
       height: auto;
       min-height: 18px;
@@ -874,6 +888,45 @@
       flex-direction: column;
       overflow: hidden;
     }
+    /* Frosted scroll-under (Task 5): the terminal pane body scrolls
+       BEHIND the dock bar. The panes in this build have no per-pane
+       title strip (renderPane emits banner + body only), so the dock
+       bar is the terminal's header-over-scroller surface. Lift cascade:
+       host -> pane -> body (each overflow:hidden level is raised by the
+       bar height; pane padding-top is cancelled on the body). A pane
+       carrying a recovery banner opts out so the banner never parks
+       behind the plate (:has fallback = banner frosted, rare state). */
+    .pm-editor-term-panel { --pm-term-dock-h: 26px; }
+    .pm-editor-term-dock-bar {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+      border-bottom: 1px solid var(--border-light);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .pm-editor-term-dock-bar {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    .pm-editor-term-host {
+      margin-top: calc(-1 * var(--pm-term-dock-h));
+      padding-top: var(--pm-term-dock-h);
+    }
+    .pm-editor-term-host .terminal-pane {
+      margin-top: calc(-1 * var(--pm-term-dock-h));
+    }
+    .pm-editor-term-host .terminal-pane-body {
+      margin-top: calc(-1 * var(--md));
+      padding-top: calc(var(--pm-term-dock-h) + var(--md));
+    }
+    .pm-editor-term-host .terminal-pane:has(> .pm-recovery-banner) { margin-top: 0; }
+    .pm-editor-term-host .terminal-pane:has(> .pm-recovery-banner) .terminal-pane-body {
+      margin-top: 0;
+      padding-top: 0;
+    }
     #editorView.pm-editor-term-drop-hover { outline: 2px dashed var(--accent-lime); outline-offset: -4px; }
     .bottom-tabs-right { display: flex; gap: var(--sm); align-items: center; flex: 0 0 auto; }
     .bottom-tabs .tab {
@@ -934,10 +987,10 @@
     .terminal-pane .line.stderr { color: var(--accent-magenta); }
     .bottom-tabs-content .line.info,
     .terminal-pane .line.info { color: var(--accent-orange); }
-    .terminal-output,
-    .terminal-pane-body { scrollbar-width: none; }
-    .terminal-output::-webkit-scrollbar,
-    .terminal-pane-body::-webkit-scrollbar { display: none; }
+    /* (No scrollbar kill here any more: both surfaces are opted in to the
+       standard auto-hiding bar in css-tokens. The terminal is off the
+       edge-dissolve system, so the bar is its only "more output above/below"
+       affordance.) */
 
     [data-theme="retro-dark"] {
       --terminal-bg: #141820;
@@ -1085,16 +1138,26 @@
       min-width: 0;
       background: var(--terminal-chrome);
     }
-    /* Split resizers: always-visible gutter (global .resizer-* default is transparent) */
+    /* Split resizers: always-visible gutter (global .resizer-* default is
+       transparent). pm7 A1: 10px box = 3px visible gutter (content-box clip)
+       inside the shared expanded grab zone; resting fill unchanged on hover.
+       background-COLOR, not the shorthand: the shorthand would reset
+       background-image and wipe any glow layer painted on these bars. */
     .terminal-workspace .pm-term-pane-resizer.resizer-col {
-      width: 3px;
-      min-width: 3px;
-      background: color-mix(in srgb, var(--border) 65%, var(--terminal-chrome) 35%);
+      width: 10px;
+      min-width: 10px;
+      margin: 0 -3.5px;
+      padding: 0 3.5px;
+      background-color: color-mix(in srgb, var(--border) 65%, var(--terminal-chrome) 35%);
+      background-clip: content-box;
     }
     .terminal-workspace .pm-term-pane-resizer.resizer-row {
-      height: 3px;
-      min-height: 3px;
-      background: color-mix(in srgb, var(--border) 65%, var(--terminal-chrome) 35%);
+      height: 10px;
+      min-height: 10px;
+      margin: -3.5px 0;
+      padding: 3.5px 0;
+      background-color: color-mix(in srgb, var(--border) 65%, var(--terminal-chrome) 35%);
+      background-clip: content-box;
     }
     .terminal-pane.pm-pane-focused {
       outline: 2px solid var(--accent-lime);
@@ -1340,34 +1403,9 @@
     }
     .pm-problems-footer:hover { text-decoration: underline; }
 
-    #pmToastStack {
-      position: fixed;
-      bottom: 48px;
-      right: 16px;
-      z-index: 20000;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-width: 320px;
-      pointer-events: none;
-    }
-    .pm-toast {
-      pointer-events: auto;
-      padding: 8px 12px;
-      font-size: 11px;
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      animation: pmToastIn 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    @keyframes pmToastIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .pm-toast { animation: none !important; }
-    }
+    /* Legacy bottom toast stack neutralized — title-bar notify owns delivery */
+    #pmToastStack { display: none !important; }
+    .pm-toast { display: none !important; }
 
     #detachedTerminalWindow {
       position: fixed;
@@ -1452,7 +1490,8 @@
       position: fixed;
       top: 100px;
       right: 40px;
-      width: min(var(--floating-chat-w, 520px), 40vw);
+      width: max(380px, min(var(--floating-chat-w, 520px), 40vw));
+      min-width: 380px;
       height: 560px;
       background: var(--surface);
       border: var(--border-width) solid var(--border);
@@ -1517,13 +1556,20 @@
     [data-theme="basic-light"] .pixel-grid,
     [data-theme="basic-dark"] .pixel-grid { display: none; }
 
+    /* min-width mirrors .editor-view's floor: with min-width:0 the dashboard
+       was the only shrinkable sibling once a drag pinned the editor at
+       `flex:none`, so opening the docked chat crushed it to zero width and
+       read as the chat covering the homescreen. */
     .dashboard-view {
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-width: 0;
+      min-width: 280px;
       min-height: 0;
     }
+    /* var(--xs) gutter, not var(--md): .dashboard-view contributes nothing on
+       its left, so --md on both margin and padding put ~20px of chrome
+       between editor pane 2 and the dashboard. */
     .editor-view {
       width: 50%;
       min-width: 280px;
@@ -1531,14 +1577,56 @@
       flex-direction: column;
       min-height: 0;
       border-right: var(--border-width) solid var(--border);
-      margin-right: var(--md);
-      padding-right: var(--md);
+      margin-right: var(--xs);
+      padding-right: var(--xs);
     }
     .editor-tabs {
       display: flex;
       padding: var(--xs) var(--md) 0 calc(var(--md) + 8px);
       gap: 2px;
       border-bottom: var(--border-width) solid var(--border);
+    }
+    /* Frosted tab bar WITH scroll-under: the code now runs behind the bar.
+       The old note here said scroll-under was impossible because the gutter is
+       scrollTop-synced (gutter.scrollTop = code.scrollTop) and the minimap maps
+       scrollTop/scrollHeight. Resolved by lifting the gutter and the code
+       TOGETHER — they are siblings in the .editor-area flex row, so an equal
+       negative margin-top plus an equal padding-top keeps line N at
+       padding-top + N*18px in both boxes, which is the invariant that matters.
+       The minimap is the third sibling and is deliberately NOT lifted, so it
+       still starts below the bar; its ratios take clientHeight and scrollHeight
+       which both grow by the same lift, leaving viewRatio unchanged. */
+    .editor-tabs {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* measured (PM_FROST -> --pm6-editor-tabs-h): the bar's height is themed —
+       friendly turns the tabs into top-rounded folder tabs with their own
+       padding — so a static value would misalign on theme switch */
+    .editor-pane { --pm6-editor-tabs-h: 34px; }
+    /* The lift goes on .editor-area, NOT on its children. .editor-area is
+       overflow:hidden, so lifting the gutter and code from inside it just fed
+       the raised strip to that clip — the rects said "under the tabs" while
+       nothing painted there, which is exactly how this shipped broken once.
+       .editor-pane does not clip, so raising the whole row works. Everything
+       inside then moves together, which also keeps the gutter/code alignment
+       free rather than something to maintain. */
+    .editor-pane > .editor-area {
+      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 34px));
+    }
+    /* the minimap rides the lift too, so give it the height back or its canvas
+       starts behind the tab bar */
+    .editor-area > .editor-minimap {
+      padding-top: var(--pm6-editor-tabs-h, 34px);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .editor-tabs {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
     }
     .editor-tabs .tab {
       padding: var(--xs) var(--md);
@@ -1720,10 +1808,21 @@
     .editor-area {
       flex: 1;
       display: flex;
+      min-width: 0;   /* same flex-overflow guard as .browser-tab-content */
       overflow: hidden;
     }
     .editor-gutter {
-      padding: var(--md) 0;
+      /* Vertical padding is locked to .editor-code's (css-components-b): line
+         N sits at padding-top + N*18px in both boxes, so the two must agree or
+         the numbers sit off their lines. The extra --pm6-sb-size at the bottom
+         is horizontal-scrollbar compensation: .editor-code now shows one, which
+         costs it that much clientHeight, so its max scrollTop grows by exactly
+         that much. The gutter is scrollTop-driven (pm6-js-prd-annotations) but
+         clamps at its own max — without the matching bottom room it would run
+         out of scroll and the numbers would lag by up to a bar-height at the
+         end of a file. Harmless when no bar is showing: the extra room is
+         simply never reached. */
+      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
       font-family: 'Consolas', monospace;
       font-size: 12px;
       color: var(--text-muted);

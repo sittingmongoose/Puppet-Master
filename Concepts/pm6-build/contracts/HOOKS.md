@@ -25,7 +25,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `#panel-search` | 12-html-side-panels | page root |
 | `#panel-settings` | 19-page-settings-shell | page root |
 | `#panel-source` | 12-html-side-panels | page root |
-| `#panel-unraid` | 12-html-side-panels | page root |
 | `#panel-usage` | 18-page-usage | page root |
 | `#panel-wizard` | 16-page-wizard | page root |
 | `#tab-dashboard` | 11-html-shell-open | page tab |
@@ -94,8 +93,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `#pmToastStack` | byId | 22-html-status-toast | 24-js-main | 15097 | MUST-EXIST |
 | `#prd-mock-content` | byId | 16-page-wizard | 26-js-prd-annotations | 18709 | MUST-EXIST |
 | `#resubmitBtn` | byId | (runtime-created / not in static HTML) | 26-js-prd-annotations | 18952, 18973 | DYNAMIC/unresolved |
-| `#searchReplaceRow` | byId | 12-html-side-panels | 26-js-prd-annotations | 19058 | MUST-EXIST |
-| `#searchResultsSummary` | byId | 12-html-side-panels | 26-js-prd-annotations | 18996 | MUST-EXIST |
 | `#sidePanelSlot` | byId | 11-html-shell-open | 25-js-terminal-demo | 18378 | MUST-EXIST |
 | `#statusMenuDropdown` | byId | 22-html-status-toast | 25-js-terminal-demo | 18223 | MUST-EXIST |
 | `#themeSelect` | byId | 11-html-shell-open | 25-js-terminal-demo | 18669 | MUST-EXIST |
@@ -131,7 +128,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.wt-bind-label` | qs | (runtime-created / not in static HTML) | 25-js-terminal-demo | 17777, 17789, 17798, 17912 | DYNAMIC/unresolved |
 | `input` | qs | (runtime-created / not in static HTML) | 25-js-terminal-demo | 17766 | DYNAMIC/unresolved |
 | `#editorPane2 .editor-tabs .tab` | qsa | 14-page-dashboard | 25-js-terminal-demo | 18455, 18497 | MUST-EXIST |
-| `#panel-search .search-result-item` | qsa | 12-html-side-panels | 26-js-prd-annotations | 18988 | MUST-EXIST |
 | `.` | qsa | (runtime-created / not in static HTML) | 25-js-terminal-demo | 17686 | DYNAMIC/unresolved |
 | `.ac-nav-item` | qsa | (runtime-created / not in static HTML) | 25-js-terminal-demo | 18602, 18606 | DYNAMIC/unresolved |
 | `.ac-section` | qsa | (runtime-created / not in static HTML) | 25-js-terminal-demo | 18608 | DYNAMIC/unresolved |
@@ -162,7 +158,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.editor-tabs .tab.tab-focused` | qsa | 14-page-dashboard | 25-js-terminal-demo | 18593 | MUST-EXIST |
 | `.editor-tabs .tab[data-tab-type="code"]` | qsa | 14-page-dashboard | 26-js-prd-annotations | 20076 | MUST-EXIST |
 | `.exec-pill` | qsa | 16-page-wizard | 26-js-prd-annotations | 18727 | MUST-EXIST |
-| `.file-tree .file` | qsa | 12-html-side-panels | 25-js-terminal-demo | 18260 | MUST-EXIST |
 | `.inspector-view` | qsa | (runtime-created / not in static HTML) | 25-js-terminal-demo | 18430 | DYNAMIC/unresolved |
 | `.lsp-registry-row` | qsa | (runtime-created / not in static HTML) | 26-js-prd-annotations | 19040 | DYNAMIC/unresolved |
 | `.messageStream` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17595 | MUST-EXIST |
@@ -184,8 +179,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.prd-pill` | qsa | 16-page-wizard | 26-js-prd-annotations | 18717 | MUST-EXIST |
 | `.primary-content > .page` | qsa | 13-html-shell-mid | 25-js-terminal-demo | 18620 | MUST-EXIST |
 | `.sc-tab` | qsa | (runtime-created / not in static HTML) | 26-js-prd-annotations | 19020 | DYNAMIC/unresolved |
-| `.sc-wt-filter-btn` | qsa | 12-html-side-panels | 25-js-terminal-demo | 17872 | MUST-EXIST |
-| `.sc-wt-row` | qsa | 12-html-side-panels | 25-js-terminal-demo | 17874 | MUST-EXIST |
 | `.seg-btn` | qsa | 25-js-terminal-demo | 25-js-terminal-demo | 17832 | internal |
 | `.selectable-doc` | qsa | 16-page-wizard | 26-js-prd-annotations | 18806 | MUST-EXIST |
 | `.settings-inspector-panel` | qsa | (runtime-created / not in static HTML) | 25-js-terminal-demo | 18439 | DYNAMIC/unresolved |
@@ -200,7 +193,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.wt-bind-dropdown` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17739, 17785, 17795, 17891 | MUST-EXIST |
 | `.wt-current-label .wt-status-pill` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17918 | MUST-EXIST |
 | `.wt-current-name` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17917 | MUST-EXIST |
-| `[data-sc-view]` | qsa | 12-html-side-panels | 26-js-prd-annotations | 19023 | MUST-EXIST |
 
 ## C. Inline handler functions (HTML parts 11-23 -> functions defined in parts 24-26)
 
@@ -246,7 +238,6 @@ Every one of these function names is a **MUST-EXIST global symbol**: if an HTML 
 | `#ghSettings` | 16-page-wizard | 16-page-wizard | internal |
 | `#pmCardRich` | 23-html-floating-chat | 23-html-floating-chat | internal |
 | `#projectSettingsModal` | 15-page-projects | 15-page-projects | internal |
-| `#scCommitMsg` | 12-html-side-panels | 12-html-side-panels | internal |
 | `#statusMenuDropdown` | 22-html-status-toast | 22-html-status-toast | internal |
 
 ## E. Baseline duplicate ids (pre-existing in PMConcept4 — check_ids.py baseline)

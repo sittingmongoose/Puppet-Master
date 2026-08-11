@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>02 Atlas — GLM-5.2 Settings</title>
+  <link rel="stylesheet" href="assets/themes.css">
+  <link rel="stylesheet" href="assets/shell.css">
+  <link rel="stylesheet" href="assets/managers.css">
+  <style>
+    /* ===== CONCEPT 02 ATLAS — spatial/cartographic IA ===== */
+    .at-stage { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+
+    /* HOME: atlas overview */
+    .at-home { flex: 1; display: grid; grid-template-columns: 1fr 320px; min-height: 0; }
+    .at-canvas { position: relative; overflow: hidden; padding: 18px; }
+    .at-canvas-inner { position: relative; width: 100%; height: 100%; }
+    /* command overlay search — top center, dims the map when focused */
+    .at-cmdk { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 20; width: min(560px, 80%); }
+    .at-cmdk-field { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 46px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-pill); box-shadow: var(--sh-2); transition: border-color var(--t-fast) var(--ease); }
+    .at-cmdk-field:focus-within { border-color: var(--accent-line); }
+    .at-cmdk-field input { flex: 1; background: transparent; border: none; outline: none; font-size: 14px; color: var(--ink); }
+    .at-cmdk-results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh-3); max-height: 340px; overflow: auto; padding: 6px; z-index: 25; }
+    .at-cmdk-result { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm); cursor: pointer; }
+    .at-cmdk-result:hover { background: var(--surface-2); }
+    .at-cmdk-result .at-rkind { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); width: 76px; flex: none; }
+
+    /* regions: named areas with boundaries; size encodes density (settings count) */
+    .at-regions { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(70px, auto); gap: 10px; padding: 70px 4px 16px; height: 100%; overflow: auto; }
+    .at-region {
+      position: relative; border: 1px solid var(--line); background: var(--surface);
+      border-radius: var(--r-lg); padding: 14px; cursor: pointer; text-align: left; color: inherit;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: transform var(--t-mid) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+    }
+    .at-region:hover { transform: translateY(-2px) scale(1.005); border-color: var(--accent-line); background: var(--surface-2); box-shadow: var(--sh-2); z-index: 3; }
+    .at-region.has-attention { border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); }
+    .at-region-top { display: flex; align-items: center; gap: 8px; }
+    .at-region-icon { width: 30px; height: 30px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); border-radius: var(--r-xs); flex: none; }
+    .at-region h3 { margin: 0; font-size: 14px; font-weight: 700; }
+    .at-region-purpose { color: var(--ink-2); font-size: 11px; line-height: 1.4; }
+    .at-region-meta { display: flex; align-items: center; gap: 6px; margin-top: auto; flex-wrap: wrap; }
+    /* you-are-here marker */
+    .at-here { position: absolute; top: 8px; right: 10px; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); display: none; }
+    .at-region.current .at-here { display: inline; }
+    /* region grid spans (density-encoded sizes) */
+    .at-r-general       { grid-column: span 4; grid-row: span 2; }
+    .at-r-appearance    { grid-column: span 3; grid-row: span 2; }
+    .at-r-agents        { grid-column: span 5; grid-row: span 3; }
+    .at-r-permissions   { grid-column: span 3; grid-row: span 2; }
+    .at-r-code          { grid-column: span 4; grid-row: span 2; }
+    .at-r-context       { grid-column: span 5; grid-row: span 2; }
+    .at-r-planning      { grid-column: span 4; grid-row: span 2; }
+    .at-r-git           { grid-column: span 3; grid-row: span 2; }
+    .at-r-extensions    { grid-column: span 5; grid-row: span 2; }
+    .at-r-media         { grid-column: span 3; grid-row: span 2; }
+    .at-r-system        { grid-column: span 4; grid-row: span 2; }
+
+    /* right rail: notices + legend */
+    .at-rail { border-left: 1px solid var(--line); background: var(--surface); overflow: auto; padding: 16px; }
+    .at-rail h2 { font-size: 13px; margin: 0 0 10px; letter-spacing: .04em; }
+    .at-legend { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .at-legend-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-2); }
+    .at-region-shape { border: 1px solid var(--line); border-radius: var(--r-xs); flex: none; }
+    .at-notice-mini { padding: 10px; border-radius: var(--r-sm); border: 1px solid var(--line); margin-bottom: 8px; background: var(--surface-2); }
+    .at-notice-mini.attention { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+    .at-notice-mini.continue { border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+    .at-notice-mini h4 { margin: 0 0 4px; font-size: 12px; }
+    .at-notice-mini .muted { font-size: 11px; }
+    .at-notice-mini button { margin-top: 6px; }
+
+    /* WORKSPACE: focus + context */
+    .at-workspace { display: grid; grid-template-columns: 200px 1fr 180px; height: 100%; min-height: 0; }
+    .at-focus { overflow: auto; padding: clamp(14px,2vw,28px); }
+    .at-focus-inner { max-width: 820px; margin: 0 auto; }
+    .at-focus h2 { font-size: 22px; margin: 0 0 4px; }
+    .at-focus-purpose { color: var(--ink-2); font-size: 13px; margin-bottom: 16px; }
+    .at-sub-section { padding: 12px 0; scroll-margin-top: 16px; }
+    .at-sub-section + .at-sub-section { border-top: 1px solid var(--line-2); }
+    .at-sub-section h3 { font-size: 15px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+
+    /* minimap (context rail) */
+    .at-minimap { border-right: 1px solid var(--line); background: var(--surface); overflow: auto; padding: 12px 10px; }
+    .at-mm-label { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+    .at-mm-region { display: block; width: 100%; text-align: left; background: transparent; border: 1px solid transparent; color: var(--ink-2); padding: 6px 8px; border-radius: var(--r-xs); cursor: pointer; font-size: 12px; position: relative; }
+    .at-mm-region:hover { background: var(--surface-2); color: var(--ink); }
+    .at-mm-region.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+    .at-mm-region .at-mm-here { position: absolute; left: -2px; top: 50%; transform: translateY(-50%); width: 3px; height: 60%; background: var(--accent); border-radius: 99px; opacity: 0; }
+    .at-mm-region.active .at-mm-here { opacity: 1; }
+    .at-mm-sub { display: block; width: 100%; text-align: left; background: transparent; border: none; color: var(--ink-3); padding: 3px 8px 3px 16px; border-radius: var(--r-xs); cursor: pointer; font-size: 11px; }
+    .at-mm-sub:hover { color: var(--ink); }
+    .at-mm-sub.active { color: var(--accent); }
+
+    /* viewport indicator (right context rail) */
+    .at-viewport-rail { border-left: 1px solid var(--line); background: var(--surface); padding: 12px; overflow: auto; }
+    .at-viewport-rail .at-mm-label { margin-bottom: 6px; }
+    .at-viewport-track { position: relative; width: 8px; height: 200px; background: var(--surface-3); border-radius: 99px; margin: 8px auto; }
+    .at-viewport-thumb { position: absolute; left: 0; right: 0; background: var(--accent); border-radius: 99px; transition: top var(--t-fast) var(--ease), height var(--t-fast) var(--ease); }
+    .at-vp-sublist { display: flex; flex-direction: column; gap: 2px; }
+    .at-vp-sub { font-size: 11px; padding: 4px 8px; border-radius: var(--r-xs); color: var(--ink-3); cursor: pointer; }
+    .at-vp-sub.active { color: var(--accent); background: var(--accent-soft); }
+
+    .at-backbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--surface); }
+    .at-manager { height: 100%; display: flex; flex-direction: column; }
+
+    /* motion: cartographic zoom/pan */
+    [data-reduced-motion="0"] .at-region { animation: at-zoom-in 480ms var(--ease-settle) backwards; }
+    .at-region:nth-child(1){animation-delay:0ms}.at-region:nth-child(2){animation-delay:50ms}.at-region:nth-child(3){animation-delay:100ms}
+    .at-region:nth-child(4){animation-delay:150ms}.at-region:nth-child(5){animation-delay:200ms}.at-region:nth-child(6){animation-delay:250ms}
+    @keyframes at-zoom-in { from { opacity:0; transform: scale(.96); } to { opacity:1; transform:none; } }
+
+    /* squeeze */
+    @media (max-width: 1100px) {
+      .at-home { grid-template-columns: 1fr; }
+      .at-rail { border-left: none; border-top: 1px solid var(--line); max-height: 240px; }
+      .at-workspace { grid-template-columns: 1fr; }
+      .at-minimap, .at-viewport-rail { display: none; }
+      .at-drawerbtn { display: inline-flex !important; }
+    }
+    .at-drawerbtn { display: none; }
+  </style>
+</head>
+<body>
+  <div class="pm-shell" data-rail="open" data-chat="closed"></div>
+  <noscript>
+    <div style="position:fixed;top:8px;right:12px;z-index:99;padding:3px 9px;border:1px solid #6fc6e8;color:#6fc6e8;border-radius:999px;font:bold 10px sans-serif">GLM-5.2</div>
+  </noscript>
+  <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept"
+     style="position:fixed;bottom:36px;right:12px;z-index:50;display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 10px sans-serif;text-decoration:none">GLM-5.2 · 02</a>
+
+  <script src="assets/icons.svg.js"></script>
+  <script src="assets/demo-data.js"></script>
+  <script src="concept-hub-bridge.js"></script>
+  <script src="assets/state.js"></script>
+  <script src="assets/shared.js"></script>
+  <script src="assets/managers.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      PM.jumpOffset = function () { return 60; };
+
+      function shell() {
+        var s = document.querySelector(".pm-shell");
+        s.innerHTML =
+          PM.shared.topbar('<span data-crumb>Settings</span>', "02 Atlas") +
+          '<nav class="pm-activity" aria-label="Surrounding navigation">' + PM.shared.activityButtons(PM.state.rail) + '</nav>' +
+          PM.shared.rail() +
+          '<main class="pm-stage" data-stage></main>' +
+          PM.shared.chat() +
+          PM.shared.footer();
+        PM.shared.wireShell();
+      }
+
+      function regionIcon(catId) {
+        return ({ general:"home", appearance:"theme", agents:"pam", permissions:"shield", code:"code",
+          context:"brain", planning:"compass", git:"history", extensions:"mcp", media:"media", system:"server" })[catId] || "grid";
+      }
+
+      /* ---------- HOME: atlas ---------- */
+      function home() {
+        var regions = PM.categories.map(function (c) {
+          var dest = PM_DEMO.destinations.find(function (d) { return d.target === c.id || d.target.indexOf(c.id + ".") === 0; });
+          var status = dest ? dest.status : "";
+          var statusKind = dest ? dest.statusKind : "neutral";
+          var managerCount = c.sub.filter(function (s) { return s.manager; }).length;
+          var sizeClass = "at-r-" + c.id;
+          var mgrs = managerCount ? '<span class="chip">' + managerCount + ' manager' + (managerCount>1?"s":"") + '</span>' : "";
+          return [
+            '<button class="at-region ' + sizeClass + (statusKind==="warn"?" has-attention":"") + '" data-region="' + c.id + '">',
+              '<span class="at-here">You are here</span>',
+              '<div class="at-region-top">',
+                '<span class="at-region-icon">' + PM.svg(regionIcon(c.id), 16) + '</span>',
+                '<h3>' + c.title + '</h3>',
+              '</div>',
+              '<span class="at-region-purpose">' + c.purpose + '</span>',
+              '<div class="at-region-meta">',
+                status ? '<span class="chip ' + (statusKind!=="neutral"?statusKind:"") + '">' + status + '</span>' : "",
+                mgrs,
+                '<span class="chip">' + c.sub.length + ' sections</span>',
+              '</div>',
+            '</button>'
+          ].join("");
+        }).join("");
+
+        var notices = [];
+        ["attention","continue","recommended"].forEach(function (kind) {
+          PM_DEMO.notices[kind].forEach(function (n) {
+            var kindLabel = { attention:"Needs attention", continue:"Continue setup", recommended:"Recommended" }[kind];
+            notices.push('<div class="at-notice-mini ' + kind + '"><span class="muted">' + kindLabel + '</span><h4>' + n.headline + '</h4><button class="btn sm primary" data-notice-target="' + n.target + '">' + n.action + '</button></div>');
+          });
+        });
+
+        var stage = document.querySelector("[data-stage]");
+        stage.innerHTML = [
+          '<div class="at-stage">',
+            '<div class="at-home">',
+              '<div class="at-canvas">',
+                '<div class="at-cmdk">',
+                  '<div class="at-cmdk-field"><span class="muted">' + PM.svg("search",16) + '</span><input type="search" placeholder="Search the settings map…" data-search-input aria-label="Search settings"><span class="muted small">⌘K</span></div>',
+                  '<div class="at-cmdk-results hidden" data-results></div>',
+                '</div>',
+                '<div class="at-canvas-inner"><div class="at-regions">' + regions + '</div></div>',
+              '</div>',
+              '<aside class="at-rail">',
+                '<h2>Legend</h2>',
+                '<div class="at-legend">',
+                  '<div class="at-legend-row"><span class="at-region-shape" style="width:18px;height:14px"></span>Region — a settings area</div>',
+                  '<div class="at-legend-row"><span class="at-region-shape has-attention" style="width:18px;height:14px;border-color:var(--warn)"></span>Needs attention</div>',
+                  '<div class="at-legend-row"><span style="width:6px;height:6px;background:var(--accent);border-radius:50%"></span>You are here</div>',
+                  '<div class="at-legend-row"><span class="muted">Region size reflects content density.</span></div>',
+                '</div>',
+                '<h2>Notices</h2>',
+                notices.join(""),
+                '<div style="margin-top:12px">' + PM.shared.themePicker() + '</div>',
+              '</aside>',
+            '</div>',
+          '</div>'
+        ].join("");
+        wireHome();
+      }
+
+      function wireHome() {
+        var inp = document.querySelector("[data-search-input]");
+        var res = document.querySelector("[data-results]");
+        inp.addEventListener("input", function () {
+          var results = PM.runSearch(this.value);
+          if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
+          res.classList.remove("hidden");
+          res.innerHTML = results.map(function (r) {
+            var kindLabel = ({ setting:"Setting", category:"Region", subcategory:"Section", manager:"Manager", destination:"Region" })[r.kind];
+            var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
+            return '<div class="at-cmdk-result" ' + target + '><span class="at-rkind">' + kindLabel + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,50) + '</span></div></div>';
+          }).join("");
+        });
+        res.addEventListener("click", function (e) {
+          var r = e.target.closest(".at-cmdk-result"); if (!r) return;
+          var mgr = r.getAttribute("data-r-manager");
+          inp.value = ""; res.classList.add("hidden");
+          if (mgr) { PM.openManager(mgr); } else { PM.openCategory(r.getAttribute("data-r-cat"), r.getAttribute("data-r-sub")); }
+          render();
+        });
+        document.querySelectorAll("[data-region]").forEach(function (b) {
+          b.addEventListener("click", function () { PM.openCategory(this.getAttribute("data-region")); render(); });
+        });
+        document.querySelectorAll("[data-notice-target]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var t = this.getAttribute("data-notice-target");
+            if (t.indexOf(".")>-1) PM.openCategory(t.split(".")[0], t.split(".")[1]); else PM.openCategory(t);
+            render();
+          });
+        });
+        PM.shared.wireThemePicker();
+        PM.shared.wireShell();
+      }
+
+      /* ---------- WORKSPACE: focus + context ---------- */
+      function workspace() {
+        var cat = PM.catById(PM.state.activeCat);
+        // minimap: all regions, current one expanded with subcategories
+        var minimap = PM.categories.map(function (c) {
+          var subs = c.id === PM.state.activeCat ? c.sub.map(function (s) {
+            return '<button class="at-mm-sub' + (s.id===PM.state.activeSub?" active":"") + '" data-mm-sub="' + s.id + '" data-mm-cat="' + c.id + '">' + s.title + '</button>';
+          }).join("") : "";
+          return [
+            '<button class="at-mm-region' + (c.id===PM.state.activeCat?" active":"") + '" data-mm-cat="' + c.id + '"><span class="at-mm-here"></span>' + c.title + '</button>',
+            subs
+          ].join("");
+        }).join("");
+
+        var focusDoc = cat.sub.map(function (s) {
+          var body = s.manager ? PM.shared.managerPromo(s.manager) : PM.shared.subList(cat.id, s.id);
+          var managerNote = s.manager ? '<a class="cr-sub-manage" data-sub-manager="' + s.manager + '" style="margin-left:auto;font-size:11px">Open ' + PM.managers[s.manager].title + ' ' + PM.svg("external",11) + '</a>' : "";
+          return '<section class="at-sub-section" data-sub-section="' + s.id + '"><h3>' + s.title + managerNote + '</h3><div class="set-list">' + body + '</div></section>';
+        }).join("");
+
+        // viewport rail: subcategory list of current region + scroll indicator
+        var vpSubs = cat.sub.map(function (s) {
+          return '<button class="at-vp-sub' + (s.id===PM.state.activeSub?" active":"") + '" data-vp-sub="' + s.id + '">' + s.title + '</button>';
+        }).join("");
+
+        var stage = document.querySelector("[data-stage]");
+        stage.innerHTML = [
+          '<div class="at-workspace">',
+            '<aside class="at-minimap">',
+              '<div class="at-mm-label">Map</div>',
+              minimap,
+            '</aside>',
+            '<div class="at-focus" data-scroller>',
+              '<div class="at-backbar" style="position:sticky;top:0;z-index:5;background:var(--surface);margin:0 0 12px;">',
+                '<button class="btn sm ghost" data-go-home>' + PM.svg("back",13) + 'Map</button>',
+                '<span class="muted small">Settings · <b style="color:var(--ink)">' + cat.title + '</b></span>',
+              '</div>',
+              '<div class="at-focus-inner">',
+                '<h2>' + cat.title + '</h2>',
+                '<p class="at-focus-purpose">' + cat.purpose + '</p>',
+                focusDoc,
+              '</div>',
+            '</div>',
+            '<aside class="at-viewport-rail">',
+              '<div class="at-mm-label">In view</div>',
+              '<div class="at-viewport-track"><div class="at-viewport-thumb" id="vpThumb" style="top:0;height:20%"></div></div>',
+              '<div class="at-vp-sublist">' + vpSubs + '</div>',
+            '</aside>',
+          '</div>'
+        ].join("");
+        wireWorkspace();
+        PM.initScrollspy();
+        setTimeout(function () { PM.initScrollspy(); }, 60);
+      }
+
+      function wireWorkspace() {
+        document.querySelector("[data-go-home]").addEventListener("click", function () { PM.goHome(); render(); });
+        document.querySelectorAll("[data-mm-cat]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var c = this.getAttribute("data-mm-cat");
+            if (c !== PM.state.activeCat) { PM.openCategory(c); render(); }
+          });
+        });
+        document.querySelectorAll("[data-mm-sub]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var cat = this.getAttribute("data-mm-cat"), sub = this.getAttribute("data-mm-sub");
+            if (cat !== PM.state.activeCat) { PM.openCategory(cat, sub); render(); }
+            else { PM.openSub(sub); render(); }
+          });
+        });
+        document.querySelectorAll("[data-vp-sub]").forEach(function (b) {
+          b.addEventListener("click", function () { PM.openSub(this.getAttribute("data-vp-sub")); render(); });
+        });
+        document.querySelectorAll("[data-sub-manager]").forEach(function (a) {
+          a.addEventListener("click", function (e) { e.preventDefault(); PM.openManager(this.getAttribute("data-sub-manager")); render(); });
+        });
+        PM.shared.wireSettings(document.querySelector(".at-focus-inner"));
+        PM.onScrollspy = function (subId) {
+          document.querySelectorAll("[data-mm-sub],[data-vp-sub]").forEach(function (b) {
+            b.classList.toggle("active", b.getAttribute("data-mm-sub") === subId || b.getAttribute("data-vp-sub") === subId);
+          });
+          // viewport thumb position
+          var cat = PM.catById(PM.state.activeCat);
+          var idx = cat.sub.findIndex(function (s) { return s.id === subId; });
+          var thumb = document.getElementById("vpThumb");
+          if (thumb && cat.sub.length) {
+            var pct = (idx / cat.sub.length) * 100;
+            thumb.style.top = pct + "%"; thumb.style.height = Math.max(12, 100/cat.sub.length) + "%";
+          }
+        };
+        PM.shared.wireShell();
+      }
+
+      /* ---------- MANAGER ---------- */
+      function manager() {
+        var m = PM.managers[PM.state.activeManager];
+        var stage = document.querySelector("[data-stage]");
+        stage.innerHTML = [
+          '<div class="at-manager" data-manager-id="' + m.id + '">',
+            '<div class="at-backbar">',
+              '<button class="btn sm ghost" data-go-home>' + PM.svg("back",13) + 'Map</button>',
+              '<span class="muted small">Settings · <b style="color:var(--ink)">' + PM.catById(m.managerCat).title + '</b> · ' + m.title + '</span>',
+            '</div>',
+            '<div style="flex:1;min-height:0;overflow:hidden">' + PM.managers_lib.render(m.id) + '</div>',
+          '</div>'
+        ].join("");
+        document.querySelector("[data-go-home]").addEventListener("click", function () { PM.goHome(); render(); });
+        PM.managers_lib.wire(stage.querySelector(".mgr"));
+        PM.shared.wireShell();
+      }
+
+      function render() {
+        var crumb = document.querySelector("[data-crumb]");
+        if (PM.state.view === "home" && crumb) crumb.innerHTML = "Settings map";
+        else if (crumb) crumb.innerHTML = 'Settings · <b>' + (PM.state.activeManager ? PM.managers[PM.state.activeManager].title : (PM.catById(PM.state.activeCat)||{}).title) + '</b>';
+        if (PM.state.view === "home") home();
+        else if (PM.state.view === "manager") manager();
+        else workspace();
+      }
+
+      PM.render = render;
+      PM.init();
+      shell();
+      render();
+    })();
+  </script>
+</body>
+</html>

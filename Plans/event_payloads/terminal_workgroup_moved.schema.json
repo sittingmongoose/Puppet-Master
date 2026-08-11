@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0",
+  "title": "terminal.workgroup_moved event payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "command_id",
+    "origin",
+    "correlation_id",
+    "terminal_workgroup_id",
+    "source_terminal_section_id",
+    "target_terminal_section_id",
+    "contained_pane_ids",
+    "contained_session_ids",
+    "section_created",
+    "preserve_session_identity"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event.terminal_workgroup_moved.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_id": {
+      "type": "string",
+      "pattern": "^cmd\\.terminal\\.move_workgroup$"
+    },
+    "origin": {
+      "const": "home_workspace"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "terminal_workgroup_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_terminal_section_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_terminal_section_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contained_pane_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "contained_session_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "section_created": {
+      "type": "boolean"
+    },
+    "preserve_session_identity": {
+      "const": true
+    }
+  }
+}

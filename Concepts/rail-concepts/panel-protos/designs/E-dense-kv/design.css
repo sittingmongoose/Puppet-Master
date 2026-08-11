@@ -1,0 +1,441 @@
+/* =====================================================================
+   DESIGN E — DENSE KEY/VALUE GRID (terminal / IDE inspector aesthetic)
+   Philosophy: maximum information density, minimal chrome. NO boxes around
+   rows — instead hairline dividers (1px var(--border-light)) between groups.
+   Tight 2-col key/value rows: uppercase muted keys, right-aligned values.
+   Lists are monospace-aligned rows with a right-aligned meta, hairline-
+   separated. Survives 220px precisely because there are zero wasted border
+   pixels or card paddings.
+   Vocab: .pk-* (proto-kv).
+   ===================================================================== */
+
+/* ---------- root column ---------- */
+.pk-root {
+  padding: var(--sm) var(--md) var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+  font-size: var(--fs-xs);
+  font-family: var(--body-font);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+/* ---------- title line (tiny, inline with optional action) ---------- */
+.pk-titleline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pk-title {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pk-title-meta {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ---------- primary input row (search box, commit msg) ---------- */
+.pk-primary {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pk-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 26px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  border-radius: 0;
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-family: var(--mono-font);
+  outline: none;
+}
+.pk-input:focus { border-bottom-color: var(--accent-primary); }
+.pk-input::placeholder { color: var(--text-muted); }
+
+/* ---------- inline filter pills (terminal-style toggle flags) ---------- */
+.pk-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--xs);
+  min-width: 0;
+}
+.pk-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 18px;
+  padding: 0 var(--sm);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  font-family: var(--mono-font);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.pk-pill:hover { color: var(--text-secondary); background: var(--surface-elevated); }
+.pk-pill.active {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+}
+.pk-pill .pk-pill-k { opacity: .7; }
+
+/* ---------- section header (hairline + uppercase label) ---------- */
+.pk-section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* the only chrome: a hairline divider ABOVE each group's label */
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--sm);
+  margin-top: var(--xs);
+}
+.pk-section:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+.pk-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  margin-bottom: var(--xs);
+  min-width: 0;
+}
+.pk-section-head .pk-section-count {
+  font-family: var(--mono-font);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+.pk-section-head .pk-section-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* ---------- KV row: the core atom ---------- */
+.pk-kv {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sm);
+  padding: 2px 0;
+  font-size: var(--fs-2xs);
+  min-width: 0;
+  line-height: 1.4;
+}
+.pk-kv-k {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.pk-kv-v {
+  color: var(--text-secondary);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pk-kv-v.mono { font-family: var(--mono-font); }
+.pk-kv-v.primary { color: var(--text-primary); }
+
+/* ---------- dense list rows (monospace-aligned, meta right) ---------- */
+.pk-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.pk-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: 2px 0;
+  min-height: 18px;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  min-width: 0;
+  /* NO border around the row — hairlines live on the row separator */
+  border-bottom: 1px solid var(--border-light);
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.pk-row:last-child { border-bottom: none; }
+.pk-row:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pk-row .pk-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pk-row .pk-row-mono { font-family: var(--mono-font); }
+.pk-row .pk-row-meta {
+  flex-shrink: 0;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.pk-row .pk-row-sub {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* dense row without a trailing hairline (used inside other lists) */
+.pk-row.flush { border-bottom: none; }
+
+/* ---------- status dot ---------- */
+.pk-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.pk-dot.ok   { background: var(--graph-passed); }
+.pk-dot.run  { background: var(--graph-running); }
+.pk-dot.fail { background: var(--graph-failed); }
+.pk-dot.idle { background: var(--graph-pending); }
+
+/* ---------- status / type chip (inline, low-chrome) ---------- */
+.pk-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 15px;
+  padding: 0 var(--xs);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: var(--mono-font);
+}
+.pk-chip.ok    { background: color-mix(in srgb, var(--graph-passed) 18%, transparent); color: var(--graph-passed); }
+.pk-chip.run   { background: color-mix(in srgb, var(--graph-running) 18%, transparent); color: var(--graph-running); }
+.pk-chip.err   { background: color-mix(in srgb, var(--graph-failed) 18%, transparent); color: var(--graph-failed); }
+.pk-chip.warn  { background: color-mix(in srgb, var(--accent-warning) 18%, transparent); color: var(--accent-warning); }
+.pk-chip.muted { background: color-mix(in srgb, var(--text-muted) 14%, transparent); color: var(--text-muted); }
+.pk-chip.fam   { background: var(--accent-soft); color: var(--accent-primary); }
+
+/* ---------- git status letter badge (single char, mono) ---------- */
+.pk-gs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--mono-font);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pk-gs.M { background: color-mix(in srgb, var(--graph-running) 22%, transparent); color: var(--graph-running); }
+.pk-gs.A { background: color-mix(in srgb, var(--graph-passed) 22%, transparent); color: var(--graph-passed); }
+.pk-gs.D { background: color-mix(in srgb, var(--accent-error) 22%, transparent); color: var(--accent-error); }
+
+/* ---------- search hit rows (indented, line-numbered, mono) ---------- */
+.pk-hit {
+  display: flex;
+  gap: var(--sm);
+  padding: 1px 0 1px var(--md);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  line-height: 1.4;
+  min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.pk-hit:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pk-hit .pk-ln {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: right;
+}
+.pk-hit .pk-hit-code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pk-hit em { color: var(--accent-primary); font-style: normal; font-weight: 700; }
+
+/* ---------- mini text buttons (row-level, borderless) ---------- */
+.pk-minibtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 var(--xs);
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 700;
+  font-family: var(--mono-font);
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pk-minibtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface-elevated); }
+.pk-minibtn.danger { color: var(--accent-error); }
+.pk-minibtn.danger:hover { border-color: var(--accent-error); }
+
+/* ---------- action footer (single line of small text buttons) ---------- */
+.pk-foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sm);
+  padding-top: var(--sm);
+  border-top: 1px solid var(--border-light);
+  min-width: 0;
+}
+.pk-foot .pk-tbtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.pk-foot .pk-tbtn:hover { color: var(--accent-primary); }
+.pk-foot .pk-tbtn.primary { color: var(--accent-primary); font-weight: 700; }
+.pk-foot .pk-tbtn.danger:hover { color: var(--accent-error); }
+.pk-foot .pk-foot-spacer { flex: 1 1 auto; min-width: 0; }
+
+/* small note line (muted, dense) */
+.pk-note {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.45;
+  padding: 2px 0;
+  min-width: 0;
+  word-break: break-word;
+}
+.pk-note.mono { font-family: var(--mono-font); }
+
+/* ---------- triage / log block (mono, hairline frame only) ---------- */
+.pk-log {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: var(--sm);
+  border-left: 2px solid var(--graph-failed);
+  background: var(--surface-elevated);
+  min-width: 0;
+}
+.pk-log .pk-log-fail { color: var(--graph-failed); }
+.pk-log .pk-log-line { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- monospace meta text ---------- */
+.pk-mono { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); }
+
+/* ---------- sprout trigger styled to match dense aesthetic ---------- */
+.pk-sprout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 20px;
+  padding: 0 var(--sm);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  border-radius: 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  font-family: var(--mono-font);
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  min-width: 0;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+}
+.pk-sprout:hover { color: var(--text-primary); border-bottom-color: var(--accent-primary); }
+.pk-sprout .pk-sprout-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pk-sprout .pm6-tb-chev { font-size: 8px; opacity: .6; flex-shrink: 0; }
+
+/* sprout menu wrap should shrink to fit dense rows */
+.pk-sprout-wrap { display: inline-flex; max-width: 100%; min-width: 0; }
+
+/* ---------- investigation step list (numbered, hairline) ---------- */
+.pk-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: 2px 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  min-width: 0;
+  cursor: pointer;
+}
+.pk-step:last-child { border-bottom: none; }
+.pk-step:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pk-step .pk-step-num {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  min-width: 16px;
+}
+.pk-step .pk-step-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pk-step .pk-step-type {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 40%;
+}

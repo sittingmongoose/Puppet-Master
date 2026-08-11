@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.nonsemantic_route_canary.v2",
+  "method_id": "apr-method-v2.0.0",
+  "canary_id": "apr-route-canary-v2.0.0",
+  "purpose": "Qualify route availability, fresh-context capture, exact response transport, and provider-effective identity without subject semantic judgment.",
+  "prompt_template": "Nonsemantic route canary. Return exactly this JSON object, with no markdown or other text: {EXPECTED_JSON}",
+  "expected_json_template": {
+    "route_canary": "ok",
+    "nonce": "{RUNTIME_NONCE}"
+  },
+  "nonce_rule": "Generate a fresh unpredictable lane-local nonce for each slot; persist it only in that slot's raw capture and receipt.",
+  "response_rule": "After strict JSON parse, the returned object must equal expected_json_template with that slot's nonce exactly and contain no extra keys.",
+  "identity_rule": "The adapter event stream must expose one usable provider/model identity that exactly matches the preregistered slot route. Missing, multiple, divergent, substituted, or inferred-only identity is IDENTITY_AMBIGUOUS.",
+  "slot_rule": "Run exactly once in a fresh context for every authorized slot. No semantic retry, repair, replacement, fallback, or additional subject is allowed.",
+  "tool_rule": "All subject tools are disabled. Any tool event is a control-plane failure.",
+  "fleet_gate": "All exact ten authorized slots must pass. One ROUTE_UNAVAILABLE, IDENTITY_AMBIGUOUS, TIMEOUT, forbidden tool event, parser/capture defect, or unexpected response stops before the semantic pilot.",
+  "model_selection_hold": "This canary is frozen but cannot launch until the user supplies the exact eight-relative-low and two-relative-high routes and a newly versioned matrix is authorized."
+}

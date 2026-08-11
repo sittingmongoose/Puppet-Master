@@ -52,7 +52,7 @@
       --ease-default:var(--ease-smooth); --sheen-dur:.6s;
       --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
       --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
-      --activity-bar-w:72px; --files-panel-w:260px; --chat-panel-w:550px; --chat-sidebar-w:200px;
+      --activity-bar-w:72px; --files-panel-w:280px; --chat-panel-w:550px; --chat-sidebar-w:200px;
       --tile-size:220px; --floating-chat-w:550px;
       --glass-alpha:.55; --glass-tint-rgb:46,34,72; --panel-blur:16px; --panel-blur-sm:10px;
       --glass-edge:rgba(255,255,255,.35); --glass-hairline:rgba(255,255,255,.08);
@@ -70,12 +70,26 @@
        BOTH copies below: the flat list and the :is() width rule). Theme
        families tint thumbs by overriding the --pm6-sb-* hooks (see
        pm6-css-global "themed scrollbars"); thumb color rides
-       --text-primary, so light themes adapt automatically. */
+       --text-primary, so light themes adapt automatically.
+
+       Auto-hide is UNIVERSAL: every opted-in pane starts with a transparent
+       thumb and reveals it while scrolling (.pm6-sb-active, written by the
+       scroll-idle driver in pm6-js-globals) or while hovered. The reveal
+       rules carry no copy of the selector list on purpose — see the comment
+       above each for why they cannot leak into a pane that did not opt in.
+       That is what keeps the list at exactly two copies. */
     :root {
+      --pm6-sb-size: 10px;
       --pm6-sb-thumb: color-mix(in srgb, var(--text-primary) 16%, transparent);
       --pm6-sb-thumb-hover: color-mix(in srgb, var(--text-primary) 30%, transparent);
       --pm6-sb-radius: 8px;
     }
+    /* Firefox reveal hook. inherits:false is load-bearing: scrollbar-color
+       itself inherits, so a hovered outer pane would otherwise light up every
+       nested pane's bar. Routing the reveal through a non-inherited hook lets
+       the reveal rule stay list-free AND out of the specificity fight with the
+       opt-in list (which never declares this hook). */
+    @property --pm6-sb-ink { syntax: '*'; inherits: false; }
     * { scrollbar-width: none; }
     *::-webkit-scrollbar { width: 0; height: 0; }
     *::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
@@ -84,21 +98,33 @@
        nonzero width below; 3px transparent border fakes an inset overlay */
     *::-webkit-scrollbar-track { background: transparent; }
     *::-webkit-scrollbar-thumb {
-      background: var(--pm6-sb-thumb);
+      background: transparent;
       border: 3px solid transparent; background-clip: padding-box;
       border-radius: var(--pm6-sb-radius);
+      transition: background 0.25s ease;
     }
+    /* Reveal (WebKit). Needs no selector list and cannot leak: a scrollbar
+       pseudo-element belongs to the element the rule matched, so a hovered
+       ancestor only ever lights up its OWN bar. Order is load-bearing — this
+       ties on specificity with the thumb:hover rule, so it must stay first. */
+    :is(.pm6-sb-active, :hover)::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); }
     *::-webkit-scrollbar-thumb:hover { background: var(--pm6-sb-thumb-hover); }
+    /* Reveal (Firefox): writes the non-inherited hook; only the opted-in
+       panes below ever read it, so matching every hovered element is inert
+       everywhere else. */
+    :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }
     /* opt-in scroll panes (verified overflow:auto hosts across parts) */
     .primary-content, .page-projects, .panel-content, .message-stream, .messageStream,
-    .chat-thread-list, .terminal-output, .file-tree, .editor-code,
-    .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body,
+    .chat-thread-list, .terminal-output, .terminal-pane-body, .file-tree,
+    .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail,
     .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap,
     .dashboard-grid, .bento-card, .chat-dropdown-list, textarea,
     .browser-viewport, .browser-permissions-panel, .browser-console-pane,
     .browser-network-pane, .browser-evidence-pane,
     .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log,
     .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc,
+    .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid,
+    .pm6-wiz-workgrid, .pm6-wiz-disc-card,
     .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas,
     .orch-rungraph-table-wrap, .orch-rungraph-detail-body,
     .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams,
@@ -107,19 +133,26 @@
     .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell,
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
-    .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body {
+    .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
+    .message-block .block-body pre, .pm-command-card.expanded pre,
+    .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
+    .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console {
       scrollbar-width: thin;
-      scrollbar-color: var(--pm6-sb-thumb) transparent;
+      scrollbar-color: var(--pm6-sb-ink, transparent) transparent;
     }
     :is(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream,
-    .chat-thread-list, .terminal-output, .file-tree, .editor-code,
-    .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body,
+    .chat-thread-list, .terminal-output, .terminal-pane-body, .file-tree,
+    .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail,
     .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap,
     .dashboard-grid, .bento-card, .chat-dropdown-list, textarea,
     .browser-viewport, .browser-permissions-panel, .browser-console-pane,
     .browser-network-pane, .browser-evidence-pane,
     .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log,
     .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc,
+    .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid,
+    .pm6-wiz-workgrid, .pm6-wiz-disc-card,
     .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas,
     .orch-rungraph-table-wrap, .orch-rungraph-detail-body,
     .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams,
@@ -128,10 +161,17 @@
     .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell,
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
-    .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body)::-webkit-scrollbar {
-      width: 10px; height: 10px;
+    .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
+    .message-block .block-body pre, .pm-command-card.expanded pre,
+    .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
+    .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
+      width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
-    /* bar show/hide must not shift chat layout */
+    /* bar show/hide must not shift chat layout. Only the thumb's colour
+       animates and the gutter is reserved the moment a pane overflows, so the
+       newly-revealed panes cannot reflow and none of them needs this. */
     .message-stream, .messageStream, .chat-thread-list { scrollbar-gutter: stable; }
 
     /* ====================================================================
@@ -483,7 +523,7 @@
       --pm6-cozy-card-base: #2A2731;
       --pm6-cozy-mix: 14%;
       --pm6-cozy-border-mix: 34%;
-      --pm6-cozy-chrome: rgba(40,36,48,.60);
+      --pm6-cozy-chrome: rgba(40,36,48,.82);
       --pm6-cozy-chrome-border: rgba(255,255,255,.08);
       --pm6-cozy-field: rgba(255,255,255,.06);
       --pm6-cozy-dot: rgba(190,180,210,.06);
@@ -542,7 +582,7 @@
       --pm6-cozy-card-base: #FFFFFF;
       --pm6-cozy-mix: 11%;
       --pm6-cozy-border-mix: 30%;
-      --pm6-cozy-chrome: rgba(255,255,255,.65);
+      --pm6-cozy-chrome: rgba(255,255,255,.88);
       --pm6-cozy-chrome-border: rgba(255,255,255,.85);
       --pm6-cozy-field: rgba(255,255,255,.70);
       --pm6-cozy-dot: rgba(122,109,140,.10);

@@ -1,0 +1,561 @@
+/* =====================================================================
+   w4 — POCKET INDEX
+   History lives in a collapsed edge pocket (tab). Expanding opens a
+   searchable index panel that YIELDS width back to the thread when closed.
+   Default = closed for max prose. Selection = top mark + soft fill.
+   ===================================================================== */
+
+.w4-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.w4-chrome {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-light);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--accent-soft) 40%, var(--surface)) 0%,
+      var(--surface) 40%
+    );
+  min-width: 0;
+}
+.w4-chrome-lead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.w4-chrome-kicker {
+  font-family: var(--display-font);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.w4-chrome-thread {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.w4-chrome-model,
+.w4-pocket-model {
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+  color: var(--accent-primary);
+  white-space: nowrap;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+}
+.w4-chrome-tools {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+}
+.w4-chrome-search {
+  width: 96px;
+  font-size: 11px;
+  padding: 5px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--surface-elevated, var(--surface));
+  color: var(--text-primary);
+}
+.w4-chrome-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  max-width: none;
+  overflow: visible;
+}
+.w4-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+.w4-ico:hover,
+.w4-ico[aria-expanded='true'] {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+.w4-ico .pm-btn-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.w4-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- pocket ---- */
+.w4-pocket {
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  width: 46px;
+  z-index: 4;
+  border-right: 1px solid color-mix(in srgb, var(--border-light) 90%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-alt, var(--surface)) 92%, var(--accent-soft)),
+      var(--surface-alt, var(--surface))
+    );
+  transition: width var(--motion-med) var(--ease-spring);
+  overflow: hidden;
+}
+.w4-pocket.is-open {
+  width: min(288px, 62vw);
+  box-shadow: var(--elev-1);
+}
+
+.w4-pocket-tab {
+  flex: none;
+  width: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  border-right: 1px solid transparent;
+}
+.w4-pocket.is-open .w4-pocket-tab {
+  border-right-color: var(--border-light);
+}
+.w4-pocket-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 4px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+.w4-pocket-toggle:hover,
+.w4-pocket.is-open .w4-pocket-toggle {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  box-shadow: var(--elev-1);
+}
+.w4-pocket-ico {
+  display: flex;
+}
+.w4-pocket-ico .pm-btn-icon {
+  width: 14px;
+  height: 14px;
+}
+.w4-pocket-toggle-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--display-font);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.w4-pocket-count {
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text-muted) 14%, transparent);
+  color: var(--text-muted);
+}
+.w4-pocket.is-open .w4-pocket-count {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  color: var(--accent-primary);
+}
+.w4-pocket-model {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 8px !important;
+  letter-spacing: 0.04em;
+  padding: 4px 3px !important;
+}
+
+/* ---- pocket panel + index list (was missing — titles rendered unstyled/crushed) ---- */
+.w4-pocket-panel {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-med) var(--ease-out);
+}
+.w4-pocket.is-open .w4-pocket-panel {
+  opacity: 1;
+  pointer-events: auto;
+}
+.w4-pocket-banner {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 12px 6px;
+}
+.w4-pocket-banner-kicker {
+  font-family: var(--display-font);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.w4-pocket-banner-note {
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+.w4-pocket-search {
+  flex: none;
+  padding: 4px 10px 8px;
+}
+.w4-pocket-input {
+  width: 100%;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--surface-elevated, var(--surface));
+  color: var(--text-primary);
+}
+.w4-pocket-list-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.w4-idx-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-content: flex-start;
+}
+.w4-idx-empty {
+  padding: 12px 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.w4-idx-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  overflow: hidden;
+}
+.w4-idx-row-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+.w4-idx-row-wrap .w4-idx-row {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.w4-idx-row::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 0;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: transparent;
+}
+.w4-idx-row:hover {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-soft) 50%, transparent);
+}
+.w4-idx-row.is-selected,
+.w4-idx-row[aria-selected='true'] {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-soft) 84%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-primary) 26%, transparent);
+}
+.w4-idx-row.is-selected::before,
+.w4-idx-row[aria-selected='true']::before {
+  background: var(--accent-primary);
+}
+.w4-idx-mark {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--border) 80%, var(--text-muted));
+}
+.w4-idx-row.is-selected .w4-idx-mark,
+.w4-idx-row[aria-selected='true'] .w4-idx-mark {
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 16%, transparent);
+}
+.w4-idx-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.w4-idx-title {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.35;
+  min-height: 1.35em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.w4-idx-meta {
+  flex: 0 0 auto;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.w4-idx-pin {
+  display: inline-flex;
+  margin-right: 4px;
+  vertical-align: -1px;
+  opacity: 0.75;
+}
+.w4-idx-pin-ico {
+  width: 10px;
+  height: 10px;
+}
+
+.w4-stage {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.w4-root .pm-thread-slot {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* closed = max prose; open at narrow = overlay (does not steal message column) */
+.w4-root.is-narrow .w4-pocket.is-open,
+.w4-root[data-chat-tier='min'] .w4-pocket.is-open {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: min(300px, 86vw);
+  box-shadow: var(--elev-3);
+  z-index: 20;
+}
+
+.w4-root[data-chat-tier='min'] .w4-chrome-search,
+.w4-root[data-chat-tier='min'] .w4-chrome-tools [data-search-scope],
+.w4-root[data-chat-tier='min'] .w4-chrome-kicker {
+  display: none;
+}
+.w4-root[data-chat-tier='min'] .w4-chrome-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: none;
+  overflow: visible;
+}
+.w4-root[data-chat-tier='min'] .w4-idx-meta {
+  display: none; /* avoid AWAITI… chops; title attr keeps full state */
+}
+.w4-root[data-chat-tier='min'] .w4-chrome-model {
+  font-size: 8.5px;
+  padding: 2px 6px;
+}
+.w4-root[data-chat-tier='min'] .w4-pocket:not(.is-open) {
+  width: 40px;
+}
+.w4-root.is-history-pinned[data-chat-tier='min'] .w4-pocket.is-open {
+  width: min(180px, 52vw);
+}
+.w4-root[data-chat-tier='min'] .w4-pocket:not(.is-open) .w4-pocket-tab {
+  width: 40px;
+}
+.w4-root[data-chat-tier='min'] .w4-pocket:not(.is-open) .w4-pocket-toggle-label {
+  display: none;
+}
+
+.w4-scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--text-primary) 28%, transparent);
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w4-pocket,
+  .w4-pocket-panel,
+  .w4-idx-row,
+  .w4-pocket-toggle {
+    transition: none;
+  }
+}
+[data-reduced-motion='1'] .w4-pocket,
+[data-reduced-motion='1'] .w4-pocket-panel,
+[data-reduced-motion='1'] .w4-idx-row,
+[data-reduced-motion='1'] .w4-pocket-toggle {
+  transition: none;
+}
+
+/* ---- Alive motion: w4 pocket ---- */
+.w4-pocket {
+  transition: width 320ms var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1)),
+    transform 320ms var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1)),
+    opacity 220ms var(--pm-ease-out, ease-out);
+}
+.w4-pocket.is-open.pm-panel-in { animation: pmGrokPanelIn 320ms var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1)) both; }
+.w4-pocket-tab .pm-btn-icon,
+.w4-pocket-chevron,
+.w4-tab-chev {
+  transition: transform 240ms var(--pm-spring-snappy, cubic-bezier(0.22, 1.55, 0.36, 1));
+}
+.w4-pocket.is-open .w4-pocket-chevron,
+.w4-pocket.is-open .w4-tab-chev { transform: rotate(180deg); }
+.w4-scrim { transition: opacity 220ms var(--pm-ease-out, ease-out); }
+.w4-idx-list.pm-stagger .pm-thread-row,
+.w4-idx-row-wrap {
+  animation: pmGrokOptionIn 240ms var(--pm-ease-out, ease-out) both;
+}
+.w4-idx-row.is-selected,
+.w4-idx-row-wrap.is-selected .w4-idx-row {
+  transition: background 200ms var(--pm-ease-out, ease-out), transform 200ms var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1));
+}
+html[data-reduced-motion='1'] .w4-pocket,
+html[data-reduced-motion='1'] .w4-scrim { animation: none !important; transition: none !important; }
+/* ---- Slint-portable motion polish (w4) ---- */
+.w4-pocket {
+  transition:
+    width var(--pm-chat-motion-surface, 280ms) var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1)),
+    box-shadow var(--pm-chat-motion-surface, 280ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.w4-pocket.pm-panel-in {
+  animation: none; /* width spring on is-open */
+}
+.w4-pocket.is-closing {
+  pointer-events: none;
+}
+.w4-pocket-ico .pm-btn-icon {
+  transition: transform 280ms var(--pm-spring-snappy, cubic-bezier(0.22, 1.55, 0.36, 1));
+}
+.w4-pocket.is-open .w4-pocket-ico .pm-btn-icon {
+  transform: rotate(-180deg);
+}
+.w4-pocket-panel {
+  transition:
+    opacity var(--pm-chat-motion-surface, 280ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform var(--pm-chat-motion-surface, 280ms) var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1));
+}
+.w4-pocket:not(.is-open) .w4-pocket-panel {
+  opacity: 0;
+  transform: translateX(-6px);
+}
+.w4-idx-list.pm-stagger > .w4-idx-row-wrap,
+.w4-idx-list.pm-stagger > .w4-idx-row {
+  animation: pmGrokOptionIn var(--pm-chat-motion-enter, 240ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  animation-delay: calc(var(--stagger-i, 0) * var(--pm-stagger-step, 42ms));
+}
+.w4-idx-row.is-selected,
+.w4-idx-row[aria-selected='true'] {
+  animation: pmGrokSettleY 300ms var(--pm-spring-settle, cubic-bezier(0.22, 1.2, 0.36, 1)) both;
+}
+.w4-scrim {
+  opacity: 1;
+  transition: opacity var(--pm-chat-motion-fast, 160ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.w4-scrim.pm-scrim-anim.is-leaving {
+  animation: pmGrokScrimOut var(--pm-chat-motion-fast, 160ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+.w4-root.is-history-pinned[data-chat-tier='min'] .w4-pocket.is-open {
+  width: min(180px, 52vw);
+}
+@media (prefers-reduced-motion: reduce) {
+  .w4-idx-list.pm-stagger > *,
+  .w4-idx-row.is-selected,
+  .w4-scrim.pm-scrim-anim.is-leaving {
+    animation: none !important;
+  }
+  .w4-pocket,
+  .w4-pocket-panel,
+  .w4-pocket-ico .pm-btn-icon {
+    transition: none !important;
+  }
+}
+[data-reduced-motion='1'] .w4-idx-list.pm-stagger > *,
+[data-reduced-motion='1'] .w4-scrim {
+  animation: none !important;
+}

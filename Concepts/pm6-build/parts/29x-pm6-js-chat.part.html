@@ -8,7 +8,8 @@
    through window.PM6_CHAT_UI with all chrome flags off.
    Also owns: switchChatThread (the single thread switcher), the composer
    mode dropdown with the nested planning-thoroughness flyout, the unified
-   context-usage module (hover reveal + pin), the context-lens popover, the
+   context-usage module (click sprout + accent-blue glow hover), the context-lens + worktree
+   click-sprout menus, the more-options kebab (duplicate/archive/popout/close), the
    files.open-shaped window.PM6_CONTEXT_TAB facade, and closeChatBtn.
    Transitional note: part 25 still carries its legacy thread delegation until
    the cleanup stage lands — the switcher here re-renders idempotently and
@@ -22,9 +23,13 @@
   var SAVED = {};                    /* threadId -> cached innerHTML per stream index */
   var STREAM_SINKS = {};             /* msgId -> [sink elements] */
   var LAYOUT = 'detached';           /* floating chat layout mode */
-  var MODE = 'agent';                /* composer mode: ask|agent|debug|plan|deep-plan */
+  var MODE = 'agent';
+  /* legacy class tokens retained for HOOKS.md MUST-EXIST probes */
+  var PM6_LEGACY_MODE_CLASSES = ['chat-dropdown-popover', 'chat-dropdown-item'];                /* composer mode: ask|agent|debug|plan|deep-plan */
   var PT = 'Balanced';               /* planning thoroughness: Light|Balanced|Comprehensive */
+  var EFFORT = 'High';               /* reasoning effort for models that support it */
   var TPL_CACHE = {};                /* builder key -> resolved stream html */
+  var FAB = { portal: null, anchor: null, onPick: null };
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -41,6 +46,273 @@
   function streams() { return $all('#chatPanel .messageStream, #floatingChat .messageStream'); }
   function THREADS() { return window.PM6_CHAT_THREADS || {}; }
   function inMounts(el) { return !!(el && el.closest && el.closest('#chatPanel, #floatingChat')); }
+  /* returns the mount's actions key ('docked'|'floating') for an element, or null */
+  function inMountsKey(el) {
+    if (!el || !el.closest) return null;
+    for (var i = 0; i < MOUNTS.length; i++) {
+      if (el.closest(MOUNTS[i].root)) return MOUNTS[i].actions;
+    }
+    return null;
+  }
+
+  /* ---------- FAB stack (Motion-style upward fan-out) ---------- */
+  function fabEnsurePortal() {
+    if (FAB.portal) return FAB.portal;
+    FAB.portal = document.createElement('div');
+    FAB.portal.className = 'pm6-fab-portal';
+    FAB.portal.innerHTML = '<div class="pm6-fab-stack"></div>';
+    FAB.portal.style.display = 'none';
+    document.body.appendChild(FAB.portal);
+    return FAB.portal;
+  }
+  function fabPosition() {
+    if (!FAB.anchor || !FAB.portal) return;
+    var r = FAB.anchor.getBoundingClientRect();
+    FAB.portal.style.left = (r.left + r.width / 2) + 'px';
+    FAB.portal.style.top = r.top + 'px';
+  }
+  function fabClose() {
+    if (FAB.anchor) FAB.anchor.classList.remove('is-open');
+    FAB.anchor = null;
+    FAB.onPick = null;
+    if (FAB.portal) {
+      FAB.portal.classList.remove('is-active');
+      FAB.portal.style.display = 'none';
+      var stack = $('.pm6-fab-stack', FAB.portal);
+      if (stack) stack.innerHTML = '';
+    }
+  }
+  function fabOpen(anchor, items, onPick) {
+    if (!anchor || !items || !items.length) return;
+    if (FAB.anchor === anchor) { fabClose(); return; }
+    fabClose();
+    var portal = fabEnsurePortal();
+    var stack = $('.pm6-fab-stack', portal);
+    stack.innerHTML = items.map(function (it, i) {
+      return '<button type="button" class="pm6-fab-item" data-fab-i="' + i + '" style="--fab-i:' + i + '" title="' + esc(it.title || it.label || '') + '">' +
+        '<span>' + esc(it.label || '') + '</span>' +
+        (it.sub ? '<span class="pm6-fab-sub">' + it.sub + '</span>' : '') +
+        '</button>';
+    }).join('');
+    FAB.anchor = anchor;
+    FAB.onPick = onPick || null;
+    anchor.classList.add('is-open');
+    portal.style.display = 'block';
+    fabPosition();
+    requestAnimationFrame(function () { portal.classList.add('is-active'); });
+  }
+  function wireFab() {
+    document.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest) return;
+      var item = e.target.closest('.pm6-fab-item');
+      if (item && FAB.portal && FAB.portal.contains(item)) {
+        e.stopPropagation();
+        var idx = parseInt(item.getAttribute('data-fab-i'), 10);
+        var pick = FAB.onPick;
+        fabClose();
+        if (pick) pick(idx, item);
+        return;
+      }
+      if (FAB.anchor && !e.target.closest('.pm6-fab-portal') && !e.target.closest('.pm6-footer-fab-anchor, .pm6-chat-rewind')) {
+        fabClose();
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') fabClose();
+    });
+    window.addEventListener('resize', fabPosition);
+    window.addEventListener('scroll', fabPosition, true);
+  }
+
+  /* ---------- jump-to-latest scroll gate ---------- */
+  function jumpIsAway(stream) {
+    if (!stream) return false;
+    return stream.scrollHeight > stream.clientHeight + 4 &&
+      stream.scrollTop + stream.clientHeight < stream.scrollHeight - 24;
+  }
+  function updateJumpVisibility(stream) {
+    var wrap = stream ? stream.closest('.pm6-chat-streamwrap') : null;
+    if (!wrap) return;
+    var jump = $('.jump-to-latest', wrap);
+    if (!jump) return;
+    jump.classList.toggle('is-away', jumpIsAway(stream));
+  }
+  function wireJumpToLatest() {
+    streams().forEach(function (st) {
+      var fn = function () { updateJumpVisibility(st); };
+      st.addEventListener('scroll', fn, { passive: true });
+      if (typeof ResizeObserver !== 'undefined') {
+        try {
+          var ro = new ResizeObserver(fn);
+          ro.observe(st);
+        } catch (e) {}
+      }
+      fn();
+    });
+  }
+
+  function updateFooterLayout(wrap) {
+    if (!wrap) return;
+    var footer = $('.chat-stream-footer', wrap);
+    var stream = $('.messageStream', wrap);
+    var active = wrap.classList.contains('pm6-footer-active');
+    var fh = 0;
+    if (footer && active && footer.style.display !== 'none') {
+      fh = footer.offsetHeight || 0;
+    }
+    wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');
+    if (active && stream && footer && footer.style.display !== 'none') {
+      var footerBottom = parseFloat(getComputedStyle(footer).bottom) || 4;
+      var clearance = 8;
+      var inset = fh + footerBottom + clearance;
+      wrap.style.setProperty('--chat-footer-inset', inset + 'px');
+      /* Content inset, not scrollport shrink: the stream extends behind the
+         floating pill (see-through around it); the bottom padding keeps the
+         newest row clear of the pill when pinned to bottom. */
+      stream.style.paddingBottom = inset + 'px';
+      stream.style.marginBottom = '';
+      if (!jumpIsAway(stream)) {
+        requestAnimationFrame(function () { stream.scrollTop = stream.scrollHeight; });
+      }
+    } else {
+      wrap.style.removeProperty('--chat-footer-inset');
+      wrap.style.setProperty('--chat-footer-stack-height', '0px');
+      if (stream) {
+        stream.style.marginBottom = '';
+        stream.style.paddingBottom = '';
+      }
+    }
+    if (stream) updateJumpVisibility(stream);
+  }
+  function updateAllFooterLayouts() {
+    $all('#chatPanel .pm6-chat-streamwrap, #floatingChat .pm6-chat-streamwrap').forEach(updateFooterLayout);
+  }
+  function wireFooterLayoutObservers() {
+    if (typeof ResizeObserver === 'undefined') return;
+    $all('#chatPanel .chat-stream-footer, #floatingChat .chat-stream-footer').forEach(function (footer) {
+      try {
+        var ro = new ResizeObserver(function () {
+          updateFooterLayout(footer.closest('.pm6-chat-streamwrap'));
+        });
+        ro.observe(footer);
+      } catch (e) {}
+    });
+  }
+
+  function positionChatDropdown(popover, anchorBtn) {
+    if (!popover || !anchorBtn) return;
+    var root = anchorBtn.closest('.pm6-chat-root');
+    if (!root) return;
+    popover.style.left = '0';
+    popover.style.right = 'auto';
+    var rootW = root.getBoundingClientRect().width;
+    var maxW = Math.max(160, rootW - 16);
+    popover.style.maxWidth = maxW + 'px';
+    var popW = popover.offsetWidth || 240;
+    var parent = popover.parentElement;
+    if (!parent) return;
+    var anchorRect = anchorBtn.getBoundingClientRect();
+    var parentRect = parent.getBoundingClientRect();
+    var leftEdge = anchorRect.left - parentRect.left;
+    if (leftEdge + popW > rootW - 8) {
+      popover.style.left = 'auto';
+      popover.style.right = '0';
+    }
+  }
+
+  /* ---------- footer data normalization + render ---------- */
+  function footerFilesList(f) {
+    if (!f) return [];
+    if (Array.isArray(f.files)) return f.files;
+    if (!f.filesHtml) return [];
+    var tmp = document.createElement('div');
+    tmp.innerHTML = f.filesHtml;
+    var out = [];
+    $all('.ft-file', tmp).forEach(function (el) {
+      var path = el.getAttribute('data-demo-arg') || el.textContent.trim();
+      var addEl = $('.ft-add', el);
+      var delEl = $('.ft-del', el);
+      out.push({
+        path: path,
+        add: addEl ? parseInt(addEl.textContent.replace(/[^0-9]/g, ''), 10) || 0 : null,
+        del: delEl ? parseInt(delEl.textContent.replace(/[^0-9]/g, ''), 10) || 0 : null,
+        label: el.textContent.trim()
+      });
+    });
+    return out;
+  }
+  function footerSubagentsData(f) {
+    if (!f) return null;
+    if (f.subagents && typeof f.subagents === 'object' && !Array.isArray(f.subagents)) return f.subagents;
+    if (typeof f.subagents === 'string' && f.subagents) {
+      return { count: 1, label: f.subagents, items: [{ id: 'sa-generic', name: f.subagents, task: '', state: 'running', summary: f.subagents }] };
+    }
+    return null;
+  }
+  function fileDiffSub(file) {
+    if (file.add == null && file.del == null) return '';
+    return '<span class="ft-add">+' + (file.add || 0) + '</span> <span class="ft-del">-' + (file.del || 0) + '</span>';
+  }
+  function filesSummaryHtml(files) {
+    if (!files.length) return '';
+    var addT = 0; var delT = 0;
+    files.forEach(function (f) { addT += f.add || 0; delT += f.del || 0; });
+    var totals = (addT || delT) ? '<span class="pm6-footer-totals"><span class="ft-add">+' + addT + '</span> <span class="ft-del">-' + delT + '</span></span>' : '';
+    if (files.length === 1) {
+      var f0 = files[0];
+      return '<span class="pm6-footer-summary-label">' + esc(f0.path || f0.label) + '</span>' +
+        (f0.add != null || f0.del != null ? ' ' + fileDiffSub(f0) : '') + totals;
+    }
+    return '<span class="pm6-footer-summary-label">' + files.length + ' file changes</span>' + totals;
+  }
+  function openFooterFilesFab(anchor, files) {
+    fabOpen(anchor, files.map(function (f) {
+      return {
+        label: f.path || f.label,
+        sub: (f.add != null || f.del != null) ? ('+' + (f.add || 0) + ' -' + (f.del || 0)) : '',
+        title: 'Open ' + (f.path || f.label) + ' in editor'
+      };
+    }), function (idx) {
+      var f = files[idx];
+      if (!f || !f.path) return;
+      try {
+        var d = demo();
+        if (d && d.actions && d.actions.dispatch) d.actions.dispatch('files.open', f.path);
+        else if (window.PM_DEMO && window.PM_DEMO.files && window.PM_DEMO.files.open) window.PM_DEMO.files.open(f.path);
+      } catch (e) {}
+    });
+  }
+  function openFooterSubagentsFab(anchor, sa, mountRoot) {
+    var items = (sa.items || []).map(function (it) {
+      return {
+        label: it.name + (it.task ? ' · ' + it.task : ''),
+        sub: it.state || '',
+        title: it.summary || it.name
+      };
+    });
+    fabOpen(anchor, items, function (idx) {
+      var it = sa.items[idx];
+      if (!it) return;
+      var stream = mountRoot ? $('.messageStream', mountRoot) : streams()[0];
+      if (!stream) return;
+      var card = null;
+      if (it.id) {
+        card = stream.querySelector("[data-pm6-subagent-id='" + it.id + "'], [data-sa-id='" + it.id + "']");
+        if (!card) {
+          $all('.pm6-subagent-card, .subagent-card', stream).forEach(function (c) {
+            if (card) return;
+            var nm = $('.pm6-subagent-name, .sa-persona-label', c);
+            if (nm && nm.textContent.trim() === it.name) card = c;
+          });
+        }
+      }
+      if (card) {
+        card.classList.add('pm6-subagent-highlight');
+        card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        setTimeout(function () { card.classList.remove('pm6-subagent-highlight'); }, 1400);
+      }
+    });
+  }
 
   /* ---------- icon hydration ---------- */
   function hydrateIcons(root) {
@@ -50,17 +322,66 @@
   }
 
   /* ---------- message builders ---------- */
+  /* Issue 12: full hover-row (actions + runtime compact + info popover) on
+     EVERY bubble, matching the PMConcept.html reference. User (right) bubbles
+     get Copy + Edit + Resend; assistant (left) bubbles get Copy only. Both
+     sides show the runtime line (mode · provider · model · time + info-i) and
+     a runtime popover with Mode/Provider/Model/Effort/Persona/Tokens/Context/
+     Cost. opt: { role, mode, provider, model, effort, persona, tokens, ctx,
+     cost, time, actions } */
+  function msgHoverRowHtml(opt) {
+    opt = opt || {};
+    var role = opt.role || 'assistant';
+    var mode = opt.mode || 'Agent';
+    var provider = opt.provider || 'Claude';
+    var model = opt.model || 'Sonnet 4.6';
+    var time = opt.time || 'now';
+    var copyBtn = '<button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>';
+    var editBtn = '<button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message — recovery: edit the newest message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>';
+    var resendBtn = '<button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>';
+    var actions = opt.actions || (role === 'user' ? [copyBtn, editBtn, resendBtn] : [copyBtn]);
+    var effort = opt.effort || 'High';
+    var persona = opt.persona || (role === 'user' ? 'default' : 'product-manager');
+    var tokens = opt.tokens || (role === 'user' ? '1,240' : '8,420');
+    var ctx = opt.ctx || '9.4k / 128k';
+    var cost = opt.cost || (role === 'user' ? '$0.02' : '$0.05');
+    return '<div class="msg-hover-row">' +
+      '<div class="msg-actions">' + actions.join('') + '</div>' +
+      '<div class="msg-runtime-compact">' +
+      '<span>' + esc(mode) + '</span><span class="sep">&middot;</span>' +
+      '<span>' + esc(provider) + '</span><span class="sep">&middot;</span>' +
+      '<span>' + esc(model) + '</span><span class="sep">&middot;</span>' +
+      '<span>' + esc(time) + '</span>' +
+      '<span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>' +
+      '<div class="msg-runtime-popover">' +
+      '<div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">' + esc(mode) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">' + esc(provider) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">' + esc(model) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">' + esc(effort) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">' + esc(persona) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">' + esc(tokens) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">' + esc(ctx) + '</span></div>' +
+      '<div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">' + esc(cost) + '</span></div>' +
+      '</div></span></div></div>';
+  }
   function msgControlsHtml() {
+    /* Legacy single-row variant retained for any static markup that still
+       references it; the dynamic builders below now use msgHoverRowHtml(). */
     return '<div class="msg-controls"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>';
   }
   function userMsgHtml(text) {
+    /* Issue 5 (follow-up): hover-row is a SIBLING of .msg-body (both children
+       of .message), matching PMConcept.html — so it renders BELOW the bubble,
+       not inside its padding box. */
     return '<div class="message user pm6-chat-msg" data-pm6-role="user"><div class="msg-body">' +
-      '<div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>' + esc(text) + msgControlsHtml() + '</div></div>';
+      '<div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>' + esc(text) + '</div>' +
+      msgHoverRowHtml({ role: 'user', time: 'now' }) + '</div>';
   }
   function assistantShellHtml(msgId) {
     return '<div class="message assistant pm6-chat-msg" data-pm6-role="assistant" data-pm6-mid="' + esc(msgId) + '"><div class="msg-body">' +
       '<div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>' +
-      '<span class="pm6-chat-sink"></span></div></div>';
+      '<span class="pm6-chat-sink"></span></div>' +
+      msgHoverRowHtml({ role: 'assistant', time: 'now' }) + '</div>';
   }
   function opStateChip(state) {
     var cls = { completed: 'completed', running: 'running', created: 'running', queued: 'waiting',
@@ -78,13 +399,14 @@
       '<div class="pm6-opcard-meta"><span class="pm6-opcard-krow"><b>Lifecycle</b> created → running → completed</span>' +
       '<span class="pm6-opcard-krow"><b>operation_input</b> <code>{ target: "' + esc(card.name || '') + '" }</code></span></div></div>';
   }
-  function subagentCardHtml(name) {
-    return '<div class="pm6-subagent-card">' +
+  function subagentCardHtml(name, id) {
+    var sid = id || 'sa-generic';
+    return '<div class="pm6-subagent-card" data-pm6-subagent-id="' + esc(sid) + '">' +
       '<div class="pm6-subagent-row" onclick="this.parentElement.classList.toggle(\'expanded\')">' +
       '<span class="pm6-subagent-status pm6-subagent-status-running"></span>' +
       '<span class="pm6-subagent-name">' + esc(name) + '</span>' +
       '<span class="pm6-subagent-task">spawned from this turn</span>' +
-      '<span class="pm6-subagent-state">running</span><span class="pm6-subagent-caret">▾</span></div>' +
+      '<span class="pm6-subagent-state">running</span><span class="pm6-subagent-caret">' + SVG.caretDown + '</span></div>' +
       '<div class="pm6-subagent-detail"><div class="pm6-subagent-sec"><b>Work stream</b>' +
       '<div class="pm6-subagent-line">↳ binding target · collecting evidence</div>' +
       '<div class="pm6-subagent-line">↳ running scoped checks (log caps at 50 lines)</div></div>' +
@@ -175,7 +497,7 @@
       '<span class="pm6-opcard-label">' + esc(headLabel) + '</span>' +
       '<span class="pm6-opcard-ts">' + esc(op.ts || '') + '</span>' +
       '<span class="pm6-op-chipslot">' + opStateChip(st) + '</span>' +
-      '<button class="pm6-opcard-toggle" title="Collapse / expand this card">▾</button></div>';
+      '<button class="pm6-opcard-toggle" title="Collapse / expand this card">' + SVG.caretDown + '</button></div>';
     var prov = '<div class="pm6-opcard-prov"><span class="pm6-ico">' + ico(op.invocation_source === 'agent' ? 'robot' : 'info') + '</span> ' +
       (op.invocation_source === 'agent' && op.agent_reason ? esc(op.agent_reason) + ' · ' : '') +
       'invocation_source: ' + esc(op.invocation_source || 'user_slash') +
@@ -292,8 +614,10 @@
   /* ---------- chrome markup: shared svg fragments ---------- */
   var SVG = {
     chev: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>',
+    plus: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
     collapse: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>',
     close: '<svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+    more: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"></circle></svg>',
     search: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     branch: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>',
     branchSm: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>',
@@ -304,8 +628,11 @@
     attach: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>',
     warnDot: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
     jump: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>',
-    sendIco: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>',
-    stopIco: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>',
+    sendIco: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>',
+    stopIco: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>',
+    rewind: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>',
+    closeX: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+    caretDown: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>',
     lensDefault: '<svg class="cl-icon cl-icon-default" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="9" x2="16" y2="9"></line><line x1="8" y1="15" x2="16" y2="15"></line></svg>',
     lensMuteBtn: '<svg class="cl-icon cl-icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
     lensFocusBtn: '<svg class="cl-icon cl-icon-focus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
@@ -317,8 +644,8 @@
 
   /* ---------- chrome markup: builders ---------- */
   /* Canonical layout = floating, with the locked tweaks: New Thread right of
-     the HISTORY sidebar title, search + context lens in header row 1, no
-     input hint, unified context-usage module (hover reveal, click = pin). */
+     the Chats sidebar title, search + context lens in header row 1, no
+     input hint, unified context-usage module (click sprout + glow hover). */
   var MOUNTS = [
     { root: '#chatPanel', actions: 'docked' },
     { root: '#floatingChat', actions: 'floating' }
@@ -326,11 +653,11 @@
   var MODE_LABELS = { ask: 'Ask', agent: 'Agent', debug: 'Debug', plan: 'Plan', 'deep-plan': 'Deep Plan' };
 
   function wtBindHtml() {
-    /* worktree binding — inline handlers stay: the globals live in part 25 */
+    /* worktree binding — click sprout open/close; hover lights like context lens */
     return '<div class="wt-bind-wrap" style="position:relative;">' +
-      '<button class="wt-bind-btn wt-bound-clean pm6-chat-wt" onclick="toggleWorktreeDropdown(this)" title="Worktree binding: bound, clean — click to switch, create or unbind" style="display:flex; align-items:center; padding:2px; background:none; border:none; color:var(--accent-lime); cursor:pointer;">' +
+      '<button type="button" class="wt-bind-btn wt-bound-clean pm6-chat-wt" title="Worktree binding: bound, clean — click to switch, create or unbind" data-od-id="chat-worktree-btn">' +
       SVG.branch + '<span class="pm6-chat-wt-dot" aria-hidden="true"></span></button>' +
-      '<div class="wt-bind-dropdown">' +
+      '<div class="wt-bind-dropdown" data-od-id="chat-worktree-menu">' +
       '<div class="wt-current-label" style="padding:4px 8px; font-weight:600; color:var(--text-primary); border-bottom:1px solid var(--border-light); margin-bottom:4px; display:flex; align-items:center; gap:4px;">' +
       SVG.branchSm + ' <span class="wt-current-name">feat/dashboard-v2</span> <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>' +
       '<div style="font-weight:600; font-size:10px; padding:4px 8px; color:var(--text-muted);">Switch Worktree</div>' +
@@ -345,30 +672,31 @@
       '</div></div></div>';
   }
   function ctxModuleHtml() {
-    /* unified context-usage module: Est. Cost row in BOTH mounts; reveal is
-       pure CSS (:hover / .pinned), Compact now is always visible in the module */
-    return '<span class="context-usage pm6-chat-ctx" title="Context: 42k / 128k — hover for usage, click to pin">' +
-      '<svg width="12" height="12" viewBox="0 0 24 24" style="transform: rotate(-90deg);">' +
+    /* unified context-usage module (docked + pop-out headers): ring only in the
+       chrome; sprout popout on click with Compact now / More details. Hover
+       glows accent-blue (same family as context lens). Token label lives
+       inside the module, not beside the ring. */
+    return '<span class="context-usage pm6-chat-ctx" data-od-id="chat-context-ring" title="Context usage — click for breakdown" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false">' +
+      '<svg width="15" height="15" viewBox="0 0 24 24" style="transform: rotate(-90deg);" aria-hidden="true">' +
       '<circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>' +
       '<circle class="pm6-chat-ctx-arc" cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-primary)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle></svg>' +
-      '<span class="pm6-chat-ctx-label">42k/128k</span>' +
-      '<div class="context-hover-module">' +
+      '<div class="context-hover-module" data-od-id="chat-context-hover-module">' +
       '<div class="chm-row"><span class="chm-label">Usage</span><span class="chm-value pm6-chat-ctx-usage">42,180 / 128,000</span></div>' +
       '<div class="chm-bar"><div class="chm-bar-fill" style="width: 33%;"></div></div>' +
       '<div class="chm-row"><span class="chm-label">Input</span><span class="chm-value">38.2k tokens</span></div>' +
       '<div class="chm-row"><span class="chm-label">Output</span><span class="chm-value">3.9k tokens</span></div>' +
       '<div class="chm-row"><span class="chm-label">Est. Cost</span><span class="chm-value">$0.19 this thread</span></div>' +
       '<div class="chm-actions">' +
-      '<button class="chm-compact-btn">Compact now</button>' +
-      '<button class="chm-details-link" title="Opens the Context tab in the editor">More details</button>' +
+      '<button class="chm-compact-btn" data-od-id="chat-context-compact">Compact now</button>' +
+      '<button class="chm-details-link" data-od-id="chat-context-more-details" title="Opens the Context tab in the editor">More details</button>' +
       '</div></div></span>';
   }
   function lensHtml() {
-    /* context lens — same markup as the carved popover, handlers delegated */
+    /* context lens — click sprout open/close (same motion as model popouts) */
     return '<div class="context-lens-wrap" style="position:relative; flex-shrink:0;">' +
-      '<button class="context-lens-btn" title="Context Lens">' +
+      '<button type="button" class="context-lens-btn" title="Context Lens" data-od-id="chat-context-lens">' +
       SVG.lensDefault + SVG.lensMuteBtn + SVG.lensFocusBtn + SVG.lensSubBtn + '</button>' +
-      '<div class="context-lens-popover">' +
+      '<div class="context-lens-popover" data-portal-display="flex" data-od-id="chat-context-lens-menu">' +
       '<div class="cl-popover-title">Context Lens</div>' +
       '<div class="cl-mode-item" data-mode="mute">' + SVG.lensMute +
       '<div class="cl-mode-info"><span class="cl-mode-name">Mute</span><span class="cl-mode-desc">Exclude messages from context</span></div></div>' +
@@ -376,20 +704,27 @@
       '<div class="cl-mode-info"><span class="cl-mode-name">Focus</span><span class="cl-mode-desc">Pin messages to top of context</span></div></div>' +
       '<div class="cl-mode-item" data-mode="subcompact">' + SVG.lensSub +
       '<div class="cl-mode-info"><span class="cl-mode-name">Subcompact</span><span class="cl-mode-desc">Replace with local summary</span></div></div>' +
-      '<div class="cl-popover-footer"><button class="cl-off-btn">Turn off</button></div>' +
+      '<div class="cl-popover-footer"><button type="button" class="cl-off-btn">Turn off</button></div>' +
       '</div></div>';
   }
   function headerActionsHtml(m) {
+    /* More-options kebab collapses the old row of icon buttons into one sprout menu */
     if (m.actions === 'floating') {
-      return '<div class="panel-actions" style="display:flex; gap:var(--xs);">' +
-        '<button class="pm6-chat-layout-cycle pm6-chat-iconbtn" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '</button>' +
-        '<button class="closeChatBtn pm6-chat-iconbtn" title="Close chat">' + SVG.close + '</button></div>';
+      return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-float">' +
+        '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-float">' + SVG.more + '</button>' +
+        '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-float">' +
+        '<button type="button" class="pm6-chat-more-item pm6-chat-layout-cycle" role="menuitem" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '<span>Cycle layout</span></button>' +
+        '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat">' + SVG.close + '<span>Close chat</span></button>' +
+        '</div></div>';
     }
-    return '<div class="panel-actions" style="display:flex; gap:var(--xs);">' +
-      '<button class="pm6-chat-iconbtn" title="Duplicate thread" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '</button>' +
-      '<button class="pm6-chat-iconbtn" title="Archive thread" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '</button>' +
-      '<button class="popOutBtn pm6-chat-iconbtn" title="Pop out to floating window">' + SVG.popout + '</button>' +
-      '<button class="closeChatBtn pm6-chat-iconbtn" title="Close chat panel">' + SVG.close + '</button></div>';
+    return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-dock">' +
+      '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-dock">' + SVG.more + '</button>' +
+      '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-dock">' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '<span>Duplicate thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '<span>Archive thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item popOutBtn" role="menuitem" title="Pop out to floating window">' + SVG.popout + '<span>Pop out window</span></button>' +
+      '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat panel">' + SVG.close + '<span>Close chat</span></button>' +
+      '</div></div>';
   }
   function headerHtml(m) {
     /* single header row: title · search · lens · worktree · context · issues · actions */
@@ -398,11 +733,10 @@
       '<div class="title pm6-chat-titlewrap" style="flex:0 1 auto; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font); min-width:0;">' +
       '<span class="chatHeaderTitle pm6-chat-title" contenteditable="true" spellcheck="false" title="Click to rename this thread">Tastebook — planning chat</span></div>' +
       '<div class="pm6-chat-headsearch">' + SVG.search +
-      '<input type="text" placeholder="Search messages &amp; threads..."></div>' +
+      '<input type="text" placeholder="Search"></div>' +
       lensHtml() +
       wtBindHtml() +
       ctxModuleHtml() +
-      '<a href="#" class="pm6-chat-issues" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab(\'problems\');" title="Open Problems in the bottom panel">' + SVG.warnDot + ' 3 Issues</a>' +
       headerActionsHtml(m) +
       '</div></div>';
   }
@@ -416,11 +750,12 @@
     /* t: PM6_CHAT_THREADS entry (title/summaryHtml are HTML-ready) or an
        engine thread record {id,title,kind} */
     var role = t.role || t.kind || 'assistant';
-    var title = t.titleHtml || t.title || 'New thread';
-    return '<div class="chat-thread-item' + (active ? ' active' : '') + ' role-' + esc(role) + ' pm6-chat-thread" data-thread="' + esc(t.id) + '">' +
+    var status = t.status || 'read';
+    var title = t.title || 'New thread';
+    return '<div class="chat-thread-item' + (active ? ' active' : '') + ' role-' + esc(role) + ' pm6-chat-thread" data-thread="' + esc(t.id) + '" data-status="' + esc(status) + '">' +
       '<div class="thread-top-row"><span class="thread-timestamp">' + (t.timestamp || 'now') + '</span>' +
-      '<div class="thread-title"' + (t.titleHtml ? ' style="display:flex; align-items:center; gap:4px;"' : '') + '>' + title + '</div></div>' +
-      '<div class="thread-bottom-row"><div class="thread-status-col">' + threadStatusHtml(t.status) + '</div>' +
+      '<div class="thread-title">' + title + '</div></div>' +
+      '<div class="thread-bottom-row"><div class="thread-status-col">' + threadStatusHtml(status) + '</div>' +
       '<div class="thread-summary">' + (t.summaryHtml || '') + '</div></div>' +
       '<div class="thread-hover-actions">' + ((t.hoverActions || []).join('')) + '</div></div>';
   }
@@ -430,10 +765,15 @@
       return threadRowHtml(T[id], id === 'th-main');
     }).join('');
     return '<div class="chat-thread-sidebar">' +
-      '<div class="sidebar-title pm6-chat-sbtitle"><span class="pm6-chat-sbtitle-label">HISTORY</span>' +
-      '<button class="pm6-chat-newthread pm6-chat-newthread-mini" data-demo-action="chat.new_thread" data-demo-arg="assistant" title="Start a new thread"><span class="pm6-ico" data-pm6-ico="sparkle"></span> New Thread</button>' +
-      '<button class="collapse-btn" title="Collapse thread list" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:2px;" onclick="this.closest(\'.chat-thread-sidebar\').classList.toggle(\'collapsed\');">' + SVG.collapse + '</button></div>' +
-      '<div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">' + rows + '</div></div>';
+      '<div class="sidebar-title pm6-chat-sbtitle"><span class="pm6-chat-sbtitle-label">Chats</span>' +
+      '<button class="pm6-chat-newthread pm6-chat-newthread-add" data-demo-action="chat.new_thread" data-demo-arg="assistant" title="Start a new thread" aria-label="Start a new thread">' + SVG.plus + '</button></div>' +
+      /* padding-top rides the frosted .sidebar-title's measured height the
+         same way .pm6-chat-stream rides --pm-chat-head-h. It has to be set
+         HERE: this inline `padding` shorthand outranks any stylesheet rule,
+         so a CSS-side scroll-under padding would be silently dropped while
+         the margin-top lift still applied, burying the first row. Collapsing
+         the sidebar zeroes the measured var, which zeroes both. */
+      '<div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm); padding-top: calc(var(--pm6-chat-sidehead-h, 30px) + var(--sm));">' + rows + '</div></div>';
   }
   function planPanelHtml() {
     return '<div class="pm6-chat-planpanel pm6-hidden">' +
@@ -452,14 +792,9 @@
       '</div></div>';
   }
   function streamFooterHtml() {
-    /* richer floating footer; per-thread values land via renderFooter(ui) */
     return '<div class="chat-stream-footer">' +
-      '<div class="chat-footer-status chatFooterSubagents"><span class="subagent-dot"></span><span>1 active subagent</span></div>' +
-      '<div class="files-touched-strip chatFooterFiles"></div>' +
-      '<div style="display:flex; gap:var(--sm); padding:var(--xs) var(--md); align-items:center;">' +
-      '<button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast(\'cmd.chat.revert → restoring files from last assistant turn...\')">Revert last edit</button>' +
-      '<button class="wizard-btn" style="font-size:10px; padding:2px 8px; opacity:0.7;" title="cmd.chat.rewind — Conversation history only. Does NOT restore files." onclick="toast(\'cmd.chat.rewind → rewinding conversation (files unchanged)\')">Rewind Chat</button>' +
-      '<span style="font-size:9px; color:var(--text-muted); margin-left:auto;">revert ≠ rewind</span></div>' +
+      '<button type="button" class="chat-footer-status chatFooterSubagents pm6-footer-fab-anchor" aria-label="Active subagents"></button>' +
+      '<button type="button" class="chat-footer-files chatFooterFiles pm6-footer-fab-anchor" aria-label="Files changed"></button>' +
       '<div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>' +
       '</div>';
   }
@@ -482,90 +817,121 @@
       '<span class="slash-cmd-name">/web map</span><span class="slash-cmd-desc">cmd.chat.web.map → "Mapping Site:" (root URL)</span></div>' +
       '</div>';
   }
+  var MODEL_CATALOG = [
+    { group: 'Claude', prov: 'claude', mark: '*', models: [
+      { id: 'Opus 4.6', efforts: ['Low','Medium','High','Max'], effort: 'High' },
+      { id: 'Sonnet 4.6', efforts: ['Low','Medium','High','Max'], effort: 'High' },
+      { id: 'Haiku 4.5', efforts: ['Low','Medium','High'], effort: 'Medium' }
+    ]},
+    { group: 'Codex', prov: 'codex', mark: 'o', models: [
+      { id: 'GPT-5.4', efforts: ['Low','Medium','High','Max'], effort: 'Medium' },
+      { id: 'GPT-5.3 Codex', efforts: ['Low','Medium','High'], effort: 'High' },
+      { id: 'GPT-5.4 Mini', efforts: ['Low','Medium','High'], effort: 'Low' }
+    ]},
+    { group: 'Gemini', prov: 'gemini', mark: '+', models: [
+      { id: 'Gemini 3.1 Pro', efforts: ['Low','Medium','High','Max'], effort: 'High' },
+      { id: 'Gemini 3 Pro', efforts: ['Low','Medium','High'], effort: 'Medium' },
+      { id: 'Gemini 3 Flash', efforts: ['Low','Medium'], effort: 'Low' }
+    ]}
+  ];
+  var MODEL_EFFORT = {};
+  var MODEL_EFFORTS = {};
+  MODEL_CATALOG.forEach(function (g) {
+    g.models.forEach(function (m) {
+      MODEL_EFFORT[m.id] = m.effort;
+      MODEL_EFFORTS[m.id] = m.efforts.slice();
+    });
+  });
+  var MODE_CATALOG = [
+    { id: 'ask', label: 'Ask', title: 'Ask — read-only: answers and analysis, no mutations' },
+    { id: 'agent', label: 'Agent', title: 'Agent — executes with your permission rules' },
+    { id: 'debug', label: 'Debug', title: 'Debug — evidence-first investigation, 8-step loop from target binding to cleanup' },
+    { id: 'plan', label: 'Plan', title: 'Plan — drafts a plan with a live TODO tracker', efforts: ['Low','Medium','High'], effort: 'High' },
+    { id: 'deep-plan', label: 'Deep Plan', title: 'Deep Plan — rich plan document in the preview editor', efforts: ['Low','Medium','High','Max'], effort: 'High' }
+  ];
+  var MODE_EFFORT = {};
+  var MODE_EFFORTS = {};
+  MODE_CATALOG.forEach(function (m) {
+    if (m.efforts) {
+      MODE_EFFORT[m.id] = m.effort || 'High';
+      MODE_EFFORTS[m.id] = m.efforts.slice();
+    }
+  });
+  var CHECK_SVG = '<svg class="pm6-chat-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>';
+  function modelItemHtml(m, prov, mark) {
+    var eff = MODEL_EFFORT[m.id] || 'High';
+    return '<button type="button" class="pm6-chat-modelitem" data-model="' + m.id + '" data-od-id="model-item-' + m.id.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '">' +
+      '<span class="pm6-chat-modelico" data-prov="' + prov + '" aria-hidden="true">' + mark + '</span>' +
+      '<span class="pm6-chat-modelname">' + m.id + '</span>' +
+      '<span class="pm6-chat-modeleffort">' + eff + '</span>' +
+      '<span class="pm6-chat-modelcheck">' + CHECK_SVG + '</span></button>';
+  }
+  function modelPopoutHtml() {
+    var body = '';
+    MODEL_CATALOG.forEach(function (g, gi) {
+      body += '<div class="pm6-chat-modelgroup' + (gi ? ' pm6-chat-modelgroup-divider' : '') + '" data-group="' + g.group + '">' + g.group + '</div>';
+      g.models.forEach(function (m) { body += modelItemHtml(m, g.prov, g.mark); });
+    });
+    return '<div class="pm6-chat-pt-popout pm6-chat-mini-popout" data-od-id="model-picker" title="Model and reasoning effort">' +
+      '<div class="pm6-chat-modelsearch" data-od-id="model-search">' + SVG.search +
+      '<input type="search" class="pm6-chat-modelsearch-input" placeholder="Search models" aria-label="Search models" autocomplete="off" spellcheck="false"/></div>' +
+      '<div class="pm6-chat-modellist">' + body + '</div></div>';
+  }
+  function effortFlyoutHtml(efforts) {
+    var levels = efforts && efforts.length ? efforts : ['Low', 'Medium', 'High', 'Max'];
+    var rows = levels.map(function (lv) {
+      return '<button type="button" class="pm6-chat-effortbtn" data-effort="' + lv + '">' +
+        '<span>' + lv + '</span>' + CHECK_SVG + '</button>';
+    }).join('');
+    return '<div class="pm6-chat-pt-popout pm6-chat-effort-popout" data-od-id="effort-popout" title="Effort">' +
+      '<div class="pm6-chat-pt-flytitle">Effort</div>' +
+      '<div class="pm6-chat-pt-body">' + rows + '</div></div>';
+  }
   function ptFlyoutHtml() {
-    return '<div class="pm6-chat-pt-flyout" title="Planning thoroughness — caps user-facing questions">' +
-      '<div class="pm6-chat-pt-flytitle">Planning thoroughness</div>' +
+    /* Standalone planning-thoroughness popout kept for settings/legacy paths;
+       mode Plan / Deep Plan now use hover effort (same as model picker). */
+    return '<div class="pm6-chat-pt-popout" title="Planning thoroughness — caps user-facing questions">' +
+      '<div class="pm6-chat-pt-flytitle">Planning thoroughness' +
+      '<button type="button" class="pm6-chat-pt-close" title="Close" aria-label="Close thoroughness">' + SVG.close + '</button></div>' +
+      '<div class="pm6-chat-pt-body">' +
       '<span class="pm6-chat-ptbtn" data-pt="Light">Light — at most 2 questions</span>' +
       '<span class="pm6-chat-ptbtn active" data-pt="Balanced">Balanced — at most 4</span>' +
-      '<span class="pm6-chat-ptbtn" data-pt="Comprehensive">Comprehensive — at most 6</span></div>';
+      '<span class="pm6-chat-ptbtn" data-pt="Comprehensive">Comprehensive — at most 6</span>' +
+      '</div></div>';
   }
-  function modeItemHtml(v, label, title, hasPt, active) {
-    return '<div class="chat-dropdown-item' + (hasPt ? ' pm6-has-pt' : '') + (active ? ' active' : '') +
-      '" data-mode="' + v + '" title="' + title + '">' +
-      '<span class="pm6-mode-name">' + label + '</span>' + (hasPt ? ptFlyoutHtml() : '') + '</div>';
+  function modeItemHtml(m) {
+    var hasEffort = !!(m.efforts && m.efforts.length);
+    var eff = hasEffort ? (MODE_EFFORT[m.id] || 'High') : '';
+    return '<button type="button" class="pm6-chat-modeitem" data-mode="' + m.id + '"' +
+      (hasEffort ? ' data-has-effort="1"' : '') +
+      ' title="' + m.title + '" data-od-id="mode-item-' + m.id + '">' +
+      '<span class="pm6-chat-modename">' + m.label + '</span>' +
+      (hasEffort ? '<span class="pm6-chat-modeeffort">' + eff + '</span>' : '<span class="pm6-chat-modeeffort"></span>') +
+      '<span class="pm6-chat-modecheck">' + CHECK_SVG + '</span></button>';
+  }
+  function modePopoutListHtml() {
+    var body = MODE_CATALOG.map(modeItemHtml).join('');
+    return '<div class="pm6-chat-pt-popout pm6-chat-mode-popout" data-od-id="mode-picker" title="Chat mode">' +
+      '<div class="pm6-chat-modelist">' + body + '</div></div>';
   }
   function modeDropdownHtml() {
-    return '<div style="position:relative;">' +
-      '<button class="chat-dropdown-btn pm6-chat-modebtn" title="Chat mode" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--radius-sm); padding:2px 8px; min-width:92px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size:11px; font-weight:600;">' +
-      '<span class="mode-label">Agent</span> ' + SVG.chev + '</button>' +
-      '<div class="chat-dropdown-popover pm6-chat-modepop" style="bottom:100%; top:auto; margin-bottom:4px; left:0;">' +
-      '<div class="chat-dropdown-list">' +
-      modeItemHtml('ask', 'Ask', 'Ask — read-only: answers and analysis, no mutations', false, false) +
-      modeItemHtml('agent', 'Agent', 'Agent — executes with your permission rules', false, true) +
-      modeItemHtml('debug', 'Debug', 'Debug — evidence-first investigation, 8-step loop from target binding to cleanup', false, false) +
-      modeItemHtml('plan', 'Plan', 'Plan — drafts a plan with a live TODO tracker · hover for thoroughness', true, false) +
-      modeItemHtml('deep-plan', 'Deep Plan', 'Deep Plan — rich plan document in the preview editor · hover for thoroughness', true, false) +
-      '</div></div></div>';
+    return '<div class="pm6-chat-selslot">' +
+      '<button type="button" class="chat-dropdown-btn pm6-chat-selbtn pm6-chat-modebtn" data-od-id="mode-selector-btn" title="Chat mode">' +
+      '<span class="mode-label">Agent</span> ' + SVG.chev + '</button></div>';
   }
   function selectorRowHtml() {
-    var btnStyle = 'background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--radius-sm); padding:3px 10px; min-width:120px; min-height:26px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;';
-    var group = 'padding: var(--sm) var(--md); font-weight: 700; color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;';
-    var groupNext = group + ' border-top: 1px solid var(--border-light); margin-top: var(--xs);';
-    return '<div class="pm6-chat-selrow" style="display:flex; gap:var(--md); align-items:center; font-size:10px; padding: 2px 0;">' +
-      '<div style="position:relative;">' +
-      '<button class="chat-dropdown-btn" title="Persona — applies from the next turn" style="' + btnStyle + '">' +
-      '<span class="persona-label">Product Manager</span> ' + SVG.chev + '</button>' +
-      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">' +
-      '<div class="chat-dropdown-list">' +
-      '<div class="chat-dropdown-item active">Product Manager</div>' +
-      '<div class="chat-dropdown-item">Architect Reviewer</div>' +
-      '<div class="chat-dropdown-item">Rust Engineer</div>' +
-      '</div></div></div>' +
-      '<div style="position:relative;">' +
-      '<button class="chat-dropdown-btn" title="Model — requested; the effective model per turn shows on each message" style="' + btnStyle + '">' +
-      '<span class="model-label">Sonnet 4.6</span> ' + SVG.chev + '</button>' +
-      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0; max-height: 320px; overflow-y: auto;">' +
-      '<div class="chat-dropdown-list">' +
-      '<div style="' + group + '">Claude</div>' +
-      '<div class="chat-dropdown-item">Opus 4.6</div>' +
-      '<div class="chat-dropdown-item active">Sonnet 4.6</div>' +
-      '<div class="chat-dropdown-item">Haiku 4.5</div>' +
-      '<div style="' + groupNext + '">Codex</div>' +
-      '<div class="chat-dropdown-item">GPT-5.4</div>' +
-      '<div class="chat-dropdown-item">GPT-5.3 Codex</div>' +
-      '<div class="chat-dropdown-item">GPT-5.4 Mini</div>' +
-      '<div style="' + groupNext + '">Gemini</div>' +
-      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
-      '<div class="chat-dropdown-item">Gemini 3 Pro</div>' +
-      '<div class="chat-dropdown-item">Gemini 3 Flash</div>' +
-      '<div style="' + groupNext + '">Copilot</div>' +
-      '<div class="chat-dropdown-item">GPT-5.4</div>' +
-      '<div class="chat-dropdown-item">Sonnet 4.6</div>' +
-      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
-      '<div style="' + groupNext + '">Cursor</div>' +
-      '<div class="chat-dropdown-item">GPT-5.4</div>' +
-      '<div class="chat-dropdown-item">Opus 4.6</div>' +
-      '<div class="chat-dropdown-item">Gemini 3 Pro</div>' +
-      '<div style="' + groupNext + '">OpenCode</div>' +
-      '<div class="chat-dropdown-item">Sonnet 4.6</div>' +
-      '<div class="chat-dropdown-item">GPT-5.4</div>' +
-      '<div class="chat-dropdown-item">Gemini 3.1 Pro</div>' +
-      '</div></div></div>' +
-      '<div style="position:relative;">' +
-      '<button class="chat-dropdown-btn" title="Reasoning effort — shown because this model supports it" style="' + btnStyle + ' min-width:80px;">' +
-      '<span class="pm6-chat-effort-label">High</span> ' + SVG.chev + '</button>' +
-      '<div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">' +
-      '<div class="chat-dropdown-list">' +
-      '<div style="padding: var(--sm) var(--md); font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">Select Effort</div>' +
-      '<div class="chat-dropdown-item active">High</div>' +
-      '<div class="chat-dropdown-item">Medium</div>' +
-      '<div class="chat-dropdown-item">Low</div>' +
-      '</div></div></div>' +
+    return '<div class="pm6-chat-selrow">' +
+      '<div class="pm6-chat-selslot">' +
+      '<button type="button" class="chat-dropdown-btn pm6-chat-selbtn pm6-chat-personabtn" data-od-id="persona-selector-btn" title="Persona — applies from the next turn">' +
+      '<span class="persona-label">Product Manager</span> ' + SVG.chev + '</button></div>' +
+      '<div class="pm6-chat-selslot">' +
+      '<button type="button" class="chat-dropdown-btn pm6-chat-selbtn pm6-chat-modelbtn" data-od-id="model-selector-btn" title="Model and reasoning effort — requested; effective model shows on each message">' +
+      '<span class="model-label">Sonnet 4.6 High</span> ' + SVG.chev + '</button></div>' +
+      modeDropdownHtml() +
       '</div>';
   }
   function inputAreaHtml() {
     return '<div class="chat-input-area pm6-chat-inputarea" style="position:relative; padding: var(--xs) var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">' +
-      '<div class="pm6-chat-suggest pm6-hidden" role="group" aria-label="Suggested web runs"></div>' +
       '<div class="pm6-chat-composer" style="position:relative; background:var(--surface-elevated); border: 1px solid var(--border); border-radius:var(--radius-md); padding:var(--xs); display:flex; flex-direction:column;">' +
       slashMenuHtml() +
       '<div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>' +
@@ -573,29 +939,31 @@
       '<div class="pm6-chat-queuefull pm6-hidden">Queue full — two messages are already waiting. Recovery: stop the current turn or let it finish.</div>' +
       '<div class="pm6-chat-composer-foot" style="display:flex; justify-content:space-between; align-items:center; gap:var(--sm); padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light); flex-wrap:wrap;">' +
       '<div style="display:flex; gap:var(--sm); align-items:center; flex-wrap:wrap;">' +
-      '<button title="Attach file or image" data-demo-action="demo.toast" data-demo-arg="Attachments ride along as context — images land in the plan review too." style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;">' + SVG.attach + '</button>' +
-      modeDropdownHtml() +
+      '<button type="button" title="Attach file or image" data-demo-action="demo.toast" data-demo-arg="Attachments ride along as context — images land in the plan review too." style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;">' + SVG.attach + '</button>' +
       '<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
       '<span class="chat-toggle-btn toggle-eli5" title="Explain Like I\'m 5" onclick="this.classList.toggle(\'active\')">ELI5</span>' +
       '<span class="chat-toggle-btn toggle-yolo" title="Auto-approve eligible tools. Never bypasses FileSafe, permissions, policy, secrets or protected-branch guards." onclick="this.classList.toggle(\'active\')">YOLO</span>' +
       '<span class="chat-toggle-btn toggle-crew" title="Multi-model Crew overlay with an inspectable crew board" onclick="this.classList.toggle(\'active\')">CREW</span>' +
       '</div></div>' +
-      '<button class="pm6-chat-send" data-pm6-state="idle" title="Send (Enter) — becomes Stop while the agent works">' +
+      '<div class="pm6-chat-composer-actions">' +
+      '<button type="button" class="pm6-chat-rewind" title="Rewind options" aria-label="Rewind options">' + SVG.rewind + '</button>' +
+      '<button type="button" class="pm6-chat-send" data-pm6-state="idle" title="Send (Enter) — becomes Stop while the agent works" aria-label="Send message">' +
       '<span class="pm6-chat-send-ico-send">' + SVG.sendIco + '</span>' +
-      '<span class="pm6-chat-send-ico-stop">' + SVG.stopIco + '</span>' +
-      '<span class="pm6-chat-send-label">Send</span></button>' +
-      '</div></div>' +
+      '<span class="pm6-chat-send-ico-stop">' + SVG.stopIco + '</span></button>' +
+      '</div></div></div>' +
       selectorRowHtml() +
       '</div>';
   }
   function chatMainHtml() {
     return '<div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">' +
-      '<div class="message-stream messageStream pm6-chat-stream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);"></div>' +
+      '<div class="pm6-chat-streamwrap" style="flex: 1; position: relative; min-height: 0; display: flex; flex-direction: column;">' +
+      '<div class="message-stream messageStream pm6-chat-stream" style="flex: 1; overflow-y: auto; padding: var(--md); padding-top: calc(var(--pm-chat-head-h, 58px) + var(--md)); display: flex; flex-direction: column; gap: var(--md);"></div>' +
       '<div class="jump-to-latest pm6-chat-jump" title="Jump to latest">' + SVG.jump + '</div>' +
+      streamFooterHtml() +
+      '</div>' +
       planPanelHtml() +
       '<div class="pendingInterventionBlock hidden"></div>' +
       '<div class="pm6-chat-queue"></div>' +
-      streamFooterHtml() +
       inputAreaHtml() +
       '</div>';
   }
@@ -612,6 +980,55 @@
       root.innerHTML = CHAT_TEMPLATE(m);
     });
     hydrateIcons();
+    wireSidebarCollapse();
+  }
+
+  /* Resize-driven chat-rail collapse: no button. When the user drags the
+     sidebar narrower than SIDEBAR_COLLAPSE_AT, toggle .collapsed so rows
+     drop status/time/summary, truncate harder, and glow status color. */
+  var SIDEBAR_COLLAPSE_AT = 148;
+  function syncSidebarCollapse(el) {
+    if (!el) return;
+    var w = el.getBoundingClientRect().width;
+    el.classList.toggle('collapsed', w > 0 && w < SIDEBAR_COLLAPSE_AT);
+  }
+  function wireSidebarCollapse() {
+    if (typeof ResizeObserver === 'undefined') {
+      $all('.chat-thread-sidebar').forEach(syncSidebarCollapse);
+      return;
+    }
+    $all('.chat-thread-sidebar').forEach(function (el) {
+      if (el._pm6CollapseObs) {
+        syncSidebarCollapse(el);
+        return;
+      }
+      var ro = new ResizeObserver(function () { syncSidebarCollapse(el); });
+      el._pm6CollapseObs = ro;
+      ro.observe(el);
+      syncSidebarCollapse(el);
+    });
+  }
+
+  /* Frosted scroll-under (Task 5): the chat header height is variable
+     (stacked rows, badges, density), so measure it and publish it as
+     --pm-chat-head-h on each mount root; the stream overlaps that far
+     behind the frost plate. CSS carries a 58px fallback constant. */
+  function wireChatHeadMeasure() {
+    if (typeof ResizeObserver === 'undefined') return;
+    MOUNTS.forEach(function (m) {
+      var root = $(m.root);
+      if (!root || root._pm6HeadObs) return;
+      var header = $('.pm6-chat-header', root);
+      if (!header) return;
+      var set = function () {
+        var h = Math.ceil(header.getBoundingClientRect().height);
+        if (h > 0) root.style.setProperty('--pm-chat-head-h', h + 'px');
+      };
+      var ro = new ResizeObserver(set);
+      root._pm6HeadObs = ro;
+      ro.observe(header);
+      set();
+    });
   }
 
   /* ---------- thread switching (single switcher, all mounts) ---------- */
@@ -654,28 +1071,28 @@
   function threadTitleText(ui, id) {
     var row = $('.chat-thread-item[data-thread="' + id + '"] .thread-title');
     if (row) return row.textContent.trim();
-    var tmp = document.createElement('div');
-    tmp.innerHTML = (ui && (ui.titleHtml || ui.title)) || 'New thread';
-    return tmp.textContent.trim();
+    return ((ui && ui.title) || 'New thread');
   }
   function renderFooter(ui) {
     var f = (ui && ui.footer) || {};
-    var agents = f.subagents || '';
-    var files = f.filesHtml || '';
-    var hasAgents = !!agents && agents.charAt(0) !== '0';
-    var hasFiles = !!files;
+    var sa = footerSubagentsData(f);
+    var files = footerFilesList(f);
+    var hasAgents = !!(sa && sa.label);
+    var hasFiles = files.length > 0;
     var hasProblems = !!f.problems;
     $all('.chatFooterSubagents').forEach(function (el) {
       if (!inMounts(el)) return;
       if (hasAgents) {
-        el.innerHTML = '<span class="subagent-dot"></span><span>' + agents + '</span>';
-        el.style.display = 'flex';
-      } else { el.style.display = 'none'; }
+        el.innerHTML = '<span class="subagent-dot"></span><span>' + esc(sa.label) + '</span>';
+        el.style.display = 'inline-flex';
+      } else { el.innerHTML = ''; el.style.display = 'none'; }
     });
     $all('.chatFooterFiles').forEach(function (el) {
       if (!inMounts(el)) return;
-      if (hasFiles) { el.innerHTML = files; el.style.display = 'flex'; }
-      else { el.innerHTML = ''; el.style.display = 'none'; }
+      if (hasFiles) {
+        el.innerHTML = filesSummaryHtml(files);
+        el.style.display = 'inline-flex';
+      } else { el.innerHTML = ''; el.style.display = 'none'; }
     });
     $all('.chatFooterProblems').forEach(function (el) {
       if (!inMounts(el)) return;
@@ -686,21 +1103,14 @@
     });
     $all('.chat-stream-footer').forEach(function (el) {
       if (!inMounts(el)) return;
-      el.style.display = (hasAgents || hasFiles || hasProblems) ? 'block' : 'none';
+      var show = hasAgents || hasFiles || hasProblems;
+      el.style.display = show ? 'inline-flex' : 'none';
+      el.classList.toggle('pm6-footer-has-sa', hasAgents && hasFiles);
+      var wrap = el.closest('.pm6-chat-streamwrap');
+      if (wrap) wrap.classList.toggle('pm6-footer-active', show);
     });
-  }
-  function renderSuggestions(ui) {
-    var chips = ui && ui.suggestions;
-    $all('.pm6-chat-suggest').forEach(function (host) {
-      if (!inMounts(host)) return;
-      if (!chips || !chips.length) { host.classList.add('pm6-hidden'); host.innerHTML = ''; return; }
-      host.classList.remove('pm6-hidden');
-      host.innerHTML = '<span class="pm6-chat-suggest-label"><span class="pm6-ico" data-pm6-ico="globe"></span> Try a live web run</span>' +
-        chips.map(function (c) {
-          return '<button class="pm6-chat-suggestchip" data-demo-action="' + esc(c.action) + '" data-demo-arg="' + esc(c.arg) + '" title="' + esc(c.title || '') + '">' + esc(c.label) + '</button>';
-        }).join('');
-    });
-    hydrateIcons();
+    window.PM6_FOOTER_CTX = { sa: sa, files: files };
+    requestAnimationFrame(updateAllFooterLayouts);
   }
   function renderComposerChips(ui) {
     var chips = (ui && ui.composerChips) || [];
@@ -733,6 +1143,7 @@
         st.innerHTML = stampHtml(threadId) + html;
       }
       st.scrollTop = st.scrollHeight;
+      updateJumpVisibility(st);
     });
     /* 4. */
     setActiveThreadItem(threadId);
@@ -752,8 +1163,7 @@
     $all('.pm6-chat-planpanel').forEach(function (p) {
       p.classList.toggle('pm6-hidden', !(threadId === 'th-deepplan' || isPlanMode()));
     });
-    /* 9. suggestions + composer chips */
-    renderSuggestions(ui);
+    /* 9. composer chips */
     renderComposerChips(ui);
     /* 10. worktree button (global stays in part 25) */
     try { if (window.updateWorktreeButtonForThread) window.updateWorktreeButtonForThread(threadId); } catch (e) {}
@@ -884,15 +1294,31 @@
       (v === 'plan' || v === 'deep-plan') ? 'Describe the goal — a plan with a live TODO tracker comes back…' :
       'Message the agent — @ mentions files, / shows commands (try /web)…';
   }
+  function modeLabelText() {
+    var base = MODE_LABELS[MODE] || 'Agent';
+    if (MODE_EFFORTS[MODE]) return base + ' ' + (MODE_EFFORT[MODE] || 'High');
+    return base;
+  }
   function setModeUI(v) {
     MODE = MODE_LABELS[v] ? v : 'agent';
     $all('.mode-label').forEach(function (l) {
-      if (inMounts(l)) l.textContent = MODE_LABELS[MODE];
+      if (inMounts(l)) l.textContent = modeLabelText();
     });
-    $all('.pm6-chat-modepop .chat-dropdown-item[data-mode]').forEach(function (it) {
-      it.classList.toggle('active', it.getAttribute('data-mode') === MODE);
-    });
+    if (modePopout) {
+      $all('.pm6-chat-modeitem', modePopout).forEach(function (it) {
+        it.classList.toggle('active', it.getAttribute('data-mode') === MODE);
+      });
+      refreshModeEffortLabels();
+    }
     $all('.pm6-chat-input').forEach(function (ta) { ta.placeholder = modePlaceholder(MODE); });
+  }
+  function refreshModeEffortLabels() {
+    if (!modePopout) return;
+    $all('.pm6-chat-modeitem', modePopout).forEach(function (b) {
+      var id = b.getAttribute('data-mode');
+      var el = b.querySelector('.pm6-chat-modeeffort');
+      if (el && id && MODE_EFFORTS[id]) el.textContent = MODE_EFFORT[id] || '';
+    });
   }
   function setPtUI(pt) {
     PT = pt;
@@ -902,56 +1328,752 @@
     var d = demo();
     if (d && d.state && d.state.chat) d.state.chat.thoroughness = pt;
   }
+  /* Issue 9: the thoroughness selector is a SEPARATE popout window
+     (body-portal), not a submenu of the mode popover. One shared element is
+     created lazily and anchored to the mode button of the mount that opened
+     it. Plan / Deep Plan now use hover effort instead of auto-opening this. */
+  var ptPopout = null;       /* the body-portal element */
+  var ptPopoutMount = null;  /* 'docked' | 'floating' — which chat owns it */
+  function ptPopoutBuild() {
+    if (ptPopout) return ptPopout;
+    ptPopout = document.createElement('div');
+    ptPopout.className = 'pm6-chat-pt-popout pm6-chat-pt-popout-portal';
+    ptPopout.innerHTML = ptFlyoutHtml();
+    ptPopout.style.display = 'none';
+    document.body.appendChild(ptPopout);
+    return ptPopout;
+  }
+  function ptPopoutReflectActive() {
+    if (!ptPopout) return;
+    $all('.pm6-chat-ptbtn', ptPopout).forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-pt') === PT);
+    });
+  }
+  function ptPopoutPosition(anchorBtn) {
+    if (!ptPopout || !anchorBtn) return;
+    var wasHidden = ptPopout.style.display === 'none';
+    if (wasHidden) ptPopout.style.display = 'block';
+    var r = anchorBtn.getBoundingClientRect();
+    var w = ptPopout.offsetWidth || 248;
+    var h = ptPopout.offsetHeight || 160;
+    var preferRight = false;
+    var row = anchorBtn.closest('.pm6-chat-selrow');
+    if (row) {
+      var btns = row.querySelectorAll('.pm6-chat-selbtn');
+      var idx = Array.prototype.indexOf.call(btns, anchorBtn);
+      if (idx >= 0) preferRight = idx >= Math.ceil(btns.length / 2);
+    } else {
+      preferRight = (r.left + r.width / 2) > window.innerWidth * 0.55;
+    }
+    var left = preferRight
+      ? Math.max(8, Math.min(r.right - w, window.innerWidth - w - 8))
+      : Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+    /* open upward from the mode button so it never collides with the composer */
+    var top = Math.max(8, r.top - h - 6);
+    if (r.top < h + 16) top = r.bottom + 6; /* flip down if no room */
+    ptPopout.style.left = left + 'px';
+    ptPopout.style.top = top + 'px';
+    ptPopout.style.bottom = 'auto';
+    if (wasHidden && !ptPopout.classList.contains('is-open')) ptPopout.style.display = 'none';
+  }
+  function ptPopoutOpen(mountKey, anchorBtn) {
+    modelPopoutClose();
+    effortPopoutClose();
+    modePopoutClose();
+    personaPopoutClose();
+    fabClose();
+    ptPopoutBuild();
+    ptPopoutMount = mountKey;
+    ptPopoutReflectActive();
+    ptPopoutPosition(anchorBtn);
+    portalOpenAnim(ptPopout, null, anchorBtn);
+  }
+  function ptPopoutClose() {
+    if (!ptPopout) return;
+    ptPopoutMount = null;
+    portalCloseAnim(ptPopout);
+  }
+
+  var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];
+  var PERSONA = 'Product Manager';
+  function personaPopoutListHtml() {
+    var body = PERSONA_CATALOG.map(function (name) {
+      return '<button type="button" class="pm6-chat-personaitem" data-persona="' + name + '" data-od-id="persona-item-' + name.toLowerCase().replace(/\s+/g, '-') + '">' +
+        '<span class="pm6-chat-personaname">' + name + '</span>' +
+        '<span class="pm6-chat-personacheck">' + CHECK_SVG + '</span></button>';
+    }).join('');
+    return '<div class="pm6-chat-pt-popout pm6-chat-persona-popout" data-od-id="persona-picker" title="Persona">' +
+      '<div class="pm6-chat-personasearch" data-od-id="persona-search">' + SVG.search +
+      '<input type="search" class="pm6-chat-personasearch-input" placeholder="Search personas" aria-label="Search personas" autocomplete="off" spellcheck="false"/></div>' +
+      '<div class="pm6-chat-personalist">' + body + '</div></div>';
+  }
+
+  function motionReduced() {
+    return !!(document.documentElement && document.documentElement.getAttribute('data-motion') === 'reduced');
+  }
+  function portalIsOpen(el) {
+    return !!(el && el.classList.contains('is-open') && !el.classList.contains('is-closing'));
+  }
+  function portalAnimateHeight(el, mutateFn) {
+    if (!el) { if (mutateFn) mutateFn(); return; }
+    if (motionReduced() || !portalIsOpen(el)) {
+      if (mutateFn) mutateFn();
+      return;
+    }
+    var startH = el.getBoundingClientRect().height;
+    el.style.height = startH + 'px';
+    el.style.overflow = 'hidden';
+    if (mutateFn) mutateFn();
+    el.style.height = 'auto';
+    var endH = el.getBoundingClientRect().height; /* respects max-height */
+    if (Math.abs(endH - startH) < 0.5) {
+      el.style.height = '';
+      el.style.overflow = '';
+      return;
+    }
+    el.style.height = startH + 'px';
+    void el.offsetHeight;
+    /* CSS height spring (y>1) overshoots past endH then settles — the search bounce */
+    el.style.height = endH + 'px';
+    el.classList.remove('is-size-bounce');
+    void el.offsetWidth;
+    el.classList.add('is-size-bounce');
+    var finished = false;
+    function clearH(ev) {
+      if (finished) return;
+      if (ev && ev.target !== el) return;
+      if (ev && ev.propertyName && ev.propertyName !== 'height') return;
+      finished = true;
+      el.style.height = '';
+      el.style.overflow = '';
+      el.classList.remove('is-size-bounce');
+      el.removeEventListener('transitionend', clearH);
+    }
+    el.addEventListener('transitionend', clearH);
+    /* cover height spring + overshoot settle (effort uses ~360–420ms) */
+    setTimeout(clearH, el.classList.contains('pm6-chat-effort-popout-portal') ? 520 : 460);
+  }
+  /* Pin open/close sprout to the corner/edge nearest the trigger so the box
+     grows out of (and collapses into) its destination, not a fixed BL origin. */
+  function setPopoutSprout(el, anchorEl) {
+    if (!el || !anchorEl) return;
+    /* neutralize closed-state scale so we measure the real layout box */
+    var prevTf = el.style.transform;
+    el.style.transform = 'none';
+    void el.offsetWidth;
+    var pr = el.getBoundingClientRect();
+    el.style.transform = prevTf;
+    var ar = anchorEl.getBoundingClientRect();
+    if (!pr.width || !pr.height) return;
+    var ax = ar.left + ar.width / 2;
+    var ay = ar.top + ar.height / 2;
+    var isSide = el.classList.contains('pm6-chat-effort-popout-portal');
+    if (isSide) {
+      /* effort / side flyouts: sprout from the edge facing the parent row */
+      var fromLeft = ((pr.left + pr.right) / 2) >= ax;
+      var yPct = ((ay - pr.top) / pr.height) * 100;
+      yPct = Math.max(10, Math.min(90, yPct));
+      el.style.setProperty('--pm6-sprout-ox', fromLeft ? '0%' : '100%');
+      el.style.setProperty('--pm6-sprout-oy', yPct.toFixed(1) + '%');
+      el.style.setProperty('--pm6-sprout-tx', fromLeft ? '-10px' : '10px');
+      el.style.setProperty('--pm6-sprout-ty', '0px');
+      el.style.setProperty('--pm6-sprout-sx', '0.48');
+      el.style.setProperty('--pm6-sprout-sy', '0.72');
+      el.setAttribute('data-sprout', fromLeft ? 'l' : 'r');
+      return;
+    }
+    /* vertical popouts: snap to the corner nearest the trigger center */
+    var ox = ((ax - pr.left) / pr.width) * 100;
+    var oy = ((ay - pr.top) / pr.height) * 100;
+    var snapX = ox < 50 ? 12 : 88;
+    var snapY = oy < 50 ? 8 : 100;
+    if (ay >= pr.bottom - 2) snapY = 100;
+    else if (ay <= pr.top + 2) snapY = 0;
+    if (ax <= pr.left + 2) snapX = 8;
+    else if (ax >= pr.right - 2) snapX = 92;
+    var fromBottom = snapY >= 50;
+    var fromLeftC = snapX < 50;
+    el.style.setProperty('--pm6-sprout-ox', snapX + '%');
+    el.style.setProperty('--pm6-sprout-oy', snapY + '%');
+    el.style.setProperty('--pm6-sprout-tx', '0px');
+    el.style.setProperty('--pm6-sprout-ty', fromBottom ? '10px' : '-10px');
+    el.style.setProperty('--pm6-sprout-sx', '0.72');
+    el.style.setProperty('--pm6-sprout-sy', '0.48');
+    el.setAttribute('data-sprout', (fromBottom ? 'b' : 't') + (fromLeftC ? 'l' : 'r'));
+  }
+  function portalOpenAnim(el, afterOpen, anchorEl) {
+    if (!el) return;
+    el.classList.remove('is-closing');
+    var disp = el.getAttribute('data-portal-display') || 'block';
+    el.style.display = disp;
+    if (anchorEl) setPopoutSprout(el, anchorEl);
+    void el.offsetHeight;
+    el.classList.add('is-open');
+    if (afterOpen) afterOpen();
+  }
+  function portalCloseAnim(el, onDone) {
+    if (!el) { if (onDone) onDone(); return; }
+    if (!el.classList.contains('is-open') && el.style.display === 'none') {
+      if (onDone) onDone();
+      return;
+    }
+    el.classList.remove('is-open', 'is-size-bounce');
+    el.classList.add('is-closing');
+    var done = false;
+    function finish(ev) {
+      if (done) return;
+      if (ev && ev.target !== el) return;
+      if (ev && ev.propertyName && ev.propertyName !== 'opacity' && ev.propertyName !== 'transform') return;
+      done = true;
+      el.classList.remove('is-closing');
+      el.style.display = 'none';
+      el.style.height = '';
+      el.style.overflow = '';
+      el.removeEventListener('transitionend', finish);
+      if (onDone) onDone();
+    }
+    el.addEventListener('transitionend', finish);
+    /* cover the ~220ms corner-collapse close */
+    setTimeout(finish, motionReduced() ? 0 : 280);
+  }
+
+  var modePopout = null;
+  var modePopoutAnchor = null;
+  var modeHoverWired = false;
+  function modePopoutBuild() {
+    if (modePopout) return modePopout;
+    modePopout = document.createElement('div');
+    modePopout.className = 'pm6-chat-mode-popout-portal chat-dropdown-popover';
+    modePopout.innerHTML = modePopoutListHtml();
+    modePopout.style.display = 'none';
+    document.body.appendChild(modePopout);
+    wireModePopoutInteractions();
+    return modePopout;
+  }
+  function modePopoutReflectActive() {
+    if (!modePopout) return;
+    $all('.pm6-chat-modeitem', modePopout).forEach(function (it) {
+      it.classList.toggle('active', it.getAttribute('data-mode') === MODE);
+    });
+    refreshModeEffortLabels();
+  }
+  function anchorPopoutAbove(el, anchorBtn, widthHint) {
+    if (!el || !anchorBtn) return;
+    var r = anchorBtn.getBoundingClientRect();
+    var w = el.offsetWidth || widthHint || 260;
+    /* Prefer the alignment that keeps the trigger under the nearest corner —
+       right-side controls (Agent) open from bottom-right; left ones from BL. */
+    var preferRight = false;
+    var row = anchorBtn.closest('.pm6-chat-selrow');
+    if (row) {
+      var btns = row.querySelectorAll('.pm6-chat-selbtn');
+      var idx = Array.prototype.indexOf.call(btns, anchorBtn);
+      if (idx >= 0) preferRight = idx >= Math.ceil(btns.length / 2);
+    } else {
+      preferRight = (r.left + r.width / 2) > window.innerWidth * 0.55;
+    }
+    var left = preferRight
+      ? Math.max(8, Math.min(r.right - w, window.innerWidth - w - 8))
+      : Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+    /* pin bottom edge just above the trigger so search filtering shrinks top-down */
+    el.style.top = 'auto';
+    el.style.bottom = Math.max(8, window.innerHeight - r.top + 6) + 'px';
+    el.style.left = left + 'px';
+  }
+  function modePopoutPosition(anchorBtn) {
+    anchorPopoutAbove(modePopout, anchorBtn, 260);
+  }
+  function modePopoutOpen(anchorBtn) {
+    modelPopoutClose();
+    personaPopoutClose();
+    effortPopoutClose();
+    ptPopoutClose();
+    fabClose();
+    modePopoutBuild();
+    modePopoutAnchor = anchorBtn;
+    modePopoutReflectActive();
+    modePopoutPosition(anchorBtn);
+    portalOpenAnim(modePopout, null, anchorBtn);
+  }
+  function modePopoutClose() {
+    if (!modePopout) return;
+    modePopoutAnchor = null;
+    effortPopoutClose();
+    clearModeHover();
+    portalCloseAnim(modePopout);
+  }
+  function modePopoutToggle(anchorBtn) {
+    if (portalIsOpen(modePopout)) { modePopoutClose(); return; }
+    modePopoutOpen(anchorBtn);
+  }
+  function applyModeSelection(mode, effort, closePicker) {
+    if (effort && MODE_EFFORTS[mode]) MODE_EFFORT[mode] = effort;
+    setModeUI(mode);
+    $all('.pm6-chat-planpanel').forEach(function (p) {
+      p.classList.toggle('pm6-hidden', !(isPlanMode() || CURRENT === 'th-deepplan'));
+    });
+    if (mode === 'debug') say('Debug mode: evidence-first, 8-step loop from target binding to cleanup.');
+    else if (MODE_EFFORTS[mode]) say('Mode set to ' + modeLabelText() + '.');
+    var T = THREADS();
+    if (T[CURRENT]) T[CURRENT].mode = mode;
+    if (closePicker !== false) {
+      modePopoutClose();
+    } else {
+      modePopoutReflectActive();
+      effortPopoutReflect();
+    }
+  }
+
+  var modelPopout = null;
+  var modelPopoutAnchor = null;
+  var MODEL = 'Sonnet 4.6';
+  var effortHoverKind = null; /* 'model' | 'mode' */
+  var effortHoverId = null;
+  var effortHoverTimer = null;
+  var modelHoverWired = false;
+  function modelLabelText() {
+    return MODEL + ' ' + (EFFORT || MODEL_EFFORT[MODEL] || 'High');
+  }
+  function modelPopoutBuild() {
+    if (modelPopout) return modelPopout;
+    modelPopout = document.createElement('div');
+    modelPopout.className = 'pm6-chat-mini-popout-portal';
+    modelPopout.innerHTML = modelPopoutHtml();
+    modelPopout.style.display = 'none';
+    document.body.appendChild(modelPopout);
+    wireModelPopoutInteractions();
+    return modelPopout;
+  }
+  function setEffortUI(effort) {
+    EFFORT = effort || 'High';
+    if (MODEL) MODEL_EFFORT[MODEL] = EFFORT;
+    $all('.pm6-chat-effortbtn').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-effort') === EFFORT);
+    });
+    refreshModelEffortLabels();
+    refreshModelButtonLabels();
+  }
+  function refreshModelButtonLabels() {
+    $all('.model-label').forEach(function (l) {
+      if (inMounts(l)) l.textContent = modelLabelText();
+    });
+  }
+  function refreshModelEffortLabels() {
+    if (!modelPopout) return;
+    $all('.pm6-chat-modelitem', modelPopout).forEach(function (b) {
+      var id = b.getAttribute('data-model');
+      var el = b.querySelector('.pm6-chat-modeleffort');
+      if (el && id) el.textContent = MODEL_EFFORT[id] || '';
+    });
+  }
+  function setModelUI(model) {
+    MODEL = model || MODEL;
+    if (MODEL_EFFORT[MODEL]) EFFORT = MODEL_EFFORT[MODEL];
+    refreshModelButtonLabels();
+    if (modelPopout) {
+      $all('.pm6-chat-modelitem', modelPopout).forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-model') === MODEL);
+      });
+    }
+  }
+  function modelPopoutReflect() {
+    if (!modelPopout) return;
+    setModelUI(MODEL);
+    var inp = modelPopout.querySelector('.pm6-chat-modelsearch-input');
+    if (inp) { inp.value = ''; filterModelList('', true); }
+  }
+  function filterModelList(q, skipAnim) {
+    if (!modelPopout) return;
+    q = (q || '').trim().toLowerCase();
+    function apply() {
+      var groups = $all('.pm6-chat-modelgroup', modelPopout);
+      groups.forEach(function (g) {
+        var name = (g.getAttribute('data-group') || '').toLowerCase();
+        var showGroup = !q || name.indexOf(q) !== -1;
+        var n = g.nextElementSibling;
+        var any = showGroup;
+        while (n && !n.classList.contains('pm6-chat-modelgroup')) {
+          if (n.classList.contains('pm6-chat-modelitem')) {
+            var mid = (n.getAttribute('data-model') || '').toLowerCase();
+            var hit = !q || showGroup || mid.indexOf(q) !== -1;
+            n.classList.toggle('pm6-hidden', !hit);
+            if (hit) any = true;
+          }
+          n = n.nextElementSibling;
+        }
+        g.classList.toggle('pm6-hidden', !any);
+      });
+    }
+    if (skipAnim) apply();
+    else portalAnimateHeight(modelPopout, apply);
+  }
+  function modelPopoutPosition(anchorBtn) {
+    anchorPopoutAbove(modelPopout, anchorBtn, 280);
+  }
+  function modelPopoutOpen(anchorBtn) {
+    fabClose();
+    ptPopoutClose();
+    modePopoutClose();
+    personaPopoutClose();
+    effortPopoutClose();
+    modelPopoutBuild();
+    modelPopoutAnchor = anchorBtn;
+    modelPopoutReflect();
+    modelPopoutPosition(anchorBtn);
+    portalOpenAnim(modelPopout, function () {
+      var inp = modelPopout.querySelector('.pm6-chat-modelsearch-input');
+      if (inp) setTimeout(function () { try { inp.focus(); } catch (err) {} }, 0);
+    }, anchorBtn);
+  }
+  function modelPopoutClose() {
+    if (!modelPopout) return;
+    modelPopoutAnchor = null;
+    effortPopoutClose();
+    clearModelHover();
+    portalCloseAnim(modelPopout);
+  }
+  function applyModelSelection(model, effort, closePicker) {
+    if (effort) MODEL_EFFORT[model] = effort;
+    setModelUI(model);
+    setEffortUI(MODEL_EFFORT[model] || EFFORT);
+    say('Model set to ' + modelLabelText() + ' from the next turn.');
+    if (closePicker !== false) {
+      modelPopoutClose();
+    } else {
+      modelPopoutReflect();
+      effortPopoutReflect();
+    }
+  }
+  function modelPopoutToggle(anchorBtn) {
+    if (portalIsOpen(modelPopout)) { modelPopoutClose(); return; }
+    modelPopoutOpen(anchorBtn);
+  }
+
+  var personaPopout = null;
+  var personaPopoutAnchor = null;
+  var personaWired = false;
+  function personaPopoutBuild() {
+    if (personaPopout) return personaPopout;
+    personaPopout = document.createElement('div');
+    personaPopout.className = 'pm6-chat-persona-popout-portal';
+    personaPopout.innerHTML = personaPopoutListHtml();
+    personaPopout.style.display = 'none';
+    document.body.appendChild(personaPopout);
+    wirePersonaPopoutInteractions();
+    return personaPopout;
+  }
+  function setPersonaUI(name) {
+    PERSONA = name || PERSONA;
+    $all('.persona-label').forEach(function (l) {
+      if (inMounts(l)) l.textContent = PERSONA;
+    });
+    if (personaPopout) {
+      $all('.pm6-chat-personaitem', personaPopout).forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-persona') === PERSONA);
+      });
+    }
+  }
+  function personaPopoutReflect() {
+    if (!personaPopout) return;
+    setPersonaUI(PERSONA);
+    var inp = personaPopout.querySelector('.pm6-chat-personasearch-input');
+    if (inp) { inp.value = ''; filterPersonaList('', true); }
+  }
+  function filterPersonaList(q, skipAnim) {
+    if (!personaPopout) return;
+    q = (q || '').trim().toLowerCase();
+    function apply() {
+      $all('.pm6-chat-personaitem', personaPopout).forEach(function (b) {
+        var label = (b.querySelector('.pm6-chat-personaname') || b).textContent.toLowerCase();
+        b.classList.toggle('pm6-hidden', !!(q && label.indexOf(q) === -1));
+      });
+    }
+    if (skipAnim) apply();
+    else portalAnimateHeight(personaPopout, apply);
+  }
+  function personaPopoutPosition(anchorBtn) {
+    anchorPopoutAbove(personaPopout, anchorBtn, 260);
+  }
+  function personaPopoutOpen(anchorBtn) {
+    modelPopoutClose();
+    modePopoutClose();
+    effortPopoutClose();
+    ptPopoutClose();
+    fabClose();
+    personaPopoutBuild();
+    personaPopoutAnchor = anchorBtn;
+    personaPopoutReflect();
+    personaPopoutPosition(anchorBtn);
+    portalOpenAnim(personaPopout, function () {
+      var inp = personaPopout.querySelector('.pm6-chat-personasearch-input');
+      if (inp) setTimeout(function () { try { inp.focus(); } catch (err) {} }, 0);
+    }, anchorBtn);
+  }
+  function personaPopoutClose() {
+    if (!personaPopout) return;
+    personaPopoutAnchor = null;
+    portalCloseAnim(personaPopout);
+  }
+  function personaPopoutToggle(anchorBtn) {
+    if (portalIsOpen(personaPopout)) { personaPopoutClose(); return; }
+    personaPopoutOpen(anchorBtn);
+  }
+  function applyPersonaSelection(name) {
+    setPersonaUI(name);
+    say('Applied from the next turn — requested vs effective is recorded on each message.');
+    personaPopoutClose();
+  }
+  function wirePersonaPopoutInteractions() {
+    if (!personaPopout || personaWired) return;
+    personaWired = true;
+    personaPopout.addEventListener('input', function (e) {
+      if (e.target && e.target.classList.contains('pm6-chat-personasearch-input')) {
+        filterPersonaList(e.target.value);
+      }
+    });
+  }
+
+  var effortPopout = null;
+  function effortPopoutBuild(efforts) {
+    if (!effortPopout) {
+      effortPopout = document.createElement('div');
+      effortPopout.className = 'pm6-chat-effort-popout-portal';
+      effortPopout.style.display = 'none';
+      document.body.appendChild(effortPopout);
+      effortPopout.addEventListener('mouseenter', function () {
+        if (effortHoverTimer) { clearTimeout(effortHoverTimer); effortHoverTimer = null; }
+      });
+      effortPopout.addEventListener('mouseleave', function () {
+        scheduleEffortClose();
+      });
+    }
+    effortPopout.innerHTML = effortFlyoutHtml(efforts);
+    return effortPopout;
+  }
+  function effortPopoutReflect() {
+    if (!effortPopout) return;
+    var cur = EFFORT;
+    if (effortHoverKind === 'mode' && effortHoverId) cur = MODE_EFFORT[effortHoverId] || 'High';
+    else if (effortHoverKind === 'model' && effortHoverId) cur = MODEL_EFFORT[effortHoverId] || EFFORT;
+    else if (MODEL) cur = MODEL_EFFORT[MODEL] || EFFORT;
+    $all('.pm6-chat-effortbtn', effortPopout).forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-effort') === cur);
+    });
+  }
+  function effortPopoutPositionBeside(rowEl) {
+    if (!effortPopout || !rowEl) return;
+    var r = rowEl.getBoundingClientRect();
+    var w = effortPopout.offsetWidth || 148;
+    var h = effortPopout.offsetHeight || 160;
+    var left = r.right + 6;
+    if (left + w > window.innerWidth - 8) left = r.left - w - 6;
+    left = Math.max(8, left);
+    var top = Math.max(8, Math.min(r.top, window.innerHeight - h - 8));
+    effortPopout.style.bottom = 'auto';
+    effortPopout.style.left = left + 'px';
+    effortPopout.style.top = top + 'px';
+  }
+  function effortPopoutOpenBeside(rowEl, kind) {
+    if (!rowEl) return;
+    kind = kind || (rowEl.classList.contains('pm6-chat-modeitem') ? 'mode' : 'model');
+    var id = kind === 'mode' ? rowEl.getAttribute('data-mode') : rowEl.getAttribute('data-model');
+    if (kind === 'mode' && !MODE_EFFORTS[id]) { effortPopoutClose(); return; }
+    var alreadyOpen = portalIsOpen(effortPopout);
+    var same = alreadyOpen && effortHoverKind === kind && effortHoverId === id;
+    effortHoverKind = kind;
+    effortHoverId = id;
+    var efforts = kind === 'mode'
+      ? (MODE_EFFORTS[id] || ['Low', 'Medium', 'High', 'Max'])
+      : (MODEL_EFFORTS[id] || ['Low', 'Medium', 'High', 'Max']);
+    /* Video: when option count changes (e.g. Medium/High/Max → Low/Medium/High/Max),
+       the side box spring-resizes in place — do NOT re-sprout the open animation. */
+    function applyEffortContent() {
+      effortPopoutBuild(efforts);
+      effortPopoutReflect();
+      effortPopoutPositionBeside(rowEl);
+    }
+    if (!alreadyOpen) {
+      applyEffortContent();
+      portalOpenAnim(effortPopout, null, rowEl);
+    } else if (same) {
+      effortPopoutReflect();
+      effortPopoutPositionBeside(rowEl);
+      setPopoutSprout(effortPopout, rowEl);
+    } else {
+      portalAnimateHeight(effortPopout, applyEffortContent);
+      setPopoutSprout(effortPopout, rowEl);
+      effortPopout.classList.add('is-open');
+      effortPopout.classList.remove('is-closing');
+      effortPopout.style.display = 'block';
+    }
+    if (kind === 'model' && modelPopout) {
+      $all('.pm6-chat-modelitem', modelPopout).forEach(function (b) {
+        b.classList.toggle('is-hover', b === rowEl);
+      });
+    }
+    if (kind === 'mode' && modePopout) {
+      $all('.pm6-chat-modeitem', modePopout).forEach(function (b) {
+        b.classList.toggle('is-hover', b === rowEl);
+      });
+    }
+  }
+  function effortPopoutOpen(anchorEl) {
+    /* legacy path — prefer beside-row hover popout */
+    if (anchorEl && anchorEl.classList && anchorEl.classList.contains('pm6-chat-modelitem')) {
+      effortPopoutOpenBeside(anchorEl, 'model');
+      return;
+    }
+    if (anchorEl && anchorEl.classList && anchorEl.classList.contains('pm6-chat-modeitem')) {
+      effortPopoutOpenBeside(anchorEl, 'mode');
+      return;
+    }
+    effortPopoutBuild(MODEL_EFFORTS[MODEL]);
+    effortHoverKind = 'model';
+    effortHoverId = MODEL;
+    effortPopoutReflect();
+    if (anchorEl) effortPopoutPositionBeside(anchorEl);
+    portalOpenAnim(effortPopout, null, anchorEl);
+  }
+  function effortPopoutClose() {
+    if (!effortPopout) return;
+    effortHoverKind = null;
+    effortHoverId = null;
+    if (modelPopout) {
+      $all('.pm6-chat-modelitem.is-hover', modelPopout).forEach(function (b) { b.classList.remove('is-hover'); });
+    }
+    if (modePopout) {
+      $all('.pm6-chat-modeitem.is-hover', modePopout).forEach(function (b) { b.classList.remove('is-hover'); });
+    }
+    portalCloseAnim(effortPopout);
+  }
+  function scheduleEffortClose() {
+    if (effortHoverTimer) clearTimeout(effortHoverTimer);
+    effortHoverTimer = setTimeout(function () {
+      effortPopoutClose();
+    }, 140);
+  }
+  function clearModelHover() {
+    if (effortHoverTimer) { clearTimeout(effortHoverTimer); effortHoverTimer = null; }
+  }
+  function clearModeHover() {
+    if (effortHoverTimer) { clearTimeout(effortHoverTimer); effortHoverTimer = null; }
+  }
+  function wireModelPopoutInteractions() {
+    if (!modelPopout || modelHoverWired) return;
+    modelHoverWired = true;
+    modelPopout.addEventListener('input', function (e) {
+      if (e.target && e.target.classList.contains('pm6-chat-modelsearch-input')) {
+        filterModelList(e.target.value);
+        effortPopoutClose();
+      }
+    });
+    modelPopout.addEventListener('mouseover', function (e) {
+      var row = e.target && e.target.closest ? e.target.closest('.pm6-chat-modelitem') : null;
+      if (!row || !modelPopout.contains(row)) return;
+      if (effortHoverTimer) { clearTimeout(effortHoverTimer); effortHoverTimer = null; }
+      effortPopoutOpenBeside(row, 'model');
+    });
+    modelPopout.addEventListener('mouseleave', function () {
+      scheduleEffortClose();
+    });
+  }
+  function wireModePopoutInteractions() {
+    if (!modePopout || modeHoverWired) return;
+    modeHoverWired = true;
+    modePopout.addEventListener('mouseover', function (e) {
+      var row = e.target && e.target.closest ? e.target.closest('.pm6-chat-modeitem') : null;
+      if (!row || !modePopout.contains(row)) return;
+      if (row.getAttribute('data-has-effort') !== '1') {
+        scheduleEffortClose();
+        $all('.pm6-chat-modeitem.is-hover', modePopout).forEach(function (b) { b.classList.remove('is-hover'); });
+        return;
+      }
+      if (effortHoverTimer) { clearTimeout(effortHoverTimer); effortHoverTimer = null; }
+      effortPopoutOpenBeside(row, 'mode');
+    });
+    modePopout.addEventListener('mouseleave', function () {
+      scheduleEffortClose();
+    });
+  }
+
   function wireModes() {
     document.addEventListener('click', function (e) {
       if (!e.target || !e.target.closest) return;
-      /* thoroughness rows FIRST — they sit inside the Plan / Deep Plan items */
+      /* thoroughness rows live in the SEPARATE popout now */
       var pt = e.target.closest('.pm6-chat-ptbtn');
-      if (pt && inMounts(pt)) {
+      if (pt && ptPopout && ptPopout.contains(pt)) {
         e.stopPropagation();
         setPtUI(pt.getAttribute('data-pt') || 'Balanced');
         var budget = { Light: 2, Balanced: 4, Comprehensive: 6 }[PT] || 4;
         say(PT + ' thoroughness — at most ' + budget + ' user-facing questions.');
+        ptPopoutReflectActive();
+        ptPopoutClose();
         return;
       }
-      /* clicks elsewhere inside a flyout (title/padding) never switch mode */
-      if (e.target.closest('.pm6-chat-pt-flyout')) return;
-      var btn = e.target.closest('.chat-dropdown-btn');
-      if (btn && inMounts(btn)) {
-        var pop = btn.nextElementSibling;
-        var was = !!(pop && pop.classList.contains('active'));
-        $all('#chatPanel .chat-dropdown-popover, #floatingChat .chat-dropdown-popover').forEach(function (p) { p.classList.remove('active'); });
-        if (pop && !was) pop.classList.add('active');
+      /* close button on the thoroughness popout */
+      if (e.target.closest('.pm6-chat-pt-close') && ptPopout && ptPopout.contains(e.target.closest('.pm6-chat-pt-close'))) {
+        ptPopoutClose(); return;
+      }
+      if (e.target.closest('.pm6-chat-modelpop-close')) { modelPopoutClose(); return; }
+      if (e.target.closest('.pm6-chat-effortpop-close')) { effortPopoutClose(); return; }
+      var modeDd = e.target.closest('.pm6-chat-modeitem');
+      if (modeDd && modePopout && modePopout.contains(modeDd)) {
+        e.stopPropagation();
+        var mv = modeDd.getAttribute('data-mode');
+        applyModeSelection(mv, MODE_EFFORT[mv], true);
         return;
       }
-      var dd = e.target.closest('.chat-dropdown-popover .chat-dropdown-item');
-      if (dd && inMounts(dd)) {
-        var pop2 = dd.closest('.chat-dropdown-popover');
-        var mode = dd.getAttribute('data-mode');
-        if (mode) {
-          setModeUI(mode);
-          $all('.pm6-chat-planpanel').forEach(function (p) {
-            p.classList.toggle('pm6-hidden', !(isPlanMode() || CURRENT === 'th-deepplan'));
-          });
-          if (mode === 'debug') say('Debug mode: evidence-first, 8-step loop from target binding to cleanup.');
-          var T = THREADS();
-          if (T[CURRENT]) T[CURRENT].mode = mode;
-          if (pop2) pop2.classList.remove('active');
-          return;
+      var modelItem = e.target.closest('.pm6-chat-modelitem');
+      if (modelItem && modelPopout && modelPopout.contains(modelItem)) {
+        e.stopPropagation();
+        applyModelSelection(modelItem.getAttribute('data-model'), MODEL_EFFORT[modelItem.getAttribute('data-model')], true);
+        return;
+      }
+      var personaItem = e.target.closest('.pm6-chat-personaitem');
+      if (personaItem && personaPopout && personaPopout.contains(personaItem)) {
+        e.stopPropagation();
+        applyPersonaSelection(personaItem.getAttribute('data-persona'));
+        return;
+      }
+      var effortBtn = e.target.closest('.pm6-chat-effortbtn');
+      if (effortBtn && effortPopout && effortPopout.contains(effortBtn)) {
+        e.stopPropagation();
+        var eff = effortBtn.getAttribute('data-effort');
+        if (effortHoverKind === 'mode' && effortHoverId) {
+          applyModeSelection(effortHoverId, eff, true);
+        } else {
+          applyModelSelection(effortHoverId || MODEL, eff, true);
         }
-        $all('.chat-dropdown-item', pop2).forEach(function (i) { i.classList.remove('active'); });
-        dd.classList.add('active');
-        var b2 = pop2 ? pop2.previousElementSibling : null;
-        var lab = b2 ? $('span', b2) : null;
-        if (lab) lab.textContent = dd.textContent.trim();
-        if (pop2) pop2.classList.remove('active');
-        say('Applied from the next turn — requested vs effective is recorded on each message.');
         return;
       }
-      /* outside click closes any open chat dropdown popover */
-      if (!e.target.closest('.chat-dropdown-popover')) {
-        $all('#chatPanel .chat-dropdown-popover.active, #floatingChat .chat-dropdown-popover.active').forEach(function (p) { p.classList.remove('active'); });
+      var btn = e.target.closest('.chat-dropdown-btn');
+      if (btn && btn.classList.contains('pm6-chat-modelbtn') && inMounts(btn)) {
+        e.stopPropagation();
+        modePopoutClose();
+        personaPopoutClose();
+        modelPopoutToggle(btn);
+        return;
       }
+      if (btn && btn.classList.contains('pm6-chat-modebtn') && inMounts(btn)) {
+        e.stopPropagation();
+        modelPopoutClose();
+        personaPopoutClose();
+        modePopoutToggle(btn);
+        return;
+      }
+      if (btn && btn.classList.contains('pm6-chat-personabtn') && inMounts(btn)) {
+        e.stopPropagation();
+        modelPopoutClose();
+        modePopoutClose();
+        personaPopoutToggle(btn);
+        return;
+      }
+      /* outside click closes body-portaled popouts */
+      if (ptPopout && !ptPopout.contains(e.target)) ptPopoutClose();
+      if (modePopout && !modePopout.contains(e.target) && !e.target.closest('.pm6-chat-modebtn') && !(effortPopout && effortPopout.contains(e.target))) modePopoutClose();
+      if (modelPopout && !modelPopout.contains(e.target) && !e.target.closest('.pm6-chat-modelbtn') && !(effortPopout && effortPopout.contains(e.target))) modelPopoutClose();
+      if (personaPopout && !personaPopout.contains(e.target) && !e.target.closest('.pm6-chat-personabtn')) personaPopoutClose();
+      if (effortPopout && !effortPopout.contains(e.target) && !(modelPopout && modelPopout.contains(e.target)) && !(modePopout && modePopout.contains(e.target)) && !e.target.closest('.pm6-chat-modelbtn') && !e.target.closest('.pm6-chat-modebtn')) effortPopoutClose();
     });
   }
 
@@ -969,7 +2091,7 @@
           '<span class="pm6-chat-queuechip-pos">#' + (i + 1) + '</span>' +
           '<span class="pm6-chat-queuechip-text">' + esc(item.text) + '</span>' +
           '<span style="flex:none;color:var(--text-muted);">queued</span>' +
-          '<button class="pm6-chat-queuechip-x" title="Remove from queue">✕</button></div>';
+          '<button class="pm6-chat-queuechip-x" title="Remove from queue" aria-label="Remove from queue">' + SVG.closeX + '</button></div>';
       }).join('');
     });
     updateQueueFull(q.length >= 2);
@@ -994,11 +2116,10 @@
   /* ---------- engine event rendering ---------- */
   function setBusy(busy) {
     $all('.pm6-chat-send').forEach(function (b) {
-      if (b.getAttribute('data-demo-action')) return; /* embedded gated send stays as-is */
+      if (b.getAttribute('data-demo-action')) return;
       b.setAttribute('data-pm6-state', busy ? 'busy' : 'idle');
-      var lab = $('.pm6-chat-send-label', b);
-      if (lab) lab.textContent = busy ? 'Stop' : 'Send';
       b.title = busy ? 'Stop — cancels active work after a 3s grace; the queue survives' : 'Send (Enter) — becomes Stop while the agent works';
+      b.setAttribute('aria-label', busy ? 'Stop agent' : 'Send message');
     });
   }
   function setContext(ctx) {
@@ -1107,12 +2228,55 @@
       var jump = e.target && e.target.closest ? e.target.closest('.pm6-chat-jump') : null;
       if (jump) {
         var st = jump.closest('.messageStream') || $('.messageStream', jump.closest('.chat-main') || document);
-        if (st) st.scrollTop = st.scrollHeight;
+        if (st) { st.scrollTop = st.scrollHeight; updateJumpVisibility(st); }
+      }
+      var rewind = e.target && e.target.closest ? e.target.closest('.pm6-chat-rewind') : null;
+      if (rewind && inMounts(rewind)) {
+        e.stopPropagation();
+        fabOpen(rewind, [
+          { label: 'Revert last edit', title: 'cmd.chat.revert — Restores file mutations from last assistant turn' },
+          { label: 'Rewind chat', title: 'cmd.chat.rewind — Conversation history only. Does NOT restore files.' }
+        ], function (idx) {
+          if (idx === 0) say('cmd.chat.revert → restoring files from last assistant turn...');
+          else say('cmd.chat.rewind → rewinding conversation (files unchanged)');
+        });
+        return;
+      }
+      var saBtn = e.target && e.target.closest ? e.target.closest('.chatFooterSubagents') : null;
+      if (saBtn && inMounts(saBtn)) {
+        e.stopPropagation();
+        var ctx = window.PM6_FOOTER_CTX || {};
+        if (ctx.sa) openFooterSubagentsFab(saBtn, ctx.sa, saBtn.closest('.pm6-chat-root'));
+        return;
+      }
+      var filesBtn = e.target && e.target.closest ? e.target.closest('.chatFooterFiles') : null;
+      if (filesBtn && inMounts(filesBtn)) {
+        e.stopPropagation();
+        var ctx2 = window.PM6_FOOTER_CTX || {};
+        if (ctx2.files && ctx2.files.length) openFooterFilesFab(filesBtn, ctx2.files);
+        return;
       }
     });
   }
 
-  /* ---------- chrome behavior: context module, lens, close, chips, rename ---------- */
+  /* ---------- chrome behavior: context module, lens, more menu, close, chips, rename ---------- */
+  function closeHeaderSprouts(except) {
+    $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {
+      if (except && p === except) return;
+      if (portalIsOpen(p) || p.classList.contains('is-closing')) portalCloseAnim(p);
+    });
+    $all('.pm6-chat-more-btn[aria-expanded="true"]').forEach(function (b) {
+      var menu = b.nextElementSibling;
+      if (except && menu === except) return;
+      b.setAttribute('aria-expanded', 'false');
+    });
+    $all('.context-usage.is-ctx-open').forEach(function (w) {
+      var mod = $('.context-hover-module', w);
+      if (except && mod === except) return;
+      w.classList.remove('is-ctx-open');
+      w.setAttribute('aria-expanded', 'false');
+    });
+  }
   function selectLens(item, mode) {
     var wrap = item.closest('.context-lens-wrap');
     if (!wrap) return;
@@ -1121,7 +2285,7 @@
     if (popover) $all('.cl-mode-item', popover).forEach(function (m) { m.classList.remove('cl-selected'); });
     item.classList.add('cl-selected');
     if (btn) btn.className = 'context-lens-btn cl-active cl-mode-' + mode;
-    if (popover) popover.classList.remove('active');
+    if (popover) portalCloseAnim(popover);
     say('Context Lens → ' + mode.charAt(0).toUpperCase() + mode.slice(1) + ' mode active');
   }
   function clearLens(offBtn) {
@@ -1131,10 +2295,50 @@
     var popover = $('.context-lens-popover', wrap);
     if (popover) $all('.cl-mode-item', popover).forEach(function (m) { m.classList.remove('cl-selected'); });
     if (btn) btn.className = 'context-lens-btn';
-    if (popover) popover.classList.remove('active');
+    if (popover) portalCloseAnim(popover);
     say('Context Lens turned off');
   }
   function wireChrome() {
+    /* Context ring: click sprout open/close (same portalOpenAnim as model
+       popouts / lens / worktree). Hover only glows accent-blue. */
+    function ctxModuleFromEvent(t) {
+      var wrap = t && t.closest ? t.closest('.context-usage') : null;
+      return (wrap && inMounts(wrap)) ? wrap : null;
+    }
+    function ctxModuleSetOpenState(wrap, open) {
+      if (!wrap) return;
+      wrap.classList.toggle('is-ctx-open', !!open);
+      wrap.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function ctxModuleOpen(wrap) {
+      if (!wrap) return;
+      var mod = $('.context-hover-module', wrap);
+      if (!mod) return;
+      $all('.context-hover-module.is-open, .context-hover-module.is-closing').forEach(function (m) {
+        if (m === mod) return;
+        var otherWrap = m.closest('.context-usage');
+        portalCloseAnim(m);
+        if (otherWrap) ctxModuleSetOpenState(otherWrap, false);
+      });
+      closeHeaderSprouts(mod);
+      if (mod.classList.contains('is-open') && !mod.classList.contains('is-closing')) return;
+      var anchor = $('svg', wrap) || wrap;
+      portalOpenAnim(mod, null, anchor);
+      ctxModuleSetOpenState(wrap, true);
+    }
+    function ctxModuleClose(wrap) {
+      if (!wrap) return;
+      var mod = $('.context-hover-module', wrap);
+      if (mod) portalCloseAnim(mod);
+      ctxModuleSetOpenState(wrap, false);
+    }
+    function ctxModuleToggle(wrap) {
+      if (!wrap) return;
+      var mod = $('.context-hover-module', wrap);
+      if (!mod) return;
+      if (portalIsOpen(mod)) ctxModuleClose(wrap);
+      else ctxModuleOpen(wrap);
+    }
     document.addEventListener('click', function (e) {
       if (!e.target || !e.target.closest) return;
       /* composer chips: delegated removal */
@@ -1151,7 +2355,16 @@
         $all('.ft-overflow', more.parentElement).forEach(function (f) { f.style.display = ''; });
         return;
       }
-      /* context-usage module */
+      /* context-usage module — click ring (not buttons inside the popout) to toggle */
+      var ctxAction = e.target.closest('.chm-compact-btn, .chm-details-link');
+      if (!ctxAction) {
+        var ctxWrap = ctxModuleFromEvent(e.target);
+        if (ctxWrap && !e.target.closest('.context-hover-module')) {
+          e.stopPropagation();
+          ctxModuleToggle(ctxWrap);
+          return;
+        }
+      }
       var compact = e.target.closest('.chm-compact-btn');
       if (compact && inMounts(compact)) {
         compact.textContent = 'Compacting…';
@@ -1161,27 +2374,80 @@
       }
       var details = e.target.closest('.chm-details-link');
       if (details && inMounts(details)) {
-        if (window.PM6_CONTEXT_TAB) window.PM6_CONTEXT_TAB.open(CURRENT);
+        /* "More details" opens the rich Context view as a new tab in the
+           file editor panel (pane1) via the "context:<threadId>" pseudo-path.
+           The tab renderer (PM6_OPEN_CONTEXT_TAB -> pm6ContextHtml) mirrors
+           the standalone #contextDetailPane content (Overview w/ Worker,
+           Breakdown legend + By-Role, Browser Context, Messages, Raw/JSON). */
+        var detailsWrap = details.closest('.context-usage');
+        if (detailsWrap) ctxModuleClose(detailsWrap);
+        try {
+          if (window.PM6_OPEN_CONTEXT_TAB) {
+            var ui = THREADS()[CURRENT] || null;
+            var label = 'Context: ' + threadTitleText(ui, CURRENT);
+            window.PM6_OPEN_CONTEXT_TAB(CURRENT, label);
+          } else if (window.PM6_CONTEXT_TAB) {
+            window.PM6_CONTEXT_TAB.open(CURRENT);
+          }
+        } catch (ec) {}
         return;
       }
-      if (e.target.closest('.context-hover-module')) return; /* module body clicks never toggle the pin */
-      var ctx = e.target.closest('.context-usage');
-      if (ctx && inMounts(ctx)) { ctx.classList.toggle('pinned'); return; }
-      /* context lens */
+      /* more-options menu (duplicate / archive / popout / close) */
+      var moreBtn = e.target.closest('.pm6-chat-more-btn');
+      if (moreBtn && inMounts(moreBtn)) {
+        e.stopPropagation();
+        var moreMenu = moreBtn.nextElementSibling;
+        var moreOpen = portalIsOpen(moreMenu);
+        closeHeaderSprouts(moreMenu);
+        if (moreOpen) {
+          portalCloseAnim(moreMenu);
+          moreBtn.setAttribute('aria-expanded', 'false');
+        } else if (moreMenu) {
+          portalOpenAnim(moreMenu, null, moreBtn);
+          moreBtn.setAttribute('aria-expanded', 'true');
+        }
+        return;
+      }
+      var moreItem = e.target.closest('.pm6-chat-more-item');
+      if (moreItem && inMounts(moreItem)) {
+        var moreWrap = moreItem.closest('.pm6-chat-more-wrap');
+        var closingMenu = moreWrap ? $('.pm6-chat-more-menu', moreWrap) : null;
+        var closingBtn = moreWrap ? $('.pm6-chat-more-btn', moreWrap) : null;
+        if (closingMenu) portalCloseAnim(closingMenu);
+        if (closingBtn) closingBtn.setAttribute('aria-expanded', 'false');
+        /* let popOutBtn / closeChatBtn / layout-cycle / demo.toast handlers run */
+      }
+      /* worktree — click to sprout (same path as lens; PM6_SPROUT for bind/unbind) */
+      var wtBtn = e.target.closest('.wt-bind-btn');
+      if (wtBtn && inMounts(wtBtn)) {
+        e.stopPropagation();
+        e.preventDefault();
+        var wtDd = null;
+        var wtWrap = wtBtn.closest('.wt-bind-wrap');
+        if (wtWrap) wtDd = $('.wt-bind-dropdown', wtWrap);
+        var wtOpen = portalIsOpen(wtDd);
+        closeHeaderSprouts(wtDd);
+        if (wtOpen) portalCloseAnim(wtDd);
+        else if (wtDd) portalOpenAnim(wtDd, null, wtBtn);
+        return;
+      }
+      /* context lens — click to sprout */
       var lensBtn = e.target.closest('.context-lens-btn');
       if (lensBtn && inMounts(lensBtn)) {
+        e.stopPropagation();
         var popover = lensBtn.nextElementSibling;
-        var isActive = !!(popover && popover.classList.contains('active'));
-        $all('.context-lens-popover').forEach(function (p) { p.classList.remove('active'); });
-        if (popover && !isActive) popover.classList.add('active');
+        var isActive = portalIsOpen(popover);
+        closeHeaderSprouts(popover);
+        if (isActive) portalCloseAnim(popover);
+        else if (popover) portalOpenAnim(popover, null, lensBtn);
         return;
       }
       var clMode = e.target.closest('.cl-mode-item');
       if (clMode && inMounts(clMode)) { selectLens(clMode, clMode.getAttribute('data-mode') || 'mute'); return; }
       var clOff = e.target.closest('.cl-off-btn');
       if (clOff && inMounts(clOff)) { clearLens(clOff); return; }
-      if (!e.target.closest('.context-lens-wrap')) {
-        $all('#chatPanel .context-lens-popover.active, #floatingChat .context-lens-popover.active').forEach(function (p) { p.classList.remove('active'); });
+      if (!e.target.closest('.context-lens-wrap') && !e.target.closest('.pm6-chat-more-wrap') && !e.target.closest('.wt-bind-wrap') && !e.target.closest('.context-usage')) {
+        closeHeaderSprouts();
       }
       /* close buttons (both mounts) */
       var closeBtn = e.target.closest('.closeChatBtn');
@@ -1196,8 +2462,30 @@
           if (resizer) resizer.classList.add('hidden');
           var icon = document.querySelector('.activity-bar .icon[title="Chat"]');
           if (icon) icon.classList.remove('active');
+          if (window.PM_REFIT_SPLIT) window.PM_REFIT_SPLIT();
         }
         return;
+      }
+    });
+    /* keyboard: Enter/Space toggles context ring when focused */
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var wrap = e.target && e.target.classList && e.target.classList.contains('context-usage')
+        ? e.target : null;
+      if (!wrap || !inMounts(wrap)) return;
+      e.preventDefault();
+      var mod = $('.context-hover-module', wrap);
+      if (!mod) return;
+      if (portalIsOpen(mod)) {
+        portalCloseAnim(mod);
+        wrap.classList.remove('is-ctx-open');
+        wrap.setAttribute('aria-expanded', 'false');
+      } else {
+        closeHeaderSprouts(mod);
+        var anchor = $('svg', wrap) || wrap;
+        portalOpenAnim(mod, null, anchor);
+        wrap.classList.add('is-ctx-open');
+        wrap.setAttribute('aria-expanded', 'true');
       }
     });
     /* header rename: contenteditable title commits on blur (focusout bubbles) */
@@ -1246,6 +2534,10 @@
       float0.style.display = 'flex';
       float0.classList.toggle('pm6-chat-overlay', mode === 'overlay');
     }
+    /* docking/undocking changes .center-column's width — refit the
+       editor/dashboard split so the editor yields, not the dashboard
+       (guarded: part 25 owns the function, load order is not fixed) */
+    if (window.PM_REFIT_SPLIT) window.PM_REFIT_SPLIT();
   }
   function wireLayoutCycle() {
     document.addEventListener('click', function (e) {
@@ -1279,7 +2571,7 @@
 
   /* ---------- floating chat drag (header row 1 is the handle; detached mode only) ---------- */
   function wireFloatDrag() {
-    var IGNORE = 'button, a, input, select, textarea, [contenteditable], .wt-bind-wrap, .context-usage, .context-lens-wrap';
+    var IGNORE = 'button, a, input, select, textarea, [contenteditable], .wt-bind-wrap, .context-usage, .context-lens-wrap, .pm6-chat-more-wrap';
     document.addEventListener('mousedown', function (e) {
       var float0 = document.getElementById('floatingChat');
       if (!float0 || float0.style.display === 'none') return;
@@ -1368,6 +2660,71 @@
     }
   };
 
+  window.PM6_SPROUT = {
+    open: portalOpenAnim,
+    close: portalCloseAnim,
+    isOpen: portalIsOpen
+  };
+
+  /* Runtime "i" popover: portal to body so it stacks above the composer/FAB. */
+  (function wireRuntimePopover() {
+    var active = null;
+    function restore(pop) {
+      if (!pop || !pop._pmHome) return;
+      var home = pop._pmHome;
+      if (home.next && home.next.parentNode === home.parent) home.parent.insertBefore(pop, home.next);
+      else if (home.parent) home.parent.appendChild(pop);
+      pop._pmHome = null;
+      pop.style.left = '';
+      pop.style.top = '';
+      pop.style.right = '';
+      pop.style.width = '';
+    }
+    function closeAll() {
+      document.querySelectorAll('.msg-runtime-popover.visible').forEach(function (pop) {
+        pop.classList.remove('visible');
+        restore(pop);
+      });
+      active = null;
+    }
+    function openFor(icon) {
+      if (!icon) return;
+      var pop = icon._pmRuntimePop || (icon.querySelector && icon.querySelector('.msg-runtime-popover'));
+      if (!pop) return;
+      icon._pmRuntimePop = pop;
+      if (pop.classList.contains('visible')) {
+        pop.classList.remove('visible');
+        restore(pop);
+        active = null;
+        return;
+      }
+      closeAll();
+      if (!pop._pmHome) {
+        pop._pmHome = { parent: pop.parentNode, next: pop.nextSibling };
+        document.body.appendChild(pop);
+      }
+      pop.classList.add('visible');
+      var ir = icon.getBoundingClientRect();
+      var mw = Math.max(200, pop.offsetWidth || 200);
+      var left = Math.min(Math.max(8, ir.right - mw), window.innerWidth - mw - 8);
+      var top = ir.bottom + 6;
+      if (top + (pop.offsetHeight || 160) > window.innerHeight - 8) {
+        top = Math.max(8, ir.top - (pop.offsetHeight || 160) - 6);
+      }
+      pop.style.left = left + 'px';
+      pop.style.top = top + 'px';
+      pop.style.right = 'auto';
+      active = pop;
+    }
+    window.pm6ToggleRuntimePopover = openFor;
+    document.addEventListener('click', function (e) {
+      if (!active) return;
+      if (e.target.closest && (e.target.closest('.msg-runtime-popover') || e.target.closest('.info-icon'))) return;
+      closeAll();
+    });
+    window.addEventListener('resize', closeAll);
+  })();
+
   /* ---------- wizard-embedded adapter (all chrome flags off) ---------- */
   window.PM6_CHAT_UI = {
     bubbleHtml: function (en) {
@@ -1447,8 +2804,11 @@
           });
           delete STREAM_SINKS[p.msgId];
         } else if (p.type === 'done') {
-          $all('[data-pm6-mid="' + p.msgId + '"] .msg-body').forEach(function (body) {
-            if (!$('.msg-controls', body)) body.insertAdjacentHTML('beforeend', msgControlsHtml());
+          $all('[data-pm6-mid="' + p.msgId + '"]').forEach(function (msg) {
+            /* Issue 5/12: append the hover-row as a SIBLING of .msg-body (a
+               child of .message), so it renders below the bubble, not inside
+               it. Skip if the shell already added one. */
+            if (!$('.msg-hover-row', msg)) msg.insertAdjacentHTML('beforeend', msgHoverRowHtml({ role: 'assistant', time: 'now' }));
           });
           delete STREAM_SINKS[p.msgId];
         }
@@ -1500,7 +2860,7 @@
         if (!T[t.id]) {
           T[t.id] = { id: t.id, title: esc(t.title || 'New thread'), role: t.kind || 'assistant', timestamp: 'now',
             status: 'unread', summaryHtml: 'Fresh thread — no turns yet', mode: 'agent',
-            footer: null, suggestions: null, composerChips: null, hoverActions: [] };
+            footer: null, composerChips: null, hoverActions: [] };
         }
         if ($('.chat-thread-item[data-thread="' + t.id + '"]')) return; /* roster row already exists */
         $all('#chatPanel .chatThreadList, #floatingChat .chatThreadList').forEach(function (list) {
@@ -1521,11 +2881,13 @@
     });
     d.on('files.touched', function (p) {
       if (!p || !p.path) return;
-      $all('.chatFooterFiles').forEach(function (strip) {
-        if ($('[data-demo-arg="' + p.path + '"]', strip)) return;
-        strip.insertAdjacentHTML('beforeend',
-          '<span class="ft-file" data-demo-action="files.open" data-demo-arg="' + esc(p.path) + '">' + esc(p.path) + ' <span class="ft-add">+</span></span>');
-      });
+      var ui = THREADS()[CURRENT];
+      if (!ui) return;
+      if (!ui.footer) ui.footer = { problems: false };
+      if (!Array.isArray(ui.footer.files)) ui.footer.files = footerFilesList(ui.footer);
+      if (ui.footer.files.some(function (f) { return f.path === p.path; })) return;
+      ui.footer.files.push({ path: p.path, add: 0, del: 0 });
+      renderFooter(ui);
     });
     d.on('chat.layout', function (p) {
       if (!p || p.source === 'chat') return;
@@ -1564,8 +2926,13 @@
     try { mergeEngineThreads(); } catch (e) {}
     wireComposers();
     wireModes();
+    wireFab();
+    wireJumpToLatest();
+    wireFooterLayoutObservers();
     wireQueue();
     wireThreads();
+    wireSidebarCollapse();
+    wireChatHeadMeasure();
     wireCardControls();
     wireChrome();
     wireLayoutCycle();

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "Kimi",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Page width",
+    "role": "page",
+    "min": 700,
+    "max": 2500,
+    "step": 10,
+    "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "gallery",
+      "title": "Kimi — Settings Redesign Bakeoff Gallery",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "bakeoff", "gallery"],
+      "order": 0
+    },
+    {
+      "id": "concept-01-atlas",
+      "title": "Concept 01 — Atlas (Kimi)",
+      "path": "concept-01-atlas.html",
+      "openPath": "concept-01-atlas.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "directory", "reference"],
+      "order": 10
+    },
+    {
+      "id": "concept-02-constellation",
+      "title": "Concept 02 — Constellation (Kimi)",
+      "path": "concept-02-constellation.html",
+      "openPath": "concept-02-constellation.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "command-center", "search-first"],
+      "order": 20
+    },
+    {
+      "id": "concept-03-ledger",
+      "title": "Concept 03 — Ledger (Kimi)",
+      "path": "concept-03-ledger.html",
+      "openPath": "concept-03-ledger.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "document", "editorial"],
+      "order": 30
+    },
+    {
+      "id": "concept-04-workbench",
+      "title": "Concept 04 — Workbench (Kimi)",
+      "path": "concept-04-workbench.html",
+      "openPath": "concept-04-workbench.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "ops-console", "health"],
+      "order": 40
+    }
+  ]
+}

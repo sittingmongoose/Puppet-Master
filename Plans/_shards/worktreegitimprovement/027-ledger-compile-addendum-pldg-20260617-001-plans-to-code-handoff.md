@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L4906-L4959
+Source lines: L4968-L5023
 
-Source SHA256: `28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309`
+Source SHA256: `88402dbf75591b036b5e9b242a67576bb4d2645329db848ea9b324ca3f2e8910`
 
 ---
 
@@ -28,6 +28,8 @@ acceptance_criteria:
   - Mutation-capable WorkNodes preserve repo and worktree identity before execution.
   - Parallel writes use isolated worktrees or explicit clean allocation.
   - Dirty, conflicted, contaminated, blocked-preserved, and lineage-mismatched worktrees block silent reuse.
+  - Exact baseline targeting distinguishes safe-point restore, historical clean isolation at an immutable OID, and no-mutation binding to a verified live worktree digest.
+  - Dirty source state is preserved unless the explicitly selected safe-point manifest owns its replacement; no command silently stashes, commits, resets, cleans, or discards it.
   - Local worktree state remains source-control truth even when GitHub promotion is configured.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

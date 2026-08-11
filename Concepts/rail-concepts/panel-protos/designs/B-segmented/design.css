@@ -1,0 +1,417 @@
+/* =====================================================================
+   DESIGN B — SEGMENTED SUB-NAV
+   Philosophy: a single-line pill segmented control at the top picks the
+   sub-view; only that sub-view renders below. This eliminates the
+   accordion-stacking problem (5 sections piling up) — the segments are
+   peers, never parents of each other. At <240px the segments collapse to
+   short codes via the .pb-is-narrow class (toggled by JS on proto:resize).
+
+   Signature element = the segmented control (.pb-seg): a row of connected
+   pill buttons sitting inside a shared rounded track. The active one is
+   filled with --accent-primary. The track supplies the single shared
+   border so there are never double-borders between pills (works on retro
+   2px borders AND glass 0px borders). Pills wrap to a 2nd row at narrow
+   widths instead of overflowing the panel.
+
+   Vocabulary prefix: .pb-*  (progressive-B / segmented-B).
+   ===================================================================== */
+
+.pb-root {
+  padding: var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+  font-size: var(--fs-xs);
+}
+
+/* =====================================================================
+   THE SIGNATURE — segmented control
+   ===================================================================== */
+.pb-seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--xs);
+  padding: var(--xs);
+  background: color-mix(in srgb, var(--surface-elevated) 75%, transparent);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  /* allow horizontal scroll as a last-resort escape so we never overflow */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.pb-seg::-webkit-scrollbar { display: none; }
+
+.pb-seg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xs);
+  min-width: 0;
+  height: 24px;
+  padding: 0 var(--md);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-snap);
+}
+.pb-seg-btn:hover {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+.pb-seg-btn.active {
+  background: var(--accent-primary);
+  color: var(--background);
+  font-weight: 800;
+  box-shadow: var(--elev-1);
+}
+.pb-seg-btn.active:hover { filter: brightness(1.06); }
+.pb-seg-btn .pb-seg-ico { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* narrow-mode collapse: show the short code instead of the full label */
+.pb-seg-btn .pb-seg-short { display: none; }
+.pb-is-narrow .pb-seg-btn { padding: 0 var(--sm); height: 22px; }
+.pb-is-narrow .pb-seg-btn .pb-seg-full { display: none; }
+.pb-is-narrow .pb-seg-btn .pb-seg-short { display: inline; }
+
+/* the segmented views stack — only the active one is shown (display set in JS) */
+.pb-seg-views { display: flex; flex-direction: column; gap: var(--md); }
+.pb-seg-view { display: flex; flex-direction: column; gap: var(--sm); }
+
+/* a compact summary line (count + state) */
+.pb-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 700;
+  min-width: 0;
+}
+.pb-summary > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-count { color: var(--text-secondary); }
+
+/* =====================================================================
+   ATOMS — shared list rows, dots, chips, kv, inputs, buttons
+   (mirrors Design A's vocabulary with pb- prefix so designs never collide)
+   ===================================================================== */
+
+.pb-list { display: flex; flex-direction: column; gap: 1px; }
+.pb-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--xs);
+  min-height: 26px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.pb-row:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pb-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+}
+.pb-row-main.pb-stack { display: flex; flex-direction: column; gap: 1px; white-space: normal; }
+.pb-row-meta { font-size: var(--fs-2xs); color: var(--text-muted); flex-shrink: 0; }
+.pb-row-sub { font-size: var(--fs-2xs); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* status dot */
+.pb-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.pb-dot.ok   { background: var(--graph-passed); }
+.pb-dot.run  { background: var(--graph-running); }
+.pb-dot.fail { background: var(--graph-failed); }
+.pb-dot.idle { background: var(--graph-pending); }
+
+/* status / type chip */
+.pb-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 var(--sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pb-chip.ok    { background: color-mix(in srgb, var(--graph-passed) 18%, transparent); color: var(--graph-passed); }
+.pb-chip.warn  { background: color-mix(in srgb, var(--graph-running) 18%, transparent); color: var(--graph-running); }
+.pb-chip.err   { background: color-mix(in srgb, var(--graph-failed) 18%, transparent); color: var(--graph-failed); }
+.pb-chip.muted { background: color-mix(in srgb, var(--text-muted) 16%, transparent); color: var(--text-muted); }
+.pb-chip.fam   { background: var(--accent-soft); color: var(--accent-primary); }
+
+/* git status letter badge */
+.pb-gs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px; height: 14px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--mono-font);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pb-gs.M { background: color-mix(in srgb, var(--graph-running) 22%, transparent); color: var(--graph-running); }
+.pb-gs.A { background: color-mix(in srgb, var(--graph-passed) 22%, transparent); color: var(--graph-passed); }
+
+/* key/value rows */
+.pb-kv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  min-height: 18px;
+}
+.pb-kv-k {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-weight: 600;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pb-kv-v {
+  color: var(--text-secondary);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pb-kv-v.mono { font-family: var(--mono-font); }
+
+/* inputs */
+.pb-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 28px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.pb-input:focus { border-color: var(--accent-primary); }
+.pb-input::placeholder { color: var(--text-muted); }
+.pb-mono { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); }
+
+/* buttons */
+.pb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xs);
+  height: 26px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pb-btn:hover { color: var(--text-primary); border-color: var(--border); }
+.pb-btn.primary {
+  background: var(--accent-primary);
+  color: var(--background);
+  border-color: var(--accent-primary);
+  font-weight: 700;
+}
+.pb-btn.primary:hover { filter: brightness(1.08); }
+.pb-btn.block { width: 100%; }
+.pb-btnrow { display: flex; gap: var(--sm); }
+.pb-btnrow > .pb-btn { flex: 1 1 0; min-width: 0; }
+
+/* icon button */
+.pb-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pb-iconbtn:hover { color: var(--text-primary); border-color: var(--border); }
+
+/* mini action button (row-level) */
+.pb-minibtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px; height: 20px;
+  padding: 0 var(--xs);
+  background: none;
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.pb-minibtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface-elevated); }
+.pb-minibtn.danger { color: var(--accent-error); }
+.pb-minibtn.danger:hover { border-color: var(--accent-error); }
+
+/* toggle pill (flags) */
+.pb-pills { display: flex; flex-wrap: wrap; gap: var(--xs); }
+.pb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 22px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pb-pill:hover { color: var(--text-primary); border-color: var(--border); }
+.pb-pill.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* sprout trigger restyle — keep the engine-required classes but match our chrome */
+.pb-trigger {
+  justify-content: flex-start;
+  width: 100%;
+  height: 26px;
+}
+.pb-trigger .pb-trigger-label {
+  flex: 1 1 auto;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* search hit row (indented, line-numbered) */
+.pb-hit {
+  display: flex;
+  gap: var(--sm);
+  padding: var(--xs) var(--xs) var(--xs) var(--md);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  line-height: 1.45;
+  overflow: hidden;
+}
+.pb-hit:hover { background: var(--surface-elevated); }
+.pb-hit .pb-ln { color: var(--text-muted); flex-shrink: 0; min-width: 22px; text-align: right; }
+.pb-hit .pb-hit-code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pb-hit em { color: var(--accent-primary); font-style: normal; font-weight: 700; }
+
+/* triage log block */
+.pb-log {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  padding: var(--sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  overflow: hidden;
+}
+.pb-log .pb-log-fail { color: var(--graph-failed); }
+.pb-log > b { color: var(--text-primary); }
+
+/* publish chain */
+.pb-chain { display: flex; flex-direction: column; gap: var(--xs); }
+.pb-chain-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+}
+.pb-chain-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.pb-chain-step.done .pb-chain-num { background: var(--graph-passed); color: var(--background); border-color: var(--graph-passed); }
+
+/* investigation bundle */
+.pb-bundle {
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+.pb-bundle-chips { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+/* footnote */
+.pb-foot {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding-top: var(--xs);
+}
+
+/* empty hint when a sub-view has nothing */
+.pb-empty {
+  padding: var(--lg) var(--md);
+  text-align: center;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}

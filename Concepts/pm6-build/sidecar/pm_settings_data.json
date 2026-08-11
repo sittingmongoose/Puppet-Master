@@ -291,7 +291,7 @@
   {
    "id": "general.visual.theme",
    "label": "Theme",
-   "desc": "Changes the whole app's look and colors instantly - no restart needed. Eight looks: Friendly, Glass, Retro, and Basic, each in dark and light. Concept note: this build diverges from the adjudicated Retro Dark default and ships Friendly Dark.",
+   "desc": "Changes the whole app's look and colors instantly - no restart needed. Eight looks: Friendly, Glass, Retro, and Basic, each in dark and light. Pair it with Theme Mode to choose light, dark, or follow your computer. Concept note: this build diverges from the adjudicated Retro Dark default and ships Friendly Dark.",
    "type": "select",
    "options": [
     "Friendly Dark",
@@ -327,9 +327,36 @@
    "src": "Theme_System"
   },
   {
+   "id": "general.visual.theme-mode",
+   "label": "Theme Mode",
+   "desc": "Chooses light, dark, or follows your computer's appearance. Auto updates live when the OS setting changes.",
+   "type": "select",
+   "options": [
+    "Light",
+    "Dark",
+    "Auto"
+   ],
+   "default": "Auto",
+   "value": "Auto",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "Auto",
+   "search": [
+    "dark mode",
+    "light mode",
+    "auto",
+    "system theme",
+    "prefers-color-scheme",
+    "appearance"
+   ],
+   "src": "Theme_System"
+  },
+  {
    "id": "general.visual.basic-color-scheme",
    "label": "Light Or Dark (Basic Theme)",
-   "desc": "Picks light, dark, or follow-your-computer coloring when the Basic Modern theme is active. Switches live, no restart.",
+   "desc": "Picks light, dark, or follow-your-computer coloring when the Basic Modern theme is active. Switches live, no restart. (superseded by Theme Mode)",
    "type": "select",
    "options": [
     "Light",

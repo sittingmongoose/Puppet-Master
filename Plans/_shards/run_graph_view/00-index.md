@@ -1,27 +1,29 @@
 # Shard Index: Plans/Run_Graph_View.md
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `1f1d5e7807c054cf621c148e1fad35df3dfb65b3eea61805a8bafec81c974649`
+Source SHA256: `49143f47ebcde1b9235b6a7cf99b532bf9bb96979480752e85df92b2447d6341`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `675ecafb4a1110a9ab47eef3e3cfe9a83e7288f53ae1aa1a0ac8e2d687496766`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `adf446045f40e3598e8526344d46b1d1282e4b5b84348ac0e325167360dd63a9`
-- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `dfd49f7330679fdb6ab85d506ff0437e6539166203dc7c731700ae36d6a0ac74`
-- [004 - 2. Layout](004-2.-layout.md) L97-L110 `aca9cec0523b6233e5608c61141c77006715f435e733351799e48c1543dc86bd`
-- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `943057d1bd1fe2cc5b8dd5a5ac18e9887cc01831935f121407c5843ebc76a5f5`
-- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `e7044d185b74b09a679a652da0162174cdaf113d153bbe2d7ca56b073b6e72d6`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `04ac60d343c4ff0edfe01a44dda1359be20f174060d7c57844d538b506bdcef2`
-- [008 - PlanUnits](008-planunits.md) L141-L186 `d72ffd851758a2ecc5883569de218e2ff023b41ed1a13b1192843d3197cc315b`
-- [009 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L188-L817 `eef19ad97c0b0a3f347fb511e2a6bea9863c3710a0bd9793a2f64399febb750d`
-- [010 - Migration Coverage](010-migration-coverage.md) L819-L832 `c8dd8c473a1160790946528ebc177989563d8937c4f103995fc1921e26fbc6ca`
-- [011 - Ledger Compile Addendum - pldg-20260614-002](011-ledger-compile-addendum-pldg-20260614-002.md) L834-L876 `4f68e0761101f7ce22515f706d35f6ab8642e2ae1197cc22183c7c0feb8c6b4f`
-- [012 - Ledger Compile Addendum - pldg-20260616-002](012-ledger-compile-addendum-pldg-20260616-002.md) L878-L961 `edab9433e15a6a49004fa96a7e7de3f3f8bf724c75af62bc569d7dc69dfc22a6`
-- [013 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](013-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L963-L1013 `32a5ad1185002aee64fbe3c823b48551021052d45dfd96566c26bd2bc1358ab2`
-- [014 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1016-L1067 `3ca9e1f3e4eeca7a3725d077a23148c316c01fd565a0687a58b2c85e502019b9`
-- [015 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1069-L1075 `78f485c7ea9fe37f0ec949a4121529729a1c982cbca9cefbde9457dd2c7d3361`
-- [016 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](016-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1076-L1082 `165c98a7d363c7f2dc9922a1a65d8a4ddbb3d0558fa40692a48ea83ee88cef33`
-- [017 - Usage GUI Propagation Addendum - 2026-07-09](017-usage-gui-propagation-addendum-2026-07-09.md) L1084-L1141 `396182f6ab8ab58e41b358c02b0dad4c0665f8259a504fb9bc60c8d9499e498e`
+- [001 - Preamble](001-preamble.md) L1-L1 `2f944bb2e18aa724097a7035057ef8342b8c9fcb725bd4efc41b62eb16c8e2aa`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L11 `a834ce5213ba1601014ee18e1c7901a0b58d8b7536461abd28a658f37a627460`
+- [003 - 1. Scope and canonical role](003-1.-scope-and-canonical-role.md) L14-L94 `2e9e2c78436a992dd6de87b50a90cd959d64dda02d6c19b28c29d37530958bc2`
+- [004 - 2. Layout](004-2.-layout.md) L97-L110 `7b12eb75c51c63794820ac91c859f2c2a1d451fc09c9262a0915f8e9a6058ca4`
+- [005 - 3. Node detail inspector](005-3.-node-detail-inspector.md) L112-L123 `1f9d436b32bd36cba82f7394c124d938b124804677d6d4a78ec9a847be25a31e`
+- [006 - 4. Data model and identity](006-4.-data-model-and-identity.md) L125-L133 `53779bf829bb1f5a3ff9c742a9c9463d3bc457d69daba8904d7af8cc85fa512e`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L135-L139 `c7c9a8f0b6afee616d137c0a98a4af895ee67e55dcb3ef8852944d2fd48db13a`
+- [008 - PlanUnits](008-planunits.md) L141-L186 `3850624428c79e4da017f7de080f213fd6ffed0455f2750a841cee8cf00b3838`
+- [009 - Known-37 recovery-unavailable graph actions - 2026-07-18](009-known-37-recovery-unavailable-graph-actions-2026-07-18.md) L188-L192 `d9d5ee3b56580e0e40f312310dcff16723d025f248fdaf26717486aca763e7cc`
+- [010 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](010-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L194-L823 `768147d7dc53c05f36bffa0f6a836150ddb739255e429aadbd84fc320a42850d`
+- [011 - Migration Coverage](011-migration-coverage.md) L825-L838 `46df128ff86272fc7683e2ca50ba9dfa9eaa7b4f8bf9e872bfb66b443dd7c812`
+- [012 - Ledger Compile Addendum - pldg-20260614-002](012-ledger-compile-addendum-pldg-20260614-002.md) L840-L882 `df3edbaf082678c73870a9d7f89a6923022049b81875b5b4b7c624c8948a01a0`
+- [013 - Ledger Compile Addendum - pldg-20260616-002](013-ledger-compile-addendum-pldg-20260616-002.md) L884-L967 `c07aeb6c8e9714fb4fefd11d27de7115427535cba5101873a155ef91616a978e`
+- [014 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](014-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L969-L1019 `7f0715187926d54df35a0af0e61352714d4533a87f1644e6ed93e1cef5deddb8`
+- [015 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](015-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1022-L1073 `42483100aeaa1af8884619c8a79682a8af01e493919ea4b2f04c24749cef1354`
+- [016 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1075-L1081 `b9e4089ba8eba1d7efd4919714ea035c3b13fb55d7311bfe19cd4a465f867b74`
+- [017 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1082-L1088 `8ced694785450f3fe9781835897fe284af1e92ee66d3ba59d1e4d2e7aa131309`
+- [018 - Usage GUI Propagation Addendum - 2026-07-09](018-usage-gui-propagation-addendum-2026-07-09.md) L1090-L1147 `614755e5ee7acfaf7ec619f41291ce79591d7eaac86905a96087c9bd96f0cf51`
+- [019 - PMConcept6 Shell Sweep Addendum - 2026-07-16](019-pmconcept6-shell-sweep-addendum-2026-07-16.md) L1149-L1275 `47db894377d06f5158dbafe2d1b4b82b983451cf8faf5a22bbfb3c6143f21520`

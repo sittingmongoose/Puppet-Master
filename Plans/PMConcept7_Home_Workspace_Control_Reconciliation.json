@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_id": "pm.pmconcept7_home_workspace_control_reconciliation.v1",
+  "title": "PMConcept7 Home Workspace control reconciliation",
+  "decision_date": "2026-08-05",
+  "status": "accepted_post_audit_repair_contract",
+  "authority": {
+    "packet": "PMConcept7_Home_Workspace_Audit_Packet_v1",
+    "implementation_packet_lineage": "PMConcept7_Home_Workspace_Implementation_Packet_v1",
+    "requirements": "shared/01_REQUIREMENTS.jsonl",
+    "worklist": "implementation/01_WORKLIST.json",
+    "canonical_owner_docs": [
+      "Plans/FinalGUISpec.md",
+      "Plans/FileManager.md",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "Plans/storage-plan.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Contracts_V0.md",
+      "Plans/UI_Wiring_Rules.md",
+      "Plans/Wiring_Matrix.production.json",
+      "Plans/Widget_System.md",
+      "Plans/DRY_Rules.md"
+    ]
+  },
+  "locked_canon": {
+    "editor_panel_count": 4,
+    "editor_panel_ids": [
+      "editor_panel_1",
+      "editor_panel_2",
+      "editor_panel_3",
+      "editor_panel_4"
+    ],
+    "terminal_section_maximum": 4,
+    "terminal_visible_pane_maximum": 4,
+    "home_main_host": true,
+    "outer_dock_hosts": ["dock_left", "dock_right", "dock_top", "dock_bottom"],
+    "floating_host": "floating",
+    "web_floating_authority": "in_canvas",
+    "native_popout_authority": "slint_multi_window"
+  },
+  "conflict_adjudication": [
+    {
+      "owner": "Plans/FileManager.md",
+      "stale_rule": "one floating editor",
+      "disposition": "superseded",
+      "replacement": "Each of four stable editor panels may float independently; native multi-window behavior remains Slint-authoritative.",
+      "consumer_update": "Plans/FinalGUISpec.md and FileManager consumers use editor_panel_id, host, slot, size, and floating_bounds from HomeWorkspaceLayoutV1."
+    },
+    {
+      "owner": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "stale_rule": "two terminal sections and terminal/editor-area exclusion",
+      "disposition": "superseded",
+      "replacement": "Home permits up to four terminal sections, each movable among home_main, any outer dock, and floating; terminal sections remain distinct from internal workgroups and panes.",
+      "consumer_update": "Terminal movement uses cmd.workspace_layout.move_surface for sections and cmd.terminal.move_workgroup for workgroups."
+    },
+    {
+      "owner": "Plans/Widget_System.md",
+      "stale_rule": "widget hostability vocabulary applied to Home surfaces",
+      "disposition": "rejected_as_wrong_owner",
+      "replacement": "Dashboard, editor, terminal, and Chat are Home surfaces, not widgets; Dashboard widget layout remains owned by Dashboard.",
+      "consumer_update": "No cmd.widget.* command, widget hostability, DOM order, or Dashboard internal layout state is used by Home movement."
+    }
+  ],
+  "model_and_storage": {
+    "model": "HomeWorkspaceLayoutV1",
+    "schema": "Plans/home_workspace_layout.schema.json",
+    "storage_registry": "Plans/storage_value_registry.json",
+    "storage_key": "home_workspace_layout.v1:{project_id}:{workspace_tab_id}",
+    "scope": ["project_id", "workspace_tab_id"],
+    "identity_rules": [
+      "Stable surface identities are references to editor, dashboard, chat, terminal section, workgroup, pane, session, and buffer owners.",
+      "Movement, docking, resize, close, reopen, and reload do not mint buffers, browser sessions, chats, terminal sessions, or PTYs.",
+      "Invalid or corrupt envelopes reset safely and record a reason; off-screen floating bounds recover to last_docked_host or home_main."
+    ]
+  },
+  "commands": {
+    "new_commands": [
+      "cmd.editor.open_panel",
+      "cmd.editor.close_panel",
+      "cmd.workspace_layout.move_surface",
+      "cmd.workspace_layout.resize_surface",
+      "cmd.workspace_layout.set_collapsed",
+      "cmd.workspace_layout.reset",
+      "cmd.terminal.move_workgroup"
+    ],
+    "extended_contracts": [
+      "OpenFile.target_editor_panel_id",
+      "OpenFile.target_editor_group_id",
+      "OpenFile.target_group compatibility alias"
+    ],
+    "typed_events": [
+      "workspace.layout_changed",
+      "terminal.workgroup_moved"
+    ],
+    "prohibited_expansions": [
+      "cmd.file.open_with Panel 1..4 values",
+      "cmd.panel.switch Home placement semantics",
+      "cmd.widget.* for Home surface movement",
+      "cmd.terminal.move_pane for workgroup movement"
+    ]
+  },
+  "interaction_authority": {
+    "authored_transform": "Concepts/pm7-tools/home_workspace_source.py",
+    "transform_id": "T20_home_workspace",
+    "transform_driver": "Concepts/pm7-tools/build_pm7.py",
+    "generated_artifact": "Concepts/PMConcept7.html",
+    "state_rule": "DOM and Slint controls project committed/draft model state; Pointer Events transactions preview locally and dispatch/persist once at semantic drop or resize end.",
+    "interaction_rules": [
+      "Pointer capture, offset-preserving pickup, placeholder/reflow preview, edge-zone cues, cancellation, reduced-motion, and save-on-drop semantics are preserved from U10 vocabulary.",
+      "Four-edge scroll dissolve and the shared theme-aware resizer glow/recovery remain the common systems.",
+      "Web guarantees in-canvas floating and all four in-app docks; window.open is optional degraded behavior.",
+      "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, and Collapse Bottom Terminal.",
+      "Open Panel and Open Browser in Panel are view-local disclosures; only Panel 1 through Panel 4 leaves dispatch commands. Collapse Bottom Terminal is never relabeled as Expand.",
+      "Reset Home Layout is owned by Settings > General & Appearance > Startup & Recovery, while Move or Dock remains surface-local and File Manager targeting remains File Manager-local."
+    ]
+  },
+  "control_census": {
+    "semantic_production_rows": 128,
+    "production_wiring_prefix": "home.",
+    "production_wiring_owner": "Plans/Wiring_Matrix.production.json",
+    "view_local_disclosures": [
+      {
+        "selector": "#pm-home-more-btn",
+        "disposition": "view_local_popup_disclosure"
+      },
+      {
+        "selector": "[data-pm-home-submenu=pm-home-open-panel-flyout]",
+        "disposition": "view_local_flyout_disclosure"
+      },
+      {
+        "selector": "[data-pm-home-submenu=pm-home-open-browser-flyout]",
+        "disposition": "view_local_flyout_disclosure"
+      },
+      {
+        "selector": "[data-pm-home-surface-options]",
+        "disposition": "view_local_surface_menu_disclosure"
+      },
+      {
+        "selector": "[data-pm-home-file-submenu]",
+        "disposition": "view_local_file_target_disclosure"
+      },
+      {
+        "selector": ".pm-home-portal",
+        "disposition": "view_local_escape_outside_left_arrow_dismissal"
+      }
+    ],
+    "semantic_selector_families": [
+      "[data-pm-home-action]",
+      "[data-pm-home-handle]",
+      "[data-pm-home-workgroup-handle]",
+      "[data-pm-home-drop-host]",
+      "[data-pm-home-resizer]",
+      ".activity-bar .icon[title=Chat]",
+      "#collapseBottom",
+      ".s4-row[data-sid=general.startup.reset-home-layout] .s4-action"
+    ],
+    "required_resolution_fields": [
+      "selector",
+      "state_selector",
+      "command_or_view_only_disposition",
+      "receipt_or_event",
+      "handler",
+      "production_wiring_row",
+      "executable_test"
+    ],
+    "executable_test_owner": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+    "repair_evidence_census": "implementation/pmconcept7-home-workspace-20260805-repair/control_census.json",
+    "zero_omission_required": true,
+    "source_hashes": {
+      "Concepts/pm7-tools/home_workspace_source.py": "3e5a3fe2f8b5f5800a834ebe1e96ccdbc4c63ed735c1f559bbb2ff164d37b7b9",
+      "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "b3babe82caff9153cb8229d28c87f89b2eae3b9db7d1dee26fc94ea87e73ef2f",
+      "Plans/Wiring_Matrix.production.json": "42ff981beb8d456f0a442d1f2ec49134d389744fe6ec3a85a1d1db1a0b7828a7",
+      "Plans/home_workspace_layout.schema.json": "503cfcbdee9253a9c411b3e88a7f2dcb17394315f632485f1cd027604a1451b7"
+    }
+  },
+  "consumer_map": {
+    "FinalGUISpec": "Home composition, hosts, model-first identity and web/native capability authority.",
+    "FileManager": "Editor panel target fields, Panel 1..4 context actions, buffer/group ownership, superseded one-floating rule.",
+    "Section15": "Four terminal sections/panes, workgroup movement, session/PTy identity, empty-section behavior.",
+    "storage-plan": "Revisioned project/workspace layout persistence and recovery.",
+    "UI_Command_Catalog": "New command catalog and OpenFile target extension.",
+    "Contracts_V0": "Typed layout/workgroup event payload contracts and OpenFile placement fields.",
+    "UI_Wiring_Rules": "Model-first dispatch, semantic commit, focus/cancellation and no-orphan rules.",
+    "Wiring_Matrix.production": "Menu actions, handles, drop targets, and semantic resize endpoint rows.",
+    "Widget_System": "Home surface/widget ownership boundary.",
+    "DRY_Rules": "Single-owner model/storage and no duplicate identity/layout state.",
+    "Automated_Testing_System": "Home matrix, schema, generated-output, interaction and governance evidence requirements.",
+    "GUI_Rebuild_Requirements_Checklist": "Home acceptance checklist and generated-artifact safeguards.",
+    "00-plans-index": "Home Workspace artifact and owner-doc index entry."
+  },
+  "evidence_contract": {
+    "implementation_directory": "implementation/pmconcept7-home-workspace-20260805-repair",
+    "immutable_failed_audit": "audit/pmconcept7-home-workspace-20260805",
+    "required_reports": [
+      "REPAIR_READINESS_REPORT.md",
+      "repair_report.json",
+      "changed_files.json",
+      "requirement_traceability.jsonl",
+      "control_census.json",
+      "build_reproducibility.json",
+      "test_results.json",
+      "governance_results.json",
+      "visual_evidence/home_workspace_matrix.json"
+    ],
+    "completion_rule": "Repair readiness may be claimed only after all 49 HW requirements are traced, the semantic and view-local census has zero omissions, required gates pass, the generated artifact matches a second fresh build byte-for-byte, and browser error counts are zero. Only a fresh independent audit may issue PASS."
+  }
+}

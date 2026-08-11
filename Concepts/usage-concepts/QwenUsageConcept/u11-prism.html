@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U11 · Prism II — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-widgets.css">
+<link rel="stylesheet" href="u11-widgets.css?v=20260805j">
+<link rel="stylesheet" href="u11-rundetail.css?v=20260805j">
+<link rel="stylesheet" href="u11-context.css?v=20260805j">
+<style>
+/* =====================================================================
+   U11 — PRISM II
+   U10 Prism cloned, then rebuilt to the U11 packet: human room names,
+   three disclosure levels, a stable-ID hierarchical scope picker,
+   conditional capacity/runs widgets, and one reusable run detail.
+   Deterministic grid (NO dense flow), Slint-portable CSS only.
+   ===================================================================== */
+
+.u11-body { flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; gap: var(--us-gap); padding: var(--us-pad); }
+
+/* ---------- rail ---------- */
+.u11-rail {
+  position: relative; flex: none; width: 196px; min-width: 0; align-self: flex-start;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 6px 10px 10px; border-radius: var(--radius-lg);
+  background: rgba(128,128,128,.06); background: color-mix(in srgb, var(--surface-elevated) 62%, transparent);
+  border: var(--border-width) solid var(--border-light);
+  max-height: 100%; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent;
+}
+.u11-rail::-webkit-scrollbar { width: 8px; }
+.u11-rail::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border-radius: 8px; }
+[data-theme^="glass"] .u11-rail { border-color: var(--glass-hairline); background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); }
+[data-theme^="basic"] .u11-rail { box-shadow: none; }
+
+.u11-railind {
+  position: absolute; z-index: 0; border-radius: var(--radius-md); pointer-events: none;
+  background: rgba(120,120,255,.11); background: color-mix(in srgb, var(--accent-primary) 11%, transparent);
+  border: 1px solid rgba(120,120,255,.30); border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+.u11-railind.live { transition: top var(--mo-spring-dur) var(--mo-follow-ease), left var(--mo-spring-dur) var(--mo-follow-ease),
+  width var(--mo-spring-dur) var(--mo-follow-ease), height var(--mo-spring-dur) var(--mo-follow-ease); }
+.u11-railind.snap { transition: none !important; }
+
+.u11-item {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 7px 8px 7px 10px; border-radius: var(--radius-md); border: 1px solid transparent;
+  color: var(--text-secondary); text-align: left; min-width: 0; cursor: pointer; background: transparent;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+.u11-item:hover { background: rgba(128,128,128,.07); background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-primary); transform: translateX(2px); }
+.u11-item.active { color: var(--text-primary); }
+.u11-iico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm);
+  background: rgba(128,128,128,.08); background: color-mix(in srgb, var(--text-primary) 6%, transparent); color: var(--text-muted);
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u11-iico svg { width: 12px; height: 12px; }
+.u11-item:hover .u11-iico { color: var(--text-primary); }
+.u11-item.active .u11-iico { background: var(--accent-primary); color: var(--surface-elevated);
+  box-shadow: 0 0 0 3px rgba(120,120,255,.24); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 24%, transparent); }
+:is([data-theme^="basic"], [data-theme^="retro"]) .u11-item.active .u11-iico { box-shadow: none; }
+.u11-itxt { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u11-ilbl { display: flex; align-items: center; gap: 6px; min-width: 0;
+  font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.u11-ilbl-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u11-imeta { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+.u11-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--tone-mute);
+  transition: background-color var(--mo-settle-dur) var(--mo-settle-ease), box-shadow var(--mo-settle-dur) var(--mo-settle-ease); }
+.u11-dot.ok { background: var(--tone-ok); } .u11-dot.warn { background: var(--tone-warn); }
+.u11-dot.err { background: var(--tone-err); } .u11-dot.info { background: var(--tone-info); }
+.u11-dot.warn { box-shadow: 0 0 0 3px rgba(255,180,60,.18); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-warn) 18%, transparent); }
+.u11-dot.err { box-shadow: 0 0 0 3px rgba(255,90,90,.18); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-err) 18%, transparent); }
+.u11-dot.warn, .u11-dot.err { animation: usPulse 1.8s var(--ease-out) infinite; }
+@keyframes u11RailIn { from { opacity: 0; transform: translateX(-7px); } to { opacity: 1; transform: none; } }
+.u11-rail .u11-item { animation: u11RailIn var(--mo-reveal-dur) var(--mo-reveal-ease) backwards;
+  animation-delay: calc(var(--u11-ri, 0) * 30ms); }
+
+/* scope chip on the scope rail entry */
+.u11-scopechip-rail { flex: none; max-width: 66px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--mono-font); font-size: 8px; font-weight: 700; letter-spacing: .04em;
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  color: var(--text-muted); background: rgba(128,128,128,.09); background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  transition: all var(--mo-settle-dur) var(--mo-settle-ease); }
+.u11-item.u11-scoperow { padding-right: 6px; }
+.u11-scopechip-rail.scoped { color: var(--accent-primary); background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px rgba(120,120,255,.38); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+
+/* More group */
+.u11-moregrp { display: flex; flex-direction: column; gap: 2px; }
+.u11-moregrp .u11-sub { padding-left: 20px; }
+.u11-moregrp.closed .u11-sub { display: none; }
+.u11-railsep { height: 1px; background: var(--border-light); margin: 6px 4px; }
+
+/* disclosure segmented control */
+.u11-disc { display: flex; gap: 2px; margin-top: 8px; padding: 3px; border-radius: var(--radius-md);
+  border: 1px solid var(--border-light); background: rgba(128,128,128,.05); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+.u11-disc button { flex: 1 1 auto; padding: 5px 2px; border: none; border-radius: var(--radius-sm); background: transparent;
+  color: var(--text-muted); cursor: pointer; font-family: var(--display-font); font-size: 7.5px; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase; transition: all var(--motion-fast) var(--ease-out); }
+.u11-disc button:hover { color: var(--text-primary); }
+.u11-disc button.on { color: var(--accent-primary); background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px rgba(120,120,255,.35); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 35%, transparent); }
+.u11-disc-cap { margin-top: 5px; font-size: 8px; color: var(--text-muted); line-height: 1.45; text-align: center; }
+
+/* ---------- panes ---------- */
+.u11-panes { flex: 1 1 auto; min-width: 0; min-height: 0; position: relative; display: flex; }
+.u11-panes::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(80% 44% at 6% -8%, rgba(120,120,255,.06), transparent 60%),
+    radial-gradient(60% 40% at 100% 104%, rgba(255,120,200,.05), transparent 60%);
+  background:
+    radial-gradient(80% 44% at 6% -8%, color-mix(in srgb, var(--accent-primary) 6%, transparent), transparent 60%),
+    radial-gradient(60% 40% at 100% 104%, color-mix(in srgb, var(--accent-magenta) 5%, transparent), transparent 60%); }
+.u11-pane {
+  flex: 1 1 auto; min-width: 0; min-height: 0; position: relative; z-index: 1;
+  overflow-y: auto; overflow-x: hidden;
+  padding: calc(var(--us-pad) + 6px) calc(var(--us-pad) + 8px) calc(var(--us-pad) + 14px);
+  scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent;
+  display: flex; flex-direction: column; gap: var(--us-gap);
+}
+.u11-pane::-webkit-scrollbar { width: 10px; }
+.u11-pane::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+.u11-pane:not(.pm-hidden):not(.u11-anim) { animation: u11In var(--mo-tab-in-dur, 200ms) var(--pm-ease-out, ease-out); }
+@keyframes u11In { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.u11-pane.u11-entering { z-index: 2; }
+.u11-pane.u11-leaving { position: absolute; inset: 0; z-index: 1; }
+
+/* kicker */
+.u11-kick { display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: none; }
+.u11-kn { flex: none; font-family: var(--num-font); font-size: var(--fs-md); font-weight: 800; line-height: 1.35;
+  letter-spacing: .5px; color: var(--accent-primary); font-variant-numeric: tabular-nums; }
+.u11-kmain { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.u11-kt { margin: 0; font-family: var(--num-font); font-size: var(--fs-2xl); font-weight: 800; letter-spacing: .2px; line-height: 1.12; color: var(--text-primary); }
+.u11-kd { margin: 0; font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); max-width: 74ch; }
+.u11-kmeta { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 3px; min-width: 0; max-width: 34%; }
+.u11-km { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.u11-scope { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--radius-pill);
+  font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; letter-spacing: .05em; white-space: nowrap; cursor: pointer;
+  border: none; transition: all var(--mo-settle-dur) var(--mo-settle-ease); }
+.u11-scope svg { width: 9px; height: 9px; flex: none; }
+.u11-scope.scoped { color: var(--accent-primary); background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px rgba(120,120,255,.38); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+.u11-scope.wide { color: var(--text-muted); background: rgba(128,128,128,.08); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u11-scope.pm-hidden { display: none; }
+
+/* canvases: deterministic grid — NO dense flow (Slint portability) */
+.u11 .uw-canvas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1020px) { .u11 .uw-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .u11 .uw-canvas { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 2000px) { .u11 .uw-canvas { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.u11 .uw-addbar { margin-bottom: 0; }
+
+/* data-quality banner strip */
+.u11-banner { display: flex; align-items: center; gap: 9px; padding: 8px 12px; border-radius: var(--radius-md);
+  border: 1px solid rgba(255,180,60,.4); border-color: color-mix(in srgb, var(--tone-warn) 40%, var(--border-light));
+  background: rgba(255,180,60,.08); background: color-mix(in srgb, var(--tone-warn) 8%, transparent);
+  font-size: var(--fs-2xs); color: var(--tone-warn-text); flex: none; }
+.u11-banner svg { width: 13px; height: 13px; flex: none; }
+.u11-banner b { color: var(--text-primary); }
+.u11-banner .u11-banner-act { margin-left: auto; }
+
+/* ---------- scope picker pop-out ---------- */
+.u11-pop-scrim { position: fixed; inset: 0; z-index: 520; background: rgba(0,0,0,.28);
+  background: color-mix(in srgb, var(--bg) 48%, transparent);
+  opacity: 0; pointer-events: none; transition: opacity var(--mo-popup-open-dur) var(--pm-ease-out); }
+.u11-pop-scrim.on { opacity: 1; pointer-events: auto; }
+.u11-pop { position: fixed; z-index: 525; width: 368px; max-height: min(78vh, 720px);
+  display: flex; flex-direction: column; min-height: 0;
+  background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3); overflow: hidden;
+  opacity: 0; transform: translateX(26px) scale(.985); transform-origin: top right; pointer-events: none;
+  transition: transform var(--mo-popup-close-dur) var(--pm-ease-in), opacity var(--mo-popup-close-dur) var(--pm-ease-in); }
+.u11-pop.on { opacity: 1; transform: none; pointer-events: auto;
+  transition: transform var(--mo-spring-dur) var(--pm-ease-spring), opacity var(--mo-popup-open-fade) var(--pm-ease-out); }
+[data-theme^="glass"] .u11-pop { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12)); border-color: var(--glass-hairline); }
+[data-theme^="retro"] .u11-pop { border-width: 2px; }
+.u11-pop-head { flex: none; display: flex; align-items: flex-start; gap: 10px; padding: 14px 14px 10px; }
+.u11-pop-ico { flex: none; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md); background: var(--accent-soft); color: var(--accent-primary); }
+.u11-pop-ico svg { width: 14px; height: 14px; }
+.u11-pop-t { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.u11-pop-tt { font-family: var(--display-font); font-size: 13px; font-weight: 700; letter-spacing: .02em; color: var(--text-primary); }
+.u11-pop-td { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.45; }
+.u11-pop-x { flex: none; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm); border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u11-pop-x:hover { color: var(--text-primary); border-color: var(--border-light); background: rgba(128,128,128,.08); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u11-pop-x svg { width: 12px; height: 12px; }
+.u11-pop-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 4px 8px 8px; display: flex; flex-direction: column; gap: 2px;
+  scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.u11-pop-list::-webkit-scrollbar { width: 8px; }
+.u11-pop-list::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border-radius: 8px; }
+.u11-pop-g { padding: 8px 8px 3px; font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1.3px;
+  text-transform: uppercase; color: var(--text-muted); }
+.u11-pop-row { position: relative; display: flex; align-items: center; gap: 9px; width: 100%; text-align: left;
+  padding: 6px 10px; border-radius: var(--radius-md); border: 1px solid transparent; background: transparent; cursor: pointer; min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u11-pop-row:hover { background: rgba(128,128,128,.07); background: color-mix(in srgb, var(--text-primary) 5%, transparent); transform: translateX(2px); }
+.u11-pop-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.u11-pop-row.on { background: rgba(120,120,255,.09); background: color-mix(in srgb, var(--accent-primary) 9%, transparent);
+  border-color: rgba(120,120,255,.34); border-color: color-mix(in srgb, var(--accent-primary) 34%, transparent); }
+.u11-pop-row.lv1 { padding-left: 22px; } .u11-pop-row.lv2 { padding-left: 36px; } .u11-pop-row.lv3 { padding-left: 50px; }
+.u11-pop-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--tone-mute); }
+.u11-pop-dot.ok { background: var(--tone-ok); } .u11-pop-dot.warn { background: var(--tone-warn); } .u11-pop-dot.err { background: var(--tone-err); }
+.u11-pop-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u11-pop-top { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.u11-pop-name { flex: 1 1 auto; min-width: 0; font-family: var(--display-font); font-size: 10.5px; font-weight: 700;
+  color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11-pop-row.on .u11-pop-name { color: var(--accent-primary); }
+.u11-pop-val { flex: none; font-family: var(--mono-font); font-size: 9.5px; font-weight: 700; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.u11-pop-val.hot { color: var(--tone-err-text); } .u11-pop-val.warm { color: var(--tone-warn-text); }
+.u11-pop-meta { font-family: var(--mono-font); font-size: 8px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11-pop-cli { font-size: 7px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 1px 5px;
+  border-radius: var(--radius-sm); color: var(--accent-primary); flex: none;
+  background: rgba(120,120,255,.12); background: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+.u11-pop-ck { flex: none; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--accent-primary); color: var(--surface-elevated);
+  opacity: 0; transform: scale(.5); transition: all var(--mo-spring-dur) var(--pm-ease-spring); }
+.u11-pop-ck svg { width: 9px; height: 9px; }
+.u11-pop-row.on .u11-pop-ck { opacity: 1; transform: none; }
+.u11-pop-foot { flex: none; padding: 9px 14px; border-top: 1px solid var(--border-light);
+  font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5;
+  background: rgba(128,128,128,.04); background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.u11-pop-foot b { color: var(--text-secondary); }
+
+/* ---------- settings sheet + export flow (sprouts) ---------- */
+.u11-sheet { display: flex; flex-direction: column; gap: 10px; padding: 13px 14px; width: 320px; max-width: calc(100vw - 24px); }
+.u11-sheet-head { display: flex; align-items: flex-start; gap: 9px; }
+.u11-sheet-tt { font-family: var(--display-font); font-size: 12.5px; font-weight: 700; color: var(--text-primary); }
+.u11-sheet-sub { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.45; margin-top: 2px; }
+.u11-sheet-sec { font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-muted); margin-top: 2px; }
+.u11-sheet-row { display: flex; align-items: center; gap: 8px; font-size: var(--fs-2xs); color: var(--text-secondary); padding: 3px 0; min-width: 0; }
+.u11-sheet-row span { flex: 1 1 auto; min-width: 0; }
+.u11-sheet-row select, .u11-sheet-row input[type="number"] {
+  font-family: var(--mono-font); font-size: 9px; color: var(--text-primary);
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 3px 6px; max-width: 130px; }
+.u11-sheet-ro { display: flex; flex-direction: column; gap: 2px; padding: 7px 9px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light); background: rgba(128,128,128,.05); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+.u11-sheet-links { display: flex; flex-direction: column; gap: 4px; padding-top: 4px; border-top: 1px solid var(--border-light); }
+.u11-sheet-link { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer;
+  font-family: var(--display-font); font-size: 9.5px; font-weight: 700; text-align: left;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u11-sheet-link svg { width: 12px; height: 12px; flex: none; }
+.u11-sheet-link:hover { color: var(--accent-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.u11-sheet-note { font-size: 8.5px; color: var(--text-muted); line-height: 1.5; }
+
+.u11-exp-intents { display: flex; flex-direction: column; gap: 6px; }
+.u11-exp-intent { display: flex; flex-direction: column; gap: 2px; padding: 9px 11px; border-radius: var(--radius-md);
+  border: 1px solid var(--border-light); background: transparent; cursor: pointer; text-align: left;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u11-exp-intent:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+.u11-exp-intent b { font-family: var(--display-font); font-size: 10.5px; color: var(--text-primary); }
+.u11-exp-intent span { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.4; }
+.u11-exp-fmts { display: flex; gap: 5px; flex-wrap: wrap; }
+.u11-exp-fmt { padding: 5px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent;
+  color: var(--text-secondary); cursor: pointer; font-family: var(--mono-font); font-size: 9px; font-weight: 700;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u11-exp-fmt:hover { color: var(--text-primary); border-color: var(--border); }
+.u11-exp-fmt.on { color: var(--accent-primary); background: var(--accent-soft); border-color: var(--accent-primary); }
+.u11-exp-fmt.adv { opacity: .6; }
+.u11-exp-go { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 8px; border-radius: var(--radius-md);
+  border: none; background: var(--accent-primary); color: var(--surface-elevated); cursor: pointer;
+  font-family: var(--display-font); font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
+  transition: filter var(--motion-fast) var(--ease-out); }
+.u11-exp-go:hover { filter: brightness(1.08); }
+.u11-exp-go svg { width: 12px; height: 12px; }
+.u11-exp-back { border: none; background: transparent; color: var(--text-muted); cursor: pointer;
+  font-family: var(--display-font); font-size: 9px; font-weight: 700; padding: 2px 4px; display: inline-flex; align-items: center; gap: 5px; }
+.u11-exp-back svg { width: 10px; height: 10px; }
+.u11-exp-back:hover { color: var(--text-primary); }
+
+/* responsive */
+@media (max-width: 1060px) {
+  .us-head-sub { display: none; }
+}
+@media (max-width: 820px) {
+  .u11-body { flex-direction: column; gap: var(--us-row); }
+  .u11-rail { width: auto; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 3px; overflow: visible; align-self: stretch; padding: 8px; }
+  .u11-item { flex: 0 0 auto; width: auto; padding: 6px 9px; }
+  .u11-imeta { display: none; }
+  .u11-kmeta { display: none; }
+  .u11-pop { width: min(368px, calc(100vw - 24px)); }
+  .u11-disc { display: none; }
+}
+
+:is([data-theme="friendly-light"], [data-theme="glass-light"]) .u11 .u11-kt { color: color-mix(in srgb, var(--text-primary) 52%, #000); }
+
+@media (prefers-reduced-motion: reduce) {
+  .u11-pane:not(.pm-hidden), .u11-dot.warn, .u11-dot.err, .u11-rail .u11-item, .u11-pop-row { animation: none; }
+  .u11-railind, .u11-railind.live, .u11-dot, .u11-pop, .u11-pop-scrim, .u11-scopechip-rail, .u11-scope { transition: none; }
+}
+html[data-reduced-motion="1"] .u11-pane:not(.pm-hidden),
+html[data-reduced-motion="1"] .u11-dot.warn,
+html[data-reduced-motion="1"] .u11-dot.err,
+html[data-reduced-motion="1"] .u11-rail .u11-item { animation: none; }
+html[data-reduced-motion="1"] .u11-railind,
+html[data-reduced-motion="1"] .u11-railind.live,
+html[data-reduced-motion="1"] .u11-dot,
+html[data-reduced-motion="1"] .u11-pop,
+html[data-reduced-motion="1"] .u11-pop.on,
+html[data-reduced-motion="1"] .u11-pop-scrim,
+html[data-reduced-motion="1"] .u11-scopechip-rail,
+html[data-reduced-motion="1"] .u11-scope { transition: none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u11">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub" id="u11HeadSub"></div>
+      <span class="us-fresh" id="u11Fresh" title="Projection freshness"><span class="d"></span><span id="u11FreshTxt"></span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u11Settings" title="Usage settings" aria-label="Usage settings"><i data-ico="cog" class="pm-ico"></i></button>
+        <button class="us-hbtn" id="u11Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" id="u11Export" title="Export usage" aria-label="Export usage"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div id="u11BannerSlot"></div>
+
+    <div class="us-pane-scope u11-body">
+
+      <nav class="u11-rail" aria-label="Usage sections">
+        <button class="u11-item active" data-tab="overview"><span class="u11-iico"><i data-ico="gauge" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Overview</span><span class="u11-dot" data-dot="overview"></span></span><span class="u11-imeta" data-meta="overview"></span></span></button>
+        <button class="u11-item u11-scoperow" data-scope-open aria-haspopup="listbox" title="Choose the scope"><span class="u11-iico"><i data-ico="filter" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Scope</span><span class="u11-dot ok" data-dot="scope"></span></span><span class="u11-imeta" data-meta="scope">all current usage</span></span><span class="u11-scopechip-rail" id="u11ScopeChip">All</span></button>
+        <button class="u11-item" data-tab="plans"><span class="u11-iico"><i data-ico="dial" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Plans &amp; limits</span><span class="u11-dot" data-dot="plans"></span></span><span class="u11-imeta" data-meta="plans"></span></span></button>
+        <button class="u11-item" data-tab="costs"><span class="u11-iico"><i data-ico="wallet" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Costs</span><span class="u11-dot" data-dot="costs"></span></span><span class="u11-imeta" data-meta="costs"></span></span></button>
+        <button class="u11-item" data-tab="accounts"><span class="u11-iico"><i data-ico="users" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Accounts</span><span class="u11-dot" data-dot="accounts"></span></span><span class="u11-imeta" data-meta="accounts"></span></span></button>
+        <button class="u11-item" data-tab="free"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Free models</span><span class="u11-dot" data-dot="free"></span></span><span class="u11-imeta" data-meta="free"></span></span></button>
+        <button class="u11-item" data-tab="context"><span class="u11-iico"><i data-ico="inbox" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Context</span><span class="u11-dot" data-dot="context"></span></span><span class="u11-imeta" data-meta="context"></span></span></button>
+        <button class="u11-item" data-tab="analytics"><span class="u11-iico"><i data-ico="trend" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Analytics</span><span class="u11-dot" data-dot="analytics"></span></span><span class="u11-imeta" data-meta="analytics"></span></span></button>
+        <button class="u11-item" data-tab="ledger"><span class="u11-iico"><i data-ico="clipboard" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Ledger</span><span class="u11-dot" data-dot="ledger"></span></span><span class="u11-imeta" data-meta="ledger"></span></span></button>
+        <div class="u11-railsep" role="separator"></div>
+        <div class="u11-moregrp closed" id="u11MoreGrp">
+          <button class="u11-item" data-more-toggle aria-expanded="false"><span class="u11-iico"><i data-ico="more" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">More</span></span><span class="u11-imeta">guard · cache · tools · signals</span></span></button>
+          <button class="u11-item u11-sub" data-tab="attention"><span class="u11-iico"><i data-ico="shield" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Attention</span><span class="u11-dot" data-dot="attention"></span></span><span class="u11-imeta" data-meta="attention"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="cache"><span class="u11-iico"><i data-ico="layers" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Prompt cache</span><span class="u11-dot" data-dot="cache"></span></span><span class="u11-imeta" data-meta="cache"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="tools"><span class="u11-iico"><i data-ico="chip" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Tools</span><span class="u11-dot" data-dot="tools"></span></span><span class="u11-imeta" data-meta="tools"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="signals"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Signals</span><span class="u11-dot" data-dot="signals"></span></span><span class="u11-imeta" data-meta="signals"></span></span></button>
+          <button class="u11-item u11-sub u11-advonly" data-tab="authority"><span class="u11-iico"><i data-ico="book" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Source authority</span><span class="u11-dot" data-dot="authority"></span></span><span class="u11-imeta" data-meta="authority"></span></span></button>
+        </div>
+        <div class="u11-railsep" role="separator"></div>
+        <div class="u11-disc" id="u11Disc" role="group" aria-label="Disclosure level">
+          <button type="button" data-disc="essentials" class="on" title="Decisions and plain-language state">Essen</button>
+          <button type="button" data-disc="standard" title="Token, context, cache, account, cost and plan details">Std</button>
+          <button type="button" data-disc="advanced" title="Raw meters, source authority, receipts and diagnostics">Adv</button>
+        </div>
+        <div class="u11-disc-cap" id="u11DiscCap">Essentials — decisions &amp; plain language</div>
+      </nav>
+
+      <div class="u11-panes">
+
+        <section class="u11-pane" data-pane="overview" aria-label="Overview">
+          <header class="u11-kick">
+            <b class="u11-kn">01</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Right now</h2>
+              <p class="u11-kd">The short version — plans under pressure, what happens next, and the money this month. Every room below is composed of widgets you can move, resize, configure and re-scope.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-overview" data-u11-types="capacity,plans,costs,attention,context,accounts"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="plans" aria-label="Plans and limits">
+          <header class="u11-kick">
+            <b class="u11-kn">02</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Plans &amp; limits</h2>
+              <p class="u11-kd">Included allowances and extra capacity per product — each with a plain-language <b>what happens next</b>. Unknown limits say so; they never render as zero.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-plans" data-u11-types="plans,capacity,authority"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="costs" aria-label="Costs">
+          <header class="u11-kick">
+            <b class="u11-kn">03</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Costs &amp; spending</h2>
+              <p class="u11-kd">What this month has cost so far — API-billed vs plan-included against one cost authority. The spending limit is yours; it is not a plan allowance.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-costs" data-u11-types="costs,analytics"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="accounts" aria-label="Accounts">
+          <header class="u11-kick">
+            <b class="u11-kn">04</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Accounts &amp; connections</h2>
+              <p class="u11-kd">Configured accounts grouped by provider. Requested is what you chose; used is what served it — mismatches surface only when they matter. CLI-owned profiles stay distinct from API routes.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-accounts" data-u11-types="accounts,authority"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="free" aria-label="Free models">
+          <header class="u11-kick">
+            <b class="u11-kn">05</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Free models</h2>
+              <p class="u11-kd">A catalog &amp; routing lens over the free routes you actually set up — not a provider, not a billing identity. Unconfigured upstream providers never appear here.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-free" data-u11-types="free,authority"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="context" aria-label="Context">
+          <header class="u11-kick">
+            <b class="u11-kn">06</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Context &amp; cache</h2>
+              <p class="u11-kd">What is eating the current effective window, and how well the cache serves it. The ring in the status bar opens the compact module; <b>More details</b> opens the full inspector.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-context" data-u11-types="context,cache"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="analytics" aria-label="Analytics">
+          <header class="u11-kick">
+            <b class="u11-kn">07</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Token analytics</h2>
+              <p class="u11-kd">Input, output, reasoning and cache-read traffic stacked across 5h / 24h / 7d. Click a legend entry to mute its series.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-analytics" data-u11-types="analytics,costs"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="ledger" aria-label="Ledger">
+          <header class="u11-kick">
+            <b class="u11-kn">08</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Ledger</h2>
+              <p class="u11-kd">One immutable event per real provider attempt, grouped under the logical work you asked for. Failed, interrupted and queued attempts stay in history; removed accounts keep their identity but leave the picker.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-ledger" data-u11-types="ledger,runs"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="attention" aria-label="Attention">
+          <header class="u11-kick">
+            <b class="u11-kn">09</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Attention</h2>
+              <p class="u11-kd">Anomaly &amp; quota guard decisions — blocked, warned, allowed, watching — each carrying its why.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-attention" data-u11-types="attention"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="cache" aria-label="Prompt cache">
+          <header class="u11-kick">
+            <b class="u11-kn">10</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Prompt cache</h2>
+              <p class="u11-kd">Per-connection prompt-cache hit and savings. Zero is a measurement; unsupported is a capability — they are never rendered the same way.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-cache" data-u11-types="cache"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="tools" aria-label="Tools">
+          <header class="u11-kick">
+            <b class="u11-kn">11</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Tool usage</h2>
+              <p class="u11-kd">Latency and error tax by tool over the last 24h. Self-recovering tools are counted once — never as duplicate user work.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-tools" data-u11-types="tools"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="signals" aria-label="Signals">
+          <header class="u11-kick">
+            <b class="u11-kn">12</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Signals &amp; efficiency</h2>
+              <p class="u11-kd">Wins, improvements and risks — the number you see is the number you trust.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-signals" data-u11-types="signals"></div>
+        </section>
+
+        <section class="u11-pane pm-hidden" data-pane="authority" aria-label="Source authority">
+          <header class="u11-kick">
+            <b class="u11-kn">13</b>
+            <div class="u11-kmain"><h2 class="u11-kt">Source authority</h2>
+              <p class="u11-kd">The advanced layer — provenance, settlement, freshness and route evidence. Raw IDs and receipts live here, never in Essentials.</p></div>
+            <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-u11-page="u11-authority" data-u11-types="authority"></div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<div class="u11-pop-scrim" id="u11PopScrim" aria-hidden="true"></div>
+<aside class="u11-pop" id="u11Pop" role="dialog" aria-label="Choose the scope">
+  <div class="u11-pop-head">
+    <span class="u11-pop-ico"><i data-ico="filter"></i></span>
+    <div class="u11-pop-t">
+      <span class="u11-pop-tt">Scope</span>
+      <span class="u11-pop-td">Choose what the numbers are made of — provider family, account, connection, product, meter, or a comparison set. Same-provider accounts stay grouped; joins are stable IDs, never display names.</span>
+    </div>
+    <button type="button" class="u11-pop-x" id="u11PopX" title="Close" aria-label="Close scope picker"><i data-ico="x"></i></button>
+  </div>
+  <div class="u11-pop-list" id="u11PopList" role="listbox" aria-label="Scopes"></div>
+  <div class="u11-pop-foot" id="u11PopFoot"></div>
+</aside>
+
+<div class="pm-sprout uw-sprout" id="u11SheetSprout" role="dialog" aria-label="Usage settings" hidden></div>
+<div class="pm-sprout uw-sprout" id="u11ExportSprout" role="dialog" aria-label="Export usage" hidden></div>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="u11-icons.js?v=20260805j"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="u11-time.js?v=20260805j"></script>
+<script src="u11-data.js?v=20260805j"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-widgets.js"></script>
+<script src="u11-widgets.js?v=20260805j"></script>
+<script src="u11-rundetail.js?v=20260805j"></script>
+<script src="u11-context.js?v=20260805j"></script>
+<script>
+(function () {
+  'use strict';
+
+  var D = window.U11, T = window.U11time;
+  var fmt = window.USfmt, R = window.USrender;
+  function $(id) { return document.getElementById(id); }
+  function ic(n) { return R.ic(n); }
+  function reduced() { return R.isRM(); }
+
+  /* ---------- persisted U11 state (filename-independent keys) ---------- */
+  var STORE = {
+    get: function (k, fb) { try { var v = localStorage.getItem(k); return v == null ? fb : JSON.parse(v); } catch (e) { return fb; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+  var disclosure = STORE.get('u11:disclosure', 'essentials');
+  if (['essentials', 'standard', 'advanced'].indexOf(disclosure) === -1) disclosure = 'essentials';
+  window.U11W.disclosure = disclosure;
+
+  /* scope fallback: if a persisted scope id vanished, fall back safely (§15.4) */
+  var savedScope = STORE.get('u11:scope', 'scope:all');
+  function scopeExists(id) {
+    if (id === 'scope:all') return true;
+    if (id === 'cmp:coding-sprint') return true;
+    return !!(D.familyById[id] || D.accountById[id] || D.connectionById[id] || D.productById[id] || D.meterById[id]);
+  }
+  if (!scopeExists(savedScope)) savedScope = 'scope:all';
+  window.U11W.pageScope = savedScope;
+
+  var settings = STORE.get('u11:settings', null) || JSON.parse(JSON.stringify(D.settingsDefaults));
+
+  /* ---------- boot chrome + widgets ---------- */
+  window.PMUsageChrome.boot({ badge: { id: 'U11', name: 'Prism II' } });
+  window.U11W.register();
+  if (window.U11Context) window.U11Context.mountTriggers($('sbChips'));
+
+  var HANDLES = [];
+  var CANVASES = [];
+
+  function typesForRoom(roomTypes) {
+    var allowed = window.U11W.typesForDisclosure[disclosure];
+    return roomTypes.filter(function (t) { return allowed.indexOf(t) !== -1; });
+  }
+
+  /* curated hole-free boards on the 4-track tier (deterministic; no dense flow) */
+  var BOARDS = {
+    'u11-overview': [
+      { type: 'capacity', c: 4, r: 8 }, { type: 'plans', c: 4, r: 10 },
+      { type: 'costs', c: 2, r: 11 }, { type: 'context', c: 2, r: 11 },
+      { type: 'attention', c: 2, r: 9 }, { type: 'accounts', c: 2, r: 9 }
+    ],
+    'u11-plans': [{ type: 'plans', c: 4, r: 11 }, { type: 'capacity', c: 2, r: 9 }, { type: 'authority', c: 2, r: 9 }],
+    'u11-costs': [{ type: 'costs', c: 2, r: 12 }, { type: 'analytics', c: 4, r: 10 }],
+    'u11-accounts': [{ type: 'accounts', c: 4, r: 11 }, { type: 'authority', c: 2, r: 8 }],
+    'u11-free': [{ type: 'free', c: 4, r: 11 }, { type: 'authority', c: 2, r: 8 }],
+    'u11-context': [{ type: 'context', c: 2, r: 10 }, { type: 'cache', c: 2, r: 10 }],
+    'u11-analytics': [{ type: 'analytics', c: 4, r: 11 }, { type: 'costs', c: 2, r: 9 }],
+    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }],
+    'u11-attention': [{ type: 'attention', c: 3, r: 11 }],
+    'u11-cache': [{ type: 'cache', c: 3, r: 11 }],
+    'u11-tools': [{ type: 'tools', c: 3, r: 11 }],
+    'u11-signals': [{ type: 'signals', c: 3, r: 11 }],
+    'u11-authority': [{ type: 'authority', c: 3, r: 10 }]
+  };
+
+  function mountCanvases() {
+    document.querySelectorAll('[data-u11-page]').forEach(function (cv) {
+      var pageId = cv.getAttribute('data-u11-page');
+      var roomTypes = (cv.getAttribute('data-u11-types') || '').split(',').filter(Boolean);
+      var types = typesForRoom(roomTypes);
+      var h = window.PMWidgets.mount(cv, { pageId: pageId, types: types.length ? types : roomTypes.slice(0, 1), defaultBoard: BOARDS[pageId] || null });
+      HANDLES.push(h);
+      CANVASES.push(cv);
+      window.U11W.wireCanvas(cv);
+      wireSortKeys(cv);
+      var mo = new MutationObserver(function (muts) {
+        muts.forEach(function (m) {
+          Array.prototype.forEach.call(m.addedNodes, function (n) {
+            if (n.nodeType !== 1) return;
+            if (n.classList && n.classList.contains('uw-body')) window.U11W.animateBody(n);
+            if (n.querySelectorAll) {
+              n.querySelectorAll('.uw-body').forEach(function (b) { window.U11W.animateBody(b); });
+            }
+            if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(n);
+          });
+        });
+      });
+      mo.observe(cv, { childList: true, subtree: true });
+      cv.querySelectorAll('.uw-body').forEach(function (b) { window.U11W.animateBody(b); });
+      if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(cv);
+    });
+  }
+
+  function wireSortKeys(cv) {
+    cv.addEventListener('keydown', function (e) {
+      var th = e.target.closest && e.target.closest('th[data-wd-sort]');
+      if (!th || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault(); th.click();
+    });
+  }
+
+  /* ---------- head / rail / kicker text ---------- */
+  function headLine() {
+    $('u11HeadSub').innerHTML = 'AI cost &amp; usage for <b>' + D.meta.project + '</b> — one room at a time. Refreshes every <b>' + D.meta.refreshMin + ' min</b> · history kept <b>' + D.meta.retentionDays + ' days</b>';
+    var f = $('u11Fresh');
+    f.classList.remove('stale', 'degraded');
+    if (D.meta.projectionHealth === 'stale') f.classList.add('stale');
+    if (D.meta.projectionHealth === 'degraded') f.classList.add('degraded');
+    f.title = 'Projection health: ' + D.meta.projectionHealth + ' · next auto-refresh ' + T.atClock(D.meta.nextAutoRefresh) + ' · zone ' + T.zone;
+    $('u11FreshTxt').textContent = D.meta.projectionHealth + ' · as of ' + T.atClock(D.meta.now);
+  }
+
+  function hotMeters() {
+    return D.meters.filter(function (m) { return m.usedPct != null && m.usedPct >= 90; });
+  }
+  function warmMeters() {
+    return D.meters.filter(function (m) { return m.usedPct != null && m.usedPct >= 70 && m.usedPct < 90; });
+  }
+
+  function railStatus() {
+    function dot(name, tone) {
+      var el = document.querySelector('[data-dot="' + name + '"]');
+      if (!el) return;
+      el.className = 'u11-dot ' + tone;
+      el.title = name + ': ' + tone;
+    }
+    function meta(name, txt) {
+      var el = document.querySelector('[data-meta="' + name + '"]');
+      if (el && el.textContent !== txt) el.textContent = txt;
+    }
+    var hot = hotMeters().length, warm = warmMeters().length;
+    var blocked = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var attn = D.accounts.filter(function (a) { return a.state !== 'ready'; }).length +
+      D.connections.filter(function (c) { return c.state === 'needs_reconnect'; }).length;
+    dot('overview', blocked || hot ? 'warn' : 'ok');
+    dot('plans', hot ? 'err' : (warm ? 'warn' : 'ok'));
+    dot('costs', 'ok');
+    dot('accounts', attn ? 'warn' : 'ok');
+    dot('free', 'ok');
+    var ctxPct = D.threadById['thread:t-88'].context.pct;
+    dot('context', ctxPct >= 90 ? 'warn' : 'ok');
+    dot('analytics', 'ok');
+    dot('ledger', 'ok');
+    dot('attention', blocked ? 'err' : 'ok');
+    dot('cache', 'ok');
+    dot('tools', 'ok');
+    dot('signals', 'ok');
+    dot('authority', 'info');
+
+    meta('overview', 'as of ' + T.atClock(D.meta.now));
+    meta('plans', D.products.length + ' products · ' + hot + ' hot');
+    meta('costs', fmt.cost(D.costs.spentMonthMicro / 1e6) + ' this month');
+    meta('accounts', D.visibleAccounts().length + ' accounts' + (attn ? ' · ' + attn + ' attention' : ''));
+    meta('free', D.eligibleFreeModels().length + ' eligible routes');
+    meta('context', fmt.tok(D.threadById['thread:t-88'].context.used) + '/' + fmt.tok(D.threadById['thread:t-88'].context.limit));
+    meta('analytics', 'stacked · 3 windows');
+    meta('ledger', D.attempts.length + ' immutable events');
+    meta('attention', blocked ? blocked + ' blocked' : 'none blocked');
+    meta('cache', '−$' + D.cacheStats.reduce(function (s, c) { return s + (c.save || 0); }, 0).toFixed(2) + ' today');
+    meta('tools', D.tools.length + ' tools · 24h');
+    meta('signals', D.signals.grade + ' · ' + D.signals.score);
+    meta('authority', 'provenance · settlement');
+
+    var sn = D.scopeNode(window.U11W.pageScope);
+    meta('scope', sn.kind === 'all' ? 'all current usage' : sn.label);
+    dot('scope', sn.kind === 'all' ? 'ok' : 'info');
+  }
+
+  function kickerMeta() {
+    var km = {
+      overview: 'as of ' + T.atClock(D.meta.now) + ' · next ' + T.atClock(D.meta.nextAutoRefresh),
+      plans: D.products.length + ' products · continuation each',
+      costs: 'limit ' + fmt.cost(D.costs.spendingLimitMicro / 1e6) + ' · warn at ' + D.costs.warningThresholdPct + '%',
+      accounts: D.visibleAccounts().length + ' accounts · requested vs used',
+      free: D.eligibleFreeModels().length + ' eligible · ' + (D.freeModels.length - D.eligibleFreeModels().length) + ' flagged',
+      context: fmt.tok(D.threadById['thread:t-88'].context.used) + ' / ' + fmt.tok(D.threadById['thread:t-88'].context.limit) + ' · ' + D.threadById['thread:t-88'].context.pct + '%',
+      analytics: 'stacked shares · mute via legend',
+      ledger: D.attempts.length + ' events · ' + D.works.length + ' work items',
+      attention: D.guards.length + ' decisions',
+      cache: D.cacheStats.length + ' connections',
+      tools: D.tools.length + ' tools · last 24h',
+      signals: D.signals.grade + ' · ' + D.signals.score,
+      authority: 'source class · settlement · freshness'
+    };
+    document.querySelectorAll('.u11-pane').forEach(function (p) {
+      var name = p.getAttribute('data-pane');
+      var m = p.querySelector('[data-kmeta]');
+      if (m && km[name] != null) m.textContent = km[name];
+      var chip = p.querySelector('[data-scope]');
+      if (!chip) return;
+      var scope = window.U11W.pageScope;
+      var sn = D.scopeNode(scope);
+      chip.classList.remove('pm-hidden');
+      if (sn.kind === 'all') {
+        chip.className = 'u11-scope wide';
+        chip.innerHTML = ic('globe2') + 'all current usage';
+      } else {
+        chip.className = 'u11-scope scoped';
+        chip.innerHTML = ic('filter') + sn.label;
+      }
+      chip.title = 'Change scope';
+    });
+  }
+
+  function updateScopeChip() {
+    var chip = $('u11ScopeChip');
+    if (!chip) return;
+    var sn = D.scopeNode(window.U11W.pageScope);
+    var txt = sn.kind === 'all' ? 'All' : sn.label;
+    chip.classList.toggle('scoped', sn.kind !== 'all');
+    chip.textContent = txt;
+  }
+
+  /* ---------- data-quality banner (only when there is a real problem) ---------- */
+  function renderBanner() {
+    var slot = $('u11BannerSlot');
+    var problems = [];
+    D.connections.forEach(function (c) { if (c.state === 'needs_reconnect') problems.push(D.accountLabel(c.accountId) + ' needs reconnect'); });
+    D.meters.forEach(function (m) { if (m.vs === 'unknown' && m.usedPct == null) problems.push((D.productById[m.productId] || {}).label + ' limit unknown'); });
+    if (!problems.length) { slot.innerHTML = ''; return; }
+    slot.innerHTML = '<div class="u11-banner" style="margin:0 var(--us-pad)">' + ic('alert') +
+      '<span><b>' + problems.length + ' source' + (problems.length > 1 ? 's' : '') + '</b> need attention — ' + problems.slice(0, 2).join(' · ') +
+      (problems.length > 2 ? ' · +' + (problems.length - 2) + ' more' : '') + '</span>' +
+      '<span class="u11-banner-act"><button type="button" class="u11w-minibtn" data-goto="accounts">Review</button></span></div>';
+    var btn = slot.querySelector('[data-goto]');
+    if (btn) btn.addEventListener('click', function () { goTo('accounts'); });
+  }
+
+  /* ---------- scope picker pop-out (hierarchical, stable IDs) ---------- */
+  var pop = $('u11Pop'), scrim = $('u11PopScrim'), popList = $('u11PopList');
+  var popOpen = false, lastFocus = null;
+
+  function meterPressure(m) {
+    return m.usedPct == null ? -1 : m.usedPct;
+  }
+  function pressureOfProductSet(ids) {
+    var max = -1;
+    D.meters.forEach(function (m) {
+      if (ids[m.productId] && m.usedPct != null && m.usedPct > max) max = m.usedPct;
+    });
+    return max;
+  }
+  function toneCls(p) { return p >= 90 ? 'err' : (p >= 70 ? 'warn' : 'ok'); }
+  function valCls(p) { return p >= 90 ? ' hot' : (p >= 70 ? ' warm' : ''); }
+
+  function scopeRow(id, label, metaTxt, level, pressure, extra) {
+    var on = window.U11W.pageScope === id;
+    var dotHtml = pressure == null ? '<span class="u11-pop-dot"></span>'
+      : '<span class="u11-pop-dot ' + toneCls(pressure) + '"></span>';
+    var valHtml = pressure == null ? '' : '<span class="u11-pop-val' + valCls(pressure) + '">' + pressure + '%</span>';
+    return '<button type="button" class="u11-pop-row lv' + level + (on ? ' on' : '') + '" role="option" aria-selected="' + on + '" tabindex="-1" data-scopeid="' + id + '">' +
+      dotHtml +
+      '<span class="u11-pop-main">' +
+        '<span class="u11-pop-top"><span class="u11-pop-name">' + label + (extra || '') + '</span>' + valHtml + '</span>' +
+        (metaTxt ? '<span class="u11-pop-meta">' + metaTxt + '</span>' : '') +
+      '</span><span class="u11-pop-ck">' + ic('check') + '</span></button>';
+  }
+
+  function buildPopList() {
+    var html = '';
+    html += scopeRow('scope:all', 'All current usage', 'the default view · every configured source', 0, null);
+    D.comparisonSets.forEach(function (c) {
+      var set = {};
+      c.productIds.forEach(function (p) { set[p] = true; });
+      html += scopeRow(c.id, c.label, 'comparison set · ' + c.productIds.length + ' products', 0, pressureOfProductSet(set));
+    });
+    html += '<div class="u11-pop-g">Provider families · accounts grouped</div>';
+
+    D.visibleFamilies().forEach(function (f) {
+      var famAccts = D.accountsOfFamily(f.id).filter(function (a) { return !a.removed; });
+      if (!famAccts.length) return;
+      var famSet = D.scopeProductSet(f.id);
+      html += scopeRow(f.id, f.label, famAccts.length + ' account' + (famAccts.length > 1 ? 's' : ''), 0, pressureOfProductSet(famSet));
+
+      famAccts.forEach(function (a) {
+        var conns = D.connectionsOfAccount(a.id);
+        var acctSet = D.scopeProductSet(a.id);
+        var attn = a.state !== 'ready' ? ' · needs attention' : '';
+        html += scopeRow(a.id, a.label, conns.length + ' connection' + (conns.length > 1 ? 's' : '') + attn, 1, pressureOfProductSet(acctSet));
+
+        conns.forEach(function (cn) {
+          var cliBadge = cn.authMethod === 'cli_owned_profile' ? '<span class="u11-pop-cli" title="OAuth owned by ' + cn.authOwnedBy + '">CLI</span>' : '';
+          var connSet = D.scopeProductSet(cn.id);
+          var connAttn = cn.state === 'needs_reconnect' ? ' · reconnect needed' : '';
+          html += scopeRow(cn.id, cn.label, D.accountLabel(a.id) + connAttn, 2, pressureOfProductSet(connSet), cliBadge);
+
+          D.productsOfConnection(cn.id).forEach(function (p) {
+            var meters = D.metersOfProduct(p.id);
+            if (!meters.length) return;
+            var prodSet = {}; prodSet[p.id] = true;
+            var cont = D.continuation[p.id];
+            html += scopeRow(p.id, p.label, meters.length + ' meter' + (meters.length > 1 ? 's' : '') + (cont ? ' · ' + p.kind.replace(/_/g, ' ') : ''), 3, pressureOfProductSet(prodSet));
+            meters.forEach(function (m) {
+              html += scopeRow(m.id, m.label, m.windowKind.replace(/_/g, ' ') + (m.resetAt ? ' · ' + T.when(m.resetAt, D.meta.now, 'reset') : ''), 3, m.usedPct);
+            });
+          });
+        });
+      });
+    });
+    popList.innerHTML = html;
+    updatePopFoot();
+  }
+
+  function updatePopFoot() {
+    var scope = window.U11W.pageScope;
+    var evts = D.attempts.filter(function (a) { return D.attemptInScope(a, scope); });
+    var cost = evts.reduce(function (s, a) { return s + (a.costMicro || 0); }, 0);
+    var who = D.scopeNode(scope).label;
+    $('u11PopFoot').innerHTML = '<b>' + evts.length + '</b> usage events · <b>' + fmt.cost(cost / 1e6) + '</b> measured cost for <b>' + who + '</b>. Removed accounts keep their history but never appear here.';
+  }
+
+  function placePop() {
+    var body = document.querySelector('.u11-body');
+    var r = body ? body.getBoundingClientRect() : { right: window.innerWidth - 16, top: 60 };
+    var w = Math.min(368, window.innerWidth - 24);
+    pop.style.width = w + 'px';
+    var left = Math.max(12, r.right - 16 - w);
+    var top = Math.max(12, r.top + 2);
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    requestAnimationFrame(function () {
+      var h = pop.offsetHeight;
+      if (top + h > window.innerHeight - 12) pop.style.top = Math.max(12, window.innerHeight - h - 12) + 'px';
+    });
+  }
+  function openPop() {
+    if (popOpen) return;
+    popOpen = true;
+    lastFocus = document.activeElement;
+    buildPopList();
+    placePop();
+    scrim.classList.add('on');
+    pop.classList.add('on');
+    var sel = popList.querySelector('.u11-pop-row.on') || popList.querySelector('.u11-pop-row');
+    if (sel) sel.focus();
+  }
+  function closePop() {
+    if (!popOpen) return;
+    popOpen = false;
+    scrim.classList.remove('on');
+    pop.classList.remove('on');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function pickScope(id) {
+    var changed = window.U11W.pageScope !== id;
+    window.U11W.pageScope = id;
+    STORE.set('u11:scope', id);
+    buildPopList();
+    setTimeout(function () {
+      closePop();
+      if (changed) applyScope();
+    }, reduced() ? 0 : 190);
+  }
+  scrim.addEventListener('click', closePop);
+  $('u11PopX').addEventListener('click', closePop);
+  popList.addEventListener('click', function (e) {
+    var row = e.target.closest('.u11-pop-row');
+    if (!row) return;
+    pickScope(row.getAttribute('data-scopeid'));
+  });
+  popList.addEventListener('keydown', function (e) {
+    var rows = Array.prototype.slice.call(popList.querySelectorAll('.u11-pop-row'));
+    var idx = rows.indexOf(document.activeElement);
+    var next = null;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = Math.min(idx + 1, rows.length - 1);
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = Math.max(idx - 1, 0);
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = rows.length - 1;
+    else if ((e.key === 'Enter' || e.key === ' ') && idx > -1) { e.preventDefault(); pickScope(rows[idx].getAttribute('data-scopeid')); return; }
+    if (next == null || !rows[next]) return;
+    e.preventDefault(); rows[next].focus();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && popOpen) closePop(); });
+  window.addEventListener('resize', function () { if (popOpen) placePop(); });
+
+  function applyScope() {
+    HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
+    railStatus();
+    kickerMeta();
+    updateScopeChip();
+    D.dispatch('cmd.account.select_profile', { scope: window.U11W.pageScope });
+  }
+
+  /* ---------- depth flight (calm pane switch, ported from U10) ---------- */
+  var DEPTH = { cur: null, flight: null };
+  function railItems() { return Array.prototype.slice.call(document.querySelectorAll('.u11-rail .u11-item[data-tab]')); }
+  function paneEl(n) { return document.querySelector('.u11-pane[data-pane="' + n + '"]'); }
+  function currentPane() {
+    if (DEPTH.cur) return DEPTH.cur;
+    var p = document.querySelector('.u11-pane:not(.pm-hidden)');
+    return p ? p.getAttribute('data-pane') : 'overview';
+  }
+  function settlePanes(name) {
+    document.querySelectorAll('.u11-pane').forEach(function (p) {
+      var on = p.getAttribute('data-pane') === name;
+      p.classList.toggle('pm-hidden', !on);
+      p.classList.remove('u11-leaving', 'u11-entering');
+      if (!on) p.classList.remove('u11-anim');
+    });
+  }
+  function landFlight(f) {
+    if (!f || f.done) return;
+    f.done = true;
+    if (DEPTH.flight === f) DEPTH.flight = null;
+    clearTimeout(f.timer);
+    if (f.aIn) { f.aIn.onfinish = null; f.aIn.cancel(); }
+    if (f.aOut) { f.aOut.onfinish = null; f.aOut.cancel(); }
+    settlePanes(f.target);
+  }
+  function goTo(name) {
+    if (!name || !paneEl(name)) return;
+    landFlight(DEPTH.flight);
+    var cur = currentPane();
+    if (name === cur) return;
+    var items = railItems();
+    var order = items.map(function (it) { return it.getAttribute('data-tab'); });
+    var deeper = order.indexOf(name) > order.indexOf(cur);
+    items.forEach(function (it) { it.classList.toggle('active', it.getAttribute('data-tab') === name); });
+    placeRailInd(true);
+    var grp = $('u11MoreGrp');
+    if (grp && ['attention', 'cache', 'tools', 'signals', 'authority'].indexOf(name) !== -1) {
+      grp.classList.remove('closed');
+      var mt = grp.querySelector('[data-more-toggle]');
+      if (mt) mt.setAttribute('aria-expanded', 'true');
+    }
+    DEPTH.cur = name;
+    var out = paneEl(cur), inn = paneEl(name);
+    if (reduced()) { settlePanes(name); return; }
+    out.classList.add('u11-anim', 'u11-leaving');
+    inn.classList.add('u11-anim', 'u11-entering');
+    inn.classList.remove('pm-hidden');
+    var dIn = 420, dOut = 300;
+    var f = { target: name, out: out, inn: inn, aIn: null, aOut: null, timer: null, done: false };
+    DEPTH.flight = f;
+    f.aIn = inn.animate(
+      [{ opacity: 0, transform: deeper ? 'translateY(22px) scale(0.972)' : 'translateY(-16px) scale(1.02)' },
+       { opacity: 1, transform: 'none' }],
+      { duration: dIn, easing: 'cubic-bezier(0.25, 1.45, 0.45, 1)' });
+    f.aOut = out.animate(
+      [{ opacity: 1, transform: 'none' },
+       { opacity: 0, transform: deeper ? 'translateY(-14px) scale(0.982)' : 'translateY(12px) scale(1.016)' }],
+      { duration: dOut, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' });
+    f.aIn.onfinish = function () { landFlight(f); };
+    f.timer = setTimeout(function () { landFlight(f); }, Math.max(dIn, dOut) + 240);
+    inn.scrollTop = 0;
+  }
+  document.querySelector('.u11-rail').addEventListener('click', function (ev) {
+    var sc = ev.target.closest('[data-scope-open]');
+    if (sc) { ev.stopPropagation(); if (popOpen) closePop(); else openPop(); return; }
+    var mt = ev.target.closest('[data-more-toggle]');
+    if (mt) {
+      ev.stopPropagation();
+      var grp = $('u11MoreGrp');
+      var closed = grp.classList.toggle('closed');
+      mt.setAttribute('aria-expanded', String(!closed));
+      return;
+    }
+    var tab = ev.target.closest('[data-tab]');
+    if (!tab) return;
+    ev.stopPropagation();
+    goTo(tab.getAttribute('data-tab'));
+  });
+  document.querySelectorAll('.u11-pane [data-scope]').forEach(function (chip) {
+    chip.addEventListener('click', function () { if (popOpen) closePop(); else openPop(); });
+  });
+
+  /* ---------- rail indicator ---------- */
+  var railInd = null;
+  function placeRailInd(animate) {
+    var act = document.querySelector('.u11-rail .u11-item.active');
+    if (!railInd || !act) return;
+    if (!animate) railInd.classList.add('snap');
+    railInd.style.top = act.offsetTop + 'px';
+    railInd.style.left = act.offsetLeft + 'px';
+    railInd.style.width = act.offsetWidth + 'px';
+    railInd.style.height = act.offsetHeight + 'px';
+    if (!animate) { void railInd.offsetWidth; railInd.classList.remove('snap'); }
+  }
+  function initRailInd() {
+    var rail = document.querySelector('.u11-rail');
+    railInd = document.createElement('span');
+    railInd.className = 'u11-railind';
+    railInd.setAttribute('aria-hidden', 'true');
+    rail.insertBefore(railInd, rail.firstChild);
+    placeRailInd(false);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { if (railInd) railInd.classList.add('live'); }); });
+    window.addEventListener('resize', function () { placeRailInd(false); });
+    if (window.ResizeObserver) new ResizeObserver(function () { placeRailInd(false); }).observe(rail);
+  }
+
+  /* ---------- disclosure ---------- */
+  var DISC_CAP = {
+    essentials: 'Essentials — decisions & plain language',
+    standard: 'Standard — tokens, cache, accounts, cost detail',
+    advanced: 'Advanced — raw meters, authority, receipts'
+  };
+  function applyDisclosureUI() {
+    document.querySelectorAll('#u11Disc button').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-disc') === disclosure);
+    });
+    $('u11DiscCap').textContent = DISC_CAP[disclosure];
+    var advOnly = document.querySelectorAll('.u11-advonly');
+    advOnly.forEach(function (el) { el.style.display = disclosure === 'advanced' ? '' : 'none'; });
+  }
+  $('u11Disc').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-disc]');
+    if (!b) return;
+    var lvl = b.getAttribute('data-disc');
+    if (lvl === disclosure) return;
+    disclosure = lvl;
+    window.U11W.disclosure = lvl;
+    STORE.set('u11:disclosure', lvl);
+    applyDisclosureUI();
+    /* re-mount canvases: available types change, stored items persist (§5.1) */
+    HANDLES.forEach(function (h) { try { h.unmount(); } catch (e2) {} });
+    HANDLES = []; CANVASES = [];
+    mountCanvases();
+    railStatus(); kickerMeta();
+    if (window.toast) window.toast('Disclosure: ' + lvl + ' — your layout and data are kept');
+  });
+
+  /* ---------- usage settings quick-controls sheet (§10 consumer) ---------- */
+  var sheetSprout = $('u11SheetSprout');
+  function afterIncludedOptions(productId) {
+    var cont = D.continuation[productId];
+    if (!cont) return [];
+    var labels = { wait_reset: 'Wait for the reset', credits: 'Use credits', prod: 'Draw on the balance/pack',
+      fallback: 'Fall back to another account', free_fallback: 'Continue with free models',
+      metered: 'Continue metered', hard_stop: 'Stop', spending_limit: 'Bound by spending limit',
+      saved_reset: 'Apply the saved reset' };
+    var seen = {}, out = [];
+    cont.order.forEach(function (step) {
+      var key = step.indexOf('prod:') === 0 ? 'prod' : (step.indexOf('fallback:') === 0 ? 'fallback' : step);
+      if (seen[key]) return;
+      seen[key] = true;
+      out.push(key + ' · ' + (labels[key] || key));
+    });
+    return out;
+  }
+  function sheetHTML() {
+    var selProd = settings.selectedProduct || 'prod:codex-plus';
+    var prod = D.productById[selProd] ? selProd : 'prod:codex-plus';
+    var html = '<div class="u11-sheet">';
+    html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Usage settings</div>' +
+      '<div class="u11-sheet-sub">Compact quick controls — a consumer of the shared Settings registry, never a second settings system.</div></div></div>';
+
+    html += '<div class="u11-sheet-sec">Preferences</div>';
+    html += '<label class="u11-sheet-row"><span>Warn me before I run low</span><input type="checkbox" data-u11set="warnLow"' + (settings.warnLow ? ' checked' : '') + '></label>';
+    html += '<label class="u11-sheet-row"><span>Automatic account/provider switching</span><input type="checkbox" data-u11set="autoSwitch"' + (settings.autoSwitch ? ' checked' : '') + '></label>';
+
+    html += '<div class="u11-sheet-sec">After included usage</div>';
+    html += '<div class="u11-sheet-row"><span>Product</span><select data-u11set="product">';
+    Object.keys(D.continuation).forEach(function (pid) {
+      var p = D.productById[pid];
+      html += '<option value="' + pid + '"' + (pid === prod ? ' selected' : '') + '>' + p.label + '</option>';
+    });
+    html += '</select></div>';
+    var opts = afterIncludedOptions(prod);
+    var cur = settings.afterIncludedByProduct[prod] || opts[0];
+    html += '<div class="u11-sheet-row"><span>Then</span><select data-u11set="after">';
+    opts.forEach(function (o) {
+      var key = o.split(' · ')[0];
+      html += '<option value="' + key + '"' + (o === cur || key === cur ? ' selected' : '') + '>' + o.split(' · ')[1] + '</option>';
+    });
+    html += '</select></div>';
+
+    var extra = D.products.filter(function (p) { return p.kind === 'metered_continuation'; });
+    if (extra.length) {
+      html += '<div class="u11-sheet-sec">Extra paid usage</div>';
+      extra.forEach(function (p) {
+        var st = settings.extraUsage[p.id] || { enabled: false, limitMicro: null };
+        html += '<label class="u11-sheet-row"><span>' + p.label + '</span><input type="checkbox" data-u11extra="' + p.id + '"' + (st.enabled ? ' checked' : '') + '></label>';
+        if (st.enabled && p.spendingLimitMicro != null) {
+          html += '<div class="u11-sheet-row"><span>Spending limit</span><input type="number" min="0" step="5" value="' + Math.round((st.limitMicro || p.spendingLimitMicro) / 1e6) + '" data-u11limit="' + p.id + '"><span style="flex:none">$ / month</span></div>';
+        }
+      });
+    }
+
+    html += '<div class="u11-sheet-sec">Current allowance (read-only)</div>';
+    html += '<div class="u11-sheet-ro">';
+    var topMeters = D.meters.filter(function (m) { return m.usedPct != null; }).sort(function (a, b) { return b.usedPct - a.usedPct; }).slice(0, 3);
+    topMeters.forEach(function (m) {
+      var p = D.productById[m.productId];
+      html += '<div class="u11-sheet-row"><span>' + p.label + ' · ' + m.label + '</span><b style="font-family:var(--mono-font)">' + m.usedPct + '%</b></div>';
+    });
+    var saved = D.meters.filter(function (m) { return D.productById[m.productId].kind === 'saved_reset'; })[0];
+    if (saved) html += '<div class="u11-sheet-row"><span>Saved resets</span><b style="font-family:var(--mono-font)">' + (saved.limit - saved.used) + ' banked · expires ' + T.atMonthDayClock(saved.expiresAt) + '</b></div>';
+    var packs = D.products.filter(function (p) { return p.kind === 'purchased_pack' || p.kind === 'prepaid_balance'; });
+    packs.slice(0, 2).forEach(function (p) {
+      var m = D.metersOfProduct(p.id)[0];
+      if (m) html += '<div class="u11-sheet-row"><span>' + p.label + '</span><b style="font-family:var(--mono-font)">' + (m.unit === 'USD' ? fmt.cost(m.limit - m.used) : fmt.tok(m.limit - m.used) + ' left') + '</b></div>';
+    });
+    html += '</div>';
+
+    html += '<div class="u11-sheet-links">';
+    html += '<button type="button" class="u11-sheet-link" data-u11link="provider">' + ic('key') + '<span>Open provider settings</span></button>';
+    html += '<button type="button" class="u11-sheet-link" data-u11link="usage">' + ic('sliders') + '<span>See all usage settings</span></button>';
+    html += '</div>';
+    html += '<div class="u11-sheet-note">Raw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies.</div>';
+    html += '</div>';
+    return html;
+  }
+  function openSheet() {
+    if (window.PMMenu && window.PMMenu.closeAll) window.PMMenu.closeAll();
+    if (window.U11Context) window.U11Context.closeAll();
+    sheetSprout.hidden = false;
+    sheetSprout.innerHTML = sheetHTML();
+    var anchor = $('u11Settings');
+    var r = anchor.getBoundingClientRect();
+    sheetSprout.style.position = 'fixed';
+    if (window.PMMenu && window.PMMenu.openAt) window.PMMenu.openAt(sheetSprout, r.right, r.top - 6);
+    else { sheetSprout.classList.add('is-open'); sheetSprout.style.right = '12px'; sheetSprout.style.bottom = '48px'; }
+  }
+  sheetSprout.addEventListener('click', function (e) {
+    var link = e.target.closest('[data-u11link]');
+    if (link) {
+      var kind = link.getAttribute('data-u11link');
+      var dest = kind === 'provider'
+        ? { surface: 'settings', manager: 'providers', section: 'routing', focus_reason: 'usage_quick_controls' }
+        : { surface: 'settings', manager: 'usage', section: 'usage_and_extra_usage', focus_reason: 'see_all' };
+      var res = D.deepLink(dest);
+      if (window.toast) window.toast(res.toast);
+      return;
+    }
+  });
+  sheetSprout.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.hasAttribute('data-u11set')) {
+      var k = t.getAttribute('data-u11set');
+      if (k === 'warnLow') settings.warnLow = t.checked;
+      else if (k === 'autoSwitch') settings.autoSwitch = t.checked;
+      else if (k === 'product') { settings.selectedProduct = t.value; sheetSprout.innerHTML = sheetHTML(); }
+      else if (k === 'after') { settings.afterIncludedByProduct[settings.selectedProduct || 'prod:codex-plus'] = t.value; }
+      STORE.set('u11:settings', settings);
+      return;
+    }
+    if (t.hasAttribute('data-u11extra')) {
+      var pid = t.getAttribute('data-u11extra');
+      settings.extraUsage[pid] = settings.extraUsage[pid] || { enabled: false, limitMicro: null };
+      settings.extraUsage[pid].enabled = t.checked;
+      STORE.set('u11:settings', settings);
+      sheetSprout.innerHTML = sheetHTML();
+      return;
+    }
+    if (t.hasAttribute('data-u11limit')) {
+      var pid2 = t.getAttribute('data-u11limit');
+      settings.extraUsage[pid2] = settings.extraUsage[pid2] || { enabled: true, limitMicro: null };
+      settings.extraUsage[pid2].limitMicro = Math.max(0, parseInt(t.value, 10) || 0) * 1e6;
+      STORE.set('u11:settings', settings);
+    }
+  });
+  $('u11Settings').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (!sheetSprout.hidden && sheetSprout.classList.contains('is-open')) {
+      if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(sheetSprout);
+      sheetSprout.hidden = true;
+    } else openSheet();
+  });
+
+  /* ---------- export intent flow (§18) ---------- */
+  var expSprout = $('u11ExportSprout');
+  var expState = { intent: null, fmt: null };
+  function exportHTML() {
+    var html = '<div class="u11-sheet">';
+    html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Export usage</div>' +
+      '<div class="u11-sheet-sub">Choose an intent — formats appear contextually, not as a permanent settings list.</div></div></div>';
+    if (!expState.intent) {
+      html += '<div class="u11-exp-intents">';
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="view"><b>Current view</b><span>The filtered chart/table you see, in the current scope.</span></button>';
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="records"><b>Usage records</b><span>Normalized machine-readable usage events with stable identity.</span></button>';
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="bundle"><b>Support / analysis bundle</b><span>Records plus metadata, source &amp; price versions, redacted receipts.</span></button>';
+      html += '</div>';
+    } else {
+      html += '<button type="button" class="u11-exp-back" data-u11expback>' + ic('chevR') + '<span>Back to intents</span></button>';
+      var fmts = expState.intent === 'view' ? [['csv', 'CSV']] :
+        expState.intent === 'records' ? [['json', 'JSON'], ['jsonl', 'JSONL']] :
+        [['json', 'JSON'], ['parquet', 'Parquet · Advanced history']];
+      html += '<div class="u11-sheet-sec">' + (expState.intent === 'view' ? 'Current view' : expState.intent === 'records' ? 'Usage records' : 'Support bundle') + ' · format</div>';
+      html += '<div class="u11-exp-fmts">';
+      fmts.forEach(function (f) {
+        var adv = f[0] === 'parquet' ? ' adv' : '';
+        html += '<button type="button" class="u11-exp-fmt' + adv + (expState.fmt === f[0] ? ' on' : '') + '" data-u11fmt="' + f[0] + '">' + f[1] + '</button>';
+      });
+      html += '</div>';
+      if (expState.fmt === 'parquet') {
+        html += '<div class="u11-sheet-note">Parquet is offered for Advanced history export. Telemetry/evaluation integrations also belong to Advanced and stay out of this default flow.</div>';
+      }
+      html += '<button type="button" class="u11-exp-go" data-u11expgo' + (expState.fmt ? '' : ' disabled') + '>' + ic('exportIc') + '<span>Export ' + (expState.fmt ? expState.fmt.toUpperCase() : '') + '</span></button>';
+    }
+    html += '</div>';
+    return html;
+  }
+  function openExport() {
+    if (window.PMMenu && window.PMMenu.closeAll) window.PMMenu.closeAll();
+    if (window.U11Context) window.U11Context.closeAll();
+    expState = { intent: null, fmt: null };
+    expSprout.hidden = false;
+    expSprout.innerHTML = exportHTML();
+    var anchor = $('u11Export');
+    var r = anchor.getBoundingClientRect();
+    expSprout.style.position = 'fixed';
+    if (window.PMMenu && window.PMMenu.openAt) window.PMMenu.openAt(expSprout, r.right, r.top - 6);
+    else { expSprout.classList.add('is-open'); expSprout.style.right = '12px'; expSprout.style.bottom = '48px'; }
+  }
+  function downloadBlob(name, text, mime) {
+    try {
+      var blob = new Blob([text], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 400);
+      return true;
+    } catch (e) { return false; }
+  }
+  function doExport() {
+    var scope = window.U11W.pageScope;
+    var evts = D.attempts.filter(function (a) { return D.attemptInScope(a, scope); });
+    var payload = '', name = '', mime = 'text/plain';
+    if (expState.intent === 'view' && expState.fmt === 'csv') {
+      var rows = [['event_id', 'work', 'bucket', 'purpose', 'status', 'account', 'connection', 'product', 'model', 'input', 'output', 'cache_read', 'cost_usd', 'started_at']];
+      evts.forEach(function (a) {
+        rows.push([a.eventId, a.workId || '', a.bucket, a.purpose, a.status,
+          a.effectiveAccountId || '', a.connectionId || '', a.productId || '',
+          a.effectiveModelId || a.requestedModelId || '',
+          a.tokens.input != null ? a.tokens.input : '', a.tokens.output != null ? a.tokens.output : '',
+          a.tokens.cacheRead != null ? a.tokens.cacheRead : '',
+          ((a.costMicro || 0) / 1e6).toFixed(6), a.startedAt || '']);
+      });
+      payload = rows.map(function (r) { return r.join(','); }).join('\n');
+      name = 'u11-current-view.csv'; mime = 'text/csv';
+    } else if (expState.intent === 'records') {
+      var recs = evts.map(function (a) {
+        return { usage_event_id: a.eventId, logical_work_id: a.workId, bucket: a.bucket, purpose: a.purpose,
+          status: a.status, requested_account_id: a.requestedAccountId, effective_account_id: a.effectiveAccountId,
+          connection_id: a.connectionId, product_id: a.productId, requested_model_id: a.requestedModelId,
+          effective_model_id: a.effectiveModelId, billing_route: a.billingRoute, tokens: a.tokens,
+          cost_microdollars: a.costMicro || 0, settlement_status: a.settlement, source_class: a.sourceClass,
+          receipt_ref: a.receiptRef, started_at: a.startedAt, finished_at: a.finishedAt };
+      });
+      if (expState.fmt === 'jsonl') { payload = recs.map(function (r) { return JSON.stringify(r); }).join('\n'); name = 'u11-usage-records.jsonl'; }
+      else { payload = JSON.stringify(recs, null, 2); name = 'u11-usage-records.json'; }
+      mime = 'application/json';
+    } else {
+      payload = JSON.stringify({
+        bundle: 'support/analysis', generated_at: new Date().toISOString(), scope: scope,
+        source_versions: { catalog: 'free_coding_models@' + '2026-08-04', pricing: 'v2026.08' },
+        records: evts.length, redacted_receipts: evts.map(function (a) { return a.receiptRef; }).filter(Boolean),
+        note: 'raw payloads, credentials and local paths are redacted'
+      }, null, 2);
+      name = 'u11-support-bundle.json'; mime = 'application/json';
+    }
+    var ok = downloadBlob(name, payload, mime);
+    D.dispatch('cmd.usage.export', { intent: expState.intent, format: expState.fmt, scope: scope });
+    if (window.toast) window.toast(ok ? 'Export ready — ' + name : 'Export prepared (demo)');
+    if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(expSprout);
+    expSprout.hidden = true;
+  }
+  expSprout.addEventListener('click', function (e) {
+    var intent = e.target.closest('[data-u11exp]');
+    if (intent) { expState.intent = intent.getAttribute('data-u11exp'); expState.fmt = null; expSprout.innerHTML = exportHTML(); return; }
+    if (e.target.closest('[data-u11expback]')) { expState.intent = null; expState.fmt = null; expSprout.innerHTML = exportHTML(); return; }
+    var fmtBtn = e.target.closest('[data-u11fmt]');
+    if (fmtBtn) {
+      if (fmtBtn.classList.contains('adv')) { if (window.toast) window.toast('Parquet is an Advanced history export (demo note)'); return; }
+      expState.fmt = fmtBtn.getAttribute('data-u11fmt'); expSprout.innerHTML = exportHTML(); return;
+    }
+    if (e.target.closest('[data-u11expgo]')) { doExport(); return; }
+  });
+  $('u11Export').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (!expSprout.hidden && expSprout.classList.contains('is-open')) {
+      if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(expSprout);
+      expSprout.hidden = true;
+    } else openExport();
+  });
+
+  /* ---------- refresh ---------- */
+  $('u11Refresh').addEventListener('click', function () {
+    var b = this; b.classList.add('spinning');
+    $('u11FreshTxt').textContent = 'refreshing…';
+    $('u11Fresh').classList.add('stale');
+    D.dispatch('cmd.usage.refresh');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u11Fresh').classList.remove('stale');
+      headLine();
+      HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
+      railStatus(); kickerMeta(); renderBanner();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+
+  /* ---------- boot ---------- */
+  headLine();
+  mountCanvases();
+  railStatus();
+  kickerMeta();
+  updateScopeChip();
+  renderBanner();
+  applyDisclosureUI();
+  initRailInd();
+  document.querySelectorAll('.u11-rail .u11-item').forEach(function (it, i) { it.style.setProperty('--u11-ri', String(i)); });
+  document.querySelectorAll('.u11-pop-head i[data-ico], .u11-pop-x i[data-ico]').forEach(function (el) {
+    el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className);
+  });
+  R.deText(document);
+})();
+</script>
+</body>
+</html>

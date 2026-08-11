@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/run-root-creation-receipt.v1.2.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "run_root_binding_sha256", "ancestor_chain_sha256", "absence_observations", "creation_primitive", "created_directory_identity", "terminal", "payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_2"},
+    "trial_id": {"const": "stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "generation_id": {"const": "generation-v1_2-001-20260717"},
+    "run_root_binding_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ancestor_chain_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "absence_observations": {"const": ["before_scan_a", "between_scans", "after_scan_b", "immediately_precreate"]},
+    "creation_primitive": {"type": "string", "minLength": 1},
+    "created_directory_identity": {"type": "object", "required": ["path", "device", "inode", "mode", "entry_kind"]},
+    "terminal": {"const": "PASS"},
+    "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

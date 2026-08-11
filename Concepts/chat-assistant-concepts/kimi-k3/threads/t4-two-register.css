@@ -1,0 +1,99 @@
+/* ============================================================================
+   Kimi K3 — T4 Two Register presentation (scoped [data-k3-thread="t4"]).
+   Two asymmetric registers in one transcript:
+     - user messages: compact quote blocks docked to the right edge, capped at
+       78% width, sitting on a slightly elevated surface with a hairline edge;
+     - assistant messages: containerless full-measure prose flush left;
+     - work payload cards: drop out of the prose column to span the full width
+       as neutral bands.
+   Role is discriminated by [data-role="user"] / [data-role="assistant"] on
+   each .k3t-msg. Token-driven so all 8 themes render complete; status rides
+   background tint / weight — never a colored left-side accent border.
+   ========================================================================== */
+
+[data-k3-thread="t4"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t4"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the list: roomy, full-measure column -------------------------------- */
+[data-k3-thread="t4"] .k3t-list {
+  gap: 22px;
+  padding: 16px 20px 24px;
+}
+
+/* ---- register 1: user messages dock right as compact quote blocks ---------- */
+[data-k3-thread="t4"] .k3t-msg[data-role="user"] {
+  align-self: flex-end;
+  width: auto;
+  max-width: 78%;
+  margin-left: auto;
+  padding: 10px 14px;
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--elev-1);
+}
+[data-k3-thread="t4"] .k3t-msg[data-role="user"] .k3t-msg-body {
+  max-width: none;
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+/* register 1 hover row: keep it tucked under the right-aligned quote */
+[data-k3-thread="t4"] .k3t-msg[data-role="user"] .k3t-msg-hover {
+  justify-content: flex-end;
+}
+[data-k3-thread="t4"] .k3t-msg[data-role="user"] .k3t-hover-meta { margin-left: 0; }
+
+/* focus tint on a user quote: keep the dock without neighbor-shifting margins */
+[data-k3-thread="t4"] .k3t-msg[data-role="user"].is-focused {
+  margin-left: auto;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+/* ---- register 2: assistant messages, containerless full-measure prose ----- */
+[data-k3-thread="t4"] .k3t-msg[data-role="assistant"] {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+[data-k3-thread="t4"] .k3t-msg[data-role="assistant"] .k3t-msg-body {
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+  color: var(--text-primary);
+}
+[data-k3-thread="t4"] .k3t-msg[data-role="assistant"].is-focused {
+  margin: 0;
+  padding: 8px 10px;
+}
+
+/* ---- work cards: neutral full-width bands --------------------------------- */
+[data-k3-thread="t4"] .k3t-card {
+  margin-top: 12px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+}
+[data-k3-thread="t4"] .k3t-subcompact { border-top-style: solid; }
+
+/* ---- thread-level work zone + live region ride the full measure ---------- */
+[data-k3-thread="t4"] .k3t-endzone { padding: 0 20px 20px; }
+[data-k3-thread="t4"] .k3t-live {
+  margin: 0 20px 14px;
+  background: var(--surface);
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: quiet ----------------------------------------------------- */
+[data-k3-thread="t4"] .k3t-msg-hover { margin-top: 6px; }

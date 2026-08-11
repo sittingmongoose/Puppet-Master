@@ -1,7 +1,7 @@
 # Section 15 Promoted Features Spec
 
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
 ## 0. Scope and SSOT status
 
@@ -176,13 +176,13 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usa
 The dev loop is shell-first and session-oriented. Terminal is the canonical interactive shell surface, and chat, output, problems, debug console, ports, and dev controls consume terminal or dev-session state instead of owning PTY state themselves.
 
 Rules:
-- Puppet Master supports up to two terminal sections/components.
-- A terminal section may be docked in the main shell or detached into its own window.
-- Puppet Master does not `auto-spawn` a `second-section` as the default terminal experience; second-section creation is user-driven or explicitly policy-disclosed.
+- Puppet Master supports up to four terminal sections/components in the Home workspace.
+- A terminal section may be docked in `home_main`, any outer edge dock, or detached/floating; the web prototype's floating presentation stays in-canvas and native Slint owns real multi-window pop-out.
+- Puppet Master does not auto-spawn additional sections as the default terminal experience; section creation is user-driven or explicitly policy-disclosed until the four-section limit.
 - Each terminal section owns an ordered tab strip.
 - Each terminal tab owns from one to four panes.
-- Terminal defaults to the bottom of the GUI, can be detached/popped into its own window (`/popped` lineage), moved and resized inside the shell, and restored as one of up to two terminal sections/components with reorderable tabs and panes.
-Terminal presentation vocabulary is explicit: the simple default is one visible bottom-docked section; `/docked` means a supported shell runtime zone, detached stays first-class, and `/editor-area` replacement is not a canonical terminal section target.
+- Terminal defaults to the bottom of the GUI, can be detached/popped into its own window (`/popped` lineage), moved and resized inside the shell, and restored as one of up to four terminal sections/components with reorderable tabs and panes.
+Terminal presentation vocabulary is explicit: the simple default is one visible bottom-docked section; `home_main` and all four edge docks are supported Home runtime zones; floating stays first-class; and the former `/editor-area` exclusion is superseded by the Home main-workspace host.
 - Terminal chrome has separate naming-surface layers: a stable `Terminal` section title, detached-window title, terminal-tab label, pane header, and accessibility name; volatile `/context/status`, `/command/status`, and high-priority attention state belong in `/badges` or secondary labels, while primary labels remain user-renamable.
 - Each terminal tab can be shown as a single pane or a two-by-two quadrant layout, and tab/pane order is user-controlled without changing runtime identity.
 - Supported tab layout families are explicit rather than arbitrary freeform geometry: one pane uses `single`; two panes use `two_columns` or `two_rows`; three panes use `three_columns`, `three_rows`, `main_left_stack_right`, `main_right_stack_left`, `main_top_stack_bottom`, or `main_bottom_stack_top`; four panes use `four_grid`, `main_left_two_stack_right`, `main_right_two_stack_left`, `main_top_three_stack_bottom`, `main_bottom_three_stack_top`, `four_columns`, or `four_rows`. Split and remove behavior transforms to the nearest valid family while preserving pane identity, and user-adjusted ratios survive until reset.
@@ -434,17 +434,31 @@ Rules:
 
 - FileSafe blocks are first-class blocked outcomes.
 - blocked commands render visible blocked UI in the thread, terminal/output surfaces, and action-needed routing
-- rerun after a destructive block respects restore-before-rerun requirements when local work or safe-point rules require it
+- when the canonical blocked episode has `requires_safe_point_restore = true`, the only legal rerun action is `cmd.runtime.restore_safe_point_then_retry` with the exact `{project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: safe_point, idempotency_key}` payload; generic retry, fresh-attempt, resume, focus-derived substitution, and latest-safe-point substitution remain blocked
+- restore-before-rerun resolves the materialized `safe_point_record` at `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}`, verifies its snapshot refs and durable recovery hold, and runs the FileSafe exact-replace transaction recorded as `safe_point_restore_transaction.v1:{project_id}:{restore_transaction_id}`; it is not merge, best-effort sequential rewrite, or `git reset --hard`
+- FileSafe verifies the target before mutation, captures and verifies pre-restore rollback state, durably journals the ordered operation set, reconciles interruption on restart, and proves exact target or rollback manifest equality; the Executor creates a new `attempt_id` only after the terminal owner result and baseline/restore receipt are durable
+- `restored_clean` and `restore_skipped` may proceed only with target equality. The other exact-restore outcomes are `restore_refused`, `restore_failed`, and `restore_recovery_required`; `snapshot_missing`, `snapshot_corrupt`, and `snapshot_scope_unsupported` remain distinct owner reason codes, while `recovery_unavailable` remains the anchored blocked posture. None creates a successor attempt, and exact safe-point restore never emits `restored_with_conflicts`
+- a missing, corrupt, ambiguous, unanchored, or unavailable safe point preserves local work, worktree ownership, blocked identity, mutation fence, and holds; it does not silently choose another baseline or become resolved because retention or cleanup ran
+- active-attempt, blocked-episode, nonterminal-restore, preserved-run, and legal-hold refs override cleanup. After the final hold release, storage policy `RP-SAFEPOINT-90D-AFTER-RELEASE` retains eligible safe points for 90 days subject to 64 per run and 2,048 per project; Section 15 does not redefine those storage-owned values
 - the feature does not rely on terminal-only messaging
+
+ContractRef: ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum-2026-07-17, ContractName:Plans/Contracts_V0.md#restore-outcome-enum, ContractName:Plans/storage-plan.md#Case-L-6, ContractName:Plans/storage_value_registry.json#/families/safe_point_record, ContractName:Plans/Executor_Protocol.md#approved-baseline-target-retry-and-restore-lifecycle, ContractName:Plans/WorktreeGitImprovement.md#approved-exact-baseline-target-SCM-contract, ContractName:Plans/Commands_System.md#Case-L-command-consumer-propagation-addendum-2026-07-17, DecisionID:PD-RSP-01, DecisionID:PD-RSP-02, DecisionID:PD-RSP-03, DecisionID:PD-RSP-04, DecisionID:PD-RSP-05, DecisionID:PD-RSP-06, DecisionID:PD-RSP-07
 
 ### 3.2 Branching Conversations (Restore Then Fork)
 
-
-- branching always starts from a restore point or equivalent preserved state boundary
-- branch creation produces a new thread/session identity linked to the source branch and restore point
-- the source thread remains intact
+- a conversation branch starts only from an immutable Assistant Chat restore point stored as the materialized `restore_point_record` family at `rp:{project_id}:{restore_point_id}` with schema `pm.storage_value.restore_point_record.v1`; a runtime `safe_point_record`, FileSafe snapshot, runtime artifact projection, or generic “equivalent preserved state boundary” is not a substitute
+- the restore point freezes one inclusive source message boundary with source thread, conversation branch, context/provenance, attachment/citation refs, `record_sha256`, and optional `safe_point_id`; it contains no workspace file bodies, and the optional safe-point identity is lineage only
+- applying an `available` restore point verifies the expected record hash and materializes the frozen conversation boundary into a new `thread_id` and conversation `branch_id`; the source thread, source conversation branch, source worktree, repository, branch, index, and files remain unchanged, and successful application does not consume the restore point
+- the lifecycle is immutable `available -> expired | deleted | corrupt`; application result is closed to `branched | refused | failed`, and only `branched` creates the new identities and `restore_point.applied` evidence
+- storage policy is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`; the cap is `2,048` per project and count pressure selects only the oldest eligible record; eligible expiry retains the required hash summary. Descendant branch, application, explicit preserve, legal-hold, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until owner-defined release evidence is durable. Section 15 consumes this policy and does not invent a timer, infer the release boundary, clear a ref, or redefine the owner-governed `expired` lifecycle transition
+- deleting the source thread does not resurrect, modify, or silently restore it. If the immutable restore-point record and all required frozen boundary refs remain `available`, a later branch keeps the source hidden and creates only a new thread/branch labeled as new, not undo. If deletion/retention purged required boundary content, the action is `refused` with unavailable reason `source_deleted_content_unavailable`, creates nothing, does not reconstruct from a tombstone or backup projection, and leaves the record/status unchanged
+- `unavailable` is a derived command/UI availability posture, and deleted-source state is provenance; neither expands the closed restore-point status or application-result enums
+- create is idempotent on `{project_id, thread_id, source_message_id, idempotency_key}`: the same semantic request returns the original `restore_point_id`, while a conflicting digest fails without a duplicate. Replaying an identical branch command/application identity returns its original result and target identities; a deliberate second branch requires a new command identity. Delete may transition only an exact-hash `available` record whose permission, storage-writer, and descendant/application/preserve/legal/source-lineage holds admit it; replay returns the original delete result, while a stale hash or protected record is refused, no hold is cleared, and no second lifecycle transition is created
 - branch labels, source-origin lineage, and branch origin time are visible in history/navigation surfaces
-- branching from a dirty or active thread requires confirmation that makes the preserved source state explicit
+- before branch creation, disclosure names the source thread/message boundary, whether the source is active, dirty, or deleted, and the new target; confirmation never implies workspace restoration because this operation changes conversation lineage only
+- the required commands are `cmd.chat.create_restore_point { project_id, thread_id, source_message_id, idempotency_key }`, `cmd.chat.branch_from_restore { project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }`, and `cmd.chat.delete_restore_point { project_id, restore_point_id, expected_restore_point_sha256 }`. `UCC-126` owns their catalog registration; naming them here or having a catalog row is still insufficient for dispatch until `Plans/Wiring_Matrix.md` and `Plans/UI_Wiring_Rules.md` prove one handler and reverse coverage for each ID
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md#Case-L-6, ContractName:Plans/storage_value_registry.json#/families/restore_point_record, ContractName:Plans/Contracts_V0.md#restore-point-lifecycle-event-registration, ContractName:Plans/Commands_System.md#conversation-restore-point-registration-dependency, ContractName:Plans/UI_Command_Catalog.md, DecisionID:PD-RSP-08
 
 ### 3.3 In-App Project Instructions Editor
 
@@ -628,7 +642,7 @@ Rules:
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
 #### Acceptance criteria
-- two terminal sections, multi-tab behavior, and one-to-four pane tabs behave deterministically across docked and detached presentation
+- up to four terminal sections, multi-tab behavior, and one-to-four pane tabs behave deterministically across docked and detached presentation
 - same-session reveal never spawns a duplicate shell when the referenced `terminal_session_id` still exists
 - restarting a session mints a new `terminal_session_id`; clearing scrollback does not
 - restored historical sessions never fake live PTY continuity
@@ -731,7 +745,7 @@ The UI command catalog must expose stable commands for:
 - workspace tab create, close, reopen, move, and focus
 - detached window open, reattach, and close for supported surfaces
 - thread context detail open, focus, close, and context-compaction actions
-- branch-from-restore and branch-open actions
+- conversation restore-point create, branch, and delete actions using the exact IDs `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point`; `UCC-126` owns the catalog rows, while dispatch still requires complete one-handler wiring and reverse coverage
 - browser open, focus, detach, open-DevTools, toggle-DevTools-dock, share, revoke-share, capture, takeover, promotion, and recovery actions
 - terminal show, focus, new-tab, split-pane, move-to-section, rename, pin, close-pane, close-tab, clear-scrollback, restart-session, terminate-session, kill-session, detach-section, and reattach-section actions
 - dev-session start, stop, restart, show-output, show-problems, and show-ports actions
@@ -1512,7 +1526,7 @@ plan_unit_id: SMPFS-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The terminal is the canonical interactive shell surface with up to two terminal sections, tab and pane layout families, bottom-default placement, detach/move/resize behavior, labels, and settings vocabulary.
+canonical_text: The terminal is the canonical interactive shell surface with up to four terminal sections, tab and pane layout families, bottom-default placement, detach/move/resize behavior, labels, and settings vocabulary.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1545,7 +1559,7 @@ source_lineage:
 preserved_exact_tokens:
 - 1.6 Dev-loop and terminal surface model
 - canonical interactive shell
-- up to two terminal sections
+- up to four terminal sections
 - tabs
 - panes
 - bottom default
@@ -2664,7 +2678,13 @@ plan_unit_id: SMPFS-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: FileSafe dangerous-command blocks are first-class blocked outcomes, and rerun after destructive blocks respects restore-before-rerun requirements when local work or safe-point rules require them.
+canonical_text: >-
+  FileSafe dangerous-command blocks are first-class blocked outcomes. When requires_safe_point_restore
+  is true, only cmd.runtime.restore_safe_point_then_retry may exact-replace the named worktree from
+  the canonical sp safe point through a durable FileSafe restore transaction; exact target or rollback
+  equality and a durable receipt precede any successor attempt, while refused, failed, recovery-required,
+  unavailable, missing, corrupt, and unsupported-scope outcomes preserve the blocked identity, local work,
+  mutation fence, worktree ownership, and recovery holds.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -2675,14 +2695,38 @@ depends_on:
 - PNC-001
 - PS-001
 - UCC-001
+- CV-320
+- F2-200
+- F2-201
+- F2-202
+- F2-203
+- SP-242
+- EP-072
+- W-063
+- CS-056
 unblocks: []
 acceptance_criteria:
 - SMPFS-033 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- When requires_safe_point_restore is true, generic retry, fresh-attempt, resume, focus-derived substitution, and latest-safe-point substitution are rejected.
+- New safe-point writes resolve only through sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}; restore execution uses the materialized safe_point_restore_transaction family and exact FileSafe equality.
+- restored_clean and restore_skipped require target equality; restore_failed requires rollback equality; restore_refused and restore_recovery_required mint no successor attempt; exact restore never emits restored_with_conflicts.
+- Missing, corrupt, unsupported-scope, ambiguous, or unavailable recovery material preserves local work and every mutation fence, blocked identity, worktree ownership, and recovery hold.
+- Storage-owned active-attempt, blocked, restore-transaction, preserved-run, and legal-hold refs override the released-safe-point TTL and cardinality policy.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-ATOMIC-001
+- RSP-ATOMIC-002
+- RSP-ATOMIC-003
+- RSP-EQUAL-001
+- RSP-INTEGRITY-001
+- RSP-INTEGRITY-002
+- RSP-INTEGRITY-003
+- RSP-RETENTION-001
+- RSP-RETENTION-003
+- RSP-BASELINE-001
 risk_class: filesafe_block_semantics_drift
 reasoning_tier: standard
 context_scope: filesafe_blocking
@@ -2693,6 +2737,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0024
+- Case-L:L-006
+- Case-L:L-010
+- Case-L:L-020
+- Case-L:L-021
+- Case-L:L-024
+- Case-L:PD-RSP-01..PD-RSP-07
 preserved_exact_tokens:
 - Dangerous-Command Blocking (FileSafe)
 - FileSafe blocks
@@ -2700,14 +2750,32 @@ preserved_exact_tokens:
 - rerun
 - restore-before-rerun
 - safe-point
-negative_constraints: []
-preserved_contractrefs: []
+- cmd.runtime.restore_safe_point_then_retry
+- requires_safe_point_restore
+- "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+- safe_point_restore_transaction
+- restored_clean
+- restore_refused
+- restore_failed
+- restore_recovery_required
+- recovery_unavailable
+negative_constraints:
+- Do not merge, best-effort rewrite, substitute another baseline, use git reset --hard, or dispatch from an unproved restore state.
+- Do not emit restored_with_conflicts from exact safe-point restore or release recovery holds because the remedy aged, was cleaned, or became unavailable.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/Permissions_System.md
 - Plans/UI_Command_Catalog.md
+- Plans/FileSafe.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Executor_Protocol.md
+- Plans/WorktreeGitImprovement.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-034 - FileSafe Visible Blocked UI
@@ -2733,6 +2801,8 @@ acceptance_criteria:
 - SMPFS-034 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Thread, terminal/output, and action-needed surfaces distinguish restore_refused, restore_failed, restore_recovery_required, recovery_unavailable, snapshot_missing, snapshot_corrupt, and snapshot_scope_unsupported instead of flattening them to a generic retry error.
+- The visible recovery action stays disabled when the required safe-point family, transaction family, snapshot refs, hold, storage writer admission, or command registration is unavailable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2746,21 +2816,33 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0024
+- Case-L:L-006
+- Case-L:L-010
+- Case-L:L-024
+- Case-L:PD-RSP-01..PD-RSP-06
 preserved_exact_tokens:
 - blocked UI
 - thread
 - terminal/output surfaces
 - action-needed routing
 - terminal-only messaging
+- restore_recovery_required
+- recovery_unavailable
 negative_constraints:
 - The feature does not rely on terminal-only messaging.
-preserved_contractrefs: []
+- Visible copy must not imply target restoration, rollback preservation, retry eligibility, or cleanup release without the corresponding owner proof.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
+- Plans/FileSafe.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-035 - Branch Restore Boundary And Lineage
@@ -2770,7 +2852,12 @@ plan_unit_id: SMPFS-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Branching conversations always start from a restore point or equivalent preserved state boundary, create a new thread/session identity linked to the source branch and restore point, and leave the source thread intact.
+canonical_text: >-
+  Conversation branching starts only from an immutable Assistant Chat restore_point_record at the
+  canonical rp project key. Applying an available expected-hash boundary creates a new thread_id and
+  conversation branch_id, leaves the source thread and source worktree unchanged, restores no files,
+  treats an optional safe_point_id as lineage only, does not consume the record, and never substitutes
+  a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved boundary.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -2781,14 +2868,31 @@ depends_on:
 - PNC-001
 - ACD-008
 - SP-001
+- CV-320
+- SP-242
+- CS-057
+- UCC-001
+- UCC-126
+- ACD-086
 unblocks: []
 acceptance_criteria:
 - SMPFS-035 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- The materialized family is restore_point_record at rp:{project_id}:{restore_point_id} with schema pm.storage_value.restore_point_record.v1 and closed status available, expired, deleted, or corrupt.
+- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused and failed create none.
+- Successful application does not consume the record, change the source conversation, change SCM/worktree state, or invoke FileSafe restore.
+- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record; Section 15 does not invent an expiry window beyond the current registry policy.
+- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed only from an available record whose required frozen refs remain retained.
+- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs nothing from tombstone or backup projection, and leaves the record/status unchanged.
+- unavailable and deleted-source state remain derived availability/provenance facts and do not expand the closed status or application-result enums.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-RP-001
+- RSP-RP-003
+- RSP-RP-004
+- RSP-CMD-001
 risk_class: branch_restore_lineage_drift
 reasoning_tier: standard
 context_scope: branching_conversations
@@ -2799,6 +2903,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - Branching Conversations (Restore Then Fork)
 - restore point
@@ -2806,14 +2912,33 @@ preserved_exact_tokens:
 - new thread/session identity
 - source branch
 - source thread remains intact
-negative_constraints: []
-preserved_contractrefs: []
+- restore_point_record
+- "rp:{project_id}:{restore_point_id}"
+- pm.storage_value.restore_point_record.v1
+- available
+- expired
+- deleted
+- corrupt
+- branched
+- refused
+- failed
+- source_deleted_content_unavailable
+negative_constraints:
+- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches, indexes, or worktrees.
+- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved state as a conversation restore point.
+- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict any record other than the oldest eligible record above `2,048` per project, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage, live, recovery, backup, rollback, or maintenance refs.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/assistant-chat-design.md
 - Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/Contracts_V0.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ### SMPFS-036 - Branch Navigation And Confirmation UI
@@ -2823,7 +2948,13 @@ plan_unit_id: SMPFS-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Branch labels, source-origin lineage, branch origin time, and dirty or active thread confirmation are visible in history and navigation surfaces before branching from risky source state.
+canonical_text: >-
+  Before a restore-point branch, the UI discloses the immutable source thread/message boundary,
+  source active, dirty, or deleted provenance, expected record hash, and new conversation target.
+  It renders available, expired, deleted, corrupt, held, permission/storage unavailable, stale-hash,
+  refused, failed, and branched truth without implying workspace restore. Create and repeated command
+  identities are idempotent, and no restore-point command is enabled until catalog registration,
+  materialized registry authority, handler wiring, and reverse coverage all exist.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -2834,14 +2965,30 @@ depends_on:
 - PNC-001
 - ACD-008
 - UCC-001
+- CV-320
+- SP-242
+- CS-057
+- UCC-126
+- ACD-087
 unblocks: []
 acceptance_criteria:
 - SMPFS-036 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Disclosure names the source thread/message boundary, source active, dirty, or deleted provenance, expected record hash, and new target before branch creation.
+- Create replay with the same semantic idempotency key returns the original restore_point_id; conflicting digest creates no duplicate.
+- Replaying the same branch or delete command identity returns the original result/event and never creates a second branch or second lifecycle transition.
+- Expired, deleted, corrupt, stale-hash, source_deleted_content_unavailable, missing-required-boundary, held, permission-denied, storage-unavailable, or in-progress states refuse without a new thread.
+- unavailable is a derived command/UI posture and deleted-source state is provenance; neither becomes a fifth record status or fourth application result.
+- UCC-126 supplies the three canonical command rows; dispatch remains disabled until each ID also has one handler plus Wiring Matrix and UI Wiring Rules reverse coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-RP-001
+- RSP-RP-002
+- RSP-RP-003
+- RSP-RP-004
+- RSP-CMD-001
 risk_class: branch_navigation_ui_drift
 reasoning_tier: standard
 context_scope: branching_gui
@@ -2852,6 +2999,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - branch labels
 - source-origin lineage
@@ -2859,14 +3008,28 @@ preserved_exact_tokens:
 - history/navigation surfaces
 - dirty or active thread
 - confirmation
-negative_constraints: []
-preserved_contractrefs: []
+- source_deleted_content_unavailable
+- idempotency_key
+- expected_restore_point_sha256
+- cmd.chat.create_restore_point
+- cmd.chat.branch_from_restore
+- cmd.chat.delete_restore_point
+negative_constraints:
+- Confirmation and labels must not imply that branching restores files, changes the source worktree, consumes the restore point, or resurrects a deleted source thread.
+- Section 15 command references must not be represented as registered or dispatch-valid before UI Command Catalog and wiring reverse coverage exist.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/assistant-chat-design.md
 - Plans/UI_Command_Catalog.md
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/Contracts_V0.md
+- Plans/Commands_System.md
+- Plans/Wiring_Matrix.md
 ```
 
 ### SMPFS-037 - Project Instructions Runtime Source Boundary
@@ -5268,10 +5431,10 @@ owner_hints:
 
 ```yaml
 plan_unit_id: SMPFS-079
-unit_type: requirement
-status: accepted
+unit_type: compatibility_disposition
+status: retired
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal acceptance requires deterministic two-section, multi-tab, one-to-four pane behavior across docked/detached presentation, same-session reveal, restart identity minting, honest historical restore, terminal/output/problems/debug/ports linkback, and responsive huge-output/search/scrollback paths.
+canonical_text: SMPFS-079 is retired because its deterministic two-terminal-section ceiling conflicts with the accepted four-section Home terminal contract in SMPFS-138; it remains migration/source lineage only and cannot be indexed as current implementation-facing terminal authority.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -5285,7 +5448,8 @@ depends_on:
 - WM-001
 unblocks: []
 acceptance_criteria:
-- SMPFS-079 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- SMPFS-079 remains addressable only as a retired compatibility disposition with source-span coverage.
+- SMPFS-138 is the sole current terminal-section maximum and Home placement authority.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -5302,7 +5466,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0043
 preserved_exact_tokens:
-- two terminal sections
+- up to four terminal sections
 - multi-tab behavior
 - one-to-four pane tabs
 - docked
@@ -5317,7 +5481,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The two-terminal-section ceiling is retired and replaced by SMPFS-138.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -6700,7 +6865,13 @@ plan_unit_id: SMPFS-101
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The UI command catalog exposes stable command families for project switching/open-new-tab, workspace tabs, detached windows, thread context detail, branching, browser controls, terminal actions, dev-session actions, and catalog lifecycle actions.
+canonical_text: >-
+  The UI Command Catalog is the sole registration owner for promoted project, workspace, detached,
+  context, conversation-restore-point, browser, terminal, dev-session, and catalog actions. UCC-126
+  registers cmd.chat.create_restore_point, cmd.chat.branch_from_restore, and
+  cmd.chat.delete_restore_point, while Section 15 consumes rather than re-registers them; dispatch
+  additionally requires conditional arguments, one handler, Wiring Matrix and UI Wiring Rules reverse
+  coverage, materialized restore-point storage authority, and owner preconditions.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -6712,14 +6883,23 @@ depends_on:
 - UCC-001
 - WM-001
 - ACD-008
+- CS-057
+- CV-320
+- SP-242
+- UCC-126
+- ACD-086
+- ACD-087
 unblocks: []
 acceptance_criteria:
 - SMPFS-101 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- UCC-126 supplies one canonical row per restore-point command ID; Section 15 naming creates no peer row or alias.
+- Catalog registration alone cannot enable the commands until one-handler wiring/reverse coverage exists, restore_point_record is materialized, and the exact owner lifecycle, permission, storage, hold, idempotency, expected-hash, and EventRecord contracts are consumable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-CMD-001
 risk_class: promoted_command_family_drift
 reasoning_tier: standard
 context_scope: command_catalog_gui
@@ -6730,6 +6910,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0048
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - project switch
 - project open-in-new-workspace-tab
@@ -6741,7 +6923,12 @@ preserved_exact_tokens:
 - terminal show
 - dev-session start
 - catalog install
-negative_constraints: []
+- cmd.chat.create_restore_point
+- cmd.chat.branch_from_restore
+- cmd.chat.delete_restore_point
+negative_constraints:
+- Section 15 does not re-register commands, clear a wiring/reverse-coverage blocker, invent private aliases, or claim dispatch validity from prose, registry presence, a catalog row alone, or a visible control.
+- Conversation restore-point commands must not combine branching with FileSafe or workspace restore.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
@@ -6752,6 +6939,8 @@ owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
 - Plans/assistant-chat-design.md
+- Plans/Commands_System.md
+- Plans/storage_value_registry.json
 ```
 
 ### SMPFS-102 - Command Category And Identity Reveal Rules
@@ -8264,6 +8453,73 @@ pm_current_coverage: PM Section15 has strong identity/lifecycle/interaction mode
 pm_gap_or_delta: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation.
 proposal_or_recommendation: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements.
 compile_disposition: create_new_planunit
+```
+
+## PMConcept7 Home Workspace terminal reconciliation — 2026-08-04
+
+The promoted terminal surface participates in the model-driven Home workspace. The
+bottom dock remains the default terminal placement, while a terminal section may be
+previewed and committed in `home_main`, any in-app edge dock, or the web in-canvas
+floating host. The desktop floating host is a native Slint window. A Home movement
+changes presentation state only and preserves `terminal_section_id`,
+`terminal_workgroup_id`, contained pane identities, transcript, terminal tabs,
+`terminal_session_id`, and PTY/session ownership. A move never mints a PTY.
+
+The workspace permits at most four terminal sections and at most four visible panes
+per active section presentation. A workgroup can move to an existing section or to
+a newly created section only while the section limit permits it. At the limit, the
+move is rejected with a visible disabled reason and the source remains unchanged.
+When the last workgroup leaves a section, that section renders an explicit empty
+state and may be closed or reused. Moving a workgroup is distinct from moving an
+individual terminal pane; `cmd.terminal.move_pane` is not extended.
+
+### Superseded Section15 constraint
+
+The former two-terminal-section limit and editor-area exclusion are superseded by
+the four-section Home model above. Bottom-dock default placement, terminal runtime
+identity ownership, and the rule that terminal does not become the PM control plane
+remain canonical.
+
+### SMPFS-138 - Home Terminal Sections Workgroups And Pane Limits
+
+```yaml
+plan_unit_id: SMPFS-138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Home supports up to four terminal sections and up to four visible panes total in the active workgroup presentation; bottom is the default host, while each section can move to main, any outer dock, or float without changing terminal section, workgroup, pane, session, or PTY identity.
+gui_related: true
+gui_classification_reason: This unit owns the user-visible terminal section, workgroup, pane, disabled-limit, and empty-section behavior.
+split_recommended: false
+depends_on: [F3-501, UCC-144, SP-245]
+unblocks: []
+acceptance_criteria:
+- Four terminal sections can exist; attempting a fifth is disabled before dispatch with Maximum four terminal sections.
+- One through four panes can be visible; attempting a fifth is disabled before dispatch with Maximum four visible terminal panes.
+- Moving a whole workgroup uses cmd.terminal.move_workgroup, preserves all pane/session bindings, and may create a section only below the cap.
+- Moving a section uses shell layout commands and never aliases cmd.terminal.move_pane.
+- Moving the last workgroup out leaves an explicit reusable empty section; no PTY or session is silently destroyed.
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: terminal_home_identity_and_limit_drift
+reasoning_tier: standard
+context_scope: home_terminal_sections
+implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Concepts/pm7-tools/home_workspace_source.py]
+node_compile_hint:
+  mode: home_terminal_sections
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+preserved_exact_tokens: [up to four terminal sections, one-to-four pane tabs, terminal_section_id, terminal_workgroup_id, terminal_pane_id, terminal_session_id]
+negative_constraints:
+- Do not mint a PTY or terminal session during layout movement.
+- Do not destroy an empty terminal section implicitly.
+compatibility_only_notes:
+- SMPFS-079 is retained only as retired source lineage.
+stale_retired_dispositions:
+- The two-terminal-section limit and editor-area exclusion are retired.
+owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/FinalGUISpec.md, Plans/storage-plan.md]
 ```
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08

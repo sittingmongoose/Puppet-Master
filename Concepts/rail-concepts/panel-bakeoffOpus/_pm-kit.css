@@ -1,0 +1,475 @@
+/* PANEL BAKEOFF — shared primitive kit
+   =====================================================================
+   The primitives EVERY version composes from. They exist here, once, so the
+   six designs differ in information architecture rather than in whether they
+   happened to reinvent elision correctly.
+
+   A version owns its LAYOUT. It does not own the status vocabulary, the
+   elision policy, or the metadata-degradation rule — those must be identical
+   across versions or the bakeoff compares noise.
+
+   Every class is .pmk-*. Version-local classes should be .vA-*, .vB-* etc.
+
+   The three mechanical fixes for what breaks today:
+
+     .pmk-row      exactly ONE slot grows, and it is the identity. No other
+                   slot may elide; they are dropped whole, right to left.
+                   Today the inverse holds -- chips are flex:none and
+                   .pm6-sp-row-meta uses margin-left:auto, so the LABEL is the
+                   only compressible thing. That is why Artifacts renders
+                   "validation_test  carg...  pass on retry".
+
+     .pmk-kv       typed. Inline only for short tokens above 280px; stacked
+                   otherwise, with a hard floor -- if the value would render
+                   under 88px it stacks regardless. Replaces .pm6-kv, whose
+                   space-between + flex:none key collapses the value.
+
+     .pmk-mark     status as a 3px rail + 14px glyph in a 21px gutter OUTSIDE
+                   the text band, replacing pills that cost 48-80px INSIDE it.
+                   Non-color-dependent per FinalGUISpec.md:1237 via four
+                   channels: glyph shape, rail dash, accessible label, and the
+                   status word at >=360px.
+   ===================================================================== */
+
+/* ------------------------------------------------------------- panel frame */
+.pmk-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.pmk-head {
+  display: flex; align-items: center; gap: var(--sm);
+  flex: none; min-height: 28px;
+  padding: var(--xs) var(--md);
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  background: var(--surface-elevated);
+  font-family: var(--display-font-sm, var(--body-font));
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-primary);
+}
+.pmk-head-title { flex: 1 1 auto; min-width: 0; overflow: hidden;
+                  text-overflow: ellipsis; white-space: nowrap; }
+.pmk-head-count { flex: none; font-weight: 500; color: var(--text-muted);
+                  letter-spacing: 0; text-transform: none; font-size: var(--fs-2xs); }
+
+/* ------------------------------------------------------------- detach grip
+   FinalGUISpec.md:950 signal 1 of 3. "Subtle" is the spec's word, so it sits
+   at --text-muted and lifts on hover/focus rather than competing with the
+   panel title. 24px square because section 13.5 has no exemption for
+   subtle things, and because signal 1 of a three-signal discovery system
+   must be reachable by keyboard as well as pointer.
+   The negative block margin keeps the 28px header at 28px: the grip is
+   allowed to use the header's own padding as its hit area, which is how a
+   24px target fits a 28px bar without growing it. */
+.pmk-grip {
+  flex: 0 0 24px; width: 24px; height: 24px;
+  margin-block: -2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted); cursor: grab;
+}
+.pmk-grip:hover { color: var(--text-primary); background: var(--accent-soft); }
+.pmk-grip:active { cursor: grabbing; }
+.pmk-grip:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px;
+                          color: var(--text-primary); }
+.pmk-grip-ico { width: 14px; height: 14px; display: block; }
+
+/* Fixed strips sit between the header and the scroller and never scroll. */
+.pmk-strip {
+  display: flex; align-items: center; gap: var(--sm);
+  flex: none; min-height: 28px; padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border-light, var(--border));
+  min-width: 0;
+}
+.pmk-strip-grow { flex: 1 1 auto; min-width: 0; }
+
+/* The ONE scroller per panel. Flat 8px in every theme -- --density does not
+   reach inside .pm6-sp-content in the app either, so this matches. */
+.pmk-body {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  /* scrollbar-gutter is load-bearing, not cosmetic. Without it the content box
+     narrows by the scrollbar width (~6px) the moment a list grows past the
+     panel height, so a design measures clean on a short list and overflows on a
+     long one -- the failure appears to be caused by DATA rather than by layout,
+     which makes it very hard to attribute. Found exactly that way: enriching
+     the fixture pushed one version's list past the fold and all 47 of its rows
+     began escaping by precisely 6px.
+     The app already applies this to its chat panes (parts/02-css-tokens:135)
+     for the same reason; the side panels never did. */
+  scrollbar-gutter: stable;
+}
+.pmk-body::-webkit-scrollbar { width: 10px; }
+.pmk-pad { padding: var(--md); display: flex; flex-direction: column; gap: var(--md); }
+
+/* ================================== ROW ==================================
+   slot          width       appears at
+   ------------------------------------------------------------------
+   rail           3px        always
+   glyph         14px        always
+   identity        inf       always  grow:1, min 96px, elide, ONE line
+   tail-meta     auto        bucket >= 2   dropped whole below
+   tail-status  0..72px      bucket >= 2   dropped whole below
+   tail-time    34..56px     bucket >= 1   dropped whole below
+   overflow      24px        always, reserved (opacity 0 until hover/focus)
+*/
+.pmk-row {
+  display: flex; align-items: center; gap: var(--sm);
+  min-height: 28px;                    /* > the 24px floor */
+  padding: 0 var(--md) 0 0;
+  border-radius: var(--radius-xs);
+  cursor: pointer; color: var(--text-primary);
+  font-size: var(--fs-xs);
+  position: relative;
+  min-width: 0;
+}
+.pmk-row:hover { background: var(--accent-soft); }
+.pmk-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.pmk-row--2line { min-height: 44px; align-items: stretch; padding-block: 3px; }
+
+/* Selection is not focus. The roving tab stop moves with the arrow keys and
+   shows the focus ring; selection is what Enter or a click COMMITTED, and it
+   survives focus moving elsewhere -- which is the whole reason section 13.3
+   gives Escape a job ("deselect"). Marked with a left rail rather than a
+   fill, so it stays legible under the friendly hover ring and does not read
+   as a second hover state. */
+.pmk-row.is-selected { background: var(--accent-soft); }
+.pmk-row.is-selected::before {
+  content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 2px;
+  border-radius: 1px; background: var(--accent-primary);
+}
+
+/* The opt-in list wrapper. No box of its own: a list that draws a border
+   would change every version's spacing, and the model works on plain
+   siblings anyway. */
+.pmk-list { display: contents; }
+
+.pmk-id {
+  flex: 1 1 auto; min-width: 96px;     /* the floor that outranks every other slot */
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pmk-id-stack { flex: 1 1 auto; min-width: 96px; display: flex;
+                flex-direction: column; justify-content: center; gap: 1px; }
+.pmk-id-stack > * { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Tail slots: fixed, never elide, dropped whole by the version's bucket logic. */
+.pmk-tail { flex: 0 0 auto; white-space: nowrap; color: var(--text-muted);
+            font-size: var(--fs-2xs); }
+.pmk-tail--time { min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Reserved overflow slot. Always occupies its 24px so the identity width does
+   not jump on hover -- a layout that reflows under the pointer is unusable. */
+.pmk-of { flex: 0 0 24px; opacity: 0; transition: opacity 90ms; }
+.pmk-row:hover .pmk-of, .pmk-row:focus-within .pmk-of,
+.pmk-row.is-selected .pmk-of { opacity: 1; }
+[data-motion="reduced"] .pmk-of { transition: none; }
+
+/* ============================== STATUS MARK ==============================
+   21px gutter OUTSIDE the text band: 3px rail + 14px glyph + 4px gap. */
+.pmk-mark { flex: 0 0 auto; display: flex; align-items: stretch; gap: var(--sm);
+            align-self: stretch; }
+.pmk-rail { flex: 0 0 3px; align-self: stretch; min-height: 16px; border-radius: 1px; }
+.pmk-glyph { flex: 0 0 14px; width: 14px; height: 14px; align-self: center; display: block; }
+
+/* rail fills, baked per tone -- no color-mix, no alpha calc (F3-431) */
+.pmk-t-ok        .pmk-rail { background: var(--accent-lime); }
+.pmk-t-run       .pmk-rail { background: var(--accent-primary); }
+.pmk-t-idle      .pmk-rail { background: var(--text-muted); }
+.pmk-t-warn      .pmk-rail { background: var(--accent-warning); }
+.pmk-t-err       .pmk-rail { background: var(--accent-error); }
+.pmk-t-off       .pmk-rail { background: var(--border); }
+.pmk-t-ok    .pmk-glyph { color: var(--accent-lime); }
+.pmk-t-run   .pmk-glyph { color: var(--accent-primary); }
+.pmk-t-idle  .pmk-glyph { color: var(--text-muted); }
+.pmk-t-warn  .pmk-glyph { color: var(--accent-warning); }
+.pmk-t-err   .pmk-glyph { color: var(--accent-error); }
+.pmk-t-off   .pmk-glyph { color: var(--text-muted); }
+
+/* Second non-color channel: the rail's dash pattern. Solid = live,
+   dashed = blocked, dotted = stale or prohibited. Rendered with
+   repeating-linear-gradient so it survives the no-SVG-filter rule. */
+.pmk-rail--dashed { background-image: repeating-linear-gradient(
+   to bottom, currentColor 0 4px, transparent 4px 7px); background-color: transparent !important; }
+.pmk-rail--dotted { background-image: repeating-linear-gradient(
+   to bottom, currentColor 0 2px, transparent 2px 5px); background-color: transparent !important; }
+.pmk-t-ok   .pmk-rail--dashed, .pmk-t-ok   .pmk-rail--dotted { color: var(--accent-lime); }
+.pmk-t-warn .pmk-rail--dashed, .pmk-t-warn .pmk-rail--dotted { color: var(--accent-warning); }
+.pmk-t-err  .pmk-rail--dashed, .pmk-t-err  .pmk-rail--dotted { color: var(--accent-error); }
+.pmk-t-idle .pmk-rail--dashed, .pmk-t-idle .pmk-rail--dotted { color: var(--text-muted); }
+
+.pmk-spin { animation: pmk-spin 1.4s linear infinite; transform-origin: 50% 50%; }
+@keyframes pmk-spin { to { transform: rotate(360deg); } }
+[data-motion="reduced"] .pmk-spin { animation: none; }
+@media (prefers-reduced-motion: reduce) { .pmk-spin { animation: none; } }
+
+/* =============================== KEY / VALUE ============================= */
+.pmk-kv { display: flex; gap: var(--md); font-size: var(--fs-xs); padding: 2px 0; min-width: 0; }
+.pmk-kv--inline { align-items: baseline; justify-content: space-between; }
+.pmk-kv--inline > .pmk-kv-k { flex: 0 1 auto; max-width: 40%; overflow: hidden;
+                              text-overflow: ellipsis; white-space: nowrap; }
+.pmk-kv--inline > .pmk-kv-v { flex: 1 1 auto; min-width: 88px; text-align: right;
+                              overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmk-kv--stacked { flex-direction: column; gap: 0; }
+.pmk-kv--stacked > .pmk-kv-k { font-size: var(--fs-2xs); color: var(--text-muted);
+                               overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Never right-align a stacked value; never let it wrap past two lines. */
+.pmk-kv--stacked > .pmk-kv-v {
+  text-align: left; color: var(--text-primary);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; overflow-wrap: anywhere;
+}
+.pmk-kv-k { color: var(--text-muted); }
+.pmk-kv-v { color: var(--text-primary); min-width: 0; }
+
+/* ================================ META RUN ==============================
+   Priority-ordered segments that DROP rather than clip, with a +N escape. */
+/* flex: 0 1 auto with min-width:0 is load-bearing. As a flex item this box
+   defaults to min-width:auto, so it refuses to shrink below its content and
+   OVERFLOWS the row instead -- measured at 30px past the box even after the
+   segment budget had already dropped what it could. It must be able to give
+   ground; its own overflow:hidden then clips gracefully and the +N escape
+   still carries whatever was dropped. */
+.pmk-meta { display: flex; align-items: baseline; gap: 0;
+            flex: 0 1 auto; min-width: 0;
+            font-size: var(--fs-2xs); color: var(--text-muted); overflow: hidden; }
+.pmk-meta-seg { flex: 0 0 auto; white-space: nowrap; }
+.pmk-meta-sep { flex: 0 0 auto; width: 6px; text-align: center; opacity: .55; }
+.pmk-meta-more {
+  flex: 0 0 auto; margin-left: var(--sm); min-height: 24px; min-width: 24px;
+  padding: 0 4px; border: 0; background: transparent; cursor: pointer;
+  color: var(--text-muted); font: inherit; font-weight: 600;
+  border-radius: var(--radius-xs);
+}
+.pmk-meta-more:hover { color: var(--text-primary); background: var(--accent-soft); }
+
+/* ================================= CHIP ================================== */
+.pmk-chip {
+  display: inline-flex; align-items: center; flex: none;
+  max-width: 72px; padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs); font-weight: 600; line-height: 1.5;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  background: var(--surface); color: var(--text-secondary);
+  border: 1px solid var(--border-light, var(--border));
+}
+.pmk-chip--ok   { color: var(--accent-lime);    border-color: var(--accent-lime); }
+.pmk-chip--warn { color: var(--accent-warning); border-color: var(--accent-warning); }
+.pmk-chip--err  { color: var(--accent-error);   border-color: var(--accent-error); }
+.pmk-chip--mono { font-family: var(--mono-font); font-weight: 500; max-width: 96px; }
+
+/* =============================== SECTION ================================
+   accessible-role button + accessible-expanded, required by GI-004. */
+.pmk-sec { display: flex; align-items: center; gap: var(--sm);
+  width: 100%; min-height: 26px; padding: 2px var(--md);
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--text-secondary); text-align: left;
+  font-family: var(--display-font-sm, var(--body-font));   /* NOT --display-font: retro
+                                       has no small Orbitron face and 10px is unreadable */
+  font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  position: sticky; top: 0; z-index: 2;
+  background: var(--surface);
+}
+.pmk-sec:hover { color: var(--text-primary); }
+.pmk-sec:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.pmk-sec-chev { flex: none; width: 10px; height: 10px; transition: transform 140ms; }
+.pmk-sec[aria-expanded="true"] .pmk-sec-chev { transform: rotate(90deg); }
+[data-motion="reduced"] .pmk-sec-chev { transition: none; }
+.pmk-sec-lbl { flex: 1 1 auto; min-width: 0; overflow: hidden;
+               text-overflow: ellipsis; white-space: nowrap; }
+/* flex:none rounded past the header's right padding by 1px in some
+   theme/width pairs. Let it concede a subpixel rather than escape. */
+.pmk-sec-n { flex: 0 1 auto; min-width: 0; font-weight: 500;
+             color: var(--text-muted); letter-spacing: 0;
+             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmk-hair { height: 1px; background: var(--border-light, var(--border)); flex: none; }
+
+/* =============================== LENS STRIP =============================
+   F3-445: one non-wrapping row, horizontal scroll on overflow, labels
+   ellipsize, items 56-180px. The selection indicator is an INSET underline,
+   not a container border -- a bottom border would shift the strip by 2px
+   between the 0px-border and 2px-border themes. */
+.pmk-lenses { display: flex; gap: 2px; overflow-x: auto; overflow-y: hidden;
+              scrollbar-width: none; flex: 1 1 auto; min-width: 0; }
+.pmk-lenses::-webkit-scrollbar { height: 0; }
+.pmk-lens {
+  flex: 0 1 auto; min-width: 56px; max-width: 180px;
+  min-height: 26px; padding: 3px var(--md);
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--text-secondary); font: inherit; font-size: var(--fs-2xs); font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  position: relative;
+}
+.pmk-lens:hover { color: var(--text-primary); }
+.pmk-lens[aria-selected="true"] { color: var(--text-primary); }
+.pmk-lens[aria-selected="true"]::after {
+  content: ''; position: absolute; left: var(--sm); right: var(--sm); bottom: 1px;
+  height: 2px; background: var(--accent-primary); border-radius: 1px;
+}
+[data-theme^="friendly"] .pmk-lens[aria-selected="true"] {
+  background: var(--accent-soft); border-radius: var(--radius-pill);
+}
+[data-theme^="friendly"] .pmk-lens[aria-selected="true"]::after { display: none; }
+.pmk-lens[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+
+/* ============================ BLOCKED / EMPTY ===========================
+   The reason code renders VERBATIM in mono, then one human sentence, then
+   the allowed actions as real buttons. Never a native title tooltip.
+   Required by GI-017, GAAAF-005, CRAU-021. */
+.pmk-blocked {
+  display: flex; flex-direction: column; gap: var(--sm);
+  padding: var(--md);
+  border-left: 3px solid var(--accent-warning);
+  background: var(--surface);
+  font-size: var(--fs-xs);
+}
+.pmk-blocked--err { border-left-color: var(--accent-error); }
+
+/* SEVERITY, in non-color channels. The border DASH is read straight off the
+   status entry the severity maps to -- D.status.blocked declares rail
+   'dashed', D.status.attention declares 'solid' -- so the banner's left edge
+   and a row's status rail encode the same distinction the same way, and
+   neither can drift from the fixture. Colour is deliberately NOT the
+   difference: both tiers are tone 'warn', because a warning that is drawn red
+   and a block that is drawn red are the same picture. */
+.pmk-blocked--dashed { border-left-style: dashed; }
+.pmk-blocked--dotted { border-left-style: dotted; }
+
+.pmk-blocked-top { display: flex; align-items: center; flex-wrap: wrap;
+                   gap: var(--sm); min-width: 0; }
+/* Shape channel: BAR for blocked, TRIANGLE for warning. GI-017 requires those
+   two stay separable by shape alone. */
+.pmk-blocked-mark { flex: 0 0 14px; display: inline-flex; align-items: center; }
+.pmk-blocked-code {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--mono-font); font-size: var(--fs-2xs);
+  color: var(--accent-warning); overflow-wrap: anywhere;
+}
+/* Word channel: the severity token itself, verbatim, for the same reason the
+   reason code is verbatim -- a paraphrase is a second vocabulary. */
+.pmk-blocked-sev {
+  flex: 0 0 auto; font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+}
+.pmk-blocked--err .pmk-blocked-code { color: var(--accent-error); }
+.pmk-blocked-say { color: var(--text-secondary); line-height: var(--lh-body); }
+.pmk-acts { display: flex; flex-wrap: wrap; gap: var(--sm); }
+/* A derived label is still a real button. It shrinks and ellipsizes rather
+   than pushing the row wide, because .pmk-acts wraps and the panel is 240px
+   at its floor -- 'Open workflow in browser' does not fit any of it. */
+.pmk-acts > .pmk-btn { flex: 0 1 auto; max-width: 100%; }
+
+.pmk-empty {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--sm);
+  padding: var(--lg) var(--md); max-height: 120px;
+}
+.pmk-empty-glyph { width: 20px; height: 20px; color: var(--text-muted); }
+.pmk-empty-t { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
+/* the ONLY place multi-line wrapped body text is permitted */
+.pmk-empty-b { font-size: var(--fs-xs); line-height: var(--lh-body); color: var(--text-secondary); }
+
+/* ================================ BUTTONS ================================ */
+.pmk-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--xs);
+  min-height: 24px; padding: 3px 10px;
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface-elevated); color: var(--text-primary);
+  font-family: var(--body-font); font-size: var(--fs-2xs); font-weight: 600;
+  cursor: pointer; white-space: nowrap; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.pmk-btn:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+.pmk-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+/* On-accent foreground is NOT --surface. Measured: --surface on --accent-primary
+   gives 1.26:1 in basic-dark, 1.43:1 friendly-dark, 1.44:1 glass-dark -- an
+   effectively illegible primary CTA (the Commit button, among others) against a
+   4.5:1 requirement. The correct pairing depends on the accent's own lightness,
+   not on the theme's ground: retro-dark's accent is ACID LIME, where white is
+   1.37:1 and near-black is 14.33:1; every other family's accent is a saturated
+   blue where white is 8.4:1 or better. One token, one exception. */
+.pmk-btn--primary { background: var(--accent-primary); border-color: var(--accent-primary);
+                    color: var(--pmk-on-accent, #FFFFFF); }
+.pmk-btn--danger:hover { border-color: var(--accent-error); color: var(--accent-error); }
+.pmk-btn--w { width: 100%; }
+.pmk-btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.pmk-btn[aria-disabled="true"]:hover { border-color: var(--border-light, var(--border));
+                                       background: var(--surface-elevated); }
+.pmk-btnrow { display: flex; gap: var(--sm); min-width: 0; }
+.pmk-btnrow > .pmk-btn { flex: 1 1 0; min-width: 0; }
+
+.pmk-field {
+  width: 100%; min-height: 26px; padding: 3px var(--md);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text-primary);
+  font-family: var(--body-font); font-size: var(--fs-xs); min-width: 0;
+}
+.pmk-field:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+/* ================================= TEXT ================================== */
+.pmk-mono { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+.pmk-dim  { color: var(--text-muted); }
+.pmk-note { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.pmk-1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pmk-card {
+  display: flex; flex-direction: column; gap: var(--xs);
+  padding: var(--md);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  min-width: 0;
+}
+[data-theme^="friendly"] .pmk-card { border-radius: var(--radius-md); box-shadow: var(--elev-1); }
+
+
+/* ======================== ON-ACCENT + AA COLOUR FLOORS ===================
+   These belong to the kit, not to any one version: all six inherit them, so a
+   per-version override would hide a defect they share. */
+.pmk-panel, .pmk-row, .pmk-card { --pmk-on-accent: #FFFFFF; }
+[data-theme="retro-dark"] .pmk-panel,
+[data-theme="retro-dark"] .pmk-row,
+[data-theme="retro-dark"] .pmk-card { --pmk-on-accent: #0A0A0A; }
+
+/* The blocked reason code is the one string GI-017 requires the user actually
+   read, and --accent-warning against --surface measures 3.20:1 in the basic
+   family -- below the AA floor that FinalGUISpec section 13.1 mandates
+   specifically for Basic, the designated accessibility theme. Darken/lighten
+   only there; the other six families already clear it. */
+[data-theme="basic-light"] .pmk-blocked-code { color: #8A5200; }
+[data-theme="basic-dark"]  .pmk-blocked-code { color: #FFC14D; }
+[data-theme="basic-light"] .pmk-blocked--err .pmk-blocked-code { color: #A11212; }
+[data-theme="basic-dark"]  .pmk-blocked--err .pmk-blocked-code { color: #FF8B8B; }
+
+/* --text-muted fails AA in basic-dark and ONLY there: #6B7280 on #1E1E1E is
+   3.45:1 against the 4.5 floor. Measured, that single token accounts for
+   ~6,000 of the W2 findings across every version -- pmk-meta-seg, pmk-tail,
+   pmk-meta-sep, pmk-sec-n, pmk-kv-k, pmk-note and pmk-meta-more are all just
+   consumers of it. The shipped baseline has the same defect (.pm6-kv-k
+   measures 3.45:1 too), so this is a pre-existing app issue surfaced by the
+   checker, not something the redesigns introduced.
+
+   Raised to #7F8694 = 4.56:1, the smallest change that clears the floor, so
+   the muted/primary hierarchy is preserved. basic-light already measures
+   5.05:1 and is left alone. Scoped to the panel subtree rather than the theme
+   block, because this is the kit asserting its own floor -- the theme's own
+   palette is not ours to redefine wholesale. */
+[data-theme="basic-dark"] .pmk-panel { --text-muted: #7F8694; }
+
+/* A section header must be self-contained. Its count sat at the right edge and
+   rounded 1px past the scroller's padding box in some theme/width pairs -- a
+   subpixel escape, but an escape. Clipping at the header's own bounds makes it
+   structurally impossible rather than tuned away. */
+.pmk-sec { overflow: hidden; max-width: 100%; }
+
+/* Chip text under the AA floor in basic-light, and ONLY there. Measured:
+   ok #0B8043 = 4.24:1 and warn #E65100 = 3.20:1 against --surface, both under
+   the 4.5 that FinalGUISpec section 13.1 mandates for Basic, the designated
+   accessibility theme. err is 4.75:1 and every basic-dark variant is 4.78:1 or
+   better, so neither is touched.
+
+   Smallest change that clears the floor, and only `color` is moved -- the
+   border keeps the theme's own accent so the chip's identity is unchanged.
+   This lives in the kit, not in a version: every design using PMK.chip shares
+   the defect, and a per-version override would flatter that version for a
+   reason unrelated to its design. */
+[data-theme="basic-light"] .pmk-chip--ok   { color: #057A3D; }   /* 4.60:1 */
+[data-theme="basic-light"] .pmk-chip--warn { color: #C73200; }   /* 4.57:1 */

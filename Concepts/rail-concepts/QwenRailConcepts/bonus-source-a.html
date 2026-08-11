@@ -1,0 +1,371 @@
+<!-- B1 · Staging Board · bonus-source-a.html — two-column kanban staging board for git changes with a sticky commit dock and a horizontal worktree strip -->
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>BONUS B1 · panel-source · Staging Board — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+.bA-head{flex:none;display:flex;align-items:center;gap:var(--md);padding:var(--lg);min-width:0;overflow:hidden;border-bottom:1px solid var(--border-light)}
+.bA-hico{width:26px;height:26px;flex:none;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent-primary)}
+.bA-title{font-family:var(--display-font);font-size:11px;font-weight:700;letter-spacing:.6px;flex:1 1 auto;min-width:max-content;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-stat{margin-left:auto;flex:0 1 auto;min-width:0;max-width:52%;font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:var(--md) var(--lg) var(--lg)}
+
+.bA-chips{padding:0 0 var(--md)}
+.bA-board{display:grid;grid-template-columns:1fr 1fr;gap:var(--md);margin-bottom:var(--lg)}
+.bA-col{min-width:0;display:flex;flex-direction:column}
+.bA-colh{display:flex;align-items:center;gap:var(--sm);font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:1.8px;color:var(--cc,var(--text-muted));padding:0 2px 5px;border-bottom:2px solid color-mix(in srgb,var(--cc,var(--accent-primary)) 45%,transparent);margin-bottom:var(--sm)}
+.bA-colh .bA-n{margin-left:auto;font-family:var(--mono-font);font-size:9px;letter-spacing:0;color:var(--cc,var(--text-muted));background:color-mix(in srgb,var(--cc,var(--accent-primary)) 13%,transparent);border-radius:var(--radius-pill);padding:0 6px}
+.bA-cards{display:flex;flex-direction:column;gap:var(--sm);min-width:0}
+
+.bA-card{position:relative;background:var(--surface-elevated);border:1px solid var(--border-light);border-left:2px solid var(--cc,var(--border));border-radius:var(--radius-sm);padding:var(--sm) var(--md);min-width:0;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out),border-color var(--motion-fast) var(--ease-out)}
+.bA-card::before{content:'';position:absolute;left:8px;right:8px;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--text-primary) 9%,transparent),transparent);pointer-events:none}
+.bA-card:hover{transform:translateY(-1px);box-shadow:var(--elev-1);border-color:var(--border)}
+.bA-stg{--cc:var(--graph-passed)}
+.bA-wip{--cc:var(--accent-warning)}
+.bA-cfl{--cc:var(--graph-failed)}
+.bA-r1{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.bA-path{flex:1 1 auto;min-width:0;font-family:var(--mono-font);font-size:10px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.bA-path:hover{color:var(--accent-blue);text-decoration:underline dotted}
+.bA-meta{font-family:var(--mono-font);font-size:9px;color:var(--text-muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-meta b{font-weight:400}
+.bA-add{color:var(--graph-passed)}
+.bA-del{color:var(--graph-failed)}
+.bA-acts{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:var(--sm)}
+.bA-gsd{color:var(--graph-failed);background:color-mix(in srgb,var(--graph-failed) 14%,transparent)}
+.bA-gsu{color:var(--graph-failed);background:color-mix(in srgb,var(--graph-failed) 16%,transparent);border:1px solid color-mix(in srgb,var(--graph-failed) 40%,transparent)}
+.bA-r1 .pm-chip{font-size:8px;padding:0 6px}
+
+.bA-dock{--cc:var(--accent-primary);position:sticky;bottom:0;z-index:2;background:linear-gradient(180deg,color-mix(in srgb,var(--surface-elevated) 94%,var(--surface)),var(--surface-elevated));box-shadow:var(--elev-2);margin-bottom:var(--lg)}
+.bA-dockfade{position:absolute;left:-20px;right:-20px;bottom:100%;height:16px;background:linear-gradient(180deg,transparent,var(--surface));pointer-events:none}
+.bA-dockh{display:flex;align-items:center;gap:var(--sm);margin-bottom:var(--sm);min-width:0}
+.bA-dockh .bA-dl{font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2px;color:var(--accent-primary)}
+.bA-dockh .pm6-tb-menu-wrap{margin-left:auto}
+.bA-dock .pm6-tb-menu-trigger{font-family:var(--mono-font);font-size:9.5px;border:1px solid var(--border-light);border-radius:var(--radius-xs);padding:3px 7px}
+.bA-dock .pm6-tb-menu{min-width:238px}
+.bA-dockrow{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.bA-dockrow{flex-wrap:wrap;gap:var(--sm)}
+.bA-dockrow .pm-input{flex:1 1 100%;min-width:0}
+.bA-sync{display:flex;align-items:center;gap:var(--sm);margin-top:var(--sm);font-family:var(--mono-font);font-size:9px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bA-net{display:flex;gap:var(--sm);margin-top:var(--sm)}
+.bA-net .pm-btn{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;padding:6px 6px}
+
+.bA-sl{display:flex;align-items:center;gap:var(--sm);font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2px;color:var(--cc,var(--text-muted));margin:0 0 var(--sm);min-width:0}
+.bA-sl::before{content:'';width:10px;height:2px;flex:none;background:var(--cc,var(--accent-primary));border-radius:1px}
+.bA-nr{margin-left:auto;font-family:var(--mono-font);font-size:9px;letter-spacing:0;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.bA-wt{--cc:var(--accent-blue)}
+.bA-wtstrip{display:flex;gap:var(--sm);overflow-x:auto;padding-bottom:4px;margin:0 calc(-1 * var(--lg)) var(--lg);padding-left:var(--lg);padding-right:var(--lg);scrollbar-width:thin;scrollbar-color:var(--pm6-sb-thumb) transparent}
+.bA-wtstrip::-webkit-scrollbar{height:8px}
+.bA-wtcard{position:relative;flex:0 0 200px;min-width:0;display:flex;flex-direction:column;gap:5px;background:var(--surface-elevated);border:1px solid var(--border-light);border-top:2px solid var(--cc,var(--accent-blue));border-radius:var(--radius-sm);padding:var(--md);transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out)}
+.bA-wtcard::before{content:'';position:absolute;left:8px;right:8px;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--text-primary) 9%,transparent),transparent);pointer-events:none}
+.bA-wtcard:hover{transform:translateY(-2px);box-shadow:var(--elev-1)}
+.bA-wtbranch{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.bA-wtdot{width:7px;height:7px;border-radius:50%;flex:none;background:var(--cc,var(--accent-blue))}
+.bA-wtname{flex:1 1 auto;min-width:0;font-family:var(--mono-font);font-size:10px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-pill{font-family:var(--mono-font);font-size:8.5px;font-weight:700;letter-spacing:.04em;padding:1px 7px;border-radius:var(--radius-pill);flex:none;align-self:flex-start}
+.bA-pill.clean{color:var(--graph-passed);background:color-mix(in srgb,var(--graph-passed) 12%,transparent)}
+.bA-pill.dirty{color:var(--accent-warning);background:color-mix(in srgb,var(--accent-warning) 14%,transparent)}
+.bA-wtpath,.bA-wtbase{font-family:var(--mono-font);font-size:9px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-wtacts{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+
+.bA-hist{--cc:var(--accent-magenta)}
+.bA-brs{--cc:var(--graph-pending)}
+.bA-row{display:flex;align-items:center;gap:var(--md);padding:5px 6px;border-radius:var(--radius-xs);min-width:0;cursor:pointer;transition:background var(--motion-fast) var(--ease-out),transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out)}
+.bA-row:hover{background:var(--accent-soft);transform:translateX(2px);box-shadow:inset 2px 0 0 var(--cc,var(--accent-primary))}
+.bA-sha{font-family:var(--mono-font);font-size:10px;font-weight:700;color:var(--cc,var(--accent-magenta));flex:none}
+.bA-msg{flex:1 1 auto;min-width:0;font-size:10.5px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-when{font-family:var(--mono-font);font-size:9px;color:var(--text-muted);flex:none}
+.bA-bico{color:var(--text-muted);flex:none}
+.bA-bname{flex:1 1 auto;min-width:0;font-family:var(--mono-font);font-size:10px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bA-row .pm-chip{font-size:8px;padding:0 6px}
+.bA-gutter{height:1px;background:var(--border-light);margin:var(--sm) 0}
+
+.side-panel-slot[data-wtier="min"] .bA-board{grid-template-columns:1fr}
+.side-panel-slot[data-wtier="min"] .bA-colh{letter-spacing:1.2px}
+.side-panel-slot[data-wtier="min"] .bA-wtcard{flex-basis:176px}
+.side-panel-slot[data-wtier="min"] .bA-when{display:none}
+.side-panel-slot[data-wtier="min"] .bA-nr{display:none}
+.side-panel-slot[data-wtier="wide"] .bA-board{gap:var(--lg)}
+.side-panel-slot[data-wtier="wide"] .bA-wtcard{flex-basis:216px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+  <div class="side-panel-view" id="panel-source">
+    <div class="bA-head"><span class="bA-hico"><i data-ico="source" class="pm-ico"></i></span><span class="bA-title">SOURCE CONTROL</span><span class="bA-stat">6 stg / 5 wip</span></div>
+    <div class="bA-scroll rail-scroll">
+
+      <div class="pm-chiprow bA-chips">
+        <button class="pm-chipbtn active" data-demo-action="demo.toast" data-demo-arg="Change filter -> all (11)">All</button>
+        <button class="pm-chipbtn" data-demo-action="demo.toast" data-demo-arg="Change filter -> staged (6)">Staged</button>
+        <button class="pm-chipbtn" data-demo-action="demo.toast" data-demo-arg="Change filter -> unstaged (5)">Unstaged</button>
+        <button class="pm-chipbtn" data-demo-action="demo.toast" data-demo-arg="Change filter -> conflicted (1)">Conflicted</button>
+      </div>
+
+      <div class="bA-board">
+        <div class="bA-col">
+          <div class="bA-colh" style="--cc:var(--graph-passed)">STAGED <span class="bA-n" style="--cc:var(--graph-passed)">6</span></div>
+          <div class="bA-cards">
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs pm-gs-staged">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> src/services/import/normalize_units/mixed_fractions.rs (HEAD vs index)">src/services/import/normalize_units/mixed_fractions.rs</span></div>
+              <div class="bA-meta"><b class="bA-add">+38</b> <b class="bA-del">-9</b> · HEAD vs index · hunk 2/4 staged</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> src/services/import/normalize_units/mixed_fractions.rs"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> mixed_fractions.rs (+38 -9)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs pm-gs-staged">A</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> web/src/routes/(app)/recipes/[id]/edit/+page.server.ts (new file)">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts</span></div>
+              <div class="bA-meta"><b class="bA-add">+214</b> <b class="bA-del">-0</b> · new file · added with git add -N</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> +page.server.ts"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +page.server.ts (+214 -0)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> +page.server.ts (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs pm-gs-staged">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> .github/workflows/ci-build-test-and-publish.yml (HEAD vs index)">.github/workflows/ci-build-test-and-publish.yml</span></div>
+              <div class="bA-meta"><b class="bA-add">+12</b> <b class="bA-del">-4</b> · HEAD vs index · buildx pinned</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> ci-build-test-and-publish.yml"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> ci-build-test-and-publish.yml (+12 -4)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci-build-test-and-publish.yml (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs pm-gs-staged">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> crates/puppet-core/src/artifacts/projection_freshness.rs (HEAD vs index)">crates/puppet-core/src/artifacts/projection_freshness.rs</span></div>
+              <div class="bA-meta"><b class="bA-add">+57</b> <b class="bA-del">-22</b> · HEAD vs index · freshness x health matrix</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> projection_freshness.rs"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> projection_freshness.rs (+57 -22)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> projection_freshness.rs (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs bA-gsd">D</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> ops/unraid/templates/tastebook-api-1.4.xml (deletion)">ops/unraid/templates/tastebook-api-1.4.xml</span></div>
+              <div class="bA-meta"><b class="bA-add">+0</b> <b class="bA-del">-148</b> · deleted · replaced by compose stack</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> tastebook-api-1.4.xml"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> tastebook-api-1.4.xml (+0 -148)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> tastebook-api-1.4.xml (restores file)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-stg">
+              <div class="bA-r1"><span class="pm-gs pm-gs-staged">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> web/src/lib/components/recipe/editor/QuantityStepper.svelte (HEAD vs index)">web/src/lib/components/recipe/editor/QuantityStepper.svelte</span></div>
+              <div class="bA-meta"><b class="bA-add">+19</b> <b class="bA-del">-6</b> · HEAD vs index · hunk 1/3 staged</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> QuantityStepper.svelte"><i data-ico="minus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> QuantityStepper.svelte (+19 -6)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> QuantityStepper.svelte (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bA-col">
+          <div class="bA-colh" style="--cc:var(--accent-warning)">UNSTAGED <span class="bA-n" style="--cc:var(--accent-warning)">5</span></div>
+          <div class="bA-cards">
+            <div class="bA-card bA-wip">
+              <div class="bA-r1"><span class="pm-gs pm-gs-mod">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> web/src/lib/components/recipe/editor/QuantityStepper.svelte (index vs working)">web/src/lib/components/recipe/editor/QuantityStepper.svelte</span></div>
+              <div class="bA-meta"><b class="bA-add">+7</b> <b class="bA-del">-3</b> · index vs working · hunk 2/3 and 3/3</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> web/src/lib/components/recipe/editor/QuantityStepper.svelte"><i data-ico="plus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> QuantityStepper.svelte (+7 -3)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> QuantityStepper.svelte (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-cfl">
+              <div class="bA-r1"><span class="pm-gs bA-gsu">C</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> src/services/import/normalize_units/mixed_fractions.rs (merge conflict)">src/services/import/normalize_units/mixed_fractions.rs</span><span class="pm-chip pm-chip-err">conflict</span></div>
+              <div class="bA-meta">both sides modified · 2 markers · resolve to stage</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> mixed_fractions.rs"><i data-ico="plus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> mixed_fractions.rs (3-way merge view)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-wip">
+              <div class="bA-r1"><span class="pm-gs pm-gs-mod">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> crates/puppet-core/src/artifacts/projection_freshness.rs (index vs working)">crates/puppet-core/src/artifacts/projection_freshness.rs</span></div>
+              <div class="bA-meta"><b class="bA-add">+4</b> <b class="bA-del">-0</b> · index vs working · doc comments only</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> crates/puppet-core/src/artifacts/projection_freshness.rs"><i data-ico="plus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> projection_freshness.rs (+4 -0)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> projection_freshness.rs (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-wip">
+              <div class="bA-r1"><span class="pm-gs pm-gs-mod">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> web/src/routes/(app)/recipes/[id]/edit/+page.server.ts (index vs working)">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts</span></div>
+              <div class="bA-meta"><b class="bA-add">+22</b> <b class="bA-del">-8</b> · index vs working · form actions rework</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> web/src/routes/(app)/recipes/[id]/edit/+page.server.ts"><i data-ico="plus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +page.server.ts (+22 -8)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> +page.server.ts (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+            <div class="bA-card bA-wip">
+              <div class="bA-r1"><span class="pm-gs pm-gs-mod">M</span><span class="bA-path" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> .github/workflows/ci-build-test-and-publish.yml (index vs working)">.github/workflows/ci-build-test-and-publish.yml</span></div>
+              <div class="bA-meta"><b class="bA-add">+3</b> <b class="bA-del">-1</b> · index vs working · manifest-list digests</div>
+              <div class="bA-acts">
+                <button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> .github/workflows/ci-build-test-and-publish.yml"><i data-ico="plus" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn" title="Diff" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> ci-build-test-and-publish.yml (+3 -1)"><i data-ico="diff" class="pm-ico sm"></i></button>
+                <button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci-build-test-and-publish.yml (destructive confirm)"><i data-ico="x" class="pm-ico sm"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bA-card bA-dock">
+        <span class="bA-dockfade"></span>
+        <div class="bA-dockh">
+          <i data-ico="pin" class="pm-ico sm" style="color:var(--accent-primary)"></i><span class="bA-dl">COMMIT DOCK</span>
+          <div class="pm6-tb-menu-wrap">
+            <button type="button" class="pm6-tb-menu-trigger" aria-controls="bADockBranchMenu"><i data-ico="branch" class="pm-ico sm"></i><span class="pm6-tb-menu-label">main</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+            <div class="pm6-tb-menu" id="bADockBranchMenu" role="menu" aria-label="Commit target branch" data-pm-menu-select>
+              <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="main" data-label="main" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> already on main">main <span class="pm6-tb-menu-meta">current</span></button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="frac" data-label="thread/import-worker-mixed-fraction-fix" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-worker-mixed-fraction-fix">thread/import-worker-mixed-fraction-fix <span class="pm6-tb-menu-meta">thread</span></button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="batch" data-label="tastebook-import-worker-batch" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> tastebook-import-worker-batch">tastebook-import-worker-batch <span class="pm6-tb-menu-meta">batch</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="bA-dockrow">
+          <label class="pm-input"><i data-ico="merge" class="pm-ico sm"></i><input aria-label="Commit message" placeholder="Commit message for 6 staged files..." value="refactor(import): split mixed-fraction normalization into a unit-aware parser"></label>
+          <button class="pm-minibtn" title="Generate with AI" data-demo-action="cmd.source_control.generate_commit_message" data-demo-arg="cmd.source_control.generate_commit_message -> pm: [ITERATION] refactor(import) ..."><i data-ico="spark" class="pm-ico sm"></i></button>
+          <button class="pm-btn pm-btn-primary" data-demo-action="panels.git_commit" data-demo-arg="cmd.git.commit -> committed 6 files to main">Commit</button>
+        </div>
+        <div class="bA-sync"><span class="dot dot-ok"></span>origin/main · 0 in / 2 out · last fetch 41s ago</div>
+        <div class="bA-net">
+          <button class="pm-btn" data-demo-action="cmd.git.pull" data-demo-arg="cmd.git.pull -> already up to date with origin/main"><i data-ico="pull" class="pm-ico sm"></i>Pull</button>
+          <button class="pm-btn" data-demo-action="cmd.git.push" data-demo-arg="cmd.git.push -> 2 commits pushed to origin/main"><i data-ico="push" class="pm-ico sm"></i>Push</button>
+          <button class="pm-btn" data-demo-action="cmd.git.fetch" data-demo-arg="cmd.git.fetch -> origin refreshed (0 new)"><i data-ico="fetch" class="pm-ico sm"></i>Fetch</button>
+        </div>
+      </div>
+
+      <section class="bA-wt">
+        <h3 class="bA-sl" style="--cc:var(--accent-blue)">WORKTREES <span class="bA-nr">6 · scrolls sideways</span></h3>
+        <div class="bA-wtstrip">
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--graph-passed)"></span><span class="bA-wtname">main</span></div>
+            <span class="bA-pill clean">clean</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook (primary)</div>
+            <div class="bA-wtbase">base origin/main · age now</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> main workspace files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> main vs origin/main"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Open lane" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> run #47 lanes"><i data-ico="external" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--accent-warning)"></span><span class="bA-wtname">thread/import-worker-mixed-fraction-fix</span></div>
+            <span class="bA-pill dirty">dirty</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook/.worktrees/import-fraction-fix</div>
+            <div class="bA-wtbase">base main · age 2h · 3 files</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> thread worktree files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> import-fraction-fix vs main (+96 -18)"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Merge" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> merge flow for import-worker-mixed-fraction-fix"><i data-ico="merge" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn danger" title="Remove" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm: thread/import-worker-mixed-fraction-fix (safe point saved)"><i data-ico="trash" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--accent-warning)"></span><span class="bA-wtname">tastebook-import-worker-batch</span></div>
+            <span class="bA-pill dirty">dirty</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook/.worktrees/import-worker-batch</div>
+            <div class="bA-wtbase">base main · age 41m · owned by run #47</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> batch worktree files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> import-worker-batch vs main (+310 -42)"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Open lane" data-demo-action="page.go" data-demo-arg="Opening Orchestrator lane: import worker batch"><i data-ico="external" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn danger" title="Remove" aria-disabled="true" data-demo-reason="blocked_by_gate" data-demo-action="demo.reason" data-demo-arg="Owned by run #47 — Remove unlocks when the lane releases it"><i data-ico="trash" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--graph-passed)"></span><span class="bA-wtname">schema.org Recipe structured-data markup coverage 2026</span></div>
+            <span class="bA-pill clean">clean</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook/.worktrees/recipe-structured-data-2026</div>
+            <div class="bA-wtbase">base main · age 1d</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> structured-data worktree files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> recipe-structured-data-2026 vs main (+74 -5)"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Merge" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> merge flow for structured-data coverage 2026"><i data-ico="merge" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn danger" title="Remove" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm: recipe-structured-data-2026"><i data-ico="trash" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--graph-passed)"></span><span class="bA-wtname">postgres-16-alpine-primary</span></div>
+            <span class="bA-pill clean">clean</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook/.worktrees/postgres-16-alpine-primary</div>
+            <div class="bA-wtbase">base main · age 3d</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> postgres worktree files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> postgres-16-alpine-primary vs main (+18 -2)"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Merge" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> merge flow for postgres-16-alpine-primary"><i data-ico="merge" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn danger" title="Remove" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm: postgres-16-alpine-primary"><i data-ico="trash" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="bA-wtcard">
+            <div class="bA-wtbranch"><span class="bA-wtdot" style="background:var(--graph-passed)"></span><span class="bA-wtname">docs/seriouseats.com/the-food-lab/why-fractions-break-our-parser</span></div>
+            <span class="bA-pill clean">clean</span>
+            <div class="bA-wtpath">/Users/jared/projects/tastebook/.worktrees/food-lab-fractions-notes</div>
+            <div class="bA-wtbase">base main · age 3d · research notes</div>
+            <div class="bA-wtacts">
+              <button class="pm-minibtn" title="Open files" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> research notes worktree files"><i data-ico="folderOpen" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Compare" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> food-lab-fractions-notes vs main (+64 -0)"><i data-ico="diff" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Merge" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> merge flow for food-lab fractions notes"><i data-ico="merge" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn danger" title="Remove" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm: docs/seriouseats.com/the-food-lab/why-fractions-break-our-parser"><i data-ico="trash" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bA-hist">
+        <h3 class="bA-sl" style="--cc:var(--accent-magenta)">HISTORY <span class="bA-nr">log --oneline -6</span></h3>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> f3a9c2e"><span class="bA-sha">f3a9c2e</span><span class="bA-msg">refactor(import): split mixed-fraction normalization into a unit-aware parser with property-based tests</span><span class="bA-when">12m</span></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 91bd7a4"><span class="bA-sha">91bd7a4</span><span class="bA-msg">feat(artifacts): add projection_freshness x projection_health matrix to runtime receipt rows</span><span class="bA-when">48m</span></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> c07e119"><span class="bA-sha">c07e119</span><span class="bA-msg">chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</span><span class="bA-when">2h</span></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 5e8d20b"><span class="bA-sha">5e8d20b</span><span class="bA-msg">fix(import): mixed_fraction_does_not_explode regression guard for "1 1/2 cup" at import.rs:58:9</span><span class="bA-when">5h</span></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> a44f9d1"><span class="bA-sha">a44f9d1</span><span class="bA-msg">feat(web): QuantityStepper svelte component with fraction-aware keyboard stepping</span><span class="bA-when">1d</span></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 7b3c6e2"><span class="bA-sha">7b3c6e2</span><span class="bA-msg">chore(ops): tastebook-api-1.4 unraid template refresh for multi-arch image digests</span><span class="bA-when">2d</span></div>
+      </section>
+
+      <div class="bA-gutter"></div>
+
+      <section class="bA-brs">
+        <h3 class="bA-sl" style="--cc:var(--graph-pending)">BRANCHES &amp; STASH <span class="bA-nr">6 · 2 stash</span></h3>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> already on main"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">main</span><span class="pm-chip pm-chip-ok">current</span><button class="pm-minibtn" title="Create PR" data-demo-action="git.create_pr" data-demo-arg="cmd.github.pr.create -> draft PR from main"><i data-ico="pr" class="pm-ico sm"></i></button></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-worker-mixed-fraction-fix"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">thread/import-worker-mixed-fraction-fix</span><span class="pm-chip">ahead 2</span><button class="pm-minibtn" title="Checkout" data-demo-action="demo.toast" data-demo-arg="cmd.git.checkout -> thread/import-worker-mixed-fraction-fix"><i data-ico="check" class="pm-ico sm"></i></button></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> tastebook-import-worker-batch (owned by run #47 — read-only)"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">tastebook-import-worker-batch</span><span class="pm-chip pm-chip-warn">run #47</span><button class="pm-minibtn" title="Checkout" data-demo-action="demo.toast" data-demo-arg="cmd.git.checkout -> tastebook-import-worker-batch"><i data-ico="check" class="pm-ico sm"></i></button></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> schema.org Recipe structured-data markup coverage 2026"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">schema.org Recipe structured-data markup coverage 2026</span><span class="pm-chip">ahead 1</span><button class="pm-minibtn" title="Checkout" data-demo-action="demo.toast" data-demo-arg="cmd.git.checkout -> structured-data coverage 2026"><i data-ico="check" class="pm-ico sm"></i></button></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> postgres-16-alpine-primary"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">postgres-16-alpine-primary</span><span class="pm-chip">even</span><button class="pm-minibtn" title="Checkout" data-demo-action="demo.toast" data-demo-arg="cmd.git.checkout -> postgres-16-alpine-primary"><i data-ico="check" class="pm-ico sm"></i></button></div>
+        <div class="bA-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> docs/seriouseats.com/the-food-lab/why-fractions-break-our-parser"><i data-ico="branch" class="pm-ico sm bA-bico"></i><span class="bA-bname">docs/seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="pm-chip">even</span><button class="pm-minibtn" title="Checkout" data-demo-action="demo.toast" data-demo-arg="cmd.git.checkout -> food-lab fractions notes"><i data-ico="check" class="pm-ico sm"></i></button></div>
+        <div class="bA-row"><i data-ico="stash" class="pm-ico sm bA-bico"></i><span class="bA-bname">stash@{0} · WIP mixed-fraction parser guard rails (running cargo test -p puppet-core import::normalize_units, retry 2/2)</span><span class="pm-chip">3 files</span><button class="pm-minibtn" title="Pop" data-demo-action="cmd.git.stash_pop" data-demo-arg="cmd.git.stash_pop -> applied and dropped stash@{0}"><i data-ico="pull" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Drop" data-demo-action="cmd.git.stash_drop" data-demo-arg="cmd.git.stash_drop -> confirm drop of stash@{0}"><i data-ico="trash" class="pm-ico sm"></i></button></div>
+        <div class="bA-row"><i data-ico="stash" class="pm-ico sm bA-bico"></i><span class="bA-bname">stash@{1} · QuantityStepper fraction keyboard stepping, editing web/src/lib/components/recipe/editor</span><span class="pm-chip">1 file</span><button class="pm-minibtn" title="Pop" data-demo-action="cmd.git.stash_pop" data-demo-arg="cmd.git.stash_pop -> applied and dropped stash@{1}"><i data-ico="pull" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Drop" data-demo-action="cmd.git.stash_drop" data-demo-arg="cmd.git.stash_drop -> confirm drop of stash@{1}"><i data-ico="trash" class="pm-ico sm"></i></button></div>
+        <div class="pm-footnote">Drag a card between columns to stage or unstage · board mirrors git status --porcelain</div>
+      </section>
+
+    </div>
+  </div>
+  <div class="side-panel-view" id="panel-search"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Search. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-git"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Actions. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-docker"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Docker. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-testing"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Testing. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-agents"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Agents. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-artifacts"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Artifacts. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>PMChrome.boot({ badge: { id: 'B1', name: 'Staging Board' } }); PMRail.showPanel('panel-source');</script>
+</body>
+</html>

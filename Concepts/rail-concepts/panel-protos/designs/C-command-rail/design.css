@@ -1,0 +1,663 @@
+/* =====================================================================
+   DESIGN C — COMMAND-RAIL
+   Philosophy: every row is a strict TWO-COLUMN layout.
+     [ 26px fixed gutter ] [ flex-1 text column (label + right meta) ]
+   The gutter carries either a status dot or a per-row action glyph.
+   The text column carries the label + a right-aligned meta value.
+   This stays legible at 220px because the gutter is fixed and the
+   text column flexes with truncation.
+
+   Structure per panel (top → bottom):
+     .pc-header          → compact header: title row + full-width primary input
+     .pc-list            → two-column rows
+     .pc-footer          → full-width action buttons
+
+   Component vocabulary is scoped .pc-* (pc = "panel · command-rail").
+   No native <select>; sprout menus are used everywhere a dropdown is needed.
+   ===================================================================== */
+
+/* ---- root shell ---- */
+.pc-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  padding: var(--md);
+  font-family: var(--body-font);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+/* =====================================================================
+   HEADER — compact. Title row (panel-context + right chip) then one
+   full-width primary action input below it.
+   ===================================================================== */
+.pc-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  padding-bottom: var(--sm);
+  border-bottom: var(--border-width) solid var(--border-light);
+}
+.pc-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pc-header-title .pc-h-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--display-font);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.pc-header-title .pc-h-meta {
+  flex-shrink: 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80px;
+}
+
+/* the single full-width primary input (search box, commit msg, build btn…) */
+.pc-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 28px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+.pc-input:focus { border-color: var(--accent-primary); }
+.pc-input::placeholder { color: var(--text-muted); }
+.pc-input.mono { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+
+/* a primary action input row: an input + an inline suffix button */
+.pc-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pc-input-row .pc-input { flex: 1 1 auto; }
+
+/* =====================================================================
+   SECTION HEADER — a tiny caps label between row groups
+   ===================================================================== */
+.pc-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  min-width: 0;
+  margin-top: var(--sm);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+}
+.pc-section .pc-sec-count { color: var(--text-secondary); flex-shrink: 0; }
+
+/* =====================================================================
+   THE TWO-COLUMN ROW — the core command-rail atom.
+   gutter (26px fixed) | text column (flex:1, min-width:0, truncates)
+   ===================================================================== */
+.pc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.pc-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-height: 24px;
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+  min-width: 0;
+}
+.pc-row:hover { background: var(--surface-elevated); color: var(--text-primary); }
+
+/* ---- the fixed-width 26px gutter ---- */
+.pc-gutter {
+  width: 26px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* ---- the flexing text column ---- */
+.pc-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  overflow: hidden;
+}
+.pc-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  color: inherit;
+}
+.pc-label.mono { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+/* right-aligned meta value living in the text column */
+.pc-meta {
+  flex-shrink: 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pc-meta.mono { font-family: var(--mono-font); }
+.pc-meta.dim  { color: var(--text-muted); opacity: .8; }
+
+/* row variants */
+.pc-row.muted   { color: var(--text-muted); cursor: default; }
+.pc-row.muted:hover { background: transparent; color: var(--text-muted); }
+.pc-row.active  { background: var(--accent-soft); color: var(--text-primary); }
+.pc-row.stack   { align-items: flex-start; }      /* when text column wraps 2 lines */
+
+/* =====================================================================
+   GUTTER CONTENT — status dots, badges, per-row action icons
+   ===================================================================== */
+
+/* status dot (the most common gutter content) */
+.pc-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--text-muted);
+}
+.pc-dot.ok   { background: var(--graph-passed); box-shadow: 0 0 0 2px color-mix(in srgb, var(--graph-passed) 22%, transparent); }
+.pc-dot.run  { background: var(--graph-running); box-shadow: 0 0 0 2px color-mix(in srgb, var(--graph-running) 22%, transparent); }
+.pc-dot.fail { background: var(--graph-failed); box-shadow: 0 0 0 2px color-mix(in srgb, var(--graph-failed) 22%, transparent); }
+.pc-dot.idle { background: var(--graph-pending); }
+/* pulsing run dot — keep it cheap (no backdrop-filter) */
+.pc-dot.run { animation: pc-pulse 1.6s var(--ease-smooth) infinite; }
+@keyframes pc-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+
+/* git-status letter badge (M/A) for source change rows */
+.pc-gs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; height: 16px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--mono-font);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pc-gs.M, .pc-gs.mod { background: color-mix(in srgb, var(--graph-running) 24%, transparent); color: var(--graph-running); }
+.pc-gs.A, .pc-gs.add { background: color-mix(in srgb, var(--graph-passed) 24%, transparent); color: var(--graph-passed); }
+
+/* line-number chip for search hits */
+.pc-ln {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 16px;
+  padding: 0 2px;
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+/* worktree branch dot (filled ring) and commit dot (hollow) */
+.pc-wt-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid var(--text-muted);
+  background: transparent;
+}
+.pc-wt-dot.ok   { border-color: var(--graph-passed); background: var(--graph-passed); }
+.pc-wt-dot.warn { border-color: var(--graph-running); background: var(--graph-running); }
+.pc-commit-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid var(--text-muted);
+  background: var(--surface);
+}
+
+/* per-row icon glyphs (svg color = currentColor) */
+.pc-ico {
+  width: 13px; height: 13px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+.pc-row:hover .pc-ico { color: var(--text-secondary); }
+.pc-ico.accent { color: var(--accent-primary); }
+.pc-ico.warn   { color: var(--accent-warning); }
+.pc-ico.ok     { color: var(--graph-passed); }
+
+/* row-level action glyph button (sits in the gutter as the trigger) */
+.pc-actbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pc-actbtn:hover { color: var(--text-primary); background: var(--surface-elevated); }
+.pc-actbtn.warn  { color: var(--accent-warning); }
+
+/* warning glyph (triangle) — sits in the gutter like pc-ico, inherits pc-ico sizing */
+.pc-warn-glyph {
+  flex-shrink: 0;
+  width: 13px; height: 13px;
+  color: var(--accent-warning);
+}
+.pc-row:hover .pc-warn-glyph { color: var(--accent-warning); }
+/* when used as a small inline button glyph (replace toggle), shrink it */
+.pc-mini .pc-warn-glyph { width: 11px; height: 11px; color: var(--text-muted); }
+
+/* =====================================================================
+   RIGHT-ALIGNED STATUS CHIP (small, lives in text column after meta)
+   ===================================================================== */
+.pc-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 var(--sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pc-chip.ok    { background: color-mix(in srgb, var(--graph-passed) 18%, transparent); color: var(--graph-passed); }
+.pc-chip.warn  { background: color-mix(in srgb, var(--graph-running) 18%, transparent); color: var(--graph-running); }
+.pc-chip.err   { background: color-mix(in srgb, var(--graph-failed) 18%, transparent); color: var(--graph-failed); }
+.pc-chip.muted { background: color-mix(in srgb, var(--text-muted) 16%, transparent); color: var(--text-muted); }
+.pc-chip.fam   { background: var(--accent-soft); color: var(--accent-primary); }
+
+/* =====================================================================
+   INLINE TOGGLE PILLS (flags, filters) — wrap-able, never a third column
+   ===================================================================== */
+.pc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--xs);
+  min-width: 0;
+}
+.pc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 20px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.pc-pill:hover { color: var(--text-secondary); border-color: var(--border); }
+.pc-pill.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* sprout-trigger styled as a pill so it fits inline with toggles */
+.pc-pill.pm6-tb-menu-trigger {
+  height: 20px;
+  padding: 0 var(--sm);
+  font-size: var(--fs-2xs);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+}
+.pc-pill.pm6-tb-menu-trigger:hover { color: var(--text-secondary); }
+.pc-pill.pm6-tb-menu-trigger[aria-expanded="true"] { color: var(--text-primary); border-color: var(--border); }
+.pc-pill.pm6-tb-menu-trigger .pm6-tb-chev { font-size: 8px; opacity: .6; }
+
+/* sprout-trigger styled as a full-width block button (branch picker) */
+.pc-block-trigger.pm6-tb-menu-trigger {
+  width: 100%;
+  height: 28px;
+  padding: 0 var(--sm);
+  gap: var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  justify-content: flex-start;
+}
+.pc-block-trigger.pm6-tb-menu-trigger:hover { color: var(--text-primary); border-color: var(--border); }
+.pc-block-trigger.pm6-tb-menu-trigger .pc-trig-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+.pc-block-trigger.pm6-tb-menu-trigger .pm6-tb-chev { font-size: 8px; opacity: .6; }
+/* the trigger's own gutter icon is fixed-width */
+.pc-block-trigger.pm6-tb-menu-trigger .pc-trig-ico {
+  width: 13px; height: 13px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+/* =====================================================================
+   SEARCH HIT ROW — also two columns, but the gutter is the line chip
+   and the text column shows the matched code (mono).
+   ===================================================================== */
+.pc-hit {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--xs) var(--sm) var(--xs) var(--md); /* indent under the file row */
+  min-height: 22px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  color: var(--text-muted);
+  min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.pc-hit:hover { background: var(--surface-elevated); color: var(--text-secondary); }
+.pc-hit .pc-gutter { width: 26px; } /* inherit gutter sizing for the ln chip */
+.pc-hit .pc-hit-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  line-height: 1.4;
+}
+.pc-hit .pc-hit-code em {
+  font-style: normal;
+  background: color-mix(in srgb, var(--accent-warning) 30%, transparent);
+  color: var(--text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* =====================================================================
+   KV ROW (build params, connection details) — still two columns:
+   gutter = a tiny type glyph; text column = "key  …  value"
+   ===================================================================== */
+.pc-kv {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-height: 22px;
+  padding: 0 var(--sm);
+  min-width: 0;
+}
+.pc-kv .pc-gutter { width: 26px; }
+.pc-kv .pc-kv-k {
+  flex-shrink: 0;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+}
+.pc-kv .pc-kv-spacer { flex: 1 1 auto; min-width: 0; border-bottom: 1px dotted var(--border-light); height: 1px; }
+.pc-kv .pc-kv-v {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  text-align: right;
+}
+.pc-kv .pc-kv-v.mono { font-family: var(--mono-font); }
+
+/* =====================================================================
+   TRIAGE / LOG BLOCK — the failed-run detail panel.
+   Still nested rows, but the outer container is a bordered code box.
+   ===================================================================== */
+.pc-triage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  margin: var(--xs) 0 var(--sm);
+  padding: var(--sm);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  min-width: 0;
+}
+.pc-triage .pc-triage-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  color: var(--text-primary);
+}
+.pc-triage .pc-triage-head b { color: var(--accent-error); font-weight: 700; }
+.pc-triage .pc-triage-line { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc-triage .pc-triage-line.fail { color: var(--graph-failed); }
+.pc-triage .pc-triage-next {
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border-light);
+  padding-top: var(--xs);
+  margin-top: var(--xs);
+}
+
+/* =====================================================================
+   CHAIN (Docker publish stages) — vertical, gutter = stage number
+   ===================================================================== */
+.pc-chain { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.pc-chain-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-height: 24px;
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-xs);
+  min-width: 0;
+}
+.pc-chain-step:hover { background: var(--surface-elevated); }
+.pc-chain-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  font-weight: 700;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.pc-chain-step.done .pc-chain-num {
+  background: var(--graph-passed);
+  border-color: var(--graph-passed);
+  color: var(--background);
+}
+.pc-chain-step.ready .pc-chain-num {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+.pc-chain-step .pc-chain-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+}
+
+/* =====================================================================
+   INVESTIGATION BUNDLE (Artifacts) — a compact card of chips + steps.
+   Steps are two-column rows like everything else.
+   ===================================================================== */
+.pc-bundle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  padding: var(--sm);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  min-width: 0;
+}
+.pc-bundle-id {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.pc-bundle-title {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pc-bundle-chips { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+/* =====================================================================
+   BUTTONS — footer action row + block buttons
+   ===================================================================== */
+.pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xs);
+  height: 26px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.pc-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface); }
+.pc-btn.primary {
+  background: var(--accent-primary);
+  color: var(--background);
+  border-color: var(--accent-primary);
+  font-weight: 700;
+}
+.pc-btn.primary:hover { filter: brightness(1.08); background: var(--accent-primary); }
+.pc-btn.block { width: 100%; }
+.pc-btn.sm { height: 22px; font-size: var(--fs-2xs); padding: 0 var(--sm); }
+
+/* full-width footer button row */
+.pc-footer {
+  display: flex;
+  gap: var(--sm);
+  padding-top: var(--sm);
+  margin-top: var(--xs);
+  border-top: var(--border-width) solid var(--border-light);
+}
+.pc-footer > .pc-btn { flex: 1 1 0; min-width: 0; }
+
+/* secondary button stack (full-width, stacked) */
+.pc-btnstack { display: flex; flex-direction: column; gap: var(--sm); }
+
+/* footnote — one-liner caption */
+.pc-foot {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.45;
+  padding-top: var(--xs);
+}
+
+/* tiny inline icon button (row-level secondary action, not in the gutter) */
+.pc-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--xs);
+  background: transparent;
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.pc-mini:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface-elevated); }
+.pc-mini.danger { color: var(--accent-error); }
+.pc-mini.danger:hover { border-color: var(--accent-error); }
+
+/* helper: hidden by default, .open shows (used by disclosures if needed) */
+.pc-collapsible { display: none; }
+.pc-collapsible.open { display: flex; flex-direction: column; gap: var(--xs); }

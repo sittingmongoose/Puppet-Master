@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C2 · Cozy Shelves — File Manager — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+/* =====================================================================
+   C2 — COZY SHELVES · FILE MANAGER
+   The File Manager re-cut in the cozy-shelves language: a soft pill
+   banner carrying the worktree-root picker, a toolbar carrying the
+   Hide-ignored toggle, a segmented tab bar (Explorer / Changed / Open),
+   a comfortable nested
+   tree of pill rows with hover-reveal quick actions, a reskinned PM
+   sprout context menu (Slint has no native one), and a sticky status
+   footer. Tints derive from theme tokens so it stays correct on all 8
+   themes; glyphs are bundled stroke SVGs only (F3-417: no emoji /
+   pictographs / CDN icons; every icon-only control carries a label and
+   a non-icon status word). Tree behavior defers to Plans/FileManager.md:
+   virtualized (row 24px, lazy expand, 10k row-cap + Show more), current-
+   file reveal with hidden-by-filter disclosure, read-only git badges
+   sourced from Source Control, path-based narrow open, single-row open
+   (no bulk-open), worktree-keyed roots.
+   ===================================================================== */
+.side-panel-view { background: var(--surface); display: flex; flex-direction: column; min-height: 0; }
+.side-panel-view:not(.active) { display: none; }
+
+/* ---- banner ---- */
+.sh-banner {
+  flex: none; display: flex; align-items: center; gap: var(--md);
+  padding: var(--lg); min-width: 0; overflow: visible;
+  margin: var(--md) var(--md) 0; border-radius: var(--radius-lg);
+  background:
+    radial-gradient(135% 150% at 6% -30%, color-mix(in srgb, var(--accent-primary) 17%, transparent), transparent 56%),
+    radial-gradient(120% 150% at 100% 0%, color-mix(in srgb, var(--accent-blue) 11%, transparent), transparent 52%),
+    var(--surface-elevated);
+  box-shadow: var(--elev-1); position: relative; z-index: 2;
+}
+.sh-bico { width: 26px; height: 26px; flex: none; border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent-primary) 16%, transparent); color: var(--accent-primary); transition: transform var(--motion-med) var(--ease-default), background var(--motion-fast) var(--ease-out); }
+.sh-banner:hover .sh-bico { transform: rotate(-7deg) scale(1.06); }
+.sh-bico svg { width: 13px; height: 13px; }
+.sh-title { font-family: var(--display-font); font-size: 12px; font-weight: 700; letter-spacing: .9px; flex: 0 0 auto; }
+.sh-bbranch { margin-left: auto; flex: 0 1 52%; min-width: 0; }
+.sh-bbranch .pm6-tb-menu-trigger { display: flex; align-items: center; gap: 6px; min-width: 0; width: 100%; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 3px 9px; }
+.sh-bbranch .pm6-tb-menu-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono-font); font-size: 10px; }
+.sh-bhead-acts { display: flex; align-items: center; gap: var(--xs); flex: none; }
+
+/* ---- segmented tab bar (shared idiom) ---- */
+.pm-segtab { flex: none; display: flex; margin: var(--sm) var(--md) 0; border-bottom: 1px solid var(--border-light); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 5%, var(--surface-elevated)); border-radius: var(--radius-lg) var(--radius-lg) 0 0; overflow: hidden; position: relative; }
+.pm-segtab-ink { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--cat, var(--accent-primary)); border-radius: 2px 2px 0 0; transition: transform var(--motion-med) var(--ease-default), width var(--motion-med) var(--ease-default); pointer-events: none; box-shadow: 0 0 10px color-mix(in srgb, var(--cat, var(--accent-primary)) 55%, transparent); }
+.pm-segtab-item { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 2px 8px; margin-bottom: -1px; background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer; color: var(--text-muted); font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1px; transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); position: relative; z-index: 1; }
+.pm-segtab-item svg { width: 15px; height: 15px; flex: none; transition: transform var(--motion-med) var(--ease-default); }
+.pm-segtab-item.active svg { transform: translateY(-1px) scale(1.1); }
+.pm-segtab-item > span { max-width: 100%; padding: 0 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-segtab-item:hover { color: var(--text-secondary); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 6%, transparent); }
+.pm-segtab-item.active { color: var(--cat, var(--accent-primary)); }
+
+/* ---- selection bar (appears on multi-select) ---- */
+.fm-selbar { flex: none; display: none; align-items: center; gap: var(--sm); padding: var(--sm) var(--md); margin: var(--sm) var(--md) 0; border-radius: var(--radius-md); background: color-mix(in srgb, var(--accent-primary) 12%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.fm-selbar.show { display: flex; }
+.fm-selbar .fm-selcount { font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; }
+.fm-selbar .fm-selcount b { color: var(--text-primary); }
+.fm-selbar .fm-selacts { display: flex; gap: var(--xs); margin-left: auto; flex-wrap: wrap; }
+
+.sh-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: var(--md) var(--md) var(--md) 6px; scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.sh-scroll::-webkit-scrollbar { width: 10px; }
+
+/* ---- filter / type-ahead (collapsible; toggled from the toolbar) ---- */
+.fm-filter { display: none; opacity: 0; overflow: hidden; margin-bottom: 0; align-items: center; gap: var(--sm); transition: max-height var(--motion-med) var(--ease-default), opacity var(--motion-med) var(--ease-out), margin-bottom var(--motion-med) var(--ease-default); }
+.fm-filter.open { display: flex; opacity: 1; margin-bottom: var(--md); }
+.fm-filter .pm-input { flex: 1 1 auto; min-width: 0; border-radius: var(--radius-pill); }
+.fm-filtercount { flex: 0 0 auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+.fm-filterclear { flex: none; }
+
+/* ---- tree ---- */
+.fm-tree { display: flex; flex-direction: column; }
+.fm-node { border-radius: var(--radius-md); }
+.fm-row { display: grid; grid-template-columns: auto var(--sm) minmax(0, 1fr) auto; align-items: center; padding: 2px 6px; border-radius: var(--radius-md); min-width: 0; cursor: pointer; position: relative; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.fm-row > .fm-chevron, .fm-row > .fm-ficon { grid-column: 1; }
+.fm-row > .fm-name { grid-column: 3; }
+.fm-row > .fm-trail { grid-column: 4; }
+.fm-row:hover { background: color-mix(in srgb, var(--accent-primary) 8%, transparent); transform: translateX(2px); }
+.fm-row:active { transform: scale(.985); }
+.fm-row.selected { background: color-mix(in srgb, var(--accent-primary) 16%, transparent); }
+.fm-row.active-file { background: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+.fm-row.ignored { opacity: .5; }
+.fm-row.ignored .fm-name { font-style: italic; }
+.fm-chevron { width: 12px; height: 12px; flex: none; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); }
+.fm-node.open > .fm-row > .fm-chevron { transform: rotate(90deg); }
+.fm-ficon { width: 15px; height: 15px; flex: none; color: var(--text-muted); }
+.fm-ficon.folder { color: var(--accent-warning); }
+.fm-ficon.rs { color: var(--accent-orange); }
+.fm-ficon.ts, .fm-ficon.tsx { color: var(--accent-blue); }
+.fm-ficon.js, .fm-ficon.jsx { color: var(--cat-amber); }
+.fm-ficon.svelte { color: var(--accent-magenta); }
+.fm-ficon.sql { color: var(--accent-lime); }
+.fm-ficon.toml { color: var(--accent-orange); }
+.fm-ficon.yml, .fm-ficon.yaml { color: var(--accent-lime); }
+.fm-ficon.xml { color: var(--accent-magenta); }
+.fm-ficon.md { color: var(--text-secondary); }
+.fm-ficon.docker { color: var(--accent-blue); }
+.fm-name { min-width: 0; font-size: 11px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color var(--motion-fast) var(--ease-out); }
+.fm-name.mono { font-family: var(--mono-font); font-size: 10.5px; }
+.fm-folder > .fm-row > .fm-name { font-weight: 600; }
+/* filename colour by git state: clean = normal text; ignored = muted/dull */
+.fm-row.M > .fm-name { color: var(--accent-warning); }
+.fm-row.A > .fm-name { color: var(--graph-passed); }
+.fm-row.Q > .fm-name { color: var(--accent-blue); }
+.fm-row.D > .fm-name { color: var(--graph-failed); }
+.fm-row.C > .fm-name { color: var(--accent-blue); }
+.fm-row.ignored > .fm-name { color: var(--text-muted); }
+/* trailing cell: fixed-width right column so counts + badges align on every row;
+   quick actions overlay it on hover (gradient backdrop) so nothing jumps */
+.fm-trail { position: relative; display: flex; align-items: center; justify-content: flex-end; gap: 4px; min-width: 46px; height: 20px; }
+.fm-trail .fm-markers { display: flex; align-items: center; gap: 4px; transition: opacity var(--motion-fast) var(--ease-out); }
+.fm-count { flex: none; font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); }
+.fm-gitbadge { flex: none; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono-font); font-size: 8px; font-weight: 700; padding: 0 5px; border-radius: var(--radius-pill); }
+.fm-gitbadge svg { width: 9px; height: 9px; }
+.fm-gitbadge.M { color: var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 16%, transparent); }
+.fm-gitbadge.A { color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 16%, transparent); }
+.fm-gitbadge.Q { color: var(--text-muted); background: color-mix(in srgb, var(--text-muted) 18%, transparent); }
+.fm-gitbadge.D { color: var(--graph-failed); background: color-mix(in srgb, var(--graph-failed) 16%, transparent); }
+.fm-gitbadge.C { color: var(--accent-blue); background: color-mix(in srgb, var(--accent-blue) 16%, transparent); }
+.fm-quick { position: absolute; right: 0; top: 50%; transform: translateY(-50%) translateX(6px); display: flex; align-items: center; gap: 2px; padding-left: 12px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--surface-elevated) 94%, transparent) 30%, var(--surface-elevated) 62%); opacity: 0; pointer-events: none; transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-quick .pm-minibtn { width: 20px; height: 20px; border-radius: var(--radius-pill); transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out); }
+.fm-quick .pm-minibtn:hover { transform: translateY(-1px) scale(1.08); }
+.fm-quick .pm-minibtn svg { width: 11px; height: 11px; }
+.fm-row:hover .fm-quick, .fm-row.selected .fm-quick { opacity: 1; transform: translateY(-50%) translateX(0); pointer-events: auto; }
+.fm-row:hover .fm-markers, .fm-row.selected .fm-markers { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .fm-quick, .fm-trail .fm-markers { transition: none; } }
+[data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-trail .fm-markers { transition: none; }
+/* nesting — closed = display:none (guaranteed 0 height, no gaps); open/close
+   height is animated via JS-measured max-height (see collapse IIFE) */
+.fm-children { display: none; opacity: 0; overflow: hidden; padding-left: 7px; border-left: 1px solid color-mix(in srgb, var(--border-light) 80%, transparent); margin-left: 5px; transition: max-height var(--motion-med) var(--ease-default), opacity var(--motion-med) var(--ease-out); will-change: max-height, opacity; }
+.fm-node.open > .fm-children { display: block; opacity: 1; }
+/* row-cap + show more */
+.fm-showmore { display: flex; align-items: center; gap: var(--sm); padding: 4px 8px 4px 20px; font-family: var(--mono-font); font-size: 9px; color: var(--accent-primary); cursor: pointer; }
+.fm-showmore:hover { text-decoration: underline; }
+.fm-emptytree { padding: var(--lg); text-align: center; color: var(--text-muted); font-size: 10.5px; line-height: 1.6; }
+
+/* ---- cozy shelf cards (Changed / Open groups) ---- */
+.sh-shelf { border-radius: var(--radius-lg); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, var(--border-light)); margin-bottom: var(--md); overflow: visible; box-shadow: var(--elev-1); }
+.sh-head { display: flex; align-items: center; gap: var(--md); padding: var(--md) var(--lg); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 11%, transparent); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.sh-hico { width: 22px; height: 22px; flex: none; border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--cat, var(--accent-blue)) 20%, transparent); color: var(--cat, var(--accent-blue)); }
+.sh-hico svg { width: 12px; height: 12px; }
+.sh-hlabel { font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; color: var(--text-primary); }
+.sh-hcount { margin-left: auto; font-size: 9.5px; font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent); color: var(--cat, var(--accent-blue)); }
+.sh-body { padding: var(--md) var(--lg) var(--lg); }
+.side-panel-view .pm-minibtn { border-radius: var(--radius-pill); width: 24px; height: 24px; }
+.side-panel-view .pm-btn { border-radius: var(--radius-pill); }
+.sh-kv { display: flex; align-items: baseline; justify-content: space-between; gap: var(--md); padding: 3px 2px; font-size: 11.5px; }
+.sh-k { color: var(--text-muted); flex: none; }
+.sh-v { color: var(--text-primary); text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fm-changerow { display: flex; align-items: center; gap: var(--sm); padding: 5px 6px 5px 9px; border-radius: var(--radius-md); min-width: 0; position: relative; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-changerow::before { content: ''; position: absolute; left: 0; top: 5px; bottom: 5px; width: 2px; border-radius: 2px; background: var(--cat, var(--accent-blue)); opacity: 0; transform: scaleY(.4); transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-changerow:hover { background: color-mix(in srgb, var(--cat) 9%, transparent); transform: translateX(2px); }
+.fm-changerow:hover::before { opacity: 1; transform: scaleY(1); }
+.fm-openrow { display: flex; align-items: center; gap: var(--sm); padding: 5px 6px; border-radius: var(--radius-md); min-width: 0; cursor: pointer; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-openrow:hover { background: color-mix(in srgb, var(--cat) 9%, transparent); transform: translateX(2px); }
+.fm-openrow.active-file { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
+.fm-openrow .fm-path { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-openrow .fm-dirty { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); }
+/* changed/open row expanders — collapsed header = badge/dot + filename (+ elided
+   parent dir, filename-first); the .sh-accb body (shared spring layer) carries the
+   full path, hunk stats, and the per-row actions moved out of the header */
+.fm-changerow { cursor: pointer; }
+.sh-head[data-collapse] { cursor: pointer; }
+.fm-cfile { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-cdir { flex: 0 1 auto; max-width: 42%; min-width: 0; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-cchev { flex: none; width: 11px; height: 11px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); }
+[data-acc].open > [data-collapse] > .fm-cchev { transform: rotate(90deg); }
+.sh-accchev { width: 10px; height: 10px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); flex: none; }
+[data-acc].open > [data-collapse] > .sh-accchev { transform: rotate(90deg); }
+.fm-cbody { display: flex; flex-direction: column; gap: 5px; padding: 2px 8px 7px 9px; }
+.fm-cpath { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); word-break: break-all; }
+.fm-chunks { display: flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: 9px; }
+.fm-chunks .add { color: var(--graph-passed); }
+.fm-chunks .del { color: var(--graph-failed); }
+.fm-chunks .meta { color: var(--text-muted); }
+.fm-cacts { display: flex; gap: var(--xs); flex-wrap: wrap; }
+.fm-cacts .pm-btn { font-size: 9px; padding: 3px 9px; }
+.fm-cacts .pm-btn.danger { color: var(--accent-error); border-color: color-mix(in srgb, var(--accent-error) 40%, transparent); }
+/* toolbar selection chip (always visible while a selection exists) */
+.fm-tbtn.fm-selchip { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.fm-tbtn.fm-selchip b { font-family: var(--mono-font); font-weight: 700; }
+.fm-reveal-note { display: flex; align-items: center; gap: var(--sm); padding: var(--sm) var(--md); margin-bottom: var(--md); border-radius: var(--radius-md); background: color-mix(in srgb, var(--accent-warning) 10%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-warning) 28%, transparent); font-size: 9.5px; color: var(--text-secondary); }
+.fm-reveal-note svg { width: 12px; height: 12px; flex: none; color: var(--accent-warning); }
+.fm-indexchip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 8.5px; color: var(--accent-warning); }
+.fm-indexchip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); animation: shPulse 1.6s var(--ease-out) infinite; }
+@keyframes shPulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* ---- reskinned file context menu (sprout family) ---- */
+.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: 5px; border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; transform-origin: var(--pm6-sprout-ox, 12%) var(--pm6-sprout-oy, 0%); }
+.fm-ctx.is-open { display: block; animation: fmSprout .16s var(--ease-out); }
+@keyframes fmSprout { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+.fm-ctx-item { display: flex; align-items: center; gap: var(--sm); width: 100%; padding: 6px 9px; border: 0; background: none; border-radius: var(--radius-xs); color: var(--text-secondary); font-size: 11px; cursor: pointer; text-align: left; }
+.fm-ctx-item:hover { background: var(--accent-soft); color: var(--text-primary); }
+.fm-ctx-item svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
+.fm-ctx-item:hover svg { color: var(--text-primary); }
+.fm-ctx-item .fm-ctx-label { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-ctx-item .fm-ctx-key { flex: none; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+.fm-ctx-item.destructive { color: var(--accent-error); }
+.fm-ctx-item.destructive svg { color: var(--accent-error); }
+.fm-ctx-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.fm-ctx-sep { height: 1px; background: var(--border-light); margin: 4px 6px; }
+
+/* ---- sticky footer ---- */
+.sh-foot { flex: none; display: flex; align-items: center; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); border-top: 1px solid var(--border-light); box-shadow: 0 -6px 14px -10px color-mix(in srgb, var(--text-primary) 40%, transparent); }
+.sh-foot .fm-footstat { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+.sh-foot .fm-footstat .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--graph-passed); flex: none; }
+.sh-foot .fm-footstat.warn .dot { background: var(--accent-warning); }
+.sh-foot .fm-footmeta { margin-left: auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* opacity pulse (shPulse idiom) — the dot's background already follows its state,
+   so the pulse colour tracks it for free (no box-shadow keyframes: Slint 1.17) */
+.sh-foot .fm-footstat .dot { animation: fmbreathe 2.6s var(--ease-out) infinite; }
+@keyframes fmbreathe { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+/* active-pane entrance */
+@keyframes fmPaneIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+[data-pane]:not(.pm-hidden) > * { animation: fmPaneIn .3s var(--ease-out) both; }
+[data-pane]:not(.pm-hidden) > *:nth-child(2) { animation-delay: .05s; }
+[data-pane]:not(.pm-hidden) > *:nth-child(3) { animation-delay: .1s; }
+[data-pane]:not(.pm-hidden) > *:nth-child(4) { animation-delay: .15s; }
+
+/* ---- file toolbar (new file / new folder / collapse-all / ignored / filter) ---- */
+.fm-toolbar-wrap { flex: none; margin: var(--sm) var(--md) 0; padding: 6px 8px; border-radius: var(--radius-lg); background: color-mix(in srgb, var(--accent-blue) 6%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-blue) 14%, var(--border-light)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent), var(--elev-1); position: relative; overflow: hidden; }
+.fm-toolbar-wrap::before { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 140% at 0% -40%, color-mix(in srgb, var(--accent-blue) 12%, transparent), transparent 60%); pointer-events: none; }
+.fm-toolbar { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--xs); position: relative; z-index: 1; }
+.fm-toolbar-hint { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 5px; padding-left: 8px; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; opacity: .9; }
+.fm-toolbar-hint svg { width: 12px; height: 12px; flex: none; color: var(--accent-blue); }
+.fm-toolbar-hint b { color: var(--text-secondary); font-weight: 700; }
+.fm-tbtn { display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; max-width: 100%; font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: .5px; padding: 4px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: var(--surface-elevated); color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.fm-tbtn svg { width: 12px; height: 12px; flex: none; }
+.fm-tbtn > span { display: none; overflow: hidden; text-overflow: ellipsis; }
+.fm-toolbar.txt .fm-tbtn > span { display: inline; }
+.fm-tbtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); box-shadow: var(--elev-1); }
+.fm-tbtn:active { transform: translateY(0) scale(.96); }
+.fm-tbtn.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+/* ---- context-menu submenus (Open with / Copy path) ---- */
+.fm-ctx-wrap { position: relative; }
+.fm-ctx-sub { position: absolute; left: calc(100% - 4px); top: -5px; min-width: 196px; padding: 5px; border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; z-index: 1; }
+.fm-ctx-wrap.open > .fm-ctx-sub { display: block; animation: fmSprout .14s var(--ease-out); }
+.fm-ctx-item .fm-ctx-caret { margin-left: auto; width: 12px; height: 12px; color: var(--text-muted); flex: none; }
+
+/* width tiers */
+.side-panel-slot[data-wtier="min"] .sh-banner { padding: var(--md); margin: var(--sm) var(--sm) 0; }
+.side-panel-slot[data-wtier="min"] .pm-segtab { margin: var(--sm) var(--sm) 0; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item { gap: 0; padding: 8px 1px 7px; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item > span { display: none; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item svg { width: 16px; height: 16px; }
+.side-panel-slot[data-wtier="min"] .sh-scroll { padding: var(--sm); }
+.side-panel-slot[data-wtier="min"] .sh-foot { padding: var(--sm); }
+.side-panel-slot[data-wtier="min"] .sh-foot .fm-footmeta { display: none; }
+/* worktree trigger: full label+chevron when room, branch glyph only when tight */
+.sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: none; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch { flex: 0 0 auto; max-width: none; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch .pm6-tb-menu-trigger { width: auto; padding: 4px 8px; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: inline-flex; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch .pm6-tb-menu-trigger .pm6-tb-menu-label,
+.side-panel-slot[data-wtier="min"] .sh-bbranch .pm6-tb-menu-trigger .pm-ico.sm:not(.fm-root-ico) { display: none; }
+.side-panel-slot[data-wtier="min"] .fm-selbar { margin: var(--sm) var(--sm) 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fm-ctx.is-open { animation: none; }
+  .fm-indexchip .dot { animation: none; }
+  .sh-foot .fm-footstat .dot { animation: none; }
+  .fm-children, .pm-segtab-ink, .fm-row, .fm-quick, .fm-chevron, .fm-cchev, .fm-changerow::before { transition: none; }
+  [data-pane]:not(.pm-hidden) > * { animation: none; }
+}
+[data-reduced-motion="1"] .fm-ctx.is-open { animation: none; }
+[data-reduced-motion="1"] .fm-indexchip .dot { animation: none; }
+[data-reduced-motion="1"] .sh-foot .fm-footstat .dot { animation: none; }
+[data-reduced-motion="1"] .fm-children, [data-reduced-motion="1"] .pm-segtab-ink, [data-reduced-motion="1"] .fm-row, [data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-chevron, [data-reduced-motion="1"] .fm-cchev, [data-reduced-motion="1"] .fm-changerow::before { transition: none; }
+[data-reduced-motion="1"] [data-pane]:not(.pm-hidden) > * { animation: none; }
+/* glass themes: give sprout menus a near-solid backing so tree rows don't bleed through */
+[data-theme^="glass"] .pm6-tb-menu, [data-theme^="glass"] .fm-ctx, [data-theme^="glass"] .fm-ctx-sub { background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), color-mix(in srgb, var(--surface) 92%, transparent); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+
+  <!-- FILE MANAGER -->
+  <div class="side-panel-view" id="panel-files">
+    <div class="sh-banner">
+      <span class="sh-bico"><i data-ico="files" class="pm-ico"></i></span>
+      <span class="sh-title">FILES</span>
+      <div class="pm6-tb-menu-wrap sh-bbranch">
+        <button type="button" class="pm6-tb-menu-trigger" id="fmRootBtn" aria-controls="fmRootMenu">
+          <i data-ico="branch" class="pm-ico sm fm-root-ico"></i><span class="pm6-tb-menu-label" id="fmRootLabel">main</span><i data-ico="chevD" class="pm-ico sm"></i>
+        </button>
+        <div class="pm6-tb-menu pm6-tb-menu-left" id="fmRootMenu" role="menu" aria-label="Worktree root" data-pm-menu-select>
+          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="main" data-label="main" data-root="main" data-demo-action="cmd.git.worktree.open" data-demo-arg="cmd.git.worktree.open -> main (workspace; focus File Manager)">main <span class="pm6-tb-menu-meta">workspace</span></button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-b" data-label="orch/lane-b-api" data-root="orch/lane-b-api" data-demo-action="cmd.git.worktree.open" data-demo-arg="cmd.git.worktree.open -> orch/lane-b-api (.worktrees/lane-b-api; focus File Manager)">orch/lane-b-api <span class="pm6-tb-menu-meta">run #47</span></button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-d" data-label="orch/lane-d-infra" data-root="orch/lane-d-infra" data-demo-action="cmd.git.worktree.open" data-demo-arg="cmd.git.worktree.open -> orch/lane-d-infra (.worktrees/lane-d-infra; focus File Manager)">orch/lane-d-infra <span class="pm6-tb-menu-meta">run #47</span></button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="import" data-label="thread/import-fixes" data-root="thread/import-fixes" data-demo-action="cmd.git.worktree.open" data-demo-arg="cmd.git.worktree.open -> thread/import-fixes (.worktrees/import-fixes; focus File Manager)">thread/import-fixes <span class="pm6-tb-menu-meta">thread</span></button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="spike" data-label="spike/r2-storage" data-root="spike/r2-storage" aria-disabled="true" data-demo-action="demo.reason" data-demo-arg="spike/r2-storage is read-only in this demo (manual worktree)">spike/r2-storage <span class="pm6-tb-menu-meta">read-only</span></button>
+        </div>
+      </div>
+      <div class="sh-bhead-acts">
+        <button class="pm-minibtn" title="Refresh" data-demo-action="cmd.file.refresh" data-demo-arg="cmd.file.refresh -> re-read active worktree tree"><i data-ico="refresh" class="pm-ico sm"></i></button>
+        <button class="pm-minibtn" title="Pop out" data-demo-action="cmd.panel.undock" data-demo-arg="cmd.panel.undock -> File Manager (dock left/right)"><i data-ico="external" class="pm-ico sm"></i></button>
+      </div>
+    </div>
+
+    <div class="pm-segtab" role="tablist" aria-label="File Manager views" style="--cat:var(--cat-blue)">
+      <span class="pm-segtab-ink" id="fmTabInk" aria-hidden="true"></span>
+      <button type="button" class="pm-segtab-item active" data-tab="explorer" role="tab" aria-label="Explorer"><i data-ico="folderOpen" class="pm-ico"></i><span>Explorer</span></button>
+      <button type="button" class="pm-segtab-item" data-tab="changed" role="tab" aria-label="Changed"><i data-ico="diff" class="pm-ico"></i><span>Changed</span></button>
+      <button type="button" class="pm-segtab-item" data-tab="open" role="tab" aria-label="Open"><i data-ico="file" class="pm-ico"></i><span>Open</span></button>
+    </div>
+
+    <div class="fm-toolbar-wrap">
+      <div class="fm-toolbar" id="fmToolbar">
+        <button type="button" class="fm-tbtn" id="fmNewFile" title="New file" data-demo-action="cmd.file.new_file" data-demo-arg="cmd.file.new_file -> prompting name (single target context)"><i data-ico="filePlus" class="pm-ico"></i><span>New file</span></button>
+        <button type="button" class="fm-tbtn" id="fmNewFolder" title="New folder" data-demo-action="cmd.file.new_folder" data-demo-arg="cmd.file.new_folder -> prompting name (single target context)"><i data-ico="folderPlus" class="pm-ico"></i><span>New folder</span></button>
+        <button type="button" class="fm-tbtn" id="fmCollapseAll" title="Collapse / expand all folders"><i data-ico="boxMinus" class="pm-ico" id="fmCollapseIco"></i><span id="fmCollapseLbl">Collapse all</span></button>
+        <button type="button" class="fm-tbtn" id="fmHideIgnored" aria-pressed="false" title="Hide ignored files"><i data-ico="eye" class="pm-ico"></i><span>Ignored</span></button>
+        <button type="button" class="fm-tbtn" id="fmFilterToggle" aria-pressed="false" title="Filter / type-ahead"><i data-ico="search" class="pm-ico"></i><span>Filter</span></button>
+        <button type="button" class="fm-tbtn fm-selchip" id="fmSelChip" style="display:none" title="Clear selection"><b id="fmSelChipN">0</b><span class="fm-selchip-lbl">&nbsp;selected</span></button>
+        <span class="fm-toolbar-hint" id="fmToolbarHint" title="Items in view"><i data-ico="files" class="pm-ico"></i><b id="fmHintCount">0</b></span>
+      </div>
+    </div>
+
+    <div class="fm-selbar" id="fmSelBar" role="status">
+      <span class="fm-selcount"><b id="fmSelCount">0</b> selected</span>
+      <span class="fm-selacts">
+        <button class="pm-minibtn" title="Copy paths" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> newline-delimited absolute paths of selection"><i data-ico="copy" class="pm-ico sm"></i></button>
+        <button class="pm-minibtn" title="Cut" data-demo-action="cmd.file.cut_nodes" data-demo-arg="cmd.file.cut_nodes -> mark selection for move (visibly armed)"><i data-ico="scissors" class="pm-ico sm"></i></button>
+        <button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> selection as visible chips (file-only)"><i data-ico="chat" class="pm-ico sm"></i></button>
+        <button class="pm-minibtn danger" title="Delete selection" data-demo-action="cmd.file.delete" data-demo-arg="cmd.file.delete -> recursive delete of selection (confirm)"><i data-ico="trash" class="pm-ico sm"></i></button>
+        <button class="pm-minibtn" id="fmSelClear" title="Clear selection"><i data-ico="x" class="pm-ico sm"></i></button>
+      </span>
+    </div>
+
+    <div class="sh-scroll">
+
+      <!-- EXPLORER -->
+      <div data-pane="explorer">
+        <div class="fm-filter" id="fmFilterWrap">
+          <label class="pm-input"><i data-ico="search" class="pm-ico sm"></i><input id="fmFilter" type="text" placeholder="Filter files…" aria-label="Filter files"></label>
+          <span class="fm-filtercount" id="fmFilterCount"></span>
+          <button class="pm-minibtn fm-filterclear" id="fmFilterClear" title="Clear filter" style="display:none"><i data-ico="x" class="pm-ico sm"></i></button>
+        </div>
+        <div class="fm-reveal-note" id="fmRevealNote" style="display:none"><i data-ico="warn" class="pm-ico"></i><span id="fmRevealText"></span></div>
+        <div class="fm-tree" id="fmTree">
+          <!-- Slint port note: this nested DOM tree maps to a FLAT ListView row model
+               (visible rows only; depth, indent, chevron and indent-guide count become
+               per-row properties) per FILE-MANAGER-DEEPDIVE §4.2 — do not port the nesting. -->
+
+          <div class="fm-node fm-folder" data-acc>
+            <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="src" data-kind="folder">
+              <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">src</span><span class="fm-count">7</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="New file" data-demo-action="cmd.file.new_file" data-demo-arg="cmd.file.new_file -> parent src (single target)"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Open in terminal" data-demo-action="cmd.terminal.show" data-demo-arg="cmd.terminal.show -> cwd src/"><i data-ico="terminal" class="pm-ico sm"></i></button></span>
+            </div>
+            <div class="fm-children">
+              <div class="fm-node fm-file" data-acc>
+                <div class="fm-row" tabindex="0" role="treeitem" data-path="src/main.rs" data-name="main.rs" data-kind="rs" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/main.rs (OpenFile path-based, single row)">
+                  <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">main.rs</span>
+                  <span class="fm-quick"><button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> src/main.rs"><i data-ico="chat" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> src/main.rs (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                </div>
+              </div>
+
+              <div class="fm-node fm-folder" data-acc>
+                <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="src/routes" data-kind="folder">
+                  <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">routes</span><span class="fm-count">2</span>
+                </div>
+                <div class="fm-children">
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="src/routes/recipes.rs" data-name="recipes.rs" data-kind="rs" data-git="M" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/routes/recipes.rs">
+                      <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">recipes.rs</span><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> recipes.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Open diff" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> recipes.rs"><i data-ico="diff" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="src/routes/auth.rs" data-name="auth.rs" data-kind="rs" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/routes/auth.rs">
+                      <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">auth.rs</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> src/routes/auth.rs"><i data-ico="chat" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> src/routes/auth.rs (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fm-node fm-folder" data-acc>
+                <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="src/services" data-kind="folder">
+                  <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">services</span><span class="fm-count">4</span>
+                </div>
+                <div class="fm-children">
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="src/services/image.rs" data-name="image.rs" data-kind="rs" data-git="M" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/services/image.rs">
+                      <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">image.rs</span><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Open diff" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> image.rs"><i data-ico="diff" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="src/services/import.rs" data-name="import.rs" data-kind="rs" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/services/import.rs">
+                      <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">import.rs</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> src/services/import.rs"><i data-ico="chat" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> src/services/import.rs (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="fm-node fm-folder" data-acc>
+                    <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="src/services/import/normalize_units" data-kind="folder">
+                      <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">normalize_units</span><span class="fm-count">2</span>
+                    </div>
+                    <div class="fm-children">
+                      <div class="fm-node fm-file" data-acc>
+                        <div class="fm-row" tabindex="0" role="treeitem" data-path="src/services/import/normalize_units/mixed_fractions.rs" data-name="mixed_fractions.rs" data-kind="rs" data-git="A" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> mixed_fractions.rs">
+                          <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">mixed_fractions.rs</span><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span>
+                          <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> mixed_fractions.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Open diff" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> mixed_fractions.rs"><i data-ico="diff" class="pm-ico sm"></i></button></span>
+                        </div>
+                      </div>
+                      <div class="fm-node fm-file" data-acc>
+                        <div class="fm-row" tabindex="0" role="treeitem" data-path="src/services/import/normalize_units/units_table.rs" data-name="units_table.rs" data-kind="rs" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> units_table.rs">
+                          <i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-name mono">units_table.rs</span>
+                          <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> units_table.rs (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fm-node fm-file" data-acc>
+                <div class="fm-row ignored" tabindex="0" role="treeitem" data-path="src/.DS_Store" data-name=".DS_Store" data-kind="generic" data-ignored="1" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> src/.DS_Store (ignored, dimmed)">
+                  <i data-ico="file" class="pm-ico fm-ficon"></i><span class="fm-name mono">.DS_Store</span><span class="fm-gitbadge Q keep">ignored</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fm-node fm-folder" data-acc>
+            <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="migrations" data-kind="folder">
+              <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">migrations</span><span class="fm-count">2</span>
+            </div>
+            <div class="fm-children">
+              <div class="fm-node fm-file" data-acc>
+                <div class="fm-row" tabindex="0" role="treeitem" data-path="migrations/0001_init.sql" data-name="0001_init.sql" data-kind="sql" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> 0001_init.sql">
+                  <i data-ico="db" class="pm-ico fm-ficon sql"></i><span class="fm-name mono">0001_init.sql</span>
+                  <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> migrations/0001_init.sql (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                </div>
+              </div>
+              <div class="fm-node fm-file" data-acc>
+                <div class="fm-row" tabindex="0" role="treeitem" data-path="migrations/0002_ratings.sql" data-name="0002_ratings.sql" data-kind="sql" data-git="A" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> 0002_ratings.sql">
+                  <i data-ico="db" class="pm-ico fm-ficon sql"></i><span class="fm-name mono">0002_ratings.sql</span><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span>
+                  <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> 0002_ratings.sql"><i data-ico="plus" class="pm-ico sm"></i></button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fm-node fm-folder" data-acc>
+            <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="web/src" data-kind="folder">
+              <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">web/src</span><span class="fm-count">4</span>
+            </div>
+            <div class="fm-children">
+              <div class="fm-node fm-folder" data-acc>
+                <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="web/src/routes" data-kind="folder">
+                  <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">routes</span><span class="fm-count">2</span>
+                </div>
+                <div class="fm-children">
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="web/src/routes/+page.svelte" data-name="+page.svelte" data-kind="svelte" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> +page.svelte">
+                      <i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-name mono">+page.svelte</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> +page.svelte"><i data-ico="chat" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="fm-node fm-folder" data-acc>
+                    <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="web/src/routes/recipe/[id]" data-kind="folder">
+                      <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">recipe/[id]</span><span class="fm-count">1</span>
+                    </div>
+                    <div class="fm-children">
+                      <div class="fm-node fm-file" data-acc>
+                        <div class="fm-row active-file" tabindex="0" role="treeitem" data-path="web/src/routes/recipe/[id]/+page.svelte" data-name="+page.svelte" data-kind="svelte" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> recipe/[id]/+page.svelte (current file, you-are-here)">
+                          <i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-name mono">+page.svelte</span>
+                          <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> recipe/[id]/+page.svelte (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="fm-node fm-folder" data-acc>
+                <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="web/src/lib" data-kind="folder">
+                  <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">lib</span><span class="fm-count">2</span>
+                </div>
+                <div class="fm-children">
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="web/src/lib/RecipeCard.svelte" data-name="RecipeCard.svelte" data-kind="svelte" data-git="A" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> RecipeCard.svelte">
+                      <i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-name mono">RecipeCard.svelte</span><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> RecipeCard.svelte"><i data-ico="plus" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                  <div class="fm-node fm-file" data-acc>
+                    <div class="fm-row" tabindex="0" role="treeitem" data-path="web/src/lib/Editor.svelte" data-name="Editor.svelte" data-kind="svelte" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Editor.svelte">
+                      <i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-name mono">Editor.svelte</span>
+                      <span class="fm-quick"><button class="pm-minibtn" title="Add to chat" data-demo-action="cmd.chat.add_file_reference" data-demo-arg="cmd.chat.add_file_reference -> Editor.svelte"><i data-ico="chat" class="pm-ico sm"></i></button></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fm-node fm-folder" data-acc>
+            <div class="fm-row ignored" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path="node_modules" data-kind="folder" data-capped="1" data-ignored="1">
+              <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">node_modules</span><span class="fm-count" title="Dependency folder — list is capped; use type-ahead to find a package">248</span>
+            </div>
+            <div class="fm-children">
+              <div class="fm-node fm-file" data-acc><div class="fm-row" tabindex="0" role="treeitem" data-path="node_modules/.bin" data-name=".bin" data-kind="folder"><i data-ico="folder" class="pm-ico fm-ficon folder"></i><span class="fm-name mono">.bin</span></div></div>
+              <div class="fm-node fm-file" data-acc><div class="fm-row" tabindex="0" role="treeitem" data-path="node_modules/svelte" data-name="svelte" data-kind="folder"><i data-ico="folder" class="pm-ico fm-ficon folder"></i><span class="fm-name mono">svelte</span></div></div>
+              <div class="fm-node fm-file" data-acc><div class="fm-row" tabindex="0" role="treeitem" data-path="node_modules/vite" data-name="vite" data-kind="folder"><i data-ico="folder" class="pm-ico fm-ficon folder"></i><span class="fm-name mono">vite</span></div></div>
+              <div class="fm-showmore" title="Showing 3 of 248 — the rest are virtualized; type-ahead to jump to a package" data-demo-action="cmd.file.expand_capped" data-demo-arg="cmd.file.expand_capped -> node_modules showing 3 of 248 (type-ahead to narrow)">+ Show 245 more (capped) — type-ahead to narrow</div>
+            </div>
+          </div>
+
+          <div class="fm-node fm-folder" data-acc>
+            <div class="fm-row" data-collapse tabindex="0" role="treeitem" aria-expanded="false" data-path=".github/workflows" data-kind="folder">
+              <i data-ico="chevR" class="pm-ico fm-chevron"></i><span class="fm-name">.github/workflows</span><span class="fm-count">1</span>
+            </div>
+            <div class="fm-children">
+              <div class="fm-node fm-file" data-acc>
+                <div class="fm-row" tabindex="0" role="treeitem" data-path=".github/workflows/ci.yml" data-name="ci.yml" data-kind="yml" data-git="M" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> ci.yml">
+                  <i data-ico="actions" class="pm-ico fm-ficon yml"></i><span class="fm-name mono">ci.yml</span><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span>
+                  <span class="fm-quick"><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> ci.yml"><i data-ico="plus" class="pm-ico sm"></i></button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="Cargo.toml" data-name="Cargo.toml" data-kind="toml" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Cargo.toml">
+              <i data-ico="toml" class="pm-ico fm-ficon toml"></i><span class="fm-name mono">Cargo.toml</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> Cargo.toml (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="docker-compose.yml" data-name="docker-compose.yml" data-kind="yml" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> docker-compose.yml">
+              <i data-ico="docker" class="pm-ico fm-ficon docker"></i><span class="fm-name mono">docker-compose.yml</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> docker-compose.yml (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="Dockerfile" data-name="Dockerfile" data-kind="docker" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Dockerfile">
+              <i data-ico="docker" class="pm-ico fm-ficon docker"></i><span class="fm-name mono">Dockerfile</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> Dockerfile (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="unraid-template.xml" data-name="unraid-template.xml" data-kind="xml" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> unraid-template.xml">
+              <i data-ico="xml" class="pm-ico fm-ficon xml"></i><span class="fm-name mono">unraid-template.xml</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Save local copy" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> unraid-template.xml to ~/Downloads/"><i data-ico="arrowDn" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="README.md" data-name="README.md" data-kind="md" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> README.md (source-canonical; rendered preview via open_with workspace_preview)">
+              <i data-ico="md" class="pm-ico fm-ficon md"></i><span class="fm-name mono">README.md</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Open preview" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> README.md workspace_preview (rendered, source stays canonical)"><i data-ico="eye" class="pm-ico sm"></i></button><button class="pm-minibtn" title="Copy relative path" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> README.md (relative)"><i data-ico="copy" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row" tabindex="0" role="treeitem" data-path="binary-asset.bin" data-name="binary-asset.bin" data-kind="generic" data-readonly="1" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> binary-asset.bin (Binary file — cannot edit; view read-only)">
+              <i data-ico="file" class="pm-ico fm-ficon"></i><span class="fm-name mono">binary-asset.bin</span><span class="fm-gitbadge keep" style="color:var(--text-muted);background:color-mix(in srgb,var(--text-muted) 14%,transparent)">read-only</span>
+              <span class="fm-quick"><button class="pm-minibtn" title="Save local copy" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> binary-asset.bin"><i data-ico="arrowDn" class="pm-ico sm"></i></button></span>
+            </div>
+          </div>
+          <div class="fm-node fm-file" data-acc>
+            <div class="fm-row ignored" tabindex="0" role="treeitem" data-path="build.log" data-name="build.log" data-kind="generic" data-ignored="1" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> build.log (ignored, dimmed)">
+              <i data-ico="file" class="pm-ico fm-ficon"></i><span class="fm-name mono">build.log</span><span class="fm-gitbadge Q keep">ignored</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CHANGED — rows are collapsed [data-acc] expanders: header = badge + filename
+           (+ elided parent dir); the .sh-accb body carries path, hunk stats, actions -->
+      <div data-pane="changed" class="pm-hidden">
+        <section class="sh-shelf open" data-acc style="--cat:var(--cat-warn)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="diff" class="pm-ico sm"></i></span><span class="sh-hlabel">MODIFIED</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="add">+38</span><span class="del">-12</span><span class="meta">3 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> recipes.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> recipes.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> recipes.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">image.rs</span><span class="fm-cdir">src/services</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/image.rs</div><div class="fm-chunks"><span class="add">+21</span><span class="del">-6</span><span class="meta">2 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> image.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> image.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">ci.yml</span><span class="fm-cdir">.github/workflows</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">.github/workflows/ci.yml</div><div class="fm-chunks"><span class="add">+9</span><span class="del">-4</span><span class="meta">1 hunk</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> ci.yml">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> ci.yml">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci.yml (confirm)">Discard</button></div></div></div></div>
+        </div></div></section>
+        <section class="sh-shelf open" data-acc style="--cat:var(--graph-passed)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="plus" class="pm-ico sm"></i></span><span class="sh-hlabel">ADDED</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="add">+214</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> mixed_fractions.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> mixed_fractions.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">0002_ratings.sql</span><span class="fm-cdir">migrations</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">migrations/0002_ratings.sql</div><div class="fm-chunks"><span class="add">+36</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> 0002_ratings.sql">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> 0002_ratings.sql">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> 0002_ratings.sql (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">RecipeCard.svelte</span><span class="fm-cdir">web/src/lib</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/lib/RecipeCard.svelte</div><div class="fm-chunks"><span class="add">+148</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> RecipeCard.svelte">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> RecipeCard.svelte">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> RecipeCard.svelte (confirm)">Discard</button></div></div></div></div>
+        </div></div></section>
+        <section class="sh-shelf open" data-acc style="--cat:var(--cat-neutral)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="warn" class="pm-ico sm"></i></span><span class="sh-hlabel">UNTRACKED</span><span class="sh-hcount">1</span></div><div class="sh-accb"><div class="sh-body">
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge Q keep">?</span><span class="fm-cfile">schema-org-recipe-structured-data-coverage-2026.md</span><span class="fm-cdir">docs</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">docs/schema-org-recipe-structured-data-coverage-2026.md</div><div class="fm-chunks"><span class="add">+64</span><span class="del">-0</span><span class="meta">untracked · not in index</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> schema-org-recipe docs">Stage</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> schema-org-recipe docs (confirm)">Discard</button></div></div></div></div>
+        </div></div></section>
+        <div class="pm-footnote">Git row badges are read-only and sourced from Source Control; stronger switch/manage/conflict worktree UI lives there. Default action for the same path across worktrees is side-by-side compare.</div>
+      </div>
+
+      <!-- OPEN — editor rows are collapsed [data-acc] expanders: header = dirty dot +
+           filename (+ elided parent dir); body = full path, save status, actions.
+           RECENT rows stay single-action (open) and that shelf defaults collapsed. -->
+      <div data-pane="open" class="pm-hidden">
+        <section class="sh-shelf open" data-acc style="--cat:var(--cat-blue)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="file" class="pm-ico sm"></i></span><span class="sh-hlabel">OPEN EDITORS</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
+          <div class="fm-openitem" data-acc><div class="fm-openrow active-file" data-collapse><span class="fm-dirty" title="unsaved"></span><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-cfile">+page.svelte</span><span class="fm-cdir">web/src/routes/recipe/[id]</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/routes/recipe/[id]/+page.svelte</div><div class="fm-chunks"><span class="meta">unsaved changes · you are here</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> +page.svelte">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> +page.svelte (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipe/[id]/+page.svelte in the tree">Reveal</button></div></div></div></div>
+          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="meta">saved</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> recipes.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> recipes.rs">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipes.rs in the tree">Reveal</button></div></div></div></div>
+          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse><span class="fm-dirty" title="unsaved"></span><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="meta">unsaved changes</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> mixed_fractions.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> mixed_fractions.rs (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> mixed_fractions.rs in the tree">Reveal</button></div></div></div></div>
+        </div></div></section>
+        <section class="sh-shelf" data-acc style="--cat:var(--cat-neutral)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="clock" class="pm-ico sm"></i></span><span class="sh-hlabel">RECENT</span><span class="sh-hcount">5</span></div><div class="sh-accb"><div class="sh-body">
+          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> image.rs"><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-path">src/services/image.rs</span><span class="sh-k" style="flex:none;font-size:9px">12m</span></div>
+          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Editor.svelte"><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-path">web/src/lib/Editor.svelte</span><span class="sh-k" style="flex:none;font-size:9px">38m</span></div>
+          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> 0001_init.sql"><i data-ico="db" class="pm-ico fm-ficon sql"></i><span class="fm-path">migrations/0001_init.sql</span><span class="sh-k" style="flex:none;font-size:9px">1h</span></div>
+          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Cargo.toml"><i data-ico="toml" class="pm-ico fm-ficon toml"></i><span class="fm-path">Cargo.toml</span><span class="sh-k" style="flex:none;font-size:9px">2h</span></div>
+          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> README.md"><i data-ico="md" class="pm-ico fm-ficon md"></i><span class="fm-path">README.md</span><span class="sh-k" style="flex:none;font-size:9px">3h</span></div>
+        </div></div></section>
+        <div class="pm-footnote">Open list is filtered by the active execution role and approval scope; reveal reuses an existing tree node instead of opening a duplicate buffer.</div>
+      </div>
+
+    </div>
+
+    <div class="sh-foot">
+      <span class="fm-footstat" id="fmWatchStat"><span class="dot"></span>Watching 18 · .gitignore respected</span>
+      <span class="fm-indexchip" id="fmIndexChip" style="display:none"><span class="dot"></span><span id="fmIndexText">Building search index…</span></span>
+      <span class="fm-footmeta" id="fmFootMeta">virtualized · row 24px · opens land in the editor</span>
+    </div>
+  </div>
+
+  <!-- stubs so the shared shell's activity bar can switch without errors -->
+  <div class="side-panel-view" id="panel-search"><div class="fm-emptytree">Search is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-source"><div class="fm-emptytree">Source Control is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-git"><div class="fm-emptytree">GitHub Actions is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-docker"><div class="fm-emptytree">Docker Manager is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-testing"><div class="fm-emptytree">Testing is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-agents"><div class="fm-emptytree">Agents is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+  <div class="side-panel-view" id="panel-artifacts"><div class="fm-emptytree">Runtime Artifacts is redesigned in c2-cozy-shelves.html. This page is the File Manager concept.</div></div>
+
+  <!-- reskinned file context menu (sprout family; Slint has no native menu) -->
+  <div class="fm-ctx pm-ctx-menu" id="fmContextMenu" role="menu" aria-label="File actions">
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_file" data-demo-arg="cmd.file.new_file -> prompting name (single target)"><i data-ico="file" class="pm-ico"></i><span class="fm-ctx-label">New file</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.new_folder" data-demo-arg="cmd.file.new_folder -> prompting name (single target)"><i data-ico="folder" class="pm-ico"></i><span class="fm-ctx-label">New folder</span></button>
+    <div class="fm-ctx-sep" role="separator"></div>
+    <div class="fm-ctx-wrap" data-sub>
+      <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Open with…</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
+      <div class="fm-ctx-sub" role="menu" aria-label="Open with">
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> source_editor"><i data-ico="edit" class="pm-ico"></i><span class="fm-ctx-label">Source editor</span></button>
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> image_viewer"><i data-ico="camera" class="pm-ico"></i><span class="fm-ctx-label">Image viewer</span></button>
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> workspace_preview (rendered; source stays canonical)"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Workspace preview</span></button>
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> detached_preview"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Detached preview</span></button>
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_with" data-demo-arg="cmd.file.open_with -> diff_review"><i data-ico="diff" class="pm-ico"></i><span class="fm-ctx-label">Diff review</span></button>
+      </div>
+    </div>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.open_in_system_default" aria-disabled="true" data-demo-reason="system_default is not in the MVP open_with enum; separate future handoff"><i data-ico="external" class="pm-ico"></i><span class="fm-ctx-label">Open in system default</span><span class="fm-ctx-key">n/a</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> hand off identity + repo_id + worktree_id to Source Control"><i data-ico="diff" class="pm-ico"></i><span class="fm-ctx-label">Open diff</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.terminal.show" data-demo-arg="cmd.terminal.show -> reveal exact session at row cwd"><i data-ico="terminal" class="pm-ico"></i><span class="fm-ctx-label">Reveal in terminal</span></button>
+    <div class="fm-ctx-sep" role="separator"></div>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.cut_nodes" data-demo-arg="cmd.file.cut_nodes -> pending move (visibly armed until paste/clear)"><i data-ico="scissors" class="pm-ico"></i><span class="fm-ctx-label">Cut</span><span class="fm-ctx-key">Ctrl+X</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_nodes" data-demo-arg="cmd.file.copy_nodes -> file-op clipboard intent (armed)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy</span><span class="fm-ctx-key">Ctrl+C</span></button>
+    <button class="fm-ctx-item" role="menuitem" id="fmCtxPaste" data-demo-action="cmd.file.paste_nodes" data-demo-arg="cmd.file.paste_nodes -> destination = folder/root (copy|move)"><i data-ico="clipboard" class="pm-ico"></i><span class="fm-ctx-label">Paste</span><span class="fm-ctx-key">Ctrl+V</span></button>
+    <div class="fm-ctx-wrap" data-sub>
+      <button class="fm-ctx-item" role="menuitem" aria-haspopup="true"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy path</span><i data-ico="chevR" class="pm-ico fm-ctx-caret"></i></button>
+      <div class="fm-ctx-sub" role="menu" aria-label="Copy path">
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> relative (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy relative path</span></button>
+        <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.copy_path" data-demo-arg="cmd.file.copy_path -> absolute (exact value via clipboard helper)"><i data-ico="copy" class="pm-ico"></i><span class="fm-ctx-label">Copy full path</span></button>
+      </div>
+    </div>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> remote-to-local escape hatch, keeps path identity"><i data-ico="arrowDn" class="pm-ico"></i><span class="fm-ctx-label">Save local copy</span></button>
+    <div class="fm-ctx-sep" role="separator"></div>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.search.find_in_files" data-demo-arg="cmd.search.find_in_files -> scope to selected path (Search panel)"><i data-ico="search" class="pm-ico"></i><span class="fm-ctx-label">Find in files</span><span class="fm-ctx-key">Search</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.git.worktree.open" data-demo-arg="cmd.git.worktree.open -> same path, other worktree (target arg; side-by-side compare identity)"><i data-ico="branch" class="pm-ico"></i><span class="fm-ctx-label">Open other worktree version</span></button>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.git.worktree.compare" data-demo-arg="cmd.git.worktree.compare -> compare with worktree… (branch HEAD vs base)"><i data-ico="diff" class="pm-ico"></i><span class="fm-ctx-label">Compare with worktree…</span></button>
+    <div class="fm-ctx-sep" role="separator"></div>
+    <button class="fm-ctx-item" role="menuitem" data-demo-action="cmd.file.rename" data-demo-arg="cmd.file.rename -> prompting new name (single target; rejects empty / . / .. / reserved)"><i data-ico="edit" class="pm-ico"></i><span class="fm-ctx-label">Rename</span><span class="fm-ctx-key">F2</span></button>
+    <button class="fm-ctx-item destructive" role="menuitem" data-demo-action="cmd.file.delete" data-demo-arg="cmd.file.delete -> recursive delete, escalates on multi-select (confirm)"><i data-ico="trash" class="pm-ico"></i><span class="fm-ctx-label">Delete</span><span class="fm-ctx-key">Del</span></button>
+  </div>
+
+</template>
+<script src="_shared/icons.js"></script>
+<script>
+/* file-type + editor glyphs (bundled stroke SVGs; no emoji/pictographs/CDN —
+   F3-417). Registered before chrome boot so the shared hydrator fills them. */
+(function () {
+  var s = function (b) { return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + b + '</svg>'; };
+  var doc = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>';
+  var P = window.PMIcons;
+  P.rust    = s(doc + '<path d="M9 13l2 2 4-4"/>');
+  P.ts      = s(doc + '<path d="M9 12h3"/><path d="M10.5 12v4"/><path d="M15 12v2.2a1.3 1.3 0 0 0 2.6 0V12"/>');
+  P.tsx     = P.ts;
+  P.js      = s(doc + '<path d="M10 12v2.4a1.3 1.3 0 0 1-2.6 0"/><path d="M14 12v2.4a1.3 1.3 0 0 0 2.6 0"/>');
+  P.jsx     = P.js;
+  P.svelte  = s(doc + '<path d="M11 11h2"/><path d="M12 9l-1.6 2.4L12 14"/>');
+  P.sql     = s(doc + '<ellipse cx="12" cy="12" rx="3.4" ry="1.4"/><path d="M8.6 12v2.4c0 .8 1.5 1.4 3.4 1.4s3.4-.6 3.4-1.4V12"/>');
+  P.toml    = s(doc + '<path d="M9.5 12h2.2"/><path d="M10.6 12v3.2"/><circle cx="15" cy="13.6" r="1.4"/>');
+  P.yml     = s(doc + '<path d="M9 11l1.5 2v2.4"/><path d="M12 11l-1.5 2"/><path d="M14 11v4.4"/>');
+  P.yaml    = P.yml;
+  P.xml     = s(doc + '<path d="M10 11.4l-1.6 1.6 1.6 1.6"/><path d="M14 11.4l1.6 1.6-1.6 1.6"/>');
+  P.md      = s(doc + '<path d="M8 15v-3l1.5 1.6L11 12v3"/><path d="M14 15v-3l2 1.8"/>');
+  P.docker  = s(doc + '<rect x="8" y="11" width="2" height="2"/><rect x="11" y="11" width="2" height="2"/><rect x="11" y="8.5" width="2" height="2"/><path d="M7 13.5h9.5a2 2 0 0 1-2 2.2H9a2 2 0 0 1-2-2.2z"/>');
+  P.edit    = s('<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>');
+  /* composite toolbar glyphs: document-with-plus, folder-with-plus, box-with-minus/plus */
+  P.filePlus   = s('<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6"/><polyline points="13 2 13 8 19 8"/><line x1="16" y1="13" x2="16" y2="19"/><line x1="13" y1="16" x2="19" y2="16"/>');
+  P.folderPlus = s('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v3"/><path d="M3 7v11a2 2 0 0 0 2 2h7"/><line x1="18" y1="14" x2="18" y2="20"/><line x1="15" y1="17" x2="21" y2="17"/>');
+  P.boxMinus   = s('<rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/>');
+  P.boxPlus    = s('<rect x="4" y="4" width="16" height="16" rx="2"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="9" y1="12" x2="15" y2="12"/>');
+})();
+</script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>
+PMChrome.boot({ badge: { id: 'C2·FM', name: 'Cozy File Manager' } });
+/* The shared shell injects its own built-in File Manager panel (also id="panel-files",
+   class pm-files-panel). This concept replaces it, so remove that built-in copy and keep
+   only the cozy redesign from our <template> (still wired to the FILES activity-bar icon). */
+(function () {
+  var builtIn = document.querySelector('.side-panel-view.pm-files-panel#panel-files');
+  if (builtIn) builtIn.remove();
+  if (window.PMRail && PMRail.showPanel) PMRail.showPanel('panel-files');
+})();
+
+(function () {
+  'use strict';
+  var panel = document.getElementById('panel-files');
+  if (!panel) return;
+  var tree = document.getElementById('fmTree');
+  var ctx = document.getElementById('fmContextMenu');
+
+  /* ---- hydrate the file-type / edit glyphs chrome boot did not know ---- */
+  panel.querySelectorAll('i[data-ico]').forEach(function (el) {
+    if (!el.innerHTML) el.innerHTML = window.PMIcon(el.getAttribute('data-ico'));
+  });
+  ctx.querySelectorAll('i[data-ico]').forEach(function (el) {
+    if (!el.innerHTML) el.innerHTML = window.PMIcon(el.getAttribute('data-ico'));
+  });
+
+  /* ---- context menu: reskinned sprout via PMMenu.openAt — bound at panel level
+          so tree rows AND Changed/Open pane rows all get it ---- */
+  var ctxTarget = null;
+  function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
+  panel.addEventListener('contextmenu', function (ev) {
+    var r = rowOf(ev.target);
+    if (!r) return;
+    ev.preventDefault();
+    ctxTarget = r;
+    /* disable Paste unless a folder/root is the target */
+    var paste = document.getElementById('fmCtxPaste');
+    if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
+    if (window.PMMenu && PMMenu.openAt) PMMenu.openAt(ctx, ev.clientX, ev.clientY);
+    ctx.dispatchEvent(new CustomEvent('pm-ctx-open'));
+  });
+  /* keyboard context menu (Shift+F10 / Menu) on a focused row */
+  panel.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'F10' && ev.key !== 'ContextMenu') return;
+    var r = rowOf(ev.target);
+    if (!r) return;
+    if (ev.key === 'F10' && !ev.shiftKey) return;
+    ev.preventDefault();
+    ctxTarget = r;
+    var rc = r.getBoundingClientRect();
+    if (window.PMMenu && PMMenu.openAt) PMMenu.openAt(ctx, rc.left + 16, rc.bottom);
+  });
+
+  /* ---- multi-select model (one active row + additive/range multi-select
+          for drag-out / delete / path-copy; open stays single-row) ---- */
+  var rows = Array.prototype.slice.call(tree.querySelectorAll('.fm-row[data-path]'));
+  var selected = new Set();
+  var lastIdx = -1;
+  var selBar = document.getElementById('fmSelBar');
+  var selCount = document.getElementById('fmSelCount');
+  function paintSel() {
+    rows.forEach(function (r, i) { var on = selected.has(r); r.classList.toggle('selected', on); r.setAttribute('aria-selected', String(on)); r.dataset.idx = i; });
+    selCount.textContent = selected.size;
+    selBar.classList.toggle('show', selected.size > 1);
+    var chip = document.getElementById('fmSelChip'), chipN = document.getElementById('fmSelChipN');
+    if (chip) { chip.style.display = selected.size > 0 ? '' : 'none'; if (chipN) chipN.textContent = selected.size; }
+    if (window.__fmToolbarFit) window.__fmToolbarFit();
+    if (window.__fmUpdateHint) window.__fmUpdateHint();
+  }
+  function clearSel() { selected.clear(); paintSel(); }
+  document.getElementById('fmSelClear').addEventListener('click', clearSel);
+  var selChip = document.getElementById('fmSelChip');
+  if (selChip) selChip.addEventListener('click', clearSel);
+
+  tree.addEventListener('click', function (ev) {
+    /* ignore clicks on quick-action buttons / chevrons (they have their own job) */
+    if (ev.target.closest('.fm-quick') || ev.target.closest('[data-collapse]')) return;
+    var r = rowOf(ev.target);
+    if (!r || !r.getAttribute('data-path')) return;
+    var i = rows.indexOf(r);
+    if (ev.shiftKey && lastIdx >= 0) {
+      /* range selection sweeps VISIBLE rows only — rows hidden inside collapsed
+         folders or by the filter / Hide-ignored must never be silently included */
+      var lo = Math.min(i, lastIdx), hi = Math.max(i, lastIdx);
+      for (var k = lo; k <= hi; k++) if (rows[k].offsetParent !== null) selected.add(rows[k]);
+    } else if (ev.metaKey || ev.ctrlKey) {
+      if (selected.has(r)) selected.delete(r); else selected.add(r);
+      lastIdx = i;
+    } else {
+      selected.clear(); selected.add(r); lastIdx = i;
+    }
+    paintSel();
+  });
+
+  /* ---- derive row git-status class from data-git (drives filename colour) ---- */
+  tree.querySelectorAll('.fm-row[data-git]').forEach(function (r) {
+    var g = r.getAttribute('data-git');
+    if (g === 'M') r.classList.add('M');
+    else if (g === 'A') r.classList.add('A');
+    else if (g === 'D') r.classList.add('D');
+    else if (g === 'C') r.classList.add('C');
+    else if (g === '?' || g === 'Q') r.classList.add('Q');
+  });
+
+  /* ---- folders inherit the strongest descendant change colour
+          (precedence: conflict > added/untracked > modified > deleted) ---- */
+  (function folderInherit() {
+    var RANK = { C: 4, Q: 3, '?': 3, A: 3, M: 2, D: 1 };
+    var CLS = ['M', 'A', 'Q', 'D', 'C'];
+    function statusOf(node) {
+      var row = node.querySelector(':scope > .fm-row');
+      var g = row ? row.getAttribute('data-git') : null;
+      var best = g ? (RANK[g] || 0) : 0;
+      node.querySelectorAll(':scope > .fm-children > .fm-node').forEach(function (ch) {
+        if (ch.classList.contains('fm-folder')) best = Math.max(best, statusOf(ch));
+        else { var cg = (ch.querySelector(':scope > .fm-row') || {}).getAttribute ? ch.querySelector(':scope > .fm-row').getAttribute('data-git') : null; best = Math.max(best, cg ? (RANK[cg] || 0) : 0); }
+      });
+      return best;
+    }
+    tree.querySelectorAll('.fm-folder').forEach(function (n) {
+      var row = n.querySelector(':scope > .fm-row'); if (!row) return;
+      CLS.forEach(function (c) { row.classList.remove(c); });
+      var s = statusOf(n);
+      if (s === 4) row.classList.add('C');
+      else if (s === 3) row.classList.add('A');
+      else if (s === 2) row.classList.add('M');
+      else if (s === 1) row.classList.add('D');
+    });
+  })();
+
+  /* ---- build a uniform trailing cell (markers + hover quick-actions) on every row ---- */
+  (function buildTrails() {
+    function btn(ico, title, action, arg) {
+      return '<button class="pm-minibtn" title="' + title + '" data-demo-action="' + action + '" data-demo-arg="' + arg + '"><i data-ico="' + ico + '" class="pm-ico sm"></i></button>';
+    }
+    tree.querySelectorAll('.fm-row').forEach(function (r) {
+      r.querySelectorAll('.fm-quick').forEach(function (q) { q.remove(); });
+      var trail = document.createElement('span'); trail.className = 'fm-trail';
+      var markers = document.createElement('span'); markers.className = 'fm-markers';
+      var c = r.querySelector('.fm-count'); if (c) markers.appendChild(c);
+      var b = r.querySelector('.fm-gitbadge'); if (b) markers.appendChild(b);
+      trail.appendChild(markers);
+      var quick = document.createElement('span'); quick.className = 'fm-quick';
+      var path = r.getAttribute('data-path') || r.getAttribute('data-name') || '';
+      var kind = r.getAttribute('data-kind');
+      var q = '';
+      if (kind === 'folder') {
+        q = btn('filePlus', 'New file here', 'cmd.file.new_file', 'cmd.file.new_file -> parent ' + path) +
+            btn('folderPlus', 'New folder here', 'cmd.file.new_folder', 'cmd.file.new_folder -> parent ' + path) +
+            btn('terminal', 'Open in terminal', 'cmd.terminal.show', 'cmd.terminal.show -> cwd ' + path);
+      } else if (r.getAttribute('data-git')) {
+        q = btn('plus', 'Stage changes', 'cmd.git.stage_hunks', 'cmd.git.stage_hunks -> ' + path) +
+            btn('diff', 'Open diff', 'cmd.git.diff_open', 'cmd.git.diff_open -> ' + path) +
+            btn('x', 'Discard changes', 'cmd.git.discard_hunks', 'cmd.git.discard_hunks -> ' + path + ' (confirm)');
+      } else if (r.getAttribute('data-readonly') === '1') {
+        q = btn('arrowDn', 'Save local copy', 'cmd.file.save_local_copy', 'cmd.file.save_local_copy -> ' + path);
+      } else {
+        q = btn('chat', 'Add to chat', 'cmd.chat.add_file_reference', 'cmd.chat.add_file_reference -> ' + path) +
+            btn('copy', 'Copy relative path', 'cmd.file.copy_path', 'cmd.file.copy_path -> ' + path + ' (relative)') +
+            btn('terminal', 'Open in terminal', 'cmd.terminal.show', 'cmd.terminal.show -> ' + path);
+      }
+      quick.innerHTML = q;
+      trail.appendChild(quick);
+      r.appendChild(trail);
+    });
+    tree.querySelectorAll('.fm-quick i[data-ico]').forEach(function (i) { if (!i.innerHTML) i.innerHTML = window.PMIcon(i.getAttribute('data-ico')); });
+  })();
+
+  /* ---- toolbar right-side hint: selection count, else visible item count ---- */
+  function updateToolbarHint() {
+    var hc = document.getElementById('fmHintCount'); if (!hc) return;
+    var sel = (typeof selected !== 'undefined') ? selected.size : 0;
+    var vis = tree.querySelectorAll('.fm-row[data-path]');
+    var n = 0; vis.forEach(function (r) { if (r.offsetParent !== null) n++; });
+    hc.textContent = sel > 0 ? sel : n;
+    var hint = document.getElementById('fmToolbarHint');
+    if (hint) hint.setAttribute('title', sel > 0 ? (sel + ' selected') : (n + ' items in view'));
+  }
+  window.__fmUpdateHint = updateToolbarHint;
+
+  /* ---- tooltips: every row + glyph + badge + quick-action gets a title.
+          folderTipOf is shared with the collapse animator so folder titles
+          are refreshed on every toggle instead of lying after the first click ---- */
+  function folderTipOf(row, open) {
+    var name = row.getAttribute('data-name') || row.getAttribute('data-path') || '';
+    var t = [name ? (name + ' (folder)') : 'Folder', open ? 'expanded' : 'collapsed'];
+    if (row.getAttribute('data-ignored') === '1') t.push('ignored by .gitignore');
+    return t.join(' · ');
+  }
+  (function tooltips() {
+    var KIND = { rs: 'Rust source', ts: 'TypeScript', tsx: 'TypeScript (JSX)', js: 'JavaScript', jsx: 'JavaScript (JSX)', svelte: 'Svelte component', sql: 'SQL', toml: 'TOML config', yml: 'YAML', yaml: 'YAML', xml: 'XML', md: 'Markdown', docker: 'Docker file', generic: 'File', folder: 'Folder' };
+    var GIT = { M: 'Modified (uncommitted)', A: 'Added (uncommitted)', Q: 'Untracked', '?': 'Untracked', D: 'Deleted', C: 'Conflict' };
+    tree.querySelectorAll('.fm-row').forEach(function (r) {
+      var name = r.getAttribute('data-name') || r.getAttribute('data-path') || '';
+      var t = [];
+      if (r.getAttribute('data-kind') === 'folder' && r.hasAttribute('data-collapse')) {
+        r.setAttribute('title', folderTipOf(r, r.closest('.fm-node').classList.contains('open')));
+      } else {
+        if (name) t.push(name);
+        var k = r.getAttribute('data-kind'); if (KIND[k]) t.push(KIND[k]);
+        var g = r.getAttribute('data-git'); if (g && GIT[g]) t.push(GIT[g]);
+        if (r.getAttribute('data-ignored') === '1') t.push('ignored by .gitignore');
+        if (r.getAttribute('data-readonly') === '1') t.push('read-only');
+      }
+      if (t.length) r.setAttribute('title', t.join(' · '));
+      var fi = r.querySelector('.fm-ficon'); if (fi) { var kk = r.getAttribute('data-kind'); fi.setAttribute('title', KIND[kk] || 'File'); }
+      r.querySelectorAll('.fm-gitbadge').forEach(function (bd) {
+        var txt = (bd.textContent || '').trim().toLowerCase();
+        if (txt.indexOf('ignored') !== -1) bd.setAttribute('title', 'Ignored by .gitignore');
+        else if (txt.indexOf('read-only') !== -1 || txt.indexOf('readonly') !== -1) bd.setAttribute('title', 'Read-only');
+        else { var g = bd.className.match(/\b([MAQDC?])\b/); if (g && GIT[g[1]]) bd.setAttribute('title', GIT[g[1]]); }
+      });
+    });
+    document.querySelectorAll('.fm-changerow, .fm-openrow').forEach(function (r) {
+      if (r.getAttribute('title')) return;
+      var f = r.querySelector('.fm-cfile'); var d = r.querySelector('.fm-cdir');
+      var parts = [];
+      if (f) parts.push((f.textContent || '').trim());
+      if (d) parts.push((d.textContent || '').trim());
+      if (parts.length) r.setAttribute('title', parts.join(' · '));
+      if (f && !f.getAttribute('title')) f.setAttribute('title', (f.textContent || '').trim());
+    });
+    document.querySelectorAll('.sh-head[data-collapse]').forEach(function (h) {
+      if (!h.getAttribute('title')) {
+        var lab = h.querySelector('.sh-hlabel');
+        h.setAttribute('title', lab ? lab.textContent.trim() : 'Expand / collapse');
+      }
+    });
+    updateToolbarHint();
+  })();
+
+  /* ---- toolbar: show button labels only when they all fit on one row ---- */
+  (function toolbarText() {
+    var tb = document.getElementById('fmToolbar'); if (!tb) return;
+    var chip = document.getElementById('fmSelChip');
+    var chipLbl = chip ? chip.querySelector('.fm-selchip-lbl') : null;
+    function fit() {
+      if (chipLbl) chipLbl.style.display = '';
+      tb.classList.add('txt');
+      var fits = tb.scrollWidth <= tb.clientWidth + 1;
+      if (!fits) tb.classList.remove('txt');
+      /* selection chip: drop "selected" when the pill cannot fit */
+      if (chip && chipLbl && chip.style.display !== 'none') {
+        chipLbl.style.display = '';
+        if (tb.scrollWidth > tb.clientWidth + 1) chipLbl.style.display = 'none';
+      }
+    }
+    fit();
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(tb);
+    window.addEventListener('resize', fit);
+    window.__fmToolbarFit = fit; /* re-run when the selection chip toggles */
+  })();
+
+  /* ---- sliding segmented-tab underline indicator ---- */
+  var segtab = panel.querySelector('.pm-segtab');
+  var ink = document.getElementById('fmTabInk');
+  function moveInk() {
+    if (!segtab || !ink) return;
+    var act = segtab.querySelector('.pm-segtab-item.active');
+    if (!act) { ink.style.width = '0px'; return; }
+    ink.style.width = act.offsetWidth + 'px';
+    ink.style.transform = 'translateX(' + act.offsetLeft + 'px)';
+  }
+  if (segtab) segtab.addEventListener('click', function () { requestAnimationFrame(moveInk); });
+  window.addEventListener('resize', moveInk);
+  /* the rail is resized by chrome.js setW (drag/slider/presets), which never fires
+     a window resize — observe the tab bar itself and the slot's width transition */
+  if (segtab && 'ResizeObserver' in window) new ResizeObserver(function () { moveInk(); }).observe(segtab);
+  var inkSlot = document.getElementById('sidePanelSlot');
+  if (inkSlot) inkSlot.addEventListener('transitionend', function (e) { if (e.propertyName === 'width') moveInk(); });
+  requestAnimationFrame(moveInk);
+
+  /* ---- folder collapse/expand — single self-cancelling animator.
+          One writer of class + inline styles per node; every new animation
+          cancels the previous one's timer + transitionend listener, so a
+          stale close can never revert a later open (fixes collapse-all→
+          expand-all and the open-then-snap-shut races). ---- */
+  (function collapseAnim() {
+    var reduce = function () { return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.documentElement.getAttribute('data-reduced-motion') === '1'; };
+    function kidsOf(node) { return node.querySelector(':scope > .fm-children'); }
+    /* neutralise the shared accordion handler on tree nodes so it can't
+       double-toggle against us (it keys off [data-acc]) */
+    tree.querySelectorAll('.fm-node[data-acc]').forEach(function (n) { n.removeAttribute('data-acc'); });
+
+    function animate(node, open) {
+      var c = kidsOf(node); if (!c) return;
+      var row = node.querySelector(':scope > .fm-row');
+      var st = node._fm || (node._fm = {});
+      if (st.timer) { clearTimeout(st.timer); st.timer = null; }
+      if (st.onEnd) { c.removeEventListener('transitionend', st.onEnd); st.onEnd = null; }
+      if (row) {
+        row.setAttribute('aria-expanded', String(open));
+        if (row.getAttribute('data-kind') === 'folder') row.setAttribute('title', folderTipOf(row, open));
+      }
+      if (reduce()) { c.style.maxHeight = ''; c.style.opacity = ''; node.classList.toggle('open', open); return; }
+      if (open) {
+        /* capture the from-height BEFORE flipping .open: a closed subtree is
+           display:none, so measuring after the class flip reads the full height
+           and the open animation collapses to a no-op */
+        var wasOpen = node.classList.contains('open');
+        var fromH = wasOpen ? c.getBoundingClientRect().height : 0;
+        var fromO = wasOpen ? (parseFloat(getComputedStyle(c).opacity) || 1) : 0.001;
+        node.classList.add('open');
+        c.style.transition = 'none'; c.style.maxHeight = fromH + 'px'; c.style.opacity = String(Math.max(0.001, fromO));
+        void c.offsetHeight;
+        c.style.transition = ''; c.style.maxHeight = c.scrollHeight + 'px'; c.style.opacity = '1';
+      } else {
+        c.style.transition = 'none'; c.style.maxHeight = c.scrollHeight + 'px'; c.style.opacity = '1';
+        void c.offsetHeight;
+        c.style.transition = ''; c.style.maxHeight = '0px'; c.style.opacity = '0';
+      }
+      st.onEnd = function (e) { if (e.propertyName !== 'max-height') return; finish(); };
+      c.addEventListener('transitionend', st.onEnd);
+      st.timer = setTimeout(finish, 340);
+      function finish() {
+        if (st.timer) { clearTimeout(st.timer); st.timer = null; }
+        if (st.onEnd) { c.removeEventListener('transitionend', st.onEnd); st.onEnd = null; }
+        if (open) { c.style.maxHeight = 'none'; c.style.opacity = ''; }
+        else { node.classList.remove('open'); c.style.maxHeight = ''; c.style.opacity = ''; }
+      }
+    }
+    window.__fmAnimate = animate;
+    window.__fmSetOpen = animate;
+
+    /* initial state: folders marked open in markup start fully shown */
+    tree.querySelectorAll('.fm-folder').forEach(function (n) {
+      var c = kidsOf(n); if (!c) return;
+      if (n.classList.contains('open')) { c.style.maxHeight = 'none'; c.style.opacity = ''; }
+    });
+
+    /* initial reveal: expand the ancestor chain of the current file at boot
+       (no animation — the markup ships everything collapsed) */
+    (function revealActive() {
+      var cur = tree.querySelector('.fm-row.active-file'); if (!cur) return;
+      var n = cur.closest('.fm-node');
+      while (n) {
+        if (n.classList.contains('fm-folder') && !n.classList.contains('open')) {
+          n.classList.add('open');
+          var c = kidsOf(n); if (c) { c.style.maxHeight = 'none'; c.style.opacity = ''; }
+          var row = n.querySelector(':scope > .fm-row');
+          if (row) { row.setAttribute('aria-expanded', 'true'); row.setAttribute('title', folderTipOf(row, true)); }
+        }
+        n = n.parentElement ? n.parentElement.closest('.fm-node') : null;
+      }
+    })();
+
+    /* folder toggle via our own handler (chevron / row click, ignoring buttons) */
+    tree.addEventListener('click', function (ev) {
+      if (ev.target.closest('button, a, .pm6-tb-menu-trigger, .pm-minibtn, .fm-quick')) return;
+      var head = ev.target.closest('[data-collapse]'); if (!head) return;
+      var node = head.closest('.fm-folder'); if (!node) return;
+      animate(node, !node.classList.contains('open'));
+      if (window.__fmRefreshCollapse) window.__fmRefreshCollapse();
+    });
+  })();
+
+  /* ---- keyboard tree model: Arrow Up/Down walk visible rows, Right expands /
+          Left collapses folders (Left on a file focuses its parent), Enter/Space
+          activates, and plain letters type-ahead by leading characters.
+          Rows already carry tabindex=0 + role=treeitem; add tree/level/selected ---- */
+  (function treeKeyboard() {
+    tree.setAttribute('role', 'tree');
+    tree.setAttribute('aria-label', 'Project files');
+    tree.querySelectorAll('.fm-row').forEach(function (r) {
+      var depth = 0, p = r.closest('.fm-node');
+      while (p) { p = p.parentElement ? p.parentElement.closest('.fm-node') : null; if (p) depth++; }
+      r.setAttribute('aria-level', String(depth + 1));
+      if (!r.hasAttribute('aria-selected')) r.setAttribute('aria-selected', 'false');
+    });
+    var allRows = Array.prototype.slice.call(tree.querySelectorAll('.fm-row'));
+    function visRows() { return allRows.filter(function (r) { return r.offsetParent !== null; }); }
+    function nameOf(r) {
+      var nm = (r.getAttribute('data-name') || r.getAttribute('data-path') || '').toLowerCase();
+      return r.getAttribute('data-name') ? nm : nm.split('/').pop();
+    }
+    var taBuf = '', taTimer = null;
+    tree.addEventListener('keydown', function (ev) {
+      var r = ev.target && ev.target.closest ? ev.target.closest('.fm-row') : null;
+      if (!r || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      var node = r.closest('.fm-node');
+      var isFolder = r.getAttribute('data-kind') === 'folder' && r.hasAttribute('data-collapse');
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        var v = visRows(), i = v.indexOf(r);
+        var nx = v[i + (ev.key === 'ArrowDown' ? 1 : -1)];
+        if (nx) nx.focus();
+      } else if (ev.key === 'ArrowRight') {
+        ev.preventDefault();
+        if (isFolder && !node.classList.contains('open')) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+        else if (isFolder) { var first = node.querySelector(':scope > .fm-children .fm-row'); if (first && first.offsetParent !== null) first.focus(); }
+      } else if (ev.key === 'ArrowLeft') {
+        ev.preventDefault();
+        if (isFolder && node.classList.contains('open')) { window.__fmAnimate(node, false); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+        else { var pn = node.parentElement ? node.parentElement.closest('.fm-node') : null; var pr = pn ? pn.querySelector(':scope > .fm-row') : null; if (pr) pr.focus(); }
+      } else if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        if (isFolder) { window.__fmAnimate(node, !node.classList.contains('open')); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+        else r.click();
+      } else if (ev.key.length === 1 && /\S/.test(ev.key)) {
+        taBuf += ev.key.toLowerCase();
+        if (taTimer) clearTimeout(taTimer);
+        taTimer = setTimeout(function () { taBuf = ''; }, 700);
+        var vv = visRows(), ii = Math.max(0, vv.indexOf(r));
+        for (var k = 1; k <= vv.length; k++) {
+          var cand = vv[(ii + k) % vv.length];
+          if (nameOf(cand).indexOf(taBuf) === 0) { cand.focus(); break; }
+        }
+      }
+    });
+  })();
+
+  /* ---- toolbar: collapse/expand all (routes through the animator) ---- */
+  (function toolbar() {
+    var btn = document.getElementById('fmCollapseAll');
+    var lbl = document.getElementById('fmCollapseLbl');
+    var ico = document.getElementById('fmCollapseIco');
+    if (!btn) return;
+    function refresh() {
+      var anyOpen = !!tree.querySelector('.fm-folder.open');
+      lbl.textContent = anyOpen ? 'Collapse all' : 'Expand all';
+      if (ico) { ico.setAttribute('data-ico', anyOpen ? 'boxMinus' : 'boxPlus'); ico.innerHTML = window.PMIcon(ico.getAttribute('data-ico'), ico.className); }
+      /* visible-item hint tracks expand/collapse; second pass lands after the
+         close animation finishes hiding subtrees */
+      if (window.__fmUpdateHint) { window.__fmUpdateHint(); setTimeout(window.__fmUpdateHint, 380); }
+    }
+    window.__fmRefreshCollapse = refresh;
+    btn.addEventListener('click', function () {
+      var folders = Array.prototype.slice.call(tree.querySelectorAll('.fm-folder'));
+      var anyOpen = folders.some(function (n) { return n.classList.contains('open'); });
+      folders.forEach(function (n) { window.__fmAnimate(n, !anyOpen); });
+      refresh();
+    });
+    refresh();
+  })();
+
+  /* ---- filter toggle (collapsible, measured-height slide) ---- */
+  (function filterToggle() {
+    var btn = document.getElementById('fmFilterToggle');
+    var wrap = document.getElementById('fmFilterWrap');
+    var input = document.getElementById('fmFilter');
+    if (!btn || !wrap) return;
+    function open() {
+      wrap.classList.add('open');
+      wrap.style.transition = 'none'; wrap.style.maxHeight = '0px'; wrap.style.opacity = '0';
+      void wrap.offsetHeight; wrap.style.transition = '';
+      wrap.style.maxHeight = wrap.scrollHeight + 12 + 'px'; wrap.style.opacity = '1';
+      setTimeout(function () { wrap.style.maxHeight = 'none'; if (input) input.focus(); sync(); }, 320);
+    }
+    function close() {
+      wrap.style.transition = 'none'; wrap.style.maxHeight = wrap.scrollHeight + 'px'; wrap.style.opacity = '1';
+      void wrap.offsetHeight; wrap.style.transition = '';
+      wrap.style.maxHeight = '0px'; wrap.style.opacity = '0';
+      setTimeout(function () { wrap.classList.remove('open'); wrap.style.maxHeight = ''; sync(); }, 320);
+    }
+    function sync() {
+      var on = !!(input && input.value.trim() !== '');
+      btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', String(on || wrap.classList.contains('open')));
+    }
+    btn.addEventListener('click', function () {
+      if (wrap.classList.contains('open')) close();
+      else open();
+    });
+    if (input) {
+      input.addEventListener('input', function () {
+        if (input.value.trim() && !wrap.classList.contains('open')) { wrap.classList.add('open'); wrap.style.maxHeight = 'none'; wrap.style.opacity = '1'; }
+        sync();
+      });
+    }
+    if (input && input.value.trim()) { wrap.classList.add('open'); wrap.style.maxHeight = 'none'; wrap.style.opacity = '1'; }
+    sync();
+  })();
+
+  /* ---- worktree/branch menu: centre under trigger + clamp inside the slot
+          (overrides the shared right/left anchoring so it never runs off-screen) ---- */
+  (function branchMenuPos() {
+    var menu = document.getElementById('fmRootMenu');
+    var trig = document.getElementById('fmRootBtn');
+    var slot = document.getElementById('sidePanelSlot');
+    if (!menu || !trig || !slot) return;
+    function place() {
+      var tr = trig.getBoundingClientRect();
+      var sr = slot.getBoundingClientRect();
+      var wr = menu.offsetParent ? menu.offsetParent.getBoundingClientRect() : tr;
+      var avail = sr.width - 8;
+      menu.style.minWidth = '0px';
+      menu.style.maxWidth = avail + 'px';
+      var mw = Math.min(menu.offsetWidth, avail);
+      var center = (tr.left + tr.width / 2) - sr.left;
+      var leftInSlot = Math.max(4, Math.min(center - mw / 2, sr.width - mw - 4));
+      menu.style.left = (leftInSlot - (wr.left - sr.left)) + 'px';
+      menu.style.right = 'auto';
+    }
+    var obs = new MutationObserver(function () { if (menu.classList.contains('is-open')) { place(); requestAnimationFrame(place); } });
+    obs.observe(menu, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('resize', function () { if (menu.classList.contains('is-open')) place(); });
+  })();
+
+  /* ---- context-menu submenus (hover + click + keyboard) ---- */
+  (function submenus() {
+    function closeAllSub() { ctx.querySelectorAll('.fm-ctx-wrap.open').forEach(function (w) { w.classList.remove('open'); }); }
+    ctx.querySelectorAll('.fm-ctx-wrap[data-sub]').forEach(function (wrap) {
+      var trig = wrap.querySelector(':scope > .fm-ctx-item');
+      wrap.addEventListener('mouseenter', function () { closeAllSub(); wrap.classList.add('open'); });
+      wrap.addEventListener('mouseleave', function () { wrap.classList.remove('open'); });
+      if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); wrap.classList.toggle('open'); });
+    });
+    ctx.addEventListener('keydown', function (ev) {
+      if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { w.classList.add('open'); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+      else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { o.classList.remove('open'); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+    });
+    ctx.addEventListener('pm-ctx-open', closeAllSub);
+  })();
+
+  /* ---- single visibility resolver: filter (name + repo-relative path) AND the
+          Hide-ignored toggle both flow through here, so neither clobbers the
+          other's display state ---- */
+  var filter = document.getElementById('fmFilter');
+  var fcount = document.getElementById('fmFilterCount');
+  var fclear = document.getElementById('fmFilterClear');
+  var revealNote = document.getElementById('fmRevealNote');
+  var revealText = document.getElementById('fmRevealText');
+  var hideBtn = document.getElementById('fmHideIgnored');
+  function applyVisibility() {
+    var q = filter.value.trim().toLowerCase();
+    var hideIgn = hideBtn.classList.contains('on');
+    fclear.style.display = q ? '' : 'none';
+    var nodes = Array.prototype.slice.call(tree.querySelectorAll('.fm-node'));
+    nodes.forEach(function (n) {
+      var row = n.querySelector(':scope > .fm-row');
+      var hay = ((row.getAttribute('data-path') || '') + ' ' + (row.getAttribute('data-name') || '')).toLowerCase();
+      n.dataset.match = (q && hay.indexOf(q) !== -1) ? '1' : '0';
+    });
+    var matches = 0;
+    nodes.forEach(function (n) {
+      var row = n.querySelector(':scope > .fm-row');
+      var isFolder = row.getAttribute('data-kind') === 'folder';
+      var ignHidden = hideIgn && row.getAttribute('data-ignored') === '1';
+      var selfHit = !q || n.dataset.match === '1';
+      var descHit = false;
+      if (q) n.querySelectorAll('.fm-node[data-match="1"]').forEach(function (d) {
+        var dr = d.querySelector(':scope > .fm-row');
+        if (!(hideIgn && dr && dr.getAttribute('data-ignored') === '1')) descHit = true;
+      });
+      var show = !ignHidden && (selfHit || descHit);
+      n.style.display = show ? '' : 'none';
+      if (q && show && !isFolder && n.dataset.match === '1') matches++;
+      if (q && isFolder && descHit && show && !n.classList.contains('open')) window.__fmAnimate(n, true);
+    });
+    fcount.textContent = !q ? '' : (matches ? matches + ' match' + (matches === 1 ? '' : 'es') : 'no matches');
+    /* hidden-file disclosure for the current file (filter or Hide-ignored) */
+    var cur = tree.querySelector('.fm-row.active-file');
+    if (cur) {
+      var hidden = false, p = cur.closest('.fm-node');
+      while (p) { if (p.style.display === 'none') { hidden = true; break; } p = p.parentElement ? p.parentElement.closest('.fm-node') : null; }
+      if (hidden) {
+        revealText.textContent = q ? 'Current file is hidden by this filter — clear it to reveal in the tree.' : 'Current file is hidden by Hide ignored — turn it off to reveal in the tree.';
+        revealNote.style.display = '';
+      } else { revealNote.style.display = 'none'; }
+    }
+    updateToolbarHint();
+    if (window.__fmRefreshCollapse) window.__fmRefreshCollapse();
+  }
+  filter.addEventListener('input', applyVisibility);
+  fclear.addEventListener('click', function () { filter.value = ''; applyVisibility(); filter.focus(); });
+
+  /* ---- Hide ignored toggle (eye -> eyeOff swap mirrors the state) ---- */
+  hideBtn.addEventListener('click', function () {
+    var on = hideBtn.classList.toggle('on');
+    hideBtn.setAttribute('aria-pressed', String(on));
+    hideBtn.setAttribute('title', on ? 'Show ignored files' : 'Hide ignored files');
+    var ic = hideBtn.querySelector('i[data-ico]');
+    if (ic) { ic.setAttribute('data-ico', on ? 'eyeOff' : 'eye'); ic.innerHTML = window.PMIcon(on ? 'eyeOff' : 'eye', ic.className); }
+    applyVisibility();
+  });
+
+  /* ---- worktree root switch (demonstrates worktree-keyed tree identity) ---- */
+  var rootMenu = document.getElementById('fmRootMenu');
+  var rootLabel = document.getElementById('fmRootLabel');
+  var watchStat = document.getElementById('fmWatchStat');
+  rootMenu.addEventListener('pm-menu-pick', function (ev) {
+    var item = ev.detail && ev.detail.item;
+    if (!item) return;
+    var root = item.getAttribute('data-root') || item.getAttribute('data-label');
+    rootLabel.textContent = root;
+    watchStat.querySelector('.dot').style.background = root === 'main' ? 'var(--graph-passed)' : 'var(--accent-warning)';
+    watchStat.childNodes[watchStat.childNodes.length - 1].textContent = 'Watching 18 · root ' + root + ' · .gitignore respected';
+  });
+
+  /* ---- demo: cycle the indexing/degraded chip on the footer for 2.5s after refresh ---- */
+  var indexChip = document.getElementById('fmIndexChip');
+  var indexText = document.getElementById('fmIndexText');
+  panel.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-demo-action="cmd.file.refresh"]');
+    if (!b) return;
+    indexText.textContent = 'Refreshing index…';
+    indexChip.style.display = '';
+    setTimeout(function () { indexText.textContent = 'Building search index — first build may take several minutes'; }, 700);
+    setTimeout(function () { indexChip.style.display = 'none'; }, 2500);
+  });
+
+  paintSel();
+})();
+</script>
+</body>
+</html>

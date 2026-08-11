@@ -1,23 +1,32 @@
 {
-  "generated_at_utc": "2026-07-12T02:20:55Z",
+  "generated_at_utc": "2026-08-11T01:30:02Z",
   "index_path": "Plans/_shards/event_record.schema/00-index.md",
-  "index_sha256": "d9b581848a48db822ca94f6a35d24ee9d6f40c022711b322bb12c0df3753d26d",
+  "index_sha256": "ca916185f16198e9841bbdd1c42cf7d15622cb818fa690b4156fcee4696c4615",
   "manifest_path": "Plans/_shards/event_record.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
-      "heading": "Lines 1-192",
-      "path": "Plans/_shards/event_record.schema/001-lines-1-192.md",
-      "sha256": "5f9ddf4e138be3734d146c440214aac73d1fb20c83a94eed1238697fb66ba470",
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/event_record.schema/001-lines-1-200.md",
+      "sha256": "a70aede0b4651e901e57cf3ffcafd6f89da5e8d3150b806982a98c1712383a6d",
       "shard_id": "001",
-      "source_line_end": 192,
+      "source_line_end": 200,
       "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-373",
+      "path": "Plans/_shards/event_record.schema/002-lines-201-373.md",
+      "sha256": "30c4d24cb56510e727b8906a8ca940f10609a63f13ec630e8606800f03667f1d",
+      "shard_id": "002",
+      "source_line_end": 373,
+      "source_line_start": 201,
       "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 192,
+    "line_count": 373,
     "path": "Plans/event_record.schema.json",
-    "sha256": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d"
+    "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
   }
 }

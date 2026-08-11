@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>Puppet Master — Left-Rail Design Gallery</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--background); }
+
+/* layered ambient — faint, theme-tied, never an aurora blob */
+.g-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(58% 46% at 8% -6%, color-mix(in srgb, var(--accent-blue) 11%, transparent), transparent 60%),
+    radial-gradient(46% 42% at 100% 0%, color-mix(in srgb, var(--accent-magenta) 9%, transparent), transparent 60%),
+    radial-gradient(64% 50% at 70% 116%, color-mix(in srgb, var(--accent-lime) 6%, transparent), transparent 60%);
+}
+[data-theme^="glass"] .g-ambient { opacity: .45; }
+
+/* top bar */
+.g-top { position: relative; z-index: 30; display: flex; align-items: center; gap: var(--lg); flex-wrap: wrap;
+  padding: 11px 20px; background: color-mix(in srgb, var(--surface) 80%, transparent);
+  border-bottom: 1px solid var(--border); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.g-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.g-logo { width: 26px; height: 26px; color: var(--accent-primary); flex: none; }
+.g-app { font-family: var(--display-font); font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--text-primary); }
+.g-sub { font-size: 10px; color: var(--text-muted); }
+.g-spacer { flex: 1 1 auto; }
+
+/* mode segmented control */
+.g-mode { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 2px; gap: 2px; background: var(--surface-elevated); }
+.g-mode button { font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: var(--radius-pill); color: var(--text-secondary); transition: all var(--motion-fast) var(--ease-out); }
+.g-mode button.on { color: var(--text-primary); background: var(--accent-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 35%, transparent); }
+
+.g-ctrl { display: flex; align-items: center; gap: 8px; }
+.g-ctrl-lbl { font-family: var(--display-font); font-size: 8px; letter-spacing: 1.3px; color: var(--text-muted); }
+.g-preset { font-size: 9px; font-weight: 700; letter-spacing: .05em; padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); color: var(--text-secondary); transition: all var(--motion-fast) var(--ease-out); }
+.g-preset:hover { color: var(--text-primary); border-color: var(--border); }
+.g-preset.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+#galWidth { width: 110px; accent-color: var(--accent-primary); cursor: ew-resize; }
+.g-wread { font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); min-width: 42px; text-align: right; }
+.g-rm { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; letter-spacing: .08em; color: var(--text-muted); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid transparent; }
+.g-rm:hover { color: var(--text-primary); border-color: var(--border-light); }
+.g-rm.on { color: var(--accent-warning); border-color: color-mix(in srgb, var(--accent-warning) 40%, transparent); background: color-mix(in srgb, var(--accent-warning) 10%, transparent); }
+.g-rm svg { width: 12px; height: 12px; }
+.g-top .pm6-tb-menu-trigger { border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+
+/* shell: left nav (echoes the app activity bar) + main */
+.g-shell { position: relative; z-index: 1; display: flex; height: calc(100% - 0px); min-height: 0; }
+.g-nav { flex: none; width: 184px; display: flex; flex-direction: column; min-height: 0;
+  background: var(--surface-alt, var(--surface)); border-right: 1px solid var(--border); }
+[data-theme^="friendly"] .g-nav { background: transparent; border-right-color: var(--pm6-cozy-chrome-border); }
+[data-theme^="glass"] .g-nav { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); border-right-color: var(--glass-hairline); }
+.g-nav-head { padding: 14px 16px 8px; font-family: var(--display-font); font-size: 8.5px; letter-spacing: 1.5px; color: var(--text-muted); }
+.g-nav-list { flex: 1; min-height: 0; overflow-y: auto; padding: 0 8px 12px; display: flex; flex-direction: column; gap: 3px; }
+.g-nav-btn { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 9px 10px; border-radius: var(--radius-md); color: var(--text-secondary);
+  border: 1px solid transparent; transition: all var(--motion-fast) var(--ease-out); }
+.g-nav-btn svg { width: 16px; height: 16px; flex: none; color: var(--text-muted); transition: color var(--motion-fast) var(--ease-out); }
+.g-nav-btn .nm { font-family: var(--display-font); font-size: 11px; font-weight: 700; letter-spacing: .02em; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-nav-btn .ct { font-family: var(--mono-font); font-size: 9px; font-weight: 700; flex: none; min-width: 16px; height: 16px; padding: 0 4px; border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-muted); }
+.g-nav-btn:hover { color: var(--text-primary); background: var(--accent-soft); }
+.g-nav-btn:hover svg { color: var(--text-primary); }
+.g-nav-btn.on { color: var(--text-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.g-nav-btn.on svg { color: var(--accent-primary); }
+.g-nav-btn.on .ct { background: color-mix(in srgb, var(--accent-primary) 22%, transparent); color: var(--accent-primary); }
+.g-nav-btn.on::before { content: ''; position: absolute; left: -8px; top: 7px; bottom: 7px; width: 3px; border-radius: var(--radius-pill); background: var(--accent-primary); }
+.g-nav-btn.bonus .nm { font-weight: 600; letter-spacing: 0; font-family: var(--body-font); }
+.g-nav-foot { padding: 10px 16px; border-top: 1px solid var(--border-light); font-size: 9.5px; color: var(--text-muted); line-height: 1.5; }
+.g-nav-foot b { color: var(--text-secondary); }
+
+/* main */
+.g-main { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+.g-main-head { flex: none; padding: 16px 22px 12px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--border-light); }
+.g-main-title { font-family: var(--display-font); font-size: 21px; font-weight: 700; letter-spacing: .3px; color: var(--text-primary); }
+.g-main-title .accent { color: var(--accent-primary); }
+.g-main-meta { font-size: 11px; color: var(--text-muted); }
+.g-main-hint { margin-left: auto; font-size: 10px; color: var(--text-muted); max-width: 420px; text-align: right; line-height: 1.5; }
+.g-grid { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px 60px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; align-content: start; }
+
+.g-card { display: flex; flex-direction: column; background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+  border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--elev-2); overflow: hidden;
+  opacity: 0; transform: translateY(12px); animation: cardIn var(--motion-med) var(--ease-spring) forwards;
+  transition: transform var(--motion-med) var(--ease-out), box-shadow var(--motion-med) var(--ease-out), border-color var(--motion-med) var(--ease-out); }
+.g-card:hover { transform: translateY(-3px); box-shadow: var(--elev-hover); border-color: color-mix(in srgb, var(--accent-primary) 35%, var(--border)); }
+@keyframes cardIn { to { opacity: 1; transform: none; } }
+.g-card.bonus { border-style: dashed; }
+.g-cap { display: flex; align-items: center; gap: 9px; padding: 11px 13px 4px; }
+.g-id { font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--background); background: var(--accent-primary); padding: 2px 7px; border-radius: var(--radius-sm); flex: none; }
+.g-card.bonus .g-id { background: var(--accent-magenta); }
+.g-card h3 { font-family: var(--display-font); font-size: 13px; font-weight: 700; letter-spacing: .3px; color: var(--text-primary); margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-mech { margin-left: auto; font-size: 9px; font-weight: 700; letter-spacing: .03em; color: var(--accent-magenta); background: color-mix(in srgb, var(--accent-magenta) 13%, transparent); padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; flex: none; max-width: 52%; overflow: hidden; text-overflow: ellipsis; }
+.g-card:not(.bonus) .g-mech { color: var(--accent-blue); background: color-mix(in srgb, var(--accent-blue) 13%, transparent); }
+.g-sub2 { padding: 0 13px 9px; font-size: 10.5px; color: var(--text-muted); line-height: 1.45; }
+.g-frame { position: relative; width: 100%; background: var(--background); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); overflow: hidden; }
+.g-frame iframe { position: absolute; top: 0; left: 0; width: 1200px; height: 760px; border: 0; transform-origin: top left; background: var(--background); }
+.g-open { display: block; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: var(--accent-primary); text-decoration: none; padding: 8px; transition: background var(--motion-fast) var(--ease-out); }
+.g-open:hover { background: var(--accent-soft); }
+
+@media (max-width: 820px) {
+  body { overflow: auto; }
+  .g-shell { flex-direction: column; height: auto; }
+  .g-nav { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+  .g-nav-list { flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+  .g-nav-btn { width: auto; flex: none; }
+  .g-nav-btn.on::before { display: none; }
+  .g-nav-foot { display: none; }
+  .g-grid { overflow: visible; }
+}
+</style>
+</head>
+<body>
+<div class="g-ambient" aria-hidden="true"></div>
+
+<header class="g-top">
+  <div class="g-brand">
+    <svg class="g-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11L4 6.5M12 11l8-4.5M12 11v9"/></svg>
+    <div><div class="g-app">PUPPET MASTER</div><div class="g-sub">left-rail design gallery · 7 panels · 12 explorations</div></div>
+  </div>
+  <div class="g-spacer"></div>
+  <div class="g-mode" id="gMode" role="tablist" aria-label="Compare by">
+    <button class="on" data-mode="panel" role="tab">By panel</button>
+    <button data-mode="concept" role="tab">By concept</button>
+  </div>
+  <div class="g-ctrl">
+    <span class="g-ctrl-lbl">THEME</span>
+    <div class="pm6-tb-menu-wrap" id="galThemeWrap">
+      <button type="button" class="pm6-tb-menu-trigger" id="galThemeBtn" aria-controls="galThemeMenu"><span class="pm6-tb-menu-label" id="galThemeLabel">Friendly Dark</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+      <div class="pm6-tb-menu" id="galThemeMenu" role="menu" aria-label="Theme" data-pm-menu-select>
+        <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="friendly-dark" data-label="Friendly Dark">Friendly Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="friendly-light" data-label="Friendly Light">Friendly Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-dark" data-label="Glass Dark">Glass Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-light" data-label="Glass Light">Glass Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-dark" data-label="Retro Dark">Retro Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-light" data-label="Retro Light">Retro Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-dark" data-label="Basic Dark">Basic Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-light" data-label="Basic Light">Basic Light</button>
+      </div>
+    </div>
+  </div>
+  <div class="g-ctrl">
+    <span class="g-ctrl-lbl">RAIL WIDTH</span>
+    <button class="g-preset" data-w="220">MIN 220</button>
+    <button class="g-preset on" data-w="280">DEFAULT 280</button>
+    <button class="g-preset" data-w="520">MAX</button>
+    <input type="range" id="galWidth" min="220" max="560" value="280" step="1" aria-label="Rail width across all previews">
+    <span class="g-wread" id="galWRead">280px</span>
+  </div>
+  <div class="g-ctrl">
+    <button class="g-rm" id="galRM" aria-pressed="false"><i data-ico="motion"></i>MOTION</button>
+  </div>
+</header>
+
+<div class="g-shell">
+  <nav class="g-nav" aria-label="Selector">
+    <div class="g-nav-head" id="gNavHead">PANELS</div>
+    <div class="g-nav-list" id="gNavList"></div>
+    <div class="g-nav-foot" id="gNavFoot"></div>
+  </nav>
+  <main class="g-main">
+    <div class="g-main-head">
+      <div class="g-main-title" id="gMainTitle"></div>
+      <div class="g-main-meta" id="gMainMeta"></div>
+      <div class="g-main-hint" id="gMainHint"></div>
+    </div>
+    <div class="g-grid" id="gGrid"></div>
+  </main>
+</div>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script>
+var PANELS = [
+  ['panel-search', 'Search', 'search'],
+  ['panel-source', 'Source', 'source'],
+  ['panel-git', 'Actions', 'actions'],
+  ['panel-docker', 'Docker', 'docker'],
+  ['panel-testing', 'Tests', 'tests'],
+  ['panel-agents', 'Agents', 'agents'],
+  ['panel-artifacts', 'Artifacts', 'artifacts']
+];
+function dispName(id) { var p = PANELS.filter(function (x) { return x[0] === id; })[0]; return p ? p[1] : id; }
+function iconFor(id) { var p = PANELS.filter(function (x) { return x[0] === id; })[0]; return p ? p[2] : 'more'; }
+
+var CONCEPTS = [
+  { id: 'C1', file: 'c1-control-room.html', name: 'Control Room', kind: 'rail',
+    pitch: 'An instrumentation deck — LED status strips, mono readouts, meter bars, category-colored rails.',
+    tags: [['Search','gauges'],['Source','instrument groups'],['Actions','LED run list'],['Docker','metered rows'],['Tests','readouts'],['Agents','status rows'],['Artifacts','bezel receipts']] },
+  { id: 'C2', file: 'c2-cozy-shelves.html', name: 'Cozy Shelves', kind: 'rail',
+    pitch: 'Soft category-tinted shelves, pill banners, lift-on-hover; warmth that re-tints per theme.',
+    tags: [['Search','soft cards'],['Source','tinted shelves'],['Actions','cozy cards'],['Docker','rounded shelves'],['Tests','soft stacks'],['Agents','cozy rows'],['Artifacts','lift cards']] },
+  { id: 'C3', file: 'c3-single-thread.html', name: 'Single Thread', kind: 'rail',
+    pitch: 'A focus tunnel — one roomy section at a time via a depth rail; most legible at min width.',
+    tags: [['Search','focus panes'],['Source','sections'],['Actions','panes'],['Docker','subview panes'],['Tests','panes'],['Agents','panes'],['Artifacts','panes']] },
+  { id: 'C4', file: 'c4-paper-trail.html', name: 'Paper Trail', kind: 'rail',
+    pitch: 'A dated ledger on a timeline spine; hit-nodes carry line numbers, git nodes carry status.',
+    tags: [['Search','line-node hits'],['Source','event ledger'],['Actions','run timeline'],['Docker','event ledger'],['Tests','run entry'],['Agents','event log'],['Artifacts','receipt trail']] },
+  { id: 'C5', file: 'c5-attention-deck.html', name: 'Attention Deck', kind: 'rail',
+    pitch: 'A triage model — one "now" hero, a severity-ranked deck, calm bulk in "all clear" cards.',
+    tags: [['Search','focus hero'],['Source','commit hero'],['Actions','failing-run hero'],['Docker','crash-loop hero'],['Tests','run hero'],['Agents','active hero'],['Artifacts','bundle hero']] },
+  { id: 'C6', file: 'c6-split-rail.html', name: 'Split Rail', kind: 'rail',
+    pitch: 'A recursive vertical glyph gutter as secondary nav beside a dense keyboard-first column.',
+    tags: [['Search','gutter panes'],['Source','gutter + rows'],['Actions','gutter panes'],['Docker','6-glyph gutter'],['Tests','gutter panes'],['Agents','gutter'],['Artifacts','gutter']] },
+  { id: 'B1', file: 'bonus-source-a.html', name: 'Staging Board', kind: 'bonus', panel: 'panel-source', mechanic: 'kanban board',
+    pitch: 'Source as a two-column STAGED | UNSTAGED board with a pinned commit dock and a sideways worktree strip.' },
+  { id: 'B2', file: 'bonus-source-b.html', name: 'Git Stream', kind: 'bonus', panel: 'panel-source', mechanic: 'mono terminal',
+    pitch: 'Source as a monospace terminal — porcelain status, log --oneline, a worktree-list table.' },
+  { id: 'D1', file: 'bonus-docker-a.html', name: 'Fleet Grid', kind: 'bonus', panel: 'panel-docker', mechanic: 'tile grid + meters',
+    pitch: 'Docker containers as a responsive tile grid (CPU/MEM meters, live crash-loop tile) under a publish pipeline.' },
+  { id: 'D2', file: 'bonus-docker-b.html', name: 'Compose Topology', kind: 'bonus', panel: 'panel-docker', mechanic: 'compose tree',
+    pitch: 'Docker as a compose org-chart — service nodes with nested containers + a release rail.' },
+  { id: 'A1', file: 'bonus-artifacts-a.html', name: 'Evidence Wall', kind: 'bonus', panel: 'panel-artifacts', mechanic: 'masonry wall',
+    pitch: 'Artifacts as a masonry wall of typed cards (CSS thumbnails, mini-diffs) under a pinned case file.' },
+  { id: 'A2', file: 'bonus-artifacts-b.html', name: 'Audit Log', kind: 'bonus', panel: 'panel-artifacts', mechanic: 'audit log',
+    pitch: 'Artifacts as a chronological audit log — time gutter, family stripes, expandable provenance.' }
+];
+
+function mechanicOf(c, panelId) {
+  if (c.kind === 'bonus') return c.mechanic;
+  var t = (c.tags || []).filter(function (x) { return x[0] === dispName(panelId); })[0];
+  return t ? t[1] : c.name;
+}
+function conceptsFor(panelId) { return CONCEPTS.filter(function (c) { return c.kind === 'rail' || c.panel === panelId; }); }
+function panelsOf(c) { return c.kind === 'rail' ? PANELS.map(function (p) { return p[0]; }) : [c.panel]; }
+
+var state = { mode: 'panel', panel: 'panel-search', concept: 'C1', theme: document.documentElement.getAttribute('data-theme') || 'friendly-dark', w: 280, rm: false };
+
+var grid = document.getElementById('gGrid');
+var navList = document.getElementById('gNavList');
+
+function iframes() { return Array.prototype.slice.call(grid.querySelectorAll('iframe')); }
+function broadcast(msg) { iframes().forEach(function (ifr) { try { ifr.contentWindow && ifr.contentWindow.postMessage(msg, '*'); } catch (e) {} }); }
+
+function buildCard(c, panelId, idx) {
+  var art = document.createElement('article');
+  art.className = 'g-card' + (c.kind === 'bonus' ? ' bonus' : '');
+  art.style.animationDelay = Math.min(idx, 8) * 45 + 'ms';
+  var mech = mechanicOf(c, panelId);
+  art.innerHTML =
+    '<div class="g-cap"><span class="g-id">' + c.id + '</span><h3>' + c.name + '</h3><span class="g-mech" title="' + mech + '">' + mech + '</span></div>' +
+    '<div class="g-sub2">' + (state.mode === 'panel' ? dispName(panelId) + ' &middot; ' : '') + c.pitch + '</div>' +
+    '<div class="g-frame"><iframe src="' + c.file + '" loading="lazy" data-pin="' + panelId + '" title="' + c.id + ' ' + dispName(panelId) + '"></iframe></div>' +
+    '<a class="g-open" href="' + c.file + '" target="_blank" rel="noopener">open full &rarr;</a>';
+  return art;
+}
+
+function render() {
+  // left nav
+  navList.innerHTML = '';
+  document.getElementById('gNavHead').textContent = state.mode === 'panel' ? 'PANELS' : 'CONCEPTS';
+  if (state.mode === 'panel') {
+    PANELS.forEach(function (p) {
+      var n = conceptsFor(p[0]).length;
+      var b = document.createElement('button');
+      b.className = 'g-nav-btn' + (p[0] === state.panel ? ' on' : '');
+      b.innerHTML = window.PMIcon(p[2]) + '<span class="nm">' + p[1] + '</span><span class="ct">' + n + '</span>';
+      b.addEventListener('click', function () { state.panel = p[0]; render(); });
+      navList.appendChild(b);
+    });
+  } else {
+    CONCEPTS.forEach(function (c) {
+      var b = document.createElement('button');
+      b.className = 'g-nav-btn' + (c.kind === 'bonus' ? ' bonus' : '') + (c.id === state.concept ? ' on' : '');
+      b.innerHTML = window.PMIcon(c.kind === 'bonus' ? iconFor(c.panel) : 'layers') + '<span class="nm">' + c.id + ' ' + c.name + '</span><span class="ct">' + panelsOf(c).length + '</span>';
+      b.addEventListener('click', function () { state.concept = c.id; render(); });
+      navList.appendChild(b);
+    });
+  }
+
+  // cards
+  grid.innerHTML = '';
+  var cards = [];
+  if (state.mode === 'panel') {
+    cards = conceptsFor(state.panel).map(function (c) { return { c: c, panel: state.panel }; });
+  } else {
+    var c = CONCEPTS.filter(function (x) { return x.id === state.concept; })[0];
+    cards = panelsOf(c).map(function (pid) { return { c: c, panel: pid }; });
+  }
+  cards.forEach(function (x, i) { grid.appendChild(buildCard(x.c, x.panel, i)); });
+  fitFrames();
+
+  // head + foot text
+  if (state.mode === 'panel') {
+    document.getElementById('gMainTitle').innerHTML = dispName(state.panel) + ' &mdash; <span class="accent">' + cards.length + ' designs</span>';
+    document.getElementById('gMainMeta').textContent = 'the same panel, six-plus ways';
+    document.getElementById('gMainHint').textContent = 'Every card below is a different design language for ' + dispName(state.panel) + '. Flip the theme or drag the width to stress them all at once; switch “By concept” to see one language across all seven panels.';
+    document.getElementById('gNavFoot').innerHTML = '<b>By panel</b> compares designs of one surface. Pick a panel on the left; counts show how many explorations exist (the three densest have two bonus variants each).';
+  } else {
+    var cc = CONCEPTS.filter(function (x) { return x.id === state.concept; })[0];
+    document.getElementById('gMainTitle').innerHTML = cc.name + ' &mdash; <span class="accent">' + cards.length + ' panels</span>';
+    document.getElementById('gMainMeta').textContent = cc.kind === 'rail' ? 'one design language across the rail' : 'single-panel variant';
+    document.getElementById('gMainHint').textContent = cc.pitch;
+    document.getElementById('gNavFoot').innerHTML = '<b>By concept</b> shows how one design language treats each panel. Rails cover all seven; a bonus variant covers just one.';
+  }
+}
+
+function fitFrames() {
+  grid.querySelectorAll('.g-frame').forEach(function (f) {
+    var w = f.clientWidth; if (!w) return;
+    var sc = w / 1200;
+    var ifr = f.querySelector('iframe');
+    ifr.style.transform = 'scale(' + sc + ')';
+    f.style.height = Math.round(760 * sc) + 'px';
+  });
+}
+window.addEventListener('resize', fitFrames);
+
+/* each preview pins to its card's data-pin on load, plus current theme/width/rm */
+window.addEventListener('message', function (e) {
+  if (e.data && e.data.type === 'pm-ready') {
+    var src = e.source;
+    var el = iframes().filter(function (i) { return i.contentWindow === src; })[0];
+    if (!el) return;
+    var pin = el.getAttribute('data-pin');
+    try {
+      src.postMessage({ type: 'pm-theme', theme: state.theme }, '*');
+      src.postMessage({ type: 'pm-setw', w: state.w }, '*');
+      src.postMessage({ type: 'pm-rm', on: state.rm }, '*');
+      if (pin) src.postMessage({ type: 'pm-panel', panel: pin }, '*');
+    } catch (err) {}
+  }
+});
+
+/* header controls */
+document.querySelectorAll('#gMode button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('#gMode button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    state.mode = b.getAttribute('data-mode');
+    render();
+  });
+});
+document.getElementById('galThemeMenu').addEventListener('pm-menu-pick', function (ev) {
+  var t = ev.detail.value; if (!t) return;
+  state.theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.style.colorScheme = /-dark$/.test(t) ? 'dark' : 'light';
+  try { localStorage.setItem('pm.theme', t); } catch (e) {}
+  broadcast({ type: 'pm-theme', theme: t });
+});
+(function () {
+  var lbl = document.getElementById('galThemeLabel');
+  var sel = document.querySelector('#galThemeMenu [data-value="' + state.theme + '"]');
+  if (sel) { lbl.textContent = sel.getAttribute('data-label'); document.querySelectorAll('#galThemeMenu [data-value]').forEach(function (i) { i.classList.toggle('is-selected', i === sel); }); }
+})();
+var slider = document.getElementById('galWidth'), wread = document.getElementById('galWRead');
+function setW(px) {
+  px = Math.max(220, Math.min(px, 560));
+  state.w = px; slider.value = px; wread.textContent = px + 'px';
+  document.querySelectorAll('.g-preset').forEach(function (b) { b.classList.toggle('on', parseInt(b.getAttribute('data-w'), 10) === px); });
+  broadcast({ type: 'pm-setw', w: px });
+}
+slider.addEventListener('input', function () { setW(parseInt(slider.value, 10)); });
+document.querySelectorAll('.g-preset').forEach(function (b) { b.addEventListener('click', function () { setW(parseInt(b.getAttribute('data-w'), 10)); }); });
+document.getElementById('galRM').addEventListener('click', function () {
+  state.rm = !state.rm;
+  this.classList.toggle('on', state.rm); this.setAttribute('aria-pressed', String(state.rm));
+  document.documentElement.setAttribute('data-reduced-motion', state.rm ? '1' : '0');
+  broadcast({ type: 'pm-rm', on: state.rm });
+});
+
+document.querySelectorAll('header i[data-ico]').forEach(function (el) { el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className); });
+
+render();
+setTimeout(fitFrames, 250);
+window.__gal = { set: function (o) { if (o.mode) state.mode = o.mode; if (o.panel) state.panel = o.panel; if (o.concept) state.concept = o.concept; render(); }, state: state, count: function () { return iframes().length; } };
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "safe_point_recovery_unavailable_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "allowed_action_ids": {
+          "items": {},
+          "type": "array"
+        },
+        "anchor_ref": {
+          "type": "string"
+        },
+        "attempt_id": {
+          "type": "string"
+        },
+        "blocked_sequence": {
+          "type": "integer"
+        },
+        "last_verified_manifest_hash": {
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string"
+        },
+        "preserved_local_work": {
+          "type": "boolean"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "receipt_ref": {
+          "type": "string"
+        },
+        "run_id": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "schema_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "snapshot_refs": {
+          "items": {},
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "safe_point_id",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "snapshot_refs",
+        "preserved_local_work",
+        "allowed_action_ids",
+        "anchor_ref",
+        "receipt_ref"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowed_action_ids": {
+      "oneOf": [
+        {
+          "const": [
+            "open_details",
+            "locate_and_verify_recovery",
+            "replan",
+            "abandon_recovery"
+          ]
+        },
+        {
+          "const": [
+            "open_details",
+            "locate_and_verify_recovery",
+            "replan",
+            "start_fresh_attempt",
+            "abandon_recovery"
+          ]
+        }
+      ]
+    },
+    "anchor_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "blocked_sequence": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "last_verified_manifest_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "node_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "preserved_local_work": {
+      "const": true
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipt_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "recovery_unavailable_reason_code": {
+      "enum": [
+        "snapshot_missing",
+        "snapshot_corrupt",
+        "snapshot_scope_unsupported",
+        "snapshot_identity_stale",
+        "snapshot_unanchored"
+      ]
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "safe_point_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "snapshot_refs": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "blocked_sequence",
+    "snapshot_refs",
+    "preserved_local_work",
+    "recovery_unavailable_reason_code",
+    "allowed_action_ids",
+    "anchor_ref",
+    "receipt_ref"
+  ],
+  "type": "object"
+}

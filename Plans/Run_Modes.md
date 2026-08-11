@@ -1169,3 +1169,14 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Runtime_Artifacts_Panel.md
 ```
+
+
+## `run.started` requested/effective owner projection
+
+Status: `STATICALLY_MATERIALIZED`; admission/runtime execution is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+The v2 target paths are `requested_runtime_mode` and effective `runtime_mode`; `requested_mode_overlay` and `effective_mode_overlay`; nullable `requested_strategy` and effective `strategy`; and `strategy_resolution_reason`. Runtime mode is `ask | plan | regular | yolo`; overlay is `none | plan | deep_plan | debug | interview | brainstorm | crew`; strategy is `hte | dae`. Requested/effective runtime mode and overlay must be equal after canonical normalization; rejected combinations never start.
+
+Legal overlays are: ask only `none`; plan `none|plan|deep_plan`; regular and yolo `none|debug|interview|brainstorm|crew`. Strategy resolution is exactly `read_only_mode_forces_hte | regular_hte_default | regular_hte_requested | regular_dae_allowed | regular_dae_disallowed | yolo_requires_dae`. Ask/plan force HTE; regular defaults or requests HTE, admits DAE only with `dae_allowed=true`, otherwise deterministically records `regular_dae_disallowed`; yolo requires DAE and otherwise stops before spawn with `yolo_requires_dae_provider` and no `run.started`.
+
+The event must also resolve one complete immutable `pm.requested_effective_runtime@1.0.0` snapshot. A thin policy snapshot, current settings, inline-only joins, display labels, or reconstructed historical values is invalid.

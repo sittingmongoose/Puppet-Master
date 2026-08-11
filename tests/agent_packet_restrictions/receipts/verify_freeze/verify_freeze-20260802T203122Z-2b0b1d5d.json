@@ -1,0 +1,84 @@
+{
+  "authorized_matrix_ref": null,
+  "command": "verify-freeze",
+  "controller_version": "2.0.0",
+  "created_at_utc": "2026-08-02T20:31:22.079Z",
+  "freeze_digest": "5a6bc023f506259ea9fa57f669f38c4b2bd61975095ac963407729dd0ad1f7df",
+  "input_artifacts": [
+    {
+      "bytes": 12740,
+      "relative_path": "charter/method.v2.md",
+      "sha256": "8d99843ca8f60b1a0ad500765743846e2260681055a61c1833991aec635779cd"
+    },
+    {
+      "bytes": 1207,
+      "relative_path": "charter/pilot_plan.v2.json",
+      "sha256": "789d65561c05c3d014a245b293ab431be98b5d77c60f004f09fe11c7e0390823"
+    },
+    {
+      "bytes": 25413,
+      "relative_path": "cases/semantic_cases.v2.json",
+      "sha256": "84a49a4ae9f0dd85d4784a77fa5d55703465efa7f67f60c2f171302b934dafd6"
+    },
+    {
+      "bytes": 2938,
+      "relative_path": "cases/response.schema.json",
+      "sha256": "5719536ed8c6f6c0c9399e7cc1970dc9ff392567ea2025572036d0554949b27a"
+    },
+    {
+      "bytes": 11383,
+      "relative_path": "cases/implementation_gated.v1.json",
+      "sha256": "a13d85ea469823e2b1ab53a97d89dd5b768b0539400a4183fa078576458c7dea"
+    },
+    {
+      "bytes": 34425,
+      "relative_path": "fixtures/deterministic_cases.v2.json",
+      "sha256": "61f8e99216365797eb0a86f8ce12e99e1ce9ca833a5670bdbd2e643383419478"
+    },
+    {
+      "bytes": 1740,
+      "relative_path": "fixtures/nonsemantic_route_canary.v2.json",
+      "sha256": "dc62a5838dfd27ee95b9dc7bedc70ad9357aa98f617a14a9cddaffa3ba7d51d7"
+    },
+    {
+      "bytes": 699,
+      "relative_path": "inventory/model_matrix_status.v2.json",
+      "sha256": "55c48a4d943a9d8652b15ef7be9232ab67df1c151746bde420f421efdd967581"
+    },
+    {
+      "bytes": 46281,
+      "relative_path": "inventory/surfaces.v1.json",
+      "sha256": "88e8f4614610b4b3cdb27b105817ec0754a653a9a6e5fdf82f7567983ec6ac32"
+    },
+    {
+      "bytes": 6772,
+      "relative_path": "charter/accepted_contract.v1.md",
+      "sha256": "4c61d98aaf8e440a3a7bb8afbc02ac747eb96c735520e96af5bd8219f04f5735"
+    },
+    {
+      "bytes": 1582,
+      "relative_path": "charter/dirty_tree_boundary.md",
+      "sha256": "7ac3905e4a4b9a434f438234035efc514d2ff95d8430ed8b7f5a2043a9924074"
+    },
+    {
+      "bytes": 1152,
+      "relative_path": "charter/correction-0001-user-model-selection-hold.md",
+      "sha256": "b41180964036fd6349059dfc422f2c069dffdaadfe6a04d8173cf28201aa80d6"
+    },
+    {
+      "bytes": 1987,
+      "relative_path": "charter/control_plane_defect-0001-v1-qualification-invalid.md",
+      "sha256": "5b3ec031351475537adc60e0dcb01c4d059f229b0c314fd167fddf5744c583ec"
+    },
+    {
+      "bytes": 118093,
+      "relative_path": "controller/controller.py",
+      "sha256": "5e19942b225ba1b1c8ffdc049cc9ca02f1adc7176cbbe67d6bf1fa643b4c0edb"
+    }
+  ],
+  "invariant_errors": [],
+  "method_id": "apr-method-v2.0.0",
+  "run_id": "verify_freeze-20260802T203122Z-2b0b1d5d",
+  "schema_id": "pm.agent_packet_restrictions.controller_receipt.v2",
+  "status": "PASS"
+}

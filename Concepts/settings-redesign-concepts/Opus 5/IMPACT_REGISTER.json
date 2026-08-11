@@ -1,0 +1,345 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "model": "Opus 5",
+  "topic": "settings-redesign",
+  "note": "Implications recorded, not applied. No file outside Concepts/settings-redesign-concepts/Opus 5 was modified. Plans/** was not read: every probable_owner_docs entry is an inference from the packet's source map and carries an uncertainty level. No command IDs were minted.",
+  "concepts": [
+    {
+      "concept_id": "concept-01",
+      "title": "Opus 5 — Atlas",
+      "design_contract_summary": "Settings is a place. A humanised directory of destination rows opens a full workspace with a persistent outline tree; search docks above the outline. Dedicated managers are rooms entered inside a destination, keeping the outline and offering a back path. Motion is architectural: the destination row grows into the workspace.",
+      "impacts": [
+        {
+          "impact_id": "impact-001",
+          "area": "settings_inventory",
+          "requirement": "Primary Settings destinations must read as places, not filters, and must carry a title, a concise purpose and an optional status summary.",
+          "selected_concept_behavior": "Every category renders as a full-width row with title, purpose sentence, status summary and chevron. This needs a per-category 'purpose' string and a humanised group assignment that the current inventory does not appear to carry.",
+          "probable_owner_docs": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"],
+          "supersedes_or_conflicts_with": ["Current rounded category shortcut treatment in PMConcept7"],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "Open a Settings destination by id",
+            "Return to the Settings directory"
+          ],
+          "wiring_routes": ["settings.home -> settings.workspace(categoryId)"],
+          "dry_component_candidates": ["DestinationRow", "AttentionColumn"],
+          "schema_or_event_impacts": ["Category record gains: purpose, groupId, statusSummary"],
+          "demo_fixture_impacts": ["Fixture supplies purpose and keywords for all 11 categories"],
+          "test_impacts": ["Destination row must not clip purpose text at 760px"],
+          "slint_notes": ["Destination purposes wrap in full at every tested width with no clamp; this is no longer a Slint text-elision risk"],
+          "uncertainty": "medium",
+          "notes": ["Group names are a concept proposal, not canon: Everyday / Who does the work / What they may do / What they know / Craft and upkeep."]
+        },
+        {
+          "impact_id": "impact-002",
+          "area": "schema_storage_events",
+          "requirement": "Context & Instructions must show which sources were admitted last turn and which were omitted, with reasons and precedence.",
+          "selected_concept_behavior": "The Context room lists admitted sources with size and reason, omitted sources with reason, an ordered precedence chain, and the compaction/cache strategy. This requires the runtime to record a per-turn admission ledger.",
+          "probable_owner_docs": ["Plans/Prompt_Pipeline.md", "Plans/agent-rules-context.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["ctx-manager", "ctx-agents-chain"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Inspect the last turn's admitted context"],
+          "wiring_routes": ["settings.context -> promptPipeline.lastTurnLedger"],
+          "dry_component_candidates": ["AdmittedSourceList", "PrecedenceChain"],
+          "schema_or_event_impacts": [
+            "New per-turn record: { sourceName, kind, tokens, admitted, reason, precedenceRank }",
+            "Retention policy for that ledger is undefined"
+          ],
+          "demo_fixture_impacts": ["Fixture models one turn with 9 admitted and 4 omitted sources"],
+          "test_impacts": ["Omitted-with-reason must be visible without opening a tooltip"],
+          "slint_notes": [],
+          "uncertainty": "high",
+          "notes": ["Whether the pipeline already emits this ledger was not verified; Plans were not read."]
+        },
+        {
+          "impact_id": "impact-003",
+          "area": "settings_inventory",
+          "requirement": "Terminal settings must avoid empty path or string fields where Auto-detected or Inherit is the real state.",
+          "selected_concept_behavior": "Shell path and starting directory render the words 'Inherited from the system' / 'Auto-detected' with the resolved value beside them. This needs the inventory to distinguish a null value from an inherited one and to carry the resolved value.",
+          "probable_owner_docs": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["term-shell-path", "term-cwd", "wt-location", "sys-data-dir"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [],
+          "wiring_routes": [],
+          "dry_component_candidates": ["ResolvedValueRow"],
+          "schema_or_event_impacts": ["Setting value gains an effectiveValue distinct from value, plus a source enum"],
+          "demo_fixture_impacts": ["Four settings in the fixture exercise inherited/auto with a resolved value"],
+          "test_impacts": ["No blank input may stand for auto, inherit, disabled or not configured"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-02",
+      "title": "Opus 5 — Console",
+      "design_contract_summary": "Settings is a question. A dominant console answers in place: a setting result becomes a live control, a manager result a preview, an action a receipt. Destinations are a numbered contents page. Navigation is a right-margin index whose marker travels with the scroll. Managers are console modes. Motion is typographic.",
+      "impacts": [
+        {
+          "impact_id": "impact-004",
+          "area": "commands",
+          "requirement": "A search result must be actionable, not merely navigable.",
+          "selected_concept_behavior": "Changing a setting directly from a search result requires every setting to be editable outside its owning page — i.e. a settings mutation API keyed by setting id, independent of the rendering surface.",
+          "probable_owner_docs": ["Plans/UI_Command_Catalog.md", "Plans/Wiring_Matrix.production.json"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "Set a setting by id from any surface",
+            "Reset a setting by id from any surface"
+          ],
+          "wiring_routes": ["search.result -> settings.mutate(settingId, value)"],
+          "dry_component_candidates": ["InlineSettingControl"],
+          "schema_or_event_impacts": ["Mutation events need a source field so audit can tell console edits from page edits"],
+          "demo_fixture_impacts": [],
+          "test_impacts": ["An edit made from search must be reflected when the owning page is opened"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": ["This is the single largest wiring implication in the set."]
+        },
+        {
+          "impact_id": "impact-005",
+          "area": "plans",
+          "requirement": "A Persona is behaviour, not authority; the full definition is not injected each turn, and child-only Personas must not appear as Chat defaults.",
+          "selected_concept_behavior": "The Persona manager shows durable definition, runtime metadata and the compact capsule as three separate things with their sizes, and gates the scope control so a child-only Persona can only take the child-only scope while an ordinary Persona can never take it.",
+          "probable_owner_docs": ["Plans/Personas.md", "Plans/Prompt_Pipeline.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["persona-manager", "persona-send-full", "persona-child-defaults"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Apply a Persona with an explicit scope"],
+          "wiring_routes": ["settings.personas -> personaService.apply(personaId, scope)"],
+          "dry_component_candidates": ["ScopeSelector", "CapsuleFootprint"],
+          "schema_or_event_impacts": ["Persona record needs childOnly, capsuleTokens, definitionWords, state(draft|active)"],
+          "demo_fixture_impacts": ["Eight personas including one draft and one child-only"],
+          "test_impacts": ["Child-only Persona must be refused every Chat-default scope"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": ["A 'Personas' subcategory had to be added to the taxonomy — see impact-013."]
+        },
+        {
+          "impact_id": "impact-006",
+          "area": "dry",
+          "requirement": "Tools must distinguish installed, project-enabled, currently available, selected for a turn, and actually invoked.",
+          "selected_concept_behavior": "Rendered as a five-stage funnel with counts. This needs all five counts to exist as queryable runtime state rather than being derived at render time.",
+          "probable_owner_docs": ["Plans/Tools.md", "Plans/MCP_Integration.md", "Plans/Skills_System.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["tools-manager", "tools-expose-all", "mcp-lazy-tools"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Show why a tool was or was not selected for a turn"],
+          "wiring_routes": ["settings.tools -> toolInventory.stageCounts()"],
+          "dry_component_candidates": ["ToolFunnel"],
+          "schema_or_event_impacts": ["Per-turn tool selection record"],
+          "demo_fixture_impacts": ["Fixture supplies 64/41/38/9/3"],
+          "test_impacts": [],
+          "slint_notes": [],
+          "uncertainty": "high",
+          "notes": []
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-03",
+      "title": "Opus 5 — Stack",
+      "design_contract_summary": "Settings is a route. Progressive Miller columns: root, sections, settings document, and a pushed fourth column for a manager. The scrollspy runs across columns — scrolling the document moves the marker and a progress bar in the adjacent column. Search collapses the stack into one result column carrying whole routes. Motion is kinetic depth.",
+      "impacts": [
+        {
+          "impact_id": "impact-007",
+          "area": "wiring",
+          "requirement": "A global search result loads the owner category and jumps to the setting or manager.",
+          "selected_concept_behavior": "Choosing a result rebuilds the entire column stack to that route. This needs every addressable thing to resolve to a stable route tuple (category, subcategory, target, manager) rather than to a page URL.",
+          "probable_owner_docs": ["Plans/Wiring_Matrix.production.json", "Plans/FinalGUISpec.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Resolve a settings route from a search result"],
+          "wiring_routes": ["search.result -> route(categoryId, subcategoryId, targetId, managerId)"],
+          "dry_component_candidates": ["SettingsRoute", "RouteBreadcrumbs"],
+          "schema_or_event_impacts": [],
+          "demo_fixture_impacts": [],
+          "test_impacts": ["Every search result kind must produce a resolvable route"],
+          "slint_notes": ["Column push/pop maps to a stack model; back must reverse the exact transform"],
+          "uncertainty": "low",
+          "notes": []
+        },
+        {
+          "impact_id": "impact-008",
+          "area": "schema_storage_events",
+          "requirement": "Assistant memory uses evidence-backed Gists with provenance, verification, pinning and half-life, and must not be flattened together with transcripts, Goal state or artefacts.",
+          "selected_concept_behavior": "Notes carry state (verified / awaiting review), evidence, scope, half-life, a recall strength bar and version count; other stores are a separate tab that names their owner. Half-life is presented as fading from active recall, never as deletion.",
+          "probable_owner_docs": ["Plans/assistant-memory-subsystem.md", "Plans/storage-plan.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["mem-manager", "mem-halflife", "mem-require-evidence", "mem-assistant-only"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "Verify a memory note against its evidence",
+            "Restore a memory note version",
+            "Rebuild and deduplicate the memory index"
+          ],
+          "wiring_routes": ["settings.memory -> memoryService.*"],
+          "dry_component_candidates": ["RecallStrengthBar", "EvidenceLine"],
+          "schema_or_event_impacts": ["Note record needs recall score, halfLife, versions, accessed, state, evidenceRef"],
+          "demo_fixture_impacts": ["Seven notes covering verified, awaiting review, pinned, faded and Goal-scoped"],
+          "test_impacts": ["A faded note must read as still true, not as expired"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": []
+        },
+        {
+          "impact_id": "impact-009",
+          "area": "schema_storage_events",
+          "requirement": "MCP must expose requested versus negotiated protocol, health, scope and progressive tool exposure.",
+          "selected_concept_behavior": "Each server shows requested and negotiated protocol as separate readings, plus exposed-of-discovered tools. The Sentry fixture negotiates an older protocol and loses resource subscriptions as a result — a degraded state that a boolean connected flag cannot express.",
+          "probable_owner_docs": ["Plans/MCP_Integration.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["mcp-manager", "mcp-approval", "mcp-lazy-tools"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Set approval scope for a named MCP server or tool"],
+          "wiring_routes": ["settings.mcp -> mcpService.reconnect / setApproval"],
+          "dry_component_candidates": ["ProtocolPair", "HealthLine"],
+          "schema_or_event_impacts": ["Server record needs protocolRequested and protocolNegotiated as distinct fields"],
+          "demo_fixture_impacts": ["Six servers covering connected, disconnected, degraded and managed"],
+          "test_impacts": ["A degraded server must not read as healthy or as failed"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": ["Normal Settings deliberately does not become an approval log viewer."]
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-04",
+      "title": "Opus 5 — Ledger",
+      "design_contract_summary": "Settings is a record. The home is a state-of-record ledger plus a sortable domain table with real columns. Every setting renders as label + value + source + scope with effect and reason as notes. Navigation is a contents list with counts plus a proportional edge mini-map. Motion is instrument-panel: structure still, values animate.",
+      "impacts": [
+        {
+          "impact_id": "impact-010",
+          "area": "settings_inventory",
+          "requirement": "Every ordinary setting must make Default, Recommended, Inherited, Auto, Not configured, Managed, Custom, Unavailable and effective-differs unambiguous.",
+          "selected_concept_behavior": "Source is a first-class column on every record rather than an annotation, and the domain table aggregates counts of changed, managed and unavailable per domain. This only works if every setting in the inventory carries a source enum and a scope, with no implicit nulls.",
+          "probable_owner_docs": ["Plans/settings_inventory.json", "Plans/DRY_Rules.md", "Plans/FinalGUISpec.md"],
+          "supersedes_or_conflicts_with": ["Any inventory entry that relies on an empty value to mean auto or inherit"],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Count non-default settings by domain"],
+          "wiring_routes": ["settings.home -> inventory.aggregate(domain)"],
+          "dry_component_candidates": ["SettingRecord", "SourceCell", "ScopeCell"],
+          "schema_or_event_impacts": [
+            "Setting record: value, defaultValue, recommendedValue, source, scope, effectiveValue, reason, effect, restart"
+          ],
+          "demo_fixture_impacts": ["198 settings covering all eight source values and six exposure levels"],
+          "test_impacts": ["Aggregate counts must update immediately after a value change"],
+          "slint_notes": ["Counter roll is a value animation, safe to port"],
+          "uncertainty": "low",
+          "notes": ["This is the impact most likely to require inventory-wide backfill."]
+        },
+        {
+          "impact_id": "impact-011",
+          "area": "plans",
+          "requirement": "A Crew template's requested composition and its effective composition are different things.",
+          "selected_concept_behavior": "Requested versus effective is the headline reading on every template, with queued members drawn as queued and the reason stated. The Migration crew is blocked because its Persona is a draft — a dependency between Crew and Persona state that both managers must be able to see.",
+          "probable_owner_docs": ["Plans/orchestrator-subagent-integration.md", "Plans/Goal_Runtime_System.md", "Plans/Personas.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["crew-manager", "crew-scope", "crew-adaptive", "goal-concurrency"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Select a Crew for the current Goal", "Query sustainable concurrency"],
+          "wiring_routes": ["settings.crew -> orchestrator.sustainableConcurrency()"],
+          "dry_component_candidates": ["RequestedVsEffective", "MemberRow"],
+          "schema_or_event_impacts": ["Crew template needs effective/waves derived from live capacity, not stored"],
+          "demo_fixture_impacts": ["Five templates covering ok, over-capacity and blocked"],
+          "test_impacts": ["Configured concurrency must never be presented as current advisable concurrency"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": ["Settings configures the policy; Orchestrator makes the live decision. The concept shows capacity read-only."]
+        },
+        {
+          "impact_id": "impact-012",
+          "area": "migration",
+          "requirement": "Media providers need the same connection rigor as coding providers plus route, modality, output, safety and history.",
+          "selected_concept_behavior": "Media providers render with per-modality support (native / through transformation / not supported), purpose assignment, output location, safety status, cost route, fallback and history count. One provider is deliberately unconfigured and video is unavailable with a reason.",
+          "probable_owner_docs": ["Plans/Media_Generation_and_Capabilities.md"],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": ["media-manager", "media-default-image", "media-video", "media-safety"],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": ["Assign a media provider to a purpose"],
+          "wiring_routes": ["settings.media -> mediaService.setPurpose"],
+          "dry_component_candidates": ["ModalityGrid"],
+          "schema_or_event_impacts": ["Media provider record needs modality support as a tri-state, not a boolean"],
+          "demo_fixture_impacts": ["Four media routes including one that borrows the Assistant route"],
+          "test_impacts": ["Unavailable video must carry a reason, not just be absent"],
+          "slint_notes": [],
+          "uncertainty": "medium",
+          "notes": []
+        }
+      ]
+    }
+  ],
+  "cross_concept_findings": [
+    {
+      "id": "cross-001",
+      "area": "source_conflict",
+      "requirement": "Packet §6 requires testing at 2200 and 2500 px.",
+      "finding": "ConceptHub/starter/model-folder/concept-hub.json caps widthControl.max at 1920, so a folder copied from the starter cannot express the packet's own test widths.",
+      "resolution_here": "max set to 2600 with presets [760, 900, 1280, 1700, 2200, 2500]; validate.py accepts it.",
+      "owner": "Concepts/ConceptHub (not modified)",
+      "uncertainty": "low"
+    },
+    {
+      "id": "cross-002",
+      "area": "settings_inventory",
+      "requirement": "Personas must remain discoverable and have a dedicated manager.",
+      "finding": "No settings category pointed at a Personas manager. A Personas subcategory was added under Agents & models in the demo fixture only.",
+      "resolution_here": "Fixture-level addition; canon untouched.",
+      "owner": "Plans/settings_inventory.json",
+      "uncertainty": "medium"
+    },
+    {
+      "id": "cross-003",
+      "area": "schema_storage_events",
+      "requirement": "Authenticated is not equivalent to ready.",
+      "finding": "One health field cannot express the OpenRouter case (key valid, catalogue fresh, every generation refused). All four concepts needed catalogue freshness and last successful generation as separate readings plus an explicit readiness probe.",
+      "resolution_here": "Modelled as separate fields in the fixture.",
+      "owner": "Plans/Models_System.md, Plans/Multi-Account.md",
+      "uncertainty": "medium"
+    },
+    {
+      "id": "cross-004",
+      "area": "dry",
+      "requirement": "Requested versus effective must be preserved everywhere it applies.",
+      "finding": "It applies to model, account, route, Crew composition, concurrency, shell path and context sources — enough places that a shared component is warranted rather than per-surface annotations.",
+      "resolution_here": "Each concept renders it in its own idiom; Ledger promotes it to a two-reading comparison.",
+      "owner": "Plans/DRY_Rules.md",
+      "uncertainty": "low"
+    },
+    {
+      "id": "cross-005",
+      "area": "settings_inventory",
+      "requirement": "No universal 'When the budget runs out' setting.",
+      "finding": "Once continuations are genuinely per-product, the Agents 'When a route runs out' section becomes a pointer into the provider manager rather than a settings page in its own right.",
+      "resolution_here": "Rendered as a manager pointer plus three genuinely global policies (warn on route change, never move an in-flight request, offer free fallback).",
+      "owner": "Plans/settings_inventory.json, Plans/usage-feature.md",
+      "uncertainty": "low"
+    },
+    {
+      "id": "cross-006",
+      "area": "slint",
+      "requirement": "Semantic state must not come from DOM geometry.",
+      "finding": "The active subcategory is a pure function of a section table and a scroll offset, measured only at explicit layout checkpoints. Two readouts (Console's travelling marker, Ledger's mini-map) still read item extents at those checkpoints and would need the layout to publish extents as properties in Slint.",
+      "resolution_here": "Documented in FINDINGS.md section 5.",
+      "owner": "Plans/FinalGUISpec.md",
+      "uncertainty": "low"
+    },
+    {
+      "id": "cross-007",
+      "area": "demo_fixtures",
+      "requirement": "Demo content must be realistic and cover every required state.",
+      "finding": "A fixture that covers all nine row states, six exposure levels, sixteen provider states and eight manager inventories is roughly 198 settings and 7 provider families. Anything smaller cannot demonstrate the contract.",
+      "resolution_here": "shared/pm-data.js is that fixture, frozen and shared by all four concepts.",
+      "owner": "Plans/settings_inventory.json",
+      "uncertainty": "low"
+    }
+  ],
+  "files_modified_outside_model_folder": []
+}

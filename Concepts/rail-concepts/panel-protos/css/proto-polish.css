@@ -1,0 +1,146 @@
+/* =====================================================================
+   proto-polish.css — motion + hover polish shared across all 6 designs.
+   Loaded by index.html after the design CSS. Additive only — it never
+   overrides structural layout, just adds entrance/stagger/hover motion
+   that was missing. Honors reduced-motion and theme motion tokens.
+   Slint note: entrance = a states block with animate; stagger = index-
+   bound delay property; hover lift = TouchArea + states.
+   ===================================================================== */
+
+/* ---------- panel entrance: fade + rise on render ---------- */
+#panelHost > * {
+  animation: proto-enter var(--motion-med) var(--ease-out) both;
+}
+@keyframes proto-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- list-row stagger: subtle cascade on the first N rows ---------- */
+/* Selectors match the ACTUAL list/row class each design emits:
+   A .pa-list>.pa-row · B .pb-list>.pb-row · C .pc-list>.pc-row
+   D .pt-spine>.pt-entry · E .pk-list>.pk-row · F .pf-list>.pf-row.
+   Caps the stagger at 10 items so long extreme lists don't delay forever. */
+#panelHost .pa-list > .pa-row,
+#panelHost .pb-list > .pb-row,
+#panelHost .pc-list > .pc-row,
+#panelHost .pt-spine > .pt-entry,
+#panelHost .pk-list > .pk-row,
+#panelHost .pf-list > .pf-row {
+  animation: proto-row-enter var(--motion-med) var(--ease-out) both;
+  animation-delay: calc(var(--proto-i, 0) * 18ms);
+}
+@keyframes proto-row-enter {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+/* Cap stagger at 10 — anything beyond appears instantly */
+#panelHost .pa-list > .pa-row:nth-child(n+11),
+#panelHost .pb-list > .pb-row:nth-child(n+11),
+#panelHost .pc-list > .pc-row:nth-child(n+11),
+#panelHost .pt-spine > .pt-entry:nth-child(n+11),
+#panelHost .pk-list > .pk-row:nth-child(n+11),
+#panelHost .pf-list > .pf-row:nth-child(n+11) {
+  animation-delay: calc(10 * 18ms);
+}
+
+/* ---------- card hover lift (F floating + any .pa-bundle) ---------- */
+/* Note: .pa-bundle lives inside a disclosure body whose inner wrapper has
+   overflow:hidden (for the grid-rows height animation), so a big shadow gets
+   clipped. Use a modest lift + elev-2 so the hover reads but isn't cut off. */
+.pf-card, .pa-bundle, .pf-bundle {
+  transition: transform var(--motion-med) var(--ease-out),
+              box-shadow var(--motion-med) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out) !important;
+}
+.pf-card:hover, .pa-bundle:hover, .pf-bundle:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--elev-2) !important;
+  border-color: var(--accent-primary) !important;
+}
+
+/* ---------- running status pulse — shared across designs ---------- */
+/* Any dot/chip carrying a "running"/"run" class pulses gently. Covers all 6
+   design prefixes (pa/pb/pc/pt/pk/pf). */
+.pa-dot.run, .pb-dot.run, .pc-dot.run, .pt-node.run, .pk-dot.run, .pf-dot.run,
+.pa-chip.warn, .pb-chip.warn, .pc-chip.run, .pt-chip.run {
+  animation: proto-pulse 1.8s var(--ease-smooth) infinite;
+}
+@keyframes proto-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--graph-running) 50%, transparent); }
+  50%      { box-shadow: 0 0 0 4px color-mix(in srgb, var(--graph-running) 0%, transparent); }
+}
+/* dots need a visible pulse ring even without background */
+.pa-dot.run, .pb-dot.run, .pc-dot.run, .pt-node.run, .pk-dot.run, .pf-dot.run {
+  position: relative;
+}
+.pa-dot.run::after, .pb-dot.run::after, .pc-dot.run::after, .pt-node.run::after,
+.pk-dot.run::after, .pf-dot.run::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--graph-running);
+  animation: proto-ring 1.8s var(--ease-out) infinite;
+  opacity: 0;
+}
+@keyframes proto-ring {
+  0%   { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ---------- focus ring on interactive rows/buttons (keyboard a11y) ---------- */
+/* Rows (one per design — note F uses .pf-row, not the old .pf-item) */
+.pa-row:focus-visible, .pb-row:focus-visible, .pc-row:focus-visible,
+.pt-entry:focus-visible, .pt-card:focus-visible,
+.pk-row:focus-visible, .pf-row:focus-visible,
+/* primary buttons */
+.pa-btn:focus-visible, .pb-btn:focus-visible, .pc-btn:focus-visible, .pf-btn:focus-visible,
+.pk-tbtn:focus-visible,
+/* pills / segments */
+.pa-pill:focus-visible, .pb-pill:focus-visible, .pc-pill:focus-visible,
+.pf-pill:focus-visible, .pk-pill:focus-visible, .pb-seg-btn:focus-visible,
+/* mini / icon / trigger buttons (the ones the audit found missing) */
+.pa-minibtn:focus-visible, .pb-minibtn:focus-visible, .pc-mini:focus-visible,
+.pc-actbtn:focus-visible, .pf-minibtn:focus-visible, .pf-iconbtn:focus-visible,
+.pk-minibtn:focus-visible,
+.pt-btn:focus-visible, .pt-minibtn:focus-visible, .pt-trigger:focus-visible,
+.pa-trigger:focus-visible, .pb-trigger:focus-visible, .pc-trigger:focus-visible,
+.pk-sprout:focus-visible, .pf-trigger:focus-visible,
+/* inputs */
+.pa-input:focus-visible, .pb-input:focus-visible, .pc-input:focus-visible,
+.pt-input:focus-visible, .pk-input:focus-visible, .pf-input:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 1px;
+}
+
+/* ---------- controls bar + toast: refine existing ---------- */
+.proto-toast.show {
+  /* keep the existing spring */
+}
+.pc-btn {
+  transition: transform var(--motion-fast) var(--ease-spring),
+              background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out) !important;
+}
+.pc-btn:active { transform: scale(0.94); }
+.pc-btn.active {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 40%, transparent),
+              0 2px 8px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+}
+
+/* ---------- reduced motion: kill everything above ---------- */
+[data-motion="reduced"] #panelHost *,
+[data-motion="reduced"] #panelHost *::before,
+[data-motion="reduced"] #panelHost *::after {
+  animation: none !important;
+  transition-duration: 0.001ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #panelHost *, #panelHost *::before, #panelHost *::after {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+  }
+}

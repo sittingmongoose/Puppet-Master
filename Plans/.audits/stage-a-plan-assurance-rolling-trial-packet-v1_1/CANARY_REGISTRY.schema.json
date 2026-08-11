@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/canary-registry.v1.1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "run_root", "registry_id", "canaries", "registry_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "run_root": {"type": "string", "minLength": 1},
+    "registry_id": {"type": "string", "minLength": 1},
+    "canaries": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["canary_id", "canary_class", "utf8_token", "utf8_bytes", "token_sha256", "forbidden_payload_classes"],
+        "properties": {
+          "canary_id": {"type": "string", "minLength": 1},
+          "canary_class": {"enum": ["AUDIT_HISTORY", "CROSS_FAMILY_CALIBRATION"]},
+          "utf8_token": {"type": "string", "minLength": 16, "maxLength": 256},
+          "utf8_bytes": {"type": "integer", "minimum": 16, "maximum": 1024},
+          "token_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "forbidden_payload_classes": {"const": ["static_payload", "derived_payload", "model_output"]}
+        }
+      }
+    },
+    "registry_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "terminal": {"const": "FROZEN_PREAUTH_CONTROLLER_ONLY"}
+  }
+}

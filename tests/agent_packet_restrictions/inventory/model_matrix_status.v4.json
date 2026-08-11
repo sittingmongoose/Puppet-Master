@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.model_matrix_status.v4",
+  "method_id": "apr-method-v4.0.0",
+  "recorded_at_utc": "2026-08-02T20:51:05Z",
+  "prior_draft_matrix_ref": "inventory/model_matrix.v1.json",
+  "prior_draft_matrix_status": "superseded_before_launch_not_authority",
+  "prior_method_statuses": {
+    "apr-method-v1.0.0": "invalidated_control_plane_defect_zero_calls",
+    "apr-method-v2.0.0": "invalidated_control_plane_defect_zero_calls",
+    "apr-method-v3.0.0": "invalidated_control_plane_defect_zero_calls"
+  },
+  "v3_invalidation_ref": "charter/control_plane_defect-0003-v3-method-invalid.md",
+  "authorized_matrix_ref": null,
+  "authorized_matrix_sha256": null,
+  "authorization_receipt_ref": null,
+  "authorization_receipt_sha256": null,
+  "authorized_matrix_status": "user_model_selection_pending",
+  "exact_matrix_constraints": {
+    "slot_count": 10,
+    "relative_low_slot_count": 8,
+    "relative_high_slot_count": 2,
+    "classification_semantics": "relative_route_strata_not_capability_certification",
+    "required_slot_ids": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L08", "H01", "H02"],
+    "minimum_distinct_low_underlying_models": 8,
+    "low_underlying_model_keys_pairwise_distinct": true,
+    "minimum_distinct_high_underlying_models": 2,
+    "high_underlying_model_keys_pairwise_distinct": true,
+    "ten_distinct_underlying_models_overall_preferred": true,
+    "cross_stratum_overlap_preference": "avoid_when_accessible_routes_permit",
+    "cross_stratum_overlap_allowed_only_when_explicitly_selected_by_jared": true,
+    "cross_stratum_overlap_requires_disclosure": true,
+    "reasoning_or_variant_counts_as_distinct_model": false,
+    "underlying_model_key_required_per_slot": true,
+    "hard_stop_condition": "fewer_than_8_distinct_accessible_low_underlying_models_or_fewer_than_2_distinct_accessible_high_underlying_models",
+    "required_route_identity_fields": ["provider_id", "model_id", "account_id", "route_id"],
+    "requested_configuration_fields": ["reasoning", "variant"]
+  },
+  "calls_launched_from_any_matrix": 0,
+  "call_counts": {
+    "route_canary": 0,
+    "pilot": 0,
+    "fleet": 0
+  },
+  "blocked_commands": ["route-canary", "pilot", "fleet"],
+  "blocked_before_auth_or_config_read": true,
+  "pilot_release_prerequisite_order": [
+    "user_authorized_exact_matrix",
+    "final_matrix_inclusive_freeze_pass",
+    "deterministic_qualification_bound_to_exact_final_freeze_pass",
+    "ten_exact_route_nonsemantic_canaries_pass"
+  ],
+  "prerequisite_failure_rule": "Each failed gate stops before the next prerequisite: gates 1-3 stop before any dependent canary, gate 4 stops before the semantic pilot, and any pilot qualification stopper stops before the fleet.",
+  "authorization_binding_rule": "At gate 1 the immutable authorization receipt binds authorized_matrix_ref and authorized_matrix_sha256; authorization_receipt_ref and authorization_receipt_sha256 bind the receipt bytes. All four non-null values must match charter/pilot_plan.v4.json and the final freeze receipt exactly.",
+  "gate_2_authorization_block_conditions": ["null_dynamic_ref_or_hash", "draft_or_unapproved_matrix", "inferred_authorization", "substituted_matrix_or_receipt", "matrix_hash_mismatch", "authorization_receipt_hash_mismatch", "authorization_receipt_matrix_binding_mismatch", "pilot_status_authorization_field_mismatch"],
+  "final_freeze_required_membership": "The input path set equals charter/pilot_plan.v4.json final_freeze_contract.required_static_refs, which includes the pilot plan itself, plus exactly the resolved non-null gate-1 authorized matrix and immutable authorization receipt. Matrix/receipt refs and hashes match the receipt, pilot plan, matrix status, and freeze receipt; every byte/hash/digest check passes.",
+  "gate_4_pass_requirement": "All ten exact routes preserve requested reasoning/variant settings, pass provider/model/account/route binding, and pass every route-declared required or exposed effective reasoning/variant attestation under the same final freeze and deterministic receipt.",
+  "release_condition": "Jared supplies and authorizes the exact eight-relative-low routes pairwise distinct by underlying model within the low stratum and two relative-high routes pairwise distinct within the high stratum, including each exact provider/model/account/route tuple and requested reasoning/variant settings. Ten distinct overall is preferred; any cross-stratum overlap must be explicitly selected by Jared and disclosed. No replacement, overlap, or split change is implicit."
+}

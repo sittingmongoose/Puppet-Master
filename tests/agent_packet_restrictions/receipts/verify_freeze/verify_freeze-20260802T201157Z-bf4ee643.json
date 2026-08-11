@@ -1,0 +1,52 @@
+{
+  "command": "verify-freeze",
+  "controller_version": "1.0.0",
+  "created_at_utc": "2026-08-02T20:11:57.302Z",
+  "input_artifacts": [
+    {
+      "bytes": 5479,
+      "relative_path": "inventory/model_matrix.v1.json",
+      "sha256": "88695d248b183c7e1633527815898ff9b6b95a6ea3740c1ca2ad727c58cdc744"
+    },
+    {
+      "bytes": 21100,
+      "relative_path": "cases/semantic_cases.v1.json",
+      "sha256": "999f57fb25a77d0086e1caa194699334536154079e9a1a5531fe281f7eabe0c8"
+    },
+    {
+      "bytes": 2938,
+      "relative_path": "cases/response.schema.json",
+      "sha256": "5719536ed8c6f6c0c9399e7cc1970dc9ff392567ea2025572036d0554949b27a"
+    },
+    {
+      "bytes": 26191,
+      "relative_path": "fixtures/deterministic_cases.v1.json",
+      "sha256": "27fe815ad5577d4ecce335a4b3c3caa1bc4356b5ff701addb79318850641bcc6"
+    },
+    {
+      "bytes": 1053,
+      "relative_path": "charter/pilot_plan.v1.json",
+      "sha256": "eb793bc6731f9f7251a074a1bb76d3c0067788bb87556e4184538b1faffc91b9"
+    },
+    {
+      "bytes": 10445,
+      "relative_path": "charter/method.v1.md",
+      "sha256": "3453fc9044c7aab7f39d960dfe7169d9a16d64b69a988fc0e0dcdb52764209e8"
+    },
+    {
+      "bytes": 616,
+      "relative_path": "inventory/model_matrix_status.v1.json",
+      "sha256": "f5bfeaefb83190f946e3fb1f573d902afa0155ffb82d8a1240cbb55fc6e8e07c"
+    },
+    {
+      "bytes": 1152,
+      "relative_path": "charter/correction-0001-user-model-selection-hold.md",
+      "sha256": "b41180964036fd6349059dfc422f2c069dffdaadfe6a04d8173cf28201aa80d6"
+    }
+  ],
+  "invariant_errors": [],
+  "method_id": "apr-method-v1.0.0",
+  "run_id": "verify_freeze-20260802T201157Z-bf4ee643",
+  "schema_id": "pm.agent_packet_restrictions.controller_receipt.v1",
+  "status": "PASS"
+}

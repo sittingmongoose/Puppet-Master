@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opus 5 — Assistant Chat concepts</title>
+
+<link rel="stylesheet" href="shared/reset.css?v=1785942719">
+<link rel="stylesheet" href="shared/tokens.css?v=1785942719">
+<link rel="stylesheet" href="shared/materials.css?v=1785942719">
+<link rel="stylesheet" href="shared/reveal.css?v=1785942719">
+<link rel="stylesheet" href="shared/scrollbars.css?v=1785942719">
+<link rel="stylesheet" href="shared/motion.css?v=1785942719">
+<link rel="stylesheet" href="shared/popup.css?v=1785942719">
+  <link rel="stylesheet" href="shared/artifact.css?v=1785942719">
+<link rel="stylesheet" href="shared/msg.css?v=1785942719">
+<link rel="stylesheet" href="shared/shell.css?v=1785942719">
+<link rel="stylesheet" href="shared/chrome.css?v=1785942719">
+<link rel="stylesheet" href="shared/workspace.css?v=1785942719">
+
+<link rel="stylesheet" href="windows/w1-ledger.css?v=1785942719">
+<link rel="stylesheet" href="windows/w2-split-desk.css?v=1785942719">
+<link rel="stylesheet" href="windows/w3-focus-column.css?v=1785942719">
+<link rel="stylesheet" href="windows/w4-stacked-panes.css?v=1785942719">
+<link rel="stylesheet" href="windows/w5-command-bar.css?v=1785942719">
+<link rel="stylesheet" href="windows/w6-docked-sheets.css?v=1785942719">
+<link rel="stylesheet" href="windows/w7-two-rail.css?v=1785942719">
+<link rel="stylesheet" href="windows/w8-frameless.css?v=1785942719">
+
+<link rel="stylesheet" href="threads/t1-speaker-turns.css?v=1785942719">
+<link rel="stylesheet" href="threads/t2-two-tone-slabs.css?v=1785942719">
+<link rel="stylesheet" href="threads/t3-timeline-spine.css?v=1785942719">
+<link rel="stylesheet" href="threads/t4-digest.css?v=1785942719">
+<link rel="stylesheet" href="threads/t5-paired-columns.css?v=1785942719">
+<link rel="stylesheet" href="threads/t6-work-interleave.css?v=1785942719">
+<link rel="stylesheet" href="threads/t7-cards-with-air.css?v=1785942719">
+<link rel="stylesheet" href="threads/t8-reading-mode.css?v=1785942719">
+</head>
+<body data-pmx-mode="gallery">
+
+<!-- Demo data as script bundles. fetch() cannot read a sibling file over file:// in
+     Chromium, so the bundles make the workspace work from disk as well as over http. -->
+<script src="demo/demoData.bundle.js?v=1785942719"></script>
+<script src="demo/demoDataExtension.js?v=1785942719"></script>
+
+<!-- Foundation -->
+<script src="shared/util.js?v=1785942719"></script>
+<script src="shared/icons.js?v=1785942719"></script>
+<script src="shared/store.js?v=1785942719"></script>
+<script src="shared/registry.js?v=1785942719"></script>
+<script src="shared/data.js?v=1785942719"></script>
+<script src="shared/motion.js?v=1785942719"></script>
+<script src="shared/hoverglow.js?v=1785942719"></script>
+<script src="shared/reveal.js?v=1785942719"></script>
+<script src="shared/popup.js?v=1785942719"></script>
+<script src="shared/scroll.js?v=1785942719"></script>
+<script src="shared/listwindow.js?v=1785942719"></script>
+
+<!-- Services -->
+<script src="shared/toast.js?v=1785942719"></script>
+<script src="shared/editorhost.js?v=1785942719"></script>
+  <script src="shared/artifacts.js?v=1785942719"></script>
+  <script src="shared/artifactpanel.js?v=1785942719"></script>
+<script src="shared/demo.js?v=1785942719"></script>
+<script src="shared/drafts.js?v=1785942719"></script>
+<script src="shared/questionnaire.js?v=1785942719"></script>
+<script src="shared/lens.js?v=1785942719"></script>
+<script src="shared/search.js?v=1785942719"></script>
+<script src="shared/surfaces.js?v=1785942719"></script>
+<script src="shared/runtime.js?v=1785942719"></script>
+
+<!-- Shared chrome -->
+<script src="shared/hoverrow.js?v=1785942719"></script>
+<script src="shared/moreinfo.js?v=1785942719"></script>
+<script src="shared/composer.js?v=1785942719"></script>
+<script src="shared/selectors.js?v=1785942719"></script>
+<script src="shared/headertools.js?v=1785942719"></script>
+<script src="shared/threadhistory.js?v=1785942719"></script>
+<script src="shared/shell.js?v=1785942719"></script>
+<script src="shared/compose.js?v=1785942719"></script>
+
+<!-- Window concepts -->
+<script src="windows/w1-ledger.js?v=1785942719"></script>
+<script src="windows/w2-split-desk.js?v=1785942719"></script>
+<script src="windows/w3-focus-column.js?v=1785942719"></script>
+<script src="windows/w4-stacked-panes.js?v=1785942719"></script>
+<script src="windows/w5-command-bar.js?v=1785942719"></script>
+<script src="windows/w6-docked-sheets.js?v=1785942719"></script>
+<script src="windows/w7-two-rail.js?v=1785942719"></script>
+<script src="windows/w8-frameless.js?v=1785942719"></script>
+
+<!-- Thread concepts -->
+<script src="threads/t1-speaker-turns.js?v=1785942719"></script>
+<script src="threads/t2-two-tone-slabs.js?v=1785942719"></script>
+<script src="threads/t3-timeline-spine.js?v=1785942719"></script>
+<script src="threads/t4-digest.js?v=1785942719"></script>
+<script src="threads/t5-paired-columns.js?v=1785942719"></script>
+<script src="threads/t6-work-interleave.js?v=1785942719"></script>
+<script src="threads/t7-cards-with-air.js?v=1785942719"></script>
+<script src="threads/t8-reading-mode.js?v=1785942719"></script>
+
+<script src="shared/workspace.js?v=1785942719"></script>
+<script>window.PMXWorkspace.boot();</script>
+</body>
+</html>

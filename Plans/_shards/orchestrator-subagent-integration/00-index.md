@@ -1,22 +1,22 @@
 # Shard Index: Plans/orchestrator-subagent-integration.md
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a`
+Source SHA256: `d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `4a39755f2d55d861a88fbe4ac68db4b86079472a8794643b9a4ba3d63ae6335b`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L14 `af1d9f640cf4d9df363145ed478fe060985a45f9970aefddf094382b049e8210`
-- [003 - Plan Document Status](003-plan-document-status.md) L17-L28 `7115583dedbd5b782ca24aaf10392b1ac4bc00144451293a560d93a75bd388a3`
-- [004 - Executive Summary](004-executive-summary.md) L30-L79 `b9f26ace8c60f1bcf7c99cd543361f8fb5d56554e01dc9c39a1d65c821a1cc8f`
-- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L81-L126 `828c2ba3f80afbc038c163ee889e2dde5e3ba192eca0bdc244c194ba9e6acb92`
-- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L127-L163 `a56d830cac405444c6572d4ca402b4012f8837879ed8a417bbf6a9d607ccd325`
-- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L165-L181 `01142e75698db9f753fa54a182649c7ade20612e942b98515fb590222d9dd5e1`
-- [008 - Compatibility Tier-Level Subagent Strategy](008-compatibility-tier-level-subagent-strategy.md) L182-L203 `8783421c60efdb4ce04ac17b8b82976ecd1c1fe486053547e2941e105ba6ed7e`
-- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L204-L215 `f9c7b1258fda8ffa166c42981b7466caf8ab60b731b5ba8ce3187f98efde3452`
-- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L217-L257 `4aa0908b6362a911a2e075084b0c2694a70b26de4f0133f00818c9196eec2c79`
-- [011 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L259-L348 `bb4ab81b3c49cd4ea920ce8a1170ca85be5ed382a1bf7556a1883bab81455102`
-- [012 - Integration with Orchestrator](012-integration-with-orchestrator.md) L349-L31469 `10a86c9e15ff3ba1dc9f59e39e1d58111f82eb45a13e22f7454d733211529d9a`
+- [001 - Preamble](001-preamble.md) L1-L1 `0320a48c73ada64563a26b4b0874517a8067473651f7fb51512219d926504417`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L14 `7ea7a786aa4d9972c74f578941bcc2cf9139bdf8e731a17b3bd4dc52450978e0`
+- [003 - Plan Document Status](003-plan-document-status.md) L17-L28 `9b263176c46f2fd82bba30f13452579498c0ac1a1be71dfc84150eff516dd8a8`
+- [004 - Executive Summary](004-executive-summary.md) L30-L79 `4bbc9369efe9290ffc8f63f52556ce56ab3f8cf8a352ab610524fef404cacaff`
+- [005 - Runtime scheduler, identity, and worktree reconciliation](005-runtime-scheduler-identity-and-worktree-reconciliation.md) L81-L126 `97f7a26d25f562beb49f74896e4aa712035cd3df3d61c9e9e1bac9f914753313`
+- [006 - Rewrite alignment (2026-02-21)](006-rewrite-alignment-2026-02-21.md) L127-L163 `ec8a807ec173f3bfb963f311471377c1ef50a689c24546964c72d3931968304e`
+- [007 - Relationship Between the Two Plans](007-relationship-between-the-two-plans.md) L165-L181 `d94e01f7fe45a129373e4b96e164999049962444bc547fa0634d6d6a9c9c1fbc`
+- [008 - Compatibility Tier-Level Subagent Strategy](008-compatibility-tier-level-subagent-strategy.md) L182-L203 `1921b82bcd60233e4ccb553745e0afa86c8cfc8120fde8ded97fa1dc5a5dadc4`
+- [009 - Debug-capable investigation orchestration](009-debug-capable-investigation-orchestration.md) L204-L215 `99f39fdc7cf65ece7834d1a4dfdf5a34f237f3b41ef99648cf077f02e0ebb3a7`
+- [010 - Dynamic Subagent Selection Architecture](010-dynamic-subagent-selection-architecture.md) L217-L257 `613af543fbc295005a86f04fde3f16a36d89c0a4bafd3f94c39749ec3cc84118`
+- [011 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L259-L348 `d47a37ff4b61f19e9a953380e5f45e41f2f3cb84cdc08890a598258be53d3101`
+- [012 - Integration with Orchestrator](012-integration-with-orchestrator.md) L349-L31480 `fe61234e80f70e927fa08f923d2dcb02d9e83c10ee86e2ff0b31df2b456a0f90`

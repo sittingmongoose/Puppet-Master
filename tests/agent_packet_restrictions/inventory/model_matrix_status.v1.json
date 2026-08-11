@@ -1,0 +1,15 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.model_matrix_status.v1",
+  "recorded_at_utc": "2026-08-02T19:54:40Z",
+  "draft_matrix_ref": "inventory/model_matrix.v1.json",
+  "draft_matrix_status": "superseded_before_launch",
+  "authorized_matrix_ref": null,
+  "authorized_matrix_status": "user_model_selection_pending",
+  "calls_launched_from_draft": 0,
+  "blocked_commands": [
+    "route-canary",
+    "pilot",
+    "fleet"
+  ],
+  "release_condition": "The user supplies and approves the exact eight-relative-low and two-relative-high model routes, after which a newly versioned matrix and pilot plan are frozen."
+}

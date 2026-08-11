@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings Bakeoff Index — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<style>
+body { overflow-y: auto; }
+.ix-wrap { max-width: 1060px; margin: 0 auto; padding: 30px 26px 80px; }
+.ix-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+.ix-h1 { font-size: 28px; font-weight: 750; color: var(--text-1); margin: 6px 0 8px; }
+.ix-lede { color: var(--text-2); font-size: 13.5px; max-width: 720px; margin: 0 0 24px; }
+.ix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.ix-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); }
+.ix-card h2 { margin: 0; font-size: 16px; color: var(--text-1); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.ix-card .thesis { color: var(--text-2); font-size: 12.5px; margin: 0; }
+.ix-card dl { display: grid; grid-template-columns: 118px 1fr; gap: 4px 10px; font-size: 12px; margin: 0; }
+.ix-card dt { color: var(--text-3); }
+.ix-card dd { margin: 0; color: var(--text-1); }
+.ix-card .open { margin-top: auto; align-self: flex-start; text-decoration: none; }
+.ix-section { margin-top: 30px; }
+.ix-section h3 { color: var(--text-1); font-size: 14px; margin: 0 0 10px; }
+.ix-list { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 12.5px; }
+.ix-list li { margin-bottom: 4px; }
+.ix-note { border: 1px dashed var(--border-strong); background: var(--surface-3); border-radius: var(--radius-m); padding: 12px 14px; color: var(--text-2); font-size: 12.5px; margin-top: 22px; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="index">
+<div class="ix-wrap">
+  <div class="ix-kicker">Puppet Master · Settings redesign bakeoff · Qwen 5.8</div>
+  <h1 class="ix-h1">Four concepts, one contract</h1>
+  <p class="ix-lede">Each concept answers the same packet with a different information architecture: how the search-centric home establishes hierarchy, how destinations read as places rather than filters, how the workspace navigates, and how managers relate to ordinary settings. No ranking is implied.</p>
+
+  <div class="ix-grid">
+    <div class="ix-card">
+      <h2>Atlas — Directory <span class="pm-badge">01</span></h2>
+      <p class="thesis">Settings as a map of places. A full-width directory of destinations, a document workspace with a persistent table of contents, and managers as separate rooms.</p>
+      <dl>
+        <dt>Search</dt><dd>Crowning field that morphs the directory into grouped results</dd>
+        <dt>Navigation</dt><dd>Left TOC, sliding active marker, controlled jump + scrollspy</dd>
+        <dt>Managers</dt><dd>Providers, Assistant Memory, MCP</dd>
+        <dt>Motion</dt><dd>Cartographic continuity — origin-aware travel</dd>
+      </dl>
+      <a class="pm-btn pm-btn-primary open" href="concept-01-atlas.html">Open Atlas</a>
+    </div>
+    <div class="ix-card">
+      <h2>Deck — Command center <span class="pm-badge">02</span></h2>
+      <p class="thesis">Settings as operations. A command field first, status modules with live readouts, a status board, and console-style managers with a sticky subcategory strip.</p>
+      <dl>
+        <dt>Search</dt><dd>Command palette with grouped dropdown results</dd>
+        <dt>Navigation</dt><dd>Horizontal tab strip synced to scroll, auto-centering</dd>
+        <dt>Managers</dt><dd>Providers, Crew, Terminal</dd>
+        <dt>Motion</dt><dd>Staged console — layout settles before text reveals</dd>
+      </dl>
+      <a class="pm-btn pm-btn-primary open" href="concept-02-deck.html">Open Deck</a>
+    </div>
+    <div class="ix-card">
+      <h2>Ledger — One document <span class="pm-badge">03</span></h2>
+      <p class="thesis">Settings as one continuous readable document. Numbered chapters, hairline entries, managers embedded as appendices, and a margin outline with a sliding ink marker.</p>
+      <dl>
+        <dt>Search</dt><dd>Underlined ledger search rendering an annotated contents list</dd>
+        <dt>Navigation</dt><dd>Margin outline with ink marker; section numbers throughout</dd>
+        <dt>Managers</dt><dd>Providers, Context &amp; Instructions, Skills/Plugins/Tools</dd>
+        <dt>Motion</dt><dd>Ink &amp; paper — near-still, fastest timings</dd>
+      </dl>
+      <a class="pm-btn pm-btn-primary open" href="concept-03-ledger.html">Open Ledger</a>
+    </div>
+    <div class="ix-card">
+      <h2>Spoke — By intent <span class="pm-badge">04</span></h2>
+      <p class="thesis">Settings organized by user intent into wings, with a floating launcher for search and master-detail split views for managers: inventory left, inspector right.</p>
+      <dl>
+        <dt>Search</dt><dd>Persistent rounded launcher over home and workspace</dd>
+        <dt>Navigation</dt><dd>Right-edge progress ticks with scrollspy; drawer when squeezed</dd>
+        <dt>Managers</dt><dd>Providers, Personas, Media</dd>
+        <dt>Motion</dt><dd>Orbital — depth via scale, inspector slides from its edge</dd>
+      </dl>
+      <a class="pm-btn pm-btn-primary open" href="concept-04-spoke.html">Open Spoke</a>
+    </div>
+  </div>
+
+  <div class="ix-section">
+    <h3>Shared under all four</h3>
+    <ul class="ix-list">
+      <li>One demo dataset: 10 destinations, ~100 settings covering default / recommended / inherited / auto / not-configured / managed / custom / unavailable / effective-differs states.</li>
+      <li>Provider register: Anthropic (two accounts incl. CLI-owned OAuth profile and exhausted usage), OpenAI (PM-direct OAuth), Gemini CLI (authenticated but invocation failed), Antigravity CLI (not installed), local keyless server, Mistral free tier (needs setup), plus models.dev and Free Coding Models continuous catalogs.</li>
+      <li>Search, deep-link focus, scrollspy with jump lock, exposure levels, spellcheck suggestions (never autocorrect), simulated receipts for actions that cannot truly operate.</li>
+      <li>All eight themes, reduced motion, quiet surrounding shell with rail and assistant panel toggles, and a demo tray for scenarios (attention / calm / refreshing / exhausted).</li>
+    </ul>
+  </div>
+
+  <div class="ix-section">
+    <h3>How to test</h3>
+    <ul class="ix-list">
+      <li>Use the Hub width slider (role: page) — recommended widths 760, 900, 1280, 1700, 2200, 2500.</li>
+      <li>Open the Demo tray (bottom right) inside a concept to toggle theme, reduced motion, scenarios, left rail, and assistant panel.</li>
+      <li>Squeezed widths collapse workspace navigation into drawers; no label clips.</li>
+    </ul>
+  </div>
+
+  <div class="ix-note">Concept pages are standalone; the shared scripts live in <b>_shared/</b>. Findings, impact register, and test report sit beside this index. This set deliberately preserves divergence — do not average the four into one design.</div>
+</div>
+<script src="_shared/concept-hub-bridge.js"></script>
+</body>
+</html>

@@ -142,21 +142,189 @@
         },
         {
             "schema_id": "pm.runtime_artifact.restore_point.schema.v1",
-            "artifact_id": "artifact-restore-point-001",
+            "artifact_id": "restore_point_without_runtime_or_safe_point_lineage",
             "artifact_type": "restore_point",
             "project_id": "fixture-project",
-            "run_id": "run-001",
-            "attempt_id": "attempt-001",
             "created_at_utc": "2026-07-02T00:00:00Z",
-            "projection_freshness": "current",
+            "projection_freshness": "refreshing",
+            "projection_health": "degraded",
+            "retention_class": "governed",
+            "routing_refs": [
+                "artifact:restore_point_without_runtime_or_safe_point_lineage"
+            ],
+            "type_payload": {
+                "restore_point_id": "restore-point-001",
+                "project_id": "fixture-project",
+                "source_thread_id": "thread-source-001",
+                "source_branch_id": "branch-source-001",
+                "source_message_id": "message-source-001",
+                "record_ref": "rp:fixture-project:restore-point-001",
+                "record_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                "status": "available",
+                "source_state": "active",
+                "availability": {
+                    "state": "available",
+                    "unavailable_reason": null
+                },
+                "retention": {
+                    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+                    "retention_state": "retained",
+                    "expires_at_utc": null,
+                    "eligibility_evidence_refs": []
+                },
+                "holds": {
+                    "hold_refs": [],
+                    "reference_refs": [],
+                    "has_protected_refs": false
+                },
+                "context_provenance_refs": [
+                    "context:restore-point-001"
+                ],
+                "attachment_refs": [],
+                "citation_refs": [],
+                "actions": {
+                    "create": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": "receipt:restore-point-created-001",
+                        "command_id": "cmd.chat.create_restore_point"
+                    },
+                    "branch": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.branch_from_restore"
+                    },
+                    "delete": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.delete_restore_point"
+                    },
+                    "open": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "route_ref": "assistant-chat:restore-point-001"
+                    },
+                    "apply": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.branch_from_restore",
+                        "semantics": "conversation_branch_only"
+                    }
+                },
+                "workspace_effects": {
+                    "restores_files": false,
+                    "mutates_source_thread": false,
+                    "mutates_source_branch": false,
+                    "mutates_source_worktree": false,
+                    "mutates_git_index": false,
+                    "mutates_runtime_safe_points": false
+                },
+                "redaction_profile": "no_secrets",
+                "contains_raw_secrets": false
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.restore_point.schema.v1",
+            "artifact_id": "restore_point_with_runtime_and_safe_point_lineage",
+            "artifact_type": "restore_point",
+            "project_id": "fixture-project",
+            "run_id": "run-restore-point-002",
+            "attempt_id": "attempt-restore-point-002",
+            "created_at_utc": "2026-07-02T00:01:00Z",
+            "projection_freshness": "stale",
             "projection_health": "healthy",
             "retention_class": "governed",
             "routing_refs": [
-                "artifact:artifact-restore-point-001"
+                "artifact:restore_point_with_runtime_and_safe_point_lineage"
             ],
             "type_payload": {
-                "safe_point_id": "safe-point-001",
-                "source_control_ref": "git:abc123"
+                "restore_point_id": "restore-point-002",
+                "project_id": "fixture-project",
+                "source_thread_id": "thread-source-002",
+                "source_branch_id": "branch-source-002",
+                "source_message_id": "message-source-002",
+                "record_ref": "rp:fixture-project:restore-point-002",
+                "record_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "status": "available",
+                "source_state": "active",
+                "availability": {
+                    "state": "available",
+                    "unavailable_reason": null
+                },
+                "retention": {
+                    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+                    "retention_state": "retained",
+                    "expires_at_utc": null,
+                    "eligibility_evidence_refs": []
+                },
+                "holds": {
+                    "hold_refs": [
+                        "hold:legal-002"
+                    ],
+                    "reference_refs": [
+                        "restore-application:002"
+                    ],
+                    "has_protected_refs": true
+                },
+                "context_provenance_refs": [
+                    "context:restore-point-002"
+                ],
+                "attachment_refs": [
+                    "attachment:fixture-002"
+                ],
+                "citation_refs": [
+                    "citation:fixture-002"
+                ],
+                "safe_point_id": "safe-point-002",
+                "safe_point_semantics": "lineage_only",
+                "safe_point_restores_files": false,
+                "actions": {
+                    "create": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": "receipt:restore-point-created-002",
+                        "command_id": "cmd.chat.create_restore_point"
+                    },
+                    "branch": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.branch_from_restore"
+                    },
+                    "delete": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.delete_restore_point"
+                    },
+                    "open": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "route_ref": "assistant-chat:restore-point-002"
+                    },
+                    "apply": {
+                        "availability": "available",
+                        "unavailable_reason": null,
+                        "outcome_ref": null,
+                        "command_id": "cmd.chat.branch_from_restore",
+                        "semantics": "conversation_branch_only"
+                    }
+                },
+                "workspace_effects": {
+                    "restores_files": false,
+                    "mutates_source_thread": false,
+                    "mutates_source_branch": false,
+                    "mutates_source_worktree": false,
+                    "mutates_git_index": false,
+                    "mutates_runtime_safe_points": false
+                },
+                "redaction_profile": "redacted_refs_only",
+                "contains_raw_secrets": false
             }
         },
         {
@@ -1181,9 +1349,9 @@
         {
             "event_type": "runtime_artifact.restore_point",
             "artifact_type": "restore_point",
-            "artifact_id": "artifact-restore-point-001",
-            "run_id": "run-001",
-            "attempt_id": "attempt-001"
+            "project_id": "fixture-project",
+            "artifact_id": "restore_point_without_runtime_or_safe_point_lineage",
+            "restore_point_id": "restore-point-001"
         },
         {
             "event_type": "runtime_artifact.browser_recording",
@@ -1284,6 +1452,279 @@
                     "changed_paths": [
                         "src/lib.rs"
                     ]
+                }
+            }
+        },
+        {
+            "case_id": "non_restore_missing_run_id",
+            "artifact_type": "code_diff",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+                "artifact_id": "bad-code-diff-missing-run",
+                "artifact_type": "code_diff",
+                "project_id": "fixture-project",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-code-diff-missing-run"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "projection_freshness_degraded_is_health_only",
+            "artifact_type": "code_diff",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+                "artifact_id": "bad-code-diff-freshness-degraded",
+                "artifact_type": "code_diff",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "degraded",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-code-diff-freshness-degraded"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "projection_freshness_unavailable_is_health_only",
+            "artifact_type": "code_diff",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+                "artifact_id": "bad-code-diff-freshness-unavailable",
+                "artifact_type": "code_diff",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "unavailable",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-code-diff-freshness-unavailable"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "projection_health_stale_is_freshness_only",
+            "artifact_type": "code_diff",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+                "artifact_id": "bad-code-diff-health-stale",
+                "artifact_type": "code_diff",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "stale",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-code-diff-health-stale"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "restore_point_missing_primary_restore_point_id",
+            "artifact_type": "restore_point",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.restore_point.schema.v1",
+                "artifact_id": "bad-restore-point-missing-primary-id",
+                "artifact_type": "restore_point",
+                "project_id": "fixture-project",
+                "created_at_utc": "2026-07-02T00:02:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "governed",
+                "routing_refs": [
+                    "artifact:bad-restore-point-missing-primary-id"
+                ],
+                "type_payload": {
+                    "project_id": "fixture-project",
+                    "source_thread_id": "thread-source-invalid-001",
+                    "source_branch_id": "branch-source-invalid-001",
+                    "source_message_id": "message-source-invalid-001",
+                    "record_ref": "rp:fixture-project:missing-primary-id",
+                    "record_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                    "status": "available",
+                    "source_state": "active",
+                    "availability": {
+                        "state": "available",
+                        "unavailable_reason": null
+                    },
+                    "retention": {
+                        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+                        "retention_state": "retained",
+                        "expires_at_utc": null,
+                        "eligibility_evidence_refs": []
+                    },
+                    "holds": {
+                        "hold_refs": [],
+                        "reference_refs": [],
+                        "has_protected_refs": false
+                    },
+                    "context_provenance_refs": [],
+                    "attachment_refs": [],
+                    "citation_refs": [],
+                    "actions": {
+                        "create": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": "receipt:restore-point-invalid-001",
+                            "command_id": "cmd.chat.create_restore_point"
+                        },
+                        "branch": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.branch_from_restore"
+                        },
+                        "delete": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.delete_restore_point"
+                        },
+                        "open": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "route_ref": "assistant-chat:missing-primary-id"
+                        },
+                        "apply": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.branch_from_restore",
+                            "semantics": "conversation_branch_only"
+                        }
+                    },
+                    "workspace_effects": {
+                        "restores_files": false,
+                        "mutates_source_thread": false,
+                        "mutates_source_branch": false,
+                        "mutates_source_worktree": false,
+                        "mutates_git_index": false,
+                        "mutates_runtime_safe_points": false
+                    },
+                    "redaction_profile": "no_secrets",
+                    "contains_raw_secrets": false
+                }
+            }
+        },
+        {
+            "case_id": "restore_point_incomplete_safe_point_lineage",
+            "artifact_type": "restore_point",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.restore_point.schema.v1",
+                "artifact_id": "bad-restore-point-incomplete-safe-point-lineage",
+                "artifact_type": "restore_point",
+                "project_id": "fixture-project",
+                "created_at_utc": "2026-07-02T00:03:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "governed",
+                "routing_refs": [
+                    "artifact:bad-restore-point-incomplete-safe-point-lineage"
+                ],
+                "type_payload": {
+                    "restore_point_id": "restore-point-invalid-002",
+                    "project_id": "fixture-project",
+                    "source_thread_id": "thread-source-invalid-002",
+                    "source_branch_id": "branch-source-invalid-002",
+                    "source_message_id": "message-source-invalid-002",
+                    "record_ref": "rp:fixture-project:restore-point-invalid-002",
+                    "record_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+                    "status": "available",
+                    "source_state": "active",
+                    "availability": {
+                        "state": "available",
+                        "unavailable_reason": null
+                    },
+                    "retention": {
+                        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+                        "retention_state": "retained",
+                        "expires_at_utc": null,
+                        "eligibility_evidence_refs": []
+                    },
+                    "holds": {
+                        "hold_refs": [],
+                        "reference_refs": [],
+                        "has_protected_refs": false
+                    },
+                    "context_provenance_refs": [],
+                    "attachment_refs": [],
+                    "citation_refs": [],
+                    "safe_point_id": "safe-point-incomplete-002",
+                    "actions": {
+                        "create": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": "receipt:restore-point-invalid-002",
+                            "command_id": "cmd.chat.create_restore_point"
+                        },
+                        "branch": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.branch_from_restore"
+                        },
+                        "delete": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.delete_restore_point"
+                        },
+                        "open": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "route_ref": "assistant-chat:restore-point-invalid-002"
+                        },
+                        "apply": {
+                            "availability": "available",
+                            "unavailable_reason": null,
+                            "outcome_ref": null,
+                            "command_id": "cmd.chat.branch_from_restore",
+                            "semantics": "conversation_branch_only"
+                        }
+                    },
+                    "workspace_effects": {
+                        "restores_files": false,
+                        "mutates_source_thread": false,
+                        "mutates_source_branch": false,
+                        "mutates_source_worktree": false,
+                        "mutates_git_index": false,
+                        "mutates_runtime_safe_points": false
+                    },
+                    "redaction_profile": "no_secrets",
+                    "contains_raw_secrets": false
                 }
             }
         },

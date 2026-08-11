@@ -191,14 +191,36 @@
     };
 
     // ── Worktree binding functions ──────────────────────────────────
+    // CSS uses .is-open / .is-closing (sprout). Prefer window.PM6_SPROUT from
+    // the chat script; fall back to .active only if sprout helpers are absent.
+    function closeAllWorktreeDropdowns() {
+      var sprout = window.PM6_SPROUT;
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
+        if (sprout && sprout.close) sprout.close(d);
+        else {
+          d.classList.remove('active', 'is-open', 'is-closing');
+          d.style.display = 'none';
+        }
+      });
+    }
     window.toggleWorktreeDropdown = function(btn) {
       var wrap = btn.closest('.wt-bind-wrap') || btn.parentElement;
       var dd = wrap.querySelector('.wt-bind-dropdown');
       if (!dd) return;
+      var sprout = window.PM6_SPROUT;
+      if (sprout && sprout.open && sprout.close && sprout.isOpen) {
+        var open = sprout.isOpen(dd);
+        document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
+          if (d !== dd && sprout.isOpen(d)) sprout.close(d);
+        });
+        if (open) sprout.close(dd);
+        else sprout.open(dd, null, btn);
+        return;
+      }
       dd.classList.toggle('active');
     };
     window.showCreateWorktreeModal = function() {
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      closeAllWorktreeDropdowns();
       var modal = document.getElementById('wtCreateModal');
       if (modal) { modal.classList.add('active'); }
       else {
@@ -235,7 +257,8 @@
         if (window.toast) toast('Worktree created: ' + name);
         document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
           b.classList.remove('wt-unbound');
-          b.classList.add('wt-bound-clean');
+          b.classList.add('wt-bound-clean', 'pm6-chat-wt');
+          b.style.color = '';
           var lbl = b.querySelector('.wt-bind-label');
           if (lbl) lbl.textContent = name;
         });
@@ -244,19 +267,21 @@
       }, 800);
     };
     window.bindWorktree = function(name) {
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      closeAllWorktreeDropdowns();
       document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
         b.classList.remove('wt-unbound', 'wt-bound-dirty', 'wt-bound-conflict');
-        b.classList.add('wt-bound-clean');
+        b.classList.add('wt-bound-clean', 'pm6-chat-wt');
+        b.style.color = '';
         var lbl = b.querySelector('.wt-bind-label');
         if (lbl) lbl.textContent = name;
       });
       if (window.toast) toast('Bound to worktree: ' + name);
     };
     window.unbindWorktree = function() {
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      closeAllWorktreeDropdowns();
       document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
-        b.className = 'wt-bind-btn wt-unbound';
+        b.className = 'wt-bind-btn wt-unbound pm6-chat-wt';
+        b.style.color = '';
         var lbl = b.querySelector('.wt-bind-label');
         if (lbl) lbl.textContent = 'No worktree';
       });
@@ -319,15 +344,6 @@
       if (gh) { gh.closest('.sa-batch-group').classList.toggle('expanded'); }
     });
 
-    // ── Source control accordion toggle ─────────────────────────────
-    document.addEventListener('click', function(e) {
-      var ah = e.target.closest('.sc-accordion-header');
-      if (ah) {
-        var section = ah.closest('.sc-accordion-section');
-        if (section) section.classList.toggle('open');
-      }
-    });
-
     // ── Worktree filter bar ─────────────────────────────────────────
     window.filterWorktrees = function(btn, filter) {
       var bar = btn.closest('.sc-wt-filter-bar');
@@ -350,7 +366,7 @@
     // ── Outside click: close worktree dropdowns ─────────────────────
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.wt-bind-wrap') && !e.target.closest('.wt-bind-dropdown')) {
-        document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+        closeAllWorktreeDropdowns();
       }
     });
 
@@ -370,11 +386,11 @@
     window.updateWorktreeButtonForThread = function(threadId) {
       var data = wtThreadData[threadId] || { state: 'unbound', label: 'No worktree' };
       document.querySelectorAll('.wt-bind-btn').forEach(function(btn) {
-        btn.className = 'wt-bind-btn wt-' + data.state;
+        /* keep pm6-chat-wt; never pin inline color (blocks lens-matched hover) */
+        btn.className = 'wt-bind-btn wt-' + data.state + ' pm6-chat-wt';
+        btn.style.color = '';
         var lbl = btn.querySelector('.wt-bind-label');
         if (lbl) lbl.textContent = data.label;
-        var stateColor = data.state === 'bound-dirty' ? 'var(--accent-warning)' : data.state === 'bound-conflict' ? 'var(--accent-error)' : data.state === 'unbound' ? 'var(--text-muted)' : 'var(--accent-lime)';
-        btn.style.color = stateColor;
       });
       document.querySelectorAll('.wt-current-name').forEach(function(el) { el.textContent = data.label; });
       document.querySelectorAll('.wt-current-label .wt-status-pill').forEach(function(el) {
@@ -430,34 +446,101 @@
 
 
 
-    /* MODIFIED (adapter shim): resize controller gained onStart/onEnd hooks
-       (pm6-noanim toggling during drags) and setupResizer's horizontal math
-       now measures from the dragged element's own rect instead of the shared
-       container, so leftPanelResizer / editorSplitResizer / editorDashResizer
-       track the cursor 1:1. Dbl-click on a horizontal resizer resets to the
-       CSS default width. */
+    /* MODIFIED (adapter shim): resize controller rebuilt on Pointer Events +
+       setPointerCapture — releasing over the editor iframe or minimap canvas
+       can no longer swallow the release and strand the drag (stuck cursor,
+       endless resize, stuck pm6-noanim); window blur ends any active drag as
+       a safety net. onStart/onEnd hooks (pm6-noanim toggling) and the
+       resizer registration API (resizerEl, opts) are unchanged;
+       setupResizer's horizontal math measures from the dragged element's own
+       rect so leftPanelResizer / editorSplitResizer / editorDashResizer track
+       the cursor 1:1. Dbl-click on any resizer resets to CSS defaults. */
     (function resizeController() {
         let active = null;
-        document.addEventListener('mousemove', (e) => {
+        let glowRect = null;
+        /* Drag-idle bus. Every resizer in the app funnels through here, and
+           endDrag is reached from pointerup, pointercancel, lostpointercapture
+           AND window blur — so `pm-resizing` on the body element cannot get
+           stuck, which
+           is what makes this the safe place to own it. Observers that do a
+           forced-layout pass (cozy-shelves pill fit, PM_EDGE band geometry,
+           the editor/dash refit) read the flag to idle for the drag and
+           register here to catch up exactly once on release. */
+        const dragEndHooks = [];
+        window.PM_ON_DRAGEND = function (fn) { dragEndHooks.push(fn); };
+        window.PM_DRAGEND = function () {
+            for (let i = 0; i < dragEndHooks.length; i++) { try { dragEndHooks[i](); } catch (e) {} }
+        };
+        function endDrag(ev) {
             if (!active) return;
-            active.moveHandler(e);
-        });
-        document.addEventListener('mouseup', () => {
-            if (active) {
-                active.resizer.classList.remove('resizing');
-                document.body.style.cursor = 'default';
-                if (active.endHandler) active.endHandler();
-                active = null;
-            }
-        });
+            const a = active;
+            active = null;
+            try {
+                if (ev && typeof ev.pointerId === 'number' && a.resizer.hasPointerCapture(ev.pointerId)) {
+                    a.resizer.releasePointerCapture(ev.pointerId);
+                }
+            } catch (e) {}
+            a.resizer.classList.remove('resizing');
+            document.body.classList.remove('pm-resizing');
+            glowRect = null;
+            document.body.style.cursor = '';
+            if (a.endHandler) a.endHandler();
+            window.PM_DRAGEND();
+        }
+        window.addEventListener('blur', () => endDrag(null));
+        /* Grab-glow anchor: park --pm-glow-off where the pointer is along the
+           bar so the glow blooms at the grab point instead of the midpoint
+           (pm6-css-bento reads it as the ::before/::after `translate`).
+           Deliberately element-level — a third document-level pointermove
+           would break the PM7 T07 listener merge. Ratio is clamped, so during
+           a captured drag the glow pins to the bar end rather than sliding
+           off. Written as a px offset FROM THE BAR MIDPOINT, not a position:
+           `translate` percentages resolve against the pseudo-element's own
+           box (16x56 / 46x240), not the bar's.
+           The rect is hoisted into glowRect for the duration of a drag — this
+           runs ahead of the drag guard on every pointermove, and a bar's own
+           drag only moves it ACROSS its axis: a col resizer slides in x while
+           this reads top/height, a row resizer in y while this reads
+           left/width. Plain hover keeps measuring live (infrequent, and the
+           layout may genuinely have moved since). */
+        function trackGlow(resizerEl, e) {
+            const r = glowRect || resizerEl.getBoundingClientRect();
+            const vertical = resizerEl.classList.contains('resizer-col');
+            const len = (vertical ? r.height : r.width) || 1;
+            const raw = vertical ? (e.clientY - r.top) / len : (e.clientX - r.left) / len;
+            const off = (Math.min(1, Math.max(0, raw)) - 0.5) * len;
+            resizerEl.style.setProperty('--pm-glow-off', off.toFixed(2) + 'px');
+        }
         window.registerResizer = function(resizerEl, opts) {
-            resizerEl.addEventListener('mousedown', (e) => {
+            resizerEl.addEventListener('pointerdown', (e) => {
+                if (e.button !== undefined && e.button !== 0) return;
+                if (active) endDrag(null);
                 active = { resizer: resizerEl, moveHandler: opts.onMove, endHandler: opts.onEnd };
+                try { resizerEl.setPointerCapture(e.pointerId); } catch (e2) {}
                 resizerEl.classList.add('resizing');
+                document.body.classList.add('pm-resizing');
+                glowRect = resizerEl.getBoundingClientRect();
                 document.body.style.cursor = opts.isHorizontal ? 'col-resize' : 'row-resize';
                 if (opts.onStart) opts.onStart(e);
                 e.preventDefault();
             });
+            /* placed before the drag guard: the glow must track plain hover
+               too, which is the whole point of the affordance */
+            resizerEl.addEventListener('pointerenter', (e) => trackGlow(resizerEl, e));
+            resizerEl.addEventListener('pointermove', (e) => {
+                trackGlow(resizerEl, e);
+                if (!active || active.resizer !== resizerEl) return;
+                if (active.moveHandler) active.moveHandler(e);
+            });
+            /* No pointerleave reset. Clearing --pm-glow-off on leave dropped
+               the anchor back to the CSS midpoint default WHILE the 150ms
+               fade-out was still running, so the glow visibly snapped to the
+               bar's midpoint before disappearing. The stale value is
+               harmless: pointerenter rewrites it synchronously, before the
+               fade-in paints. */
+            resizerEl.addEventListener('pointerup', endDrag);
+            resizerEl.addEventListener('pointercancel', endDrag);
+            resizerEl.addEventListener('lostpointercapture', () => endDrag(null));
         };
     })();
 
@@ -466,11 +549,15 @@
         if (!resizer) return;
         const getPrev = () => document.getElementById(prevElementId) || (prevElementId && document.querySelector('.' + prevElementId));
         const getNext = () => document.getElementById(nextElementId) || (nextElementId && document.querySelector('.' + nextElementId));
+        let startX = 0, startY = 0, startW = 0, startH = 0;
         window.registerResizer(resizer, {
             isHorizontal,
-            onStart() {
+            onStart(e) {
                 const prev = getPrev();
                 if (prev) prev.classList.add('pm6-noanim');
+                startX = e.clientX; startY = e.clientY;
+                if (isHorizontal && prev) startW = prev.getBoundingClientRect().width;
+                if (!isHorizontal) { const next = getNext(); if (next) startH = next.getBoundingClientRect().height; }
             },
             onEnd() {
                 const prev = getPrev();
@@ -481,30 +568,80 @@
                 const next = getNext();
                 if (isHorizontal && prev && resizer.parentNode) {
                     const containerRect = resizer.parentNode.getBoundingClientRect();
-                    const prevRect = prev.getBoundingClientRect();
-                    let newWidth = e.clientX - prevRect.left;
-                    const minW = parseFloat(getComputedStyle(prev).minWidth) || 200;
-                    const maxW = Math.min(window.innerWidth * 0.5, containerRect.width - 100);
+                    let newWidth = startW + (e.clientX - startX);
+                    const prevCS = getComputedStyle(prev);
+                    const minW = parseFloat(prevCS.minWidth) || 200;
+                    const nextMinW = next ? (parseFloat(getComputedStyle(next).minWidth) || 0) : 0;
+                    let maxW = Math.max(320, containerRect.width - (nextMinW || 240));
+                    /* Honour the element's own max-width. .side-panel-slot caps at
+                       min(480px, 50vw); without this the drag kept writing widths
+                       past the cap that CSS then threw away, so the panel froze
+                       while the handle ran on — and dragging back did nothing until
+                       the written value fell under the cap again. That decoupling
+                       was the "jerky" left panel. */
+                    const cssMaxW = parseFloat(prevCS.maxWidth);
+                    if (!isNaN(cssMaxW) && cssMaxW > 0) maxW = Math.min(maxW, cssMaxW);
+                    if (maxW < minW) maxW = minW;
                     newWidth = Math.max(minW, Math.min(newWidth, maxW));
-                    prev.style.width = newWidth + 'px';
-                    prev.style.flex = 'none';
+                    prev.style.setProperty('width', newWidth + 'px', 'important');
+                    prev.style.setProperty('flex', 'none', 'important');
+                    /* remember what the user actually asked for: refits clamp
+                       DOWN against this and restore back UP to it when the
+                       space returns (see refitEditorDashSplit) */
+                    prev.dataset.pmUserW = newWidth;
                 } else if (!isHorizontal && next && resizer.parentNode) {
                     const containerRect = resizer.parentNode.getBoundingClientRect();
-                    const newHeight = containerRect.bottom - e.clientY;
-                    if (newHeight > 50 && newHeight < containerRect.height - 100) {
-                        next.style.height = newHeight + 'px';
-                        next.style.flex = 'none';
-                    }
+                    const maxH = Math.max(50, containerRect.height - 100);
+                    const newHeight = Math.max(50, Math.min(startH + (startY - e.clientY), maxH));
+                    next.style.setProperty('height', newHeight + 'px', 'important');
+                    next.style.setProperty('flex', 'none', 'important');
                 }
             }
         });
-        if (isHorizontal) {
-            resizer.addEventListener('dblclick', () => {
+        resizer.addEventListener('dblclick', () => {
+            if (isHorizontal) {
                 const prev = getPrev();
-                if (prev) { prev.style.width = ''; prev.style.flex = ''; }
-            });
-        }
+                if (prev) {
+                    prev.style.removeProperty('width');
+                    prev.style.removeProperty('flex');
+                    delete prev.dataset.pmUserW;
+                }
+            } else {
+                const next = getNext();
+                if (next) { next.style.removeProperty('height'); next.style.removeProperty('flex'); }
+            }
+        });
     }
+
+    /* Editor/dashboard refit. A drag pins .editor-view at `width:Npx` +
+       `flex:none !important`, which makes it unshrinkable — so when the docked
+       chat panel opened and .center-column lost its width, the whole squeeze
+       landed on .dashboard-view and crushed it out of sight. This clamps the
+       pinned width against the dashboard's min-width so the EDITOR gives up
+       the space, and restores it back toward dataset.pmUserW when the space
+       comes back. No-op until the split has actually been dragged (plain flex
+       already fits correctly). */
+    function refitEditorDashSplit() {
+        const ev = document.getElementById('editorView');
+        const dv = document.getElementById('dashboardView');
+        if (!ev || !dv) return;
+        if (ev.style.display === 'none' || dv.style.display === 'none') return;
+        const row = ev.parentNode;
+        if (!row || !row.getBoundingClientRect) return;
+        const want = parseFloat(ev.dataset.pmUserW || '') || parseFloat(ev.style.width);
+        if (!want) return;
+        const rowW = row.getBoundingClientRect().width;
+        if (!rowW) return;
+        /* exact gutter (resizer box + collapsed margins), overflow-proof */
+        const gap = Math.max(0, dv.getBoundingClientRect().left - ev.getBoundingClientRect().right);
+        const evMin = parseFloat(getComputedStyle(ev).minWidth) || 0;
+        const dashMin = parseFloat(getComputedStyle(dv).minWidth) || 0;
+        const target = Math.min(want, Math.max(evMin, rowW - dashMin - gap));
+        if (Math.abs(target - (parseFloat(ev.style.width) || 0)) < 0.5) return;
+        ev.style.setProperty('width', target + 'px', 'important');
+        ev.style.setProperty('flex', 'none', 'important');
+    }
+    window.PM_REFIT_SPLIT = refitEditorDashSplit;
 
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -649,16 +786,56 @@
         const chatResizer = document.getElementById('chatResizer');
         const chatPanel = document.getElementById('chatPanel');
         if (chatResizer && chatPanel && window.registerResizer) {
+            let chatStartX = 0, chatStartW = 0, chatMinW = 360;
             window.registerResizer(chatResizer, {
                 isHorizontal: true,
+                onStart(e) {
+                    chatStartX = e.clientX;
+                    chatStartW = chatPanel.getBoundingClientRect().width;
+                    /* Derive the floor like setupResizer does instead of the
+                       old hardcoded 520: --chat-panel-w resolves to 480 below
+                       2200px and to a 380-440 clamp below 1720px, so a 520
+                       floor snapped the panel 40-140px WIDER on the first
+                       pointermove and could never be dragged back. */
+                    chatMinW = parseFloat(getComputedStyle(chatPanel).minWidth) || 0;
+                    if (!chatMinW) chatMinW = Math.min(360, chatStartW);
+                },
                 onMove(e) {
-                    const newWidth = window.innerWidth - e.clientX;
-                    if (newWidth >= 520 && newWidth <= 1200) {
-                        chatPanel.style.width = newWidth + 'px';
-                        chatPanel.style.maxWidth = 'none';
-                        chatPanel.style.flex = 'none';
-                    }
+                    const newWidth = Math.max(chatMinW, Math.min(chatStartW + (chatStartX - e.clientX), 1200));
+                    chatPanel.style.setProperty('width', newWidth + 'px', 'important');
+                    chatPanel.style.setProperty('max-width', 'none', 'important');
+                    chatPanel.style.setProperty('flex', 'none', 'important');
+                    refitEditorDashSplit();
                 }
+            });
+            chatResizer.addEventListener('dblclick', () => {
+                chatPanel.style.removeProperty('width');
+                chatPanel.style.removeProperty('max-width');
+                chatPanel.style.removeProperty('flex');
+                refitEditorDashSplit();
+            });
+        }
+
+        /* One observer on the editor/dashboard row covers window resizes,
+           left-panel drags and the responsive breakpoints without polling.
+           refitEditorDashSplit only writes .editor-view's width, which does
+           not change the row's own box, so this cannot self-retrigger. */
+        const editorDashRow = (document.getElementById('editorView') || {}).parentNode;
+        if (editorDashRow && typeof ResizeObserver !== 'undefined') {
+            /* Idle for a resizer drag: the row is re-laid out every frame and
+               the refit answers with a getComputedStyle + four rects. The
+               clamp only matters once the drag has settled, so catch up on
+               release. The chat resizer's own inline refit call stays live —
+               that one IS the drag's clamp. */
+            let refitPending = false;
+            new ResizeObserver(() => {
+                if (document.body.classList.contains('pm-resizing')) { refitPending = true; return; }
+                refitEditorDashSplit();
+            }).observe(editorDashRow);
+            if (window.PM_ON_DRAGEND) window.PM_ON_DRAGEND(() => {
+                if (!refitPending) return;
+                refitPending = false;
+                refitEditorDashSplit();
             });
         }
 
@@ -795,6 +972,9 @@
                 const chatResizer = document.getElementById('chatResizer');
                 if (chatResizer) chatResizer.classList.toggle('hidden');
                 iconBtn.classList.toggle('active');
+                /* the docked panel takes its width off .center-column — refit
+                   the split so the editor yields instead of the dashboard */
+                refitEditorDashSplit();
             } else if (title === 'Dashboard') {
                 const dash = document.getElementById('dashboardView');
                 if (dash) {
@@ -1102,11 +1282,12 @@
           card.style.viewTransitionName = `bento-card-${index}`;
       });
 
-      // Theme Switcher
+      // Theme Switcher — title-bar sprout menu (PM_THEME); keep change bridge for legacy listeners
       const themeSelect = document.getElementById('themeSelect');
       if (themeSelect) {
           themeSelect.addEventListener('change', function() {
-              document.documentElement.setAttribute('data-theme', this.value);
+              var v = this.getAttribute('data-value') || this.value;
+              if (v) document.documentElement.setAttribute('data-theme', v);
           });
       }
 

@@ -1,0 +1,318 @@
+/* w5 "Command Bar" — Opus 5
+ * One band at the bottom holds every control and the composer. No header at all.
+ * All rules scoped under [data-pmx-window="w5"]; a test fails anything outside that scope.
+ */
+
+[data-pmx-window="w5"] .w5-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+/* Edge to edge, top to the bar. This is the whole point of the concept. */
+[data-pmx-window="w5"] .w5-transcript {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+[data-pmx-window="w5"] .w5-surfaces {
+  flex: 0 0 auto;
+  max-height: 34%;
+  overflow-y: auto;
+  border-top: 1px solid var(--border);
+}
+[data-pmx-window="w5"] .w5-surfaces:empty { display: none; border-top: none; }
+
+[data-pmx-window="w5"] .w5-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-window="w5"] .w5-question:empty { display: none; }
+
+/* ---------------------------------------------------------------- the band */
+
+[data-pmx-window="w5"] .w5-bar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-elevated);
+  min-width: 0;
+}
+
+[data-pmx-window="w5"] .w5-toolrow {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: 4px var(--md) 0;
+  min-width: 0;
+}
+
+[data-pmx-window="w5"] .w5-cmd {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w5"] .w5-cmd:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+[data-pmx-window="w5"] .w5-cmd[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+[data-pmx-window="w5"] .w5-kbd {
+  font-family: var(--mono-font);
+  font-size: 9px;
+  padding: 0 4px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-muted);
+}
+
+[data-pmx-window="w5"] .w5-tools { flex: 1 1 auto; min-width: 0; display: flex; }
+
+[data-pmx-window="w5"] .w5-brand {
+  display: flex; align-items: baseline; gap: 5px; flex: 0 0 auto;
+  font-size: var(--fs-2xs); color: var(--text-muted);
+}
+[data-pmx-window="w5"] .w5-brand-name { font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+[data-pmx-window="w5"] .w5-brand-model { letter-spacing: .05em; }
+
+[data-pmx-window="w5"] .w5-composer { min-width: 0; }
+
+/* ---------------------------------------------------------------- command overlay */
+
+[data-pmx-window="w5"] .w5-cmdlayer {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12%;
+  background: color-mix(in srgb, var(--background) 60%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-default), visibility 0s linear var(--motion-fast);
+}
+[data-pmx-window="w5"] .w5-cmdlayer[data-open="1"] {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition: opacity var(--motion-fast) var(--ease-default), visibility 0s;
+}
+
+[data-pmx-window="w5"] .w5-cmdpanel {
+  width: min(420px, 88%);
+  max-height: 60%;
+  display: flex;
+  flex-direction: column;
+  /* This panel sits in front of the dimmed transcript, so it must be OPAQUE. Bare
+   * `--surface-elevated` is translucent in the glass themes and would let the scrimmed
+   * transcript read straight through a panel that is in front in z-order. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+  overflow: hidden;
+}
+[data-pmx-window="w5"] .w5-cmdinput {
+  flex: 0 0 auto;
+  padding: var(--sm) var(--md);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-sm);
+}
+[data-pmx-window="w5"] .w5-cmdinput:focus { outline: none; }
+[data-pmx-window="w5"] .w5-cmdlist { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+[data-pmx-window="w5"] .w5-cmdrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  width: 100%;
+  padding: var(--sm) var(--md);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+[data-pmx-window="w5"] .w5-cmdrow:hover { background: var(--surface); }
+/* Active row is a fill, never a left accent border. */
+[data-pmx-window="w5"] .w5-cmdrow.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  font-weight: 600;
+}
+[data-pmx-window="w5"] .w5-cmdrow-title {
+  flex: 1 1 auto; min-width: 0; font-size: var(--fs-xs);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+[data-pmx-window="w5"] .w5-cmdrow-meta { flex: 0 0 auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-window="w5"] .w5-cmdrow-state {
+  flex: 0 0 auto; font-size: var(--fs-2xs);
+  padding: 0 5px; border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text-secondary);
+}
+[data-pmx-window="w5"] .w5-cmdempty { padding: var(--md); font-size: var(--fs-xs); color: var(--text-muted); }
+
+[data-pmx-window="w5"] .w5-overlay { position: static; }
+
+/* ---------------------------------------------------------------- narrow width
+ * The band wraps to two rows rather than overflowing, and the tool row goes icon-only. */
+
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w5"] .w5-cmd-label { display: none; }
+  [data-pmx-window="w5"] .w5-kbd { display: none; }
+  [data-pmx-window="w5"] .w5-brand-name { display: none; }
+  [data-pmx-window="w5"] .w5-toolrow { padding: 3px var(--sm) 0; gap: 4px; flex-wrap: wrap; }
+  [data-pmx-window="w5"] .w5-surfaces { max-height: 30%; }
+  [data-pmx-window="w5"] .w5-cmdlayer { padding-top: 8%; }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w5"] .w5-shell[data-w5-mount="popout"] {
+  border-left: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+}
+[data-pmx-window="w5"] .w5-shell[data-w5-mount="popout"] .w5-toolrow { flex-wrap: nowrap; }
+
+/* ---------------------------------------------------------------- reduced motion */
+
+[data-motion="reduced"][data-pmx-window="w5"] .w5-cmdlayer { transition: none !important; }
+[data-motion="reduced"][data-pmx-window="w5"] .w5-cmdlayer[data-open="0"] { visibility: hidden !important; }
+[data-motion="reduced"][data-pmx-window="w5"] .w5-cmdlayer[data-open="1"] { visibility: visible !important; opacity: 1 !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * The command surface is INVOKED, not merely shown. It sweeps up from its own bar
+ * with a slight vertical compression that resolves, so the panel reads as having
+ * been pulled out of the bar rather than dropped on top of it. Rows then arrive
+ * in order, which also makes the list scannable from the top down.
+ */
+@keyframes pmx-w5-sweep {
+  from { opacity: 0; transform: translateY(14px) scaleY(.9); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-w5-row {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w5"] .w5-cmdpanel {
+  transform-origin: bottom center;
+  animation: pmx-w5-sweep var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w5"] .w5-cmdrow {
+  animation: pmx-w5-row var(--motion-fast) var(--ease-spring-real) both;
+}
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(1) { animation-delay: 26ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(2) { animation-delay: 52ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(3) { animation-delay: 78ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(4) { animation-delay: 104ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(5) { animation-delay: 130ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(6) { animation-delay: 156ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(7) { animation-delay: 180ms; }
+[data-pmx-window="w5"] .w5-cmdrow:nth-child(8) { animation-delay: 180ms; }
+
+[data-pmx-window="w5"] .w5-cmd {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w5"] .w5-cmd:active { transform: scale(.96); }
+
+[data-motion="reduced"][data-pmx-window="w5"] .w5-cmdpanel,
+[data-motion="reduced"][data-pmx-window="w5"] .w5-cmdrow {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w5"] .w5-cmdpanel,
+  [data-pmx-window="w5"] .w5-cmdrow {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
+
+/* ---------------------------------------------------------------- pinned history rail
+ * This concept renders its own transient history, so before now it never mounted the
+ * shared module and never showed thread status at all. The rail declares that region.
+ *
+ * It is always present so the pin is always reachable: a slim edge carrying just the
+ * control, widening to a real column when engaged. The shell becomes a grid in the
+ * pinned state and every pre-existing child is pushed to column 2 — that way the
+ * layout switch needs no knowledge of this window's internal structure, which is what
+ * keeps the change from being invasive.
+ */
+[data-pmx-window="w5"] .w5-pinrail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  transition: width var(--motion-med) var(--ease-spring-real);
+}
+[data-pmx-window="w5"] .w5-pinrail[data-w5-pinned="0"] { width: 30px; }
+[data-pmx-window="w5"] .w5-pinrail[data-w5-pinned="0"] .w5-pinrail-title,
+[data-pmx-window="w5"] .w5-pinrail[data-w5-pinned="0"] .w5-pinrail-body { display: none; }
+
+[data-pmx-window="w5"] .w5-pinrail-head {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: var(--sm) 3px;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+[data-pmx-window="w5"] .w5-pinrail[data-w5-pinned="1"] .w5-pinrail-head {
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w5"] .w5-pinrail-title {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-window="w5"] .w5-pinrail-body {
+  flex: 1 1 auto; min-height: 0; min-width: 0;
+  overflow-y: auto; overflow-x: hidden;
+}
+
+/* Pinned: the shell becomes two columns and everything that was already here moves to
+   the second one. */
+[data-pmx-window="w5"] .w5-shell[data-w5-pinned="1"] {
+  display: grid;
+  grid-template-columns: clamp(200px, 23%, 268px) minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  align-content: stretch;
+}
+[data-pmx-window="w5"] .w5-shell[data-w5-pinned="1"] > * { grid-column: 2; min-width: 0; }
+[data-pmx-window="w5"] .w5-shell[data-w5-pinned="1"] > .w5-pinrail {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  width: auto;
+}
+
+[data-motion="reduced"][data-pmx-window="w5"] .w5-pinrail { transition: none !important; }

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qwen 3.8 · Assistant Chat Concepts · Puppet Master</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff8a5c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%231c1723'/%3E%3C/svg%3E">
+<script>
+(function () {
+  try {
+    var s = JSON.parse(localStorage.getItem("pmc-qwen38-gallery-v2") || "null");
+    document.documentElement.dataset.theme = (s && s.chromeTheme) || "friendly-dark";
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800&family=Orbitron:wght@500;700;800&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/motion.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/scrollbars.css">
+<link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+<div class="g-root" id="gRoot" data-mode="focus" data-concept-model="Qwen 3.8">
+
+  <header class="g-topbar">
+    <div class="g-brand">
+      <span class="g-brand-glyph"></span>
+      <span>Puppet Master</span>
+      <span class="g-brand-sub">Assistant Chat concept comparison</span>
+    </div>
+    <span class="pmq-badge-model"><span class="pmq-badge-glyph"></span>Qwen 3.8</span>
+    <nav class="g-modes" aria-label="Workspace mode">
+      <button class="g-mode pmq-active" type="button" data-mode="focus">Focus</button>
+      <button class="g-mode" type="button" data-mode="compare">Compare</button>
+      <button class="g-mode" type="button" data-mode="catalog">Catalog</button>
+    </nav>
+    <div class="g-topbar-right">
+      <button class="g-iconbtn g-ctl-global" type="button" id="gThemeBtn" aria-label="Theme">
+        <span class="g-swatch" id="gThemeSwatch"></span><span id="gThemeName">Friendly Dark</span><i data-ico="chevDown"></i>
+      </button>
+      <button class="g-iconbtn" type="button" id="gMotionBtn" aria-pressed="false" aria-label="Reduced motion">
+        <i data-ico="pause"></i><span>Motion</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="g-ctlbar">
+    <div class="g-ctl g-ctl-global">
+      <span class="g-ctl-k">Chat width</span>
+      <div class="g-presets" id="gPresets"></div>
+      <input class="g-slider" id="gSlider" type="range" min="520" max="1200" step="5" value="750" aria-label="Chat width">
+      <span class="g-pxread" id="gPxRead">750 px</span>
+    </div>
+    <div class="g-ctl g-ctl-global">
+      <span class="g-ctl-k">App rail</span>
+      <div class="g-seg" id="gRailSeg">
+        <button type="button" data-rail="open" class="pmq-active">Open</button>
+        <button type="button" data-rail="closed">Closed</button>
+      </div>
+    </div>
+    <div class="g-ctl g-ctl-global">
+      <span class="g-ctl-k">Mount</span>
+      <div class="g-seg" id="gMountSeg">
+        <button type="button" data-mount="docked" class="pmq-active"><i data-ico="dock"></i>Docked</button>
+        <button type="button" data-mount="popout"><i data-ico="popout"></i>Pop-out</button>
+      </div>
+    </div>
+    <div class="g-ctl g-ctl-global">
+      <span class="g-ctl-k">Scenario</span>
+      <button class="g-pairbtn" type="button" id="gScenarioBtn" aria-label="Demo scenario"><i data-ico="chats"></i><span>Chat redesign — live conversation</span><i data-ico="chevDown"></i></button>
+    </div>
+  </div>
+
+  <main class="g-stage">
+    <section class="g-pane g-pane-a" aria-label="Concept pane A">
+      <div class="g-pane-head">
+        <span class="g-pane-tag">Live concept</span>
+        <button class="g-pairbtn g-pane-win" type="button" data-pane="a" aria-label="Window concept"><i data-ico="popout"></i><span>W1 · Masthead</span></button>
+        <button class="g-pairbtn g-pane-thr" type="button" data-pane="a" aria-label="Thread concept"><i data-ico="chats"></i><span>T1 · Measured Prose</span></button>
+        <span class="g-pane-head-right">
+          <button class="g-pc g-pc-demo" type="button" data-pane="a" aria-label="Pane A demo triggers" title="Demo harness triggers"><i data-ico="flask"></i><span class="g-pc-v">Demo</span></button>
+          <button class="g-pc g-pc-pin" type="button" data-pane="a" aria-pressed="false" aria-label="Pin pane A history panel" title="Keep the history panel open"><i data-ico="pin"></i><span class="g-pc-v">Pin</span></button>
+          <span class="pmq-mountlabel g-pane-mount">Docked</span>
+        </span>
+      </div>
+      <div class="g-pane-ctl" data-pane="a"></div>
+      <iframe class="g-frame" id="frameA" title="Assistant Chat concept pane A" src="about:blank"></iframe>
+    </section>
+    <section class="g-pane g-pane-b" aria-label="Concept pane B">
+      <div class="g-pane-head">
+        <span class="g-pane-tag">Compare</span>
+        <button class="g-pairbtn g-pane-win" type="button" data-pane="b" aria-label="Window concept"><i data-ico="popout"></i><span>W5 · Chrome Spine</span></button>
+        <button class="g-pairbtn g-pane-thr" type="button" data-pane="b" aria-label="Thread concept"><i data-ico="chats"></i><span>T6 · Dense Rows</span></button>
+        <span class="g-pane-head-right">
+          <button class="g-pc g-pc-demo" type="button" data-pane="b" aria-label="Pane B demo triggers" title="Demo harness triggers"><i data-ico="flask"></i><span class="g-pc-v">Demo</span></button>
+          <button class="g-pc g-pc-pin" type="button" data-pane="b" aria-pressed="false" aria-label="Pin pane B history panel" title="Keep the history panel open"><i data-ico="pin"></i><span class="g-pc-v">Pin</span></button>
+          <span class="pmq-mountlabel g-pane-mount">Docked</span>
+        </span>
+      </div>
+      <div class="g-pane-ctl" data-pane="b"></div>
+      <iframe class="g-frame" id="frameB" title="Assistant Chat concept pane B" src="about:blank"></iframe>
+    </section>
+  </main>
+
+  <div class="g-catalog pmq-scroll" id="gCatalog"></div>
+
+  <footer class="g-statusbar">
+    <span class="g-status-live"><i></i>Interactive prototype</span>
+    <span><b>8</b> window concepts</span>
+    <span><b>8</b> thread concepts</span>
+    <span><b>64</b> mountable pairings</span>
+    <span><b>17</b> demo threads · <b>440+</b> messages</span>
+    <div class="g-status-right">
+      <span>Concept lineage only · Plans canon unchanged</span>
+      <span class="pmq-mountlabel">Qwen 3.8</span>
+    </div>
+  </footer>
+</div>
+
+<script src="_shared/labels.js"></script>
+<script src="_shared/format.js"></script>
+<script src="_shared/icons.js"></script>
+<script src="_shared/popups.js"></script>
+<script src="_shared/registry.js"></script>
+<script>
+(function () {
+  const THEMES = [
+    ["friendly-dark", "Friendly Dark", "#2e2639", "#ff8a5c"],
+    ["friendly-light", "Friendly Light", "#fffdf9", "#e5643a"],
+    ["retro-dark", "Retro Dark", "#101810", "#00e03c"],
+    ["retro-light", "Retro Light", "#fbfef8", "#0d8f34"],
+    ["basic-light", "Basic Light", "#ffffff", "#2563d8"],
+    ["basic-dark", "Basic Dark", "#262930", "#5b9dff"],
+    ["glass-dark", "Glass Dark", "#1a2130", "#6cc2ff"],
+    ["glass-light", "Glass Light", "#f8fafd", "#1f7fd6"]
+  ];
+  const PRESETS = [["minimum", "Minimum", 520], ["normal", "Normal", 750], ["wider", "Wider", 975], ["wide", "Wide", 1200]];
+  const SCENARIOS = [
+    ["thread-16", "Chat redesign — live conversation", "sustained talk · markdown · long-message collapse · search"],
+    ["thread-02", "Usage page review", "sustained conversation · search"],
+    ["thread-15", "Weekend project planning", "ordinary sustained conversation"],
+    ["thread-09", "Finding an old decision", "120-message history · search jump · chapters"],
+    ["thread-13", "Generated project brief", "artifacts · markdown brief · diagram"],
+    ["thread-01", "Tastebook — planning chat", "goal · tasks · subagents · diffs · questionnaire"],
+    ["thread-11", "Goal run — chat redesign", "running goal · progress · 8 subagents"],
+    ["thread-14", "Security audit follow-up", "blocked goal · exact blocker reason"],
+    ["thread-06", "Failing import tests", "paused goal · diffs · tasks"],
+    ["thread-12", "Questions waiting for answers", "questionnaire queue · persistence"],
+    ["thread-05", "Browser research session", "subagents · browser tab · thought stream"],
+    ["thread-03", "Planning Wizard handoff", "long user message · draft history · artifact"],
+    ["thread-08", "Draft recovery check", "seeded draft · revision history"],
+    ["thread-10", "Pull request review", "diff group · subagents"],
+    ["thread-04", "Provider routing setup", "provider · model · effort selectors"],
+    ["thread-07", "Theme behavior review", "plain conversation"],
+    ["thread-17", "Provider & access redesign", "goal · questions · subagents · approvals · warnings · artifacts"]
+  ];
+  const DEMO_TRIGGERS = {
+    history: ["history.peek", "history.pin_compact", "history.pin_full", "history.unpin"],
+    question: ["question.prepare", "question.select", "question.next", "question.skip", "question.cancel", "question.submit"],
+    goal: ["goal.start", "goal.progress", "goal.pause", "goal.resume", "goal.update", "goal.blocked", "goal.complete"],
+    todo: ["todo.add", "todo.complete", "todo.reopen", "todo.block"],
+    subagent: ["subagent.spawn", "subagent.progress", "subagent.complete", "subagent.fail", "subagent.retry"],
+    activity: ["activity.thinking_summary", "activity.search", "activity.edit", "activity.test"],
+    diff: ["diff.create", "diff.update", "diff.open"],
+    artifact: ["artifact.loading", "artifact.ready", "artifact.switch", "artifact.error", "artifact.close"],
+    decision: ["decision.approval_open", "decision.approve", "decision.deny", "decision.branch"],
+    thread: ["thread.send_request", "thread.receive_response", "thread.spawn_related", "thread.branch"],
+    system: ["system.port_collision", "system.cross_project", "system.compact_now", "system.redirect", "system.crew", "system.reset"]
+  };
+  const LS = "pmc-qwen38-gallery-v2";
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const DEFAULTS = {
+    mode: "focus", motionReduced: false, chromeTheme: "friendly-dark",
+    panes: {
+      a: { w: "w1", t: "t1", theme: "friendly-dark", width: 750, rail: "open", mount: "docked", scenario: "thread-16", pin: false },
+      b: { w: "w5", t: "t6", theme: "glass-dark", width: 975, rail: "open", mount: "docked", scenario: "thread-09", pin: false }
+    }
+  };
+  let state = clone(DEFAULTS);
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS));
+    if (saved && saved.panes) {
+      state.mode = saved.mode || state.mode;
+      state.motionReduced = !!saved.motionReduced;
+      state.chromeTheme = saved.chromeTheme || state.chromeTheme;
+      ["a", "b"].forEach(p => Object.assign(state.panes[p], saved.panes[p] || {}));
+    }
+  } catch (e) {}
+
+  const $ = s => document.querySelector(s);
+  const root = $("#gRoot");
+  window.PMIcons.hydrate(document);
+  const themeName = id => { const t = THEMES.find(x => x[0] === id); return t ? t[1] : id; };
+  const themeColors = id => { const t = THEMES.find(x => x[0] === id) || THEMES[0]; return [t[2], t[3]]; };
+  const scenarioTitle = id => { const s = SCENARIOS.find(x => x[0] === id); return s ? s[1] : id; };
+  const shortTheme = id => { const m = { friendly: "Fri", retro: "Ret", basic: "Bas", glass: "Gla" }; const parts = id.split("-"); return (m[parts[0]] || parts[0]) + "·" + (parts[1] === "dark" ? "D" : "L"); };
+
+  const panes = {
+    a: { frame: $("#frameA"), winBtn: document.querySelector('.g-pane-a .g-pane-win'), thrBtn: document.querySelector('.g-pane-a .g-pane-thr'), mountEl: document.querySelector('.g-pane-a .g-pane-mount'), pinBtn: document.querySelector('.g-pane-a .g-pc-pin'), ctl: document.querySelector('.g-pane-ctl[data-pane="a"]') },
+    b: { frame: $("#frameB"), winBtn: document.querySelector('.g-pane-b .g-pane-win'), thrBtn: document.querySelector('.g-pane-b .g-pane-thr'), mountEl: document.querySelector('.g-pane-b .g-pane-mount'), pinBtn: document.querySelector('.g-pane-b .g-pc-pin'), ctl: document.querySelector('.g-pane-ctl[data-pane="b"]') }
+  };
+
+  function persist() {
+    try {
+      const nr = p => { const o = Object.assign({}, p); delete o.ready; return o; };
+      localStorage.setItem(LS, JSON.stringify({ mode: state.mode, motionReduced: state.motionReduced, chromeTheme: state.chromeTheme, panes: { a: nr(state.panes.a), b: nr(state.panes.b) } }));
+    } catch (e) {}
+  }
+
+  function hostUrl(p) {
+    const s = state.panes[p];
+    return "host.html?w=" + s.w + "&t=" + s.t + "&mount=" + s.mount + "&theme=" + s.theme + "&width=" + s.width + "&rail=" + s.rail + "&rm=" + (state.motionReduced ? "1" : "0") + "&dt=" + s.scenario;
+  }
+  function drive(p, type, payload) { const f = panes[p].frame; if (f.contentWindow) f.contentWindow.postMessage(Object.assign({ pm: type }, payload), "*"); }
+  function sendPane(p) {
+    const s = state.panes[p];
+    drive(p, "pm-theme", { theme: s.theme });
+    drive(p, "pm-rm", { on: state.motionReduced });
+    drive(p, "pm-chat-width", { px: s.width });
+    drive(p, "pm-rail", { open: s.rail === "open" });
+    drive(p, "pm-mount", { mode: s.mount });
+    drive(p, "pm-pin", { on: !!s.pin });
+    drive(p, "pm-data-thread", { id: s.scenario });
+  }
+  function setLabel(btn, kind, id) {
+    const meta = kind === "w" ? window.PMChatRegistry.windowMeta[id] : window.PMChatRegistry.threadMeta[id];
+    const span = btn.querySelector("span");
+    if (span && meta) span.textContent = meta.id.toUpperCase() + " · " + meta.label;
+  }
+  function setSegActive(seg, attr, val) { seg.querySelectorAll("button").forEach(b => b.classList.toggle("pmq-active", b.dataset[attr] === val)); }
+
+  function applyChrome(id) {
+    state.chromeTheme = id;
+    document.documentElement.dataset.theme = id;
+    const [bg, acc] = themeColors(id);
+    $("#gThemeSwatch").style.background = "linear-gradient(135deg, " + bg + " 55%, " + acc + " 55%)";
+    $("#gThemeName").textContent = themeName(id);
+  }
+  function paintTopWidth(px) {
+    const pct = ((px - 520) / (1200 - 520)) * 100;
+    $("#gSlider").style.setProperty("--fill", pct + "%");
+    $("#gPxRead").textContent = px + " px";
+    $("#gSlider").value = px;
+    $("#gPresets").querySelectorAll(".g-preset").forEach((b, i) => b.classList.toggle("pmq-active", PRESETS[i][2] === px));
+  }
+  function setScenarioLabelTop(id) { const sp = $("#gScenarioBtn").querySelector("span"); if (sp) sp.textContent = scenarioTitle(id); }
+
+  function setPane(p, patch) { Object.assign(state.panes[p], patch); sendPane(p); persist(); refresh(); }
+  function refreshPin(p) {
+    const on = !!state.panes[p].pin;
+    panes[p].pinBtn.classList.toggle("pmq-active", on);
+    panes[p].pinBtn.setAttribute("aria-pressed", String(on));
+  }
+  function setPanePin(p, on) { state.panes[p].pin = !!on; drive(p, "pm-pin", { on: state.panes[p].pin }); refreshPin(p); persist(); }
+  function setPanePair(p, kind, id) { state.panes[p][kind] = id; drive(p, "pm-pair", { windowId: state.panes[p].w, threadId: state.panes[p].t }); persist(); refresh(); }
+  function setPaneThemeChrome(p, id) { setPane(p, { theme: id }); applyChrome(id); }
+
+  function buildPaneCtl(p) {
+    const ctl = panes[p].ctl;
+    ctl.innerHTML = "";
+    const th = document.createElement("button");
+    th.type = "button"; th.className = "g-pc g-pc-theme"; th.setAttribute("aria-label", "Pane theme");
+    th.innerHTML = '<span class="g-swatch"></span><span class="g-pc-v"></span>';
+    th.addEventListener("click", e => window.PMChatPopups.menu(e.currentTarget, THEMES.map(t => ({ label: t[1], checked: state.panes[p].theme === t[0], onpick: () => setPane(p, { theme: t[0] }) })), { title: "Pane theme", width: 200 }));
+    ctl.appendChild(th);
+    const wwrap = document.createElement("div"); wwrap.className = "g-pc-width";
+    PRESETS.forEach(pr => { const b = document.createElement("button"); b.type = "button"; b.className = "g-pc-w"; b.dataset.px = pr[2]; b.textContent = pr[2]; b.title = pr[1]; b.addEventListener("click", () => setPane(p, { width: pr[2] })); wwrap.appendChild(b); });
+    ctl.appendChild(wwrap);
+    const sc = document.createElement("button"); sc.type = "button"; sc.className = "g-pc g-pc-scenario"; sc.setAttribute("aria-label", "Pane scenario");
+    sc.innerHTML = '<i data-ico="chats"></i><span class="g-pc-v"></span>';
+    sc.addEventListener("click", e => window.PMChatPopups.menu(e.currentTarget, SCENARIOS.map(s => ({ label: s[1], sub: s[2], checked: state.panes[p].scenario === s[0], onpick: () => setPane(p, { scenario: s[0] }) })), { title: "Pane scenario", width: 300, search: true }));
+    ctl.appendChild(sc);
+    const rw = document.createElement("div"); rw.className = "g-pc-seg";
+    [["open", "Open"], ["closed", "Closed"]].forEach(([v, lab]) => { const b = document.createElement("button"); b.type = "button"; b.className = "g-pc-segbtn"; b.dataset.rail = v; b.textContent = lab; b.addEventListener("click", () => setPane(p, { rail: v })); rw.appendChild(b); });
+    ctl.appendChild(rw);
+    const mw = document.createElement("div"); mw.className = "g-pc-seg";
+    [["docked", "dock"], ["popout", "popout"]].forEach(([v, ico]) => { const b = document.createElement("button"); b.type = "button"; b.className = "g-pc-segbtn g-pc-ico"; b.dataset.mount = v; b.title = v === "popout" ? "Pop-out" : "Docked"; b.innerHTML = '<i data-ico="' + ico + '"></i>'; b.addEventListener("click", () => setPane(p, { mount: v })); mw.appendChild(b); });
+    ctl.appendChild(mw);
+    window.PMIcons.hydrate(ctl);
+  }
+  function refreshPaneCtl(p) {
+    const s = state.panes[p]; const ctl = panes[p].ctl;
+    const th = ctl.querySelector(".g-pc-theme"); const [bg, acc] = themeColors(s.theme);
+    th.querySelector(".g-swatch").style.background = "linear-gradient(135deg, " + bg + " 55%, " + acc + " 55%)";
+    th.querySelector(".g-pc-v").textContent = shortTheme(s.theme);
+    ctl.querySelectorAll(".g-pc-w").forEach(b => b.classList.toggle("pmq-active", +b.dataset.px === s.width));
+    ctl.querySelector(".g-pc-scenario .g-pc-v").textContent = scenarioTitle(s.scenario);
+    ctl.querySelectorAll("[data-rail]").forEach(b => b.classList.toggle("pmq-active", b.dataset.rail === s.rail));
+    ctl.querySelectorAll("[data-mount]").forEach(b => b.classList.toggle("pmq-active", b.dataset.mount === s.mount));
+  }
+
+  function refresh() {
+    applyChrome(state.chromeTheme);
+    paintTopWidth(state.panes.a.width);
+    setSegActive($("#gRailSeg"), "rail", state.panes.a.rail);
+    setSegActive($("#gMountSeg"), "mount", state.panes.a.mount);
+    setScenarioLabelTop(state.panes.a.scenario);
+    ["a", "b"].forEach(p => {
+      setLabel(panes[p].winBtn, "w", state.panes[p].w);
+      setLabel(panes[p].thrBtn, "t", state.panes[p].t);
+      panes[p].mountEl.textContent = state.panes[p].mount === "popout" ? "Pop-out" : "Docked";
+      refreshPin(p);
+      refreshPaneCtl(p);
+    });
+  }
+
+  window.addEventListener("message", e => {
+    const m = e.data;
+    if (!m || m.pm !== "pm-ready") return;
+    ["a", "b"].forEach(p => { if (panes[p].frame.contentWindow === e.source) { state.panes[p].ready = true; sendPane(p); } });
+  });
+
+  $("#gThemeBtn").addEventListener("click", e => {
+    window.PMChatPopups.menu(e.currentTarget, THEMES.map(t => ({ label: t[1], checked: state.panes.a.theme === t[0], onpick: () => setPaneThemeChrome("a", t[0]) })), { title: "Theme", width: 220 });
+  });
+  const motionBtn = $("#gMotionBtn");
+  motionBtn.addEventListener("click", () => {
+    state.motionReduced = !state.motionReduced;
+    document.documentElement.dataset.motion = state.motionReduced ? "reduced" : "full";
+    motionBtn.classList.toggle("pmq-active", state.motionReduced);
+    motionBtn.setAttribute("aria-pressed", String(state.motionReduced));
+    motionBtn.querySelector("span").textContent = state.motionReduced ? "Reduced" : "Motion";
+    sendPane("a"); sendPane("b"); persist();
+  });
+
+  const presetsEl = $("#gPresets");
+  PRESETS.forEach(([id, label, px]) => {
+    const b = document.createElement("button"); b.className = "g-preset"; b.type = "button"; b.textContent = label; b.title = px + " px";
+    b.addEventListener("click", () => setPane("a", { width: px })); presetsEl.appendChild(b);
+  });
+  $("#gSlider").addEventListener("input", e => setPane("a", { width: Math.max(520, Math.min(1200, +e.target.value)) }));
+  $("#gRailSeg").addEventListener("click", e => { const b = e.target.closest("[data-rail]"); if (b) setPane("a", { rail: b.dataset.rail }); });
+  $("#gMountSeg").addEventListener("click", e => { const b = e.target.closest("[data-mount]"); if (b) setPane("a", { mount: b.dataset.mount }); });
+  $("#gScenarioBtn").addEventListener("click", e => {
+    window.PMChatPopups.menu(e.currentTarget, SCENARIOS.map(s => ({ label: s[1], sub: s[2], checked: state.panes.a.scenario === s[0], onpick: () => setPane("a", { scenario: s[0] }) })), { title: "Demo scenario", width: 340, search: true });
+  });
+
+  function pairMenu(anchor, p, kind) {
+    const metas = kind === "w" ? window.PMChatRegistry.windows() : window.PMChatRegistry.threads();
+    window.PMChatPopups.menu(anchor, metas.map(m => ({ label: m.id.toUpperCase() + " · " + m.label, sub: m.blurb, checked: state.panes[p][kind] === m.id, onpick: () => setPanePair(p, kind, m.id) })), { title: kind === "w" ? "Window concept" : "Thread concept", width: 300 });
+  }
+  panes.a.pinBtn.addEventListener("click", () => setPanePin("a", !state.panes.a.pin));
+  panes.b.pinBtn.addEventListener("click", () => setPanePin("b", !state.panes.b.pin));
+  function demoMenu(anchor, p) {
+    const items = [];
+    Object.keys(DEMO_TRIGGERS).forEach(g => {
+      items.push({ sep: true, label: g });
+      DEMO_TRIGGERS[g].forEach(n => {
+        items.push({ label: n.split(".")[1].replace(/_/g, " "), sub: n, onpick: () => drive(p, "pm-trigger", { name: n }) });
+      });
+    });
+    window.PMChatPopups.menu(anchor, items, { title: "Demo triggers · harness only", width: 300, search: true });
+  }
+  document.querySelectorAll(".g-pc-demo").forEach(b => {
+    b.addEventListener("click", e => demoMenu(e.currentTarget, b.dataset.pane));
+  });
+  panes.a.winBtn.addEventListener("click", e => pairMenu(e.currentTarget, "a", "w"));
+  panes.a.thrBtn.addEventListener("click", e => pairMenu(e.currentTarget, "a", "t"));
+  panes.b.winBtn.addEventListener("click", e => pairMenu(e.currentTarget, "b", "w"));
+  panes.b.thrBtn.addEventListener("click", e => pairMenu(e.currentTarget, "b", "t"));
+
+  document.querySelector(".g-modes").addEventListener("click", e => {
+    const b = e.target.closest("[data-mode]"); if (!b) return;
+    state.mode = b.dataset.mode; root.dataset.mode = state.mode;
+    document.querySelector(".g-modes").querySelectorAll(".g-mode").forEach(x => x.classList.toggle("pmq-active", x === b));
+    if (state.mode === "focus") applyChrome(state.panes.a.theme);
+    persist();
+  });
+
+  const MINI = {
+    w1: '<div class="g-mini-col"><div class="mb" style="height:10px;width:100%"></div><div class="mb mb-acc" style="height:6px;width:70%"></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:88%"></div><div class="mb mb-usr" style="width:52%"></div><div class="mb mb-ast" style="width:74%"></div></div></div>',
+    w2: '<div class="g-mini-col"><div class="mb" style="height:8px;width:100%"></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:90%"></div><div class="mb mb-usr" style="width:48%"></div><div class="mb mb-ast" style="width:66%"></div><div class="mb mb-usr" style="width:40%"></div></div></div>',
+    w3: '<div class="g-mini-col"><div class="mb" style="height:7px;width:100%"></div><div class="g-mini-row"><div class="mb mb-acc" style="height:12px;width:30%"></div><div class="mb" style="height:12px;width:30%"></div><div class="mb" style="height:12px;width:30%"></div></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:84%"></div><div class="mb mb-usr" style="width:56%"></div><div class="mb mb-ast" style="width:70%"></div></div></div>',
+    w4: '<div class="g-mini-col" style="position:relative"><div class="mb mb-acc" style="height:8px;width:26%;position:absolute;top:0;left:0"></div><div class="mb" style="height:8px;width:14%;position:absolute;top:0;right:0"></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:92%"></div><div class="mb mb-usr" style="width:50%"></div><div class="mb mb-ast" style="width:78%"></div></div><div class="mb" style="height:8px;width:34%;position:absolute;bottom:0;left:0"></div><div class="mb mb-acc" style="height:8px;width:14%;position:absolute;bottom:0;right:0"></div></div>',
+    w5: '<div class="g-mini-row"><div class="g-mini-col" style="width:10px;flex:none;gap:4px"><div class="mb mb-acc" style="width:100%;height:7px"></div><div class="mb" style="width:100%;height:7px"></div><div class="mb" style="width:100%;height:7px"></div><div class="mb" style="width:100%;height:7px"></div></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:90%"></div><div class="mb mb-usr" style="width:52%"></div><div class="mb mb-ast" style="width:72%"></div><div class="mb mb-usr" style="width:44%"></div></div></div>',
+    w6: '<div class="g-mini-col"><div class="g-mini-row" style="flex-wrap:wrap"><div class="mb mb-acc" style="height:8px;width:26%;border-radius:5px"></div><div class="mb" style="height:8px;width:18%;border-radius:5px"></div><div class="mb" style="height:8px;width:22%;border-radius:5px"></div><div class="mb" style="height:8px;width:14%;border-radius:5px"></div></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:86%"></div><div class="mb mb-usr" style="width:50%"></div><div class="mb mb-ast" style="width:74%"></div></div></div>',
+    w7: '<div class="g-mini-row"><div class="g-mini-col" style="width:14px;flex:none;gap:4px"><div class="mb" style="width:100%;height:10px;border-radius:3px"></div><div class="mb mb-acc" style="width:100%;height:10px;border-radius:3px"></div><div class="mb" style="width:100%;height:10px;border-radius:3px"></div><div class="mb" style="width:100%;height:10px;border-radius:3px"></div></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb" style="height:6px;width:100%"></div><div class="mb mb-ast" style="width:88%"></div><div class="mb mb-usr" style="width:54%"></div><div class="mb mb-ast" style="width:68%"></div></div></div>',
+    w8: '<div class="g-mini-col"><div class="mb mb-acc" style="height:3px;width:100%"></div><div class="mb" style="height:3px;width:100%"></div><div class="mb" style="height:3px;width:100%"></div><div class="g-mini-col" style="gap:3px;justify-content:center"><div class="mb mb-ast" style="width:92%"></div><div class="mb mb-usr" style="width:48%"></div><div class="mb mb-ast" style="width:80%"></div><div class="mb mb-usr" style="width:38%"></div></div></div>',
+    t1: '<div class="g-mini-col" style="gap:4px;justify-content:center"><div class="mb mb-ast" style="width:88%"></div><div class="mb mb-ast" style="width:70%"></div><div class="mb mb-usr" style="width:52%"></div><div class="mb mb-ast" style="width:80%"></div><div class="mb mb-ast" style="width:58%"></div></div>',
+    t2: '<div class="g-mini-col" style="gap:5px;justify-content:center"><div class="mb mb-ast" style="width:100%;height:16px;border:1px solid var(--border-strong);background:transparent"></div><div class="mb mb-usr" style="width:100%;height:16px;border:1px solid var(--border-strong);background:transparent"></div><div class="mb mb-ast" style="width:100%;height:16px;border:1px solid var(--border-strong);background:transparent"></div></div>',
+    t3: '<div class="g-mini-row" style="gap:6px"><div class="g-mini-col" style="gap:4px;justify-content:center;flex:1"><div class="mb mb-ast" style="width:92%"></div><div class="mb mb-usr" style="width:60%"></div><div class="mb mb-ast" style="width:78%"></div></div><div class="g-mini-col" style="width:16px;flex:none;gap:4px;border-left:1px solid var(--border-strong);padding-left:3px;justify-content:center"><div class="mb" style="width:100%;height:3px"></div><div class="mb" style="width:100%;height:3px"></div><div class="mb" style="width:100%;height:3px"></div></div></div>',
+    t4: '<div class="g-mini-row" style="gap:5px"><div class="g-mini-col" style="width:10px;flex:none;gap:6px;justify-content:center"><div class="mb" style="width:100%;height:3px"></div><div class="mb" style="width:100%;height:3px"></div><div class="mb" style="width:100%;height:3px"></div></div><div class="g-mini-col" style="gap:4px;justify-content:center;flex:1"><div class="mb mb-ast" style="width:90%"></div><div class="mb mb-usr" style="width:56%"></div><div class="mb mb-ast" style="width:74%"></div></div></div>',
+    t5: '<div class="g-mini-col" style="gap:2px;justify-content:center"><div class="mb mb-acc" style="height:3px;width:34%"></div><div class="mb mb-ast" style="width:94%;height:5px"></div><div class="mb mb-ast" style="width:88%;height:5px"></div><div class="mb mb-usr" style="width:64%;height:5px"></div><div class="mb mb-ast" style="width:90%;height:5px"></div><div class="mb mb-usr" style="width:52%;height:5px"></div></div>',
+    t6: '<div class="g-mini-col" style="gap:3px;justify-content:center"><div class="g-mini-row"><div class="mb mb-acc" style="width:12%;height:5px"></div><div class="mb mb-ast" style="width:70%;height:5px"></div></div><div class="g-mini-row"><div class="mb mb-acc" style="width:12%;height:5px"></div><div class="mb mb-ast" style="width:58%;height:5px"></div></div><div class="g-mini-row"><div class="mb mb-acc" style="width:12%;height:5px"></div><div class="mb mb-usr" style="width:46%;height:5px"></div></div><div class="g-mini-row"><div class="mb mb-acc" style="width:12%;height:5px"></div><div class="mb mb-ast" style="width:66%;height:5px"></div></div></div>',
+    t7: '<div class="g-mini-col" style="gap:4px"><div class="g-mini-row"><div class="mb mb-acc" style="height:10px;width:40%;border-radius:3px"></div><div class="mb" style="height:10px;width:28%;border-radius:3px"></div></div><div class="g-mini-col" style="gap:4px;justify-content:center;flex:1"><div class="mb mb-ast" style="width:90%"></div><div class="mb mb-usr" style="width:52%"></div><div class="mb mb-ast" style="width:76%"></div></div></div>',
+    t8: '<div class="g-mini-col" style="gap:4px;justify-content:center"><div class="mb mb-acc" style="height:5px;width:44%"></div><div class="mb mb-ast" style="width:88%"></div><div class="mb mb-usr" style="width:50%"></div><div class="mb mb-acc" style="height:5px;width:44%"></div><div class="mb mb-ast" style="width:80%"></div><div class="mb mb-usr" style="width:42%"></div></div>'
+  };
+  const TILE_PALETTE = [
+    ["#ff8a5c", "#7dd6a8"], ["#6cc2ff", "#b39dff"], ["#00e03c", "#37d2d8"], ["#5b9dff", "#9d8cff"],
+    ["#e5643a", "#2e9e70"], ["#1f7fd6", "#7457d8"], ["#ffc25e", "#ff6f7d"], ["#2e9e70", "#ffc25e"]
+  ];
+  function buildCatalog() {
+    const cat = $("#gCatalog"); cat.innerHTML = "";
+    const section = (title, sub, metas, kind, palOff) => {
+      const head = document.createElement("div"); head.className = "g-cat-head"; head.innerHTML = "<h2>" + title + "</h2><span>" + sub + "</span>"; cat.appendChild(head);
+      const grid = document.createElement("div"); grid.className = "g-cat-grid";
+      metas.forEach((m, i) => {
+        const pal = TILE_PALETTE[(i + palOff) % TILE_PALETTE.length];
+        const card = document.createElement("button"); card.className = "g-card"; card.type = "button"; card.style.animationDelay = (i * 35) + "ms";
+        card.style.setProperty("--tile-a", pal[0]);
+        card.style.setProperty("--tile-b", pal[1]);
+        card.innerHTML = '<div class="g-card-top"><span class="g-card-id">' + m.id.toUpperCase() + '</span><span class="g-card-name">' + m.label + '</span><span class="g-card-open">Open</span></div>' +
+          '<div class="g-mini" aria-hidden="true">' + MINI[m.id] + '</div><div class="g-card-blurb">' + m.blurb + "</div>";
+        card.addEventListener("click", () => {
+          if (kind === "w") state.panes.a.w = m.id; else state.panes.a.t = m.id;
+          state.mode = "focus"; root.dataset.mode = "focus";
+          document.querySelector(".g-modes").querySelectorAll(".g-mode").forEach(x => x.classList.toggle("pmq-active", x.dataset.mode === "focus"));
+          applyChrome(state.panes.a.theme);
+          drive("a", "pm-pair", { windowId: state.panes.a.w, threadId: state.panes.a.t });
+          persist(); refresh();
+        });
+        grid.appendChild(card);
+      });
+      cat.appendChild(grid);
+    };
+    section("Window concepts", "chrome around the conversation · any window hosts any thread", window.PMChatRegistry.windows(), "w", 0);
+    section("Thread concepts", "how the conversation itself reads · mountable in all eight windows", window.PMChatRegistry.threads(), "t", 3);
+  }
+
+  if (state.mode === "focus") state.chromeTheme = state.panes.a.theme;
+  document.documentElement.dataset.motion = state.motionReduced ? "reduced" : "full";
+  motionBtn.classList.toggle("pmq-active", state.motionReduced);
+  motionBtn.setAttribute("aria-pressed", String(state.motionReduced));
+  motionBtn.querySelector("span").textContent = state.motionReduced ? "Reduced" : "Motion";
+  root.dataset.mode = state.mode;
+  document.querySelector(".g-modes").querySelectorAll(".g-mode").forEach(x => x.classList.toggle("pmq-active", x.dataset.mode === state.mode));
+  buildPaneCtl("a"); buildPaneCtl("b");
+  applyChrome(state.chromeTheme);
+  paintTopWidth(state.panes.a.width);
+  buildCatalog();
+  refresh();
+  panes.a.frame.src = hostUrl("a");
+  panes.b.frame.src = hostUrl("b");
+})();
+</script>
+<script>
+/* ConceptHub bridge: pm-concept-ready / pm-concept-state */
+window.addEventListener("message", function (e) {
+  if (e.data && e.data.pmConcept === "state") {
+    window.dispatchEvent(new CustomEvent("pm-concept-state", { detail: { model: "Qwen 3.8", ready: true } }));
+  }
+});
+window.addEventListener("load", function () {
+  window.dispatchEvent(new CustomEvent("pm-concept-ready", { detail: { model: "Qwen 3.8" } }));
+});
+</script>
+</body>
+</html>

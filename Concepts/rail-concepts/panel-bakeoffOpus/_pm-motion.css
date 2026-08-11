@@ -1,0 +1,573 @@
+/* PANEL BAKEOFF - shared MOTION LAYER (CSS half; JS half is _pm-motion.js)
+   =====================================================================
+   The six design systems and nine variants are structurally sound and measure
+   clean, and they are also STATIC: the shared kit plus the component layer
+   carry 15 animation declarations between them (menu sprout, running-status
+   spin, hover reveal), while the panel designs themselves carry almost none -
+   vA has 2, every other version has 0. There is no expand easing, no list
+   enter, and vD is a navigation STACK with no push/pop at all.
+
+   This file is the missing vocabulary. It is opt-in: nothing here fires until
+   a version adds a .pmm-* class or calls a PMM.* helper, so adding the file
+   changes zero pixels and zero fit-check numbers on its own.
+
+   ---------------------------------------------------------------------
+   THE VOCABULARY - six primitives, and only six
+   ---------------------------------------------------------------------
+     1. .pmm-expand      section open / close      (accordion)
+     2. .pmm-frame       push / pop navigation     (vD stack, xS3 detail)
+     3. .pmm-enter       list rows arriving        (<= 4 stagger steps)
+     4. .pmm-sheet       sheet / drawer in-out     (vB sheet, xA2 casefile)
+     5. .pmm-lens-ind    selection indicator slide (F3-445 lens strip, tabs)
+     6. .pmm-flash       value-change flash        (run counts, container state)
+
+   If a motion is not one of these six, it does not belong in a side panel.
+   Six is also the number a Slint port can carry without a bespoke animation
+   per screen.
+
+   ---------------------------------------------------------------------
+   PER-THEME MAPPING - one table, not four copies of every rule
+   ---------------------------------------------------------------------
+   The token layer ALREADY encodes a motion personality per family: every
+   [data-theme] block in _pm-tokens.css overrides --ease-default and
+   --motion-med (retro 140ms/--ease-snap, basic 200ms/--ease-smooth, glass
+   320ms/--ease-out, friendly 260ms/--ease-spring). So the primitives below
+   never name a family. They read seven --pmm-* knobs, and the knobs are
+   declared once per family in the block that follows this comment:
+
+     family    ease in        ease out       in     out    travel  step   peak
+     -------   ------------   ------------   ----   ----   ------  -----  ----
+     retro     --ease-snap    --ease-snap    fast   fast   4px     15ms   .22
+     basic     --ease-smooth  --ease-smooth  fast   fast   2px     0ms    .10
+     glass     --ease-out     --ease-smooth  med    fast   12px    30ms   .14
+     friendly  --ease-spring  --ease-out     med    fast   8px     40ms   .18
+
+   Read it as personality, not decoration:
+     retro     mechanical. --ease-snap both ways, no overshoot, the shortest
+               travel that still reads as movement, a hard flash. It declares
+               3px 3px 0 offset shadows and 0px radii; it should feel like a
+               relay closing, not like a thing gliding.
+     basic     THE ACCESSIBILITY THEME, and so the most restrained: 2px of
+               travel, symmetric --ease-smooth, NO stagger at all (step 0ms
+               makes every row arrive together), the dimmest flash. Nothing
+               here moves far enough to be a distraction, and nothing depends
+               on motion to be understood.
+     glass     fluid. --ease-out decelerates into place, the longest travel,
+               and the only family that spends --motion-slow on a sheet.
+     friendly  bouncy. --ease-spring on transform-only primitives, softened to
+               --ease-out on the accordion, because a spring on a height
+               overshoots past the natural size and shivers the rows below it.
+
+   Durations are NEVER invented: they are --motion-fast / --motion-med /
+   --motion-slow verbatim. --motion-med is itself per-theme, so "med" above is
+   140/200/260/320ms depending on family, for free. Travel distances are the
+   :root size scale (--xs 2px, --sm 4px, --md 8px, --lg 12px), which the README
+   guarantees no theme overrides. The one derived value is the stagger step,
+   calc(--motion-fast / N) - a fraction of an existing token, not a new one.
+
+   ---------------------------------------------------------------------
+   REDUCED-MOTION CONTRACT - non-negotiable
+   ---------------------------------------------------------------------
+   Every animation in this file is killed by BOTH [data-motion="reduced"] (the
+   harness control, set on .pm-stage by _pm-shell.js:135) AND
+   @media (prefers-reduced-motion: reduce). Both blocks live at the bottom of
+   this file and carry identical selector lists - the same shape _pm-kit.css
+   and _pm-components.css already use.
+
+   The contract is on the MOTION, not on the OUTCOME. Killing the animation
+   must always leave the correct end state:
+     - .pmm-expand.is-open is open instantly (0fr -> 1fr with no transition)
+     - .pmm-enter rows sit at their natural opacity 1, no transform
+     - .pmm-frame has no transform of its own, so removing the animation is
+       already the resting frame
+     - .pmm-lens-ind keeps its x and width custom properties, which are its
+       POSITION, not its animation - only the transition is dropped
+     - .pmm-flash simply does not paint; the changed number is the signal and
+       the flash was only ever the garnish
+
+   ---------------------------------------------------------------------
+   SLINT 1.17.1 MAPPING - per primitive
+   ---------------------------------------------------------------------
+   transform + opacity are chosen throughout because they map to Slint's
+   animate on x / y / opacity, and because they do not touch layout.
+
+     .pmm-expand   THE ONE EXCEPTION. An accordion has to animate a size.
+                   We use grid-template-rows 0fr -> 1fr rather than height,
+                   so no JS measures anything and no max-height guess can be
+                   wrong. Slint equivalent: a states block on the section body
+                   with an animate on the height property -
+                     states [ open when root.open : { body.height: body.
+                       preferred-height; } closed when !root.open :
+                       { body.height: 0px; } ]
+                     animate height { duration: 240ms; easing: ease-out; }
+                   This is the only primitive that costs a layout pass per
+                   frame, and it is confined to the section body.
+     .pmm-frame    animate x { } on the pushed frame plus animate opacity.
+     .pmm-enter    animate y, opacity on a delegate, with the delay taken from
+                   min(index, 3) * step - a for-loop index expression, which is
+                   why the cascade is capped at four steps.
+     .pmm-sheet    animate height on the wrapper (as .pmm-expand), animate y +
+                   opacity on the inner. .pmm-sheet--over is transform-only and
+                   is the preferred shape where the design can afford an
+                   overlay: animate y alone.
+     .pmm-lens-ind animate x, width on the indicator rectangle. Slint animates
+                   width natively, and the element is out of flow, so this is
+                   the one place a width animation is both cheap and portable.
+     .pmm-flash    animate opacity on a Rectangle overlay.
+
+   ---------------------------------------------------------------------
+   THINGS THIS FILE DELIBERATELY DOES NOT DO
+   ---------------------------------------------------------------------
+   - No backdrop-filter (F3-431 blur budget is closed at 7 surfaces app-wide).
+   - No color-mix beyond the :root-declared --accent-soft / --accent-glow.
+   - No SVG filters, no box-shadow animation, no blur.
+   - No per-frame JS. The JS half only toggles classes and sets two custom
+     properties; the document already merges its pointermove listeners for a
+     reason and nothing here adds one.
+   - No animation on .pmk-sec itself. It is position: sticky inside the
+     .pmk-body scroller, and a transform on a sticky element (or an
+     overflow: hidden wrapper around one) breaks the stick. .pmm-expand
+     therefore wraps the section BODY ONLY, never the header.
+   ===================================================================== */
+
+/* ==========================================================================
+   FAMILY KNOBS
+   Declared on [data-theme] so var(--motion-med) resolves to the THEME's
+   override, then refined per family with the same [data-theme^="x"] prefix
+   selector _pm-kit.css already uses for the friendly lens pill. Every
+   primitive below reads these seven names and nothing else, which is what
+   keeps this a table instead of four copies of every rule.
+   ========================================================================== */
+:root,
+[data-theme] {
+  --pmm-ease-in:     var(--ease-default, var(--ease-smooth));
+  --pmm-ease-out:    var(--ease-smooth);
+  --pmm-ease-expand: var(--ease-default, var(--ease-smooth));
+  --pmm-dur-in:      var(--motion-med);
+  --pmm-dur-out:     var(--motion-fast);
+  --pmm-dur-sheet:   var(--motion-med);
+  --pmm-travel:      var(--md);            /* push / pop and sheet distance */
+  --pmm-rise:        var(--sm);            /* list-row enter distance       */
+  --pmm-step:        calc(var(--motion-fast) / 4);   /* stagger, 30ms       */
+  --pmm-scale-from:  1;                    /* friendly is the only 1 != x   */
+  --pmm-flash-peak:  .14;
+  --pmm-flash-dur:   var(--motion-slow);
+  --pmm-lens-pad:    var(--sm);
+}
+
+/* retro - mechanical: snap in and out, short hard travel, a bright flash. */
+[data-theme^="retro"] {
+  --pmm-ease-in:     var(--ease-snap);
+  --pmm-ease-out:    var(--ease-snap);
+  --pmm-ease-expand: var(--ease-snap);
+  --pmm-dur-in:      var(--motion-fast);
+  --pmm-dur-sheet:   var(--motion-fast);
+  --pmm-travel:      var(--sm);
+  --pmm-rise:        var(--xs);
+  --pmm-step:        calc(var(--motion-fast) / 8);   /* 15ms */
+  --pmm-flash-peak:  .22;
+  --pmm-flash-dur:   var(--motion-med);
+}
+
+/* basic - the accessibility theme, and so the most restrained of the four:
+   the smallest travel in the file, symmetric smooth easing, NO stagger, the
+   dimmest flash, and the accordion at --motion-fast. */
+[data-theme^="basic"] {
+  --pmm-ease-in:     var(--ease-smooth);
+  --pmm-ease-out:    var(--ease-smooth);
+  --pmm-ease-expand: var(--ease-smooth);
+  --pmm-dur-in:      var(--motion-fast);
+  --pmm-dur-sheet:   var(--motion-fast);
+  --pmm-travel:      var(--xs);
+  --pmm-rise:        var(--xs);
+  --pmm-step:        0ms;
+  --pmm-flash-peak:  .10;
+}
+
+/* glass - fluid: decelerate in, the longest travel, sheets at --motion-slow. */
+[data-theme^="glass"] {
+  --pmm-ease-in:     var(--ease-out);
+  --pmm-ease-out:    var(--ease-smooth);
+  --pmm-ease-expand: var(--ease-out);
+  --pmm-dur-sheet:   var(--motion-slow);
+  --pmm-travel:      var(--lg);
+  --pmm-rise:        var(--sm);
+  --pmm-step:        calc(var(--motion-fast) / 4);   /* 30ms */
+}
+
+/* friendly - bouncy, but the spring is spent on TRANSFORMS only. On a height
+   an overshoot resolves past the natural size and shivers everything below,
+   so --pmm-ease-expand steps down to --ease-out here. */
+[data-theme^="friendly"] {
+  --pmm-ease-in:     var(--ease-spring);
+  --pmm-ease-out:    var(--ease-out);
+  --pmm-ease-expand: var(--ease-out);
+  --pmm-travel:      var(--md);
+  --pmm-rise:        var(--sm);
+  --pmm-step:        calc(var(--motion-fast) / 3);   /* 40ms */
+  --pmm-scale-from:  .98;
+  --pmm-flash-peak:  .18;
+  --pmm-lens-pad:    0px;
+}
+
+/* ==========================================================================
+   1. SECTION EXPAND / COLLAPSE          .pmm-expand
+   --------------------------------------------------------------------------
+   grid-template-rows 0fr -> 1fr. No measurement, no max-height guess that is
+   wrong for one theme, and the collapsed state is a true zero rather than a
+   clipped box.
+
+   Wrap the section BODY, never the header. .pmk-sec is position: sticky with
+   top: 0 inside .pmk-body; putting a clipping wrapper around a sticky element
+   kills the stick, and the sticky headers are load-bearing in vA, vB and vF.
+
+   EXACTLY ONE ELEMENT CHILD. This is not a style preference, it is how the
+   mechanism works: grid-template-rows: 0fr sizes the FIRST row only, so a
+   wrapper holding six rows directly collapses to 90px instead of 0 and the
+   "closed" section leaks its whole body (measured, not assumed). Wrap the
+   body in one div and hand PMM.expand that div. When the helper is handed a
+   box with any other number of children it falls back to .pmm-expand--static
+   below, which is correct but does not animate - a misuse degrades to no
+   motion, never to a section that will not close.
+
+   The inner child must clip while it is moving, which conflicts with the
+   friendly hover ring (a 2px ring plus a 22px glow needs ~12px of clearance -
+   see versions/README). So the clip is released once the box has settled:
+   PMM.expand adds .pmm-settled on transitionend. Without the JS helper the
+   box simply stays clipped, which is correct, just less generous.
+   ========================================================================== */
+.pmm-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  /* grid-template-columns is load-bearing. A grid with only rows declared gets
+     an implicit `auto` column, which sizes to MAX-CONTENT -- so children are
+     free to grow past the container and the accordion silently becomes wider
+     than the panel. minmax(0, 1fr) pins the column to the container and lets
+     the children's own min-width:0 do its job.
+     Found the hard way: one version's rows measured 256px inside a 240px body,
+     and the overflow scaled with the theme's text width (friendly 6px, glass
+     12px, basic 16px) because basic is the widest face. It surfaced only after
+     the fixture grew long enough identities to exceed the column, which made it
+     look like a data problem rather than a layout one. */
+  grid-template-columns: minmax(0, 1fr);
+  transition: grid-template-rows var(--pmm-dur-out) var(--pmm-ease-expand);
+}
+.pmm-expand > * { min-width: 0; min-height: 0; overflow: hidden; }
+.pmm-expand.is-open {
+  grid-template-rows: 1fr;
+  transition-duration: var(--pmm-dur-in);
+}
+.pmm-expand.is-open.pmm-settled > * { overflow: visible; }
+
+/* The degraded path, applied by PMM.expand / PMM.sheet when the box does not
+   have exactly one element child. Correct open/closed state, no animation. */
+.pmm-expand.pmm-expand--static,
+.pmm-sheet.pmm-expand--static {
+  display: block;
+  grid-template-rows: none;
+  transition: none;
+}
+.pmm-expand--static > * { overflow: visible; }
+.pmm-expand.pmm-expand--static:not(.is-open),
+.pmm-sheet.pmm-expand--static:not(.is-open) { display: none; }
+
+/* Optional: fade the body with the height. Costs nothing on the compositor
+   and hides the one frame where a two-line row is half a line tall. */
+.pmm-expand--fade > * {
+  opacity: 0;
+  transition: opacity var(--pmm-dur-out) var(--pmm-ease-out);
+}
+.pmm-expand--fade.is-open > * {
+  opacity: 1;
+  transition-duration: var(--pmm-dur-in);
+}
+
+/* ==========================================================================
+   2. PUSH / POP NAVIGATION              .pmm-frame  +  data-pmm-dir
+   --------------------------------------------------------------------------
+   For vD, which is a navigation stack rendering exactly one frame at a time,
+   and for xS3's push-to-detail at the narrow buckets. The harness re-renders
+   the whole stage on a state change, so there is no outgoing node to animate
+   in the normal case: the incoming frame animates alone, and the DIRECTION is
+   what tells you whether you went deeper or came back. Forward enters from
+   the right, back enters from the left - the same convention as every stack
+   navigator, and the reason the two keyframes exist rather than one.
+
+   .is-leaving is provided for the versions that DO keep both frames alive for
+   a beat (a portal, or a two-column split at bucket 3).
+   ========================================================================== */
+.pmm-frame { will-change: auto; }
+.pmm-frame.pmm-run[data-pmm-dir="fwd"] {
+  animation: pmm-push-fwd var(--pmm-dur-in) var(--pmm-ease-in) both;
+}
+.pmm-frame.pmm-run[data-pmm-dir="back"] {
+  animation: pmm-push-back var(--pmm-dur-in) var(--pmm-ease-in) both;
+}
+.pmm-frame.is-leaving[data-pmm-dir="fwd"] {
+  animation: pmm-leave-fwd var(--pmm-dur-out) var(--pmm-ease-out) both;
+}
+.pmm-frame.is-leaving[data-pmm-dir="back"] {
+  animation: pmm-leave-back var(--pmm-dur-out) var(--pmm-ease-out) both;
+}
+
+@keyframes pmm-push-fwd {
+  from { transform: translateX(var(--pmm-travel)); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes pmm-push-back {
+  from { transform: translateX(calc(var(--pmm-travel) * -1)); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes pmm-leave-fwd {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(calc(var(--pmm-travel) * -1)); opacity: 0; }
+}
+@keyframes pmm-leave-back {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(var(--pmm-travel)); opacity: 0; }
+}
+
+/* ==========================================================================
+   3. LIST ROW ENTER                     .pmm-enter
+   --------------------------------------------------------------------------
+   FOUR steps, then everything else arrives on the fourth. A side panel can
+   hold 23 visible objects (vB's Source Control showcase); a per-row cascade
+   over 23 rows at 30ms is 690ms of the list visibly assembling itself, which
+   is exactly the "long cascade" this rule exists to forbid. Capping the delay
+   at 3 steps also makes it expressible in Slint as min(index, 3) * step.
+
+   basic sets --pmm-step to 0ms, so in the accessibility theme the whole list
+   fades up together with no cascade at all.
+   ========================================================================== */
+.pmm-enter > * {
+  animation: pmm-rise var(--pmm-dur-in) var(--pmm-ease-in) both;
+}
+.pmm-enter > *:nth-child(1) { animation-delay: 0ms; }
+.pmm-enter > *:nth-child(2) { animation-delay: var(--pmm-step); }
+.pmm-enter > *:nth-child(3) { animation-delay: calc(var(--pmm-step) * 2); }
+.pmm-enter > *:nth-child(n+4) { animation-delay: calc(var(--pmm-step) * 3); }
+
+@keyframes pmm-rise {
+  from { opacity: 0; transform: translateY(var(--pmm-rise)) scale(var(--pmm-scale-from)); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   4. SHEET / DRAWER                     .pmm-sheet  /  .pmm-sheet--over
+   --------------------------------------------------------------------------
+   vB's sheet and the xA2 casefile are IN FLOW: they push the rows below them
+   down, so the wrapper has to animate a size and the primitive is the
+   accordion plus a content slide. .pmm-sheet-in carries the transform so the
+   body arrives slightly after the box that holds it, which is what makes an
+   in-flow sheet read as a drawer rather than as a jump.
+
+   .pmm-sheet--over is the overlay variant: transform only, no size animation,
+   nothing reflows. Prefer it wherever the design can afford an overlay - it
+   is cheaper here and it is a single animate y in Slint.
+
+   The in-flow sheet obeys the same EXACTLY ONE CHILD rule as .pmm-expand, and
+   that child is normally .pmm-sheet-in. The overlay variant is exempt: it
+   animates a transform, so it has no opinion about how many children it has.
+   ========================================================================== */
+.pmm-sheet {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--pmm-dur-out) var(--pmm-ease-expand);
+}
+.pmm-sheet > * { min-height: 0; overflow: hidden; }
+.pmm-sheet.is-open {
+  grid-template-rows: 1fr;
+  transition-duration: var(--pmm-dur-sheet);
+}
+.pmm-sheet.is-open.pmm-settled > * { overflow: visible; }
+
+.pmm-sheet-in {
+  opacity: 0;
+  transform: translateY(calc(var(--pmm-travel) * -1));
+  transition: opacity var(--pmm-dur-out) var(--pmm-ease-out),
+              transform var(--pmm-dur-out) var(--pmm-ease-out);
+}
+.pmm-sheet.is-open > .pmm-sheet-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: var(--pmm-dur-sheet);
+  transition-timing-function: var(--pmm-ease-in);
+}
+
+/* overlay variant - the version owns the positioning, we own the movement */
+.pmm-sheet--over {
+  display: block;
+  grid-template-rows: none;
+  opacity: 0;
+  transform: translateY(var(--pmm-travel));
+  pointer-events: none;
+  transition: opacity var(--pmm-dur-out) var(--pmm-ease-out),
+              transform var(--pmm-dur-out) var(--pmm-ease-out),
+              visibility 0s linear var(--pmm-dur-out);
+  visibility: hidden;
+}
+.pmm-sheet--over > * { overflow: visible; }
+.pmm-sheet--over.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+  transition: opacity var(--pmm-dur-sheet) var(--pmm-ease-in),
+              transform var(--pmm-dur-sheet) var(--pmm-ease-in),
+              visibility 0s linear 0s;
+}
+.pmm-sheet--over.pmm-sheet--side {
+  transform: translateX(var(--pmm-travel));
+}
+.pmm-sheet--over.pmm-sheet--side.is-open { transform: translateX(0); }
+
+/* ==========================================================================
+   5. LENS / TAB INDICATOR SLIDE         .pmm-lens-track  +  .pmm-lens-ind
+   --------------------------------------------------------------------------
+   The kit paints the F3-445 selection as an inset ::after underline on the
+   selected item, which cannot travel because it belongs to a different
+   element every time. Opting a strip into .pmm-lens-track suppresses that
+   static mark and hands the job to one indicator element that MOVES.
+
+   PMM.lens() sets --pmm-lens-x and --pmm-lens-w from one geometry read per
+   selection change. x is a transform (compositable); w is a width, which is
+   affordable because the indicator is out of flow - nothing reflows around
+   it - and because scaleX on a 1px base would distort the padded inset, and
+   distort friendly's pill radius, in a way a width does not.
+
+   Theme-aware without a second indicator: friendly gets its pill
+   (--pmm-lens-pad 0 plus --accent-soft, matching what _pm-kit.css already
+   paints statically for that family), retro gets a 3px hard-edged bar with no
+   radius, everything else the 2px underline.
+   ========================================================================== */
+.pmm-lens-track { position: relative; }
+.pmm-lens-track > .pmk-lens { z-index: 1; }
+/* the strip opted in, so the kit's per-item static mark stands down */
+.pmm-lens-track .pmk-lens[aria-selected="true"]::after { display: none; }
+[data-theme^="friendly"] .pmm-lens-track .pmk-lens[aria-selected="true"] {
+  background: transparent;
+}
+
+.pmm-lens-ind {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--pmm-lens-w, 0px);
+  transform: translateX(var(--pmm-lens-x, 0px));
+  transition: transform var(--pmm-dur-in) var(--pmm-ease-in),
+              width var(--pmm-dur-in) var(--pmm-ease-in);
+  pointer-events: none;
+  z-index: 0;
+}
+.pmm-lens-ind::after {
+  content: '';
+  position: absolute;
+  left: var(--pmm-lens-pad); right: var(--pmm-lens-pad); bottom: 1px;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: 1px;
+}
+[data-theme^="retro"] .pmm-lens-ind::after {
+  bottom: 0; height: 3px; border-radius: 0;
+}
+[data-theme^="friendly"] .pmm-lens-ind::after {
+  top: 0; bottom: 0; height: auto;
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill);
+}
+
+/* ==========================================================================
+   6. VALUE-CHANGE FLASH                 .pmm-flash + .is-flash
+   --------------------------------------------------------------------------
+   For a number that changed under the user rather than because of them: run
+   counts, container states, the queue meter. It is an opacity ramp on an
+   overlay pseudo-element - no colour math, no box-shadow, nothing that would
+   force a repaint of the text itself.
+
+   Tone modifiers use the flat accent tokens directly. Peak opacity is a
+   family knob because retro can carry .22 of acid lime over #1A1A1A and basic
+   must not carry more than .10 of anything.
+   ========================================================================== */
+.pmm-flash { position: relative; }
+.pmm-flash.is-flash::after {
+  content: '';
+  position: absolute;
+  inset: -1px -3px;
+  border-radius: var(--radius-xs);
+  background: var(--pmm-flash-fill, var(--accent-primary));
+  pointer-events: none;
+  opacity: 0;
+  animation: pmm-flash var(--pmm-flash-dur) var(--pmm-ease-out) both;
+}
+.pmm-flash--up   { --pmm-flash-fill: var(--accent-lime); }
+.pmm-flash--down { --pmm-flash-fill: var(--accent-error); }
+.pmm-flash--warn { --pmm-flash-fill: var(--accent-warning); }
+
+@keyframes pmm-flash {
+  0%   { opacity: 0; }
+  18%  { opacity: var(--pmm-flash-peak); }
+  100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   REDUCED MOTION - the contract, twice, with identical selector lists
+   --------------------------------------------------------------------------
+   [data-motion="reduced"] is the harness control (_pm-shell.js:135 sets it on
+   .pm-stage). The media query is the operating system's own setting. Both
+   must kill everything above; neither may change an end state.
+
+   .pmm-lens-ind keeps its transform: the custom properties ARE the
+   indicator's position, so only the transition is dropped. Everything else
+   resolves to its natural resting state once the animation is gone.
+   ========================================================================== */
+[data-motion="reduced"] .pmm-expand,
+[data-motion="reduced"] .pmm-expand--fade > *,
+[data-motion="reduced"] .pmm-frame,
+[data-motion="reduced"] .pmm-enter > *,
+[data-motion="reduced"] .pmm-sheet,
+[data-motion="reduced"] .pmm-sheet-in,
+[data-motion="reduced"] .pmm-sheet--over,
+[data-motion="reduced"] .pmm-lens-ind,
+[data-motion="reduced"] .pmm-flash.is-flash::after {
+  animation: none;
+  transition: none;
+}
+[data-motion="reduced"] .pmm-sheet-in {
+  opacity: 1;
+  transform: none;
+}
+[data-motion="reduced"] .pmm-sheet--over {
+  transform: none;
+}
+/* SPECIFICITY GUARD. The open-state rules re-declare transition-duration at
+   (0,3,0) -- `.pmm-sheet.is-open > .pmm-sheet-in` and the overlay equivalent --
+   which outranks the (0,2,0) killer above and leaves a live 260ms transition
+   running under reduced motion, exactly while the sheet is open and the motion
+   is actually visible. Measured: .pmm-sheet-in reported 0.26s in reduced mode
+   while every sibling correctly reported 0s. Match the specificity. */
+[data-motion="reduced"] .pmm-sheet.is-open > .pmm-sheet-in,
+[data-motion="reduced"] .pmm-sheet--over.is-open,
+[data-motion="reduced"] .pmm-sheet.is-open > * {
+  transition: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pmm-expand,
+  .pmm-expand--fade > *,
+  .pmm-frame,
+  .pmm-enter > *,
+  .pmm-sheet,
+  .pmm-sheet-in,
+  .pmm-sheet--over,
+  .pmm-lens-ind,
+  .pmm-flash.is-flash::after {
+    animation: none;
+    transition: none;
+  }
+  .pmm-sheet-in { opacity: 1; transform: none; }
+  .pmm-sheet--over { transform: none; }
+  /* same specificity guard as the attribute block above */
+  .pmm-sheet.is-open > .pmm-sheet-in,
+  .pmm-sheet--over.is-open,
+  .pmm-sheet.is-open > * { transition: none; animation: none; }
+}

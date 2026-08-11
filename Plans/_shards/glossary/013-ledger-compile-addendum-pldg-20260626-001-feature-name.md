@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L1627-L2010
+Source lines: L1668-L2148
 
-Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
+Source SHA256: `608f0418a56b0f2a31ba473cb27d81579d6259deead06f6125a6c44166fcb50b`
 
 ---
 
@@ -391,4 +391,101 @@ owner_hints:
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/Permissions_System.md
 - Plans/Commands_System.md
+```
+
+### G-027 - Case L Durable State Event And Recovery Vocabulary
+
+```yaml
+plan_unit_id: G-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: >-
+  Canonical Case L vocabulary distinguishes application and project EventRecord scope, global event and scoped idempotency identity, projector_replay_only and dedupe_unavailable, canonical non-rebuildable versus derived rebuildable state, safe points, Assistant Chat restore points, storage backups, migration journals, exact-replace restore, durable atomic replace, snapshot custody, recovery and legal holds, exact Worktree baseline targets, truthful restore aftermath, and the closed projection freshness and health axes.
+gui_related: true
+gui_classification_reason: This unit standardizes user-visible and implementer-facing recovery, trust, scope, and storage terms consumed by GUI and non-GUI surfaces.
+split_recommended: false
+depends_on: [SP-235, SP-241, SP-242, CV-317, F2-200, EP-072, W-063, G-012, G-021]
+unblocks: []
+acceptance_criteria:
+- Application scope requires null project_id and app partition; project scope requires a non-empty project_id and reversible project partition.
+- Event and idempotency identity lifetimes, replay-only side-effect limits, and dedupe_unavailable no-append behavior match the Contracts and storage owners.
+- Canonical non-rebuildable state is never called a disposable projection, and derived rebuildable state requires a retained registered source.
+- Safe points, restore points, storage backups, and migration journals retain different scope, custody, and mutation semantics.
+- Exact-replace, durable atomic replace, snapshot custody, recovery anchors, legal holds, and Worktree baseline targets resolve to their owner contracts without local algorithm invention.
+- projection_freshness uses current, refreshing, and stale; projection_health uses healthy, degraded, and unavailable; blocked and unknown retain their separate owner meanings.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime implementation, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- targeted Case L terminology and ContractRef checks
+risk_class: case_l_durable_state_vocabulary_drift
+reasoning_tier: high
+context_scope: case_l_durable_state_glossary
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: case_l_durable_state_event_recovery_vocabulary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Case-L:L-003
+- Case-L:L-004
+- Case-L:L-010
+- Case-L:L-027
+- Case-L:L-029
+- Case-L:EVT-01..EVT-07
+- Case-L:PD-RSP-01..PD-RSP-09
+preserved_exact_tokens:
+- application
+- project
+- scope_kind
+- scope_partition
+- EventRecord
+- event_id
+- idempotency_key
+- projector_replay_only
+- dedupe_unavailable
+- canonical_non_rebuildable
+- derived_rebuildable
+- safe point
+- restore point
+- exact-replace
+- durable atomic replace
+- snapshot custody
+- recovery anchor
+- legal hold
+- restore_recovery_required
+- recovery_unavailable
+- historical_commit
+- worktree_head
+- current | refreshing | stale
+- healthy | degraded | unavailable
+negative_constraints:
+- Do not invent a fake project identity or treat application and project scope as interchangeable.
+- Do not call every redb value a projection or treat a rebuilt projection as recovered canonical authority.
+- Do not collapse safe points, restore points, storage backups, and migration journals into one restore term.
+- Do not use fresh, warm, expired, blocked, or unknown as values in the storage-owned projection freshness or health enums.
+- Do not turn missing/corrupt recovery material, unknown loss, or a failed rollback into success-shaped copy.
+- Do not claim runtime execution, whole-Case-L closure, buildability, or completeness from glossary propagation.
+compatibility_only_notes:
+- EventRecord 1.0 and EventEnvelopeV1 are compatibility-reader inputs only; projector_replay_only normalization does not append or rewrite them.
+- restored_with_conflicts is compatibility-only for a future explicitly merge-capable owner and is invalid for safe-point restore and Chat revert.
+stale_retired_dispositions:
+- fresh, warm, and expired are retired projection_freshness aliases.
+- blocked and unknown are retired competing projection_health aliases.
+- Generic all-redb-is-rebuildable and universal-CRC-skip wording is retired.
+owner_boundary_notes:
+- Glossary owns short definitions; Contracts and event_record.schema own EventRecord fields and outcomes.
+- Storage owns persistence, replay mechanics, recovery dispositions, retention, holds, and maintenance.
+- FileSafe owns exact-replace mechanics and snapshot equality/custody behavior.
+- WorktreeGitImprovement owns baseline effects; Executor_Protocol owns admission, lineage, and dispatch gating.
+owner_hints:
+- Plans/Glossary.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FileSafe.md
+- Plans/Executor_Protocol.md
+- Plans/WorktreeGitImprovement.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md'
 ```

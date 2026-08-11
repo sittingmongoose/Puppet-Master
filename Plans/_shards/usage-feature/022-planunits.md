@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L928-L5013
+Source lines: L928-L5015
 
-Source SHA256: `ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1`
+Source SHA256: `a931a09ca24f19e422824892309f2bccc01cfce999e7aaa1f807824acb3ff727`
 
 ---
 
@@ -513,7 +513,7 @@ plan_unit_id: UF-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Thread-scoped Usage appears as the chat context circle with hover-revealed Usage, Tokens, Cost, and More Details actions plus explicit click-to-Compact Now behavior; More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
+canonical_text: Thread-scoped Usage appears as the chat context circle whose click (or Enter/Space when the ring is focused) toggles a status module showing Usage, Tokens, Cost, Compact Now, and More Details; hover shows an accent glow only and no token label renders beside the ring. More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice inside the module and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
 gui_related: true
 gui_classification_reason: The unit defines user-visible chat Usage controls.
 split_recommended: false
@@ -554,7 +554,7 @@ preserved_exact_tokens:
 - app-wide Usage
 - OpenCode
 negative_constraints:
-- Compact Now must not dispatch from hover alone.
+- Compact Now must not dispatch from hover or from the ring's opening click alone.
 - Compact Now failure must not be silent or logs-only.
 - OpenCode references are non-binding UX references and do not replace Puppet Master canonical behavior.
 preserved_contractrefs:
@@ -562,7 +562,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Hover-opened status module and hover/click split (hover module, click Compact Now) retired per PMConcept7 context ring; hover shows an accent glow only, the module opens on click per assistant-chat-design ACD-441, and the beside-ring token label is removed with usage figures rendering inside the module."
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -1545,13 +1546,14 @@ preserved_exact_tokens:
 negative_constraints:
 - Thread Usage in the chat shell or side panel is not the primary detailed surface.
 - Detached usage pop-out is not the canonical thread detail model.
-- Direct click on the context circle must not open the detail pane without the hover/click split.
+- Direct click on the context circle must not open the detail pane; the ring click opens the context status module and only its More Details action opens the pane (ACD-441).
 - Unresolved `tab or panel or pop-out` phrasing must not leave implementation guessing.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The hover/click split exclusion wording is retired per PMConcept7 context ring; the ring click opens the context status module (hover shows an accent glow only) and only the module's More Details action opens the Context Detail Pane per assistant-chat-design ACD-441."
 owner_hints:
 - Plans/usage-feature.md
 ```

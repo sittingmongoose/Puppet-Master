@@ -1,0 +1,274 @@
+/* PMX workspace chrome — Opus 5
+ *
+ * Deliberately styled OUTSIDE any [data-theme] subtree, with its own neutral palette, so it
+ * can never be mistaken for the design under test. The concepts change with the theme; this
+ * bar does not.
+ */
+
+:root {
+  --ws-bg: #14151a;
+  --ws-surface: #1c1e25;
+  --ws-line: #2c2f39;
+  --ws-text: #e6e7ec;
+  --ws-muted: #9297a6;
+  --ws-accent: #6aa5ff;
+  --ws-gap: 12px;
+}
+
+body {
+  margin: 0;
+  background: var(--ws-bg);
+  color: var(--ws-text);
+  font: 400 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- control bar */
+
+.ws-bar-host { position: sticky; top: 0; z-index: 40; }
+
+.ws-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ws-gap) 18px;
+  padding: 10px 16px;
+  background: var(--ws-surface);
+  border-bottom: 1px solid var(--ws-line);
+}
+
+.ws-brand { display: flex; flex-direction: column; margin-right: 8px; }
+.ws-brand-label { font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+.ws-brand-sub { font-size: 11px; color: var(--ws-muted); }
+
+.ws-ctrl { display: flex; align-items: center; gap: 8px; }
+.ws-ctrl-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ws-muted); }
+
+.ws-seg { display: inline-flex; border: 1px solid var(--ws-line); border-radius: 7px; overflow: hidden; }
+.ws-seg-btn {
+  padding: 5px 10px;
+  border: none;
+  background: transparent;
+  color: var(--ws-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.ws-seg-btn + .ws-seg-btn { border-left: 1px solid var(--ws-line); }
+.ws-seg-btn[aria-pressed="true"] { background: var(--ws-accent); color: #0d1017; font-weight: 600; }
+
+.ws-select {
+  padding: 5px 8px;
+  background: var(--ws-bg);
+  color: var(--ws-text);
+  border: 1px solid var(--ws-line);
+  border-radius: 7px;
+  font: inherit;
+  font-size: 12px;
+  max-width: 210px;
+}
+
+.ws-toggle {
+  padding: 5px 10px;
+  background: transparent;
+  color: var(--ws-muted);
+  border: 1px solid var(--ws-line);
+  border-radius: 7px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.ws-toggle[aria-pressed="true"] { background: var(--ws-accent); color: #0d1017; border-color: var(--ws-accent); font-weight: 600; }
+
+.ws-slider { width: 150px; accent-color: var(--ws-accent); }
+.ws-readout { font-size: 12px; color: var(--ws-muted); font-variant-numeric: tabular-nums; min-width: 52px; }
+
+.ws-links { margin-left: auto; display: flex; gap: 10px; }
+.ws-link { color: var(--ws-muted); font-size: 12px; text-decoration: none; }
+.ws-link:hover { color: var(--ws-accent); text-decoration: underline; }
+
+/* ---------------------------------------------------------------- layout */
+
+.ws-root { padding: 20px 16px 64px; max-width: 1800px; margin: 0 auto; }
+
+.ws-intro h1 { margin: 8px 0 6px; font-size: 22px; }
+.ws-intro p { margin: 0 0 20px; max-width: 74ch; color: var(--ws-muted); font-size: 13px; }
+
+.ws-section { margin: 0 0 34px; }
+.ws-section h2 { margin: 0 0 4px; font-size: 15px; letter-spacing: .01em; }
+.ws-section-note { margin: 0 0 14px; font-size: 12px; color: var(--ws-muted); max-width: 74ch; }
+
+.ws-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+}
+
+.ws-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.ws-card-head { display: flex; align-items: baseline; gap: 8px; padding: 10px 12px 4px; }
+.ws-card-id { font-size: 11px; font-weight: 700; color: var(--ws-accent); letter-spacing: .06em; }
+.ws-card-name { margin: 0; font-size: 14px; font-weight: 600; }
+.ws-card-model { margin-left: auto; font-size: 10px; color: var(--ws-muted); letter-spacing: .05em; }
+.ws-card-blurb { margin: 0 12px 10px; font-size: 12px; color: var(--ws-muted); }
+
+/* The preview is a real composition at real size, scaled down for the grid. Scaling the
+ * rendered result keeps the layout under test honest — the concept still lays out at its
+ * true chat width, we only shrink the picture. */
+/* The scale is DERIVED from the frame's real width by fitCards() in workspace.js, not
+ * hard-coded. It used to be a flat scale(.5) — 1400px of concept rendered at 700px — while
+ * the grid column was only 377px wide. Every preview was therefore cropped to its left 54%,
+ * cut off mid-transcript exactly where the next card began, which read as two concepts
+ * running into each other. A fixed scale cannot survive a fluid grid; the variables below
+ * are the fallback for the frame before the first measure lands. */
+.ws-card-frame {
+  position: relative;
+  height: var(--ws-card-h, 420px);
+  overflow: hidden;
+  border-top: 1px solid var(--ws-line);
+  background: #0c0d11;
+}
+.ws-card-scaler {
+  position: absolute;
+  top: 0; left: 0;
+  width: var(--ws-card-vw, 1400px);
+  height: var(--ws-card-vh, 840px);
+  transform: scale(var(--ws-card-scale, .5));
+  transform-origin: top left;
+}
+.ws-card-open {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--ws-accent);
+  text-decoration: none;
+  border-top: 1px solid var(--ws-line);
+}
+.ws-card-open:hover { text-decoration: underline; }
+.ws-card-error { padding: 16px; color: #ff9a9a; font-size: 13px; }
+
+/* ---------------------------------------------------------------- stage */
+
+.ws-stage-holder {
+  height: calc(100vh - 130px);
+  min-height: 620px;
+  border: 1px solid var(--ws-line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0c0d11;
+}
+.ws-stage-holder > .pmx-stage { width: 100%; height: 100%; }
+
+/* ---------------------------------------------------------------- contact sheet */
+
+.ws-contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 16px;
+}
+.ws-contact-cell {
+  border: 1px solid var(--ws-line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--ws-surface);
+}
+.ws-contact-label {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 8px 12px; font-size: 12px; font-weight: 600;
+}
+.ws-contact-model { margin-left: auto; font-size: 10px; color: var(--ws-muted); letter-spacing: .05em; }
+.ws-contact-frame {
+  position: relative;
+  height: var(--ws-card-h, 470px);
+  overflow: hidden;
+  border-top: 1px solid var(--ws-line);
+  background: #0c0d11;
+}
+/* The virtual stage is sized so that a 1200px chat plus the rail still fits inside the cell
+ * once scaled. A wider stage would crop the chat off the right edge, which is precisely the
+ * thing this sheet exists to show — so the scale is measured from the cell by fitFrames()
+ * rather than hard-coded, for the same reason as the gallery cards above. */
+.ws-contact-frame > .pmx-stage {
+  position: absolute; top: 0; left: 0;
+  width: var(--ws-card-vw, 1320px);
+  height: var(--ws-card-vh, 1440px);
+  transform: scale(var(--ws-card-scale, .32));
+  transform-origin: top left;
+}
+
+/* ---------------------------------------------------------------- stage container */
+
+/* NO container-type here. It was removed as dead weight, not as a bug fix.
+ *
+ * Removing it was first reported as the cure for popups landing in the wrong
+ * place. That was wrong, and the correction is worth recording: measuring the
+ * displacement per theme showed it was zero in basic, friendly and retro, and
+ * non-zero ONLY in glass. `container-type: inline-size` is not theme-dependent,
+ * so it could not have been the cause. The actual cause was
+ * `backdrop-filter` on the stage in the glass themes (shared/materials.css) —
+ * a filter makes an element a containing block for `position: fixed`
+ * descendants, and glass is the only family that applies one.
+ *
+ * The line is still correctly absent. It WOULD establish a containing block via
+ * layout containment, and nothing read it: no container-name, every @container
+ * query in the workspace is named (pmx-chat on window shells, pmx-thread on
+ * thread roots), and no cq* units exist anywhere. Do not reintroduce it.
+ *
+ * Popups no longer depend on any of this being true. popup.js measures its own
+ * containing block by parking the element at offset 0,0 and reading where it
+ * lands, so a fixed popup is placed correctly whatever establishes the block —
+ * including the transform the contact sheet and gallery use to scale their
+ * stages, where popups correctly scale with the cell. */
+.pmx-stage {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ws-fatal { padding: 32px; }
+.ws-fatal h2 { margin: 0 0 8px; font-size: 16px; }
+.ws-fatal p { margin: 0; color: #ff9a9a; font-family: ui-monospace, monospace; font-size: 12px; }
+
+/* ---------------------------------------------------------------- demo director
+ * A review control, not a product surface. It is visually separated from the concept stage
+ * and collapsed by default so it never competes with what is being reviewed. */
+
+.ws-director {
+  margin: var(--sm) 0 0;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-elevated) 60%, transparent);
+}
+.ws-director-summary {
+  display: flex; align-items: baseline; gap: var(--sm);
+  padding: 5px var(--md);
+  cursor: pointer; list-style: none;
+  font-size: var(--fs-2xs);
+}
+.ws-director-summary::-webkit-details-marker { display: none; }
+.ws-director-title { font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.ws-director-note { color: var(--text-muted); }
+.ws-director-body { padding: 0 var(--md) var(--sm); display: flex; flex-direction: column; gap: 6px; }
+.ws-director-group { display: flex; align-items: baseline; gap: var(--sm); flex-wrap: wrap; }
+.ws-director-group-label {
+  flex: 0 0 74px; font-size: var(--fs-2xs); color: var(--text-muted);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.ws-director-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.ws-director-btn {
+  padding: 2px var(--sm);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text-secondary);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+.ws-director-btn:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+/* A trigger reports whether it actually fired, so a dead control cannot hide here either. */
+.ws-director-btn[data-last="ok"] { border-color: var(--accent-primary); }
+.ws-director-btn[data-last="failed"] { border-style: dashed; color: var(--text-muted); }

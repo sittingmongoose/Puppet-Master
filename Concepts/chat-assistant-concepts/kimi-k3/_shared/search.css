@@ -1,0 +1,192 @@
+/* ============================================================================
+   Kimi K3 — search kit styles (window.K3Search). Token-driven only: rides the
+   shared surfaces/borders/radii/accents so all 8 themes render complete.
+   The panel lives inside a .k3-pop.k3-popover portal (popups.css owns the
+   sprout motion and chrome); these rules cover only the search content.
+   Selection/hover use background tint + weight — no colored side borders.
+   Reduced motion collapses the hover/focus transitions via the global
+   data-motion contract (motion.css).
+   ========================================================================== */
+
+/* popover variant: search results need more room than the default popover */
+.k3s2-pop {
+  width: min(430px, calc(100vw - 16px));
+  max-width: min(430px, calc(100vw - 16px));
+  padding: 8px;
+}
+
+.k3s2-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* ---- scope chips -------------------------------------------------------- */
+.k3s2-scopes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.k3s2-scope {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3s2-scope:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3s2-scope.is-selected {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+
+/* ---- result list --------------------------------------------------------- */
+.k3s2-results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.k3s2-empty {
+  padding: 14px 10px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm, 13px);
+  text-align: center;
+}
+
+/* ---- one result row ------------------------------------------------------- */
+.k3s2-result {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3s2-result:hover { background: var(--accent-soft); }
+.k3s2-result:focus-visible {
+  outline: none;
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent-primary);
+}
+
+.k3s2-result-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+
+.k3s2-role {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--text-muted);
+}
+
+/* disclosure chips: lens state / Older history / Collapsed / Summary */
+.k3s2-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-pill, 999px);
+  white-space: nowrap;
+  user-select: none;
+}
+.k3s2-chip-accent {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 35%, transparent);
+}
+
+.k3s2-snippet {
+  min-width: 0;
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  color: var(--text-secondary);
+  overflow-wrap: break-word;
+}
+.k3s2-snippet mark {
+  padding: 0 1px;
+  color: var(--text-primary);
+  background: var(--accent-glow);
+  border-radius: var(--radius-xs, 2px);
+}
+
+/* ---- grouped (All Threads) display ---------------------------------------- */
+.k3s2-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 9px 3px;
+}
+.k3s2-group-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.k3s2-count {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill, 999px);
+  font-variant-numeric: tabular-nums;
+}
+
+/* subcompact source hits nested under their summary hit (indent only —
+   never a colored side border) */
+.k3s2-children {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 16px;
+}
+
+/* ---- open() variant: input carried inside the popover ---------------------- */
+.k3s2-open-input { margin-bottom: 8px; }
+.k3s2-open-results:empty { display: none; }

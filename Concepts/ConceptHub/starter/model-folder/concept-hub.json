@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "topic": "YOUR TOPIC",
+  "model": "YOUR MODEL",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Component width",
+    "role": "page",
+    "min": 520,
+    "max": 1920,
+    "step": 10,
+    "default": 1280,
+    "presets": [520, 768, 1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "concept-01",
+      "title": "Concept 01",
+      "path": "concept-01.html",
+      "openPath": "concept-01.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["example"],
+      "order": 10
+    }
+  ]
+}

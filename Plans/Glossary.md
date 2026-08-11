@@ -154,13 +154,42 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 - **Concern trust contract** -- degraded-trust and `/concern` escalation across provider/runtime/UI must share one reusable trust/concern contract that carries auth/account health, switch pressure, provider confidence, projection freshness, the `/runtime/UI` boundary, under-owned ownership drift, and requested/effective auth-account visibility between assistant chat and interview/builder docs.
 
 
-- **Projection Freshness** -- the recency of the projection relative to the live runtime source. It answers "how old is this copy?" and is evaluated with states such as `fresh`, `warm`, `stale`, and `expired`.
-- **Projection Health** -- the quality and executability of the projection. It answers "is this state safe and complete enough to act on?" and is evaluated with states such as `healthy`, `degraded`, `blocked`, or `unknown`.
-- Action gating uses both axes together: a projection can be fresh-but-unhealthy or healthy-but-stale, and either condition can block a route/open or mutation surface.
+- **Projection Freshness (`projection_freshness`)** -- the recency of a projection relative to its owner-defined canonical source. The closed states are `current | refreshing | stale`. `fresh`, `warm`, and `expired` are retired projection-freshness aliases and MUST NOT be emitted as canonical values.
+- **Projection Health (`projection_health`)** -- the integrity and availability of a projection relative to the canonical source and deterministic survivor set. The closed states are `healthy | degraded | unavailable`. `blocked` is write/admission posture, not projection health; `unknown` is unresolved evidence, not a successful health state. When health cannot be established, owner policy routes to `unavailable` or the stricter blocked posture instead of guessing.
+- Action gating evaluates freshness, health, and write availability separately. A projection can be `current` but `degraded`, or `stale` but `healthy`; either can require canonical revalidation or block mutation. After canonical-history loss, a rebuilt projection may become `current` relative to the surviving set while remaining `degraded` with gap provenance.
 - `trust_tier` is reserved for preview/browser semantics such as DOM confidence, scraper provenance, or visual inspection confidence.
 - Retire `trust_tier` from action-gating terminology; route/open admissibility and mutations key from `projection_freshness` plus `projection_health` instead.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### Durable state, EventRecord, and recovery terms
+
+- **Application scope** -- an EventRecord scope for app-data-root-wide facts. It requires `scope_kind = application`, `project_id = null`, and storage `scope_partition = app`. A fake/default project ID is forbidden.
+- **Project scope** -- an EventRecord scope for facts owned by one project. It requires `scope_kind = project`, a non-empty `project_id`, and the reversible storage partition `project~{base64url_no_pad(UTF8(project_id))}`.
+- **EventRecord** -- the canonical persisted `pm.event.v0` envelope. New writers emit `schema_version = 2.0.0`; Contracts owns the envelope and identity/replay rules, while storage owns append, ordering, dedupe acceleration, migration, retention, and payload registration.
+- **Event identity** -- `event_id` is globally unique for the lifetime of the app data root. The idempotency identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime. Matching identity and semantic digest returns the original result; a different digest is `idempotency_conflict`.
+- **`projector_replay_only`** -- a compatibility-replay policy constructed from retained legacy bytes. It may update only owned rebuildable projections/checkpoints/indexes/mirrors atomically. It is rejected by normal append and never dispatches work, commands, tools, providers, or network effects; charges usage; notifies; publishes an outbox; mutates safe points or canonical values; or creates another canonical event.
+- **`dedupe_unavailable`** -- the fail-closed append result when the rebuildable dedupe accelerator cannot be synchronously caught up to the verified seglog tail under the writer lock. It means no append, buffering, or deferred in-memory acceptance occurred.
+- **Canonical non-rebuildable state** -- a registry-declared durable value whose authority remains in its canonical store. Case L redb families with `canonical_non_rebuildable` recover through mandatory verified backup and MUST NOT be described as generic projections.
+- **Derived rebuildable state** -- a registry-declared index, checkpoint, mirror, or projection that may rebuild only from its materialized, retained, registered source. Rebuild success does not recreate missing canonical authority.
+- **Safe point** -- a runtime recovery anchor for exact worktree state, keyed canonically by `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}`. FileSafe exact-restores its manifest-owned state; it is not a user-facing Assistant Chat restore point.
+- **Restore point** -- an immutable Assistant Chat conversation-boundary record under `rp:{project_id}:{restore_point_id}`. Applying it creates a new thread/branch from the frozen conversation state while leaving the source thread and worktree unchanged. An optional safe-point ref is lineage only and never silently restores files.
+- **Storage backup** -- a verified shared-boundary copy of the canonical stores used for recovery and supported downgrade-by-restore. It is selected from startup recovery and applied with canonical stores offline; JSON/JSONL exports are not MVP backups.
+- **Migration journal** -- the storage-owned, crash-decidable state record for schema transition, verification, stamp ordering, rollback, and terminal receipt. It is not a safe point, restore point, or ordinary backup record.
+- **Exact-replace restore** -- FileSafe replacement of the complete manifest-owned state, never merge. Its atomicity is a durable journaled logical transaction with verified pre-restore rollback, per-path durable replacement, post-restore equality, and restart reconciliation; it does not claim a portable whole-worktree rename.
+- **Durable atomic replace** -- temp content staged in the target directory, content fsync, same-directory rename/replace, and affected-parent-directory fsync before durable success.
+- **Snapshot custody** -- content-addressed snapshot manifests/blobs under the resolved storage root outside the worktree; remote-project custody remains on the authorized remote. Persisted events/values carry refs and hashes, never captured file bodies.
+- **Recovery anchor** -- the durable reference set that keeps a blocked episode, safe point, snapshot/blob refs, restore transaction, worktree, or preserved run cleanup-ineligible while recovery remains legally required. It releases only for `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user` after no live successor/restorable ref remains.
+- **Legal hold** -- a storage-owned explicit hold requiring `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt. Holds compose by union and never clear automatically.
+- **`restore_failed`** -- apply failed, verified rollback completed, and the final manifest equals the recorded pre-restore manifest. It does not mean target restoration succeeded.
+- **`restore_recovery_required`** -- neither target equality nor original-state equality can be proven; the mutation fence, worktree ownership, transaction, safe point, and recovery holds remain active.
+- **`recovery_unavailable`** -- required snapshot material is missing or corrupt. Restore is disabled, local work and ownership remain preserved, and the episode remains blocked and anchored until explicit abandon, replan, or verified recovery.
+- **`baseline_target = safe_point`** -- exact-replaces the named worktree through FileSafe, then permits a new attempt only after owner equality and durable receipt.
+- **`baseline_target = historical_commit`** -- leaves the source worktree unchanged and creates a distinct clean isolated worktree at an exact immutable commit OID; a moving ref or abbreviated OID is not equivalent.
+- **`baseline_target = worktree_head`** -- performs no restore or SCM mutation and binds only to the exact validated live `HEAD` plus FileSafe state digest; dirty state remains attributed and requires the owner-prescribed confirmation.
+- **Unknown aftermath** -- unresolved evidence is not a permissive state or synonym for health. Unknown retention policy preserves instead of deleting; unknown storage-I/O class fails closed as device unavailable; unknown canonical-loss extent blocks mutation; and unknown scope/payload mapping quarantines rather than defaults.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
 
 ### Help architecture and project status terms
 
@@ -258,11 +287,11 @@ ContractRef: Primitive:PatchPipeline, ContractName:Plans/WorktreeGitImprovement.
 ### SessionStore
 The persistent storage boundary for sessions, runs, events, and artifacts. Implementation uses seglog (append-only event ledger), redb (durable KV state/projections), and Tantivy (full-text search). Secrets are forbidden.
 
-`seglog` is canonical; redb, `/Tantivy/JSONL`, and search indexes are disposable projections. Replay and `/rebuild` target a deterministic `target_seq`, while freshness notifications derive from committed projection state instead of ad-hoc polling.
+`seglog` is the canonical event ledger. redb is not one authority class: registry-declared `canonical_non_rebuildable` families are canonical product state recovered from mandatory verified backup, `canonical_dual_homed` families reconcile through their registered peer, and only `derived_rebuildable` redb/index/checkpoint families are disposable projections. `/Tantivy/JSONL` and search indexes remain derived. Replay and `/rebuild` target a deterministic survivor/checkpoint boundary and may rebuild only from a materialized retained registered source; projection freshness notifications derive from committed state instead of ad-hoc polling.
 
 Runtime persistence records distinguish `attempt_record`, `tier_runtime_record`, `blocked_projection`, and `usage_record`; storage-plan and storage-plan.md own the durable overlay shape while glossary terms name the records consistently.
 
-Runtime state is not stored in plan-node shards or project-local JSON sidecars; GPT audit context points mutable runtime truth to seglog, redb, and `/redb/projections` owned by storage projections.
+Runtime state is not stored in plan-node shards or project-local JSON sidecars; mutable runtime truth routes to the registry-declared canonical or derived storage family rather than treating every redb value as `/redb/projections`.
 
 ContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
 
@@ -293,7 +322,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, Con
 
 ## Owner / Consumer Map
 
-`Plans/Glossary.md` remains the owner doc for short canonical terminology, runtime/routing vocabulary, help-entry vocabulary, projection trust vocabulary, recovery/copy boundaries, evidence vocabulary, secret terminology, and primitive glossary definitions. Richer examples or workflow-specific copy may live in consumer docs, but consumers must preserve the canonical terms and negative constraints defined here.
+`Plans/Glossary.md` remains the owner doc for short canonical terminology, runtime/routing vocabulary, help-entry vocabulary, projection trust vocabulary, recovery/copy boundaries, evidence vocabulary, secret terminology, and primitive glossary definitions. It does not own EventRecord fields, storage mechanics, FileSafe restore algorithms, Worktree baseline effects, or Executor admission. Those remain owned respectively by `Plans/Contracts_V0.md` plus `Plans/event_record.schema.json`, `Plans/storage-plan.md`, `Plans/FileSafe.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/Executor_Protocol.md`. Richer examples or workflow-specific copy may live in consumer docs, but consumers must preserve the canonical terms and negative constraints defined here.
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
 
@@ -819,7 +848,7 @@ plan_unit_id: G-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: Projection freshness, health, trust, degraded fallback, runtime-trust command, blocked presentation, Progress trust, concern trust, and projection_freshness/projection_health terms keep recency, safety, write availability, dismissal, trust_tier, and mutation gating axes distinct.
+canonical_text: Projection freshness is closed to current, refreshing, and stale; projection health is closed to healthy, degraded, and unavailable; blocked remains write/admission posture and unknown remains unresolved evidence, while action gating keeps freshness, health, write availability, dismissal, trust_tier, and mutation authority distinct.
 gui_related: true
 gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
 split_recommended: false
@@ -829,6 +858,8 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- Fresh, warm, and expired are not emitted as projection_freshness values; blocked and unknown are not emitted as projection_health values.
+- A survivor-current projection may remain degraded after canonical loss, and owner policy blocks rather than guessing when health or loss extent is unknown.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -859,9 +890,12 @@ negative_constraints:
 - Do not flatten freshness, health, and write availability into one generic offline badge.
 - dismissed is presentation state, not semantic resolution.
 - Retire trust_tier from action-gating terminology.
-compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes: []
+compatibility_only_notes:
+- fresh, warm, and expired are retired freshness aliases; blocked and unknown are retired competing health aliases.
+stale_retired_dispositions:
+- The duplicate fresh, warm, stale, expired and healthy, degraded, blocked, unknown vocabulary is retired in favor of the storage-owned closed axes.
+owner_boundary_notes:
+- Plans/storage-plan.md owns projection_freshness and projection_health state semantics; Glossary owns their short canonical definitions.
 owner_hints:
 - Plans/Glossary.md
 preserved_contractrefs:
@@ -1309,7 +1343,7 @@ plan_unit_id: G-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: SessionStore primitive vocabulary defines session/run/event/artifact storage over seglog, redb, Tantivy, replay, projections, runtime records, and storage-owned overlay shape while forbidding secrets and keeping runtime state out of plan-node shards and project-local JSON sidecars.
+canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/JSONL/search state; replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
 gui_related: false
 gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
 split_recommended: false
@@ -1319,6 +1353,8 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- Every redb family is interpreted through its machine-readable recovery authority rather than assumed to be a projection.
+- A rebuild may recover only derived state with a materialized retained registered source and cannot recreate missing canonical receipts or product state.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1338,6 +1374,9 @@ preserved_exact_tokens:
 - seglog
 - redb
 - Tantivy
+- canonical_non_rebuildable
+- canonical_dual_homed
+- derived_rebuildable
 - target_seq
 - freshness notifications
 - attempt_record
@@ -1348,6 +1387,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Secrets are forbidden in persistent storage.
 - Runtime state is not stored in plan-node shards or project-local JSON sidecars.
+- Do not describe all redb state as disposable or rebuildable.
+- Do not infer successful canonical recovery from a rebuilt projection.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -2007,4 +2048,101 @@ owner_hints:
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/Permissions_System.md
 - Plans/Commands_System.md
+```
+
+### G-027 - Case L Durable State Event And Recovery Vocabulary
+
+```yaml
+plan_unit_id: G-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: >-
+  Canonical Case L vocabulary distinguishes application and project EventRecord scope, global event and scoped idempotency identity, projector_replay_only and dedupe_unavailable, canonical non-rebuildable versus derived rebuildable state, safe points, Assistant Chat restore points, storage backups, migration journals, exact-replace restore, durable atomic replace, snapshot custody, recovery and legal holds, exact Worktree baseline targets, truthful restore aftermath, and the closed projection freshness and health axes.
+gui_related: true
+gui_classification_reason: This unit standardizes user-visible and implementer-facing recovery, trust, scope, and storage terms consumed by GUI and non-GUI surfaces.
+split_recommended: false
+depends_on: [SP-235, SP-241, SP-242, CV-317, F2-200, EP-072, W-063, G-012, G-021]
+unblocks: []
+acceptance_criteria:
+- Application scope requires null project_id and app partition; project scope requires a non-empty project_id and reversible project partition.
+- Event and idempotency identity lifetimes, replay-only side-effect limits, and dedupe_unavailable no-append behavior match the Contracts and storage owners.
+- Canonical non-rebuildable state is never called a disposable projection, and derived rebuildable state requires a retained registered source.
+- Safe points, restore points, storage backups, and migration journals retain different scope, custody, and mutation semantics.
+- Exact-replace, durable atomic replace, snapshot custody, recovery anchors, legal holds, and Worktree baseline targets resolve to their owner contracts without local algorithm invention.
+- projection_freshness uses current, refreshing, and stale; projection_health uses healthy, degraded, and unavailable; blocked and unknown retain their separate owner meanings.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime implementation, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- targeted Case L terminology and ContractRef checks
+risk_class: case_l_durable_state_vocabulary_drift
+reasoning_tier: high
+context_scope: case_l_durable_state_glossary
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: case_l_durable_state_event_recovery_vocabulary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Case-L:L-003
+- Case-L:L-004
+- Case-L:L-010
+- Case-L:L-027
+- Case-L:L-029
+- Case-L:EVT-01..EVT-07
+- Case-L:PD-RSP-01..PD-RSP-09
+preserved_exact_tokens:
+- application
+- project
+- scope_kind
+- scope_partition
+- EventRecord
+- event_id
+- idempotency_key
+- projector_replay_only
+- dedupe_unavailable
+- canonical_non_rebuildable
+- derived_rebuildable
+- safe point
+- restore point
+- exact-replace
+- durable atomic replace
+- snapshot custody
+- recovery anchor
+- legal hold
+- restore_recovery_required
+- recovery_unavailable
+- historical_commit
+- worktree_head
+- current | refreshing | stale
+- healthy | degraded | unavailable
+negative_constraints:
+- Do not invent a fake project identity or treat application and project scope as interchangeable.
+- Do not call every redb value a projection or treat a rebuilt projection as recovered canonical authority.
+- Do not collapse safe points, restore points, storage backups, and migration journals into one restore term.
+- Do not use fresh, warm, expired, blocked, or unknown as values in the storage-owned projection freshness or health enums.
+- Do not turn missing/corrupt recovery material, unknown loss, or a failed rollback into success-shaped copy.
+- Do not claim runtime execution, whole-Case-L closure, buildability, or completeness from glossary propagation.
+compatibility_only_notes:
+- EventRecord 1.0 and EventEnvelopeV1 are compatibility-reader inputs only; projector_replay_only normalization does not append or rewrite them.
+- restored_with_conflicts is compatibility-only for a future explicitly merge-capable owner and is invalid for safe-point restore and Chat revert.
+stale_retired_dispositions:
+- fresh, warm, and expired are retired projection_freshness aliases.
+- blocked and unknown are retired competing projection_health aliases.
+- Generic all-redb-is-rebuildable and universal-CRC-skip wording is retired.
+owner_boundary_notes:
+- Glossary owns short definitions; Contracts and event_record.schema own EventRecord fields and outcomes.
+- Storage owns persistence, replay mechanics, recovery dispositions, retention, holds, and maintenance.
+- FileSafe owns exact-replace mechanics and snapshot equality/custody behavior.
+- WorktreeGitImprovement owns baseline effects; Executor_Protocol owns admission, lineage, and dispatch gating.
+owner_hints:
+- Plans/Glossary.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FileSafe.md
+- Plans/Executor_Protocol.md
+- Plans/WorktreeGitImprovement.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md'
 ```

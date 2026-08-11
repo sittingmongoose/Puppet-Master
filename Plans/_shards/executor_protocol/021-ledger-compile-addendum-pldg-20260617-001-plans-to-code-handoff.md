@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6000-L6273
+Source lines: L6094-L6370
 
-Source SHA256: `e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8`
+Source SHA256: `fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162`
 
 ---
 
@@ -62,13 +62,15 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor intake and dispatch must establish a source-control execution context and model-resolution context before mutation-capable work starts. The execution context preserves repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Model routing preserves requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. PlanCompile does not own source control; source control, worktrees, safe points, snapshots, rollback, FileSafe, and GitHub promotion apply after Executor accepts WorkNode requests.
-  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth.
+  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth. Recovery/fresh-attempt preflight conditionally validates the closed safe_point, historical_commit, and worktree_head baseline targets; an exact baseline receipt and verified postcondition precede successor-attempt dispatch.
 gui_related: false
 gui_classification_reason: Execution preflight and model receipt fields are backend runtime contracts.
 depends_on: [EP-099, MS-111, W-072, F2-189]
 unblocks: [EP-102, POA-048, RAP-029]
 acceptance_criteria:
   - Mutation-capable WorkNodes have repo/worktree/baseline/safe-point context before risky execution.
+  - Historical recovery accepts only a full immutable commit OID and preserves the source dirty worktree; worktree-head recovery performs no mutation and requires exact OID plus state digest.
+  - Safe-point retry consumes FileSafe/Contracts/storage owner results and preserves blocked/recovery anchors on refusal, verified rollback, recovery-required, or unavailable recovery material.
   - Model resolution receipts are captured before dispatch and visible to receipt consumers.
   - GitHub is optional promotion/output and local source-control/worktree state remains execution truth.
 validation_surfaces:
@@ -105,6 +107,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make PlanCompile own source-control mutation.
   - Do not require GitHub for local-only project completion.
+  - Do not substitute branch names, moving refs, current HEAD, another worktree, or a newer safe point for the commanded baseline.
 owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/WorktreeGitImprovement.md

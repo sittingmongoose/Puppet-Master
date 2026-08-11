@@ -1,12 +1,17 @@
     /* ── Browser Tab Content (workspace_preview / automation_session) ── */
+    /* min-width:0 is load-bearing, not decoration. Without it a flex item
+       keeps min-width:auto and refuses to shrink below its min-content width;
+       .browser-toolbar is a nowrap row of buttons + address bar + badges, so
+       the whole browser pane would hold that intrinsic width and overflow the
+       editor pane, painting its chrome over the dashboard beside it. */
     .browser-tab-content {
-      display: flex; flex-direction: column; flex: 1; min-height: 0;
+      display: flex; flex-direction: column; flex: 1; min-height: 0; min-width: 0;
       background: var(--surface); border: 1px solid var(--border-light);
     }
     .browser-toolbar {
       display: flex; align-items: center; gap: var(--xs); padding: 3px var(--sm);
       background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);
-      height: 32px; flex-shrink: 0;
+      height: 32px; flex-shrink: 0; min-width: 0; overflow: hidden;
     }
     .browser-nav-btn, .browser-action-btn {
       background: none; border: none; color: var(--text-secondary); cursor: pointer;
@@ -14,8 +19,36 @@
     }
     .browser-nav-btn:hover, .browser-action-btn:hover { background: var(--surface); color: var(--text-primary); }
     .browser-action-btn.active-tool { color: var(--accent-blue); background: rgba(0,150,255,0.1); }
+    /* Frosted scroll-under: the page scrolls BEHIND the browser toolbar.
+       Height is a static 32px because .browser-toolbar declares height:32px
+       outright — nothing themed moves it, so there is nothing to measure.
+       The plate is mixed from --surface-elevated (the toolbar's own base
+       colour), not --surface, so the chrome keeps reading as chrome over the
+       viewport's opaque white page. */
+    .browser-tab-content { --pm6-browser-tb-h: 32px; }
+    .browser-toolbar {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .browser-toolbar {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+    }
+    .browser-viewport {
+      margin-top: calc(-1 * var(--pm6-browser-tb-h, 32px));
+      padding-top: var(--pm6-browser-tb-h, 32px);
+    }
+
+    /* min-width:0 makes the address bar the element that absorbs the squeeze,
+       so the buttons keep their size as the pane narrows */
     .browser-address-bar {
-      flex: 1; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px;
+      flex: 1; min-width: 0;
+      background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px;
       padding: 2px 8px; font-family: var(--mono-font); font-size: 11px; color: var(--text-primary);
       outline: none;
     }
@@ -265,7 +298,32 @@
       background: var(--surface-elevated);
       font-family: var(--display-font);
     }
+    /* Non-retro: Projects-like open header row */
+    :is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .orch-header {
+      height: auto;
+      min-height: 0;
+      padding: 0;
+      margin: var(--md) var(--xl) 0;
+      border-bottom: none;
+      background: transparent;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: var(--sm);
+    }
+    [data-theme^="friendly"] .orch-header {
+      margin: var(--md) var(--xl) 0;
+      padding: var(--md) var(--lg);
+      background: var(--pm6-cozy-card-base, var(--surface-elevated));
+      border: 1px solid var(--pm6-cozy-chrome-border, var(--border-light));
+      border-radius: var(--radius-lg);
+    }
     .orch-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+    :is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .orch-title {
+      font-family: var(--display-font);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
     .orch-status-badge {
       padding: var(--xs) var(--sm);
       font-size: 11px;
@@ -331,6 +389,62 @@
       display: flex !important;
       flex-direction: column;
     }
+
+    /* Frosted scroll-under (Task 5): the active tab pane scrolls BEHIND the
+       page chrome. The lift is MEASURED, not constant (PM_FROST publishes
+       --pm6-orch-chrome-h = page top to tab-strip bottom, and
+       --pm6-orch-tabs-h = the strip's own box): .orch-header is a 32px bar
+       under retro and auto-height everywhere else, and the two run banners
+       between the rows toggle in and out, so a constant would desync the
+       overlap from the plate on the first theme switch or banner.
+
+       Only FULL-BLEED chrome can host the effect, so --pm6-orch-lift is
+       theme-gated:
+         retro  - title row + banners + tab strip are all edge-to-edge, so
+                  the whole stack takes the plate;
+         basic  - the title row is an open var(--xl)-inset block while the
+                  pane insets by var(--md), so content would slide through
+                  an 8px gutter beside it; the tab strip alone qualifies;
+         friendly/glass - BOTH rows are inset floating pills
+                  (margin: … var(--xl), rounded, own background). Content
+                  passing through those side gutters reads as a layout
+                  break, so these themes keep the stacked layout and the
+                  lift stays 0px, which collapses every calc() below back
+                  to the original padding.
+       No [data-theme^="glass"] backdrop-filter reset is needed here (the
+       usual glass fallback): glass never takes the plate at all, so there
+       is no nested backdrop-filter to undo, and a blanket glass rule would
+       overwrite the transparent title row / frosted pill strip that the
+       glass skin sets in pm6-css-orchestrator. */
+    .page-orchestrator {
+      --pm6-orch-chrome-h: 70px;
+      --pm6-orch-tabs-h: 36px;
+      --pm6-orch-lift: 0px;
+    }
+    [data-theme^="retro"] .page-orchestrator { --pm6-orch-lift: var(--pm6-orch-chrome-h, 70px); }
+    [data-theme^="basic"] .page-orchestrator { --pm6-orch-lift: var(--pm6-orch-tabs-h, 36px); }
+    /* the banner rows carry their own opaque fill; they only need the z-lift
+       so the pane sliding under them cannot paint over them (the pane is a
+       later, unpositioned sibling) */
+    [data-theme^="retro"] .orch-header,
+    [data-theme^="retro"] .pm6-orch-banner,
+    :is([data-theme^="retro"], [data-theme^="basic"]) .orch-tabs {
+      position: relative;
+      z-index: 5;
+    }
+    [data-theme^="retro"] .orch-header,
+    :is([data-theme^="retro"], [data-theme^="basic"]) .orch-tabs {
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* .orch-content is the overflow:hidden clipping ancestor between the
+       chrome and the pane, so it is the thing that gets lifted; it takes no
+       padding back, which keeps .orch-tab-content's height:100% resolving
+       against the full (chrome-inclusive) box. Each pane re-pays the lift
+       in its own padding-top instead. */
+    .orch-content { margin-top: calc(-1 * var(--pm6-orch-lift, 0px)); }
+    .orch-tab-content { padding-top: calc(var(--pm6-orch-lift, 0px) + var(--md)); }
     .orch-progress-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -817,6 +931,51 @@
     [data-theme="basic-light"] .page-projects .projects-toolbar,
     [data-theme="basic-dark"] .page-projects .projects-toolbar { box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
+    /* Frosted scroll-under (Task 5, restructure): .page-projects IS the
+       scroller and both chrome rows are its children, so they scrolled away
+       with the cards. They are pinned with position:sticky as a two-row
+       stack instead: the header takes top:0 and the toolbar takes the
+       header's MEASURED height (PM_FROST -> --pm6-proj-head-h), so the two
+       land flush against each other rather than keeping the var(--lg) flex
+       gap between them and leaking cards through it. Measured because the
+       header wraps its action row at narrow widths.
+       Sticky offsets resolve against the scrollport, so top:0 is the page's
+       true top edge. No side leak: the rows and the card grid share
+       .page-projects' var(--2xl) padding, so a card can never appear beside
+       a plate. .page-projects is in PM_EDGE's skipTop for this — a sticky row
+       parked at a mask-dissolved edge would visibly fade at the boundary.
+       The toolbar keeps its own --surface-elevated identity (frosted to 72%
+       rather than swapped for --surface) because it is an elevated card, not
+       bare page chrome. padding-bottom stays where it is. */
+    .page-projects { --pm6-proj-head-h: 42px; }
+    .page-projects .projects-header-bento {
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    .page-projects .projects-toolbar {
+      position: sticky;
+      top: var(--pm6-proj-head-h, 42px);
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the page */
+    [data-theme^="glass"] .page-projects .projects-header-bento {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    [data-theme^="glass"] .page-projects .projects-toolbar {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+    }
+
     .page-projects .projects-toolbar label {
       font-size: 13px;
       font-weight: 500;
@@ -1261,7 +1420,32 @@
       overflow-y: auto;
       padding: var(--md);
     }
-    
+    /* Frosted scroll-under (Task 5): the drawer body scrolls BEHIND its
+       header. Measured (PM_FROST -> --pm6-insp-head-h): the header is a
+       single row but its var(--xl) padding rides the display font, and the
+       drawer is translateX-hidden at boot, so it measures 0 there and the
+       constant below carries until it first opens. The panel is the
+       overflow:hidden clipper and the header sits flush at its top, so the
+       header's own box is the whole lift. */
+    .settings-inspector-panel { --pm6-insp-head-h: 54px; }
+    .settings-inspector-panel .inspector-header {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the drawer */
+    [data-theme^="glass"] .settings-inspector-panel .inspector-header {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    .settings-inspector-panel .inspector-body {
+      margin-top: calc(-1 * var(--pm6-insp-head-h, 54px));
+      padding-top: calc(var(--pm6-insp-head-h, 54px) + var(--md));
+    }
+
     .inspector-view {
       display: none;
     }

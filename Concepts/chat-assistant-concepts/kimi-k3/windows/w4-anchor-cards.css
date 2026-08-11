@@ -1,0 +1,165 @@
+/* ============================================================================
+   Kimi K3 — W4 Anchor Cards chrome (scoped [data-k3-window="w4"]).
+   Standard header + lens banner; a transcript area that owns the layout and
+   hosts an absolutely-positioned right-edge gutter of floating work cards
+   (wide layout, env.width >= 975). Under 975px the same surfaces collapse
+   into a single work-chips row above the composer. The gutter overlays the
+   thread's right margin — it never steals width from the transcript.
+   Token-driven only; selected/active states never use a left-side border.
+   ========================================================================== */
+
+[data-k3-window="w4"] {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+[data-k3-window="w4"] > .k3w-kit-header { flex: 0 0 auto; }
+[data-k3-window="w4"] .k3w-kit-lens-banner { flex: 0 0 auto; }
+
+/* ---- body: transcript area + chips row + composer ------------------------- */
+[data-k3-window="w4"] .w4-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* transcript area is the positioned container for the anchor gutter */
+[data-k3-window="w4"] .w4-transcript-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* reserve right padding so the floating gutter never covers the transcript
+   prose when wide; the gutter sits in that reserved margin. */
+[data-k3-window="w4"] .w4-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--w4-gutter-reserve, 0px);
+  transition: padding-right var(--motion-med, 240ms) var(--ease-default, ease-out);
+}
+/* wide layout reserves room on the right for the floating cards */
+[data-k3-window="w4"] .w4-gutter:not([hidden]) ~ .w4-thread,
+[data-k3-window="w4"] .w4-transcript-area:has(.w4-gutter:not([hidden])) .w4-thread {
+  --w4-gutter-reserve: 244px;
+}
+
+/* ---- anchor gutter (wide layout only) ------------------------------------- */
+[data-k3-window="w4"] .w4-gutter {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 5;
+  width: 232px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  pointer-events: auto;
+}
+[data-k3-window="w4"] .w4-gutter-head {
+  flex: 0 0 auto;
+  padding: 4px 2px 6px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+}
+[data-k3-window="w4"] .w4-gutter-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 2px;
+  overflow-y: auto;
+}
+
+/* floating card treatment for the kit surfaces under our scope */
+[data-k3-window="w4"] .w4-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--elev-1);
+}
+[data-k3-window="w4"] .w4-gutter-body .w4-card { padding: 10px 12px; }
+[data-k3-window="w4"] .w4-card-chips { box-shadow: none; border: 0; background: transparent; }
+
+/* ---- Chats anchor card (always present; travels gutter<->chips) ----------- */
+[data-k3-window="w4"] .w4-chats-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+[data-k3-window="w4"] .w4-chats-card .w4-chats-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 2px 2px 6px;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+  margin-bottom: 6px;
+}
+[data-k3-window="w4"] .w4-chats-title {
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+}
+/* pin toggle: pressed = accent tint, never a colored left border */
+[data-k3-window="w4"] .w4-chats-pin.is-pinned {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+}
+[data-k3-window="w4"] .w4-chats-history {
+  flex: 1 1 auto;
+  min-height: 80px;
+  max-height: 60vh;
+  background: transparent;
+  border: 0;
+  overflow: hidden;
+}
+/* in the narrow chips row, give the chats card a sensible height */
+[data-k3-window="w4"] .w4-chips .w4-chats-card {
+  max-height: 240px;
+  padding: 8px 10px;
+}
+[data-k3-window="w4"] .w4-chips .w4-chats-history { max-height: 180px; }
+
+/* ---- chips row (narrow layout only) --------------------------------------- */
+[data-k3-window="w4"] .w4-chips {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 14px;
+  background: var(--surface);
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w4"] .w4-chips .w4-card-chips { width: 100%; }
+
+/* ---- composer slot --------------------------------------------------------- */
+[data-k3-window="w4"] .w4-composer {
+  flex: 0 0 auto;
+  padding: 10px 14px 14px;
+}
+
+/* reduced motion: the padding transition is the only motion here; the global
+   gate collapses it, and the resting state is identical either way. */

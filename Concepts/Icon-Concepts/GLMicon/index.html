@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puppet Master — Icon Lab (GLMicon)</title>
+<style>
+  :root{
+    --bg:#211E26; --surface:#2A2731; --surface-elev:#322E3A;
+    --text:#F0EDF4; --text-2:#B4AEBE; --muted:#8A8494;
+    --border:rgba(240,237,244,.10); --border-2:rgba(240,237,244,.06);
+    --accent:#6FC6E8; --accent-rgb:111,198,232;
+    --warn:#FFD97F;
+    --radius:14px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  a{color:inherit}
+  .wrap{max-width:1280px; margin:0 auto; padding:32px 28px 96px}
+
+  header.hero{margin-bottom:24px}
+  .eyebrow{
+    display:inline-block; font:600 11px/1 var(--mono); letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent);
+    background:rgba(var(--accent-rgb),.12); padding:6px 10px; border-radius:999px; margin-bottom:14px;
+  }
+  h1{font-size:clamp(28px,4vw,42px); line-height:1.1; margin:0 0 10px; letter-spacing:-.02em; font-weight:800}
+  .lede{color:var(--text-2); max-width:75ch; margin:0; font-size:15.5px}
+  .meta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:18px; color:var(--muted); font-size:13px}
+  .meta-row b{color:var(--text-2); font-weight:600}
+  .meta-row code{font-family:var(--mono); font-size:12px; color:var(--accent)}
+
+  /* Portability banner */
+  .banner{
+    margin:24px 0 8px; padding:16px 18px; border-radius:var(--radius);
+    background:rgba(var(--accent-rgb),.08); border:1px solid rgba(var(--accent-rgb),.28);
+    color:var(--text-2); font-size:13.5px;
+  }
+  .banner b{color:var(--text)}
+  .banner code{font-family:var(--mono); color:var(--accent); font-size:12px}
+  .banner .pill{display:inline-block; background:var(--accent); color:#0c0c0f; font-weight:700;
+    font-size:11px; padding:2px 8px; border-radius:999px; margin-right:6px; letter-spacing:.02em}
+
+  section{margin-top:46px}
+  h2{font-size:21px; margin:0 0 4px; letter-spacing:-.01em}
+  .section-sub{color:var(--muted); font-size:13px; margin:0 0 20px}
+
+  /* App-header preview strip */
+  .chrome-strip{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+    border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; background:var(--border);
+  }
+  .chrome-cell{display:flex; align-items:center; gap:10px; padding:14px; font-weight:700; font-size:14px}
+  .chrome-cell .logo{width:26px; height:26px; flex:0 0 auto; display:block}
+  .chrome-cell .title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+  /* Controls */
+  .controls{display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;
+    margin-bottom:22px; position:sticky; top:0; z-index:5;
+    background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(8px);
+    padding:14px 0; border-bottom:1px solid var(--border-2)}
+  .seg{display:inline-flex; background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:4px; gap:2px}
+  .seg button{appearance:none; border:0; background:transparent; color:var(--text-2); font:600 13px/1 inherit; padding:8px 14px; border-radius:999px; cursor:pointer; transition:.15s}
+  .seg button:hover{color:var(--text)}
+  .seg button[aria-pressed="true"]{background:var(--accent); color:#0c0c0f}
+  .family-row{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{font:600 12px/1 var(--mono); letter-spacing:.04em; text-transform:lowercase; padding:7px 11px;
+    border-radius:999px; cursor:pointer; background:var(--surface); border:1px solid var(--border); color:var(--text-2); transition:.15s}
+  .chip:hover{color:var(--text)}
+  .chip[aria-pressed="true"]{border-color:rgba(var(--accent-rgb),.6); color:var(--accent); background:rgba(var(--accent-rgb),.10)}
+
+  /* Card grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(248px,1fr)); gap:18px}
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
+    display:flex; flex-direction:column; transition:.18s}
+  .card:hover{transform:translateY(-2px); border-color:rgba(var(--accent-rgb),.45); box-shadow:0 14px 40px rgba(0,0,0,.34)}
+  .stage{position:relative; display:grid; place-items:center; min-height:188px; padding:24px}
+  .stage svg, .stage img{width:108px; height:108px; display:block}
+  .badge-type{position:absolute; top:10px; left:10px; font:600 10px/1 var(--mono); letter-spacing:.12em;
+    text-transform:uppercase; padding:5px 8px; border-radius:6px; background:rgba(0,0,0,.45); color:#fff; backdrop-filter:blur(4px)}
+  .badge-type.anim{color:#ffe9a8}
+  .info{padding:14px 14px 6px}
+  .info .name{font-weight:700; font-size:14.5px}
+  .info .sub{color:var(--muted); font-size:12.5px; margin-top:3px}
+  .info .motion{color:var(--accent); font-size:12px; margin-top:3px; font-weight:600}
+  .file{margin-top:10px; font:11.5px/1.35 var(--mono); color:var(--muted); word-break:break-all}
+  .actions{display:flex; gap:8px; padding:12px 14px 16px; margin-top:auto}
+  .btn{flex:1; appearance:none; cursor:pointer; font:600 13px/1 inherit; padding:10px 12px; border-radius:10px;
+    border:1px solid var(--border); transition:.15s; background:var(--surface-elev); color:var(--text); text-decoration:none; text-align:center;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px}
+  .btn:hover{border-color:rgba(var(--accent-rgb),.6); color:var(--accent)}
+  .btn-primary{background:var(--accent); color:#0c0c0f; border-color:transparent}
+  .btn-primary:hover{color:#0c0c0f; filter:brightness(1.05)}
+  .card.hide{display:none}
+
+  /* Tray comparison table */
+  .tray-wrap{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden}
+  .tray-grid{display:grid; grid-template-columns:200px repeat(3,1fr); gap:1px; background:var(--border)}
+  .tray-grid > div{background:var(--surface); padding:14px; display:flex; flex-direction:column; gap:8px}
+  .tray-grid .row-head{font-weight:700; font-size:13.5px; display:flex; align-items:center}
+  .tray-grid .row-head small{display:block; color:var(--muted); font-weight:400; font-size:11.5px; margin-top:2px}
+  .tray-col-head{font-weight:700; font-size:13px; color:var(--accent); text-align:center}
+  .tray-cell{display:flex; gap:18px; align-items:center; justify-content:center; min-height:64px}
+  .tray-cell .sz{display:flex; flex-direction:column; align-items:center; gap:5px}
+  .tray-cell .sz img{display:block}
+  .tray-cell .sz span{font:600 10px/1 var(--mono); color:var(--muted)}
+  .menubar{background:linear-gradient(#e6e6e6,#d8d8d8); border-radius:6px; padding:4px}
+  .menubar.dark{background:linear-gradient(#2a2a2a,#1c1c1c)}
+  .menubar img{filter:drop-shadow(0 1px 0 rgba(0,0,0,.1))}
+
+  /* Build artifacts list */
+  .art-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px}
+  .art{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px}
+  .art h4{margin:0 0 4px; font-size:13.5px}
+  .art p{margin:0; color:var(--muted); font-size:12px}
+  .art code{font-family:var(--mono); color:var(--accent); font-size:11.5px}
+
+  .callout{margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(255,217,127,.08);
+    border:1px solid rgba(255,217,127,.25); color:var(--text-2); font-size:12.5px}
+  .callout b{color:var(--warn)}
+
+  footer{margin-top:54px; padding-top:22px; border-top:1px solid var(--border-2); color:var(--muted); font-size:12.5px}
+  footer code{font-family:var(--mono); color:var(--text-2)}
+
+  @media (max-width:760px){
+    .tray-grid{grid-template-columns:1fr}
+    .tray-grid .tray-col-head{display:none}
+    .controls{position:static; background:transparent; backdrop-filter:none; border:0; padding:0}
+  }
+  @media (prefers-reduced-motion:reduce){ .card:hover{transform:none} }
+
+  /* Top GLM label */
+  .glm-label{
+    width:100%; text-align:center; padding:10px 16px;
+    background:var(--accent); color:#0c0c0f;
+    font:800 15px/1 var(--mono); letter-spacing:.4em; text-transform:uppercase;
+    position:fixed; top:0; left:0; z-index:50;
+  }
+  body{padding-top:36px}
+</style>
+</head>
+<body>
+<div class="glm-label">GLM</div>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Concepts / GLMicon</span>
+    <h1>Puppet Master — Icon Lab</h1>
+    <p class="lede">
+      The full icon system for Puppet Master, portability-tested for Rust + Slint 1.17.1 across
+      macOS, Windows, Linux, and web. Theme-matched static marks, browser-animated loaders, three
+      tray glyph variants, and ready-to-ship app-icon bundles (.icns / .ico / hicolor / web).
+    </p>
+    <div class="meta-row">
+      <span><b>8</b> static themed marks</span>
+      <span><b>8</b> animated loaders</span>
+      <span><b>3</b> tray glyph variants</span>
+      <span><b>288</b> generated bundle files</span>
+      <span>source <code>Pm placeholder 3.svg</code></span>
+    </div>
+  </header>
+
+  <div class="banner">
+    <span class="pill">PORTABILITY</span>
+    <b>Slint can't play SVG-internal animation</b> — it rasterizes SVGs via <code>resvg</code> as a
+    single static frame (true on desktop AND the wasm/web target). So: the <b>8 static SVGs</b> are
+    the portable truth (drop into <code>@image-url(...)</code> as-is). The <b>8 animated SVGs</b>
+    animate in browsers and are authored so their frozen <code>t=0</code> frame is still a complete
+    logo — meaning they degrade gracefully to a static mark in Slint. For real Slint loading motion,
+    animate the <code>Image</code> element (<code>animate transform-rotation</code>) rather than the SVG.
+  </div>
+
+  <!-- App-header strip -->
+  <section>
+    <h2>In the app header</h2>
+    <p class="section-sub">Each static mark at header size on its theme's real <code>--background</code> — how it looks replacing the "Puppet Master" title in PMConcept7's top-left.</p>
+    <div class="chrome-strip" id="chromeStrip"></div>
+  </section>
+
+  <!-- Logo gallery (static + animated) -->
+  <section>
+    <h2>Logo gallery</h2>
+    <p class="section-sub">8 static theme variants + 8 animated loaders (one distinct motion per theme). Animated cards play live in this browser.</p>
+    <div class="controls">
+      <div class="seg" id="typeSeg" role="group" aria-label="Filter by type">
+        <button aria-pressed="true" data-type="all">All</button>
+        <button aria-pressed="false" data-type="static">Static</button>
+        <button aria-pressed="false" data-type="anim">Animated</button>
+      </div>
+      <div class="family-row" id="familyRow" role="group" aria-label="Filter by theme family">
+        <button class="chip" aria-pressed="true" data-family="all">all</button>
+        <button class="chip" aria-pressed="false" data-family="retro">retro</button>
+        <button class="chip" aria-pressed="false" data-family="basic">basic</button>
+        <button class="chip" aria-pressed="false" data-family="glass">glass</button>
+        <button class="chip" aria-pressed="false" data-family="friendly">friendly</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- Tray glyph comparison -->
+  <section>
+    <h2>Tray glyph variants — pick one</h2>
+    <p class="section-sub">
+      The full PM+puppet-strings mark is illegible at 16px, and macOS needs a monochrome <em>template image</em>
+      (OS reads the alpha channel only). Three simplified glyphs are shown below at real tray sizes,
+      rendered on both light and dark menubar backgrounds. The <b>mac template</b> row shows the
+      auto-tinting silhouette; <b>color</b> is for Windows/Linux. Shown in the friendly-dark accent;
+      every theme has its own accent-colored color set under <code>build/&lt;theme&gt;/tray/</code>.
+    </p>
+    <div class="tray-wrap">
+      <div class="tray-grid">
+        <div class="tray-col-head" style="grid-column:1/-1; text-align:left; background:var(--surface-elev)">
+          <span style="color:var(--muted); font-weight:600">Friendly-dark accent · real 16px / 32px sizes</span>
+        </div>
+        <div></div>
+        <div class="tray-col-head">PM Monogram</div>
+        <div class="tray-col-head">Puppet + String</div>
+        <div class="tray-col-head">Simplified Mark</div>
+
+        <div class="row-head">macOS template<small>menubar auto-tints; show on light + dark bar</small></div>
+        <div class="tray-cell" id="tpl-pm"></div>
+        <div class="tray-cell" id="tpl-puppet"></div>
+        <div class="tray-cell" id="tpl-mark"></div>
+
+        <div class="row-head">Windows / Linux color<small>full-color, accent fill</small></div>
+        <div class="tray-cell" id="clr-pm"></div>
+        <div class="tray-cell" id="clr-puppet"></div>
+        <div class="tray-cell" id="clr-mark"></div>
+      </div>
+    </div>
+    <div class="callout">
+      <b>Recommendation:</b> the <b>PM Monogram</b> reads most reliably at 16×16. <b>Simplified Mark</b>
+      is the best compromise if you want to keep the puppet motif in the tray. <b>Puppet + String</b>
+      is expressive but its thin string and small eyes lose detail at 16px — better at 22px+ (Linux).
+    </div>
+  </section>
+
+  <!-- Build artifacts -->
+  <section>
+    <h2>Generated bundles</h2>
+    <p class="section-sub">
+      Per-theme, under <code>build/&lt;theme&gt;/</code>. Regenerate everything with
+      <code>python3 build_icons.py</code> (needs <code>resvg</code>, <code>iconutil</code> [mac], <code>Pillow</code>).
+    </p>
+    <div class="art-grid">
+      <div class="art"><h4>macOS app icon</h4><p><code>app-icon/mac/PM-&lt;theme&gt;.icns</code> — 10 PNG variants (16→1024, incl. @2x)</p></div>
+      <div class="art"><h4>Windows app icon</h4><p><code>app-icon/windows/PM-&lt;theme&gt;.ico</code> — 7 sizes (16→256, 256 PNG-compressed)</p></div>
+      <div class="art"><h4>Linux hicolor</h4><p><code>app-icon/linux/hicolor/</code> — 8 PNG sizes + <code>scalable/</code> SVG</p></div>
+      <div class="art"><h4>Web (PWA)</h4><p><code>app-icon/web/</code> — 192/512 any+maskable, favicon.ico, apple-touch, manifest</p></div>
+      <div class="art"><h4>Tray — macOS template</h4><p><code>tray/&lt;glyph&gt;/mac/</code> — black+alpha, 16/32 + @2x (set <code>isTemplate</code>)</p></div>
+      <div class="art"><h4>Tray — Windows/Linux</h4><p><code>tray/&lt;glyph&gt;/windows|linux/</code> — accent color, 16/32 / 22px</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Built as a Concepts deliverable. Nothing outside <code>Concepts/GLMicon/</code> was modified;
+    <code>PMConcept7.html</code> was read only for theme tokens. Static SVGs render identically in Slint
+    (resvg) across all targets; the animated loaders are browser-animated and degrade to a clean static
+    frame under resvg/Slint.
+  </footer>
+</div>
+
+<script>
+  const THEMES = [
+    {slug:"retro-dark",     label:"Retro Dark",     family:"retro",    mode:"dark",  accent:"#00FF41", contrast:"#1A1A1A", bg:"#1A1A1A", motion:"String Pluck"},
+    {slug:"retro-light",    label:"Retro Light",    family:"retro",    mode:"light", accent:"#0047AB", contrast:"#E0E0E0", bg:"#F5F0E8", motion:"Draw-On Reveal"},
+    {slug:"basic-light",    label:"Basic Light",    family:"basic",    mode:"light", accent:"#0056B3", contrast:"#FFFFFF", bg:"#EAECEF", motion:"Breathing Scale"},
+    {slug:"basic-dark",     label:"Basic Dark",     family:"basic",    mode:"dark",  accent:"#64B5F6", contrast:"#121212", bg:"#121212", motion:"Shimmer Sweep"},
+    {slug:"glass-dark",     label:"Glass Dark",     family:"glass",    mode:"dark",  accent:"#B79CFF", contrast:"#241B36", bg:"#241B36", motion:"Control-Bar Tilt"},
+    {slug:"glass-light",    label:"Glass Light",    family:"glass",    mode:"light", accent:"#8B6ED9", contrast:"#FFFFFF", bg:"#E4CDE4", motion:"Orbit Ring"},
+    {slug:"friendly-dark",  label:"Friendly Dark",  family:"friendly", mode:"dark",  accent:"#6FC6E8", contrast:"#211E26", bg:"#211E26", motion:"Spring Bounce"},
+    {slug:"friendly-light", label:"Friendly Light", family:"friendly", mode:"light", accent:"#3F9CC7", contrast:"#FFFFFF", bg:"#FBF7F3", motion:"Equalizer Strings"},
+  ];
+  const $ = (s, r=document) => r.querySelector(s);
+  const titleColor = (bg) => {
+    const c = bg.replace('#',''); const r=parseInt(c.substr(0,2),16), g=parseInt(c.substr(2,2),16), b=parseInt(c.substr(4,2),16);
+    return ((0.299*r + 0.587*g + 0.114*b)/255) > 0.55 ? '#1A1A1A' : '#F0EDF4';
+  };
+
+  // Header chrome strip
+  (function(){
+    const wrap = $('#chromeStrip');
+    THEMES.forEach(t => {
+      const cell = document.createElement('div');
+      cell.className = 'chrome-cell';
+      cell.style.background = t.bg; cell.style.color = titleColor(t.bg);
+      cell.innerHTML = `<img class="logo" src="static/pm-${t.slug}.svg" alt=""><span class="title">Puppet Master</span>`;
+      wrap.appendChild(cell);
+    });
+  })();
+
+  // Logo gallery
+  const grid = $('#grid');
+  THEMES.forEach(t => {
+    [['static',`static/pm-${t.slug}.svg`],['anim',`animated/pm-${t.slug}-loading.svg`]].forEach(([kind,file]) => {
+      const card = document.createElement('article');
+      card.className = 'card'; card.dataset.type = kind; card.dataset.family = t.family;
+      card.innerHTML = `
+        <div class="stage" style="background:${t.bg}">
+          <span class="badge-type ${kind}">${kind==='anim'?'Loading':'Static'}</span>
+          <img src="${file}" alt="" loading="lazy">
+        </div>
+        <div class="info">
+          <div class="name">${t.label}</div>
+          <div class="sub">${t.family} · ${t.mode}</div>
+          ${kind==='anim' ? `<div class="motion">${t.motion}</div>` : `<div class="sub" style="opacity:.7">accent ${t.accent}</div>`}
+          <div class="file">${file}</div>
+        </div>
+        <div class="actions">
+          <a class="btn" href="${file}" target="_blank" rel="noopener">Open</a>
+          <button class="btn btn-primary" data-download="${file}" data-name="${file.split('/').pop()}">Download</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+  });
+
+  // Filters
+  let curType='all', curFam='all';
+  function applyFilters(){
+    let shown=0;
+    grid.querySelectorAll('.card').forEach(c=>{
+      const show=(curType==='all'||c.dataset.type===curType)&&(curFam==='all'||c.dataset.family===curFam);
+      c.classList.toggle('hide',!show); if(show)shown++;
+    });
+    let empty=$('#empty');
+    if(shown===0){ if(!empty){empty=document.createElement('div');empty.id='empty';empty.className='empty';empty.textContent='No icons match this filter.';grid.appendChild(empty);} }
+    else if(empty){empty.remove();}
+  }
+  $('#typeSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('#typeSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');curType=b.dataset.type;applyFilters();});
+  $('#familyRow').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('#familyRow').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');curFam=b.dataset.family;applyFilters();});
+
+  // Download (fetch+blob; fallback to opening)
+  grid.addEventListener('click', async e => {
+    const btn = e.target.closest('[data-download]'); if(!btn) return; e.preventDefault();
+    const url = btn.getAttribute('data-download'), name = btn.getAttribute('data-name');
+    try { const res = await fetch(url); const blob = await res.blob(); const o = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=o; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(o),1500);
+    } catch(err){ window.open(url,'_blank','noopener'); }
+  });
+
+  // Tray comparison cells (friendly-dark theme)
+  (function(){
+    const T='friendly-dark';
+    const glyphs={pm:'pm-monogram',puppet:'puppet-string',mark:'simplified-mark'};
+    const fillRow=(idPrefix, kind, platFolder, ext)=>{
+      ['pm','puppet','mark'].forEach(g=>{
+        const cell = $(`#${idPrefix}-${g}`); if(!cell)return;
+        const glyph=glyphs[g];
+        // 16px on light menubar, 32px on dark menubar
+        const light = document.createElement('div'); light.className='sz';
+        const mbL=document.createElement('div'); mbL.className='menubar';
+        mbL.innerHTML=`<img src="build/${T}/tray/${glyph}/${platFolder}/${kind}-${glyph}-16.png" width="16" height="16" alt="">`;
+        light.appendChild(mbL); light.innerHTML+='<span>16 · light bar</span>';
+        const dark = document.createElement('div'); dark.className='sz';
+        const mbD=document.createElement('div'); mbD.className='menubar dark';
+        mbD.innerHTML=`<img src="build/${T}/tray/${glyph}/${platFolder}/${kind}-${glyph}-32.png" width="22" height="22" alt="">`;
+        dark.appendChild(mbD); dark.innerHTML+='<span>32 · dark bar</span>';
+        cell.appendChild(light); cell.appendChild(dark);
+      });
+    };
+    fillRow('tpl','tray-template','mac');
+    fillRow('clr','tray-color','windows');
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.model_matrix.v1",
+  "method_id": "apr-method-v1.0.0",
+  "frozen_at_utc": "2026-08-02T19:51:38Z",
+  "exact_slot_count": 10,
+  "required_class_counts": {
+    "relative_low": 8,
+    "relative_high": 2
+  },
+  "coordinator_and_reader_exclusion": "The Sol Ultra coordinator and Sol Medium Plan readers are not subjects.",
+  "route_adapter": {
+    "name": "OpenCode CLI",
+    "version_observed": "1.18.9",
+    "fresh_context_command_shape": "opencode run --format json --model <route> --agent packet-subject --dir <lane-local-empty-dir>",
+    "reasoning_override": null,
+    "requested_reasoning_configuration": "provider_default_no_override",
+    "fallback_allowed": false,
+    "controller_retry_count": 0
+  },
+  "availability_gate": {
+    "catalog_and_credential_state": "configured",
+    "semantic_launch_state": "blocked_pending_ten_route_nonsemantic_canary",
+    "failure_rule": "Any unavailable, divergent, substituted, or identity-ambiguous slot stops before pilot and fleet; no replacement is allowed."
+  },
+  "slots": [
+    {
+      "slot_id": "L01",
+      "relative_class": "relative_low",
+      "route": "opencode/deepseek-v4-flash-free",
+      "provider_id": "opencode",
+      "model_id": "deepseek-v4-flash-free",
+      "distinct_underlying_model_key": "deepseek-v4-flash",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L02",
+      "relative_class": "relative_low",
+      "route": "opencode/laguna-s-2.1-free",
+      "provider_id": "opencode",
+      "model_id": "laguna-s-2.1-free",
+      "distinct_underlying_model_key": "laguna-s-2.1",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L03",
+      "relative_class": "relative_low",
+      "route": "opencode/ling-3.0-flash-free",
+      "provider_id": "opencode",
+      "model_id": "ling-3.0-flash-free",
+      "distinct_underlying_model_key": "ling-3.0-flash",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L04",
+      "relative_class": "relative_low",
+      "route": "opencode/mimo-v2.5-free",
+      "provider_id": "opencode",
+      "model_id": "mimo-v2.5-free",
+      "distinct_underlying_model_key": "mimo-v2.5",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L05",
+      "relative_class": "relative_low",
+      "route": "opencode/nemotron-3-ultra-free",
+      "provider_id": "opencode",
+      "model_id": "nemotron-3-ultra-free",
+      "distinct_underlying_model_key": "nemotron-3-ultra",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L06",
+      "relative_class": "relative_low",
+      "route": "opencode/north-mini-code-free",
+      "provider_id": "opencode",
+      "model_id": "north-mini-code-free",
+      "distinct_underlying_model_key": "north-mini-code",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L07",
+      "relative_class": "relative_low",
+      "route": "github-copilot/gpt-5.4-nano",
+      "provider_id": "github-copilot",
+      "model_id": "gpt-5.4-nano",
+      "distinct_underlying_model_key": "gpt-5.4-nano",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "L08",
+      "relative_class": "relative_low",
+      "route": "github-copilot/claude-haiku-4.5",
+      "provider_id": "github-copilot",
+      "model_id": "claude-haiku-4.5",
+      "distinct_underlying_model_key": "claude-haiku-4.5",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "H01",
+      "relative_class": "relative_high",
+      "route": "github-copilot/gpt-5.6-sol",
+      "provider_id": "github-copilot",
+      "model_id": "gpt-5.6-sol",
+      "distinct_underlying_model_key": "gpt-5.6-sol",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    },
+    {
+      "slot_id": "H02",
+      "relative_class": "relative_high",
+      "route": "github-copilot/claude-opus-5",
+      "provider_id": "github-copilot",
+      "model_id": "claude-opus-5",
+      "distinct_underlying_model_key": "claude-opus-5",
+      "catalog_status": "active",
+      "requested_variant": null,
+      "requested_reasoning": "provider_default_no_override",
+      "availability_status": "pending_nonsemantic_canary"
+    }
+  ]
+}

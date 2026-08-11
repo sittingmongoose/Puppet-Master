@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2789-L2830
+Source lines: L2888-L2933
 
-Source SHA256: `d5e5bac279f215379f79b061d0273bfdc217fe608cd0c264913f441cf8518113`
+Source SHA256: `efecff59153c90ec0a8dd33d6982b5ed891688de490ddcebfb45639be8d2e91e`
 
 ---
 
@@ -42,8 +42,12 @@ If a mutation-capable attempt performed local changes before the FileSafe block 
 
 When `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`.
 
+The rerun action is admissible only after storage returns one verified canonical `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` record and durable proof that the blocked recovery hold protects its manifest, blobs, transaction lineage, and named worktree. FileSafe executes the exact-replace transaction in §11.1.2b; it does not interpret `restore_safe_point_then_retry` as merge, best-effort checkout, or retry-before-restore. Missing/corrupt snapshot material changes the episode to recovery-unavailable, preserves local work, and leaves ordinary retry illegal.
+
 ### Persistence
 A FileSafe block is a persistent blocked runtime episode until resolved or superseded.
+
+When the episode requires safe-point restore, the blocked episode, safe-point refs, and blocked hold are one storage-defined durability unit before the sole recovery action is exposed. A nonterminal restore transaction is reconstructed before ordinary Executor dispatch or janitor cleanup. FileSafe requests hold release only after `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user`, and never because of age, process exit, archival, worktree unbinding, or missing cleanup material.
 
 Context-shaping and handoff rule:
 - FileSafe does not define alternate child continuity or alternate memory behavior.

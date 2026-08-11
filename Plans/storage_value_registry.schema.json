@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
-  "title": "Puppet Master Storage Value Registry",
-  "description": "Registry of seglog/redb storage value families, key shapes, value schemas, replay, migration, retention, and redaction contracts. The registry is a Tier 0 storage contract only; it does not declare Puppet Master implementation-buildable.",
+  "$id": "https://puppetmaster.local/schemas/storage_value_registry/2.0.0/storage_value_registry.schema.json",
+  "title": "Puppet Master Storage Value Registry v2",
+  "description": "Closed machine authority for storage value families, structured retention, recovery, migration, restore, EventRecord identity/dedupe, and compatibility-key disposition. Registry conformance is planning-contract evidence only and is not runtime/buildability proof.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -13,27 +13,26 @@
     "owner_doc",
     "buildability_gate_policy",
     "critical_family_ids",
+    "mvp_required_family_ids",
+    "event_record_identity_contract",
+    "retention_policies",
     "families"
   ],
   "properties": {
     "$schema": {
-      "type": "string",
       "const": "https://puppetmaster.local/schemas/storage_value_registry.schema.json"
     },
     "schema_id": {
-      "type": "string",
-      "const": "pm.storage_value_registry.v1"
+      "const": "pm.storage_value_registry.v2"
     },
     "schema_version": {
-      "type": "string",
-      "const": "1.0.0"
+      "const": "2.0.0"
     },
     "generated_at_utc": {
       "type": "string",
       "format": "date-time"
     },
     "owner_doc": {
-      "type": "string",
       "const": "Plans/storage-plan.md"
     },
     "buildability_gate_policy": {
@@ -47,19 +46,15 @@
       ],
       "properties": {
         "buildability_gate_passed_must_remain_false": {
-          "type": "boolean",
           "const": true
         },
         "ordinary_product_worknodes_allowed": {
-          "type": "boolean",
           "const": false
         },
         "ordinary_product_nodeseeds_allowed": {
-          "type": "boolean",
           "const": false
         },
         "scope": {
-          "type": "string",
           "const": "tier_0c_2_storage_value_contracts_only"
         }
       }
@@ -70,6 +65,77 @@
       "uniqueItems": true,
       "items": {
         "$ref": "#/$defs/family_id"
+      }
+    },
+    "mvp_required_family_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/family_id"
+      }
+    },
+    "event_record_identity_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_schema_id",
+        "writer_schema_version",
+        "scope_partition_application",
+        "scope_partition_project_formula",
+        "event_id_uniqueness",
+        "idempotency_uniqueness",
+        "event_record_index_family_id",
+        "event_id_dedupe_family_id",
+        "idempotency_dedupe_family_id",
+        "dedupe_checkpoint_family_id",
+        "dedupe_outage_result",
+        "projector_replay_only_append_result"
+      ],
+      "properties": {
+        "event_schema_id": {
+          "const": "pm.event.v0"
+        },
+        "writer_schema_version": {
+          "const": "2.0.0"
+        },
+        "scope_partition_application": {
+          "const": "app"
+        },
+        "scope_partition_project_formula": {
+          "const": "project~{base64url_no_pad(UTF8(project_id))}"
+        },
+        "event_id_uniqueness": {
+          "const": "app_data_root_lifetime_global"
+        },
+        "idempotency_uniqueness": {
+          "const": "app_data_root_lifetime_scope_partition_event_type"
+        },
+        "event_record_index_family_id": {
+          "const": "event_record_index"
+        },
+        "event_id_dedupe_family_id": {
+          "const": "event_id_dedupe_index"
+        },
+        "idempotency_dedupe_family_id": {
+          "const": "event_idempotency_dedupe_index"
+        },
+        "dedupe_checkpoint_family_id": {
+          "const": "event_dedupe_checkpoint"
+        },
+        "dedupe_outage_result": {
+          "const": "dedupe_unavailable_no_append"
+        },
+        "projector_replay_only_append_result": {
+          "const": "replay_only_not_appendable"
+        }
+      }
+    },
+    "retention_policies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/retention_policy"
       }
     },
     "families": {
@@ -89,11 +155,485 @@
       "type": "string",
       "minLength": 1
     },
+    "nullable_non_empty_string": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "string_list": {
       "type": "array",
       "minItems": 1,
       "items": {
         "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "cardinality_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cardinality_scope",
+        "max_cardinality"
+      ],
+      "properties": {
+        "cardinality_scope": {
+          "enum": [
+            "instance",
+            "project",
+            "thread",
+            "run",
+            "session",
+            "logical_key"
+          ]
+        },
+        "max_cardinality": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "retention_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "retention_mode",
+        "anchor_kind",
+        "retain_indefinitely",
+        "ttl_seconds",
+        "source_policy_ref",
+        "max_cardinality",
+        "cardinality_scope",
+        "additional_cardinality_limits",
+        "max_bytes",
+        "overflow_action",
+        "hold_eligible",
+        "expiry_action",
+        "policy_version"
+      ],
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "retention_mode": {
+          "enum": [
+            "indefinite",
+            "fixed_ttl",
+            "source_coupled",
+            "current_plus_history",
+            "anchored_then_ttl"
+          ]
+        },
+        "anchor_kind": {
+          "enum": [
+            "creation",
+            "last_observation",
+            "last_access",
+            "run_completion",
+            "thread_last_activity",
+            "terminal_transition",
+            "reference_release",
+            "migration_completion",
+            "explicit_delete",
+            "resolution",
+            "source_record"
+          ]
+        },
+        "retain_indefinitely": {
+          "type": "boolean"
+        },
+        "ttl_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_policy_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_cardinality": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "cardinality_scope": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "instance",
+            "project",
+            "thread",
+            "run",
+            "session",
+            "logical_key"
+          ]
+        },
+        "additional_cardinality_limits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cardinality_limit"
+          }
+        },
+        "max_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "overflow_action": {
+          "enum": [
+            "evict_oldest_eligible",
+            "roll_successor",
+            "rebuild_projection",
+            "fail_closed",
+            "quarantine_oldest_resolved"
+          ]
+        },
+        "hold_eligible": {
+          "type": "boolean"
+        },
+        "expiry_action": {
+          "enum": [
+            "compact",
+            "tombstone_then_compact",
+            "rebuild",
+            "delete_sidecar",
+            "retain_hash_summary",
+            "none"
+          ]
+        },
+        "policy_version": {
+          "const": "1.0.0"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "retention_mode": {
+                "const": "indefinite"
+              }
+            },
+            "required": [
+              "retention_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retain_indefinitely": {
+                "const": true
+              },
+              "ttl_seconds": {
+                "type": "null"
+              },
+              "source_policy_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "retention_mode": {
+                "const": "fixed_ttl"
+              }
+            },
+            "required": [
+              "retention_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retain_indefinitely": {
+                "const": false
+              },
+              "ttl_seconds": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "source_policy_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "retention_mode": {
+                "const": "source_coupled"
+              }
+            },
+            "required": [
+              "retention_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retain_indefinitely": {
+                "const": false
+              },
+              "ttl_seconds": {
+                "type": "null"
+              },
+              "source_policy_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "retention_mode": {
+                "enum": [
+                  "current_plus_history",
+                  "anchored_then_ttl"
+                ]
+              }
+            },
+            "required": [
+              "retention_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retain_indefinitely": {
+                "const": false
+              },
+              "ttl_seconds": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "source_policy_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "max_cardinality": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "max_cardinality"
+            ]
+          },
+          "then": {
+            "properties": {
+              "cardinality_scope": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "cardinality_scope": {
+                "enum": [
+                  "instance",
+                  "project",
+                  "thread",
+                  "run",
+                  "session",
+                  "logical_key"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "recovery_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_class",
+        "strategy",
+        "source_family_ids",
+        "source_refs",
+        "backup_required",
+        "data_loss_if_unavailable",
+        "user_disclosure_required"
+      ],
+      "properties": {
+        "authority_class": {
+          "enum": [
+            "canonical_non_rebuildable",
+            "canonical_dual_homed",
+            "derived_rebuildable",
+            "migration_history",
+            "required_recovery_anchor",
+            "resettable_ui_state",
+            "compatibility_or_deferred"
+          ]
+        },
+        "strategy": {
+          "enum": [
+            "restore_from_mandatory_backup",
+            "restore_backup_then_replay",
+            "rebuild_from_seglog",
+            "rebuild_from_canonical_events_and_snapshot",
+            "reset_to_defaults_after_quarantine",
+            "deferred_owner_contract",
+            "migrate_alias_only"
+          ]
+        },
+        "source_family_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/family_id"
+          }
+        },
+        "source_refs": {
+          "$ref": "#/$defs/string_list"
+        },
+        "backup_required": {
+          "type": "boolean"
+        },
+        "data_loss_if_unavailable": {
+          "type": "boolean"
+        },
+        "user_disclosure_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "migration_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "canonical_write_key_only",
+        "compatibility_keys_read_only",
+        "ambiguity_policy",
+        "source_refs"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "current_schema",
+            "coordinator_copy_forward",
+            "store_coordinator",
+            "rebuild_on_schema_change",
+            "deferred_owner_contract",
+            "compatibility_read_only"
+          ]
+        },
+        "canonical_write_key_only": {
+          "type": "boolean",
+          "const": true
+        },
+        "compatibility_keys_read_only": {
+          "type": "boolean"
+        },
+        "ambiguity_policy": {
+          "enum": [
+            "fail_closed",
+            "not_applicable"
+          ]
+        },
+        "alias_dispositions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "key_shape",
+              "disposition"
+            ],
+            "properties": {
+              "key_shape": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "disposition": {
+                "enum": [
+                  "coordinator_copy_forward",
+                  "lookup_only"
+                ]
+              }
+            }
+          }
+        },
+        "source_refs": {
+          "$ref": "#/$defs/string_list"
+        }
+      }
+    },
+    "restore_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "transaction_family_id",
+        "outcome_owner_ref",
+        "mutation_fence_on_unresolved",
+        "source_refs"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "mandatory_backup",
+            "backup_then_replay",
+            "rebuild_from_authority",
+            "filesafe_exact_replace",
+            "conversation_branch",
+            "reset_after_quarantine",
+            "deferred_owner_contract",
+            "not_applicable"
+          ]
+        },
+        "transaction_family_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/family_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome_owner_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mutation_fence_on_unresolved": {
+          "type": "boolean"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/string_list"
+        }
       }
     },
     "family": {
@@ -105,6 +645,7 @@
         "status",
         "tier",
         "key_shape",
+        "compatibility_key_shapes",
         "value_schema_id",
         "value_schema_ref",
         "owner_doc",
@@ -117,16 +658,19 @@
         "nullable_fields",
         "replay_behavior",
         "migration",
+        "migration_disposition",
+        "restore_disposition",
         "retention_compaction",
+        "retention_policy_ref",
         "redaction_no_secret_rule",
-        "legacy_canonical_crosswalk_status"
+        "legacy_canonical_crosswalk_status",
+        "recovery_disposition"
       ],
       "properties": {
         "family_id": {
           "$ref": "#/$defs/family_id"
         },
         "storage_kind": {
-          "type": "string",
           "enum": [
             "seglog",
             "redb",
@@ -137,7 +681,6 @@
           ]
         },
         "status": {
-          "type": "string",
           "enum": [
             "materialized",
             "deferred_not_build_blocking",
@@ -145,7 +688,6 @@
           ]
         },
         "tier": {
-          "type": "string",
           "enum": [
             "tier_0_launch_critical",
             "later_gui_or_feature_projection",
@@ -154,6 +696,13 @@
         },
         "key_shape": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "compatibility_key_shapes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
         },
         "value_schema_id": {
           "$ref": "#/$defs/non_empty_string"
@@ -174,7 +723,6 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "encoding": {
-          "type": "string",
           "enum": [
             "messagepack_canonical",
             "json_canonical",
@@ -203,7 +751,16 @@
         "migration": {
           "$ref": "#/$defs/non_empty_string"
         },
+        "migration_disposition": {
+          "$ref": "#/$defs/migration_disposition"
+        },
+        "restore_disposition": {
+          "$ref": "#/$defs/restore_disposition"
+        },
         "retention_compaction": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "retention_policy_ref": {
           "$ref": "#/$defs/non_empty_string"
         },
         "redaction_no_secret_rule": {
@@ -211,6 +768,9 @@
         },
         "legacy_canonical_crosswalk_status": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "recovery_disposition": {
+          "$ref": "#/$defs/recovery_disposition"
         },
         "value_schema": {
           "type": "object"
@@ -224,7 +784,45 @@
         "reopen_condition": {
           "type": "string"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "materialized"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "value_schema"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "deferred_not_build_blocking"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "deferred_owner",
+              "deferred_reason",
+              "reopen_condition"
+            ]
+          }
+        }
+      ]
     }
   }
 }

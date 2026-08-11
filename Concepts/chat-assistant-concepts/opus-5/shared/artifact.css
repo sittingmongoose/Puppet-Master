@@ -1,0 +1,166 @@
+/* PMX artifact workspace — Opus 5
+ * Shared body/state styling for the left-of-Chat artifact surface. Placement, width and the
+ * switcher chrome belong to each window concept and live in windows/wN.css; only what is
+ * genuinely common to every placement is here.
+ *
+ * Unprefixed rules are permitted in shared/*.css only (CONTRACT.md section 7).
+ */
+
+.pmx-artifact {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-right: 1px solid var(--border);
+}
+.pmx-artifact[data-open="0"] { display: none; }
+
+.pmx-artifact-head {
+  flex: 0 0 auto;
+  display: flex; align-items: flex-start; gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+}
+.pmx-artifact-titles { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.pmx-artifact-title {
+  font-size: var(--fs-xs); font-weight: 650; color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pmx-artifact-sub {
+  font-size: var(--fs-2xs); color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pmx-artifact-close {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+.pmx-artifact-close:hover { background: var(--surface-elevated); color: var(--text-primary); }
+
+/* Its own scroller. The transcript's scroll position must never move because an artifact
+ * scrolled, which is why this is a separate overflow context rather than shared page flow. */
+.pmx-artifact-body {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; overflow-x: hidden;
+  padding: var(--md);
+}
+
+/* An `updating` artifact keeps its body on screen and only dims very slightly, so a count that
+ * changes in place reads as a change rather than as a reload. */
+.pmx-artifact[data-state="updating"] .pmx-artifact-body { opacity: .72; }
+.pmx-artifact-body { transition: opacity var(--motion-fast) var(--ease-default); }
+
+/* ---------------------------------------------------------------- loading */
+
+.pmx-artifact-skel-row {
+  height: 10px; margin-bottom: 10px; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--text-primary) 9%, transparent);
+  animation: pmx-artifact-pulse 1.4s ease-in-out infinite;
+  animation-delay: calc(var(--pmx-skel-i, 0) * 90ms);
+}
+.pmx-artifact-skel-row[data-i="0"] { width: 62%; --pmx-skel-i: 0; }
+.pmx-artifact-skel-row[data-i="1"] { width: 92%; --pmx-skel-i: 1; }
+.pmx-artifact-skel-row[data-i="2"] { width: 78%; --pmx-skel-i: 2; }
+.pmx-artifact-skel-row[data-i="3"] { width: 88%; --pmx-skel-i: 3; }
+.pmx-artifact-skel-row[data-i="4"] { width: 54%; --pmx-skel-i: 4; }
+.pmx-artifact-skel-note { margin-top: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
+
+@keyframes pmx-artifact-pulse {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------- error */
+
+.pmx-artifact-error { display: flex; flex-direction: column; gap: var(--sm); align-items: flex-start; }
+.pmx-artifact-error-title { font-size: var(--fs-xs); font-weight: 650; }
+.pmx-artifact-error-body { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.5; }
+.pmx-artifact-error-note { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5; }
+.pmx-artifact-retry {
+  padding: 4px var(--md);
+  border: 1px solid var(--accent-primary); border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  color: var(--text-primary); font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+.pmx-artifact-retry:hover { background: color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+
+/* ---------------------------------------------------------------- diff */
+
+.pmx-artifact-diff-row {
+  display: flex; align-items: baseline; gap: var(--sm);
+  padding: 4px 0; border-bottom: 1px solid var(--border);
+  font-size: var(--fs-2xs);
+}
+.pmx-artifact-diff-path {
+  flex: 1 1 auto; min-width: 0; font-family: var(--font-mono);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pmx-artifact-diff-counts { flex: 0 0 auto; display: inline-flex; gap: var(--sm); font-variant-numeric: tabular-nums; }
+.pmx-artifact-add { color: var(--status-ok, var(--text-secondary)); }
+.pmx-artifact-del { color: var(--status-bad, var(--text-muted)); }
+
+/* ---------------------------------------------------------------- source */
+
+.pmx-artifact-source { margin: 0; font-family: var(--font-mono); font-size: var(--fs-2xs); line-height: 1.6; }
+.pmx-artifact-line { display: flex; gap: var(--sm); white-space: pre; }
+.pmx-artifact-ln { flex: 0 0 auto; width: 3ch; text-align: right; color: var(--text-muted); }
+.pmx-artifact-code { flex: 1 1 auto; min-width: 0; overflow-x: auto; }
+/* The changed range is marked with a background band and a left inset, never a coloured left
+ * accent border — that treatment is prohibited project-wide as a status marker. */
+.pmx-artifact-line[data-hot="1"] {
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------------------------------------------------------------- image */
+
+.pmx-artifact-shot { width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius-md); }
+.pmx-shot-bg { fill: var(--background); }
+.pmx-shot-panel { fill: var(--surface-elevated); }
+.pmx-shot-panel-active { fill: color-mix(in srgb, var(--accent-primary) 20%, var(--surface-elevated)); }
+.pmx-shot-line { fill: color-mix(in srgb, var(--text-primary) 34%, transparent); }
+.pmx-shot-dim { fill: color-mix(in srgb, var(--text-primary) 16%, transparent); }
+.pmx-artifact-caption {
+  margin-top: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted);
+  font-family: var(--font-mono);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- report */
+
+.pmx-artifact-report-row {
+  display: flex; align-items: baseline; gap: var(--sm);
+  padding: 4px 0; font-size: var(--fs-2xs);
+}
+.pmx-artifact-report-mark { flex: 0 0 auto; display: inline-flex; color: var(--text-muted); }
+.pmx-artifact-report-row[data-result="pass"] .pmx-artifact-report-mark { color: var(--status-ok, var(--text-secondary)); }
+.pmx-artifact-report-name { flex: 1 1 auto; min-width: 0; }
+.pmx-artifact-report-result { flex: 0 0 auto; color: var(--text-muted); }
+.pmx-artifact-report-note {
+  margin: 0 0 4px 22px; font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic;
+}
+
+/* ---------------------------------------------------------------- document */
+
+.pmx-artifact-doc-h {
+  margin: var(--md) 0 4px; font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted);
+}
+.pmx-artifact-doc-h:first-child { margin-top: 0; }
+.pmx-artifact-doc-p { margin: 0 0 var(--sm); font-size: var(--fs-2xs); line-height: 1.6; color: var(--text-secondary); }
+
+/* ---------------------------------------------------------------- reduced motion
+ * The skeleton pulse is decorative and indefinite, so it is removed rather than frozen —
+ * a frozen pulse reads as a stuck surface. The word "Loading" carries the state instead. */
+
+[data-motion="reduced"] .pmx-artifact-skel-row,
+[data-motion="reduced"] .pmx-artifact-body { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-motion]:not([data-motion="full"]) .pmx-artifact-skel-row,
+  [data-motion]:not([data-motion="full"]) .pmx-artifact-body { animation: none !important; transition: none !important; }
+}

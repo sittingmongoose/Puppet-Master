@@ -1,0 +1,295 @@
+[
+  {
+    "name": "ccusage",
+    "repo_url": "https://github.com/ryoppippi/ccusage",
+    "license": "MIT",
+    "access_date": "2026-07-30",
+    "branch": "main",
+    "commit_sha": "8e08eaa724652f15055409d681c4daa3bd231f3e",
+    "maintenance_signal": "Very active. HEAD commit 2026-07-30 (day of access). Daily automated pricing snapshots (LiteLLM + models.dev). Rewritten from TypeScript/Bun to a Rust workspace with per-CLI adapters. ~20 issues/PRs merged per week; v20.x.",
+    "files_examined": [
+      "rust/crates/ccusage-core/src/types.rs",
+      "rust/crates/ccusage-core/src/cost.rs",
+      "rust/crates/ccusage-core/src/last_window.rs",
+      "rust/adapters/claude/src/lib.rs",
+      "rust/adapters/claude/src/daily.rs",
+      "rust/adapters/common/src/report.rs"
+    ],
+    "what_it_tracks": "Token usage and cost across many coding CLIs (Claude Code, Codex, Copilot, Gemini, OpenCode, Cursor, Kimi, Grok, Amp, Goose, etc.) via a separate adapter per CLI. Per-day/week/month/session/project/model breakdowns; 5-hour 'blocks'; statusline; credits.",
+    "value_sources": {
+      "input/output/cache tokens": "Parsed from each CLI's local transcript logs. Claude: ~/.claude/projects/**/*.jsonl assistant message.usage (input_tokens, output_tokens, cache_creation_input_tokens, cache_read_input_tokens, cache_creation.ephemeral_{5m,1h}_input_tokens).",
+      "cost": "Provider-recorded costUSD field in the JSONL when present (authoritative), else recomputed from an embedded LiteLLM/models.dev pricing table (estimate). CostMode = Display | Auto | Calculate selects which.",
+      "pricing_table": "Embedded LiteLLM + models.dev snapshots, refreshed by automated commits; per-token rates for input/output/cache_create(5m & 1h)/cache_read plus *_above_200k tiers and a fast_multiplier.",
+      "reset_time": "usage_limit_reset_time carried in the transcript entry when present.",
+      "subagents": "is_sidechain flag on the JSONL entry marks subagent/sidechain messages."
+    },
+    "data_path": "discover log files -> parse JSONL lines into UsageEntry/TokenUsageRaw -> dedup by (message.id, request_id) with sidechain fallback -> attach date/project/session/model/cost/credits -> aggregate into TokenCounts/ModelBreakdown/UsageSummary -> group by day/week/month/session/project/blocks -> render table/JSON/statusline; no persistent DB (recomputes from logs each run, with an in-memory cache).",
+    "token_handling": {
+      "input": "raw usage.input_tokens (Anthropic: non-cached input).",
+      "output": "usage.output_tokens.",
+      "reasoning": "Not a separate bucket in the Claude path; reasoning is inside output. (Codex/other adapters differ.)",
+      "cache_read": "Separate additive bucket cache_read_tokens.",
+      "cache_write": "cache_creation_token_count() = ephemeral_5m + ephemeral_1h when breakdown present, else cache_creation_input_tokens.",
+      "inclusive_total": "TokenCounts.total() = input + output + cache_creation + cache_read + extra_total_tokens. Cache is ADDITIVE, never folded into input."
+    },
+    "double_count_prevention": "push_deduped_entry keys on usage_dedupe_hash(message_id, request_id); fallback to message_id alone for sidechain replays. should_replace_deduped_entry keeps the entry with the LARGER token total (handles corrected/partial-stream replays) and prefers sidechain over non-sidechain. Forked-session replay double-counts were a recurring real bug (see issues).",
+    "grouping_dimensions": ["session", "project", "model", "day", "week", "month", "5h-block", "version", "sidechain/subagent"],
+    "plan_quotas_windows": "5-hour 'blocks' command anchors rolling windows; daily/weekly/monthly are calendar buckets (last_window.rs computes start-of-window for --last N periods, week start configurable). Does NOT model provider plan quotas/limits itself; surfaces usage_limit_reset_time when the transcript provides it. No add-on/overage modeling.",
+    "burn_rate_forecast": "Not a first-class run-out forecaster; statusline shows today/block cost & tokens-per-minute. Relies on block windows + reset time rather than extrapolation.",
+    "api_price_vs_subscription": "Issue #1503: subscription billing currently reads as $0.00 (token-based API-equivalent number), which can HIDE separately-billed usage credits/auto-reloads. Requested model: label token number 'API-equivalent estimate', label subscription paid cost 'unknown / provider ledger required' rather than $0.00, preserve credential/account + billing mode per run.",
+    "filtering_export_alerts": "Rich CLI filtering (--since/--until, --project, --instances, model aliases), JSON/CSV-ish output, statusline; companion mobile push alerts for 5h window exist as a separate tool (#1445). No built-in alerts.",
+    "privacy_local_only": "Local-only: reads logs on disk, no network except optional pricing fetch. No prompt content surfaced in reports (token/cost metadata only).",
+    "failure_modes": [
+      "Forked/resumed sessions replay parent token history under new timestamps -> double counting (Codex #1349/#1370/#1337).",
+      "Stale/missing pricing -> $0.00 cost for new models (sonnet-5, kimi-k3, glm) until pricing snapshot updates (#1441/#1473/#1451).",
+      "Fast-mode / speed multiplier changes token totals ~2x (#1363); cache-write bucket unparsed for Codex so Cache Create=0 and cost underestimated (#1422).",
+      "--since/--until accept invalid dates and silently return wrong results (#1483)."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/ccusage/ccusage/issues/1503", "title": "Subscription mode can hide paid usage-credit charges; distinguish estimated vs provider-billed cost", "what_it_reveals": "Authoritative-vs-estimated gap: token-based cost is an API-equivalent estimate; subscription usage shown as $0.00 can mask real billed usage-credits/auto-reload. Proposes explicit labels and per-run account/billing-mode provenance."},
+      {"url": "https://github.com/ccusage/ccusage/issues/1422", "title": "Codex: Cache Create always 0 and GPT-5.6 cost underestimated (cache writes billed at 1.25x via cache_write_tokens)", "what_it_reveals": "Provider parser bug + stale pricing: OpenAI now bills cache WRITES at 1.25x input for GPT-5.6 (usage.input_tokens_details.cache_write_tokens) but the adapter never parsed/priced that bucket -> Cache Create=0 and under-billed cost."},
+      {"url": "https://github.com/ccusage/ccusage/issues/1370", "title": "Codex forked sessions can double count replayed parent token history", "what_it_reveals": "Double-count: fork JSONL replays parent token_count events with rewritten timestamps; naive per-event summation counts the same usage again. Fix dedups forked replay prefixes (PR #1369)."},
+      {"url": "https://github.com/ccusage/ccusage/issues/1363", "title": "ccusage returns different token totals while using Codex Fast mode", "what_it_reveals": "Miscounting: fast-mode multiplier/speed field changes reported totals >2x; inclusive totals are sensitive to the speed dimension."}
+    ]
+  },
+  {
+    "name": "Claude-Code-Usage-Monitor (Claude-Monitor)",
+    "repo_url": "https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor",
+    "license": "MIT",
+    "access_date": "2026-07-30",
+    "branch": "main",
+    "commit_sha": "c59a83bf943f329f0e61f1a29c760353ee1860a5",
+    "maintenance_signal": "Active; v4.0.0 release in progress. HEAD 2026-06-27. ~8.5k stars. Rich TUI, snapshots, official-statusline integration.",
+    "files_examined": [
+      "src/claude_monitor/core/models.py",
+      "src/claude_monitor/core/calculations.py",
+      "src/claude_monitor/core/p90_calculator.py",
+      "src/claude_monitor/core/plans.py",
+      "src/claude_monitor/core/data_processors.py",
+      "src/claude_monitor/output/snapshots.py"
+    ],
+    "what_it_tracks": "Real-time Claude Code usage monitor: per-5h-session-block token/cost, burn rate, run-out projection, plan-quota progress bars, predicted reset time, and an empirically-inferred (p90) effective token limit.",
+    "value_sources": {
+      "tokens": "Parses ~/.claude/projects/**/*.jsonl assistant message.usage (input/output/cache_creation/cache_read).",
+      "cost": "Local pricing table (pricing.py) with CostMode enum (incl. CACHED); API-equivalent estimate, not provider-billed.",
+      "plan_limits": "HARDCODED community-derived estimates in plans.py PLAN_LIMITS: Pro 19k tokens/$18/250 msgs, Max5 88k/$35/1k, Max20 220k/$140/2k; Team explicitly 'unverified estimates'. NOT from provider.",
+      "effective_limit": "p90_calculator infers the real quota from observed past blocks (see burn_rate_forecast).",
+      "authoritative_window": "Issue #202 documents an undocumented GET https://api.anthropic.com/api/oauth/usage endpoint (Bearer oauth token, anthropic-beta: oauth-2025-04-20, User-Agent: claude-code/<ver>) returning server-side utilization %, reset time, weekly limits — same data as Claude Code /usage."
+    },
+    "data_path": "scan JSONL -> UsageEntry/TokenCounts -> group into 5h SessionBlocks (start/end/is_active) -> compute burn rate + projection + p90 effective limit -> compare to plan quota -> render TUI progress bars / snapshots / official statusline.",
+    "token_handling": {
+      "input": "input_tokens",
+      "output": "output_tokens",
+      "reasoning": "not separated",
+      "cache_read": "separate bucket cache_read_tokens",
+      "cache_write": "separate bucket cache_creation_tokens",
+      "inclusive_total": "TokenCounts.total_tokens = input + output + cache_creation + cache_read. Cache ADDITIVE (same convention as ccusage)."
+    },
+    "double_count_prevention": "Block-based grouping with isGap/isActive flags; burn calc skips isGap blocks. WEAKNESS: resumed sessions can misattribute a prior session's usage to the current 5h block (issue #158, OPEN) — no message-id-level dedup like ccusage.",
+    "grouping_dimensions": ["5h-session-block", "model", "plan"],
+    "plan_quotas_windows": "5-hour rolling SessionBlocks are the core unit; plan limits are fixed hardcoded quotas; LIMIT_DETECTION_THRESHOLD=0.95 flags 'hit limit'. WEEKLY window explicitly NOT shipped (snapshots.py: 'seven_day is the OFFICIAL weekly slot, deferred'; issue #234 OPEN).",
+    "burn_rate_forecast": "Two methods: (1) linear — calculate_burn_rate = total_tokens/duration_minutes, project_block_usage extrapolates to block end_time. (2) P90 — _calculate_p90_from_blocks takes completed blocks that reached >=95% of a known common limit, then quantiles(hits, n=10)[8] (90th percentile) as the inferred real limit; falls back to all completed blocks then default. This empirical-percentile approach survives the provider exposing no quota.",
+    "api_price_vs_subscription": "Treats everything as token->cost estimate against hardcoded plan quotas; does not reconcile provider billing. Issue #202 pushes toward the authoritative OAuth usage API for true utilization.",
+    "filtering_export_alerts": "TUI views, snapshot output, official statusline; threshold warnings. No CSV/JSON ledger export of the kind ccusage offers.",
+    "privacy_local_only": "Local-only log parsing; no prompts surfaced. The OAuth endpoint (#202) would send a bearer token to Anthropic but is opt-in/separate.",
+    "failure_modes": [
+      "Resumed sessions inflate the current 5h block with prior-session usage (#158 OPEN).",
+      "Reset-time mismatches vs Claude Code's own reset (#159, #220, #95 --reset-hour ignored).",
+      "Hardcoded plan limits drift from real subscription (#148); weekly window still missing (#234).",
+      "Accuracy disputes when subagents/agents not accounted (#137, #123)."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor/issues/202", "title": "Anthropic OAuth Usage API — authoritative window state for cross-device accuracy", "what_it_reveals": "Confirms the authoritative server-side source: GET api.anthropic.com/api/oauth/usage returns utilization %, reset time, weekly limits (powers /usage). Local log parsing is only an estimate; the API solves cross-device accuracy."},
+      {"url": "https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor/issues/158", "title": "Incorrect Cost Usage calculation when continuing work in a resumed session", "what_it_reveals": "Concrete double-count/misattribution failure: /resume of a heavy session makes the monitor credit all prior usage to the current 5h block. Lacks message-id dedup."},
+      {"url": "https://github.com/Maciek-roboblog/Claude-Code-Usage-Monitor/issues/234", "title": "Weekly usage / weekly reset day-time still not present in v4.0.0", "what_it_reveals": "Even with an official weekly slot available, modeling the weekly window was deferred; 5h-vs-weekly remains unsolved in practice (snapshots.py comment confirms)."}
+    ]
+  },
+  {
+    "name": "cc-statusline",
+    "repo_url": "https://github.com/chongdashu/cc-statusline",
+    "license": "MIT",
+    "access_date": "2026-07-30",
+    "branch": "main",
+    "commit_sha": "6fe55d96e8688d7951fbab35e5d4a4545e37dd4a",
+    "maintenance_signal": "Moderate. HEAD 2025-12-24 (v1.4.0). Generates a bash statusline script; ~620 stars.",
+    "files_examined": [
+      "src/features/usage.ts",
+      "src/index.ts",
+      "src/generators/bash-generator.ts"
+    ],
+    "what_it_tracks": "Claude Code statusline: session cost, $/hour burn, tokens/min, total tokens, context-remaining, and 5h session reset time.",
+    "value_sources": {
+      "cost/tokens": "Claude Code's NATIVE statusline JSON on stdin: .cost.total_cost_usd, .cost.total_duration_ms, .context_window.total_input_tokens/total_output_tokens. Does NOT parse JSONL itself — trusts the CLI's provider-derived numbers (authoritative).",
+      "burn_rate": "Derived: cost_per_hour = cost_usd * 3600000 / duration_ms; tpm = tokens * 60000 / duration_ms.",
+      "reset_time/5h window": "Delegated: shells out to `ccusage blocks --json`, reads .blocks[] isActive, .usageLimitResetTime/.endTime."
+    },
+    "data_path": "Claude Code invokes statusline with JSON on stdin -> jq extracts cost/duration/context tokens -> awk computes rates -> optional `ccusage blocks` subprocess for reset -> printf statusline string. No persistence; pure pass-through of authoritative CLI data.",
+    "token_handling": {
+      "inclusive_total": "tot_tokens = total_input_tokens + total_output_tokens ONLY (line 56). Cache is NOT added separately because Claude Code's context_window totals are already inclusive. This is the 'consume the authoritative inclusive number' strategy, contrasting with ccusage/claudecodeui that re-derive from raw buckets."
+    },
+    "double_count_prevention": "N/A — no aggregation; relies on Claude Code/ccusage to be correct.",
+    "grouping_dimensions": ["current session only"],
+    "plan_quotas_windows": "Shows 5h reset time via ccusage; no quota modeling of its own.",
+    "burn_rate_forecast": "Instantaneous burn ($/hour, tokens/min) from cumulative cost/duration; no run-out projection.",
+    "api_price_vs_subscription": "Displays whatever Claude Code reports (subscription sessions show Claude's own cost figure).",
+    "filtering_export_alerts": "None; single-line statusline.",
+    "privacy_local_only": "Local-only; renders data Claude Code already exposes.",
+    "failure_modes": [
+      "v1.4.0 regression: generated script omitted the cost/token/burn extraction code entirely (#34 OPEN).",
+      "Incorrect cost from printf quoting bug (#9).",
+      "Hard dependency on ccusage + jq; ccusage subprocess caused fork-bomb/perf overload (#14); Windows install writes relative path so statusline never runs (#38)."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/chongdashu/cc-statusline/issues/34", "title": "v1.4.0 generated script missing cost/token/burn-rate extraction code", "what_it_reveals": "Codegen regression silently dropped the entire usage-extraction block — statusline showed nothing. Shows fragility of generating bash from TS."},
+      {"url": "https://github.com/chongdashu/cc-statusline/issues/9", "title": "Incorrect cost value displayed due to quoting in printf in generated statusline.sh", "what_it_reveals": "Concrete display bug: shell quoting mangled the cost value. Presentation-layer corruption of an otherwise-correct number."}
+    ]
+  },
+  {
+    "name": "opencode",
+    "repo_url": "https://github.com/sst/opencode",
+    "license": "MIT",
+    "access_date": "2026-07-30",
+    "branch": "dev",
+    "commit_sha": "8c38d260eb6555d2824230be100fb2a7eadd7513",
+    "maintenance_signal": "Extremely active; HEAD 2026-07-30, v1.18.10. The coding agent itself, so it records its own usage from the model response.",
+    "files_examined": [
+      "packages/opencode/src/session/session.ts",
+      "packages/opencode/src/session/message.ts",
+      "packages/opencode/src/session/processor.ts"
+    ],
+    "what_it_tracks": "Per-assistant-message tokens {input, output, reasoning, cache:{read,write}} and cost; per-session rollups; /stats; context-window utilization for compaction.",
+    "value_sources": {
+      "tokens": "AI SDK usage object returned by the provider on each step (inputTokens, outputTokens, reasoningTokens, cacheReadInputTokens, cacheWriteInputTokens), plus provider metadata fallbacks for cache-write (anthropic/vertex/bedrock/venice cacheCreationInputTokens).",
+      "cost": "models.dev pricing (model.cost: input/output/cache.read/cache.write per 1M, tiered over-200K). Copilot overrides with provider-authoritative totalNanoAiu / 1e11.",
+      "context_limit": "model.limit.context from the model catalog."
+    },
+    "data_path": "stream step-finish events -> getUsage() normalizes usage+cost -> store on assistant message (message.ts schema) -> persist to SQLite (tokens_input/output/reasoning/cache_read/cache_write, cost columns) -> aggregate for /stats and context-overflow/compaction.",
+    "token_handling": {
+      "input": "adjustedInputTokens = inputTokens - cacheRead - cacheWrite (NON-cached input).",
+      "output": "outputTokens - reasoningTokens (reasoning separated out).",
+      "reasoning": "separate bucket; priced at the output rate.",
+      "cache_read": "separate bucket, priced at cache.read rate.",
+      "cache_write": "separate bucket, priced at cache.write rate.",
+      "inclusive_total": "Cost is the sum of each bucket * its own rate (input + output + cache.read + cache.write + reasoning@output_rate). Provider totalTokens kept as `total`. contextTokens = raw inputTokens (inclusive of cache) is used only for tier selection."
+    },
+    "key_insight_cache_inclusivity": "Comment at session.ts:363-366: 'AI SDK v6 normalized inputTokens to include cached tokens across all providers (including Anthropic/Bedrock which previously excluded them). Always subtract cache tokens to get the non-cached input count for separate cost calculation.' This is the clearest in-repo statement that the meaning of 'input_tokens' differs by provider/SDK version and must be normalized before pricing.",
+    "double_count_prevention": "Usage recorded once per step-finish; orphan reasoning-deltas dropped (processor.ts). Per-message authoritative recording avoids transcript re-scan double counts.",
+    "grouping_dimensions": ["message", "session", "model", "provider"],
+    "plan_quotas_windows": "No subscription-plan/quota modeling; focuses on context-window limit for compaction and per-session cost.",
+    "burn_rate_forecast": "No run-out forecaster; context-overflow handling drives compaction instead.",
+    "api_price_vs_subscription": "Copilot uses provider-authoritative totalNanoAiu billing units in preference to token*price (session.ts:389-393) — a clean authoritative-over-estimate precedence.",
+    "filtering_export_alerts": "/stats command, export command; no alerts.",
+    "privacy_local_only": "Stores sessions locally (SQLite); usage metadata only.",
+    "failure_modes": [
+      "TUI context usage always shows 0% when model.limit.context is undefined in the catalog (#39595 OPEN) — unavailable context limit breaks the percentage.",
+      "oa-compat cost chunk omits required OpenAI fields (#39606) — provider-parser cost field gaps.",
+      "1M context windows not honored for models that support them (#39658)."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/anomalyco/opencode/issues/39595", "title": "TUI context usage always shows 0% — model.limit.context is undefined", "what_it_reveals": "When the model catalog lacks a context limit, the authoritative denominator is unavailable and the context-% silently collapses to 0 — a stale/unknown-data failure mode."},
+      {"url": "https://github.com/anomalyco/opencode/issues/39606", "title": "oa-compat cost chunk omits required OpenAI fields", "what_it_reveals": "Provider-compatibility parser drops cost/usage fields, corrupting downstream accounting."}
+    ]
+  },
+  {
+    "name": "claudecodeui",
+    "repo_url": "https://github.com/siteboon/claudecodeui",
+    "license": "GPL-3.0",
+    "access_date": "2026-07-30",
+    "branch": "main",
+    "commit_sha": "264e0946d2a168c281b85807cd1183130f40b090",
+    "maintenance_signal": "Very active; HEAD 2026-07-29, v1.37.0. Web/Electron UI for Claude Code (+Codex/OpenCode sessions).",
+    "files_examined": [
+      "server/modules/providers/services/provider-token-usage.service.ts",
+      "server/shared/types.ts",
+      "server/modules/providers/list/codex/codex-sessions.provider.ts",
+      "server/modules/providers/list/opencode/opencode-sessions.provider.ts"
+    ],
+    "what_it_tracks": "Context-window utilization (used/total) and token breakdown (input/output/cacheRead/cacheCreation/reasoning) for the active session, across Claude (JSONL), Codex (token_count events), and OpenCode (SQLite).",
+    "value_sources": {
+      "claude_tokens": "Parses the session JSONL message.usage (input_tokens, cache_read_input_tokens, cache_creation_input_tokens, output_tokens).",
+      "codex_tokens": "event_msg payload.type=='token_count' total_token_usage (input/output/total) + model_context_window — note this is CUMULATIVE total usage, taken as-is.",
+      "opencode_tokens": "Reads opencode's SQLite session table columns tokens_input/output/reasoning/cache_read/cache_write.",
+      "context_window": "Configured value or defaults: 200_000 (Claude path) / 160_000 (fallback) / model_context_window (Codex)."
+    },
+    "data_path": "per provider: open JSONL/SQLite -> read latest usage -> normalize field-name variants (snake/camel) -> compute used/total -> return TokenUsageResult to the UI. Malformed JSONL lines are skipped without discarding earlier usage (partial-stream resilience).",
+    "token_handling": {
+      "input": "INCLUSIVE: inputTokens = directInputTokens + cacheReadTokens + cacheCreationTokens (Claude path, line 158). OpenCode path: inputTokens = tokens_input + cache_read (line 224).",
+      "output": "output_tokens.",
+      "reasoning": "tracked for OpenCode; folded into used.",
+      "cache_read": "folded INTO input (not separately additive in the headline 'used').",
+      "cache_write": "cacheCreationTokens tracked separately and also folded into input.",
+      "inclusive_total": "used = inputTokens(incl. cache) + outputTokens (Claude); OpenCode used = input + output + reasoning + cacheRead + cacheWrite. OPPOSITE convention to ccusage/opencode-core which keep cache separate and additive."
+    },
+    "key_insight_cache_inclusivity": "Because Anthropic's raw input_tokens EXCLUDES cached tokens, claudecodeui adds cacheRead+cacheCreation back into 'input' to approximate the true context occupied. This is the inverse of opencode-core (which subtracts cache from an already-inclusive AI-SDK input). Both are reconciling the same provider quirk from opposite starting points.",
+    "double_count_prevention": "Reads the LATEST/cumulative usage rather than summing every message (Codex total_token_usage; Claude takes last message usage) — avoids summing per-turn repeats. No message-id dedup needed because it samples, not aggregates.",
+    "grouping_dimensions": ["current session", "provider", "model"],
+    "plan_quotas_windows": "No 5h/weekly window modeling; issue #1003 requests per-model remaining-quota display (not built).",
+    "burn_rate_forecast": "None; shows a context-usage bar (used/total).",
+    "api_price_vs_subscription": "No cost; token/context only.",
+    "filtering_export_alerts": "UI-only; no ledger/export.",
+    "privacy_local_only": "Local-only (reads local logs/DB; readonly SQLite). Explicit `unsupported:true`+message when a provider schema lacks token columns (graceful 'unavailable').",
+    "failure_modes": [
+      "Stale hardcoded model list — getSupportedModels() disabled, returns fixed list so new Claude models never appear (#1043 OPEN).",
+      "No remaining-quota display per model (#1003 OPEN).",
+      "Orphaned/duplicate resumed Claude sessions burn tokens unnoticed (#1004)."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/siteboon/claudecodeui/issues/1043", "title": "Model picker never shows new Claude models — getSupportedModels() is disabled, returns a hardcoded stale list", "what_it_reveals": "Stale static model metadata: the catalog is hardcoded and the dynamic fetch disabled, so context limits/names go stale as providers ship models."},
+      {"url": "https://github.com/siteboon/claudecodeui/issues/1003", "title": "[Feature] Display remaining model quota per model in the Web UI", "what_it_reveals": "Confirms plan-quota/remaining-capacity surfacing is an unmet need; the UI shows context fill but not subscription quota/run-out."}
+    ]
+  },
+  {
+    "name": "codeburn",
+    "repo_url": "https://github.com/getagentseal/codeburn",
+    "license": "MIT",
+    "access_date": "2026-07-30",
+    "branch": "main",
+    "commit_sha": "146037bfd533edff85cd39f322571b2c5434fcca",
+    "maintenance_signal": "Very active; HEAD 2026-07-29, ~9k stars. Tracks ~40 coding tools via a provider plugin architecture; CLI + menubar + desktop + web dashboard.",
+    "files_examined": [
+      "src/types.ts",
+      "src/providers/claude.ts",
+      "src/providers/session-message.ts",
+      "src/usage-aggregator.ts",
+      "src/day-aggregator.ts",
+      "src/models.ts"
+    ],
+    "what_it_tracks": "Token usage + cost across ~40 agents (Claude Code, Codex, Cursor, Gemini, Copilot, Warp, Kiro, OpenCode, etc.) by model/project/task/day; savings; estimated-vs-measured cost; quota windows (menubar).",
+    "value_sources": {
+      "tokens": "Per-provider parsers over local transcripts/SQLite (Claude JSONL, Codex JSONL, OpenCode SQLite, Cursor SQLite...). Unified TokenUsage {inputTokens, outputTokens, cacheCreationInputTokens, cacheReadInputTokens, cachedInputTokens, reasoningTokens}.",
+      "cost": "models.dev/LiteLLM pricing (calculateCost in models.ts); some providers (Warp/Kiro/Cursor) SYNTHESIZE tokens from content length -> costIsEstimated=true.",
+      "authoritative_billing": "Copilot session.shutdown token/cost events; Claude quota via api.anthropic.com/api/oauth/usage (menubar).",
+      "subagents": "advisor_message entries carry the advisor model's own tokens and are EXCLUDED from top-level totals (types.ts:39-41) to prevent double-count; 'message' records mirror the main model and are already covered."
+    },
+    "data_path": "discover per-provider sources -> parse to ParsedProviderCall/ParsedApiCall (with costIsEstimated) -> cache to daily aggregates (day-aggregator) -> usage-aggregator rolls up totals + estimatedCostUSD -> dashboard/menubar/web/MCP export.",
+    "token_handling": {
+      "input": "inputTokens (raw).",
+      "output": "outputTokens; reasoning kept separate (reasoningTokens) but folded into the 'total' as output+reasoning (session-message.ts:136).",
+      "reasoning": "explicit separate field.",
+      "cache_read": "cacheReadInputTokens; cachedInputTokens mirrors it.",
+      "cache_write": "cacheCreationInputTokens (incl. ephemeral 5m/1h breakdown).",
+      "inclusive_total": "usage-aggregator.ts:46 tokens = input + output + cacheRead + cacheCreation (cache ADDITIVE, like ccusage)."
+    },
+    "double_count_prevention": "dedupKey per parsed message; advisor/subagent tokens excluded from top-level totals; turn-level dedup at cache boundary. yield/commit attribution had its own double-credit bugs (#713, #641).",
+    "estimated_vs_measured": "ParsedApiCall.costIsEstimated flags synthesized figures; aggregates roll these into estimatedCostUSD which is 'display/metadata only and never changes totals' (types.ts:137-141). Bug #639: the flag was dropped at the parser boundary so estimates rendered identically to measured.",
+    "grouping_dimensions": ["provider", "model", "project", "task", "day", "session"],
+    "plan_quotas_windows": "Menubar quota windows + run-out projection (issues #726/#725 'quota intelligence': live remaining, burn-rate forecast, pre-flight, invoice reconciliation); Claude quota polled from the OAuth usage API.",
+    "burn_rate_forecast": "Run-out projection for quota windows (deficit, lasts-to-reset / runs-out-in) per #726; active 'quota intelligence' epic #725.",
+    "api_price_vs_subscription": "Reconciles token-cost estimate against provider quota/billing (OAuth usage API, Copilot session-state); explicit estimated-vs-measured separation is a core design goal.",
+    "filtering_export_alerts": "report -p <period>, web dashboard, menubar, MCP server, sharing/sanitize (privacy), daily budget alerts respecting metric (#497).",
+    "privacy_local_only": "Local-first; 'Never reads prompts'; sharing/sanitize.ts redacts before share; readonly DB access.",
+    "failure_modes": [
+      "Claude quota polling ignored Retry-After and retried at 30s -> sustained 429s on /api/oauth/usage (#701).",
+      "costIsEstimated dropped at parser boundary; estimates rendered like measured (#639).",
+      "Unpriced models silently add $0 to totals with the warning off by default (#638); 27 models/599.6M tokens unpriced via unresolved suffix variants (#629).",
+      "Web dashboard cache read/write cards summed ENTIRE history instead of the selected period (#583).",
+      "OpenCode SQLite token fallback selected model_id but the column is model (#769) — parser bug."
+    ],
+    "issues_prs": [
+      {"url": "https://github.com/getagentseal/codeburn/issues/701", "title": "Claude quota polling ignores the Retry-After header and retries failures at 30s, causing sustained 429s on /api/oauth/usage", "what_it_reveals": "Rate-limit handling failure against the authoritative OAuth usage endpoint: parsing retry_after only from the JSON body and fixed 30s retries caused a 429 loop. Confirms the endpoint and the need to honor headers/backoff."},
+      {"url": "https://github.com/getagentseal/codeburn/issues/639", "title": "costIsEstimated is dropped at the parser boundary; estimated costs render exactly like measured ones", "what_it_reveals": "Authoritative-vs-estimated provenance is easily lost across pipeline stages; synthesized (content-length) tokens displayed with the same authority as measured ones."},
+      {"url": "https://github.com/getagentseal/codeburn/issues/638", "title": "Unpriced models silently contribute $0 to totals; warning is off by default", "what_it_reveals": "Stale/missing pricing silently undercounts spend and looks identical to a free model; warning gated behind CODEBURN_VERBOSE=1."},
+      {"url": "https://github.com/getagentseal/codeburn/issues/583", "title": "Web dashboard Cache read/write cards sum entire history instead of current period", "what_it_reveals": "Window-aggregation bug: cache cards summed up to 365 days of backfill instead of the selected period — period filtering must be applied per-bucket, not just to totals."}
+    ]
+  }
+]

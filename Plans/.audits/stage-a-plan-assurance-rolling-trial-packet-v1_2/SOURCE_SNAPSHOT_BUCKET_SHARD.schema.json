@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/source-snapshot-bucket-shard.v1.2.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "shard_index", "first_bucket", "last_bucket", "buckets", "payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_2"},
+    "trial_id": {"const": "stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "generation_id": {"const": "generation-v1_2-001-20260717"},
+    "shard_index": {"type": "integer", "minimum": 0, "maximum": 15},
+    "first_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"},
+    "last_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"},
+    "buckets": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": "object", "required": ["bucket", "entry_count", "regular_file_count", "directory_entry_count", "symlink_count", "nonregular_count", "multi_link_regular_file_count", "physical_bucket_commitment_sha256", "classification_bucket_commitment_sha256"]}},
+    "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

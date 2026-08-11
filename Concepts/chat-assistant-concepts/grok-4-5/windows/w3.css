@@ -1,0 +1,481 @@
+/* =====================================================================
+   w3 — STRIP CONSOLE
+   Single dense TOP instrument strip (telemetry feel): search + selectors
+   + status lamps in one band. History = HORIZONTAL scrollable pills under
+   the strip (not a side rail). Prose capped to a comfortable measure below.
+   Selection = filled pill + top ink (never left accent border).
+   ===================================================================== */
+
+.w3-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.w3-console {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-alt, var(--surface)) 90%, var(--accent-soft)) 0%,
+      var(--surface) 100%
+    );
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+
+.w3-strip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.2fr) auto auto;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 8px 10px 6px;
+  min-width: 0;
+}
+
+.w3-strip-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.w3-strip-mark {
+  width: 8px;
+  height: 22px;
+  border-radius: 2px;
+  background:
+    linear-gradient(
+      180deg,
+      var(--accent-primary),
+      color-mix(in srgb, var(--accent-primary) 35%, var(--border))
+    );
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+}
+.w3-strip-id {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.w3-strip-name {
+  font-family: var(--display-font);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.w3-strip-model {
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  white-space: nowrap;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.w3-strip-thread {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--surface-elevated, var(--surface)) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-light) 80%, transparent);
+}
+.w3-strip-thread-lbl {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.w3-strip-thread-val {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+
+/* status lamps — telemetry */
+.w3-lamps {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  flex: none;
+}
+.w3-lamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--border-light) 85%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated, var(--surface)) 80%, transparent);
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 0;
+}
+.w3-lamp i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-muted) 18%, transparent);
+}
+.w3-lamp em {
+  font-style: normal;
+  max-width: 72px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}
+.w3-lamp.is-live i {
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 22%, transparent);
+  animation: w3-lamp-breathe 1.6s var(--ease-out) infinite;
+}
+.w3-lamp.is-live {
+  color: var(--text-secondary);
+  border-color: color-mix(in srgb, var(--accent-primary) 28%, var(--border-light));
+}
+.w3-lamp.is-warn i {
+  background: var(--tone-warn-text, var(--accent-primary));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone-warn-text, var(--accent-primary)) 20%, transparent);
+}
+.w3-lamp.is-idle i {
+  background: color-mix(in srgb, var(--text-muted) 70%, transparent);
+}
+@keyframes w3-lamp-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.92); }
+}
+
+.w3-instruments {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  min-width: 0;
+  justify-content: flex-end;
+}
+.w3-search {
+  width: 78px;
+  max-width: 16vw;
+  font-size: 11px;
+  padding: 5px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--surface);
+  color: var(--text-primary);
+}
+.w3-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  max-width: none;
+  overflow: visible;
+}
+.w3-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 5px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+.w3-ico:hover,
+.w3-ico[aria-expanded='true'] {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+.w3-ico .pm-btn-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* horizontal chat pills — under the strip */
+.w3-pills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* End gutter for scroll clearance; no edge mask (hard clip + snap instead) */
+  padding: 2px 18px 9px 10px;
+  min-width: 0;
+  scrollbar-width: thin;
+  scroll-padding-inline: 10px 18px;
+  scroll-snap-type: x proximity;
+  /* No edge mask — hard clip + scroll; label ellipsis stays inside pill max-width */
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.w3-pill-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+.w3-pills-empty {
+  font-size: 10px;
+  color: var(--text-muted);
+  padding: 4px 2px;
+}
+.w3-pill {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 148px;
+  padding: 5px 11px 5px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--border-light) 90%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated, var(--surface)) 75%, transparent);
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-spring);
+}
+.w3-pill::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 0;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: transparent;
+}
+.w3-pill:hover {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-soft) 65%, transparent);
+  transform: translateY(-1px);
+}
+.w3-pill.is-selected,
+.w3-pill[aria-selected='true'] {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-soft) 90%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-primary) 34%, transparent);
+  box-shadow: var(--elev-1);
+}
+.w3-pill.is-selected::after,
+.w3-pill[aria-selected='true']::after {
+  background: var(--accent-primary);
+}
+.w3-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--border) 80%, var(--text-muted));
+  flex: none;
+}
+.w3-pill.is-selected .w3-pill-dot,
+.w3-pill[aria-selected='true'] .w3-pill-dot {
+  background: var(--accent-primary);
+}
+.w3-pill-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  min-height: 1.3em;
+}
+.w3-pill-pin {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  opacity: 0.7;
+}
+
+.w3-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(80% 60% at 50% 0%, color-mix(in srgb, var(--accent-soft) 35%, transparent), transparent 70%);
+}
+.w3-prose {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 760px;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.w3-root .pm-thread-slot {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* tier yield — collapse stacking height at ≤520 */
+.w3-root[data-chat-tier='min'] .w3-strip {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 6px 8px;
+  padding: 5px 8px 4px;
+}
+.w3-root[data-chat-tier='min'] .w3-strip-thread,
+.w3-root[data-chat-tier='min'] .w3-lamps,
+.w3-root[data-chat-tier='min'] .w3-search,
+.w3-root[data-chat-tier='min'] .w3-instruments [data-search-scope] {
+  display: none;
+}
+.w3-root[data-chat-tier='min'] .w3-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: none;
+  overflow: visible;
+}
+.w3-root[data-chat-tier='min'] .w3-strip-name {
+  display: none;
+}
+.w3-root[data-chat-tier='min'] .w3-strip-id {
+  gap: 0;
+}
+.w3-root[data-chat-tier='min'] .w3-pills {
+  /* Prefer hard clip + horizontal scroll — no mask fade through glyphs */
+  padding: 0 14px 4px 8px;
+  scroll-padding-inline: 8px 14px;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.w3-root[data-chat-tier='min'] .w3-pill {
+  /* Label ellipsis stays inside max-width; pill chrome stays fully opaque */
+  max-width: 104px;
+  padding: 3px 8px 3px 7px;
+  font-size: 10px;
+}
+.w3-root[data-chat-tier='min'] .w3-lamp em {
+  /* never mid-word-chop status; hide text, keep lamp + title */
+  display: none;
+}
+.w3-root[data-chat-tier='min'] .w3-selectors .pm6-tb-menu-label {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w3-pill,
+  .w3-lamp.is-live i {
+    transition: none;
+    animation: none;
+  }
+}
+[data-reduced-motion='1'] .w3-pill {
+  transition: none;
+}
+[data-reduced-motion='1'] .w3-lamp.is-live i {
+  animation: none;
+}
+
+/* ---- Alive motion: w3 pills ---- */
+.w3-pill {
+  transition: transform 200ms var(--pm-spring-snappy, cubic-bezier(0.22, 1.55, 0.36, 1)),
+    background 220ms var(--pm-ease-out, ease-out),
+    box-shadow 220ms var(--pm-ease-out, ease-out);
+}
+.w3-pill.is-selected {
+  box-shadow: inset 0 -2px 0 var(--accent-primary);
+  transform: translateY(-1px);
+}
+.w3-pills {
+  transition: gap 240ms var(--pm-ease-out, ease-out);
+}
+.w3-lamp,
+.w3-status-lamp {
+  transition: opacity 280ms var(--pm-ease-out, ease-out), filter 280ms var(--pm-ease-out, ease-out);
+}
+.w3-tools { transition: opacity 220ms var(--pm-ease-out, ease-out), gap 220ms var(--pm-ease-out, ease-out); }
+html[data-reduced-motion='1'] .w3-pill,
+html[data-reduced-motion='1'] .w3-lamp { transition: none !important; animation: none !important; }
+html[data-reduced-motion='1'] .w3-lamp { filter: none !important; }
+/* ---- Slint-portable motion polish (w3) ---- */
+.w3-pill::after {
+  transform: scaleX(0.2);
+  transform-origin: center top;
+  transition:
+    background var(--pm-chat-motion-fast, 160ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 280ms var(--pm-spring-snappy, cubic-bezier(0.22, 1.55, 0.36, 1));
+}
+.w3-pill.is-selected::after,
+.w3-pill[aria-selected='true']::after {
+  transform: scaleX(1);
+}
+.w3-pill-wrap {
+  transition: transform 320ms var(--pm-spring-soft, cubic-bezier(0.34, 1.4, 0.64, 1)), opacity 200ms var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.w3-pills.pm-stagger > .w3-pill-wrap {
+  animation: pmGrokChipIn var(--pm-chat-motion-fast, 160ms) var(--pm-spring-snappy, cubic-bezier(0.22, 1.55, 0.36, 1)) both;
+  animation-delay: calc(var(--stagger-i, 0) * var(--pm-stagger-step, 42ms));
+}
+.w3-lamp.is-live i {
+  /* ambient lamp — muted under RM via existing rules */
+  animation: w3-lamp-breathe 1.6s var(--ease-out, ease-out) infinite;
+}
+.w3-root[data-chat-tier='min'] .w3-strip,
+.w3-root[data-chat-tier='min'] .w3-instruments {
+  transition:
+    gap var(--pm-chat-motion-surface, 280ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    padding var(--pm-chat-motion-surface, 280ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    opacity var(--pm-chat-motion-fast, 160ms) var(--pm-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.w3-pill:active {
+  transform: scale(0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .w3-pills.pm-stagger > .w3-pill-wrap,
+  .w3-lamp.is-live i {
+    animation: none !important;
+  }
+  .w3-pill::after,
+  .w3-pill-wrap {
+    transition: none !important;
+  }
+  .w3-pill:active {
+    transform: none !important;
+  }
+}
+[data-reduced-motion='1'] .w3-pills.pm-stagger > .w3-pill-wrap,
+[data-reduced-motion='1'] .w3-lamp.is-live i {
+  animation: none !important;
+}

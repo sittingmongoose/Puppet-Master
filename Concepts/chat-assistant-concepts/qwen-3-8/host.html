@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puppet Master · Assistant Chat Concepts · Qwen 3.8</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff8a5c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%231c1723'/%3E%3C/svg%3E">
+<script>
+(function () {
+  try {
+    var t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("pm.theme") || "friendly-dark";
+    document.documentElement.dataset.theme = t;
+    if (new URLSearchParams(location.search).get("rm") === "1") document.documentElement.dataset.motion = "reduced";
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@500;600;700;800&family=Orbitron:wght@500;700;800&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/motion.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/scrollbars.css">
+<link rel="stylesheet" href="_shared/shell.css">
+<link rel="stylesheet" href="windows/_window-kit.css">
+<link rel="stylesheet" href="threads/_thread-kit.css">
+<link rel="stylesheet" href="windows/w1.css">
+<link rel="stylesheet" href="windows/w2.css">
+<link rel="stylesheet" href="windows/w3.css">
+<link rel="stylesheet" href="windows/w4.css">
+<link rel="stylesheet" href="windows/w5.css">
+<link rel="stylesheet" href="windows/w6.css">
+<link rel="stylesheet" href="windows/w7.css">
+<link rel="stylesheet" href="windows/w8.css">
+<link rel="stylesheet" href="threads/t1.css">
+<link rel="stylesheet" href="threads/t2.css">
+<link rel="stylesheet" href="threads/t3.css">
+<link rel="stylesheet" href="threads/t4.css">
+<link rel="stylesheet" href="threads/t5.css">
+<link rel="stylesheet" href="threads/t6.css">
+<link rel="stylesheet" href="threads/t7.css">
+<link rel="stylesheet" href="threads/t8.css">
+</head>
+<body data-concept-model="Qwen 3.8">
+<div id="app"></div>
+<script>
+/* ConceptHub bridge: pm-concept-ready / pm-concept-state */
+window.addEventListener("message", function (e) {
+  if (e.data && e.data.pmConcept === "state") {
+    window.dispatchEvent(new CustomEvent("pm-concept-state", { detail: { model: "Qwen 3.8", ready: !!window.__pmChatState } }));
+  }
+});
+window.addEventListener("load", function () {
+  window.dispatchEvent(new CustomEvent("pm-concept-ready", { detail: { model: "Qwen 3.8" } }));
+});
+</script>
+<script src="_shared/labels.js"></script>
+<script src="_shared/commands.js"></script>
+<script src="_shared/format.js"></script>
+<script src="_shared/markdown.js"></script>
+<script src="_shared/icons.js"></script>
+<script src="_shared/popups.js"></script>
+<script>window.PMAnim=window.PMAnim||{reduced:function(){return document.documentElement.dataset.motion==='reduced'||(matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);},flip:function(e,m){m&&m();},staggerIn:function(e){e&&[].forEach.call(e,function(x){x.style.opacity=1;x.style.transform='none';});},springTo:function(s,f,t){s(t);},crossfadeNum:function(c,t){if(c)c.textContent=t;},morphClip:function(e,f,t,o){if(e)e.style.clipPath='inset('+t+')';o&&o.onDone&&o.onDone();},pop:function(){},strike:function(){}};</script>
+  <script src="_shared/anim.js"></script>
+  <script src="_shared/store.js"></script>
+  <script src="_shared/spellcheck.js"></script>
+<script src="_shared/demo-loader.js"></script>
+<script src="_shared/demo-extend.js"></script>
+<script src="_shared/registry.js"></script>
+<script src="_shared/bridge.js"></script>
+<script src="_shared/shell.js"></script>
+<script src="windows/_window-kit.js"></script>
+<script src="threads/_thread-kit.js"></script>
+<script src="windows/w1.js"></script>
+<script src="windows/w2.js"></script>
+<script src="windows/w3.js"></script>
+<script src="windows/w4.js"></script>
+<script src="windows/w5.js"></script>
+<script src="windows/w6.js"></script>
+<script src="windows/w7.js"></script>
+<script src="windows/w8.js"></script>
+<script src="threads/t1.js"></script>
+<script src="threads/t2.js"></script>
+<script src="threads/t3.js"></script>
+<script src="threads/t4.js"></script>
+<script src="threads/t5.js"></script>
+<script src="threads/t6.js"></script>
+<script src="threads/t7.js"></script>
+<script src="threads/t8.js"></script>
+  <script src="_shared/host-boot.js"></script>
+  <script src="_shared/demo-triggers.js"></script>
+  <script>
+  (function () {
+    if (new URLSearchParams(location.search).get("harness") !== "1") return;
+    document.addEventListener("DOMContentLoaded", function () {
+      var d = document.createElement("div");
+      d.className = "pmq-harness";
+      d.innerHTML =
+        '<div class="pmq-harness-head"><span>Demo harness · not product chrome</span><button type="button" data-hclose aria-label="Close harness">Close</button></div>' +
+        '<div class="pmq-harness-body"></div>';
+      document.body.appendChild(d);
+      var body = d.querySelector(".pmq-harness-body");
+      var groups = {
+        history: ["history.peek", "history.pin_compact", "history.pin_full", "history.unpin", "history.switch_thread"],
+        question: ["question.prepare", "question.select", "question.next", "question.validation_error", "question.skip", "question.cancel", "question.submit"],
+        goal: ["goal.start", "goal.progress", "goal.pause", "goal.resume", "goal.update", "goal.blocked", "goal.complete"],
+        todo: ["todo.add", "todo.complete", "todo.reopen", "todo.block"],
+        subagent: ["subagent.spawn", "subagent.progress", "subagent.complete", "subagent.fail", "subagent.retry"],
+        activity: ["activity.thinking_summary", "activity.search", "activity.read", "activity.browser", "activity.test", "activity.edit", "activity.generate"],
+        diff: ["diff.create", "diff.update", "diff.open"],
+        artifact: ["artifact.loading", "artifact.ready", "artifact.switch", "artifact.error", "artifact.close"],
+        decision: ["decision.approval_open", "decision.details", "decision.approve", "decision.deny", "decision.branch"],
+        thread: ["thread.send_request", "thread.receive_response", "thread.spawn_related", "thread.branch"],
+        system: ["system.port_collision", "system.worktree_collision", "system.cross_project", "system.compact_now", "system.redirect", "system.crew", "system.reset"]
+      };
+      Object.keys(groups).forEach(function (g) {
+        var h = document.createElement("div");
+        h.className = "pmq-harness-group";
+        h.innerHTML = "<b>" + g + "</b>";
+        groups[g].forEach(function (n) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.textContent = n.split(".")[1];
+          b.title = n;
+          b.addEventListener("click", function () { window.__pmDemoTrigger(n, {}); });
+          h.appendChild(b);
+        });
+        body.appendChild(h);
+      });
+      d.querySelector("[data-hclose]").addEventListener("click", function () { d.remove(); });
+    });
+  })();
+  </script>
+  <style>
+    .pmq-harness {
+      position: fixed; left: 8px; bottom: 8px; z-index: 90;
+      width: 300px; max-height: 46vh; overflow: auto;
+      background: var(--surface-elevated, #fff); color: var(--text-primary, #111);
+      border: 1px solid var(--border-strong, #999); border-radius: 10px;
+      box-shadow: 0 8px 28px rgb(0 0 0 / .25);
+      font: 11px/1.4 system-ui, sans-serif;
+    }
+    .pmq-harness-head { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-bottom: 1px solid var(--border, #ccc); font-weight: 700; }
+    .pmq-harness-head button { border: 0; background: none; cursor: pointer; color: inherit; font: inherit; }
+    .pmq-harness-body { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; }
+    .pmq-harness-group b { display: block; text-transform: uppercase; letter-spacing: .06em; font-size: 9px; opacity: .6; margin: 2px 0; }
+    .pmq-harness-group button { margin: 0 4px 4px 0; padding: 3px 7px; border: 1px solid var(--border, #ccc); border-radius: 999px; background: none; color: inherit; cursor: pointer; font: inherit; }
+    .pmq-harness-group button:hover { border-color: var(--accent-primary, #e5643a); color: var(--accent-primary, #e5643a); }
+  </style>
+  <script>
+window.PMChatHost.boot().catch(function (err) {
+  document.getElementById("app").innerHTML =
+    '<div style="padding:40px;font-family:system-ui;color:#c33;max-width:560px">' +
+    "<h2 style=\"margin:0 0 10px\">Workspace could not start</h2><p>" + String(err.message || err) + "</p></div>";
+  console.error(err);
+});
+</script>
+</body>
+</html>

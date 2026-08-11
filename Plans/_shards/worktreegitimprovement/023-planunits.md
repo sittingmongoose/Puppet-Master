@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L803-L4784
+Source lines: L858-L4846
 
-Source SHA256: `28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309`
+Source SHA256: `88402dbf75591b036b5e9b242a67576bb4d2645329db848ea9b324ca3f2e8910`
 
 ---
 
@@ -3470,6 +3470,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - "W-063 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "safe_point exact-restores the named worktree through FileSafe equality and never merges or substitutes another target."
+- "historical_commit creates a distinct clean worktree at the exact full commit OID while leaving the source dirty state unchanged."
+- "worktree_head performs zero SCM mutation and binds only when exact HEAD and FileSafe state digest match, with explicit dirty confirmation where required."
+- "Baseline fixtures prove exact postconditions, refusal without substitution, and fenced recovery after interruption or third-party edits."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
@@ -3527,6 +3531,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - "W-064 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "A restore-required blocked worktree remains blocked_preserved and anchored until the storage/FileSafe release rule is satisfied."
+- "restore_refused, restore_failed after verified rollback, and restore_recovery_required never expose the target worktree as runnable."
+- "Missing/corrupt required snapshot state becomes recovery_unavailable without prune, alternate-baseline substitution, or silent resolution."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:

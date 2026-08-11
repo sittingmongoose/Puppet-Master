@@ -1,0 +1,224 @@
+/* ============================================================================
+   Kimi K3 — W8 Sheet Modal chrome (scoped [data-k3-window="w8"]).
+
+   Compact header, a slim action row (Chats / Work / Search), the transcript
+   slot, and the composer. Each action opens a bottom sheet — an absolute
+   bottom overlay (max-height 60%) that slides up over a scrim. Only one
+   sheet is open at a time; Esc or scrim click closes. Sheets animate via
+   transform; the resting closed state is display:none, so reduced motion
+   reaches the identical final state instantly.
+
+   Token-driven only — every color/radius/border comes from themes.css so
+   all 8 theme tables render complete. Active trigger + open sheet use
+   background tint + weight, never a colored left-side accent border.
+   ========================================================================= */
+
+[data-k3-window="w8"] {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+[data-k3-window="w8"] .w8-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-k3-window="w8"] .k3w-kit-header { flex: 0 0 auto; }
+[data-k3-window="w8"] .k3w-kit-lens-banner { flex: 0 0 auto; }
+
+/* ---- action row: one button per sheet ---------------------------------- */
+[data-k3-window="w8"] .w8-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface);
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+  flex-wrap: wrap;
+}
+[data-k3-window="w8"] .w8-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w8"] .w8-action:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+/* active trigger = background tint + weight, never a left border */
+[data-k3-window="w8"] .w8-action.is-active {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+[data-k3-window="w8"] .w8-action-ic { display: inline-flex; flex: 0 0 auto; }
+[data-k3-window="w8"] .w8-action-ic svg { width: 13px; height: 13px; }
+[data-k3-window="w8"] .w8-action-label { white-space: nowrap; }
+[data-k3-window="w8"] .w8-action-badge {
+  display: none;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-primary);
+  background: var(--accent-glow);
+  border-radius: var(--radius-pill, 999px);
+}
+[data-k3-window="w8"] .w8-action-badge:not([hidden]) { display: inline-flex; }
+
+/* inline one-line work summary beside the actions */
+[data-k3-window="w8"] .w8-work-summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+}
+[data-k3-window="w8"] .w8-work-summary:not([hidden]) { display: block; }
+
+/* ---- slots ---------------------------------------------------------------- */
+[data-k3-window="w8"] .w8-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-window="w8"] .w8-composer {
+  flex: 0 0 auto;
+  padding: 10px 14px 14px;
+}
+
+/* ---- scrim --------------------------------------------------------------- */
+[data-k3-window="w8"] .w8-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, .34);
+  opacity: 0;
+  transition: opacity var(--motion-med, 240ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w8"] .w8-scrim.is-open { opacity: 1; }
+
+/* ---- sheets -------------------------------------------------------------- */
+/* All sheets rest off-screen below the viewport. Only the one carrying
+   .is-open slides up; the others stay display:none (toggled by JS) so they
+   never overlap and mutual exclusion is structural. */
+[data-k3-window="w8"] .w8-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  max-height: 60%;
+  background: var(--surface);
+  border-top: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-lg, 14px) var(--radius-lg, 14px) 0 0;
+  box-shadow: var(--elev-2);
+  transform: translateY(102%);
+  transition: transform var(--motion-med, 240ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w8"] .w8-sheet.is-open { transform: translateY(0); }
+
+/* PINNED Chats sheet: instead of an absolute bottom overlay (which covered the
+   composer), it docks as an IN-FLOW compact strip just above the composer slot.
+   It reserves layout space, never overlaps the composer, drops the scrim, and
+   caps its height so the transcript + composer both stay usable. */
+[data-k3-window="w8"].is-chats-pinned .w8-scrim { display: none !important; }
+[data-k3-window="w8"] .w8-sheet.is-pinned-docked {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+  z-index: auto;
+  flex: 0 0 auto;
+  max-height: 26vh;
+  transform: none;
+  box-shadow: none;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 0;
+  transition: none;
+}
+
+[data-k3-window="w8"] .w8-sheet-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w8"] .w8-sheet-title {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 650;
+  color: var(--text-primary);
+}
+[data-k3-window="w8"] .w8-sheet-titlegroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+/* pin toggle on the Chats sheet: pressed = accent tint, never a colored border */
+[data-k3-window="w8"] .w8-sheet-pin.is-pinned {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+}
+[data-k3-window="w8"] .w8-sheet-pin svg { width: 15px; height: 15px; }
+[data-k3-window="w8"] .w8-sheet-close svg { width: 15px; height: 15px; }
+
+[data-k3-window="w8"] .w8-sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px 14px;
+  overflow-y: auto;
+}
+/* kit surfaces sit flush in the work sheet */
+[data-k3-window="w8"] [data-w8-sheet="work"] .k3w-kit-surface { width: 100%; }
+[data-k3-window="w8"] [data-w8-sheet="chats"] .k3w-kit-history {
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+}
+[data-k3-window="w8"] .w8-empty {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  line-height: var(--lh-body, 1.5);
+  padding: 4px 2px;
+}

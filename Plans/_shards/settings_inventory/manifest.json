@@ -1,0 +1,878 @@
+{
+  "generated_at_utc": "2026-08-11T01:30:02Z",
+  "index_path": "Plans/_shards/settings_inventory/00-index.md",
+  "index_sha256": "a678495dfde2fae2e7a76f15fd5cf24f6252f646d3a7b8e7203afb4a74eea8ab",
+  "manifest_path": "Plans/_shards/settings_inventory/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/settings_inventory/001-lines-1-200.md",
+      "sha256": "82c1490d395af26d54648e6d76327d7755436bfe9a0ea6c9e4014c10624bd02c",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/settings_inventory/002-lines-201-400.md",
+      "sha256": "2210bcc97244b6c98871af3694585687ef593050416a3752b147c021ef410f05",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-600",
+      "path": "Plans/_shards/settings_inventory/003-lines-401-600.md",
+      "sha256": "10900dede678c809bd72caabd5480a1d2d705377b6bc95fcc8792ea6d98f3fdd",
+      "shard_id": "003",
+      "source_line_end": 600,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 601-800",
+      "path": "Plans/_shards/settings_inventory/004-lines-601-800.md",
+      "sha256": "574e23ab5f7c6350c87011a6c574352228ad511a69c780c895c341da57834b71",
+      "shard_id": "004",
+      "source_line_end": 800,
+      "source_line_start": 601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 801-1000",
+      "path": "Plans/_shards/settings_inventory/005-lines-801-1000.md",
+      "sha256": "2bbe5a9ae57a54753b5b02eda261a837c48a6d19f53fe3821d2ec0e738bd1b74",
+      "shard_id": "005",
+      "source_line_end": 1000,
+      "source_line_start": 801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1001-1200",
+      "path": "Plans/_shards/settings_inventory/006-lines-1001-1200.md",
+      "sha256": "ff6d67f81ecdd640194dacfe42ec6b8f11caedd2e84c7d7fa82054cb54faa932",
+      "shard_id": "006",
+      "source_line_end": 1200,
+      "source_line_start": 1001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1201-1400",
+      "path": "Plans/_shards/settings_inventory/007-lines-1201-1400.md",
+      "sha256": "3f33a4029856f558a7d3fd2e22cde81a3eb1c21726cb9315a05a38df5d280284",
+      "shard_id": "007",
+      "source_line_end": 1400,
+      "source_line_start": 1201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1401-1600",
+      "path": "Plans/_shards/settings_inventory/008-lines-1401-1600.md",
+      "sha256": "b29127b89829366b55a83ffb701369c506f0e9c55aab00ba8085dd47961cd42d",
+      "shard_id": "008",
+      "source_line_end": 1600,
+      "source_line_start": 1401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1601-1800",
+      "path": "Plans/_shards/settings_inventory/009-lines-1601-1800.md",
+      "sha256": "4ae1db91b174a053b66f054b04247b227fe1d920464f58ffc49a35965fe4f016",
+      "shard_id": "009",
+      "source_line_end": 1800,
+      "source_line_start": 1601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1801-2000",
+      "path": "Plans/_shards/settings_inventory/010-lines-1801-2000.md",
+      "sha256": "398edee406107da0785f69032de71c50d59b2d1ce126670232c9bd6a5222c190",
+      "shard_id": "010",
+      "source_line_end": 2000,
+      "source_line_start": 1801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2001-2200",
+      "path": "Plans/_shards/settings_inventory/011-lines-2001-2200.md",
+      "sha256": "b8044c62eaeb465abf025a585e9fb2e068b3b373a114ddc644a72c6d326f0ec3",
+      "shard_id": "011",
+      "source_line_end": 2200,
+      "source_line_start": 2001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2201-2400",
+      "path": "Plans/_shards/settings_inventory/012-lines-2201-2400.md",
+      "sha256": "2c4e10d4146f1316e06731aab2a5e61210f4100e2f624a2518fb3cabe1f6789b",
+      "shard_id": "012",
+      "source_line_end": 2400,
+      "source_line_start": 2201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2401-2600",
+      "path": "Plans/_shards/settings_inventory/013-lines-2401-2600.md",
+      "sha256": "602373fad0d27260d4cbe7fe3f7f8d6f62e885d94487941fb0e4c52a80daa279",
+      "shard_id": "013",
+      "source_line_end": 2600,
+      "source_line_start": 2401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2601-2800",
+      "path": "Plans/_shards/settings_inventory/014-lines-2601-2800.md",
+      "sha256": "013575f8d48f2f5cd1afb3055e9a35979930e0563b338a261e4d6f1badbd851a",
+      "shard_id": "014",
+      "source_line_end": 2800,
+      "source_line_start": 2601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2801-3000",
+      "path": "Plans/_shards/settings_inventory/015-lines-2801-3000.md",
+      "sha256": "f2d52a82eb8f4f69074eba247882efb0a259bd314b5ab5dacd7e04a9d924feb4",
+      "shard_id": "015",
+      "source_line_end": 3000,
+      "source_line_start": 2801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3001-3200",
+      "path": "Plans/_shards/settings_inventory/016-lines-3001-3200.md",
+      "sha256": "0fffed3aa982fc619e6d358bc57283267f12607ec3dd4fb78c2eba1d83ba2b9c",
+      "shard_id": "016",
+      "source_line_end": 3200,
+      "source_line_start": 3001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3201-3400",
+      "path": "Plans/_shards/settings_inventory/017-lines-3201-3400.md",
+      "sha256": "3d891c073c198110a83931c76b513f0e4ab6373b4bd7361f32ccf4d12f58539b",
+      "shard_id": "017",
+      "source_line_end": 3400,
+      "source_line_start": 3201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3401-3600",
+      "path": "Plans/_shards/settings_inventory/018-lines-3401-3600.md",
+      "sha256": "ecc8e9ec1f80007853f873c0f04d1da787caf449d40f6b5038c33c1c081658ce",
+      "shard_id": "018",
+      "source_line_end": 3600,
+      "source_line_start": 3401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3601-3800",
+      "path": "Plans/_shards/settings_inventory/019-lines-3601-3800.md",
+      "sha256": "63f3ed582b7184acaeb7b5b20458d45675ae1ff32e282445f74b8b14b33483aa",
+      "shard_id": "019",
+      "source_line_end": 3800,
+      "source_line_start": 3601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3801-4000",
+      "path": "Plans/_shards/settings_inventory/020-lines-3801-4000.md",
+      "sha256": "c0f3f3b8fe0dfeee5fba9cdc8d6d178f07d1a8a2da08bdf0f9e08b3485e77356",
+      "shard_id": "020",
+      "source_line_end": 4000,
+      "source_line_start": 3801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4001-4200",
+      "path": "Plans/_shards/settings_inventory/021-lines-4001-4200.md",
+      "sha256": "1ad38112760112f1d0763532f1c344222660bea29ca4f1867ac9cd23a8d6f8d6",
+      "shard_id": "021",
+      "source_line_end": 4200,
+      "source_line_start": 4001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4201-4400",
+      "path": "Plans/_shards/settings_inventory/022-lines-4201-4400.md",
+      "sha256": "c6abd95743ea1ef388b5ae5a18c45935c8cf7a528aed0c3d3d84aab01ed2bc4d",
+      "shard_id": "022",
+      "source_line_end": 4400,
+      "source_line_start": 4201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4401-4600",
+      "path": "Plans/_shards/settings_inventory/023-lines-4401-4600.md",
+      "sha256": "693eca2ed66195631a0eaa2699808d76f57c384ca598b1c8e1193a52f7e2c220",
+      "shard_id": "023",
+      "source_line_end": 4600,
+      "source_line_start": 4401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4601-4800",
+      "path": "Plans/_shards/settings_inventory/024-lines-4601-4800.md",
+      "sha256": "9708afdc9e142867e1f78f88abb0256ece03c8897dc8a974658edeaf5131b32a",
+      "shard_id": "024",
+      "source_line_end": 4800,
+      "source_line_start": 4601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4801-5000",
+      "path": "Plans/_shards/settings_inventory/025-lines-4801-5000.md",
+      "sha256": "85cf9467172ebf89f06ed45b464f4034c58e62f85324a65018940f53fd6d951a",
+      "shard_id": "025",
+      "source_line_end": 5000,
+      "source_line_start": 4801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5001-5200",
+      "path": "Plans/_shards/settings_inventory/026-lines-5001-5200.md",
+      "sha256": "3a75dcf2e57dbbc5f84ebd3cb9e213f54702e48fbb7bedff8898450913ecad6d",
+      "shard_id": "026",
+      "source_line_end": 5200,
+      "source_line_start": 5001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5201-5400",
+      "path": "Plans/_shards/settings_inventory/027-lines-5201-5400.md",
+      "sha256": "0fc425031ae070cf1ff5c58cb47933ee33b4bffb984aa2516f3447143e2cfaa5",
+      "shard_id": "027",
+      "source_line_end": 5400,
+      "source_line_start": 5201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5401-5600",
+      "path": "Plans/_shards/settings_inventory/028-lines-5401-5600.md",
+      "sha256": "303b27becc66063d8ff55ceed3aa71803a401d89e915b80d58b2d3c0d8ae2015",
+      "shard_id": "028",
+      "source_line_end": 5600,
+      "source_line_start": 5401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5601-5800",
+      "path": "Plans/_shards/settings_inventory/029-lines-5601-5800.md",
+      "sha256": "af52511441d317b64d7c065c382f238963400f8c02744301a6004ef0f6f9c025",
+      "shard_id": "029",
+      "source_line_end": 5800,
+      "source_line_start": 5601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5801-6000",
+      "path": "Plans/_shards/settings_inventory/030-lines-5801-6000.md",
+      "sha256": "3a6697dd069e66566dde6acf6ac8e14d63331171687fee1df2add701d536cd84",
+      "shard_id": "030",
+      "source_line_end": 6000,
+      "source_line_start": 5801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6001-6200",
+      "path": "Plans/_shards/settings_inventory/031-lines-6001-6200.md",
+      "sha256": "f676fcaae2b076bd0c0e2a5438a29eeca4e9fcc98ed9c6be414cea5ba1d7700b",
+      "shard_id": "031",
+      "source_line_end": 6200,
+      "source_line_start": 6001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6201-6400",
+      "path": "Plans/_shards/settings_inventory/032-lines-6201-6400.md",
+      "sha256": "e0a4e4571ae15c986b6e1413dac651307592c7447606bd058ea2b197e18c79db",
+      "shard_id": "032",
+      "source_line_end": 6400,
+      "source_line_start": 6201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6401-6600",
+      "path": "Plans/_shards/settings_inventory/033-lines-6401-6600.md",
+      "sha256": "0c271cedc9d2610d2467dc537e15ea2899ad8239ebebbd7237b1ef6f3676e114",
+      "shard_id": "033",
+      "source_line_end": 6600,
+      "source_line_start": 6401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6601-6800",
+      "path": "Plans/_shards/settings_inventory/034-lines-6601-6800.md",
+      "sha256": "520b4314f6709371627d252835458ad9c896883237a027a0ba7feca7f1dedd46",
+      "shard_id": "034",
+      "source_line_end": 6800,
+      "source_line_start": 6601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6801-7000",
+      "path": "Plans/_shards/settings_inventory/035-lines-6801-7000.md",
+      "sha256": "dadab2134a4403b204a2e5646a337b5104761ed29f92f19ad97aedbd2512a602",
+      "shard_id": "035",
+      "source_line_end": 7000,
+      "source_line_start": 6801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7001-7200",
+      "path": "Plans/_shards/settings_inventory/036-lines-7001-7200.md",
+      "sha256": "5ec1b2ad6ce76b80a659d947bc16ce5bdcb10a24a9186d1194264bd9ac21a7f8",
+      "shard_id": "036",
+      "source_line_end": 7200,
+      "source_line_start": 7001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7201-7400",
+      "path": "Plans/_shards/settings_inventory/037-lines-7201-7400.md",
+      "sha256": "46bb497d80ef4685d40370b8498c174c45ad0ddc8f67f59bbd84041de3863c1f",
+      "shard_id": "037",
+      "source_line_end": 7400,
+      "source_line_start": 7201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7401-7600",
+      "path": "Plans/_shards/settings_inventory/038-lines-7401-7600.md",
+      "sha256": "c6208700773b9da43722b17d428e4f0dbefbf87732129970adb9ff8589784366",
+      "shard_id": "038",
+      "source_line_end": 7600,
+      "source_line_start": 7401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7601-7800",
+      "path": "Plans/_shards/settings_inventory/039-lines-7601-7800.md",
+      "sha256": "4de00efaa0e4cac9f097a2abecb68ef830d07418dcb8547b12698e04bea49f2a",
+      "shard_id": "039",
+      "source_line_end": 7800,
+      "source_line_start": 7601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7801-8000",
+      "path": "Plans/_shards/settings_inventory/040-lines-7801-8000.md",
+      "sha256": "47450e2fd69a403d0f913fd8ff036666bc4c8809252cd1e675795a0dd93b811a",
+      "shard_id": "040",
+      "source_line_end": 8000,
+      "source_line_start": 7801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8001-8200",
+      "path": "Plans/_shards/settings_inventory/041-lines-8001-8200.md",
+      "sha256": "b5f26696d6889939557cc62208d672e4b93538699bfcb9e2a1bba0d2f57cccf6",
+      "shard_id": "041",
+      "source_line_end": 8200,
+      "source_line_start": 8001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8201-8400",
+      "path": "Plans/_shards/settings_inventory/042-lines-8201-8400.md",
+      "sha256": "4eca6079309dbb4274617ea77fef62998d414b909066de07882b419792a65963",
+      "shard_id": "042",
+      "source_line_end": 8400,
+      "source_line_start": 8201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8401-8600",
+      "path": "Plans/_shards/settings_inventory/043-lines-8401-8600.md",
+      "sha256": "f42ee13d5e49ca01e322bbd8d149462712f4d4933d4ffa1335107ce5b1cc3846",
+      "shard_id": "043",
+      "source_line_end": 8600,
+      "source_line_start": 8401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8601-8800",
+      "path": "Plans/_shards/settings_inventory/044-lines-8601-8800.md",
+      "sha256": "8f0fcccf5181f5b237916d783ec947371bbb460756341b54c076adf9a7c79a99",
+      "shard_id": "044",
+      "source_line_end": 8800,
+      "source_line_start": 8601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8801-9000",
+      "path": "Plans/_shards/settings_inventory/045-lines-8801-9000.md",
+      "sha256": "149fa30a5aaddc21905876979abb522cf8470d57f6400f550af9f1956c19c8d2",
+      "shard_id": "045",
+      "source_line_end": 9000,
+      "source_line_start": 8801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9001-9200",
+      "path": "Plans/_shards/settings_inventory/046-lines-9001-9200.md",
+      "sha256": "47812bfb48054bddfbc7df9ad0612e184cb19047bfa984255365eac4a5b85d8a",
+      "shard_id": "046",
+      "source_line_end": 9200,
+      "source_line_start": 9001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9201-9400",
+      "path": "Plans/_shards/settings_inventory/047-lines-9201-9400.md",
+      "sha256": "df63de2a9fa63e009e76cbe8dd01249f14c471682067c147b33b5d0200563aaf",
+      "shard_id": "047",
+      "source_line_end": 9400,
+      "source_line_start": 9201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9401-9600",
+      "path": "Plans/_shards/settings_inventory/048-lines-9401-9600.md",
+      "sha256": "fb3dff80bc30d1c0665dc5e9ebe407baa57df5ff10f56e1a01856fe0ab4d390f",
+      "shard_id": "048",
+      "source_line_end": 9600,
+      "source_line_start": 9401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9601-9800",
+      "path": "Plans/_shards/settings_inventory/049-lines-9601-9800.md",
+      "sha256": "fca11998d1692a6787bf9bbc8b0f4ebb65e485eee295346e3311dd1fab7a317a",
+      "shard_id": "049",
+      "source_line_end": 9800,
+      "source_line_start": 9601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9801-10000",
+      "path": "Plans/_shards/settings_inventory/050-lines-9801-10000.md",
+      "sha256": "60d26b36f808af203bc84d105f50b753013326e2ffbf1cdb588312c400b80a9d",
+      "shard_id": "050",
+      "source_line_end": 10000,
+      "source_line_start": 9801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10001-10200",
+      "path": "Plans/_shards/settings_inventory/051-lines-10001-10200.md",
+      "sha256": "b4ee59c710c60113359e9e0e69db64b70525084e741ea2312867fca9ce1421c2",
+      "shard_id": "051",
+      "source_line_end": 10200,
+      "source_line_start": 10001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10201-10400",
+      "path": "Plans/_shards/settings_inventory/052-lines-10201-10400.md",
+      "sha256": "c36d44df50448cdc4792b42f03fbbeadc031dc8807dcd6e5905473925291bec9",
+      "shard_id": "052",
+      "source_line_end": 10400,
+      "source_line_start": 10201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10401-10600",
+      "path": "Plans/_shards/settings_inventory/053-lines-10401-10600.md",
+      "sha256": "8326b513b2d136caab212977c65ee6c48551517580c94895749086d4a2ecd549",
+      "shard_id": "053",
+      "source_line_end": 10600,
+      "source_line_start": 10401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10601-10800",
+      "path": "Plans/_shards/settings_inventory/054-lines-10601-10800.md",
+      "sha256": "3f60f2b72578d2e6d7af180bc4c4f79237f90959386cc9223b644d7a5237882c",
+      "shard_id": "054",
+      "source_line_end": 10800,
+      "source_line_start": 10601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10801-11000",
+      "path": "Plans/_shards/settings_inventory/055-lines-10801-11000.md",
+      "sha256": "9b2ef3cab7f7e5cec28f7b9da61ad72650d5fb1d0c544e51281699cb97d0baec",
+      "shard_id": "055",
+      "source_line_end": 11000,
+      "source_line_start": 10801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11001-11200",
+      "path": "Plans/_shards/settings_inventory/056-lines-11001-11200.md",
+      "sha256": "7b6c29d108df46572b681cb5ae9b0dfb984c5ab385420045648b50f4c69d0b49",
+      "shard_id": "056",
+      "source_line_end": 11200,
+      "source_line_start": 11001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11201-11400",
+      "path": "Plans/_shards/settings_inventory/057-lines-11201-11400.md",
+      "sha256": "7a609ba108ab6d20e422fc9294430e91200a3c80cfafaf511487bc148ce5dd25",
+      "shard_id": "057",
+      "source_line_end": 11400,
+      "source_line_start": 11201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11401-11600",
+      "path": "Plans/_shards/settings_inventory/058-lines-11401-11600.md",
+      "sha256": "421865aa178c0548506e0928ed0d482ceb04df5a130511ed86750d07c8b74b17",
+      "shard_id": "058",
+      "source_line_end": 11600,
+      "source_line_start": 11401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11601-11800",
+      "path": "Plans/_shards/settings_inventory/059-lines-11601-11800.md",
+      "sha256": "5c67eac6c7f0df362024e60766ee8bd5c51dc7fc7392129f90f6034b4d7adc1e",
+      "shard_id": "059",
+      "source_line_end": 11800,
+      "source_line_start": 11601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11801-12000",
+      "path": "Plans/_shards/settings_inventory/060-lines-11801-12000.md",
+      "sha256": "5e85bc7020a90d2151e846a257bb865c0858c1238d0f616e11e61162dfba973d",
+      "shard_id": "060",
+      "source_line_end": 12000,
+      "source_line_start": 11801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 12001-12200",
+      "path": "Plans/_shards/settings_inventory/061-lines-12001-12200.md",
+      "sha256": "75aff47ac9168f752e922a460ec22ff6f9d7f77d3277e55cb45747c3f9bf3679",
+      "shard_id": "061",
+      "source_line_end": 12200,
+      "source_line_start": 12001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 12201-12400",
+      "path": "Plans/_shards/settings_inventory/062-lines-12201-12400.md",
+      "sha256": "b778157dc220756382ce4ac49cdb2c82bf77ec4687d5fc360ecb9097fc6bd6e8",
+      "shard_id": "062",
+      "source_line_end": 12400,
+      "source_line_start": 12201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 12401-12600",
+      "path": "Plans/_shards/settings_inventory/063-lines-12401-12600.md",
+      "sha256": "b6fa15415c04d31ddc7d87232792559e5c1681d6b66b8d8b57b91498aef31cde",
+      "shard_id": "063",
+      "source_line_end": 12600,
+      "source_line_start": 12401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 12601-12800",
+      "path": "Plans/_shards/settings_inventory/064-lines-12601-12800.md",
+      "sha256": "21ae5562095f9c4f24ff8c67740143a5d56668e2bc52dde299069dbae48dc90b",
+      "shard_id": "064",
+      "source_line_end": 12800,
+      "source_line_start": 12601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 12801-13000",
+      "path": "Plans/_shards/settings_inventory/065-lines-12801-13000.md",
+      "sha256": "9eb30b9d3a1ec600441019b616882ea84ac3bb4e8c75c5a6a23ea698d5abd5d9",
+      "shard_id": "065",
+      "source_line_end": 13000,
+      "source_line_start": 12801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 13001-13200",
+      "path": "Plans/_shards/settings_inventory/066-lines-13001-13200.md",
+      "sha256": "019b49a707fab2e0f020853f0aeeaa5c59be449de5ca1607ea7aeb7d879260f6",
+      "shard_id": "066",
+      "source_line_end": 13200,
+      "source_line_start": 13001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 13201-13400",
+      "path": "Plans/_shards/settings_inventory/067-lines-13201-13400.md",
+      "sha256": "c2a7a9789124e792dd29f153f4c68bb56318938cde250c0b7692eb65f51c6687",
+      "shard_id": "067",
+      "source_line_end": 13400,
+      "source_line_start": 13201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 13401-13600",
+      "path": "Plans/_shards/settings_inventory/068-lines-13401-13600.md",
+      "sha256": "2adef3b83beb4af2ab56bd438d77582f2ea2f7007501110492a328f0c4933357",
+      "shard_id": "068",
+      "source_line_end": 13600,
+      "source_line_start": 13401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 13601-13800",
+      "path": "Plans/_shards/settings_inventory/069-lines-13601-13800.md",
+      "sha256": "2d6bcd9d005a5502f6739ea819da589994e73d9f6837c90101977112ea8dc374",
+      "shard_id": "069",
+      "source_line_end": 13800,
+      "source_line_start": 13601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 13801-14000",
+      "path": "Plans/_shards/settings_inventory/070-lines-13801-14000.md",
+      "sha256": "07585a4480be0589b29972c65225479763c1f544a13d8e83ccbfcc334080ae92",
+      "shard_id": "070",
+      "source_line_end": 14000,
+      "source_line_start": 13801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 14001-14200",
+      "path": "Plans/_shards/settings_inventory/071-lines-14001-14200.md",
+      "sha256": "173b869b8a1e110189a40adea3a69c7ecb9d653791d794ced5e01a9240d5d0d0",
+      "shard_id": "071",
+      "source_line_end": 14200,
+      "source_line_start": 14001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 14201-14400",
+      "path": "Plans/_shards/settings_inventory/072-lines-14201-14400.md",
+      "sha256": "1f4dee1890f8f3ca1c0e00801ba04d92993ada86c32824ca11d44ca73664dae9",
+      "shard_id": "072",
+      "source_line_end": 14400,
+      "source_line_start": 14201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 14401-14600",
+      "path": "Plans/_shards/settings_inventory/073-lines-14401-14600.md",
+      "sha256": "c031b028e50571ae79fa1f5bd056dec3d0bde564f7bcb879d70af09e028274ff",
+      "shard_id": "073",
+      "source_line_end": 14600,
+      "source_line_start": 14401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 14601-14800",
+      "path": "Plans/_shards/settings_inventory/074-lines-14601-14800.md",
+      "sha256": "eb2c4b523b5372c960c1975534f9613c07216b8fd528333f1ad68aeca707c95d",
+      "shard_id": "074",
+      "source_line_end": 14800,
+      "source_line_start": 14601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 14801-15000",
+      "path": "Plans/_shards/settings_inventory/075-lines-14801-15000.md",
+      "sha256": "7c65ef1d6a9933c91495d267a1d12db4fa6401cb32917314edac902370d4f418",
+      "shard_id": "075",
+      "source_line_end": 15000,
+      "source_line_start": 14801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 15001-15200",
+      "path": "Plans/_shards/settings_inventory/076-lines-15001-15200.md",
+      "sha256": "b5d7fdc429f4dde00622aafca2c70a9be18fe16e8bf65cdbb2258cd735dd35d6",
+      "shard_id": "076",
+      "source_line_end": 15200,
+      "source_line_start": 15001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 15201-15400",
+      "path": "Plans/_shards/settings_inventory/077-lines-15201-15400.md",
+      "sha256": "9fcefa95c5cd3a95c66c8109b03df887eaa226a851f8a20b652bd23c6aea379c",
+      "shard_id": "077",
+      "source_line_end": 15400,
+      "source_line_start": 15201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 15401-15600",
+      "path": "Plans/_shards/settings_inventory/078-lines-15401-15600.md",
+      "sha256": "be592697e881a9ad6d37b5cf0aaf3fbec0f28deb3b8facce000343a0a583ca95",
+      "shard_id": "078",
+      "source_line_end": 15600,
+      "source_line_start": 15401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 15601-15800",
+      "path": "Plans/_shards/settings_inventory/079-lines-15601-15800.md",
+      "sha256": "7d138c61c7dc36f036d46823c6eda2acb3eb09a9722677c24d5070e5269a3ac1",
+      "shard_id": "079",
+      "source_line_end": 15800,
+      "source_line_start": 15601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 15801-16000",
+      "path": "Plans/_shards/settings_inventory/080-lines-15801-16000.md",
+      "sha256": "62d425e1cf588689287f5fb880117d3e9b015adcc71dbd3951144036cb75ed51",
+      "shard_id": "080",
+      "source_line_end": 16000,
+      "source_line_start": 15801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 16001-16200",
+      "path": "Plans/_shards/settings_inventory/081-lines-16001-16200.md",
+      "sha256": "7068ef8630ebc6ff7b3eed1c684290f2a0bcdd8912aaa3f8eee832d47d6573c5",
+      "shard_id": "081",
+      "source_line_end": 16200,
+      "source_line_start": 16001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 16201-16400",
+      "path": "Plans/_shards/settings_inventory/082-lines-16201-16400.md",
+      "sha256": "c7d2bd4a208c625b8de0781c4bfb44074feb87112e5666c7580b77d33b162458",
+      "shard_id": "082",
+      "source_line_end": 16400,
+      "source_line_start": 16201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 16401-16600",
+      "path": "Plans/_shards/settings_inventory/083-lines-16401-16600.md",
+      "sha256": "d74951526470f6d85d8613be3142913aa03b5a733b7cc13d8e8386fc99f0effd",
+      "shard_id": "083",
+      "source_line_end": 16600,
+      "source_line_start": 16401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 16601-16800",
+      "path": "Plans/_shards/settings_inventory/084-lines-16601-16800.md",
+      "sha256": "dad59c538621d4d6f40bd6f5d60e2a352f78136d6180e7e8f74fdcc031adc23e",
+      "shard_id": "084",
+      "source_line_end": 16800,
+      "source_line_start": 16601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 16801-17000",
+      "path": "Plans/_shards/settings_inventory/085-lines-16801-17000.md",
+      "sha256": "5099f80f1f28f98473387ac239e40487733202a03ff44788f1fac2a0f7092329",
+      "shard_id": "085",
+      "source_line_end": 17000,
+      "source_line_start": 16801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 17001-17200",
+      "path": "Plans/_shards/settings_inventory/086-lines-17001-17200.md",
+      "sha256": "1aa0ab6fd7921d972b630a68b5e8c6a2adf4a4c00eb9451b3a622ee2af7cc2bd",
+      "shard_id": "086",
+      "source_line_end": 17200,
+      "source_line_start": 17001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 17201-17400",
+      "path": "Plans/_shards/settings_inventory/087-lines-17201-17400.md",
+      "sha256": "e8244b7a013b9159fb4d0f080c221367d2db9e2d834e56d6e3c1b76a62c948df",
+      "shard_id": "087",
+      "source_line_end": 17400,
+      "source_line_start": 17201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 17401-17600",
+      "path": "Plans/_shards/settings_inventory/088-lines-17401-17600.md",
+      "sha256": "411e425ad122c20cb151272d59dc44fe01ec94dcbbb811b29bd25b985c61eee2",
+      "shard_id": "088",
+      "source_line_end": 17600,
+      "source_line_start": 17401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 17601-17800",
+      "path": "Plans/_shards/settings_inventory/089-lines-17601-17800.md",
+      "sha256": "42e4d9114ebeba234fd643406af914f946b3fc4b2c9e23d5b7c4489c9586397f",
+      "shard_id": "089",
+      "source_line_end": 17800,
+      "source_line_start": 17601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 17801-18000",
+      "path": "Plans/_shards/settings_inventory/090-lines-17801-18000.md",
+      "sha256": "4eb39a5b92b366cfdae617aeb921e1da5bfb637630f841098c01eaee0ce7f6a6",
+      "shard_id": "090",
+      "source_line_end": 18000,
+      "source_line_start": 17801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 18001-18200",
+      "path": "Plans/_shards/settings_inventory/091-lines-18001-18200.md",
+      "sha256": "eacbbbd47f0a72f65a78d1e7d24e4c9d9ec48ef511eb2ccfbd8e3005ea872cd5",
+      "shard_id": "091",
+      "source_line_end": 18200,
+      "source_line_start": 18001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 18201-18400",
+      "path": "Plans/_shards/settings_inventory/092-lines-18201-18400.md",
+      "sha256": "9738198d3a1ce36a0935344e1f331a9c48da9cef7f76699dfbe3f29dbd940128",
+      "shard_id": "092",
+      "source_line_end": 18400,
+      "source_line_start": 18201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 18401-18600",
+      "path": "Plans/_shards/settings_inventory/093-lines-18401-18600.md",
+      "sha256": "3b892d43960ef465daa19524e9ef7b2d6519ea42818ea15b0ec5474d5ec28116",
+      "shard_id": "093",
+      "source_line_end": 18600,
+      "source_line_start": 18401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 18601-18800",
+      "path": "Plans/_shards/settings_inventory/094-lines-18601-18800.md",
+      "sha256": "743faabc04f39b9ccd21125235cc26e2209cf65a81fcf5c0fef0ce0789806c03",
+      "shard_id": "094",
+      "source_line_end": 18800,
+      "source_line_start": 18601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 18801-19000",
+      "path": "Plans/_shards/settings_inventory/095-lines-18801-19000.md",
+      "sha256": "ec01ebef80a215252c054ee309d5bf90fa132e23f15b601e5b3d96a12c6c9791",
+      "shard_id": "095",
+      "source_line_end": 19000,
+      "source_line_start": 18801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 19001-19094",
+      "path": "Plans/_shards/settings_inventory/096-lines-19001-19094.md",
+      "sha256": "2c4adb1432a665c999f0939ec86b18832b599740d7a8fc466516d8f5328cbfe0",
+      "shard_id": "096",
+      "source_line_end": 19094,
+      "source_line_start": 19001,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 19094,
+    "path": "Plans/settings_inventory.json",
+    "sha256": "806c5e6ac29651d29feed4b25dbb624cd7a878330cb19385d62a5812f8094a91"
+  }
+}

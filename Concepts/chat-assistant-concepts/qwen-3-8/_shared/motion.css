@@ -1,0 +1,163 @@
+:root {
+  --motion-scale: 1;
+  --dur-instant: 0ms;
+  --dur-fast: calc(120ms * var(--motion-scale));
+  --dur-med: calc(240ms * var(--motion-scale));
+  --dur-slow: calc(420ms * var(--motion-scale));
+  --dur-sprout-open: calc(300ms * var(--motion-scale));
+  --dur-sprout-close: calc(220ms * var(--motion-scale));
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-sprout: cubic-bezier(0.22, 1.55, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+  --rise: calc(6px * var(--motion-scale));
+  --slide-x: calc(10px * var(--motion-scale));
+}
+
+html[data-motion="reduced"] {
+  --motion-scale: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion="full"]) {
+    --motion-scale: 0;
+  }
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  transition-duration: 0ms !important;
+  animation-duration: 0ms !important;
+  transition-delay: 0ms !important;
+  animation-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+
+@keyframes pmq-fade-up {
+  from { opacity: 0; transform: translateY(var(--rise)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pmq-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pmq-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes pmq-sprout-in {
+  from { opacity: 0; transform: scale(0.72, 0.48); }
+  to { opacity: 1; transform: scale(1, 1); }
+}
+
+.pmq-anim-enter {
+  animation: pmq-fade-up var(--dur-med) var(--ease-out) both;
+}
+
+:root {
+  --ease-gentle-overshoot: cubic-bezier(0.22, 1.15, 0.36, 1);
+  --ease-snap-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bouncy: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --stagger-step: 35ms;
+}
+
+@keyframes pmq-pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.28, 0.78); }
+  62% { transform: scale(0.9, 1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pmq-orbit {
+  to { rotate: 360deg; }
+}
+
+@keyframes pmq-draw {
+  from { stroke-dashoffset: var(--len, 1); }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pmq-num-in {
+  from { opacity: 0; transform: translateY(0.6em); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pmq-num-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-0.6em); }
+}
+
+@keyframes pmq-strike {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.pmq-pop {
+  transform-origin: 50% 60%;
+  animation: pmq-pop 0.5s var(--ease-bouncy) both;
+  will-change: transform;
+}
+
+.pmq-orbit {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pmq-orbit .pair {
+  position: absolute;
+  inset: 0;
+  animation: pmq-orbit 0.9s linear infinite;
+}
+
+.pmq-orbit .pair i {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pmq-orbit .pair i:last-child {
+  top: auto;
+  bottom: 0;
+  opacity: 0.4;
+}
+
+.pmq-orbit .pair:nth-child(2) {
+  rotate: 45deg;
+  animation-delay: -0.15s;
+  opacity: 0.7;
+}
+
+.pmq-orbit.pmq-static .pair {
+  animation: none;
+}
+
+.pmq-strike {
+  position: relative;
+}
+
+.pmq-strike::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 1px);
+  height: 2px;
+  background: currentColor;
+  opacity: 0.75;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: pmq-strike 0.28s var(--ease-out) both;
+  pointer-events: none;
+}

@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.plan_assurance.rolling_trial_contract.v1.2",
+  "schema_version": "1.2.0",
+  "packet_id": "stage-a-plan-assurance-rolling-trial-packet-v1_2",
+  "packet_status": "VALIDATION_PENDING",
+  "created_on": "2026-07-17",
+  "objective": "Representation-only launchability repair for the two proven v1.1 prelaunch blockers; no trial launch.",
+  "inheritance": {
+    "parent_packet_id": "stage-a-plan-assurance-rolling-trial-packet-v1_1",
+    "parent_packet_core_population_sha256": "b1f87276139f1ade7e33b894a68dc6c7c948f4cb23efa7901c9168b5a844f1ff",
+    "parent_effective_contract_sha256": "7a73c4f3aa52807be2d6aa24a92c2efae9ba854a6cfdf429bba442ac7d917c32",
+    "parent_root_terminal_handoff_sha256": "0e6cf48f275e683bb0dd5310491db6694fd4a6f4dfe83fb6b05f14a875a6dba9",
+    "rule": "Every v1 and v1.1 semantic, authority, safety, research, metric, token, topology, isolation, budget, and read-only requirement remains authoritative unless this overlay explicitly replaces only its source or structural representation. Omission never deletes a parent requirement.",
+    "parent_terminal_preserved": "INPUT_DRIFT_STOP:EXCLUDED_RUN_ROOT_ANCESTOR_METADATA_UNMODELED",
+    "parent_terminal_relabel_forbidden": true,
+    "parent_validation_lineage": {"gates": "55/55", "negative_mutations": "263/263", "survivors": 0}
+  },
+  "repairs": {
+    "source_directory_identity": {
+      "algorithm_id": "pm.plan_assurance.source_snapshot.merkle.v1.2",
+      "directory_link_count_policy_id": "pm.plan_assurance.directory_link_count.null.v1.2",
+      "rule": "Directory st_nlink is normalized to null for every directory because directory population is already committed by exact paths, child Merkle leaves, modes, kinds, and counts. Every regular-file link count remains exact; multi-link regular files block.",
+      "exact_run_root": "The raw NFC ASCII-basename absolute run-root path is bound exactly, must be an absent direct child of the real no-symlink packet backtest parent at freeze, and is created once with mkdir relative to an opened no-follow parent directory.",
+      "detection_preserved": ["add", "remove", "rename", "byte", "mode", "kind", "classification", "regular-file link count", "sibling and prefix path", "case and Unicode alias", "dot segment", "symlink", "hardlink", "rename-copy escape"]
+    },
+    "structural_sharding": {
+      "representation_id": "pm.plan_assurance.structural_map.ordered_shards.v1.2",
+      "logical_semantics": "The exact v1 active structural map is reconstructed before the unchanged v1 structural schema and semantic validator run.",
+      "enumerates": ["active canonical documents", "substantive sections", "machine nodes", "PlanUnits", "acceptance units", "relevant cross-references", "capability assignments", "aliases", "exclusions"],
+      "noncanonical_rule": "Generated, governance, source-lineage, audit, retired, and unknown populations are committed only by source classification roots and class counts and are never duplicated as semantic rows or transmitted to workers.",
+      "capability_slice_rule": "Each family manifest binds exact canonical byte spans; workers later receive only the applicable manifest and span bytes after the inherited lock boundary.",
+      "ordering": ["population", "documents", "sections", "machine_nodes", "plan_units", "acceptance_units", "references", "owner_consumer_edges", "capability_assignments", "identity_aliases"]
+    }
+  },
+  "identity_freshness": {
+    "packet_id": "stage-a-plan-assurance-rolling-trial-packet-v1_2",
+    "trial_id": "stage-a-plan-assurance-rolling-trial-v1_2-run-001",
+    "generation_id": "generation-v1_2-001-20260717",
+    "request_prefix": "request.v1_2.",
+    "message_prefix": "message.v1_2.",
+    "marker_prefix": "marker.v1_2.",
+    "nonce_prefix": "nonce.v1_2.",
+    "reuse_forbidden": ["v1/v1.1 packet identity", "v1/v1.1 trial or run root", "v1/v1.1 generation", "v1/v1.1 request", "v1/v1.1 authority message", "v1/v1.1 marker", "v1/v1.1 nonce", "v1/v1.1 stop artifacts"]
+  },
+  "budgets": {
+    "ordinary_physical_file_bytes_maximum": 1048576,
+    "shard_physical_bytes_maximum": 8388608,
+    "shard_decoded_bytes_maximum": 8388608,
+    "shard_target_decoded_bytes": 4194304,
+    "logical_artifact_decoded_bytes_maximum": 100663296,
+    "shards_per_logical_artifact_maximum": 32,
+    "shard_files_campaign_maximum": 128,
+    "artifact_files_maximum": 640,
+    "artifact_bytes_maximum": 201326592,
+    "decoded_logical_bytes_campaign_maximum": 268435456,
+    "terminal_reserve_physical_bytes": 4194304,
+    "terminal_reserve_decoded_bytes": 4194304,
+    "terminal_reserve_files": 8,
+    "compression_expansion_ratio_maximum": 64,
+    "record_decoded_bytes_maximum": 1048576,
+    "all_reported_tokens_maximum": 2400000,
+    "model_input_tokens_maximum": 2020000,
+    "model_output_tokens_maximum": 380000,
+    "external_search_queries_maximum": 120,
+    "external_page_opens_maximum": 240,
+    "wall_clock_seconds_maximum": 43200
+  },
+  "authority": {
+    "trial_launch_authorized": false,
+    "authority_request_authorized": false,
+    "external_research_authorized_by_this_packet": false,
+    "trial_semantic_model_dispatch_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "generated_or_governance_writes_authorized": false,
+    "git_write_authorized": false,
+    "launch_commands": [],
+    "ready_meaning": "Packet and local launch-harness readiness only. It grants no trial, Plan, product, buildability, implementation, runtime, governance, or OS-sandbox claim."
+  },
+  "preserved_parent_semantics": {
+    "pilot_families": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"],
+    "required_control_count": 33,
+    "base_roles": ["LOCAL_EXPECTATION_MODELER", "OPEN_DISCOVERY_RESEARCHER"],
+    "conditional_failure_worker": "At most one FAILURE_EVIDENCE_RESEARCHER per family only on the inherited controller-derived adequacy trigger.",
+    "challenge_rotation": {"USAGE_ACCOUNTING_TRUTH": "MIGRATIONS_DURABLE_STATE", "WEB_RESEARCH_BEHAVIOR": "ACCESSIBILITY_CONTROL_CONTRACTS", "ACCESSIBILITY_CONTROL_CONTRACTS": "WEB_RESEARCH_BEHAVIOR", "MIGRATIONS_DURABLE_STATE": "USAGE_ACCOUNTING_TRUTH"},
+    "worker_descendants_allowed": false,
+    "worker_repo_reads_authorized": false,
+    "worker_audit_reads_authorized": false,
+    "worker_writes_authorized": false,
+    "fork_turns": "none",
+    "mechanical_os_sandbox_available": false,
+    "f3_terminal": "FINAL_VALID_NEGATIVE_STOP",
+    "accessibility_scale_inference": "excluded",
+    "hidden_oracle_and_hidden_source_identity_forbidden": true
+  },
+  "validation": {
+    "immutable_parent_validation_must_be_hash_bound": true,
+    "portable_parent_gates_and_mutations_must_be_replayed_against_fresh_v1_2_absent_root": true,
+    "exact_live_parent_gate_rerun_claim_forbidden": true,
+    "new_blocker_specific_mutations_required": true,
+    "survivors_maximum": 0,
+    "fresh_live_pre_post_replay_required": true,
+    "actual_structural_shards_required": true,
+    "all_json_and_json_schemas_must_validate": true
+  },
+  "next_boundary": "After a separate fresh controller stages exact v1.2 live inputs, a new sender-attested launch authority may be requested. This packet itself does not request or consume authority.",
+  "repair_payload_sha256": "ae44b4ace364c8f792cf4fed64bf52d0077fd22042f485faada4d8a509d9bc7b"
+}

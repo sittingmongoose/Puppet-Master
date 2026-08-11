@@ -1,0 +1,12 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.model_matrix_status.v3",
+  "method_id": "apr-method-v3.0.0",
+  "recorded_at_utc": "2026-08-02T20:36:58Z",
+  "prior_draft_matrix_ref": "inventory/model_matrix.v1.json",
+  "prior_draft_matrix_status": "superseded_before_launch",
+  "authorized_matrix_ref": null,
+  "authorized_matrix_status": "user_model_selection_pending",
+  "calls_launched_from_any_matrix": 0,
+  "blocked_commands": ["route-canary", "pilot", "fleet"],
+  "release_condition": "The user supplies the exact eight-relative-low and two-relative-high model routes and their reasoning/variant settings; a newly versioned matrix and authorization receipt then freeze before route canaries."
+}

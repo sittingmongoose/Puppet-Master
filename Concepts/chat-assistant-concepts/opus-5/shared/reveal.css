@@ -1,0 +1,143 @@
+/* PMX reveal chrome — Opus 5
+ *
+ * Motion for surfaces that take the floor. Every duration and curve resolves
+ * from the theme, so the same choreography settles tightly on retro and bounces
+ * on friendly. See reveal.js for why the whole thing is identity-keyed.
+ */
+
+/* ---------------------------------------------------------------- entrance
+ * Bottom-anchored growth. The card's BOTTOM edge is the fixed reference and the
+ * top edge rises, which is the behaviour in the reference recording and the
+ * right one regardless: the card lives directly above the composer, so growing
+ * downward would shove the thing the user is about to type into.
+ *
+ * transform-origin does that work here rather than layout, so nothing reflows.
+ */
+.pmx-reveal-enter {
+  transform-origin: bottom center;
+  animation: pmx-reveal-in var(--motion-med) var(--ease-spring-real) both;
+}
+
+@keyframes pmx-reveal-in {
+  from {
+    opacity: 0;
+    /* Non-uniform: the card fills out taller than it does wider, so it reads as
+     * unfolding upward rather than simply scaling up. */
+    transform: translateY(10px) scale3d(.97, .82, 1);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The height leg of an advance. Kept separate from the entrance because the two
+ * overlap: the box is still springing while the new rows are already cascading
+ * in. Overlapping action is most of what makes this feel authored. */
+.pmx-reveal-springing {
+  transition: height var(--motion-slow) var(--ease-spring-real);
+}
+
+/* ---------------------------------------------------------------- capsule
+ * Stands in for the card while work is notionally happening. Deliberately the
+ * same visual family as the card so the morph between them is believable.
+ */
+.pmx-reveal-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--md);
+  padding: var(--md) var(--lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  max-width: 100%;
+  min-width: 0;
+}
+.pmx-reveal-capsule-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pmx-reveal-spinner {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--accent-primary);
+}
+.pmx-reveal-spinner svg { display: block; }
+
+.pmx-reveal-capsule-in {
+  transform-origin: bottom center;
+  animation: pmx-reveal-capsule-in var(--motion-med) var(--ease-spring-real) both;
+}
+@keyframes pmx-reveal-capsule-in {
+  from { opacity: 0; transform: translateY(6px) scale3d(.92, .86, 1); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------- ripple
+ * Positioned and sized by reveal.js from the actual pointer coordinates, so it
+ * spreads from where the finger landed rather than from the middle of the row.
+ */
+.pmx-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent-primary) 34%, transparent) 0%,
+    color-mix(in srgb, var(--accent-primary) 12%, transparent) 55%,
+    transparent 72%);
+  animation: pmx-ripple 560ms var(--ease-out) both;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------------- todo + goal
+ * The other surfaces named in the brief. A completed item draws its own check
+ * rather than swapping glyphs, so completion reads as an event.
+ */
+.pmx-check-draw path,
+.pmx-check-draw polyline {
+  stroke-dasharray: var(--pmx-dash, 26);
+  animation: pmx-draw-stroke var(--motion-med) var(--ease-out) both;
+}
+
+/* A todo row settling after it is checked off. */
+.pmx-todo-done {
+  animation: pmx-celebrate 420ms var(--ease-spring-real);
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * The two-part contract: these must reach the same final state, not a frozen
+ * frame. The blanket override in motion.css zeroes durations and delays; these
+ * rules remove the decorative layers outright and guarantee visibility.
+ */
+[data-motion="reduced"] .pmx-reveal-enter,
+[data-motion="reduced"] .pmx-reveal-capsule-in,
+[data-motion="reduced"] .pmx-todo-done,
+[data-motion="reduced"] .pmx-check-draw path,
+[data-motion="reduced"] .pmx-check-draw polyline {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  stroke-dashoffset: 0 !important;
+}
+[data-motion="reduced"] .pmx-reveal-springing { transition: none !important; }
+[data-motion="reduced"] .pmx-reveal-spinner { animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pmx-reveal-enter,
+  .pmx-reveal-capsule-in,
+  .pmx-todo-done,
+  .pmx-check-draw path,
+  .pmx-check-draw polyline {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .pmx-reveal-springing { transition: none !important; }
+  .pmx-reveal-spinner { animation: none !important; }
+}

@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L415-L432
 
-Source SHA256: `ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1`
+Source SHA256: `a931a09ca24f19e422824892309f2bccc01cfce999e7aaa1f807824acb3ff727`
 
 ---
 
@@ -22,7 +22,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_C
 Non-canonical after this section:
 - thread Usage in the chat shell or side panel as the primary detailed surface
 - detached usage pop-out as the canonical thread detail model
-- direct click on the context circle opening the detail pane without the hover/click split
+- direct click on the context circle opening the detail pane; the ring click opens the context status module and only its `More Details` action opens the pane (ACD-441)
 - unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md

@@ -1,0 +1,240 @@
+// ============================================================================
+// Opusicon / pm-logo.slint
+// Reference Puppet Master logo components for Slint 1.17.1.
+//
+// WHY THIS FILE EXISTS
+// --------------------
+// Slint renders SVG through resvg, which supports only the static SVG 1.1
+// subset -- "no animations. There are no plans on implementing them either",
+// covering both SMIL and CSS @keyframes. The animated SVGs in ../animated/ are
+// CSS-driven, so in Slint they render as a FROZEN FIRST FRAME. That failure is
+// silent: the frozen frame is still a valid-looking logo, so a loader wired up
+// that way simply never moves and nobody notices.
+//
+// resvg also does not implement `transform-box`, which every one of those SVGs
+// relies on for its transform origins -- so even the frozen frame would be
+// positioned wrong.
+//
+// Therefore the app draws the mark natively with `Path`, and animates it with
+// `animation-tick()`. Nothing here is rasterised: no resvg, no image cache, no
+// DPI rounding.
+//
+// API NOTES verified against slint-ui/slint tag v1.17.1
+// -----------------------------------------------------
+//  * `transform-rotation` / `transform-scale-*` / `transform-origin` are
+//    injected into EVERY element (typeregister.rs RESERVED_TRANSFORM_PROPERTIES),
+//    so a Rectangle full of Path children rotates as one rigid body.
+//  * `rotation-origin-x` / `rotation-origin-y` are DEPRECATED -- there is a
+//    dedicated compiler pass (passes/deprecated_rotation_origin.rs) that warns
+//    and rewrites them. `transform-origin` takes a Point STRUCT, not two
+//    scalars, and mixing the two forms is a hard error.
+//  * `animate` interpolates on property CHANGE. It can loop with
+//    `iteration-count: -1`, but still needs one change to start, so it is the
+//    wrong tool for an always-on loader. `animation-tick()` re-evaluates its
+//    binding every frame and is what Slint's own Spinner and the weather demo's
+//    BusyLayer use.
+//  * `animate` accepts only int / float / length / physical-length / color /
+//    brush / angle. Animating a string, bool, image or struct is a COMPILE
+//    ERROR -- so `Path.commands` (string) and `transform-origin` (struct) can
+//    never be animated. Strings below are therefore built from MoveTo/LineTo
+//    children whose coordinates are plain floats.
+// ============================================================================
+
+// ---------------------------------------------------------------------------
+// Theme. Drive these from the app's active PMConcept7 theme.
+// Values below are friendly-dark (the app default).
+// ---------------------------------------------------------------------------
+export global PmTheme {
+    in-out property <brush> tile: #2A2731;        // --surface
+    in-out property <brush> ink: #6FC6E8;         // --accent-primary
+    in-out property <percent> tile-radius: 32.4%; // per theme family
+    in-out property <duration> period: 1800ms;
+}
+
+// ---------------------------------------------------------------------------
+// Geometry, in the authored 43.2 x 43.2 grid.
+//
+// Recovered by flattening the source cubics and taking scanline cross-sections
+// -- NOT from the path's outer extremes. Check: the left cap centre 7.785 minus
+// the cap radius 1.578 is 6.207, and the measured path bbox min-x is 6.210.
+// Using the outer extremes instead predicts 5.82 and is wrong.
+//
+//   both bars   |slope| 0.4432  (23.9044 deg), length 31.07
+//   crossing    (21.99, 13.895) = fraction (0.50902, 0.32164)
+//   bar width   3.156 perpendicular
+//   str-l hangs from the COUNTER bar, str-r from the MAIN bar
+// ---------------------------------------------------------------------------
+export global PmGeo {
+    out property <float> grid: 43.2;
+    out property <float> bar-x1: 7.785;
+    out property <float> bar-y1: 7.600;
+    out property <float> bar-x2: 36.190;
+    out property <float> bar-y2: 20.190;
+    out property <float> pivot-fx: 0.50902;
+    out property <float> pivot-fy: 0.32164;
+    out property <float> bar-w: 3.156;
+}
+
+// ---------------------------------------------------------------------------
+// PmRig — the control cross plus its two strings, drawn at `size`.
+// `tilt` rotates the cross; `slack-l` / `slack-r` scale each string's length.
+// Kept separate from the animation so the static mark and the loader are the
+// same artwork.
+// ---------------------------------------------------------------------------
+export component PmRig inherits Rectangle {
+    in property <length> size: 64px;
+    in property <brush> ink: PmTheme.ink;
+    in property <angle> tilt: 0deg;
+    in property <float> slack-l: 1.0;
+    in property <float> slack-r: 1.0;
+    in property <length> lift-l: 0px;
+    in property <length> lift-r: 0px;
+
+    // viewbox units -> logical px
+    property <length> u: root.size / 43.2;
+
+    width: root.size;
+    height: root.size;
+
+    // -- the cross. Rotating this Rectangle rotates both Paths together.
+    cross := Rectangle {
+        width: 100%;
+        height: 100%;
+        transform-rotation: root.tilt;
+        // Point struct. NOT rotation-origin-x / rotation-origin-y (deprecated).
+        transform-origin: {
+            x: root.size * PmGeo.pivot-fx,
+            y: root.size * PmGeo.pivot-fy
+        };
+
+        // counter bar, drawn first so the main bar reads as passing over it
+        Path {
+            width: 100%; height: 100%;
+            viewbox-x: 0; viewbox-y: 0;
+            viewbox-width: 43.2; viewbox-height: 43.2;
+            stroke: root.ink;
+            stroke-width: root.u * PmGeo.bar-w;
+            stroke-line-cap: round;
+            MoveTo { x: 7.785;  y: 20.190; }
+            LineTo { x: 36.190; y: 7.600;  }
+        }
+        Path {
+            width: 100%; height: 100%;
+            viewbox-x: 0; viewbox-y: 0;
+            viewbox-width: 43.2; viewbox-height: 43.2;
+            stroke: root.ink;
+            stroke-width: root.u * PmGeo.bar-w;
+            stroke-line-cap: round;
+            MoveTo { x: 7.785;  y: 7.600;  }
+            LineTo { x: 36.190; y: 20.190; }
+        }
+    }
+
+    // -- strings. Length is a float binding on a LineTo child, so it animates
+    //    without re-parsing a path string every frame.
+    string-l := Path {
+        width: 100%; height: 100%;
+        viewbox-x: 0; viewbox-y: 0;
+        viewbox-width: 43.2; viewbox-height: 43.2;
+        stroke: root.ink;
+        stroke-width: root.u * 0.97;
+        stroke-line-cap: round;
+        property <float> top: 15.60 + (root.lift-l / root.u);
+        property <float> len: 8.59 * root.slack-l;
+        MoveTo { x: 14.905; y: string-l.top; }
+        LineTo { x: 14.905; y: string-l.top + string-l.len; }
+    }
+
+    string-r := Path {
+        width: 100%; height: 100%;
+        viewbox-x: 0; viewbox-y: 0;
+        viewbox-width: 43.2; viewbox-height: 43.2;
+        stroke: root.ink;
+        stroke-width: root.u * 0.97;
+        stroke-line-cap: round;
+        property <float> top: 16.28 + (root.lift-r / root.u);
+        property <float> len: 12.18 * root.slack-r;
+        MoveTo { x: 29.335; y: string-r.top; }
+        LineTo { x: 29.335; y: string-r.top + string-r.len; }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// PmLoader — "Marionette Rig".
+//
+// The cross rocks +/-7deg. Because str-l hangs from the counter bar at dx -7.08
+// and str-r from the main bar at dx +7.35, a rigid tilt raises one attach point
+// and lowers the other by very nearly the same amount (0.863 vs 0.895 units at
+// 7deg). The strings therefore move in genuine opposition -- that is measured
+// from the artwork, not invented.
+//
+// `running: false` freezes t at 0, so the loader and the static mark are the
+// same component and there is no swap or flash when loading ends.
+// ---------------------------------------------------------------------------
+export component PmLoader inherits Rectangle {
+    in property <length> size: 64px;
+    in property <bool> running: true;
+    in property <bool> reduced-motion: false;
+
+    width: root.size;
+    height: root.size;
+    background: PmTheme.tile;
+    border-radius: root.size * PmTheme.tile-radius / 100%;
+    clip: true;
+
+    // 0..1 sawtooth. animation-tick() re-evaluates every frame, forever.
+    // Gate it on `running` so an idle window is not repainting at 60fps.
+    property <float> t: (root.running && !root.reduced-motion)
+        ? Math.mod(animation-tick(), PmTheme.period) / (PmTheme.period / 1ms) * 1
+        : 0.0;
+
+    property <angle> swing: 7deg * Math.sin(360deg * root.t);
+
+    PmRig {
+        size: root.size;
+        ink: PmTheme.ink;
+        tilt: root.swing;
+        // measured attach travel: +/-0.863 and +/-0.895 units at 7deg
+        lift-l: -0.863 * (root.size / 43.2) * Math.sin(360deg * root.t) / 1;
+        lift-r:  0.895 * (root.size / 43.2) * Math.sin(360deg * root.t) / 1;
+    }
+
+    // Reduced motion: hold the neutral frame and breathe.
+    // Floor is 0.78, not the customary 0.5 -- friendly-light's mark sits at
+    // 3.09:1 against its tile at FULL opacity, so any deeper dip drops it under
+    // the WCAG 1.4.11 3:1 non-text floor.
+    opacity: root.reduced-motion && root.running
+        ? 0.78 + 0.22 * Math.abs(Math.sin(180deg * animation-tick() / 1200ms))
+        : 1.0;
+}
+
+// ---------------------------------------------------------------------------
+// PmTrayIcon — notes, not a component.
+//
+// Two things bite here, both verified in the Slint 1.17.1 source:
+//
+// 1. SystemTrayIcon rasterises through Image::to_rgba8(), which calls
+//    render_to_buffer(None) -- i.e. the SVG's INTRINSIC size. Hand it an SVG
+//    whose root is viewBox="0 0 43.2 43.2" with no width/height and you get a
+//    43x43 bitmap, which AppKit then squeezes into an 18pt box at 2x. Always
+//    supply an explicitly sized asset. ../mono/tray.svg carries width/height.
+//
+// 2. On macOS, Slint never calls setTemplate: on the NSImage
+//    (internal/core/items/system_tray/appkit.rs goes through initWithData:).
+//    So the usual black+alpha "Template" convention does NOT work -- a black
+//    glyph stays black on a dark menu bar and is invisible. Ship BOTH tints and
+//    swap on Palette.color-scheme yourself:
+//
+//      SystemTrayIcon {
+//          icon: Palette.color-scheme == ColorScheme.dark
+//              ? @image-url("tray-light.png")     // white glyph
+//              : @image-url("tray-dark.png");     // black glyph
+//          tooltip: "Puppet Master";
+//          Menu { /* exactly one Menu child, not inside if/for */ }
+//      }
+//
+//    Plans/FinalGUISpec.md:574 requires the tray icon to change to the accent
+//    colour while the orchestrator is running, so there is a third asset:
+//    a pre-tinted accent PNG. On macOS an accent-coloured tray icon must NOT
+//    be a template image, which is consistent with the above.
+// ---------------------------------------------------------------------------

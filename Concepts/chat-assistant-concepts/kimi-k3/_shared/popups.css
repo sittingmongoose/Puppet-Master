@@ -1,0 +1,96 @@
+/* Kimi K3 — popup chrome (shared family: surface-elevated fill, border,
+   radius-md, elev-3; glass shares the plate rule; retro zeroes radius). */
+
+.k3-pop {
+  position: fixed;
+  z-index: 1400;
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--elev-3, 0 12px 32px rgba(0,0,0,.28));
+  color: var(--text-primary);
+  font-family: var(--body-font, inherit);
+  font-size: var(--fs-sm, 13px);
+  min-width: 180px;
+  max-width: min(360px, calc(100vw - 16px));
+  max-height: min(440px, calc(100vh - 16px));
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.k3-menu-list {
+  overflow-y: auto;
+  max-height: inherit;
+  padding: 5px;
+}
+
+.k3-menu-search {
+  padding: 6px;
+  border-bottom: var(--border-width, 1px) solid var(--border-light, var(--border));
+}
+.k3-menu-search input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 5px 8px;
+  font: inherit;
+  outline: none;
+}
+.k3-menu-search input:focus-visible {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-soft, transparent);
+}
+
+.k3-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.k3-menu-item:hover:not(:disabled) { background: var(--accent-soft, rgba(127,127,127,.14)); }
+.k3-menu-item:focus-visible {
+  outline: none;
+  background: var(--accent-soft, rgba(127,127,127,.14));
+  box-shadow: inset 0 0 0 1px var(--accent-primary);
+}
+.k3-menu-item:disabled { opacity: .45; cursor: default; }
+.k3-menu-item.is-selected .k3-menu-label { color: var(--accent-primary); font-weight: 600; }
+.k3-menu-item.is-danger { color: var(--accent-error, #d05555); }
+
+.k3-menu-ic { display: inline-flex; width: 15px; height: 15px; flex: 0 0 auto; }
+.k3-menu-ic svg { width: 15px; height: 15px; }
+.k3-menu-label { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; }
+.k3-menu-hint { flex: 0 0 auto; color: var(--text-muted); font-size: var(--fs-xs, 11px); display: inline-flex; align-items: center; }
+.k3-menu-hint svg { width: 12px; height: 12px; }
+.k3-menu-sep { height: 1px; background: var(--border-light, var(--border)); margin: 4px 6px; }
+.k3-menu-header {
+  padding: 5px 9px 3px;
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.k3-confirm { padding: 14px; width: 300px; }
+.k3-confirm-title { font-weight: 650; margin-bottom: 6px; }
+.k3-confirm-body { color: var(--text-secondary); margin-bottom: 12px; line-height: var(--lh-body, 1.5); }
+.k3-confirm-row { display: flex; justify-content: flex-end; gap: 8px; }
+
+.k3-popover { padding: 10px 12px; max-width: min(340px, calc(100vw - 16px)); }
+.k3-popover .k3-kv { display: flex; justify-content: space-between; gap: 14px; padding: 2.5px 0; }
+.k3-popover .k3-kv-k { color: var(--text-muted); flex: 0 0 auto; }
+.k3-popover .k3-kv-v { text-align: right; overflow: hidden; text-overflow: ellipsis; }

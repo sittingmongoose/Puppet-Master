@@ -1,0 +1,209 @@
+/* PMX motion CSS — Opus 5
+ * Motion tokens live in tokens.css; this file consumes them and owns the reduced-motion contract.
+ */
+
+.pmx-stage { interpolate-size: allow-keywords; }
+
+/* ---------------------------------------------------------------- vocabulary
+ * Every animation below is driven by var(--ease-default) and var(--motion-med),
+ * both of which each theme redefines. That is the whole trick: one declaration
+ * snaps on retro (140ms, cubic-bezier(.2,0,0,1)), glides on glass (320ms,
+ * ease-out), and springs on friendly (260ms, overshoot). The motion contract is
+ * shared; the personality comes from the theme.
+ */
+
+@keyframes pmx-enter-up    { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pmx-enter-down  { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes pmx-enter-left  { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes pmx-enter-right { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+@keyframes pmx-enter-scale { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes pmx-exit-down   { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(6px); } }
+@keyframes pmx-pulse       { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.82); } }
+@keyframes pmx-pop         { 0% { transform: scale(.8); opacity: 0; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes pmx-press       { 0% { transform: scale(1); } 45% { transform: scale(.96); } 100% { transform: scale(1); } }
+@keyframes pmx-float       { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes pmx-shake       { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+@keyframes pmx-shimmer     { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+@keyframes pmx-draw        { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes pmx-sweep       { from { opacity: 0; transform: translateY(12px) scaleY(.86); } to { opacity: 1; transform: none; } }
+
+.pmx-enter        { animation: pmx-enter-up var(--motion-med) var(--ease-default) both; }
+.pmx-enter-scale  { animation: pmx-enter-scale var(--motion-med) var(--ease-default) both; }
+.pmx-exit         { animation: pmx-exit-down 200ms var(--ease-default) both; }
+.pmx-pulse        { animation: pmx-pulse 1.5s ease-in-out infinite; }
+.pmx-pop          { animation: pmx-pop var(--motion-med) var(--ease-default) both; }
+.pmx-press:active { animation: pmx-press var(--motion-fast) var(--ease-default); }
+.pmx-float        { animation: pmx-float 3.2s ease-in-out infinite; }
+.pmx-shake        { animation: pmx-shake 180ms var(--ease-default) 2; }
+
+/* Sequenced entry. Concepts set --pmx-i on each row; the cascade reads as one
+ * gesture rather than N independent animations. Capped so a long list does not
+ * accumulate a visible wait at the bottom.
+ *
+ * This uses the sampled spring rather than --ease-default: a cascade is exactly
+ * where per-family settle is most legible, because you see the same motion N
+ * times in a row. */
+.pmx-cascade > * {
+  animation: pmx-enter-up var(--motion-med) var(--ease-spring-real) both;
+  animation-delay: calc(min(var(--pmx-i, 0) * 28ms, 280ms));
+}
+
+/* ---------------------------------------------------------------- principles
+ * Each primitive below exists for one specific job. They are deliberately small
+ * and composable, because the character comes from the theme's spring, not from
+ * a bespoke curve per effect.
+ */
+
+/* ANTICIPATION — a brief counter-move before the main action, so a thing that is
+ * about to expand first gathers itself. Without this an expansion starts at full
+ * speed from rest, which is the single most common reason UI motion reads as
+ * "computed" rather than "physical". */
+@keyframes pmx-anticipate {
+  0%   { transform: translateY(0) scaleY(1); }
+  22%  { transform: translateY(2px) scaleY(.972); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+/* RIPPLE from the pointer. Reuses --pmx-mx/--pmx-my, which hoverglow.js already
+ * writes on hover, so the origin is the actual click point rather than centre. */
+@keyframes pmx-ripple {
+  from { opacity: .42; transform: scale(0); }
+  to   { opacity: 0;   transform: scale(1); }
+}
+
+/* APPEAL — the confirmation beat. Squash follows the stretch so it settles
+ * rather than just growing. */
+@keyframes pmx-celebrate {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.055); }
+  68%  { transform: scale(.986); }
+  100% { transform: scale(1); }
+}
+@keyframes pmx-celebrate-ring {
+  from { opacity: .7; transform: scale(.72); }
+  to   { opacity: 0;  transform: scale(1.5); }
+}
+
+/* A stroke drawing itself — for a checkmark completing. */
+@keyframes pmx-draw-stroke {
+  from { stroke-dashoffset: var(--pmx-dash, 26); }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* SECONDARY ACTION — a spinner that keeps turning through a larger transition,
+ * so the surface reads as busy while it is also moving. */
+@keyframes pmx-spin { to { transform: rotate(360deg); } }
+
+/* Attention without alarm: a slow bob, for a thread waiting on the user. */
+@keyframes pmx-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2.5px); }
+}
+
+/* A one-shot glow marking the row that just changed. */
+@keyframes pmx-changed {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary) 50%, transparent); }
+  100% { box-shadow: 0 0 0 12px transparent; }
+}
+
+.pmx-anticipate   { animation: pmx-anticipate var(--motion-med) var(--ease-out) both; }
+.pmx-celebrate    { position: relative; animation: pmx-celebrate 460ms var(--ease-spring-real); }
+.pmx-celebrate::after {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: inherit;
+  border: 1px solid var(--accent-primary);
+  opacity: 0;
+  pointer-events: none;
+  animation: pmx-celebrate-ring 600ms var(--ease-out);
+}
+.pmx-spin  { animation: pmx-spin 900ms linear infinite; transform-origin: 50% 50%; }
+.pmx-bob   { animation: pmx-bob 2.2s ease-in-out infinite; }
+.pmx-changed { animation: pmx-changed 900ms var(--ease-out); }
+
+/* Anything that should settle like the theme rather than merely ease. */
+.pmx-spring { transition-timing-function: var(--ease-spring-real); }
+
+/* A moving highlight for surfaces that are actively working. The sweep is
+ * theme-tinted and the duration is the theme's own --sheen-dur. */
+.pmx-live { position: relative; overflow: hidden; }
+.pmx-live::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--accent-primary) 11%, transparent),
+    transparent);
+  transform: translateX(-100%);
+  animation: pmx-shimmer 2s var(--ease-out) infinite;
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * Both signals are honored: the OS preference and the in-workspace toggle.
+ *
+ * Note the delay overrides. Zeroing duration does NOT zero delay — PMConcept7 hit exactly
+ * this bug and closed menus lingered as ~220ms ghosts because the close transition delayed
+ * its opacity leg. Without these two lines the reduced-motion end state is still wrong.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0s !important;
+  transition-duration: .01ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}
+
+/* An explicit stage override must win over the OS preference in BOTH directions, so a
+ * reviewer can compare normal and reduced motion side by side on one contact sheet. */
+[data-motion="full"] *,
+[data-motion="full"] *::before,
+[data-motion="full"] *::after {
+  animation-duration: revert-layer;
+  transition-duration: revert-layer;
+}
+
+/* Indefinite pulses carry meaning (something is running). Under reduced motion they must
+ * settle at full opacity rather than freezing at whatever frame they were on. */
+[data-motion="reduced"] .pmx-pulse,
+[data-motion="reduced"] .pmx-float,
+[data-motion="reduced"] .pmx-bob,
+[data-motion="reduced"] .pmx-spin,
+[data-motion="reduced"] .pmx-anticipate,
+[data-motion="reduced"] .pmx-celebrate,
+[data-motion="reduced"] .pmx-changed,
+[data-motion="reduced"] .pmx-cascade > * {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Purely decorative layers are REMOVED rather than frozen. A shimmer stopped
+ * mid-sweep, or a confirmation ring paused at 40% scale, is a visual artefact
+ * that states nothing — worse than no effect at all. None of these carry
+ * information the surrounding text does not already carry. */
+[data-motion="reduced"] .pmx-live::after,
+[data-motion="reduced"] .pmx-celebrate::after,
+[data-motion="reduced"] .pmx-ripple { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pmx-pulse, .pmx-float, .pmx-bob, .pmx-spin,
+  .pmx-anticipate, .pmx-celebrate, .pmx-changed, .pmx-cascade > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .pmx-live::after, .pmx-celebrate::after, .pmx-ripple { display: none !important; }
+}

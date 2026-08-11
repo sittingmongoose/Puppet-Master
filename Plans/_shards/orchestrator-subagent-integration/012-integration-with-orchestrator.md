@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L349-L31469
+Source lines: L349-L31480
 
-Source SHA256: `2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a`
+Source SHA256: `d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7`
 
 ---
 
@@ -31129,3 +31129,14 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 67` (repaired; source line 408; `sfk-b1341ed138dc2692d0b50560`): Fail-open lock timeout repaired: lock timeout/mirror failure is fail-closed coordination_conflict; stale lock cleanup snippets are source-lineage examples, not scheduling authority. Source summary: - [HIGH] L25343-25357 (OSI-323): fail-open 5s lock-timeout policy explicitly parked as "requires owner adjudication" with no adjudicating doc named FIX: name the owner anchor and record the decision.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+
+## Platform Capability Manager - Known-37 owner materialization
+
+Status: `STATICALLY_MATERIALIZED`; behavior remains `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+The Platform Capability Manager owns `Plans/platform_capability_catalog.json` under closed schema `pm.platform_capability_catalog.v1@1.0.0`. Catalog identity is `pm.platform_capability_catalog`, first immutable revision is integer `1`, one revision is `active`, and entries are sorted by stable `capability_id`. Entry execution classes are `direct_provider | cli_bridged_provider | server_bridged_provider`; allowed evidence sources are ordered `live_runtime_discovery > provider_policy_snapshot > static_platform_baseline`. Only owner-cited entries may exist. Empty placeholder, fixture-derived, retired `platform_specs`, display-name, provider-label, or dynamic discovery identities are forbidden.
+
+`platform.capability_evaluated` v2 uses `capability_ref` to the frozen catalog revision and closed `requested_state = required | preferred | not_requested`, `effective_state = available | degraded | unavailable | not_evaluated`. Missing evidence never means unavailable. Unknown IDs/tokens, aliases from new writers, same-source conflict, stale/unverified/secret-bearing evidence, illegal state/reason/source products, or scope conflict use `quarantine_without_checkpoint_advance`; no consumer snapshot is supplied.
+
+The legal degradation reason/source pairs are `runtime_partial/live_runtime_discovery`, `provider_policy_limited/provider_policy_snapshot`, `static_baseline_only/static_platform_baseline`, `runtime_absent/live_runtime_discovery`, `provider_policy_denied/provider_policy_snapshot`, and `platform_unsupported/static_platform_baseline`. `available` and `not_evaluated` use `none`; `not_requested` requires `not_evaluated`, null selection fields, and empty evidence. Historical events resolve their immutable revision without recomputation. CAP-POS-001..010 and CAP-NEG-001..014 are normative owner acceptance cases and are not claimed executed here.

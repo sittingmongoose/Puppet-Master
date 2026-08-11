@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L129-L373
 
-Source SHA256: `ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1`
+Source SHA256: `a931a09ca24f19e422824892309f2bccc01cfce999e7aaa1f807824acb3ff727`
 
 ---
 
@@ -48,8 +48,8 @@ Per-thread context/usage in chat is a split inspect/action affordance rather tha
 
 Rules:
 - the chat header context circle is always the entrypoint for per-thread context state
-- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
-- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- hover shows a soft accent glow only and does not open the module; no token label renders beside the ring (usage figures render inside the module)
+- click, or Enter/Space while the ring is focused, toggles the lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, `Compact Now`, and `More Details` (corner-origin sprout per assistant-chat-design ACD-441); the detail surface never opens directly from the ring click
 - selecting `Compact Now` dispatches the canonical compaction command for that thread
 - selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
 - app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane

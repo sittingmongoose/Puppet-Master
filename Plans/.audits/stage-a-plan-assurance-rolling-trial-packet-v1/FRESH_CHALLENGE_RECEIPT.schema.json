@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/fresh-challenge-receipt.v1.json",
+  "title": "Plan Assurance Fresh Cross-Family Challenge Receipt",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "schema_id", "challenge_id", "trial_id", "target_family_id", "challenger_family_id", "challenger_context_id", "target_graph_sha256", "target_control_registry_sha256", "target_locks_ref", "target_locks_sha256", "challenge_resource_receipt_id", "challenge_resource_receipt_sha256", "covered_obligation_ids", "covered_instance_ids", "covered_control_ids", "findings", "all_findings_dispositioned", "started_at_utc", "finished_at_utc", "terminal", "receipt_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "schema_id": {"const": "pm.plan_assurance.fresh_challenge_receipt.v1"},
+    "challenge_id": {"type": "string", "minLength": 1}, "trial_id": {"type": "string", "minLength": 1},
+    "target_family_id": {"enum": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"]},
+    "challenger_family_id": {"enum": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"]},
+    "challenger_context_id": {"type": "string", "minLength": 1}, "target_graph_sha256": {"$ref": "#/$defs/sha256"},
+    "target_control_registry_sha256": {"$ref": "#/$defs/sha256"}, "target_locks_ref": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}, "target_locks_sha256": {"$ref": "#/$defs/sha256"},
+    "challenge_resource_receipt_id": {"type": "string", "minLength": 1}, "challenge_resource_receipt_sha256": {"$ref": "#/$defs/sha256"},
+    "covered_obligation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "covered_instance_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "covered_control_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "findings": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["finding_id", "severity", "category", "target_refs", "evidence_refs", "disposition", "disposition_ref"], "properties": {"finding_id": {"type": "string", "minLength": 1}, "severity": {"enum": ["critical", "major", "moderate", "minor"]}, "category": {"type": "string", "minLength": 1}, "target_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "disposition": {"enum": ["repaired", "accepted_residual", "not_applicable", "blocked"]}, "disposition_ref": {"type": "string", "minLength": 1}}}},
+    "all_findings_dispositioned": {"const": true}, "started_at_utc": {"type": "string", "format": "date-time"}, "finished_at_utc": {"type": "string", "format": "date-time"},
+    "terminal": {"const": "DONE"}, "receipt_payload_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<title>W2 Rail Chrome Prototype</title>
+<style id="proto-tokens">
+  :root {
+    --surface:#161616; --surface-alt:#1A1A1A; --surface-elevated:#222;
+    --border:#2E2E2E; --border-light:#333; --border-width:1px;
+    --text-primary:#E8E8E8; --text-secondary:#9A9A9A; --text-muted:#6E6E6E;
+    --accent-lime:#9BE15D; --accent-blue:#3794FF; --accent-warning:#D7A032;
+    --xs:4px; --sm:8px; --md:12px;
+    --border-radius:6px; --radius-pill:999px;
+    --display-font: 'Bahnschrift', 'Avenir Next Condensed', sans-serif;
+    --body-font: system-ui, sans-serif;
+    --motion-fast:120ms; --motion-med:240ms;
+    --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+    --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --ease-settle:cubic-bezier(.22,1.5,.36,1); --ease-pop:cubic-bezier(.3,1.36,.34,1);
+    --pm-row-step:22ms; --ab-hover-scale:1.09; --ab-press-scale:.9;
+  }
+  [data-theme="basic-dark"] {
+    --motion-med: 200ms; --pm-row-step: 18ms;
+    --ease-settle: cubic-bezier(.26,1.4,.36,1); --ab-hover-scale: 1.08;
+  }
+  [data-theme="retro-light"] {
+    --surface:#F2EEE6; --surface-alt:#E4DED5; --surface-elevated:#FBF9F4;
+    --border:#C9C2B4; --border-light:#D8D2C6; --text-primary:#26251F;
+    --text-secondary:#5D5A50; --text-muted:#8B877B;
+    --motion-med: 140ms; --pm-row-step: 10ms;
+    --ease-settle: cubic-bezier(.3,1.14,.38,1); --ab-hover-scale: 1.04;
+  }
+  [data-theme="friendly-dark"] {
+    --surface:#1B2431; --surface-alt:transparent; --surface-elevated:#243141;
+    --border:#33415A; --border-light:#2C3A50; --text-primary:#F2F0EA;
+    --text-secondary:#B9C4D6; --text-muted:#7E8CA3;
+    --pm6-cozy-sky:#8FB7FF; --pm6-cozy-card-base:#202B3B;
+    --motion-med: 260ms; --pm-row-step: 26ms;
+    --ease-settle: cubic-bezier(.22,1.68,.36,1); --ab-hover-scale: 1.14;
+  }
+  [data-theme="glass-dark"] {
+    --surface:#17131F; --surface-alt:#1D1827; --surface-elevated:#282036;
+    --border:#3A2F4E; --border-light:#322A44; --text-primary:#EFEBF7;
+    --text-secondary:#B7ADCB; --text-muted:#7F7595;
+    --pm6-glass-step-3:rgba(255,255,255,.14); --glass-edge:rgba(255,255,255,.35);
+    --motion-med: 320ms; --pm-row-step: 24ms;
+    --ease-settle: cubic-bezier(.24,1.34,.4,1); --ab-hover-scale: 1.1;
+  }
+  body { margin:0; background:var(--surface); color:var(--text-primary);
+         font-family:var(--body-font); display:flex; height:100vh; }
+</style>
+<style id="proto-rail-css">
+  /* ---- rail structure (copied from base) ---- */
+  .activity-bar {
+    width: 72px; min-width: 72px;
+    background: var(--surface-alt, var(--surface));
+    border-right: var(--border-width) solid var(--border);
+    display: flex; flex-direction: column; align-items: center;
+    padding: var(--md) 0; gap: var(--sm);
+    position: relative;
+    --ab-ind-left: 0px; --ab-ind-inset: 4px;
+    transition: width var(--motion-fast) var(--ease-out);
+  }
+  .activity-bar.collapsed { width: 36px; min-width: 36px; }
+  .activity-bar .icon {
+    width: 100%; padding: var(--xs) 0;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    color: var(--text-secondary); cursor: pointer; position: relative;
+    border-radius: var(--border-radius);
+    font-family: var(--display-font); font-size: 9px; font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .activity-bar .icon .symbol { display: flex; align-items: center; justify-content: center; height: 20px; }
+  .activity-bar .icon:hover { color: var(--text-primary); }
+  .activity-bar .icon.active { color: var(--accent-lime); }
+  .activity-bar .icon.active::before {
+    content: '';
+    position: absolute; left: -6px; top: 4px; bottom: 4px; width: 3px;
+    background: var(--accent-lime);
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ---- W2 recipe A: sliding indicator ---- */
+  .activity-bar .icon.active::before { opacity: 0; }
+  .ab-ind {
+    position: absolute;
+    left: var(--ab-ind-left);
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    background: var(--accent-lime);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, height;
+    transition: opacity var(--motion-fast) var(--ease-out);
+  }
+  .activity-bar .icon { z-index: 1; }
+
+  /* ---- W2 recipe B: hover / press ---- */
+  .activity-bar .icon .symbol {
+    transition: transform var(--motion-fast) var(--ease-settle),
+                background var(--motion-fast) var(--ease-out),
+                box-shadow var(--motion-med) var(--ease-out),
+                color var(--motion-fast) var(--ease-out);
+  }
+  .activity-bar .icon:hover .symbol { transform: translateY(-1px) scale(var(--ab-hover-scale)); }
+  .activity-bar .icon:active .symbol { transform: scale(var(--ab-press-scale)); }
+
+  /* ---- W2 recipe C: badge pop ---- */
+  @keyframes abBadgePop { 0% { transform: scale(.4); } 60% { transform: scale(1.22); } 100% { transform: scale(1); } }
+  .ab-badge-pop { animation: abBadgePop 280ms var(--ease-out); }
+  .pm6-ab-dot {
+    position: absolute; top: -2px; right: -4px; width: 7px; height: 7px;
+    border-radius: var(--radius-pill); background: var(--accent-warning);
+    box-shadow: 0 0 0 2px var(--surface-alt, var(--surface));
+  }
+
+  /* ---- W2 recipe D: drag reorder ---- */
+  .pm-ab-ghost { position: fixed; z-index: 12001; margin: 0; opacity: .85; pointer-events: none; will-change: transform; }
+  .pm-ab-drop-indicator {
+    position: fixed; z-index: 12001; height: 2px; border-radius: 1px;
+    background: var(--accent-blue); pointer-events: none;
+    transition: top var(--motion-fast) var(--ease-settle);
+  }
+  body.pm-ab-dragging { cursor: grabbing; }
+  body.pm-ab-dragging .activity-bar .icon:hover .symbol { transform: none !important; }
+  .activity-bar .icon.pm-ab-drag-src { opacity: .35; }
+  .activity-bar .icon.pm-ab-drop-hot { color: var(--text-primary); background: var(--surface-elevated); }
+  @keyframes abIconLand { 0% { transform: scale(1); } 55% { transform: scale(1.07); } 100% { transform: scale(1); } }
+  .ab-icon-land { animation: abIconLand 260ms var(--ease-pop); }
+
+  /* ---- W2 recipe E: More tray ---- */
+  #abMoreBtn { transition: opacity var(--motion-fast) var(--ease-out); }
+  #abMoreBtn[data-empty="1"] { display: flex; opacity: 0.45; }
+  #abMoreBtn[data-empty="1"]:hover,
+  body.pm-ab-dragging #abMoreBtn[data-empty="1"] { opacity: 1; }
+  .pm-ab-tray {
+    position: fixed; z-index: 12000;
+    display: flex; flex-direction: column; gap: 2px;
+    min-width: 160px; max-width: 240px; padding: var(--xs);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+    transform-origin: 100% 100%;
+    transform: scale(.7,.5);
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+                opacity 140ms var(--ease-out);
+  }
+  .pm-ab-tray-open { transform: scale(1,1); opacity: 1; }
+  .pm-ab-tray-closing {
+    transform: scale(.7,.5); opacity: 0;
+    transition: transform 150ms ease-in, opacity 150ms ease-in;
+  }
+  .pm-ab-tray-row {
+    display: flex; align-items: center; gap: var(--sm);
+    padding: var(--xs) var(--sm); border: none; background: none;
+    color: var(--text-secondary); font-family: var(--body-font); font-size: 12px;
+    text-align: left; border-radius: var(--border-radius); cursor: pointer;
+    transition: background var(--motion-fast) var(--ease-out),
+                color var(--motion-fast) var(--ease-out),
+                transform var(--motion-fast) var(--ease-out);
+  }
+  .pm-ab-tray-row:hover { background: var(--surface); color: var(--text-primary); transform: translateX(2px); }
+  .pm-ab-tray-row .pm-ab-tray-ico { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex: none; }
+  @keyframes trayRowIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+  .pm-ab-tray-open .pm-ab-tray-row {
+    animation: trayRowIn .24s var(--ease-out) both;
+    animation-delay: calc(var(--pi, 0) * var(--pm-row-step));
+  }
+
+  /* ---- theme rail overrides (copied + knob-fed) ---- */
+  [data-theme^="friendly"] .activity-bar { border-right: none; background: transparent; --ab-ind-inset: 8px; }
+  [data-theme^="friendly"] .activity-bar .icon { border-radius: 14px; color: var(--text-muted); }
+  [data-theme^="friendly"] .activity-bar .icon .symbol {
+    width: 40px; height: 40px; max-width: 100%; border-radius: 14px;
+    transition: transform var(--motion-med) var(--ease-spring),
+                background var(--motion-fast) var(--ease-smooth),
+                box-shadow var(--motion-med) var(--ease-out),
+                color var(--motion-fast) var(--ease-out);
+  }
+  [data-theme^="friendly"] .activity-bar .icon:hover .symbol {
+    transform: scale(var(--ab-hover-scale));
+    background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  }
+  [data-theme^="friendly"] .activity-bar .icon.active { color: var(--accent-blue); }
+  [data-theme^="friendly"] .activity-bar .icon.active .symbol {
+    background: color-mix(in srgb, var(--pm6-cozy-sky) 16%, var(--pm6-cozy-card-base));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-sky) 35%, transparent);
+  }
+  [data-theme^="friendly"] .activity-bar .icon.active::before {
+    background: var(--pm6-cozy-sky); border-radius: var(--radius-pill);
+    left: -2px; top: 8px; bottom: 8px;
+  }
+  [data-theme^="friendly"] .ab-ind { background: var(--pm6-cozy-sky); border-radius: var(--radius-pill); }
+
+  [data-theme^="glass"] .activity-bar .icon .symbol { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+  [data-theme^="glass"] .activity-bar .icon.active { color: var(--text-primary); }
+  [data-theme^="glass"] .activity-bar .icon.active::before { background: var(--accent-blue); box-shadow: none; }
+  [data-theme^="glass"] .activity-bar .icon.active .symbol {
+    background: var(--pm6-glass-step-3); border-radius: 10px;
+    box-shadow: inset 0 1px 0 var(--glass-edge);
+  }
+  [data-theme^="glass"] .activity-bar .icon:hover .symbol {
+    transform: scale(var(--ab-hover-scale));
+    background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  }
+  [data-theme^="glass"] .ab-ind { background: var(--accent-blue); }
+
+  /* ---- W2 recipe F: reduced motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .ab-ind, .pm-ab-tray, .pm-ab-tray-row, .pm-ab-drop-indicator, #abMoreBtn,
+    .activity-bar .icon .symbol { transition: none !important; }
+    .ab-badge-pop, .ab-icon-land { animation: none !important; }
+    .pm-ab-tray-open .pm-ab-tray-row { animation: none !important; opacity: 1; transform: none; }
+    .pm-ab-tray { transform: none; }
+    .pm-ab-tray-open { transform: none; opacity: 1; }
+  }
+  [data-motion="reduced"] .ab-ind, [data-motion="reduced"] .pm-ab-tray,
+  [data-motion="reduced"] .pm-ab-tray-row, [data-motion="reduced"] .pm-ab-drop-indicator,
+  [data-motion="reduced"] #abMoreBtn, [data-motion="reduced"] .activity-bar .icon .symbol { transition: none !important; }
+  [data-motion="reduced"] .ab-badge-pop, [data-motion="reduced"] .ab-icon-land { animation: none !important; }
+  [data-motion="reduced"] .pm-ab-tray-open .pm-ab-tray-row { animation: none !important; opacity: 1; transform: none; }
+  [data-motion="reduced"] .pm-ab-tray { transform: none; }
+  [data-motion="reduced"] .pm-ab-tray-open { transform: none; opacity: 1; }
+</style>
+</head>
+<body>
+  <nav class="activity-bar" id="activityBar" aria-label="Activity bar">
+    <div class="icon" title="Chat" data-ab-id="chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
+    <div class="icon active" title="File Manager" data-ab-id="files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span><span class="pm6-ab-dot" data-ab-count="3"></span></div>
+    <div class="icon" title="Search" data-ab-id="search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
+    <div class="icon" title="Source Control" data-ab-id="source" data-target="panel-source"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg></span><span class="icon-label">SOURCE</span></div>
+    <div class="icon" title="GitHub Actions" data-ab-id="gh-actions" data-target="panel-git"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span><span class="icon-label">ACTIONS</span></div>
+    <div class="icon" title="Docker Manager" data-ab-id="docker" data-target="panel-docker"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="icon-label">DOCKER</span></div>
+    <div class="icon" id="abMoreBtn" data-ab-id="more" data-empty="1" title="More"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span><span class="icon-label">MORE</span></div>
+  </nav>
+  <main style="flex:1; padding:24px;">
+    <div id="panelStub" style="color:var(--text-secondary); font-size:13px;">active: <b id="activeName">panel-files</b></div>
+    <p style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button data-set-theme="basic-dark">basic-dark</button>
+      <button data-set-theme="retro-light">retro-light</button>
+      <button data-set-theme="friendly-dark">friendly-dark</button>
+      <button data-set-theme="glass-dark">glass-dark</button>
+      <button id="hideDocker">hide DOCKER to tray</button>
+      <button id="toggleMotion">toggle data-motion=reduced</button>
+    </p>
+  </main>
+<script id="proto-rail-js">
+(function () {
+  'use strict';
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function byId(id) { return document.getElementById(id); }
+  function reduce() { var de = document.documentElement; return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || de.getAttribute('data-reduced-motion') === '1' || de.getAttribute('data-motion') === 'reduced'; }
+  function cssMs(name) { var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); var n = parseFloat(v); return isNaN(n) ? 240 : (v.indexOf('ms') > -1 ? n : n * 1000); }
+
+  /* ================= sliding active indicator ================= */
+  var bar = byId('activityBar');
+  var ind = document.createElement('span');
+  ind.className = 'ab-ind';
+  ind.setAttribute('aria-hidden', 'true');
+  bar.appendChild(ind);
+  var indAnim = null;
+  function indGeom(icon) {
+    var barCs = getComputedStyle(bar);
+    var inset = parseFloat(barCs.getPropertyValue('--ab-ind-inset')) || 4;
+    var br = bar.getBoundingClientRect();
+    var ir = icon.getBoundingClientRect();
+    return { top: ir.top - br.top + inset, height: Math.max(4, ir.height - inset * 2) };
+  }
+  function indMove(icon, animate) {
+    if (!icon) {
+      if (indAnim) { try { indAnim.cancel(); } catch (e) {} indAnim = null; }
+      ind.style.opacity = '0';
+      return;
+    }
+    var to = indGeom(icon);
+    if (ind.style.opacity !== '1') {
+      if (indAnim) { try { indAnim.cancel(); } catch (e) {} indAnim = null; }
+      ind.style.top = to.top + 'px'; ind.style.height = to.height + 'px';
+      ind.style.opacity = '1';
+      return;
+    }
+    var fromTop = parseFloat(getComputedStyle(ind).top);
+    var fromH = parseFloat(getComputedStyle(ind).height);
+    if (isNaN(fromTop)) { ind.style.top = to.top + 'px'; ind.style.height = to.height + 'px'; return; }
+    ind.style.top = to.top + 'px'; ind.style.height = to.height + 'px';
+    if (indAnim) { try { indAnim.cancel(); } catch (e) {} indAnim = null; }
+    if (!animate || reduce()) return;
+    var dist = Math.abs(to.top - fromTop);
+    if (dist < 2 && Math.abs(to.height - fromH) < 2) return;
+    var settle = getComputedStyle(document.documentElement).getPropertyValue('--ease-settle').trim() || 'ease-out';
+    var spanTop = Math.min(fromTop, to.top);
+    var spanH = dist + to.height;
+    indAnim = ind.animate([
+      { top: fromTop + 'px', height: fromH + 'px', opacity: 1, easing: settle },
+      { top: spanTop + 'px', height: spanH + 'px', opacity: .55, offset: .45, easing: settle },
+      { top: to.top + 'px', height: to.height + 'px', opacity: 1 }
+    ], { duration: cssMs('--motion-med'), easing: 'linear', composite: 'replace' });
+    indAnim.onfinish = function () { indAnim = null; };
+    indAnim.oncancel = function () { indAnim = null; };
+  }
+  function indSync(animate) { indMove(bar.querySelector('.icon.active'), animate); }
+  new MutationObserver(function (muts) {
+    var hit = false;
+    for (var i = 0; i < muts.length; i++) {
+      var m = muts[i];
+      if (m.type === 'childList') { hit = true; break; }
+      var t = m.target;
+      if (t === bar || (t.classList && t.classList.contains('icon'))) { hit = true; break; }
+    }
+    if (hit) indSync(true);
+  }).observe(bar, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  new MutationObserver(function () { indSync(true); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-motion'] });
+  var resizeTick = false;
+  window.addEventListener('resize', function () {
+    if (resizeTick) return; resizeTick = true;
+    requestAnimationFrame(function () { resizeTick = false; indSync(false); });
+  });
+  indSync(false);
+
+  /* ================= badge pop ================= */
+  function popBadge(el) {
+    if (!el || reduce()) return;
+    el.classList.remove('ab-badge-pop');
+    void el.offsetWidth;
+    el.classList.add('ab-badge-pop');
+    el.addEventListener('animationend', function h(ev) {
+      if (ev.target !== el) return;
+      el.classList.remove('ab-badge-pop');
+      el.removeEventListener('animationend', h);
+    });
+  }
+  $all('#activityBar .icon .pm6-ab-dot, #activityBar .icon .ab-badge, #activityBar .icon [data-ab-count]').forEach(function (b) {
+    var c = parseInt(b.getAttribute('data-ab-count') || '1', 10);
+    if (!isNaN(c) && c > 0) popBadge(b);
+  });
+
+  /* ================= legacy-style click handler (active swap) ================= */
+  document.addEventListener('click', function (e) {
+    var iconBtn = e.target && e.target.closest ? e.target.closest('.activity-bar .icon') : null;
+    if (!iconBtn || iconBtn.id === 'abMoreBtn') return;
+    var isActive = iconBtn.classList.contains('active');
+    $all('.activity-bar .icon[data-target]').forEach(function (i) { i.classList.remove('active'); });
+    if (isActive) { iconBtn.classList.remove('active'); byId('activeName').textContent = '(closed)'; }
+    else {
+      iconBtn.classList.add('active');
+      byId('activeName').textContent = iconBtn.getAttribute('data-target') || iconBtn.getAttribute('title');
+    }
+  });
+
+  /* ================= drag reorder (lerp ghost + land) ================= */
+  var moreBtn = byId('abMoreBtn');
+  var hidden = [];
+  var drag = null;
+  function visibleIcons() { return $all('#activityBar > .icon[data-ab-id]').filter(function (i) { return i !== moreBtn; }); }
+  function syncMore() { moreBtn.setAttribute('data-empty', hidden.length ? '0' : '1'); }
+  function suppressNextClick() {
+    var fn = function (e) { e.stopPropagation(); e.preventDefault(); window.removeEventListener('click', fn, true); };
+    window.addEventListener('click', fn, true);
+    setTimeout(function () { window.removeEventListener('click', fn, true); }, 0);
+  }
+  function computeSlots() {
+    return visibleIcons().map(function (i) { var r = i.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, mid: r.top + r.height / 2 }; });
+  }
+  function lerpLoop() {
+    if (!drag || !drag.ghost) return;
+    drag.cx += (drag.tx - drag.cx) * 0.35;
+    drag.cy += (drag.ty - drag.cy) * 0.35;
+    drag.ghost.style.left = drag.cx + 'px';
+    drag.ghost.style.top = drag.cy + 'px';
+    drag.raf = requestAnimationFrame(lerpLoop);
+  }
+  function beginDrag() {
+    drag.started = true;
+    document.body.classList.add('pm-ab-dragging');
+    killTray();
+    var g = drag.node.cloneNode(true);
+    g.classList.add('pm-ab-ghost');
+    g.classList.remove('active');
+    var w = drag.fromTray ? moreBtn.getBoundingClientRect().width : drag.node.getBoundingClientRect().width;
+    g.style.width = Math.max(32, Math.round(w)) + 'px';
+    document.body.appendChild(g);
+    drag.ghost = g;
+    drag.tx = drag.sx + 6; drag.ty = drag.sy - 12; drag.cx = drag.tx; drag.cy = drag.ty;
+    g.style.left = drag.cx + 'px'; g.style.top = drag.cy + 'px';
+    if (!reduce()) drag.raf = requestAnimationFrame(lerpLoop);
+    if (!drag.fromTray) drag.node.classList.add('pm-ab-drag-src');
+    var indi = document.createElement('div');
+    indi.className = 'pm-ab-drop-indicator';
+    var br = bar.getBoundingClientRect();
+    indi.style.left = (br.left + 4) + 'px';
+    indi.style.width = (br.width - 8) + 'px';
+    indi.style.display = 'none';
+    document.body.appendChild(indi);
+    drag.indicator = indi;
+    drag.moreRect = moreBtn.getBoundingClientRect();
+    drag.slots = computeSlots();
+  }
+  function onPointerMove(e) {
+    if (!drag || e.pointerId !== drag.pid) return;
+    if (!drag.started) {
+      if (Math.abs(e.clientX - drag.sx) < 4 && Math.abs(e.clientY - drag.sy) < 4) return;
+      beginDrag();
+    }
+    drag.tx = e.clientX + 6; drag.ty = e.clientY - 12;
+    if (reduce()) { drag.cx = drag.tx; drag.cy = drag.ty; drag.ghost.style.left = drag.cx + 'px'; drag.ghost.style.top = drag.cy + 'px'; }
+    var mr = drag.moreRect;
+    drag.overMore = !drag.fromTray &&
+      e.clientX >= mr.left && e.clientX <= mr.right && e.clientY >= mr.top && e.clientY <= mr.bottom;
+    moreBtn.classList.toggle('pm-ab-drop-hot', !!drag.overMore);
+    if (drag.overMore) { drag.indicator.style.display = 'none'; drag.insertAt = -1; return; }
+    var idx = drag.slots.length;
+    for (var i = 0; i < drag.slots.length; i++) { if (e.clientY < drag.slots[i].mid) { idx = i; break; } }
+    drag.insertAt = idx;
+    var y = idx < drag.slots.length
+      ? drag.slots[idx].top - 1
+      : (drag.slots.length ? drag.slots[drag.slots.length - 1].bottom + 1 : mr.top - 4);
+    drag.indicator.style.top = y + 'px';
+    drag.indicator.style.display = 'block';
+  }
+  function onPointerUp(e) { if (drag && e.pointerId === drag.pid) endDrag(false); }
+  function onPointerCancel(e) { if (drag && e.pointerId === drag.pid) endDrag(true); }
+  function endDrag(cancelled) {
+    var d = drag;
+    drag = null;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerCancel);
+    if (!d || !d.started) return;
+    if (d.raf) cancelAnimationFrame(d.raf);
+    document.body.classList.remove('pm-ab-dragging');
+    moreBtn.classList.remove('pm-ab-drop-hot');
+    if (d.ghost && d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
+    if (d.indicator && d.indicator.parentNode) d.indicator.parentNode.removeChild(d.indicator);
+    d.node.classList.remove('pm-ab-drag-src');
+    if (!cancelled) landIcon(applyDrop(d));
+    suppressNextClick();
+  }
+  function landIcon(n) {
+    if (!n || reduce()) return;
+    n.classList.remove('ab-icon-land');
+    void n.offsetWidth;
+    n.classList.add('ab-icon-land');
+    n.addEventListener('animationend', function h(ev) {
+      if (ev.target !== n) return;
+      n.classList.remove('ab-icon-land');
+      n.removeEventListener('animationend', h);
+    });
+  }
+  function applyDrop(d) {
+    if (!d.fromTray && d.overMore) {
+      if (d.node.parentNode) d.node.parentNode.removeChild(d.node);
+      hidden.push({ id: d.id, node: d.node });
+      syncMore();
+      return null;
+    }
+    if (d.insertAt == null || d.insertAt < 0) return null;
+    var vis = visibleIcons();
+    var ref = d.insertAt < vis.length ? vis[d.insertAt] : moreBtn;
+    if (ref === d.node) return null;
+    if (d.fromTray) {
+      for (var i = 0; i < hidden.length; i++) { if (hidden[i].id === d.id) { hidden.splice(i, 1); break; } }
+      syncMore();
+    }
+    bar.insertBefore(d.node, ref);
+    return d.node;
+  }
+  function armGesture(e, node, id, fromTray, captureEl) {
+    if (e.button !== 0) return;
+    drag = { node: node, id: id, fromTray: !!fromTray, started: false, sx: e.clientX, sy: e.clientY, pid: e.pointerId };
+    try { captureEl.setPointerCapture(e.pointerId); } catch (err) {}
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerCancel);
+  }
+  bar.addEventListener('pointerdown', function (e) {
+    var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
+    if (!icon || icon === moreBtn) return;
+    armGesture(e, icon, icon.getAttribute('data-ab-id'), false, icon);
+  });
+
+  /* ================= More tray ================= */
+  function buildTrayRow(h, i) {
+    var row = document.createElement('button');
+    row.type = 'button';
+    row.className = 'pm-ab-tray-row';
+    row.setAttribute('data-ab-id', h.id);
+    row.style.setProperty('--pi', String(Math.min(i, 6)));
+    var ico = document.createElement('span');
+    ico.className = 'pm-ab-tray-ico';
+    var svg = h.node.querySelector('svg');
+    if (svg) ico.appendChild(svg.cloneNode(true));
+    row.appendChild(ico);
+    var label = document.createElement('span');
+    label.textContent = h.node.getAttribute('title') || h.id;
+    row.appendChild(label);
+    row.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      restoreHidden(h.id, null);
+      refreshTray();
+    });
+    row.addEventListener('pointerdown', function (ev) { armGesture(ev, h.node, h.id, true, row); });
+    return row;
+  }
+  function restoreHidden(id, beforeNode) {
+    for (var i = 0; i < hidden.length; i++) {
+      if (hidden[i].id !== id) continue;
+      var h = hidden.splice(i, 1)[0];
+      bar.insertBefore(h.node, beforeNode || moreBtn);
+      syncMore();
+      return h;
+    }
+    return null;
+  }
+  function openTrayRows(tray) {
+    while (tray.firstChild) tray.removeChild(tray.firstChild);
+    hidden.forEach(function (h, i) { tray.appendChild(buildTrayRow(h, i)); });
+  }
+  function closeTray(t) {
+    if (!t || t.classList.contains('pm-ab-tray-closing')) return;
+    document.removeEventListener('keydown', escClose);
+    if (reduce()) { if (t.parentNode) t.parentNode.removeChild(t); return; }
+    t.classList.remove('pm-ab-tray-open');
+    t.classList.add('pm-ab-tray-closing');
+    var done = false;
+    function rm() { if (done) return; done = true; if (t.parentNode) t.parentNode.removeChild(t); }
+    t.addEventListener('transitionend', function (ev) { if (ev.target === t) rm(); });
+    setTimeout(rm, 220);
+  }
+  function killTray() { closeTray(document.querySelector('.pm-ab-tray:not(.pm-ab-tray-closing)')); }
+  function escClose(ev) { if (ev.key === 'Escape') killTray(); }
+  function refreshTray() {
+    var tray = document.querySelector('.pm-ab-tray:not(.pm-ab-tray-closing)');
+    if (!tray) return;
+    if (!hidden.length) { killTray(); return; }
+    openTrayRows(tray);
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('#abMoreBtn') : null;
+    if (!btn) return;
+    e.stopPropagation();
+    e.preventDefault();
+    var existing = document.querySelector('.pm-ab-tray:not(.pm-ab-tray-closing)');
+    if (existing) { killTray(); return; }
+    if (!hidden.length) return;
+    var m = document.createElement('div');
+    m.className = 'pm-ab-tray';
+    openTrayRows(m);
+    document.body.appendChild(m);
+    var r = moreBtn.getBoundingClientRect();
+    m.style.left = (r.right + 8) + 'px';
+    m.style.top = Math.min(r.top, Math.max(8, window.innerHeight - m.offsetHeight - 8)) + 'px';
+    if (reduce()) m.classList.add('pm-ab-tray-open');
+    else requestAnimationFrame(function () { requestAnimationFrame(function () { m.classList.add('pm-ab-tray-open'); }); });
+    document.addEventListener('keydown', escClose);
+    setTimeout(function () {
+      function close(ev) {
+        if (m.contains(ev.target)) return;
+        closeTray(m);
+        document.removeEventListener('click', close);
+      }
+      document.addEventListener('click', close);
+    }, 0);
+  }, true);
+
+  /* ================= proto controls ================= */
+  $all('[data-set-theme]').forEach(function (b) {
+    b.addEventListener('click', function () { document.documentElement.setAttribute('data-theme', b.getAttribute('data-set-theme')); });
+  });
+  byId('hideDocker').addEventListener('click', function () {
+    var n = document.querySelector('.icon[data-ab-id="docker"]');
+    if (!n) return;
+    if (n.parentNode) n.parentNode.removeChild(n);
+    hidden.push({ id: 'docker', node: n });
+    syncMore();
+  });
+  byId('toggleMotion').addEventListener('click', function () {
+    var de = document.documentElement;
+    de.setAttribute('data-motion', de.getAttribute('data-motion') === 'reduced' ? 'full' : 'reduced');
+  });
+})();
+</script>
+</body>
+</html>

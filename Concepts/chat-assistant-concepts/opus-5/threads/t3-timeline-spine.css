@@ -1,0 +1,582 @@
+/* t3 "Timeline Spine" — Opus 5
+ *
+ * One continuous, NEUTRAL vertical line (`.t3-list::before`) runs the full height of the
+ * transcript. It is a single element, drawn once, so it is structurally impossible for it to
+ * vary by turn, selection, or status — the exact property this concept must hold. Every row
+ * hangs its own SVG marker at a fixed offset over that line. Do not add color, width, or
+ * left-border rules keyed to selection/status/active anywhere in this file: that is the
+ * project-wide prohibited pattern and it is automatically tested.
+ *
+ * All rules scoped under [data-pmx-thread="t3"]. A test fails any selector outside that scope.
+ */
+
+[data-pmx-thread="t3"] .t3-root {
+  container-type: inline-size;
+  container-name: pmx-thread;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------- concept header */
+
+[data-pmx-thread="t3"] .t3-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  padding: 4px var(--md);
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+[data-pmx-thread="t3"] .t3-head-name { font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+[data-pmx-thread="t3"] .t3-head-model { margin-left: auto; letter-spacing: .05em; }
+
+/* ---------------------------------------------------------------- transcript + spine */
+
+[data-pmx-thread="t3"] .t3-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-anchor: none;
+}
+
+[data-pmx-thread="t3"] .t3-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--md) var(--lg) var(--xl);
+  min-width: 0;
+}
+
+/* The spine itself: one line, one color, drawn once for the whole list. Left edge of the
+ * marker column, never touching the message content, never a "left accent" on any row. */
+[data-pmx-thread="t3"] .t3-list::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: calc(var(--lg) + 9px);
+  width: 2px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+[data-pmx-thread="t3"] .t3-row,
+[data-pmx-thread="t3"] .t3-unit,
+[data-pmx-thread="t3"] .t3-older-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  column-gap: var(--md);
+  min-width: 0;
+}
+[data-pmx-thread="t3"] .t3-row { padding: var(--sm) 0; }
+[data-pmx-thread="t3"] .t3-unit { padding: 3px 0; }
+
+/* The marker sits on top of the spine line, filled with the page background so the line
+ * appears to pass BEHIND it, then the neutral currentColor glyph draws over that. */
+[data-pmx-thread="t3"] .t3-marker {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  margin-top: 2px;
+  color: var(--text-muted);
+  background: var(--background);
+  border-radius: 50%;
+  z-index: 1;
+}
+/* Execution-unit markers read slightly smaller than a conversation turn's, so the square
+ * silhouette is unmistakable without needing a second color. */
+[data-pmx-thread="t3"] .t3-unit .t3-marker svg { width: 12px; height: 12px; }
+[data-pmx-thread="t3"] .t3-unit .t3-marker { color: var(--text-muted); }
+[data-pmx-thread="t3"] .t3-row .t3-marker { color: var(--text-secondary); }
+
+/* ---------------------------------------------------------------- turn content */
+
+[data-pmx-thread="t3"] .t3-body {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+[data-pmx-thread="t3"] .t3-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  margin-bottom: 2px;
+}
+[data-pmx-thread="t3"] .t3-role-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-meta-status {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+}
+
+[data-pmx-thread="t3"] .t3-prose {
+  font-size: var(--fs-sm);
+  line-height: 1.58;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+  max-width: 74ch;
+}
+[data-pmx-thread="t3"] .t3-p { margin: 0 0 .58em; }
+[data-pmx-thread="t3"] .t3-p:last-child { margin-bottom: 0; }
+
+[data-pmx-thread="t3"] .t3-body[data-collapsible="1"][data-expanded="0"] .t3-prose {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+[data-pmx-thread="t3"] .t3-more {
+  margin-top: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 140ms var(--ease-out);
+}
+[data-pmx-thread="t3"] .t3-row:hover .t3-more,
+[data-pmx-thread="t3"] .t3-row:focus-within .t3-more,
+[data-pmx-thread="t3"] .t3-body[data-expanded="1"] .t3-more { opacity: 1; }
+
+/* Hover row and any following block also live in the content column, not under the marker. */
+[data-pmx-thread="t3"] .t3-row > .pmx-msg-hover-row { grid-column: 2; grid-row: 2; }
+
+/* ---------------------------------------------------------------- thought (inline disclosure) */
+
+[data-pmx-thread="t3"] .t3-thought { margin-top: var(--sm); }
+[data-pmx-thread="t3"] .t3-thought-toggle {
+  display: flex; align-items: center; gap: 4px;
+  padding: 0; border: none; background: transparent;
+  color: var(--text-muted); font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t3"] .t3-thought-toggle:hover { color: var(--text-primary); }
+[data-pmx-thread="t3"] .t3-thought-chevron { display: inline-flex; }
+[data-pmx-thread="t3"] .t3-thought-chevron svg { width: 12px; height: 12px; }
+[data-pmx-thread="t3"] .t3-thought-body {
+  margin-top: 4px;
+  padding-left: var(--md);
+  border-left: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+  max-height: 220px;
+  overflow-y: auto;
+}
+[data-pmx-thread="t3"] .t3-thought-row { padding: 3px 0; font-size: var(--fs-2xs); display: flex; gap: var(--sm); }
+[data-pmx-thread="t3"] .t3-thought-status { flex: 0 0 auto; min-width: 64px; color: var(--text-muted); }
+[data-pmx-thread="t3"] .t3-thought-summary { color: var(--text-secondary); min-width: 0; overflow-wrap: anywhere; }
+[data-pmx-thread="t3"] .t3-thought-note { padding-top: 3px; font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; }
+
+/* ---------------------------------------------------------------- answered questionnaire (inline history) */
+
+[data-pmx-thread="t3"] .t3-answered {
+  margin-top: var(--sm);
+  padding: var(--sm) var(--md);
+  /* Must be OPAQUE, same reasoning as the questionnaire card below: this is a summary
+   * of an answered questionnaire, not a tint meant to blend with the turn above it. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  border-radius: var(--radius-sm);
+}
+[data-pmx-thread="t3"] .t3-answered-label {
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px;
+}
+[data-pmx-thread="t3"] .t3-qa { padding: 3px 0; }
+[data-pmx-thread="t3"] .t3-qa-q { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t3"] .t3-qa-a { font-size: var(--fs-xs); color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- execution units + tail surfaces
+ * Same square marker family for both a per-turn activity unit and a thread-level surface
+ * (Goal/Todo/Agents/Diff/Artifacts) appended at the foot of the spine — both are "work",
+ * neither is a conversational turn. */
+
+[data-pmx-thread="t3"] .t3-unit-content { grid-column: 2; grid-row: 1; min-width: 0; }
+[data-pmx-thread="t3"] .t3-unit-btn {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+}
+[data-pmx-thread="t3"] .t3-unit-kind {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-unit-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+[data-pmx-thread="t3"] .t3-unit-btn:hover .t3-unit-label { color: var(--text-primary); }
+[data-pmx-thread="t3"] .t3-unit-dur {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t3"] .t3-tail:empty { display: none; }
+
+/* When a work-surface host exists, surfaces render there instead — a plain compact list,
+ * no spine, since the host is its own region outside the transcript. */
+[data-pmx-thread="t3"] .t3-host-unit {
+  display: block;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
+}
+[data-pmx-thread="t3"] .t3-host-unit:last-child { border-bottom: none; }
+[data-pmx-thread="t3"] .t3-host-unit .t3-unit-btn { padding: 5px var(--md); }
+
+/* ---------------------------------------------------------------- live status */
+
+[data-pmx-thread="t3"] .t3-live .t3-unit-content { display: flex; align-items: center; gap: var(--sm); }
+[data-pmx-thread="t3"] .t3-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-primary); flex: 0 0 auto;
+}
+[data-pmx-thread="t3"] .t3-live .t3-unit-label { color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- older history */
+
+[data-pmx-thread="t3"] .t3-older-wrap { grid-template-columns: 20px 1fr; padding: var(--sm) 0 var(--md); align-items: center; }
+[data-pmx-thread="t3"] .t3-older {
+  grid-column: 2;
+  justify-self: start;
+  padding: 5px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t3"] .t3-older:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+
+/* ---------------------------------------------------------------- jump to latest */
+
+/* The lane reserves the pill's space permanently, so the transcript viewport height never
+ * changes and content can never sit underneath the pill. Reserving it dynamically instead
+ * (padding toggled on the root when the pill appeared) resized the scroller 313->267px and
+ * slid the transcript 27px over 320ms on every return to the bottom. */
+[data-pmx-thread="t3"] .t3-jump-lane {
+  flex: 0 0 auto;
+  height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+[data-pmx-thread="t3"] .t3-jump {
+  transform: translateY(8px) scale(.96);
+  padding: 5px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  /* Must be OPAQUE: it floats in front of the scrolling transcript, and in the glass
+   * themes `--surface-elevated` alone is translucent enough that the turn underneath
+   * reads straight through the pill. Paint the themed tint over an opaque base instead. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  color: var(--text-primary);
+  font: inherit; font-size: var(--fs-2xs);
+  box-shadow: var(--elev-2);
+  cursor: pointer;
+  opacity: 0; pointer-events: none;
+  /* The pill ARRIVES on the sampled spring, the same curve the popup family uses, so it
+   * lands with a settle rather than easing flat to a stop. Opacity stays quick and linear-ish
+   * so the surface is legible before it finishes moving. The DEPARTURE keeps the short
+   * ease-out: a spring on the way out would overshoot downward past the lane it is leaving. */
+  transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+  z-index: 2;
+}
+[data-pmx-thread="t3"] .t3-jump[data-visible="1"] {
+  opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+  transition: opacity 110ms var(--ease-out), transform 420ms var(--ease-spring-real);
+}
+/* When a window provides no dedicated question host, the inline fallback (below) stacks
+ * below the scroller inside this same positioned box, so the pill's fixed bottom offset
+ * would otherwise land on its action row. A deterministic clearance keeps the two apart
+ * in every case, rather than fighting it out with z-index. */
+/* ---------------------------------------------------------------- inline question fallback */
+
+[data-pmx-thread="t3"] .t3-inline-question { flex: 0 0 auto; min-width: 0; border-top: 1px solid color-mix(in srgb, var(--border) 55%, transparent); }
+[data-pmx-thread="t3"] .t3-inline-question:empty { display: none; border-top: none; }
+
+[data-pmx-thread="t3"] .t3-question {
+  padding: var(--md);
+  /* Must be OPAQUE, same reasoning as .t3-jump: a questionnaire card is a surface the
+   * user must be able to read cleanly, never a translucent tint over live content. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  min-width: 0;
+}
+[data-pmx-thread="t3"] .t3-question-head {
+  display: flex; align-items: baseline; gap: var(--sm);
+  font-size: var(--fs-2xs); color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-question-req { margin-left: auto; }
+[data-pmx-thread="t3"] .t3-question-prompt {
+  margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary);
+}
+[data-pmx-thread="t3"] .t3-question-opts { display: flex; flex-direction: column; gap: 4px; }
+[data-pmx-thread="t3"] .t3-opt {
+  padding: 6px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit; font-size: var(--fs-xs); text-align: left; cursor: pointer;
+}
+[data-pmx-thread="t3"] .t3-opt:hover { border-color: var(--accent-primary); }
+[data-pmx-thread="t3"] .t3-opt[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+[data-pmx-thread="t3"] .t3-question-free {
+  width: 100%; min-height: 64px; resize: vertical;
+  padding: var(--sm); font: inherit; font-size: var(--fs-xs);
+  color: var(--text-primary); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+[data-pmx-thread="t3"] .t3-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
+
+/* ---------------------------------------------------------------- shared action + status atoms */
+
+[data-pmx-thread="t3"] .t3-act,
+.pmx-popup[data-pmx-thread="t3"] .t3-act {
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t3"] .t3-act:hover,
+.pmx-popup[data-pmx-thread="t3"] .t3-act:hover { background: var(--surface-elevated); color: var(--text-primary); }
+[data-pmx-thread="t3"] .t3-act-primary {
+  background: var(--accent-primary); border-color: var(--accent-primary); color: var(--background); font-weight: 600;
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-status {
+  padding: 1px 7px; font-size: var(--fs-2xs); border-radius: var(--radius-pill);
+  background: var(--surface-elevated); color: var(--text-secondary); flex: 0 0 auto;
+}
+
+/* ---------------------------------------------------------------- popup sheets */
+
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-title {
+  padding: var(--sm) var(--md) var(--xs);
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-list { max-height: 260px; overflow-y: auto; padding: 0 var(--md) var(--sm); }
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-row {
+  display: flex; gap: var(--sm); padding: 4px 0; font-size: var(--fs-2xs);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-row:last-child { border-bottom: none; }
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-kind { flex: 0 0 auto; min-width: 72px; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-label { flex: 1 1 auto; min-width: 0; color: var(--text-primary); overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-dur { flex: 0 0 auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.pmx-popup[data-pmx-thread="t3"] .t3-sheet-foot { padding: var(--sm) var(--md); font-size: var(--fs-2xs); color: var(--text-muted); border-top: 1px solid var(--border); }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-goal { padding: 0 var(--md) var(--sm); display: flex; flex-direction: column; gap: 6px; }
+.pmx-popup[data-pmx-thread="t3"] .t3-goal-head { display: flex; align-items: baseline; gap: var(--sm); }
+.pmx-popup[data-pmx-thread="t3"] .t3-goal-obj { font-size: var(--fs-sm); color: var(--text-primary); min-width: 0; overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t3"] .t3-goal-acts { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-blocker,
+.pmx-popup[data-pmx-thread="t3"] .t3-replan { display: flex; flex-direction: column; gap: 3px; }
+.pmx-popup[data-pmx-thread="t3"] .t3-blocker-row { display: flex; gap: var(--sm); font-size: var(--fs-2xs); }
+.pmx-popup[data-pmx-thread="t3"] .t3-blocker-k,
+.pmx-popup[data-pmx-thread="t3"] .t3-replan-k { flex: 0 0 auto; min-width: 92px; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t3"] .t3-blocker-v,
+.pmx-popup[data-pmx-thread="t3"] .t3-replan-v { color: var(--text-primary); min-width: 0; overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t3"] .t3-replan { flex-direction: row; font-size: var(--fs-2xs); }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-todo-row { display: flex; gap: var(--sm); font-size: var(--fs-2xs); min-width: 0; }
+.pmx-popup[data-pmx-thread="t3"] .t3-todo-state { flex: 0 0 auto; min-width: 74px; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t3"] .t3-todo-label { min-width: 0; overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t3"] .t3-todo-row[data-state="complete"] .t3-todo-label { color: var(--text-muted); }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-agent { padding: 5px 0; border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent); }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent:last-child { border-bottom: none; }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent-head { display: flex; align-items: baseline; gap: var(--sm); }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent-name { font-weight: 600; color: var(--text-primary); font-size: var(--fs-2xs); }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent-task { color: var(--text-secondary); font-size: var(--fs-2xs); margin-top: 2px; }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent-act { color: var(--text-muted); font-size: var(--fs-2xs); margin-top: 2px; }
+.pmx-popup[data-pmx-thread="t3"] .t3-agent-dur { color: var(--text-muted); font-size: var(--fs-2xs); font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-file {
+  display: flex; align-items: baseline; gap: var(--sm); width: 100%;
+  padding: 3px 0; border: none; background: transparent;
+  font: inherit; font-size: var(--fs-2xs); text-align: left; cursor: pointer; min-width: 0;
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-file:hover .t3-file-path { color: var(--accent-primary); }
+.pmx-popup[data-pmx-thread="t3"] .t3-file-path {
+  font-family: var(--mono-font); color: var(--text-primary);
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: left;
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-file-status { color: var(--text-muted); flex: 0 0 auto; }
+.pmx-popup[data-pmx-thread="t3"] .t3-file-n { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+.pmx-popup[data-pmx-thread="t3"] .t3-file-more { padding: 3px 0; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+.pmx-popup[data-pmx-thread="t3"] .t3-artifact {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: 5px 0; border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+.pmx-popup[data-pmx-thread="t3"] .t3-artifact:last-child { border-bottom: none; }
+.pmx-popup[data-pmx-thread="t3"] .t3-artifact-title { font-size: var(--fs-xs); color: var(--text-primary); min-width: 0; overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t3"] .t3-artifact-meta { font-size: var(--fs-2xs); color: var(--text-muted); min-width: 0; overflow-wrap: anywhere; }
+
+/* ---------------------------------------------------------------- Context Lens
+ * Shaping state is opacity/italic on the prose only. The marker and the spine stay exactly
+ * as they are on every other row — selection and status never touch them. */
+
+[data-pmx-thread="t3"] .t3-row[data-lens="muted"] .t3-body { opacity: .45; }
+[data-pmx-thread="t3"] .t3-row[data-lens="focused"] .t3-body {
+  background: color-mix(in srgb, var(--accent-primary) 7%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  margin-left: -6px;
+}
+[data-pmx-thread="t3"] .t3-row[data-lens="subcompacted"] .t3-prose,
+[data-pmx-thread="t3"] .t3-row[data-lens="source"] .t3-prose { opacity: .6; font-style: italic; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t3"] .t3-list { padding: var(--sm) var(--md) var(--lg); }
+  [data-pmx-thread="t3"] .t3-list::before { left: calc(var(--md) + 9px); }
+  [data-pmx-thread="t3"] .t3-row,
+  [data-pmx-thread="t3"] .t3-unit,
+  [data-pmx-thread="t3"] .t3-older-wrap { grid-template-columns: 18px 1fr; column-gap: var(--sm); }
+  [data-pmx-thread="t3"] .t3-marker { width: 18px; height: 18px; }
+  [data-pmx-thread="t3"] .t3-prose { font-size: var(--fs-xs); line-height: 1.55; }
+  [data-pmx-thread="t3"] .t3-blocker-k, [data-pmx-thread="t3"] .t3-replan-k { min-width: 72px; }
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-more,
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-jump,
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-thought-toggle{ transition: none !important; }
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-more { opacity: 1 !important; }
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-live-dot { animation: none !important; opacity: 1 !important; }
+
+/* Persistent expand affordance. Hover-only discovery was the weakest point in the
+ * set: a faded message gave no standing signal that it could be opened. The control
+ * now always shows at low contrast and hover only raises it. */
+[data-pmx-thread="t3"] .t3-more { opacity: .62 !important; }
+[data-pmx-thread="t3"] .t3-turn:hover .t3-more,
+[data-pmx-thread="t3"] .t3-turn:focus-within .t3-more,
+[data-pmx-thread="t3"] .t3-more:hover,
+[data-pmx-thread="t3"] .t3-more:focus-visible { opacity: 1 !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * A timeline is drawn, not assembled. The spine extends downward from its origin
+ * and the markers pop in its WAKE — each one a beat behind the line reaching it —
+ * so the eye is led down the thread in the order events actually happened. The
+ * spine keeps its neutral colour throughout; only its length is animated.
+ */
+@keyframes pmx-t3-draw {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+/* The pop is the spring's, not the keyframe's. */
+@keyframes pmx-t3-marker {
+  from { opacity: 0; transform: scale(.62); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+[data-pmx-thread="t3"] .t3-tail {
+  transform-origin: top center;
+  animation: pmx-t3-draw var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-thread="t3"] .t3-marker {
+  animation: pmx-t3-marker var(--motion-med) var(--ease-spring-real) both;
+}
+/* Each marker lands a beat after the one above it, so the eye is led DOWN the
+ * thread while the spine is still extending past it. A single shared delay made
+ * every marker arrive at once, which read as the line and the dots being two
+ * unrelated animations that happened to start together. */
+[data-pmx-thread="t3"] .t3-row:nth-child(1) .t3-marker { animation-delay: 60ms; }
+[data-pmx-thread="t3"] .t3-row:nth-child(2) .t3-marker { animation-delay: 96ms; }
+[data-pmx-thread="t3"] .t3-row:nth-child(3) .t3-marker { animation-delay: 132ms; }
+[data-pmx-thread="t3"] .t3-row:nth-child(4) .t3-marker { animation-delay: 168ms; }
+[data-pmx-thread="t3"] .t3-row:nth-child(5) .t3-marker { animation-delay: 204ms; }
+[data-pmx-thread="t3"] .t3-row:nth-child(n+6) .t3-marker { animation-delay: 240ms; }
+[data-pmx-thread="t3"] .t3-unit-btn,
+[data-pmx-thread="t3"] .t3-thought-toggle {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t3"] .t3-unit-btn:active,
+[data-pmx-thread="t3"] .t3-thought-toggle:active { transform: scale(.96); }
+
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-tail,
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-marker {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t3"] .t3-tail,
+  [data-pmx-thread="t3"] .t3-marker {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- jump pill clearance
+ * The pill floats over the transcript, and nothing reserved space for it, so when it
+ * appeared it sat directly on top of live message text and hid whole words. Readable
+ * sustained conversation is the criterion this whole workspace is measured against, so
+ * a control that covers prose is a real defect rather than a cosmetic one.
+ *
+ * The clearance is added only while the pill is actually visible — reserving it
+ * permanently would cost every conversation a strip of transcript to protect against a
+ * control that is usually not there. */
+
+/* Permanent clearance on the SCROLLED CONTENT, not on the scroller's box.
+ *
+ * Two earlier attempts got this wrong in opposite directions. Padding on
+ * .t3-scroll added room only at the end of the content, which coincides with the
+ * pill's position solely when scrolled to the bottom — precisely when the pill is
+ * hidden — so it did nothing. Padding on .t3-root did clear the pill, but it
+ * shrank the scroller's viewport by 46px, and toggling that at the bottom slid the
+ * whole transcript 27px every time, measurably, over 320ms.
+ *
+ * Reserving the space inside the content instead changes no box at all. It costs a
+ * little extra scroll distance and leaves a small gap under the last message, which
+ * is what every chat client does anyway, and the pill floats over that gap. */
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-root { transition: none !important; }

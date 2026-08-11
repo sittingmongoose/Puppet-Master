@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "topic": "chat-assistant",
+  "model": "Grok 4.5",
+  "presentation": "entries",
+  "order": 40,
+  "widthControl": {
+    "enabled": true,
+    "label": "Chat width",
+    "role": "chat",
+    "min": 520,
+    "max": 1200,
+    "step": 10,
+    "default": 750,
+    "presets": [520, 750, 975, 1200],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "gallery",
+      "title": "Grok 4.5 Chat gallery",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["gallery", "windows", "threads"],
+      "order": 1
+    },
+    {
+      "id": "host-w6-t1",
+      "title": "Host · Focus Stage × Prose Column",
+      "path": "host.html",
+      "openPath": "host.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["host", "w6", "t1", "default-pair"],
+      "order": 10,
+      "notes": "Default pair is w6×t1 at width=750 via host URL params when opened from review tooling."
+    }
+  ]
+}

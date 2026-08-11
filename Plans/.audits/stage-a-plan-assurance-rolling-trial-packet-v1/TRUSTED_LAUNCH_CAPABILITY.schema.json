@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/trusted-launch-capability.v1.json",
+  "title": "Live Codex Orchestrator Launch Attestation Capture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "capability_id", "authority_mode", "target_task_path", "observed_sender_task_path", "observed_message_type", "observed_message_id", "observed_turn_id", "observed_message_created_at_utc", "consumed_at_utc", "authorization_message", "authorization_message_sha256", "launch_request_sha256", "approved_launch_binding_sha256", "approved_external_transmission_manifest_sha256", "exact_execution_envelope_sha256", "one_use_nonce_sha256", "issued_at_utc", "expires_at_utc", "max_uses", "live_system_sender_attestation_observed", "offline_cryptographic_verification", "terminal", "capability_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "capability_id": {"type": "string", "minLength": 1},
+    "authority_mode": {"const": "codex_live_orchestrator_sender"},
+    "target_task_path": {"type": "string", "pattern": "^/root(?:/|$)"},
+    "observed_sender_task_path": {"type": "string", "pattern": "^/root(?:/|$)"},
+    "observed_message_type": {"enum": ["MESSAGE", "NEW_TASK"]},
+    "observed_message_id": {"type": "string", "minLength": 1},
+    "observed_turn_id": {"type": "string", "minLength": 1},
+    "observed_message_created_at_utc": {"type": "string", "format": "date-time"},
+    "consumed_at_utc": {"type": "string", "format": "date-time"},
+    "authorization_message": {"$ref": "#/$defs/authorization_message"},
+    "authorization_message_sha256": {"$ref": "#/$defs/sha256"},
+    "launch_request_sha256": {"$ref": "#/$defs/sha256"},
+    "approved_launch_binding_sha256": {"$ref": "#/$defs/sha256"},
+    "approved_external_transmission_manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "exact_execution_envelope_sha256": {"$ref": "#/$defs/sha256"},
+    "one_use_nonce_sha256": {"$ref": "#/$defs/sha256"},
+    "issued_at_utc": {"type": "string", "format": "date-time"},
+    "expires_at_utc": {"type": "string", "format": "date-time"},
+    "max_uses": {"const": 1},
+    "live_system_sender_attestation_observed": {"const": true},
+    "offline_cryptographic_verification": {"const": false},
+    "terminal": {"const": "LIVE_ATTESTATION_CONSUMED"},
+    "capability_payload_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authorization_message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "decision", "request_sha256", "approved_launch_binding_sha256", "approved_external_transmission_manifest_sha256", "exact_execution_envelope_sha256", "one_use_nonce_sha256", "target_task_path", "expires_at_utc", "external_research_authorized", "model_calls_authorized", "canonical_plan_writes_authorized", "generated_or_governance_writes_authorized", "git_write_authorized"],
+      "properties": {
+        "schema_version": {"const": "1.0.0"},
+        "decision": {"const": "AUTHORIZE_ONE_LIVE_TURN"},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "approved_launch_binding_sha256": {"$ref": "#/$defs/sha256"},
+        "approved_external_transmission_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "exact_execution_envelope_sha256": {"$ref": "#/$defs/sha256"},
+        "one_use_nonce_sha256": {"$ref": "#/$defs/sha256"},
+        "target_task_path": {"type": "string", "pattern": "^/root(?:/|$)"},
+        "expires_at_utc": {"type": "string", "format": "date-time"},
+        "external_research_authorized": {"const": true},
+        "model_calls_authorized": {"const": true},
+        "canonical_plan_writes_authorized": {"const": false},
+        "generated_or_governance_writes_authorized": {"const": false},
+        "git_write_authorized": {"const": false}
+      }
+    }
+  }
+}

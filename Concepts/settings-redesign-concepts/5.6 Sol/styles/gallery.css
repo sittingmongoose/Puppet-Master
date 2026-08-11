@@ -1,0 +1,314 @@
+* { box-sizing: border-box; }
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: clip;
+  scroll-padding-block-start: 92px;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--canvas);
+  font-size: 1rem;
+  text-rendering: optimizeLegibility;
+}
+
+button, input, select { max-width: 100%; font: inherit; color: inherit; }
+button, select, input[type="range"], input[type="checkbox"] { cursor: pointer; }
+
+:is(a, button, input, select):focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.gallery-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(20px, 4vw, 64px);
+  align-items: start;
+  max-width: 1900px;
+  margin-inline: auto;
+  padding: clamp(28px, 4vw, 54px) clamp(18px, 4vw, 64px) 24px;
+  border-block-end: var(--border-size) solid var(--divider);
+}
+
+.gallery-kicker,
+.concept-card header span {
+  color: var(--accent-text);
+  font-family: var(--font-compact);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.gallery-head h1 {
+  margin: 8px 0 10px;
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: clamp(2.15rem, 5vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+.gallery-head p {
+  max-width: 74ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.925rem;
+  line-height: 1.6;
+}
+
+.gallery-model {
+  padding: 8px 11px;
+  border: var(--border-size) solid var(--control-border-strong);
+  border-radius: 999px;
+  color: var(--accent-text);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.review-controls {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 11px;
+  max-width: 1900px;
+  margin-inline: auto;
+  padding: 11px clamp(18px, 4vw, 64px);
+  border-block-end: var(--border-size) solid var(--divider);
+  background: var(--chrome);
+  backdrop-filter: blur(var(--material-blur));
+}
+
+.review-controls label {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.review-controls select {
+  min-width: 128px;
+  min-height: 40px;
+  padding-block: 6px;
+  padding-inline: 9px 28px;
+  border: var(--border-size) solid var(--control-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.width-control {
+  grid-template-columns: auto auto;
+  flex: 1 1 270px;
+  min-width: min(320px, 100%);
+  max-width: 430px;
+}
+
+.width-control output {
+  justify-self: end;
+  color: var(--ink);
+  font-family: var(--font-code);
+}
+
+.width-control input {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 24px;
+  accent-color: var(--accent-fill);
+}
+
+.review-controls .check-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding-inline: 10px;
+  border: var(--border-size) solid var(--control-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.check-control input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--accent-fill);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 42px);
+  max-width: 1900px;
+  margin-inline: auto;
+  padding: clamp(24px, 4vw, 64px);
+}
+
+.concept-card {
+  min-width: 0;
+  padding-block-start: 16px;
+  border-block-start: 2px solid var(--control-border-strong);
+}
+
+.concept-card > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 14px;
+  min-width: 0;
+}
+
+.concept-card > header > div { min-width: 0; }
+
+.concept-card h2 {
+  margin: 5px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.concept-card a {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: var(--border-size) solid var(--control-border);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.concept-card a:hover {
+  border-color: var(--control-border-strong);
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+.concept-card > p {
+  min-height: 42px;
+  margin: 9px 0 14px;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.frame-stage {
+  position: relative;
+  width: 100%;
+  height: min(650px, 68vh);
+  height: min(650px, 68dvh);
+  min-height: 420px;
+  overflow: hidden;
+  border: var(--border-size) solid var(--control-border-strong);
+  background: var(--surface-sunken);
+  box-shadow: var(--shadow-sm);
+  contain: layout paint;
+}
+
+.frame-stage iframe {
+  position: absolute;
+  inset-block-start: 0;
+  display: block;
+  border: 0;
+  background: var(--canvas);
+  transform-origin: top left;
+}
+
+.gallery-foot {
+  max-width: 1900px;
+  margin-inline: auto;
+  padding: 22px clamp(18px, 4vw, 64px) 38px;
+  border-block-start: var(--border-size) solid var(--divider);
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1150px) {
+  .gallery-grid { grid-template-columns: minmax(0, 1fr); }
+  .frame-stage { height: 700px; }
+}
+
+@media (max-width: 680px) {
+  .gallery-head { grid-template-columns: minmax(0, 1fr); }
+  .gallery-model { justify-self: start; }
+
+  /* A compact, horizontally scrollable review tray keeps every control
+     reachable without allowing it to consume the entire zoomed viewport. */
+  .review-controls {
+    align-items: end;
+    flex-wrap: nowrap;
+    max-width: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 9px 12px;
+    scrollbar-width: thin;
+    scroll-snap-type: inline proximity;
+  }
+  .review-controls > label {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .review-controls > label:not(.width-control) { min-width: max-content; }
+  .width-control { width: 260px; min-width: 260px; }
+  .concept-card > header { align-items: start; flex-direction: column; }
+  .frame-stage { height: 620px; min-height: 360px; }
+}
+
+@media (any-pointer: coarse), (hover: none) {
+  .review-controls select,
+  .review-controls .check-control,
+  .concept-card a { min-height: 44px; }
+  .check-control input { width: 20px; height: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-reduced-motion="1"] *,
+[data-reduced-motion="1"] *::before,
+[data-reduced-motion="1"] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (forced-colors: active) {
+  .review-controls,
+  .frame-stage,
+  .concept-card,
+  .gallery-head,
+  .gallery-foot { border-color: CanvasText; }
+  .frame-stage { box-shadow: none; }
+}

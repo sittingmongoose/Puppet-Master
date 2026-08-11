@@ -1,45 +1,46 @@
 # Shard Index: Plans/Architecture_Invariants.md
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1`
+Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L13 `ab2110db0232585850238d99f152b549f02629ae944b2a0f984a396a2c004882`
-- [002 - 0. Scope](002-0.-scope.md) L15-L24 `ce9445a74c4966b83cc3bf9aeb438c3837d58217e4cac0022d4ba19c0e8ade8c`
-- [003 - INV-001 -- Tool correlation integrity (normalized streams + persisted events)](003-inv-001-tool-correlation-integrity-normalized-streams-persisted-.md) L25-L44 `0ffc89d97822ce80f539124a6b649a70f4631904db4fffbc02e26fc01d4b4f8f`
-- [004 - INV-002 -- No secrets in persistent storage](004-inv-002-no-secrets-in-persistent-storage.md) L45-L56 `d9a358eddb7052614950c0a9aa65909fa4ed5c6c97008602258d1bb9aec93b6d`
-- [005 - INV-003 -- UI SSOT (no bespoke UI behavior)](005-inv-003-ui-ssot-no-bespoke-ui-behavior.md) L58-L67 `c4eb7c93ddab04445aab7450aafc6a82bc88d4c104963be58eb4bfa0ac0b1ba1`
-- [006 - INV-004 -- UI command boundary (no business logic in UI)](006-inv-004-ui-command-boundary-no-business-logic-in-ui.md) L68-L77 `bb14960bf4fae26f126b0e4f2ea7745925191f2263e293fe6bf7e749276a98f2`
-- [007 - INV-005 -- Deterministic ordering from SSOT lists](007-inv-005-deterministic-ordering-from-ssot-lists.md) L78-L87 `928f5d1f4346cd08e2ded2695d2a8402dd1291f92c7c2beaaa836aff8d279959`
-- [008 - INV-006 -- Providers are storage-isolated](008-inv-006-providers-are-storage-isolated.md) L88-L92 `846403b759a20339fca94a5ebf515c7fa5d7bfc985c239330e80ab74bf2456cd`
-- [009 - INV-007 -- No stringly-typed IDs outside SSOT](009-inv-007-no-stringly-typed-ids-outside-ssot.md) L94-L103 `85ca0b1d4b57ec053c7e37e0dfcb5ccb7ce90aef75f47e1429ae310aa7c445a9`
-- [010 - INV-008 -- GitHub operations are API-only](010-inv-008-github-operations-are-api-only.md) L104-L113 `21cac3fc52bb08f09b834be2ccb31e1a840e8f45ba4eb263ac2e9e2cfa88dbbc`
-- [011 - INV-009 -- Cursor transport is invisible to consumers](011-inv-009-cursor-transport-is-invisible-to-consumers.md) L114-L123 `062f22c37573f74b06e92782a4927d7534c8fcc41cdac9aa0f17141dd2a7b3fd`
-- [012 - INV-010 -- Platform naming compliance](012-inv-010-platform-naming-compliance.md) L124-L134 `b8dbfb6f92d66982f06d3f6b684b7c1cecf842ef2bbe32553f70217befbf5f32`
-- [013 - INV-011 -- UI command dispatch only (Rule 1)](013-inv-011-ui-command-dispatch-only-rule-1.md) L135-L146 `257a0c89404bea367746783ae8daf0461749fb0f748ef0f542c318aac45436f5`
-- [014 - INV-012 -- Wiring matrix coverage (Rule 2)](014-inv-012-wiring-matrix-coverage-rule-2.md) L147-L153 `ba2def971468de4afd99e0024c7124844f59148cb2fe2bd021192f950ede521d`
-- [015 - INV-013 -- Pre-dispatch tool validation](015-inv-013-pre-dispatch-tool-validation.md) L154-L163 `d9be2f408a4103ffe0bfbf1aa4de5d1a5cc1108fbe791077663196d3311827ab`
-- [016 - INV-014 -- Shared mutable state requires RWMutex](016-inv-014-shared-mutable-state-requires-rwmutex.md) L165-L176 `11f494f42221ecb480b20d7dd2ba8810b2aecb47a73cfb2b668951f7b4bb8ca9`
-- [017 - INV-015 -- Monetary values are integer microdollars](017-inv-015-monetary-values-are-integer-microdollars.md) L177-L189 `bbdac505ca109d4929caa95fc82ffc20f38a937c13cfef6032feeadf59468d9b`
-- [018 - INV-016 -- Token fields are never aggregated at storage layer](018-inv-016-token-fields-are-never-aggregated-at-storage-layer.md) L190-L201 `b113ebb88054d4e0ab967a6686cd247fa5682f17670f5b0bfed7989bbd39f65c`
-- [019 - INV-017 -- File mutations are atomic (temp-fsync-rename)](019-inv-017-file-mutations-are-atomic-temp-fsync-rename.md) L202-L210 `4a0922bd93f1cfce555c8dd635f1bcb850cfdc88f8d0ef11875d1a7474633873`
-- [020 - INV-018 -- Seglog CRC32 is mandatory](020-inv-018-seglog-crc32-is-mandatory.md) L211-L226 `c5f5f73f33b888ede008841c03372ea8f7118c27a8f34da1150a688b9b8c9d03`
-- [021 - Contract-driven code generation (lightweight; DRY)](021-contract-driven-code-generation-lightweight-dry.md) L228-L235 `9b0422b9bd2a85a7bbbfe9999355acce58d35452ec9d37473176a7c717fe63c1`
-- [022 - Validation (gated; autonomous)](022-validation-gated-autonomous.md) L237-L252 `46d7a9931fa6c5d6b667e7bf16bd071d39b1e131c9c10e512c90bde0dae25c8a`
-- [023 - Debug investigation invariants addendum (2026-03-23)](023-debug-investigation-invariants-addendum-2026-03-23.md) L254-L276 `4fa4004d1f8ce14951f6fc46857fb1ac59934434568fe3004ba54bc2bd094578`
-- [024 - INV-019 -- Runtime identity and blocked-policy continuity](024-inv-019-runtime-identity-and-blocked-policy-continuity.md) L278-L312 `dbf2041da58e9dfdb92ab7c9ed7262f25aeafa7cd25083c0fa0e901519ce0b8a`
-- [025 - INV-020 -- Project-driven capability activation](025-inv-020-project-driven-capability-activation.md) L314-L326 `e8afb080cb62dbcd6d52876a38f2b96eda46b0133cfc7a03fe3b6e3a0935377e`
-- [026 - INV-021 -- Dependency-driven seam reconciliation order](026-inv-021-dependency-driven-seam-reconciliation-order.md) L328-L338 `80aea9157ec2356f0630781abaa645a9cf7a671aea104d853ccf8d79008e994b`
-- [027 - INV-022 -- Service-bound native workbench architecture](027-inv-022-service-bound-native-workbench-architecture.md) L340-L363 `917976bef7315880d5c6d6368da2af368834b4082e6d5e29721a579454d0b19c`
-- [028 - INV-023 -- Investigation lifecycle budgets are typed](028-inv-023-investigation-lifecycle-budgets-are-typed.md) L365-L375 `6cfd60545e3076d429c160ec9388f3e96e3df3af5ec37f60e9babf127b4ac5a0`
-- [029 - INV-024 -- Debug Mode evidence planes stay explicit](029-inv-024-debug-mode-evidence-planes-stay-explicit.md) L377-L392 `164f5bd6085c2ecf14db9ca2428b90b53af5dc71d256f1a72c9d1fac40605de8`
-- [030 - INV-025 -- Provider profile isolation is not shared mutable state](030-inv-025-provider-profile-isolation-is-not-shared-mutable-state.md) L394-L401 `5fefe379d53afddc49caf31615afc347a2e73214037e430ecf7adcdfdf4f999b`
-- [031 - INV-026 -- Web/provider recovery consumers defer to owner contracts](031-inv-026-web-provider-recovery-consumers-defer-to-owner-contracts.md) L403-L412 `f745ce7219df08d0dc7a1a613e267025d7922c192e77f8978e1a64fc1f2fbf38`
-- [032 - Owner / Consumer Map](032-owner-consumer-map.md) L414-L418 `37707b0eab411b9dfebbf1c04ea48c2fa9e5bc3dcd245615e3a6f5e3860a80eb`
-- [033 - PlanUnits](033-planunits.md) L420-L4394 `8fee0925a66d1bfea86c0bbccda045b5852bf0595fe32c392c53183e7188eb89`
-- [034 - Migration Coverage](034-migration-coverage.md) L4396-L4406 `7de061f0c32de5edd9be6b4fc4753faee06b6154b7f3bd500e091c6afdd69996`
-- [035 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](035-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4408-L4414 `f011e1e9d8bc913e21f8de8247b304691551c2086f12710135bb1fd79c2b722d`
+- [001 - Preamble](001-preamble.md) L1-L13 `7871175f7cd778ecc2ed3a18aab4ba9a6761c1f2c75a93ad150e1425e3895714`
+- [002 - 0. Scope](002-0.-scope.md) L15-L24 `1afc5eedd44352be7eea06b313d12a7e7aaf553a707c6c2f5c4c2ab6e8e785e9`
+- [003 - INV-001 -- Tool correlation integrity (normalized streams + persisted events)](003-inv-001-tool-correlation-integrity-normalized-streams-persisted-.md) L25-L44 `348affad2aaef16c772f09adcffb1880534aa0d788a8c57e43e758fa9c5d600e`
+- [004 - INV-002 -- No secrets in persistent storage](004-inv-002-no-secrets-in-persistent-storage.md) L45-L56 `30f69592799c8bd7527165d60a34a4991c8a7af3d24d95483d31c0edec0ca655`
+- [005 - INV-003 -- UI SSOT (no bespoke UI behavior)](005-inv-003-ui-ssot-no-bespoke-ui-behavior.md) L58-L67 `f55ec6bf919b0a8d9bb0b2ebb97d42d70a9b871158f80074bcc3fbe55c818089`
+- [006 - INV-004 -- UI command boundary (no business logic in UI)](006-inv-004-ui-command-boundary-no-business-logic-in-ui.md) L68-L77 `fc82d8bd8a6087a45feda00930171bddc19dd3ade32c83f28f0e7585cfa99158`
+- [007 - INV-005 -- Deterministic ordering from SSOT lists](007-inv-005-deterministic-ordering-from-ssot-lists.md) L78-L87 `973007449a94a993f1abcf67d8d92baa5fa00cb21e5fb523165754547a0c4555`
+- [008 - INV-006 -- Providers are storage-isolated](008-inv-006-providers-are-storage-isolated.md) L88-L92 `91d8a7a5665a1ca4c24ffa78c3c1da91f7667560803609431ec9593d31e47c5c`
+- [009 - INV-007 -- No stringly-typed IDs outside SSOT](009-inv-007-no-stringly-typed-ids-outside-ssot.md) L94-L103 `149da9466455cefa7efb6f5a78496709a61f07d4c948c7eea8bba27dac3b7736`
+- [010 - INV-008 -- GitHub operations are API-only](010-inv-008-github-operations-are-api-only.md) L104-L113 `64eb3799eb518d867a3304ac472d88d1d9016ae00d7b4c87cd28a25bb43547a0`
+- [011 - INV-009 -- Cursor transport is invisible to consumers](011-inv-009-cursor-transport-is-invisible-to-consumers.md) L114-L123 `23894a15c027e57b1b7545aded2f78c3fda361a6be00dd62b71f79d71a78e68d`
+- [012 - INV-010 -- Platform naming compliance](012-inv-010-platform-naming-compliance.md) L124-L134 `baa683fe22ec9fbf90fa191d48c8381b17ed8cb018b39ffbcd34d91b0307bbd2`
+- [013 - INV-011 -- UI command dispatch only (Rule 1)](013-inv-011-ui-command-dispatch-only-rule-1.md) L135-L146 `65d4bb81be1b9a9637abe40bdeec449c6f60ba989dceba6e3bc9694ea5f157e0`
+- [014 - INV-012 -- Wiring matrix coverage (Rule 2)](014-inv-012-wiring-matrix-coverage-rule-2.md) L147-L153 `f699bcfa7cfe9b635a0483a4ecbae140cacac657dd0a7cf4df86bb4d5c4cb1b5`
+- [015 - INV-013 -- Pre-dispatch tool validation](015-inv-013-pre-dispatch-tool-validation.md) L154-L163 `878a398d9049f4728268c8d5c67da9eff019c9cc9b7e7d4586332731dc04c8f6`
+- [016 - INV-014 -- Shared mutable state requires RWMutex](016-inv-014-shared-mutable-state-requires-rwmutex.md) L165-L176 `63cd7bbde985557532b40a3915d01cae59982894596b6989476fc2dc524d4451`
+- [017 - INV-015 -- Monetary values are integer microdollars](017-inv-015-monetary-values-are-integer-microdollars.md) L177-L189 `156ebbee22f68a6599eeac46431f289a6dadc9db024b8a6edec4b33f8f54267c`
+- [018 - INV-016 -- Token fields are never aggregated at storage layer](018-inv-016-token-fields-are-never-aggregated-at-storage-layer.md) L190-L201 `c788d71a2447c4a1fc2c5f4926a7706533be14c45c34ef5fd120574692e077f0`
+- [019 - INV-017 -- Durable atomic replacement and exact-replace recovery](019-inv-017-durable-atomic-replacement-and-exact-replace-recovery.md) L202-L212 `1aab8b4ad1101ea0439a1f4836a6c5d4fadd6aaf9e4aadb127336947af50e244`
+- [020 - INV-018 -- Seglog frame integrity and deterministic recovery are mandatory](020-inv-018-seglog-frame-integrity-and-deterministic-recovery-are-ma.md) L213-L236 `940053073108fff91d7d854269b54d6114239618c48278445356aacbace489ae`
+- [021 - Contract-driven code generation (lightweight; DRY)](021-contract-driven-code-generation-lightweight-dry.md) L238-L245 `e7e3b1715013f41b6e420d874565ecf4ef7a6efd7aa632051d7db8e4672ddc28`
+- [022 - Validation (gated; autonomous)](022-validation-gated-autonomous.md) L247-L262 `b29c995215b075453b824c57749fc358333f07752c80f62d99d916783d18713a`
+- [023 - Debug investigation invariants addendum (2026-03-23)](023-debug-investigation-invariants-addendum-2026-03-23.md) L264-L286 `7db2346255de8cd77b92aafdc361f0c4794241f8ba6e5823f17a4839cd4d2cbe`
+- [024 - INV-019 -- Runtime identity and blocked-policy continuity](024-inv-019-runtime-identity-and-blocked-policy-continuity.md) L288-L323 `ca3aedc3885a312c2a39dad58eafccee230d5911ebcf72ffee4da6835054494b`
+- [025 - INV-020 -- Project-driven capability activation](025-inv-020-project-driven-capability-activation.md) L325-L337 `87e7af2fba171b5a2957d249819932cdb8dd46f76044c1fd6b485ef5b684a4c9`
+- [026 - INV-021 -- Dependency-driven seam reconciliation order](026-inv-021-dependency-driven-seam-reconciliation-order.md) L339-L349 `6f50ec72baf75c58ca474e09336d56882ccd3bf694d9fd8626194cd5ce0770c6`
+- [027 - INV-022 -- Service-bound native workbench architecture](027-inv-022-service-bound-native-workbench-architecture.md) L351-L374 `5fa3022453c388bd204e7ff0b1d4dc97b16b74b7e717c35a7457e753a84257fb`
+- [028 - INV-023 -- Investigation lifecycle budgets are typed](028-inv-023-investigation-lifecycle-budgets-are-typed.md) L376-L386 `e0b7563c40ab12f48bbc10e27a9b548c03506fdc8074dec1fe0f94690246bea2`
+- [029 - INV-024 -- Debug Mode evidence planes stay explicit](029-inv-024-debug-mode-evidence-planes-stay-explicit.md) L388-L403 `4376fc5c709f2750002ac5c9d8567759ba2abad043ca907a50aead8d51f1ecee`
+- [030 - INV-025 -- Provider profile isolation is not shared mutable state](030-inv-025-provider-profile-isolation-is-not-shared-mutable-state.md) L405-L412 `f74247ce79c2e6c65bb02a701b1be247169001748cdf269c08b9fca4bfbe7e67`
+- [031 - INV-026 -- Web/provider recovery consumers defer to owner contracts](031-inv-026-web-provider-recovery-consumers-defer-to-owner-contracts.md) L414-L423 `d05dec33172d6e94f00de0c61c7885cc410f45a23c3875eff51cd1436815d7c8`
+- [032 - INV-027 -- Durable-state authority, scope, replay, and recovery remain explicit](032-inv-027-durable-state-authority-scope-replay-and-recovery-remain.md) L425-L437 `52eed91635368f41e74ee2da81accada74b0df033a369b5ef8238588a2232cb0`
+- [033 - Owner / Consumer Map](033-owner-consumer-map.md) L439-L443 `2bf17d293b6de58df4e9fccaea697229e2070770352f38b6fc28ed9c9306b4b4`
+- [034 - PlanUnits](034-planunits.md) L445-L4530 `24c7cbad9fa8c3831ef4109a6c9b436021d7f23cd36eee324d2c0b6dd8cff19c`
+- [035 - Migration Coverage](035-migration-coverage.md) L4532-L4542 `c2b86d04245f5d93b55a53167a0e5a4ce12ecf8ddc06b155ab648c4ae389cc6c`
+- [036 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](036-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4544-L4550 `11a4b40fe15ffa28ed099a1e35472b422eb6eadb6d25f168ae0d5d2cf68a4ce5`

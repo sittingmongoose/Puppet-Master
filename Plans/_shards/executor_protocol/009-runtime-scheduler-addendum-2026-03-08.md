@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L267-L570
+Source lines: L267-L572
 
-Source SHA256: `e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8`
+Source SHA256: `fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162`
 
 ---
 
@@ -157,7 +157,7 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestra
 | `blocked_reason_code` | `headless_ask_denied` | 0 | — | No | blocked or denied outcome; never silently retry |
 | `blocked_reason_code` | `filesafe_blocked` | 0 | — | No | never auto-retry; honor FileSafe restore requirements |
 | `blocked_reason_code` | `external_side_effect_blocked` | 0 | — | No | preserve local work and wait for approval/decline |
-| `failure_class` | `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
+| `failure_class` | `storage_io` | owner-routed by `storage_io_class` | owner-routed | Conditional | Storage owns the closed class and retry budget: `interrupted` permits at most three immediate adapter retries and `transient_busy` permits exactly one retry after 250 ms; every other class is non-retryable. Adapter retries do not create a new Executor attempt. |
 | `failure_class` | `quota_exceeded` | 0 | — | No | user action or later retry window |
 | `failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only |
 | `blocked_reason_code` | `replan_required` | 0 | — | No | remain blocked until patch or replan is applied |
@@ -177,6 +177,8 @@ Closed mapping requirements:
 Per-class (`per-class`) retry rules:
 - `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
 - `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
+- `storage_io` consumes the storage-owned `storage_io_class` result and exact retry facts; Executor MUST NOT broaden retryability, restart a canonical write as a new attempt, buffer pseudo-durable work, or auto-resume a blocked attempt after storage recovery
+- while storage reports `storage_access_mode != writer`, no mutation-capable attempt may enter dispatch; an explicit storage recovery action may make the owning runtime action available again, but the blocked episode remains until that action is separately admitted
 - generic retry without prior classification is prohibited
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/CLI_Bridged_Providers.md

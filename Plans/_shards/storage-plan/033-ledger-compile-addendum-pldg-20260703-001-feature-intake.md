@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16135-L16609
+Source lines: L16158-L16637
 
-Source SHA256: `66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1`
+Source SHA256: `21bd16a8872bfbd2f641dac39e4b02bb8f311eb5f90d27fbb3c5de62157c5706`
 
 ---
 
@@ -276,13 +276,13 @@ canonical_text: >-
   pm.event.v0 envelope in Plans/Contracts_V0.md#EventRecord and
   Plans/event_record.schema.json. Seglog is the authoritative append-only
   MessagePack EventRecord store; redb may store rebuildable checkpoints,
-  projections, idempotency indexes, and event_record_index.v1 lookup rows that
+  projections, dedicated dedupe indexes, and event_record_index.v2 scope-partitioned lookup rows that
   point back to seglog. Replay ordering uses segment generation, segment order,
   byte offset, and sequence_id rather than timestamps. Stored values require
   schema_version, reject unsupported schema_id/schema_version pairs, use
   event_id and idempotency_key according to replay_policy, preserve
-  redaction/no-secret rules, and migrate legacy EventEnvelopeV1 type values into
-  EventRecord event_type with migration metadata.
+  redaction/no-secret rules, and normalize legacy EventEnvelopeV1 values deterministically
+  in memory with projector_replay_only rather than rewriting or appending them.
 gui_related: false
 gui_classification_reason: This unit defines storage value encoding, replay, and projection boundaries, not GUI presentation.
 depends_on: [SP-001, CV-309]
@@ -292,7 +292,9 @@ acceptance_criteria:
   - EventRecord values are MessagePack encoded and conform to Plans/event_record.schema.json.
   - redb event lookup rows carry schema_id, schema_version, event_type, segment refs, offset, payload hash, idempotency, and causality refs while pointing back to seglog.
   - Replay order is deterministic and not timestamp-derived.
-  - Legacy EventEnvelopeV1 is compatibility input only and new writers emit EventRecord.
+  - Application/project scope partitions validate without fake project identities; new writers emit EventRecord 2.0.0 only.
+  - Legacy EventEnvelopeV1 is compatibility input only, normalizes byte-deterministically in memory, and never rewrites the source on ordinary open.
+  - Dedupe indexes catch up to the verified seglog tail or append fails closed without mutation.
   - This is partial closure for EventRecord persistence only; not all redb value schemas or payload schemas are materialized.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate
@@ -316,7 +318,7 @@ preserved_exact_tokens:
   - "`EventRecord`"
   - "`pm.event.v0`"
   - "`schema_version`"
-  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`"
   - "`event_id`"
   - "`idempotency_key`"
   - "`sequence_id`"
@@ -350,10 +352,12 @@ canonical_text: >-
   rows are fully materialized for ApprovedPlanPack, PlanApproved outbox,
   PlanCompileRun, compiler wave contract, WorkGraph draft, WorkNodeRequest,
   Executor intake report, attempt receipt, EventRecord index, blocked
-  projection, and goal receipt. Later GUI, provider, analytics, terminal,
-  browser, project-state, coordination mirror export, worktree/lane, permission/safe-point, and feature
-  projection families are inventoried as deferred_not_build_blocking with an
-  owner, reason, and reopen condition. Persisted values require schema_version,
+  projection, and goal receipt. Case L additionally requires materialized migration,
+  editor recovery/workspace, hotreload, onboarding, safe-point/restore transaction,
+  restore-point, EventRecord dedupe, retention/anchor/maintenance/quarantine/deletion
+  families under the registry-owner repair. Permission snapshots and genuinely later
+  GUI/provider/feature projections remain independently deferred with owner, reason,
+  and reopen condition. Persisted values require schema_version,
   name key shape and value owner, specify replay, migration, retention and
   compaction behavior, and reject raw secrets, tokens, passwords, credentials,
   API keys, OAuth values, local credential paths, or local machine secrets.
@@ -364,7 +368,8 @@ unblocks: []
 acceptance_criteria:
   - Plans/storage_value_registry.json parses and conforms to Plans/storage_value_registry.schema.json.
   - Every registered storage family has key_shape, value_schema_id/ref, owner_doc, producer, consumers, schema_version, encoding, replay, migration, retention/compaction, redaction/no-secret, and legacy/canonical crosswalk status.
-  - Launch-critical rows are materialized for approved_plan_pack, plan_approved_outbox, plan_compile_run, compiler_wave_contract, workgraph_draft, worknode_request, executor_intake_report, attempt_receipt, event_record_index, blocked_projection, and goal_receipt.
+  - Launch-critical rows include the original Tier 0C-2 set plus Case L migration receipt, safe-point record, and safe-point restore transaction; no mutation-capable path depends on a deferred bundled family.
+  - Required-MVP editor, hotreload, onboarding, restore-point, dedupe, retention/anchor/maintenance/quarantine/deletion rows are materialized with closed value schemas before implementation depends on them.
   - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants.
   - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.
   - Coordination event, read-model, and debug mirror export families are registered as non-launch-critical storage families; mirrors remain compatibility/debug surfaces only.
@@ -399,7 +404,7 @@ preserved_exact_tokens:
   - "`WorkNodeRequest`"
   - "`Executor intake`"
   - "`attempt receipt`"
-  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`"
   - "`blocked_projection.v1:{project_id}:{node_id}`"
   - "`goal_receipt.v1:{project_id}:{receipt_id}`"
   - "`coordination.agent_registered`"

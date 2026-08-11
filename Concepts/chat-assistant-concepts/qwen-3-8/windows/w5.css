@@ -1,0 +1,214 @@
+.pmq-w5 {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  container-type: inline-size;
+  container-name: pmq-w5;
+}
+
+.pmq-w5-root { display: flex; flex: 1; min-width: 0; min-height: 0; position: relative; }
+
+.pmq-w5-body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.pmq-w5-body > .pmq-thread-slot { flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w5-body > .pmq-pincol {
+  --pmq-pincol-w: 224px;
+  animation: pmq-w5-pin-in var(--dur-med) var(--ease-out);
+}
+
+.pmq-w5-body > .pmq-artws { animation: pmq-w5-pin-in var(--dur-med) var(--ease-out); }
+
+@keyframes pmq-w5-pin-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.pmq-w5-spine {
+  flex: none;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 10px;
+  background: var(--surface-sunken);
+  border-right: 1px solid var(--border);
+}
+
+.pmq-w5-sbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-w5-sbtn .pmq-ico { color: color-mix(in srgb, var(--text-primary) 84%, var(--accent-primary)); }
+
+.pmq-w5-sbtn:hover { background: var(--hover-fill-strong); color: var(--accent-primary); }
+.pmq-w5-sbtn:hover .pmq-ico { color: var(--accent-primary); }
+.pmq-w5-sbtn:active { transform: scale(0.92); }
+
+.pmq-w5-sbtn[aria-expanded="true"],
+.pmq-w5-sbtn[aria-pressed="true"] {
+  color: var(--accent-primary);
+  background: var(--accent-softer);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 42%, transparent);
+}
+
+.pmq-w5-sbtn[aria-expanded="true"] .pmq-ico,
+.pmq-w5-sbtn[aria-pressed="true"] .pmq-ico { color: var(--accent-primary); }
+
+.pmq-w5-pin.pmq-on { color: var(--accent-primary); background: var(--accent-softer); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 42%, transparent); }
+.pmq-w5-pin.pmq-on .pmq-ico { transform: rotate(45deg); color: var(--accent-primary); }
+.pmq-w5-pin .pmq-ico { transition: transform var(--dur-med) var(--ease-spring); }
+
+.pmq-w5-spine .pmq-btn.pmq-btn-icon { width: 32px; height: 32px; min-width: 32px; min-height: 32px; color: color-mix(in srgb, var(--text-primary) 84%, var(--accent-primary)); }
+.pmq-w5-spine .pmq-btn.pmq-btn-icon .pmq-ico { color: inherit; }
+.pmq-w5-spine .pmq-btn.pmq-btn-icon:hover,
+.pmq-w5-spine .pmq-lens-btn.pmq-lens-active { color: var(--accent-primary); background: var(--accent-softer); }
+.pmq-w5-spine .pmq-ring { width: 32px; height: 32px; }
+
+.pmq-w5-spacer { flex: 1; min-height: 10px; }
+
+.pmq-w5-spine .pmq-artchip {
+  width: 32px;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 2px;
+  border-radius: var(--radius-sm);
+}
+
+.pmq-w5-pinrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  padding: 6px 4px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w5-pinrow:hover, .pmq-w5-pinrow.pmq-active { background: var(--hover-fill); }
+
+.pmq-w5-pinrow-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  color: color-mix(in srgb, var(--text-primary) 84%, var(--accent-primary));
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w5-pinrow:hover .pmq-w5-pinrow-g,
+.pmq-w5-pinrow.pmq-active .pmq-w5-pinrow-g { color: var(--accent-primary); }
+
+.pmq-w5-pinrow-t {
+  max-width: 100%;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pmq-w5-pinrow.pmq-active .pmq-w5-pinrow-t { color: var(--accent-primary); }
+
+.pmq-w5-pinmicro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 2px auto;
+  border-radius: var(--radius-sm);
+  color: color-mix(in srgb, var(--text-primary) 84%, var(--accent-primary));
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w5-pinmicro:hover, .pmq-w5-pinmicro.pmq-active { background: var(--hover-fill); color: var(--accent-primary); }
+
+.pmq-w5-main { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w5-titlerow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 12px 7px 10px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+  min-width: 0;
+}
+
+.pmq-w5-titlerow .pmq-title-block { flex: 1; min-width: 0; }
+
+.pmq-w5 .pmq-thread-slot { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+
+.pmq-w5-config .pmq-w5-cfg-summary { display: flex; flex-direction: column; gap: 5px; padding: 8px 10px 4px; }
+
+.pmq-w5-cfg-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  min-width: 0;
+}
+
+.pmq-w5-cfg-row .pmq-ico { width: 13px; height: 13px; color: var(--text-faint); flex: none; }
+
+.pmq-w5-cfg-k {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  width: 52px;
+  flex: none;
+}
+
+.pmq-w5-cfg-v {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.pmq-w5-cfg-sel { flex-direction: column; gap: 6px; padding: 6px 10px 10px; }
+
+@container pmq-w5 (max-width: 560px) {
+  .pmq-w5-spine { width: 30px; gap: 3px; padding: 7px 0 9px; }
+  .pmq-w5-sbtn, .pmq-w5-spine .pmq-btn.pmq-btn-icon, .pmq-w5-spine .pmq-ring {
+    width: 24px; height: 24px; min-width: 24px; min-height: 24px;
+  }
+  .pmq-w5-sbtn .pmq-ico, .pmq-w5-spine .pmq-btn.pmq-btn-icon .pmq-ico { width: 15px; height: 15px; }
+  .pmq-w5-spine .pmq-artchip { width: 24px; }
+  .pmq-w5-pinrow-g, .pmq-w5-pinmicro { width: 28px; height: 28px; }
+  .pmq-w5-titlerow { padding-right: 9px; }
+  .pmq-w5-titlerow .pmq-title-state { display: none; }
+}

@@ -1,0 +1,1659 @@
+/* PANEL BAKEOFF - vG  COZY SHELVES  (design system)
+   =========================================================================
+   Ported from Concepts/rail-concepts/c2-cozy-shelves.html,
+with the six
+   fixes the build contract requires. The LOOK is kept: soft shelf cards,
+two-line rows,
+hairline borders,
+generous but not wasteful spacing. The
+   MECHANICS are rebuilt so the design survives 240px in all 8 themes and
+   maps onto Slint 1.17.1.
+
+   The four properties this design exists for (contract,
+top):
+     1. a shelf says WHAT and HOW MANY before it shows data
+     2. a row is identity on line 1,
+qualification on line 2,
+always
+     3. one accent channel per shelf
+     4. four primitives composed identically in every panel
+
+   WHAT CHANGED FROM THE SOURCE,
+AND WHY
+     - 10 ad-hoc font sizes -> a five-step ladder driven by --cz-scale.
+       There is not one literal px font-size below this comment.
+     - arbitrary per-shelf hues (--cat: var(--accent-lime) etc) -> semantic
+       --cz-cat from data-cz-state. --accent-primary is reserved for
+       selection and primary action and is never a category colour: in
+       retro-dark --accent-primary IS --accent-lime,
+so a lime category chip
+       and a selected row were the same pixel.
+     - every color-mix() tint is gone (F3-431 forbids runtime colour maths,
+and Slint has no equivalent). The category channel is carried by a
+       3px inset rail + the head glyph + the count,
+all solid tokens.
+     - .sh-kvwrap's space-between overlap (234px at the 280px default) ->
+       an explicit stacked/inline rule with an 88px inline floor.
+     - one 250px tab threshold -> count-aware modes.
+     - the nested .fm-children tree,
+whose filename reached 0px at depth 6
+       -> a flat tree with a capped indent and a 72px name floor.
+     - liveRail 1.8s infinite -> nothing. A running row is a static spine.
+
+   MARKUP CONTRACT (what _pm-cozy.js emits and the four panel files compose)
+   -------------------------------------------------------------------------
+   root      <div class="cz" data-cz-text="normal|large|larger" data-cz-b="0..3">
+               .cz-banner            panel title bar,
+does not scroll
+               .cz-tabs              subview switcher,
+does not scroll
+               .cz-scroll            the ONE scroller
+               .cz-foot              sticky action footer,
+does not scroll
+
+   shelf     <section class="cz-shelf" data-cz-state="ok|run|warn|err|idle"
+                      data-cz-open="1|0">
+               .cz-head                     flex row (may itself be a button)
+                 button.cz-head-main[aria-expanded]
+                   .cz-ico .cz-head-label .cz-head-count .cz-chev
+                 .cz-head-acts              buttons / .cz-menu
+               .cz-body                     payload; [hidden] when collapsed
+
+   row       <div class="cz-row" data-cz-state="..." (role/tabindex from JS)>
+               .cz-spine  .cz-ico
+               .cz-main > .cz-name (line 1) + .cz-meta (line 2)
+               .cz-chip
+               .cz-acts                     reserved at rest,
+faded in
+
+   ex row    <div class="cz-ex" data-cz-open="0">
+               button.cz-ex-h[aria-expanded]   same innards as .cz-row
+               .cz-ex-b                        [hidden] when collapsed
+
+   body      .cz-body / .cz-ex-b hold slots in the fixed contract order:
+               .cz-sum  .cz-facts  .cz-detail  .cz-actions  .cz-blocked  .cz-menu
+
+   kv        <div class="cz-kv" data-cz-kv="stacked|inline"
+                    data-cz-kind="token|badge|measure|prose">
+               .cz-k  .cz-v
+
+   tabs      <div class="cz-tabs" data-cz-tabmode="labelled|icons|overflow">
+               button.cz-tab[aria-selected] > .cz-ico + .cz-tab-label
+               button.cz-tab-more
+
+   tree      <div class="cz-tree" role="tree">
+               .cz-crumb                            scope breadcrumb
+               <div class="cz-tree-row" role="treeitem" aria-level="N"
+                    data-cz-d="N" style="--cz-d:N" data-cz-git="A|M|D|?|R|U|C|!">
+                 .cz-spine                          3px git spine,
+fixed
+                 .cz-gut                            12px mono status gutter
+                 .cz-tw                             the indented text band
+                   .cz-chev .cz-ico .cz-name .cz-badge
+                 .cz-acts                           reserved at rest
+               .cz-more                             paging / show-more row
+
+   atoms     .cz-chip  .cz-btn  .cz-ibtn  .cz-menu  .cz-blocked  .cz-empty
+
+   Aliases kept deliberately generous: .cz-tree > .cz-row, .cz-tree-rows > .cz-row is styled exactly
+   like .cz-tree-row,
+and a <button class="cz-head"> works as well as
+   .cz-head > .cz-head-main. Four agents compose this in parallel; being
+   forgiving about which of two obvious spellings they picked is cheaper
+   than being right.
+
+   SLINT MAPPING
+     .cz-shelf     a component with a `cat` brush property; the rail is one
+                   Rectangle,
+not a gradient,
+because Slint has no color-mix.
+     .cz-tree      a ListView over a flat model; `--cz-d` is an int property
+                   and the indent is `min(depth,
+6) * 10px`,
+an expression
+                   Slint can evaluate. There is no recursion anywhere.
+     .cz-tabs      an int `tabmode` computed once in Rust from panel width
+                   and tab count. No text is measured.
+     .cz-kv        a bool `inline` from the same bucket int.
+
+   HARD RULES OBSERVED
+     no color-mix() - no :has() - no ::before/::after at all - no display:grid
+     - no viewport units - no keyframes and no infinite animation - no
+     literal px font-size - every interactive box >= 24px - all colour from
+     _pm-tokens.css so all 8 themes work - no emoji.
+   ========================================================================= */
+
+
+/* ============================== 1. ROOT SCOPE ============================
+   The five-step ladder. --cz-scale models general.visual.panel-text-size,
+which is the agreed setting,
+so text size is ONE number and not ten
+   scattered decisions.
+
+   The display font is deliberately --display-font-sm,
+not --display-font.
+   The contract permits the display face at --cz-fs-head and above; the kit
+   forbids --display-font below 12px because retro renders Orbitron and
+   10.5px Orbitron is what cost Docker 60px of tab width. --display-font-sm
+   is the same slot at a readable face (Rajdhani in retro),
+so both rules
+   hold at once. */
+.cz,
+fixed
+                 .cz-gut                            12px mono status gutter
+                 .cz-tw                             the indented text band
+                   .cz-chev .cz-ico .cz-name .cz-badge
+                 .cz-acts                           reserved at rest
+               .cz-more                             paging / show-more row
+
+   atoms     .cz-chip  .cz-btn  .cz-ibtn  .cz-menu  .cz-blocked  .cz-empty
+
+   Aliases kept deliberately generous: .cz-tree > .cz-row, .cz-tree-rows > .cz-row is styled exactly
+   like .cz-trow {
+  --cz-scale: 1;
+  --cz-fs-micro: calc(8px    * var(--cz-scale));
+  --cz-fs-small: calc(9px    * var(--cz-scale));
+  --cz-fs-meta:  calc(9.5px  * var(--cz-scale));
+  --cz-fs-head:  calc(10.5px * var(--cz-scale));
+  --cz-fs-body:  calc(11.5px * var(--cz-scale));
+
+  /* geometry constants the tree and the rows share */
+  --cz-gut-w: 12px;          /* git status gutter, fixed, costs the name 0 */
+  --cz-spine-w: 3px;         /* the one category / git channel             */
+  --cz-act-w: 24px;          /* action gutter, reserved AT REST            */
+  --cz-name-floor: 72px;     /* a filename may never reach 0               */
+  --cz-indent: 10px;         /* per level, capped at 6 levels              */
+
+  --cz-cat: var(--graph-pending);
+  --cz-cat-fg: var(--cz-cat);
+
+  display: flex; flex-direction: column;
+  height: 100%; min-height: 0; min-width: 0;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--cz-fs-body);
+  line-height: var(--line-height, 1.5);
+}
+.cz[data-cz-text="large"]  { --cz-scale: 1.12; }
+.cz[data-cz-text="larger"] { --cz-scale: 1.25; }
+
+/* Buttons in this system never look like OS buttons. */
+.cz button {
+  font: inherit; color: inherit;
+  background: none; border: 0; margin: 0;
+  text-align: left; cursor: pointer;
+}
+.cz button:focus-visible,
+.cz [tabindex]:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+  border-radius: var(--radius-xs);
+}
+
+.cz svg { display: block; flex: none; }
+
+
+/* ========================= 2. SEMANTIC CATEGORY COLOUR ==================
+   One mapping, applied wherever data-cz-state appears - shelf, row, chip,
+   dot - so the vocabulary cannot drift between primitives.
+
+   --cz-cat   the rail / spine / border channel. Large solid areas, so the
+              theme token is used verbatim.
+   --cz-cat-fg the TEXT and glyph channel. Same value everywhere except the
+              basic family, which mandates WCAG AA (FinalGUISpec 13.1) and
+              where several graph-* tokens miss the 4.5 floor as text.
+
+   Colour never carries meaning alone: every consumer of these also carries
+   a glyph shape and an accessible label, per the contract. */
+.cz [data-cz-state="ok"],   .cz[data-cz-state="ok"]   { --cz-cat: var(--graph-passed);   --cz-cat-fg: var(--graph-passed); }
+.cz [data-cz-state="run"],  .cz[data-cz-state="run"]  { --cz-cat: var(--graph-running);  --cz-cat-fg: var(--graph-running); }
+.cz [data-cz-state="warn"], .cz[data-cz-state="warn"] { --cz-cat: var(--accent-warning); --cz-cat-fg: var(--accent-warning); }
+.cz [data-cz-state="err"],  .cz[data-cz-state="err"]  { --cz-cat: var(--graph-failed);   --cz-cat-fg: var(--graph-failed); }
+.cz [data-cz-state="idle"], .cz[data-cz-state="idle"] { --cz-cat: var(--graph-pending);  --cz-cat-fg: var(--text-muted); }
+
+/* Git letters map onto the same five states so the tree needs no second
+   vocabulary. A added, M modified, R renamed (in flight), D deleted,
+   U/C conflicted, ? untracked, ! ignored. */
+.cz [data-cz-git="A"] { --cz-cat: var(--graph-passed);   --cz-cat-fg: var(--graph-passed); }
+.cz [data-cz-git="M"] { --cz-cat: var(--accent-warning); --cz-cat-fg: var(--accent-warning); }
+.cz [data-cz-git="R"] { --cz-cat: var(--graph-running);  --cz-cat-fg: var(--graph-running); }
+.cz [data-cz-git="D"] { --cz-cat: var(--graph-failed);   --cz-cat-fg: var(--graph-failed); }
+.cz [data-cz-git="U"],
+.cz [data-cz-git="C"] { --cz-cat: var(--graph-failed);   --cz-cat-fg: var(--graph-failed); }
+.cz [data-cz-git="?"] { --cz-cat: var(--graph-pending);  --cz-cat-fg: var(--text-muted); }
+.cz [data-cz-git="!"] { --cz-cat: var(--border-light);   --cz-cat-fg: var(--text-muted); }
+
+
+/* ============================ 3. PANEL FRAME ============================
+   Banner and tabs are flex:none and live outside the scroller, so the
+   panel keeps exactly one scroll level. */
+.cz-banner {
+  flex: none; display: flex; align-items: center; gap: var(--md);
+  min-height: 30px; min-width: 0;
+  padding: var(--sm) var(--md);
+  background: var(--surface-elevated);
+  border-bottom: 1px solid var(--border-light, var(--border));
+}
+.cz-banner-ico {
+  flex: none; width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light, var(--border));
+  color: var(--accent-primary);
+}
+.cz-banner-ico svg { width: 12px; height: 12px; }
+.cz-title {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--display-font-sm, var(--body-font));
+  font-size: var(--cz-fs-head); font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-banner-acts { flex: none; display: flex; align-items: center; gap: var(--xs); }
+
+.cz-scroll {
+  flex: 1 1 auto; min-height: 0; min-width: 0;
+  overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  /* stable gutter: without it a design measures clean on a short list and
+     overflows by the scrollbar width the moment the list grows */
+  scrollbar-gutter: stable;
+  padding: var(--md);
+}
+.cz-scroll::-webkit-scrollbar { width: 10px; }
+.cz[data-cz-b="0"] .cz-scroll,
+.cz[data-cz-b="1"] .cz-scroll { padding: var(--sm); }
+
+.cz-foot {
+  flex: none; display: flex; align-items: center; gap: var(--sm);
+  min-height: 30px; min-width: 0;
+  padding: var(--sm) var(--md);
+  background: var(--surface-elevated);
+  border-top: 1px solid var(--border-light, var(--border));
+}
+.cz-foot-count {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-foot-count b { color: var(--text-primary); font-weight: 700; }
+
+
+/* ============================== 4. SHELF ================================
+   The card. overflow is VISIBLE, because a 210px portaled menu inside a
+   220px panel must be allowed to escape - that was a real defect in the
+   source design's first revision.
+
+   The category channel is the 3px inset rail, and it is the only place a
+   large area of --cz-cat appears. No tint fill: tinting a surface without
+   color-mix() is not expressible, and faking it with an overlay element
+   would put a decorative div in every agent's markup. */
+.cz-shelf {
+  display: block; min-width: 0;
+  margin-bottom: var(--md);
+  border-radius: var(--radius-lg);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  box-shadow: inset var(--cz-spine-w) 0 0 var(--cz-cat), var(--elev-1);
+  overflow: visible;
+}
+.cz-shelf:last-child { margin-bottom: 0; }
+
+.cz-head {
+  display: flex; align-items: center; gap: var(--sm);
+  min-height: 28px; min-width: 0;
+  padding: var(--sm) var(--md) var(--sm) var(--lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+/* the head is allowed to BE the button, or to CONTAIN one */
+button.cz-head, .cz-head-main {
+  display: flex; align-items: center; gap: var(--sm);
+  flex: 1 1 auto; min-width: 0; min-height: 24px;
+  padding: 0; background: none; border: 0;
+}
+button.cz-head { padding: var(--sm) var(--md) var(--sm) var(--lg); }
+.cz-head-label {
+  flex: 0 1 auto; min-width: 0;
+  font-family: var(--display-font-sm, var(--body-font));
+  font-size: var(--cz-fs-head); font-weight: 700; letter-spacing: .10em;
+  text-transform: uppercase; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* "how many" is part of the promise the shelf makes, so it is never the
+   thing that gets dropped: flex:none, and the label elides instead. */
+.cz-head-count {
+  flex: none; margin-left: auto;
+  padding: 0 var(--sm); min-width: 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cz-cat);
+  font-family: var(--mono-font); font-size: var(--cz-fs-small); font-weight: 700;
+  color: var(--cz-cat-fg); text-align: center; white-space: nowrap;
+}
+.cz-head-acts { flex: none; display: flex; align-items: center; gap: var(--xs); }
+.cz-chev {
+  flex: none; width: 10px; height: 10px; color: var(--text-muted);
+  transition: transform var(--motion-med) var(--ease-default);
+}
+[data-cz-open="1"] > .cz-head .cz-chev,
+[data-cz-open="1"] > .cz-head-main .cz-chev,
+button.cz-head[aria-expanded="true"] .cz-chev,
+.cz-head-main[aria-expanded="true"] .cz-chev,
+.cz-ex-h[aria-expanded="true"] .cz-chev { transform: rotate(90deg); }
+
+/* Payload. Also used as the expanded-row payload, so CZ.body(slots) and
+   the shelf body are one box with one padding rule. */
+.cz-body, .cz-ex-b {
+  min-width: 0;
+  padding: var(--sm) var(--lg) var(--md);
+}
+.cz-body[hidden], .cz-ex-b[hidden],
+.cz-body.is-closed, .cz-ex-b.is-closed { display: none; }
+.cz-body > * + *, .cz-ex-b > * + * { margin-top: var(--sm); }
+.cz[data-cz-b="0"] .cz-body, .cz[data-cz-b="0"] .cz-ex-b,
+.cz[data-cz-b="1"] .cz-body, .cz[data-cz-b="1"] .cz-ex-b { padding: var(--xs) var(--md) var(--sm); }
+.cz[data-cz-b="0"] .cz-head, .cz[data-cz-b="1"] .cz-head,
+.cz[data-cz-b="0"] button.cz-head, .cz[data-cz-b="1"] button.cz-head { padding-inline: var(--sm) var(--sm); padding-left: var(--md); }
+
+/* CZ.body slots, in the fixed contract order. Only the ones that need to
+   look different from a plain block are named. */
+.cz-sum { color: var(--text-secondary); font-size: var(--cz-fs-meta); line-height: var(--lh-body, 1.55); }
+.cz-facts { display: block; min-width: 0; }
+.cz-detail {
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-secondary); line-height: var(--lh-body, 1.55);
+  min-width: 0; overflow: hidden;
+}
+.cz-detail > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cz-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sm); }
+/* equal-width action row without display:grid */
+.cz-actions--eq { flex-wrap: nowrap; }
+.cz-actions--eq > .cz-btn { flex: 1 1 0; min-width: 0; justify-content: center; }
+
+
+/* =============================== 5. ROW =================================
+   Identity on line 1, qualification on line 2, in the same place every
+   time. Exactly ONE slot grows and it is the identity; every other slot is
+   flex:none. The inverse of that is what makes the shipped panel render
+   "validation_test  carg...  pass on retry". */
+.cz-row {
+  display: flex; align-items: center; gap: var(--sm);
+  min-height: 40px; min-width: 0;
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-md);
+  transition: background var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+.cz-row--1line { min-height: 24px; }
+.cz-row[role="treeitem"], .cz-row[tabindex], .cz-row[data-cz-click] { cursor: pointer; }
+.cz-row:hover { background: var(--accent-soft); transform: translateX(2px); }
+.cz-row[aria-selected="true"], .cz-row.is-selected {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent-primary);
+}
+.cz-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+/* the one category channel a row is allowed */
+.cz-spine {
+  flex: none; align-self: stretch;
+  width: var(--cz-spine-w); min-height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--cz-cat);
+}
+.cz-dot {
+  flex: none; width: 7px; height: 7px;
+  border-radius: var(--radius-pill); background: var(--cz-cat);
+}
+.cz-ico { flex: none; width: 14px; height: 14px; color: var(--text-muted); }
+.cz-ico svg { width: 100%; height: 100%; }
+.cz-ico--cat { color: var(--cz-cat-fg); }
+
+/* identity is the one slot that grows, and it has a floor of its own so a
+   long chip can never squeeze it to nothing the way the tree name was */
+.cz-main {
+  flex: 1 1 auto; min-width: var(--cz-name-floor);
+  display: flex; flex-direction: column;
+}
+.cz-name {
+  min-width: 0;
+  font-size: var(--cz-fs-body); font-weight: 600; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-name--mono { font-family: var(--mono-font); font-weight: 500; }
+.cz-meta {
+  min-width: 0;
+  font-size: var(--cz-fs-meta); color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-meta--mono { font-family: var(--mono-font); }
+.cz-meta-sep { padding: 0 var(--xs); opacity: .6; }
+
+/* The action gutter is reserved AT REST. Actions fade in, they never
+   arrive: a name that reflows on hover is a name you cannot read while
+   reaching for the button next to it. */
+.cz-acts {
+  flex: none; margin-left: auto;
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: var(--xs);
+  min-width: var(--cz-act-w);
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}.cz-row:hover > .cz-acts,
+.cz-row:focus-within > .cz-acts,
+.cz-row[aria-selected="true"] > .cz-acts,
+.cz-ex-h:hover > .cz-acts,
+.cz-ex-h:focus-within > .cz-acts,
+.cz-tree-row:hover > .cz-acts,
+.cz-tree-row:focus-within > .cz-acts,
+.cz-tree-row[aria-selected="true"] > .cz-acts,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row:hover > .cz-acts,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row:focus-within > .cz-acts,
+.cz-trow:hover > .cz-acts,
+.cz-trow:focus-within > .cz-acts,
+.cz-trow[aria-selected="true"] > .cz-acts { opacity: 1; }
+
+
+/* ============================ 6. EXPANDABLE ROW =========================
+   31 expanders in the source design and not one was keyboard-operable:
+   every header was a div and there were zero tabindex attributes. Here the
+   header is a real button and the collapsed payload is display:none, so it
+   leaves the tab order entirely. Expansion is NOT exclusive - this is a
+   list, not an accordion. */
+.cz-ex {
+  min-width: 0;
+  margin-bottom: var(--sm);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  overflow: visible;
+}
+.cz-ex:last-child { margin-bottom: 0; }
+.cz-ex-h {
+  display: flex; align-items: center; gap: var(--sm);
+  width: 100%; min-height: 32px; min-width: 0;
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-md);
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.cz-ex-h:hover { background: var(--accent-soft); }
+.cz-ex-h:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.cz-ex[data-cz-open="0"] > .cz-ex-b { display: none; }
+
+
+/* =============================== 7. KV ==================================
+   The 234px overlap: a long mono key and a value shared one space-between
+   row with text-overflow:clip, so the key simply ran over the value.
+
+   Rule, exactly as contracted:
+     bucket 0 and 1 (<360px)  stacked, both left aligned, never right
+     bucket 2+                inline, but only when the value clears 88px
+     kind=prose               always stacked and wrapping
+   Stacked is the DEFAULT here, so a helper that forgets to set the mode
+   fails safe into the readable shape rather than into the bug. */
+.cz-kv {
+  display: flex; flex-direction: column; gap: 0;
+  min-width: 0; padding: 2px 0;
+  font-size: var(--cz-fs-body);
+}
+.cz-k {
+  color: var(--text-muted); min-width: 0;
+  font-size: var(--cz-fs-meta);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-v {
+  color: var(--text-primary); min-width: 0;
+  text-align: left;              /* a stacked value is NEVER right aligned */
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cz-kv[data-cz-kind="token"] > .cz-v,
+.cz-kv[data-cz-kind="measure"] > .cz-v { font-family: var(--mono-font); }
+.cz-kv[data-cz-kind="measure"] > .cz-v { font-weight: 700; }
+
+.cz-kv[data-cz-kv="inline"] {
+  flex-direction: row; align-items: baseline;
+  justify-content: space-between; gap: var(--md);
+}
+/* the key yields, the value does not: this is the whole fix */
+.cz-kv[data-cz-kv="inline"] > .cz-k { flex: 0 1 auto; min-width: 0; max-width: 46%; }
+.cz-kv[data-cz-kv="inline"] > .cz-v { flex: 0 0 auto; min-width: 88px; text-align: right; }
+
+/* prose always stacks and wraps, whatever the mode attribute says */
+.cz-kv[data-cz-kind="prose"],
+.cz-kv[data-cz-kv="inline"][data-cz-kind="prose"] { flex-direction: column; gap: 0; }
+.cz-kv[data-cz-kind="prose"] > .cz-k,
+.cz-kv[data-cz-kv="inline"][data-cz-kind="prose"] > .cz-k { max-width: none; }
+.cz-kv[data-cz-kind="prose"] > .cz-v,
+.cz-kv[data-cz-kv="inline"][data-cz-kind="prose"] > .cz-v {
+  min-width: 0; text-align: left;
+  white-space: normal; overflow-wrap: anywhere;
+  line-height: var(--lh-body, 1.55);
+}
+
+/* Belt and braces: below bucket 2 nothing is inline, even if a caller set
+   the attribute. Higher specificity than the inline rule on purpose. */
+.cz[data-cz-b="0"] .cz-kv,
+.cz[data-cz-b="1"] .cz-kv { flex-direction: column; gap: 0; }
+.cz[data-cz-b="0"] .cz-kv > .cz-k,
+.cz[data-cz-b="1"] .cz-kv > .cz-k { max-width: none; }
+.cz[data-cz-b="0"] .cz-kv > .cz-v,
+.cz[data-cz-b="1"] .cz-kv > .cz-v { min-width: 0; text-align: left; }
+
+
+/* ============================== 8. TABS =================================
+   Count-aware. One threshold at 250px turned labels on for every tab count
+   at once, which is why Docker's six labels were cut in all 8 themes at the
+   default width. The mode is decided in JS by the contract's arithmetic
+   (labelled >= 72*n+24, icons >= 28*n+24, else first 3 + overflow) and
+   arrives here as an attribute; CSS measures nothing.
+
+   Tab labels use --body-font at --cz-fs-micro and are forbidden the display
+   face - retro Orbitron at 8px is the exact defect this replaces. */
+.cz-tabs {
+  flex: none; display: flex; align-items: stretch;
+  min-width: 0;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border-bottom: 1px solid var(--border-light, var(--border));
+  font-family: var(--body-font);
+}
+.cz[data-cz-b="0"] .cz-tabs, .cz[data-cz-b="1"] .cz-tabs { padding: 0 var(--sm); }
+
+.cz-tab {
+  flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  min-height: 40px; padding: var(--sm) 2px;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.cz-tab > .cz-ico { width: 15px; height: 15px; color: inherit; }
+.cz-tab-label {
+  max-width: 100%; padding: 0 2px;
+  font-family: var(--body-font);          /* never the display face */
+  font-size: var(--cz-fs-micro); font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-tab:hover { color: var(--text-secondary); background: var(--accent-soft); }
+/* selection is --accent-primary. It is never a category colour. */
+.cz-tab[aria-selected="true"], .cz-tab.is-on {
+  color: var(--accent-primary); border-bottom-color: var(--accent-primary);
+}
+.cz-tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab {
+  min-height: 28px; min-width: 28px; padding: var(--xs) 0; gap: 0;
+}
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab-label,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab-label { display: none; }
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab > .cz-ico,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab > .cz-ico { width: 16px; height: 16px; }
+
+.cz-tab-more {
+  flex: 0 0 auto; min-width: 28px; min-height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+}
+.cz-tab-more:hover { color: var(--text-primary); background: var(--accent-soft); }
+.cz-tab-more > .cz-ico { width: 14px; height: 14px; color: inherit; }
+
+
+/* =============================== 9. TREE ================================
+   The centrepiece, and the thing the source design got wrong.
+
+   Measured on the nested version: indent cost exactly 22px per level with
+   no floor, and the filename COLLAPSED TO 0px and vanished (min-width:0
+   under overflow:hidden permits it) - at 280px that happened at depth 9,
+   at 220px at depth 6. The real tree here peaks at depth 3-6.
+
+   Four mechanical fixes, all of them structural rather than tuned:
+     1 flat DOM, depth in --cz-d, no nesting  -> Slint ListView, virtualizable
+     2 indent capped at 6 levels x 10px = 60px, then free
+     3 the name has a 72px floor and ellipsizes; it cannot reach 0
+     4 git status is a 3px spine + one mono character in a fixed 12px
+       gutter, both OUTSIDE the name band, so status costs the name 0px
+   and the action gutter is reserved at rest so nothing reflows on hover. */
+.cz-tree { display: block; min-width: 0; }.cz-tree-row,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row,
+.cz-trow {
+  --cz-d: 0;
+  display: flex; align-items: center; gap: var(--xs);
+  min-height: 24px; min-width: 0;
+  padding: 2px var(--xs) 2px 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out);
+}.cz-tree-row:hover,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row:hover,
+.cz-trow:hover { background: var(--accent-soft); transform: none; }.cz-tree-row[aria-selected="true"],
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row[aria-selected="true"],
+.cz-trow[aria-selected="true"] {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent-primary);
+}.cz-tree-row:focus-visible,
+.cz-trow:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }/* the fixed status channel: 3px spine + 12px mono gutter,
+never inline */
+.cz-tree-row > .cz-spine,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row > .cz-spine,
+never inline */
+.cz-trow > .cz-spine {
+  align-self: stretch; min-height: 14px;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+}
+.cz-gut {
+  flex: 0 0 var(--cz-gut-w); width: var(--cz-gut-w);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--mono-font); font-size: var(--cz-fs-small); font-weight: 700;
+  color: var(--cz-cat-fg); line-height: 1;
+}
+
+/* the text band. min(depth,6)*10px is an expression Slint can evaluate,
+   which is why the cap lives in the layout and not in the model. */
+.cz-tw {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; align-items: center; gap: var(--xs);
+  padding-left: calc(min(var(--cz-d, 0), 6) * var(--cz-indent));
+}
+/* The twist is a 14px MARK, not a control: the whole 24px row is the hit
+   target and Left/Right on the row does the collapsing, per contract 7. If
+   a panel ever makes it a real button it must be sized to 24px first. */
+.cz-twist {
+  flex: none; width: 14px; height: 14px; min-height: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  transition: transform var(--motion-med) var(--ease-default);
+}
+.cz-twist svg { width: 9px; height: 9px; }[aria-expanded="true"] > .cz-tw > .cz-twist,
+.cz-tree-row[aria-expanded="true"] .cz-twist,
+.cz-trow[aria-expanded="true"] .cz-twist { transform: rotate(90deg); }
+.cz-twist--leaf { visibility: hidden; }.cz-tree-row .cz-ico,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row .cz-ico,
+.cz-trow .cz-ico { width: 13px; height: 13px; }/* THE FLOOR. Without it the filename reaches 0px and disappears. */
+.cz-tree-row .cz-name,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row .cz-name,
+/* THE FLOOR. Without it the filename reaches 0px and disappears. */
+.cz-trow .cz-name {
+  flex: 1 1 auto;
+  min-width: var(--cz-name-floor);
+  font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}.cz-tree-row[data-cz-kind="folder"] .cz-name,
+.cz-trow[data-cz-kind="folder"] .cz-name { font-weight: 700; }.cz-tree-row[data-cz-species="ignored"],
+.cz-trow[data-cz-species="ignored"] { opacity: .62; }.cz-tree-row[data-cz-species="ignored"] .cz-name,
+.cz-trow[data-cz-species="ignored"] .cz-name { font-style: italic; }.cz-tree-row[data-cz-species="generated"] .cz-name,
+.cz-tree-row[data-cz-species="symlink"] .cz-name,
+.cz-trow[data-cz-species="generated"] .cz-name,
+.cz-trow[data-cz-species="symlink"] .cz-name { color: var(--text-secondary); }.cz-tree-row[data-cz-species="readonly"] .cz-name,
+.cz-trow[data-cz-species="readonly"] .cz-name { color: var(--text-secondary); }
+
+/* second-species marker: a word, not a colour. Reserved width so it cannot
+   push the name below its floor - it is dropped whole at bucket 0/1. */
+.cz-badge {
+  flex: none;
+  padding: 0 var(--xs);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-light, var(--border));
+  font-family: var(--mono-font); font-size: var(--cz-fs-micro); font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text-muted); white-space: nowrap;
+}
+.cz[data-cz-b="0"] .cz-badge { display: none; }.cz-tree-row > .cz-acts,
+.cz-tree > .cz-row, .cz-tree-rows > .cz-row > .cz-acts,
+.cz-trow > .cz-acts { min-width: var(--cz-act-w); }
+
+/* re-rooting breadcrumb for depth past the cap (contract 6.7) */
+.cz-crumb {
+  display: flex; align-items: center; gap: var(--xs);
+  min-height: 24px; min-width: 0;
+  margin-bottom: var(--xs);
+  padding: 2px var(--sm);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border-light, var(--border));
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-secondary);
+  white-space: nowrap; overflow: hidden;
+}
+.cz-crumb-seg {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  min-height: 24px; display: inline-flex; align-items: center;
+}
+.cz-crumb-seg:hover { color: var(--text-primary); }
+.cz-crumb-sep { flex: none; color: var(--text-muted); opacity: .7; }
+
+.cz-more {
+  display: flex; align-items: center; justify-content: center; gap: var(--xs);
+  width: 100%; min-height: 24px;
+  margin-top: var(--xs);
+  border-radius: var(--radius-md);
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--accent-primary);
+}
+.cz-more:hover { background: var(--accent-soft); }
+
+
+/* ============================== 10. ATOMS ==============================*/
+.cz-chip {
+  display: inline-flex; align-items: center; gap: var(--xs);
+  flex: none; max-width: 100%;
+  padding: 1px var(--sm); min-height: 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cz-cat);
+  color: var(--cz-cat-fg);
+  font-size: var(--cz-fs-small); font-weight: 700;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-chip--mono { font-family: var(--mono-font); font-weight: 500; }
+.cz-chip--plain { border-color: var(--border-light, var(--border)); color: var(--text-secondary); }
+.cz-chip > svg { width: 9px; height: 9px; }
+
+.cz-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--xs);
+  min-height: 24px; min-width: 0;
+  padding: var(--xs) var(--md);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light, var(--border));
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--cz-fs-meta); font-weight: 700;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.cz-btn:hover { color: var(--text-primary); border-color: var(--border); }
+.cz-btn--primary { border-color: var(--accent-primary); color: var(--accent-primary); }
+.cz-btn--primary:hover { background: var(--accent-soft); color: var(--accent-primary); }
+.cz-btn--danger { border-color: var(--accent-error); color: var(--accent-error); }
+.cz-btn[disabled], .cz-btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.cz-btn > svg { width: 11px; height: 11px; }
+
+.cz-ibtn, .cz-menu {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none; width: 24px; height: 24px; min-height: 24px;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.cz-ibtn:hover, .cz-menu:hover { color: var(--text-primary); background: var(--accent-soft); }
+.cz-ibtn:focus-visible, .cz-menu:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.cz-ibtn > svg, .cz-menu > svg { width: 12px; height: 12px; }
+.cz-ibtn[disabled], .cz-menu[disabled] { opacity: .45; cursor: default; }
+/* a .cz-menu placed as a body slot rather than a row control still has to
+   sit on its own line without stretching */
+.cz-body > .cz-menu, .cz-ex-b > .cz-menu { margin-left: auto; }
+
+.cz-note {
+  display: flex; align-items: flex-start; gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light, var(--border));
+  background: var(--surface);
+  font-size: var(--cz-fs-meta); color: var(--text-secondary);
+  line-height: var(--lh-body, 1.55);
+}
+
+
+/* ============================ 11. BLOCKED ==============================
+   Never a toast. GI-017 / W-019 / CRAU-021 require the reason be readable
+   for as long as the state lasts: the code verbatim, one human sentence,
+   and allowed_action_ids as real buttons. */
+.cz-blocked {
+  min-width: 0;
+  padding: var(--sm) var(--md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light, var(--border));
+  border-left: var(--cz-spine-w) solid var(--accent-warning);
+  background: var(--surface);
+}
+.cz-blocked--err { border-left-color: var(--accent-error); }
+.cz-blocked-code {
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta); font-weight: 700;
+  letter-spacing: .02em; color: var(--accent-warning);
+  overflow-wrap: anywhere;
+}
+.cz-blocked--err .cz-blocked-code { color: var(--accent-error); }
+.cz-blocked-say {
+  margin-top: 2px;
+  font-size: var(--cz-fs-meta); color: var(--text-secondary);
+  line-height: var(--lh-body, 1.55);
+}
+.cz-blocked-acts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sm);
+  margin-top: var(--sm);
+}
+
+
+/* ============================= 12. EMPTY ===============================
+   Five kinds, not one component with variable copy. The kind is on the
+   element so a reviewer can see which of the five a panel actually used. */
+.cz-empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--xs); min-width: 0;
+  padding: var(--xl) var(--md);
+  text-align: center;
+}
+.cz-empty-ico { width: 20px; height: 20px; color: var(--text-muted); }
+.cz-empty-t {
+  font-size: var(--cz-fs-head); font-weight: 700; color: var(--text-primary);
+}
+.cz-empty-b {
+  font-size: var(--cz-fs-meta); color: var(--text-secondary);
+  line-height: var(--lh-body, 1.55); max-width: 240px;
+}
+.cz-empty-cta { margin-top: var(--sm); }
+.cz-empty[data-cz-empty="unavailable"] .cz-empty-ico { color: var(--accent-warning); }
+.cz-empty[data-cz-empty="not-configured"] .cz-empty-ico { color: var(--accent-primary); }
+
+
+/* ============================ 13. MOTION ===============================
+   Reuse of the existing layer only: this file adds four short property
+   transitions and no keyframes, no timeline, and nothing infinite. The
+   source ran liveRail 1.8s infinite on every running row through :has();
+   a running row here is a static spine plus whatever settle the shared
+   PMM layer applies on a state change.
+
+   The killer rules below are written at strictly higher specificity than
+   the rules that declare the transitions (element+class vs class), so they
+   actually win instead of merely existing. */
+@media (prefers-reduced-motion: reduce) {.cz .cz-row,
+.cz .cz-tree-row,
+.cz .cz-ex-h,
+.cz .cz-tab,
+.cz .cz-tab-more,
+.cz .cz-btn,
+.cz .cz-ibtn,
+.cz .cz-menu,
+.cz .cz-acts,
+.cz .cz-chev,
+.cz .cz-twist,
+.cz .cz-more,
+.cz .cz-trow { transition: none; }
+  .cz .cz-row:hover { transform: none; }
+}[data-motion="reduced"] .cz .cz-row,
+[data-motion="reduced"] .cz .cz-tree-row,
+[data-motion="reduced"] .cz .cz-ex-h,
+[data-motion="reduced"] .cz .cz-tab,
+[data-motion="reduced"] .cz .cz-tab-more,
+[data-motion="reduced"] .cz .cz-btn,
+[data-motion="reduced"] .cz .cz-ibtn,
+[data-motion="reduced"] .cz .cz-menu,
+[data-motion="reduced"] .cz .cz-acts,
+[data-motion="reduced"] .cz .cz-chev,
+[data-motion="reduced"] .cz .cz-twist,
+[data-motion="reduced"] .cz .cz-more,
+[data-motion="reduced"] .cz .cz-trow { transition: none; }
+[data-motion="reduced"] .cz .cz-row:hover { transform: none; }
+[data-reduced-motion="1"] .cz .cz-row:hover { transform: none; }
+
+
+/* ======================= 14. PER-FAMILY CORRECTIONS ====================
+   Eight themes, three real differences: retro is flat and heavy-bordered,
+   glass has no border at all, basic mandates WCAG AA.
+   ---------------------------------------------------------------------- */
+
+/* ---- retro: 0 radius, 2px borders, hard offset shadows. The inset
+   category rail would sit under a 2px border and read as 1px, so it is
+   widened; and the hard shadow needs the shelf not to hug its neighbour. */
+[data-theme^="retro"] .cz-shelf {
+  box-shadow: inset 4px 0 0 var(--cz-cat), var(--elev-1);
+  margin-bottom: var(--lg);
+}
+[data-theme^="retro"] .cz-head-label { letter-spacing: .06em; }
+[data-theme^="retro"] .cz-chip, [data-theme^="retro"] .cz-head-count { border-width: 1px; }
+/* Rajdhani is narrow; the extra tracking basic needs would cost width here */
+[data-theme^="retro"] .cz-tab-label { letter-spacing: .04em; }
+
+/* ---- glass: --border-width is 0, so the shelf is defined by elevation
+   plus the category rail alone. Give it a hairline that survives that. */
+[data-theme^="glass"] .cz-shelf,
+[data-theme^="glass"] .cz-ex {
+  border: 1px solid var(--glass-hairline, var(--border-light));
+}
+[data-theme^="glass"] .cz-shelf { box-shadow: inset var(--cz-spine-w) 0 0 var(--cz-cat), var(--elev-2); }
+
+/* ---- friendly: big radii, and a hoverable card wants clearance for the
+   soft glow. Nothing here uses overflow:hidden on a hoverable container,
+   which is the mistake that clips it. */
+[data-theme^="friendly"] .cz-shelf { box-shadow: inset var(--cz-spine-w) 0 0 var(--cz-cat), var(--elev-1); }
+[data-theme^="friendly"] .cz-row { padding: var(--xs) var(--sm); }
+
+/* ---- basic: the designated accessibility theme (FinalGUISpec 13.1).
+   --text-muted is #6B7280 on #1E1E1E = 3.45:1 in basic-dark and fails the
+   4.5 floor; raised to the smallest value that clears it, exactly as the
+   kit does, and scoped to this panel subtree rather than redefining the
+   theme's palette. basic-light already measures 5.05:1. */
+[data-theme="basic-dark"] .cz { --text-muted: #7F8694; }
+
+/* The graph-* tokens are fine as 3px rails but several miss AA as TEXT in
+   the basic family. --cz-cat (rail) keeps the theme token; --cz-cat-fg
+   (text and glyph) is corrected here and only here. Values reused from the
+   kit's already-measured set so the two systems agree.
+     basic-light on #EAECEF: ok 4.60 - run 4.5+ - warn 4.57 - err 4.75
+     basic-dark  on #1E1E1E: pending 3.52 is the only failure            */
+[data-theme="basic-light"] .cz [data-cz-state="ok"],
+[data-theme="basic-light"] .cz [data-cz-git="A"]  { --cz-cat-fg: #057A3D; }
+[data-theme="basic-light"] .cz [data-cz-state="run"],
+[data-theme="basic-light"] .cz [data-cz-git="R"]  { --cz-cat-fg: #8A5200; }
+[data-theme="basic-light"] .cz [data-cz-state="warn"],
+[data-theme="basic-light"] .cz [data-cz-git="M"]  { --cz-cat-fg: #C73200; }
+[data-theme="basic-light"] .cz [data-cz-state="err"],
+[data-theme="basic-light"] .cz [data-cz-git="D"],
+[data-theme="basic-light"] .cz [data-cz-git="U"],
+[data-theme="basic-light"] .cz [data-cz-git="C"]  { --cz-cat-fg: #C62828; }
+[data-theme="basic-light"] .cz .cz-blocked-code   { color: #8A5200; }
+[data-theme="basic-light"] .cz .cz-blocked--err .cz-blocked-code { color: #A11212; }
+
+[data-theme="basic-dark"] .cz [data-cz-state="idle"],
+[data-theme="basic-dark"] .cz [data-cz-git="?"],
+[data-theme="basic-dark"] .cz [data-cz-git="!"]   { --cz-cat-fg: #7F8694; }
+[data-theme="basic-dark"] .cz .cz-blocked-code    { color: #FFC14D; }
+[data-theme="basic-dark"] .cz .cz-blocked--err .cz-blocked-code { color: #FF8B8B; }
+
+/* basic is the widest text (Inter 15px + 0.02em) and the tallest line box
+   (1.6). Drop the decorative tracking so labels do not run out of band. */
+[data-theme^="basic"] .cz-head-label { letter-spacing: .06em; }
+[data-theme^="basic"] .cz-tab-label { letter-spacing: .02em; }
+
+
+/* ==================== 15. HIGH CONTRAST / FORCED COLORS ================
+   The category rail is a box-shadow and box-shadows are dropped in forced
+   colours, which would delete the only category channel. Fall back to a
+   real border so the shelf keeps an edge. */
+@media (forced-colors: active) {
+  .cz-shelf, .cz-ex { border: 1px solid CanvasText; box-shadow: none; }
+  .cz-spine, .cz-dot { background: CanvasText; }
+  .cz-tab[aria-selected="true"] { border-bottom-color: Highlight; }
+}
+
+
+/* ================= 16. VOCABULARY RECONCILIATION (JS <-> CSS) ============
+   _pm-cozy.js and this stylesheet were written in parallel and shipped two
+   spellings for the same parts. vG-panels-d hand-composes to the names
+   above; vG-panels-a/b/c go through the CZ.* helpers and get the names
+   below. Nothing above this comment is edited: every rule here is
+   ADDITIVE, so both spellings render the same design.
+
+   Each block below states WHICH RULE ABOVE it mirrors. The mapping was
+   read out of the markup _pm-cozy.js actually emits (parent, siblings,
+   contents), never guessed from the name - two of them (.cz-tw, .cz-crumb)
+   mean something different in each vocabulary, and those are handled
+   explicitly rather than aliased.
+
+   House rules still hold here: no emoji, no color-mix(), no :has(), no
+   display:grid, no viewport units, no @keyframes, no backdrop-filter, no
+   !important on display, every interactive box >= 24px, all colour from
+   _pm-tokens.css.
+   ---------------------------------------------------------------------- */
+
+
+/* -------- 16.0 ROOT TOKEN REPAIR ----------------------------------------
+   Section 1's rule is unreachable: a mangled doc comment leaked into its
+   selector list (".cz, fixed .cz-gut 12px mono status gutter ...") and one
+   invalid compound invalidates the WHOLE list, so the browser drops the
+   rule. Everything that reads --cz-fs-*, --cz-cat, --cz-indent,
+   --cz-name-floor, --cz-act-w, --cz-gut-w or --cz-spine-w was therefore
+   resolving to nothing and the panel had no font ladder, no category
+   channel and no column layout at all.
+
+   Re-declared here verbatim rather than repaired in place, so the original
+   text stays untouched. .cz[data-cz-text="large"] is (0,2,0) and still
+   wins over this (0,1,0) rule, so the text ladder is unaffected. */
+.cz {
+  --cz-scale: 1;
+  --cz-fs-micro: calc(8px    * var(--cz-scale));
+  --cz-fs-small: calc(9px    * var(--cz-scale));
+  --cz-fs-meta:  calc(9.5px  * var(--cz-scale));
+  --cz-fs-head:  calc(10.5px * var(--cz-scale));
+  --cz-fs-body:  calc(11.5px * var(--cz-scale));
+
+  --cz-gut-w: 12px;
+  --cz-spine-w: 3px;
+  --cz-act-w: 24px;
+  --cz-name-floor: 72px;
+  --cz-indent: 10px;
+
+  --cz-cat: var(--graph-pending);
+  --cz-cat-fg: var(--cz-cat);
+
+  display: flex; flex-direction: column;
+  height: 100%; min-height: 0; min-width: 0;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--cz-fs-body);
+  line-height: var(--line-height, 1.5);
+}
+
+
+/* -------- 16.1 SHELF ----------------------------------------------------
+   CZ.shelf emits
+     section.cz-shelf[data-cz-state][data-cz-open]
+       div.cz-shelf-bar                     == .cz-head        (flex row)
+         button.cz-shelf-head[aria-expanded] == .cz-head-main  (the button)
+           svg.cz-shelf-chev                 == .cz-chev
+           span.cz-shelf-ico > svg.cz-ico
+           span.cz-shelf-label               == .cz-head-label
+           span.cz-shelf-count               == .cz-head-count
+           span.cz-shelf-state > svg.cz-shelf-mark
+         span.cz-shelf-acts                  == .cz-head-acts
+       div.cz-shelf-body[data-cz-open]       == .cz-body
+   The head button is INSIDE the bar, exactly as vG-panels-d nests
+   button.cz-head-main inside div.cz-head, so the bar/button split maps
+   one to one. */
+.cz-shelf-bar {
+  display: flex; align-items: center; gap: var(--sm);
+  min-height: 28px; min-width: 0;
+  padding: var(--sm) var(--md) var(--sm) var(--lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.cz[data-cz-b="0"] .cz-shelf-bar,
+.cz[data-cz-b="1"] .cz-shelf-bar { padding-inline: var(--sm) var(--sm); padding-left: var(--md); }
+
+.cz-shelf-head {
+  display: flex; align-items: center; gap: var(--sm);
+  flex: 1 1 auto; min-width: 0; min-height: 24px;
+  padding: 0; background: none; border: 0;
+}
+
+/* == .cz-chev, MINUS the rotation. CZ.shelf / CZ.exRow / toggleBox swap the
+   glyph itself (chev -> down), so a CSS rotate would turn an already-down
+   chevron through 90 degrees and point it at the wrong wall. These are
+   deliberately not spelled .cz-chev for that reason. */
+.cz-shelf-chev,
+.cz-ex-chev {
+  flex: none; width: 10px; height: 10px;
+  color: var(--text-muted);
+}
+
+/* a wrapper span; the svg it holds carries .cz-ico and does the sizing */
+.cz-shelf-ico { flex: none; display: inline-flex; align-items: center; }
+
+/* == .cz-head-label, with one deliberate difference: it GROWS. In the CSS
+   vocabulary the count carries margin-left:auto to reach the right edge;
+   here the count is followed by the state glyph, and two auto margins in
+   one flex line split the free space and strand the count in the middle.
+   Letting the label take the slack keeps property 1 intact - the label is
+   still the thing that elides, the count is still flex:none. */
+.cz-shelf-label {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--display-font-sm, var(--body-font));
+  font-size: var(--cz-fs-head); font-weight: 700; letter-spacing: .10em;
+  text-transform: uppercase; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+[data-theme^="retro"] .cz-shelf-label,
+[data-theme^="basic"] .cz-shelf-label { letter-spacing: .06em; }
+
+/* == .cz-head-count, without margin-left:auto (see above) */
+.cz-shelf-count {
+  flex: none;
+  padding: 0 var(--sm); min-width: 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cz-cat);
+  font-family: var(--mono-font); font-size: var(--cz-fs-small); font-weight: 700;
+  color: var(--cz-cat-fg); text-align: center; white-space: nowrap;
+}
+
+/* the shelf's state glyph: the same one accent channel as the count */
+.cz-shelf-state { flex: none; display: inline-flex; align-items: center; }
+.cz-shelf-mark  { flex: none; width: 12px; height: 12px; color: var(--cz-cat-fg); }
+
+.cz-shelf-acts { flex: none; display: flex; align-items: center; gap: var(--xs); }
+
+/* == .cz-body. No display declaration here on purpose: [hidden] and the
+   inline display:none the helper writes must keep winning. */
+.cz-shelf-body { min-width: 0; padding: var(--sm) var(--lg) var(--md); }
+.cz[data-cz-b="0"] .cz-shelf-body,
+.cz[data-cz-b="1"] .cz-shelf-body { padding: var(--xs) var(--md) var(--sm); }
+.cz-shelf-body > * + * { margin-top: var(--sm); }
+
+
+/* -------- 16.2 EXPANDABLE ROW -------------------------------------------
+   CZ.exRow emits
+     div.cz-ex[data-cz-open]
+       div.cz-ex-bar                        the flex row  ]  together these
+         button.cz-ex-head[aria-expanded]   the button    ]  are .cz-ex-h
+           svg.cz-ex-chev, span.cz-row-mark, span.cz-row-band
+         span.cz-row-acts                   == .cz-acts
+       div.cz-ex-body[data-cz-open]         == .cz-ex-b
+   .cz-ex-h is a single element that is both the row and the button; the
+   helper splits those in two because the action gutter may not live inside
+   the button (a button inside a button is not a control). So the BAR takes
+   .cz-ex-h's geometry and hover, and the head becomes the growing child.
+   The hover has to sit on the bar, or the action gutter - a sibling of the
+   button, not a descendant - never reveals. */
+.cz-ex-bar {
+  display: flex; align-items: center; gap: var(--sm);
+  width: 100%; min-height: 32px; min-width: 0;
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-md);
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.cz-ex-bar:hover { background: var(--accent-soft); }
+.cz-ex-head {
+  display: flex; align-items: center; gap: var(--sm);
+  flex: 1 1 auto; min-width: 0; min-height: 24px;
+  padding: 0; background: none; border: 0;
+}
+.cz-ex-head:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+.cz-ex-body { min-width: 0; padding: var(--sm) var(--lg) var(--md); }
+.cz[data-cz-b="0"] .cz-ex-body,
+.cz[data-cz-b="1"] .cz-ex-body { padding: var(--xs) var(--md) var(--sm); }
+.cz-ex-body > * + * { margin-top: var(--sm); }
+
+
+/* -------- 16.3 ROW INTERNALS --------------------------------------------
+   CZ.row / CZ.exRow emit
+     span.cz-row-mark > svg.cz-mark-ico     the state glyph
+     span.cz-row-band                       == .cz-main
+       span.cz-row-l1                       line 1: identity
+         span.cz-row-id                     == .cz-name
+         span.cz-row-chip                   wrapper: may hold a .cz-chip OR
+                                            a bare escaped string
+       span.cz-row-l2                       == .cz-meta, ALWAYS emitted
+         span.cz-row-seg / span.cz-row-sep / span.cz-row-more
+     span.cz-row-acts                       == .cz-acts
+   .cz-row itself is already styled in section 5 and is not touched. */
+.cz-row-mark {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  color: var(--cz-cat-fg);
+}
+.cz-mark-ico { flex: none; width: 12px; height: 12px; }
+
+/* == .cz-main: the one slot that grows, with the same 72px floor */
+.cz-row-band {
+  flex: 1 1 auto; min-width: var(--cz-name-floor);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.cz-row-l1 { display: flex; align-items: center; gap: var(--xs); min-width: 0; }
+
+/* == .cz-name */
+.cz-row-id {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--cz-fs-body); font-weight: 600; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* chipOf() returns EITHER a .cz-chip element OR a bare escaped string, so
+   this wrapper has to look right holding plain text too. 50% cap keeps the
+   identity at half the line whatever the chip says. */
+.cz-row-chip {
+  flex: none; min-width: 0; max-width: 50%;
+  display: inline-flex; align-items: center;
+  font-size: var(--cz-fs-small); color: var(--text-secondary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* == .cz-meta. l2 is emitted even when empty (property 2), so it must hold
+   its line height or the identity re-centres and moves between rows. */
+.cz-row-l2 {
+  min-width: 0; min-height: 1.35em;
+  font-size: var(--cz-fs-meta); color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-row-seg { white-space: nowrap; }
+/* metaRun() emits the separator as an EMPTY span and ::before/::after are
+   banned in this file, so the separator has to be a real box: a 2px dot. */
+.cz-row-sep {
+  display: inline-block; flex: none;
+  width: 2px; height: 2px;
+  margin: 0 var(--xs); vertical-align: middle;
+  border-radius: var(--radius-pill);
+  background: currentColor; opacity: .55;
+}
+/* the +N escape is a fact, not a fragment: it never fades out with the meta */
+.cz-row-more {
+  margin-left: var(--xs);
+  font-family: var(--mono-font); font-weight: 700;
+  color: var(--text-secondary); white-space: nowrap;
+}
+
+/* == .cz-acts, reserved AT REST and faded in. .cz-tacts is the tree row's
+   spelling of the same slot. */
+.cz-row-acts,
+.cz-tacts {
+  flex: none; margin-left: auto;
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: var(--xs);
+  min-width: var(--cz-act-w);
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.cz-row:hover > .cz-row-acts,
+.cz-row:focus-within > .cz-row-acts,
+.cz-row[aria-selected="true"] > .cz-row-acts,
+.cz-row.is-selected > .cz-row-acts,
+.cz-ex-bar:hover > .cz-row-acts,
+.cz-ex-bar:focus-within > .cz-row-acts,
+.cz-row:hover > .cz-tacts,
+.cz-row:focus-within > .cz-tacts,
+.cz-row[aria-selected="true"] > .cz-tacts,
+.cz-row.is-selected > .cz-tacts { opacity: 1; }
+
+/* CZ.list: the roving-tabindex host. A plain block, like .cz-tree. */
+.cz-list { display: block; min-width: 0; }
+
+
+/* -------- 16.4 CZ.body SLOTS --------------------------------------------
+   CZ.body wraps its slots in a second .cz-body INSIDE .cz-shelf-body /
+   .cz-ex-body, so without this the payload pays the section-4 padding
+   twice. Slot names are string-concatenated ("cz-body-" + k) and so were
+   invisible to a class-name diff, but all six are emitted and all six map
+   onto a section-4 slot rule. */
+.cz-body > .cz-body,
+.cz-shelf-body > .cz-body,
+.cz-ex-body > .cz-body,
+.cz-ex-b > .cz-body { padding: 0; }
+
+.cz-body-summary {                      /* == .cz-sum */
+  color: var(--text-secondary); font-size: var(--cz-fs-meta);
+  line-height: var(--lh-body, 1.55);
+}
+.cz-body-facts { display: block; min-width: 0; }          /* == .cz-facts   */
+.cz-body-detail {                                          /* == .cz-detail  */
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-secondary); line-height: var(--lh-body, 1.55);
+  min-width: 0; overflow: hidden;
+}
+.cz-body-detail > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cz-body-actions {                                         /* == .cz-actions */
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sm);
+}
+.cz-body-blocked { min-width: 0; }
+.cz-body-overflow { display: flex; align-items: center; justify-content: flex-end; }
+
+
+/* -------- 16.5 KV : THE OVERLAP FIX, RE-ARMED ---------------------------
+   This is the one that mattered. Section 7 keys the whole stacked/inline
+   decision on [data-cz-kv="inline|stacked"], but CZ.kv emits the mode as
+   the CLASSES .cz-kv--inline / .cz-kv--stacked and the children as
+   .cz-kv-k / .cz-kv-v. Not one selector in section 7 matched CZ.kv output,
+   so the key and the value were two nowrap spans in the base column box
+   with no width contract at all - which is exactly the 234px overlap this
+   redesign exists to remove.
+
+   STACKED IS THE FAIL-SAFE. The base .cz-kv rule is already
+   flex-direction:column, and the .cz-kv-k / .cz-kv-v rules below are
+   written for that shape, so a caller that sets NEITHER the class nor the
+   attribute gets the stacked pair - the one shape that cannot overlap.
+   Inline is opt-in and only ever widens from there. */
+.cz-kv-k {                                                 /* == .cz-k */
+  color: var(--text-muted); min-width: 0;
+  font-size: var(--cz-fs-meta);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-kv-v {                                                 /* == .cz-v */
+  color: var(--text-primary); min-width: 0;
+  text-align: left;              /* a stacked value is NEVER right aligned */
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cz-kv[data-cz-kind="token"]   > .cz-kv-v,
+.cz-kv[data-cz-kind="measure"] > .cz-kv-v { font-family: var(--mono-font); }
+.cz-kv[data-cz-kind="measure"] > .cz-kv-v { font-weight: 700; }
+
+/* stacked, stated explicitly so neither spelling can inherit a row */
+.cz-kv--stacked { flex-direction: column; gap: 0; }
+.cz-kv--stacked > .cz-k,  .cz-kv--stacked > .cz-kv-k { max-width: none; }
+.cz-kv--stacked > .cz-v,  .cz-kv--stacked > .cz-kv-v { min-width: 0; text-align: left; }
+
+/* inline: the key yields, the value does not. Same 88px floor as section 7. */
+.cz-kv--inline {
+  flex-direction: row; align-items: baseline;
+  justify-content: space-between; gap: var(--md);
+}
+.cz-kv--inline > .cz-k,
+.cz-kv--inline > .cz-kv-k,
+.cz-kv[data-cz-kv="inline"] > .cz-kv-k { flex: 0 1 auto; min-width: 0; max-width: 46%; }
+.cz-kv--inline > .cz-v,
+.cz-kv--inline > .cz-kv-v,
+.cz-kv[data-cz-kv="inline"] > .cz-kv-v { flex: 0 0 auto; min-width: 88px; text-align: right; }
+
+/* prose always stacks and wraps, whatever the mode says */
+.cz-kv--inline[data-cz-kind="prose"] { flex-direction: column; gap: 0; }
+.cz-kv[data-cz-kind="prose"] > .cz-kv-k,
+.cz-kv--inline[data-cz-kind="prose"] > .cz-k,
+.cz-kv--inline[data-cz-kind="prose"] > .cz-kv-k { max-width: none; }
+.cz-kv[data-cz-kind="prose"] > .cz-kv-v,
+.cz-kv--inline[data-cz-kind="prose"] > .cz-v,
+.cz-kv--inline[data-cz-kind="prose"] > .cz-kv-v {
+  min-width: 0; text-align: left;
+  white-space: normal; overflow-wrap: anywhere;
+  line-height: var(--lh-body, 1.55);
+}
+
+/* Belt and braces, mirroring section 7: below bucket 2 nothing is inline,
+   whichever spelling asked for it. Higher specificity than the rules above
+   on purpose. */
+.cz[data-cz-b="0"] .cz-kv--inline,
+.cz[data-cz-b="1"] .cz-kv--inline { flex-direction: column; gap: 0; }
+.cz[data-cz-b="0"] .cz-kv > .cz-kv-k,
+.cz[data-cz-b="1"] .cz-kv > .cz-kv-k { max-width: none; }
+.cz[data-cz-b="0"] .cz-kv > .cz-kv-v,
+.cz[data-cz-b="1"] .cz-kv > .cz-kv-v { min-width: 0; text-align: left; }
+
+
+/* -------- 16.6 BUTTON AND MENU ATOMS ------------------------------------
+   CZ.act emits svg.cz-btn-ico + span.cz-btn-lbl inside .cz-btn, and adds
+   .cz-btn--icon when there is an icon and no label. CZ.menu wraps the
+   PMK overflow trigger in span.cz-of. All four are string-concatenated in
+   the helper and so were invisible to a class-name diff. */
+.cz-btn-ico { flex: none; width: 11px; height: 11px; }
+.cz-btn-lbl { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* an icon-only button is square, and still 24px so it stays a target */
+.cz-btn--icon { width: 24px; min-width: 24px; padding: 0; }
+.cz-of { display: inline-flex; align-items: center; flex: none; }
+
+
+/* -------- 16.7 TABS -----------------------------------------------------
+   Two mismatches at once. CZ.tabs emits span.cz-tab-lbl (section 8 styles
+   .cz-tab-label), svg.cz-tab-ico (section 8 styles .cz-tab > .cz-ico), and
+   span.cz-tab-n; and CZ.tabmode returns "label" / "icon" / "overflow"
+   while section 8 keys on "labelled" / "icons". "overflow" matched by
+   luck; ICON MODE NEVER ENGAGED, so a six-tab strip at 240px rendered as
+   six full-height labelled tabs. Both spellings are wired below. */
+.cz-tab-lbl {                                              /* == .cz-tab-label */
+  max-width: 100%; padding: 0 2px;
+  font-family: var(--body-font);          /* never the display face */
+  font-size: var(--cz-fs-micro); font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+[data-theme^="retro"] .cz-tab-lbl { letter-spacing: .04em; }
+[data-theme^="basic"] .cz-tab-lbl { letter-spacing: .02em; }
+.cz-tab-ico { flex: none; width: 15px; height: 15px; color: inherit; }
+/* the count rides under the label. It is emitted in label mode only, so it
+   only ever costs height on a strip that already had room for words. */
+.cz-tab-n {
+  flex: none; line-height: 1;
+  font-family: var(--mono-font); font-size: var(--cz-fs-micro); font-weight: 700;
+  color: var(--text-muted); white-space: nowrap;
+}
+.cz-tab[aria-selected="true"] .cz-tab-n { color: var(--accent-primary); }
+
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab {
+  min-height: 28px; min-width: 28px; padding: var(--xs) 0; gap: 0;
+}
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab-label,
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab-lbl,
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab-lbl,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab-lbl,
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab-n,
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab-n,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab-n { display: none; }
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab > .cz-ico,
+.cz-tabs[data-cz-tabmode="icon"] .cz-tab-ico,
+.cz-tabs[data-cz-tabmode="icons"] .cz-tab-ico,
+.cz-tabs[data-cz-tabmode="overflow"] .cz-tab-ico { width: 16px; height: 16px; }
+
+/* == .cz-tab-more: CZ.menu's wrapper, in the tab strip */
+.cz-tabs-of {
+  flex: 0 0 auto; min-width: 28px; min-height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+}
+
+
+/* -------- 16.8 TREE, AND THE .cz-tw BUG --------------------------------
+   treeRow() emits a FLAT row:
+     div.cz-row.cz-trow[style="--cz-d:N;--cz-di:M"]
+       span.cz-tw       > svg.cz-tw-ico      the 14px TWISTY
+       span.cz-gut      > span.cz-spine + span.cz-gc
+       span.cz-name
+       span.cz-sp       > svg.cz-sp-ico
+       span.cz-tacts
+
+   Section 9 defines .cz-tw as the indented TEXT BAND - flex:1 1 auto plus
+   padding-left: min(--cz-d,6)*10px - but the helper emits it as the twisty
+   holder. The chevron therefore grew to fill the row and absorbed the
+   entire indent, squeezing the name against the action gutter.
+
+   THE INDENT MOVES TO THE ROW. The twisty is the first child, so row
+   padding-left steps the twisty, the git gutter and the name together, and
+   the name band still starts exactly --cz-di * --cz-indent from the left -
+   which is the cost treeChars() already subtracts from the name budget.
+   --cz-di is emitted pre-capped at DEPTH_CAP, so no min() is needed and
+   the expression ports to Slint as `di * 10px`. Falls back to --cz-d for
+   hand-written rows that only carry the raw depth.
+   The row background and the selected-row rail are painted on the padding
+   box, so both still start at the row's true left edge. */
+.cz .cz-trow,
+.cz .cz-tree-rows > .cz-row,
+.cz .cz-tree-row {
+  padding-left: calc(var(--cz-di, var(--cz-d, 0)) * var(--cz-indent, 10px));
+}
+
+/* .cz-tw is a 14px MARK, matching .cz-twist. Written at (0,2,0) so it wins
+   over section 9's flex:1 1 auto + padding-left without editing it.
+   No rotation rule: setFolder() swaps the glyph (chev <-> down) itself. */
+.cz .cz-tw {
+  flex: none;
+  width: 14px; height: 14px; min-height: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0; padding-left: 0;
+  color: var(--text-muted);
+}
+.cz .cz-tw-ico { flex: none; width: 9px; height: 9px; }
+
+.cz-tree-rows { display: block; min-width: 0; }
+
+/* The git channel. The helper nests .cz-spine INSIDE .cz-gut, so the
+   12px gutter has to carry the 3px spine as well - which is the 15px
+   treeChars() subtracts. Section 9's own `.cz-trow > .cz-spine` rule is
+   dead anyway: a stray comment terminator sits inside its selector list. */
+.cz .cz-trow > .cz-gut,
+.cz .cz-tree-rows > .cz-row > .cz-gut,
+.cz .cz-tree-row > .cz-gut {
+  flex: 0 0 calc(var(--cz-gut-w) + var(--cz-spine-w));
+  width: calc(var(--cz-gut-w) + var(--cz-spine-w));
+  justify-content: flex-start; gap: 2px;
+}
+.cz .cz-gut > .cz-spine {
+  flex: none; align-self: stretch;
+  width: var(--cz-spine-w); min-height: 14px;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  background: var(--cz-cat);
+}
+.cz .cz-trow > .cz-spine,
+.cz .cz-tree-rows > .cz-row > .cz-spine,
+.cz .cz-tree-row > .cz-spine {
+  align-self: stretch; min-height: 14px;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+}
+.cz-gc { flex: 1 1 auto; min-width: 0; text-align: center; overflow: hidden; }
+
+/* the species marker. NOT given a reserved width: treeRow() emits an empty
+   .cz-sp for rows without a species and treeChars() charges the name 0 for
+   those, so a fixed width here would take back budget the name was
+   promised. The name's own 72px floor is what protects it. */
+.cz-sp { flex: none; display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.cz-sp-ico { flex: none; width: 11px; height: 11px; }
+
+/* treeRow() writes data-cz-kind="dir"; section 9 keyed on "folder", so
+   folder names never got their weight. */
+.cz .cz-trow[data-cz-kind="dir"] .cz-name,
+.cz .cz-tree-rows > .cz-row[data-cz-kind="dir"] .cz-name,
+.cz .cz-tree-row[data-cz-kind="dir"] .cz-name { font-weight: 700; }
+
+/* the paging line. Static text, so it is muted rather than accent: it is
+   not the clickable .cz-more. */
+.cz-tree-foot {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 24px;
+  margin-top: var(--xs);
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+
+/* -------- 16.9 SCOPE BREADCRUMB ----------------------------------------
+   .cz-crumb means two different things and both are live in the same
+   panel: vG-panels-a composes section 9's form, where .cz-crumb is the BAR
+   and .cz-crumb-seg are the segments; breadcrumb() emits
+   div.cz-tree-scope as the bar and .cz-crumb as each SEGMENT.
+   Everything here is therefore scoped under .cz-tree-scope, at (0,2,0), so
+   panels-a's bar keeps section 9's rule untouched. */
+.cz-tree-scope {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 2px;
+  min-width: 0;
+  margin-bottom: var(--xs);
+  padding: 2px var(--sm);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border-light, var(--border));
+  font-family: var(--mono-font); font-size: var(--cz-fs-meta);
+  color: var(--text-secondary);
+  overflow: hidden;
+}
+.cz-tree-scope > .cz-crumb {
+  display: inline-flex; align-items: center; gap: var(--xs);
+  min-height: 24px; min-width: 0;
+  margin: 0; padding: 0 2px;
+  border: 0; background: none;
+  border-radius: var(--radius-xs);
+  color: inherit; font: inherit;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-tree-scope > .cz-crumb:hover { color: var(--text-primary); background: var(--accent-soft); }
+.cz-tree-scope > .cz-crumb:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.cz-tree-scope > .cz-crumb--cur { color: var(--text-primary); font-weight: 700; }
+.cz-crumb-ico { flex: none; width: 11px; height: 11px; }
+.cz-crumb-lbl { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+/* -------- 16.10 BLOCKED -------------------------------------------------
+   CZ.blocked wraps the mark and the code in span.cz-blocked-top, and emits
+   .cz-blocked-say / .cz-blocked-acts as SPANS - so section 11's
+   `margin-top` on .cz-blocked-say was landing on an inline box and doing
+   nothing. */
+.cz-blocked-top { display: flex; align-items: center; gap: var(--xs); min-width: 0; }
+.cz-blocked > .cz-blocked-say { display: block; }
+.cz-blocked-mark { flex: none; display: inline-flex; align-items: center; color: var(--accent-warning); }
+.cz-blocked--err .cz-blocked-mark { color: var(--accent-error); }
+/* mirrors the section 14 corrections for .cz-blocked-code, so the glyph and
+   the code stay the same colour in the accessibility theme */
+[data-theme="basic-light"] .cz .cz-blocked-mark { color: #8A5200; }
+[data-theme="basic-light"] .cz .cz-blocked--err .cz-blocked-mark { color: #A11212; }
+[data-theme="basic-dark"]  .cz .cz-blocked-mark { color: #FFC14D; }
+[data-theme="basic-dark"]  .cz .cz-blocked--err .cz-blocked-mark { color: #FF8B8B; }
+
+
+/* -------- 16.11 data-cz-open: "true"/"false" AND "1"/"0" ---------------
+   The helpers write true/false, vG-panels-d writes 1/0, and sections 4 and
+   6 only ever read 1/0 - so no collapse rule fired for helper markup and
+   no chevron ever turned.
+
+   The collapse rules carry :not(.pmm-expand) deliberately. PMM.expand()
+   stamps .pmm-expand on a box it is animating and _pm-cozy.js sets
+   hidden + display:none only AFTER that animation has had its beat
+   (contract section 7); an unconditional display:none here would cut the
+   collapse animation off at frame zero. With the guard, CSS collapses the
+   box when the motion layer is absent and defers to the helper when it is
+   present - and the payload leaves the tab order either way.
+   No open-state display rule is written anywhere here, so [hidden] and the
+   helper's inline display:none always win. */
+[data-cz-open="true"] > .cz-head .cz-chev,
+[data-cz-open="true"] > .cz-head-main .cz-chev { transform: rotate(90deg); }
+
+.cz-ex[data-cz-open="false"] > .cz-ex-b:not(.pmm-expand),
+.cz-ex[data-cz-open="false"] > .cz-ex-body:not(.pmm-expand),
+.cz-ex[data-cz-open="0"]     > .cz-ex-body:not(.pmm-expand),
+.cz-shelf[data-cz-open="false"] > .cz-body:not(.pmm-expand),
+.cz-shelf[data-cz-open="false"] > .cz-shelf-body:not(.pmm-expand),
+.cz-shelf[data-cz-open="0"]     > .cz-body:not(.pmm-expand),
+.cz-shelf[data-cz-open="0"]     > .cz-shelf-body:not(.pmm-expand) { display: none; }
+
+/* [hidden] has to keep working for the helper spellings too */
+.cz-shelf-body[hidden], .cz-ex-body[hidden],
+.cz-shelf-body.is-closed, .cz-ex-body.is-closed { display: none; }
+
+
+/* -------- 16.12 REDUCED MOTION -----------------------------------------
+   Same kill list as section 13, for the names introduced above. */
+@media (prefers-reduced-motion: reduce) {
+  .cz .cz-ex-bar,
+  .cz .cz-row-acts,
+  .cz .cz-tacts,
+  .cz .cz-shelf-chev,
+  .cz .cz-ex-chev,
+  .cz .cz-tw { transition: none; }
+}
+[data-motion="reduced"] .cz .cz-ex-bar,
+[data-motion="reduced"] .cz .cz-row-acts,
+[data-motion="reduced"] .cz .cz-tacts,
+[data-motion="reduced"] .cz .cz-shelf-chev,
+[data-motion="reduced"] .cz .cz-ex-chev,
+[data-motion="reduced"] .cz .cz-tw { transition: none; }
+
+/* ------------------------------------------------------------------ */
+/* 17. NEUTRAL BY DEFAULT                                              */
+/* A tree row with no git status must not inherit its shelf's category */
+/* colour. Without this every unmodified file wears the shelf's rail:  */
+/* one conflicted file rolls the shelf up to state="err" and 400 clean */
+/* files render a red spine, which says "error" about files that are   */
+/* fine. Colour in this design is earned per row, never ambient - and  */
+/* a wall of tinted left borders is exactly the look this redesign was */
+/* commissioned to remove.                                             */
+.cz-trow:not([data-cz-git]) .cz-spine,
+.cz-tree-row:not([data-cz-git]) .cz-spine,
+.cz-trow[data-cz-git=""] .cz-spine,
+.cz-tree-row[data-cz-git=""] .cz-spine { background: transparent; }
+
+/* The file tree is a browser, not a status board. Its shelf states what
+   the folder IS, so it stays neutral however many dirty files it holds;
+   per-row spines carry the git signal. Panels whose shelf genuinely
+   summarises health (Docker, Tests, Actions) keep the worst-state roll-up. */
+.cz-shelf[data-cz-neutral],
+[data-pm-panel="files"] .cz-shelf { --cz-cat: var(--graph-pending); }
+
+/* ------------------------------------------------------------------ */
+/* 18. FIT-SWEEP CORRECTIONS                                           */
+/* Both found by the sweep, both confined to Search, both real.        */
+
+/* R4 x8 (every width and theme): the regex toggle renders its ".*"    */
+/* label at 21.6px wide. min-height alone does not make a square hit   */
+/* target - FinalGUISpec 13.5 wants 24 in BOTH axes, and a two-glyph   */
+/* label is the case that exposes it.                                  */
+.cz-btn, .cz-ibtn, .cz-tab-more, .cz-more, .cz-crumb-seg { min-width: 24px; }
+
+/* R2 x10 (at 320 and 380 only): meta segments and the "+N" overflow   */
+/* chip escaped the row's content box by up to 49px. The row band had  */
+/* no min-width:0, so its flex children refused to shrink and spilled  */
+/* instead of eliding. This is the same class of bug as the original   */
+/* PMConcept7 defect - a flex child that cannot shrink pushes the      */
+/* overflow somewhere it cannot be seen - so it is worth fixing at the */
+/* primitive rather than in the Search panel.                          */
+/* First attempt set flex/min-width on .cz-row-seg, which is display:inline -
+   an inline box ignores both, so the segments still spilled. The meta line has
+   to BE a flex row for its children to shrink. */
+.cz-row-band, .cz-meta { min-width: 0; overflow: hidden; }
+.cz-row-l2 {
+  display: flex; align-items: baseline; min-width: 0;
+  overflow: hidden; white-space: nowrap;
+}
+.cz-row-seg {
+  display: inline-block; min-width: 0; flex: 0 1 auto;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cz-row-more, .cz-row-sep { flex: 0 0 auto; }
+
+/* The footer count clipped silently in basic-light at 240px (its font is wider
+   than friendly's, so the string outgrew the band only in that theme). It had
+   overflow:hidden but no ellipsis, which is the worst combination: text
+   disappears with no sign it was cut. */
+.cz-foot-count {
+  min-width: 0; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}

@@ -1,0 +1,267 @@
+/* ============================================================================
+   Kimi K3 — motion tokens, shared keyframes, reduced-motion contract.
+   All animations are transform/opacity (Slint-portable) except the two
+   sanctioned exceptions: k3-flash (background/box-shadow highlight pulse)
+   and k3-shimmer (background-position). Every loop is decorative and every
+   utility ends in a state identical to no-animation, so content is never
+   hidden behind an animation. k3.js drives the contract via
+   <html data-motion="full|reduced"> (manual toggle wins over
+   prefers-reduced-motion, so no media query here — the attribute is the
+   single source of truth).
+   ========================================================================== */
+
+/* duration tokens — mapped onto the PM6 motion scale when present */
+:root {
+  --k3-dur-fast: var(--motion-fast, 120ms);
+  --k3-dur-med:  var(--motion-med, 220ms);
+  --k3-dur-slow: var(--motion-slow, 360ms);
+  --k3-dur-xslow: var(--motion-xslow, 540ms);
+}
+
+/* ---- keyframes ---- */
+
+/* entrance: rise 6px while fading in */
+@keyframes k3-fadeup-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* entrance: scale up from .96 while fading in */
+@keyframes k3-pop-in {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* search-jump target highlight pulse (sanctioned background/box-shadow) */
+@keyframes k3-flash {
+  0%   { background-color: var(--accent-glow, transparent); box-shadow: 0 0 0 0 var(--accent-glow, transparent); }
+  100% { background-color: transparent; box-shadow: 0 0 0 14px transparent; }
+}
+
+/* running-slot shimmer (sanctioned background-position) */
+@keyframes k3-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* live-row sheen sweep (transform-only, via the ::after band below) */
+@keyframes k3-sheen {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* running status dot pulse */
+@keyframes k3-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .5; transform: scale(.75); }
+}
+
+/* ---- utility classes (final state == natural state) ---- */
+
+.k3-anim-fadeup { animation: k3-fadeup-in var(--k3-dur-med) var(--ease-out, ease-out) both; }
+.k3-anim-pop    { animation: k3-pop-in var(--k3-dur-med) var(--ease-spring, ease-out) both; }
+.k3-anim-flash  { animation: k3-flash var(--k3-dur-slow) var(--ease-out, ease-out) 2; }
+
+/* live-row sheen: a soft accent band sweeps the row; parked off-row (and
+   therefore invisible) whenever the animation is not running */
+.k3-running { position: relative; overflow: hidden; }
+.k3-running::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 25%, var(--accent-glow, transparent) 50%, transparent 75%);
+  transform: translateX(-100%);
+  animation: k3-sheen calc(var(--sheen-dur, .6s) * 4) var(--ease-smooth, ease) infinite;
+}
+
+/* running-slot shimmer: accent-soft band cycling via background-position */
+.k3-shimmer {
+  background-image: linear-gradient(100deg, transparent 35%, var(--accent-soft, transparent) 50%, transparent 65%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: k3-shimmer calc(var(--k3-dur-slow) * 3) linear infinite;
+}
+
+/* running status dot pulse (.k3-dot base styles live in base.css) */
+.k3-dot.is-running { animation: k3-pulse calc(var(--k3-dur-slow) * 2) var(--ease-smooth, ease) infinite; }
+
+/* ============================================================================
+   "ALIVE" MOTION — entrance, stagger, selection, status, spinner primitives.
+   All transform/opacity (or sanctioned background/box-shadow). Every
+   animation ends at the natural resting state so nothing is ever hidden.
+   The reduced-motion gate (below) collapses all of these to instant.
+   ========================================================================== */
+
+/* entrance: rise + fade (springy landing) */
+@keyframes k3-rise {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* entrance: scale-in pop (soft spring) */
+@keyframes k3-scale-in {
+  from { opacity: 0; transform: scale(.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* stagger child: each row rises independently; --k3-i sets the per-child index */
+@keyframes k3-row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* selection check pop: 0 -> overshoot 1.18 -> settle 1 */
+@keyframes k3-check-pop {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+/* one-shot settle for items that just completed (lime flash that fades) */
+@keyframes k3-settle-done {
+  0%   { background-color: var(--accent-glow, transparent); }
+  100% { background-color: transparent; }
+}
+/* blocked / failed micro-shake (attention, transform-only) */
+@keyframes k3-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1.5px); }
+  80% { transform: translateX(1px); }
+}
+/* layout spring-settle: overshoot up then settle (for reflow after a surface departs) */
+@keyframes k3-spring-settle {
+  0%   { transform: translateY(6px); }
+  55%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+/* four-dot orbit spinner — the preparing/submitting language.
+   Dots are positioned around a center; the ring rotates 45deg so the dots
+   cycle between a diamond and a square arrangement (matches the reference). */
+@keyframes k3-dot-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* calmer sheen sweep for running rows (slower, softer) */
+@keyframes k3-sheen-soft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+/* count-up slot: a number that scales in from below (paired with .k3-count) */
+@keyframes k3-count-up {
+  from { opacity: .4; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* soft pulse for "needs attention" symbols (slower, gentler than running pulse) */
+@keyframes k3-attention-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .45; transform: scale(.82); }
+}
+
+/* ---- entrance utilities ---- */
+.k3-anim-rise     { animation: k3-rise var(--k3-dur-med) var(--ease-soft-spring, ease-out) both; }
+.k3-anim-scale-in { animation: k3-scale-in var(--k3-dur-med) var(--ease-spring, ease-out) both; }
+
+/* ---- stagger primitive: mark a container .k3-stagger and set --k3-i on each child ---- */
+/* the delay is capped at 8 steps (360ms) so long lists don't drag their tail */
+.k3-stagger > * {
+  animation: k3-row-in var(--k3-dur-med) var(--ease-out, ease-out) both;
+  animation-delay: calc(min(var(--k3-i, 0), 8) * 45ms);
+}
+/* one-shot completion settle (apply, then remove; ends transparent) */
+.k3-settle { animation: k3-settle-done var(--k3-dur-slow) var(--ease-out, ease-out) 1; }
+/* blocked/failed shake (one-shot, ends at rest) */
+.k3-shake-now { animation: k3-shake var(--k3-dur-med) var(--ease-smooth, ease) 1; }
+/* spring reflow after a surface departs (one-shot, ends at rest) */
+.k3-spring-reflow { animation: k3-spring-settle var(--k3-dur-xslow) var(--ease-elastic, ease-out) 1; }
+
+/* ---- four-dot orbit spinner ----
+   Build: <span class="k3-orbit"><i></i><i></i><i></i><i></i></span>
+   The ring rotates; dots sit at top/right/bottom/left of a small box, so the
+   45deg rotation cycles them between diamond and square. */
+.k3-orbit {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  animation: k3-dot-orbit var(--k3-dur-slow) var(--ease-smooth, ease) infinite;
+}
+.k3-orbit > i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+.k3-orbit > i:nth-child(1) { top: 50%; left: 0; opacity: .95; }
+.k3-orbit > i:nth-child(2) { top: 0; left: 50%; opacity: .7; }
+.k3-orbit > i:nth-child(3) { top: 50%; left: 100%; opacity: .5; }
+.k3-orbit > i:nth-child(4) { top: 100%; left: 50%; opacity: .3; }
+
+/* calmer running-row sheen (alternate to .k3-running) */
+.k3-running-soft { position: relative; overflow: hidden; }
+.k3-running-soft::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, var(--accent-glow, transparent) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: k3-sheen-soft calc(var(--sheen-dur, .6s) * 6) var(--ease-smooth, ease) infinite;
+}
+
+/* count-up: a number that re-animates when its value changes (set .k3-count on
+   the numeral; JS toggles a key to retrigger). Ends at rest (opacity 1). */
+.k3-count { animation: k3-count-up var(--k3-dur-med) var(--ease-out, ease-out) 1; }
+
+/* "needs attention" symbol pulse (slower than running) */
+.k3-dot.is-attention { animation: k3-attention-pulse calc(var(--k3-dur-slow) * 2.4) var(--ease-smooth, ease) infinite; }
+
+/* ---- accordion helper: grid-rows 0fr -> 1fr, inner wrapper is required ---- */
+.k3-acc {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--k3-dur-med) var(--ease-spring, ease-out);
+}
+.k3-acc.is-open { grid-template-rows: 1fr; }
+.k3-acc > .k3-acc-in { min-height: 0; overflow: hidden; }
+/* when an accordion opens, its direct children stagger in top-to-bottom.
+   Each child needs --k3-i set (0,1,2...); without it the delay is 0 (no harm).
+   Children re-fire only when .is-open lands (mount/open), not on every paint. */
+.k3-acc.is-open > .k3-acc-in > * {
+  animation: k3-row-in var(--k3-dur-med) var(--ease-out, ease-out) both;
+  animation-delay: calc(min(var(--k3-i, 0), 8) * 45ms);
+}
+
+/* ============================================================================
+   REDUCED MOTION CONTRACT — everything collapses to instant; final states
+   are identical to full motion. Nothing may hide content behind animation.
+   ========================================================================== */
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* explicit kills for decorative loops */
+html[data-motion="reduced"] .k3-running,
+html[data-motion="reduced"] .k3-running::after,
+html[data-motion="reduced"] .k3-running-soft,
+html[data-motion="reduced"] .k3-running-soft::after,
+html[data-motion="reduced"] .k3-shimmer,
+html[data-motion="reduced"] .k3-dot.is-running,
+html[data-motion="reduced"] .k3-dot.is-attention,
+html[data-motion="reduced"] .k3-orbit,
+html[data-motion="reduced"] .k3-orbit > i {
+  animation: none !important;
+}
+html[data-motion="reduced"] .k3-shimmer { background-image: none; }
+/* under reduced motion, one-shot "alive" entrances/settles resolve instantly
+   to their natural resting state (already guaranteed by the global .01ms gate
+   + the both/1 fill-mode; this just makes intent explicit and trims the
+   reflow/shake so they never displace content). */
+html[data-motion="reduced"] .k3-spring-reflow,
+html[data-motion="reduced"] .k3-shake-now { transform: none !important; }

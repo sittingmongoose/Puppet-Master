@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L300-L1612
+Source lines: L329-L1653
 
-Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
+Source SHA256: `608f0418a56b0f2a31ba473cb27d81579d6259deead06f6125a6c44166fcb50b`
 
 ---
 
@@ -530,7 +530,7 @@ plan_unit_id: G-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: Projection freshness, health, trust, degraded fallback, runtime-trust command, blocked presentation, Progress trust, concern trust, and projection_freshness/projection_health terms keep recency, safety, write availability, dismissal, trust_tier, and mutation gating axes distinct.
+canonical_text: Projection freshness is closed to current, refreshing, and stale; projection health is closed to healthy, degraded, and unavailable; blocked remains write/admission posture and unknown remains unresolved evidence, while action gating keeps freshness, health, write availability, dismissal, trust_tier, and mutation authority distinct.
 gui_related: true
 gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
 split_recommended: false
@@ -540,6 +540,8 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- Fresh, warm, and expired are not emitted as projection_freshness values; blocked and unknown are not emitted as projection_health values.
+- A survivor-current projection may remain degraded after canonical loss, and owner policy blocks rather than guessing when health or loss extent is unknown.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -570,9 +572,12 @@ negative_constraints:
 - Do not flatten freshness, health, and write availability into one generic offline badge.
 - dismissed is presentation state, not semantic resolution.
 - Retire trust_tier from action-gating terminology.
-compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes: []
+compatibility_only_notes:
+- fresh, warm, and expired are retired freshness aliases; blocked and unknown are retired competing health aliases.
+stale_retired_dispositions:
+- The duplicate fresh, warm, stale, expired and healthy, degraded, blocked, unknown vocabulary is retired in favor of the storage-owned closed axes.
+owner_boundary_notes:
+- Plans/storage-plan.md owns projection_freshness and projection_health state semantics; Glossary owns their short canonical definitions.
 owner_hints:
 - Plans/Glossary.md
 preserved_contractrefs:
@@ -1020,7 +1025,7 @@ plan_unit_id: G-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: SessionStore primitive vocabulary defines session/run/event/artifact storage over seglog, redb, Tantivy, replay, projections, runtime records, and storage-owned overlay shape while forbidding secrets and keeping runtime state out of plan-node shards and project-local JSON sidecars.
+canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/JSONL/search state; replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
 gui_related: false
 gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
 split_recommended: false
@@ -1030,6 +1035,8 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- Every redb family is interpreted through its machine-readable recovery authority rather than assumed to be a projection.
+- A rebuild may recover only derived state with a materialized retained registered source and cannot recreate missing canonical receipts or product state.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1049,6 +1056,9 @@ preserved_exact_tokens:
 - seglog
 - redb
 - Tantivy
+- canonical_non_rebuildable
+- canonical_dual_homed
+- derived_rebuildable
 - target_seq
 - freshness notifications
 - attempt_record
@@ -1059,6 +1069,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Secrets are forbidden in persistent storage.
 - Runtime state is not stored in plan-node shards or project-local JSON sidecars.
+- Do not describe all redb state as disposable or rebuildable.
+- Do not infer successful canonical recovery from a rebuilt projection.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

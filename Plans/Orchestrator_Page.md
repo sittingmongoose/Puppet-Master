@@ -451,6 +451,14 @@ owner_hints:
   - Plans/Orchestrator_Page.md
 ```
 
+## Known-37 recovery-unavailable orchestrator actions - 2026-07-18
+
+The Orchestrator projects the current recovery anchor, exact five-value owner reason, snapshot refs, preserved-local-work disclosure, pre/post-attempt identity, and ordered `allowed_action_ids[]`. It registers no local recovery family. `locate_and_verify_recovery` routes only to `cmd.runtime.locate_and_verify_recovery`; `abandon_recovery` routes only to `cmd.runtime.abandon_recovery`; their catalog labels, typed request/result contracts, one-handler wiring, and receipt effect are authoritative.
+
+The page keeps inspect first and explicit abandonment last. `start_fresh_attempt` appears only when the existing isolated historical-commit/worktree-head predicate is currently owner-admitted. Ordinary restore/retry, abort, skip, approve, timer, archive, and cleanup cannot replace the current list. Every click revalidates the exact blocked sequence, anchor, reason, snapshot set, attempt branch, membership, permission/storage state, and idempotency identity.
+
+Projection changes to released only from durable owner authority: committed locate/verify receipt gives `resolved`; committed replan gives `resolved`; a fully durable isolated successor gives `superseded_with_verified_successor`; committed explicit abandonment gives `abandoned_by_user`. Any refusal, recoverable failure, owner disagreement, stale projection, or receipt failure keeps `recovery_unavailable`, all refs/holds/local work, and `cleanup_performed = false`. The page displays the typed outcome and receipt identity; generic command acknowledgement is not success.
+
 ## Ledger Compile Addendum - pldg-20260630-001-feature-intake
 
 This addendum compiles Orchestrator containerized-host projection obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
@@ -2319,7 +2327,7 @@ owner_hints:
 
 This addendum repairs non-runtime Orchestrator page rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-4ac2b9911ffce6c6ae062b08`: safe-point retry UI shows action `cmd.orchestrator.safe_point_retry` with fields `run_id`, `safe_point_id`, `retry_scope`, and `permission_snapshot_id?`. Confirmation copy must name the safe point and affected node/run. Disabled reasons are `safe_point_missing`, `state_changed`, `permission_denied`, and `operation_in_progress`.
+- Repairs `sfk-4ac2b9911ffce6c6ae062b08`: safe-point retry UI shows action `cmd.orchestrator.safe_point_retry` with the canonical project/run/node/blocked/attempt/safe-point/repo/worktree fields, `baseline_target = safe_point`, and optional `permission_snapshot_id`. Admission validates optional permission evidence against current permission state, consumes it, and dispatches the exact canonical payload to `cmd.runtime.restore_safe_point_then_retry` / `handlers::runtime::restore_safe_point_then_retry`. Confirmation copy must name the safe point and affected node/run. Disabled reasons are `safe_point_missing`, `state_changed`, `permission_denied`, and `operation_in_progress`.
 - Repairs `sfk-20d70c6eed1de1a86055e838`: Plan Compile launch waits for `PlanApproved` publication for `60000` ms by default. On expiry it enters `plan_compile_launch_expired` with actions `retry_wait`, `open_plan_approval`, and `cancel_launch`.
 - Repairs `sfk-e9a741e787bc73207fc9b89a`: core DAG GUI commands are `cmd.run_graph.pan`, `cmd.run_graph.zoom`, `cmd.run_graph.drag_node`, `cmd.run_graph.open_minimap_target`, `cmd.run_graph.open_context_menu`, `cmd.run_graph.keyboard_navigate`, and `cmd.run_graph.set_selection`. Enabled state requires graph data loaded and no modal capture; drag additionally requires editable layout mode.
 
@@ -2391,4 +2399,289 @@ owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/usage-feature.md
   - Plans/Runtime_Artifacts_Panel.md
+```
+
+## PMConcept6 Shell Sweep Addendum - 2026-07-16
+
+This addendum promotes user-approved PMConcept6 orchestrator controls (problems-only filter, ledger export, plan compile replay, and the safe-point retry confirmation) into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### OP-030 - Problems-Only Graph Filter
+
+```yaml
+plan_unit_id: OP-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The Orchestrator graph toolbar exposes a Problems only toggle that filters the Node Graph view projection to problem-state elements: nodes and lanes whose state is attention_required, blocked, or degraded. The toggle is off by default, applies to the rendered view projection only, and resets rather than persisting across focused-run changes; it is never persisted globally across unrelated projects. Enabling the filter hides non-problem elements from the rendered view without mutating run state, node state, or the underlying projection data, and disabling it restores the unfiltered projection.
+gui_related: true
+gui_classification_reason: The Problems only toolbar toggle and the filtered graph view are user-visible GUI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The graph toolbar shows a Problems only toggle that is off by default.
+  - With the toggle enabled, the view shows only nodes and lanes whose state is attention_required, blocked, or degraded.
+  - Disabling the toggle restores the unfiltered projection without any run, node, or projection mutation.
+  - The toggle resets across focused-run changes and is not persisted globally across unrelated projects.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Orchestrator problems-only graph filter fixture suite
+risk_class: orchestrator_problem_filter_drift
+reasoning_tier: standard
+context_scope: orchestrator_graph_problem_filter
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: orchestrator_problems_only_filter
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/pm6-build/parts/17-page-orchestrator.part.html"
+  - "Plans/Orchestrator_Page.md:98"
+  - "Plans/Orchestrator_Page.md:219"
+  - "Plans/Orchestrator_Page.md:228"
+preserved_exact_tokens:
+  - Problems only
+  - attention_required
+  - blocked
+  - degraded
+negative_constraints:
+  - Do not mutate run, node, or projection state from the filter; it is a view-only projection filter.
+  - Do not persist the control globally across unrelated projects.
+  - Do not treat the filtered view as evidence that hidden non-problem nodes ceased to exist.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+```
+
+### OP-031 - Ledger Export JSON Action
+
+```yaml
+plan_unit_id: OP-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The Orchestrator Ledger tab exposes an Export JSON action that produces a download of the visible filtered ledger projection: the rows currently visible under the active filters and sort, serialized as JSON. Exported rows carry their usage_event_ref-style provenance fields, including usage_event_ref, usage_record_id, and related correlation refs, where the underlying rows have them, so exported data remains traceable to canonical records. The export is a projection export: it does not include raw records, evidence payloads, or secrets, and it confers no usage, billing, or ledger authority.
+gui_related: true
+gui_classification_reason: The Ledger tab Export JSON action and its download are user-visible GUI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The Ledger tab shows an Export JSON action that downloads the visible filtered ledger projection as JSON.
+  - Exported rows preserve usage_event_ref, usage_record_id, and related provenance/correlation fields where present on the source rows.
+  - The export contains no raw records, evidence payloads, or secrets beyond the visible projection.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Orchestrator Ledger export fixture suite
+risk_class: orchestrator_ledger_export_drift
+reasoning_tier: standard
+context_scope: orchestrator_ledger_export
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: orchestrator_ledger_export_action
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/pm6-build/parts/17-page-orchestrator.part.html"
+  - "Concepts/pm6-build/parts/29x-pm6-js-orchestrator.part.html"
+  - "Plans/Orchestrator_Page.md:2139-2156"
+  - "Plans/Orchestrator_Page.md:2347"
+preserved_exact_tokens:
+  - Export JSON
+  - Ledger
+  - usage_event_ref
+negative_constraints:
+  - Do not silently include raw records or evidence in ordinary exports.
+  - Do not export secrets, unauthorized provider/account details, or data outside the user's permissions.
+  - Do not let the export confer usage, billing, or ledger authority; the Ledger tab remains a projection consumer.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/usage-feature.md
+```
+
+### OP-032 - Plan Compile Replay Projection
+
+```yaml
+plan_unit_id: OP-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The Plan Compile tab offers a read-only replay of compile waves as a projection: the user can step or play through the recorded compile-wave progression to review how the compile unfolded. Replay never re-executes compilation, never creates or rebinds a PlanCompileRun, and never mutates compile records or the compile projection; replay position and playback state are view-local and are discarded with the view. Replay frames are labeled as historical replay so they are never mistaken for live compile state.
+gui_related: true
+gui_classification_reason: Plan Compile replay controls and replayed wave frames are user-visible GUI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Plan Compile replay steps or plays through recorded compile waves as a read-only projection.
+  - Replay never re-executes compilation and never creates, rebinds, or mutates a PlanCompileRun or compile records.
+  - Replay position and playback state are view-local and are not persisted as run or project state.
+  - Replay frames are visibly labeled as historical replay, distinct from live compile status.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Plan Compile replay projection fixture suite
+risk_class: orchestrator_compile_replay_drift
+reasoning_tier: standard
+context_scope: orchestrator_plan_compile_replay
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: orchestrator_plan_compile_replay_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/pm6-build/parts/17-page-orchestrator.part.html"
+  - "Concepts/pm6-build/parts/29x-pm6-js-orchestrator.part.html"
+  - "Plans/Orchestrator_Page.md:44"
+  - "Plans/Orchestrator_Page.md:48-50"
+  - "Plans/Orchestrator_Page.md:1571"
+preserved_exact_tokens:
+  - Plan Compile
+  - Replay
+negative_constraints:
+  - Do not re-execute compilation or create, rebind, or duplicate PlanCompileRuns from replay controls.
+  - Do not mutate compile records or the compile projection from replay.
+  - Do not present replay frames as live compile state; label them as historical replay.
+compatibility_only_notes:
+  - "Slint compatibility: replay stepping animates via retained-scene updates and jumps discretely under reduced motion; no arbitrary-content backdrop blur, no SVG filters, color math precomputed."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Planning_Wizard.md
+```
+
+### OP-033 - Safe-Point Retry Confirmation Modal
+
+```yaml
+plan_unit_id: OP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The confirmation modal for cmd.orchestrator.safe_point_retry names the safe point id, the affected node and run, and the follow-up action that will occur on confirm, before any retry is dispatched. The action's disabled reasons are exactly safe_point_missing, state_changed, permission_denied, and operation_in_progress, and the invoking control or modal surfaces the applicable reason instead of failing silently. Confirmation copy is specific per the safe-point retry repair row: it names the safe point and the affected node/run rather than showing generic retry text.
+gui_related: true
+gui_classification_reason: The safe-point retry confirmation modal, its copy, and its disabled states are user-visible GUI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The confirmation modal names the safe point id, the affected node and run, and the follow-up action before dispatch.
+  - Disabled reasons are exactly safe_point_missing, state_changed, permission_denied, and operation_in_progress, surfaced on the invoking control or modal.
+  - No cmd.orchestrator.safe_point_retry dispatch occurs without explicit confirmation through the modal.
+  - Wrapper input contains the exact canonical project/run/node/blocked/attempt/safe-point/repo/worktree fields and baseline_target safe_point plus optional permission_snapshot_id only.
+  - Admission validates and consumes optional permission_snapshot_id, then dispatches the exact canonical payload to handlers::runtime::restore_safe_point_then_retry.
+  - The compatibility alias applies the identical transform; both spellings share the runtime result, safe_point.restored producer, effects, idempotency, and admission.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future safe-point retry confirmation fixture suite
+risk_class: orchestrator_safe_point_retry_confirmation_drift
+reasoning_tier: standard
+context_scope: orchestrator_safe_point_retry_confirmation
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: orchestrator_safe_point_retry_confirmation
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/pm6-build/parts/17-page-orchestrator.part.html"
+  - "Concepts/pm6-build/parts/29x-pm6-js-orchestrator.part.html"
+  - "Plans/Orchestrator_Page.md:2322"
+preserved_exact_tokens:
+  - cmd.orchestrator.safe_point_retry
+  - safe_point_missing
+  - state_changed
+  - permission_denied
+  - operation_in_progress
+negative_constraints:
+  - Do not dispatch cmd.orchestrator.safe_point_retry without the named confirmation.
+  - Do not extend, rename, or substitute the four disabled reasons without owner-doc revision.
+  - Do not show generic confirmation copy that omits the safe point id, affected node, or run identity.
+  - Do not create an Orchestrator restore handler, peer receipt-only/no-event execution path, or wrapper-specific retry dimension.
+compatibility_only_notes:
+  - "Slint compatibility: the modal overlay uses opaque or precomputed scrim styling; no arbitrary-content backdrop blur, no SVG filters, color math precomputed."
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/UI_Command_Catalog.md
+```
+
+## PMConcept7 Concept Promotion Addendum - 2026-07-23
+
+This addendum records ownership boundaries from the user-approved PMConcept7 concept pass (ChatGuiUpdates2 workstreams, revs 4-9.2) and promotes no new PlanUnits in this document. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only. The Orchestrator tab set is unchanged: the live tabs remain Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger. Tab-strip theme presentation skins and the content gap between the strip and the panes below it are owned by `Plans/FinalGUISpec.md` (F3-463), and the Orchestrator page-header layout is owned by `Plans/FinalGUISpec.md` (F3-462); this document keeps tab-set membership, projections, and page behavior canon. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum resolves the `run_interrupted` CTA card's three action references (`Plans/FinalGUISpec.md` CTA Card Contracts, referenced) to the canonical `cmd.run.*` dispatch ids registered by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.3 (referenced). Run lifecycle semantics remain owned by this document's existing sections and by `Plans/Run_Graph_View.md`; this addendum restates nothing beyond the resolution mapping and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+
+### OP-034 - Run-Control Command Trio Semantics
+
+```yaml
+plan_unit_id: OP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  The run_interrupted CTA card's three actions resolve to canonical commands: cmd.run.resume resumes an
+  interrupted orchestrator run preserving its run identity and checkpoint lineage (consumed by reference
+  from this document's "Current vs historical run behavior", including the focused-run/historical
+  routing contract, and "Owner-surface command routing"); cmd.run.view_log reveals the run's log surface
+  without mutating run state; cmd.run.stop requests run stop through the existing stop/lifecycle path
+  (referenced) with confirmation class two_step per Commands_System §7.3 (referenced); these commands
+  never create a new run identity.
+gui_related: true
+gui_classification_reason: The run_interrupted CTA card's primary and secondary actions are user-visible orchestrator controls.
+depends_on: [OP-033]
+unblocks: []
+acceptance_criteria:
+  - The run_interrupted CTA card primary and secondary action ids resolve to cmd.run.resume, cmd.run.view_log, and cmd.run.stop exactly.
+  - cmd.run.resume preserves the interrupted run's identity and checkpoint lineage; no dispatch of the trio mints a new run identity.
+  - cmd.run.stop carries confirmation class two_step per Commands_System §7.3; cmd.run.resume and cmd.run.view_log carry none.
+  - Disabled reasons for the trio come only from the closed set stale_projection, permission_required, unreachable per Commands_System §7.3 (referenced).
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future run_interrupted CTA card dispatch fixtures
+risk_class: run_control_command_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: run_control_command_trio_semantics
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "user decision 2026-07-27"
+  - "Plans/Orchestrator_Page.md:246"
+  - "Plans/Orchestrator_Page.md:250"
+  - Plans/Commands_System.md (Run & Debug Revival Addendum §7.3; referenced)
+preserved_exact_tokens:
+  - cmd.run.resume
+  - cmd.run.view_log
+  - cmd.run.stop
+  - run_interrupted
+negative_constraints:
+  - Do not mint additional cmd.run.* ids here; registration is owned by Plans/Commands_System.md §7.3 and Plans/UI_Command_Catalog.md (referenced).
+  - Do not restate run lifecycle semantics beyond the resolution mapping; "Current vs historical run behavior" and "Owner-surface command routing" remain the canon.
+  - Do not allow any trio dispatch to create a new run identity or to bypass the cmd.run.stop two_step confirmation.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+  - Plans/Commands_System.md
 ```

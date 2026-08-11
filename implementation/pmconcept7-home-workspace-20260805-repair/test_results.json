@@ -1,0 +1,40 @@
+{
+  "direct_in_app_browser": {
+    "console_errors": 0,
+    "evidence": "visual_evidence/headful/headful_browser_session.json",
+    "page_or_console_warnings": 0,
+    "real_os_blur": {
+      "detail": "Finder raise, tab switch, and browser visibility transitions did not deliver a window blur event to the controlled webview; executable harness and source listener evidence cover blur cancellation.",
+      "status": "not_observed_by_tooling"
+    },
+    "screenshots": 17,
+    "status": "PASS_WITH_BLUR_DELIVERY_NOTE"
+  },
+  "generated_at_utc": "2026-08-05T15:51:33.701933+00:00",
+  "home_matrix": {
+    "check_count": 22,
+    "evidence": "visual_evidence/home_workspace_matrix.json",
+    "failed_checks": [],
+    "matrix_count": 72,
+    "matrix_failures": 0,
+    "passed_checks": 22,
+    "recording_count": 6,
+    "runtime_error_case_count": 0,
+    "status": "PASS",
+    "trace_count": 6
+  },
+  "legacy_capture": {
+    "captures": 35,
+    "console_errors": 0,
+    "evidence": "legacy_validation/capture/capture_log.json",
+    "status": "PASS"
+  },
+  "legacy_smoke": {
+    "console_errors": 0,
+    "evidence": "legacy_validation/smoke/pm7-smoke.json",
+    "status": "PASS"
+  },
+  "schema_id": "pm.pm7_home_workspace_repair_test_results.v1",
+  "status": "PASS_WITH_DOCUMENTED_TOOLING_LIMITATION",
+  "tooling_boundary": "The controlled in-app webview did not deliver a genuine window blur event during Finder raise, tab switch, or visibility attempts. Source contains the production window blur listener and the executable matrix covers blur rollback; no direct-OS-blur PASS is claimed."
+}

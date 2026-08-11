@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1146-L1239
+Source lines: L1136-L1239
 
-Source SHA256: `23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7`
+Source SHA256: `675341194e15f562897bd18f552ac6582a1198cc4095730f8d4ab219e0c87b88`
 
 ---
 
@@ -26,16 +26,26 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 | --- | --- | --- |
 | `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
 | `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id, repo_id?, worktree_id?, baseline_target? }` |
+| `retry_now` | `cmd.runtime.retry_now` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id, repo_id?, worktree_id?, baseline_target?, safe_point_id?, historical_commit_oid?, expected_head_oid?, expected_state_sha256?, dirty_state_confirmed?, idempotency_key }` |
 | `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target }` |
-| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id?, repo_id?, worktree_id?, baseline_target? }` |
+| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point", idempotency_key }` |
+| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id?, repo_id?, worktree_id?, baseline_target?, safe_point_id?, historical_commit_oid?, expected_head_oid?, expected_state_sha256?, dirty_state_confirmed?, idempotency_key }` |
 | `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
 | `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
 | `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
 | `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
 
-SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is the closed candidate enum `safe_point | historical_commit | worktree_head`. When a recovery command carries `repo_id`, `worktree_id`, or `baseline_target`, runtime dispatch must validate the targeted worktree and baseline exactly and must reject the command rather than silently substitute another worktree or baseline.
+SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is closed to `safe_point | historical_commit | worktree_head`; the former stale candidate wording is superseded. Conditional payload and effect are exact:
+
+| `baseline_target` | Conditionally required immutable inputs | Effect and successful postcondition |
+|---|---|---|
+| `safe_point` | `safe_point_id`, `repo_id`, `worktree_id` | FileSafe exact-replaces the complete named-worktree manifest. Only `restored_clean` or zero-mutation `restore_skipped` with target equality may produce the durable baseline receipt used for successor-attempt admission. |
+| `historical_commit` | full immutable `historical_commit_oid`, `repo_id`, source `worktree_id` | Preserve the source byte-for-byte and create a distinct isolated clean worktree at that exact commit OID; the durable result carries the new `worktree_id`. No abbreviated, branch, tag, remote, reflog, symbolic, or moving ref is accepted. |
+| `worktree_head` | `repo_id`, `worktree_id`, full `expected_head_oid`, `expected_state_sha256`, and `dirty_state_confirmed = true` when dirty | Perform no checkout, reset, stash, clean, branch move, index rewrite, or file mutation. Bind only when the recomputed OID and FileSafe state digest still match exactly. |
+
+`cmd.runtime.restore_safe_point_then_retry` admits only `baseline_target = safe_point`. When `requires_safe_point_restore = true`, it is the only legal rerun command. `cmd.runtime.retry_now` and `cmd.runtime.start_fresh_attempt` accept a target only when the blocked/retry owner admits that verb and every field in the matching row is present. Unknown values, missing conditional fields, stale `blocked_sequence`, repo/worktree mismatch, moving or abbreviated refs, missing/non-commit OIDs, and digest drift refuse without target substitution, successor attempt, cleanup, or automatic replay.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#approved-baseline-target-retry-and-restore-lifecycle, ContractName:Plans/WorktreeGitImprovement.md#approved-exact-baseline-target-SCM-contract, ContractName:Plans/FileSafe.md#11.1.2b, ContractName:Plans/Contracts_V0.md#safe_point.restored
 
 ### Navigation commands
 - `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`

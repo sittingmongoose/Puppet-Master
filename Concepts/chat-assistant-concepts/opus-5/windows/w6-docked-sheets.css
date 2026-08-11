@@ -1,0 +1,251 @@
+/* w6 "Docked Sheets" — Opus 5
+ * Sheets with snap points at narrow width, a side panel when wide.
+ * All rules scoped under [data-pmx-window="w6"]; a test fails anything outside that scope.
+ */
+
+[data-pmx-window="w6"] .w6-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+[data-pmx-window="w6"] .w6-header {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: var(--sm) var(--md); flex: 0 0 auto; min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w6"] .w6-brand { display: flex; align-items: baseline; gap: 5px; flex: 0 0 auto; }
+[data-pmx-window="w6"] .w6-brand-name {
+  font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+[data-pmx-window="w6"] .w6-brand-model { font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .05em; }
+[data-pmx-window="w6"] .w6-tools { margin-left: auto; min-width: 0; display: flex; justify-content: flex-end; }
+
+[data-pmx-window="w6"] .w6-transcript { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+[data-pmx-window="w6"] .w6-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-window="w6"] .w6-question:empty { display: none; }
+[data-pmx-window="w6"] .w6-composer { flex: 0 0 auto; min-width: 0; }
+
+/* ---------------------------------------------------------------- tabs */
+
+/* In normal flow, right-aligned, between the transcript and the composer. Absolute
+ * positioning put this row on top of whatever happened to be at that corner — the header
+ * selectors at wide width, the send button at the bottom. Flow order cannot collide. */
+[data-pmx-window="w6"] .w6-shell { }
+[data-pmx-window="w6"] .w6-header { order: 1; }
+[data-pmx-window="w6"] .w6-transcript { order: 2; }
+[data-pmx-window="w6"] .w6-tabs { order: 3; }
+[data-pmx-window="w6"] .w6-question { order: 4; }
+[data-pmx-window="w6"] .w6-composer { order: 5; }
+
+[data-pmx-window="w6"] .w6-tabs {
+  position: static;
+  align-self: flex-end;
+  flex: 0 0 auto;
+  z-index: 12;
+  display: flex;
+  gap: 4px;
+  padding: 4px var(--md);
+}
+[data-pmx-window="w6"] .w6-tab {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-muted);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+  box-shadow: var(--elev-1);
+}
+[data-pmx-window="w6"] .w6-tab:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+[data-pmx-window="w6"] .w6-tab[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  border-color: var(--accent-primary); color: var(--text-primary); font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- the sheet */
+
+[data-pmx-window="w6"] .w6-sheet {
+  position: absolute;
+  left: 0; right: 0;
+  /* Anchored ABOVE the composer and the question host, not at the shell's bottom edge.
+   * `bottom: 0` meant every open sheet — including the 56px peek, which is supposed to be
+   * the unobtrusive state — sat on top of the composer. The overlap assertion never caught
+   * it because the closed sheet is height:0 and so intersects nothing. The reserve is
+   * measured in JS because both surfaces change height with content (attachment chips, a
+   * multi-line draft, an open question card). */
+  bottom: var(--w6-reserve, 0px);
+  z-index: 14;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+  /* The sheet covers the transcript behind it (and, promoted to a side panel at wide width,
+   * sits in front of nothing but still must read as solid). Bare `--surface-elevated` is
+   * translucent in the glass themes, which would let the transcript read straight through a
+   * sheet that is in front in z-order. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  border-top: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--elev-3);
+  transition: height var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w6"] .w6-sheet[data-dragging="1"] { transition: none; }
+
+/* Peek never covers more than a sliver: the transcript stays the base layer. */
+[data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""]) .w6-sheet { height: 56px; }
+[data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""])[data-snap="rail"] .w6-sheet { height: 64px; }
+[data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""])[data-snap="half"] .w6-sheet { height: 50%; }
+[data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""])[data-snap="full"] .w6-sheet { height: 88%; }
+
+[data-pmx-window="w6"] .w6-handle {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  height: 16px; cursor: grab; touch-action: none;
+}
+[data-pmx-window="w6"] .w6-handle:active { cursor: grabbing; }
+[data-pmx-window="w6"] .w6-grip {
+  width: 34px; height: 4px; border-radius: 2px;
+  background: color-mix(in srgb, var(--text-primary) 22%, transparent);
+}
+
+[data-pmx-window="w6"] .w6-sheet-head {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: 0 var(--md) var(--sm); flex: 0 0 auto;
+}
+[data-pmx-window="w6"] .w6-sheet-title {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+[data-pmx-window="w6"] .w6-sheet-close {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+[data-pmx-window="w6"] .w6-sheet-close:hover { background: var(--surface); color: var(--text-primary); }
+[data-pmx-window="w6"] .w6-sheet-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+[data-pmx-window="w6"] .w6-overlay { position: static; }
+
+/* ---------------------------------------------------------------- wide width
+ * Above the threshold the sheet promotes to a side panel: same content, desktop shape. */
+
+@container pmx-chat (min-width: 980px) {
+  /* Promoted to a side panel, the sheet used to stay absolutely positioned at top:0/bottom:0,
+   * right:0 — which painted it directly over the right end of the header row, exactly the
+   * "pinned to a corner" collision this audit looks for, one level up from the tabs row that
+   * was already fixed below. A two-column grid gives the panel its own reserved track below
+   * the header instead, so nothing can ever paint underneath it. */
+  [data-pmx-window="w6"] .w6-shell {
+    display: grid;
+    grid-template-columns: 1fr 0;
+    grid-template-rows: auto 1fr auto auto auto;
+    grid-template-areas:
+      "header     header"
+      "transcript sheet"
+      "tabs       sheet"
+      "question   sheet"
+      "composer   sheet";
+  }
+  [data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""]) {
+    grid-template-columns: 1fr 300px;
+  }
+  [data-pmx-window="w6"] .w6-header { grid-area: header; }
+  [data-pmx-window="w6"] .w6-transcript { grid-area: transcript; min-width: 0; }
+  [data-pmx-window="w6"] .w6-tabs { grid-area: tabs; justify-self: end; align-self: auto; min-width: 0; }
+  [data-pmx-window="w6"] .w6-question { grid-area: question; }
+  [data-pmx-window="w6"] .w6-composer { grid-area: composer; }
+
+  [data-pmx-window="w6"] .w6-sheet {
+    grid-area: sheet;
+    position: static;
+    width: auto;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
+    border-top: none;
+    border-left: 1px solid var(--border);
+    border-radius: 0;
+    /* A closed side panel is removed outright rather than collapsed to zero width — and with
+     * its grid column dropped to 0 above, there is no leftover track for it to overflow into
+     * even before display:none applies. */
+    display: none;
+  }
+  [data-pmx-window="w6"] .w6-shell[data-sheet]:not([data-sheet=""]) .w6-sheet {
+    display: flex;
+  }
+  [data-pmx-window="w6"] .w6-handle { display: none; }
+}
+
+[data-motion="reduced"][data-pmx-window="w6"] .w6-sheet { transition: none !important; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w6"] .w6-brand-name { display: none; }
+  [data-pmx-window="w6"] .w6-tab-label { display: none; }
+  [data-pmx-window="w6"] .w6-header { padding: var(--xs) var(--sm); }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w6"] .w6-shell[data-w6-mount="popout"] {
+  border-left: none; border-radius: var(--radius-lg); box-shadow: var(--elev-3);
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * A sheet moves between snap points instantly with no partial position, and a drag still
+ * lands exactly on a snap because the snap decision happens in JS, not in the transition. */
+
+[data-motion="reduced"][data-pmx-window="w6"] .w6-sheet { transition: none !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * A docked sheet has SNAP POINTS, so its arrival overshoots very slightly and
+ * settles rather than easing flat to a stop — that overshoot is what communicates
+ * "this landed at a detent" instead of "this faded in at this height". The tabs
+ * that summon the sheets press in place so the dock feels physical.
+ */
+/* Flattened deliberately: the overshoot now comes from the theme's sampled
+ * spring rather than from a hand-placed 70% keyframe. Keeping both stacked two
+ * bounces on top of each other, which reads as a wobble instead of a detent. */
+@keyframes pmx-w6-snap {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w6"] .w6-sheet {
+  animation: pmx-w6-snap var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w6"] .w6-tab {
+  transition:
+    transform var(--motion-fast) var(--ease-default),
+    background var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w6"] .w6-tab:hover { transform: translateY(-2px); }
+[data-pmx-window="w6"] .w6-tab:active { transform: translateY(0) scale(.97); }
+[data-pmx-window="w6"] .w6-handle {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w6"] .w6-handle:active { transform: scaleX(1.15); }
+
+[data-motion="reduced"][data-pmx-window="w6"] .w6-sheet {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w6"] .w6-sheet {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

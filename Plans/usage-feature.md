@@ -30,7 +30,7 @@ These requirements are canonical live specification text for this owner document
 
 The rewrite described in `Plans/rewrite-tie-in-memo.md` reinforces this plan's intent: Usage should be implemented as **projections/rollups** over the canonical event ledger (seglog), with durable KV state in redb and fast search in Tantivy--without changing the UX requirements in this document. 5h/7d and dashboard numbers are served from **redb rollups** produced by **analytics scan jobs** that aggregate over the seglog (and any JSONL mirror); the Usage view reads these rollups rather than scanning the ledger on demand.
 
-**ELI5/Expert copy alignment:** Authored usage tooltip/help text in this plan (for example context-circle hover copy and explanatory hints) must provide both Expert and ELI5 variants and follow the authoritative checklist in `Plans/FinalGUISpec.md` §7.4.0.
+**ELI5/Expert copy alignment:** Authored usage tooltip/help text in this plan (for example context-circle status-module copy and explanatory hints) must provide both Expert and ELI5 variants and follow the authoritative checklist in `Plans/FinalGUISpec.md` §7.4.0.
 
 ## Storage dependency (implementation)
 
@@ -86,7 +86,7 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - `UI_Command_Catalog.md` and `UI_Command_Catalog` wrappers must normalize artifact actions, thread usage actions, panel switches, and Orchestrator pivots into shared route/subject payloads rather than preserving separate local arg sets.
 - `storage-plan.md` and `storage-plan` thread/run history export to JSONL/JSON is a coarse export enhancement only; Usage treats it as projection output over canonical records rather than a replacement for the record/bundle/view taxonomy.
 - Runtime recovery gate material with the `Runtime Recovery Canonicalization Gate Addendum` label, runtime-lineage checks, and free-floating notes must be integrated into numbered gate canon before Usage relies on it as a blocked/runtime authority.
-- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current.
+- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with `title` and `aria-label` accessible names per UF-089.
 - Usage consumes `/package` and `/worktree` cleanup state only after owner records mark stale lanes or worktrees `cleanup_eligible`: lane/package completion, graph-patch supersession, revoked/reopened flow via `/reopened`, and completed recovery may make old backing removable only when no retention reason remains.
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
 - `cmd.nav.open_usage_subject` resolves canonical Usage/Ledger identity from `usage_event_ref` or an equivalent usage target; domain-specific usage commands are wrappers over the shared route/subject model, not independent argument families.
@@ -104,7 +104,7 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 | **AGENTS.md -- Usage Tracking & Plan Detection** | Canonical source for per-platform usage sources (Claude Admin API, Copilot metrics, Gemini quotas, Codex/Cursor error parsing), env vars, and error-message parsing. |
 | **Plans/newfeatures.md §3** | Persistent rate limit and usage visibility: 5h/7d in dashboard/header, tier config usage, alerts; data layer + widget + background refresh. |
 | **Plans/newfeatures.md §7** | Analytics view: aggregate usage over time and by dimension; reporting layer on top of usage/plan detection. |
-| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows tokens/usage %/cost; thread-scoped detail opens the canonical Context Detail Pane/editor-tab surface. |
+| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows an accent glow only; click opens the context status module (tokens/usage %/cost per ACD-441); thread-scoped detail opens the canonical Context Detail Pane/editor-tab surface. |
 | **orchestrator-subagent-integration.md** | Platform quota display and resource monitoring (e.g. quota usage in GUI, crew quota). |
 | **Plans/newfeatures.md §19.2** | Technical mechanism for 5h/7d (session usage from stream, account-level via `claude --account` or Admin API); mid-stream usage and context % from stream-json. |
 | **Plans/storage-plan.md** | Implementation checklist for seglog, redb, projectors, analytics scan; Usage reads rollups from redb produced by analytics scan jobs over seglog. |
@@ -124,7 +124,7 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 | **[yume](https://github.com/aofp/yume) / [yume site](https://aofp.github.io/yume/)** | Native desktop UI for Claude Code. **Persistent rate limit visibility** -- 5h and 7d limits always visible (no `/usage` needed). **Analytics dashboard** -- usage by project/model/date, cost tracking, export; "know where your tokens go"; mid-stream context (live token count). Strong UX benchmark for always-visible limits and analytics. |
 | **[openclaudecto](https://github.com/josharsh/openclaudecto)** | Open-source Claude Code dashboard (coming soon): analytics & cost tracking, token consumption, cost breakdowns by model, tool usage distribution, daily activity trends. Useful reference for analytics/cost UX and data shape. |
 | **[OpenCode Monitor](https://ocmonitor.vercel.app/docs)** | CLI tool for monitoring and analyzing OpenCode AI coding sessions: live dashboard, daily usage breakdown, usage quotas, session/time/model/project analysis, export (CSV/JSON). **We provide equivalent usage visibility in the app GUI**, not via a separate terminal/CLI monitor -- one place for orchestration and usage. |
-| **[OpenCode desktop](https://github.com/anomalyco/opencode) (packages/app)** | **Per-thread usage in chat:** Small **context circle** (ProgressCircle) at top of chat showing context usage %; **hover** shows tooltip (total tokens, usage %, cost USD); **click** opens "context" tab for that session with detailed usage. Reference: `packages/app/src/components/session-context-usage.tsx`, `session-context-metrics.ts`. We adopt this pattern in §5 "Per-thread usage in Chat (OpenCode-style)". |
+| **[OpenCode desktop](https://github.com/anomalyco/opencode) (packages/app)** | **Per-thread usage in chat:** Small **context circle** (ProgressCircle) at top of chat showing context usage %; **hover** shows tooltip (total tokens, usage %, cost USD); **click** opens "context" tab for that session with detailed usage. Reference: `packages/app/src/components/session-context-usage.tsx`, `session-context-metrics.ts`. We adapt this pattern in §5 "Per-thread usage in Chat (OpenCode-style)"; PM's ring opens its status module on click, with hover as an accent glow only, per ACD-441. |
 
 ## Scope of the Usage Feature
 
@@ -166,8 +166,8 @@ Per-thread context/usage in chat is a split inspect/action affordance rather tha
 
 Rules:
 - the chat header context circle is always the entrypoint for per-thread context state
-- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
-- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- hover shows a soft accent glow only and does not open the module; no token label renders beside the ring (usage figures render inside the module)
+- click, or Enter/Space while the ring is focused, toggles the lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, `Compact Now`, and `More Details` (corner-origin sprout per assistant-chat-design ACD-441); the detail surface never opens directly from the ring click
 - selecting `Compact Now` dispatches the canonical compaction command for that thread
 - selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
 - app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
@@ -426,7 +426,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_C
 Non-canonical after this section:
 - thread Usage in the chat shell or side panel as the primary detailed surface
 - detached usage pop-out as the canonical thread detail model
-- direct click on the context circle opening the detail pane without the hover/click split
+- direct click on the context circle opening the detail pane; the ring click opens the context status module and only its `More Details` action opens the pane (ACD-441)
 - unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
@@ -629,7 +629,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - **Impact**
   - Loss of trust in the Usage view; unnecessary failed runs.
 - **Mitigation**
-  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide a prominent "Refresh" action.
+  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide an explicit "Refresh" action; on the Usage page head this renders as an icon-only button with `title` and `aria-label` accessible names (UF-089).
   - Optional: lightweight refresh when app gains focus or when starting a new run (with rate limiting to avoid thrash).
 
 ### Problem 7: Multi-project usage
@@ -1430,7 +1430,7 @@ plan_unit_id: UF-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Thread-scoped Usage appears as the chat context circle with hover-revealed Usage, Tokens, Cost, and More Details actions plus explicit click-to-Compact Now behavior; More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
+canonical_text: Thread-scoped Usage appears as the chat context circle whose click (or Enter/Space when the ring is focused) toggles a status module showing Usage, Tokens, Cost, Compact Now, and More Details; hover shows an accent glow only and no token label renders beside the ring. More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice inside the module and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
 gui_related: true
 gui_classification_reason: The unit defines user-visible chat Usage controls.
 split_recommended: false
@@ -1471,7 +1471,7 @@ preserved_exact_tokens:
 - app-wide Usage
 - OpenCode
 negative_constraints:
-- Compact Now must not dispatch from hover alone.
+- Compact Now must not dispatch from hover or from the ring's opening click alone.
 - Compact Now failure must not be silent or logs-only.
 - OpenCode references are non-binding UX references and do not replace Puppet Master canonical behavior.
 preserved_contractrefs:
@@ -1479,7 +1479,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Hover-opened status module and hover/click split (hover module, click Compact Now) retired per PMConcept7 context ring; hover shows an accent glow only, the module opens on click per assistant-chat-design ACD-441, and the beside-ring token label is removed with usage figures rendering inside the module."
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -2462,13 +2463,14 @@ preserved_exact_tokens:
 negative_constraints:
 - Thread Usage in the chat shell or side panel is not the primary detailed surface.
 - Detached usage pop-out is not the canonical thread detail model.
-- Direct click on the context circle must not open the detail pane without the hover/click split.
+- Direct click on the context circle must not open the detail pane; the ring click opens the context status module and only its More Details action opens the pane (ACD-441).
 - Unresolved `tab or panel or pop-out` phrasing must not leave implementation guessing.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The hover/click split exclusion wording is retired per PMConcept7 context ring; the ring click opens the context status module (hover shows an accent glow only) and only the module's More Details action opens the Context Detail Pane per assistant-chat-design ACD-441."
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -6166,4 +6168,70 @@ pm_current_coverage: "Seglog is PM\u2019s canonical source; usage/analytics roll
 pm_gap_or_delta: External observability should be supported without making OTLP canonical or leaking sensitive content.
 proposal_or_recommendation: 'Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so.'
 compile_disposition: create_new_planunit
+```
+
+## PMConcept7 Concept Promotion Addendum - 2026-07-23
+
+This addendum promotes user-approved PMConcept7 (ChatGuiUpdates2 workstreams, revs 4-9.2) Usage page head behaviors into canonical PlanUnits. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### UF-089 - Usage Page Head Presentation
+
+```yaml
+plan_unit_id: UF-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  The Usage page head stays one line. Its subtitle follows the copy pattern "AI Cost/usage for
+  <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept
+  for 90 days." where <project> is the active project name; the concept fixture shows project
+  Tastebook. The 5-minute figure mirrors the default auto-refresh cadence inside the documented 5-15
+  minute background refresh window and the 90-day figure mirrors the default raw-event retention
+  window; changed defaults surface the configured values rather than stale copy. Refresh and Export
+  render as icon-only buttons (inline SVG restart and clipboard glyphs), each carrying `title` and
+  `aria-label` accessible names, and dispatch cmd.usage.refresh and cmd.usage.export unchanged.
+gui_related: true
+gui_classification_reason: This unit defines the visible Usage page head copy, subtitle pattern, and icon-only Refresh/Export presentation.
+split_recommended: false
+depends_on: [UF-006, UF-039]
+unblocks: []
+acceptance_criteria:
+- "The Usage page head renders one line with the subtitle pattern 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' resolved against the active project name (concept fixture: Tastebook)."
+- "The subtitle's 5-minute figure reflects the default auto-refresh cadence and the 90-day figure reflects the default raw-event retention window; changed defaults surface the configured values rather than stale copy."
+- "Refresh and Export render as icon-only buttons with inline SVG restart and clipboard glyphs, each carrying title and aria-label accessible names, and dispatch cmd.usage.refresh and cmd.usage.export with unchanged behavior."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_page_head_presentation
+implementation_surfaces:
+- "Plans/usage-feature.md"
+node_compile_hint:
+  mode: usage_page_head_presentation
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "Plans/usage-feature.md (background refresh 5-15 minute default window; 90-day raw-event retention default)"
+preserved_exact_tokens:
+- "AI Cost/usage for"
+- "Refreshes every 5 minutes; history kept for 90 days."
+- "Tastebook"
+- "icon-only"
+- "aria-label"
+negative_constraints:
+- "Do not add a second head line or re-introduce text-labeled Refresh/Export buttons on the Usage page head."
+- "Do not hardcode Tastebook or the 5-minute/90-day figures as literal copy; the project name is the active project and the figures mirror the configured defaults."
+- "Do not change cmd.usage.refresh or cmd.usage.export IDs, payloads, events, or preconditions from this unit; it is presentation only."
+compatibility_only_notes:
+- "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only with title and aria-label accessible names so the head stays one line."
+owner_boundary_notes:
+- "Page-header layout and per-theme header boxes are owned by Plans/FinalGUISpec.md F3-462; this unit owns Usage head copy and control presentation only."
+- "cmd.usage.refresh and cmd.usage.export command semantics are owned by Plans/UI_Command_Catalog.md (UCC-116); this unit registers no commands."
+owner_hints:
+- "Plans/usage-feature.md"
 ```

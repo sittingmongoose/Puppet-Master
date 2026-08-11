@@ -1,0 +1,291 @@
+/* w4 "Stacked Panes" — Opus 5
+ *
+ * Conversation, Work, and History multiplex one vertical accordion instead of dividing the
+ * width. Each pane's height is driven by a single transitionable number — flex-grow, 0 or 1 —
+ * toggled off a `data-role` attribute, so the whole resize is one CSS transition rather than a
+ * measured height animation. Above 980px the accordion turns sideways and the collapsed pane
+ * becomes a narrow vertical strip instead of a horizontal bar.
+ *
+ * Every rule is scoped under [data-pmx-window="w4"]. A test parses this file and fails any
+ * selector outside that scope.
+ */
+
+[data-pmx-window="w4"] .w4-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  --w4-head: 32px;
+  --w4-head-row: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- header */
+
+[data-pmx-window="w4"] .w4-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+[data-pmx-window="w4"] .w4-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+[data-pmx-window="w4"] .w4-brand-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-pmx-window="w4"] .w4-brand-sep { color: var(--text-muted); opacity: .6; }
+[data-pmx-window="w4"] .w4-brand-model {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+[data-pmx-window="w4"] .w4-header-tools {
+  margin-left: auto;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------------------------------------------------------------- accordion */
+
+[data-pmx-window="w4"] .w4-accordion {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-pmx-window="w4"] .w4-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  flex: 0 0 var(--w4-head);
+  border-top: 1px solid var(--border);
+  transition: flex-grow var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w4"] .w4-pane:first-child { border-top: none; }
+[data-pmx-window="w4"] .w4-pane[data-role="primary"] { flex-grow: 1; }
+
+[data-pmx-window="w4"] .w4-pane-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex: 0 0 var(--w4-head);
+  min-width: 0;
+  padding: 0 var(--md);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default),
+              color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w4"] .w4-pane-head:hover { background: var(--surface-elevated); color: var(--text-primary); }
+/* Open panes read as a filled head. No colored left-side accent border anywhere, per
+ * contract 8.2 — active/expanded state is a background fill plus weight only. */
+[data-pmx-window="w4"] .w4-pane[data-role="primary"] .w4-pane-head,
+[data-pmx-window="w4"] .w4-pane[data-role="secondary"] .w4-pane-head {
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  color: var(--text-primary);
+}
+[data-pmx-window="w4"] .w4-pane-icon { flex: 0 0 auto; display: inline-flex; opacity: .85; }
+[data-pmx-window="w4"] .w4-pane-label {
+  flex: 0 0 auto;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+[data-pmx-window="w4"] .w4-pane-status {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+[data-pmx-window="w4"] .w4-pane-chevron {
+  flex: 0 0 auto;
+  display: inline-flex;
+  opacity: .6;
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w4"] .w4-pane[data-role="primary"] .w4-pane-chevron,
+[data-pmx-window="w4"] .w4-pane[data-role="secondary"] .w4-pane-chevron { transform: rotate(180deg); }
+
+[data-pmx-window="w4"] .w4-pane-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 var(--md) var(--md);
+}
+[data-pmx-window="w4"] .w4-transcript { padding: var(--md); }
+
+[data-pmx-window="w4"] .w4-question { display: block; min-width: 0; }
+[data-pmx-window="w4"] .w4-question:not(:empty) {
+  padding-bottom: var(--sm);
+  margin-bottom: var(--sm);
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w4"] .w4-surface-host { display: block; min-width: 0; }
+
+[data-pmx-window="w4"] .w4-history-body { padding: 0; overflow: hidden; }
+[data-pmx-window="w4"] .w4-history-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------- composer */
+
+[data-pmx-window="w4"] .w4-composer { flex: 0 0 auto; min-width: 0; }
+
+/* ---------------------------------------------------------------- overlay root */
+
+[data-pmx-window="w4"] .w4-overlay { position: static; }
+
+/* ---------------------------------------------------------------- wide width
+ * Above ~980px the accordion turns sideways: primary and secondary sit side by side, sharing
+ * the width, and the third pane becomes a narrow vertical strip instead of a horizontal bar.
+ * Its label and status stay visible, set vertically, so a "collapsed" pane still carries live
+ * status exactly as it does at a narrow width — only its orientation changes. */
+
+@container pmx-chat (min-width: 980px) {
+  [data-pmx-window="w4"] .w4-accordion { flex-direction: row; }
+  [data-pmx-window="w4"] .w4-pane {
+    flex-basis: var(--w4-head-row);
+    border-top: none;
+    border-left: 1px solid var(--border);
+  }
+  [data-pmx-window="w4"] .w4-pane:first-child { border-left: none; }
+  [data-pmx-window="w4"] .w4-pane[data-role="secondary"] { flex-grow: 1; }
+
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-head {
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--sm);
+    padding: var(--md) 0;
+  }
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-label,
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-status {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 100%;
+  }
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-status { color: var(--text-muted); }
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-chevron { display: none; }
+  /* A collapsed strip keeps its pane in the DOM so scroll position survives, but the body
+   * must be genuinely hidden. Zero flex-basis alone leaves the rows inside measurable at a
+   * few pixels wide, which reads as an unintended horizontal scroller and leaves the
+   * controls focusable while invisible. */
+  [data-pmx-window="w4"] .w4-pane[data-role="collapsed"] .w4-pane-body {
+    flex: 0 0 0;
+    padding: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+  /* Side by side, each open pane is a column. It must be free to shrink, but not below a
+   * width where the surfaces inside stop fitting — past that point two panes side by side
+   * is worse than one, so the open panes claim a real floor and the strip absorbs the rest. */
+  [data-pmx-window="w4"] .w4-pane { min-width: 0; }
+  [data-pmx-window="w4"] .w4-pane-body { min-width: 0; }
+  [data-pmx-window="w4"] .w4-pane[data-role="primary"],
+  [data-pmx-window="w4"] .w4-pane[data-role="secondary"] { min-width: 280px; }
+}
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-chat (max-width: 640px) {
+  [data-pmx-window="w4"] .w4-brand-sep,
+  [data-pmx-window="w4"] .w4-brand-model { display: none; }
+  [data-pmx-window="w4"] .w4-header { padding: var(--sm); gap: 6px; }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w4"] .w4-shell[data-w4-mount="popout"] {
+  border-left: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * The blanket .01ms override in motion.css already neutralizes this transition, but an
+ * explicit override is kept here too — belt-and-braces, the same way w1's drawer is — so a
+ * pane can never be caught mid-open. */
+[data-motion="reduced"][data-pmx-window="w4"] .w4-pane,
+[data-motion="reduced"][data-pmx-window="w4"] .w4-pane-chevron{ transition: none !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * An accordion of panes is a stack, so the panes DEAL in — each one arriving a
+ * beat after the one above it, from slightly behind and slightly high, the way a
+ * card lands on a pile. The chevron rotation is tied to the same easing so the
+ * open gesture and the pane arrival feel like one system.
+ */
+@keyframes pmx-w4-deal {
+  from { opacity: 0; transform: translateY(-8px) scale(.99); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w4"] .w4-pane {
+  animation: pmx-w4-deal var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w4"] .w4-pane:nth-child(1) { animation-delay: 45ms; }
+[data-pmx-window="w4"] .w4-pane:nth-child(2) { animation-delay: 90ms; }
+[data-pmx-window="w4"] .w4-pane:nth-child(3) { animation-delay: 135ms; }
+[data-pmx-window="w4"] .w4-pane:nth-child(4) { animation-delay: 180ms; }
+[data-pmx-window="w4"] .w4-pane:nth-child(5) { animation-delay: 225ms; }
+[data-pmx-window="w4"] .w4-pane:nth-child(6) { animation-delay: 225ms; }
+
+[data-pmx-window="w4"] .w4-pane-chevron {
+  transition: transform var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w4"] .w4-pane[data-pmx-open="1"] .w4-pane-chevron,
+[data-pmx-window="w4"] .w4-pane[aria-expanded="true"] .w4-pane-chevron { transform: rotate(90deg); }
+
+[data-pmx-window="w4"] .w4-pane-head {
+  transition: background var(--motion-fast) var(--ease-default);
+}
+
+[data-motion="reduced"][data-pmx-window="w4"] .w4-pane {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w4"] .w4-pane {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

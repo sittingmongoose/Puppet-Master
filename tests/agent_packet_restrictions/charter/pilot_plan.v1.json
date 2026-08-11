@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.pilot_plan.v1",
+  "method_id": "apr-method-v1.0.0",
+  "frozen_at_utc": "2026-08-02T19:51:38Z",
+  "prerequisites": [
+    "freeze_manifest_pass",
+    "deterministic_controller_canary_pass",
+    "ten_route_nonsemantic_canary_pass"
+  ],
+  "pilot_slots": ["L01", "L07", "H01"],
+  "pilot_case_ids": ["SC-01", "SC-03", "SC-06"],
+  "expected_call_count": 9,
+  "fresh_context_per_call": true,
+  "controller_semantic_retries": 0,
+  "subject_repair_calls": 0,
+  "pilot_outputs_reused_in_fleet": false,
+  "qualification_rule": {
+    "semantic_subject_failure": "preserve_as_result_and_continue_if_control_plane_is_sound",
+    "control_plane_or_identity_defect": "preserve_failed_pilot_stop_and_require_new_method_version"
+  },
+  "fleet_gate": {
+    "semantic_cases": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06"],
+    "slots": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L08", "H01", "H02"],
+    "expected_call_count": 60,
+    "fresh_context_per_call": true,
+    "controller_semantic_retries": 0
+  }
+}

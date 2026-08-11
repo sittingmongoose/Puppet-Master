@@ -1,0 +1,133 @@
+/* ============================================================================
+   Kimi K3 — Questionnaire choreography variants.
+   The shared K3Questionnaire stamps data-variant + .k3q-var-<id> on the card
+   root; this file gives each variant a distinct entrance, advance motion,
+   and feel. The data interaction (navigate/skip/submit) is shared; only the
+   motion language differs. Every animation is transform/opacity (or
+   sanctioned background/box-shadow) and ends at the natural resting state,
+   so the reduced-motion gate collapses each to instant with identical finals.
+   ========================================================================== */
+
+/* ---- shared: selection check-pop + Skip->Submit morph (all variants) ---- */
+.k3q-option.is-selected .k3q-option-check svg {
+  animation: k3-check-pop var(--k3-dur-med, 220ms) var(--ease-spring, ease-out) 1;
+}
+.k3q-option .k3q-option-check { transform-origin: center; }
+/* the morphing primary button crossfades + dips on label change */
+.k3q-primary-morph {
+  animation: k3q-primary-crossfade var(--k3-dur-med, 220ms) var(--ease-out, ease-out) 1;
+}
+@keyframes k3q-primary-crossfade {
+  0%   { opacity: .35; transform: translateY(2px) scale(.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* the option rows already stagger via .k3-stagger (Phase 0); a touch more
+   air for the question body across all variants */
+.k3q-options.k3-stagger > .k3q-option { transform-origin: center; }
+
+/* ---- option-row press feedback (all variants): the row depresses ---- */
+.k3q-option:active { transform: scale(.985); }
+.k3q-option { transition: background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                          color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                          transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+
+/* ============================================================================
+   1. MORPH — faithful to the reference video.
+   The card arrives as a compact pill that expands upward (bottom-anchored),
+   reveals content top-to-bottom, advances with a vertical carousel, and on
+   submit condenses back toward a pill before dismissing.
+   ========================================================================== */
+@keyframes k3q-enter-morph {
+  0%   { opacity: 0; transform: translateY(20px) scaleY(.62); transform-origin: bottom center; }
+  55%  { opacity: 1; transform: translateY(-3px) scaleY(1.015); }
+  100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+.k3q-enter-morph { animation: k3q-enter-morph var(--k3-dur-xslow, 540ms) var(--ease-soft-spring, ease-out) both; }
+/* advance: vertical carousel — old content up/out, new from below */
+@keyframes k3q-adv-morph-next {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes k3q-adv-morph-prev {
+  0%   { opacity: 0; transform: translateY(-18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.k3q-adv-morph-next { animation: k3q-adv-morph-next var(--k3-dur-med, 220ms) var(--ease-soft-spring, ease-out) both; }
+.k3q-adv-morph-prev { animation: k3q-adv-morph-prev var(--k3-dur-med, 220ms) var(--ease-soft-spring, ease-out) both; }
+/* morph variant: rounded, soft-shadow card (the video's monochrome feel) */
+.k3q-var-morph { border-radius: var(--radius-lg, 14px); }
+
+/* ============================================================================
+   2. RISE — calm/airy. The question rises inline; options cascade gently.
+   ========================================================================== */
+@keyframes k3q-enter-rise {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.k3q-enter-rise { animation: k3q-enter-rise var(--k3-dur-slow, 360ms) var(--ease-soft-out, ease-out) both; }
+@keyframes k3q-adv-rise-next {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes k3q-adv-rise-prev {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.k3q-adv-rise-next { animation: k3q-adv-rise-next var(--k3-dur-med, 220ms) var(--ease-out, ease-out) both; }
+.k3q-adv-rise-prev { animation: k3q-adv-rise-prev var(--k3-dur-med, 220ms) var(--ease-out, ease-out) both; }
+
+/* ============================================================================
+   3. STACK — playful/tactile. The card scales in elastically; selecting
+   "presses" the row; advancing pushes the card out and the next springs
+   from depth.
+   ========================================================================== */
+@keyframes k3q-enter-stack {
+  0%   { opacity: 0; transform: scale(.84) translateY(14px); }
+  60%  { opacity: 1; transform: scale(1.02) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.k3q-enter-stack { animation: k3q-enter-stack var(--k3-dur-xslow, 540ms) var(--ease-soft-spring, ease-out) both; }
+@keyframes k3q-adv-stack-next {
+  0%   { opacity: 0; transform: scale(.88) translateX(10px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+@keyframes k3q-adv-stack-prev {
+  0%   { opacity: 0; transform: scale(.88) translateX(-10px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+.k3q-adv-stack-next { animation: k3q-adv-stack-next var(--k3-dur-med, 220ms) var(--ease-spring, ease-out) both; }
+.k3q-adv-stack-prev { animation: k3q-adv-stack-prev var(--k3-dur-med, 220ms) var(--ease-spring, ease-out) both; }
+/* stack variant: selection presses the row more firmly */
+.k3q-var-stack .k3q-option.is-selected { transform: scale(.98); }
+.k3q-var-stack .k3q-option { transition: background-color var(--k3-dur-fast, 120ms) var(--ease-spring, ease-out),
+                                          color var(--k3-dur-fast, 120ms) var(--ease-spring, ease-out),
+                                          transform var(--k3-dur-fast, 120ms) var(--ease-spring, ease-out); }
+
+/* ============================================================================
+   4. INLINE-STRIP — compact. A tighter card for narrow/console hosts;
+   options arrive as a quick horizontal-friendly stagger with minimal travel.
+   ========================================================================== */
+@keyframes k3q-enter-inline-strip {
+  0%   { opacity: 0; transform: translateY(6px) scaleY(.7); transform-origin: bottom center; }
+  100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+.k3q-enter-inline-strip { animation: k3q-enter-inline-strip var(--k3-dur-med, 220ms) var(--ease-out, ease-out) both; }
+@keyframes k3q-adv-inline-strip-next {
+  0%   { opacity: 0; transform: translateX(6px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes k3q-adv-inline-strip-prev {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.k3q-adv-inline-strip-next { animation: k3q-adv-inline-strip-next var(--k3-dur-fast, 120ms) var(--ease-out, ease-out) both; }
+.k3q-adv-inline-strip-prev { animation: k3q-adv-inline-strip-prev var(--k3-dur-fast, 120ms) var(--ease-out, ease-out) both; }
+/* inline-strip variant: tighter padding for compact hosts */
+.k3q-var-inline-strip { padding-top: 8px; }
+.k3q-var-inline-strip .k3q-option { padding: 6px 9px; }
+
+/* ---- reduced motion: every entrance/advance resolves to the resting state ----
+   The global gate already collapses animation durations to .01ms; these rules
+   just make the intent explicit so a paused mid-flight frame can never hide
+   content (all keyframes end at opacity:1 / transform:none). */
+html[data-motion="reduced"] .k3q-card { transform: none !important; opacity: 1 !important; }

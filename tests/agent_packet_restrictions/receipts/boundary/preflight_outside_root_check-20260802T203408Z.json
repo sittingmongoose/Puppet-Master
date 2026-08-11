@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.outside_root_boundary_check.v1",
+  "created_at_utc": "2026-08-02T20:34:08Z",
+  "phase": "pre_subject_model_selection",
+  "exclusive_root": "tests/agent_packet_restrictions/",
+  "head": "71d039c6f7827068beb536eebde4b414a69d7afc",
+  "baseline": {
+    "created_at_utc": "2026-08-02T19:40:38Z",
+    "tracked_dirty_path_count": 1202,
+    "tracked_dirty_path_list_sha256": "8e12852441cb05fd8ca503da14cc4206207d440164c9966f795ac176465c5487",
+    "untracked_file_count": 11001,
+    "untracked_file_list_sha256": "62eeb9dd3c9a9953756b9324c51252269d8ac306f32a56b9e3656deeb13a6c10"
+  },
+  "current_outside_root": {
+    "tracked_dirty_path_count": 1202,
+    "tracked_dirty_path_list_sha256": "8e12852441cb05fd8ca503da14cc4206207d440164c9966f795ac176465c5487",
+    "untracked_file_count": 11010,
+    "untracked_file_list_sha256": "e44037d31131aa35b6490bbe990643fa2091b7fea8cc3f2ad4ccf395a03fe3bb",
+    "porcelain_all_entry_count": 12212,
+    "porcelain_all_sha256": "30e7fb9b623bc25554e6824ee7cbe5e2f75c30609edb4f197c86e4f8d7d082ba"
+  },
+  "comparison": {
+    "head_unchanged": true,
+    "tracked_dirty_path_projection_unchanged": true,
+    "untracked_projection_unchanged": false,
+    "untracked_file_count_delta": 9,
+    "terminal": "CONCURRENT_OUTSIDE_ROOT_CHANGE_DETECTED"
+  },
+  "observed_recent_outside_root_families": [
+    "Plans/ledgers/v2/pldg-20260801-001-feature-intake/",
+    "Plans/ledgers/v2/ledger_registry.json",
+    "Concepts/PMConcept7-NOTES.md",
+    "Concepts/motion-wave/evidence/"
+  ],
+  "attribution": "This lane issued no write command outside the exclusive root. The checkout is shared with other active tasks, so the nine-file untracked delta is recorded as concurrent external state rather than attributed to this lane. A new immediate prelaunch boundary and post-run comparison are required before and after subject testing.",
+  "subject_model_calls_at_check": 0,
+  "provider_subprocesses_at_check": 0
+}

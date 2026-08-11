@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L127-L1500
+Source lines: L335-L2295
 
-Source SHA256: `9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d`
+Source SHA256: `4fb42282de1cd0ebc263609e0487ef584d2f0663e3aa41ec7d1bf9b5f74d3f98`
 
 ---
 
@@ -1258,6 +1258,593 @@ owner_hints:
   - Plans/WorktreeGitImprovement.md
   - Plans/Orchestrator_Page.md
   - Plans/Run_Graph_View.md
+```
+
+### DL-027 - Case L Bundle A Recovery And Migration Decisions
+
+```yaml
+plan_unit_id: DL-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle A records exactly PD-L-01 through PD-L-06 as accepted: canonical
+  redb-only state uses verified automatic recovery snapshots, backup failure
+  closes mutation admission, newer-format data permits metadata-only diagnostics
+  rather than a live viewer, downgrade is whole-boundary compatible-backup
+  restore only, and offline restore does not treat JSON or JSONL export as backup.
+gui_related: true
+gui_classification_reason: The decisions govern visible compatibility, read-only, recovery-shell, downgrade-disclosure, and restore behavior.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly PD-L-01, PD-L-02, PD-L-03, PD-L-04, PD-L-05, and PD-L-06 with the approved selected values and no additional decision.
+  - Conscious acceptance of PD-L-01, PD-L-02, PD-L-03, and PD-L-04 remains explicit.
+  - Storage owner, registry/schema machine authority, and consumer routing remain distinct.
+  - All FX-L001, FX-L002, FX-L003, FX-L016, FX-L025, and FX-L032 source-plan oracles remain the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_recovery_migration_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_a_recovery_migration_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+  - Plans/Release_Supply_Chain.md
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: case_l_bundle_a_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-A
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/MIGRATION_BACKUP_REPAIR_PLAN.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/REGISTRY_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - PD-L-01
+  - PD-L-02
+  - PD-L-03
+  - PD-L-04
+  - PD-L-05
+  - PD-L-06
+  - blocked_newer_store
+  - restore_from_mandatory_backup
+negative_constraints:
+  - No in-place downgrade or live newer-format viewer is admitted.
+  - JSON or JSONL export is not an MVP backup-import path.
+  - Required verified-snapshot failure cannot be waived while mutation continues.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+```
+
+### DL-028 - Case L Bundle B Seglog Durability Recovery Decisions
+
+```yaml
+plan_unit_id: DL-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle B records exactly the twenty-one accepted SEG-D decisions for
+  SeglogFrameV2 framing, protected resynchronization, bounded metadata/payload,
+  two-barrier acknowledgement, mutation-gating barriers, seal-time
+  persisted_at_utc paired with synced AppendReceipt proof, nonreused sequences,
+  deterministic survivor/recovery truth, crash convergence, immutable closed
+  sources, verified successor publication, and recovery-before-startup.
+gui_related: true
+gui_classification_reason: The decisions include visible loss disclosure and degraded/read-only recovery state as well as backend durability.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly SEG-D-001 through SEG-D-009, SEG-D-011, and SEG-D-013 through SEG-D-023 with the approved selected values and no additional decision.
+  - persisted_at_utc is assigned at commit-group seal, is not independent durability proof, and is admitted as durable only with a matching synced AppendReceipt; acknowledged_at_utc remains post-barrier acknowledgement.
+  - Storage mechanics remain storage-owned and consumer payload, invariant, runtime-gate, GUI, and artifact routing remains explicit.
+  - SEG-FX-001 through SEG-FX-018 and SEG-OR-001 through SEG-OR-012 remain the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_seglog_durability_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_b_seglog_durability_recovery_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Architecture_Invariants.md
+  - Plans/Executor_Protocol.md
+  - Plans/FinalGUISpec.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: case_l_bundle_b_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-B
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/SEGLOG_RECOVERY_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - SEG-D-001
+  - SEG-D-002
+  - SEG-D-003
+  - SEG-D-004
+  - SEG-D-005
+  - SEG-D-006
+  - SEG-D-007
+  - SEG-D-008
+  - SEG-D-009
+  - SEG-D-011
+  - SEG-D-013
+  - SEG-D-014
+  - SEG-D-015
+  - SEG-D-016
+  - SEG-D-017
+  - SEG-D-018
+  - SEG-D-019
+  - SEG-D-020
+  - SEG-D-021
+  - SEG-D-022
+  - SEG-D-023
+  - SeglogFrameV2
+  - persisted_at_utc
+  - acknowledged_at_utc
+  - 'AppendReceipt{durability_state="synced"}'
+negative_constraints:
+  - Seal-time persisted_at_utc is not independently persistence proof.
+  - Append success cannot precede the segment and manifest durability barriers.
+  - Recovery cannot modify closed source segments or claim clean loss.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+```
+
+### DL-029 - Case L Bundle C Retention Compaction Quarantine Decisions
+
+```yaml
+plan_unit_id: DL-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle C records exactly nineteen accepted retention, legal-hold,
+  recovery-anchor, compaction, deletion, quarantine, and registry-v2 decisions,
+  including the released-safe-point window and the immediate-logical plus
+  bounded-physical thread-deletion policy consciously accepted by the owner.
+gui_related: true
+gui_classification_reason: The decisions govern Settings, protected hold actions, deletion disclosure, blocked recovery, and quarantine warning/recovery surfaces.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly PD-L005-01 through PD-L005-07, PD-L010-01 through PD-L010-03, PD-L015-01 through PD-L015-05, PD-L033-01 through PD-L033-03, and PD-SCHEMA-01 with no additional decision.
+  - Conscious acceptance of PD-L005-03 and PD-L015-04 remains explicit.
+  - Storage and FileSafe owner boundaries, registry/schema machine authority, and all named consumer routes remain distinct.
+  - RET, ANCHOR, CMP, DEL, and Q fixture/oracle families named in the grouped entry remain the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_retention_compaction_quarantine_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_c_retention_compaction_quarantine_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: case_l_bundle_c_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-C
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RETENTION_COMPACTION_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - PD-L005-01
+  - PD-L005-02
+  - PD-L005-03
+  - PD-L005-04
+  - PD-L005-05
+  - PD-L005-06
+  - PD-L005-07
+  - PD-L010-01
+  - PD-L010-02
+  - PD-L010-03
+  - PD-L015-01
+  - PD-L015-02
+  - PD-L015-03
+  - PD-L015-04
+  - PD-L015-05
+  - PD-L033-01
+  - PD-L033-02
+  - PD-L033-03
+  - PD-SCHEMA-01
+  - pm.storage_value_registry.v2
+negative_constraints:
+  - Held or unresolved critical authority cannot be age, count, cap, or pressure evicted.
+  - Closed source segments cannot be rewritten in place.
+  - Invalid canonical values cannot reset before exact raw-byte custody is durable.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+```
+
+### DL-030 - Case L Bundle D Storage Root Lock And Fallback Decisions
+
+```yaml
+plan_unit_id: DL-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle D records exactly fourteen accepted storage-I/O, retry,
+  degradation, aggregate-lock, frozen-viewer, root-continuity, relocation, and
+  detached-fallback decisions with fail-closed writer admission, OS-lock
+  authority, boot-before-create identity proof, binding-last relocation, and
+  fast-forward-only fallback reconciliation.
+gui_related: true
+gui_classification_reason: The decisions govern visible viewer, storage-exhaustion, root-mismatch, relocation, fallback, and divergence states/actions.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly L012-C1 through L012-C4, L014-C1 through L014-C4, L018-C1 through L018-C3, and L011-C1 through L011-C3 with no additional decision.
+  - Storage owner, Contracts vocabulary, Executor admission, GUI presentation, and command/wiring consumer routing remain distinct.
+  - Every fixture/oracle in LOCKING_ROOT_IO_REPAIR_PLAN sections 3.6, 4.6, 5.6, and 6.6 remains the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_storage_root_lock_fallback_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_d_storage_root_lock_fallback_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/FinalGUISpec.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: case_l_bundle_d_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-D
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/LOCKING_ROOT_IO_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - L012-C1
+  - L012-C2
+  - L012-C3
+  - L012-C4
+  - L014-C1
+  - L014-C2
+  - L014-C3
+  - L014-C4
+  - L018-C1
+  - L018-C2
+  - L018-C3
+  - L011-C1
+  - L011-C2
+  - L011-C3
+  - storage_io_class
+  - storage_read_only
+  - storage_instance_id
+  - fallback_diverged
+negative_constraints:
+  - Diagnostic lock metadata cannot authorize takeover.
+  - Known prior storage cannot be replaced by silent first-run initialization.
+  - Divergent fallback histories cannot be automatically merged or overwritten.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+```
+
+### DL-031 - Case L Bundle E EventRecord Scope And Replay Decisions
+
+```yaml
+plan_unit_id: DL-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle E records exactly seven accepted EventRecord decisions: explicit
+  application-or-project scope without fake project identity, app-root-lifetime
+  event identity and scoped idempotency, deterministic in-memory legacy
+  normalization, quarantine for unhandled secrets or unknown mappings,
+  fail-closed dedupe catch-up, and EventRecord 2.0 writer/read compatibility.
+gui_related: false
+gui_classification_reason: The decisions define envelope, persistence, normalization, dedupe, and replay contracts rather than a user-visible UI layout.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly EVT-01 through EVT-07 with the approved selected values and no additional decision.
+  - Contracts/schema envelope authority and storage persistence/normalization/dedupe authority remain distinct.
+  - All schema/scope, normalization, dedupe/outage, projector-replay-only, and version/migration source-plan oracles remain the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_eventrecord_scope_replay_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_e_eventrecord_scope_replay_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+node_compile_hint:
+  mode: case_l_bundle_e_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-E
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/EVENT_RECORD_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - EVT-01
+  - EVT-02
+  - EVT-03
+  - EVT-04
+  - EVT-05
+  - EVT-06
+  - EVT-07
+  - scope_kind
+  - projector_replay_only
+  - EventEnvelopeV1
+negative_constraints:
+  - Application scope cannot use a fake project sentinel.
+  - Legacy normalization cannot append, rewrite source bytes, or perform canonical or external side effects.
+  - Append cannot proceed while dedupe currentness is unproved.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### DL-032 - Case L Bundle F Restore Safe Point And Chat Decisions
+
+```yaml
+plan_unit_id: DL-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L Bundle F records exactly nine accepted exact-replace restore,
+  canonical-state-manifest equality, content-addressed snapshot custody,
+  truthful restore outcomes, safe-point key/alias, reference-hold,
+  baseline-target, immutable conversation restore-point, and Chat-revert parity
+  decisions.
+gui_related: true
+gui_classification_reason: The decisions govern restore confirmations, outcomes, blocked recovery, baseline actions, and visible restore-point branching.
+split_recommended: false
+depends_on: [DL-002]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly PD-RSP-01 through PD-RSP-09 with the approved selected values and no additional decision.
+  - Persistence, FileSafe mechanics, Contracts enums/events, Worktree effects, Executor admission, Chat lifecycle, and command/artifact consumer routing remain distinct.
+  - All RSP-ATOMIC, RSP-EQUAL, RSP-INTEGRITY, RSP-SCOPE, RSP-RETENTION, RSP-KEY, RSP-REGISTRY, RSP-BASELINE, RSP-RP, RSP-CMD, and RSP-CHAT oracles remain the acceptance surface.
+validation_surfaces:
+  - exact Case L 76-decision set-equality check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_restore_safe_point_chat_decision_drift
+reasoning_tier: high
+context_scope: case_l_bundle_f_restore_safe_point_chat_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: case_l_bundle_f_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Bundle-F
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+preserved_exact_tokens:
+  - PD-RSP-01
+  - PD-RSP-02
+  - PD-RSP-03
+  - PD-RSP-04
+  - PD-RSP-05
+  - PD-RSP-06
+  - PD-RSP-07
+  - PD-RSP-08
+  - PD-RSP-09
+  - restored_clean
+  - restore_failed
+  - restore_refused
+  - restore_recovery_required
+  - 'sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}'
+negative_constraints:
+  - Safe-point restore and Chat revert cannot merge or use a weaker restore engine.
+  - Success and failure outcomes cannot be emitted without their exact equality proof.
+  - Restore-point application cannot mutate the source thread or worktree or silently restore files.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+  - Plans/assistant-chat-design.md
+```
+
+### DL-033 - Case L Supplemental Probe Packet Decisions
+
+```yaml
+plan_unit_id: DL-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L supplemental approval records exactly three accepted packets:
+  PD-PROBE-L011-01 A/A/A/A/A for fallback-divergence command identity, explicit
+  CAS, candidate-only fork binding, exact encrypted recovery export, and
+  owner-receipt-only audit; PD-PROBE-L020-01 A/A/A for removed retry_scope,
+  admission-time wrapper consumption, and identical compatibility-alias
+  normalization; and PD-PROBE-L032-01 A for the closed ready-or-blocked
+  migration-preflight outcome/reason pairing.
+gui_related: true
+gui_classification_reason: The decisions govern visible fallback actions, restore-and-retry command routing, and migration-preflight results.
+split_recommended: false
+depends_on: [DL-027, DL-030, DL-032]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly PD-PROBE-L011-01 A/A/A/A/A, PD-PROBE-L020-01 A/A/A, and PD-PROBE-L032-01 A with no additional decision packet.
+  - Storage, Executor, Worktree Git, command/wiring, GUI, Contracts, registry/schema, readiness, and testing owner/consumer boundaries remain distinct.
+  - The decisions authorize materialization only and do not claim persisted-event denominator, registry, critical escalation, finding, obligation, Case L, governance, runtime, certification, or buildability closure.
+  - No wave-5 producer-owner discovery decision is selected or recorded.
+validation_surfaces:
+  - exact supplemental three-packet set-equality check
+  - PlanUnit YAML parse and identifier-uniqueness check
+risk_class: case_l_supplemental_probe_decision_drift
+reasoning_tier: high
+context_scope: case_l_supplemental_probe_packet_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/Executor_Protocol.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/storage_value_registry.json
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: case_l_supplemental_probe_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Supplemental-Approvals-2026-07-18
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/wave4/pre_generation_fidelity/REPAIR_REGISTER.md:Three-User-Ready-Decision-Packets
+preserved_exact_tokens:
+  - PD-PROBE-L011-01
+  - A/A/A/A/A
+  - PD-PROBE-L020-01
+  - A/A/A
+  - PD-PROBE-L032-01
+  - outcome = ready|blocked
+  - reason_code = null|blocked_insufficient_space
+  - cmd.storage.fallback.keep_logical_root
+  - cmd.storage.fallback.fork_new_instance
+  - cmd.storage.fallback.export_both
+negative_constraints:
+  - Fallback reconciliation cannot merge, overwrite, delete, silently switch authority, or invent a new event family.
+  - Wrapper normalization cannot retain retry_scope, forward wrapper-only fields, or create a second handler or peer execution path.
+  - Migration preflight cannot admit an unlisted outcome or reason, ETA, percentage, or fabricated result.
+  - No WorkNodes, NodeSeeds, or wave-5 producer-owner decisions are created by this record.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/storage-plan.md
+  - Plans/Executor_Protocol.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### DL-034 - Case L Supplemental Kernel Depth Decisions
+
+```yaml
+plan_unit_id: DL-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Case L supplemental kernel-depth approval records exactly nine accepted packet
+  choices: DP-K37-01 A, DP-K37-02 B, DP-K37-03 A, DP-K37-04 A, DP-K37-05 A,
+  DP-K37-06 C, DP-K37-07 A, DP-K37-08 A, and DP-K37-09 A for closed per-event
+  payloads, structured retention classes, capability evaluation, restore
+  application/corruption, run-start snapshots, recovery commands, boot recovery,
+  and integrity/recovery vocabularies.
+gui_related: true
+gui_classification_reason: The choices include visible restore/recovery actions and runtime/capability disclosures as well as persistence contracts.
+split_recommended: false
+depends_on: [DL-031, DL-032]
+unblocks: []
+acceptance_criteria:
+  - The grouped entry contains exactly DP-K37-01 A, DP-K37-02 B, DP-K37-03 A, DP-K37-04 A, DP-K37-05 A, DP-K37-06 C, DP-K37-07 A, DP-K37-08 A, and DP-K37-09 A with no additional decision packet.
+  - Goal Runtime, Storage, capability, Assistant Chat, FileSafe, Run Modes, Executor, Models, Multi-Account, Contracts, registry/schema, commands, and GUI owner/consumer boundaries remain distinct.
+  - Closed models and semantic classes are preserved without inventing unspecified exact wire-token spellings.
+  - The decisions authorize materialization only and do not claim persisted-event denominator, registry-depth, critical escalation, finding, obligation, Case L, governance, runtime, certification, or buildability closure.
+  - No wave-5 producer-owner discovery decision is selected or recorded.
+validation_surfaces:
+  - exact supplemental nine-packet set-equality check
+  - PlanUnit YAML parse and identifier-uniqueness check
+risk_class: case_l_supplemental_kernel_depth_decision_drift
+reasoning_tier: high
+context_scope: case_l_supplemental_kernel_depth_decisions
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/goal_runtime_events.schema.json
+  - Plans/storage-plan.md
+  - Plans/event_family_registry.json
+  - Plans/event_family_registry.schema.json
+  - Plans/newtools.md
+  - Plans/assistant-chat-design.md
+  - Plans/FileSafe.md
+  - Plans/Run_Modes.md
+  - Plans/Executor_Protocol.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: case_l_supplemental_kernel_depth_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/DECISION_REGISTER.md:Supplemental-Approvals-2026-07-18
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/wave4/event_denominator_adjudication/CONTRACT_DEPTH_REGISTER.md:User-Ready-Decision-Packets
+preserved_exact_tokens:
+  - DP-K37-01 A
+  - DP-K37-02 B
+  - DP-K37-03 A
+  - DP-K37-04 A
+  - DP-K37-05 A
+  - DP-K37-06 C
+  - DP-K37-07 A
+  - DP-K37-08 A
+  - DP-K37-09 A
+  - retention_policy_ref
+  - application_id
+  - cmd.runtime.*
+  - impact_precision
+negative_constraints:
+  - Open generic payloads, wildcard or default rows, inferred scope or retention, and raw-secret fields are not admitted.
+  - Failed or refused restore application cannot fabricate target identities.
+  - No second recovery command namespace or handler is admitted.
+  - Exact wire-token spellings not fixed by the approved options cannot be invented by this record.
+  - No WorkNodes, NodeSeeds, complete-denominator claim, complete-registry claim, Case L closure claim, or wave-5 producer-owner discovery decision is created by this record.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

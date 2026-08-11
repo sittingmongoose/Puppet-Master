@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="utf-8">
+<title>W3 Panel Lifecycle Prototype</title>
+<style id="proto-tokens">
+  :root {
+    --surface:#161616; --surface-alt:#1A1A1A; --surface-elevated:#222;
+    --border:#2E2E2E; --text-primary:#E8E8E8; --text-secondary:#9A9A9A;
+    --text-muted:#6E6E6E; --accent:#9BE15D; --accent-soft:rgba(155,225,93,.14);
+    --xs:4px; --sm:8px; --md:12px; --radius-pill:999px;
+    --body-font: system-ui, sans-serif;
+    --motion-fast:120ms; --motion-med:240ms;
+    --ease-out:cubic-bezier(.22,1,.36,1); --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --ease-settle:cubic-bezier(.22,1.5,.36,1);
+    --pm-travel:10px; --pm-stagger:26ms; --pm-row-step:22ms;
+  }
+  [data-theme="friendly-dark"] {
+    --surface:#1B2431; --surface-alt:#161D29; --surface-elevated:#243141;
+    --border:#33415A; --text-primary:#F2F0EA; --text-secondary:#B9C4D6;
+    --text-muted:#7E8CA3; --accent:#8FB7FF; --accent-soft:rgba(143,183,255,.16);
+    --pm-travel:12px; --ease-settle:cubic-bezier(.22,1.68,.36,1);
+  }
+  [data-theme="basic-light"] {
+    --surface:#F4F4F5; --surface-alt:#E9E9EB; --surface-elevated:#FFFFFF;
+    --border:#D4D4D8; --text-primary:#1A1A1A; --text-secondary:#52525B;
+    --text-muted:#8B8B92; --accent:#3794FF; --accent-soft:rgba(55,148,255,.14);
+    --pm-travel:8px; --ease-settle:cubic-bezier(.26,1.4,.36,1);
+  }
+  body { margin:0; background:var(--surface); color:var(--text-primary);
+         font-family:var(--body-font); display:flex; height:100vh; }
+</style>
+<style id="proto-panel-css">
+  .activity-bar {
+    width: 64px; min-width: 64px; background: var(--surface-alt);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center;
+    padding: var(--md) 0; gap: var(--sm); position: relative;
+  }
+  .activity-bar .icon {
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 11px; font-weight: 700;
+    position: relative; user-select: none;
+  }
+  .activity-bar .icon.active { color: var(--accent); background: var(--accent-soft); }
+
+  .side-panel-slot {
+    width: 320px; min-width: 320px; background: var(--surface-elevated);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+    transition: width var(--motion-med) var(--ease-out);
+  }
+  .side-panel-slot.hidden { display: none; }
+  .side-panel-view { display: none; flex-direction: column; padding: var(--md); gap: var(--sm); flex: 1; }
+  .side-panel-view.active { display: flex; }
+  #sidePanelSlot .side-panel-view { position: relative; }
+  .row { padding: 8px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--text-secondary); font-size: 12px; }
+
+  /* ---- W3 enter (upgraded: overshoot + settle) ---- */
+  .side-panel-view.active.pm-panel-enter { animation: railPanelIn .34s var(--ease-out); }
+  @keyframes railPanelIn {
+    from { opacity: 0; transform: translateX(calc(var(--pm-travel) * -1)) scale(.995); }
+    70%  { opacity: 1; transform: translateX(calc(var(--pm-travel) * .22)) scale(1.001); }
+    to   { transform: none; }
+  }
+  /* ---- W3 exit ---- */
+  .side-panel-view.pm-panel-exit { animation: railPanelOut .13s var(--ease-smooth) both; }
+  @keyframes railPanelOut { to { opacity: 0; transform: translateX(calc(var(--pm-travel) * -.6)); } }
+
+  /* ---- pill-fit measure guard (faithful: only kills INACTIVE views) ---- */
+  .side-panel-slot.pill-fit-measure .side-panel-view:not(.active) {
+    display: flex !important; position: absolute !important; inset: 0;
+    visibility: hidden !important; pointer-events: none !important; z-index: -1;
+    animation: none !important;
+  }
+
+  /* ---- reduced-motion kill blocks ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .side-panel-view.pm-panel-exit, .side-panel-view.active.pm-panel-enter { animation: none !important; }
+  }
+  html[data-reduced-motion="1"] .side-panel-view.pm-panel-exit,
+  html[data-motion="reduced"] .side-panel-view.pm-panel-exit,
+  html[data-reduced-motion="1"] .side-panel-view.active.pm-panel-enter,
+  html[data-motion="reduced"] .side-panel-view.active.pm-panel-enter { animation: none !important; }
+
+  #stage { flex: 1; padding: 16px; }
+  .ctl { margin: 0 0 8px; }
+  button { font: inherit; margin-right: 6px; }
+</style>
+</head>
+<body>
+  <nav class="activity-bar" id="activityBar">
+    <div class="icon" data-target="panel-a" title="A">A</div>
+    <div class="icon" data-target="panel-b" title="B">B</div>
+    <div class="icon" data-target="panel-c" title="C">C</div>
+  </nav>
+  <div class="side-panel-slot hidden" id="sidePanelSlot">
+    <section class="side-panel-view" id="panel-a"><h3>Panel A</h3><div class="row">a1</div><div class="row">a2</div></section>
+    <section class="side-panel-view" id="panel-b"><h3>Panel B</h3><div class="row">b1</div><div class="row">b2</div></section>
+    <section class="side-panel-view" id="panel-c"><h3>Panel C</h3><div class="row">c1</div><div class="row">c2</div></section>
+  </div>
+  <div id="stage">
+    <div class="ctl"><button data-set-theme="friendly-dark">friendly-dark</button><button data-set-theme="basic-light">basic-light</button><button id="toggleMotion">toggle data-motion</button></div>
+    <div id="log" style="font-size:12px;color:var(--text-muted);white-space:pre-wrap"></div>
+  </div>
+
+<script id="proto-panel-js">
+(function () {
+  'use strict';
+  function byId(id) { return document.getElementById(id); }
+  function reduce() { var de = document.documentElement; return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || de.getAttribute('data-reduced-motion') === '1' || de.getAttribute('data-motion') === 'reduced'; }
+
+  /* minimal pill-fit stand-in: measure pass adds/removes pill-fit-measure */
+  var slot = byId('sidePanelSlot');
+  var scheduled = null;
+  function schedule(scope) {
+    if (scheduled) cancelAnimationFrame(scheduled);
+    scheduled = requestAnimationFrame(function () {
+      scheduled = null;
+      slot.classList.add('pill-fit-measure');
+      void slot.offsetWidth;
+      slot.classList.remove('pill-fit-measure');
+    });
+  }
+
+  /* ================= PMPANEL orchestrator (W3) ================= */
+  var PMPANEL = (function () {
+    var pending = null;
+    function activeView() { return document.querySelector('.side-panel-view.active'); }
+    function setIcons(targetId) {
+      document.querySelectorAll('.activity-bar .icon[data-target]').forEach(function (i) {
+        i.classList.toggle('active', !!targetId && i.getAttribute('data-target') === targetId);
+      });
+    }
+    function setViews(targetId) {
+      document.querySelectorAll('.side-panel-view').forEach(function (v) {
+        v.classList.remove('active');
+        v.classList.remove('pm-panel-exit');
+        v.classList.remove('pm-panel-enter');
+      });
+      if (targetId) { var t = byId(targetId); if (t) t.classList.add('active'); }
+    }
+    function applyInstant(targetId, s) {
+      setIcons(targetId);
+      setViews(targetId);
+      s.classList.toggle('hidden', !targetId);
+    }
+    function settle() {
+      if (!pending) return;
+      var p = pending; pending = null;
+      clearTimeout(p.timer);
+      if (p.node) p.node.removeEventListener('animationend', p.onEnd);
+      p.run();
+    }
+    function exitThen(node, ms, useEnd, finish) {
+      var done = false;
+      function onEnd() { run(); }
+      function run() {
+        if (done) return;
+        done = true;
+        if (pending && pending.run === run) pending = null;
+        node.removeEventListener('animationend', onEnd);
+        finish();
+      }
+      node.classList.remove('pm-panel-enter'); /* cancel any in-flight enter so exit (lower specificity) can run */
+      node.classList.add('pm-panel-exit');
+      if (useEnd) node.addEventListener('animationend', onEnd);
+      pending = { timer: setTimeout(run, ms), node: useEnd ? node : null, onEnd: onEnd, run: run };
+    }
+    function go(targetId) {
+      var s = byId('sidePanelSlot');
+      if (!s) return;
+      settle();
+      var outgoing = activeView();
+      if (targetId && outgoing && outgoing.id === targetId) targetId = null;
+      if (reduce()) { applyInstant(targetId, s); return; }
+      if (!targetId) {
+        if (!outgoing) { applyInstant(null, s); return; }
+        exitThen(outgoing, 150, true, function () {
+          setIcons(null); setViews(null); s.classList.add('hidden');
+        });
+        return;
+      }
+      if (s.classList.contains('hidden') || !outgoing) { applyInstant(targetId, s); return; }
+      exitThen(outgoing, 130, false, function () {
+        setIcons(targetId); setViews(targetId); s.classList.remove('hidden');
+      });
+    }
+    return { go: go, _settle: settle };
+  })();
+  window.PMPANEL = PMPANEL;
+
+  /* ================= one-shot panel enter observer (copied from base) ================= */
+  var views = slot.querySelectorAll('.side-panel-view');
+  views.forEach(function (v) {
+    new MutationObserver(function () {
+      if (v.classList.contains('active') && !v._pmCozeEntered) {
+        v._pmCozeEntered = true;
+        if (!reduce()) {
+          v.classList.add('pm-panel-enter');
+          v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });
+        }
+        schedule(v);
+      } else if (!v.classList.contains('active')) {
+        v._pmCozeEntered = false;
+      }
+    }).observe(v, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  /* ================= legacy-style rail click handler delegating to PMPANEL ================= */
+  document.addEventListener('click', function (e) {
+    var iconBtn = e.target.closest('.activity-bar .icon');
+    if (!iconBtn) return;
+    var isActive = iconBtn.classList.contains('active');
+    var targetId = iconBtn.getAttribute('data-target');
+    if (window.PMPANEL && window.PMPANEL.go) window.PMPANEL.go(isActive ? null : targetId);
+  });
+
+  /* proto controls */
+  document.querySelectorAll('[data-set-theme]').forEach(function (b) {
+    b.addEventListener('click', function () { document.documentElement.setAttribute('data-theme', b.getAttribute('data-set-theme')); });
+  });
+  byId('toggleMotion').addEventListener('click', function () {
+    var de = document.documentElement;
+    de.setAttribute('data-motion', de.getAttribute('data-motion') === 'reduced' ? 'full' : 'reduced');
+  });
+})();
+</script>
+</body>
+</html>

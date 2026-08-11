@@ -199,23 +199,33 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V
 ContractRef: Invariant:INV-016
 
 <a id="INV-017"></a>
-## INV-017 -- File mutations are atomic (temp-fsync-rename)
+## INV-017 -- Durable atomic replacement and exact-replace recovery
 
-All FileSafe-managed file write operations MUST use the atomic write pattern: write to a temp file, fsync, rename to the target path. Direct `os.WriteFile` or equivalent non-atomic write calls MUST NOT be used for managed files. Concurrent-edit safety is part of INV-017: managed rewrites capture `read_revision`, re-check before promote, and abort with `concurrent_edit_conflict` on concurrent-edit drift; any missing path is a MUST CHANGE item, not an implementation preference.
+All FileSafe-managed single-file writes and storage-owned same-directory journal, manifest, and pointer replacements MUST use the durable atomic-replace pattern: stage a temp file in the target directory, fsync the staged content, rename or replace the target, then fsync the affected parent directory before reporting durable success. When the platform cannot establish equivalent directory-entry durability, the canonical operation fails closed. Direct `os.WriteFile` or equivalent non-atomic write calls MUST NOT be used for managed files.
+
+Concurrent-edit safety remains part of INV-017: managed rewrites capture `read_revision`, re-check the expected preimage immediately before promote, and abort with `concurrent_edit_conflict` on drift; any missing path is a MUST CHANGE item, not an implementation preference. FileSafe safe-point restore and Chat revert are exact-replace operations over the manifest-owned state, but their atomicity is a durable journaled logical transaction with per-path durable replacement, verified rollback, and restart reconciliation. They are not a claim that a portable whole-worktree atomic rename exists.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 ContractRef: Invariant:INV-017
 
 <a id="INV-018"></a>
-## INV-018 -- Seglog CRC32 is mandatory
+## INV-018 -- Seglog frame integrity and deterministic recovery are mandatory
 
 
 ### Rule
 
-Every seglog record MUST include a CRC32 checksum. Checksum validation MUST occur on every read. A record that fails CRC32 validation MUST be skipped and a recovery event emitted. Silently processing a corrupt record is prohibited.
+Every first-generation writer targets `SeglogFrameV2`. Its resynchronization prefix, bounded header metadata, and payload have independently validated integrity coverage, and a reader may resynchronize only at a candidate boundary that passes the complete storage-owned validation order. A CRC failure is not universally skippable.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+- A partial final frame at the active tail may be truncated only through the storage-owned intent, preimage, durability, and postcondition protocol.
+- A single bad frame is the loss unit only when the next complete boundary validates. Otherwise the loss unit is the exact bounded byte range to the next validated boundary or the segment remainder.
+- Active non-tail corruption seals the active source as degraded and preserves its bytes; closed-segment corruption never rewrites the damaged closed source in place.
+- Recovery rebuilds derived projections from the deterministic surviving-record set. If acknowledged canon has a hole, `projection_health` remains `degraded` with gap provenance even when `projection_freshness` becomes `current` relative to the survivor set; unknown or mutation-authorizing loss blocks mutation.
+- Storage integrity and boot-recovery events use deterministic episode identity and disclose segment, generation, offset/range, evidence precision, and terminal disposition without calling lossy recovery clean.
+
+Silently processing corrupt bytes, treating every checksum failure as one skippable record, choosing a boundary by timestamp/mtime, or promoting a projection to recovery authority is prohibited.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
 ContractRef: Invariant:INV-018
 
@@ -286,6 +296,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 - DAE jail posture, approval posture, usage switch-history, and execution-role follow-through remain continuous across retries, resumes, restores, and recovered attempts.
 - Cross-surface consumers reuse the frozen runtime `state-summary` instead of inventing local phrasing: `effective_health_state`, `effective_pressure_state`, and `effective_resolution_outcome` use the scheduler vocabulary and remain canonical effective-state fields even when Agent-Config, Health, Usage, or other surfaces show live current values.
 - Runtime recovery invariants include safe-point vs restore-point boundaries, `graph-lock` non-degradation, `classification-before-policy`, `checkpoint-derived` projection freshness, and `attempt-boundary` identity freeze. `Plans/FileSafe.md` remains the DAE enforcement owner for post-approval arg mutation, `context_files` write-scope widening, `fail-open` initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift; `Plans/MiscPlan.md` cleanup wording must not let best-effort prepare/cleanup invalidate safe-point prerequisites or let `mtime-based` evidence pruning cut across `attempt-lineage` retention.
+- Cleanup eligibility is anchor-derived, never age- or worktree-binding-derived while recovery remains live. A `requires_safe_point_restore` blocked episode, canonical safe-point record, snapshot/blob refs, and `recovery_anchor_record` publish as one durability unit; cleanup remains forbidden while any active-attempt, unresolved blocked-episode, nonterminal restore-transaction, preserved-run, or legal-hold ref exists. The recovery anchor releases only for `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user`. Missing or corrupt required recovery material becomes `recovery_unavailable`, preserves local work and ownership, and remains blocked and anchored; no janitor, retention timer, archive, exit, or run-completion path may convert that loss into semantic resolution.
 - Runtime governance is a `governance-layer` invariant, not only UI/storage cleanup: `Plans/Decision_Policy.md` owns first-class concern / corroboration / promotion objects plus `/corroboration/promotion`, authority, and `/lifecycle` rules; `Plans/Permissions_System.md` consumes the stricter requested/effective identity model that `Plans/Contracts_V0.md` now makes canonical; and this document records scheduler lane ordering plus `mutation-safe-point` requirements.
 - Cross-surface command wrappers remain route consumers, not runtime owners: `Plans/UI_Command_Catalog.md` entries such as `cmd.artifacts.show_in_ledger`, `cmd.artifacts.show_in_usage`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, and `cmd.panel.switch` may stay `navigation-like` wrappers only when they normalize through canonical route/runtime objects.
 - `Plans/Run_Graph_View.md` must resolve its internal identity split before consumers treat it as runtime truth: older `tier_id` / `tier_type` detail panes, worker activity, verification streams, Usage links, and event correlation cannot compete with `scheduler_pass_id`, `blocked_sequence`, `safe_point_id`, and remediation lineage.
@@ -411,9 +422,23 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md
 
+## INV-027 -- Durable-state authority, scope, replay, and recovery remain explicit
+
+**Rule:** Durable state MUST preserve the authority and aftermath semantics of its owner contracts; store location, projection appearance, or a successful replay MUST NOT be used to invent authority or completion.
+
+- Every materialized storage family declares a machine-readable recovery authority. `canonical_non_rebuildable` redb values are canonical product state and recover only through the registry-owned `restore_from_mandatory_backup` disposition; `canonical_dual_homed` values reconcile through their registered peer; only `derived_rebuildable` state may rebuild from a materialized and retained registered source. The phrase “rebuild projections” MUST NOT imply that all redb content is disposable or that missing canonical receipts/state can be reconstructed as success.
+- EventRecord `2.0.0` uses required `scope_kind = application | project`. Application scope requires `project_id = null` and storage partition `app`; project scope requires a non-empty `project_id` and the reversible project partition. Fake/default project identities are forbidden. `event_id` is global for the app-data-root lifetime, while the idempotency identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime. A stale or unavailable dedupe accelerator catches up synchronously or append fails `dedupe_unavailable` without buffering or deferred acceptance.
+- `projector_replay_only` is compatibility replay, not append authority. It may update only the owning rebuildable projection, checkpoint, index, or mirror atomically; it MUST NOT append, mutate canonical state, dispatch work or commands, call tools/providers/network, charge usage, notify, publish an outbox, mutate safe points, or create another canonical event.
+- Runtime safe points, user-facing restore points, storage backups, and migration journals are distinct. A safe point captures exact worktree state for FileSafe exact-replace recovery; a restore point captures an immutable Assistant Chat conversation boundary and branches to a new thread without changing the source thread or worktree; a storage backup captures one offline shared canonical-store boundary; and a migration journal records crash-decidable schema transition state. An optional safe-point ref on a restore point is lineage only and never silently restores files.
+- FileSafe owns manifest equality, off-worktree content-addressed snapshot custody, exact-replace journaling, verified rollback, and restart reconciliation. The authorized remote retains custody for remote projects; events and redb values carry refs and hashes, never captured file bodies. Storage owns snapshot/transaction records, holds, retention, and the maintenance lease. Contracts owns closed outcomes and reason codes. Worktree/Source Control owns exact `safe_point`, `historical_commit`, and `worktree_head` effects; Executor owns admission, successor-attempt identity, and dispatch gating.
+- `safe_point` exact-restores the named worktree. `historical_commit` creates a distinct clean isolated worktree at an exact immutable OID while preserving the source worktree. `worktree_head` performs no restore, checkout, reset, stash, clean, branch move, index rewrite, or file mutation and binds only to the exact validated `HEAD` plus FileSafe state digest. No moving ref, current-worktree guess, latest safe point, or dirty-state discard may substitute for those identities.
+- Failure truth is closed and owner-routed. `restore_failed` is valid only after verified rollback equality; `restore_recovery_required` means neither target nor original equality is proven and keeps the mutation fence and holds; `recovery_unavailable` means the required remedy is missing or corrupt and remains blocked/anchored. `projection_freshness = current | refreshing | stale` is recency; `projection_health = healthy | degraded | unavailable` is integrity/availability. `unknown` is not a health success state: unknown retention policy preserves instead of deleting, unknown I/O fails closed as device unavailable, and unknown canonical-loss extent blocks mutation.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
+
 ## Owner / Consumer Map
 
-This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Architecture_Invariants.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. `Plans/Architecture_Invariants.md` owns only the cross-cutting prohibitions and authority boundaries stated here. `Plans/storage-plan.md` retains durable-store mechanics, recovery dispositions, retention, and holds; `Plans/Contracts_V0.md` plus `Plans/event_record.schema.json` retain EventRecord and closed outcome ownership; `Plans/FileSafe.md` retains exact-replace mechanics and manifest equality; `Plans/WorktreeGitImprovement.md` retains baseline/worktree effects; and `Plans/Executor_Protocol.md` retains admission, attempt lineage, and dispatch gating. Consumer text MUST reference those owners rather than become peer canon.
 
 ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
 
@@ -1593,16 +1618,15 @@ preserved_contractrefs:
 - 'ContractRef: Invariant:INV-016'
 ```
 
-### AI-021 - FileSafe Atomic Mutation Pattern
+### AI-021 - Durable Atomic Replacement And Exact-replace Recovery
 
 ```yaml
 plan_unit_id: AI-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
-canonical_text: All FileSafe-managed writes use temp file, fsync, and rename, while managed rewrites capture read_revision,
-  re-check before promote, and abort with concurrent_edit_conflict on drift; non-atomic writes and missing safety paths are
-  prohibited.
+canonical_text: >-
+  Durable atomic replacement stages in the target directory, fsyncs content, renames or replaces, and fsyncs the affected parent directory before success; managed rewrites re-check read_revision and abort concurrent_edit_conflict on drift, while FileSafe exact-replace recovery remains a journaled logical transaction with verified rollback and restart reconciliation rather than a claimed whole-tree atomic rename.
 gui_related: false
 gui_classification_reason: This unit covers FileSafe mutation safety, not GUI behavior.
 split_recommended: false
@@ -1614,6 +1638,8 @@ acceptance_criteria:
   bridge.
 - Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
   own contracts.
+- Durable success is impossible before staged-content fsync, rename or replace, and affected-parent-directory fsync complete.
+- Safe-point and Chat-revert exact replacement uses the FileSafe-owned journal, rollback equality, and restart reconciliation without claiming portable whole-tree rename atomicity.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1628,11 +1654,16 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0022
+- Case-L:L-029
+- Case-L:PD-RSP-01
 preserved_exact_tokens:
-- INV-017 -- File mutations are atomic (temp-fsync-rename)
+- INV-017 -- Durable atomic replacement and exact-replace recovery
 - temp file
 - fsync
 - rename
+- parent directory
+- exact-replace
+- restore_recovery_required
 - os.WriteFile
 - read_revision
 - concurrent_edit_conflict
@@ -1640,6 +1671,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Direct os.WriteFile or equivalent non-atomic write calls MUST NOT be used for managed files.
 - Any missing path is a MUST CHANGE item, not an implementation preference.
+- Do not report durable success before the affected parent directory is synchronized.
+- Do not describe a multi-path FileSafe restore as a portable whole-tree atomic rename.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -1650,15 +1683,15 @@ preserved_contractrefs:
 - 'ContractRef: Invariant:INV-017'
 ```
 
-### AI-022 - Seglog CRC32 Recovery
+### AI-022 - SeglogFrameV2 Integrity And Deterministic Recovery
 
 ```yaml
 plan_unit_id: AI-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
-canonical_text: Every seglog record includes CRC32, every read validates the checksum, failed records are skipped with a recovery
-  event, and silently processing corrupt records is prohibited.
+canonical_text: >-
+  SeglogFrameV2 independently validates prefix, bounded header metadata, and payload; recovery resynchronizes only through a completely validated boundary, distinguishes active-tail truncation, active non-tail corruption, and immutable closed-segment corruption, preserves exact or bounded loss units, and rebuilds derived projections from the deterministic survivor set without calling acknowledged canonical loss clean.
 gui_related: false
 gui_classification_reason: This unit covers storage/seglog integrity, not GUI behavior.
 split_recommended: false
@@ -1670,6 +1703,8 @@ acceptance_criteria:
   bridge.
 - Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
   own contracts.
+- Bit-flip and partial-frame fixtures distinguish one validated bad frame, active-tail truncation, active non-tail corruption, and closed-segment corruption without rewriting closed source bytes.
+- Acknowledged canonical loss retains degraded health and blocks mutation when its extent is unknown or mutation-authorizing.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1685,21 +1720,28 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0023
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0024
+- Case-L:L-004
+- Case-L:L-026
 preserved_exact_tokens:
-- INV-018 -- Seglog CRC32 is mandatory
+- INV-018 -- Seglog frame integrity and deterministic recovery are mandatory
+- SeglogFrameV2
 - CRC32 checksum
-- every read
-- recovery event
-- corrupt record
+- prefix_crc32
+- active tail
+- closed-segment corruption
+- survivor set
+- projection_health
 negative_constraints:
 - Silently processing a corrupt record is prohibited.
+- Do not treat every checksum failure as one skippable record.
+- Do not rewrite a damaged closed segment in place or promote a projection to recovery authority.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
 - Plans/Architecture_Invariants.md
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md'
 - 'ContractRef: Invariant:INV-018'
 ```
 
@@ -2209,9 +2251,8 @@ plan_unit_id: AI-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
-canonical_text: Runtime recovery preserves safe-point versus restore-point boundaries, graph-lock non-degradation, classification-before-policy,
-  checkpoint-derived projection freshness, attempt-boundary identity freeze, FileSafe DAE ownership, MiscPlan cleanup constraints,
-  attempt immutability, failure-vs-blocked separation, restore identity, projection authority, and provider-pool concurrency.
+canonical_text: >-
+  Runtime recovery preserves safe-point versus restore-point boundaries, attempt and restore identity, projection authority, and owner separation; a restore-required blocked episode publishes its safe point, snapshot refs, and recovery anchor as one durability unit, cleanup follows live reference holds, release is limited to the three owner terminal dispositions, and missing or corrupt recovery material remains recovery_unavailable, blocked, anchored, and locally preserved.
 gui_related: false
 gui_classification_reason: This unit covers recovery and owner-contract invariants, not GUI behavior.
 split_recommended: false
@@ -2223,6 +2264,8 @@ acceptance_criteria:
   bridge.
 - Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
   own contracts.
+- A live active-attempt, blocked-episode, restore-transaction, preserved-run, or legal-hold ref makes the safe point and every custody dependency cleanup-ineligible.
+- Anchor release occurs only for resolved, superseded_with_verified_successor, or explicit abandoned_by_user, and missing/corrupt recovery material never releases by age or cleanup.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2237,6 +2280,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+- Case-L:L-010
+- Case-L:PD-L010-01..PD-L010-03
+- Case-L:PD-RSP-06
 preserved_exact_tokens:
 - safe-point vs restore-point
 - graph-lock
@@ -2251,9 +2297,14 @@ preserved_exact_tokens:
 - mtime-based
 - attempt-lineage
 - provider-pool
+- recovery_anchor_record
+- recovery_unavailable
+- superseded_with_verified_successor
+- abandoned_by_user
 negative_constraints:
 - Owner docs must not keep same-doc contradictions around attempt reuse, DAE/FileSafe authority, cleanup-vs-safe-point validity,
   or blocked-recovery payload fields.
+- Age, archive, process exit, run completion, or worktree unbinding MUST NOT release the last legal recovery path.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -4391,6 +4442,91 @@ owner_hints:
 - Plans/Architecture_Invariants.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+```
+
+### AI-068 - Case L Durable State Authority Scope And Recovery
+
+```yaml
+plan_unit_id: AI-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: >-
+  Durable-state consumers preserve registry-declared canonical-versus-derived authority, EventRecord application/project scope and app-root-lifetime identity, side-effect-free projector replay, distinct safe-point/restore-point/backup/migration meanings, FileSafe exact-replace and snapshot custody, exact Worktree baseline effects, live recovery holds, and separate freshness, health, failure, degraded, unavailable, and unknown semantics without redefining their owner contracts.
+gui_related: false
+gui_classification_reason: This unit defines cross-cutting storage, event, replay, restore, worktree, and recovery invariants rather than GUI presentation.
+split_recommended: false
+depends_on: [SP-235, SP-241, SP-242, CV-317, F2-200, EP-072, W-063]
+unblocks: []
+acceptance_criteria:
+- Canonical non-rebuildable redb rows are never described or recovered as generic projections, and derived rebuilds require a materialized retained source.
+- Application EventRecords carry null project_id, project EventRecords carry a non-empty project_id, and no fake project identity is invented.
+- Global event_id, scoped idempotency identity, dedupe_unavailable, and projector_replay_only preserve the Contracts and storage owner rules without side-effect widening.
+- Safe points, Assistant Chat restore points, storage backups, and migration journals retain distinct scope, custody, mutation, and lifecycle meanings.
+- Safe-point, historical_commit, and worktree_head preserve their exact Worktree/Source Control effects and never substitute moving refs or inferred current state.
+- Restore failure and recovery states remain truthful, live holds block cleanup, and unknown input never becomes healthy, available, or mutation-authorizing by default.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime implementation, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- targeted Case L token and owner-reference checks
+risk_class: case_l_durable_state_authority_drift
+reasoning_tier: high
+context_scope: case_l_durable_state_consumers
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: case_l_durable_state_authority_scope_recovery
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Case-L:L-003
+- Case-L:L-004
+- Case-L:L-010
+- Case-L:L-029
+- Case-L:PD-L-01..PD-L-06
+- Case-L:EVT-01..EVT-07
+- Case-L:PD-RSP-01..PD-RSP-09
+preserved_exact_tokens:
+- canonical_non_rebuildable
+- derived_rebuildable
+- scope_kind
+- scope_partition
+- projector_replay_only
+- dedupe_unavailable
+- exact-replace
+- recovery_anchor_record
+- recovery_unavailable
+- restore_recovery_required
+- historical_commit
+- worktree_head
+- projection_freshness
+- projection_health
+negative_constraints:
+- Do not treat canonical redb rows as generic rebuildable projections.
+- Do not invent a fake project, append replay-only compatibility input, or buffer append when dedupe authority is unavailable.
+- Do not collapse safe points, restore points, storage backups, and migration journals into one restore object.
+- Do not release recovery custody by age, archive, exit, run completion, or worktree unbinding while a live ref remains.
+- Do not claim runtime execution, whole-Case-L closure, buildability, or completeness from this plan-only consumer propagation.
+compatibility_only_notes:
+- EventRecord 1.0 and EventEnvelopeV1 remain compatibility-reader inputs; they are not rewritten or appended as current EventRecord 2.0 values during ordinary replay.
+- restored_with_conflicts remains compatibility-only for a future explicitly merge-capable owner and is invalid for exact safe-point restore and Chat revert.
+stale_retired_dispositions:
+- Universal CRC-failure skip wording is retired; SeglogFrameV2 recovery distinguishes tail, active non-tail, closed-segment, and unproven-boundary outcomes.
+- Fresh, warm, expired, blocked, and unknown are retired as projection_freshness or projection_health enum substitutes.
+owner_boundary_notes:
+- Plans/storage-plan.md owns persistence, recovery dispositions, replay mechanics, retention, holds, and maintenance.
+- Plans/Contracts_V0.md and Plans/event_record.schema.json own EventRecord and closed restore outcome contracts.
+- Plans/FileSafe.md owns manifest equality, exact-replace mechanics, rollback, restart reconciliation, and snapshot custody behavior.
+- Plans/WorktreeGitImprovement.md owns baseline and worktree effects; Plans/Executor_Protocol.md owns admission, attempt lineage, and dispatch gating.
+owner_hints:
+- Plans/Architecture_Invariants.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/FileSafe.md
+- Plans/Executor_Protocol.md
+- Plans/WorktreeGitImprovement.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md'
 ```
 
 ## Migration Coverage

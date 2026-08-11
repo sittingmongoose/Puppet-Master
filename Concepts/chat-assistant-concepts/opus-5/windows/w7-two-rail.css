@@ -1,0 +1,220 @@
+/* w7 "Two-Rail" — Opus 5
+ * A thin rail inside the chat, subordinate to the application rail outside it.
+ * All rules scoped under [data-pmx-window="w7"]; a test fails anything outside that scope.
+ */
+
+[data-pmx-window="w7"] .w7-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- the inner rail
+ * Narrower, quieter, and unlabelled — that combination is what keeps it legible as a
+ * secondary rail rather than a duplicate of the application rail. */
+
+[data-pmx-window="w7"] .w7-rail {
+  flex: 0 0 44px;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--sm) 0;
+  background: color-mix(in srgb, var(--surface-elevated) 60%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+[data-pmx-window="w7"] .w7-railbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w7"] .w7-railbtn:hover { background: var(--surface); color: var(--text-primary); }
+/* Active entry is a filled tile. NOT a left accent bar — that treatment is prohibited, and
+ * a rail is precisely where it would be most tempting. */
+[data-pmx-window="w7"] .w7-railbtn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------- overlay column */
+
+[data-pmx-window="w7"] .w7-column {
+  flex: 0 0 0;
+  width: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  /* Below 700px this column becomes an absolutely positioned overlay covering the
+   * transcript (see the narrow-width block), so it must be OPAQUE — bare
+   * `--surface-elevated` is translucent in the glass themes and would let the transcript
+   * read straight through a column that is in front in z-order. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  border-right: 1px solid var(--border);
+  /* A zero-width column must also be invisible. Clipping alone leaves its content
+   * measurable, which reads as an unintended horizontal scroller and keeps the controls
+   * inside it focusable while they cannot be seen. */
+  visibility: hidden;
+  transition: flex-basis var(--motion-med) var(--ease-default),
+              width var(--motion-med) var(--ease-default),
+              visibility 0s linear var(--motion-med);
+}
+[data-pmx-window="w7"] .w7-shell[data-open="history"] .w7-column,
+[data-pmx-window="w7"] .w7-shell[data-open="work"] .w7-column {
+  flex-basis: 260px;
+  width: 260px;
+  visibility: visible;
+  transition: flex-basis var(--motion-med) var(--ease-default),
+              width var(--motion-med) var(--ease-default),
+              visibility 0s;
+}
+
+[data-pmx-window="w7"] .w7-col-head {
+  display: flex; align-items: center; gap: 4px;
+  padding: var(--sm) var(--sm) var(--sm) var(--md);
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w7"] .w7-col-title {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+[data-pmx-window="w7"] .w7-col-pin,
+[data-pmx-window="w7"] .w7-col-close {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; padding: 0;
+  border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+[data-pmx-window="w7"] .w7-col-pin:hover,
+[data-pmx-window="w7"] .w7-col-close:hover { background: var(--surface); color: var(--text-primary); }
+[data-pmx-window="w7"] .w7-col-pin[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  color: var(--text-primary);
+}
+[data-pmx-window="w7"] .w7-col-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+/* ---------------------------------------------------------------- main */
+
+[data-pmx-window="w7"] .w7-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-pmx-window="w7"] .w7-header {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: var(--sm) var(--md); flex: 0 0 auto;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  min-width: 0;
+}
+[data-pmx-window="w7"] .w7-brand { display: flex; align-items: baseline; gap: 5px; flex: 0 0 auto; }
+[data-pmx-window="w7"] .w7-brand-name {
+  font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+[data-pmx-window="w7"] .w7-brand-model { font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .05em; }
+[data-pmx-window="w7"] .w7-tools { margin-left: auto; min-width: 0; display: flex; justify-content: flex-end; }
+
+[data-pmx-window="w7"] .w7-transcript { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+[data-pmx-window="w7"] .w7-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-window="w7"] .w7-question:empty { display: none; }
+[data-pmx-window="w7"] .w7-composer { flex: 0 0 auto; min-width: 0; }
+
+[data-pmx-window="w7"] .w7-overlay { position: static; }
+
+/* ---------------------------------------------------------------- narrow width
+ * The column covers the transcript entirely rather than squeezing it to nothing; the 44px
+ * rail stays, because losing it would strand every entry point. */
+
+@container pmx-chat (max-width: 700px) {
+  [data-pmx-window="w7"] .w7-shell[data-open="history"] .w7-column,
+  [data-pmx-window="w7"] .w7-shell[data-open="work"] .w7-column {
+    position: absolute;
+    left: 44px; top: 0; bottom: 0;
+    right: 0;
+    width: auto;
+    flex-basis: auto;
+    z-index: 12;
+    box-shadow: var(--elev-3);
+  }
+}
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w7"] .w7-brand-name { display: none; }
+  [data-pmx-window="w7"] .w7-header { padding: var(--xs) var(--sm); }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w7"] .w7-shell[data-w7-mount="popout"] {
+  border-left: none; border-radius: var(--radius-lg); box-shadow: var(--elev-3);
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+[data-motion="reduced"][data-pmx-window="w7"] .w7-column,
+[data-motion="reduced"][data-pmx-window="w7"] .w7-railbtn{ transition: none !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * Two rails flank the transcript, so they PART to reveal it — each moving outward
+ * from the centre line rather than both sliding the same way. The transcript
+ * itself does not move, which is what makes the reveal read as the rails opening
+ * around it instead of the whole layout shifting.
+ */
+/* Both rails start pulled toward the centre and settle OUTWARD to their resting
+ * positions — which is what "parting" actually looks like, and which also keeps
+ * them inside the container on the first frame. Starting them outboard would put
+ * each one past its own edge until the animation resolved, measuring as
+ * horizontal overflow and risking a scrollbar flash at 520px. */
+@keyframes pmx-w7-part-left {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-w7-part-right {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w7"] .w7-rail {
+  animation: pmx-w7-part-left var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w7"] .w7-column {
+  animation: pmx-w7-part-right var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w7"] .w7-railbtn {
+  transition:
+    transform var(--motion-fast) var(--ease-default),
+    background var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w7"] .w7-railbtn:active { transform: scale(.94); }
+
+[data-motion="reduced"][data-pmx-window="w7"] .w7-rail,
+[data-motion="reduced"][data-pmx-window="w7"] .w7-column {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w7"] .w7-rail,
+  [data-pmx-window="w7"] .w7-column {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

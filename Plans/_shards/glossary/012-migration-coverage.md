@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L1614-L1624
+Source lines: L1655-L1665
 
-Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
+Source SHA256: `608f0418a56b0f2a31ba473cb27d81579d6259deead06f6125a6c44166fcb50b`
 
 ---
 

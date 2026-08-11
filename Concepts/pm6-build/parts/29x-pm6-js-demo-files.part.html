@@ -1064,6 +1064,209 @@
     ]
   };
 
+  /* ================= src/models/recipe.rs =================
+     Has an editor tab in the static markup but was never in the corpus, so
+     filesFacade.open() rejected it as "outside the demo tree". */
+  FILES['src/models/recipe.rs'] = {
+    diffs: { 12: 'added', 13: 'added', 14: 'added', 27: 'modified' },
+    lines: [
+      C('//! Recipe aggregate — the row shape the API and the importer share.'),
+      '',
+      K('use') + ' chrono::{DateTime, Utc};',
+      K('use') + ' serde::{Deserialize, Serialize};',
+      K('use') + ' sqlx::FromRow;',
+      '',
+      '#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]',
+      K('pub struct') + ' ' + F('Recipe') + ' {',
+      '    ' + K('pub') + ' id: ' + N('i64') + ',',
+      '    ' + K('pub') + ' title: ' + N('String') + ',',
+      /*10*/ '    ' + K('pub') + ' minutes: ' + N('i32') + ',',
+      '    ' + K('pub') + ' rating: ' + N('f32') + ',',
+      '    ' + K('pub') + ' source_url: Option&lt;' + N('String') + '&gt;,',
+      '    ' + K('pub') + ' hero_rendition: Option&lt;' + N('String') + '&gt;,',
+      '    ' + K('pub') + ' created_at: DateTime&lt;Utc&gt;,',
+      '}',
+      '',
+      '#[derive(Debug, Deserialize)]',
+      K('pub struct') + ' ' + F('NewRecipe') + ' {',
+      '    ' + K('pub') + ' title: ' + N('String') + ',',
+      /*20*/ '    ' + K('pub') + ' ingredients: Vec&lt;' + N('String') + '&gt;,',
+      '    ' + K('pub') + ' steps: Vec&lt;' + N('String') + '&gt;,',
+      '}',
+      '',
+      K('impl') + ' ' + F('Recipe') + ' {',
+      '    ' + C('/// Renditions are addressed by content hash, never by upload name.'),
+      '    ' + K('pub fn') + ' ' + F('hero_url') + '(&amp;' + K('self') + ') -&gt; Option&lt;' + N('String') + '&gt; {',
+      '        ' + K('self') + '.hero_rendition.as_ref().map(|h| ' + F('format!') + '(' + S('"/media/{}/1200.webp"') + ', h))',
+      '    }',
+      '}'
+    ]
+  };
+
+  /* ================= normalize_units/mixed_fractions.rs ================= */
+  FILES['src/services/import/normalize_units/mixed_fractions.rs'] = {
+    diffs: { 0: 'added', 1: 'added', 2: 'added', 8: 'added', 9: 'added', 10: 'added', 11: 'added', 12: 'added', 13: 'added', 14: 'added', 15: 'added', 16: 'added', 17: 'added', 18: 'added', 19: 'added', 20: 'added' },
+    lines: [
+      C('//! Mixed-fraction parsing — "1 1/2 cups" and the vulgar-fraction forms.'),
+      C('//! New in run #47: the n-19 flake was this module returning 11/2.'),
+      '',
+      K('use') + ' std::str::FromStr;',
+      '',
+      C('/// U+00BD and friends, expanded before the ASCII pass.'),
+      K('const') + ' ' + N('VULGAR') + ': &amp;[(' + N('char') + ', ' + N('f64') + ')] = &amp;[',
+      '    (' + S("'\\u{00bd}'") + ', ' + N('0.5') + '), (' + S("'\\u{2153}'") + ', ' + N('0.333_333_3') + '), (' + S("'\\u{2154}'") + ', ' + N('0.666_666_7') + '),',
+      '    (' + S("'\\u{00bc}'") + ', ' + N('0.25') + '), (' + S("'\\u{00be}'") + ', ' + N('0.75') + '), (' + S("'\\u{215b}'") + ', ' + N('0.125') + '),',
+      /*10*/ '];',
+      '',
+      K('pub fn') + ' ' + F('parse') + '(raw: &amp;' + N('str') + ') -&gt; Option&lt;' + N('f64') + '&gt; {',
+      '    ' + K('let') + ' s = raw.trim();',
+      '    ' + K('if') + ' s.is_empty() { ' + K('return') + ' ' + N('None') + '; }',
+      '',
+      '    ' + C('// A space between whole and fraction is the mixed form: "1 1/2".'),
+      '    ' + C('// Splitting on \'/\' first is what produced 11/2 = 5.5.'),
+      '    ' + K('if let') + ' Some((whole, frac)) = s.split_once(' + S("' '") + ') {',
+      '        ' + K('let') + ' w = ' + N('f64') + '::from_str(whole).ok()?;',
+      '        ' + K('return') + ' Some(w + ' + F('parse_simple') + '(frac)?);',
+      /*20*/ '    }',
+      '    ' + F('parse_simple') + '(s)',
+      '}',
+      '',
+      K('fn') + ' ' + F('parse_simple') + '(s: &amp;' + N('str') + ') -&gt; Option&lt;' + N('f64') + '&gt; {',
+      '    ' + K('if let') + ' Some(&amp;(_, v)) = ' + N('VULGAR') + '.iter().find(|(c, _)| s.starts_with(*c)) {',
+      '        ' + K('return') + ' Some(v);',
+      '    }',
+      '    ' + K('match') + ' s.split_once(' + S("'/'") + ') {',
+      '        Some((n, d)) =&gt; {',
+      '            ' + K('let') + ' d = ' + N('f64') + '::from_str(d).ok()?;',
+      /*30*/ '            ' + K('if') + ' d == ' + N('0.0') + ' { ' + K('return') + ' ' + N('None') + '; }',
+      '            Some(' + N('f64') + '::from_str(n).ok()? / d)',
+      '        }',
+      '        ' + N('None') + ' =&gt; ' + N('f64') + '::from_str(s).ok(),',
+      '    }',
+      '}',
+      '',
+      '#[cfg(test)]',
+      K('mod') + ' tests {',
+      '    ' + K('use') + ' super::*;',
+      '',
+      /*40*/ '    #[test]',
+      '    ' + K('fn') + ' ' + F('mixed_is_not_concatenated') + '() {',
+      '        ' + F('assert_eq!') + '(' + F('parse') + '(' + S('"1 1/2"') + '), Some(' + N('1.5') + '));',
+      '        ' + F('assert_eq!') + '(' + F('parse') + '(' + S('"2 3/4"') + '), Some(' + N('2.75') + '));',
+      '    }',
+      '',
+      '    #[test]',
+      '    ' + K('fn') + ' ' + F('vulgar_forms') + '() {',
+      '        ' + F('assert_eq!') + '(' + F('parse') + '(' + S('"\\u{00bd}"') + '), Some(' + N('0.5') + '));',
+      '    }',
+      '}'
+    ]
+  };
+
+  /* ================= normalize_units/units_table.rs ================= */
+  FILES['src/services/import/normalize_units/units_table.rs'] = {
+    diffs: {},
+    lines: [
+      C('//! Unit aliases and their canonical metric conversion.'),
+      C('//! Everything downstream stores grams or millilitres.'),
+      '',
+      K('use') + ' std::collections::HashMap;',
+      K('use') + ' std::sync::OnceLock;',
+      '',
+      '#[derive(Debug, Clone, Copy, PartialEq)]',
+      K('pub enum') + ' ' + F('Measure') + ' { Mass, Volume, Count }',
+      '',
+      '#[derive(Debug, Clone, Copy)]',
+      /*10*/ K('pub struct') + ' ' + F('Unit') + ' {',
+      '    ' + K('pub') + ' canonical: &amp;' + N("'static") + ' ' + N('str') + ',',
+      '    ' + K('pub') + ' measure: ' + F('Measure') + ',',
+      '    ' + K('pub') + ' factor: ' + N('f64') + ',',
+      '}',
+      '',
+      C('/// Aliases are matched lowercase, trailing "s" stripped.'),
+      K('const') + ' ' + N('TABLE') + ': &amp;[(&amp;' + N('str') + ', ' + F('Unit') + ')] = &amp;[',
+      '    (' + S('"cup"') + ',        ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('236.588') + ' }),',
+      '    (' + S('"tbsp"') + ',       ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('14.787') + ' }),',
+      /*20*/ '    (' + S('"tablespoon"') + ', ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('14.787') + ' }),',
+      '    (' + S('"tsp"') + ',        ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('4.929') + ' }),',
+      '    (' + S('"teaspoon"') + ',   ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('4.929') + ' }),',
+      '    (' + S('"fl oz"') + ',      ' + F('Unit') + ' { canonical: ' + S('"ml"') + ', measure: ' + F('Measure') + '::Volume, factor: ' + N('29.574') + ' }),',
+      '    (' + S('"oz"') + ',         ' + F('Unit') + ' { canonical: ' + S('"g"') + ',  measure: ' + F('Measure') + '::Mass,   factor: ' + N('28.350') + ' }),',
+      '    (' + S('"lb"') + ',         ' + F('Unit') + ' { canonical: ' + S('"g"') + ',  measure: ' + F('Measure') + '::Mass,   factor: ' + N('453.592') + ' }),',
+      '    (' + S('"g"') + ',          ' + F('Unit') + ' { canonical: ' + S('"g"') + ',  measure: ' + F('Measure') + '::Mass,   factor: ' + N('1.0') + ' }),',
+      '    (' + S('"kg"') + ',         ' + F('Unit') + ' { canonical: ' + S('"g"') + ',  measure: ' + F('Measure') + '::Mass,   factor: ' + N('1000.0') + ' }),',
+      '    (' + S('"clove"') + ',      ' + F('Unit') + ' { canonical: ' + S('"ct"') + ', measure: ' + F('Measure') + '::Count,  factor: ' + N('1.0') + ' }),',
+      /*30*/ '];',
+      '',
+      K('fn') + ' ' + F('index') + '() -&gt; &amp;' + N("'static") + ' HashMap&lt;&amp;' + N("'static") + ' ' + N('str') + ', ' + F('Unit') + '&gt; {',
+      '    ' + K('static') + ' IDX: OnceLock&lt;HashMap&lt;&amp;' + N('str') + ', ' + F('Unit') + '&gt;&gt; = OnceLock::new();',
+      '    IDX.get_or_init(|| ' + N('TABLE') + '.iter().copied().collect())',
+      '}',
+      '',
+      K('pub fn') + ' ' + F('lookup') + '(raw: &amp;' + N('str') + ') -&gt; Option&lt;' + F('Unit') + '&gt; {',
+      '    ' + K('let') + ' key = raw.trim().to_lowercase();',
+      '    ' + K('let') + ' key = key.strip_suffix(' + S("'s'") + ').unwrap_or(&amp;key);',
+      '    ' + F('index') + '().get(key).copied()',
+      /*40*/ '}'
+    ]
+  };
+
+  /* ================= build.log ================= */
+  FILES['build.log'] = {
+    diffs: {},
+    lines: [
+      C('# .gitignore\'d — kept in the tree so the ignored-row styling has a subject.'),
+      '',
+      '   Compiling tastebook-api v0.1.0 (/workspace/tastebook)',
+      '   Compiling import-worker v0.1.0 (/workspace/tastebook/crates/import-worker)',
+      'warning: unused import: `std::time::Duration`',
+      '  --&gt; src/main.rs:6:5',
+      '   |',
+      ' 6 | use std::time::Duration;',
+      '   |     ^^^^^^^^^^^^^^^^^^^',
+      '   |',
+      /*10*/ '   = note: `#[warn(unused_imports)]` on by default',
+      '',
+      '    Finished `release` profile [optimized] target(s) in 1m 12s',
+      '     Running `target/release/tastebook`',
+      '2026-08-03T04:11:07Z  INFO tastebook: listening on 0.0.0.0:8080',
+      '2026-08-03T04:11:07Z  INFO tastebook::db: pool ready (max=16)',
+      '2026-08-03T04:11:08Z  INFO import_worker: queue bound=64, workers=4',
+      '2026-08-03T04:11:22Z  WARN import_worker: retry 1/3 for job 9f3c (upstream 503)',
+      '2026-08-03T04:11:24Z  INFO import_worker: job 9f3c ok in 2.1s',
+      '2026-08-03T04:12:03Z  INFO tastebook::media: rendition 1200.webp written (hash 7ac91e)'
+    ]
+  };
+
+  /* ================= binary / system files =================
+     Real editors refuse to decode these; the file manager already flags them
+     (data-ignored / .bin), so the pane says so instead of rendering mojibake. */
+  FILES['src/.DS_Store'] = {
+    diffs: {},
+    lines: [
+      C('Binary file — not shown.'),
+      '',
+      'src/.DS_Store   6,148 bytes   macOS Finder metadata',
+      '',
+      'Ignored by .gitignore (**/.DS_Store) and skipped by the indexer.',
+      'Open it with an external tool if you really need the bytes.'
+    ]
+  };
+
+  FILES['binary-asset.bin'] = {
+    diffs: {},
+    lines: [
+      C('Binary file — not shown.'),
+      '',
+      'binary-asset.bin   1,048,576 bytes   application/octet-stream',
+      '',
+      'sha256  4f1a7d2c9b0e55638a1d0c47ee92b3f80c6a51d7e2b4938ff0a1c6d5e8b37a29',
+      '',
+      'Marked read-only in the file manager. The editor will not decode it as',
+      'text; use the hex viewer or an external tool.'
+    ]
+  };
+
   Object.keys(FILES).forEach(function (p) { T.files[p] = FILES[p]; });
 })();
 </script>

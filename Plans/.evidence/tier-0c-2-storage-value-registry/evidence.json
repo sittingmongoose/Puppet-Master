@@ -3,27 +3,27 @@
     {
       "note": "Registry JSON Schema.",
       "path": "Plans/storage_value_registry.schema.json",
-      "sha256": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a"
+      "sha256": "61a9a0ddd19ab642235848b85a254bdb19219aa1aa1b2d11b64eaf9624149c92"
     },
     {
       "note": "Materialized/deferred storage value registry.",
       "path": "Plans/storage_value_registry.json",
-      "sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+      "sha256": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a"
     },
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "3fdbbf095642af4f00da3029c8e0e1f968a5dc1a939132857fc03f88aec44533"
+      "sha256": "cbd19a245e48ca0396b73a980ca6557e465e8f166c50f2fa437796b9631f3b59"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "ee85227c4f012d12c1c56b978a056e1d55e95e5ec05bdb89b27805c15be89e99"
+      "sha256": "9a29111e4a3cc1d19678b90c81ed267324f64b1624f8eab4624690e7eef1a4e1"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "91ceb0b84346e06aa77a9ca7e76733084171803bd4481920f4e73ddbf650b2d3"
+      "sha256": "fb6aaaf8fa4f5cff7e615a33464878ce38e84e2517572604980b4dcb9ddf88c3"
     }
   ],
   "checks": [
@@ -186,6 +186,11 @@
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 -c \"import json,runpy; g=runpy.run_path('scripts/pm-governance-seal.py'); print(json.dumps(g['register_spec_lock_files'](g['repo_path']('Plans/Spec_Lock.json'), ['scripts/pm_pnc019_currentness.py']), sort_keys=True))\"",
+      "exit_code": 0,
+      "stdout_excerpt": "{\"added_files\": [\"scripts/pm_pnc019_currentness.py\"], \"changed\": true, \"path\": \"Plans/Spec_Lock.json\", \"updated_hashes\": []}"
     }
   ],
   "contract_refs_satisfied": [

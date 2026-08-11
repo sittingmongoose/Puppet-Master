@@ -1,0 +1,567 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "model": "5.6 Sol",
+  "topic": "settings-redesign",
+  "concepts": [
+    {
+      "concept_id": "concept-01-index-house",
+      "title": "5.6 Sol — Index House",
+      "design_contract_summary": "A stable destination directory loads one category into a three-pane workspace with a nested directory, continuous document, and value-source/effect inspector.",
+      "impacts": [
+        {
+          "impact_id": "index-house-ia-001",
+          "area": "settings_inventory",
+          "requirement": "Represent the packet's humanized category and subcategory hierarchy as stable addresses without primary category pills.",
+          "selected_concept_behavior": "Numbered destination rows open one category; nested directory entries and semantic subcategory anchors preserve location.",
+          "probable_owner_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/settings_inventory.json"
+          ],
+          "supersedes_or_conflicts_with": [
+            "PMConcept7 primary category pill behavior in this redesign lane",
+            "Current settings inventory mixes user goals and internal implementation boundaries"
+          ],
+          "settings_ids": [
+            "concept-fixture:experience.*",
+            "concept-fixture:intelligence.*",
+            "concept-fixture:safety.*",
+            "concept-fixture:code.*",
+            "concept-fixture:context.*",
+            "concept-fixture:planning.*",
+            "concept-fixture:collaboration.*",
+            "concept-fixture:extensions.*",
+            "concept-fixture:media.*",
+            "concept-fixture:system.*"
+          ],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: settings.open_destination",
+            "NOT_MINTED: settings.jump_to_subcategory",
+            "NOT_MINTED: settings.focus_setting"
+          ],
+          "wiring_routes": [
+            "Settings Home search result -> owner category -> semantic subcategory anchor -> setting focus",
+            "Directory category selection -> one-category document model",
+            "Intersection-observed chapter -> scrollspy state"
+          ],
+          "dry_component_candidates": [
+            "SettingsDestinationRow",
+            "SettingsDirectory",
+            "SettingsValueSourceInspector",
+            "SettingsSectionAnchor"
+          ],
+          "schema_or_event_impacts": [
+            "Canonical category aliases may need stable migration fields",
+            "Setting source, scope, exposure, requested value, and effective value need typed presentation state"
+          ],
+          "demo_fixture_impacts": [
+            "Ten category fixtures, twenty subcategories, and seventy-two data-backed settings",
+            "Default, Inherited, Auto, Not configured, Managed, Custom, Unavailable, Effective value differs, independent recommendation marks, and all six exposure levels"
+          ],
+          "test_impacts": [
+            "Stable deep-link offset",
+            "Scrollspy does not oscillate",
+            "Squeezed directory becomes a navigator without clipping"
+          ],
+          "slint_notes": [
+            "Use a ListModel for categories and section models for settings",
+            "Translate IntersectionObserver to viewport section-position signals without making geometry product state"
+          ],
+          "uncertainty": "high",
+          "notes": [
+            "Concept fixture IDs are not canonical settings IDs.",
+            "No inventory or Plans content was changed."
+          ]
+        },
+        {
+          "impact_id": "index-house-manager-002",
+          "area": "wiring",
+          "requirement": "Open dedicated managers from both category context and the Home specialist-room directory.",
+          "selected_concept_behavior": "The inspector routes to the related manager while the Home directory exposes all ten manager families.",
+          "probable_owner_docs": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Wiring_Matrix.production.json",
+            "Plans/DRY_Rules.md"
+          ],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: settings.open_manager",
+            "NOT_MINTED: settings.restore_category_defaults"
+          ],
+          "wiring_routes": [
+            "Category inspector -> related manager overview",
+            "Manager Home action -> Settings Home",
+            "Restore category defaults -> confirmation/receipt path"
+          ],
+          "dry_component_candidates": [
+            "SettingsManagerHeader",
+            "SettingsReceipt",
+            "SettingsResourceRow"
+          ],
+          "schema_or_event_impacts": [
+            "Manager navigation history should retain the originating setting or category"
+          ],
+          "demo_fixture_impacts": [
+            "Manager-to-category relationship map"
+          ],
+          "test_impacts": [
+            "Back navigation and focus restoration",
+            "Every manager action mutates state or returns an honest receipt"
+          ],
+          "slint_notes": [
+            "Manager shells can share state/actions while each concept supplies an adapter layout"
+          ],
+          "uncertainty": "medium",
+          "notes": [
+            "Candidate command names are descriptive only and were not minted."
+          ]
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-02-switchboard",
+      "title": "5.6 Sol — Switchboard",
+      "design_contract_summary": "An operational board organizes Settings around readiness, health, explicit actions, station switching, a vertical signal track, and an effective-state tray.",
+      "impacts": [
+        {
+          "impact_id": "switchboard-status-001",
+          "area": "schema_storage_events",
+          "requirement": "Expose readiness, loading, refreshing, degraded, setup, unavailable, managed, and last-known-good state without reducing Settings to alerts.",
+          "selected_concept_behavior": "Home readouts and destination bays summarize readiness; the workspace tray explains effective state and future/in-flight boundaries.",
+          "probable_owner_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/storage-plan.md",
+            "Plans/usage-feature.md",
+            "Plans/Models_System.md"
+          ],
+          "supersedes_or_conflicts_with": [
+            "Horizontal notice rail behavior from PMConcept7 is replaced for this redesign concept",
+            "Detailed usage remains owned by Usage even when Settings shows a snapshot"
+          ],
+          "settings_ids": [
+            "concept-fixture:intelligence.usage.codex-next",
+            "concept-fixture:intelligence.usage.snapshot",
+            "concept-fixture:planning.goal.effective",
+            "concept-fixture:collaboration.crew.composition"
+          ],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: settings.inspect_readiness",
+            "NOT_MINTED: settings.refresh_provider_catalogue",
+            "NOT_MINTED: settings.review_effective_state"
+          ],
+          "wiring_routes": [
+            "Provider/Usage health snapshot -> Settings status readout",
+            "Readiness signal action -> owning manager detail",
+            "Requested state + live capacity/policy -> effective-state explanation"
+          ],
+          "dry_component_candidates": [
+            "ReadinessSummary",
+            "EffectiveStateTray",
+            "LastKnownGoodIndicator",
+            "ActionReceipt"
+          ],
+          "schema_or_event_impacts": [
+            "Readiness evidence needs source, observed-at, freshness, last-known-good, and quarantine fields",
+            "Requested/effective state needs reason and owner provenance"
+          ],
+          "demo_fixture_impacts": [
+            "Normal, Needs attention, Calm, Setup in progress, Loading, Refreshing, Degraded with last-known-good data, Managed workspace, Unavailable dependency, Error, Usage exhausted, and Requested/effective difference scenarios",
+            "Provider refresh retains catalogue rows while validation runs"
+          ],
+          "test_impacts": [
+            "No permanent pulse in calm state",
+            "Refresh failure preserves last-known-good rows",
+            "Status actions resolve to owner surfaces"
+          ],
+          "slint_notes": [
+            "Readiness should be a normalized Rust state model, not inferred from visual style",
+            "Station and signal transitions require transform/opacity equivalents"
+          ],
+          "uncertainty": "medium",
+          "notes": [
+            "Settings usage snapshots must not duplicate the full Usage concept."
+          ]
+        },
+        {
+          "impact_id": "switchboard-provider-002",
+          "area": "plans",
+          "requirement": "Represent provider family, account/profile, connection, product/plan, model evidence, and role assignment as separate operational levels.",
+          "selected_concept_behavior": "A topology-like provider board exposes isolated accounts, future-only selection, in-flight capture, refresh, model gates, and support receipts.",
+          "probable_owner_docs": [
+            "Plans/Models_System.md",
+            "Plans/Multi-Account.md",
+            "Plans/CLI_Bridged_Providers.md",
+            "Plans/Provider_OpenCode.md",
+            "Plans/usage-feature.md"
+          ],
+          "supersedes_or_conflicts_with": [
+            "Generic account switching that does not preserve an in-flight route",
+            "Treating CLI-owned OAuth as Puppet Master direct OAuth"
+          ],
+          "settings_ids": [
+            "concept-fixture:provider.openai",
+            "concept-fixture:provider.claude",
+            "concept-fixture:provider.antigravity",
+            "concept-fixture:provider.ollama",
+            "concept-fixture:provider.openrouter-free",
+            "concept-fixture:provider.local-server"
+          ],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: provider.select_future_account",
+            "NOT_MINTED: provider.repair_profile",
+            "NOT_MINTED: provider.open_owned_sign_in",
+            "NOT_MINTED: model.set_alias",
+            "NOT_MINTED: model.set_priority"
+          ],
+          "wiring_routes": [
+            "Provider refresh -> discovery -> validation -> last-known-good commit or quarantine",
+            "Future account choice -> new-request route preference without mutating captured in-flight work",
+            "Free route setup -> underlying provider/account/model owner"
+          ],
+          "dry_component_candidates": [
+            "ProviderHierarchy",
+            "AccountIsolationRow",
+            "ModelCapabilityControls",
+            "ProviderSupportReceipt"
+          ],
+          "schema_or_event_impacts": [
+            "Account profile isolation and authentication owner need explicit fields",
+            "Fast and effort support need evidence-qualified capability records",
+            "Usage exhaustion needs provider-specific next-action state"
+          ],
+          "demo_fixture_impacts": [
+            "Same-provider multi-account, API, CLI-owned OAuth, server, signed-out, not-installed, failed invocation, free setup, keyless, and exhausted-usage fixtures"
+          ],
+          "test_impacts": [
+            "Unsupported Fast/effort controls remain absent",
+            "Authentication success does not imply generation readiness",
+            "Account selection is future-only"
+          ],
+          "slint_notes": [
+            "Provider and model lists should be virtualized ListModels",
+            "Refresh must update the model atomically after validation"
+          ],
+          "uncertainty": "medium",
+          "notes": [
+            "Provider names and capability timestamps are fixtures, not current provider truth."
+          ]
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-03-wayfinder",
+      "title": "5.6 Sol — Wayfinder",
+      "design_contract_summary": "A human-goal taxonomy turns Settings categories into routes and subcategories into checkpoints while preserving canonical area names and expert branches.",
+      "impacts": [
+        {
+          "impact_id": "wayfinder-taxonomy-001",
+          "area": "settings_inventory",
+          "requirement": "Search and navigation must support human outcomes without hiding canonical category ownership.",
+          "selected_concept_behavior": "Routes pair an outcome label with the owning category; search returns both the target and its humanized route.",
+          "probable_owner_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/settings_inventory.json"
+          ],
+          "supersedes_or_conflicts_with": [
+            "Current inventory labels that expose internal subsystem boundaries as the only navigation language"
+          ],
+          "settings_ids": [
+            "concept-alias:make-pm-feel-right",
+            "concept-alias:connect-intelligence",
+            "concept-alias:control-agents",
+            "concept-alias:build-and-operate",
+            "concept-alias:keep-context",
+            "concept-alias:plan-and-verify",
+            "concept-alias:coordinate-work",
+            "concept-alias:extend-capabilities",
+            "concept-alias:create-media",
+            "concept-alias:diagnose-and-recover"
+          ],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: settings.open_route",
+            "NOT_MINTED: settings.open_checkpoint"
+          ],
+          "wiring_routes": [
+            "Humanized search token -> canonical owner category alias -> subcategory/setting deep link",
+            "Journey map selection -> category replacement",
+            "Checkpoint selection -> semantic anchor and controlled scroll"
+          ],
+          "dry_component_candidates": [
+            "SettingsRouteAlias",
+            "JourneyMap",
+            "CheckpointNavigator",
+            "ExpertBranchDisclosure"
+          ],
+          "schema_or_event_impacts": [
+            "Canonical categories may need localized search aliases and outcome descriptions",
+            "Aliases must migrate independently from stable setting identity"
+          ],
+          "demo_fixture_impacts": [
+            "Outcome aliases for all required packet domains"
+          ],
+          "test_impacts": [
+            "Search by outcome lands on the canonical owner",
+            "Canonical and humanized names remain visible together",
+            "Checkpoint scrollspy remains stable"
+          ],
+          "slint_notes": [
+            "Route lines are decorative; semantic state remains a route/category model",
+            "Narrow navigator becomes a full-height stateful overlay"
+          ],
+          "uncertainty": "high",
+          "notes": [
+            "Route aliases are concept proposals and were not added to canonical inventory."
+          ]
+        },
+        {
+          "impact_id": "wayfinder-guided-manager-002",
+          "area": "dry",
+          "requirement": "Provider, Memory, and Terminal managers may use guided setup/inspect/repair steps without hiding expert state.",
+          "selected_concept_behavior": "Manager surfaces use the Wayfinder spatial grammar while retaining direct expert controls, provenance, and receipts.",
+          "probable_owner_docs": [
+            "Plans/Models_System.md",
+            "Plans/assistant-memory-subsystem.md",
+            "Plans/FinalGUISpec.md"
+          ],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: manager.start_guided_setup",
+            "NOT_MINTED: manager.inspect_expert_state"
+          ],
+          "wiring_routes": [
+            "Manager problem state -> bounded setup/inspect/repair step -> receipt",
+            "Optional expert branch -> full manager controls"
+          ],
+          "dry_component_candidates": [
+            "GuidedManagerStep",
+            "ManagerEvidencePanel",
+            "ManagerActionReceipt"
+          ],
+          "schema_or_event_impacts": [
+            "Guided steps need resumable state only if later adopted; the concept does not persist a wizard"
+          ],
+          "demo_fixture_impacts": [
+            "Setup, ready, failed, unavailable, and degraded manager paths"
+          ],
+          "test_impacts": [
+            "Expert state remains reachable",
+            "Guided actions never claim external success without evidence"
+          ],
+          "slint_notes": [
+            "Use explicit manager-step state rather than relying on CSS expansion"
+          ],
+          "uncertainty": "medium",
+          "notes": [
+            "No production wizard lifecycle is implied by this concept."
+          ]
+        }
+      ]
+    },
+    {
+      "concept_id": "concept-04-ledger",
+      "title": "5.6 Sol — Ledger",
+      "design_contract_summary": "A dense reference register and continuous folio prioritize comparison, requested/effective values, source, scope, history, and manager evidence.",
+      "impacts": [
+        {
+          "impact_id": "ledger-effective-state-001",
+          "area": "schema_storage_events",
+          "requirement": "Make default, inherited, managed, unavailable, requested, and effective values comparable without exposing raw internal enums.",
+          "selected_concept_behavior": "Rows and manager facts expose humanized status plus source/scope; explicit comparison cells distinguish requested from effective state.",
+          "probable_owner_docs": [
+            "Plans/settings_inventory.json",
+            "Plans/storage-plan.md",
+            "Plans/Goal_Runtime_System.md",
+            "Plans/orchestrator-subagent-integration.md",
+            "Plans/Permissions_System.md"
+          ],
+          "supersedes_or_conflicts_with": [
+            "Any single-value presentation that hides policy, qualification, or capacity substitution"
+          ],
+          "settings_ids": [
+            "concept-fixture:planning.goal.effective",
+            "concept-fixture:collaboration.crew.composition",
+            "concept-fixture:intelligence.usage.managed"
+          ],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [
+            "NOT_MINTED: settings.inspect_value_provenance",
+            "NOT_MINTED: settings.restore_default",
+            "NOT_MINTED: settings.restore_inherited_value"
+          ],
+          "wiring_routes": [
+            "Stored request + policy/qualification/capacity state -> effective value + reason + owner",
+            "Reset action -> owning default/inheritance resolver -> receipt"
+          ],
+          "dry_component_candidates": [
+            "RequestedEffectiveValue",
+            "ValueProvenance",
+            "SettingsLedgerRow",
+            "ChapterMinimap"
+          ],
+          "schema_or_event_impacts": [
+            "Effective-value derivation needs reason, owner, observed-at, and source revision",
+            "Reset must distinguish default restoration from inheritance restoration",
+            "Managed and unavailable states need user-readable reasons"
+          ],
+          "demo_fixture_impacts": [
+            "Requested/effective Goal and Crew examples",
+            "Managed organization policy and unavailable language-support examples"
+          ],
+          "test_impacts": [
+            "Requested and effective values never collapse into one ambiguous field",
+            "Reset/inherit/default labels remain distinct",
+            "No raw enum or identifier appears in ordinary UI"
+          ],
+          "slint_notes": [
+            "Comparison rows should receive derived display state from Rust",
+            "Dense table columns need explicit breakpoint layouts"
+          ],
+          "uncertainty": "high",
+          "notes": [
+            "Canonical storage/event shapes were not inferred or edited."
+          ]
+        },
+        {
+          "impact_id": "ledger-reference-002",
+          "area": "slint",
+          "requirement": "Support a dense destination register and long manager inventories without unbounded DOM-style rendering.",
+          "selected_concept_behavior": "The web concept uses data-backed hierarchy records, a pinned category directory, and a chapter minimap; squeezed tables reflow into labelled ledger entries instead of creating horizontal clipping.",
+          "probable_owner_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/DRY_Rules.md"
+          ],
+          "supersedes_or_conflicts_with": [],
+          "settings_ids": [],
+          "command_ids_existing": [],
+          "command_candidates_not_minted": [],
+          "wiring_routes": [
+            "Register row -> category folio",
+            "Minimap row -> semantic chapter jump",
+            "Manager ledger row -> evidence detail"
+          ],
+          "dry_component_candidates": [
+            "VirtualSettingsRegister",
+            "VirtualManagerLedger",
+            "SettingsChapterMinimap"
+          ],
+          "schema_or_event_impacts": [
+            "Inventory rows need stable sort and display-group metadata"
+          ],
+          "demo_fixture_impacts": [
+            "Long-list fixtures should be expanded for native virtualization profiling"
+          ],
+          "test_impacts": [
+            "Keyboard traversal of virtual rows",
+            "Squeezed hierarchy tables reflow into labelled entries without page-level horizontal scroll",
+            "Visible row recycling preserves focus and scrollspy state"
+          ],
+          "slint_notes": [
+            "Use ListView or equivalent recycling for production inventories",
+            "Sticky CSS behavior requires explicit Slint layout states"
+          ],
+          "uncertainty": "medium",
+          "notes": [
+            "The fixture volume proves structure, not production-scale performance."
+          ]
+        }
+      ]
+    }
+  ],
+  "cross_concept_findings": [
+    {
+      "finding_id": "cross-001",
+      "finding": "The current settings inventory mixes human goals and internal subsystem boundaries; all four concepts preserve complete domain discoverability while proposing different humanized presentation layers.",
+      "probable_owner_docs": [
+        "Plans/settings_inventory.json",
+        "Plans/FinalGUISpec.md"
+      ],
+      "uncertainty": "high"
+    },
+    {
+      "finding_id": "cross-002",
+      "finding": "Search, category replacement, semantic anchors, scrollspy, setting rows, receipts, provider state, Memory evidence, and Terminal profiles can share normalized state without forcing a shared visual adapter.",
+      "probable_owner_docs": [
+        "Plans/DRY_Rules.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "finding_id": "cross-003",
+      "finding": "Settings should display source-labelled provider usage summaries and provider-specific next actions while handing off exact provider/account context to the Usage owner for detailed history and analysis; the concept-local handoff remains an explicit simulation receipt.",
+      "probable_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "finding_id": "cross-004",
+      "finding": "Spellcheck behavior needs command and storage adjudication for source selection, personal/project dictionary scope, exclusion rules, replace-once, ignore, and dictionary actions.",
+      "probable_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "uncertainty": "high"
+    },
+    {
+      "finding_id": "cross-005",
+      "finding": "No candidate command in this register is minted. Existing command identity, payload, permission, receipt, and undo semantics require canonical lookup and owner adjudication before promotion.",
+      "probable_owner_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "uncertainty": "high"
+    },
+    {
+      "finding_id": "cross-006",
+      "finding": "Provider capability and freshness labels in this bakeoff are deterministic fixtures and must not be promoted as current provider evidence.",
+      "probable_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "uncertainty": "none"
+    },
+    {
+      "finding_id": "cross-007",
+      "finding": "Production demo and test fixtures need one normalized graph for settings provenance; provider families, accounts, connections, products, routes, adapters and evidence; eleven role assignments; Memory versions; Terminal drafts; spelling exclusions; domain-specific Context, Persona, Crew, MCP, LSP, extension/tool and Media inventories; scenario overlays; setup sessions; recent changes; and persistent receipts.",
+      "probable_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "finding_id": "cross-008",
+      "finding": "Navigation, category replacement, search, jump, scrollspy, disclosure, refresh, save, reorder, and drawer motion should share semantic transaction keys while each selected presentation owns its choreography; participant roles and keyed entity targets need testable bindings, and native Slint should map the same keys to cancelable property animations and temporary proxy components.",
+      "probable_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/DRY_Rules.md"
+      ],
+      "uncertainty": "medium"
+    },
+    {
+      "finding_id": "cross-009",
+      "finding": "Production responsive and accessibility contracts need explicit effective-main-width breakpoints, reachable pane-to-drawer-to-inline adaptations, narrow list/detail focus restoration, semantic combobox/tab/menu/drawer primitives, inert hidden panels, forced-colors tokens, RTL direction handling, text expansion, coarse-pointer targets, and reduced-motion parity.",
+      "probable_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "uncertainty": "medium"
+    }
+  ],
+  "files_modified_outside_model_folder": []
+}

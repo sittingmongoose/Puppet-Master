@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/capability-obligation-graph.v1.json",
+  "title": "Plan Assurance Capability Obligation Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "graph_id", "trial_id", "capability_id", "graph_revision", "bindings", "environment_tuples", "nodes", "edges", "stage_transition_receipts", "loss_attributions", "closure_assessments", "retrieval_diagnostics_ref", "semantic_graph_sha256", "integrity"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "graph_id": {"type": "string", "minLength": 1},
+    "trial_id": {"type": "string", "minLength": 1},
+    "capability_id": {"type": "string", "minLength": 1},
+    "graph_revision": {"type": "integer", "minimum": 1},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural_map_sha256", "surface_ledger_sha256", "risk_profile_sha256", "research_portfolio_ref", "research_portfolio_sha256", "research_adequacy_ref", "research_adequacy_sha256", "artifact_validator_sha256", "denominator_frozen_before_plan_comparison"],
+      "properties": {
+        "structural_map_sha256": {"$ref": "#/$defs/sha256"},
+        "surface_ledger_sha256": {"$ref": "#/$defs/sha256"},
+        "risk_profile_sha256": {"$ref": "#/$defs/sha256"},
+        "research_portfolio_ref": {"type": "string", "minLength": 1},
+        "research_portfolio_sha256": {"$ref": "#/$defs/sha256"},
+        "research_adequacy_ref": {"type": "string", "minLength": 1},
+        "research_adequacy_sha256": {"$ref": "#/$defs/sha256"},
+        "artifact_validator_sha256": {"$ref": "#/$defs/sha256"},
+        "denominator_frozen_before_plan_comparison": {"type": "boolean"}
+      }
+    },
+    "environment_tuples": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/environment_tuple"}},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+    "stage_transition_receipts": {"type": "array", "items": {"$ref": "#/$defs/stage_receipt"}},
+    "loss_attributions": {"type": "array", "items": {"$ref": "#/$defs/loss"}},
+    "closure_assessments": {"type": "array", "items": {"$ref": "#/$defs/closure"}},
+    "retrieval_diagnostics_ref": {"type": ["string", "null"]},
+    "semantic_graph_sha256": {"$ref": "#/$defs/sha256"},
+    "integrity": {"$ref": "#/$defs/integrity"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"integrity": {"properties": {"terminal": {"const": "PASS"}}, "required": ["terminal"]}},
+        "required": ["integrity"]
+      },
+      "then": {
+        "properties": {
+          "bindings": {"properties": {"denominator_frozen_before_plan_comparison": {"const": true}}},
+          "nodes": {"minItems": 1},
+          "edges": {"minItems": 1},
+          "stage_transition_receipts": {"minItems": 1},
+          "closure_assessments": {"minItems": 1},
+          "integrity": {
+            "properties": {
+              "unique_node_ids": {"const": true},
+              "unique_edge_ids": {"const": true},
+              "dangling_refs": {"const": 0},
+              "active_claims_without_disposition_edges": {"const": 0},
+              "dependency_cycles": {"const": 0}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "environment_tuple": {"type": "object", "additionalProperties": false, "required": ["environment_tuple_id", "platform", "connectivity", "dependency_condition", "scale_condition", "tuple_sha256"], "properties": {"environment_tuple_id": {"type": "string", "pattern": "^env\\.[a-z0-9._:-]+$"}, "platform": {"type": "string", "minLength": 1}, "connectivity": {"type": "string", "minLength": 1}, "dependency_condition": {"type": "string", "minLength": 1}, "scale_condition": {"type": "string", "minLength": 1}, "tuple_sha256": {"$ref": "#/$defs/sha256"}}},
+    "node_id": {"type": "string", "pattern": "^(cap|src|eva|clm|obl|auth|risk|surf|scn|val|con|anchor|dec|ng|unc|loss|close)-[a-z0-9][a-z0-9._:-]+$"},
+    "common_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "node_type", "identity_basis", "revision", "content_sha256", "lifecycle", "source_refs", "aliases", "payload"],
+      "properties": {
+        "id": {"$ref": "#/$defs/node_id"},
+        "node_type": {"enum": ["Capability", "SourceRecord", "EvidenceAssertion", "ClaimAtom", "Obligation", "AuthorityRecord", "RiskRecord", "SurfaceInstance", "NamedScenario", "ValidationContract", "ConsumerInstance", "PlanAnchor", "Decision", "NonGoal", "Uncertainty"]},
+        "identity_basis": {"type": "string", "minLength": 1},
+        "revision": {"type": "integer", "minimum": 1},
+        "content_sha256": {"$ref": "#/$defs/sha256"},
+        "lifecycle": {"enum": ["proposed", "active", "rejected", "stale", "superseded", "retired"]},
+        "source_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "aliases": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "payload": {"type": "object", "propertyNames": {"not": {"pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"}}}
+      }
+    },
+    "node": {
+      "oneOf": [
+        {"$ref": "#/$defs/capability_node"},
+        {"$ref": "#/$defs/source_node"},
+        {"$ref": "#/$defs/evidence_node"},
+        {"$ref": "#/$defs/claim_node"},
+        {"$ref": "#/$defs/obligation_node"},
+        {"$ref": "#/$defs/authority_node"},
+        {"$ref": "#/$defs/risk_node"},
+        {"$ref": "#/$defs/surface_node"},
+        {"$ref": "#/$defs/scenario_node"},
+        {"$ref": "#/$defs/validation_node"},
+        {"$ref": "#/$defs/consumer_node"},
+        {"$ref": "#/$defs/anchor_node"},
+        {"$ref": "#/$defs/decision_node"},
+        {"$ref": "#/$defs/non_goal_node"},
+        {"$ref": "#/$defs/uncertainty_node"}
+      ],
+      "allOf": [
+        {
+          "if": {"properties": {"node_type": {"const": "Obligation"}}, "required": ["node_type"]},
+          "then": {"properties": {"payload": {"required": ["evidence_required", "requires_named_realization"], "properties": {"evidence_required": {"type": "boolean"}, "requires_named_realization": {"type": "boolean"}}}}}
+        }
+      ]
+    },
+    "node_variant": {
+      "type": "object",
+      "required": ["node_type", "payload"],
+      "properties": {
+        "node_type": {"type": "string"},
+        "payload": {"type": "object"}
+      }
+    },
+    "capability_node": {
+      "allOf": [
+        {"$ref": "#/$defs/common_node"},
+        {"properties": {"id": {"pattern": "^cap-"}, "node_type": {"const": "Capability"}, "payload": {"type": "object", "required": ["outcome", "risk_record_ids", "non_goal_ids"], "properties": {"outcome": {"type": "string", "minLength": 1}, "risk_record_ids": {"type": "array", "items": {"pattern": "^risk-"}}, "non_goal_ids": {"type": "array", "items": {"pattern": "^ng-"}}}}}}
+      ]
+    },
+    "source_node": {
+      "allOf": [
+        {"$ref": "#/$defs/common_node"},
+        {
+          "properties": {
+            "id": {"pattern": "^src-"},
+            "node_type": {"const": "SourceRecord"},
+            "payload": {
+              "type": "object",
+              "required": ["source_class", "uri_or_ref", "locator", "portfolio_id", "source_card_id", "source_card_content_sha256", "operation_receipt_ids", "currentness", "applicability", "authority_fitness", "limitations"],
+              "properties": {
+                "source_class": {"enum": ["canonical_repo", "user_instruction", "decision", "official", "standard", "implementation_test", "issue_failure", "comparator_adjacent", "research_failure"]},
+                "uri_or_ref": {"type": "string", "minLength": 1},
+                "locator": {"type": "string", "minLength": 1},
+                "portfolio_id": {"type": ["string", "null"]},
+                "source_card_id": {"type": ["string", "null"]},
+                "source_card_content_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+                "operation_receipt_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+                "currentness": {"enum": ["current", "stale", "unknown", "not_applicable"]},
+                "applicability": {"enum": ["applicable", "conditional", "not_applicable", "unresolved"]},
+                "authority_fitness": {"enum": ["fit", "limited", "not_fit", "unresolved"]},
+                "limitations": {"type": "array", "items": {"type": "string"}}
+              },
+              "allOf": [
+                {
+                  "if": {"properties": {"source_class": {"enum": ["official", "standard", "implementation_test", "issue_failure", "comparator_adjacent", "research_failure"]}}, "required": ["source_class"]},
+                  "then": {"properties": {"portfolio_id": {"type": "string", "minLength": 1}, "source_card_id": {"type": "string", "minLength": 1}, "source_card_content_sha256": {"$ref": "#/$defs/sha256"}, "operation_receipt_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "evidence_node": {
+      "allOf": [
+        {"$ref": "#/$defs/common_node"},
+        {"properties": {"id": {"pattern": "^eva-"}, "node_type": {"const": "EvidenceAssertion"}, "payload": {"type": "object", "required": ["statement", "source_record_id", "relation", "entailment_strength", "authority_fitness", "applicability", "limitations"], "properties": {"statement": {"type": "string", "minLength": 1}, "source_record_id": {"pattern": "^src-"}, "relation": {"enum": ["supports", "contradicts", "limits", "applicability"]}, "entailment_strength": {"enum": ["direct", "strong_inference", "weak_inference", "none"]}, "authority_fitness": {"enum": ["fit", "limited", "not_fit", "unresolved"]}, "applicability": {"type": "string", "minLength": 1}, "limitations": {"type": "array", "items": {"type": "string"}}}}}}
+      ]
+    },
+    "claim_node": {
+      "allOf": [
+        {"$ref": "#/$defs/common_node"},
+        {"properties": {"id": {"pattern": "^clm-"}, "node_type": {"const": "ClaimAtom"}, "payload": {"type": "object", "required": ["statement", "origin_class", "claim_kind", "applicability_predicate", "authority_request", "uncertainty_refs"], "properties": {"statement": {"type": "string", "minLength": 1}, "origin_class": {"enum": ["intent", "repo_fact", "system_policy", "research", "inference", "seam", "control", "decision"]}, "claim_kind": {"enum": ["normative", "descriptive", "conditional", "verification"]}, "applicability_predicate": {"type": "string", "minLength": 1}, "authority_request": {"type": "string", "minLength": 1}, "uncertainty_refs": {"type": "array", "items": {"pattern": "^unc-"}}}}}}
+      ]
+    },
+    "obligation_node": {
+      "allOf": [
+        {"$ref": "#/$defs/common_node"},
+        {"properties": {"id": {"pattern": "^obl-"}, "node_type": {"const": "Obligation"}, "payload": {"type": "object", "required": ["subject_ids", "predicate_key", "object_scope", "modality", "applicability", "risk_refs", "authority_refs", "builder_discretion_boundary", "disposition", "residual_uncertainty_refs"], "properties": {"subject_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "predicate_key": {"type": "string", "minLength": 1}, "object_scope": {"type": "string", "minLength": 1}, "modality": {"enum": ["must", "must_not", "should", "conditional"]}, "applicability": {"enum": ["applicable", "conditional", "not_applicable", "unresolved"]}, "risk_refs": {"type": "array", "minItems": 1, "items": {"pattern": "^risk-"}}, "authority_refs": {"type": "array", "items": {"pattern": "^auth-"}}, "builder_discretion_boundary": {"type": "string", "minLength": 1}, "disposition": {"enum": ["open", "specified", "not_applicable", "explicitly_excluded", "residual_risk_accepted", "blocked", "superseded"]}, "residual_uncertainty_refs": {"type": "array", "items": {"pattern": "^unc-"}}}}}}
+      ]
+    },
+    "authority_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^auth-"}, "node_type": {"const": "AuthorityRecord"}, "payload": {"type": "object", "required": ["kind", "scope", "may_impose_mandatory_semantics"], "properties": {"kind": {"type": "string", "minLength": 1}, "scope": {"type": "string", "minLength": 1}, "may_impose_mandatory_semantics": {"type": "boolean"}}}}}]},
+    "risk_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^risk-"}, "node_type": {"const": "RiskRecord"}, "payload": {"type": "object", "required": ["severity", "dimensions", "assurance_depth"], "properties": {"severity": {"enum": ["critical", "major", "moderate", "minor"]}, "dimensions": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "assurance_depth": {"enum": ["R1", "R2", "R3"]}}}}}]},
+    "surface_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^surf-"}, "node_type": {"const": "SurfaceInstance"}, "payload": {"type": "object", "required": ["ledger_instance_id", "instance_role"], "properties": {"ledger_instance_id": {"type": "string", "minLength": 1}, "instance_role": {"enum": ["named_instance", "parameterized_instance_set"]}}}}}]},
+    "scenario_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^scn-"}, "node_type": {"const": "NamedScenario"}, "payload": {"type": "object", "additionalProperties": false, "required": ["scenario_class", "origin", "frozen_before_plan_comparison", "control_registry_ids", "instance_axes", "initial_state_ids", "steps", "transition_rules", "operational_conditions", "authority_permission", "failure_cases", "consumer_truth", "observability", "environment_tuple_refs", "obligation_ids", "oracle_refs", "builder_discretion"], "properties": {"scenario_class": {"enum": ["user_journey", "control_contract", "system_flow", "migration_recovery"]}, "origin": {"enum": ["common_visible_control", "obligation_generated", "discovery_generated"]}, "frozen_before_plan_comparison": {"const": true}, "control_registry_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "instance_axes": {"type": "object", "additionalProperties": false, "required": ["actor", "journey", "entrypoint", "surface", "control", "command", "state", "event_type", "data_store"], "properties": {"actor": {"$ref": "#/$defs/scenario_axis"}, "journey": {"$ref": "#/$defs/scenario_axis"}, "entrypoint": {"$ref": "#/$defs/scenario_axis"}, "surface": {"$ref": "#/$defs/scenario_axis"}, "control": {"$ref": "#/$defs/scenario_axis"}, "command": {"$ref": "#/$defs/scenario_axis"}, "state": {"$ref": "#/$defs/scenario_axis"}, "event_type": {"$ref": "#/$defs/scenario_axis"}, "data_store": {"$ref": "#/$defs/scenario_axis"}}}, "initial_state_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/scenario_step"}}, "transition_rules": {"type": "object", "additionalProperties": false, "required": ["allowed", "forbidden"], "properties": {"allowed": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "forbidden": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}}, "operational_conditions": {"type": "object", "additionalProperties": false, "required": ["concurrency", "retry", "restart", "cancellation"], "properties": {"concurrency": {"type": "string", "minLength": 1}, "retry": {"type": "string", "minLength": 1}, "restart": {"type": "string", "minLength": 1}, "cancellation": {"type": "string", "minLength": 1}}}, "authority_permission": {"type": "object", "additionalProperties": false, "required": ["authority_refs", "permission_predicates", "denial_behavior"], "properties": {"authority_refs": {"type": "array", "minItems": 1, "items": {"pattern": "^auth-"}}, "permission_predicates": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "denial_behavior": {"type": "string", "minLength": 1}}}, "failure_cases": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["failure_id", "trigger", "recovery_step_ids", "terminal_state_id", "preserved_invariants", "restart_behavior"], "properties": {"failure_id": {"type": "string", "minLength": 1}, "trigger": {"type": "string", "minLength": 1}, "recovery_step_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "terminal_state_id": {"type": "string", "minLength": 1}, "preserved_invariants": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "restart_behavior": {"type": "string", "minLength": 1}}}}, "consumer_truth": {"type": "object", "additionalProperties": false, "required": ["authoritative_state_rule", "unknown_partial_stale_rule", "forbidden_representation"], "properties": {"authoritative_state_rule": {"type": "string", "minLength": 1}, "unknown_partial_stale_rule": {"type": "string", "minLength": 1}, "forbidden_representation": {"type": "string", "minLength": 1}}}, "observability": {"type": "object", "additionalProperties": false, "required": ["event_ids", "currentness_rule", "receipt_or_signal", "failure_visibility"], "properties": {"event_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "currentness_rule": {"type": "string", "minLength": 1}, "receipt_or_signal": {"type": "string", "minLength": 1}, "failure_visibility": {"type": "string", "minLength": 1}}}, "environment_tuple_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "obligation_ids": {"type": "array", "minItems": 1, "items": {"pattern": "^obl-"}}, "oracle_refs": {"type": "array", "minItems": 1, "items": {"pattern": "^val-"}}, "builder_discretion": {"type": "object", "additionalProperties": false, "required": ["fixed_semantics", "delegated_details", "forbidden_builder_choices"], "properties": {"fixed_semantics": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "delegated_details": {"type": "array", "items": {"type": "string", "minLength": 1}}, "forbidden_builder_choices": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}}}}}}]},
+    "scenario_axis": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "scenario_step": {"type": "object", "additionalProperties": false, "required": ["step_id", "ordinal", "actor_id", "command_id", "from_state_ids", "to_state_ids", "read_data_ids", "write_data_ids", "emitted_event_ids", "permission_outcome", "expected_observation"], "properties": {"step_id": {"type": "string", "minLength": 1}, "ordinal": {"type": "integer", "minimum": 1}, "actor_id": {"type": "string", "minLength": 1}, "command_id": {"type": "string", "minLength": 1}, "from_state_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "to_state_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "read_data_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "write_data_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "emitted_event_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "permission_outcome": {"enum": ["allowed", "denied", "conditional"]}, "expected_observation": {"type": "string", "minLength": 1}}},
+    "validation_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^val-"}, "node_type": {"const": "ValidationContract"}, "payload": {"type": "object", "required": ["kind", "verification_stage", "oracle", "evidence_status"], "properties": {"kind": {"enum": ["plan_static", "schema", "repo_fact_probe", "research_probe", "scenario_acceptance", "future_build_test", "future_runtime_test"]}, "verification_stage": {"enum": ["plan", "build", "runtime"]}, "oracle": {"type": "string", "minLength": 1}, "evidence_status": {"enum": ["specified", "executed_pass", "executed_fail", "future_only", "blocked"]}}}}}]},
+    "consumer_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^con-"}, "node_type": {"const": "ConsumerInstance"}, "payload": {"type": "object", "required": ["consumer_kind", "owner_anchor_id", "consumer_anchor_id"], "properties": {"consumer_kind": {"type": "string", "minLength": 1}, "owner_anchor_id": {"pattern": "^anchor-"}, "consumer_anchor_id": {"pattern": "^anchor-"}}}}}]},
+    "anchor_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^anchor-"}, "node_type": {"const": "PlanAnchor"}, "payload": {"type": "object", "required": ["document_ref", "node_ref", "content_sha256"], "properties": {"document_ref": {"type": "string", "minLength": 1}, "node_ref": {"type": "string", "minLength": 1}, "content_sha256": {"$ref": "#/$defs/sha256"}}}}}]},
+    "decision_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^dec-"}, "node_type": {"const": "Decision"}, "payload": {"type": "object", "required": ["decision_kind", "authority_ref", "rationale", "scope", "reopen_condition"], "properties": {"decision_kind": {"type": "string", "minLength": 1}, "authority_ref": {"pattern": "^auth-"}, "rationale": {"type": "string", "minLength": 1}, "scope": {"type": "string", "minLength": 1}, "reopen_condition": {"type": "string", "minLength": 1}}}}}]},
+    "non_goal_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^ng-"}, "node_type": {"const": "NonGoal"}, "payload": {"type": "object", "required": ["statement", "scope", "authority_ref"], "properties": {"statement": {"type": "string", "minLength": 1}, "scope": {"type": "string", "minLength": 1}, "authority_ref": {"pattern": "^auth-"}}}}}]},
+    "uncertainty_node": {"allOf": [{"$ref": "#/$defs/common_node"}, {"properties": {"id": {"pattern": "^unc-"}, "node_type": {"const": "Uncertainty"}, "payload": {"type": "object", "required": ["statement", "severity", "blocking", "owner", "resolution_route", "evidence_needed"], "properties": {"statement": {"type": "string", "minLength": 1}, "severity": {"enum": ["critical", "major", "moderate", "minor"]}, "blocking": {"type": "boolean"}, "owner": {"type": "string", "minLength": 1}, "resolution_route": {"type": "string", "minLength": 1}, "evidence_needed": {"type": "string", "minLength": 1}}}}}]},
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "edge_type", "from_id", "to_id", "state", "scope", "authority_refs", "evidence_refs", "currentness"],
+      "properties": {
+        "edge_id": {"type": "string", "pattern": "^edge-[a-z0-9][a-z0-9._:-]+$"},
+        "edge_type": {
+          "enum": [
+            "supports_claim", "contradicts_claim", "limits_claim", "supports_applicability", "refutes_applicability", "supports_authority_scope",
+            "supports_obligation", "supports_common_intent", "grounded_novel", "conditional_if_applicable", "verification_child", "contradicts_obligation", "refines_claim", "duplicates_claim", "supersedes_claim", "rejected_by_decision",
+            "depends_on", "refines_obligation", "conflicts_with", "supersedes", "derived_from", "authorized_by", "requires_decision", "bounded_by_non_goal", "excluded_by_decision", "residual_risk_accepted_by", "creates_risk", "mitigates_risk", "has_uncertainty",
+            "applies_to_surface", "applies_to_actor", "realized_by_scenario", "exercises_state", "invokes_command", "observes_event", "reads_data", "writes_data", "requires_permission", "covers_failure_mode", "recovers_via", "validated_by",
+            "owned_by", "requires_propagation_to", "materialized_at", "consumed_by", "closed_by", "reopened_by", "previously_closed_as", "superseded_by"
+          ]
+        },
+        "from_id": {"$ref": "#/$defs/node_id"},
+        "to_id": {"$ref": "#/$defs/node_id"},
+        "state": {"enum": ["proposed", "confirmed", "rejected", "stale", "superseded"]},
+        "scope": {"type": "string", "minLength": 1},
+        "authority_refs": {"type": "array", "items": {"$ref": "#/$defs/node_id"}},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/node_id"}},
+        "currentness": {"enum": ["current", "stale", "unknown", "not_applicable"]}
+      }
+    },
+    "stage_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "stage_id", "input_ids", "output_ids", "split_map", "merge_map", "carry_forward_ids", "dispositioned_ids", "unaccounted_input_ids", "input_sha256", "output_sha256"],
+      "properties": {
+        "receipt_id": {"type": "string", "minLength": 1},
+        "stage_id": {"type": "string", "minLength": 1},
+        "input_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "output_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "split_map": {"type": "object"},
+        "merge_map": {"type": "object"},
+        "carry_forward_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "dispositioned_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "unaccounted_input_ids": {"type": "array", "maxItems": 0},
+        "input_sha256": {"$ref": "#/$defs/sha256"},
+        "output_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "loss": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["loss_id", "obligation_id", "coverage_facet", "first_failed_stage", "loss_code", "severity", "affected_instance_ids", "downstream_consequences", "repair_route", "status", "measurement_only"],
+      "properties": {
+        "loss_id": {"type": "string", "pattern": "^loss-[a-z0-9][a-z0-9._:-]+$"},
+        "obligation_id": {"type": "string", "pattern": "^obl-"},
+        "coverage_facet": {"enum": ["semantic", "evidence", "applicability", "authority", "instance_realization", "propagation", "validation", "retrieval_diagnostic"]},
+        "first_failed_stage": {"enum": ["structural_mapping", "surface_discovery", "discovery", "failure_evidence_recovery", "adjudication", "named_realization", "consumer_propagation", "validation_controls", "measurement_only"]},
+        "loss_code": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["critical", "major", "moderate", "minor"]},
+        "affected_instance_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "downstream_consequences": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "repair_route": {"type": "string", "minLength": 1},
+        "status": {"enum": ["open", "repaired", "accepted_residual", "not_applicable", "blocked"]},
+        "measurement_only": {"type": "boolean"}
+      }
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assessment_id", "obligation_id", "semantic_state", "evidence_state", "applicability_state", "authority_state", "confidence", "instance_realization", "consumer_propagation", "validation_contract", "uncertainty_state", "disposition", "claim_basis_ids", "evidence_basis_ids", "authority_basis_ids", "decision_basis_ids", "risk_basis_ids", "scenario_basis_ids", "consumer_basis_ids", "validation_basis_ids", "plan_anchor_ids", "reopen_conditions", "closure_fingerprint_sha256", "controller_derived"],
+      "properties": {
+        "assessment_id": {"type": "string", "pattern": "^close-"},
+        "obligation_id": {"type": "string", "pattern": "^obl-"},
+        "semantic_state": {"enum": ["absent", "partial", "complete", "contradicted", "unresolved", "not_applicable"]},
+        "evidence_state": {"enum": ["not_required_for_claim_kind", "unsupported", "insufficient", "adequate", "conflicted", "stale", "unavailable"]},
+        "applicability_state": {"enum": ["applicable", "conditionally_applicable", "not_applicable", "unresolved"]},
+        "authority_state": {"enum": ["authorized", "bounded_inference", "inspiration_only", "overreach", "unresolved"]},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "instance_realization": {"enum": ["none", "pattern_only", "partial", "complete"]},
+        "consumer_propagation": {"enum": ["none", "partial", "complete", "not_applicable"]},
+        "validation_contract": {"enum": ["missing", "specified", "plan_checked_pass", "plan_checked_fail", "future_only", "blocked"]},
+        "uncertainty_state": {"enum": ["none", "nonblocking_named", "blocking", "accepted_residual_risk"]},
+        "disposition": {"enum": ["open", "specified", "not_applicable", "explicitly_excluded", "residual_risk_accepted", "blocked", "superseded"]},
+        "claim_basis_ids": {"type": "array", "items": {"pattern": "^clm-"}},
+        "evidence_basis_ids": {"type": "array", "items": {"pattern": "^eva-"}},
+        "authority_basis_ids": {"type": "array", "items": {"pattern": "^auth-"}},
+        "decision_basis_ids": {"type": "array", "items": {"pattern": "^dec-"}},
+        "risk_basis_ids": {"type": "array", "items": {"pattern": "^risk-"}},
+        "scenario_basis_ids": {"type": "array", "items": {"pattern": "^scn-"}},
+        "consumer_basis_ids": {"type": "array", "items": {"pattern": "^con-"}},
+        "validation_basis_ids": {"type": "array", "items": {"pattern": "^val-"}},
+        "plan_anchor_ids": {"type": "array", "items": {"pattern": "^anchor-"}},
+        "reopen_conditions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "closure_fingerprint_sha256": {"$ref": "#/$defs/sha256"},
+        "controller_derived": {"const": true}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"const": "specified"}}},
+          "then": {"properties": {
+            "semantic_state": {"const": "complete"},
+            "evidence_state": {"enum": ["adequate", "not_required_for_claim_kind"]},
+            "applicability_state": {"enum": ["applicable", "conditionally_applicable"]},
+            "authority_state": {"enum": ["authorized", "bounded_inference"]},
+            "instance_realization": {"enum": ["complete", "none"]},
+            "consumer_propagation": {"enum": ["complete", "not_applicable"]},
+            "validation_contract": {"enum": ["specified", "plan_checked_pass"]},
+            "uncertainty_state": {"enum": ["none", "nonblocking_named"]}
+          }}
+        },
+        {
+          "if": {"properties": {"disposition": {"const": "not_applicable"}}},
+          "then": {"properties": {"applicability_state": {"const": "not_applicable"}}}
+        },
+        {
+          "if": {"properties": {"disposition": {"enum": ["explicitly_excluded", "residual_risk_accepted", "superseded"]}}},
+          "then": {"properties": {"authority_basis_ids": {"minItems": 1}, "decision_basis_ids": {"minItems": 1}, "reopen_conditions": {"minItems": 1}}}
+        }
+      ]
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unique_node_ids", "unique_edge_ids", "dangling_refs", "active_claims_without_disposition_edges", "dependency_cycles", "exact_source_edges_in_closure", "workers_self_certified", "terminal"],
+      "properties": {
+        "unique_node_ids": {"type": "boolean"},
+        "unique_edge_ids": {"type": "boolean"},
+        "dangling_refs": {"type": "integer", "minimum": 0},
+        "active_claims_without_disposition_edges": {"type": "integer", "minimum": 0},
+        "dependency_cycles": {"type": "integer", "minimum": 0},
+        "exact_source_edges_in_closure": {"const": 0},
+        "workers_self_certified": {"const": false},
+        "terminal": {"enum": ["PASS", "REVISE", "BLOCKED", "INVALID"]}
+      }
+    }
+  }
+}

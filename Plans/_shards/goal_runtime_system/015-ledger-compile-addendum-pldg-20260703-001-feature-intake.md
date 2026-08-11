@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L2399-L3119
+Source lines: L3528-L4300
 
-Source SHA256: `93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785`
+Source SHA256: `19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3`
 
 ---
 
@@ -665,11 +665,63 @@ gui_classification_reason: This unit defines backend Goal Runtime event payload 
 depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
 unblocks: []
 acceptance_criteria:
-  - The common payload envelope includes event_name, schema_version, occurred_at_utc, project/thread/goal identity, revisions, actor/execution role, requested/effective provider/model/account refs, correlation/causation/idempotency, evidence/artifact refs, approval refs, and block refs.
-  - All 15 goal events and all 6 goal_run events list event-specific payload minima.
-  - LoopBreakerRegistry includes the required loop families with fingerprint, max count, observation window, terminal action, and user-facing reason.
-  - AgentControlEnvelope, CertificationReceipt, ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure define stable identities and required proof/authority fields.
-  - Goal Runtime does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this payload closure.
+  - >-
+    Exactly 21 current local v2 row schemas exist at the approved Section 6 paths
+    and `$id` values; each is a self-contained Draft 2020-12 root with only local
+    `#/$defs/...` references, exact row const discriminators, closed root/common
+    objects and event payload, and no external schema dependency.
+  - >-
+    Exactly one canonical common-definition source exists in this owner document,
+    and the JCS value of every shared common `$defs` member equals its local copy in
+    all 21 approved roots.
+  - >-
+    Exactly 21 registry rows point one-to-one to those roots with family revision
+    `2.0.0`, payload root pointer `#`, event payload pointer
+    `#/$defs/event_payload`, the approved semantic identities and replay/redaction
+    settings, and the sole admitted legacy alias `GoalRunStarted` only for
+    `goal_run.started`; `BuildStarted` and every other alias are rejected.
+  - >-
+    New v1 writes fail; valid `pm.goal_runtime_events.schema.v1` input remains
+    reader-only, enters only the registered legacy normalizer and
+    `projector_replay_only`, and cannot emit, mutate, schedule, approve, charge,
+    write a receipt, or certify.
+  - >-
+    Every common and row field has its exact type, presence, absent-versus-null,
+    extra-field, closed-enum, conditional-branch, identity-join, revision/CAS,
+    lifecycle-state, transition, completion/certification authority, permission,
+    recovery, viewer, and redaction rule encoded in the row schema where
+    schema-decidable and named in owner/consumer oracle prose.
+  - >-
+    All 21 obligations `EA-UND-0001-GOAL..EA-UND-0021-GOAL` have one positive and
+    one no-append negative oracle, for exactly 42 row oracles, covering every legal
+    lifecycle edge and every forbidden source, branch, or edge.
+  - >-
+    The 15 common Section 10 outcomes and deterministic replay are carried as
+    owner and consumer acceptance requirements, including duplicate-same,
+    duplicate-conflict, stale revision, dedupe unavailable, replay-only, raw
+    secret, outer/inner conflict, unknown schema or enum, unsupported reader,
+    illegal transition, completion/certification authority, recovery/viewer,
+    permission, verifier-unavailable, and same-class-blocker behavior.
+  - >-
+    Schema-decidable clauses may be checked read-only, but transition, side-effect,
+    replay, authority, currentness, provider/tool, and persistence behavior remains
+    `NON_EXECUTABLE_UNDER_THIS_TRANSACTION` unless an unchanged pre-existing check
+    demonstrably covers it; no executable oracle artifact, runtime result,
+    certification, gate, or buildability proof is claimed.
+  - >-
+    All 21 Goal and GoalRun registry rows carry the exact approved Storage-owned
+    closed structured `retention_policy_ref` with exactly `registry_schema_id`,
+    `policy_id`, and `policy_version`, resolving to exactly one current Storage
+    catalog record. A missing, unresolved, multiply resolved, stale-version, or
+    unknown ref rejects; no event-name or prefix inference, default, or fallback
+    supplies an assignment. Exact row-specific assignments remain authoritative
+    in the live registry and Storage owner surfaces and are not duplicated or
+    re-owned by Goal Runtime.
+  - >-
+    Goal Runtime owner propagation and the named Contracts, registry, row-schema,
+    Storage, and Automated Testing consumer propagation are complete before any
+    generator or gate phase begins; existing checks may then run read-only and must
+    report exact coverage and failures without widening mutation scope.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness

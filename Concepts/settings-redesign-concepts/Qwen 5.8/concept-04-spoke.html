@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en" data-theme="glass-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spoke — Settings by Intent — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<style>
+.sp-home, .sp-work { flex: 1; min-height: 0; overflow-y: auto; }
+.sp-orbit { animation: spOrbit .4s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes spOrbit { from { opacity: 0; transform: scale(.985) translateY(8px); } to { opacity: 1; transform: none; } }
+.sp-slide-r { animation: spSlideR .32s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes spSlideR { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+
+.sp-wrap { max-width: 1160px; margin: 0 auto; padding: 26px 28px 80px; width: 100%; }
+.sp-hub { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 26px; }
+.sp-hub-ring { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--surface); box-shadow: var(--shadow); margin-bottom: 12px; }
+.sp-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+.sp-hub h1 { margin: 4px 0 6px; font-size: 27px; color: var(--text-1); font-weight: 750; letter-spacing: -.01em; }
+.sp-hub p { margin: 0 0 16px; color: var(--text-2); font-size: 13px; max-width: 560px; }
+.sp-launcher { position: relative; width: min(620px, 100%); }
+.sp-launcher-field { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 12px 18px; box-shadow: var(--shadow); }
+.sp-launcher-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow); }
+.sp-launcher-field input { flex: 1; background: none; border: none; outline: none; color: var(--text-1); font-size: 14.5px; min-width: 0; }
+.sp-launcher-field .pm-ico { color: var(--accent); }
+.sp-launcher-drop { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 60; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-l); box-shadow: var(--shadow); max-height: 360px; overflow-y: auto; padding: 8px; text-align: left; }
+.sp-launcher-drop[hidden] { display: none; }
+.sp-ld-group { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 7px 10px 3px; }
+.sp-ld-item { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: none; background: none; padding: 8px 10px; border-radius: var(--radius-m); cursor: pointer; color: var(--text-1); }
+.sp-ld-item:hover, .sp-ld-item.active { background: var(--accent-soft); }
+.sp-ld-item .path { color: var(--text-3); font-size: 11px; }
+
+.sp-wings { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 16px; }
+.sp-wing { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 16px; box-shadow: var(--shadow); }
+.sp-wing-cap { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; color: var(--text-1); font-weight: 700; font-size: 14px; }
+.sp-wing-cap .pm-ico { color: var(--accent); }
+.sp-wing-cap .why { display: block; font-weight: 400; font-size: 11.5px; color: var(--text-3); }
+.sp-spoke { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius-m); padding: 10px; cursor: pointer; }
+.sp-spoke { transition: background-color .16s, border-color .16s; }
+.sp-spoke:hover { background: var(--surface-2); border-color: var(--border); }
+.sp-spoke-ico { transition: color .16s, border-color .16s; }
+.sp-spoke-ico { width: 30px; height: 30px; flex: none; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--text-2); background: var(--surface-3); }
+.sp-spoke:hover .sp-spoke-ico { color: var(--accent); border-color: var(--accent); }
+.sp-spoke .t { color: var(--text-1); font-weight: 650; font-size: 13px; }
+.sp-spoke .p { color: var(--text-3); font-size: 11.5px; }
+.sp-spoke .pm-ico.chev { margin-left: auto; color: var(--text-3); flex: none; }
+.sp-az { margin-top: 18px; text-align: center; }
+.sp-az-list { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.sp-az-list button { border: 1px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 12px; }
+.sp-az-list button:hover { color: var(--accent); border-color: var(--accent); }
+
+.sp-board { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.sp-notice { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 12px 14px; box-shadow: var(--shadow); }
+.sp-notice .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sp-notice h4 { margin: 0 0 3px; font-size: 13px; color: var(--text-1); font-weight: 650; }
+.sp-notice p { margin: 0 0 9px; font-size: 12px; color: var(--text-2); }
+.sp-notice-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+
+.sp-bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--bg-shell); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+[data-chrome-blur="on"] .sp-bar { backdrop-filter: var(--chrome-blur); }
+.sp-bar .title { font-weight: 700; color: var(--text-1); font-size: 14px; white-space: nowrap; }
+.sp-bar .pm-spacer { flex: 1; }
+.sp-bar .sp-search-mini { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 12px; flex: 0 1 250px; min-width: 150px; }
+.sp-bar .sp-search-mini input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12px; }
+.sp-disc-seg { flex: none; }
+
+.sp-body { display: grid; grid-template-columns: minmax(0, 1fr) 208px; gap: 0; align-items: start; }
+.pm-app[data-wtier="squeezed"] .sp-body { grid-template-columns: 1fr; }
+.sp-doc { padding: 22px 26px 90px; max-width: 820px; min-width: 0; }
+.sp-sub { margin-bottom: 34px; scroll-margin-top: 64px; }
+.sp-sub h2 { font-size: 16.5px; color: var(--text-1); margin: 0 0 3px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.sp-sub .lead { color: var(--text-3); font-size: 12px; margin: 0 0 12px; }
+
+.sp-rail { position: sticky; top: 56px; padding: 18px 14px; display: flex; flex-direction: column; gap: 4px; }
+.pm-app[data-wtier="squeezed"] .sp-rail { position: static; flex-direction: row; flex-wrap: wrap; padding: 8px 14px; }
+.sp-tick { display: flex; align-items: center; gap: 8px; border: none; background: none; color: var(--text-3); font-size: 11.5px; padding: 5px 8px; cursor: pointer; border-radius: 999px; text-align: left; transition: background-color .18s, color .18s; }
+.sp-tick .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); flex: none; transition: background-color .18s; }
+.sp-tick:hover { color: var(--text-1); }
+.sp-tick.active { color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+.sp-tick.active .dot { background: var(--accent); }
+
+.sp-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 11px 14px; margin-bottom: 8px; box-shadow: var(--shadow); }
+.sp-row-top { display: flex; align-items: flex-start; gap: 12px; }
+.sp-row-top > div:first-child { flex: 1; min-width: 0; }
+.sp-row-label { color: var(--text-1); font-weight: 650; font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.sp-row-desc { color: var(--text-3); font-size: 11.5px; margin-top: 2px; }
+.sp-row-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.sp-row-ctl { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
+.pm-app[data-wtier="squeezed"] .sp-row-ctl { align-items: flex-start; }
+.sp-row-ctl .line { display: flex; align-items: center; gap: 7px; }
+.sp-row-detail { display: none; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-2); }
+.sp-row.open .sp-row-detail { display: block; animation: pmReveal .22s ease both; }
+.sp-row[data-hidden="true"] { display: none; }
+
+.sp-split { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 16px; align-items: start; }
+.pm-app[data-wtier="squeezed"] .sp-split { grid-template-columns: 1fr; }
+.sp-inv { display: flex; flex-direction: column; gap: 6px; }
+.sp-inv-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 10px 0 2px; }
+.sp-inv-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-m); padding: 9px 11px; cursor: pointer; color: var(--text-1); font-size: 12.5px; }
+.sp-inv-item:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.sp-inv-item.sel { border-color: var(--accent); background: var(--accent-soft); }
+.sp-inv-item .sub { display: block; color: var(--text-3); font-size: 11px; }
+.sp-inspector { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); box-shadow: var(--shadow); padding: 18px; min-height: 300px; }
+.sp-inspector h3 { margin: 0 0 4px; font-size: 16px; color: var(--text-1); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.sp-inspector .sub { color: var(--text-2); font-size: 12.5px; }
+.sp-kv { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 5px 14px; font-size: 12.5px; margin: 12px 0; }
+.sp-kv dt { color: var(--text-3); }
+.sp-kv dd { margin: 0; color: var(--text-1); }
+.sp-ins-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+.sp-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
+.sp-model-mini { display: flex; align-items: center; gap: 9px; border: 1px solid var(--border); border-radius: var(--radius-m); padding: 8px 11px; margin-bottom: 6px; flex-wrap: wrap; background: var(--surface-3); }
+.sp-model-mini .name { font-weight: 650; color: var(--text-1); }
+.sp-model-mini .meta { color: var(--text-3); font-size: 11px; }
+.sp-fav { background: none; border: none; color: var(--text-3); cursor: pointer; padding: 2px; display: inline-flex; }
+.sp-fav.on { color: var(--warn); }
+.sp-role { display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1fr); gap: 8px; font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.pm-app[data-wtier="squeezed"] .sp-role { grid-template-columns: 1fr; }
+.sp-role .req { color: var(--text-3); }
+.sp-role .eff { color: var(--text-1); font-weight: 650; }
+.sp-media-hist { font-size: 12px; color: var(--text-2); padding: 5px 0; border-bottom: 1px solid var(--border); }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="spoke">
+<div id="app"></div>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-state.js"></script>
+<script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+  var MODEL = "Qwen 5.8";
+  var shell = window.PMShell.mount({ conceptName: "Spoke concept", model: MODEL });
+  var content = shell.content;
+  var INDEX = window.PMCore.buildSearchIndex();
+  var IMPLEMENTED = { providers: true, personas: true, media: true };
+  var MANAGER_HOME = { memory: "Atlas", mcp: "Atlas", crew: "Deck", terminal: "Deck", "context-sources": "Ledger", skills: "Ledger", lsp: "Deck" };
+  var WINGS = [
+    { id: "connect", icon: "plug", title: "Connect & provide", why: "Routes, models, and extensions that do the work.", dests: ["models", "extensions", "media"] },
+    { id: "shape", icon: "wand", title: "Shape assistance", why: "How Puppet Master looks, feels, and remembers.", dests: ["general", "appearance", "context"] },
+    { id: "guard", icon: "shield", title: "Guard & permit", why: "What is allowed, protected, and diagnosable.", dests: ["safety", "system"] },
+    { id: "automate", icon: "target", title: "Plan & automate", why: "Goals, Crews, code, and verification policy.", dests: ["planning", "code"] }
+  ];
+  var spy = null;
+  var selected = {};
+
+  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function route() {
+    var v = window.PMState.state.view;
+    if (spy) { spy.destroy(); spy = null; }
+    if (v.name === "home") renderHome(); else renderWork(v);
+  }
+
+  function renderHome() {
+    var st = window.PMState.state;
+    var html = '<div class="sp-home sp-orbit" id="sp-home"><div class="sp-wrap">' +
+      '<div class="sp-hub"><div class="sp-hub-ring">' + window.PMIcons.get("compass", 24) + "</div>" +
+      '<div class="sp-kicker">Settings · Spoke · ' + MODEL + '</div><h1>The hub knows the way</h1>' +
+      "<p>Settings grouped by what you are trying to do. Search reaches everything directly; every destination stays reachable through its wing or the A–Z index.</p>" +
+      '<div class="sp-launcher"><label class="sp-launcher-field">' + window.PMIcons.get("search", 17) +
+      '<input id="sp-q" placeholder="Search any setting, manager, provider, or model…" autocomplete="off" aria-label="Search settings"></label>' +
+      '<div class="sp-launcher-drop" id="sp-drop" hidden></div></div></div>' +
+      '<div class="sp-wings">' +
+      WINGS.map(function (w) {
+        return '<div class="sp-wing"><div class="sp-wing-cap">' + window.PMIcons.get(w.icon, 16) + "<span>" + esc(w.title) + '<span class="why">' + esc(w.why) + "</span></span></div>" +
+          w.dests.map(function (id) {
+            var d = dest(id);
+            var chip = d.status.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(d.status.summary) + "</span>"
+              : d.status.kind === "setup" ? '<span class="pm-badge pm-badge-info">' + esc(d.status.summary) + "</span>"
+              : '<span class="pm-badge pm-badge-ok">' + esc(d.status.summary) + "</span>";
+            return '<button class="sp-spoke" data-dest="' + d.id + '"><span class="sp-spoke-ico">' + window.PMIcons.get(d.icon, 14) + "</span>" +
+              '<span style="flex:1;min-width:0"><span class="t">' + esc(d.title) + '</span><br><span class="p">' + esc(d.purpose) + "</span></span>" +
+              chip + '<span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 15) + "</span></button>";
+          }).join("") +
+        "</div>";
+      }).join("") +
+      "</div>" +
+      '<div class="sp-az"><button class="pm-btn pm-btn-quiet pm-btn-sm" id="sp-az-toggle">' + window.PMIcons.get("list", 13) + " All destinations A–Z</button>" +
+      '<div class="sp-az-list" id="sp-az" hidden>' +
+      window.PMDemoData.destinations.slice().sort(function (a, b) { return a.title.localeCompare(b.title); }).map(function (d) {
+        return '<button data-dest="' + d.id + '">' + esc(d.title) + "</button>";
+      }).join("") + "</div></div>" +
+      '<div class="sp-board">' +
+      (st.notices.length ? st.notices.map(function (n) {
+        var chip = n.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(n.status) + "</span>"
+          : n.kind === "continue" ? '<span class="pm-badge pm-badge-info">' + esc(n.status) + "</span>"
+          : '<span class="pm-badge pm-badge-ok">' + esc(n.status) + "</span>";
+        return '<div class="sp-notice" data-notice="' + n.id + '"><div class="top">' + chip + "</div>" +
+          "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
+          '<div class="sp-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-na>' + esc(n.action) + "</button>" +
+          (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-ns>' + esc(n.secondary) + "</button>" : "") +
+          "</div></div>";
+      }).join("") : '<div class="sp-note-card" style="grid-column:1/-1">' + window.PMIcons.get("checkCircle", 13) + " Calm state — the board is empty. Nothing needs attention.</div>") +
+      "</div>" +
+    "</div></div>";
+    content.innerHTML = html;
+    bindHome();
+  }
+
+  function bindHome() {
+    var q = document.getElementById("sp-q");
+    var drop = document.getElementById("sp-drop");
+    var hits = [];
+    var active = -1;
+    function run() {
+      var v = q.value.trim();
+      active = -1;
+      if (!v) { drop.hidden = true; return; }
+      hits = window.PMCore.search(v, INDEX);
+      if (!hits.length) { drop.innerHTML = '<div class="sp-ld-group">No matches</div><div class="sp-note-card" style="margin:6px">Try “half-life”, “allowlist”, “Fast”, or a provider name.</div>'; drop.hidden = false; return; }
+      var groups = {};
+      hits.forEach(function (h) {
+        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : (h.kind === "provider" || h.kind === "model") ? "Providers & models" : h.kind === "persona" ? "Personas" : "Destinations";
+        (groups[g] = groups[g] || []).push(h);
+      });
+      var html = "";
+      Object.keys(groups).forEach(function (g) {
+        html += '<div class="sp-ld-group">' + g + "</div>";
+        groups[g].forEach(function (h) {
+          html += '<button class="sp-ld-item" data-hit><span style="flex:1;min-width:0">' + esc(h.title) + '<br><span class="path">' + esc(h.path.join(" › ")) + "</span></span>" + window.PMIcons.get("arrowRight", 13) + "</button>";
+        });
+      });
+      drop.innerHTML = html;
+      drop.hidden = false;
+      drop.querySelectorAll("[data-hit]").forEach(function (el, i) {
+        el.addEventListener("mousedown", function (ev) { ev.preventDefault(); go(i); });
+      });
+    }
+    function go(i) {
+      drop.hidden = true;
+      var t = Object.assign({}, hits[i].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    }
+    q.addEventListener("input", run);
+    q.addEventListener("focus", run);
+    q.addEventListener("blur", function () { setTimeout(function () { drop.hidden = true; }, 150); });
+    q.addEventListener("keydown", function (e) {
+      var items = drop.querySelectorAll("[data-hit]");
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); mark(items); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); mark(items); }
+      else if (e.key === "Enter" && hits.length) { e.preventDefault(); go(Math.max(active, 0)); }
+      else if (e.key === "Escape") drop.hidden = true;
+    });
+    function mark(items) { items.forEach(function (b, i) { b.classList.toggle("active", i === active); }); }
+
+    content.querySelectorAll("[data-dest]").forEach(function (b) {
+      b.addEventListener("click", function () { window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") }); });
+    });
+    document.getElementById("sp-az-toggle").addEventListener("click", function () {
+      var az = document.getElementById("sp-az");
+      az.hidden = !az.hidden;
+    });
+    content.querySelectorAll("[data-notice]").forEach(function (card) {
+      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
+      if (!n) return;
+      var na = card.querySelector("[data-na]");
+      var ns = card.querySelector("[data-ns]");
+      if (na) na.addEventListener("click", function () { noticeGo(n); });
+      if (ns) ns.addEventListener("click", function () { noticeGo(n, true); });
+    });
+  }
+
+  function noticeGo(n, secondary) {
+    if (secondary && n.id === "anthropic-usage") { window.PMState.receipt("Deep link to Usage", "Usage owns measured balances. Simulated navigation.", "info"); return; }
+    if (secondary && n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "anthropic" }); return; }
+    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", subcategory: "mcp" }); return; }
+    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", manager: "media" }); return; }
+    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", manager: "personas" }); return; }
+    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
+    window.PMState.receipt(n.action, "Simulated notice action.", "sim");
+  }
+
+  function settingRow(s) {
+    var meta = window.PMCore.settingMeta(s);
+    var ctl = "";
+    if (s.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + "></button>";
+    else if (s.type === "select") ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" + (s.options || []).map(function (o) { return "<option" + (o === s.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+    else if (s.type === "segment") ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '">' + esc(o) + "</button>"; }).join("") + "</span>";
+    else if (s.type === "text") ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '"' + (meta.disabled ? " disabled" : "") + ">";
+    else if (s.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-ctl>' + esc(s.actionLabel || "Open") + "</button>";
+    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
+    var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
+    return '<div class="sp-row" data-setting-id="' + s.id + '" data-hidden="' + hidden + '">' +
+      '<div class="sp-row-top"><div><div class="sp-row-label">' + esc(s.label) + "</div>" +
+      '<div class="sp-row-desc">' + esc(s.desc) + "</div>" +
+      '<div class="sp-row-badges">' + badges + "</div></div>" +
+      '<div class="sp-row-ctl"><div class="line">' + ctl +
+      (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset>Reset</button>' : "") +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-details aria-expanded="false">Why</button>' +
+      "</div><span class=\"pm-note\">" + esc(meta.sourceLabel) + " · " + esc(s.scope) + "</span></div></div>" +
+      '<div class="sp-row-detail">Source: ' + esc(meta.sourceLabel) + " · exposure " + esc(s.tier) +
+      (s.requested ? " · requested " + esc(s.requested) : "") + (s.effective ? " · effective " + esc(s.effective) : "") +
+      (s.reason ? " · " + esc(s.reason) : "") + (s.inheritedFrom ? " · inherited from " + esc(s.inheritedFrom) : "") +
+      (s.managedBy ? " · managed by " + esc(s.managedBy) : "") + "</div>" +
+    "</div>";
+  }
+
+  function managerNote(sub) {
+    var where = MANAGER_HOME[sub.manager] || "another concept";
+    return '<div class="sp-note-card">' + window.PMIcons.get("info", 13) + " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> split view is demonstrated in the " + where + " concept of this set. Spoke keeps it reachable here with its surrounding settings.</div>";
+  }
+
+  function providersSplit(v) {
+    var st = window.PMState.state;
+    if (!selected.providers) selected.providers = (v && v.provider) || "anthropic";
+    var items = [];
+    items.push({ cap: "Catalogs" });
+    st.catalogs.forEach(function (c) { items.push({ kind: "catalog", id: c.id, label: c.name, sub: c.state === "refreshing" ? "Refreshing — last-known-good active" : "Checked " + c.lastChecked }); });
+    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
+    groups.forEach(function (g) {
+      var ps = st.providers.filter(function (p) { return p.group === g; });
+      if (!ps.length) return;
+      items.push({ cap: g });
+      ps.forEach(function (p) { items.push({ kind: "provider", id: p.id, label: p.name, sub: p.stateLabel }); });
+    });
+    items.push({ cap: "Assignments" });
+    items.push({ kind: "roles", id: "roles", label: "Agent role assignments", sub: "Requested vs effective" });
+    var list = items.map(function (it) {
+      if (it.cap) return '<div class="sp-inv-cap">' + esc(it.cap) + "</div>";
+      var sel = selected.providers === it.id;
+      return '<button class="sp-inv-item' + (sel ? " sel" : "") + '" data-inv="' + it.id + '"><span style="flex:1;min-width:0">' + esc(it.label) + '<span class="sub">' + esc(it.sub) + "</span></span>" + window.PMIcons.get("chevronRight", 13) + "</button>";
+    }).join("");
+    return '<div class="sp-split"><div class="sp-inv">' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + providerInspector() + "</div></div>";
+  }
+
+  function providerInspector() {
+    var st = window.PMState.state;
+    var sel = selected.providers;
+    var cat = st.catalogs.filter(function (c) { return c.id === sel; })[0];
+    if (cat) {
+      return "<h3>" + window.PMIcons.get("refresh", 16) + " " + esc(cat.name) + (cat.state === "refreshing" ? ' <span class="pm-badge pm-badge-info">Refreshing — last-known-good active</span>' : ' <span class="pm-badge pm-badge-ok">Current</span>') + "</h3>" +
+        '<div class="sub">Continuously maintained catalog input. A fresh catalog does not prove account entitlement.</div>' +
+        '<dl class="sp-kv"><dt>Last checked</dt><dd>' + esc(cat.lastChecked) + "</dd><dt>Last activated</dt><dd>" + esc(cat.lastActivated) + "</dd><dt>Source version</dt><dd>" + esc(cat.version) + "</dd><dt>Last known good</dt><dd>" + (cat.lastKnownGood ? "Held — bad updates are quarantined" : "No") + "</dd>" +
+        (cat.materialChanges.length ? "<dt>Material changes</dt><dd>" + cat.materialChanges.map(esc).join("; ") + "</dd>" : "") +
+        '</dl><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-catalog-refresh="' + cat.id + '"' + (cat.state === "refreshing" ? " disabled" : "") + ">" + (cat.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div>";
+    }
+    if (sel === "roles") {
+      return "<h3>" + window.PMIcons.get("robot", 16) + " Agent role assignments</h3>" +
+        '<div class="sub">Roles never force every assignment into provider cards. Requested and effective stay distinct.</div>' +
+        '<div style="margin-top:10px">' + st.roles.map(function (r) {
+          return '<div class="sp-role"><span>' + esc(r.label) + '</span><span class="req">Requested: ' + esc(r.requested) + '</span><span class="eff">Effective: ' + esc(r.effective) +
+            (r.differs ? ' <span class="pm-badge pm-badge-diff">Differs</span>' : "") + (r.note ? '<div class="pm-note">' + esc(r.note) + "</div>" : "") + "</span></div>";
+        }).join("") + "</div>";
+    }
+    var p = window.PMState.providerById(sel);
+    if (!p) return '<div class="sp-note-card">Select an item from the inventory.</div>';
+    var html = "<h3>" + esc(p.name) + " " +
+      (p.state === "ready" ? '<span class="pm-badge pm-badge-ok">Connected</span>'
+        : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">Decision needed</span>'
+        : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">Invocation failed</span>'
+        : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Setup required</span>'
+        : p.state === "signed-out" ? '<span class="pm-badge pm-badge-warn">Signed out</span>'
+        : '<span class="pm-badge">Not installed</span>') + "</h3>" +
+      '<div class="sub">' + esc(p.stateLabel) + " · " + esc(p.group) + "</div>";
+    if (p.state === "not-installed") {
+      return html + '<div class="sp-note-card" style="margin-top:12px">' + esc(p.install.note) + '</div><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button><button class="pm-btn pm-btn-sm" data-pa="diagnostics">About CLI-owned login</button></div>';
+    }
+    if (p.setup) {
+      return html + '<div class="sp-note-card" style="margin-top:12px">' + esc(p.setup.note) + " Steps: " + p.setup.steps.map(esc).join(" → ") + '</div><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div>';
+    }
+    if (p.state === "signed-out") {
+      html += '<div class="sp-note-card" style="margin-top:12px">' + esc(p.login.note) + '</div>' +
+        '<div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div>';
+    }
+    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
+      var bits = [];
+      if (a.usage) {
+        if (a.usage.included === "exhausted") bits.push('<span class="pm-badge pm-badge-danger">Included usage exhausted</span>');
+        else if (a.usage.included) bits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
+        if (a.usage.remaining && a.usage.included !== "exhausted") bits.push('<span class="pm-note">remaining ' + esc(a.usage.remaining) + "</span>");
+        if (a.usage.extra) bits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
+        if (a.usage.reset) bits.push('<span class="pm-note">reset ' + esc(a.usage.reset) + "</span>");
+        if (a.usage.pressure) bits.push('<span class="pm-note">pressure ' + esc(a.usage.pressure) + "</span>");
+      }
+      return '<div data-account="' + a.id + '" style="border:1px solid var(--border);border-radius:var(--radius-m);padding:11px 13px;margin-top:10px;background:var(--surface-3)' + (a.enabled === false ? ";opacity:.66" : "") + '">' +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="color:var(--text-1)">' + esc(a.label) + "</b>" +
+        (a.nickname ? '<span class="pm-badge">' + esc(a.nickname) + "</span>" : "") +
+        (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") +
+        (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky sessions</span>' : "") +
+        (a.enabled === false ? '<span class="pm-badge pm-badge-warn">Disabled</span>' : "") +
+        (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">Authenticated — not verified ready</span>' : "") +
+        '<span class="pm-note" style="margin-left:auto">priority ' + (a.priority || 1) +
+        ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 10) + "</button>" +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 10) + "</button></span></div>" +
+        '<dl class="sp-kv"><dt>Auth owner</dt><dd>' + esc(a.authOwner) + " — " + esc(a.authKind) + "</dd><dt>Transport</dt><dd>" + esc(a.transport) + "</dd>" +
+        (a.isolation ? "<dt>Isolation</dt><dd>" + esc(a.isolation) + "</dd>" : "") +
+        (a.identity ? "<dt>Identity</dt><dd>" + esc(a.identity) + "</dd>" : "") +
+        (a.health ? "<dt>Health</dt><dd>catalog " + esc(a.health.catalog) + " · generation " + esc(a.health.generation) + "</dd>" : "") + "</dl>" +
+        '<div class="sp-ins-actions" style="margin-top:0">' + bits.join("") + "</div>" +
+        (a.probe ? '<div class="pm-note" style="color:var(--err);margin-top:6px">' + esc(a.probe.detail) + " (" + esc(a.probe.at) + ")</div>" : "") +
+        '<div class="sp-ins-actions">' +
+        (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-use-account="' + a.id + '">Use for future requests</button>' : "") +
+        (a.preferred ? '<span class="pm-note">Future requests use this account; running work is never retargeted.</span>' : "") +
+        '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="probe">Readiness probe</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
+        ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
+        "</div>" +
+        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ? '<div class="sp-ins-actions"><span class="pm-note">What happens next:</span><select class="pm-select" data-continuation>' + a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
+      "</div>";
+    }).join("");
+    if (p.models.length) {
+      html += '<div class="sp-inv-cap" style="margin-top:14px">Models — priority order</div>' +
+        p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
+          var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">Available</span>'
+            : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">Unverified</span>'
+            : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Needs setup</span>'
+            : '<span class="pm-badge pm-badge-danger">Unavailable</span>';
+          return '<div class="sp-model-mini" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
+            '<button class="sp-fav' + (m.favorite ? " on" : "") + '" data-fav aria-pressed="' + m.favorite + '" aria-label="Favorite">' + window.PMIcons.get("star", 14) + "</button>" +
+            '<span class="name">' + esc(m.name) + "</span>" + (m.alias ? '<span class="meta">alias ' + esc(m.alias) + "</span>" : "") +
+            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") + stateChip +
+            '<span class="meta">' + esc(m.context) + " ctx" + (m.effort.length ? " · effort" : "") + (m.fast ? " · Normal/Fast" : "") + (m.free ? " · " + esc(m.free) : "") + " · " + esc(m.evidence) + "</span>" +
+            '<span style="margin-left:auto;display:flex;gap:4px;align-items:center">' +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
+            '<span class="pm-note">#' + m.priority + "</span>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-alias>Alias</button>' +
+            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show" : "Hide") + "</button>" +
+            (m.effort.length ? '<span class="pm-seg">' + m.effort.slice(0, 3).map(function (e, i) { return '<button data-effort="' + e + '" class="' + (i === 1 ? "active" : "") + '" style="padding:2px 7px;font-size:11px">' + e.slice(0, 3) + "</button>"; }).join("") + "</span>" : "") +
+            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal" style="padding:2px 7px;font-size:11px">N</button><button data-speed="Fast" style="padding:2px 7px;font-size:11px">F</button></span>' : "") +
+            "</span>" +
+            (m.reason ? '<div class="pm-note" style="width:100%;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
+          "</div>";
+        }).join("");
+    }
+    return html;
+  }
+
+  function personasSplit(v) {
+    var st = window.PMState.state;
+    if (!selected.personas) selected.personas = (v && v.persona) || "p-assistant";
+    var list = '<div class="sp-inv-cap">Core roles</div>' +
+      st.personas.filter(function (p) { return p.core; }).map(function (p) {
+        return '<button class="sp-inv-item' + (selected.personas === p.id ? " sel" : "") + '" data-inv="' + p.id + '"><span style="flex:1;min-width:0">' + esc(p.name) + '<span class="sub">' + esc(p.description) + '</span></span></button>';
+      }).join("") +
+      '<div class="sp-inv-cap">Custom</div>' +
+      st.personas.filter(function (p) { return !p.core; }).map(function (p) {
+        return '<button class="sp-inv-item' + (selected.personas === p.id ? " sel" : "") + '" data-inv="' + p.id + '"><span style="flex:1;min-width:0">' + esc(p.name) + '<span class="sub">' + esc(p.eligible) + '</span></span></button>';
+      }).join("");
+    return '<div class="sp-split"><div class="sp-inv">' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + personaInspector() + "</div></div>";
+  }
+
+  function personaInspector() {
+    var st = window.PMState.state;
+    var p = st.personas.filter(function (x) { return x.id === selected.personas; })[0];
+    if (!p) return '<div class="sp-note-card">Select a Persona.</div>';
+    var scopes = ["This turn", "This thread", "This Goal or PlanningRun", "Project default for new work", "Global default for new work", "Child only"];
+    return "<h3>" + window.PMIcons.get("persona", 16) + " " + esc(p.name) + (p.core ? ' <span class="pm-badge">Core role</span>' : ' <span class="pm-badge pm-badge-info">Custom</span>') +
+      (p.childOnly ? ' <span class="pm-badge pm-badge-warn">Child-only</span>' : "") + "</h3>" +
+      '<div class="sub">' + esc(p.description) + "</div>" +
+      '<dl class="sp-kv">' +
+      "<dt>Durable definition</dt><dd>Behavior, not an account, model, or permission grant</dd>" +
+      "<dt>Runtime metadata</dt><dd>" + esc(p.eligible) + "</dd>" +
+      "<dt>Model-facing capsule</dt><dd>" + esc(p.capsule) + " — the full source is never injected each turn</dd>" +
+      "<dt>Skills & tools</dt><dd>Eligible and preferred, not automatically loaded in full</dd>" +
+      "</dl>" +
+      (p.childOnly ? '<div class="sp-note-card">Child-only Personas cannot be chosen as ordinary Chat defaults.</div>' : "") +
+      '<div class="sp-ins-actions"><span class="pm-note">Apply scope:</span><select class="pm-select" data-persona-scope>' +
+      scopes.map(function (s) { return "<option" + (p.childOnly && s !== "Child only" ? " disabled" : "") + ">" + esc(s) + "</option>"; }).join("") +
+      '</select><button class="pm-btn pm-btn-primary pm-btn-sm" data-persona-apply>Apply</button></div>' +
+      '<div class="pm-note" style="margin-top:10px">A Persona cannot widen Plan/Review mode, permissions, FileSafe, network, project, or parent-agent ceilings. Chat selection defaults to the current thread.</div>';
+  }
+
+  function mediaSplit() {
+    var st = window.PMState.state;
+    if (!selected.media) selected.media = "media-imagegen";
+    var list = st.mediaProviders.map(function (m) {
+      var chip = m.state === "connected" ? "Ready" : m.state === "degraded" ? "Degraded" : "Not configured";
+      return '<button class="sp-inv-item' + (selected.media === m.id ? " sel" : "") + '" data-inv="' + m.id + '"><span style="flex:1;min-width:0">' + esc(m.name) + '<span class="sub">' + esc(chip) + " · " + esc(m.capability) + '</span></span></button>';
+    }).join("");
+    return '<div class="sp-split"><div class="sp-inv"><div class="sp-inv-cap">Media routes</div>' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + mediaInspector() + "</div></div>";
+  }
+
+  function mediaInspector() {
+    var st = window.PMState.state;
+    var m = st.mediaProviders.filter(function (x) { return x.id === selected.media; })[0];
+    if (!m) return "";
+    var chip = m.state === "connected" ? '<span class="pm-badge pm-badge-ok">Connected</span>' : m.state === "degraded" ? '<span class="pm-badge pm-badge-warn">Degraded — fallback active</span>' : '<span class="pm-badge pm-badge-info">Not configured</span>';
+    var html = "<h3>" + window.PMIcons.get("image", 16) + " " + esc(m.name) + " " + chip + "</h3>" +
+      '<div class="sub">' + esc(m.capability) + " · " + esc(m.mode) + "</div>" +
+      '<dl class="sp-kv">' +
+      "<dt>Route</dt><dd>" + esc(m.route) + "</dd>" +
+      "<dt>Output</dt><dd>" + esc(m.output) + "</dd>" +
+      "<dt>Safety policy</dt><dd>" + esc(m.safety) + "</dd>" +
+      "<dt>Cost / allowance</dt><dd>" + esc(m.cost) + "</dd>" +
+      "<dt>Fallback</dt><dd>" + esc(m.fallback) + "</dd>" +
+      "</dl>";
+    if (m.state === "not-configured") {
+      html += '<div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-media-act="setup">Configure route</button></div>';
+    } else {
+      html += '<div class="sp-ins-actions"><button class="pm-btn pm-btn-sm" data-media-act="test">Test route</button><button class="pm-btn pm-btn-sm" data-media-act="history">Full history (' + m.history + ")</button></div>";
+      if (m.id === "media-vision") {
+        html += '<div class="sp-inv-cap" style="margin-top:12px">Recent activity</div>' + st.mediaHistory.map(function (h) {
+          return '<div class="sp-media-hist">' + esc(h.what) + ' <span class="pm-note">— ' + esc(h.route) + " · " + esc(h.when) + " · " + esc(h.outcome) + "</span></div>";
+        }).join("");
+      }
+    }
+    return html;
+  }
+
+  function renderWork(v) {
+    var d = dest(v.category);
+    if (!d) { renderHome(); return; }
+    var st = window.PMState.state;
+    var disc = st.ui.disclosure;
+    var html = '<div class="sp-work sp-orbit" id="sp-work">' +
+      '<div class="sp-bar">' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="sp-back">' + window.PMIcons.get("arrowLeft", 13) + " Hub</button>" +
+        '<span class="title">' + esc(d.title) + "</span>" +
+        '<span class="pm-spacer"></span>' +
+        '<label class="sp-search-mini">' + window.PMIcons.get("search", 13) + '<input id="sp-q2" placeholder="Search…" aria-label="Search in Settings"></label>' +
+        '<span class="pm-seg sp-disc-seg" id="sp-disc">' +
+        ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '" style="padding:3px 8px;font-size:11px">' + (x === "standard" ? "Std" : x === "advanced" ? "Adv" : "All") + "</button>"; }).join("") +
+        "</span>" +
+      "</div>" +
+      '<div class="sp-body">' +
+        '<div class="sp-doc" id="sp-doc">' +
+        d.subcategories.map(function (sub) {
+          var mgr = "";
+          if (sub.manager) {
+            if (sub.manager === "providers") mgr = providersSplit(v);
+            else if (sub.manager === "personas") mgr = personasSplit(v);
+            else if (sub.manager === "media") mgr = mediaSplit();
+            else mgr = managerNote(sub);
+          }
+          return '<section class="sp-sub" data-sub-section="' + sub.id + '">' +
+            "<h2>" + esc(sub.title) + (sub.manager ? ' <span class="pm-badge pm-badge-muted">manager</span>' : "") + "</h2>" +
+            '<p class="lead">' + sub.settings.length + " settings" + (sub.manager ? " · split view: inventory left, inspector right" : "") + "</p>" +
+            mgr + sub.settings.map(settingRow).join("") +
+          "</section>";
+        }).join("") +
+        "</div>" +
+        '<nav class="sp-rail" id="sp-rail" aria-label="Subcategory progress">' +
+        d.subcategories.map(function (s) { return '<button class="sp-tick" data-sub="' + s.id + '"><span class="dot"></span>' + esc(s.title) + "</button>"; }).join("") +
+        "</nav>" +
+      "</div></div>";
+    content.innerHTML = html;
+    bindWork(v, d);
+  }
+
+  function bindWork(v, d) {
+    var scroller = document.getElementById("sp-work");
+    var doc = document.getElementById("sp-doc");
+    var ticks = content.querySelectorAll(".sp-tick");
+    document.getElementById("sp-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+
+    spy = window.PMCore.scrollspy(scroller, function () {
+      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
+    }, function (id) {
+      ticks.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-sub") === id); });
+    }, { offset: 70 });
+
+    ticks.forEach(function (b) { b.addEventListener("click", function () { spy.jumpTo(b.getAttribute("data-sub")); }); });
+
+    document.getElementById("sp-disc").querySelectorAll("[data-disc]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
+        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
+          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+          row.setAttribute("data-hidden", window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard");
+        });
+        content.querySelectorAll("#sp-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
+        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " settings.", "info");
+        if (spy) spy.refresh();
+      });
+    });
+
+    document.getElementById("sp-q2").addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var hits = window.PMCore.search(e.target.value, INDEX);
+      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found.", "info"); return; }
+      var t = Object.assign({}, hits[0].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    });
+
+    doc.addEventListener("click", function (e) {
+      var t;
+      if ((t = e.target.closest("[data-inv]"))) {
+        var id = t.getAttribute("data-inv");
+        var mgr = currentManager(v);
+        selected[mgr] = id;
+        var insp = document.getElementById("sp-insp");
+        if (insp) {
+          insp.innerHTML = mgr === "providers" ? providerInspector() : mgr === "personas" ? personaInspector() : mediaInspector();
+          insp.classList.remove("sp-slide-r");
+          void insp.offsetWidth;
+          insp.classList.add("sp-slide-r");
+        }
+        doc.querySelectorAll("[data-inv]").forEach(function (b) { b.classList.toggle("sel", b.getAttribute("data-inv") === id); });
+        return;
+      }
+      var row = e.target.closest("[data-setting-id]");
+      var btn = e.target.closest("button, select");
+      if (row && btn) {
+        var id2 = row.getAttribute("data-setting-id");
+        var s = window.PMState.getSetting(id2);
+        if (btn.matches("[data-ctl].pm-toggle")) { window.PMState.setSettingValue(id2, !(s.value === true)); patchRow(id2); return; }
+        if (btn.matches("[data-seg]")) { window.PMState.setSettingValue(id2, btn.getAttribute("data-seg")); patchRow(id2); return; }
+        if (btn.matches("[data-reset]")) { window.PMState.resetSetting(id2); patchRow(id2); return; }
+        if (btn.matches("[data-details]")) { row.classList.toggle("open"); btn.setAttribute("aria-expanded", row.classList.contains("open")); return; }
+        if (btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
+          if (s.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
+          window.PMState.receipt(s.actionLabel || "Opened", s.label + ": honest simulated result.", "sim");
+          return;
+        }
+      }
+      mgrClick(e, v);
+    });
+    doc.addEventListener("change", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      if (row && e.target.matches("[data-ctl]")) {
+        var id = row.getAttribute("data-setting-id");
+        window.PMState.setSettingValue(id, e.target.value);
+        patchRow(id);
+      }
+      if (e.target.matches("[data-continuation]")) window.PMState.receipt("Continuation saved", "Anthropic Max: " + e.target.value + " — future requests only.", "ok");
+    });
+
+    function currentManager(view) {
+      if (view.manager && IMPLEMENTED[view.manager]) return view.manager;
+      for (var i = 0; i < d.subcategories.length; i++) {
+        var m = d.subcategories[i].manager;
+        if (m && IMPLEMENTED[m]) return m;
+      }
+      return "providers";
+    }
+
+    function mgrClick(e, view) {
+      var t;
+      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
+      var insp = e.target.closest("#sp-insp");
+      var mgr = currentManager(view);
+      if (mgr === "providers") {
+        var pid = selected.providers;
+        var acctEl = e.target.closest("[data-account]");
+        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
+        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); refreshSplit(view); return; }
+        if (aid && (t = e.target.closest("[data-nickname]"))) {
+          var acc = window.PMState.accountById(pid, aid);
+          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
+          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); refreshSplit(view); }
+          return;
+        }
+        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); refreshSplit(view); return; }
+        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); refreshSplit(view); return; }
+        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); refreshSplit(view); return; }
+        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); refreshSplit(view); return; }
+        if ((t = e.target.closest("[data-pa]"))) {
+          var act = t.getAttribute("data-pa");
+          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral setup runs in the underlying provider. Simulated.", "sim"); return; }
+          window.PMState.providerAction(pid, act); return;
+        }
+        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured state. Simulated navigation.", "info"); return; }
+        var ml = e.target.closest("[data-model]");
+        if (ml) {
+          var mid = ml.getAttribute("data-model");
+          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); refreshSplit(view); return; }
+          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); refreshSplit(view); return; }
+          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); refreshSplit(view); return; }
+          if ((t = e.target.closest("[data-alias]"))) {
+            var p = window.PMState.providerById(pid);
+            var m = p.models.filter(function (x) { return x.id === mid; })[0];
+            var next = prompt("Alias for " + m.name + ":", m.alias || "");
+            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); refreshSplit(view); }
+            return;
+          }
+          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); refreshSplit(view); return; }
+          if ((t = e.target.closest("[data-effort]"))) { t.parentNode.querySelectorAll("[data-effort]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Effort preference saved", "Applies when supported.", "ok"); return; }
+          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " requested when genuinely supported.", "ok"); return; }
+        }
+      }
+      if (mgr === "personas" && (t = e.target.closest("[data-persona-apply]"))) {
+        var scopeSel = doc.querySelector("[data-persona-scope]");
+        var persona = window.PMState.state.personas.filter(function (x) { return x.id === selected.personas; })[0];
+        if (scopeSel && persona) {
+          window.PMState.receipt("Persona scope applied", persona.name + " → " + scopeSel.value + ". Other threads are unchanged.", "ok");
+        }
+        return;
+      }
+      if (mgr === "media" && (t = e.target.closest("[data-media-act]"))) {
+        var mp = window.PMState.state.mediaProviders.filter(function (x) { return x.id === selected.media; })[0];
+        var a = t.getAttribute("data-media-act");
+        if (a === "setup") window.PMState.receipt("Configure route", mp.name + ": route picker opened. Simulated.", "sim");
+        if (a === "test") window.PMState.receipt("Test generated", mp.name + " produced a test asset with an honest simulated receipt.", "sim");
+        if (a === "history") window.PMState.receipt("Generation history", mp.history + " runs recorded. Viewer simulated.", "sim");
+        return;
+      }
+    }
+
+    function patchRow(id) {
+      var s = window.PMState.getSetting(id);
+      var el = content.querySelector('[data-setting-id="' + id + '"]');
+      if (!el) return;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = settingRow(s);
+      var fresh = tmp.firstChild;
+      fresh.classList.toggle("open", el.classList.contains("open"));
+      el.replaceWith(fresh);
+    }
+    function refreshSplit(view) {
+      var mgr = currentManager(view);
+      var subId = null;
+      d.subcategories.forEach(function (s) { if (s.manager === mgr) subId = s.id; });
+      var section = content.querySelector('[data-sub-section="' + subId + '"]');
+      if (!section) return;
+      var h2 = section.querySelector("h2");
+      var lead = section.querySelector(".lead");
+      var rows = section.querySelectorAll(":scope > .sp-row");
+      section.innerHTML = "";
+      section.appendChild(h2);
+      section.appendChild(lead);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = mgr === "providers" ? providersSplit(view) : mgr === "personas" ? personasSplit(view) : mediaSplit();
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      rows.forEach(function (r) { section.appendChild(r); });
+      if (spy) spy.refresh();
+    }
+    window._spokePatch = { patchRow: patchRow, refreshSplit: refreshSplit };
+
+    if (v.subcategory) spy.jumpTo(v.subcategory, function () { focusV(v); });
+    else if (v.manager) {
+      var subForMgr = null;
+      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
+      if (subForMgr) { spy.jumpTo(subForMgr, function () { focusV(v); }); return; }
+      focusV(v);
+    } else { scroller.scrollTop = 0; focusV(v); }
+  }
+
+  function focusV(v) {
+    if (v.focusSetting) {
+      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
+      if (el) { el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(el); }
+    } else if (v.provider) {
+      selected.providers = v.provider;
+      var insp = document.getElementById("sp-insp");
+      if (insp) { insp.innerHTML = providerInspector(); window.PMCore.focusFlash(insp); }
+    } else if (v.persona) {
+      selected.personas = v.persona;
+      var insp2 = document.getElementById("sp-insp");
+      if (insp2) { insp2.innerHTML = personaInspector(); window.PMCore.focusFlash(insp2); }
+    }
+  }
+
+  window.PMState.subscribe(function (kind) {
+    if (kind === "navigate") { route(); return; }
+    if (kind === "scenario") { route(); return; }
+    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._spokePatch) {
+      window._spokePatch.refreshSplit(window.PMState.state.view);
+    }
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>

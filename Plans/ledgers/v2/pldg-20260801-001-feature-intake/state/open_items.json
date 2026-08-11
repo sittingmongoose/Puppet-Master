@@ -1,0 +1,346 @@
+{
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "last_event_id": "evt-0026",
+  "governance_status": "not_started",
+  "open_questions": [
+    {
+      "question_id": "q-0045",
+      "status": "open",
+      "question": "Does the August 5 handoff supersede the fixed one-size-for-low-end profile and no-predicted-budget rule?",
+      "owner": "Jared",
+      "recommendation": "No. Keep one fixed conservative profile; measure InstructionLoad and tokens diagnostically without importing model-specific profiles or numeric example budgets.",
+      "linked_atom_ids": [
+        "atom-0063"
+      ],
+      "source_refs": [
+        "packet:ONE_PAGE_DELTA.md",
+        "packet:05_PROMPT_CAPSULE_AND_CONTEXT_ADMISSION_CONTRACT.md",
+        "chat:no-budgets-one-size-fits-all-low-end-profile"
+      ]
+    },
+    {
+      "question_id": "q-0046",
+      "status": "open",
+      "question": "Should the packet's at-least-three-tier test language change the exact eight-low/two-high cohort?",
+      "owner": "Jared",
+      "recommendation": "No implicit change. Keep 8-low/2-high as the primary cohort; authorize any mid-tier calibration later as a separate cohort.",
+      "linked_atom_ids": [
+        "atom-0055",
+        "atom-0062"
+      ],
+      "source_refs": [
+        "packet:08_TEST_MATRIX_V2.md",
+        "chat:local-folder-eight-low-two-high-correction"
+      ]
+    }
+  ],
+  "deferred_questions": [
+    {
+      "question_id": "q-0022",
+      "status": "deferred",
+      "question": "What behavioral and model-quality test matrix should validate the completed design?",
+      "owner": "Jared for any future resume decision and exact roster authorization",
+      "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+      "artifact_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/tests/agent_packet_restrictions/",
+      "terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+      "reason": "Stopped at Jared's request to finish due usage; exact 8-low/2-high roster was never supplied, authorized, or frozen; all auth/config/provider/route/model call counts are zero.",
+      "verified_draft_inputs": {
+        "surfaces": 54,
+        "blocked_production_surfaces": 51,
+        "isolated_contract_simulations": 2,
+        "currently_runnable_deterministic_surfaces": 1,
+        "implementation_gated_tests": 24,
+        "semantic_cases": 7,
+        "deterministic_checks": 222
+      },
+      "resume_requirements": [
+        "Jared supplies and authorizes the exact eight-low/two-high roster.",
+        "An immutable authorization receipt binds each provider/model/account/route/reasoning tuple.",
+        "A new corrected post-V4 method is frozen.",
+        "Controller, scorer, and capture qualification bind to the final matrix-inclusive freeze.",
+        "All ten exact routes pass nonsemantic canaries before semantic pilot."
+      ],
+      "claim_boundary": "Preregistration drafts only. No empirical model-performance, production-enforcement, readiness, weak-model-success, or high-model-success claim is supported.",
+      "deferred_inputs": [
+        "Reject packet, source, attachment, or route mutation after admission.",
+        "Reject hidden outside-source bytes, answer keys, prior outputs, or unclassified host instructions.",
+        "Test write and network denial separately from read confinement; a cooperative read boundary is not OS read isolation or FileSafe security.",
+        "Cap total model-controlled evidence requests before executing any of them.",
+        "Preserve zero, empty, and over-cap output as distinct terminals.",
+        "Require exact started-prefix plus absorbed-suffix accounting after the first nonpass.",
+        "Require one fresh context and zero semantic retries for the assurance-derived strict case.",
+        "Test duplicate or conflicting IDs and evidence joins.",
+        "Preserve provider-effective model identity as an attested residual unless signed evidence exists."
+      ],
+      "source_refs": [
+        "chat:testing-deferred-chat-initiation-and-planunit-acceptance",
+        "thread:019faf32-0047-7e10-ba41-a9f46ac89b79:coordination-reply",
+        "chat:cross-system-testing-delegated-to-sol-ultra",
+        "chat:local-folder-eight-low-two-high-correction",
+        "corr-0013",
+        "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+        "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f:terminal-preflight-closeout",
+        "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
+        "tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md",
+        "codex-client:client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8"
+      ]
+    }
+  ],
+  "in_progress_questions": [],
+  "open_blockers": [],
+  "unclassified_candidates": [
+    {
+      "atom_id": "atom-0062",
+      "status": "candidate",
+      "summary": "Future testing may compare legacy full prompts, compiled capsules with runtime services, compact prompts without services, overloaded compiled prompts, and missing-tool/source cases, but testing remains deferred and the exact method is not accepted.",
+      "gui_related": false,
+      "blocked_by": [
+        "q-0022",
+        "q-0046"
+      ]
+    },
+    {
+      "atom_id": "atom-0063",
+      "status": "candidate",
+      "summary": "The handoff's tier-calibrated thresholds and numeric examples conflict with the accepted fixed-profile/no-predicted-budget boundary and require explicit adjudication.",
+      "gui_related": false,
+      "blocked_by": [
+        "q-0045"
+      ]
+    }
+  ],
+  "unresolved_contradictions": [
+    {
+      "item_id": "q-0045",
+      "status": "open_user_adjudication",
+      "summary": "Packet tier-calibrated thresholds and example numeric budgets conflict with Jared's earlier exact one-size-for-low-end and no-predicted-budget constraints.",
+      "recommendation": "Preserve the fixed profile and treat InstructionLoad and token values as diagnostics only."
+    },
+    {
+      "item_id": "q-0046",
+      "status": "open_user_adjudication",
+      "summary": "Packet at-least-three-tier calibration language conflicts with the already specified primary cohort of exactly eight low-end and two high-end models.",
+      "recommendation": "Preserve the 8/2 primary cohort and make any mid-tier cohort separately authorized."
+    }
+  ],
+  "resolved_contradictions": [
+    {
+      "item_id": "contradiction-0001",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "GRS-010 and F3-393 qualification wording must not treat a verifier/adjudicator role label as absolute capability proof.",
+      "resolution": "Keep relative worker/verifier and higher/lower role ordering for task-difficulty routing. Interpret qualification only through objective hard-capability checks plus bounded strict-policy packets, protocol compliance, requirement-ID coverage receipts, evidence references, and independent bounded verification.",
+      "source_refs": [
+        "Plans/Goal_Runtime_System.md:744",
+        "Plans/FinalGUISpec.md:25449",
+        "chat:quality-agnostic-agent-contract-decisions",
+        "chat:relative-model-quality-clarification"
+      ]
+    },
+    {
+      "item_id": "contradiction-0002",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Goal Runtime requires whole objective/source/target universe visibility while the fixed low-end strict-policy envelope prohibits sending that whole universe to one agent.",
+      "resolution": "dec-0016 and dec-0019 preserve the whole universe in controller/store custody and expose only bounded PlanUnit/acceptance/source assignments or deterministic source windows to agents, with hierarchical reduction and stable lineage.",
+      "source_refs": [
+        "Plans/Goal_Runtime_System.md:327",
+        "Plans/Goal_Runtime_System.md:591",
+        "Plans/Plan_Document_System.md:145",
+        "atom-0024",
+        "atom-0028",
+        "dec-0016",
+        "dec-0019"
+      ]
+    },
+    {
+      "item_id": "contradiction-0003",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Prompt Pipeline and late plugin/provider transforms can expand or mutate automated prompt material after ordinary structural assembly.",
+      "resolution": "dec-0015 requires structural admission and final fully rendered admission; dec-0017 binds the receipt to the effective payload and transform identities and invalidates it on change.",
+      "source_refs": [
+        "Plans/Prompt_Pipeline.md:254",
+        "Plans/Prompt_Pipeline.md:269",
+        "Plans/Plugins_System.md:309",
+        "Plans/Plugins_System.md:321",
+        "atom-0023",
+        "atom-0025",
+        "dec-0015",
+        "dec-0017"
+      ]
+    },
+    {
+      "item_id": "contradiction-0004",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Models and providers require route-specific prompt, tool-schema, and history transformations, while `one size fits all` could be misread as requiring byte-identical packets.",
+      "resolution": "One size fits all means one fixed structural contract and limit profile for strict-policy automated calls. Route-required transforms remain allowed inside that profile, pass final rendered admission, and become receipt bindings rather than reasons to raise the limits.",
+      "source_refs": [
+        "Plans/Models_System.md:501",
+        "Plans/Models_System.md:8452",
+        "atom-0014",
+        "atom-0023",
+        "atom-0025",
+        "dec-0015",
+        "dec-0017"
+      ]
+    },
+    {
+      "item_id": "contradiction-0005",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "The earlier `everywhere` interpretation put direct user-controlled Assistant Chat, Chat-originated delegation, and Puppet Master automated-system calls into one identical strict low-end envelope.",
+      "resolution": "corr-0007 and corr-0009 plus dec-0014 and dec-0018 separate direct Chat and Chat-initiated delegation from strict-policy automated-system initiation. The selected Chat assistant model determines Chat-originated delegation.",
+      "source_refs": [
+        "chat:assistant-chat-automation-boundary-and-planunit-question",
+        "chat:testing-deferred-chat-initiation-and-planunit-acceptance",
+        "corr-0007",
+        "corr-0009",
+        "atom-0017",
+        "atom-0026",
+        "atom-0027",
+        "dec-0014",
+        "dec-0018"
+      ]
+    },
+    {
+      "item_id": "contradiction-0006",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "The strict-policy Agent Input Envelope requires stable obligation IDs before execution dispatch, but large unstructured source material has no authoritative obligation inventory, and asking one low-quality agent to create it would recreate the original large-prompt omission risk before the packet compiler can help.",
+      "resolution": "dec-0024 through dec-0026 and atom-0033 through atom-0035 require deterministic immutable segmentation, bounded redundant extraction with complete source-span coverage, exact source-linked conservative classification, and fail-closed handling of unresolved mandatory meaning or conflicts.",
+      "source_refs": [
+        "chat:architectural-defaults-accepted-with-low-quality-uncertainty",
+        "chat:unstructured-obligation-recommendations-accepted",
+        "atom-0033",
+        "atom-0034",
+        "atom-0035",
+        "dec-0024",
+        "dec-0025",
+        "dec-0026"
+      ]
+    },
+    {
+      "item_id": "contradiction-0007",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Central Agent Packet Compiler ownership can still be bypassed if existing feature or provider paths assemble and dispatch prompts locally; without provider-boundary receipt enforcement, the accepted `everywhere` strict-policy coverage is nominal rather than machine-enforced.",
+      "resolution": "dec-0027 and atom-0036 require provider dispatch to reject missing, stale, invalid, or content-mismatched strict-policy admission receipts and classify legacy or feature-local raw-prompt paths as blocked migration defects rather than compatibility fallbacks.",
+      "source_refs": [
+        "chat:unstructured-obligation-recommendations-accepted",
+        "chat:provider-enforcement-receipt-custody-and-diagnostics-accepted",
+        "atom-0030",
+        "atom-0036",
+        "dec-0021",
+        "dec-0027"
+      ]
+    },
+    {
+      "item_id": "contradiction-0008",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "The provider-boundary receipt gate must exempt accepted direct Assistant Chat and Chat-initiated delegation, but without trusted execution-origin provenance and closed-world route classification an automated or legacy caller could evade strict policy by presenting itself as Chat traffic.",
+      "resolution": "dec-0030 and dec-0031 plus atom-0039 and atom-0040 require controller-issued non-self-asserted execution origin, fail-closed unknown origin, and closed-world registration of every production provider route with explicitly enumerated Chat exceptions.",
+      "source_refs": [
+        "chat:assistant-chat-automation-boundary-and-planunit-question",
+        "chat:testing-deferred-chat-initiation-and-planunit-acceptance",
+        "chat:origin-registry-and-fail-closed-recovery-accepted",
+        "atom-0026",
+        "atom-0027",
+        "atom-0039",
+        "atom-0040",
+        "dec-0014",
+        "dec-0018",
+        "dec-0030",
+        "dec-0031"
+      ]
+    },
+    {
+      "item_id": "contradiction-0009",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "The strict-policy compiler and admission gate can bound the initial automated request, but append-only model histories and raw tool or data results can make later provider turns large or obligation-dense again, recreating the original failure after admission.",
+      "resolution": "dec-0033 and dec-0034 plus atom-0042 and atom-0043 require reconstruction of every strict-policy automated turn from bounded typed current state, shared bounded admission for all model-visible tool and data results, and final rendered admission on later provider requests.",
+      "source_refs": [
+        "chat:origin-registry-and-fail-closed-recovery-accepted",
+        "chat:bounded-history-tool-evidence-and-response-repair-accepted",
+        "atom-0023",
+        "atom-0042",
+        "atom-0043",
+        "dec-0015",
+        "dec-0033",
+        "dec-0034"
+      ]
+    },
+    {
+      "item_id": "contradiction-0010",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Strict-policy packets must preserve exact source and tool evidence, but that evidence can contain prompt-like text that a lower-quality agent may follow as instructions, undermining the controller's objective, tools, response contract, or policy even when packet size is bounded.",
+      "resolution": "dec-0036 and accepted atom-0045 require a typed instruction-authority manifest, untrusted-data classification for source and evidence, independent FileSafe safety checks over the compiled request, and fail-closed handling of authority conflicts while forbidding parser misses from acting as authorization.",
+      "source_refs": [
+        "chat:bounded-history-tool-evidence-and-response-repair-accepted",
+        "chat:filesafe-ties-and-authority-invalidation-adjudication-accepted",
+        "plan-audit:filesafe-bounded-six-slice-2026-08-02",
+        "atom-0043",
+        "atom-0045",
+        "dec-0034",
+        "dec-0036"
+      ]
+    },
+    {
+      "item_id": "contradiction-0011",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Packet Admission Gate, historically called `Agent Admission`, and FileSafe both gate provider-bound automated input but prove different properties; if they inspect different effective payloads or one receipt substitutes for the other, late transforms can preserve one valid receipt while bypassing obligation coverage or safety enforcement.",
+      "resolution": "dec-0039, accepted atom-0048, and corr-0011 require independent deterministic Packet Admission Gate and FileSafe receipts bound to the same final effective payload, structured attachments, and route identity; provider dispatch requires both, neither substitutes, and any post-gate mutation invalidates both.",
+      "source_refs": [
+        "chat:filesafe-ties-and-authority-invalidation-adjudication-accepted",
+        "chat:co-bound-filesafe-gates-accepted",
+        "plan-audit:filesafe-bounded-six-slice-2026-08-02",
+        "atom-0023",
+        "atom-0036",
+        "atom-0045",
+        "atom-0048",
+        "dec-0015",
+        "dec-0027",
+        "dec-0036",
+        "dec-0039",
+        "corr-0011"
+      ]
+    },
+    {
+      "item_id": "contradiction-0012",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Even when Packet Admission Gate and FileSafe approve the same hash, a provider adapter could reconstruct or mutate the checked request, or a later run could treat cached artifacts and old receipts as transferable authority, creating a time-of-check/time-of-use or cross-scope authorization gap.",
+      "resolution": "dec-0043 and dec-0044 plus accepted atom-0052 and atom-0053 require an immutable co-gated dispatch-intent snapshot over exact provider bytes, attachments, receipts, and route identity and permit reusable derivations only as current data while execution-authority receipts remain run/node/attempt-bound.",
+      "source_refs": [
+        "chat:co-bound-filesafe-gates-accepted",
+        "chat:deterministic-gate-model-usage-clarification",
+        "corr-0011",
+        "atom-0023",
+        "atom-0025",
+        "atom-0037",
+        "atom-0046",
+        "atom-0048",
+        "atom-0050",
+        "atom-0052",
+        "atom-0053",
+        "dec-0043",
+        "dec-0044"
+      ]
+    },
+    {
+      "item_id": "contradiction-0013",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "The retired term `Agent Admission` could be misread as another model role, and implementing admission, FileSafe, dispatch-intent, or response-conformance checks as model calls would add hidden per-dispatch agent usage and recreate a weak-model reliability dependency.",
+      "resolution": "dec-0045 and accepted atom-0054 require deterministic packet compilation, deterministic Packet Admission Gate validation, deterministic FileSafe enforcement, one assigned worker-model call, and deterministic response conformance, adding zero mandatory hidden gate-model calls per ordinary dispatch. Model extraction is limited to changed unstructured sources and reused while dependency-current; explicit workflow model roles remain visible.",
+      "source_refs": [
+        "chat:deterministic-gate-model-usage-clarification",
+        "chat:zero-hidden-gate-model-calls-accepted",
+        "corr-0011",
+        "atom-0033",
+        "atom-0044",
+        "atom-0048",
+        "atom-0054",
+        "dec-0045"
+      ]
+    }
+  ],
+  "compile_open_items": [],
+  "post_compile_pending_items": [],
+  "unsealed_governance": [],
+  "notes": "The August 5 packet is reconciled as noncanonical additive source input. q-0045 and q-0046 remain open; atom-0062 and atom-0063 remain candidates. q-0022 remains deferred after delegated task `019fc3fd-4061-7d01-9c22-a3c82f34de1f` stopped before subject launch. The exact 8-low/2-high roster never froze and all subject/provider call counts are zero. Verified materials remain preregistration drafts only. V4 is invalidated by control_plane_defect-0004; four `/tmp` scratch lists remain untouched without deletion authority. No testing, canonical compile, governance, or implementation action was authorized or performed."
+}

@@ -1,0 +1,410 @@
+/* T3 · working margin — every turn carries a tinted left rule; at chat
+    width >= 900px the hover row becomes a RIGHT metadata gutter (an editor
+    margin bound to its body's top, ruled off in accent tint with tick marks).
+    Below 900px it collapses back to the kit's inline hover row. Container
+    query on the thread slot. */
+
+.pmq-thread[data-structure="margin"] {
+  container-type: inline-size;
+  container-name: pmqt3;
+}
+
+.pmq-t3 .pmq-stream {
+  padding: 16px 20px 26px;
+  gap: 0;
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pmq-t3 .pmq-msg { padding: 5px 0; }
+.pmq-t3 .pmq-msg + .pmq-msg { margin-top: 10px; }
+
+.pmq-t3-main { min-width: 0; }
+
+/* ---- role label: display-caps with a tick that echoes the gutter ---- */
+
+.pmq-t3-role {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 15px;
+  margin: 0 0 6px;
+  font-family: var(--display-font);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3-role::before {
+  content: "";
+  width: 7px;
+  height: 2px;
+  flex: none;
+  background: color-mix(in srgb, var(--accent-primary) 48%, transparent);
+}
+
+.pmq-t3 .pmq-msg:hover .pmq-t3-role,
+.pmq-t3 .pmq-msg:focus-within .pmq-t3-role { color: var(--text-primary); }
+
+/* ---- bodies: a visible 2px tinted rule (the narrow-width signature) ---- */
+
+.pmq-t3 .pmq-msg.pmq-assistant .pmq-body {
+  border-left: 2px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+  max-width: 70ch;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3 .pmq-msg.pmq-assistant:hover .pmq-body {
+  border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+}
+
+.pmq-t3 .pmq-msg.pmq-user .pmq-body { max-width: 58ch; }
+
+/* ---- the working margin (>= 900px) ---- */
+
+@container pmqt3 (min-width: 900px) {
+  .pmq-t3 .pmq-msg-inner { position: relative; }
+
+  /* reserve the margin lane; the body column keeps the reading measure */
+  .pmq-t3-main { padding-right: 206px; }
+
+  /* the rail owns annotation duty; drop the body's left rule */
+  .pmq-t3 .pmq-msg.pmq-assistant .pmq-body { border-left-color: transparent; }
+
+  /* the gutter is bound to the BODY's top: the role label is a fixed
+     15px + 6px gap, so the rail starts exactly where the prose starts and
+     never floats at the row top or inflates inter-turn rhythm */
+  .pmq-t3 .pmq-msg-hover {
+    position: absolute;
+    top: 21px;
+    right: 0;
+    width: 186px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    opacity: 1;
+    transform: none;
+    margin: 0;
+    border-left: 2px solid color-mix(in srgb, var(--accent-primary) 36%, transparent);
+    padding: 0 0 4px 14px;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .pmq-t3 .pmq-msg:hover .pmq-msg-hover,
+  .pmq-t3 .pmq-msg:focus-within .pmq-msg-hover {
+    border-color: color-mix(in srgb, var(--accent-primary) 62%, transparent);
+  }
+
+  /* margin notes: mono, ticked in the accent tint */
+  .pmq-t3 .pmq-msg-hover .pmq-hmeta {
+    position: relative;
+    font-family: var(--mono-font);
+    font-size: 10.5px;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 2px 0 2px 13px;
+  }
+
+  .pmq-t3 .pmq-msg-hover .pmq-hmeta::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.58em;
+    width: 7px;
+    height: 2px;
+    background: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  }
+
+  /* actions as quiet margin controls */
+  .pmq-t3 .pmq-msg-hover .pmq-hact {
+    width: fit-content;
+    border-color: transparent;
+    background: none;
+    padding: 2px 5px;
+    color: var(--text-faint);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-spring);
+  }
+
+  .pmq-t3 .pmq-msg-hover .pmq-hact:hover {
+    color: var(--accent-primary);
+    background: var(--hover-fill);
+    transform: translateX(2px);
+  }
+
+  .pmq-t3 .pmq-msg.pmq-user .pmq-msg-hover { align-items: stretch; }
+
+  .pmq-t3 .pmq-body { max-width: 68ch; }
+}
+
+/* ---- questionnaire sidecar inspector (questRenderer) ----
+   The renderer always builds the same .pmq-t3-quest DOM; the container query
+   below decides placement: inline full-width under 900px, absolute in the
+   right margin gutter at >= 900px. */
+
+.pmq-t3-quest {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-2);
+  overflow: hidden;
+}
+
+.pmq-t3q-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px 6px 11px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pmq-t3q-head > .pmq-ico { width: 13px; height: 13px; flex: none; color: var(--accent-primary); }
+
+.pmq-t3q-title {
+  font-family: var(--display-font);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pmq-t3q-num {
+  display: inline-grid;
+  margin-left: auto;
+  flex: none;
+  white-space: nowrap;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.pmq-t3q-num > * { grid-area: 1 / 1; white-space: nowrap; }
+
+.pmq-t3q-cancel { flex: none; }
+
+/* body: vertical progress tick rail + the active question slide */
+
+.pmq-t3q-body { display: flex; gap: 10px; padding: 10px 11px; }
+
+.pmq-t3q-ticks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 4px;
+  flex: none;
+}
+
+.pmq-t3q-tick {
+  width: 9px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--border-strong);
+  transition: background-color var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3q-tick.pmq-answered { background: var(--text-secondary); }
+
+.pmq-t3q-tick.pmq-here { background: var(--accent-primary); width: 13px; }
+
+.pmq-t3q-slide { flex: 1; min-width: 0; }
+
+.pmq-t3q-prompt {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.pmq-t3q-optional { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-faint); }
+
+/* options as ledger rows: mono, ticked, hairline-divided */
+
+.pmq-t3q-opts { display: flex; flex-direction: column; }
+
+.pmq-t3q-opt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 26px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--mono-font);
+  font-size: var(--fs-xs);
+  text-align: left;
+  color: var(--text-secondary);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3q-opt + .pmq-t3q-opt::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: -1px;
+  height: 1px;
+  background: color-mix(in srgb, var(--border) 62%, transparent);
+}
+
+.pmq-t3q-opt:hover { background: var(--hover-fill); color: var(--text-primary); }
+
+.pmq-t3q-opttick {
+  width: 7px;
+  height: 2px;
+  flex: none;
+  background: var(--border-strong);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3q-opttext { min-width: 0; overflow-wrap: break-word; }
+
+.pmq-t3q-optcheck { width: 11px; height: 11px; flex: none; margin-left: auto; color: var(--accent-primary); opacity: 0; transition: opacity var(--dur-fast) var(--ease-out); }
+
+.pmq-t3q-opt.pmq-on { color: var(--accent-primary); }
+.pmq-t3q-opt.pmq-on .pmq-t3q-opttick { background: var(--accent-primary); }
+.pmq-t3q-opt.pmq-on .pmq-t3q-optcheck { opacity: 1; }
+
+.pmq-t3q-free {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.pmq-t3q-free:focus { border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent); }
+
+.pmq-t3q-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-top: 1px solid var(--border);
+}
+
+.pmq-t3q-foot .pmq-btn { min-height: 24px; min-width: 24px; padding: 0 8px; font-size: var(--fs-xs); }
+.pmq-t3q-foot .pmq-btn .pmq-ico { width: 11px; height: 11px; }
+.pmq-t3q-spacer { flex: 1; }
+
+/* wide: the sidecar parks in the right margin gutter, aligned with the zone */
+@container pmqt3 (min-width: 900px) {
+  .pmq-t3-quest {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    width: 200px;
+  }
+
+  .pmq-t3q-body { gap: 8px; padding: 9px 9px; }
+  .pmq-t3q-prompt { font-size: var(--fs-xs); }
+  .pmq-t3q-opt { font-size: 10.5px; }
+}
+
+/* ---- margin ledger (workRender) ----
+   Collapsed rows read `goal · running`, `tasks · 2/8`, … — a single hairline
+   strip under 900px, a right-gutter ledger column at >= 900px (same DOM). */
+
+.pmq-t3 .pmq-stream > .pmq-t3-work { width: 100%; max-width: 1020px; }
+
+.pmq-t3-work { margin-top: 16px; }
+
+.pmq-t3w-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1px 10px;
+  padding: 3px 2px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.pmq-t3w-row {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t3w-row:hover { color: var(--text-primary); background: var(--hover-fill); }
+
+.pmq-t3w-key { font-weight: 700; color: var(--text-secondary); transition: color var(--dur-fast) var(--ease-out); }
+.pmq-t3w-row:hover .pmq-t3w-key { color: var(--text-primary); }
+.pmq-t3w-dot { color: var(--border-strong); }
+
+.pmq-t3w-val { display: inline-grid; font-variant-numeric: tabular-nums; }
+.pmq-t3w-val > * { grid-area: 1 / 1; }
+
+.pmq-t3w-chev { width: 10px; height: 10px; flex: none; color: var(--text-faint); transition: transform var(--dur-fast) var(--ease-out); }
+.pmq-t3w-row.pmq-open .pmq-t3w-chev { transform: rotate(90deg); }
+.pmq-t3w-row.pmq-open { color: var(--text-secondary); }
+
+.pmq-t3w-panels { display: flex; flex-direction: column; gap: 8px; }
+
+/* a closed panel holds no height of its own; hiding it keeps the narrow
+   strip flush (the born-open node on expand is still animated by the kit) */
+.pmq-t3-work .pmq-gw:not(.pmq-open) { display: none; }
+
+/* wide: the ledger moves into the right margin, echoing the hover gutter */
+@container pmqt3 (min-width: 900px) {
+  .pmq-t3 .pmq-stream > .pmq-t3-work {
+    width: 200px;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .pmq-t3w-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 2px 0 4px 12px;
+    border-top: none;
+    border-bottom: none;
+    border-left: 2px solid color-mix(in srgb, var(--accent-primary) 36%, transparent);
+  }
+
+  .pmq-t3w-row { width: 100%; padding: 3px 6px 3px 13px; }
+
+  .pmq-t3w-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 7px;
+    height: 2px;
+    margin-top: -1px;
+    background: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  }
+
+  .pmq-t3w-chev { margin-left: auto; }
+
+  .pmq-t3w-panels { width: 100%; }
+
+  .pmq-t3w-panel .pmq-surface { border-radius: var(--radius-md); }
+}

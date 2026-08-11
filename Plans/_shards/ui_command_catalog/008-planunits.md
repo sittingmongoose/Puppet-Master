@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1247-L6862
+Source lines: L1247-L6879
 
-Source SHA256: `23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7`
+Source SHA256: `675341194e15f562897bd18f552ac6582a1198cc4095730f8d4ab219e0c87b88`
 
 ---
 
@@ -1268,7 +1268,7 @@ plan_unit_id: UCC-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement as target_group only, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
+canonical_text: Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement through target_editor_panel_id/target_editor_group_id with target_group as a compatibility alias, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -1302,7 +1302,7 @@ preserved_exact_tokens:
 - widget.tier_tree
 - widget.progress_bars
 - Delete Run
-- OpenFile { path, line?, range?, target_group? }
+- OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }
 - subject-open
 - /route
 - /navigation
@@ -3070,7 +3070,7 @@ plan_unit_id: UCC-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving transcript, lineage, citations, attachments, audit metadata, stable thread_id, and message focus behavior.
+canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed whole-thread action that immediately removes ordinary projections, requests physical content purge within 24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -3082,6 +3082,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-056 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- cmd.chat.delete remains distinct from unsupported message-level delete and discloses legal-hold-delayed physical purge without promising ordinary unarchive.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -3112,8 +3113,11 @@ preserved_exact_tokens:
 - citations
 - attachments
 - audit metadata
+- storage_deletion_record
+- storage.deletion_lifecycle_changed
 negative_constraints:
 - Grouped chat lifecycle token does not denote message-level delete or file-restore behavior.
+- Thread deletion must not clear legal, recovery, worktree, backup, or audit authority merely to satisfy the purge target.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
@@ -4177,7 +4181,7 @@ plan_unit_id: UCC-075
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: cmd.chat.rewind remains conversation-only, while cmd.chat.revert restores persisted file mutations through the canonical FileSafe pipeline using recorded absolute paths and refreshes affected editors through the mutation pipeline.
+canonical_text: cmd.chat.rewind remains conversation-only, while cmd.chat.revert resolves one immutable eligible assistant-turn whole-mutation manifest and exact-replaces its complete recorded scope through the canonical FileSafe manifest, verified rollback, journal, equality, restart, remote-custody, and recovery-hold rules using recorded absolute identities; it never partially restores a multi-file turn or changes conversation state.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4186,9 +4190,11 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- F2-204
 unblocks: []
 acceptance_criteria:
 - UCC-075 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- cmd.chat.revert returns the exact FileSafe restore outcomes, never restored_with_conflicts or partial success, and no_eligible_mutating_turn creates no FileSafe transaction.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -4215,9 +4221,13 @@ preserved_exact_tokens:
 - working_directory
 - affected editors
 - canonical mutation pipeline
+- whole-turn mutation manifest
+- no_eligible_mutating_turn
+- restore_recovery_required
 negative_constraints:
 - cmd.chat.rewind MUST NOT be used as a file-restore alias.
 - cmd.chat.revert must not reinterpret relative paths through the current working_directory.
+- cmd.chat.revert must not rewind conversation state, merge target content, or report partial multi-file success.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
@@ -4327,7 +4337,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Debug Mode UICommand IDs are internal wiring IDs, not User Commands.
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/Commands_System.md#5.2.8-debug-mode-uicommand-family'
+- 'ContractRef: ContractName:Plans/Commands_System.md#7.1-debug-mode-dispatch-family'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -5083,7 +5093,13 @@ plan_unit_id: UCC-090
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: SCM-targeted retry and fresh-attempt recovery commands support the same worktree reuse policy as restore; baseline_target is the closed safe_point/historical_commit/worktree_head enum and runtime dispatch must validate repo, worktree, and baseline exactly.
+canonical_text: >-
+  SCM-targeted retry and fresh-attempt recovery commands use the closed
+  safe_point/historical_commit/worktree_head baseline_target enum with per-value exact fields and
+  effects: safe_point exact-replaces the named worktree, historical_commit creates an isolated
+  clean worktree at a full immutable commit OID while preserving the source, and worktree_head
+  binds the exact live OID/state digest without mutation; runtime rejects missing, stale, moving,
+  mismatched, or substitute identity.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -5095,6 +5111,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-090 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- Each baseline target requires its exact immutable fields and produces only its owner-defined effect/postcondition before durable successor admission.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:

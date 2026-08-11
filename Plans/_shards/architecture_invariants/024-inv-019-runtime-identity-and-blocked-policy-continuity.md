@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L278-L312
+Source lines: L288-L323
 
-Source SHA256: `6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1`
+Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
 
 ---
 
@@ -19,6 +19,7 @@ Source SHA256: `6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1
 - DAE jail posture, approval posture, usage switch-history, and execution-role follow-through remain continuous across retries, resumes, restores, and recovered attempts.
 - Cross-surface consumers reuse the frozen runtime `state-summary` instead of inventing local phrasing: `effective_health_state`, `effective_pressure_state`, and `effective_resolution_outcome` use the scheduler vocabulary and remain canonical effective-state fields even when Agent-Config, Health, Usage, or other surfaces show live current values.
 - Runtime recovery invariants include safe-point vs restore-point boundaries, `graph-lock` non-degradation, `classification-before-policy`, `checkpoint-derived` projection freshness, and `attempt-boundary` identity freeze. `Plans/FileSafe.md` remains the DAE enforcement owner for post-approval arg mutation, `context_files` write-scope widening, `fail-open` initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift; `Plans/MiscPlan.md` cleanup wording must not let best-effort prepare/cleanup invalidate safe-point prerequisites or let `mtime-based` evidence pruning cut across `attempt-lineage` retention.
+- Cleanup eligibility is anchor-derived, never age- or worktree-binding-derived while recovery remains live. A `requires_safe_point_restore` blocked episode, canonical safe-point record, snapshot/blob refs, and `recovery_anchor_record` publish as one durability unit; cleanup remains forbidden while any active-attempt, unresolved blocked-episode, nonterminal restore-transaction, preserved-run, or legal-hold ref exists. The recovery anchor releases only for `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user`. Missing or corrupt required recovery material becomes `recovery_unavailable`, preserves local work and ownership, and remains blocked and anchored; no janitor, retention timer, archive, exit, or run-completion path may convert that loss into semantic resolution.
 - Runtime governance is a `governance-layer` invariant, not only UI/storage cleanup: `Plans/Decision_Policy.md` owns first-class concern / corroboration / promotion objects plus `/corroboration/promotion`, authority, and `/lifecycle` rules; `Plans/Permissions_System.md` consumes the stricter requested/effective identity model that `Plans/Contracts_V0.md` now makes canonical; and this document records scheduler lane ordering plus `mutation-safe-point` requirements.
 - Cross-surface command wrappers remain route consumers, not runtime owners: `Plans/UI_Command_Catalog.md` entries such as `cmd.artifacts.show_in_ledger`, `cmd.artifacts.show_in_usage`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, and `cmd.panel.switch` may stay `navigation-like` wrappers only when they normalize through canonical route/runtime objects.
 - `Plans/Run_Graph_View.md` must resolve its internal identity split before consumers treat it as runtime truth: older `tier_id` / `tier_type` detail panes, worker activity, verification streams, Usage links, and event correlation cannot compete with `scheduler_pass_id`, `blocked_sequence`, `safe_point_id`, and remediation lineage.

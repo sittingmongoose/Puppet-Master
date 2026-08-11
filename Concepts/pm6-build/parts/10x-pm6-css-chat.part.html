@@ -40,18 +40,6 @@
       flex: none;
     }
     .pm6-chat-headstats { font-size: var(--fs-xs); }
-    .pm6-chat-issues {
-      color: var(--accent-orange);
-      border: 1px solid var(--accent-orange);
-      display: flex; align-items: center; gap: 4px;
-      text-decoration: none;
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      cursor: pointer;
-      transition: background var(--motion-fast) var(--ease-default);
-    }
-    .pm6-chat-issues:hover { background: color-mix(in srgb, var(--accent-orange) 14%, transparent); }
     .pm6-chat-iconbtn {
       background: none; border: none;
       color: var(--text-secondary);
@@ -62,8 +50,158 @@
       transition: color var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-default);
     }
     .pm6-chat-iconbtn:hover { color: var(--text-primary); background: var(--accent-soft); }
-    .pm6-chat-ctx { cursor: pointer; color: var(--text-secondary); font-family: var(--body-font); display: flex; align-items: center; gap: var(--xs); }
-    .pm6-chat-ctx-label { font-variant-numeric: tabular-nums; }
+    /* More-options kebab — collapses duplicate/archive/popout/close (docked)
+       and layout-cycle/close (floating) into one sprout menu */
+    .pm6-chat-more-wrap { position: relative; flex-shrink: 0; }
+    .pm6-chat-more-btn[aria-expanded="true"] {
+      color: var(--text-primary);
+      background: var(--accent-soft);
+    }
+    /* Title-bar theme/project menus share the chat more-options sprout contract
+       (Slint: PopupWindow, not native ComboBox). */
+    .pm6-tb-menu-wrap { position: relative; flex-shrink: 0; }
+    .pm6-tb-menu-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--xs);
+      font-family: var(--body-font);
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .pm6-tb-menu-trigger[aria-expanded="true"] {
+      color: var(--text-primary);
+    }
+    .pm6-chat-more-menu,
+    .pm6-tb-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 210px;
+      z-index: 220;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elev-3);
+      padding: var(--xs) 0;
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -10px;
+      --pm6-sprout-sx: 0.72;
+      --pm6-sprout-sy: 0.48;
+      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms;
+      will-change: transform, opacity;
+    }
+    /* Project menu sprouts from the left side of the trigger */
+    #projectMenu {
+      right: auto;
+      left: 0;
+      --pm6-sprout-ox: 12%;
+    }
+    .pm6-chat-more-menu.is-open,
+    .pm6-tb-menu.is-open {
+      display: block;
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s;
+    }
+    .pm6-chat-more-menu.is-closing,
+    .pm6-tb-menu.is-closing {
+      display: block;
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms;
+    }
+    /* Override .chat-panel-header .panel-actions button { width/height: 24px }
+       — that rule was squashing menu item labels into a 24×24 box. */
+    .chat-panel-header .panel-actions .pm6-chat-more-item,
+    .pm6-chat-more-item,
+    .pm6-tb-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: auto;
+      min-height: 32px;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 0;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .pm6-chat-more-item:hover,
+    .pm6-tb-menu-item:hover {
+      background: var(--surface);
+      color: var(--text-primary);
+    }
+    .pm6-tb-menu-item.is-selected {
+      color: var(--text-primary);
+      background: var(--accent-soft);
+    }
+    .pm6-chat-more-item.destructive { color: var(--accent-error); }
+    .pm6-chat-more-item.destructive:hover {
+      background: color-mix(in srgb, var(--accent-error) 10%, transparent);
+      color: var(--accent-error);
+    }
+    .pm6-chat-more-item svg { flex-shrink: 0; width: 13px; height: 13px; }
+    .pm6-chat-more-item span { flex: 1 1 auto; min-width: 0; }
+    .pm6-chat-ctx {
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-family: var(--body-font);
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+      border-radius: 50%;
+      transition: filter 0.2s ease, color 0.2s ease;
+    }
+    /* ring alone in the header (token label removed); ~25% larger than the old 12px */
+    .pm6-chat-ctx > svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: block;
+      transition: filter 0.2s ease;
+    }
+    /* Glow on hover / while open — same accent-blue as context-lens hover border,
+       soft bloom (not a hard outline ring around the SVG). */
+    .pm6-chat-ctx:hover > svg,
+    .pm6-chat-ctx.is-ctx-open > svg {
+      filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent-blue) 70%, transparent))
+              drop-shadow(0 0 7px color-mix(in srgb, var(--accent-blue) 40%, transparent));
+    }
+    .pm6-chat-ctx-label { display: none; }
     .pm6-chat-wt { position: relative; }
     .pm6-chat-wt-dot {
       position: absolute; top: -1px; right: -2px;
@@ -71,12 +209,40 @@
       background: var(--accent-orange);
       display: none;
     }
-    .wt-bind-btn.wt-unbound { color: var(--text-muted); opacity: .55; }
-    .wt-bind-btn.wt-bound-clean { color: var(--accent-lime); }
-    .wt-bind-btn.wt-bound-dirty { color: var(--accent-lime); }
+    .wt-bind-btn.wt-unbound { color: var(--text-muted); opacity: .55; filter: grayscale(1); }
+    .wt-bind-btn.wt-bound-clean { color: var(--accent-lime); opacity: 1; filter: none; }
+    .wt-bind-btn.wt-bound-dirty { color: var(--accent-lime); opacity: 1; filter: none; }
     .wt-bind-btn.wt-bound-dirty .pm6-chat-wt-dot { display: block; }
-    .wt-bind-btn.wt-bound-conflict { color: var(--accent-warning); }
+    .wt-bind-btn.wt-bound-conflict { color: var(--accent-warning); opacity: 1; filter: none; }
     .wt-bind-btn.wt-bound-conflict .pm6-chat-wt-dot { display: block; background: var(--accent-error); }
+    /* Bound/unbound hover = exact lens hover (must beat state color rules above) */
+    .wt-bind-btn:hover,
+    .wt-bind-btn.wt-unbound:hover,
+    .wt-bind-btn.wt-bound:hover,
+    .wt-bind-btn.wt-bound-clean:hover,
+    .wt-bind-btn.wt-bound-dirty:hover,
+    .wt-bind-btn.wt-bound-conflict:hover {
+      color: var(--text-primary);
+      border-color: var(--accent-blue);
+      background: var(--surface);
+      opacity: 1;
+      filter: none;
+    }
+    /* Glass hover must live AFTER the late bound-hover block so step-2 / hairline
+       wins over accent-blue — same as .context-lens-btn:hover on glass. */
+    [data-theme^="glass"] .context-lens-btn:hover,
+    [data-theme^="glass"] .wt-bind-btn:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-unbound:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-clean:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-dirty:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-conflict:hover {
+      background: var(--pm6-glass-step-2);
+      border-color: var(--glass-edge);
+      color: var(--text-primary);
+      opacity: 1;
+      filter: none;
+    }
     .pm6-chat-wt-row {
       padding: 3px 8px;
       font-size: var(--fs-xs);
@@ -85,14 +251,62 @@
     }
     .pm6-chat-wt-row:hover { background: var(--surface-elevated); }
     .pm6-chat-sbtitle {
-      padding: var(--md);
+      padding: 6px 8px;
       font-weight: 600;
-      font-size: var(--fs-sm);
-      letter-spacing: .06em;
+      font-size: 11.5px;
+      letter-spacing: 0.02em;
       border-bottom: 1px solid var(--border-light);
       display: flex; justify-content: space-between; align-items: center;
       color: var(--text-secondary);
+      gap: 4px;
+      min-height: 30px;
+      box-sizing: border-box;
     }
+
+    /* ---- frosted scroll-under chrome (Task 5) ----
+       The stream scrolls BEHIND the chat header: content stays sharp
+       until it reaches the header's lower boundary, then attenuates
+       into the frost plate. The header height is variable (stacked
+       rows, badges, density) — 29x-pm6-js-chat measures it into
+       --pm-chat-head-h on each mount root (58px CSS fallback).
+       Overlap cascade: every overflow:hidden ancestor between the
+       panel root and the stream is lifted by the header height so the
+       scrollport reaches behind the header; each level's padding-top
+       puts its children back below the header. The sidebar stays
+       untouched under the plate (chat-body padding). */
+    .chat-panel-header.pm6-chat-header {
+      position: relative;
+      z-index: 6;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+      border-bottom: 1px solid var(--border-light);
+    }
+    /* glass blur budget: the shell carries the only backdrop-filter in
+       a pane — the header falls back to a near-opaque plate */
+    [data-theme^="glass"] .chat-panel-header.pm6-chat-header {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    #chatPanel .chat-body,
+    #floatingChat .chat-body {
+      margin-top: calc(-1 * var(--pm-chat-head-h, 58px));
+      padding-top: var(--pm-chat-head-h, 58px);
+    }
+    #chatPanel .chat-main,
+    #floatingChat .chat-main {
+      margin-top: calc(-1 * var(--pm-chat-head-h, 58px));
+      padding-top: var(--pm-chat-head-h, 58px);
+    }
+    #chatPanel .pm6-chat-stream,
+    #floatingChat .pm6-chat-stream {
+      margin-top: calc(-1 * var(--pm-chat-head-h, 58px));
+    }
+    /* sticky plan tracker pins just below the frost plate, not at the
+       scrollport top (which now sits behind the header); fallback
+       mirrors the stream's 58px overlap fallback */
+    .sticky-plan-tracker { top: var(--pm-chat-head-h, 58px); }
 
     /* ---- thread sidebar ---- */
     .pm6-chat-newthread {
@@ -111,6 +325,27 @@
     }
     .pm6-chat-newthread:hover { background: var(--accent-glow); }
     .pm6-chat-newthread:active { transform: scale(.97); }
+    /* Header "+" shares .pm6-chat-newthread — keep it a compact square, not the CTA. */
+    .pm6-chat-newthread.pm6-chat-newthread-add {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; flex: 0 0 18px;
+      margin: 0; padding: 0; gap: 0;
+      font-size: 0; line-height: 0;
+      color: var(--text-secondary);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      align-self: center;
+      box-sizing: border-box;
+    }
+    .pm6-chat-newthread.pm6-chat-newthread-add:hover {
+      color: var(--accent-primary);
+      border-color: var(--accent-primary);
+      background: var(--accent-soft);
+      transform: none;
+    }
+    .pm6-chat-newthread.pm6-chat-newthread-add:active { transform: scale(.96); }
+    .pm6-chat-newthread.pm6-chat-newthread-add svg { width: 10px; height: 10px; display: block; }
     .pm6-chat-thread { border-radius: var(--radius-sm); }
     @keyframes pm6-chat-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -119,6 +354,12 @@
 
     /* ---- stream + typed messages ---- */
     .pm6-chat-stream { scroll-behavior: smooth; }
+    /* Flex column + overflow:auto: default flex-shrink:1 crushes cards (e.g.
+       wizardrec) to a single line. Children must keep their natural height. */
+    .messageStream > *,
+    .pm6-chat-stream > * {
+      flex-shrink: 0;
+    }
     .pm6-chat-msg { animation: pm-enter-up var(--motion-med) var(--ease-default) both; }
     .pm6-chat-sys {
       align-self: center;
@@ -412,18 +653,29 @@
       transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
     }
     .pm6-chat-ptbtn.active { background: var(--accent-soft); color: var(--accent-primary); }
+    .pm6-chat-composer-actions { display: inline-flex; align-items: center; gap: var(--sm); flex: none; }
+    .pm6-chat-rewind {
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); color: var(--text-secondary);
+      cursor: pointer; padding: 0; margin-right: 2px;
+      transition: color var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-default), border-color var(--motion-fast) var(--ease-default);
+    }
+    .pm6-chat-rewind:hover { color: var(--text-primary); background: var(--accent-soft); border-color: var(--accent-glow); }
+    .pm6-chat-rewind.is-open { color: var(--accent-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+    .pm6-chat-rewind svg { width: 14px; height: 14px; }
     .pm6-chat-send {
-      display: inline-flex; align-items: center; gap: var(--xs);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; padding: 0;
       background: var(--accent-primary);
       border: 1px solid var(--accent-primary);
       color: var(--surface);
       border-radius: var(--radius-sm);
-      font-size: var(--fs-xs);
-      font-weight: 700;
-      padding: 5px 14px;
       cursor: pointer;
       transition: background var(--motion-med) var(--ease-default), border-color var(--motion-med) var(--ease-default), transform var(--motion-fast) var(--ease-default);
     }
+    .pm6-chat-send svg { width: 14px; height: 14px; }
     .pm6-chat-send:active { transform: scale(.95); }
     .pm6-chat-send .pm6-chat-send-ico-stop { display: none; }
     .pm6-chat-send[data-pm6-state="busy"] { background: var(--accent-magenta); border-color: var(--accent-magenta); }
@@ -447,27 +699,306 @@
       box-shadow: var(--elev-3), 0 0 0 100vmax color-mix(in srgb, var(--background) 55%, transparent);
     }
 
-    /* ---- web-op runner: suggestion chips / progress / route tree / preview table ---- */
-    .pm6-chat-suggest {
-      display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap;
-      padding: 2px 2px var(--xs);
+    /* ---- FAB stack (footer expand + rewind menu) ---- */
+    .pm6-fab-portal {
+      position: fixed; z-index: 1300;
+      transform: translateX(-50%);
+      pointer-events: none;
     }
-    .pm6-chat-suggest-label {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-      color: var(--text-muted); flex: none;
-    }
-    .pm6-chat-suggest-label .pm6-ico { display: inline-flex; width: 12px; }
-    .pm6-chat-suggestchip {
-      font-family: var(--body-font); font-size: var(--fs-xs);
-      color: var(--text-secondary);
+    .pm6-fab-portal.is-active { pointer-events: auto; }
+    .pm6-fab-stack { position: relative; width: max-content; min-width: 120px; }
+    .pm6-fab-item {
+      position: absolute; left: 50%; bottom: 0;
+      transform: translateX(-50%) translateY(6px) scale(0.88);
+      opacity: 0;
+      display: inline-flex; align-items: center; gap: var(--xs);
+      white-space: nowrap;
+      padding: 5px 10px;
+      font-size: var(--fs-2xs); font-weight: 600;
+      font-family: var(--body-font);
+      color: var(--text-primary);
       background: var(--surface-elevated);
       border: 1px solid var(--border-light);
-      border-radius: var(--radius-pill);
-      padding: 2px 10px; cursor: pointer;
-      transition: color var(--motion-fast) var(--ease-default), border-color var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-default);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 14px rgba(0,0,0,.14);
+      cursor: pointer;
+      transition: transform var(--motion-med) var(--ease-spring), opacity var(--motion-med) var(--ease-default);
+      transition-delay: 0ms;
     }
-    .pm6-chat-suggestchip:hover { color: var(--accent-primary); border-color: var(--accent-glow); background: var(--accent-soft); }
+    .pm6-fab-item:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+    .pm6-fab-item .pm6-fab-sub { color: var(--text-muted); font-weight: 500; margin-left: var(--xs); font-variant-numeric: tabular-nums; }
+    .pm6-fab-portal.is-active .pm6-fab-item {
+      opacity: 1;
+      transform: translateX(-50%) translateY(calc(var(--fab-i) * -38px - 4px)) scale(1);
+      transition-delay: calc(var(--fab-i) * 45ms);
+    }
+    [data-motion="reduced"] .pm6-fab-item { transition: none; }
+    [data-motion="reduced"] .pm6-fab-portal.is-active .pm6-fab-item {
+      transform: translateX(-50%) translateY(calc(var(--fab-i) * -38px - 4px));
+    }
+    /* Corner-origin spring popouts — matched to reference video (slowed):
+       boxes sprout from the trigger corner, fill out (non-uniform scale),
+       overshoot slightly, then settle. Open + close share the same duration.
+       Close stays nearly opaque (video barely fades); search height uses a
+       stronger spring so filtered lists bounce as they resize. */
+    .pm6-chat-mini-popout-portal,
+    .pm6-chat-effort-popout-portal,
+    .pm6-chat-mode-popout-portal,
+    .pm6-chat-persona-popout-portal,
+    .pm6-chat-pt-popout-portal {
+      position: fixed;
+      width: 280px;
+      max-height: min(420px, 70vh);
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elev-3);
+      padding: var(--xs);
+      z-index: 1200;
+      /* bottom-anchored: height changes shrink the top edge, not the spawn edge */
+      top: auto;
+      /* sprout origin + closed nudge set per-open from nearest trigger corner */
+      --pm6-sprout-ox: 14%;
+      --pm6-sprout-oy: 100%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: 10px;
+      --pm6-sprout-sx: 0.72;
+      --pm6-sprout-sy: 0.48;
+      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+      opacity: 0;
+      /* closed: compressed toward the trigger corner — taller grow than wide ("fill out") */
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms,
+        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+      will-change: transform, opacity, height;
+    }
+    .pm6-chat-mini-popout-portal.is-open,
+    .pm6-chat-mode-popout-portal.is-open,
+    .pm6-chat-persona-popout-portal.is-open,
+    .pm6-chat-effort-popout-portal.is-open,
+    .pm6-chat-pt-popout-portal.is-open {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s,
+        /* springy height for search-filter resize bounce */
+        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+    }
+    .pm6-chat-mini-popout-portal.is-closing,
+    .pm6-chat-mode-popout-portal.is-closing,
+    .pm6-chat-persona-popout-portal.is-closing,
+    .pm6-chat-effort-popout-portal.is-closing,
+    .pm6-chat-pt-popout-portal.is-closing {
+      /* video: solid through most of the collapse; only a late, tiny fade */
+      opacity: 0;
+      /* collapse into the same trigger corner set at open */
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms,
+        height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+    }
+    /* search-filter / effort-option-count size bounce — stretch settles with height spring */
+    @keyframes pm6-popout-size-bounce {
+      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+      40%  { transform: translate3d(0, 0, 0) scale3d(1.012, 1.055, 1); }
+      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+    }
+    /* side flyouts (effort / mode thoroughness): stronger vertical overshoot —
+       matched to reference video when option count changes (e.g. 3 → 4 levels) */
+    @keyframes pm6-effort-size-bounce {
+      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+      35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
+      70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
+      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+    }
+    .pm6-chat-mini-popout-portal.is-open.is-size-bounce,
+    .pm6-chat-persona-popout-portal.is-open.is-size-bounce {
+      animation: pm6-popout-size-bounce 380ms cubic-bezier(0.22, 1.55, 0.36, 1);
+    }
+    .pm6-chat-effort-popout-portal.is-open.is-size-bounce,
+    .pm6-chat-pt-popout-portal.is-open.is-size-bounce {
+      animation: pm6-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+    }
+    .pm6-chat-effort-popout-portal {
+      width: 148px; max-height: none; overflow: visible;
+      z-index: 1210; padding: 6px;
+      top: 0; /* effort flyout is row-relative; JS sets top/left */
+      /* default: sprout from left edge (opens to the right of a row) */
+      --pm6-sprout-ox: 0%;
+      --pm6-sprout-oy: 28%;
+      --pm6-sprout-tx: -10px;
+      --pm6-sprout-ty: 0px;
+      --pm6-sprout-sx: 0.48;
+      --pm6-sprout-sy: 0.72;
+    }
+    /* option-count resize: stronger height spring than search-filter bounce */
+    .pm6-chat-effort-popout-portal.is-open {
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s,
+        height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+    }
+    .pm6-chat-mode-popout-portal { width: 260px; z-index: 1250; }
+    .pm6-chat-persona-popout-portal { width: 260px; z-index: 1240; }
+    .pm6-chat-modelbtn,
+    .pm6-chat-modebtn,
+    .pm6-chat-personabtn { cursor: pointer; }
+    .pm6-chat-modelsearch,
+    .pm6-chat-modesearch,
+    .pm6-chat-personasearch {
+      display: flex; align-items: center; gap: 6px;
+      margin: 2px 2px 6px; padding: 6px 8px;
+      background: var(--surface); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      position: sticky; top: 0; z-index: 1;
+    }
+    .pm6-chat-modelsearch svg,
+    .pm6-chat-modesearch svg,
+    .pm6-chat-personasearch svg { flex: none; opacity: .7; }
+    .pm6-chat-modelsearch input,
+    .pm6-chat-modesearch input,
+    .pm6-chat-personasearch input {
+      flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+      color: var(--text-primary); font: 600 12px/1.3 var(--body-font);
+    }
+    .pm6-chat-modelsearch input::placeholder,
+    .pm6-chat-modesearch input::placeholder,
+    .pm6-chat-personasearch input::placeholder { color: var(--text-muted); font-weight: 500; }
+    .pm6-chat-modellist,
+    .pm6-chat-modelist,
+    .pm6-chat-personalist { display: flex; flex-direction: column; gap: 1px; }
+    [data-motion="reduced"] .pm6-chat-mini-popout-portal,
+    [data-motion="reduced"] .pm6-chat-mode-popout-portal,
+    [data-motion="reduced"] .pm6-chat-persona-popout-portal,
+    [data-motion="reduced"] .pm6-chat-effort-popout-portal,
+    [data-motion="reduced"] .pm6-chat-pt-popout-portal {
+      transition: none !important;
+      transform: none !important;
+    }
+    [data-motion="reduced"] .pm6-chat-mini-popout-portal.is-open,
+    [data-motion="reduced"] .pm6-chat-mode-popout-portal.is-open,
+    [data-motion="reduced"] .pm6-chat-persona-popout-portal.is-open,
+    [data-motion="reduced"] .pm6-chat-effort-popout-portal.is-open,
+    [data-motion="reduced"] .pm6-chat-pt-popout-portal.is-open {
+      opacity: 1; visibility: visible; pointer-events: auto;
+    }
+    .pm6-chat-effortbtn {
+      display: flex; width: 100%; align-items: center; justify-content: space-between;
+      text-align: left; gap: 8px;
+      border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 600; letter-spacing: 0;
+      padding: 7px 8px;
+      cursor: pointer;
+      color: var(--text-primary);
+      background: transparent; border: none;
+    }
+    .pm6-chat-effortbtn:hover { background: var(--surface); }
+    .pm6-chat-effortbtn.active { background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+    .pm6-chat-effortbtn .pm6-chat-check { opacity: 0; color: var(--text-primary); }
+    .pm6-chat-effortbtn.active .pm6-chat-check { opacity: 1; }
+    .pm6-chat-modelgroup {
+      padding: 8px 8px 4px;
+      font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .pm6-chat-modelgroup-divider { border-top: 1px solid var(--border-light); margin-top: 4px; padding-top: 8px; }
+    .pm6-chat-selrow {
+      display: flex; gap: var(--sm); align-items: center; font-size: 10px;
+      padding: 2px 0; min-width: 0;
+    }
+    .pm6-chat-selslot { position: relative; flex: 1 1 0; min-width: 0; }
+    .pm6-chat-selbtn {
+      background: var(--surface-elevated); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: 3px 8px; min-width: 0; min-height: 26px;
+      width: 100%; justify-content: space-between; color: var(--text-primary);
+      cursor: pointer; display: flex; align-items: center; gap: var(--xs);
+      font-size: 11px; font-weight: 600;
+    }
+    .pm6-chat-selbtn .persona-label,
+    .pm6-chat-selbtn .model-label,
+    .pm6-chat-selbtn .mode-label {
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    }
+    .pm6-chat-inputarea { overflow-x: hidden; }
+    .pm6-chat-modelitem,
+    .pm6-chat-modeitem,
+    .pm6-chat-personaitem {
+      display: flex; width: 100%; align-items: center; gap: 8px;
+      text-align: left; padding: 7px 8px;
+      font-size: 12px; font-weight: 600;
+      border: none; background: transparent; cursor: pointer;
+      color: var(--text-primary); border-radius: var(--radius-sm);
+    }
+    .pm6-chat-modelitem:hover,
+    .pm6-chat-modelitem.is-hover,
+    .pm6-chat-modeitem:hover,
+    .pm6-chat-modeitem.is-hover,
+    .pm6-chat-personaitem:hover,
+    .pm6-chat-personaitem.active { background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+    .pm6-chat-modelitem.active,
+    .pm6-chat-modeitem.active,
+    .pm6-chat-personaitem.active { background: var(--accent-soft); color: var(--text-primary); }
+    .pm6-chat-modename,
+    .pm6-chat-personaname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm6-chat-personacheck {
+      flex: none; width: 14px; opacity: 0; color: var(--text-primary);
+    }
+    .pm6-chat-personaitem.active .pm6-chat-personacheck { opacity: 1; }
+    .pm6-chat-modelgroup.pm6-hidden,
+    .pm6-chat-modelitem.pm6-hidden,
+    .pm6-chat-modeitem.pm6-hidden,
+    .pm6-chat-personaitem.pm6-hidden { display: none !important; }
+    .pm6-chat-modeeffort {
+      flex: none; font-size: 11px; font-weight: 500; color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+    .pm6-chat-modecheck {
+      flex: none; width: 14px; opacity: 0; color: var(--text-primary);
+    }
+    .pm6-chat-modeitem.active .pm6-chat-modecheck { opacity: 1; }
+    .pm6-chat-modelico {
+      width: 18px; height: 18px; border-radius: 50%; flex: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800; letter-spacing: 0;
+      background: var(--surface); color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+    }
+    .pm6-chat-modelico[data-prov="claude"] { color: var(--accent-orange); border-color: color-mix(in srgb, var(--accent-orange) 40%, var(--border)); }
+    .pm6-chat-modelico[data-prov="codex"] { color: var(--accent-lime); border-color: color-mix(in srgb, var(--accent-lime) 40%, var(--border)); }
+    .pm6-chat-modelico[data-prov="gemini"] { color: var(--accent-blue); border-color: color-mix(in srgb, var(--accent-blue) 40%, var(--border)); }
+    .pm6-chat-modelname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm6-chat-modeleffort {
+      flex: none; font-size: 11px; font-weight: 500; color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+    .pm6-chat-modelcheck {
+      flex: none; width: 14px; opacity: 0; color: var(--text-primary);
+    }
+    .pm6-chat-modelitem.active .pm6-chat-modelcheck { opacity: 1; }
+    .pm6-chat-effort-popout .pm6-chat-pt-flytitle {
+      font-size: 11px; font-weight: 600; color: var(--text-secondary);
+      padding: 4px 8px 6px; letter-spacing: 0.01em;
+    }
+    .pm6-chat-effort-popout .pm6-chat-pt-close { display: none; }
+    .pm6-chat-queuechip-x svg { width: 10px; height: 10px; }
     .pm6-opcard-ts { margin-left: auto; font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; flex: none; }
     .pm6-opcard-ts + .pm6-op-chipslot { flex: none; }
     .pm6-opcard-toggle { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0 2px; font-size: 10px; flex: none; }
@@ -512,44 +1043,50 @@
       color: var(--text-primary); font-size: 11px;
     }
     .pm6-chat-sbtitle .pm6-chat-sbtitle-label { margin-right: auto; }
-    .pm6-chat-newthread-mini {
-      width: auto; flex: none;
-      margin: 0 var(--xs) 0 var(--sm);
-      padding: 2px var(--sm);
-      font-size: var(--fs-2xs);
-    }
-    /* context-usage module: pure-CSS hover reveal + click-to-pin (the module
-       is a child of the pill, so hovering into the popover keeps it open) */
-    .context-usage:hover .context-hover-module,
-    .context-usage.pinned .context-hover-module { display: block; }
+    /* context-usage module: click sprout open/close (JS .is-open) — Compact now always visible */
     .context-hover-module .chm-compact-btn { display: inline-block; }
-    /* planning-thoroughness flyout — nested in the Plan / Deep Plan items */
-    .pm6-chat-modepop .chat-dropdown-item.pm6-has-pt { position: relative; }
-    .pm6-chat-pt-flyout {
-      display: none;
-      position: absolute; left: 100%; top: 0;
-      min-width: 210px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-light);
+    /* Issue 9: planning-thoroughness is a SEPARATE popout window (body-portal),
+       opened when the user picks Plan / Deep Plan. It is no longer a nested
+       submenu of the mode popover. Shares sprout motion with other chat popouts. */
+    .pm6-chat-pt-popout-portal {
+      width: 248px;
+      max-height: none;
+      overflow: visible;
       border-radius: var(--radius-sm);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      padding: var(--xs);
-      z-index: 80;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.32);
     }
-    .chat-dropdown-popover.active .pm6-has-pt:hover > .pm6-chat-pt-flyout,
-    .chat-dropdown-popover.active .pm6-has-pt.active > .pm6-chat-pt-flyout { display: block; }
     .pm6-chat-pt-flytitle {
+      display: flex; align-items: center; justify-content: space-between;
       font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
       color: var(--text-muted);
       padding: var(--xs) var(--sm);
     }
-    .pm6-chat-pt-flyout .pm6-chat-ptbtn {
+    .pm6-chat-pt-close {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      padding: 2px; border-radius: var(--radius-xs); display: inline-flex; align-items: center;
+    }
+    .pm6-chat-pt-close:hover { color: var(--text-primary); background: var(--accent-soft); }
+    .pm6-chat-pt-close svg { width: 12px; height: 12px; }
+    .pm6-chat-pt-body { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--xs); }
+    .pm6-chat-pt-popout .pm6-chat-ptbtn {
       display: block; width: 100%; text-align: left;
       border-radius: var(--radius-xs);
       font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0;
       padding: var(--xs) var(--sm);
     }
-    .pm6-chat-pt-flyout .pm6-chat-ptbtn:hover { background: var(--surface); }
+    .pm6-chat-pt-popout .pm6-chat-ptbtn:hover { background: var(--surface); }
+    .pm6-chat-pt-popout .pm6-chat-ptbtn.active { background: var(--accent-soft); color: var(--accent-primary); }
+    /* subtle hint chip on the Plan / Deep Plan items */
+    .pm6-mode-pt-hint {
+      font-size: 9px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--text-muted); margin-left: var(--xs);
+      padding: 1px 5px; border: 1px solid var(--border-light); border-radius: var(--radius-xs);
+    }
+    /* keep the legacy nested-flyout class names neutralized in case any theme
+       still references them — they are unused now */
+    .pm6-chat-pt-flyout { display: none !important; }
+    .chat-dropdown-popover.active .pm6-has-pt:hover > .pm6-chat-pt-flyout,
+    .chat-dropdown-popover.active .pm6-has-pt.active > .pm6-chat-pt-flyout { display: none !important; }
 
     /* ---- wizard-embedded surface (PM6_CHAT_UI.writeEmbedded — chrome off:
        stream bubbles + quick-reply chips + gated composer only; wrapper keeps
@@ -599,9 +1136,7 @@
     [data-theme^="retro"] .pm6-chat-ptbtn,
     [data-theme^="retro"] .pm6-chat-send,
     [data-theme^="retro"] .pm6-chat-btn { border-radius: 0; }
-    [data-theme^="retro"] .pm6-chat-suggestchip,
     [data-theme^="retro"] .pm6-route-tree { border-radius: 0; }
-    [data-theme^="glass"] .pm6-chat-suggestchip { background: var(--pm6-glass-step-2); }
     [data-theme^="basic"] .pm6-chat-card,
     [data-theme^="basic"] .pm6-opcard { animation: none; }
     /* friendly cozy: neutral chat cards; worktree rows ride lavender */
@@ -620,9 +1155,7 @@
     @media (prefers-reduced-motion: reduce) {
       .pm6-opcard-progressfill { transition: none; }
       .pm6-opcard-chip-running { animation: none; }
-      .pm6-chat-suggestchip { transition: none; }
     }
     [data-motion="reduced"] .pm6-opcard-progressfill { transition: none; }
     [data-motion="reduced"] .pm6-opcard-chip-running { animation: none; }
-    [data-motion="reduced"] .pm6-chat-suggestchip { transition: none; }
   </style>

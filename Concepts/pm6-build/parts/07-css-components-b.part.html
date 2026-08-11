@@ -63,7 +63,13 @@
     .minimap-heat-strip.hs-conflict { background: var(--accent-orange); }
     .editor-code {
       flex: 1;
-      padding: var(--md);
+      /* Vertical padding halved to buy back the room the new horizontal
+         scrollbar costs. .editor-gutter's vertical padding (css-components-a)
+         MUST move with this one or the line numbers stop lining up — including
+         the --pm6-editor-tabs-h term, which is the scroll-under lift: the code
+         runs behind the frosted tab bar and both boxes re-pad by the same
+         amount, so line N stays at padding-top + N*18px in each. */
+      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) var(--md) var(--sm);
       font-family: 'Consolas', 'Monaco', monospace;
       font-size: 13px;
       overflow: auto;

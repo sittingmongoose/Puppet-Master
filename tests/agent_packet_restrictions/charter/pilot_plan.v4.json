@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.pilot_plan.v4",
+  "method_id": "apr-method-v4.0.0",
+  "version_opened_at_utc": "2026-08-02T20:51:05Z",
+  "freeze_authority": "latest_passing_verify_freeze_receipt_over_exact_final_artifact_bytes",
+  "model_matrix_status": "user_model_selection_pending",
+  "authorized_model_matrix_ref": null,
+  "authorized_model_matrix_sha256": null,
+  "authorization_receipt_ref": null,
+  "authorization_receipt_sha256": null,
+  "semantic_cases_ref": "cases/semantic_cases.v4.json",
+  "response_schema_ref": "cases/subject_response.v2.schema.json",
+  "deterministic_cases_ref": "fixtures/deterministic_cases.v4.json",
+  "route_canary_ref": "fixtures/nonsemantic_route_canary.v4.json",
+  "matrix_status_ref": "inventory/model_matrix_status.v4.json",
+  "final_freeze_contract": {
+    "required_static_refs": [
+      "charter/method.v4.md",
+      "charter/pilot_plan.v4.json",
+      "cases/semantic_cases.v4.json",
+      "cases/subject_response.v2.schema.json",
+    "cases/implementation_gated.v2.json",
+      "fixtures/deterministic_cases.v4.json",
+      "fixtures/nonsemantic_route_canary.v4.json",
+      "inventory/model_matrix_status.v4.json",
+    "inventory/surfaces.v2.json",
+      "charter/accepted_contract.v1.md",
+      "charter/dirty_tree_boundary.md",
+      "charter/correction-0001-user-model-selection-hold.md",
+      "charter/control_plane_defect-0001-v1-qualification-invalid.md",
+      "charter/control_plane_defect-0002-v2-qualification-invalid.md",
+      "charter/control_plane_defect-0003-v3-method-invalid.md",
+      "controller/controller.py"
+    ],
+    "required_dynamic_refs": [
+      {
+        "ref_field": "authorized_model_matrix_ref",
+        "sha256_field": "authorized_model_matrix_sha256",
+        "source": "gate_1_immutable_authorization_receipt"
+      },
+      {
+        "ref_field": "authorization_receipt_ref",
+        "sha256_field": "authorization_receipt_sha256",
+        "source": "gate_1_immutable_authorization_receipt_bytes"
+      }
+    ],
+    "dynamic_ref_resolution": "Resolve both exact non-null refs and SHA-256 values from gate 1. The immutable authorization receipt binds the exact matrix ref and matrix SHA-256; pilot-plan and matrix-status authorization fields must match it exactly.",
+    "input_artifact_membership_rule": "The freeze input-artifact path set equals required_static_refs plus exactly the resolved authorized model matrix ref and resolved authorization receipt ref; no missing or extra paths.",
+    "authorization_binding_rule": "The authorization receipt bytes recompute to authorization_receipt_sha256; its bound matrix ref and SHA-256 equal authorized_model_matrix_ref and authorized_model_matrix_sha256; and the same four values match the authorization fields in charter/pilot_plan.v4.json and inventory/model_matrix_status.v4.json.",
+    "gate_2_block_conditions": [
+      "null_dynamic_ref_or_hash",
+      "draft_or_unapproved_matrix",
+      "inferred_authorization",
+      "substituted_matrix_or_receipt",
+      "matrix_hash_mismatch",
+      "authorization_receipt_hash_mismatch",
+      "authorization_receipt_matrix_binding_mismatch",
+      "pilot_status_authorization_field_mismatch"
+    ],
+    "receipt_required_fields": [
+      "schema_id",
+      "method_id",
+      "run_id",
+      "created_at_utc",
+      "status",
+      "authorized_matrix_ref",
+      "authorized_matrix_sha256",
+      "authorization_receipt_ref",
+      "authorization_receipt_sha256",
+      "freeze_digest",
+      "controller_version",
+      "input_artifact_count",
+      "input_artifacts[].relative_path",
+      "input_artifacts[].bytes",
+      "input_artifacts[].sha256",
+      "invariant_errors",
+      "command"
+    ],
+    "receipt_pass_rule": "status is PASS, method_id is apr-method-v4.0.0, authorized matrix and authorization receipt refs/hashes equal the resolved gate-1 bindings, invariant_errors is empty, every artifact byte count and SHA-256 recomputes, and freeze_digest recomputes over the exact ordered manifest."
+  },
+  "prerequisite_order_strict": true,
+  "prerequisites": [
+    {
+      "order": 1,
+      "gate": "user_authorized_exact_matrix",
+      "requirement": "Jared supplies and authorizes exactly eight relative-low slots pairwise distinct by underlying model within the low stratum and two relative-high slots pairwise distinct within the high stratum, with exact provider/model/account/route and reasoning/variant settings; ten distinct overall is preferred and any cross-stratum overlap must be explicitly selected by Jared and disclosed. Gate 1 emits an immutable authorization receipt binding the exact matrix ref and SHA-256."
+    },
+    {
+      "order": 2,
+      "gate": "final_matrix_inclusive_freeze_pass",
+      "requirement": "The final exact-byte freeze input set equals final_freeze_contract.required_static_refs, including charter/pilot_plan.v4.json itself, plus exactly the resolved non-null gate-1 authorized matrix and immutable authorization receipt; both refs/hashes match the receipt and matrix-status authorization fields, and every byte/hash/digest check passes."
+    },
+    {
+      "order": 3,
+      "gate": "deterministic_qualification_bound_to_exact_final_freeze_pass",
+      "requirement": "The controller, capture path, scorer canaries, and deterministic fixtures pass while bound to the exact final matrix-inclusive freeze receipt and digest."
+    },
+    {
+      "order": 4,
+      "gate": "ten_exact_route_nonsemantic_canaries_pass",
+      "requirement": "One fresh canary for each exact authorized slot preserves requested reasoning/variant settings, passes provider/model/account/route identity binding plus every route-declared required or exposed effective reasoning/variant attestation, and is bound to the same final freeze and deterministic qualification receipt."
+    }
+  ],
+  "precondition_failure_rule": {
+    "user_authorized_exact_matrix": "on_failure_preserve_receipt_report_exact_blocker_stop_before_final_matrix_inclusive_freeze_pass",
+    "final_matrix_inclusive_freeze_pass": "on_failure_preserve_receipt_report_exact_blocker_stop_before_deterministic_qualification_bound_to_exact_final_freeze_pass",
+    "deterministic_qualification_bound_to_exact_final_freeze_pass": "on_failure_preserve_receipt_report_exact_blocker_stop_before_any_route_canary",
+    "ten_exact_route_nonsemantic_canaries_pass": "on_failure_preserve_receipts_report_exact_blocker_stop_before_semantic_pilot",
+    "pilot_qualification_stopper": "preserve_receipts_report_exact_blocker_stop_before_fleet"
+  },
+  "pilot_slots": ["L01", "L07", "H01"],
+  "pilot_case_ids": ["SC-01", "SC-03", "SC-06"],
+  "pilot_expected_call_count": 9,
+  "fresh_context_per_call": true,
+  "controller_semantic_retries": 0,
+  "subject_repair_calls": 0,
+  "hidden_reviewer_or_repair_calls": 0,
+  "pilot_outputs_reused_in_fleet": false,
+  "qualification_rule": {
+    "PASS": "preserve_as_subject_result_and_continue_pilot",
+    "PROTOCOL_FAIL": "preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "FALSE_COMPLETION": "preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "EVIDENCE_FAIL": "preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "UNCERTAINTY_FAIL": "preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "SEMANTIC_FAIL": "preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "FORBIDDEN_ACTION": "when_correctly_captured_and_attributed_preserve_as_subject_failure_result_and_continue_if_control_plane_is_sound",
+    "TIMEOUT": "preserve_failed_observation_and_stop_pilot_qualification",
+    "ROUTE_UNAVAILABLE": "preserve_failed_observation_and_stop_pilot_qualification",
+    "CONTROL_PLANE_DEFECT": "preserve_failed_pilot_stop_and_require_new_method_version",
+    "IDENTITY_AMBIGUOUS": "preserve_failed_observation_and_stop_pilot_qualification",
+    "IMPLEMENTATION_GATED": "pre_dispatch_only_no_subject_call_stop_before_pilot_and_report_implementation_blocker"
+  },
+  "fleet_gate": {
+    "semantic_cases": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06", "SC-07"],
+    "completed_positive_control": "SC-07",
+    "slots": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L08", "H01", "H02"],
+    "expected_call_count": 70,
+    "fresh_context_per_call": true,
+    "controller_semantic_retries": 0
+  },
+  "call_accounting": {
+    "route_canary_calls": 10,
+    "pilot_calls": 9,
+    "fleet_calls": 70,
+    "maximum_planned_subject_route_calls": 89,
+    "unrecorded_calls_permitted": 0
+  }
+}

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U7 · Board — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<link rel="stylesheet" href="_shared/usage-widgets.css">
+<link rel="stylesheet" href="_shared/usage-widget-renderers.css">
+<style>
+/* =====================================================================
+   U7 — BOARD · the orderly instrument board
+   One precise instrument grid of MOVE / RESIZE / CONFIGURE / ADD /
+   REMOVE widgets (UF-055/056/058/059/060). The grid is the shared
+   PMWidgets canvas and every widget body renders from the shared
+   density-aware catalog PMWidgetDefs — U7 owns only its canvas
+   treatment and bench chrome:
+   1. GROUND — an engineering graph-paper field (24px minor / 120px
+      major rulings), not U8's dotted fog.
+   2. MODULE CHROME — corner registration ticks on every module and a
+      live module number in each header (a CSS counter, so the numbers
+      re-run the moment you drag-reorder). Uniform headers, tight even
+      gaps, dense backfill: order IS the identity.
+   3. LAYOUT DEFAULTS — tier-aware curated defaultBoard: the 3/4/5/6
+      track grids each get a span set that tiles hole-free at
+      1280/1700/2200/2500 (quota focal band, paired twin modules,
+      full-width ledger deck). A pristine board re-locks to the new
+      tier when the window crosses a track breakpoint.
+    4. BENCH CHROME — the spend readout strip with a live grid readout,
+       a control-rail addbar, squared tracked toggles, provenance foot.
+    5. BENCH LIFE — U7's signature motion layer, built ON the shared
+       widget motion (never re-implementing it): a staggered module
+       power-on cascade (content bloom + registration-tick draw + frame
+       flash), a diagnostic scan sweeping the spend strip, odometer
+       ticks on the live module numbers when a reorder renumbers them,
+       and a brief border-pulse acknowledgement when live values land.
+       The bench hums; every effect freezes under reduced motion.
+    Sizing stays free grid-span (S/M/L/XL are shortcuts, a non-preset
+   span shows "Custom" in the kebab); layout persists as a versioned
+   envelope at localStorage 'pmw:u7-board'.
+   ===================================================================== */
+
+/* Big-number digits ride the canonical --num-font (themes.css:679-682) — the
+   friendly face's numerals resolve to loaded Nunito, glass to Sora, retro to
+   JetBrains Mono; no local shim, and the stale legacy display link is gone. */
+
+/* keyboard-operable ledger sort headers (wired in the concept script) */
+th[data-wd-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+/* ---------- ground: engineering graph paper ----------
+   A perceptible plotting field on the board surface: 24px minor rulings +
+   120px major rulings that read in the gaps and margins around the opaque
+   modules (the modules stay solid for legibility; the field is what shows
+   between them, so the whole canvas reads as one precision instrument panel,
+   not wallpaper). Intensity is themed: friendly/retro carry a stronger
+   drafting-paper field, glass/basic a subtler one. The major lines take a
+   faint accent cast so the grid reads as    engineered, not photocopied. The `html` prefix lifts specificity to tie the
+   cozy themes' `html[data-theme^=friendly] .us-scroll { background: transparent }`
+   (usage-shared.css) and win by source order, so the field survives on friendly. */
+html .u7 .us-scroll {
+  --u7g-major: 13%;
+  --u7g-minor: 6.5%;
+  --u7g-line: color-mix(in srgb, var(--accent-primary) 22%, var(--text-primary));
+  padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--u7g-line) var(--u7g-major), transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--u7g-line) var(--u7g-major), transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--text-primary) var(--u7g-minor), transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text-primary) var(--u7g-minor), transparent) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+[data-theme^="friendly"] .u7 .us-scroll { --u7g-major: 15%; --u7g-minor: 8%; }
+[data-theme^="retro"]    .u7 .us-scroll { --u7g-major: 17%; --u7g-minor: 9%; }
+[data-theme^="glass"]    .u7 .us-scroll { --u7g-major: 9%;  --u7g-minor: 5%; }
+[data-theme^="basic"]    .u7 .us-scroll { --u7g-major: 8%;  --u7g-minor: 4.5%; }
+
+/* ---------- bench chrome: the always-visible spend readout ---------- */
+.u7-strip { display: flex; align-items: stretch; flex-wrap: wrap; margin-bottom: var(--us-gap);
+  border: 1px solid var(--border-light);
+  border-top: 2px solid color-mix(in srgb, var(--accent-primary) 60%, var(--border));
+  border-radius: var(--radius-md); overflow: hidden;
+  background: var(--surface-elevated); box-shadow: var(--elev-1); }
+.u7-stmain { display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: var(--md) var(--lg);
+  border-right: 1px solid var(--border-light); background: color-mix(in srgb, var(--accent-primary) 6%, transparent); }
+.u7-stbig { font-family: var(--num-font); font-weight: 800; font-size: 28px; line-height: 1;
+  color: var(--accent-primary); letter-spacing: .3px; font-variant-numeric: tabular-nums; }
+.u7-stlbl { display: flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+.u7-stlbl svg { width: 11px; height: 11px; flex: none; }
+.u7-sti { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: var(--md) var(--lg);
+  border-right: 1px solid var(--border-light); min-width: 0; flex: 1 1 auto;
+  transition: background var(--motion-fast) var(--ease-out); }
+.u7-stgrid { flex: 1.5 1 140px; }
+.u7-sti:hover { background: color-mix(in srgb, var(--accent-primary) 5%, transparent); }
+.u7-stk { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.u7-stk svg { width: 10px; height: 10px; flex: none; }
+.u7-stv { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-lg); color: var(--text-primary);
+  font-variant-numeric: tabular-nums; white-space: nowrap; transition: color var(--motion-fast) var(--ease-out); }
+.u7-sti:hover .u7-stv { color: var(--accent-primary); }
+.u7-stv.warn { color: var(--tone-warn-text); } .u7-stv.hot { color: var(--tone-err-text); }
+.u7-sts { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u7-stnote { margin-left: auto; align-self: center; padding: var(--md) var(--lg); font-size: var(--fs-2xs);
+  color: var(--text-muted); max-width: 196px; line-height: var(--lh-body); flex: none; }
+@media (max-width: 1360px) { .u7-stnote { display: none; } }
+
+/* ---------- head + control toggles: squared, tracked, instrument-like ---------- */
+.u7-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary);
+  font-size: 9.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  font-family: var(--body-font); cursor: pointer; white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u7-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); }
+.u7-btn:active { transform: scale(.96); }
+.u7-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.u7-btn svg { width: 11px; height: 11px; }
+
+/* ---------- control rail (addbar) ---------- */
+.u7 .uw-addbar { padding: 4px 2px 9px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); }
+.u7 .uw-addbtn { border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+.u7 .uw-resetbtn { border-radius: var(--radius-sm); }
+.u7 .uw-hint { font-family: var(--mono-font); font-size: 9px; letter-spacing: .05em; text-transform: uppercase; }
+
+/* ---------- the board canvas ----------
+   The shared .uw-canvas grid (4/3/2/1 responsive tracks, 28px auto-rows,
+   5 tracks ≥1800, 6 tracks ≥2300) carries the widgets; U7 adds its even
+   gap rhythm and dense backfill so the curated spans tile hole-free. */
+.u7-grid { gap: var(--us-gap); grid-auto-flow: dense; }
+
+/* ---------- module chrome: registration ticks + live module numbers ----------
+   Signature 1 — every module carries drafting-style corner registration
+   marks that brighten while the module is hovered, dragged or resized.
+   Signature 2 — each header ends in a mono module number driven by a CSS
+   counter on DOM order, so the whole board renumbers itself live the
+   instant a drag-reorder lands. */
+.u7-grid { counter-reset: u7mod; }
+.u7-grid .uw { counter-increment: u7mod; }
+.u7-grid .uw::before, .u7-grid .uw::after {
+  content: ''; position: absolute; width: 7px; height: 7px; z-index: 2; pointer-events: none;
+  border: 0 solid color-mix(in srgb, var(--accent-primary) 40%, var(--border));
+  opacity: .55; transition: opacity var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out);
+}
+.u7-grid .uw::before { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+.u7-grid .uw::after { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+.u7-grid .uw:hover::before, .u7-grid .uw:hover::after,
+.u7-grid .uw.is-dragging::before, .u7-grid .uw.is-dragging::after,
+.u7-grid .uw.is-resizing::before, .u7-grid .uw.is-resizing::after {
+  opacity: 1; border-color: var(--accent-primary);
+}
+.u7-grid .uw-head::after {
+  content: counter(u7mod, decimal-leading-zero);
+  flex: none; margin-left: 2px; padding: 1px 4px 0;
+  font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; letter-spacing: .14em;
+  color: var(--text-muted); transition: color var(--motion-fast) var(--ease-out);
+}
+.u7-grid .uw:hover .uw-head::after { color: var(--accent-primary); }
+
+/* ---------- bench life: the U7 motion signature ----------
+   Built ON the shared widget motion — the entrance stagger, FLIP reorder
+   settle, hover depth and press squash are untouched. This layer adds the
+   instrument character on top:
+   1. POWER-ON — every entering module boots: while the shared uwIn stagger
+      lands it, the readout blooms up from dark (u7Bloom on head+body), the
+      corner registration ticks draw in from their corners, and the frame
+      flashes an accent border + glow, then eases back. The delay rides
+      --u7-bd, which the concept script copies from the same inline
+      animation-delay the shared entrance stamps, so the cascade is one wave.
+   2. BENCH SCAN — a faint diagnostic band sweeps the spend strip on a long
+      loop with an off-screen dwell (sweep, pause, sweep), like a bench test.
+   3. NUMBER TICK — module numbers drop in like an odometer when the CSS
+      counter renumbers (the concept script flips .u7-renum).
+   4. MODULE ACK — a brief accent ring when live values land; the base .uw
+      transition eases it in and out.
+   5. TICK IDLE — registration marks breathe almost imperceptibly until the
+      module is pointed at; hover/drag/resize still them (the existing
+      brighten rules take over).
+   Precise, not bouncy: settle/settle curves only, no overshoot on the bench
+   chrome. Reduced motion freezes all of it (JS guards + the rules below). */
+@keyframes u7Bloom { 0% { filter: brightness(.32) saturate(.55); } 58% { filter: brightness(1.07); } 100% { filter: brightness(1); } }
+@keyframes u7TickTL { from { opacity: 0; transform: translate(4px, 4px); } to { opacity: .55; transform: none; } }
+@keyframes u7TickBR { from { opacity: 0; transform: translate(-4px, -4px); } to { opacity: .55; transform: none; } }
+@keyframes u7NumTick { 0% { transform: translateY(-.95em); opacity: 0; } 62% { transform: translateY(1px); opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes u7TickIdle { from { opacity: .42; } to { opacity: .62; } }
+@keyframes u7Scan { 0% { transform: translateX(-140px); } 74% { transform: translateX(100vw); } 100% { transform: translateX(100vw); } }
+
+/* 1 · power-on (frame flash settles back through the base .uw transition) */
+.u7-grid .uw.u7-boot { border-color: color-mix(in srgb, var(--accent-primary) 55%, var(--border));
+  box-shadow: var(--elev-1), 0 0 0 1px color-mix(in srgb, var(--accent-primary) 26%, transparent),
+    0 0 22px -6px color-mix(in srgb, var(--accent-primary) 48%, transparent); }
+.u7-grid .uw.u7-boot .uw-head, .u7-grid .uw.u7-boot .uw-body {
+  animation: u7Bloom var(--mo-spring-dur, 420ms) var(--pm-ease-smooth, ease) var(--u7-bd, 0ms) both; }
+.u7-grid .uw.u7-boot::before { animation: u7TickTL var(--mo-settle-dur, 300ms) var(--pm-ease-out, ease-out) var(--u7-bd, 0ms) both; }
+.u7-grid .uw.u7-boot::after { animation: u7TickBR var(--mo-settle-dur, 300ms) var(--pm-ease-out, ease-out) var(--u7-bd, 0ms) both; }
+
+/* 2 · bench scan (the strip is already overflow:hidden, so the band clips) */
+.u7-strip { position: relative; }
+.u7-strip::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 110px; z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 0%,
+    color-mix(in srgb, var(--accent-primary) 7%, transparent) 34%,
+    color-mix(in srgb, var(--accent-primary) 13%, transparent) 50%,
+    color-mix(in srgb, var(--accent-primary) 7%, transparent) 66%, transparent 100%);
+  animation: u7Scan calc(7.4s * var(--pm-motion-k, 1)) linear infinite; }
+
+/* 3 · number tick */
+.u7-grid .uw.u7-renum .uw-head::after { color: var(--accent-primary);
+  animation: u7NumTick var(--mo-settle-dur, 300ms) var(--pm-ease-out, ease-out); }
+
+/* 4 · module ack */
+.u7-grid .uw.u7-ack { border-color: color-mix(in srgb, var(--accent-primary) 50%, var(--border));
+  box-shadow: var(--elev-1), 0 0 0 1px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+
+/* 5 · idle tick breathing, phase-shifted across the bench, stilled on touch */
+.u7-grid .uw::before, .u7-grid .uw::after { animation: u7TickIdle 5.6s ease-in-out var(--u7-tiph, 0s) infinite alternate; }
+.u7-grid .uw:nth-child(2n)::before, .u7-grid .uw:nth-child(2n)::after { --u7-tiph: -1.9s; }
+.u7-grid .uw:nth-child(3n)::before, .u7-grid .uw:nth-child(3n)::after { --u7-tiph: -3.7s; }
+.u7-grid .uw:hover::before, .u7-grid .uw:hover::after,
+.u7-grid .uw.is-dragging::before, .u7-grid .uw.is-dragging::after,
+.u7-grid .uw.is-resizing::before, .u7-grid .uw.is-resizing::after { animation: none; }
+
+/* reduced motion: freeze the scan + tick life (the boot/number/ack classes
+   are never applied under RM — the concept script guards on USrender.isRM) */
+html[data-reduced-motion="1"] .u7-strip::after,
+html[data-reduced-motion="1"] .u7-grid .uw::before,
+html[data-reduced-motion="1"] .u7-grid .uw::after,
+html[data-reduced-motion="1"] .u7-grid .uw.u7-boot .uw-head,
+html[data-reduced-motion="1"] .u7-grid .uw.u7-boot .uw-body { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .u7-strip::after, .u7-grid .uw::before, .u7-grid .uw::after,
+  .u7-grid .uw.u7-boot .uw-head, .u7-grid .uw.u7-boot .uw-body { animation: none; }
+}
+
+/* ---------- content-fit trims (local; shared renderers untouched) ----------
+   Footnotes: every trailing footnote pins to the card foot (margin-top:auto)
+   so modules whose content runs short read composed instead of bottom-heavy,
+   and carries top breathing room + a seat off the card edge so it never sits
+   flush against the frame (the old glass-light Attention nit). Budget: the
+   donuts lock into a uniform instrument array (primary MTD/projected pair one
+   step larger) instead of a wrapped chip salad. Quotas: its tier-2 provider
+   list is taller than any sane span, so the body's scroll becomes visible. */
+.u7-grid .uw-body > .us-foot { margin-top: auto; padding-top: 6px; margin-bottom: 2px; }
+.u7-grid .uw-body:has(> .wd-qrow) { scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--text-primary) 32%, transparent) transparent; }
+.u7-grid .wd-donuts { display: grid; grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+  justify-items: center; gap: var(--sm) var(--xs); }
+.u7-grid .wd-donut:nth-child(-n+2) svg { width: 60px; height: 60px; }
+.u7-grid .wd-donut small { font-size: 8.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.u7-grid .wd-pres .wd-presk { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.u7-grid .wd-pchip { border-radius: var(--radius-sm); }
+
+/* ---------- provenance de-noise (the "· measured · high" thinning) ----------
+   The shared renderers put a value-state chip (.vs) + a confidence qualifier
+   (.conf) on most rows; on an instrument board that text repeats as noise.
+   De-noise WITHOUT losing data:
+   • confidence collapses to its level-colored dot (.cd) everywhere — the word
+     "high/medium/low" goes, the dot color + its title tooltip ("source
+     confidence: …") keep the full fact;
+   • the DEFAULT good state (.vs-ok = measured / provider-reported / settled /
+     zero) collapses to a compact solid green LED — silence means "measured &
+     fine"; its title tooltip ("value state: …") still names it. Only TITLED
+     chips collapse ([title]): a self-labeling chip with no tooltip, e.g. the
+     cost "included" marker, keeps its word so nothing becomes an unexplained
+     dot;
+   • every NON-default state (estimated / stale / hidden / unknown / blocked …)
+     keeps its full colored word-chip, so anything that needs reading still
+     spells itself out. Nothing is deleted or hidden — quieted to LEDs on
+     demand, full chips for the exceptions. */
+.u7-grid .conf { font-size: 0; gap: 0; }
+.u7-grid .conf .cd { width: 6px; height: 6px; }
+.u7-grid .vs-ok[title] { flex: none; width: 8px; height: 8px; min-width: 0; padding: 0;
+  border-radius: 50%; background: var(--tone-ok); }
+.u7-grid .vs-ok[title] > span { display: none; }
+/* LEDs brighten slightly on hover so they read as live indicators, not specks */
+.u7-grid .conf:hover .cd, .u7-grid .vs-ok[title]:hover { filter: brightness(1.18); }
+
+/* ---------- provenance footer ---------- */
+.u7-prov { padding: var(--sm) 2px var(--md); }
+.u7-prov b { color: var(--text-secondary); }
+.u7-provk { font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--text-muted); }
+
+/* ---------- per-theme character ---------- */
+[data-theme^="retro"] .u7-strip { border-radius: 0; border-width: 2px; }
+[data-theme^="retro"] .u7-btn { border-radius: 2px; }
+[data-theme^="retro"] .uw, [data-theme^="retro"] .uw-addbtn, [data-theme^="retro"] .uw-resetbtn { border-radius: 0; }
+[data-theme^="retro"] .uw { border-width: 2px; }
+[data-theme^="retro"] .u7-grid .uw::before { border-top-width: 2px; border-left-width: 2px; }
+[data-theme^="retro"] .u7-grid .uw::after { border-bottom-width: 2px; border-right-width: 2px; }
+[data-theme^="retro"] .u7 .uw-addbtn, [data-theme^="retro"] .u7 .uw-resetbtn,
+[data-theme^="retro"] .u7 .wd-pchip { border-radius: 0; }
+[data-theme^="glass"] .u7-strip { border-color: var(--glass-hairline, var(--border-light)); background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); }
+
+/* glass-light: raise add-bar + head-control contrast (scoped to U7) */
+[data-theme="glass-light"] .uw-addbtn { color: color-mix(in srgb, var(--accent-primary) 45%, var(--text-primary));
+  border-color: color-mix(in srgb, var(--accent-primary) 70%, transparent);
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent); }
+[data-theme="glass-light"] .u7-btn { color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--text-primary) 30%, transparent); }
+[data-theme="glass-light"] .us-hbtn, [data-theme="glass-light"] .uw-resetbtn {
+  border-color: color-mix(in srgb, var(--text-primary) 28%, transparent); }
+
+/* glass-light: the page head sits straight on the morning-sky wallpaper
+   (transparent .us-head), where the pink/violet bands sink the stock
+   --text-primary below 4.5:1 — deepen the H1 (scoped to U7) so the title
+   holds AA against the brightest sky band. */
+[data-theme="glass-light"] .u7 .us-head-title { color: #251B40; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u7">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI cost &amp; usage for <b>Tastebook</b> — a widget board you compose yourself. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u7Fresh"><span class="d"></span><span id="u7FreshTxt">current · as of 14:42</span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u7Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn" title="Export usage board as JSON" aria-label="Export usage board as JSON" data-demo-action="usage.export" data-demo-arg="Usage board exported as JSON (demo)"><i data-ico="exportIc" class="pm-ico"></i></button>
+        <button class="u7-btn" id="u7Add" title="Add a widget to the board" aria-label="Add a widget to the board"><i data-ico="plus" class="pm-ico sm"></i>Add widget</button>
+        <button class="u7-btn" id="u7Reset" title="Reset layout to the default board" aria-label="Reset layout to the default board"><i data-ico="history" class="pm-ico sm"></i>Reset layout</button>
+      </div>
+    </header>
+
+    <div class="us-scroll">
+      <div class="u7-strip" id="u7Strip" aria-label="Current spend readout"></div>
+      <div class="u7-grid" id="u7Board" aria-label="Usage widget board"></div>
+      <div class="us-foot u7-prov pm-rev"><i data-ico="help" class="pm-ico sm"></i><span><b class="u7-provk">Provenance</b> · Canonical UsageRecord projections · as of <b>14:42</b> · next auto-refresh <b>14:47</b> · <b>missing ≠ zero</b> — every unreadable number carries a value-state chip instead of a fake reading. Drag a widget by its grip, resize it freely from the corner, and open its menu for focus, size presets, configure and remove.</span></div>
+    </div>
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script src="_shared/usage-widgets.js"></script>
+<script src="_shared/usage-widget-renderers.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U7', name: 'Board' } });
+if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+
+(function () {
+  'use strict';
+  var D = window.USAGE, fmt = window.USfmt, R = window.USrender;
+  function $(id) { return document.getElementById(id); }
+
+  /* =================================================================
+     BOARD — U7's legacy 12-type catalog mapped onto the shared
+     PMWidgetDefs ids (quota_summary→quota, multi_account→accounts;
+     the rest keep their names). All 12 stay addable from the picker;
+     the first-run board is a curated 9-widget composition.
+     ================================================================= */
+  var PAGE_ID = 'u7-board';
+  var KEY = 'pmw:' + PAGE_ID;
+  var U7_TYPES = ['quota', 'guard', 'analytics', 'budget', 'cache', 'tools',
+                   'accounts', 'context', 'ledger', 'signals', 'whatcounts', 'planGating'];
+  var LEGACY_MAP = { quota_summary: 'quota', multi_account: 'accounts' };
+
+  /* ---------- tier-aware default boards (curated composition) ----------
+     The shared canvas runs 3/4/5/6 tracks (≤1280 / <1800 / <2300 / ≥2300)
+     and the renderers are AREA-AWARE — any box draws a purpose-built
+     density. Spans are therefore chosen purely for COMPOSITION, measured
+     against each renderer's natural fill height so EVERY module's content
+     soaks its box (no scroll, and only the small pinned-foot breathing
+     the catalog intentionally seats a footnote into — never a half-empty
+     card):
+       • FOCAL — quota is a FULL-WIDTH hero row at every tier (the widest
+         module on the board, the pressure readout you look at first).
+       • RHYTHM — the rest tile in equal-height bands; each content-fixed
+         module is paired with a flex sibling (the chart / table absorb the
+         band height with zero gap), so bands sum exactly to the track
+         count and the board tiles hole-free at 1280/1700/2200/2500 — no
+         dead space, no half-empty trailing columns.
+       • ORDER is curated per tier (still usage-first: quota + guard lead,
+         spend/cost sit modest and mid-board, ledger closes) so that
+         equal-height modules fall consecutively and the dense grid never
+         has to scramble reading order to backfill.
+     A pristine board re-locks to the new tier on breakpoint crossings
+     (see the resize handler below); a touched board is never rewritten. */
+  var TIER_BOARDS = {
+    /* 3 = single column: every module its own full-width row at its natural
+       height (chart/table rows given a touch more room to breathe) */
+    3: [['quota', 3, 7], ['guard', 3, 5], ['analytics', 3, 6], ['cache', 3, 5], ['context', 3, 5],
+        ['budget', 3, 6], ['tools', 3, 5], ['accounts', 3, 7], ['ledger', 3, 6]],
+    /* 4 = full-width hero / twin 5-rows / twin 5-rows / modest twin 6-rows /
+       accounts deck / ledger deck */
+    4: [['quota', 4, 7], ['guard', 2, 5], ['analytics', 2, 5], ['cache', 2, 5], ['context', 2, 5],
+        ['budget', 2, 6], ['tools', 2, 6], ['accounts', 4, 7], ['ledger', 4, 6]],
+    /* 5 = full-width hero / 3+2 rails of equal height / 2+3 deck close */
+    5: [['quota', 5, 7], ['guard', 3, 5], ['analytics', 2, 5], ['cache', 3, 5], ['context', 2, 5],
+        ['budget', 3, 6], ['tools', 2, 6], ['accounts', 2, 7], ['ledger', 3, 7]],
+    /* 6 = full-width hero / 3+3 (rich guard keeps its footnote) / 3+3 / 3+3 /
+       2+4 deck close (all equal-height bands) */
+    6: [['quota', 6, 7], ['guard', 3, 5], ['analytics', 3, 5], ['cache', 3, 5], ['context', 3, 5],
+        ['budget', 3, 6], ['tools', 3, 6], ['accounts', 2, 7], ['ledger', 4, 7]]
+  };
+  function tierCols() {
+    var w = window.innerWidth;
+    if (w <= 600) return 1;
+    if (w <= 900) return 2;
+    if (w <= 1280) return 3;
+    if (w < 1800) return 4;
+    if (w < 2300) return 5;
+    return 6;
+  }
+  function boardFor(cols) {
+    var b = TIER_BOARDS[cols];
+    if (b) return b.map(function (x) { return { type: x[0], c: x[1], r: x[2] }; });
+    return window.PMWidgetDefs.defaultBoard.map(function (t) {
+      var sp = (window.PMWidgetDefs.TYPES[t] || {}).span || [2, 6];
+      return { type: t, c: sp[0], r: sp[1] };
+    });
+  }
+  function spanTable(cols) {
+    var tbl = {};
+    (TIER_BOARDS[cols] || []).forEach(function (x) { tbl[x[0]] = [x[1], x[2]]; });
+    return tbl;
+  }
+  var bootCols = tierCols();
+  var U7_DEFAULT_BOARD = boardFor(bootCols);
+  var bootSpans = spanTable(bootCols);
+  function spanFor(t) {
+    return bootSpans[t] || (window.PMWidgetDefs.TYPES[t] || {}).span || [2, 6];
+  }
+  function mkItem(t) {
+    var sp = spanFor(t);
+    return { uid: 'u7' + t + Math.random().toString(36).slice(2, 8), type: t, c: sp[0], r: sp[1], cfg: {}, focus: false };
+  }
+
+  /* Re-register the shared catalog with U7's tier spans so the picker's
+     "Default" size matches the board rhythm (free resize stays canonical;
+     S/M/L/XL remain non-binding shortcuts). Types outside the tier table
+     keep their catalog span. */
+  function registerFor(cols) {
+    var tbl = spanTable(cols);
+    U7_TYPES.forEach(function (id) {
+      var d = window.PMWidgetDefs.TYPES[id];
+      if (!d) return;
+      var def = { icon: (window.PMIcons && window.PMIcons[d.icon]) || '', iconKey: d.icon, label: d.label, desc: d.desc, span: (tbl[id] || d.span).slice(), render: d.render };
+      if (d.config) def.config = d.config;
+      if (d.live) def.live = d.live;
+      window.PMWidgets.register(id, def);
+    });
+  }
+  window.PMWidgetDefs.register(window.PMWidgets, { only: U7_TYPES });
+  registerFor(bootCols);
+
+  /* Legacy only: migrate the pre-v2 'u7-board' bare array (type + order
+     preserved, spans re-based onto the current tier table). A clean first
+     run leaves KEY empty so PMWidgets seeds the curated defaultBoard. */
+  (function migrateLegacy() {
+    try {
+      if (localStorage.getItem(KEY)) return;
+      var legacy = JSON.parse(localStorage.getItem('u7-board') || 'null');
+      if (Array.isArray(legacy) && legacy.length) {
+        var items = legacy.map(function (x) {
+          var t = LEGACY_MAP[x && x.type] || (x && x.type);
+          return U7_TYPES.indexOf(t) !== -1 ? t : null;
+        }).filter(function (t) { return t; }).map(mkItem);
+        if (items.length) {
+          localStorage.setItem(KEY, JSON.stringify({ v: 2, items: items }));
+          localStorage.removeItem('u7-board');
+        }
+      }
+    } catch (e) {}
+  })();
+
+  /* Widget ledger sort headers (th[data-wd-sort]) are rendered by the shared
+     catalog and re-created on every sort, so keyboard support is wired here at
+     the concept level: make each header focusable, expose aria-sort from the
+     active .on/.rev state, and activate on Enter/Space by re-firing the click
+     the shared delegation already handles (then restore focus to the
+     re-rendered header so keyboard users keep their place). */
+  function wireSortKeys(cv) {
+    function decor(th) {
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      th.setAttribute('aria-sort', th.classList.contains('on') ? (th.classList.contains('rev') ? 'descending' : 'ascending') : 'none');
+    }
+    cv.querySelectorAll('th[data-wd-sort]').forEach(decor);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.matches && n.matches('th[data-wd-sort]')) decor(n);
+          if (n.querySelectorAll) n.querySelectorAll('th[data-wd-sort]').forEach(decor);
+        });
+      });
+    }).observe(cv, { childList: true, subtree: true });
+    cv.addEventListener('keydown', function (e) {
+      var th = e.target.closest && e.target.closest('th[data-wd-sort]');
+      if (!th || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var key = th.getAttribute('data-wd-sort');
+      var uw = th.closest('.uw');
+      th.click();
+      requestAnimationFrame(function () {
+        var scope = (uw && uw.isConnected) ? uw : cv;
+        var nt = scope.querySelector('th[data-wd-sort="' + key + '"]');
+        if (nt) { decor(nt); nt.focus(); }
+      });
+    });
+  }
+
+  var canvas = $('u7Board');
+  var board = window.PMWidgets.mount(canvas, { pageId: PAGE_ID, types: U7_TYPES, defaultBoard: U7_DEFAULT_BOARD });
+  window.PMWidgetDefs.wireCanvas(canvas);
+  wireSortKeys(canvas);
+
+  /* Demo-action buttons inside widget bodies render dynamically (guard
+     actions, ledger drill-through) — wire them as bodies land. The catalog
+     now humanizes its own machine identifiers, so no de-underscore pass. */
+  new MutationObserver(function (muts) {
+    muts.forEach(function (m) {
+      Array.prototype.forEach.call(m.addedNodes, function (n) {
+        if (n.nodeType !== 1) return;
+        if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(n);
+      });
+    });
+  }).observe(canvas, { childList: true, subtree: true });
+  if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(canvas); /* bodies rendered before the observer existed */
+
+  /* ---------- live grid readout (strip) + tier-crossing re-lock ---------- */
+  function updateGridRead() {
+    var el = $('u7StGrid');
+    if (!el || !canvas._pmw) return;
+    el.innerHTML = '<span class="u7-stk">' + R.ic('hash') + 'module grid</span>' +
+      '<span class="u7-stv">' + cnt(tierCols(), 0, '', ' trk') + '</span>' +
+      '<span class="u7-sts">' + cnt(canvas._pmw.items.length, 0, '', '') + ' of ' + U7_TYPES.length + ' modules</span>';
+    R.animateCounters(el); /* shared animator: value→value tween + landing tick */
+  }
+  new MutationObserver(updateGridRead).observe(canvas, { childList: true });
+
+  function stampOf(items) {
+    return items.map(function (it) { return it.type + ':' + it.c + 'x' + it.r; }).join(',');
+  }
+  var curCols = bootCols;
+  var seedStamp = stampOf(board.items);
+  var rszT = null;
+  window.addEventListener('resize', function () {
+    if (rszT) clearTimeout(rszT);
+    rszT = setTimeout(function () {
+      updateGridRead();
+      var c = tierCols();
+      if (c === curCols) return;
+      curCols = c;
+      var items = board.items;
+      var pristine = stampOf(items) === seedStamp && !items.some(function (it) { return it.focus; });
+      if (pristine && TIER_BOARDS[c]) {
+        registerFor(c);
+        canvas._pmw.defaultBoard = boardFor(c);
+        board.reset(); /* re-seed the curated tier board (entrance replays) */
+        seedStamp = stampOf(board.items);
+      }
+    }, 220);
+  });
+
+  /* =================================================================
+     BENCH LIFE — U7's motion signature, layered ON the shared widget
+     motion (entrance stagger / FLIP settle / hover depth stay shared):
+     • POWER-ON — entering modules bloom bright, draw their registration
+       ticks and flash the frame. The delay is copied from the inline
+       animation-delay the shared entrance already stamps, so the boot
+       cascade runs in lockstep with the shared stagger wave.
+     • NUMBER TICK — the mono module numbers are a CSS counter over DOM
+       order; when a reorder renumbers them, the changed numbers drop in
+       like an odometer (.u7-renum, styles above).
+     • MODULE ACK — a brief accent ring when live values land (ledger
+       append, cooldown ticks, refreshed counters), throttled per module
+       so the bench responds without chattering.
+     • SETTLE CONFIRM — a reordered module acks once when it lands.
+     The strip scan + strip/grid readout ticks are CSS + the shared
+     counter animator. Everything here honors USrender.isRM: under
+     reduced motion no class is ever applied (values still update).
+     ================================================================= */
+  var ackGraceUntil = Date.now() + 1500; /* the boot tween is acknowledgement enough */
+  var ackLast = new WeakMap(), ackTimer = new WeakMap(), dragWatch = null;
+
+  function ackModule(uw) {
+    if (!uw || uw.classList.contains('is-placeholder') || R.isRM()) return;
+    var now = Date.now();
+    if (now < ackGraceUntil) return;
+    if (now - (ackLast.get(uw) || 0) < 2500) return;
+    ackLast.set(uw, now);
+    uw.classList.add('u7-ack');
+    var t = ackTimer.get(uw);
+    if (t) clearTimeout(t);
+    ackTimer.set(uw, setTimeout(function () { uw.classList.remove('u7-ack'); ackTimer.delete(uw); }, 560));
+  }
+
+  function powerOn(uw) {
+    if (R.isRM() || uw.classList.contains('u7-boot')) return;
+    uw.style.setProperty('--u7-bd', uw.style.animationDelay || '0ms'); /* the shared stagger step */
+    uw.classList.add('u7-boot');
+    var bd = parseFloat(uw.style.animationDelay) || 0;
+    setTimeout(function () { uw.classList.remove('u7-boot'); }, bd + 1300); /* fallback; animationend is the primary exit */
+  }
+
+  function shownNumber(uw) {
+    /* the number IS the CSS counter over DOM order (counter-reset on the
+       grid, one increment per .uw) — computed style returns the unresolved
+       counter() in modern Chrome, so mirror the counter directly */
+    var k = 0, sib = canvas.firstElementChild;
+    while (sib && sib !== uw) { k++; sib = sib.nextElementSibling; }
+    return sib ? ('0' + (k + 1)).slice(-2) : '';
+  }
+  function renumberPass() {
+    if (R.isRM()) return;
+    var changed = [];
+    canvas.querySelectorAll('.uw[data-uid]').forEach(function (uw) {
+      var n = shownNumber(uw); /* "07" */
+      var prev = uw.getAttribute('data-u7n');
+      if (prev === null) { uw.setAttribute('data-u7n', n); return; } /* seed silently on first sight */
+      if (prev !== n) { uw.setAttribute('data-u7n', n); changed.push(uw); }
+    });
+    if (!changed.length) return;
+    changed.forEach(function (uw) { uw.classList.remove('u7-renum'); });
+    void canvas.offsetWidth; /* restart the drop-in even on back-to-back renumbers */
+    changed.forEach(function (uw) {
+      uw.classList.add('u7-renum');
+      setTimeout(function () { uw.classList.remove('u7-renum'); }, 700); /* fallback; animationend is the primary exit */
+    });
+  }
+  var renumPending = false;
+  function queueRenumber() {
+    if (renumPending) return;
+    renumPending = true;
+    requestAnimationFrame(function () { renumPending = false; renumberPass(); });
+  }
+
+  canvas.addEventListener('animationend', function (e) {
+    var uw = e.target.closest && e.target.closest('.uw');
+    if (!uw) return;
+    if (e.animationName === 'u7Bloom') uw.classList.remove('u7-boot');
+    else if (e.animationName === 'u7NumTick') uw.classList.remove('u7-renum');
+  });
+
+  new MutationObserver(function (muts) {
+    var renum = false;
+    muts.forEach(function (m) {
+      Array.prototype.forEach.call(m.addedNodes, function (n) {
+        if (n.nodeType !== 1) return;
+        renum = true;
+        var uws = [];
+        if (n.matches && n.matches('.uw')) uws.push(n);
+        if (n.querySelectorAll) n.querySelectorAll('.uw').forEach(function (x) { uws.push(x); });
+        uws.forEach(function (uw) {
+          if (uw.classList.contains('uw-enter')) powerOn(uw);
+          if (dragWatch && uw.getAttribute('data-uid') === dragWatch.uid) {
+            /* the held module was seated again — confirm the settle if the order changed */
+            if (stampOf(board.items) !== dragWatch.stamp) ackModule(uw);
+            dragWatch = null;
+          }
+        });
+        /* content landed inside an existing module (a live ledger row, a
+           refreshed readout) — the module acknowledges. Structural additions
+           of whole modules are already handled above. */
+        if (!uws.length) {
+          var host = n.closest && n.closest('.uw');
+          if (host && host.hasAttribute('data-uid')) ackModule(host);
+        }
+      });
+      if (m.type === 'characterData') {
+        var p = m.target.parentElement, uw = p && p.closest && p.closest('.uw');
+        if (uw) ackModule(uw); /* a live readout just changed */
+      }
+    });
+    if (renum) queueRenumber();
+  }).observe(canvas, { childList: true, subtree: true, characterData: true });
+
+  /* the first render landed before this observer existed — power on whatever
+     is still mid-entrance (the shared stagger delays are still inline) and
+     seed the module numbers so later renumbers tick instead of seeding */
+  canvas.querySelectorAll('.uw.uw-enter').forEach(powerOn);
+  queueRenumber();
+
+  /* track the held module so its seating can be confirmed (the shared drag
+     owns the interaction; this only watches the grip + the seating swap) */
+  canvas.addEventListener('pointerdown', function (e) {
+    var grip = e.target.closest && e.target.closest('[data-pmw-grip]');
+    if (!grip) return;
+    var uw = grip.closest('.uw');
+    if (uw) dragWatch = { uid: uw.getAttribute('data-uid'), stamp: stampOf(board.items) };
+  }, true);
+  window.addEventListener('pointerup', function () {
+    if (!dragWatch) return;
+    setTimeout(function () { /* the module never left the board: a press, not a drag */
+      if (dragWatch && canvas.querySelector('.uw[data-uid="' + dragWatch.uid + '"]')) dragWatch = null;
+    }, 420);
+  });
+
+  /* =================================================================
+     SPEND STRIP — always-visible money readout above the grid
+     ================================================================= */
+  function stb(k, val, sub, ico, cls) {
+    return '<div class="u7-sti"><span class="u7-stk">' + (ico ? R.ic(ico) : '') + k + '</span>' +
+      '<span class="u7-stv ' + (cls || '') + '">' + val + '</span><span class="u7-sts">' + sub + '</span></div>';
+  }
+  /* a readout as a shared [data-counter]: the shared animator tweens it
+     value→value and lands it with a tick (renderStrip feeds animateCounters) */
+  function cnt(v, dec, pre, suf) {
+    return '<span data-counter="' + v + '" data-decimals="' + dec + '"' + (pre ? ' data-prefix="' + pre + '"' : '') + '>' +
+      (pre || '') + (0).toFixed(dec) + '</span>' + (suf || '');
+  }
+  function renderStrip() {
+    var s = $('u7Strip');
+    var top = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b) { return b.used - a.used; })[0];
+    var topTone = top ? R.fillTone(top.used) : 'mute';
+    var bigColor = topTone === 'hot' ? 'var(--tone-err-text)' : (topTone === 'warn' ? 'var(--tone-warn-text)' : 'var(--accent-primary)');
+    var nBlk = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var nWarn = D.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    var mp = D.forecast.monthPace;
+    s.innerHTML =
+      '<div class="u7-stmain"><span class="u7-stbig" style="color:' + bigColor + '">' + (top ? cnt(top.used, 0, '', '%') : '\u2014') + '</span>' +
+      '<span class="u7-stlbl">' + R.ic('gauge') + 'top window \u00b7 ' + (top ? top.name : '') + '</span>' +
+      '<span class="u7-stlbl" style="opacity:.85">resets ' + (top && top.reset !== 'unknown' ? top.reset : '\u2014') + ' \u00b7 spend ' + fmt.cost(D.spend['5h']) + ' last 5h ' + R.chip(D.spendBasis) + '</span></div>' +
+      stb('cache hit', D.contextByRole ? cnt(D.contextByRole.cacheHitRate, 1, '', '%') : '\u2014', '\u2212' + fmt.cost(D.cacheTotalSaved) + ' saved today', 'layers', 'ok') +
+      stb('burn rate', cnt(D.burn.perHour, 2, '$', '/hr'), '$' + D.burn.perDay.toFixed(0) + '/day pace', 'bolt', '') +
+      stb('guards', cnt(nBlk, 0, '', ' blk'), cnt(nWarn, 0, '', ' warn') + ' \u00b7 1h window', 'shield', nBlk ? 'hot' : '') +
+      stb('month pace', (mp != null && Math.abs(mp) >= 1) ? cnt(mp, 2, '$', '') : fmt.cost(mp), '+' + D.forecast.monthPaceDelta + '% vs last month', 'trend', 'warn') +
+      '<div class="u7-sti u7-stgrid" id="u7StGrid" aria-live="polite"></div>' +
+      '<span class="u7-stnote">List-rate basis \u2014 may differ from your actual bill. Cost lands on the effective account.</span>';
+    updateGridRead();
+    R.animateCounters(s); /* readouts tick up from zero on boot, land with a tick */
+  }
+
+  /* =================================================================
+     HEAD WIRING + BOOT
+     ================================================================= */
+  $('u7Refresh').addEventListener('click', function () {
+    var b = this;
+    b.classList.add('spinning');
+    $('u7FreshTxt').textContent = 'refreshing\u2026';
+    $('u7Fresh').classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u7Fresh').classList.remove('stale');
+      $('u7FreshTxt').textContent = 'current · as of ' + D.asOf;
+      renderStrip();
+      board.rerender();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+  $('u7Add').addEventListener('click', function (e) {
+    e.stopPropagation(); /* keep this click from hitting PMMenu's document
+      closeAll after the delegated add.click() has opened the picker */
+    var add = canvas.previousElementSibling && canvas.previousElementSibling.querySelector('.uw-addbtn');
+    if (add) add.click(); /* single add path: the shared picker sprout */
+  });
+  $('u7Reset').addEventListener('click', function () { board.reset(); });
+
+  renderStrip();
+})();
+</script>
+</body>
+</html>

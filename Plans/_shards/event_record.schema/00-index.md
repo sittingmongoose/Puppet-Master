@@ -1,11 +1,12 @@
 # Shard Index: Plans/event_record.schema.json
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d`
+Source SHA256: `bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Lines 1-192](001-lines-1-192.md) L1-L192 `5f9ddf4e138be3734d146c440214aac73d1fb20c83a94eed1238697fb66ba470`
+- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `a70aede0b4651e901e57cf3ffcafd6f89da5e8d3150b806982a98c1712383a6d`
+- [002 - Lines 201-373](002-lines-201-373.md) L201-L373 `30c4d24cb56510e727b8906a8ca940f10609a63f13ec630e8606800f03667f1d`

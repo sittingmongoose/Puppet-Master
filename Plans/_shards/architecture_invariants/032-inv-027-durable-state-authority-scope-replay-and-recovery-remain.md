@@ -1,0 +1,23 @@
+# Shard 032: INV-027 -- Durable-state authority, scope, replay, and recovery remain explicit
+
+Source: `Plans/Architecture_Invariants.md`
+
+Source lines: L425-L437
+
+Source SHA256: `a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543`
+
+---
+
+## INV-027 -- Durable-state authority, scope, replay, and recovery remain explicit
+
+**Rule:** Durable state MUST preserve the authority and aftermath semantics of its owner contracts; store location, projection appearance, or a successful replay MUST NOT be used to invent authority or completion.
+
+- Every materialized storage family declares a machine-readable recovery authority. `canonical_non_rebuildable` redb values are canonical product state and recover only through the registry-owned `restore_from_mandatory_backup` disposition; `canonical_dual_homed` values reconcile through their registered peer; only `derived_rebuildable` state may rebuild from a materialized and retained registered source. The phrase “rebuild projections” MUST NOT imply that all redb content is disposable or that missing canonical receipts/state can be reconstructed as success.
+- EventRecord `2.0.0` uses required `scope_kind = application | project`. Application scope requires `project_id = null` and storage partition `app`; project scope requires a non-empty `project_id` and the reversible project partition. Fake/default project identities are forbidden. `event_id` is global for the app-data-root lifetime, while the idempotency identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime. A stale or unavailable dedupe accelerator catches up synchronously or append fails `dedupe_unavailable` without buffering or deferred acceptance.
+- `projector_replay_only` is compatibility replay, not append authority. It may update only the owning rebuildable projection, checkpoint, index, or mirror atomically; it MUST NOT append, mutate canonical state, dispatch work or commands, call tools/providers/network, charge usage, notify, publish an outbox, mutate safe points, or create another canonical event.
+- Runtime safe points, user-facing restore points, storage backups, and migration journals are distinct. A safe point captures exact worktree state for FileSafe exact-replace recovery; a restore point captures an immutable Assistant Chat conversation boundary and branches to a new thread without changing the source thread or worktree; a storage backup captures one offline shared canonical-store boundary; and a migration journal records crash-decidable schema transition state. An optional safe-point ref on a restore point is lineage only and never silently restores files.
+- FileSafe owns manifest equality, off-worktree content-addressed snapshot custody, exact-replace journaling, verified rollback, and restart reconciliation. The authorized remote retains custody for remote projects; events and redb values carry refs and hashes, never captured file bodies. Storage owns snapshot/transaction records, holds, retention, and the maintenance lease. Contracts owns closed outcomes and reason codes. Worktree/Source Control owns exact `safe_point`, `historical_commit`, and `worktree_head` effects; Executor owns admission, successor-attempt identity, and dispatch gating.
+- `safe_point` exact-restores the named worktree. `historical_commit` creates a distinct clean isolated worktree at an exact immutable OID while preserving the source worktree. `worktree_head` performs no restore, checkout, reset, stash, clean, branch move, index rewrite, or file mutation and binds only to the exact validated `HEAD` plus FileSafe state digest. No moving ref, current-worktree guess, latest safe point, or dirty-state discard may substitute for those identities.
+- Failure truth is closed and owner-routed. `restore_failed` is valid only after verified rollback equality; `restore_recovery_required` means neither target nor original equality is proven and keeps the mutation fence and holds; `recovery_unavailable` means the required remedy is missing or corrupt and remains blocked/anchored. `projection_freshness = current | refreshing | stale` is recency; `projection_health = healthy | degraded | unavailable` is integrity/availability. `unknown` is not a health success state: unknown retention policy preserves instead of deleting, unknown I/O fails closed as device unavailable, and unknown canonical-loss extent blocks mutation.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md

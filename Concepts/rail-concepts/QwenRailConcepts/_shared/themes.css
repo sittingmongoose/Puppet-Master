@@ -1,0 +1,498 @@
+/* ============================================================================
+   rail-concepts/_shared/themes.css
+   PM6 token contract + all 8 theme tables, extracted VERBATIM from
+   Concepts/PMConcept7.html (SECTION 2 core-css, lines 156-663) so every
+   concept page renders with the exact production token values.
+   Source-lineage only — canonical spec is Plans/FinalGUISpec.md Theme System
+   Addendum (F3-425/F3-426).
+   ============================================================================ */
+
+:root {
+  --xs: 2px;
+  --sm: 4px;
+  --md: 8px;
+  --lg: 12px;
+  --xl: 16px;
+  --border-width: 2px;
+  --border-radius: 0px;
+  --display-font: 'Orbitron', sans-serif;
+  --body-font: 'Rajdhani', sans-serif;
+  --base-font-size: 14px;
+  --line-height: 1.4;
+  --letter-spacing: normal;
+  --grid-gap: 24px;
+  /* -- new PM6 tokens (verbatim contract block) -- */
+  --radius-xs:2px; --radius-sm:6px; --radius-md:10px; --radius-lg:16px; --radius-xl:22px; --radius-pill:999px;
+  --accent-primary:var(--accent-blue); --accent-primary-rgb:0,71,171;
+  --accent-soft:color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  --accent-glow:color-mix(in srgb, var(--accent-primary) 25%, transparent);
+  --elev-1:0 1px 2px rgba(0,0,0,.12); --elev-2:0 4px 14px rgba(0,0,0,.16);
+  --elev-3:0 12px 36px rgba(0,0,0,.22); --elev-hover:0 10px 30px var(--accent-glow);
+  --motion-fast:120ms; --motion-med:240ms; --motion-slow:420ms;
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --ease-smooth:cubic-bezier(.4,0,.2,1); --ease-snap:cubic-bezier(.2,0,0,1);
+  --ease-default:var(--ease-smooth); --sheen-dur:.6s;
+  --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
+  --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
+  --activity-bar-w:72px; --files-panel-w:260px; --chat-panel-w:550px; --chat-sidebar-w:200px;
+  --tile-size:220px; --floating-chat-w:550px;
+  --glass-alpha:.55; --glass-tint-rgb:46,34,72; --panel-blur:16px; --panel-blur-sm:10px;
+  --glass-edge:rgba(255,255,255,.35); --glass-hairline:rgba(255,255,255,.08);
+  /* -- baseline-undefined var fix (six names referenced by legacy CSS/JS) -- */
+  --mono-font: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-mono: var(--mono-font);
+  --bg: var(--background);
+  --accent-red: var(--accent-error);
+  --accent-blue-rgb: var(--accent-primary-rgb);
+  --glass-glow-color: var(--accent-glow);
+}
+
+/* scrollbar hooks (opt-in panes only — see .rail-scroll in base.css) */
+:root {
+  --pm6-sb-thumb: color-mix(in srgb, var(--text-primary) 16%, transparent);
+  --pm6-sb-thumb-hover: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  --pm6-sb-radius: 8px;
+}
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { width: 0; height: 0; }
+*::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+*::-webkit-scrollbar-corner { background: transparent; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--pm6-sb-thumb);
+  border: 3px solid transparent; background-clip: padding-box;
+  border-radius: var(--pm6-sb-radius);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--pm6-sb-thumb-hover); }
+
+/* ============================================================================
+   THEME 1 - RETRO DARK (square corners, hard offsets, snap motion)
+   ============================================================================ */
+[data-theme="retro-dark"] {
+  --background: #1A1A1A;
+  --surface: #1A1A1A;
+  --surface-elevated: #252525;
+  --text-primary: #E0E0E0;
+  --text-secondary: #A6A6A6;
+  --text-muted: #909090;
+  --border: #A8ACB3;
+  --border-light: #3A3D42;
+  --accent-blue: #0047AB;
+  --accent-magenta: #FF1493;
+  --accent-lime: #00FF41;
+  --accent-orange: #FF7F27;
+  --accent-warning: #FFB300;
+  --accent-error: #FF5252;
+  --accent-primary: var(--accent-lime);
+  --accent-primary-rgb: 0,255,65;
+  --graph-pending: #6C757D;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: 3px 3px 0 rgba(224,224,224,.55);
+  --pm6-rb-shadow-hard: 3px 3px 0 rgba(224,224,224,.55);
+  --elev-1: 2px 2px 0 rgba(224,224,224,.40);
+  --elev-2: 3px 3px 0 rgba(224,224,224,.55);
+  --elev-3: 5px 5px 0 rgba(224,224,224,.55);
+  --elev-hover: 4px 4px 0 var(--accent-glow);
+  --display-font: 'Orbitron', sans-serif;
+  --display-font-sm: 'Rajdhani', sans-serif;
+  --body-font: 'Rajdhani', sans-serif;
+  --base-font-size: 15px;
+  --line-height: 1.55;
+  --border-radius: 0px;
+  --border-width: 2px;
+  --border-width-inner: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-pill: 2px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-snap);
+  --motion-med: 140ms;
+  --sheen-dur: .35s;
+}
+
+/* ============================================================================
+   THEME 2 - RETRO LIGHT
+   ============================================================================ */
+[data-theme="retro-light"] {
+  --background: #F5F0E8;
+  --surface: #F5F0E8;
+  --surface-elevated: #FAF7F2;
+  --text-primary: #1A1A1A;
+  --text-secondary: #444444;
+  --text-muted: #524F49;
+  --border: #4A463F;
+  --border-light: #D8D1C7;
+  --accent-blue: #0047AB;
+  --accent-magenta: #FF1493;
+  --accent-lime: #00FF41;
+  --accent-orange: #FF7F27;
+  --accent-warning: #F57C00;
+  --accent-error: #D32F2F;
+  --accent-primary: var(--accent-blue);
+  --accent-primary-rgb: 0,71,171;
+  --graph-pending: #ADB5BD;
+  --graph-running: #FFB74D;
+  --graph-passed: #66BB6A;
+  --graph-failed: #EF5350;
+  --graph-planning: #42A5F5;
+  --graph-gating: #AB47BC;
+  --shadow: 3px 3px 0 rgba(26,26,26,.30);
+  --pm6-rb-shadow-hard: 3px 3px 0 rgba(26,26,26,.30);
+  --elev-1: 2px 2px 0 rgba(26,26,26,.22);
+  --elev-2: 3px 3px 0 rgba(26,26,26,.30);
+  --elev-3: 5px 5px 0 rgba(26,26,26,.30);
+  --elev-hover: 4px 4px 0 var(--accent-glow);
+  --display-font: 'Orbitron', sans-serif;
+  --display-font-sm: 'Rajdhani', sans-serif;
+  --body-font: 'Rajdhani', sans-serif;
+  --base-font-size: 15px;
+  --line-height: 1.55;
+  --border-radius: 0px;
+  --border-width: 2px;
+  --border-width-inner: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-pill: 2px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-snap);
+  --motion-med: 140ms;
+  --sheen-dur: .35s;
+}
+
+/* ============================================================================
+   THEME 3 - BASIC LIGHT (calm, flat, smooth motion)
+   ============================================================================ */
+[data-theme="basic-light"] {
+  --background: #EAECEF;
+  --surface: #EAECEF;
+  --surface-elevated: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #3B3B3B;
+  --text-muted: #5C6470;
+  --border: #C4C4C4;
+  --border-light: #E0E0E0;
+  --accent-blue: #0056B3;
+  --accent-magenta: #D32F2F;
+  --accent-lime: #0B8043;
+  --accent-orange: #E65100;
+  --accent-warning: #E65100;
+  --accent-error: #C62828;
+  --accent-primary-rgb: 0,86,179;
+  --graph-pending: #ADB5BD;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(0,0,0,.08);
+  --elev-2: 0 2px 8px rgba(0,0,0,.10);
+  --elev-3: 0 6px 20px rgba(0,0,0,.14);
+  --elev-hover: 0 6px 18px var(--accent-glow);
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+}
+
+/* ============================================================================
+   THEME 4 - BASIC DARK
+   ============================================================================ */
+[data-theme="basic-dark"] {
+  --background: #121212;
+  --surface: #1E1E1E;
+  --surface-elevated: #2D2D2D;
+  --text-primary: #E8E8E8;
+  --text-secondary: #A0A0A0;
+  --text-muted: #6B7280;
+  --border: #424242;
+  --border-light: #333333;
+  --accent-blue: #64B5F6;
+  --accent-magenta: #FF69B4;
+  --accent-lime: #3DD68C;
+  --accent-orange: #FFA347;
+  --accent-warning: #FFB74D;
+  --accent-error: #EF5350;
+  --accent-primary-rgb: 100,181,246;
+  --graph-pending: #6C757D;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(0,0,0,.20);
+  --elev-2: 0 2px 8px rgba(0,0,0,.24);
+  --elev-3: 0 6px 20px rgba(0,0,0,.30);
+  --elev-hover: 0 6px 18px var(--accent-glow);
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+}
+
+/* ============================================================================
+   THEMES 5 & 6 - GLASS DARK / GLASS LIGHT - "ONE PANE OF GLASS"
+   Every fill derives from --glass-alpha (transparency slider).
+   ============================================================================ */
+[data-theme="glass-dark"] {
+  --background: #241B36;
+  --glass-tint-rgb: 46,34,72;
+  --glass-alpha: .60;
+  --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --surface-elevated: rgba(58,44,88, calc(var(--glass-alpha) + .08));
+  --text-primary: #EDE7F8;
+  --text-secondary: #CFC5E6;
+  --text-muted: rgba(237,231,248,.55);
+  --border: rgba(255,255,255,.14);
+  --border-light: rgba(255,255,255,.08);
+  --accent-blue: #B79CFF;
+  --accent-magenta: #E58BC8;
+  --accent-lime: #8FD9A5;
+  --accent-orange: #F3B266;
+  --accent-warning: #F6C888;
+  --accent-error: #F0879B;
+  --accent-primary-rgb: 183,156,255;
+  --graph-pending: rgba(207,197,230,.55);
+  --graph-running: #F3B266;
+  --graph-passed: #8FD9A5;
+  --graph-failed: #F0879B;
+  --graph-planning: #93A2F2;
+  --graph-gating: #E58BC8;
+  --shadow: 0 8px 24px rgba(10,5,25,.45);
+  --elev-1: 0 2px 8px rgba(10,5,25,.35);
+  --elev-2: 0 8px 24px rgba(10,5,25,.45);
+  --elev-3: 0 16px 44px rgba(10,5,25,.55);
+  --glass-edge: rgba(255,255,255,.40);
+  --glass-hairline: rgba(255,255,255,.16);
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --border-radius: 14px;
+  --border-width: 0px;
+  --base-font-size: 14px;
+  --line-height: 1.5;
+  --letter-spacing: 0.01em;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-out);
+  --motion-med: 320ms;
+  --sheen-dur: .7s;
+}
+
+[data-theme="glass-light"] {
+  --background: #E4CDE4;
+  --glass-tint-rgb: 246,240,255;
+  --glass-alpha: .55;
+  --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --surface-elevated: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
+  --text-primary: #453A5C;
+  --text-secondary: rgba(69,58,92,.75);
+  --text-muted: rgba(69,58,92,.55);
+  --border: rgba(69,58,92,.16);
+  --border-light: rgba(69,58,92,.09);
+  --accent-blue: #8B6ED9;
+  --accent-magenta: #C167B4;
+  --accent-lime: #3E7D4E;
+  --accent-orange: #B26A2A;
+  --accent-warning: #8F6410;
+  --accent-error: #C0566B;
+  --accent-primary-rgb: 139,110,217;
+  --graph-pending: rgba(69,58,92,.40);
+  --graph-running: #B26A2A;
+  --graph-passed: #3E7D4E;
+  --graph-failed: #C0566B;
+  --graph-planning: #7E8BE0;
+  --graph-gating: #C167B4;
+  --shadow: 0 8px 24px rgba(93,63,133,.16);
+  --elev-1: 0 2px 8px rgba(93,63,133,.10);
+  --elev-2: 0 8px 24px rgba(93,63,133,.16);
+  --elev-3: 0 16px 44px rgba(93,63,133,.22);
+  --glass-edge: rgba(255,255,255,.95);
+  --glass-hairline: rgba(255,255,255,.55);
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --border-radius: 14px;
+  --border-width: 0px;
+  --base-font-size: 14px;
+  --line-height: 1.5;
+  --letter-spacing: 0.01em;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-out);
+  --motion-med: 320ms;
+  --sheen-dur: .7s;
+}
+
+/* ============================================================================
+   THEMES 7 & 8 - FRIENDLY DARK (DEFAULT) / FRIENDLY LIGHT - "COZY"
+   Cal Sans display + Quicksand body, warm paper/charcoal grounds, pastel
+   category accents, tinted cards, frosted chrome.
+   ============================================================================ */
+[data-theme="friendly-dark"] {
+  --background: #211E26;
+  --surface: #2A2731;
+  --surface-elevated: #322E3A;
+  --surface-alt: #262330;
+  --text-primary: #F0EDF4;
+  --text-secondary: #B4AEBE;
+  --text-muted: #8A8494;
+  --border: rgba(240,237,244,.10);
+  --border-light: rgba(240,237,244,.06);
+  --accent-blue: #6FC6E8;
+  --accent-magenta: #C3B1E4;
+  --accent-lime: #6FDABC;
+  --accent-orange: #FFAD93;
+  --accent-warning: #FFD97F;
+  --accent-error: #FF8A73;
+  --accent-primary-rgb: 111,198,232;
+  --graph-pending: #8A8494;
+  --graph-running: #FFAD93;
+  --graph-passed: #6FDABC;
+  --graph-failed: #FF8A73;
+  --graph-planning: #6FC6E8;
+  --graph-gating: #C3B1E4;
+  --shadow: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+  --elev-1: 0 1px 3px rgba(0,0,0,.26);
+  --elev-2: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+  --elev-3: 0 14px 40px rgba(0,0,0,.34);
+  --elev-hover: 0 12px 30px rgba(111,198,232,.20);
+  --display-font: 'Cal Sans', 'Nunito', system-ui, sans-serif;
+  --body-font: 'Quicksand', 'Nunito', system-ui, sans-serif;
+  --base-font-size: 14.5px;
+  --line-height: 1.55;
+  --letter-spacing: normal;
+  --border-radius: 14px;
+  --border-width: 1px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-spring);
+  --motion-med: 260ms;
+  --sheen-dur: .55s;
+  /* cozy hooks (dark derivation: same pastels, slightly brighter) */
+  --pm6-cozy-mint: #6FDABC;
+  --pm6-cozy-sky: #6FC6E8;
+  --pm6-cozy-coral: #FFAD93;
+  --pm6-cozy-lav: #C3B1E4;
+  --pm6-cozy-butter: #FFD97F;
+  --pm6-cozy-card-base: #2A2731;
+  --pm6-cozy-mix: 14%;
+  --pm6-cozy-border-mix: 34%;
+  --pm6-cozy-chrome: rgba(40,36,48,.60);
+  --pm6-cozy-chrome-border: rgba(255,255,255,.08);
+  --pm6-cozy-field: rgba(255,255,255,.06);
+  --pm6-cozy-dot: rgba(190,180,210,.06);
+  --pm6-cozy-glow-mint: rgba(95,208,176,.10);
+  --pm6-cozy-glow-lav: rgba(179,157,219,.12);
+  --pm6-cozy-glow-sky: rgba(90,185,224,.09);
+}
+
+[data-theme="friendly-light"] {
+  --background: #FBF7F3;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-alt: #F5EFEA;
+  --text-primary: #4A4550;
+  --text-secondary: #6B6473;
+  --text-muted: #9A93A0;
+  --border: #E4DCEA;
+  --border-light: #EFEAF3;
+  --accent-blue: #3F9CC7;
+  --accent-magenta: #9678C9;
+  --accent-lime: #2FA183;
+  --accent-orange: #F07A55;
+  --accent-warning: #D9A62A;
+  --accent-error: #E8654C;
+  --accent-primary-rgb: 63,156,199;
+  --graph-pending: #9A93A0;
+  --graph-running: #F07A55;
+  --graph-passed: #2FA183;
+  --graph-failed: #E8654C;
+  --graph-planning: #3F9CC7;
+  --graph-gating: #9678C9;
+  --shadow: 0 4px 16px rgba(122,109,140,.12);
+  --elev-1: 0 2px 8px rgba(122,109,140,.10);
+  --elev-2: 0 4px 16px rgba(122,109,140,.12);
+  --elev-3: 0 14px 40px rgba(122,109,140,.20);
+  --elev-hover: 0 10px 26px rgba(90,185,224,.25);
+  --display-font: 'Cal Sans', 'Nunito', system-ui, sans-serif;
+  --body-font: 'Quicksand', 'Nunito', system-ui, sans-serif;
+  --base-font-size: 14.5px;
+  --line-height: 1.55;
+  --letter-spacing: normal;
+  --border-radius: 14px;
+  --border-width: 1px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-spring);
+  --motion-med: 260ms;
+  --sheen-dur: .55s;
+  /* cozy hooks (approved mockup palette, pure pastels) */
+  --pm6-cozy-mint: #5FD0B0;
+  --pm6-cozy-sky: #5AB9E0;
+  --pm6-cozy-coral: #FF9E80;
+  --pm6-cozy-lav: #B39DDB;
+  --pm6-cozy-butter: #FFD166;
+  --pm6-cozy-card-base: #FFFFFF;
+  --pm6-cozy-mix: 11%;
+  --pm6-cozy-border-mix: 30%;
+  --pm6-cozy-chrome: rgba(255,255,255,.65);
+  --pm6-cozy-chrome-border: rgba(255,255,255,.85);
+  --pm6-cozy-field: rgba(255,255,255,.70);
+  --pm6-cozy-dot: rgba(122,109,140,.10);
+  --pm6-cozy-glow-mint: rgba(95,208,176,.16);
+  --pm6-cozy-glow-lav: rgba(179,157,219,.18);
+  --pm6-cozy-glow-sky: rgba(90,185,224,.14);
+}
+
+/* glass: left-panel sees the clearest transparency step (F3-427 step 1) */
+[data-theme^="glass"] { --surface-alt: transparent; }
+
+/* ============================================================================
+   Reduced motion (F3-440 reduce-animations + prefers-reduced-motion)
+   ============================================================================ */
+html[data-reduced-motion="1"] *,
+html[data-reduced-motion="1"] *::before,
+html[data-reduced-motion="1"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

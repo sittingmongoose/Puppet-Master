@@ -1,0 +1,945 @@
+/* Grok 4.5 — Slint-portable motion kit.
+   Springs, stagger, press squash, settle, panel enter/exit, Q height morph.
+   Prefer transform/opacity/explicit height. RM hard-kills bounce. */
+
+:root {
+  --pm-chat-motion-enter: var(--motion-med, 240ms);
+  --pm-chat-motion-surface: var(--motion-med, 280ms);
+  --pm-chat-motion-fast: var(--motion-fast, 160ms);
+  --pm-chat-motion-slow: 420ms;
+  --pm-chat-motion-pulse: 1.8s;
+  --pm-chat-rise: 8px;
+  --pm-spring-snappy: cubic-bezier(0.22, 1.55, 0.36, 1);
+  --pm-spring-soft: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --pm-spring-settle: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --pm-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pm-ease-in-out: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --pm-stagger-step: 42ms;
+}
+
+/* ---- Enter / reveal ---- */
+
+@keyframes pmGrokEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--pm-chat-rise)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pmGrokEnterSoft {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pmGrokExit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+@keyframes pmGrokPop {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pmGrokSettleY {
+  0% {
+    transform: translateY(-10px);
+  }
+  55% {
+    transform: translateY(4px);
+  }
+  78% {
+    transform: translateY(-1.5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pmGrokPanelIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes pmGrokPanelInRight {
+  from {
+    opacity: 0;
+    transform: translateX(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes pmGrokPanelOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.98);
+  }
+}
+
+@keyframes pmGrokPanelOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(12px) scale(0.98);
+  }
+}
+
+@keyframes pmGrokScrimIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pmGrokScrimOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pmGrokSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  70% {
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pmGrokChipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(4px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.06) translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pmGrokChipOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes pmGrokToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pmGrokToastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes pmGrokHitPulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes pmGrokStatusSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pmGrokStatusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.78);
+    opacity: 0.55;
+  }
+}
+
+@keyframes pmGrokAttention {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  78% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pmGrokAttentionCalm {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes pmGrokDotsOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Marker class pm-q-morph-expand is driven by measured height in JS (no max-height keyframes). */
+
+@keyframes pmGrokOptionIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pmGrokSelectPop {
+  from {
+    transform: scale(0.7);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.pm-motion-pending {
+  opacity: 0;
+}
+
+.pm-motion-enter {
+  animation: pmGrokEnterSoft var(--pm-chat-motion-enter) var(--pm-spring-soft) both;
+}
+
+.pm-motion-exit {
+  animation: pmGrokExit var(--pm-chat-motion-fast) var(--pm-ease-out) both;
+  pointer-events: none;
+}
+
+.pm-motion-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.pm-motion-pop {
+  animation: pmGrokPop var(--pm-chat-motion-fast) var(--pm-spring-snappy) both;
+}
+
+.pm-motion-settle {
+  animation: pmGrokSettleY var(--pm-chat-motion-slow) var(--pm-spring-settle) both;
+}
+
+.pm-motion-slide-up {
+  animation: pmGrokSlideUp var(--pm-chat-motion-surface) var(--pm-spring-soft) both;
+}
+
+/* Stagger children */
+.pm-stagger > * {
+  animation: pmGrokOptionIn var(--pm-chat-motion-enter) var(--pm-ease-out) both;
+  animation-delay: calc(var(--stagger-i, 0) * var(--pm-stagger-step));
+}
+
+.pm-stagger > *:nth-child(1) {
+  --stagger-i: 0;
+}
+.pm-stagger > *:nth-child(2) {
+  --stagger-i: 1;
+}
+.pm-stagger > *:nth-child(3) {
+  --stagger-i: 2;
+}
+.pm-stagger > *:nth-child(4) {
+  --stagger-i: 3;
+}
+.pm-stagger > *:nth-child(5) {
+  --stagger-i: 4;
+}
+.pm-stagger > *:nth-child(6) {
+  --stagger-i: 5;
+}
+.pm-stagger > *:nth-child(7) {
+  --stagger-i: 6;
+}
+.pm-stagger > *:nth-child(8) {
+  --stagger-i: 7;
+}
+.pm-stagger > *:nth-child(n + 9) {
+  --stagger-i: 8;
+}
+
+/* Press squash */
+.pm-press,
+.pm-btn:active,
+.pm-composer-btn:active,
+.pm-goal-act:active,
+.pm-msg-action:active,
+.pm6-tb-menu-item:active,
+.pm-composer-attach:active {
+  transform: scale(0.97);
+  transition: transform 90ms var(--pm-ease-out);
+}
+
+/* Panel / overlay helpers */
+.pm-panel-in {
+  animation: pmGrokPanelIn var(--pm-chat-motion-surface) var(--pm-spring-soft) both;
+}
+.pm-panel-in-right {
+  animation: pmGrokPanelInRight var(--pm-chat-motion-surface) var(--pm-spring-soft) both;
+}
+.pm-panel-out {
+  animation: pmGrokPanelOut var(--pm-chat-motion-fast) var(--pm-ease-out) both;
+  pointer-events: none;
+}
+.pm-panel-out-right {
+  animation: pmGrokPanelOutRight var(--pm-chat-motion-fast) var(--pm-ease-out) both;
+  pointer-events: none;
+}
+
+/* Enter only while open. w2 keeps a dormant scrim in the DOM; fill-mode:both
+   on a bare .pm-scrim-anim left a permanent light wash over the chat. */
+.pm-scrim-anim.is-open:not(.is-leaving),
+.w1-scrim.pm-scrim-anim:not(.is-leaving),
+.w4-scrim.pm-scrim-anim:not(.is-leaving),
+.w5-scrim.pm-scrim-anim:not(.is-leaving),
+.w6-scrim.pm-scrim-anim:not(.is-leaving),
+.w7-scrim.pm-scrim-anim:not(.is-leaving),
+.w8-scrim.pm-scrim-anim:not(.is-leaving) {
+  animation: pmGrokScrimIn var(--pm-chat-motion-fast) var(--pm-ease-out) both;
+}
+.pm-scrim-anim.is-leaving {
+  animation: pmGrokScrimOut var(--pm-chat-motion-fast) var(--pm-ease-out) both;
+}
+
+.pm-chip-in {
+  animation: pmGrokChipIn var(--pm-chat-motion-fast) var(--pm-spring-snappy) both;
+}
+.pm-chip-out {
+  animation: pmGrokChipOut 140ms var(--pm-ease-out) both;
+}
+
+.pm-toast-in {
+  animation: pmGrokToastIn 320ms var(--pm-spring-soft) both;
+}
+.pm-toast-out {
+  animation: pmGrokToastOut 180ms var(--pm-ease-out) both;
+}
+
+.pm-hit-pulse {
+  animation: pmGrokHitPulse 480ms var(--pm-ease-out) both;
+}
+
+/* Work-surface accordion */
+details.pm-work-surface,
+details.pm-thought,
+details.pm-folio-leaf {
+  display: grid;
+  grid-template-rows: auto 0fr;
+  transition: grid-template-rows var(--pm-chat-motion-surface) var(--pm-spring-soft);
+}
+
+details.pm-work-surface[open],
+details.pm-thought[open],
+details.pm-folio-leaf[open] {
+  grid-template-rows: auto 1fr;
+}
+
+details.pm-work-surface > :not(summary),
+details.pm-thought > :not(summary),
+details.pm-folio-leaf > :not(summary) {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0.001;
+  transition: opacity calc(var(--pm-chat-motion-surface) * 0.85) var(--pm-ease-out);
+}
+
+details.pm-work-surface[open] > :not(summary),
+details.pm-thought[open] > :not(summary),
+details.pm-folio-leaf[open] > :not(summary) {
+  opacity: 1;
+}
+
+details.pm-work-surface > summary .pm-work-chev,
+details.pm-thought > summary .pm-work-chev,
+details.pm-folio-leaf > summary .pm-work-chev {
+  transition: transform var(--pm-chat-motion-fast) var(--pm-spring-snappy);
+}
+details.pm-work-surface[open] > summary .pm-work-chev,
+details.pm-thought[open] > summary .pm-work-chev,
+details.pm-folio-leaf[open] > summary .pm-work-chev {
+  transform: rotate(90deg);
+}
+
+@supports selector(details::details-content) {
+  details.pm-work-surface::details-content,
+  details.pm-thought::details-content,
+  details.pm-folio-leaf::details-content {
+    display: block;
+    overflow: hidden;
+    min-height: 0;
+    transition:
+      content-visibility var(--pm-chat-motion-surface) allow-discrete,
+      opacity calc(var(--pm-chat-motion-surface) * 0.85) var(--pm-ease-out);
+  }
+  details.pm-work-surface:not([open])::details-content,
+  details.pm-thought:not([open])::details-content,
+  details.pm-folio-leaf:not([open])::details-content {
+    opacity: 0.001;
+  }
+  details.pm-work-surface[open]::details-content,
+  details.pm-thought[open]::details-content,
+  details.pm-folio-leaf[open]::details-content {
+    opacity: 1;
+  }
+}
+
+/* Live pulse */
+@keyframes pmGrokLivePulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.42;
+    transform: scale(0.82);
+  }
+}
+
+.pm-activity-live::before {
+  animation: pmGrokLivePulse var(--pm-chat-motion-pulse) var(--ease-smooth, ease-in-out) infinite;
+}
+
+/* Thread status marks (symbol-first) */
+.pm-thread-status {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.pm-thread-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--border) 70%, var(--text-muted));
+}
+.pm-thread-status.is-working .pm-thread-status-mark {
+  width: 10px;
+  height: 10px;
+  border: 2px solid color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: pmGrokStatusSpin 0.85s linear infinite;
+}
+.pm-thread-status.is-attention .pm-thread-status-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-warning, #e6a23c);
+  animation:
+    pmGrokAttention 420ms var(--pm-spring-snappy) both,
+    pmGrokAttentionCalm 1.6s ease-in-out 420ms infinite;
+}
+.pm-thread-status.is-done .pm-thread-status-mark,
+.pm-thread-status.is-idle .pm-thread-status-mark {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-success, #3d9a6a) 80%, var(--text-muted));
+}
+.pm-thread-status.is-idle .pm-thread-status-mark {
+  background: color-mix(in srgb, var(--border) 70%, var(--text-muted));
+}
+.pm-thread-status.is-blocked .pm-thread-status-mark,
+.pm-thread-status.is-error .pm-thread-status-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent-error, #d64545);
+  animation: pmGrokAttention 380ms var(--pm-spring-snappy) both;
+}
+
+/* Row more trigger */
+.pm-thread-row-more {
+  flex: none;
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity var(--pm-chat-motion-fast) var(--pm-ease-out),
+    transform var(--pm-chat-motion-fast) var(--pm-spring-snappy);
+}
+.pm-thread-row:hover .pm-thread-row-more,
+.pm-thread-row:focus-within .pm-thread-row-more,
+[role='option']:hover .pm-thread-row-more,
+[role='option']:focus-within .pm-thread-row-more,
+.w3-pill:hover .pm-thread-row-more,
+.w3-pill:focus-within .pm-thread-row-more {
+  opacity: 1;
+  transform: scale(1);
+}
+.pm-thread-row:not(:hover):not(:focus-within) .pm-thread-row-more {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Q morph surface — height owned by JS during pm-q-height-morph; no max-height fight */
+.pm-q-stage {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  transform-origin: 50% 100%;
+  transition: opacity var(--pm-chat-motion-fast) var(--pm-ease-out);
+}
+.pm-q-stage.pm-q-height-morph {
+  transition:
+    height var(--pm-chat-motion-slow) var(--pm-spring-soft),
+    opacity var(--pm-chat-motion-fast) var(--pm-ease-out);
+}
+.pm-q-stage.is-pill {
+  height: 72px;
+}
+.pm-q-stage.is-pill .pm-q-card-head,
+.pm-q-stage.is-pill .pm-q-carousel,
+.pm-q-stage.is-pill .pm-q-card-actions {
+  display: none;
+}
+.pm-q-stage.is-expanded:not(.pm-q-height-morph) {
+  max-height: min(52vh, 480px);
+  height: auto;
+}
+.pm-q-stage.is-expanded .pm-q-pill {
+  display: none;
+}
+.pm-q-carousel-pane.is-enter-prep {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.pm-q-stage.is-submitting .pm-q-dots,
+.pm-q-stage.is-preparing .pm-q-dots {
+  display: block;
+}
+.pm-q-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 56px;
+}
+.pm-q-pill-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.pm-q-dots {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  animation: pmGrokDotsOrbit 1.4s linear infinite;
+}
+.pm-q-dots i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  top: 50%;
+  left: 50%;
+  margin: -2.5px 0 0 -2.5px;
+}
+.pm-q-dots i:nth-child(1) {
+  transform: translate(0, -8px);
+}
+.pm-q-dots i:nth-child(2) {
+  transform: translate(8px, 0);
+}
+.pm-q-dots i:nth-child(3) {
+  transform: translate(0, 8px);
+}
+.pm-q-dots i:nth-child(4) {
+  transform: translate(-8px, 0);
+}
+.pm-q-card.pm-motion-pending {
+  opacity: 0;
+}
+.pm-q-options.pm-stagger .pm-q-option {
+  animation: pmGrokOptionIn 280ms var(--pm-ease-out) both;
+}
+.pm-q-option.is-selected .pm-q-mark,
+.pm-q-option[aria-checked='true'] .pm-q-mark {
+  animation: pmGrokSelectPop 220ms var(--pm-spring-snappy) both;
+}
+.pm-q-carousel {
+  position: relative;
+  overflow: hidden;
+}
+.pm-q-carousel-pane {
+  transition: transform 320ms var(--pm-spring-soft), opacity 240ms var(--pm-ease-out);
+}
+.pm-q-carousel-pane.is-leaving {
+  transform: translateY(-28%);
+  opacity: 0;
+  pointer-events: none;
+}
+.pm-q-carousel-pane.is-entering {
+  animation: pmGrokOptionIn 320ms var(--pm-spring-soft) both;
+}
+.pm-q-stage.is-settling,
+.pm-q-stage.pm-q-settle {
+  animation: pmGrokSettleY 360ms var(--pm-spring-soft) both;
+}
+.pm-composer-attach-chip.pm-chip-out,
+.pm-composer-attach-chip.is-leaving {
+  animation: pmGrokExit 180ms var(--pm-ease-out) both;
+  pointer-events: none;
+}
+
+/* Goal strip */
+.pm-goal-strip {
+  animation: pmGrokSlideUp var(--pm-chat-motion-surface) var(--pm-spring-soft) both;
+}
+
+/* Jump exit */
+.pm-jump-latest.is-leaving {
+  animation: pmGrokExit 180ms var(--pm-ease-out) both;
+  pointer-events: none;
+}
+
+/* Lens / ring / settings panels */
+.pm-lens-bar {
+  animation: pmGrokSlideUp 280ms var(--pm-spring-soft) both;
+}
+.pm-lens-chip {
+  transition:
+    transform var(--pm-chat-motion-fast) var(--pm-spring-snappy),
+    background var(--pm-chat-motion-fast) var(--pm-ease-out),
+    color var(--pm-chat-motion-fast) var(--pm-ease-out);
+}
+.pm-lens-chip.is-on {
+  transform: scale(1.04);
+}
+.pm-ring-popover,
+.pm-settings-panel {
+  transform-origin: top right;
+  animation: pmGrokPop 280ms var(--pm-spring-soft) both;
+}
+.pm-ring-popover.is-leaving,
+.pm-settings-panel.is-leaving {
+  animation: pmGrokExit 160ms var(--pm-ease-out) both;
+  pointer-events: none;
+}
+.pm-ring-meter-fill {
+  transition: width 480ms var(--pm-spring-soft);
+}
+
+/* Drafts / More Info */
+.pm-composer-draft-peek:not([hidden]),
+.pm-more-info:not([hidden]) {
+  animation: pmGrokSlideUp 240ms var(--pm-spring-soft) both;
+}
+
+/* Host toast */
+.pm-host-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 9999;
+  padding: 10px 16px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--surface-elevated, var(--surface));
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--elev-3, 0 12px 32px color-mix(in srgb, var(--text-primary) 18%, transparent));
+  font-size: 12.5px;
+  font-weight: 600;
+  pointer-events: none;
+  animation: pmGrokToastIn 320ms var(--pm-spring-soft) both;
+}
+.pm-host-toast.is-leaving {
+  animation: pmGrokToastOut 180ms var(--pm-ease-out) both;
+}
+
+/* History pin strip */
+.pm-history-pin-btn[aria-pressed='true'] {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+
+/* ---- Reduced motion hard kill ---- */
+
+html[data-reduced-motion='1'] .pm-motion-pending,
+html[data-motion='reduced'] .pm-motion-pending {
+  opacity: 1;
+}
+
+html[data-reduced-motion='1'] .pm-motion-enter,
+html[data-motion='reduced'] .pm-motion-enter,
+html[data-reduced-motion='1'] .pm-motion-exit,
+html[data-motion='reduced'] .pm-motion-exit,
+html[data-reduced-motion='1'] .pm-motion-pop,
+html[data-motion='reduced'] .pm-motion-pop,
+html[data-reduced-motion='1'] .pm-motion-settle,
+html[data-motion='reduced'] .pm-motion-settle,
+html[data-reduced-motion='1'] .pm-motion-slide-up,
+html[data-motion='reduced'] .pm-motion-slide-up,
+html[data-reduced-motion='1'] .pm-panel-in,
+html[data-reduced-motion='1'] .pm-panel-in-right,
+html[data-reduced-motion='1'] .pm-panel-out,
+html[data-reduced-motion='1'] .pm-panel-out-right,
+html[data-motion='reduced'] .pm-panel-in,
+html[data-motion='reduced'] .pm-panel-in-right,
+html[data-motion='reduced'] .pm-panel-out,
+html[data-motion='reduced'] .pm-panel-out-right,
+html[data-reduced-motion='1'] .pm-scrim-anim,
+html[data-motion='reduced'] .pm-scrim-anim,
+html[data-reduced-motion='1'] .pm-chip-in,
+html[data-reduced-motion='1'] .pm-chip-out,
+html[data-motion='reduced'] .pm-chip-in,
+html[data-motion='reduced'] .pm-chip-out,
+html[data-reduced-motion='1'] .pm-toast-in,
+html[data-reduced-motion='1'] .pm-toast-out,
+html[data-motion='reduced'] .pm-toast-in,
+html[data-motion='reduced'] .pm-toast-out,
+html[data-reduced-motion='1'] .pm-stagger > *,
+html[data-motion='reduced'] .pm-stagger > *,
+html[data-reduced-motion='1'] .pm-activity-live::before,
+html[data-motion='reduced'] .pm-activity-live::before,
+html[data-reduced-motion='1'] .pm-thread-status.is-working .pm-thread-status-mark,
+html[data-reduced-motion='1'] .pm-thread-status.is-attention .pm-thread-status-mark,
+html[data-motion='reduced'] .pm-thread-status.is-working .pm-thread-status-mark,
+html[data-motion='reduced'] .pm-thread-status.is-attention .pm-thread-status-mark,
+html[data-reduced-motion='1'] .pm-q-dots,
+html[data-motion='reduced'] .pm-q-dots,
+html[data-reduced-motion='1'] .pm-goal-strip,
+html[data-motion='reduced'] .pm-goal-strip,
+html[data-reduced-motion='1'] .pm-lens-bar,
+html[data-motion='reduced'] .pm-lens-bar,
+html[data-reduced-motion='1'] .pm-ring-popover,
+html[data-reduced-motion='1'] .pm-settings-panel,
+html[data-motion='reduced'] .pm-ring-popover,
+html[data-motion='reduced'] .pm-settings-panel,
+html[data-reduced-motion='1'] .pm-host-toast,
+html[data-motion='reduced'] .pm-host-toast {
+  animation: none !important;
+  animation-delay: 0ms !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html[data-reduced-motion='1'] details.pm-work-surface,
+html[data-motion='reduced'] details.pm-work-surface,
+html[data-reduced-motion='1'] details.pm-thought,
+html[data-motion='reduced'] details.pm-thought,
+html[data-reduced-motion='1'] details.pm-folio-leaf,
+html[data-motion='reduced'] details.pm-folio-leaf,
+html[data-reduced-motion='1'] details.pm-work-surface > :not(summary),
+html[data-motion='reduced'] details.pm-work-surface > :not(summary),
+html[data-reduced-motion='1'] .pm-q-card-body,
+html[data-motion='reduced'] .pm-q-card-body,
+html[data-reduced-motion='1'] .pm-q-stage,
+html[data-motion='reduced'] .pm-q-stage,
+html[data-reduced-motion='1'] .pm-ring-meter-fill,
+html[data-motion='reduced'] .pm-ring-meter-fill {
+  transition: none !important;
+  transition-delay: 0ms !important;
+}
+
+html[data-reduced-motion='1'] details.pm-work-surface > :not(summary),
+html[data-motion='reduced'] details.pm-work-surface > :not(summary),
+html[data-reduced-motion='1'] details.pm-thought > :not(summary),
+html[data-motion='reduced'] details.pm-thought > :not(summary),
+html[data-reduced-motion='1'] details.pm-folio-leaf > :not(summary),
+html[data-motion='reduced'] details.pm-folio-leaf > :not(summary) {
+  opacity: 1;
+}
+
+html[data-reduced-motion='1'] .pm6-tb-menu,
+html[data-reduced-motion='1'] .pm6-chat-more-menu,
+html[data-motion='reduced'] .pm6-tb-menu,
+html[data-motion='reduced'] .pm6-chat-more-menu,
+html[data-reduced-motion='1'] .pm6-tb-menu.is-open,
+html[data-reduced-motion='1'] .pm6-chat-more-menu.is-open,
+html[data-reduced-motion='1'] .pm6-tb-menu.is-closing,
+html[data-reduced-motion='1'] .pm6-chat-more-menu.is-closing,
+html[data-motion='reduced'] .pm6-tb-menu.is-open,
+html[data-motion='reduced'] .pm6-chat-more-menu.is-open,
+html[data-motion='reduced'] .pm6-tb-menu.is-closing,
+html[data-motion='reduced'] .pm6-chat-more-menu.is-closing {
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+  animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+}
+
+html[data-reduced-motion='1'] .pm-press:active,
+html[data-motion='reduced'] .pm-press:active,
+html[data-reduced-motion='1'] .pm-btn:active,
+html[data-motion='reduced'] .pm-btn:active {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-motion-pending {
+    opacity: 1;
+  }
+  .pm-motion-enter,
+  .pm-motion-exit,
+  .pm-motion-pop,
+  .pm-motion-settle,
+  .pm-motion-slide-up,
+  .pm-panel-in,
+  .pm-panel-in-right,
+  .pm-panel-out,
+  .pm-panel-out-right,
+  .pm-scrim-anim,
+  .pm-chip-in,
+  .pm-chip-out,
+  .pm-toast-in,
+  .pm-toast-out,
+  .pm-stagger > *,
+  .pm-activity-live::before,
+  .pm-q-dots,
+  .pm-goal-strip,
+  .pm-lens-bar,
+  .pm-ring-popover,
+  .pm-settings-panel,
+  .pm-host-toast,
+  .pm-thread-status.is-working .pm-thread-status-mark,
+  .pm-thread-status.is-attention .pm-thread-status-mark {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .pm-work-surface,
+  details.pm-work-surface,
+  details.pm-thought,
+  details.pm-folio-leaf,
+  details.pm-work-surface > :not(summary),
+  details.pm-thought > :not(summary),
+  details.pm-folio-leaf > :not(summary),
+  .pm-q-card-body,
+  .pm-q-stage {
+    transition: none !important;
+  }
+  details.pm-work-surface > :not(summary),
+  details.pm-thought > :not(summary),
+  details.pm-folio-leaf > :not(summary) {
+    opacity: 1;
+  }
+  .pm6-tb-menu,
+  .pm6-chat-more-menu,
+  .pm6-tb-menu.is-open,
+  .pm6-chat-more-menu.is-open,
+  .pm6-tb-menu.is-closing,
+  .pm6-chat-more-menu.is-closing {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

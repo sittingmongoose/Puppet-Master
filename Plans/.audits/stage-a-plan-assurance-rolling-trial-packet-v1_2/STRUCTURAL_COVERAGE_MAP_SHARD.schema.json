@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/structural-coverage-map-shard.v1.2.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "structural_generation_binding_sha256", "shard_index", "collection_index", "collection", "row_start", "row_end_exclusive", "row_count", "first_identity", "last_identity", "rows_sha256", "rows", "payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_2"},
+    "trial_id": {"const": "stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "generation_id": {"const": "generation-v1_2-001-20260717"},
+    "structural_generation_binding_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "shard_index": {"type": "integer", "minimum": 0, "maximum": 31},
+    "collection_index": {"type": "integer", "minimum": 0, "maximum": 9},
+    "collection": {"enum": ["population", "documents", "sections", "machine_nodes", "plan_units", "acceptance_units", "references", "owner_consumer_edges", "capability_assignments", "identity_aliases"]},
+    "row_start": {"type": "integer", "minimum": 0},
+    "row_end_exclusive": {"type": "integer", "minimum": 1},
+    "row_count": {"type": "integer", "minimum": 1},
+    "first_identity": {"type": "string", "minLength": 1},
+    "last_identity": {"type": "string", "minLength": 1},
+    "rows_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "rows": {"type": "array", "minItems": 1},
+    "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

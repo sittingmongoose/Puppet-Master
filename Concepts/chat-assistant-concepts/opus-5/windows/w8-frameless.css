@@ -1,0 +1,339 @@
+/* w8 "Frameless" — Opus 5
+ * Edge-to-edge transcript, floating capsules, no chrome.
+ * All rules scoped under [data-pmx-window="w8"]; a test fails anything outside that scope.
+ */
+
+/* The question capsule and the composer capsule used to be two independently
+ * absolutely-positioned pills, the question pinned a hardcoded 78px above the shell's bottom
+ * edge on the assumption that the composer is always exactly one line tall. A multi-line
+ * composer grows past that assumption and the two capsules collide. Making the shell a
+ * bottom-aligned flex column instead — every other child here (transcript, header capsule,
+ * full overlay) stays absolutely positioned and is unaffected — lets the question and
+ * composer stack in real flow with a fixed gap, so the question is always exactly one gap
+ * above whatever the composer's actual rendered height happens to be. */
+[data-pmx-window="w8"] .w8-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  position: relative;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+[data-pmx-window="w8"] .w8-transcript {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------- capsules
+ * A single translucent layer with ONE backdrop blur. Deliberately not stacking a second
+ * blur under a glass theme — nested blurs are expensive and are a recorded project risk. */
+
+[data-pmx-window="w8"] .w8-cap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% - 24px);
+  padding: 5px var(--sm);
+  background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--elev-2);
+  backdrop-filter: blur(10px);
+  min-width: 0;
+}
+
+[data-pmx-window="w8"] .w8-cap-head {
+  top: 10px;
+  transition: transform var(--motion-med) var(--ease-default), opacity var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w8"] .w8-cap-head[data-hidden="1"] {
+  transform: translateX(-50%) translateY(-140%);
+  opacity: 0;
+}
+/* Hovering the very top brings it back without scrolling. */
+[data-pmx-window="w8"] .w8-shell:hover .w8-cap-head[data-hidden="1"]:hover {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+[data-pmx-window="w8"] .w8-cap-composer {
+  /* Back into normal flow (see the .w8-shell comment) so its height, whatever it grows to,
+   * is what the question capsule above it actually stacks against. */
+  position: static;
+  transform: none;
+  margin-bottom: 12px;
+  width: min(100% - 24px, 720px);
+  padding: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+[data-pmx-window="w8"] .w8-composerhost { width: 100%; min-width: 0; }
+
+[data-pmx-window="w8"] .w8-capbtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; flex: 0 0 auto;
+  padding: 0; border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+[data-pmx-window="w8"] .w8-capbtn:hover { background: var(--surface); color: var(--text-primary); }
+
+[data-pmx-window="w8"] .w8-tools { flex: 1 1 auto; min-width: 0; display: flex; }
+
+[data-pmx-window="w8"] .w8-brand {
+  display: flex; align-items: baseline; gap: 5px; flex: 0 0 auto;
+  padding-right: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted);
+}
+[data-pmx-window="w8"] .w8-brand-name { font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+[data-pmx-window="w8"] .w8-brand-model { letter-spacing: .05em; }
+
+/* ---------------------------------------------------------------- question */
+
+[data-pmx-window="w8"] .w8-question {
+  /* In flow, stacked directly above the composer capsule by the shell's gap — see the
+   * .w8-shell comment. align-self stretches it to the shell's width; the margin reproduces
+   * the old left/right 12px inset. */
+  align-self: stretch;
+  margin: 0 12px;
+  min-width: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--elev-3);
+}
+[data-pmx-window="w8"] .w8-question:empty { display: none; }
+
+/* ---------------------------------------------------------------- full overlay */
+
+[data-pmx-window="w8"] .w8-full {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  /* This overlay replaces the transcript entirely, so it must be OPAQUE. Bare `--surface`
+   * is translucent in the glass themes and would let the transcript read straight through
+   * an overlay that is in front in z-order. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface), var(--surface));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-default), visibility 0s linear var(--motion-fast);
+}
+[data-pmx-window="w8"] .w8-full[data-open="1"] {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition: opacity var(--motion-fast) var(--ease-default), visibility 0s;
+}
+[data-pmx-window="w8"] .w8-full-head {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: var(--sm) var(--md); flex: 0 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w8"] .w8-full-title {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted);
+}
+[data-pmx-window="w8"] .w8-full-close {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border: none; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+}
+[data-pmx-window="w8"] .w8-full-close:hover { background: var(--surface-elevated); color: var(--text-primary); }
+[data-pmx-window="w8"] .w8-full-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: var(--sm) 0; }
+[data-pmx-window="w8"] .w8-full-note { padding: var(--md); font-size: var(--fs-xs); line-height: 1.55; color: var(--text-muted); max-width: 60ch; }
+
+[data-pmx-window="w8"] .w8-hrow {
+  display: flex; align-items: baseline; gap: var(--sm);
+  width: 100%; padding: var(--sm) var(--md);
+  border: none; background: transparent; color: var(--text-primary);
+  font: inherit; text-align: left; cursor: pointer; min-width: 0;
+}
+[data-pmx-window="w8"] .w8-hrow:hover { background: var(--surface-elevated); }
+/* Fill, not a left accent border. */
+[data-pmx-window="w8"] .w8-hrow.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  font-weight: 600;
+}
+[data-pmx-window="w8"] .w8-hrow-title {
+  flex: 1 1 auto; min-width: 0; font-size: var(--fs-xs);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+[data-pmx-window="w8"] .w8-hrow-meta { flex: 0 0 auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+[data-pmx-window="w8"] .w8-overlay { position: static; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w8"] .w8-brand-name { display: none; }
+  /* The capsule wraps to a second row rather than clipping its controls. Hiding a tool to
+   * make the row fit would strand a required entry point, and letting it overflow is a
+   * geometry failure, so wrapping is the only honest option at this width. */
+  [data-pmx-window="w8"] .w8-cap-head {
+    top: 8px;
+    padding: 4px 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 2px;
+    border-radius: var(--radius-lg);
+  }
+  [data-pmx-window="w8"] .w8-tools { flex: 1 1 100%; min-width: 0; justify-content: center; }
+  [data-pmx-window="w8"] .w8-brand { padding-right: 0; }
+  [data-pmx-window="w8"] .w8-shell { gap: 8px; }
+  [data-pmx-window="w8"] .w8-cap-composer { margin-bottom: 8px; width: calc(100% - 16px); }
+  [data-pmx-window="w8"] .w8-question { margin: 0 8px; }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w8"] .w8-shell[data-w8-mount="popout"] {
+  border-left: none;
+  border-radius: var(--radius-lg);
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * Auto-hide is disabled entirely, not merely made instant: the capsule simply stays put.
+ * A capsule frozen half-hidden would be exactly the partial state the contract forbids. */
+
+[data-motion="reduced"][data-pmx-window="w8"] .w8-cap-head {
+  transition: none !important;
+  transform: translateX(-50%) !important;
+  opacity: 1 !important;
+}
+[data-motion="reduced"][data-pmx-window="w8"] .w8-full { transition: none !important; }
+[data-motion="reduced"][data-pmx-window="w8"] .w8-full[data-open="0"] { visibility: hidden !important; }
+[data-motion="reduced"][data-pmx-window="w8"] .w8-full[data-open="1"] { visibility: visible !important; opacity: 1 !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * Frameless means the chrome earns its place. Controls rest at reduced contrast
+ * and come fully forward on hover or keyboard focus, so the transcript dominates
+ * while nothing is ever actually hidden. The resting state stays well above
+ * invisible on purpose — a control you cannot see is not "frameless", it is lost.
+ */
+@keyframes pmx-w8-settle {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w8"] .w8-transcript {
+  animation: pmx-w8-settle var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w8"] .w8-tools,
+[data-pmx-window="w8"] .w8-capbtn {
+  opacity: .62;
+  transition: opacity var(--motion-med) var(--ease-default),
+              transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w8"] .w8-shell:hover .w8-tools,
+[data-pmx-window="w8"] .w8-shell:focus-within .w8-tools,
+[data-pmx-window="w8"] .w8-tools:hover,
+[data-pmx-window="w8"] .w8-tools:focus-within,
+[data-pmx-window="w8"] .w8-capbtn:hover,
+[data-pmx-window="w8"] .w8-capbtn:focus-visible { opacity: 1; }
+[data-pmx-window="w8"] .w8-capbtn:active { transform: scale(.95); }
+
+/* Under reduced motion the chrome is simply always at full contrast: a fade that
+ * cannot fade would otherwise leave it stuck at its resting opacity. */
+[data-motion="reduced"][data-pmx-window="w8"] .w8-transcript {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}[data-motion="reduced"][data-pmx-window="w8"] .w8-tools,
+[data-motion="reduced"][data-pmx-window="w8"] .w8-capbtn{ opacity: 1 !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w8"] .w8-transcript {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  [data-pmx-window="w8"] .w8-tools,
+  [data-pmx-window="w8"] .w8-capbtn { opacity: 1 !important; }
+}
+
+
+/* ---------------------------------------------------------------- pinned history rail
+ * This concept renders its own transient history, so before now it never mounted the
+ * shared module and never showed thread status at all. The rail declares that region.
+ *
+ * It is always present so the pin is always reachable: a slim edge carrying just the
+ * control, widening to a real column when engaged. The shell becomes a grid in the
+ * pinned state and every pre-existing child is pushed to column 2 — that way the
+ * layout switch needs no knowledge of this window's internal structure, which is what
+ * keeps the change from being invasive.
+ */
+[data-pmx-window="w8"] .w8-pinrail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  transition: width var(--motion-med) var(--ease-spring-real);
+}
+[data-pmx-window="w8"] .w8-pinrail[data-w8-pinned="0"] { width: 30px; }
+[data-pmx-window="w8"] .w8-pinrail[data-w8-pinned="0"] .w8-pinrail-title,
+[data-pmx-window="w8"] .w8-pinrail[data-w8-pinned="0"] .w8-pinrail-body { display: none; }
+
+[data-pmx-window="w8"] .w8-pinrail-head {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: var(--sm) 3px;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+[data-pmx-window="w8"] .w8-pinrail[data-w8-pinned="1"] .w8-pinrail-head {
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+}
+[data-pmx-window="w8"] .w8-pinrail-title {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-window="w8"] .w8-pinrail-body {
+  flex: 1 1 auto; min-height: 0; min-width: 0;
+  overflow-y: auto; overflow-x: hidden;
+}
+
+/* Pinned: the shell becomes two columns and everything that was already here moves to
+   the second one. */
+[data-pmx-window="w8"] .w8-shell[data-w8-pinned="1"] {
+  display: grid;
+  grid-template-columns: clamp(200px, 23%, 268px) minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  align-content: stretch;
+}
+[data-pmx-window="w8"] .w8-shell[data-w8-pinned="1"] > * { grid-column: 2; min-width: 0; }
+[data-pmx-window="w8"] .w8-shell[data-w8-pinned="1"] > .w8-pinrail {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  width: auto;
+}
+
+[data-motion="reduced"][data-pmx-window="w8"] .w8-pinrail { transition: none !important; }
+
+/* ---------------------------------------------------------------- selector collapse
+ * w8's cap is deliberately the narrowest chrome in the set, and four selector pills do
+ * not fit in it: they degraded to "Product desi… / Opu… / Ag… / m…". The last one is the
+ * telling case — "m…" for "main" carries no information at all, so the pill was costing
+ * space while communicating nothing.
+ *
+ * Rather than invent a w8-specific treatment, this promotes the collapse affordance the
+ * selector row already ships for narrow containers. One "More" control opens a menu
+ * where all four values are readable in full, which suits a concept whose whole premise
+ * is that chrome earns its place.
+ */
+[data-pmx-window="w8"] .pmx-chrome-sel { display: none; }
+[data-pmx-window="w8"] .pmx-chrome-sel-more { display: inline-flex; }

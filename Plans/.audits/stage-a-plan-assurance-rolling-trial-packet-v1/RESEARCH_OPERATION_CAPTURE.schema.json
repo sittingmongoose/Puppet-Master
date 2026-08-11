@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/research-operation-capture.v1.json",
+  "title": "Research Operation Capture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "schema_id", "capture_ref", "operation_id", "worker_context_id", "operation_kind", "tool_id", "request", "response", "started_at_utc", "finished_at_utc", "terminal", "source_card_ids", "capture_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "schema_id": {"const": "pm.plan_assurance.research_operation_capture.v1"},
+    "capture_ref": {"type": "string", "minLength": 1},
+    "operation_id": {"type": "string", "minLength": 1},
+    "worker_context_id": {"type": "string", "minLength": 1},
+    "operation_kind": {"enum": ["search", "open", "read", "extract", "browser_observe"]},
+    "tool_id": {"type": "string", "minLength": 1},
+    "request": {"$ref": "#/$defs/blob"},
+    "response": {"$ref": "#/$defs/blob"},
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "finished_at_utc": {"type": "string", "format": "date-time"},
+    "terminal": {"enum": ["PASS", "PARTIAL", "FAILED", "DENIED", "TIMEOUT"]},
+    "source_card_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "capture_payload_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "blob": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["encoding", "bytes", "sha256", "data"],
+      "properties": {
+        "encoding": {"const": "base64"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "data": {"type": "string"}
+      }
+    }
+  }
+}

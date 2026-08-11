@@ -1,452 +1,17 @@
 <script id="pm6-js-panels">
-/* pm6-js-panels — shell chrome + side panels wiring.
-   Registers panel actions on PM_DEMO, renders live state (git / docker /
-   artifacts / notifications) from PM_DEMO events, drives the breadcrumb,
-   activity-bar page icons, docker subview chips, worktree row expansion,
-   theme persistence and the depth-background pointer parallax. */
+/* pm6-js-panels -- shell chrome wiring: activity-bar page navigation +
+   Ctrl+1..9, activity-bar customization (reorder / hide / More tray),
+   theme + project title-bar sprout menus, the title-bar density ladder,
+   and the depth-background pointer parallax. The legacy side-panel render
+   JS (git / docker / artifacts / notifications / agents mirror / worktree
+   row expansion / file filter) was removed in the 2026-07-29 deferred-
+   cleanup wave: the PM6 panels it served were replaced by the Cozy Shelves
+   panels, whose behavior lives in pm6-js-cozy-shelves. */
 (function () {
   'use strict';
-  function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   function byId(id) { return document.getElementById(id); }
-  function safeToast(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
   function demo() { return window.PM_DEMO || null; }
-
-  /* ================= action registrations ================= */
-  function regActions() {
-    var D = demo();
-    if (!D || !D.actions || !D.actions.register) return false;
-    var reg = function (id, fn) { try { D.actions.register(id, fn); } catch (e) {} };
-    var argOf = function (ctx) { return ctx && ctx.arg != null ? String(ctx.arg) : ''; };
-
-    /* open a side panel (optionally with a docker subview): "panel-docker:publish" */
-    reg('panels.show', function (ctx) {
-      var a = argOf(ctx).split(':');
-      var icon = $('.activity-bar .icon[data-target="' + a[0] + '"]');
-      var view = byId(a[0]);
-      if (!view) return { toast: 'That panel is not in this build.' };
-      $all('.side-panel-view').forEach(function (v) { v.classList.remove('active'); });
-      view.classList.add('active');
-      $all('.activity-bar .icon[data-target]').forEach(function (i) { i.classList.remove('active'); });
-      if (icon) icon.classList.add('active');
-      var slot = byId('sidePanelSlot');
-      if (slot) slot.classList.remove('hidden');
-      if (a[0] === 'panel-docker' && a[1]) showDockerView(a[1]);
-      return { ok: true };
-    });
-
-    reg('panels.open_chat', function () {
-      var chatIcon = $('.activity-bar .icon[title="Chat"]');
-      var chatPanel = byId('chatPanel');
-      if (chatPanel && chatPanel.classList.contains('hidden') && chatIcon) chatIcon.click();
-      else if (!chatPanel && chatIcon) chatIcon.click();
-      else safeToast('Chat panel is already open.');
-      return { ok: true };
-    });
-
-    reg('panels.git_commit', function () {
-      var D2 = demo();
-      var input = byId('scCommitMsg');
-      var msg = input && input.value ? input.value.trim() : '';
-      if (!msg) return { toast: 'Type a commit message — or let AI draft one.' };
-      var res = D2 && D2.git && D2.git.commit ? D2.git.commit(msg) : { toast: 'Demo engine still loading.' };
-      if (res && res.ok && input) input.value = '';
-      return res;
-    });
-
-    reg('panels.docker_view', function (ctx) {
-      showDockerView(argOf(ctx) || 'containers');
-      return { ok: true };
-    });
-
-    reg('panels.art_filter', function (ctx) {
-      var f = argOf(ctx) || 'all';
-      $all('#panel-artifacts .pm6-art-filters .pm6-dm-chip').forEach(function (c) {
-        c.classList.toggle('active', (c.dataset.demoArg || 'all') === f);
-      });
-      $all('#panel-artifacts [data-pm6-art-family]').forEach(function (r) {
-        r.style.display = (f === 'all' || r.getAttribute('data-pm6-art-family') === f) ? '' : 'none';
-      });
-      return { ok: true };
-    });
-
-    reg('panels.ack', function (ctx) {
-      var row = $('#pm6NotifyList [data-notify=' + JSON.stringify(argOf(ctx)) + ']');
-      if (!row) return { toast: 'Alert already handled.' };
-      if (row.classList.contains('pm6-acked')) return { disabled: true, reason: 'already_done' };
-      row.classList.add('pm6-acked');
-      var chip = row.querySelector('.pm6-chip');
-      if (chip) { chip.textContent = 'acknowledged'; chip.className = 'pm6-chip'; }
-      refreshNotifyState();
-      return { toast: 'Acknowledged — it stays in the log.' };
-    });
-
-    reg('panels.snooze', function (ctx) {
-      var row = $('#pm6NotifyList [data-notify=' + JSON.stringify(argOf(ctx)) + ']');
-      if (!row) return { toast: 'Alert already handled.' };
-      if (row.classList.contains('pm6-acked')) return { disabled: true, reason: 'already_done' };
-      row.classList.add('pm6-acked');
-      var chip = row.querySelector('.pm6-chip');
-      if (chip) { chip.textContent = 'snoozed 1h'; chip.className = 'pm6-chip'; }
-      refreshNotifyState();
-      return { toast: 'Snoozed — it returns in an hour (demo clock).' };
-    });
-
-    reg('panels.test_run', function () {
-      var btn = byId('pm6TestRunBtn');
-      if (btn && btn.dataset.pm6Busy) return { disabled: true, reason: 'busy' };
-      if (btn) { btn.dataset.pm6Busy = '1'; btn.textContent = 'Running…'; }
-      var chip = byId('pm6TestChip');
-      if (chip) { chip.textContent = 'running'; chip.className = 'pm6-chip pm6-chip-warn'; }
-      try {
-        var D2 = demo();
-        if (D2 && D2.term && D2.term.streamTo) {
-          D2.term.streamTo('ts-sess-alpha', [
-            '$ cargo test --workspace',
-            '   Compiling tastebook v0.4.2',
-            'running 214 tests ...',
-            'test result: ok. 214 passed; 0 failed; finished in 3.41s'
-          ], 700);
-        }
-      } catch (e) {}
-      setTimeout(function () {
-        if (chip) { chip.textContent = '214 passed'; chip.className = 'pm6-chip pm6-chip-ok'; }
-        var when = byId('pm6TestWhen');
-        if (when) when.textContent = 'just now · manual run';
-        if (btn) { delete btn.dataset.pm6Busy; btn.textContent = 'Run Tests'; }
-        safeToast('cargo test green — 214 passed, receipt filed to Runtime Artifacts');
-      }, 3400);
-      return { ok: true };
-    });
-
-    reg('panels.debug_start', function () {
-      var sel = byId('pm6RunConfig');
-      var cfg = sel ? sel.value : 'cargo run';
-      var st = byId('pm6RunState');
-      if (st) { st.textContent = 'Launching'; st.className = 'pm6-chip pm6-chip-warn'; }
-      try {
-        var D2 = demo();
-        if (D2 && D2.term && D2.term.streamTo) {
-          D2.term.streamTo('ts-sess-alpha', ['$ ' + cfg, 'DAP session on :54112 (1 session / project)', 'breakpoint set: import.rs:58'], 600);
-        }
-      } catch (e) {}
-      setTimeout(function () {
-        if (st) { st.textContent = 'Paused at breakpoint'; st.className = 'pm6-chip pm6-chip-warn'; }
-      }, 2200);
-      return { toast: 'Debug session starting: ' + cfg };
-    });
-
-    return true;
-  }
-
-  /* ================= docker subviews + containers ================= */
-  function showDockerView(name) {
-    $all('#panel-docker [data-pm6-dm-view]').forEach(function (v) {
-      v.classList.toggle('pm6-hidden', v.getAttribute('data-pm6-dm-view') !== name);
-    });
-    $all('#panel-docker .pm6-dm-chips .pm6-dm-chip').forEach(function (c) {
-      c.classList.toggle('active', c.dataset.demoArg === name);
-    });
-  }
-
-  function renderContainers() {
-    var host = byId('pm6DmContainers');
-    var D = demo();
-    if (!host) return;
-    var list = (D && D.state && D.state.docker && D.state.docker.containers) || [];
-    if (!list.length) { host.innerHTML = '<div class="pm6-sp-note">No containers — runtime detected but nothing is defined yet.</div>'; return; }
-    var running = 0, exited = 0, restarting = 0;
-    var html = list.map(function (c) {
-      var dot = 'pm6-dot-idle', chip = 'pm6-chip', label = c.state;
-      if (c.state === 'running') { dot = 'pm6-dot-ok'; chip = 'pm6-chip pm6-chip-ok'; running++; }
-      else if (c.state === 'exited') { dot = 'pm6-dot-err'; chip = 'pm6-chip'; exited++; label = 'exited' + (c.exitCode != null ? ' (' + c.exitCode + ')' : ''); }
-      else if (c.state === 'restarting') { dot = 'pm6-dot-run'; chip = 'pm6-chip pm6-chip-warn'; restarting++; }
-      var canStart = c.state !== 'running';
-      var canStop = c.state === 'running' || c.state === 'restarting';
-      return '' +
-        '<div class="pm6-dm-ct" data-ct="' + c.id + '">' +
-          '<span class="pm6-status-dot ' + dot + '">●</span>' +
-          '<span class="pm6-dm-ct-name"><span>' + c.name + '</span>' +
-            '<span class="pm6-dm-ct-meta">' + c.image + (c.ports ? ' · ' + c.ports : '') + '</span></span>' +
-          '<span class="' + chip + '">' + label + '</span>' +
-          '<span class="pm6-sc-acts">' +
-            (canStart
-              ? '<button class="pm6-sp-minibtn" data-demo-action="docker.start" data-demo-arg="' + c.id + '" title="Start">▸</button>'
-              : '<button class="pm6-sp-minibtn" aria-disabled="true" data-demo-reason="already_done" title="Already running">▸</button>') +
-            (canStop
-              ? '<button class="pm6-sp-minibtn" data-demo-action="docker.stop" data-demo-arg="' + c.id + '" title="Stop">✕</button>'
-              : '<button class="pm6-sp-minibtn" aria-disabled="true" data-demo-reason="already_done" title="Already stopped">✕</button>') +
-            '<button class="pm6-sp-minibtn" data-demo-action="docker.logs" data-demo-arg="' + c.id + '" title="Logs">⋮</button>' +
-          '</span>' +
-        '</div>';
-    }).join('');
-    host.innerHTML = html;
-    var count = byId('pm6DmCount');
-    if (count) count.textContent = running + ' running · ' + exited + ' exited · ' + restarting + ' restarting';
-  }
-
-  function renderCompose(payload) {
-    var host = byId('pm6DmCompose');
-    if (!host || !payload || !payload.services) return;
-    Object.keys(payload.services).forEach(function (svc) {
-      var row = host.querySelector('[data-svc="' + svc + '"] .pm6-status-dot');
-      if (row && payload.services[svc] === 'running') { row.className = 'pm6-status-dot pm6-dot-ok'; }
-    });
-  }
-
-  function renderChain(pc) {
-    var chain = byId('pm6DmChain');
-    if (!chain || !pc) return;
-    var set = function (stage, text, cls, done) {
-      var el = chain.querySelector('[data-stage="' + stage + '"]');
-      if (!el) return;
-      var chip = el.querySelector('[data-role="state"]');
-      if (chip) { chip.textContent = text; chip.className = 'pm6-chip ' + (cls || ''); }
-      el.classList.toggle('done', !!done);
-    };
-    set('build', pc.built ? 'built ' + (pc.digest ? String(pc.digest).slice(0, 14) + '…' : '') : 'pending', pc.built ? 'pm6-chip-ok' : '', pc.built);
-    set('push', pc.pushedImage ? 'pushed ' + pc.tag : (pc.built ? 'ready' : 'pending'), pc.pushedImage ? 'pm6-chip-ok' : '', pc.pushedImage);
-    set('hub', 'exists', 'pm6-chip-ok', true);
-    var tmpl = pc.template || 'unknown';
-    set('template', tmpl, (tmpl === 'ready_to_push' || tmpl === 'pushed' || tmpl === 'clean') ? 'pm6-chip-ok' : (tmpl === 'dirty' ? 'pm6-chip-warn' : ''), tmpl === 'pushed');
-    set('unraid', pc.pushedTemplate ? 'template live' : 'waiting', pc.pushedTemplate ? 'pm6-chip-ok' : '', pc.pushedTemplate);
-    var digest = byId('pm6DmDigest');
-    if (digest) digest.textContent = pc.digest ? pc.digest : '— not built yet';
-    var mirror = byId('pm6UnraidMirror');
-    if (mirror) { mirror.textContent = tmpl; mirror.className = 'pm6-chip ' + (tmpl === 'dirty' ? 'pm6-chip-warn' : 'pm6-chip-ok'); }
-  }
-
-  /* ================= git renders ================= */
-  function fileRow(f, staged) {
-    var act = staged
-      ? '<button class="pm6-sp-minibtn" title="Unstage" data-demo-action="demo.toast" data-demo-arg="cmd.git.unstage_hunks → ' + f + '">-</button>'
-      : '<button class="pm6-sp-minibtn" title="Stage" data-demo-action="git.stage" data-demo-arg="' + f + '">+</button>';
-    return '<div class="pm6-sc-file">' +
-      '<span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → ' + f + '">' + f +
-      ' <span class="git-status ' + (staged ? 'pm6-gs-staged' : 'pm6-gs-mod') + '">M</span></span>' +
-      '<span class="pm6-sc-acts">' + act +
-      '<button class="pm6-sp-minibtn pm6-danger" title="Discard" data-demo-action="demo.toast" data-demo-arg="cmd.git.discard_hunks → ' + f + ' (confirm required)">✕</button></span></div>';
-  }
-
-  function renderGitChanges() {
-    var D = demo();
-    var g = D && D.state && D.state.git;
-    if (!g) return;
-    var stagedHost = byId('pm6ScStaged'), unstagedHost = byId('pm6ScUnstaged');
-    if (stagedHost && Array.isArray(g.staged)) {
-      stagedHost.innerHTML = g.staged.length
-        ? g.staged.map(function (f) { return fileRow(f, true); }).join('')
-        : '<div class="pm6-sp-note">Nothing staged.</div>';
-    }
-    if (unstagedHost && Array.isArray(g.unstaged)) {
-      unstagedHost.innerHTML = g.unstaged.length
-        ? g.unstaged.map(function (f) { return fileRow(f, false); }).join('')
-        : '<div class="pm6-sp-note">Working tree clean.</div>';
-    }
-    var sc = byId('pm6ScStagedCount'); if (sc && g.staged) sc.textContent = g.staged.length;
-    var uc = byId('pm6ScUnstagedCount'); if (uc && g.unstaged) uc.textContent = g.unstaged.length;
-    var counts = byId('pm6ScCounts');
-    if (counts && g.staged && g.unstaged) counts.textContent = g.staged.length + ' staged, ' + g.unstaged.length + ' unstaged';
-  }
-
-  function renderPr(pr) {
-    if (!pr) return;
-    var prLine = byId('pm6ScPr');
-    if (prLine) {
-      prLine.textContent = pr.id + ' · ' + pr.state + ' · ' +
-        pr.checks.filter(function (c) { return c.state === 'success'; }).length + '/' + pr.checks.length + ' checks green';
-    }
-    var checks = byId('pm6GhChecks');
-    if (checks) {
-      checks.innerHTML = pr.checks.map(function (c) {
-        var cls = c.state === 'success' ? 'pm6-chip-ok' : (c.state === 'running' ? 'pm6-chip-warn' : '');
-        var dot = c.state === 'success' ? 'pm6-dot-ok' : (c.state === 'running' ? 'pm6-dot-run' : 'pm6-dot-idle');
-        return '<div class="pm6-gh-run"><span class="pm6-status-dot ' + dot + '">●</span>' +
-          '<span class="pm6-gh-run-name">' + c.id + ' <span class="pm6-sp-row-meta">' + pr.id + ' · ' + pr.branch + '</span></span>' +
-          '<span class="pm6-chip ' + cls + '">' + c.state + '</span></div>';
-      }).join('') + (pr.state === 'merged' ? '<div class="pm6-sp-note">PR #88 merged into main — publish chain is next.</div>' : '');
-    }
-  }
-
-  function renderActionsRun(run) {
-    if (!run) return;
-    if (run.id === 'wf-310') {
-      var chip = byId('pm6GhRun310Chip');
-      var row = $('#pm6GhRuns [data-run="wf-310"] .pm6-status-dot');
-      var triage = byId('pm6GhTriage');
-      if (chip) {
-        chip.textContent = run.status;
-        chip.className = 'pm6-chip ' + (run.status === 'success' ? 'pm6-chip-ok' : (run.status === 'failed' ? 'pm6-chip-err' : 'pm6-chip-warn'));
-      }
-      if (row) row.className = 'pm6-status-dot ' + (run.status === 'success' ? 'pm6-dot-ok' : (run.status === 'failed' ? 'pm6-dot-err' : 'pm6-dot-run'));
-      if (triage && run.status === 'success') triage.style.display = 'none';
-      var ready = byId('pm6GhReadiness');
-      if (ready && run.status === 'success') ready.textContent = '3 of 3 recent runs green';
-    }
-  }
-
-  function renderAuth(payload) {
-    var box = byId('pm6GhDevice');
-    if (!box || !payload) return;
-    if (payload.code) {
-      box.classList.add('active');
-      box.innerHTML = 'Enter this code at <span class="pm6-mono">' + (payload.uri || 'github.com/login/device') + '</span>' +
-        '<span class="pm6-gh-code">' + payload.code + '</span>' +
-        '<span class="pm6-sp-footnote">Polling for authorization… scopes: ' + (payload.scopes || []).join(', ') + '</span>';
-    } else if (payload.state === 'polling') {
-      var f = box.querySelector('.pm6-sp-footnote');
-      if (f) f.textContent = 'Polling for authorization' + new Array((payload.tick || 0) % 4 + 1).join('.') + '…';
-    } else if (payload.state === 'success') {
-      box.classList.add('active');
-      box.innerHTML = '<span class="pm6-chip pm6-chip-ok">connected</span> workflow scope granted — requested = effective: jared-dev';
-      var scopes = byId('pm6GhScopes');
-      if (scopes) scopes.textContent = 'repo, read:user, user:email, workflow';
-      var note = byId('pm6GhScopeNote');
-      if (note) note.innerHTML = '<span class="pm6-chip pm6-chip-ok">✓</span> all scopes present — dispatch enabled.';
-      $all('.pm6-gh-dispatch').forEach(function (b) {
-        b.removeAttribute('disabled');
-        b.setAttribute('aria-disabled', 'false');
-        delete b.dataset.demoReason;
-        b.dataset.demoAction = 'demo.toast';
-        b.dataset.demoArg = 'cmd.github.actions.dispatch → workflow_dispatch form (ref: main)';
-        b.title = 'Dispatch this workflow';
-      });
-      var dn = byId('pm6GhDispatchNote');
-      if (dn) dn.textContent = 'Dispatch enabled — workflow scope granted.';
-    }
-  }
-
-  function renderAiSpinner(payload) {
-    var spin = byId('pm6AiSpin');
-    var input = byId('scCommitMsg');
-    if (!spin) return;
-    if (payload && payload.state === 'thinking') {
-      spin.classList.add('active');
-      if (input) input.placeholder = 'AI drafting a conventional commit…';
-    } else {
-      spin.classList.remove('active');
-      if (input) input.placeholder = 'Commit message...';
-    }
-  }
-
-  /* ================= runtime artifacts (live rows) =================
-     Live api_web_call rows append here from runtime_artifact.created (research
-     run + every PM_DEMO.web.start run: search/fetch/extract/research/crawl/map).
-     Compact 5-item cap, newest first; row click routes to the owning surface as
-     a route-open receipt toast. */
-  function renderLiveArtifact(payload) {
-    var host = byId('pm6ArtLive');
-    if (!host || !payload || !payload.artifact) return;
-    var a = payload.artifact;
-    if (host.querySelector('[data-pm6-art-id="' + a.id + '"]')) return; /* idempotent per artifact */
-    var empty = host.querySelector('.pm6-art-empty');
-    if (empty) empty.remove();
-    var canceled = a.state === 'canceled' || a.partial;
-    var stateChip = canceled
-      ? '<span class="pm6-chip pm6-chip-warn">canceled · partial' + (a.pages != null ? ' (' + a.pages + ' pages)' : '') + '</span>'
-      : '<span class="pm6-chip pm6-chip-ok">' + (a.state || 'completed') + (a.pages != null ? ' · ' + a.pages + ' pages' : '') + '</span>';
-    var cits = (a.citations || []).map(function (c) {
-      return '<span class="pm6-chip">[' + c.n + '] ' + (c.source_confidence || 'unknown') + '</span>';
-    }).join('');
-    var row = document.createElement('div');
-    row.className = 'pm6-art-row pm6-art-typed pm6-enter-up';
-    row.setAttribute('data-pm6-art-family', 'web');
-    row.setAttribute('data-pm6-art-id', a.id || '');
-    row.setAttribute('data-demo-action', 'demo.toast');
-    row.setAttribute('data-demo-arg', 'Route-open receipt: ' + (a.id || 'artifact') + ' routes to its owning surface (Chat operation card). Payload lazy-loads from the artifact ref.');
-    row.innerHTML =
-      '<div class="pm6-art-l1"><span class="pm6-chip pm6-fam pm6-fam-web">' + (a.type || 'api_web_call') + '</span>' +
-        '<span class="pm6-art-label">' + (a.label || 'Web operation') + '</span>' + stateChip + '</div>' +
-      '<div class="pm6-art-prev">' + (a.command || '') + ' · provider ' + (a.provider || '—') +
-        (a.fallback_path ? ' · fallback ' + a.fallback_path : ' · no fallback') + '</div>' +
-      '<div class="pm6-art-meta">' + (a.source_count || 0) + ' sources · cache ' + (a.cache || '—') + ' · ' + (a.invocation_source || '') + ' · ' + (a.when || 'just now') + '</div>' +
-      ((a.agent_reason || cits) ? '<div class="pm6-art-prov">' + (a.agent_reason || '') + cits + '</div>' : '') +
-      '<div class="pm6-btnrow">' +
-        '<button class="pm6-sp-minibtn" data-demo-action="web.sources" data-demo-arg="' + String(a.id || '').replace('art-', '') + '">Citations</button>' +
-        '<button class="pm6-sp-minibtn" data-demo-action="panels.open_chat">Open in Chat</button>' +
-      '</div>';
-    host.insertBefore(row, host.firstChild);
-    var rows = host.querySelectorAll('.pm6-art-row');
-    for (var i = rows.length - 1; i >= 5; i--) rows[i].parentNode.removeChild(rows[i]); /* 5-item compact format */
-  }
-
-  /* ================= notifications ================= */
-  function refreshNotifyState() {
-    var list = byId('pm6NotifyList');
-    var empty = byId('pm6NotifyEmpty');
-    var dot = byId('pm6NotifyDot');
-    if (!list) return;
-    var open = $all('.pm6-notify-row', list).filter(function (r) { return !r.classList.contains('pm6-acked'); });
-    if (empty) empty.classList.toggle('pm6-hidden', open.length > 0);
-    if (dot) dot.classList.toggle('pm6-hidden', open.length === 0);
-  }
-
-  function addGateNotification(gate) {
-    var list = byId('pm6NotifyList');
-    if (!list || !gate || byId('pm6NotifyGateRow')) return;
-    var row = document.createElement('div');
-    row.className = 'pm6-notify-row pm6-notify-gate';
-    row.id = 'pm6NotifyGateRow';
-    row.setAttribute('data-notify', 'n-gate');
-    row.innerHTML =
-      '<div class="pm6-art-l1"><span class="pm6-note-glyph">⚠</span>' +
-        '<span class="pm6-art-label">Approval needed: ' + (gate.label || 'package gate') + '</span>' +
-        '<span class="pm6-chip pm6-chip-err">attention_required</span></div>' +
-      '<div class="pm6-art-prev">' + (gate.question || 'A run gate is waiting on you.') + '</div>' +
-      '<div class="pm6-btnrow">' +
-        '<button class="pm6-sp-minibtn" data-demo-action="run.approve_gate" data-demo-arg="' + (gate.id || '') + '">Approve</button>' +
-        '<button class="pm6-sp-minibtn pm6-danger" data-demo-action="run.decline_gate" data-demo-arg="' + (gate.id || '') + '">Decline</button>' +
-        '<button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="orchestrator">Open Orchestrator</button>' +
-      '</div>';
-    list.insertBefore(row, list.firstChild);
-    refreshNotifyState();
-  }
-
-  function resolveGateNotification(gate) {
-    var row = byId('pm6NotifyGateRow');
-    if (!row || !gate) return;
-    if (gate.state === 'approved' || gate.state === 'declined') {
-      row.classList.add('pm6-acked');
-      var chip = row.querySelector('.pm6-chip');
-      if (chip) { chip.textContent = gate.state; chip.className = 'pm6-chip ' + (gate.state === 'approved' ? 'pm6-chip-ok' : 'pm6-chip-warn'); }
-      refreshNotifyState();
-    }
-  }
-
-  function addUsageNotification(payload) {
-    var list = byId('pm6NotifyList');
-    if (!list || !payload || payload.kind !== 'threshold' || byId('pm6Notify80Row')) return;
-    var row = document.createElement('div');
-    row.className = 'pm6-notify-row pm6-notify-warn';
-    row.id = 'pm6Notify80Row';
-    row.setAttribute('data-notify', 'n-usage80');
-    row.innerHTML =
-      '<div class="pm6-art-l1"><span class="pm6-note-glyph">⚠</span>' +
-        '<span class="pm6-art-label">Claude 5h window crossed 80%</span>' +
-        '<span class="pm6-chip pm6-chip-warn">warning</span></div>' +
-      '<div class="pm6-art-prev">Suggested action: let the router shift heavy lanes to the Codex account.</div>' +
-      '<div class="pm6-btnrow">' +
-        '<button class="pm6-sp-minibtn" data-demo-action="panels.ack" data-demo-arg="n-usage80">Acknowledge</button>' +
-        '<button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="usage">Open Usage</button>' +
-      '</div>';
-    list.insertBefore(row, list.firstChild);
-    refreshNotifyState();
-  }
-
-  /* ================= agents mirror ================= */
-  function renderAgents(runState) {
-    try {
-      var chip = byId('pm6AgentLaneB');
-      var count = byId('pm6AgentsCount');
-      if (!chip || !runState) return;
-      var stage = runState.state || runState.stage;
-      if (stage === 'complete') { chip.textContent = 'done'; chip.className = 'pm6-chip pm6-chip-ok'; if (count) count.textContent = '1'; }
-      else if (stage === 'executing' || stage === 'running') { chip.textContent = 'running'; chip.className = 'pm6-chip'; if (count) count.textContent = '3'; }
-    } catch (e) {}
-  }
-
-  /* ================= breadcrumb (strip removed; stub kept for call sites) ================= */
-  function setBreadcrumb() {}
 
   /* ================= activity bar: page icons + Ctrl+1..8 ================= */
   function wireActivityBar() {
@@ -471,7 +36,7 @@
     document.addEventListener('keydown', function (e) {
       if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
       var n = parseInt(e.key, 10);
-      if (!(n >= 1 && n <= 8)) return;
+      if (!(n >= 1 && n <= 9)) return;
       var icons = $all('.activity-bar .icon[data-target]');
       var icon = icons[n - 1];
       if (icon) { e.preventDefault(); icon.click(); }
@@ -479,7 +44,7 @@
   }
 
   /* ================= activity bar customization (reorder / hide / More tray) =================
-     Persistence: single key pm.activity_bar_order:v1 — one JSON array of
+     Persistence: single key pm.activity_bar_order:v2 — one JSON array of
      data-ab-id strings containing the "__more__" sentinel; ids after the
      sentinel are the hidden (tray) set. This is FinalGUISpec's
      "ordered list of activity bar item IDs + separator position" contract.
@@ -492,7 +57,7 @@
      already are). Icon nodes are MOVED, never cloned: the delegated
      Chat/Dashboard title-matched handlers (js-terminal-demo) keep working. */
   function initActivityBarCustomization() {
-    var LS_KEY = 'pm.activity_bar_order:v1';
+    var LS_KEY = 'pm.activity_bar_order:v2';
     var SENTINEL = '__more__';
     var bar = byId('activityBar');
     var moreBtn = byId('abMoreBtn');
@@ -741,18 +306,652 @@
     }, true);
   }
 
-  /* ================= theme persistence + parallax ================= */
-  function wireTheme() {
-    var sel = byId('themeSelect');
-    if (!sel) return;
+  /* ================= theme + project title-bar sprout menus =================
+     Theme model: family (friendly|glass|retro|basic) x mode (light|dark|auto).
+     Persistence: pm.themeFamily + pm.themeMode, plus the resolved slug kept in
+     the legacy pm.theme key for older readers. Auto follows the OS via
+     prefers-color-scheme and re-resolves live on scheme change.
+     data-theme on <html> ALWAYS carries one of the 8 resolved slugs, so every
+     [data-theme…] CSS block and the /-light$/ glass-alpha clamps keep working. */
+  var PM_THEME_FAMILIES = { friendly: 'Friendly', glass: 'Glass', retro: 'Retro', basic: 'Basic' };
+  var PM_THEME_MODES = ['light', 'dark', 'auto'];
+  var PM_THEME_SLUGS = {
+    'friendly-dark': 'Friendly Dark',
+    'friendly-light': 'Friendly Light',
+    'glass-dark': 'Glass Dark',
+    'glass-light': 'Glass Light',
+    'retro-dark': 'Retro Dark',
+    'retro-light': 'Retro Light',
+    'basic-dark': 'Basic Dark',
+    'basic-light': 'Basic Light'
+  };
+  var PM_THEME_SLUG_RE = /^(friendly|glass|retro|basic)-(light|dark)$/;
+  var themeState = { family: 'friendly', mode: 'dark' };
+
+  function themeLsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function themeLsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+
+  function themeResolveScheme(mode) {
+    if (mode === 'light') return 'light';
+    if (mode === 'dark') return 'dark';
     try {
-      var saved = localStorage.getItem('pm.theme');
-      if (saved && sel.querySelector('option[value="' + saved + '"]')) sel.value = saved;
-      else sel.value = document.documentElement.getAttribute('data-theme') || 'friendly-dark';
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
     } catch (e) {}
-    sel.addEventListener('change', function () {
-      try { localStorage.setItem('pm.theme', this.value); } catch (e) {}
+    return 'light';
+  }
+
+  function themeReadState() {
+    var fam = themeLsGet('pm.themeFamily');
+    var mode = themeLsGet('pm.themeMode');
+    var leg = PM_THEME_SLUG_RE.exec(themeLsGet('pm.theme') || '');
+    if (!PM_THEME_FAMILIES[fam]) fam = leg ? leg[1] : 'friendly';
+    if (PM_THEME_MODES.indexOf(mode) < 0) mode = leg ? leg[2] : 'dark';
+    return { family: fam, mode: mode };
+  }
+
+  function themeApply(family, mode, opts) {
+    opts = opts || {};
+    if (!PM_THEME_FAMILIES[family]) family = 'friendly';
+    if (PM_THEME_MODES.indexOf(mode) < 0) mode = 'dark';
+    themeState.family = family;
+    themeState.mode = mode;
+    var slug = family + '-' + themeResolveScheme(mode);
+    var prev = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', slug);
+    if (opts.persist !== false) {
+      themeLsSet('pm.themeFamily', family);
+      themeLsSet('pm.themeMode', mode);
+      themeLsSet('pm.theme', slug);
+    }
+    themeSyncChrome();
+    if (opts.dispatch !== false && prev !== slug) {
+      var btn = byId('themeSelect');
+      if (btn) {
+        try { btn.dispatchEvent(new Event('change', { bubbles: true })); } catch (e0) {}
+      }
+    }
+    if (window.PM_GLASS_LOCK_REFRESH) {
+      try { window.PM_GLASS_LOCK_REFRESH(); } catch (e1) {}
+    }
+    return slug;
+  }
+
+  function themeSyncChrome() {
+    var family = themeState.family;
+    var mode = themeState.mode;
+    var scheme = themeResolveScheme(mode);
+    var slug = family + '-' + scheme;
+    var btn = byId('themeSelect');
+    var label = byId('themeMenuLabel');
+    var menu = byId('themeMenu');
+    if (btn) {
+      btn.setAttribute('data-value', slug);
+      btn.setAttribute('data-mode-icon', mode === 'light' ? 'sun' : (mode === 'dark' ? 'moon' : 'auto'));
+      var title = 'Theme: ' + PM_THEME_FAMILIES[family] +
+        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');
+      btn.setAttribute('title', title);
+      if (btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', title);
+      try { btn.value = slug; } catch (e0) {}
+    }
+    if (label) label.textContent = PM_THEME_FAMILIES[family] || family;
+    if (menu) {
+      menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) {
+        b.setAttribute('aria-checked', b.getAttribute('data-mode-value') === mode ? 'true' : 'false');
+      });
+      menu.querySelectorAll('.pm6-tt-family').forEach(function (row) {
+        var on = row.getAttribute('data-family') === family;
+        row.classList.toggle('is-selected', on);
+        row.setAttribute('aria-checked', on ? 'true' : 'false');
+        row.querySelectorAll('.pm6-tt-chip').forEach(function (chip) {
+          chip.classList.toggle('is-active', chip.getAttribute('data-chip') === family + '-' + scheme);
+        });
+      });
+    }
+  }
+
+  function tbMenuIsOpen(menu) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.isOpen) return sprout.isOpen(menu);
+    return !!(menu && menu.classList.contains('is-open'));
+  }
+  function tbMenuOpen(menu, btn) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.open) sprout.open(menu, null, btn);
+    else if (menu) {
+      menu.classList.add('is-open');
+      menu.classList.remove('is-closing');
+      menu.style.display = 'block';
+    }
+  }
+  function tbMenuClose(menu) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.close) sprout.close(menu);
+    else if (menu) {
+      menu.classList.remove('is-open', 'is-closing', 'active');
+      menu.style.display = 'none';
+    }
+  }
+  function tbCloseAllMenus(except) {
+    document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
+      if (except && m === except) return;
+      if (tbMenuIsOpen(m)) tbMenuClose(m);
+      var wrap = m.closest('.pm6-tb-menu-wrap');
+      var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
     });
+  }
+
+  window.PM_THEME = {
+    get: function () {
+      return document.documentElement.getAttribute('data-theme') ||
+        (themeState.family + '-' + themeResolveScheme(themeState.mode));
+    },
+    getFamily: function () { return themeState.family; },
+    getMode: function () { return themeState.mode; },
+    setFamily: function (f, opts) {
+      return themeApply(f, themeState.mode, opts || {});
+    },
+    setMode: function (m, opts) {
+      return themeApply(themeState.family, m, opts || {});
+    },
+    /* legacy/settings path: full slug ('retro-light') parses into
+       family + EXPLICIT mode (a slug pick can never mean auto) */
+    set: function (t, opts) {
+      var m = PM_THEME_SLUG_RE.exec(t || '');
+      if (!m) return themeApply(themeState.family, themeState.mode, opts || {});
+      return themeApply(m[1], m[2], opts || {});
+    },
+    syncChrome: function () { themeSyncChrome(); }
+  };
+
+  function wireTheme() {
+    var btn = byId('themeSelect');
+    var menu = byId('themeMenu');
+    if (!btn || !menu) return;
+
+    /* boot: adopt the head-snippet state (already migrated + resolved pre-paint);
+       re-persist so a legacy-only profile gains the family/mode keys. */
+    var st = themeReadState();
+    themeApply(st.family, st.mode, { dispatch: false });
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      var open = tbMenuIsOpen(menu);
+      tbCloseAllMenus(open ? null : menu);
+      if (open) {
+        tbMenuClose(menu);
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        tbMenuOpen(menu, btn);
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    menu.addEventListener('click', function (ev) {
+      var seg = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-mode[data-mode-value]') : null;
+      if (seg) {
+        ev.preventDefault();
+        window.PM_THEME.setMode(seg.getAttribute('data-mode-value'));
+        return; /* mode is a filter, not a final pick: menu stays open */
+      }
+      var row = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-family[data-family]') : null;
+      if (!row) return;
+      ev.preventDefault();
+      window.PM_THEME.setFamily(row.getAttribute('data-family'));
+      tbMenuClose(menu);
+      btn.setAttribute('aria-expanded', 'false');
+    });
+
+    /* auto mode: re-resolve + reapply when the OS color scheme flips */
+    try {
+      if (window.matchMedia) {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var onSchemeChange = function () {
+          if (themeState.mode !== 'auto') return;
+          themeApply(themeState.family, themeState.mode, {});
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onSchemeChange);
+        else if (mq.addListener) mq.addListener(onSchemeChange);
+      }
+    } catch (e) {}
+  }
+
+  function wireProjectMenu() {
+    var btn = byId('projectMenuBtn');
+    var menu = byId('projectMenu');
+    var label = byId('projectMenuLabel');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      var open = tbMenuIsOpen(menu);
+      tbCloseAllMenus(open ? null : menu);
+      if (open) {
+        tbMenuClose(menu);
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        tbMenuOpen(menu, btn);
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    menu.addEventListener('click', function (ev) {
+      var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-project]') : null;
+      if (!item) return;
+      ev.preventDefault();
+      var name = item.getAttribute('data-project') || '';
+      var title = item.getAttribute('data-project-title') || ('Active project: ' + name);
+      if (label) label.textContent = name;
+      btn.setAttribute('title', title);
+      menu.querySelectorAll('.pm6-tb-menu-item').forEach(function (el) {
+        el.classList.toggle('is-selected', el === item);
+      });
+      tbMenuClose(menu);
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function wireTitleBarMenusDismiss() {
+    document.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (t && t.closest && t.closest('.pm6-tb-menu-wrap')) return;
+      if (t && t.closest && t.closest('.pm6-tb-search-wrap')) return;
+      tbCloseAllMenus(null);
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') {
+        tbCloseAllMenus(null);
+        if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      }
+    });
+  }
+
+  /* ================= title-bar density: theme → search → notify → project → page ▼ ===== */
+  function wireTitleBarDensity() {
+    var bar = document.querySelector('.title-bar');
+    var wrap = byId('tbSearchWrap');
+    var inline = byId('tbSearchInput');
+    var btn = byId('tbSearchBtn');
+    var pop = byId('tbSearchPop');
+    var popInput = byId('tbSearchPopInput');
+    var notify = byId('notifySlot');
+    var themeWrap = byId('themeMenuWrap');
+    var projectWrap = byId('projectMenuWrap');
+    if (!bar || !wrap || !inline || !btn || !pop || !notify || !themeWrap || !projectWrap) return;
+
+    var SEARCH_MAX = 170;
+    var SEARCH_MIN = 112;
+    var NOTIFY_MAX = 248;
+    var NOTIFY_MIN = 120;
+    var THEME_ICON = 32;
+    var PROJECT_ICON = 32;
+    var popOpen = false;
+    var closeTimer = null;
+    var raf = null;
+    var fullThemeW = 0;
+    var fullProjectW = 0;
+
+    function reduced() {
+      try {
+        return document.documentElement.getAttribute('data-motion') === 'reduced' ||
+          (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      } catch (e) { return false; }
+    }
+
+    function openPop() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      popOpen = true;
+      pop.classList.remove('is-closing');
+      pop.classList.add('open', 'is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      if (popInput) {
+        popInput.value = inline.value || '';
+        try { popInput.focus(); popInput.select(); } catch (e0) {}
+      }
+    }
+    function closePop() {
+      if (!popOpen && !pop.classList.contains('open') && !pop.classList.contains('is-open')) return;
+      popOpen = false;
+      btn.setAttribute('aria-expanded', 'false');
+      if (popInput && inline) inline.value = popInput.value || inline.value;
+      if (reduced()) {
+        pop.classList.remove('open', 'is-open', 'is-closing');
+        return;
+      }
+      pop.classList.add('is-closing');
+      pop.classList.remove('open', 'is-open');
+      closeTimer = setTimeout(function () {
+        pop.classList.remove('is-closing');
+        closeTimer = null;
+      }, 240);
+    }
+
+    window.PM_TB_SEARCH = {
+      open: openPop,
+      close: closePop,
+      isOpen: function () { return popOpen; }
+    };
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      tbCloseAllMenus(null);
+      if (popOpen) closePop();
+      else openPop();
+    });
+
+    if (popInput) {
+      popInput.addEventListener('input', function () {
+        inline.value = popInput.value;
+      });
+      popInput.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape') { ev.stopPropagation(); closePop(); }
+      });
+    }
+
+    function setSearchW(px) {
+      wrap.style.setProperty('--tb-search-w', px + 'px');
+    }
+    function setNotifyW(px) {
+      notify.style.setProperty('--rs-stack-w', px + 'px');
+      notify.style.width = px + 'px';
+    }
+    function setSearchMode(mode) {
+      wrap.setAttribute('data-mode', mode);
+      if (mode === 'icon') {
+        btn.hidden = false;
+        inline.setAttribute('aria-hidden', 'true');
+      } else {
+        btn.hidden = true;
+        inline.removeAttribute('aria-hidden');
+        closePop();
+      }
+    }
+    function setThemeMode(mode) {
+      themeWrap.setAttribute('data-mode', mode);
+      var trig = byId('themeSelect');
+      if (trig) {
+        if (mode === 'icon') trig.setAttribute('aria-label', 'Theme');
+        else trig.removeAttribute('aria-label');
+      }
+    }
+    function setProjectMode(mode) {
+      projectWrap.setAttribute('data-mode', mode);
+      var trig = byId('projectMenuBtn');
+      if (trig) {
+        if (mode === 'icon') trig.setAttribute('aria-label', 'Active project');
+        else trig.removeAttribute('aria-label');
+      }
+    }
+
+    var pageStrip = document.querySelector('.title-bar .page-tabs');
+    var moreWrap = byId('pageTabsMoreWrap');
+    var moreBtn = byId('pageTabsMoreBtn');
+    var moreMenu = byId('pageTabsMoreMenu');
+    var PAGE_ICONS = {
+      dashboard: 'home',
+      projects: 'folder',
+      wizard: 'wand',
+      orchestrator: 'layers',
+      usage: 'dial',
+      settings: 'gear'
+    };
+
+    function pageTabs() {
+      if (!pageStrip) return [];
+      return Array.prototype.slice.call(pageStrip.querySelectorAll('.page-tab[data-page]'));
+    }
+    function resetPageTabsOverflow() {
+      pageTabs().forEach(function (t) { t.classList.remove('is-overflow'); });
+      if (moreWrap) moreWrap.hidden = true;
+      if (moreMenu) moreMenu.innerHTML = '';
+      if (moreBtn) moreBtn.setAttribute('aria-expanded', 'false');
+      if (moreMenu && tbMenuIsOpen(moreMenu)) tbMenuClose(moreMenu);
+      bar.removeAttribute('data-tb-tabs');
+    }
+    function rebuildPageOverflowMenu(hiddenTabs) {
+      if (!moreMenu || !moreWrap) return;
+      moreMenu.innerHTML = '';
+      if (!hiddenTabs.length) {
+        moreWrap.hidden = true;
+        return;
+      }
+      moreWrap.hidden = false;
+      var icons = window.PM_ICONS || {};
+      hiddenTabs.forEach(function (t) {
+        var page = t.getAttribute('data-page') || '';
+        var label = (t.textContent || page).trim();
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pm6-tb-menu-item pm6-tb-pages-more-item';
+        btn.setAttribute('role', 'menuitem');
+        btn.setAttribute('data-page', page);
+        if (t.classList.contains('active')) btn.classList.add('is-selected');
+        var icoKey = PAGE_ICONS[page];
+        var icoHtml = (icoKey && icons[icoKey]) ? icons[icoKey] : '';
+        btn.innerHTML = icoHtml + '<span></span>';
+        var span = btn.querySelector('span');
+        if (span) span.textContent = label;
+        moreMenu.appendChild(btn);
+      });
+    }
+    function fitPageTabsOverflow() {
+      if (!pageStrip || !moreWrap) return;
+      resetPageTabsOverflow();
+      void bar.offsetWidth;
+      if (naturalOverflow() <= 0) return;
+
+      moreWrap.hidden = false;
+      void moreWrap.offsetWidth;
+      var guard = 12;
+      while (naturalOverflow() > 0 && guard-- > 0) {
+        var tabs = pageTabs().filter(function (t) {
+          return !t.classList.contains('is-overflow');
+        });
+        var hide = null;
+        for (var i = tabs.length - 1; i >= 0; i--) {
+          if (!tabs[i].classList.contains('active')) { hide = tabs[i]; break; }
+        }
+        if (!hide && tabs.length > 1) hide = tabs[tabs.length - 1];
+        if (!hide) break;
+        hide.classList.add('is-overflow');
+      }
+      var hidden = pageTabs().filter(function (t) {
+        return t.classList.contains('is-overflow');
+      });
+      rebuildPageOverflowMenu(hidden);
+      if (hidden.length) bar.setAttribute('data-tb-tabs', 'overflow');
+    }
+
+    if (moreBtn && moreMenu) {
+      moreBtn.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+        var open = tbMenuIsOpen(moreMenu);
+        tbCloseAllMenus(open ? null : moreMenu);
+        if (open) {
+          tbMenuClose(moreMenu);
+          moreBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          tbMenuOpen(moreMenu, moreBtn);
+          moreBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+      moreMenu.addEventListener('click', function (ev) {
+        var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-page]') : null;
+        if (!item) return;
+        ev.preventDefault();
+        var page = item.getAttribute('data-page');
+        tbMenuClose(moreMenu);
+        moreBtn.setAttribute('aria-expanded', 'false');
+        try {
+          if (window.PM_PAGES && window.PM_PAGES.go) window.PM_PAGES.go(page);
+        } catch (e0) {}
+        schedule();
+      });
+    }
+
+    function measureThemeFull() {
+      setThemeMode('full');
+      void themeWrap.offsetWidth;
+      fullThemeW = Math.max(themeWrap.offsetWidth || 0, themeWrap.scrollWidth || 0, THEME_ICON + 40);
+      return fullThemeW;
+    }
+    function measureProjectFull() {
+      setProjectMode('full');
+      void projectWrap.offsetWidth;
+      fullProjectW = Math.max(projectWrap.offsetWidth || 0, projectWrap.scrollWidth || 0, PROJECT_ICON + 40);
+      return fullProjectW;
+    }
+
+    function naturalOverflow() {
+      var gap = 0;
+      var pad = 0;
+      try {
+        var cs = window.getComputedStyle(bar);
+        gap = parseFloat(cs.gap) || 0;
+        pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      } catch (e1) {}
+      function hMargins(el) {
+        try {
+          var m = window.getComputedStyle(el);
+          /* auto margins (search ml:auto spacer) must not count as needed width */
+          var ml = m.marginLeft;
+          var mr = m.marginRight;
+          var left = (ml === 'auto') ? 0 : (parseFloat(ml) || 0);
+          var right = (mr === 'auto') ? 0 : (parseFloat(mr) || 0);
+          return left + right;
+        } catch (e2) { return 0; }
+      }
+      var kids = Array.prototype.slice.call(bar.children);
+      var sum = 0;
+      kids.forEach(function (el, i) {
+        if (i) sum += gap;
+        var w = 0;
+        if (el === wrap) {
+          var mode = wrap.getAttribute('data-mode');
+          if (mode === 'icon') w = 32;
+          else w = parseFloat(wrap.style.getPropertyValue('--tb-search-w')) || SEARCH_MAX;
+        } else if (el === notify) {
+          w = parseFloat(notify.style.getPropertyValue('--rs-stack-w')) || NOTIFY_MAX;
+        } else if (el === themeWrap) {
+          if (themeWrap.getAttribute('data-mode') === 'icon') w = THEME_ICON;
+          else w = fullThemeW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === projectWrap) {
+          if (projectWrap.getAttribute('data-mode') === 'icon') w = PROJECT_ICON;
+          else w = fullProjectW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === pageStrip) {
+          /* Sum visible tabs + more chip so a constrained nav box cannot
+             under-count needed width (offsetWidth alone stalled density). */
+          var tw = 0;
+          pageTabs().forEach(function (t) {
+            if (t.classList.contains('is-overflow')) return;
+            tw += Math.max(t.offsetWidth || 0, t.scrollWidth || 0);
+          });
+          if (moreWrap && !moreWrap.hidden) {
+            tw += Math.max(moreWrap.offsetWidth || 0, moreWrap.scrollWidth || 0);
+          }
+          w = Math.max(tw, el.offsetWidth || 0, el.scrollWidth || 0);
+        } else {
+          w = Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        }
+        sum += w;
+        /* search wrap uses margin-left:auto as a free-space absorber;
+           getComputedStyle resolves it to px — never count it as needed width */
+        if (el !== wrap) sum += hMargins(el);
+      });
+      /* clientWidth includes padding; flex kids live in content box */
+      return sum - (bar.clientWidth - pad);
+    }
+
+    function applyDensity() {
+      setSearchMode('full');
+      setThemeMode('full');
+      setProjectMode('full');
+      setSearchW(SEARCH_MAX);
+      setNotifyW(NOTIFY_MAX);
+      resetPageTabsOverflow();
+      void bar.offsetWidth;
+      measureThemeFull();
+      measureProjectFull();
+
+      var over = naturalOverflow();
+      if (over <= 0) return;
+
+      var need = over;
+
+      /* 1) Theme label → palette icon */
+      var tw = fullThemeW || measureThemeFull();
+      setThemeMode('icon');
+      need -= Math.max(0, tw - THEME_ICON);
+      if (need <= 0) return;
+
+      /* 2) Compress search SEARCH_MAX → SEARCH_MIN */
+      var searchW = SEARCH_MAX;
+      if (need > 0) {
+        var cut = Math.min(need, SEARCH_MAX - SEARCH_MIN);
+        searchW = SEARCH_MAX - cut;
+        setSearchW(searchW);
+        need -= cut;
+      }
+      if (need <= 0) return;
+
+      /* 3) Search → icon */
+      setSearchMode('icon');
+      need -= (searchW - 32);
+      if (need <= 0) return;
+
+      /* 4) Shorten notify NOTIFY_MAX → NOTIFY_MIN */
+      if (need > 0) {
+        var ncut = Math.min(need, NOTIFY_MAX - NOTIFY_MIN);
+        setNotifyW(NOTIFY_MAX - ncut);
+        need -= ncut;
+      }
+      if (need <= 0) return;
+
+      /* 5) Project label → folder icon */
+      var pw = fullProjectW || measureProjectFull();
+      setProjectMode('icon');
+      need -= Math.max(0, pw - PROJECT_ICON);
+      if (need <= 0) return;
+
+      /* 6) Progressive page-tab overflow → ▼ sprout (last resort) */
+      if (naturalOverflow() > 0) fitPageTabsOverflow();
+    }
+
+    function schedule() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        applyDensity();
+      });
+    }
+
+    setSearchW(SEARCH_MAX);
+    setNotifyW(NOTIFY_MAX);
+    setSearchMode('full');
+    setThemeMode('full');
+    setProjectMode('full');
+    resetPageTabsOverflow();
+    schedule();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      var ro = new ResizeObserver(schedule);
+      ro.observe(bar);
+    } else {
+      window.addEventListener('resize', schedule);
+    }
+    try {
+      if (window.PM_DEMO && typeof window.PM_DEMO.on === 'function') {
+        window.PM_DEMO.on('page.changed', schedule);
+      }
+    } catch (e3) {}
   }
 
   function wireParallax() {
@@ -779,85 +978,15 @@
     }, { passive: true });
   }
 
-  /* ================= source-control row expansion ================= */
-  function wireWorktreeRows() {
-    var panel = byId('panel-source');
-    if (!panel) return;
-    panel.addEventListener('click', function (e) {
-      if (e.target.closest('[data-demo-action]') || e.target.closest('button')) return;
-      var row = e.target.closest('.pm6-wt-row');
-      if (!row) return;
-      row.classList.toggle('expanded');
-      row.classList.toggle('sc-wt-expanded');
-    });
-  }
-
-  /* ================= subscriptions ================= */
-  function subscribe() {
-    var D = demo();
-    if (!D || !D.on) return;
-    var safe = function (fn) { return function (p, t) { try { fn(p, t); } catch (e) {} }; };
-    D.on('git.changed', safe(renderGitChanges));
-    D.on('git.commit', safe(function () { renderGitChanges(); }));
-    D.on('git.ai', safe(renderAiSpinner));
-    D.on('git.pr', safe(renderPr));
-    D.on('git.actions', safe(function (p) { renderActionsRun(p && p.run); }));
-    D.on('git.auth', safe(renderAuth));
-    D.on('docker.container', safe(function () { renderContainers(); }));
-    D.on('docker.compose', safe(renderCompose));
-    D.on('docker.chain', safe(renderChain));
-    D.on('docker.build', safe(function (p) {
-      var digest = byId('pm6DmDigest');
-      if (digest && p) digest.textContent = p.state === 'building' ? 'building…' : (p.digest || digest.textContent);
-    }));
-    D.on('runtime_artifact.created', safe(renderLiveArtifact));
-    D.on('run.gate', safe(function (g) {
-      if (g && g.state === 'attention_required') addGateNotification(g);
-      else resolveGateNotification(g);
-    }));
-    D.on('usage.alert', safe(addUsageNotification));
-    D.on('run.state', safe(renderAgents));
-    D.on('page.changed', safe(function (p) { if (p) setBreadcrumb(p.page, p.subTab); }));
-    D.on('files.open', safe(function (p) {
-      if (!p || !p.path) return;
-      $all('#panel-files .pm6-fm-file').forEach(function (f) {
-        f.classList.toggle('file-active', f.dataset.demoArg === p.path);
-      });
-    }));
-  }
-
-  /* ================= file filter ================= */
-  function wireFileFilter() {
-    var input = byId('pm6FmFilter');
-    if (!input) return;
-    input.addEventListener('input', function () {
-      var q = this.value.toLowerCase();
-      $all('#panel-files .pm6-fm-file').forEach(function (f) {
-        f.style.display = !q || f.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
-      });
-      $all('#panel-files .pm6-fm-folder').forEach(function (f) {
-        f.style.display = q ? 'none' : '';
-      });
-    });
-  }
-
   /* ================= boot ================= */
   function boot() {
-    try { regActions(); } catch (e) {}
-    try { subscribe(); } catch (e) {}
-    try { renderContainers(); } catch (e) {}
-    try {
-      var D = demo();
-      if (D && D.state && D.state.docker && D.state.docker.publishChain) renderChain(D.state.docker.publishChain);
-    } catch (e) {}
-    try { wireActivityBar(); } catch (e) {}
-    try { initActivityBarCustomization(); } catch (e) {}
+    try { wireActivityBar(); } catch (e) { console.warn('[pm6] wireActivityBar', e); }
+    try { initActivityBarCustomization(); } catch (e) { console.warn('[pm6] initActivityBarCustomization', e); }
     try { wireTheme(); } catch (e) {}
+    try { wireProjectMenu(); } catch (e) {}
+    try { wireTitleBarMenusDismiss(); } catch (e) {}
+    try { wireTitleBarDensity(); } catch (e) {}
     try { wireParallax(); } catch (e) {}
-    try { wireWorktreeRows(); } catch (e) {}
-    try { wireFileFilter(); } catch (e) {}
-    try { setBreadcrumb('dashboard'); } catch (e) {}
-    try { refreshNotifyState(); } catch (e) {}
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L497-L594
+Source lines: L503-L603
 
-Source SHA256: `4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e`
+Source SHA256: `e0358f4d0c5cdce2cbbac0fdef1e70a80ba910ff84c72d999f77c9fc01893eb2`
 
 ---
 
@@ -89,6 +89,8 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `event_record.schema.json` | [`Plans/_shards/event_record.schema/00-index.md`](Plans/_shards/event_record.schema/00-index.md) |
 | `storage_value_registry.schema.json` | [`Plans/_shards/storage_value_registry.schema/00-index.md`](Plans/_shards/storage_value_registry.schema/00-index.md) |
 | `storage_value_registry.json` | [`Plans/_shards/storage_value_registry/00-index.md`](Plans/_shards/storage_value_registry/00-index.md) |
+| `settings_inventory.schema.json` | [`Plans/_shards/settings_inventory.schema/00-index.md`](Plans/_shards/settings_inventory.schema/00-index.md) |
+| `settings_inventory.json` | [`Plans/_shards/settings_inventory/00-index.md`](Plans/_shards/settings_inventory/00-index.md) |
 | `non_executable_closure_evidence.schema.json` | [`Plans/_shards/non_executable_closure_evidence.schema/00-index.md`](Plans/_shards/non_executable_closure_evidence.schema/00-index.md) |
 | `non_executable_closure_evidence.json` | [`Plans/_shards/non_executable_closure_evidence/00-index.md`](Plans/_shards/non_executable_closure_evidence/00-index.md) |
 | `web_agent_policy_fixtures.json` | [`Plans/_shards/web_agent_policy_fixtures/00-index.md`](Plans/_shards/web_agent_policy_fixtures/00-index.md) |
@@ -106,3 +108,4 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `web_provider_projection_fixtures.json` | [`Plans/_shards/web_provider_projection_fixtures/00-index.md`](Plans/_shards/web_provider_projection_fixtures/00-index.md) |
 | `web_research_run_fixtures.json` | [`Plans/_shards/web_research_run_fixtures/00-index.md`](Plans/_shards/web_research_run_fixtures/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |
+| `storage_recovery_contracts.schema.json` | [`Plans/_shards/storage_recovery_contracts.schema/00-index.md`](Plans/_shards/storage_recovery_contracts.schema/00-index.md) |

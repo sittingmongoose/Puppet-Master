@@ -1,0 +1,156 @@
+{
+  "_meta": {
+    "project": "Puppet Master (PM) motion token system",
+    "derived_from": "motion-source-ledger.json (14 sources) and motion-synthesis.md principles P1-P12",
+    "target_runtime": "Slint 1.17.1 (Rust desktop); prototyped in HTML/CSS under Concepts/usage-concepts/",
+    "conventions": {
+      "duration_ms": "single nominal value; themes may scale +/-30% (P12)",
+      "easing": "CSS cubic-bezier notation; all values are Slint-feasible because Slint supports cubic-bezier(a,b,c,d) (source-confirmed)",
+      "spring": "optional physics description (tension/friction or stiffness/damping). Slint has NO native spring; these are realized as the given cubic-bezier overshoot approximation OR a Rust Timer/animation-tick()-driven spring (see slint_note)",
+      "reduced": "reduced-motion variant per W3C WCAG 2.3.3 + MDN: drop position/scale/parallax channels, keep the state signal via instant change or opacity/color only",
+      "slint_feasible": "true = directly expressible with animate/states/transforms; the slint_note records the exact mechanism or the documented fallback"
+    },
+    "pm_easing_set": {
+      "pm-ease-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "pm-ease-in": "cubic-bezier(0.4, 0, 1, 1)",
+      "pm-ease-in-out": "cubic-bezier(0.45, 0, 0.4, 1)",
+      "pm-ease-spring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      "pm-ease-smooth": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "pm-ease-linear": "linear"
+    }
+  },
+  "tokens": [
+    {
+      "name": "popup-open",
+      "duration_ms": 220,
+      "easing": "cubic-bezier(0.22, 1.55, 0.36, 1)",
+      "spring": { "note": "tiny back-out overshoot for the sprout; opacity uses plain ease-out, no overshoot", "css_approx": "cubic-bezier(0.22, 1.55, 0.36, 1)", "react_spring_preset": "stiff-ish (tension ~210, friction ~20)" },
+      "rationale": "Corner-origin sprout from the anchor. 220ms sits at Material short4/medium1, Carbon moderate-02 (240), Spectrum micro/macro boundary (220-250) and the prototype's own --mo-enter (220). Transform uses a SMALL overshoot (the prototype sprout cubic-bezier(0.22,1.55,0.36,1)); opacity fades faster (~120ms ease-out) so the pop reads as 'arriving' (Carbon entrance, Spectrum ease-out). Amplitude kept low per Carbon (avoid bounce/stretch) and Apple (avoid gratuitous motion).",
+      "sources": ["Material Design 3", "IBM Carbon", "Adobe Spectrum", "Microsoft Fluent", "Apple HIG", "prototype _shared/base.css sprout"],
+      "slint_feasible": true,
+      "slint_note": "PopupWindow root: animate opacity (120ms pm-ease-out) + scale (from ~0.92) + translate (from anchor offset) over 220ms with the overshoot cubic-bezier; set scale-origin-x/y to the anchor corner (computed in Rust). Collision-aware above/below placement + corner origin computed in Rust (mirrors usage-widgets.js place()). Slint cubic-bezier supports y>1 overshoot.",
+      "reduced": { "duration_ms": 120, "easing": "cubic-bezier(0.22, 1, 0.36, 1)", "change": "opacity-only fade-in; NO scale/translate (W3C: position/scale is the trigger; MDN: replace transform with opacity). State ('a menu appeared, anchored here') preserved by the popup simply appearing at its placed position." }
+    },
+    {
+      "name": "popup-close",
+      "duration_ms": 150,
+      "easing": "cubic-bezier(0.4, 0, 1, 1)",
+      "spring": null,
+      "rationale": "Exits are faster than entrances and accelerate to imply permanent departure (Carbon exit; Material Direct Exit 167ms + fade; Spectrum ease-in). 150ms = prototype --mo-exit, Material short3, Carbon moderate-01. Always paired with a fade (Fluent: exits combine with fade-out). The prototype close (opacity 45ms ease-in delay 175ms + transform 220ms) is over-engineered; collapse to a single 150ms accelerate+fade.",
+      "sources": ["IBM Carbon", "Material Design 3", "Adobe Spectrum", "Microsoft Fluent", "prototype base.css sprout.is-closing"],
+      "slint_feasible": true,
+      "slint_note": "Animate opacity->0 + scale->~0.96 toward the anchor corner over 150ms pm-ease-in, THEN call PopupWindow.close() after the duration via a slint::Timer (Slint has no exit-before-close; exit is a state you play, then dismiss).",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "instant close (or <=80ms opacity-only). No transform." }
+    },
+    {
+      "name": "tab-select",
+      "duration_ms": 250,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "spring": { "note": "prototype drives the ink with a JS velocity spring (stiffness 500, damping 35 ~ critically damped, fast). Slint approximates with pm-ease-out; a true velocity-aware spring needs a Rust Timer.", "css_approx": "cubic-bezier(0.22, 1, 0.36, 1)", "react_spring_preset": "default (tension 170, friction 26)" },
+      "rationale": "The shared-element 'ink' magnet slides+resizes to the new tab (continuity, P4) while panels crossfade. 250ms = Material medium1, Spectrum macro-500 (250), Carbon moderate-02 (240). Directional panel crossfade (in ~200ms ease-out, out ~120ms) keeps orientation (Fluent page transitions respect direction; prototype pmTabIn 300ms / pmTabOut 150ms). Carbon: same entry point => same invoke/dismiss (consistency).",
+      "sources": ["Material Design 3", "IBM Carbon", "Adobe Spectrum", "Microsoft Fluent", "prototype usage-tabs.js/.css"],
+      "slint_feasible": true,
+      "slint_note": "Ink = a Rectangle behind the tabs; on selection animate its x + width (250ms pm-ease-out) to the target tab's geometry (read from the tab items). Panels = animate opacity of outgoing (120ms) and incoming (200ms) panel; use a directional translate +/-12px if desired. NO native spring: the JS velocity-spring magnet becomes a cubic-bezier ease-out (acceptable) or a Rust-driven spring feeding x/width via Timer/animation-tick().",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "ink snaps to the active tab (enabled:false / duration 0 — the prototype already snap()s under reduced); panels switch with display toggle + optional <=100ms opacity. Active-tab state is fully preserved." }
+    },
+    {
+      "name": "widget-pickup",
+      "duration_ms": 120,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "spring": null,
+      "rationale": "The 'lift' feedback when a widget is grabbed: a small scale-up (~1.0->1.02), elevation (shadow), and slight dim of the source slot. 120ms is at the NN/g 0.1s direct-manipulation ceiling and Carbon's 90-120ms micro-interaction band / fast-02 (110). Restrained: this is a frequent interaction so per Apple it must stay subtle. NOTE the drag body itself is un-animated and 1:1 (see free-resize / P5).",
+      "sources": ["Nielsen Norman Group", "IBM Carbon", "Apple HIG", "prototype usage-widgets.css is-dragging"],
+      "slint_feasible": true,
+      "slint_note": "Animate scale (1.0->~1.02) + opacity + a single BoxShadow (blur/offset up) over 120ms pm-ease-out on pointer-down. Keep to ONE BoxShadow (P11). The actual drag translates the widget 1:1 with the pointer (no animate on x/y during drag).",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "no scale lift; a static border/opacity highlight marks the grabbed widget (state preserved). Drag remains 1:1." }
+    },
+    {
+      "name": "widget-drop",
+      "duration_ms": 220,
+      "easing": "cubic-bezier(0.2, 0, 0, 1)",
+      "spring": null,
+      "rationale": "Restrained settle of the dragged widget into its snapped grid slot after release. 220ms = prototype FLIP --mo-enter (220), Material short4/medium1, Spectrum 220. Easing is Material standard (0.2,0,0,1) / the prototype's FLIP ease-out-bold (0,0.4,0,1) — a controlled decelerate with NO overshoot, per Carbon's explicit 'avoid bounce/stretch/sudden stops' for utilitarian grid moves.",
+      "sources": ["Material Design 3", "IBM Carbon", "Adobe Spectrum", "prototype usage-widgets.js flip()"],
+      "slint_feasible": true,
+      "slint_note": "On pointer-up, animate the widget's x/y/width/height from the pointer position to the computed snapped slot over 220ms pm-ease-out. This is the Slint counterpart of the JS FLIP 'play' step (see motion-to-slint-map.md re: computing rects in Rust).",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "instant snap to the slot. Final layout (the state) is shown immediately; nothing is hidden." }
+    },
+    {
+      "name": "widget-reflow",
+      "duration_ms": 240,
+      "easing": "cubic-bezier(0.45, 0, 0.4, 1)",
+      "spring": null,
+      "rationale": "Neighbors sliding to make room when a widget is added/removed/resized/reordered. 240ms = Carbon moderate-02, ~Spectrum 250, Material medium1 (250). Symmetric ease-in-out (Spectrum place-to-place 0.45,0,0.4,1; Fluent point-to-point) because items are relocating, not entering/exiting. Continuity (P4): neighbors must visibly MOVE, not blink (Simons & Levin change blindness). Optional ~20ms stagger, total <500ms (Carbon choreography); avoid criss-cross/diagonal paths.",
+      "sources": ["IBM Carbon", "Adobe Spectrum", "Microsoft Fluent", "Simons & Levin (1997)", "prototype usage-widgets.js flip()"],
+      "slint_feasible": true,
+      "slint_note": "Animate each affected item's x/y (and width/height if resized) to its new layout position over 240ms pm-ease-in-out. Because Slint GridLayout does not expose child geometry for a JS-style FLIP, either (a) drive reflow with absolute x/y placement computed in Rust (preferred for FLIP parity) or (b) let the GridLayout re-layout and animate items via a state change; see motion-to-slint-map.md (FLIP risk). No entrance-animation replay: reflow only translates existing items, it does NOT re-run widget-pickup/uwIn.",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "instant reposition. The new arrangement (state) is shown immediately; comprehension preserved by the layout itself, not by motion." }
+    },
+    {
+      "name": "free-resize",
+      "duration_ms": 150,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "spring": null,
+      "rationale": "This token is the RELEASE settle only. DURING the drag, resize is 1:1 with the pointer and un-animated (direct manipulation, NN/g <=0.1s; the prototype updates grid span live with no transition + an .is-resizing outline). On release, the widget settles to its snapped row/col span in 150ms (Material short3, Carbon moderate-01) with a decelerate. Restrained: no bounce on a structural edit (Carbon).",
+      "sources": ["Nielsen Norman Group", "Material Design 3", "IBM Carbon", "prototype usage-widgets.js startResize/onResizeMove"],
+      "slint_feasible": true,
+      "slint_note": "During drag: bind width/height (or grid span) directly to the pointer delta with animate disabled (enabled:false) so it tracks 1:1; show an outline/border. On release: animate width/height to the snapped grid value over 150ms pm-ease-out. Neighbors use widget-reflow.",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "1:1 during drag (unchanged) + instant snap on release. The resized geometry is always shown truthfully." }
+    },
+    {
+      "name": "focus-enter",
+      "duration_ms": 400,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "spring": null,
+      "rationale": "Expanding a widget/section to focus mode is a LARGE spatial change = expressive tier. 400ms = Carbon slow-01 (large expansion), Material medium4/long2 (400/500, Card->full-screen uses 500 + Emphasized), Spectrum macro-800 (400). Implemented as a connected animation (Fluent Connected Animation / Material): the widget morphs from its grid slot rect to the focus rect (prototype .is-focus fixed inset 5vh/5vw). Decelerate so the large arrival feels controlled, not bouncy.",
+      "sources": ["IBM Carbon", "Material Design 3", "Adobe Spectrum", "Microsoft Fluent", "prototype usage-widgets.css is-focus"],
+      "slint_feasible": true,
+      "slint_note": "Connected/FLIP animation: capture the slot rect, set the focus rect, animate x/y/width/height (and optionally font/content density) from slot->focus over 400ms pm-ease-out. Requires computing both rects in Rust (the slot geometry + the focus inset rect). Dim the background with a scrim Rectangle animating opacity over ~700ms (ambient) if used.",
+      "reduced": { "duration_ms": 150, "easing": "cubic-bezier(0.22, 1, 0.36, 1)", "change": "replace the spatial morph with an opacity crossfade (150ms) or instant switch to the focus layout. The 'this is now focused' state is preserved by the layout + an instant scrim, per W3C (large position/size change is the vestibular trigger; fade is lower risk)." }
+    },
+    {
+      "name": "focus-exit",
+      "duration_ms": 300,
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "spring": null,
+      "rationale": "Return from focus to the grid slot. Exits are shorter than entrances (Carbon exit; Material exit): 300ms = Material medium2, prototype --mo-modal (300), Spectrum macro-600 (300). Smooth in-out (pm-ease-smooth) for the relocation back to the slot. Fluent Connected Animation reverses seamlessly; the slot rect is the shared element (continuity, P4).",
+      "sources": ["IBM Carbon", "Material Design 3", "Adobe Spectrum", "Microsoft Fluent", "prototype usage-widgets.js exitFocus()"],
+      "slint_feasible": true,
+      "slint_note": "Reverse of focus-enter: animate x/y/width/height focus->slot over 300ms pm-ease-smooth; fade the scrim out. Same Rust rect computation. Exit-then-teardown via Timer if the focus overlay is a separate PopupWindow.",
+      "reduced": { "duration_ms": 150, "easing": "cubic-bezier(0.22, 1, 0.36, 1)", "change": "opacity crossfade (150ms) or instant return to the grid layout. Slot position/state preserved." }
+    },
+    {
+      "name": "data-refresh",
+      "duration_ms": 800,
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "spring": null,
+      "rationale": "Value-change motion: counters rolling, meter/donut fills, and a new-row highlight. The tween is 800ms (prototype us-fill .8s / counters ~1000ms) kept at/under the NN/g 1s flow limit, with a smooth decelerate (Material pm-ease-smooth). Productive/subtle (Carbon: data viz uses productive motion). New-row highlight is a single brief background fade (~1000-1200ms) — an attention cue, not a re-entrance. Indeterminate refresh spinner is linear/infinite but MUST degrade under reduced motion.",
+      "sources": ["Nielsen Norman Group", "IBM Carbon", "Material Design 3", "prototype usage-data.js animateCounters/animateFills, usage-shared.css us-fill/usFlash/usSpin"],
+      "slint_feasible": true,
+      "slint_note": "Meter/donut fill: animate width / an angle / a path property over 800ms pm-ease-smooth (feasible). COUNTERS: Slint cannot tween text directly — tween a <float> property over 800ms and format it in a text binding, OR step it with a slint::Timer; animation-tick() is available for time-driven values. Spinner: animate rotation-angle with iteration-count:-1 linear, or drive via animation-tick(). New-row: animate the row background color/opacity once.",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "values update INSTANTLY but the NEW value is shown (state comprehension preserved — the prototype sets width:var(--wf)!important under reduced). Spinner -> a static 'updating' indicator (no spin). New-row -> instant subtle tint (no animated flash) or an opacity-only fade. Color/opacity channels are W3C lower-risk." }
+    },
+    {
+      "name": "chart-transition",
+      "duration_ms": 400,
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "spring": null,
+      "rationale": "Morphing a chart when the range changes (5h/24h/7d) or data refreshes. 400ms = Carbon slow-01, Material medium4, Spectrum macro-800 (400), prototype --motion-slow (420). A single unified smooth curve across all bars/lines (NO per-series stagger wars — P6 avoiding competing motion; Carbon: sequence data viz last, keep it productive). Bar heights / line points interpolate so the change reads as continuity, not a redraw (P4).",
+      "sources": ["IBM Carbon", "Material Design 3", "Adobe Spectrum", "prototype u3/u5/u6 charts"],
+      "slint_feasible": true,
+      "slint_note": "Animate bar Rectangle heights (or a Path's points / a numeric per-bar property) over 400ms pm-ease-smooth. For many bars, animate a small set of representative properties or drive the interpolation in Rust and feed values; avoid 50 simultaneous independent animate blocks (batch where possible). The budget line / axes can fade (opacity) rather than morph.",
+      "reduced": { "duration_ms": 100, "easing": "linear", "change": "instant data swap, optionally a <=100ms opacity crossfade between old and new chart. The data (state) is fully shown; only the morph is removed." }
+    },
+    {
+      "name": "hover",
+      "duration_ms": 120,
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "spring": { "note": "the prototype's pointer-following tab 'magnet' translate (2.5-8px, per-theme stiffness/damping) is a separate restrained effect; Slint approximates or drops it.", "css_approx": "n/a (pointer-driven)", "react_spring_preset": "gentle (tension 120, friction 14)" },
+      "rationale": "Micro feedback on hover/focus-visible: background/border/color/border-color and a shadow reveal. 120ms = prototype --motion-fast (120), Carbon fast-02 (110) + the 90-120ms micro band, NN/g 0.1s, Spectrum micro-100 (130). Ease-out so feedback feels immediate. This is a FREQUENT interaction, so per Apple it must be the subtlest motion in the system.",
+      "sources": ["Nielsen Norman Group", "IBM Carbon", "Apple HIG", "Adobe Spectrum", "prototype base.css/usage-shared.css transitions"],
+      "slint_feasible": true,
+      "slint_note": "Use TouchArea.has-hover (and FocusScope focus) to drive a state that animates background / border-color / opacity / a single BoxShadow over 120ms pm-ease-out (states with in/out). The pointer-following 'magnet' translate needs pointermove tracking in Rust (PointerEvent) feeding a small translate; it is optional and the first thing to drop under reduced motion or on low power.",
+      "reduced": { "duration_ms": 0, "easing": "linear", "change": "hover color/border change may remain (color is W3C lower-risk) but applied instantly (or <=80ms); the magnet translate is DISABLED. Hover affordance is preserved via the instant color/border change." }
+    }
+  ]
+}

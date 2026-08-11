@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L913-L5800
+Source lines: L1002-L5894
 
-Source SHA256: `e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8`
+Source SHA256: `fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162`
 
 ---
 
@@ -3573,7 +3573,7 @@ plan_unit_id: EP-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id; prior attempts remain immutable, and post-lock execution must preserve runtime identity plus corroboration/promotion/runtime context.
+canonical_text: Every admitted retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id only after its selected baseline_target postcondition and durable baseline receipt are proved; prior attempts remain immutable, restore-required episodes accept only restore_safe_point_then_retry, and post-lock execution preserves blocked/recovery anchors plus runtime identity.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -3582,6 +3582,9 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- "`safe_point`, exact `historical_commit` OID, and exact `worktree_head` OID/state-digest targets are conditionally validated without substitution."
+- A successor attempt is not runnable before the owner baseline result and receipt are durable; refused, failed, or recovery-required preparation mints no runnable successor.
+- A restore-required blocked episode retains the same blocked identity and recovery anchor until verified successor, explicit abandonment, replan, or owner-verified recovery satisfies the owning terminal rule.
 - ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -3608,6 +3611,8 @@ preserved_exact_tokens:
 - /corroboration/promotion/runtime
 negative_constraints:
 - After graph lock, execution must not fall back to identity-blind planning-artifact-centric execution.
+- Do not bypass restore_safe_point_then_retry when requires_safe_point_restore is true.
+- Do not release a recovery anchor or dispatch a successor from an unproved baseline.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

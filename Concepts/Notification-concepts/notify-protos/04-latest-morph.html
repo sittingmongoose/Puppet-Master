@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proto 04 — Latest morph</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    .lm-host { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .lm-pill {
+      position: relative;
+      display: flex; align-items: center; gap: 8px;
+      height: 28px;
+      max-width: 260px;
+      padding: 0 10px 0 12px;
+      border-left: 3px solid var(--n-accent, var(--accent-blue));
+      cursor: pointer;
+      overflow: hidden;
+      transition:
+        width var(--motion-slow) var(--ease-out),
+        height var(--motion-slow) var(--ease-out),
+        max-width var(--motion-slow) var(--ease-out),
+        border-radius var(--motion-med),
+        box-shadow var(--motion-med);
+      width: auto;
+    }
+    .lm-pill.empty {
+      opacity: .4;
+      border-left-color: var(--border);
+      cursor: default;
+    }
+    .lm-pill .lm-title {
+      flex: 1; min-width: 0;
+      font-size: 11px; font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .lm-count {
+      flex: 0 0 auto;
+      min-width: 18px; height: 18px; padding: 0 5px;
+      border-radius: var(--radius-pill);
+      background: color-mix(in srgb, var(--accent-primary) 22%, var(--surface));
+      border: var(--border-width) solid var(--border);
+      font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lm-pill.empty .lm-count { display: none; }
+    .lm-pill .n-x { flex: 0 0 auto; opacity: .7; }
+
+    /* morph expand: pill becomes tall list container */
+    .lm-pill.expanded {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      top: 6px;
+      width: 300px;
+      max-width: 300px;
+      height: auto;
+      min-height: 28px;
+      max-height: 340px;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 10px;
+      gap: 8px;
+      z-index: 70;
+      box-shadow: var(--elev-3);
+      cursor: default;
+      overflow: auto;
+    }
+    .lm-pill.expanded .lm-collapsed-row { display: none; }
+    .lm-expand-head {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+    }
+    .lm-pill.expanded .lm-expand-head { display: flex; }
+    .lm-list { display: none; flex-direction: column; gap: 6px; }
+    .lm-pill.expanded .lm-list { display: flex; }
+    .lm-item {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--n-accent);
+      background: var(--surface);
+      opacity: 0;
+      transform: scale(.96);
+      animation: lmIn var(--motion-med) var(--ease-out) forwards;
+    }
+    .lm-item .meta { flex: 1; }
+    .lm-item .t { font-size: 12px; font-weight: 700; }
+    .lm-item .b { font-size: 11px; color: var(--text-muted); }
+    @keyframes lmIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ephemeral ghost under bar */
+    .lm-ghost {
+      position: absolute;
+      left: 50%; top: calc(100% + 8px);
+      transform: translateX(-50%);
+      width: 240px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--n-accent);
+      z-index: 55;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--motion-med), transform var(--motion-med) var(--ease-out);
+    }
+    .lm-ghost.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .lm-ghost.hide {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px) scale(.95);
+    }
+    .lm-ghost .t { font-size: 12px; font-weight: 700; }
+    .lm-ghost .b { font-size: 11px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown"><span>tastebook</span><span>▼</span></div>
+      <nav class="page-tabs">
+        <span class="page-tab active">Home</span>
+        <span class="page-tab">Projects</span>
+        <span class="page-tab">Planning Wizard</span>
+        <span class="page-tab">Orchestrator</span>
+        <span class="page-tab">Usage</span>
+        <span class="page-tab">Settings</span>
+      </nav>
+      <div class="notify-slot">
+        <div class="lm-host">
+          <div class="lm-pill n-card empty" id="lmPill">
+            <div class="lm-collapsed-row" style="display:flex;align-items:center;gap:8px;width:100%;min-width:0">
+              <span class="lm-title" id="lmTitle">No notifications</span>
+              <span class="lm-count" id="lmCount">0</span>
+              <button type="button" class="n-x" id="lmDismissLatest" aria-label="Dismiss latest" hidden>×</button>
+            </div>
+            <div class="lm-expand-head">
+              <span>Notifications</span>
+              <button type="button" class="clear-all-btn" id="lmClear">Clear all</button>
+            </div>
+            <div class="lm-list" id="lmList"></div>
+          </div>
+          <div class="lm-ghost n-card" id="lmGhost">
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <div style="flex:1">
+                <div class="t"></div>
+                <div class="b"></div>
+              </div>
+              <button type="button" class="n-x" id="lmGhostX" aria-label="Dismiss">×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search files, commands..." />
+      <select class="theme-select" id="themeSelect">
+        <option value="friendly-dark">Friendly Dark</option>
+        <option value="friendly-light">Friendly Light</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="basic-light">Basic Light</option>
+      </select>
+    </header>
+    <div class="main-area">
+      <aside class="fake-side"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>CHAT</span></aside>
+      <main class="home-pane">
+        <div class="proto-banner">Proto 04 — Single latest morph</div>
+        <h1>Home</h1>
+        <p>Collapsed state shows only the newest notification as a compact pill + unread count. Expanding morphs that pill into a taller list.</p>
+        <div class="home-cards">
+          <div class="home-card"><strong>Projects</strong><span>3 active</span></div>
+          <div class="home-card"><strong>Runs</strong><span>Wave idle</span></div>
+          <div class="home-card"><strong>Usage</strong><span>42% today</span></div>
+        </div>
+      </main>
+      <aside class="fake-chat">
+        <div class="bubble">One surface morphs between states.</div>
+        <div class="bubble me">Slint-friendly: width/height/opacity only.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <h2>Proto 04 controls</h2>
+    <p class="hint">Latest pill morphs into the full inbox.</p>
+    <div class="row">
+      <button type="button" id="btnEph">Ephemeral</button>
+      <button type="button" class="primary" id="btnImp">Important</button>
+      <button type="button" id="btnWarn">Warning</button>
+    </div>
+    <div class="row">
+      <button type="button" id="btnReduced">Motion: full</button>
+      <button type="button" id="btnClear">Clear all</button>
+    </div>
+    <div class="demo-nav">
+      <a href="01-rightward-stack.html">01</a>
+      <a href="02-bell-accordion.html">02</a>
+      <a href="03-chip-rail.html">03</a>
+      <a class="current" href="04-latest-morph.html">04</a>
+      <a href="05-drop-then-dock.html">05</a>
+      <a href="06-fan-deck.html">06</a>
+    </div>
+  </div>
+
+  <script src="_shared.js"></script>
+  <script>
+(function () {
+  var S = window.PMNotifyShared;
+  S.bootTheme();
+  S.wireThemeSelect(document.getElementById('themeSelect'));
+  S.wireReduced(document.getElementById('btnReduced'));
+
+  var items = [];
+  var expanded = false;
+  var ghostTimer = null;
+  var pill = document.getElementById('lmPill');
+  var titleEl = document.getElementById('lmTitle');
+  var countEl = document.getElementById('lmCount');
+  var listEl = document.getElementById('lmList');
+  var ghost = document.getElementById('lmGhost');
+  var dismissBtn = document.getElementById('lmDismissLatest');
+
+  function syncCollapsed() {
+    pill.classList.toggle('empty', items.length === 0);
+    dismissBtn.hidden = items.length === 0 || expanded;
+    if (!items.length) {
+      titleEl.textContent = 'No notifications';
+      countEl.textContent = '0';
+      pill.className = 'lm-pill n-card empty' + (expanded ? ' expanded' : '');
+      return;
+    }
+    var latest = items[0];
+    titleEl.textContent = latest.title;
+    countEl.textContent = items.length > 9 ? '9+' : String(items.length);
+    pill.className = 'lm-pill n-card n-sev-' + latest.severity + (expanded ? ' expanded' : '');
+  }
+
+  function renderList() {
+    listEl.innerHTML = '';
+    items.forEach(function (it, i) {
+      var row = document.createElement('div');
+      row.className = 'lm-item n-sev-' + it.severity;
+      row.style.animationDelay = (i * 40) + 'ms';
+      row.innerHTML = '<div class="meta"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+      row.querySelector('.t').textContent = it.title;
+      row.querySelector('.b').textContent = it.body;
+      row.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      listEl.appendChild(row);
+    });
+  }
+
+  function setExpanded(on) {
+    expanded = on && items.length > 0;
+    pill.classList.toggle('expanded', expanded);
+    syncCollapsed();
+    if (expanded) renderList();
+  }
+
+  function dismiss(id) {
+    items = items.filter(function (x) { return x.id !== id; });
+    syncCollapsed();
+    if (expanded) {
+      if (!items.length) setExpanded(false);
+      else renderList();
+    }
+  }
+
+  function clearAll() {
+    items = [];
+    setExpanded(false);
+    syncCollapsed();
+    hideGhost(true);
+  }
+
+  function hideGhost(immediate) {
+    if (ghostTimer) { clearTimeout(ghostTimer); ghostTimer = null; }
+    ghost.classList.remove('show');
+    if (!immediate) ghost.classList.add('hide');
+    else ghost.classList.remove('hide');
+  }
+
+  function showGhost(msg, done) {
+    hideGhost(true);
+    ghost.className = 'lm-ghost n-card n-sev-' + msg.severity + ' show';
+    ghost.querySelector('.t').textContent = msg.title;
+    ghost.querySelector('.b').textContent = msg.body;
+    ghostTimer = setTimeout(function () {
+      ghost.classList.remove('show');
+      ghost.classList.add('hide');
+      setTimeout(function () { ghost.classList.remove('hide'); done && done(); }, 200);
+    }, msg.important ? 700 : 2000);
+  }
+
+  function push(msg) {
+    if (!msg.important) {
+      showGhost(msg);
+      return;
+    }
+    showGhost(msg, function () {
+      items.unshift(msg);
+      if (items.length > 12) items.length = 12;
+      syncCollapsed();
+      if (expanded) renderList();
+    });
+  }
+
+  pill.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.n-x, .clear-all-btn')) return;
+    if (!items.length) return;
+    if (!expanded) setExpanded(true);
+  });
+  dismissBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (items[0]) dismiss(items[0].id);
+  });
+  document.getElementById('lmClear').addEventListener('click', function (e) { e.stopPropagation(); clearAll(); });
+  document.getElementById('lmGhostX').addEventListener('click', function (e) {
+    e.stopPropagation();
+    hideGhost(true);
+  });
+  document.addEventListener('click', function (e) {
+    if (!expanded) return;
+    if (e.target.closest && e.target.closest('#lmPill')) return;
+    setExpanded(false);
+  });
+  S.escCollapse(function () { setExpanded(false); });
+
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+  document.getElementById('btnEph').addEventListener('click', function () { push(S.ephemeral()); });
+  document.getElementById('btnImp').addEventListener('click', function () { push(S.important()); });
+  document.getElementById('btnWarn').addEventListener('click', function () { push(S.warning()); });
+
+  syncCollapsed();
+})();
+  </script>
+</body>
+</html>

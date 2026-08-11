@@ -1,0 +1,415 @@
+/* =====================================================================
+   proto-shell.css — the app frame for the panel prototype.
+   Simplified home page: real title bar (PM sprout menus), collapsible
+   activity bar, simplified non-interactive center stage, and the
+   LEFT PANEL SLOT where all 6×7 designs render.
+   Slint note: this maps to a top-level Window with a horizontal box:
+   [activity-bar Rectangle][left-panel Rectangle][center Rectangle].
+   ===================================================================== */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+  letter-spacing: var(--letter-spacing);
+  color: var(--text-primary);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* glass themes: tint the body background toward the glass tint so the
+   "one pane of glass" read survives even without backdrop-filter */
+[data-theme^="glass"] body {
+  background:
+    radial-gradient(ellipse 50% 38% at 15% 10%, rgba(110,79,163,.25) 0%, transparent 68%),
+    radial-gradient(ellipse 46% 34% at 85% 8%,  rgba(70,56,126,.22) 0%, transparent 70%),
+    radial-gradient(ellipse 62% 44% at 50% 102%, rgba(178,94,142,.18) 0%, transparent 72%),
+    var(--background);
+}
+[data-theme="glass-light"] body {
+  background:
+    radial-gradient(ellipse 46% 34% at 12% 8%,  rgba(245,169,203,.30) 0%, transparent 68%),
+    radial-gradient(ellipse 52% 40% at 88% 6%,  rgba(201,166,238,.28) 0%, transparent 70%),
+    var(--background);
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- TITLE BAR ---------- */
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  height: 44px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border-bottom: var(--border-width) solid var(--border-light);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 50;
+}
+.tb-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  font-family: var(--display-font);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: .03em;
+}
+.tb-brand-mark {
+  width: 18px; height: 18px;
+  color: var(--accent-primary);
+}
+.tb-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border-light);
+}
+.tb-page-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.page-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  padding: var(--xs) var(--md);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.page-tab:hover { color: var(--text-secondary); background: var(--surface); }
+.page-tab.active {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+.tb-right { display: flex; align-items: center; gap: var(--sm); }
+
+/* ---------- MAIN ROW ---------- */
+.main-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---------- ACTIVITY BAR ---------- */
+.activity-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: var(--activity-bar-w);
+  min-width: var(--activity-bar-w);
+  background: var(--surface);
+  border-right: var(--border-width) solid var(--border-light);
+  flex-shrink: 0;
+  padding: var(--md) 0;
+  gap: var(--xs);
+  overflow-y: auto;
+}
+.activity-bar.collapsed {
+  width: 44px;
+  min-width: 44px;
+}
+.ab-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  margin: 0 var(--sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  position: relative;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.ab-icon:hover { color: var(--text-secondary); background: var(--surface-elevated); }
+.ab-icon.active {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+.ab-icon.active::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--sm) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--accent-primary);
+  border-radius: var(--radius-pill);
+}
+.ab-icon svg { width: 18px; height: 18px; flex-shrink: 0; }
+.ab-icon .ab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
+.activity-bar.collapsed .ab-label { display: none; }
+.activity-bar.collapsed .ab-icon { justify-content: center; padding: var(--sm); margin: 0 var(--xs); }
+.ab-spacer { flex: 1 1 auto; }
+
+/* ---------- LEFT PANEL SLOT (the redesign target) ---------- */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: var(--border-width) solid var(--border-light);
+  flex-shrink: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+/* resize bounds — the hard constraint. min 220, default 260, max 480. */
+.side-panel-slot {
+  width: var(--files-panel-w);
+  min-width: 220px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+/* the prototype width toggle overrides via inline style on this element */
+
+/* ---------- CENTER STAGE (simplified, non-interactive) ---------- */
+.center-column {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--background);
+}
+.center-stage {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: var(--xl);
+  gap: var(--md);
+  min-height: 0;
+  overflow: auto;
+}
+.cs-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: var(--md);
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--xl);
+}
+.cs-placeholder svg { width: 56px; height: 56px; opacity: .35; }
+.cs-placeholder h2 {
+  margin: 0;
+  font-family: var(--display-font);
+  font-size: var(--fs-xl);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.cs-placeholder p { margin: 0; font-size: var(--fs-sm); max-width: 420px; line-height: 1.5; }
+.cs-bento {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--grid-gap);
+}
+.cs-bento .bento-card {
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--xl);
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+}
+.cs-bento .bento-card .bc-label {
+  font-size: var(--fs-2xs);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+.cs-bento .bento-card .bc-value {
+  font-family: var(--display-font);
+  font-size: var(--fs-2xl);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.cs-bento .bento-card .bc-meta { font-size: var(--fs-xs); color: var(--text-secondary); }
+
+/* ---------- PROTOTYPE CONTROLS BAR ---------- */
+.proto-controls {
+  position: fixed;
+  bottom: var(--md);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  padding: var(--sm) var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--elev-3);
+  max-width: calc(100vw - 32px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pc-group {
+  display: flex;
+  align-items: center;
+  gap: var(--xs);
+}
+.pc-label {
+  font-size: var(--fs-2xs);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-right: var(--xs);
+}
+.pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 var(--sm);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pc-btn:hover { color: var(--text-primary); border-color: var(--border); }
+.pc-btn.active {
+  background: var(--accent-primary);
+  color: var(--background);
+  border-color: var(--accent-primary);
+}
+.pc-sep { width: 1px; height: 20px; background: var(--border-light); }
+
+/* ---------- PANEL VIEW CONTAINER ---------- */
+/* This is where the active design's panel HTML is injected. The design CSS
+   files style their own internals; this just provides the scroll frame. */
+.panel-host {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+/* ---------- STATUS BAR ---------- */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  height: 26px;
+  padding: 0 var(--md);
+  background: var(--surface);
+  border-top: var(--border-width) solid var(--border-light);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.status-bar .sb-item { display: inline-flex; align-items: center; gap: var(--xs); }
+.status-bar .sb-spacer { flex: 1 1 auto; }
+
+/* ---------- TOAST ---------- */
+.proto-toast {
+  position: fixed;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-12px);
+  z-index: 800;
+  padding: var(--sm) var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--elev-3);
+  font-size: var(--fs-xs);
+  color: var(--text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-med) var(--ease-out),
+              transform var(--motion-med) var(--ease-spring);
+  max-width: 80vw;
+}
+.proto-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* scrollbar — thin themed, only on scroll hosts */
+.panel-host, .proto-controls, .pm6-tb-menu, .activity-bar, .center-stage {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--text-primary) 18%, transparent) transparent;
+}
+.panel-host::-webkit-scrollbar,
+.proto-controls::-webkit-scrollbar,
+.pm6-tb-menu::-webkit-scrollbar,
+.activity-bar::-webkit-scrollbar,
+.center-stage::-webkit-scrollbar { width: 8px; height: 8px; }
+.panel-host::-webkit-scrollbar-thumb,
+.pm6-tb-menu::-webkit-scrollbar-thumb,
+.activity-bar::-webkit-scrollbar-thumb,
+.center-stage::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-primary) 18%, transparent);
+  border-radius: var(--radius-pill);
+}
+.panel-host::-webkit-scrollbar-thumb:hover,
+.activity-bar::-webkit-scrollbar-thumb:hover,
+.center-stage::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-primary) 32%, transparent);
+}
+
+/* reduced-motion: kill sprout/spring animations */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  transition-duration: 0.001ms !important;
+  animation-duration: 0.001ms !important;
+}

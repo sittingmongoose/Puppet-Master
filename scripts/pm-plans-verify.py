@@ -536,6 +536,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "check_project_artifact_requirements": "check-project-artifacts",
     "validate_plans_to_code_handoff_schema": "validate-plans-to-code-handoff-schema",
     "validate_prd_planning_runtime_contracts": "validate-prd-planning-runtime-contracts",
+    "validate_case_l_non_event_materialization": "validate-case-l-non-event-materialization",
     "validate_implementation_readiness": "validate-implementation-readiness",
     "validate_plan_migration": "validate-plan-migration",
     "validate_runtime_artifact_schemas": "validate-runtime-artifact-schemas",
@@ -560,6 +561,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "project_artifacts": "check-project-artifacts",
     "plans_to_code_handoff_schema": "validate-plans-to-code-handoff-schema",
     "prd_planning_runtime_contracts": "validate-prd-planning-runtime-contracts",
+    "case_l_non_event_materialization": "validate-case-l-non-event-materialization",
     "implementation_readiness": "validate-implementation-readiness",
     "plan_migration": "validate-plan-migration",
     "runtime_artifact_schemas": "validate-runtime-artifact-schemas",
@@ -586,6 +588,8 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "shards",
     "validate_prd_planning_runtime_contracts",
     "prd_planning_runtime_contracts",
+    "validate_case_l_non_event_materialization",
+    "case_l_non_event_materialization",
     "validate_implementation_readiness",
     "implementation_readiness",
     "validate_gui_asset_policy",
@@ -670,6 +674,17 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
         if all(any_errors):
             errors.append(f"{path}: did not match anyOf")
 
+    if "oneOf" in schema:
+        matching_branches = sum(
+            not validate_schema(instance, sub, root_schema, path)
+            for sub in schema["oneOf"]
+        )
+        if matching_branches != 1:
+            errors.append(f"{path}: matched {matching_branches} oneOf branches instead of exactly one")
+
+    if "not" in schema and not validate_schema(instance, schema["not"], root_schema, path):
+        errors.append(f"{path}: matched forbidden not schema")
+
     expected_type = schema.get("type")
     if expected_type is not None:
         expected_types = expected_type if isinstance(expected_type, list) else [expected_type]
@@ -687,6 +702,11 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
             errors.append(f"{path}: shorter than minLength {schema['minLength']}")
         if "pattern" in schema and not re.search(schema["pattern"], instance):
             errors.append(f"{path}: does not match pattern {schema['pattern']}")
+        if schema.get("format") == "date-time" and not re.match(
+            r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$",
+            instance,
+        ):
+            errors.append(f"{path}: is not a UTC RFC 3339 date-time")
 
     if isinstance(instance, (int, float)) and not isinstance(instance, bool):
         if "minimum" in schema and instance < schema["minimum"]:
@@ -721,6 +741,14 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
         for key in schema.get("required", []):
             if key not in instance:
                 errors.append(f"{path}: missing required key {key}")
+        for trigger, dependents in schema.get("dependentRequired", {}).items():
+            if trigger not in instance:
+                continue
+            for dependent in dependents:
+                if dependent not in instance:
+                    errors.append(
+                        f"{path}: key {trigger} requires dependent key {dependent}"
+                    )
         properties = schema.get("properties", {})
         for key, value in instance.items():
             if key in properties:
@@ -2307,7 +2335,7 @@ RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS = {
     "screenshot": ["media_ref"],
     "evidence": ["evidence_kind"],
     "document": ["document_ref"],
-    "restore_point": ["safe_point_id"],
+    "restore_point": ["restore_point_id"],
     "browser_recording": ["browser_session_id", "runtime_state", "open_watch_state", "artifact_refs", "redaction_profile_id", "show_when_possible"],
     "tool_llm_trace": ["trace_ref", "usage_record_id"],
     "context_snapshot": ["snapshot_ref"],
@@ -2335,6 +2363,27 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
 
     envelope = load_json(envelope_path)
     fixtures = load_json(fixture_path)
+    envelope_properties = envelope.get("properties", {})
+    expected_freshness = ["current", "refreshing", "stale"]
+    expected_health = ["healthy", "degraded", "unavailable"]
+    if envelope_properties.get("projection_freshness", {}).get("enum") != expected_freshness:
+        failures.append(
+            {
+                "path": rel(envelope_path),
+                "error": "runtime_artifact_projection_freshness_axis_mismatch",
+                "expected": expected_freshness,
+                "actual": envelope_properties.get("projection_freshness", {}).get("enum"),
+            }
+        )
+    if envelope_properties.get("projection_health", {}).get("enum") != expected_health:
+        failures.append(
+            {
+                "path": rel(envelope_path),
+                "error": "runtime_artifact_projection_health_axis_mismatch",
+                "expected": expected_health,
+                "actual": envelope_properties.get("projection_health", {}).get("enum"),
+            }
+        )
     valid_payloads = fixtures.get("valid_payloads", [])
     payloads_by_type: dict[str, list[dict[str, Any]]] = {}
     for payload in valid_payloads:
@@ -2350,6 +2399,44 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         expected_id = f"pm.runtime_artifact.{artifact_type}.schema.v1"
         if schema.get("$id") != expected_id:
             failures.append({"path": rel(schema_path), "artifact_type": artifact_type, "error": "wrong_schema_id", "expected": expected_id})
+        schema_required = schema.get("required", [])
+        schema_properties = schema.get("properties", {})
+        if artifact_type == "restore_point" and set(schema_properties) != set(envelope_properties):
+            failures.append(
+                {
+                    "path": rel(schema_path),
+                    "artifact_type": artifact_type,
+                    "error": "runtime_artifact_outer_property_parity_mismatch",
+                    "expected": sorted(envelope_properties),
+                    "actual": sorted(schema_properties),
+                }
+            )
+        if artifact_type == "restore_point":
+            unexpected_runtime_requirements = sorted(
+                {"run_id", "attempt_id"}.intersection(schema_required)
+            )
+            if unexpected_runtime_requirements:
+                failures.append(
+                    {
+                        "path": rel(schema_path),
+                        "artifact_type": artifact_type,
+                        "error": "restore_point_runtime_ids_must_be_optional",
+                        "actual": unexpected_runtime_requirements,
+                    }
+                )
+        else:
+            missing_runtime_requirements = sorted(
+                {"run_id", "attempt_id"}.difference(schema_required)
+            )
+            if missing_runtime_requirements:
+                failures.append(
+                    {
+                        "path": rel(schema_path),
+                        "artifact_type": artifact_type,
+                        "error": "non_restore_runtime_ids_not_required",
+                        "missing": missing_runtime_requirements,
+                    }
+                )
         payloads = payloads_by_type.get(artifact_type, [])
         if not payloads:
             failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_valid_payload_fixture"})
@@ -2391,6 +2478,27 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
     for artifact_type in RUNTIME_ARTIFACT_TYPES:
         if artifact_type not in event_types:
             failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_event_record_fixture"})
+    restore_event_records = [
+        record
+        for record in event_records
+        if isinstance(record, dict) and record.get("artifact_type") == "restore_point"
+    ]
+    if not any(
+        isinstance(record.get("project_id"), str)
+        and bool(record.get("project_id"))
+        and isinstance(record.get("artifact_id"), str)
+        and bool(record.get("artifact_id"))
+        and isinstance(record.get("restore_point_id"), str)
+        and bool(record.get("restore_point_id"))
+        for record in restore_event_records
+    ):
+        failures.append(
+            {
+                "path": rel(fixture_path),
+                "artifact_type": "restore_point",
+                "error": "restore_point_event_primary_identity_missing",
+            }
+        )
 
     browser_fixture_actions: set[str] = set()
     browser_page_representations: list[dict[str, Any]] = []
@@ -2458,6 +2566,13 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         "browser_recording_fallback_open_missing_route",
         "browser_recording_runtime_unavailable_missing_remediation",
         "browser_recording_runtime_unavailable_missing_runtime_state",
+        "missing_attempt_id",
+        "non_restore_missing_run_id",
+        "projection_freshness_degraded_is_health_only",
+        "projection_freshness_unavailable_is_health_only",
+        "projection_health_stale_is_freshness_only",
+        "restore_point_missing_primary_restore_point_id",
+        "restore_point_incomplete_safe_point_lineage",
     }
     for case_id in sorted(required_invalid_case_ids - invalid_case_ids):
         failures.append({"path": rel(fixture_path), "invalid_fixture": case_id, "error": "missing_required_runtime_invalid_fixture"})
@@ -2468,6 +2583,26 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
         schema = load_json(schema_path) if schema_path.exists() else {}
         schema_errors = validate_schema(payload, envelope, envelope) + validate_schema(payload, schema, schema)
+        case_id = invalid.get("case_id")
+        envelope_owned_negative_ids = {
+            "missing_attempt_id",
+            "non_restore_missing_run_id",
+            "projection_freshness_degraded_is_health_only",
+            "projection_freshness_unavailable_is_health_only",
+            "projection_health_stale_is_freshness_only",
+        }
+        if case_id in envelope_owned_negative_ids and not validate_schema(
+            payload,
+            envelope,
+            envelope,
+        ):
+            failures.append(
+                {
+                    "path": rel(fixture_path),
+                    "invalid_fixture": case_id,
+                    "error": "runtime_artifact_envelope_owned_negative_unexpectedly_valid",
+                }
+            )
         custom_errors = []
         if artifact_type in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS:
             type_payload = payload.get("type_payload", {})
@@ -2479,10 +2614,48 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         if not schema_errors and not custom_errors:
             failures.append({"path": rel(fixture_path), "invalid_fixture": invalid.get("case_id"), "error": "invalid_fixture_unexpectedly_valid"})
 
+    restore_positive_ids = {
+        payload.get("artifact_id")
+        for payload in valid_payloads
+        if isinstance(payload, dict) and payload.get("artifact_type") == "restore_point"
+    }
+    required_restore_positive_ids = {
+        "restore_point_without_runtime_or_safe_point_lineage",
+        "restore_point_with_runtime_and_safe_point_lineage",
+    }
+    for fixture_id in sorted(required_restore_positive_ids - restore_positive_ids):
+        failures.append(
+            {
+                "path": rel(fixture_path),
+                "artifact_type": "restore_point",
+                "fixture": fixture_id,
+                "error": "missing_required_restore_point_positive_fixture",
+            }
+        )
+
+    non_restore_types = set(RUNTIME_ARTIFACT_TYPES) - {"restore_point"}
+    schemas_requiring_runtime_ids = 0
+    for artifact_type in sorted(non_restore_types):
+        schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
+        if schema_path.exists() and {"run_id", "attempt_id"}.issubset(
+            set(load_json(schema_path).get("required", []))
+        ):
+            schemas_requiring_runtime_ids += 1
+    if schemas_requiring_runtime_ids != 18:
+        failures.append(
+            {
+                "path": rel(envelope_path),
+                "error": "runtime_artifact_non_restore_runtime_id_sibling_count_mismatch",
+                "expected": 18,
+                "actual": schemas_requiring_runtime_ids,
+            }
+        )
+
     return report_status(
         "validate-runtime-artifact-schemas",
         failures,
         artifact_types_checked=len(RUNTIME_ARTIFACT_TYPES),
+        non_restore_runtime_id_siblings_checked=schemas_requiring_runtime_ids,
         valid_payload_fixture_count=len(valid_payloads),
         event_record_fixture_count=len(event_records),
     )
@@ -3122,7 +3295,7 @@ USAGE_ROUTE_COMMAND_IDS = {
     "cmd.artifacts.show_in_ledger",
 }
 BROWSER_COMMAND_EXPECTED_EVENTS = {
-    "cmd.browser.open_workspace_preview": ["browser.session.created", "browser.session.state_changed"],
+    "cmd.browser.open_workspace_preview": ["workspace.layout_changed", "browser.session.created", "browser.session.state_changed"],
     "cmd.browser.open_detached_preview": ["browser.session.created", "browser.session.state_changed"],
     "cmd.browser.detach_browser_tab": ["browser.session.state_changed"],
     "cmd.browser.pick_element_for_chat": ["browser.context_captured"],
@@ -5655,6 +5828,24 @@ def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str,
     )
 
 
+def cmd_validate_case_l_non_event_materialization(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-implementation-readiness.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-case-l-non-event-materialization",
+        [sys.executable, str(validator), "validate-case-l"],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-case-l-non-event-materialization",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-plan-migration.py"
     run_dir = Path(getattr(args, "run_dir", None) or DEFAULT_PLAN_MIGRATION_RUN)
@@ -5807,6 +5998,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("validate_implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("validate_plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
@@ -5853,6 +6045,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
@@ -5889,6 +6082,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         project_artifacts=compact_gate_report(check_map["project_artifacts"]),
         plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
         prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
+        case_l_non_event_materialization=compact_gate_report(check_map["case_l_non_event_materialization"]),
         implementation_readiness=compact_gate_report(check_map["implementation_readiness"]),
         plan_migration=compact_gate_report(check_map["plan_migration"]),
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
@@ -5919,6 +6113,7 @@ COMMANDS = {
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
+    "validate-case-l-non-event-materialization": cmd_validate_case_l_non_event_materialization,
     "validate-implementation-readiness": cmd_validate_implementation_readiness,
     "validate-plan-migration": cmd_validate_plan_migration,
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
@@ -5948,6 +6143,7 @@ def main() -> int:
     _SUBPROCESS_VALIDATORS = {
         "check-shards",
         "validate-prd-planning-runtime-contracts",
+        "validate-case-l-non-event-materialization",
         "validate-implementation-readiness",
         "validate-plan-migration",
         "validate-gui-asset-policy",

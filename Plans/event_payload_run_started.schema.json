@@ -1,0 +1,631 @@
+{
+  "$defs": {
+    "run_started_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/run_started/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "requested_effective_snapshot_ref": {
+          "type": "string"
+        },
+        "run_id": {
+          "type": "string"
+        },
+        "runtime_mode": {
+          "type": "string"
+        },
+        "thread_id": {
+          "type": "string"
+        },
+        "ts": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "project_id",
+        "runtime_mode",
+        "ts"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "ask"
+            },
+            "runtime_mode": {
+              "const": "ask"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "plan"
+            },
+            "requested_mode_overlay": {
+              "const": "plan"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "deep_plan"
+            },
+            "requested_mode_overlay": {
+              "const": "deep_plan"
+            },
+            "requested_runtime_mode": {
+              "const": "plan"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_runtime_mode": {
+              "const": "regular"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "none"
+            },
+            "requested_mode_overlay": {
+              "const": "none"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_mode_overlay": {
+              "const": "debug"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_mode_overlay": {
+              "const": "interview"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_mode_overlay": {
+              "const": "brainstorm"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_mode_overlay": {
+              "const": "crew"
+            },
+            "requested_runtime_mode": {
+              "const": "yolo"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "ask"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "ask"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "plan"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "plan"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "read_only_mode_forces_hte"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_hte_default"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "hte"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_hte_requested"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_dae_allowed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "regular"
+            },
+            "strategy": {
+              "const": "hte"
+            },
+            "strategy_resolution_reason": {
+              "const": "regular_dae_disallowed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": null
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "yolo_requires_dae"
+            }
+          }
+        },
+        {
+          "properties": {
+            "requested_strategy": {
+              "const": "dae"
+            },
+            "runtime_mode": {
+              "const": "yolo"
+            },
+            "strategy": {
+              "const": "dae"
+            },
+            "strategy_resolution_reason": {
+              "const": "yolo_requires_dae"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "effective_account_id": {
+              "type": "null"
+            },
+            "requested_account_id": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_account_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "requested_account_id": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_account_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "requested_account_id": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "effective_account_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "effective_mode_overlay": {
+      "enum": [
+        "none",
+        "plan",
+        "deep_plan",
+        "debug",
+        "interview",
+        "brainstorm",
+        "crew"
+      ]
+    },
+    "effective_model": {
+      "pattern": "^[^/]+/.+$",
+      "type": "string"
+    },
+    "effective_persona": {
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "effective_platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_account_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_effective_snapshot_ref": {
+      "pattern": "^requested_effective_runtime\\.v1:project~[A-Za-z0-9_-]+:[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "requested_mode_overlay": {
+      "enum": [
+        "none",
+        "plan",
+        "deep_plan",
+        "debug",
+        "interview",
+        "brainstorm",
+        "crew"
+      ]
+    },
+    "requested_model": {
+      "pattern": "^[^/]+/.+$",
+      "type": "string"
+    },
+    "requested_persona": {
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "requested_platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requested_runtime_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "requested_strategy": {
+      "anyOf": [
+        {
+          "enum": [
+            "hte",
+            "dae"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "runtime_mode": {
+      "enum": [
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ]
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "strategy": {
+      "enum": [
+        "hte",
+        "dae"
+      ]
+    },
+    "strategy_resolution_reason": {
+      "enum": [
+        "read_only_mode_forces_hte",
+        "regular_hte_default",
+        "regular_hte_requested",
+        "regular_dae_allowed",
+        "regular_dae_disallowed",
+        "yolo_requires_dae"
+      ]
+    },
+    "thread_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ts": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "project_id",
+    "requested_effective_snapshot_ref",
+    "requested_runtime_mode",
+    "runtime_mode",
+    "requested_mode_overlay",
+    "effective_mode_overlay",
+    "requested_strategy",
+    "strategy",
+    "strategy_resolution_reason",
+    "requested_platform",
+    "effective_platform",
+    "requested_model",
+    "effective_model",
+    "requested_account_id",
+    "effective_account_id",
+    "requested_persona",
+    "effective_persona",
+    "ts"
+  ],
+  "type": "object"
+}

@@ -1,6 +1,6 @@
 {
- "generated": "2026-07-08",
- "working_sha256": "7a2bd3a707de59bf1358ac010c65a9a97f63b688cc343321830eacb9a12d5c4d",
+ "generated": "2026-08-10",
+ "working_sha256": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2",
  "global": {
   "deltas": {
    "div": 0,
@@ -10,12 +10,12 @@
    "template": 0
   },
   "body_open_count": 1,
-  "lines": 21518
+  "lines": 47747
  },
  "parts": {
   "01-head-prelude.part.html": {
-   "sha256": "0a1381dc7aa09c7a526c80a7524e4e6371a1e2a8de454468dc444b043d00365c",
-   "lines": 9,
+   "sha256": "334608f76f54202b64dc19924431ddb9e2ace68e229ef18b2493a846e003ee47",
+   "lines": 72,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -26,8 +26,8 @@
    }
   },
   "02-css-tokens.part.html": {
-   "sha256": "fc4ff1eb2403b8c146d637bef55f6980d824e81028dfb5ad8619960771518d93",
-   "lines": 445,
+   "sha256": "2974b74ceb0c89c1e47b5e9bd11896a66d67773dbdaadee3209ee13a3d35c738",
+   "lines": 773,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -38,8 +38,8 @@
    }
   },
   "03-css-glass-a.part.html": {
-   "sha256": "619252dd08e02dede9b48dcbe5924aa4150ddd0a8f52a39559c5c0ce866645bd",
-   "lines": 992,
+   "sha256": "b39f0624aa67187aaf0310ca5c0e000ccac999586d7dcb384bfb189d4bbf8c94",
+   "lines": 861,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -50,8 +50,8 @@
    }
   },
   "04-css-glass-b.part.html": {
-   "sha256": "f66989facf45957c4dbd3cfc247453d7044e3390a6a22139496ea1e431326fdd",
-   "lines": 1432,
+   "sha256": "98284939954e8f2027416e4eb4599222e851c05a71b728374c0c9fb2c9cbe879",
+   "lines": 196,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -62,8 +62,8 @@
    }
   },
   "05-css-shell.part.html": {
-   "sha256": "42f28c851a75a7511419c2b7ca49aa81ede2965b3aa1c32dd44aee9a39d6f5c0",
-   "lines": 867,
+   "sha256": "9f822b8f54a8d7f995ecbf195c975250dcb919a9a153e69e05f554e9697acfbb",
+   "lines": 1320,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -74,8 +74,8 @@
    }
   },
   "06-css-components-a.part.html": {
-   "sha256": "09fb951df00f4d757b017f7757489f808b8cea358d8fa3ce0f7781e7ce209bdf",
-   "lines": 1723,
+   "sha256": "663f56c013addbd01eff1479e94dd93575330e4f6dbc4401b3480cc502c4b6c5",
+   "lines": 1849,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -86,8 +86,8 @@
    }
   },
   "07-css-components-b.part.html": {
-   "sha256": "e948081d3c8d99259b1811fbf7a8d208470d619afa346b923f7eb37306e00564",
-   "lines": 609,
+   "sha256": "1e44463ab1e21e6297aec470fd50b0d826cc6ab3a1d01e17d5634ab767f49b65",
+   "lines": 498,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -98,8 +98,8 @@
    }
   },
   "08-css-components-c.part.html": {
-   "sha256": "ea7702b5180b1ece3263cb581a4ce31c1ce0e7b46fa4f7046c67243889498b6b",
-   "lines": 1936,
+   "sha256": "63243a376338d25d3bf384eebed81d5c15e2baf49734e33964975bf24bceeb95",
+   "lines": 1711,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -110,8 +110,8 @@
    }
   },
   "09-css-bento-themes.part.html": {
-   "sha256": "f8342d5ee731ae7fb2c823d6c4bac33e40b9cbac60c52d3c3e992d631c90685d",
-   "lines": 907,
+   "sha256": "8f3ac5fb3118e24d3d9adbda829eb84e7a8484f177d45c0e28a0e20d5cdfa1b1",
+   "lines": 1383,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -122,8 +122,8 @@
    }
   },
   "10-css-settings.part.html": {
-   "sha256": "23dfc8d03b3df2b0c3b0ac383bd03195e1f41774cf61c52e672edf10ef214a93",
-   "lines": 930,
+   "sha256": "cde4c5cd1bf98e9973fe184432b91ccc7a68c096716917d00213fbd1d962369a",
+   "lines": 1042,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -134,8 +134,8 @@
    }
   },
   "10x-pm6-css-global.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "00b0d6a3e40fedca2692a579318943b62077ae1cc2520041f229eb62d4a71801",
+   "lines": 1619,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -146,8 +146,8 @@
    }
   },
   "10x-pm6-css-dashboard.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "b6569e6e76c2be7b75f0ba90e29d010f092c325bf90ace0772d15bc98991735d",
+   "lines": 414,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -158,8 +158,8 @@
    }
   },
   "10x-pm6-css-projects.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "8025f989cff458b6b940eac897a2d989648d55ea342b6df6f55e125942424ab3",
+   "lines": 319,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -170,8 +170,8 @@
    }
   },
   "10x-pm6-css-wizard.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "b69d9ad54e36951ac5544acc1c3e304ae233173b20a17ddc201a1069955a5258",
+   "lines": 1550,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -182,8 +182,8 @@
    }
   },
   "10x-pm6-css-orchestrator.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "22705c00876d711c5d25bde542778242fa81589390d500599151adc7973dec1a",
+   "lines": 927,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -194,8 +194,8 @@
    }
   },
   "10x-pm6-css-usage.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "92b4bcc69201dc6eb7fe8778d6459cca5c90e5ddc9b01dce3d436ae30288cc1c",
+   "lines": 27,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -206,8 +206,8 @@
    }
   },
   "10x-pm6-css-chat.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "65cfda0315959fed4603fa2096d779593a43c0a56bfb961e9e319e5bfd3276b8",
+   "lines": 1161,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -218,8 +218,8 @@
    }
   },
   "10x-pm6-css-bottom.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "2747f0a01afaa73813db47f59cc0bec588261433763c81f2f832e832cb5dd9fb",
+   "lines": 1138,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -230,8 +230,20 @@
    }
   },
   "10x-pm6-css-panels.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "9b7580fa7d3764e785c137946a155473b51de689dec0768459c7a41cf700b8bd",
+   "lines": 353,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-cozy-shelves.part.html": {
+   "sha256": "3b92607fd9b650b6f493de7f3a907314ab3618e74fcbdd530b01e2a7165a5b70",
+   "lines": 1512,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -242,8 +254,8 @@
    }
   },
   "11-html-shell-open.part.html": {
-   "sha256": "74573ff146f9722e2ad7ebbee2fbc7efc77d3cf4e4e0232f96f631b69302265c",
-   "lines": 48,
+   "sha256": "31d120d1053f8a17d29cf90f6d76b033f52f0f8ad64c93a34ecda8d10973aba7",
+   "lines": 131,
    "div_delta": 3,
    "deltas": {
     "div": 3,
@@ -254,8 +266,8 @@
    }
   },
   "12-html-side-panels.part.html": {
-   "sha256": "7670f17a68ae0f924cc9ede0bcf00c77cd280e8616e5d6099c7470db934ec60d",
-   "lines": 619,
+   "sha256": "93c1c49fef9e8c010e36831eaa92cf33145378611fcc17977b8b8e5ae6dd4c14",
+   "lines": 984,
    "div_delta": -1,
    "deltas": {
     "div": -1,
@@ -278,8 +290,8 @@
    }
   },
   "14-page-dashboard.part.html": {
-   "sha256": "da17f6ebb91de3cd51b1d32e3988c580a6f050d65dc26263457bf63eddcabe10",
-   "lines": 574,
+   "sha256": "31595c414c7357aa551ff094a2ea6b716cb8e607ee616514750f781a29734d9e",
+   "lines": 501,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -290,8 +302,8 @@
    }
   },
   "15-page-projects.part.html": {
-   "sha256": "6d6749d0de9270bec52887bd125c0906c8e841d7e660f120a78c6c82b4eb3fb1",
-   "lines": 257,
+   "sha256": "74169eee5950de0df64c140bc2df482af34023edada8f5cd65881545301813f0",
+   "lines": 284,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -302,8 +314,8 @@
    }
   },
   "16-page-wizard.part.html": {
-   "sha256": "2878dd01e6ac95ba37c2fa9afe3f312b39d33ab0f9107bf8e866698569ab9db7",
-   "lines": 461,
+   "sha256": "5ac155d9dec27c7297f42cc6555cf5aa62ff9ba6db9db4d1f29ff03b5005f7e5",
+   "lines": 266,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -314,8 +326,8 @@
    }
   },
   "17-page-orchestrator.part.html": {
-   "sha256": "f9063aedb086228fb29f766d4eccad305c5e8dd74f9ec113d7072aa43c49c911",
-   "lines": 414,
+   "sha256": "1a789910c3fde08e7036524b058e99b8e1e05ecacf483d628978c5defef6a4b0",
+   "lines": 317,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -326,8 +338,8 @@
    }
   },
   "18-page-usage.part.html": {
-   "sha256": "cae9e4933f0783f4f0c8a44fadd5b1071472fe6c898503e4b97339f16fd852ba",
-   "lines": 1375,
+   "sha256": "81dae230320db0987dad5f13bbd11de85e6529479ea5bf5d306872b5f12c9269",
+   "lines": 1151,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -350,8 +362,8 @@
    }
   },
   "20-html-bottom-panel.part.html": {
-   "sha256": "f66e4c82a08c25ae340c0ca34bcbdf1b8ee2e63f019488e03e56cfb0a4c125f9",
-   "lines": 179,
+   "sha256": "1b50565c3a11281cdf7a6f4d249d4af5c4347931e87b30545e7bf38e0df54b91",
+   "lines": 249,
    "div_delta": -1,
    "deltas": {
     "div": -1,
@@ -362,8 +374,8 @@
    }
   },
   "21-html-chat-panel.part.html": {
-   "sha256": "a2e8663bb8250a83cdf8cfa587c16a742fd8eedb08f6364999e1916538d34e6f",
-   "lines": 501,
+   "sha256": "7f44c3fc57d299ae560eabe3c4539b0113f2cced6947af71a803e19577cebbb2",
+   "lines": 4,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -374,8 +386,8 @@
    }
   },
   "22-html-status-toast.part.html": {
-   "sha256": "a77450ff84bea7ee6c12d3e38663dc5b7695393219ed715aeb40d3662b079e65",
-   "lines": 49,
+   "sha256": "36bc6d2a630068759f6d8536cb9e4d8a031ac50f793685d8abbdaa365a1597d6",
+   "lines": 52,
    "div_delta": -1,
    "deltas": {
     "div": -1,
@@ -386,8 +398,8 @@
    }
   },
   "23-html-floating-chat.part.html": {
-   "sha256": "6b4ba7ea3309eda011874180cea4256e3590a6d2301f77b04463612e52ad2e48",
-   "lines": 724,
+   "sha256": "e1fd588bd2f5878938070ac8c9ff312aed2b3f4d2dc2cfe63fe5e181594ac618",
+   "lines": 144,
    "div_delta": -1,
    "deltas": {
     "div": -1,
@@ -398,8 +410,8 @@
    }
   },
   "24-js-main.part.html": {
-   "sha256": "b367b35ce760a9f454ff7db34e71e353382bf6f6d87ed98b72b66581e48dadd1",
-   "lines": 1558,
+   "sha256": "3a0cbc886aba3859a2d6e53bacd4c75bccbac96bd2c9899557d3cb28a3fbf0f8",
+   "lines": 1609,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -410,8 +422,8 @@
    }
   },
   "25-js-terminal-demo.part.html": {
-   "sha256": "64f428f872f2c9a508c71d6eac3433980e4a00d27d3dac804836b7847d7a0fbb",
-   "lines": 2060,
+   "sha256": "02ca57c376a11da4f02102bf620bcbf14fe4508696adde89982775a9df57f481",
+   "lines": 1325,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -422,8 +434,8 @@
    }
   },
   "26-js-prd-annotations.part.html": {
-   "sha256": "fe04e3844cd1920af7a7d2118197162421bde0c784ad4eab6de241ff8bc86a2d",
-   "lines": 1415,
+   "sha256": "4827aa2d6efc39989cf1159cba65a63597855dfa021b582a4d4d7a0ddf0e9f37",
+   "lines": 1422,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -434,8 +446,8 @@
    }
   },
   "27-js-shimmer-filters.part.html": {
-   "sha256": "a46f7db32494f36ddbd2e7201523c7dbc701156ed75396996674d4a265e6a9d4",
-   "lines": 250,
+   "sha256": "cf9b482308a880218f1cad061e289ae9c03fcc76a93e09db188293b48a46c8e7",
+   "lines": 2,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -458,8 +470,8 @@
    }
   },
   "29-js-settings-engine.part.html": {
-   "sha256": "ca58ec1165cb86f6237b4e3b73e1302b7c95b68f03467f7b744beec5bf7fe829",
-   "lines": 1142,
+   "sha256": "38e82d30a53d650290746d5598cca06ce64ca2fc582321be60b7c5e6f186a62c",
+   "lines": 1260,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -470,8 +482,8 @@
    }
   },
   "29x-pm6-js-globals.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "2e1b1edacff8627ebf6e9474dbf726fcdf90fcad4abe5ed3ba29086848bd146b",
+   "lines": 1931,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -481,9 +493,33 @@
     "template": 0
    }
   },
-  "29x-pm6-js-demo-engine.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+  "29x-pm6-js-demo-engine-a.part.html": {
+   "sha256": "3e85c712e105e59a8d2e851d76f09a98fe51b8d844ae83fea20060184b3d8bbc",
+   "lines": 1787,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-demo-engine-b.part.html": {
+   "sha256": "6ae21bc7e5a30f370011d80b29f207b3f9893d28d1340d4037dda5e7faeedfc4",
+   "lines": 1271,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-demo-files.part.html": {
+   "sha256": "6771c034f18667f8cd9657ea47a28cf0757d53c36fd1a0faa95a5aa6a4023586",
+   "lines": 1272,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -494,8 +530,8 @@
    }
   },
   "29x-pm6-js-dashboard.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "280588c07b05ea6316693ad038ffe554135ea2ed463288a8bbb7b418edb711b7",
+   "lines": 1971,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -506,8 +542,8 @@
    }
   },
   "29x-pm6-js-projects.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "2167f6783a4ebc4694660447288494779f0c6e07a2a863989798b4973f4ee2fd",
+   "lines": 455,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -518,8 +554,8 @@
    }
   },
   "29x-pm6-js-wizard.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "99103bcaa99b4176d8542043d576a2e85548457c1470a5c019567f90e842f0b9",
+   "lines": 1549,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -530,8 +566,8 @@
    }
   },
   "29x-pm6-js-orchestrator.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "79de2a54eb0c01f185af916421c7e88dad3c145463592c45eaed86d2c2a73960",
+   "lines": 1550,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -542,8 +578,20 @@
    }
   },
   "29x-pm6-js-usage.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "6c0923f2d4e6375b3574c210cd57804b05c8afb1f068854b79fd640f83399cc7",
+   "lines": 196,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-chat-data.part.html": {
+   "sha256": "06acb11fba25054f6f9134e79b0f56c521c72786d0c42b2b5ccc3e43351aceeb",
+   "lines": 1150,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -554,8 +602,8 @@
    }
   },
   "29x-pm6-js-chat.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "af6f1d46fff7c57a30be01beec7847375af70dc493ad9ea4db2f2c4e44140ce1",
+   "lines": 2948,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -566,8 +614,8 @@
    }
   },
   "29x-pm6-js-bottom.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "8b56f040c82aa25206d5265ea7d60e0a8876fbed0c4f9e7c482b8592556161a2",
+   "lines": 429,
    "div_delta": 0,
    "deltas": {
     "div": 0,
@@ -578,8 +626,20 @@
    }
   },
   "29x-pm6-js-panels.part.html": {
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "lines": 0,
+   "sha256": "fa11b8aed91cfaa35293d011a3578e99ed60a85f03777eeab30fa1598c637970",
+   "lines": 994,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-cozy-shelves.part.html": {
+   "sha256": "50c91ea869342392ecc26f635b048145bf8bfffb70c93aa35440bd0861d48240",
+   "lines": 1778,
    "div_delta": 0,
    "deltas": {
     "div": 0,

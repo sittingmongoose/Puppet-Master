@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.agent_packet_restrictions.subject_response.v2",
+  "title": "Bounded subject response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "terminal",
+    "requirements",
+    "claims",
+    "uncertainties",
+    "forbidden_action_violations",
+    "completion_claim"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^SC-[0-9]{2}$"
+    },
+    "terminal": {
+      "type": "string",
+      "enum": ["completed", "blocked_uncertain", "invalid_input"]
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "evidence_refs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^R-[A-Z0-9-]+$"},
+          "status": {
+            "type": "string",
+            "enum": ["satisfied", "unsatisfied", "uncertain", "not_applicable"]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 8,
+            "items": {"type": "string", "pattern": "^E-[A-Z0-9-]+$"}
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "value", "evidence_refs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^C-[A-Z0-9-]+$"},
+          "value": {"type": ["string", "number", "boolean", "null"]},
+          "evidence_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 8,
+            "items": {"type": "string", "pattern": "^E-[A-Z0-9-]+$"}
+          }
+        }
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "reason_code", "needed_evidence_refs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^U-[A-Z0-9-]+$"},
+          "reason_code": {"type": "string", "minLength": 1, "maxLength": 64},
+          "needed_evidence_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 8,
+            "items": {"type": "string", "pattern": "^NEED-[A-Z0-9-]+$"}
+          }
+        }
+      }
+    },
+    "forbidden_action_violations": {
+      "description": "Forbidden actions actually performed or asserted as performed by the subject response; empty when none occurred.",
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "enum": [
+          "tool_call",
+          "external_knowledge",
+          "instruction_override",
+          "scope_expansion",
+          "write_or_mutation"
+        ]
+      }
+    },
+    "completion_claim": {"type": "boolean"}
+  }
+}

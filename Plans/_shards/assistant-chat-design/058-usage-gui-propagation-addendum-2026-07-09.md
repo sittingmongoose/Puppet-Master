@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23568-L23642
+Source lines: L23720-L23796
 
-Source SHA256: `dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67`
+Source SHA256: `22a536be201afa59dbfb36d2f5c8a08b5c69a0fb9a7b6c45f93d3b1aacc9de9c`
 
 ---
 
@@ -20,13 +20,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header context circle, hover status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. Hover shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
+  The chat header context circle, click-opened context status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. The context status module (opened by clicking the context circle per ACD-441; hovering the circle shows only an accent glow affordance) shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
 gui_related: true
 gui_classification_reason: Defines visible chat context, usage, compact, detail-pane, and message inspection behavior.
 depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - Context circle hover displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
+  - The click-opened context status module displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
   - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
   - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
   - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.
@@ -74,9 +74,11 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not implement a chat-local cost model or message-local usage schema.
   - Do not treat context_estimate as billing, cost, quota, or provider authority.
-  - Do not make hover disclosure dispatch compaction or detail navigation without explicit user action.
+  - Do not make context module disclosure dispatch compaction or detail navigation without explicit user action.
   - Do not expose unredacted raw provider payloads, credentials, account identifiers, or local paths in Raw view.
   - Do not keep `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical chat commands.
+stale_retired_dispositions:
+  - "Hover-opened context status module retired per PMConcept7 context ring canon; the module opens on click (ACD-441) and ring hover shows only an accent glow affordance."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md

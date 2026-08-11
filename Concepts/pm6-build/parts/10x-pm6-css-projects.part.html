@@ -51,8 +51,31 @@
     }
     .pm6-proj-branch .pm6-ico svg { width: 12px; height: 12px; display: block; }
 
-    /* ---- status pills (extends part-05 .status-badge) ---- */
-    .pm6-proj-card .status-badge { white-space: nowrap; flex-shrink: 0; }
+    /* ---- status pills (extends part-05 .status-badge) ----
+       Top-right corner of the card with inset padding so long chips
+       (Run #47 · Needs Attention) never clip into the border. */
+    .pm6-proj-card .status-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      white-space: nowrap;
+      flex-shrink: 0;
+      max-width: calc(100% - 20px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .pm6-proj-card .project-card-header {
+      padding-right: 0;
+      min-height: 28px;
+      align-items: flex-start;
+    }
+    .pm6-proj-card .project-card-title-area {
+      /* reserve room for the absolute status chip (incl. long Run #47 labels) */
+      padding-right: clamp(96px, 42%, 200px);
+      max-width: 100%;
+      box-sizing: border-box;
+    }
     .status-badge.pm6-ready { background: var(--accent-blue); color: var(--surface); }
     .status-badge.pm6-attn { background: var(--accent-warning); color: var(--background); }
     .status-badge.pm6-archived {

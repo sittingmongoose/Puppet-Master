@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>5.6 Sol — Puppet Master Settings Bakeoff Workspace</title>
+  <link rel="stylesheet" href="_shared/themes.css">
+  <link rel="stylesheet" href="styles/gallery.css">
+</head>
+<body>
+  <header class="gallery-head">
+    <div>
+      <span class="gallery-kicker">Puppet Master Settings redesign</span>
+      <h1 data-concept-model="5.6 Sol">5.6 Sol — Four-concept bakeoff</h1>
+      <p>One normalized fixture, four different ways to find, understand, and manage Settings. Controls below broadcast the same review state to every live concept.</p>
+    </div>
+    <span class="gallery-model" data-concept-model="5.6 Sol">5.6 Sol</span>
+  </header>
+
+  <form class="review-controls" aria-label="Shared concept review controls">
+    <label>Scenario<select name="scenario"><option value="normal">Normal home</option><option value="attention">Needs attention</option><option value="calm">Calm state</option><option value="setup">Setup in progress</option><option value="loading">Loading state</option><option value="refreshing">Refreshing catalogues</option><option value="degraded">Degraded with last-known-good data</option><option value="managed">Managed workspace</option><option value="unavailable">Unavailable dependency</option><option value="error">Error state</option><option value="usage-exhausted">Included usage exhausted</option><option value="effective-difference">Requested and effective values differ</option></select></label>
+    <label>Theme<select name="theme"><option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option><option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option><option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option><option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option></select></label>
+    <label class="width-control">Page width <output name="widthOutput">1280 px</output><input name="width" type="range" min="760" max="2500" step="10" value="1280" list="widthPresets"><datalist id="widthPresets"><option value="760"><option value="900"><option value="1280"><option value="1700"><option value="2200"><option value="2500"></datalist></label>
+    <label class="check-control"><input name="rail" type="checkbox" checked> Project rail</label>
+    <label class="check-control"><input name="chat" type="checkbox"> Assistant panel</label>
+    <label class="check-control"><input name="reduced" type="checkbox"> Reduced motion</label>
+  </form>
+
+  <main class="gallery-grid">
+    <article class="concept-card">
+      <header><div><span>Directory thesis</span><h2>5.6 Sol — Index House</h2></div><a href="concept-01-index-house.html" target="_blank" rel="noopener">Open standalone</a></header>
+      <p>Stable addresses, a room index, a continuous document, and an evidence inspector.</p>
+      <div class="frame-stage"><iframe title="5.6 Sol — Index House live concept" src="concept-01-index-house.html"></iframe></div>
+    </article>
+    <article class="concept-card">
+      <header><div><span>Operational thesis</span><h2>5.6 Sol — Switchboard</h2></div><a href="concept-02-switchboard.html" target="_blank" rel="noopener">Open standalone</a></header>
+      <p>Readiness signals, destination bays, operating stations, and effective-state trays.</p>
+      <div class="frame-stage"><iframe title="5.6 Sol — Switchboard live concept" src="concept-02-switchboard.html"></iframe></div>
+    </article>
+    <article class="concept-card">
+      <header><div><span>Goal-oriented thesis</span><h2>5.6 Sol — Wayfinder</h2></div><a href="concept-03-wayfinder.html" target="_blank" rel="noopener">Open standalone</a></header>
+      <p>Human outcomes become routes with checkpoints, expert branches, and current-location cues.</p>
+      <div class="frame-stage"><iframe title="5.6 Sol — Wayfinder live concept" src="concept-03-wayfinder.html"></iframe></div>
+    </article>
+    <article class="concept-card">
+      <header><div><span>Reference thesis</span><h2>5.6 Sol — Ledger</h2></div><a href="concept-04-ledger.html" target="_blank" rel="noopener">Open standalone</a></header>
+      <p>A dense register, explicit reference columns, chapter minimap, and comparative manager views.</p>
+      <div class="frame-stage"><iframe title="5.6 Sol — Ledger live concept" src="concept-04-ledger.html"></iframe></div>
+    </article>
+  </main>
+
+  <footer class="gallery-foot">5.6 Sol · Four unranked interactive concepts · Simulated external actions are labeled in-product</footer>
+  <script src="_shared/concept-hub-bridge.js"></script>
+  <script type="module" src="_shared/gallery.mjs"></script>
+</body>
+</html>

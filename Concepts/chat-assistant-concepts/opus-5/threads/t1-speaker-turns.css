@@ -1,0 +1,477 @@
+/* t1 "Speaker Turns" — Opus 5
+ *
+ * Typography does the work. There are no bubbles and no nested containers in the transcript:
+ * a hanging speaker label, a hairline rule, prose at full measure, and a one-line work strip.
+ * Everything heavier opens in a popup sheet rather than growing inside the turn.
+ *
+ * All rules scoped under [data-pmx-thread="t1"]. A test fails any selector outside that scope.
+ */
+
+[data-pmx-thread="t1"] .t1-root {
+  container-type: inline-size;
+  container-name: pmx-thread;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------- concept header */
+
+[data-pmx-thread="t1"] .t1-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  padding: 4px var(--md);
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+[data-pmx-thread="t1"] .t1-head-name { font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+[data-pmx-thread="t1"] .t1-head-model { margin-left: auto; letter-spacing: .05em; }
+
+/* ---------------------------------------------------------------- transcript */
+
+[data-pmx-thread="t1"] .t1-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-anchor: none;
+}
+
+[data-pmx-thread="t1"] .t1-list {
+  display: flex;
+  flex-direction: column;
+  padding: var(--md) var(--lg) var(--xl);
+  min-width: 0;
+}
+
+/* A turn is not a box. No border, no background, no padding shell — just rhythm. */
+[data-pmx-thread="t1"] .t1-turn {
+  position: relative;
+  min-width: 0;
+  padding: 2px 0 var(--sm);
+}
+
+/* The rule appears only where the speaker changes, so a run of turns from one side reads
+ * as continuous prose instead of a stack of headers. */
+[data-pmx-thread="t1"] .t1-turn[data-turn-start="1"] {
+  margin-top: var(--lg);
+  padding-top: var(--md);
+  border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+[data-pmx-thread="t1"] .t1-turn[data-turn-start="1"]:first-child { margin-top: 0; border-top: none; }
+
+[data-pmx-thread="t1"] .t1-speaker { margin-bottom: 3px; }
+[data-pmx-thread="t1"] .t1-speaker-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-turn[data-pmx-role="assistant"] .t1-speaker-label { color: var(--accent-primary); }
+
+/* ---------------------------------------------------------------- prose */
+
+[data-pmx-thread="t1"] .t1-body { position: relative; min-width: 0; }
+
+[data-pmx-thread="t1"] .t1-prose {
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: var(--text-primary);
+  max-width: 68ch;
+  overflow-wrap: anywhere;
+}
+[data-pmx-thread="t1"] .t1-p { margin: 0 0 .62em; }
+[data-pmx-thread="t1"] .t1-p:last-child { margin-bottom: 0; }
+
+/* The user's own words sit slightly quieter so the eye can find the assistant's answer,
+ * without inverting who is speaking. */
+[data-pmx-thread="t1"] .t1-turn[data-pmx-role="user"] .t1-prose { color: var(--text-secondary); }
+
+/* Collapse: a firm six-line clamp with a fade, so the preview always carries subject and
+ * direction but can never own the viewport at 520px. */
+[data-pmx-thread="t1"] .t1-body[data-collapsible="1"][data-expanded="0"] .t1-prose {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+[data-pmx-thread="t1"] .t1-more {
+  margin-top: 4px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 140ms var(--ease-out);
+}
+[data-pmx-thread="t1"] .t1-turn:hover .t1-more,
+[data-pmx-thread="t1"] .t1-turn:focus-within .t1-more,
+[data-pmx-thread="t1"] .t1-body[data-expanded="1"] .t1-more { opacity: 1; }
+
+/* ---------------------------------------------------------------- work strip
+ * One line. Everything the turn did. Opens a sheet rather than growing inline. */
+
+[data-pmx-thread="t1"] .t1-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: 3px;
+  font-size: var(--fs-2xs);
+}
+[data-pmx-thread="t1"] .t1-strip-sep { color: var(--text-muted); opacity: .5; }
+[data-pmx-thread="t1"] .t1-strip-btn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text-muted) 40%, transparent);
+  text-underline-offset: 3px;
+}
+[data-pmx-thread="t1"] .t1-strip-btn:hover { color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- older history */
+
+[data-pmx-thread="t1"] .t1-older-wrap { display: flex; justify-content: center; padding: var(--sm) 0 var(--md); }
+[data-pmx-thread="t1"] .t1-older {
+  padding: 5px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-older:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+
+/* ---------------------------------------------------------------- live status */
+
+[data-pmx-thread="t1"] .t1-live {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  margin-top: var(--md);
+  padding: var(--sm) 0;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent-primary); flex: 0 0 auto;
+}
+[data-pmx-thread="t1"] .t1-live-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-pmx-thread="t1"] .t1-live-time { font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- jump to latest */
+
+/* The lane reserves the pill's space permanently, so the transcript viewport height never
+ * changes and content can never sit underneath the pill. Reserving it dynamically instead
+ * (padding toggled on the root when the pill appeared) resized the scroller 313->267px and
+ * slid the transcript 27px over 320ms on every return to the bottom. */
+[data-pmx-thread="t1"] .t1-jump-lane {
+  flex: 0 0 auto;
+  height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+[data-pmx-thread="t1"] .t1-jump {
+  transform: translateY(8px) scale(.96);
+  padding: 5px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  /* Must be OPAQUE: it floats in front of the scrolling transcript, and in the glass
+   * themes `--surface-elevated` alone is translucent enough that the message underneath
+   * reads straight through the pill. Paint the themed tint over an opaque base instead. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  color: var(--text-primary);
+  font: inherit; font-size: var(--fs-2xs);
+  box-shadow: var(--elev-2);
+  cursor: pointer;
+  opacity: 0; pointer-events: none;
+  /* The pill ARRIVES on the sampled spring, the same curve the popup family uses, so it
+   * lands with a settle rather than easing flat to a stop. Opacity stays quick and linear-ish
+   * so the surface is legible before it finishes moving. The DEPARTURE keeps the short
+   * ease-out: a spring on the way out would overshoot downward past the lane it is leaving. */
+  transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+  z-index: 2;
+}
+[data-pmx-thread="t1"] .t1-jump[data-visible="1"] {
+  opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+  transition: opacity 110ms var(--ease-out), transform 420ms var(--ease-spring-real);
+}
+/* ---------------------------------------------------------------- work surfaces */
+
+[data-pmx-thread="t1"] .t1-inline-surfaces,
+[data-pmx-thread="t1"] .t1-inline-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-thread="t1"] .t1-inline-surfaces:empty,
+[data-pmx-thread="t1"] .t1-inline-question:empty { display: none; }
+
+[data-pmx-thread="t1"] .t1-surface {
+  padding: var(--sm) var(--md);
+  border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  min-width: 0;
+}
+[data-pmx-thread="t1"] .t1-surface-head {
+  display: flex; align-items: baseline; gap: var(--sm); flex-wrap: wrap; min-width: 0;
+}
+[data-pmx-thread="t1"] .t1-surface-kind {
+  font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text-muted); flex: 0 0 auto;
+}
+[data-pmx-thread="t1"] .t1-surface-title {
+  font-size: var(--fs-xs); color: var(--text-primary);
+  min-width: 0; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Status is a word, not a colored edge. */
+[data-pmx-thread="t1"] .t1-status {
+  margin-left: auto; flex: 0 0 auto;
+  padding: 1px 7px;
+  font-size: var(--fs-2xs);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+}
+
+[data-pmx-thread="t1"] .t1-surface-acts { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+[data-pmx-thread="t1"] .t1-act {
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-act:hover { background: var(--surface-elevated); color: var(--text-primary); }
+[data-pmx-thread="t1"] .t1-act-primary {
+  background: var(--accent-primary); border-color: var(--accent-primary); color: var(--background); font-weight: 600;
+}
+
+[data-pmx-thread="t1"] .t1-blocker,
+[data-pmx-thread="t1"] .t1-replan { margin-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+[data-pmx-thread="t1"] .t1-blocker-row { display: flex; gap: var(--sm); font-size: var(--fs-2xs); }
+[data-pmx-thread="t1"] .t1-blocker-k,
+[data-pmx-thread="t1"] .t1-replan-k { flex: 0 0 auto; min-width: 92px; color: var(--text-muted); }
+[data-pmx-thread="t1"] .t1-blocker-v,
+[data-pmx-thread="t1"] .t1-replan-v { color: var(--text-primary); min-width: 0; overflow-wrap: anywhere; }
+[data-pmx-thread="t1"] .t1-replan { flex-direction: row; font-size: var(--fs-2xs); }
+
+[data-pmx-thread="t1"] .t1-todo { margin-top: 5px; display: flex; flex-direction: column; gap: 2px; }
+[data-pmx-thread="t1"] .t1-todo-row { display: flex; gap: var(--sm); font-size: var(--fs-2xs); min-width: 0; }
+[data-pmx-thread="t1"] .t1-todo-state { flex: 0 0 auto; min-width: 74px; color: var(--text-muted); }
+[data-pmx-thread="t1"] .t1-todo-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+[data-pmx-thread="t1"] .t1-todo-row[data-state="complete"] .t1-todo-label { color: var(--text-muted); }
+
+[data-pmx-thread="t1"] .t1-agents { overflow: hidden; }
+[data-pmx-thread="t1"] .t1-agents[data-open="0"] { height: 0; }
+[data-pmx-thread="t1"] .t1-agent {
+  display: flex; flex-wrap: wrap; gap: var(--sm) 6px;
+  padding: 4px 0; font-size: var(--fs-2xs);
+  border-top: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+[data-pmx-thread="t1"] .t1-agent-name { font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t1"] .t1-agent-task { color: var(--text-secondary); flex: 1 1 140px; min-width: 0; }
+[data-pmx-thread="t1"] .t1-agent-act { color: var(--text-muted); flex: 1 1 100%; min-width: 0; }
+[data-pmx-thread="t1"] .t1-agent-dur { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+/* .t1-status normally rides `margin-left: auto` to hug the right edge of a single-line
+ * row (Goal's kind + title + status). Reused here it stranded status and duration on
+ * their own wrapped line with a large dead gap to their left. Let this row's wrap fall
+ * flush left instead of scattering. */
+[data-pmx-thread="t1"] .t1-agent .t1-status { margin-left: 0; }
+
+[data-pmx-thread="t1"] .t1-files { margin-top: 5px; display: flex; flex-direction: column; }
+[data-pmx-thread="t1"] .t1-file {
+  display: flex; align-items: baseline; gap: var(--sm);
+  padding: 3px 0; border: none; background: transparent;
+  font: inherit; font-size: var(--fs-2xs); text-align: left; cursor: pointer; min-width: 0;
+}
+[data-pmx-thread="t1"] .t1-file:hover .t1-file-path { color: var(--accent-primary); }
+[data-pmx-thread="t1"] .t1-file-path {
+  font-family: var(--mono-font); color: var(--text-primary);
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: left;
+}
+[data-pmx-thread="t1"] .t1-file-status { color: var(--text-muted); flex: 0 0 auto; }
+[data-pmx-thread="t1"] .t1-file-n { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+[data-pmx-thread="t1"] .t1-file-more { padding: 3px 0; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* ---------------------------------------------------------------- questionnaire */
+
+[data-pmx-thread="t1"] .t1-question {
+  padding: var(--md);
+  border-top: 1px solid var(--border);
+  /* Must be OPAQUE, same reasoning as .t1-jump: a questionnaire card is a surface the
+   * user must be able to read cleanly, never a translucent tint over live content. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  min-width: 0;
+}
+[data-pmx-thread="t1"] .t1-question-head {
+  display: flex; align-items: baseline; gap: var(--sm);
+  font-size: var(--fs-2xs); color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-question-req { margin-left: auto; }
+[data-pmx-thread="t1"] .t1-question-prompt {
+  margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary);
+}
+[data-pmx-thread="t1"] .t1-question-opts { display: flex; flex-direction: column; gap: 4px; }
+[data-pmx-thread="t1"] .t1-opt {
+  padding: 6px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit; font-size: var(--fs-xs); text-align: left; cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-opt:hover { border-color: var(--accent-primary); }
+/* Chosen state is a fill plus weight, never a left accent bar. */
+[data-pmx-thread="t1"] .t1-opt[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+[data-pmx-thread="t1"] .t1-question-free {
+  width: 100%; min-height: 64px; resize: vertical;
+  padding: var(--sm); font: inherit; font-size: var(--fs-xs);
+  color: var(--text-primary); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+[data-pmx-thread="t1"] .t1-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
+
+/* ---------------------------------------------------------------- popup sheets */
+
+[data-pmx-thread="t1"] .t1-sheet-title,
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-title {
+  padding: var(--sm) var(--md) var(--xs);
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-list { max-height: 240px; overflow-y: auto; padding: 0 var(--md) var(--sm); }
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-row {
+  display: flex; gap: var(--sm); padding: 4px 0; font-size: var(--fs-2xs);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-row:last-child { border-bottom: none; }
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-kind { flex: 0 0 auto; min-width: 72px; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-label { flex: 1 1 auto; min-width: 0; color: var(--text-primary); overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-dur { flex: 0 0 auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.pmx-popup[data-pmx-thread="t1"] .t1-sheet-foot { padding: var(--sm) var(--md); font-size: var(--fs-2xs); color: var(--text-muted); border-top: 1px solid var(--border); }
+.pmx-popup[data-pmx-thread="t1"] .t1-qa { padding: 5px 0; }
+.pmx-popup[data-pmx-thread="t1"] .t1-qa-q { font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t1"] .t1-qa-a { font-size: var(--fs-xs); color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- Context Lens
+ * Shaping state reads as a field treatment plus a word, never a colored left edge. */
+
+[data-pmx-thread="t1"] .t1-turn[data-lens="muted"] .t1-prose { opacity: .45; }
+[data-pmx-thread="t1"] .t1-turn[data-lens="focused"] .t1-prose {
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  margin-left: -6px;
+}
+[data-pmx-thread="t1"] .t1-turn[data-lens="subcompacted"] .t1-prose,
+[data-pmx-thread="t1"] .t1-turn[data-lens="source"] .t1-prose { opacity: .6; font-style: italic; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t1"] .t1-list { padding: var(--sm) var(--md) var(--lg); }
+  [data-pmx-thread="t1"] .t1-prose { font-size: var(--fs-xs); line-height: 1.58; }
+  [data-pmx-thread="t1"] .t1-turn[data-turn-start="1"] { margin-top: var(--md); padding-top: var(--sm); }
+  [data-pmx-thread="t1"] .t1-blocker-k, [data-pmx-thread="t1"] .t1-replan-k { min-width: 72px; }
+  [data-pmx-thread="t1"] .t1-todo-state { min-width: 62px; }
+  [data-pmx-thread="t1"] .t1-agent-task { flex-basis: 100%; }
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-more,
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-jump{ transition: none !important; }
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-more { opacity: 1 !important; }
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-live-dot { animation: none !important; opacity: 1 !important; }
+
+/* Persistent expand affordance. Hover-only discovery was the weakest point in the
+ * set: a faded message gave no standing signal that it could be opened. The control
+ * now always shows at low contrast and hover only raises it. */
+[data-pmx-thread="t1"] .t1-more { opacity: .62 !important; }
+[data-pmx-thread="t1"] .t1-turn:hover .t1-more,
+[data-pmx-thread="t1"] .t1-turn:focus-within .t1-more,
+[data-pmx-thread="t1"] .t1-more:hover,
+[data-pmx-thread="t1"] .t1-more:focus-visible { opacity: 1 !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * The concept is the back-and-forth of speakers, so the motion carries it: the
+ * user's turns enter from one side and the assistant's from the other. The offset
+ * is small — 10px — because this has to survive a 520px column without the text
+ * ever appearing to swing.
+ */
+@keyframes pmx-t1-turn-user {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-t1-turn-agent {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-thread="t1"] .t1-turn {
+  animation: pmx-t1-turn-agent var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-thread="t1"] .t1-turn[data-pmx-role="user"] {
+  animation-name: pmx-t1-turn-user;
+  animation-timing-function: var(--ease-spring-real);
+}
+[data-pmx-thread="t1"] .t1-strip-btn {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t1"] .t1-strip-btn:active { transform: scale(.95); }
+
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-turn {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t1"] .t1-turn {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- jump pill clearance
+ * The pill floats over the transcript, and nothing reserved space for it, so when it
+ * appeared it sat directly on top of live message text and hid whole words. Readable
+ * sustained conversation is the criterion this whole workspace is measured against, so
+ * a control that covers prose is a real defect rather than a cosmetic one.
+ *
+ * The clearance is added only while the pill is actually visible — reserving it
+ * permanently would cost every conversation a strip of transcript to protect against a
+ * control that is usually not there. */
+
+/* Permanent clearance on the SCROLLED CONTENT, not on the scroller's box.
+ *
+ * Two earlier attempts got this wrong in opposite directions. Padding on
+ * .t1-scroll added room only at the end of the content, which coincides with the
+ * pill's position solely when scrolled to the bottom — precisely when the pill is
+ * hidden — so it did nothing. Padding on .t1-root did clear the pill, but it
+ * shrank the scroller's viewport by 46px, and toggling that at the bottom slid the
+ * whole transcript 27px every time, measurably, over 320ms.
+ *
+ * Reserving the space inside the content instead changes no box at all. It costs a
+ * little extra scroll distance and leaves a small gap under the last message, which
+ * is what every chat client does anyway, and the pill floats over that gap. */
+[data-motion="reduced"][data-pmx-thread="t1"] .t1-root { transition: none !important; }

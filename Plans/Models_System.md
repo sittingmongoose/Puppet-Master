@@ -9507,3 +9507,12 @@ owner_hints:
   - Plans/Multi-Account.md
   - Plans/usage-feature.md
 ```
+
+
+## `run.started` Models owner join
+
+Status: `STATICALLY_MATERIALIZED`; provider/model resolution is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+The v2 event and its immutable `pm.requested_effective_runtime@1.0.0` record require non-empty `requested_platform`, `effective_platform`, `requested_model`, and `effective_model`. Models owns the concrete runtime-platform pair and canonical model IDs in `provider_id/model_id` form. The model vendor namespace need not equal the concrete runtime platform; the immutable `models_resolution_ref` must prove the mapping.
+
+Unequal platform/model pairs are valid only with historically resolvable Models fallback/substitution/capability/policy evidence and deterministic precedence. Display labels, string-prefix inference, unknown IDs, unsupported effective models, retired `platform_specs`, or current-catalog replay reconstruction are forbidden. `provider_policy_snapshot` may supply typed platform-capability evidence but its provider/model enum remains distinct from the platform-capability evaluation enum.

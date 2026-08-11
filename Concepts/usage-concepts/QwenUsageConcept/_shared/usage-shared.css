@@ -1,0 +1,437 @@
+/* ============================================================================
+   usage-concepts/_shared/usage-shared.css
+   The shared design CONTRACT for all eight usage concepts. It fixes the two
+   things that must NOT vary between concepts — the spacing rhythm and the
+   value-state / status vocabulary — while leaving each concept free to own its
+   own layout language and aesthetic.
+
+   Spacing derives from theme tokens so it re-flows on all 8 themes, but the
+   SCALE is fixed (one spacing ladder, no per-widget ad-hoc gaps — this is the
+   direct fix for the "uneven spacing" complaint). Status colors are semantic
+   and theme-table-driven, so they are correct on every theme without any
+   hardcoded pastel.
+   ============================================================================ */
+
+/* ---------- 1. THE SPACING LADDER (single source of rhythm) ---------- */
+:root {
+  --us-pad: var(--xl);            /* page outer padding (16) */
+  --us-gap: var(--grid-gap);      /* gap between sections (20 cozy/glass, 24 others) */
+  --us-cpad: var(--lg);           /* card interior padding (12) */
+  --us-row: var(--md);            /* gap between rows inside a card (8) */
+  --us-tight: var(--sm);          /* tight inner gap (4) */
+  --us-sec-h: 34px;               /* section header band height */
+}
+
+/* page center region (between title bar and status bar) */
+.us-center { flex: 1 1 auto; min-height: 0; display: flex; position: relative; z-index: 1; overflow: hidden; background: var(--background); }
+[data-theme^="glass"] .us-center { background: transparent; }
+.us-center-inner { flex: 1 1 auto; min-width: 0; width: 100%; margin: 0 auto; display: flex; flex-direction: column; min-height: 0; }
+
+/* the page itself */
+.us-page { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; background: var(--surface); }
+[data-theme^="glass"] .us-page { background: transparent; }
+.us-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: var(--us-pad); scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.us-scroll::-webkit-scrollbar { width: 10px; }
+.us-scroll::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+
+/* responsive column grid (UF-059: 2 cols <1200, 3 cols 1200-1600, 4 cols >1600) */
+.us-cols { display: grid; gap: var(--us-gap); grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; }
+.us-cols > .c2 { grid-column: span 2; }
+.us-cols > .c3 { grid-column: span 3; }
+.us-cols > .c4 { grid-column: span 4; }
+@media (max-width: 1600px) { .us-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } .us-cols > .c4 { grid-column: span 3; } }
+@media (max-width: 1200px) { .us-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } .us-cols > .c3, .us-cols > .c4 { grid-column: span 2; } }
+@media (max-width: 760px)  { .us-cols { grid-template-columns: minmax(0, 1fr); } .us-cols > .c2, .us-cols > .c3, .us-cols > .c4 { grid-column: span 1; } }
+
+/* ---------- 2. PAGE HEAD (UF-089 one-line head + F3-462 per-theme boxes) ---------- */
+.us-head {
+  flex: none; display: flex; align-items: center; gap: var(--lg); min-width: 0;
+  padding: var(--md) var(--us-pad); border-bottom: var(--border-width) solid var(--border);
+  background: var(--surface);
+}
+.us-head-title { font-family: var(--display-font); font-size: var(--fs-xl); font-weight: 700; color: var(--text-primary); line-height: var(--lh-tight); white-space: nowrap; letter-spacing: .4px; }
+.us-head-sub { font-size: var(--fs-sm); color: var(--text-secondary); line-height: var(--lh-body); min-width: 0; flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.us-head-sub b { color: var(--text-primary); font-weight: 700; }
+.us-head-acts { display: flex; align-items: center; gap: var(--sm); flex: none; margin-left: auto; }
+/* squished head: drop the freshness chip first, then let the subtitle wrap to
+   its own line so the title + actions never bleed at ~320px */
+@media (max-width: 620px) { .us-fresh { display: none; } }
+@media (max-width: 420px) {
+  .us-head { flex-wrap: wrap; row-gap: var(--sm); }
+  .us-head-sub { flex: 1 1 100%; order: 3; white-space: normal; overflow: visible; }
+}
+
+/* F3-462: friendly = rounded inset box on the cozy card surface */
+[data-theme^="friendly"] .us-head {
+  margin: var(--md) var(--us-pad) 0; padding: var(--md) var(--lg);
+  border: 1px solid var(--pm6-cozy-chrome-border, var(--border-light)); border-radius: var(--radius-lg);
+  background: var(--pm6-cozy-card-base, var(--surface-elevated));
+}
+/* F3-462: glass + basic = open Projects-like (no chrome bar) */
+:is([data-theme^="glass"], [data-theme^="basic"]) .us-head { background: transparent; border-bottom: none; padding-left: 0; padding-right: 0; }
+/* F3-462: retro keeps its chrome bar */
+[data-theme^="retro"] .us-head { border-bottom-width: var(--border-width); }
+
+/* head icon-only buttons (GATE-010: require title + aria-label) */
+.us-hbtn { width: 30px; height: 30px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.us-hbtn:hover { color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); background: var(--accent-soft); }
+.us-hbtn.primary { background: var(--accent-soft); color: var(--accent-primary); border-color: transparent; }
+.us-hbtn svg { width: 14px; height: 14px; }
+.us-hbtn.spinning svg { animation: usSpin 1s linear infinite; }
+@keyframes usSpin { to { transform: rotate(360deg); } }
+
+/* freshness chip in the head */
+.us-fresh { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
+.us-fresh .d { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--graph-passed); }
+.us-fresh.stale .d { background: var(--accent-warning); }
+.us-fresh.degraded .d { background: var(--graph-failed); }
+
+/* ---------- 3. STATUS + VALUE-STATE VOCABULARY (the honesty layer) ---------- */
+/* Semantic tone variables, theme-correct everywhere. */
+:root {
+  --tone-ok: var(--graph-passed);
+  --tone-warn: var(--accent-warning);
+  --tone-err: var(--graph-failed);
+  --tone-info: var(--accent-blue);
+  --tone-mute: var(--text-muted);
+  --tone-purple: var(--accent-magenta);
+}
+
+/* value-state chip — one encoding across all concepts (UF-074/087/088) */
+.vs {
+  display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .03em; white-space: nowrap; line-height: 1.5;
+  border: 1px solid transparent; max-width: 100%; min-width: 0;
+}
+.vs > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.vs-ok     { background: color-mix(in srgb, var(--tone-ok) 14%, transparent); color: var(--tone-ok-text); }
+.vs-warn   { background: color-mix(in srgb, var(--tone-warn) 15%, transparent); color: var(--tone-warn-text); }
+.vs-err    { background: color-mix(in srgb, var(--tone-err) 14%, transparent); color: var(--tone-err-text); }
+.vs-info   { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); }
+.vs-mute   { background: color-mix(in srgb, var(--tone-mute) 14%, transparent); color: var(--tone-mute-text); }
+.vs-purple { background: color-mix(in srgb, var(--tone-purple) 14%, transparent); color: var(--tone-purple-text); }
+.vs-dash   { border: 1px dashed color-mix(in srgb, currentColor 45%, transparent); background: transparent; }
+
+/* confidence dot (high/medium/low/unknown) */
+.conf { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
+.conf .cd { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.conf-high .cd { background: var(--tone-ok); }
+.conf-medium .cd { background: var(--tone-info); }
+.conf-low .cd { background: var(--tone-warn); }
+.conf-unknown .cd { background: var(--tone-mute); }
+
+/* status dots (live / working / pressure) */
+.us-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; display: inline-block; }
+.us-dot.ok { background: var(--tone-ok); color: var(--tone-ok); }
+.us-dot.warn { background: var(--tone-warn); color: var(--tone-warn); }
+.us-dot.err { background: var(--tone-err); color: var(--tone-err); }
+.us-dot.info { background: var(--tone-info); color: var(--tone-info); }
+.us-dot.mute { background: var(--tone-mute); color: var(--tone-mute); }
+.us-dot.pulse { animation: usPulse 1.8s var(--ease-out) infinite; }
+@keyframes usPulse { 0% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 35%, transparent); } 70% { opacity: .55; box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 0%, transparent); } 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 0%, transparent); } }
+
+/* ---------- 4. NUMBERS + COST (right-aligned mono; UF-036 precision) ---------- */
+.us-num { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-size: var(--fs-2xs); color: var(--text-secondary); text-align: right; white-space: nowrap; }
+.us-cost { font-family: var(--mono-font); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.us-cost.hot { color: var(--tone-err-text); }
+.us-cost.ok { color: var(--tone-ok-text); }
+.us-cost.warn { color: var(--tone-warn-text); }
+
+/* big display numbers — vivid so poster-size values pop and harmonize with their arcs/bars */
+.us-big { font-family: var(--display-font); font-weight: 800; font-size: var(--fs-3xl); line-height: 1; color: var(--text-primary); letter-spacing: .3px; }
+.us-big.ok { color: var(--tone-ok); } .us-big.warn { color: var(--tone-warn); } .us-big.err { color: var(--tone-err); }
+.us-bigk { font-family: var(--display-font); font-size: var(--fs-2xs); font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--text-muted); margin-top: 3px; }
+
+/* ---------- 5. METERS + GAUGES (semantic fill tones) ---------- */
+.us-track { flex: 1 1 auto; min-width: 24px; height: 6px; border-radius: var(--radius-pill); background: var(--border-light); overflow: hidden; }
+.us-fill { display: block; height: 100%; border-radius: var(--radius-pill); width: 0; transition: width var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+/* fill tones ride --us-fill-* where a theme defines them (WCAG 1.4.11: >=3:1 vs
+   the track, see themes.css); everywhere else the raw vivid tone is used */
+.us-fill.ok { background: var(--us-fill-ok, var(--tone-ok)); }
+.us-fill.warn { background: var(--us-fill-warn, var(--tone-warn)); }
+.us-fill.hot { background: var(--us-fill-hot, var(--tone-err)); }
+.us-fill.info { background: var(--us-fill-info, var(--tone-info)); }
+.us-fill.purple { background: var(--us-fill-purple, var(--tone-purple)); }
+/* mute/neutral fills must never render hollow: a theme-tinted gray that clears
+   3:1 vs the track on every theme (tokens in themes.css), visibly inactive */
+.us-fill.mute { background: var(--us-fill-mute, var(--tone-mute)); }
+
+/* donut strokes ARE fills (WCAG 1.4.11): route raw-tone presentation-attribute
+   strokes (shared .wd-donut AND the concept donuts, which use the identical
+   'var(--tone-*)' attribute strings) onto the same >=3:1 --us-fill-* tokens the
+   meters use; themes without an override keep the vivid raw tone (already
+   passing there). Any CSS rule out-ranks a presentation attribute — no JS
+   change needed; inline style: strokes (u2) are untouched by design. */
+.dfill[stroke="var(--tone-ok)"]   { stroke: var(--us-fill-ok, var(--tone-ok)); }
+.dfill[stroke="var(--tone-warn)"] { stroke: var(--us-fill-warn, var(--tone-warn)); }
+.dfill[stroke="var(--tone-err)"]  { stroke: var(--us-fill-hot, var(--tone-err)); }
+.dfill[stroke="var(--tone-info)"] { stroke: var(--us-fill-info, var(--tone-info)); }
+.us-meter { display: flex; align-items: center; gap: var(--sm); min-width: 0; }
+.us-meter .lb { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); width: 30px; flex: none; letter-spacing: .02em; white-space: nowrap; }
+.us-meter .pc { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); width: 34px; text-align: right; flex: none; }
+
+/* chart series colors — IDENTICAL across all concepts (input/output/reasoning/cache) */
+:root { --ser-inp: var(--accent-blue); --ser-out: var(--accent-magenta); --ser-rea: var(--accent-orange); --ser-cache: var(--accent-lime); }
+
+/* ---------- 6. SECTION HEADER (one rhythm for every section) ---------- */
+.us-sec { display: flex; flex-direction: column; min-width: 0; }
+.us-sech { display: flex; align-items: center; gap: var(--sm); min-height: var(--us-sec-h); min-width: 0; }
+.us-secico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--accent-primary); }
+.us-secico svg { width: 12px; height: 12px; }
+.us-sect { font-family: var(--display-font); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-primary); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.us-secm { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; margin-left: auto; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; letter-spacing: .03em; }
+.us-sepline { flex: 1 1 auto; height: 1px; background: var(--border-light); min-width: 12px; }
+
+/* ---------- 7. LEDGER TABLE (base; concepts may re-style) ---------- */
+.us-tblwrap { border: 1px solid var(--border-light); border-radius: var(--radius-md); overflow: auto; background: var(--surface); min-width: 0; }
+.us-tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+.us-tbl thead th { position: sticky; top: 0; z-index: 2; background: var(--surface-elevated); padding: var(--sm) var(--md); text-align: left; font-weight: 700; color: var(--text-secondary); border-bottom: var(--border-width) solid var(--border); white-space: nowrap; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: .04em; cursor: pointer; user-select: none; }
+.us-tbl td { padding: var(--sm) var(--md); border-bottom: 1px solid var(--border-light); color: var(--text-primary); vertical-align: middle; white-space: nowrap; }
+.us-tbl tbody tr { transition: background var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.us-tbl tbody tr:hover { background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+.us-tbl .mono { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+.us-tbl .num { text-align: right; font-family: var(--mono-font); font-size: var(--fs-2xs); font-variant-numeric: tabular-nums; }
+.us-tbl .dim { color: var(--text-muted); }
+.us-tbl tr.us-new { animation: usFlash var(--mo-data-flash-dur, 1100ms) var(--pm-ease-smooth, ease) both; }
+@keyframes usFlash { 0% { background: var(--accent-soft); } 100% { background: transparent; } }
+
+/* event-type text colors in the ledger */
+.ev-completion { color: var(--text-primary); }
+.ev-tool { color: var(--text-secondary); }
+.ev-error { color: var(--tone-err-text); font-weight: 700; }
+.ev-guard { color: var(--tone-warn-text); font-weight: 700; }
+.ev-switch { color: var(--tone-info-text); font-weight: 700; }
+
+/* ---------- 8. GENERIC CARD + ROW (rhythm, not aesthetic) ---------- */
+.us-rows { display: flex; flex-direction: column; gap: var(--us-tight); min-width: 0; }
+.us-hr { height: 1px; background: var(--border-light); border: none; margin: var(--sm) 0; }
+.us-foot { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); display: flex; gap: 6px; align-items: flex-start; }
+.us-foot svg { width: 12px; height: 12px; flex: none; margin-top: 1px; }
+
+/* what-counts matrix */
+.us-wc { display: flex; align-items: center; gap: var(--sm); padding: 3px 0; font-size: var(--fs-2xs); min-width: 0; }
+.us-wc .q { flex: 1 1 auto; min-width: 0; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.us-wc .a { flex: 0 1 auto; min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.us-wc .a.yes { color: var(--tone-ok-text); } .us-wc .a.no { color: var(--tone-mute-text); } .us-wc .a.part { color: var(--tone-warn-text); }
+
+/* ---------- 9. FOCUS RINGS (F3-201) + REDUCED MOTION ---------- */
+.us-page :is(button, [tabindex], input, select, a):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+[data-theme^="basic"] .us-page :is(button, [tabindex], input, select, a):focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .us-fill, .us-hbtn, .us-dot.pulse { transition: none; animation: none; }
+  .us-fill { width: var(--wf, 0%) !important; }
+  .us-tbl tr.us-new { animation: none; }
+}
+html[data-reduced-motion="1"] .us-fill { transition: none; width: var(--wf, 0%) !important; }
+html[data-reduced-motion="1"] .us-hbtn, html[data-reduced-motion="1"] .us-dot.pulse { transition: none; animation: none; }
+html[data-reduced-motion="1"] .us-tbl tr.us-new { animation: none; }
+
+/* ---------- 10. THEME WORST-CASE GUARDRAILS ---------- */
+/* retro: thickest borders + 15px type + square corners — keep rows from ballooning */
+[data-theme^="retro"] .us-track, [data-theme^="retro"] .us-fill { border-radius: 2px; }
+[data-theme^="retro"] .vs, [data-theme^="retro"] .us-hbtn { border-radius: 2px; }
+/* basic: tallest line-height (1.6) — keep table rows compact */
+[data-theme^="basic"] .us-tbl td, [data-theme^="basic"] .us-tbl th { padding-top: 3px; padding-bottom: 3px; }
+/* glass: border-width 0 — give the table a hairline so it still reads */
+[data-theme^="glass"] .us-tbl thead th { border-bottom: 1px solid var(--glass-hairline); }
+[data-theme^="glass"] .us-tbl td { border-bottom-color: var(--glass-hairline); }
+
+/* ---------- 11. ALIGNED METER + SHARED ROW GRIDS (values line up; chips never dictate length) ---------- */
+.us-meter { display: grid; align-items: center; gap: var(--sm); min-width: 0; grid-template-columns: var(--us-mlb, 30px) minmax(24px, 1fr) var(--us-mpc, 40px); }
+.us-meter .lb { width: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.us-meter .pc { width: auto; font-variant-numeric: tabular-nums; }
+.us-meter .us-track { width: auto; }
+.us-winrow { display: grid; align-items: center; gap: var(--sm); min-width: 0; padding: 2px 0; grid-template-columns: minmax(64px, var(--us-wlb, 96px)) minmax(24px, 1fr) 36px minmax(56px, auto); }
+.us-winlab { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.us-winpc { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); text-align: right; font-variant-numeric: tabular-nums; }
+.us-winrst { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); text-align: right; white-space: nowrap; }
+.us-winrow.cd .us-winrst { color: var(--tone-warn-text); }
+.us-proj { display: inline-flex; align-items: center; font-size: 9px; font-weight: 700; letter-spacing: .03em; color: var(--text-muted); white-space: nowrap; }
+.us-proj::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; margin-right: 4px; opacity: .7; }
+.us-list { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; column-gap: var(--sm); row-gap: 2px; }
+.us-list > .r { display: contents; }
+.us-list > .r > .k { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: var(--fs-2xs); }
+.us-list > .r > .chip { justify-self: start; }
+.us-list > .r > .v { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-size: var(--fs-2xs); color: var(--text-primary); text-align: right; justify-self: end; white-space: nowrap; }
+.us-kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; column-gap: var(--sm); }
+.us-kv > .k { color: var(--text-muted); font-size: var(--fs-2xs); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.us-kv > .v { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-size: var(--fs-2xs); color: var(--text-primary); text-align: right; justify-self: end; white-space: nowrap; }
+
+/* ---------- 12. CONTEXT-LENS SPROUT CHROME (the one standard popup) ---------- */
+.pm-sprout { position: absolute; z-index: 240; min-width: 200px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--elev-3); padding: var(--xs);
+  --pm6-sprout-ox: 88%; --pm6-sprout-oy: 0%; --pm6-sprout-tx: 0px; --pm6-sprout-ty: -10px; --pm6-sprout-sx: 0.72; --pm6-sprout-sy: 0.48;
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy); opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity var(--mo-popup-close-dur, 150ms) var(--mo-popup-close-ease, ease-in), transform var(--mo-popup-close-dur, 150ms) var(--mo-popup-close-ease, ease-in), visibility 0s linear var(--mo-popup-close-dur, 150ms); }
+.pm-sprout.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); transition: opacity var(--mo-popup-open-fade, 120ms) var(--pm-ease-out, ease-out), transform var(--mo-popup-open-dur, 220ms) var(--mo-popup-open-ease, cubic-bezier(0.22, 1.55, 0.36, 1)), visibility 0s; }
+.pm-sprout.is-closing { opacity: 0; visibility: hidden; pointer-events: none; transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1); transition: opacity var(--mo-popup-close-dur, 150ms) var(--mo-popup-close-ease, ease-in), transform var(--mo-popup-close-dur, 150ms) var(--mo-popup-close-ease, ease-in), visibility 0s linear var(--mo-popup-close-dur, 150ms); }
+[data-theme^="glass"] .pm-sprout { background: var(--pm6-glass-plate, var(--surface-elevated)); border: 1px solid var(--glass-hairline); box-shadow: inset 0 1px 0 var(--glass-edge), var(--elev-3); border-radius: 12px; }
+[data-theme^="retro"] .pm-sprout { border-radius: 0; }
+/* reduced: drop the transform channel entirely, keep opacity/visibility state (P10) */
+html[data-reduced-motion="1"] .pm-sprout, html[data-reduced-motion="1"] .pm-sprout.is-open, html[data-reduced-motion="1"] .pm-sprout.is-closing { transition: none; transform: none; }
+html[data-reduced-motion="1"] .pm-sprout:not(.is-open) { opacity: 0; visibility: hidden; }
+html[data-reduced-motion="1"] .pm-sprout.is-open { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-sprout, .pm-sprout.is-open, .pm-sprout.is-closing { transition: none; transform: none; }
+  .pm-sprout:not(.is-open) { opacity: 0; visibility: hidden; }
+  .pm-sprout.is-open { opacity: 1; visibility: visible; }
+}
+
+/* ---------- 13. TOOLTIP (every icon-only control) ---------- */
+[data-tip] { position: relative; }
+[data-tip]:hover::after, [data-tip]:focus-visible::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 8px; font-size: 10px; font-weight: 600; white-space: nowrap; z-index: 700; box-shadow: var(--elev-2); pointer-events: none; }
+
+/* ---------- 14. WIDE DISPLAYS ---------- */
+@media (min-width: 2200px) { .us-cols { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (min-width: 2500px) { .us-cols { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/* ---------- 15. SETTINGS-PAGE SCROLLBAR ON EVERY SCROLLER ---------- */
+.us-scroll, .uw-body, .pm-md, .us-tblwrap { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text-primary) 22%, transparent) transparent; }
+.us-scroll::-webkit-scrollbar, .uw-body::-webkit-scrollbar, .pm-md::-webkit-scrollbar, .us-tblwrap::-webkit-scrollbar { width: 10px; height: 10px; }
+.us-scroll::-webkit-scrollbar-track, .uw-body::-webkit-scrollbar-track, .pm-md::-webkit-scrollbar-track, .us-tblwrap::-webkit-scrollbar-track { background: transparent; }
+.us-scroll::-webkit-scrollbar-thumb, .uw-body::-webkit-scrollbar-thumb, .pm-md::-webkit-scrollbar-thumb, .us-tblwrap::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-primary) 22%, transparent); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+.us-scroll::-webkit-scrollbar-thumb:hover, .uw-body::-webkit-scrollbar-thumb:hover, .pm-md::-webkit-scrollbar-thumb:hover, .us-tblwrap::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--text-primary) 38%, transparent); }
+
+/* ---------- 16. MOTION TOKENS — the single semantic motion set ----------
+   Source of truth: research/motion-token-map.json (12 semantic motions) +
+   research/motion-synthesis.md (P1-P12). Naming: --mo-<token>-dur/-ease.
+   Durations are the map's nominal values, scaled per theme by --pm-motion-k
+   (P12 intensity, set next to --motion-med in themes.css: retro .58 / basic
+   .83 / friendly 1.08 / glass 1.33). The instant tier (hover, pickup) and the
+   data tier (refresh, flash) are perceptually anchored (NN/g) and never scale.
+   The blanket reduced-motion kill-switch lives in themes.css (single copy);
+   the -dur-r variants below are for targeted reduced rules that must drop the
+   transform/position channel while keeping state visible (P10). */
+:root {
+  /* PM easing set (all Slint-feasible cubic-beziers; aliases of the PM6 --ease-* contract where values match) */
+  --pm-ease-out: var(--ease-out);                  /* cubic-bezier(0.22, 1, 0.36, 1) enter/decelerate — the workhorse */
+  --pm-ease-in: cubic-bezier(0.4, 0, 1, 1);        /* exit/accelerate */
+  --pm-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1); /* reflow / point-to-point */
+  --pm-ease-spring: var(--ease-spring);            /* cubic-bezier(0.34, 1.56, 0.64, 1) restrained overshoot, sparingly */
+  --pm-ease-smooth: var(--ease-smooth);            /* cubic-bezier(0.4, 0, 0.2, 1) */
+  --pm-ease-linear: linear;                        /* indeterminate loops only */
+
+  /* popup (sprout) — corner-origin open, fast accelerate close */
+  --mo-popup-open-dur: calc(220ms * var(--pm-motion-k, 1));
+  --mo-popup-open-ease: cubic-bezier(0.22, 1.55, 0.36, 1); /* tiny overshoot on transform */
+  --mo-popup-open-fade: calc(120ms * var(--pm-motion-k, 1)); /* opacity leads, no overshoot */
+  --mo-popup-close-dur: calc(150ms * var(--pm-motion-k, 1));
+  --mo-popup-close-ease: var(--pm-ease-in);
+
+  /* tabs — ink magnet slide + directional panel crossfade */
+  --mo-tab-select-dur: calc(250ms * var(--pm-motion-k, 1));
+  --mo-tab-select-ease: var(--pm-ease-out);
+  --mo-tab-in-dur: calc(200ms * var(--pm-motion-k, 1));
+  --mo-tab-in-ease: var(--pm-ease-out);
+  --mo-tab-out-dur: calc(120ms * var(--pm-motion-k, 1));
+  --mo-tab-out-ease: var(--pm-ease-in);
+
+  /* widgets — drag is 1:1; only lift/settle/reflow animate */
+  --mo-widget-pickup-dur: 120ms;                   /* instant tier: never scaled */
+  --mo-widget-pickup-ease: var(--pm-ease-out);
+  --mo-widget-drop-dur: calc(220ms * var(--pm-motion-k, 1));
+  --mo-widget-drop-ease: cubic-bezier(0.2, 0, 0, 1); /* decelerate, NO overshoot */
+  --mo-widget-reflow-dur: calc(240ms * var(--pm-motion-k, 1));
+  --mo-widget-reflow-ease: var(--pm-ease-in-out);
+  --mo-reflow-stagger: 20ms;                       /* ≤20ms/item, total <500ms */
+  --mo-free-resize-dur: calc(150ms * var(--pm-motion-k, 1)); /* release settle only */
+  --mo-free-resize-ease: var(--pm-ease-out);
+
+  /* focus mode — connected slot↔focus morph */
+  --mo-focus-enter-dur: calc(400ms * var(--pm-motion-k, 1));
+  --mo-focus-enter-ease: var(--pm-ease-out);
+  --mo-focus-scrim-dur: 700ms;                     /* ambient background dim */
+  --mo-focus-exit-dur: calc(300ms * var(--pm-motion-k, 1));
+  --mo-focus-exit-ease: var(--pm-ease-smooth);
+
+  /* data + charts — data tier: never scaled (keep <1s flow limit) */
+  --mo-data-refresh-dur: 800ms;                    /* counters / meter+donut fills */
+  --mo-data-refresh-ease: var(--pm-ease-smooth);
+  --mo-data-flash-dur: 1100ms;                     /* new-row highlight, one-shot */
+  --mo-chart-transition-dur: calc(400ms * var(--pm-motion-k, 1)); /* unified curve, no per-series stagger */
+  --mo-chart-transition-ease: var(--pm-ease-smooth);
+
+  /* hover/micro feedback — instant tier: never scaled */
+  --mo-hover-dur: 120ms;
+  --mo-hover-ease: var(--pm-ease-out);
+
+  /* personality/spring vocabulary — expert-tier primitives: real overshoot
+     (spring), wind-up (antic), secondary motion (follow), squash (press),
+     stagger steps and one-shot reveals. Portable cubic-beziers only (no JS
+     springs). Durations scale with --pm-motion-k like the tiers above; the
+     stagger step is flat per item (like --mo-reflow-stagger). */
+  --mo-spring-dur: calc(420ms * var(--pm-motion-k, 1));  /* generic springy arrival with overshoot */
+  --mo-spring-ease: var(--pm-ease-spring);           /* cubic-bezier(0.34, 1.56, 0.64, 1) — aligned with --ease-spring, single source */
+  --mo-settle-dur: calc(300ms * var(--pm-motion-k, 1));  /* smooth decelerate settle, no overshoot */
+  --mo-settle-ease: var(--pm-ease-out);              /* cubic-bezier(0.22, 1, 0.36, 1) */
+  --mo-antic-dur: calc(90ms * var(--pm-motion-k, 1));    /* anticipation wind-up (slight reverse) */
+  --mo-antic-ease: cubic-bezier(0.55, -0.35, 0.7, 0.05);
+  --mo-follow-dur: calc(560ms * var(--pm-motion-k, 1));  /* softer/longer follow-through for secondary motion */
+  --mo-follow-ease: cubic-bezier(0.25, 1.45, 0.45, 1);
+  --mo-stagger: 24ms;                                /* per-item stagger step (flat, unscaled) */
+  --mo-press-dur: calc(110ms * var(--pm-motion-k, 1));   /* press squash + spring back */
+  --mo-press-ease: var(--pm-ease-spring);            /* cubic-bezier(0.34, 1.56, 0.64, 1) — same spring curve */
+  --mo-reveal-dur: calc(480ms * var(--pm-motion-k, 1));  /* one-shot scroll reveal */
+  --mo-reveal-ease: var(--pm-ease-out);              /* cubic-bezier(0.22, 1, 0.36, 1) */
+  --mo-bounce-ease: cubic-bezier(0.28, 1.8, 0.45, 1);    /* extra-playful bounce — use sparingly */
+
+  /* reduced-motion variants (P10: drop position/scale, keep the state signal) */
+  --mo-popup-open-dur-r: 120ms;                    /* opacity-only fade-in at placed position */
+  --mo-popup-close-dur-r: 0ms;
+  --mo-tab-select-dur-r: 0ms; --mo-tab-in-dur-r: 0ms; --mo-tab-out-dur-r: 0ms;
+  --mo-widget-pickup-dur-r: 0ms; --mo-widget-drop-dur-r: 0ms;
+  --mo-widget-reflow-dur-r: 0ms; --mo-free-resize-dur-r: 0ms;
+  --mo-focus-enter-dur-r: 150ms; --mo-focus-exit-dur-r: 150ms; /* opacity crossfade */
+  --mo-data-refresh-dur-r: 0ms;                    /* instant value swap, new value always shown */
+  --mo-chart-transition-dur-r: 100ms;              /* ≤100ms opacity crossfade */
+  --mo-hover-dur-r: 0ms;                           /* color/border still change, applied instantly */
+  --mo-spring-dur-r: 120ms;                        /* opacity-only fade-in at rest position */
+  --mo-settle-dur-r: 0ms; --mo-antic-dur-r: 0ms;   /* wind-up cut entirely */
+  --mo-follow-dur-r: 0ms;                          /* secondary motion is dropped first */
+  --mo-press-dur-r: 0ms;                           /* state change instant, no squash */
+  --mo-reveal-dur-r: 150ms;                        /* short opacity-only fade-in, no travel */
+
+  /* legacy aliases (pre-token names still referenced by usage-widgets.css/.js) */
+  --mo-interact: var(--mo-hover-dur); --mo-enter: var(--mo-popup-open-dur);
+  --mo-exit: var(--mo-popup-close-dur); --mo-panel: var(--mo-tab-select-dur);
+  --mo-modal: var(--mo-focus-exit-dur); --mo-spring: 360ms;
+  --mo-pulse: 1.8s;                                /* --mo-stagger promoted to the personality vocabulary above (24ms) */
+  --mo-count: var(--mo-data-refresh-dur);
+  --ease-out-bold: cubic-bezier(0, 0.4, 0, 1);     /* FLIP drop curve used by usage-widgets */
+}
+
+/* personality vocabulary — reduced-motion collapse (P10): the tokens
+   themselves drop to their -r variants so anything reading them sees the calm
+   values; the blanket kill-switch in themes.css already freezes element-level
+   animation/transition durations. */
+html[data-reduced-motion="1"] {
+  --mo-spring-dur: var(--mo-spring-dur-r);
+  --mo-settle-dur: var(--mo-settle-dur-r);
+  --mo-antic-dur: var(--mo-antic-dur-r);
+  --mo-follow-dur: var(--mo-follow-dur-r);
+  --mo-press-dur: var(--mo-press-dur-r);
+  --mo-reveal-dur: var(--mo-reveal-dur-r);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mo-spring-dur: var(--mo-spring-dur-r);
+    --mo-settle-dur: var(--mo-settle-dur-r);
+    --mo-antic-dur: var(--mo-antic-dur-r);
+    --mo-follow-dur: var(--mo-follow-dur-r);
+    --mo-press-dur: var(--mo-press-dur-r);
+    --mo-reveal-dur: var(--mo-reveal-dur-r);
+  }
+}
+
+/* ---------- 17. FRIENDLY GRID GROUND ---------- */
+html[data-theme^="friendly"] .us-center {
+  background:
+    radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(46% 38% at 16% 6%, var(--pm6-cozy-glow-mint), transparent 65%),
+    radial-gradient(50% 42% at 88% 12%, var(--pm6-cozy-glow-lav), transparent 65%),
+    radial-gradient(55% 40% at 55% 108%, var(--pm6-cozy-glow-sky), transparent 65%),
+    var(--background);
+}
+html[data-theme^="friendly"] .us-page, html[data-theme^="friendly"] .us-scroll { background: transparent; }

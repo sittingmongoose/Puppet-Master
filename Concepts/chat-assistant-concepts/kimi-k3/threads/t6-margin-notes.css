@@ -1,0 +1,125 @@
+/* ============================================================================
+   Kimi K3 — T6 Margin Notes presentation (scoped [data-k3-thread="t6"]).
+   Reading-measure prose whose hover/meta row parks in a ~150px right margin on
+   wide containers and returns to normal inline flow when narrow.
+     - container-type: inline-size on the list drives an @container query;
+     - at >=700px the .k3t-msg-hover is absolutely positioned into the right
+       margin: meta always visible, action buttons revealed on message hover;
+     - at <700px the hover row flows inline beneath the prose (kit default).
+   The kit reserves the hover row's space via opacity, so the resting state is
+   always the visible state (reduced-motion safe). Token-driven so all 8 themes
+   render complete; status rides weight / tint — never a colored accent border.
+
+   Geometry (wide):
+     prose column:  list-x 20..(max 68ch)        reading measure
+     margin column: right of prose, ~150px wide  hover row parked here
+   ========================================================================== */
+
+[data-k3-thread="t6"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t6"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the list: reading measure + container for the margin query ---------- */
+[data-k3-thread="t6"] .k3t-list {
+  container-type: inline-size;
+  gap: 24px;
+  padding: 18px 20px 24px;
+}
+
+/* ---- messages: reading measure, reserve no margin by default -------------- */
+[data-k3-thread="t6"] .k3t-msg {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+}
+[data-k3-thread="t6"] .k3t-msg-body {
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+}
+[data-k3-thread="t6"] .k3t-msg[data-role="user"] .k3t-msg-body { color: var(--text-secondary); }
+
+/* narrow default: hover row sits inline beneath the prose (kit behavior),
+   but make the meta always legible */
+[data-k3-thread="t6"] .k3t-msg-hover { margin-top: 4px; }
+
+/* focus tint without neighbor-shifting negative margins */
+[data-k3-thread="t6"] .k3t-msg.is-focused {
+  margin: 0 auto;
+  padding: 8px 10px;
+}
+
+/* ---- work records as slim inline entries (same family as t1) -------------- */
+[data-k3-thread="t6"] .k3t-card {
+  margin-top: 12px;
+  padding: 10px 0 2px;
+  background: transparent;
+  border: 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-k3-thread="t6"] .k3t-subcompact { border-top-style: dashed; }
+
+/* ---- thread-level work zone + live region ride the measure ---------------- */
+[data-k3-thread="t6"] .k3t-endzone { padding: 0 20px 20px; }
+[data-k3-thread="t6"] .k3t-endzone > * {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+}
+[data-k3-thread="t6"] .k3t-endzone .k3t-card { margin-top: 0; }
+[data-k3-thread="t6"] .k3t-live {
+  margin: 0 auto 14px;
+  width: calc(100% - 40px);
+  max-width: calc(68ch);
+  box-sizing: border-box;
+  background: transparent;
+  border-color: var(--border-light);
+}
+
+/* ===========================================================================
+   WIDE CONTAINER (>=700px): park the hover row in a ~150px right margin.
+   The message becomes a positioning context; the prose keeps its reading
+   measure while the meta column docks to the right of it.
+   ======================================================================== */
+@container (min-width: 700px) {
+  [data-k3-thread="t6"] .k3t-msg {
+    position: relative;
+    /* reserve the margin column to the right of the reading measure */
+    padding-right: 150px;
+  }
+
+  [data-k3-thread="t6"] .k3t-msg-hover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 140px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 0;
+    /* meta column is always visible in the margin (no opacity gate) */
+    opacity: 1;
+  }
+
+  /* action buttons are hover-only even when the row is parked */
+  [data-k3-thread="t6"] .k3t-hover-actions {
+    opacity: 0;
+    transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out);
+  }
+  [data-k3-thread="t6"] .k3t-msg:hover .k3t-hover-actions,
+  [data-k3-thread="t6"] .k3t-msg:focus-within .k3t-hover-actions { opacity: 1; }
+
+  /* meta rides at the bottom of the parked column, full width */
+  [data-k3-thread="t6"] .k3t-hover-meta { margin-left: 0; }
+
+  /* keep the focus tint inside the measure + margin footprint */
+  [data-k3-thread="t6"] .k3t-msg.is-focused { padding: 8px 150px 8px 10px; }
+}

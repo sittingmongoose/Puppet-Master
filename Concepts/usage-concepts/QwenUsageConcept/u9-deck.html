@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U9 · Deck — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-tabs.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<link rel="stylesheet" href="_shared/usage-widgets.css">
+<link rel="stylesheet" href="_shared/usage-widget-renderers.css">
+<style>
+/* =====================================================================
+   U9 — DECK
+   A curated, tabbed tour of usage: five slides, each led by one headline
+   card. All widget bodies ride the shared PMWidgets canvas + PMWidgetDefs
+   catalog — this page owns only what is uniquely U9:
+   - the tab rail: an Orchestrator-style top-tab strip (baseline, separators,
+     spring ink restyled as a 3px step + tinted well). PMTabs behavior
+     (roving tabindex, arrow-key activation, spring ink, crossfade) is the
+     shared module, untouched; only its paint is deck-specific.
+   - the deck chrome: slide-position readout beside the rail, live card
+     counts on each tab, a caption kicker per slide, and a lead-card
+     treatment that follows whichever card sits first on the active slide.
+   - the headline card: a concept-local `u9hero` widget type registered into
+     the shared canvas (so kebab / resize / focus / persistence all apply to
+     it like any card). It is seeded first on every slide and carries the
+     slide's headline metric — peak quota pressure on the usage slides,
+      actual spend on Cost — at hero scale, with the next-tightest readings
+      as a supporting column. The quota spreadsheet is deliberately demoted to
+      a supporting rail on Overview; cost never appears before the Cost tab.
+     - per-slide default boards: a curated DECK, not a stack of slabs — bands
+       carry varied widths (2 / 4 / 6) that interlock into complete rows at
+       every tier. The deck's canvas runs its own track tiers (2 / 4 / 6 cols
+       at <=900 / <=2299 / >=2300, single column below 600) because those are
+       the only tiers where mixed spans clamp to complete rows: at 3 or 5 live
+       tracks any partial band strands a trailing 1-col lane (min card width is
+       2), so the deck never offers them. Span combos per tier: 4+2 pairs and
+       2+2+2 three-ups at 6 cols; 2+2 pairs under full-width statements at 4
+       cols; a clean stack at 2 cols. Dense packing interlocks the pairs, so
+       every row sums to the live track count — 0% dead space, straight right
+       edge at 900/1280/1700/2200/2500. Each band's rows are sized to its
+       area-aware density tier so no band body-scrolls; the renderers recompose
+       their content to whatever box a pairing gives them.
+     - the hero band opens full-width but is COMPOSED, not hollow: headline
+       figure + meter + caption on the left, a real supporting column on the
+       right (three next-tightest readings, four stat chips, three fact lines)
+       so content soaks ~80%+ of the band at every width; on the Cost slide it
+       leads with actual spend ($ MTD), the budget ratio demoted to meter+cap.
+    ===================================================================== */
+
+/* No interim root-level num-font fallback shim remains: the canonical TYP-1
+   font link above serves Sora / JetBrains Mono / Outfit, so the html-qualified
+   --num-font tokens in themes.css resolve every theme's hero digits to a
+   loaded face with real tabular figures. */
+
+/* ---------- page + ambient stage wash ---------- */
+.u9 .us-scroll {
+  padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px);
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 5%, transparent), transparent 300px);
+}
+[data-theme^="glass"] .u9 .us-scroll { background-image: none; }
+
+/* ---------- the deck bar: tabs + slide-position readout ---------- */
+.u9-deckbar { display: flex; align-items: stretch; gap: var(--lg); }
+.u9-deckbar .pm-tabs { flex: 1 1 auto; min-width: 0; }
+
+.u9 .pm-tabs {
+  gap: 0; padding: 0;
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  background: color-mix(in srgb, var(--surface-elevated) 45%, transparent);
+}
+[data-theme^="retro"] .u9 .pm-tabs { border-bottom-width: 2px; background: color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
+[data-theme^="glass"] .u9 .pm-tabs { background: transparent; border-bottom-color: var(--glass-hairline, var(--border-light)); }
+
+.u9 .pm-tab { height: 34px; border-radius: 0; padding: 0 16px; letter-spacing: .05em; }
+/* quiet vertical separators so the row reads as one tab strip, not links */
+.u9 .pm-tab + .pm-tab::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 1px; background: var(--border-light); }
+.u9 .pm-tab:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+/* hovering an inactive tab grows a stub off the baseline: "you can land here" */
+.u9 .pm-tab:not(.active):hover::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: 2px; border-radius: 2px 2px 0 0; background: color-mix(in srgb, var(--text-primary) 35%, transparent); }
+.u9 .pm-tab.active { color: var(--text-primary); }
+/* the active tab's count chip: stronger well + text pulled toward the page
+   ink so it clears AA on both light and dark accent tints */
+/* the shared rail paints badges through --pm-badge-ink/--pm-badge-bg (its
+   html-qualified rule outranks any direct color/background here), so the
+   active badge is restyled through those hooks: an ink-leaning text mix that
+   clears AA on the accent well in every family */
+.u9 .pm-tab.active .pm-tab-badge {
+  --pm-badge-bg: color-mix(in srgb, var(--accent-primary) 24%, var(--surface-elevated));
+  --pm-badge-ink: color-mix(in srgb, var(--accent-primary) 30%, var(--text-primary));
+}
+.u9 .pm-tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; border-radius: var(--radius-xs); }
+
+/* the spring ink, repainted as a tab step: a tinted well + a 3px underline
+   riding the rail baseline (geometry stays owned by PMTabs' inline styles) */
+.u9 .pm-tab-ink { background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.u9 .pm-tab-ink::before { content: ""; position: absolute; inset: 3px 1px 0; border-radius: 7px 7px 0 0; background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
+.u9 .pm-tab-ink::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--accent-primary); box-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+[data-theme^="retro"] .u9 .pm-tab-ink::before { border-radius: 0; inset: 3px 0 0; }
+[data-theme^="retro"] .u9 .pm-tab-ink::after { border-radius: 0; box-shadow: none; }
+[data-theme^="glass"] .u9 .pm-tab-ink::before { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08)); box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.35)); }
+
+/* slide-position readout: where you are in the deck (decorative; the tablist
+   already announces selection, so this stays aria-hidden) */
+.u9-deckpos { flex: none; display: flex; align-items: baseline; gap: 4px; padding: 0 2px 7px; white-space: nowrap; user-select: none; }
+.u9-deckpos b { font-family: var(--num-font); font-variant-numeric: tabular-nums; font-weight: 800; font-size: var(--fs-md); line-height: 1; color: var(--text-primary); }
+.u9-dp-of { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); }
+.u9-dp-nm { font-family: var(--display-font); font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-secondary); margin-left: 6px; }
+@media (max-width: 760px) { .u9-dp-nm { display: none; } }
+/* the readout digits and slide name flip in place when the slide changes
+   (WAAPI in the concept script) — transform needs a box; inline-block keeps
+   the baseline row aligned */
+.u9-deckpos b, .u9-dp-nm { display: inline-block; }
+
+/* ---------- deck motion: depth slide + hero landing -----------------------
+   The shared PMTabs crossfade mechanics (pm-in / pm-out classes, absolute
+   overlay exit, rapid-switch cancelHide, no entrance replay) are preserved
+   untouched — U9 only repaints the panel animation: the shell travels further
+   with a scale change, so slides ARRIVE with depth instead of crossfading.
+   Content follow-through (kicker, hero spring-land, band cascade) runs off
+   WAAPI in the concept script: fill backwards, nothing retained after finish,
+   so widget hover-lift / FLIP / drag are never frozen post-slide. --pm-dir is
+   stamped on the panels root so travel is directional (forward slides in from
+   the right). Reduced motion: kill-switch + these collapses make every slide
+   change an instant swap. */
+.u9 { --u9-slide-in-dur: calc(360ms * var(--pm-motion-k, 1)); --u9-slide-out-dur: calc(150ms * var(--pm-motion-k, 1)); }
+@keyframes pmU9DeckIn {
+  0% { opacity: 0; transform: translate3d(calc(var(--pm-dir, 1) * 52px), 0, 0) scale(.984); }
+  55% { opacity: 1; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes pmU9DeckOut {
+  0% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translate3d(calc(var(--pm-dir, 1) * -38px), 0, 0) scale(.99); }
+}
+.u9 .pm-tabpanels > [data-pm-panel].pm-in {
+  animation-name: pmU9DeckIn;
+  animation-duration: var(--u9-slide-in-dur);
+  animation-timing-function: var(--ease-out-bold, cubic-bezier(0, 0.4, 0, 1));
+}
+.u9 .pm-tabpanels > [data-pm-panel].pm-out {
+  animation-name: pmU9DeckOut;
+  animation-duration: var(--u9-slide-out-dur);
+  animation-timing-function: var(--pm-ease-in, cubic-bezier(0.4, 0, 1, 1));
+}
+html[data-reduced-motion="1"] .u9 .pm-tabpanels > [data-pm-panel].pm-in,
+html[data-reduced-motion="1"] .u9 .pm-tabpanels > [data-pm-panel].pm-out { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .u9 .pm-tabpanels > [data-pm-panel].pm-in,
+  .u9 .pm-tabpanels > [data-pm-panel].pm-out { animation: none; }
+}
+
+/* ---------- per-slide caption kicker ---------- */
+.u9-kick { display: flex; align-items: baseline; gap: 10px; margin: 2px 0 0; }
+.u9-kick-no { flex: none; font-family: var(--num-font); font-variant-numeric: tabular-nums; font-weight: 800; font-size: var(--fs-sm); letter-spacing: .05em; color: color-mix(in srgb, var(--accent-primary) 70%, var(--text-primary)); }
+.u9-kick p { margin: 0; min-width: 0; font-family: var(--body-font); font-size: var(--fs-2xs); line-height: var(--lh-body); color: var(--text-secondary); }
+.u9-kick p b { color: var(--text-primary); font-weight: 700; }
+.u9-kick::after { content: ""; flex: 1 1 auto; align-self: center; height: 1px; background: var(--border-light); }
+
+/* ---------- deck canvases: dense pack + the lead card ---------- */
+.u9 .uw-canvas { grid-auto-flow: dense; }
+/* the deck's own track tiers: 2 / 4 / 6 (1 below 600px). Mixed 2/4/6 spans
+   only ever clamp to COMPLETE rows on these tiers — at 3 or 5 live tracks a
+   partial band always strands a 1-col trailing lane (no card is 1 wide), which
+   is exactly the ragged edge the deck is built to refuse. PMWidgets reads the
+   live track count, so clamp / resize / drag all follow these tiers. */
+.u9 .uw-canvas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .u9 .uw-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .u9 .uw-canvas { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 2300px) { .u9 .uw-canvas { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+/* the first card on a slide is its headline: an accent rail up top, a tinted
+   head band, a wash that sinks from the accent into the body and a larger
+   title. The class follows items[0], so a drag-reorder re-features the new
+   lead instead of freezing the seed. */
+.u9 .uw.u9-lead { border-color: color-mix(in srgb, var(--accent-primary) 52%, var(--border)); box-shadow: var(--elev-2), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 14%, transparent); }
+.u9 .uw.u9-lead:hover { border-color: color-mix(in srgb, var(--accent-primary) 68%, var(--border)); box-shadow: var(--elev-2), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+.u9 .uw.u9-lead::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 1; background: linear-gradient(90deg, var(--accent-primary), color-mix(in srgb, var(--accent-primary) 12%, transparent)); }
+.u9 .uw.u9-lead .uw-head { background: color-mix(in srgb, var(--accent-primary) 9%, transparent); }
+.u9 .uw.u9-lead .uw-ico { background: color-mix(in srgb, var(--cat, var(--accent-primary)) 24%, transparent); }
+.u9 .uw.u9-lead .uw-tt { font-size: var(--fs-sm); letter-spacing: .06em; }
+.u9 .uw.u9-lead .uw-body { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 58%); }
+[data-theme^="retro"] .u9 .uw.u9-lead { border-width: 2px; }
+[data-theme^="glass"] .u9 .uw.u9-lead .uw-body { background: linear-gradient(180deg, rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)), transparent 62%); }
+
+/* ---------- the headline card (u9hero) ----------
+   One metric at hero scale, a full-bleed meter under it, and the next
+   readings as a quiet supporting column. The big number rides the theme's
+   numeric voice (--num-font) at hero size, so the deck opens on a number,
+   not a table. Pointer events stay untouched — drag/resize/kebab all live
+   on the shared shell around this content. */
+.u9-hero { display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.u9 .uw-body > .u9-hero { flex: 1 1 auto; } /* fill the band so its columns vertically center the headline */
+/* the left column anchors top (kicker) and bottom (caption) with the focal
+   figure centered between, so a tall full-bleed band reads as composed
+   editorial rhythm — never a number floating in a hollow panel. The kicker
+   lines up with the supporting column's heading; the caption with its facts. */
+.u9-hmain { display: flex; flex-direction: column; gap: 8px; min-width: 0; justify-content: space-between; }
+.u9-hfig { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.u9-hk { font-family: var(--display-font); font-size: 9px; font-weight: 700; letter-spacing: var(--ls-caps, .12em); text-transform: uppercase; color: var(--accent-primary); }
+.u9-hbig { font-family: var(--num-font); font-variant-numeric: tabular-nums; font-feature-settings: var(--num-features, 'tnum' 1);
+  font-weight: var(--fw-hero, 800); font-size: calc(var(--fs-hero, 48px) * .92); line-height: var(--lh-hero, .95);
+  letter-spacing: var(--ls-hero, -0.02em); color: var(--text-primary); }
+/* the lead headline sits in a full-bleed band that spans the whole deck width,
+   so its focal number scales with the viewport — a true hero stat that fills
+   the band instead of floating small inside it (clamped so a narrow 2-col
+   hero on a phone-width fit never overflows its 42% column). */
+.u9 .uw.u9-lead .u9-hbig { font-size: clamp(44px, 4.4vw, 96px); }
+/* the counting figure: an inline-block so the shared counter's landing tick
+   (scale pulse) has a transform box; tabular figures ride the parent */
+.u9-hnum { display: inline-block; }
+.u9-hbig small { font-size: .42em; font-weight: 700; letter-spacing: 0; color: var(--text-secondary); margin-left: 3px; }
+/* the hero meter rides as a real full-width bar under the focal figure: the
+   shared .us-meter is a 3-col grid (label / track / percent) but the hero
+   emits no label and hides the percent, which stranded the lone track in the
+   30px label column — so here it is a plain flex row and the track soaks the
+   full left column at a confident 8px. */
+.u9 .u9-hmeter { display: flex; align-items: center; margin-top: 0; }
+.u9 .u9-hmeter .us-track { flex: 1 1 auto; width: auto; height: 8px; }
+.u9-hmeter .pc { display: none; } /* the big number already carries the figure */
+.u9-hcap { font-family: var(--body-font); font-size: var(--fs-2xs); line-height: var(--lh-body); color: var(--text-secondary); min-width: 0; }
+.u9-hcap b { color: var(--text-primary); font-weight: 700; }
+.u9-hcap .vs { vertical-align: 1px; margin-left: 4px; }
+.u9-hside { display: flex; flex-direction: column; gap: 8px; min-width: 0; justify-content: center;
+  border-top: 1px solid var(--border-light); padding-top: 9px; }
+.u9-hsk { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: var(--ls-caps, .12em); text-transform: uppercase; color: var(--text-muted); }
+/* chips lock to a 2x2 grid so the side column keeps the same height whether
+   the band is 4 cols wide or full-bleed — the hero's fill never depends on
+   how far the pills happen to wrap */
+.u9-hstats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; margin-top: 2px; }
+.u9-hstat { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-size: 9px; color: var(--text-secondary);
+  padding: 4px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--surface-elevated) 66%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* quiet supporting facts under the chips: the third row of the hero's
+   supporting column, so the band reads composed at every tier */
+.u9-hfacts { display: flex; flex-direction: column; gap: 4px; margin-top: 1px; }
+.u9-hfact { font-family: var(--body-font); font-size: var(--fs-2xs); line-height: var(--lh-body); color: var(--text-secondary); min-width: 0; }
+.u9-hfact b { color: var(--text-primary); font-weight: 700; }
+/* wide spans: headline left, supporting column right across a hairline seam */
+.u9-hero.u9-hero-wide { flex-direction: row; align-items: stretch; gap: 22px; }
+.u9-hero.u9-hero-wide .u9-hmain { flex: 0 0 42%; }
+.u9-hero.u9-hero-wide .u9-hside { flex: 1 1 auto; border-top: 0; padding-top: 0; border-left: 1px solid var(--border-light); padding-left: 22px; }
+[data-theme^="retro"] .u9-hero.u9-hero-wide .u9-hside { border-left-width: 2px; }
+[data-theme^="retro"] .u9-hside { border-top-width: 2px; }
+
+/* content-fit trim (local; shared renderers untouched): the token-flow chart
+   absorbs exactly the space its tile offers instead of holding a 96px floor */
+.u9 .wd-chart { min-height: 0; }
+
+/* keyboard-operable ledger sort headers (wired in the concept script) */
+th[data-wd-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+/* glass-light: keep the rail + readout legible over the pane */
+[data-theme="glass-light"] .u9 .pm-tabs { border-bottom-color: color-mix(in srgb, var(--text-primary) 22%, transparent); }
+[data-theme="glass-light"] .u9 .pm-tab:not(.active):hover::after { background: color-mix(in srgb, var(--text-primary) 45%, transparent); }
+
+/* page-chrome wordmark ("Deck"): the shared --text-primary reads soft on the
+   two warm light surfaces; pull it toward the ink so the slide title lands
+   with real weight (paint-only, no layout shift). */
+:is([data-theme="friendly-light"], [data-theme="glass-light"]) .u9 .us-head-title {
+  color: color-mix(in srgb, var(--text-primary) 52%, #000);
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="usage-page">
+  <div class="us-page u9">
+    <div class="us-scroll">
+      <header class="us-head">
+        <span class="us-head-title">Deck</span>
+        <span class="us-head-sub">A tabbed, widget-composed tour of <b>usage first</b> — five slides, each led by one headline card. Quotas, resets, cache and tokens lead; cost stays a tab away. Drag widgets, resize the corner, add your own.</span>
+      </header>
+      <div class="u9-shell" style="padding:0 var(--us-pad) var(--us-pad)">
+        <div class="u9-deckbar">
+          <div class="pm-tabs" id="u9tabs" role="tablist"></div>
+          <span class="u9-deckpos" aria-hidden="true"><b id="u9DeckNo">01</b><span class="u9-dp-of" id="u9DeckOf">/ 05</span><span class="u9-dp-nm" id="u9DeckName">Overview</span></span>
+        </div>
+        <div class="pm-tabpanels" id="u9panels" style="margin-top:var(--md)">
+          <section data-pm-panel="overview">
+            <header class="u9-kick"><span class="u9-kick-no">01</span><p>The headline card leads — how close your <b>tightest quota</b> sits to its reset, with the quota rail, token shape and guards in support. Cost waits in the Cost tab.</p></header>
+            <div class="uw-canvas" data-pmw-page="u9-overview" data-pmw-types="quota,analytics,tokens,cache,context,guard,signals,provenance,ledger"></div>
+          </section>
+          <section data-pm-panel="quotas">
+            <header class="u9-kick"><span class="u9-kick-no">02</span><p>Every window that can <b>block you</b>, side by side — limits, resets, guard states and what actually counts against them.</p></header>
+            <div class="uw-canvas" data-pmw-page="u9-quotas" data-pmw-types="quota,guard,planGating,whatcounts,provenance"></div>
+          </section>
+          <section data-pm-panel="tokens">
+            <header class="u9-kick"><span class="u9-kick-no">03</span><p>Where the <b>tokens went</b> — the 24-hour flow, the sessions still burning them and the context window they fill.</p></header>
+            <div class="uw-canvas" data-pmw-page="u9-tokens" data-pmw-types="analytics,sessions,tokens,context,provenance"></div>
+          </section>
+          <section data-pm-panel="cost">
+            <header class="u9-kick"><span class="u9-kick-no">04</span><p>The <b>money slide</b> — actual spend leads, the burn trend beside it, budgets and the accounts it lands on below, with cache quietly paying you back.</p></header>
+            <div class="uw-canvas" data-pmw-page="u9-cost" data-pmw-types="accounts,budget,spend,cache,cost,provenance"></div>
+          </section>
+          <section data-pm-panel="tools">
+            <header class="u9-kick"><span class="u9-kick-no">05</span><p>The <b>tooling layer</b> — which tools burn tokens, the signals they raise and the sessions they run.</p></header>
+            <div class="uw-canvas" data-pmw-page="u9-tools" data-pmw-types="tools,signals,sessions,whatcounts,provenance"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script src="_shared/usage-tabs.js"></script>
+<script src="_shared/usage-widgets.js"></script>
+<script src="_shared/usage-widget-renderers.js"></script>
+<script>
+(function () {
+  var TABS = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'quotas', label: 'Quotas & Guard' },
+    { id: 'tokens', label: 'Tokens & Sessions' },
+    { id: 'cost', label: 'Cost & Cache' },
+    { id: 'tools', label: 'Tools' }
+  ];
+  var CATALOG = ['quota', 'guard', 'analytics', 'budget', 'cache', 'tools', 'accounts', 'context',
+    'ledger', 'signals', 'whatcounts', 'planGating', 'spend', 'provenance', 'sessions', 'cost', 'tokens'];
+
+  /* ---------- the headline card ------------------------------------------
+     A concept-local widget type seeded first on every slide, so each deck
+     slide opens on one curated hero instead of a widget grid. It registers
+     through the shared PMWidgets contract (kebab, free resize + Custom,
+     focus + scrim, per-pageId persistence, FLIP reorder) exactly like the
+     catalog types; it is deliberately absent from the add-picker type lists
+     (data-pmw-types) because the headline is deck chrome, restored by reset.
+     Usage-first by construction: the usage slides headline the tightest
+     quota window; dollars appear only on the Cost slide, where the hero
+     leads with actual spend (dollars MTD), not the budget ratio. */
+  function heroTier(sk, it) {
+    if (sk === 'S') return 0;
+    if (sk === 'M') return 1;
+    if (sk === 'L') return 2;
+    if (sk === 'XL') return 3;
+    var c = (it && it.c) || 6, r = (it && it.r) || 6;
+    /* sizeKey sees the STORED span, but the hero's layout must follow the
+       rendered one: at the deck's 2-col tier the band clamps to 2 wide, where
+       the side-by-side split would cramp — mirror the canvas tier rule */
+    if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) c = Math.min(c, 2);
+    if (c >= 4 || (c >= 3 && r >= 9)) return 3;
+    if (c >= 3) return 2;
+    if (c >= 2 && r >= 6) return 1;
+    return 0;
+  }
+  function heroWinRows(skip, n) {
+    var R = window.USrender, out = [];
+    (window.USAGE.quotas || []).forEach(function (q) {
+      (q.windows || []).forEach(function (w) { if (w.used != null && w !== skip) out.push(w); });
+    });
+    out.sort(function (a, b) { return b.used - a.used; });
+    return out.slice(0, n).map(function (w) { return R.winBar(w); });
+  }
+  function heroBarRows(rows) {
+    var R = window.USrender;
+    return rows.map(function (r) {
+      return R.winBar({ label: r.label, used: r.pct, reset: r.val });
+    });
+  }
+  function heroModel(slide) {
+    var d = window.USAGE, R = window.USrender, fmt = window.USfmt;
+    var blocked = d.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var warned = d.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    var winTotal = d.quotas.reduce(function (s, q) { return s + (q.windows || []).length; }, 0);
+    var peak = null;
+    d.quotas.forEach(function (q) {
+      (q.windows || []).forEach(function (w) { if (w.used != null && (!peak || w.used > peak.used)) peak = w; });
+    });
+    if (slide === 'tokens') {
+      var total = d.usedTokensTotal;
+      var cb = d.contextBudget;
+      var ctxPct = Math.round(cb.totalTokens / cb.limit * 100);
+      var byTop = d.byModel.filter(function (m) { return m.provider_total != null; })
+        .sort(function (a, b) { return b.provider_total - a.provider_total; });
+      /* hero figure rides the shared counter (value→value + landing tick):
+         the M/k magnitude moves into the unit so the tweened digits stay raw */
+      var tScale = total == null ? null : total >= 1e6 ? { v: total / 1e6, d: 1, u: 'M tokens' }
+        : total >= 1e3 ? { v: total / 1e3, d: 1, u: 'k tokens' } : { v: total, d: 0, u: 'tokens' };
+      return {
+        k: 'tokens used · source-aware',
+        cnt: tScale, big: '\u2014', unit: tScale ? tScale.u : '',
+        pct: ctxPct, tone: R.fillTone(ctxPct),
+        cap: '<b>' + ctxPct + '%</b> of the ' + fmt.tok(cb.limit) + ' context window filled · ' +
+          d.byModel.length + ' models · subagents ' + fmt.tok(d.subagentTokens),
+        sideK: 'top models by tokens',
+        bars: heroBarRows(byTop.slice(0, 3).map(function (m) {
+          return { label: m.model, pct: total ? Math.round(m.provider_total / total * 100) : 0, val: fmt.tok(m.provider_total) };
+        })),
+        chips: [fmt.num(d.sessions.length) + ' sessions sampled', 'source-aware · never double-counted',
+          'subagents ' + fmt.tok(d.subagentTokens), d.byModel.length + ' models in the mix'],
+        facts: ['<b>' + ctxPct + '%</b> of the ' + fmt.tok(cb.limit) + ' context window is filled',
+          'top model <b>' + (byTop[0] ? byTop[0].model : '\u2014') + '</b> · ' +
+            (byTop[0] ? fmt.tok(byTop[0].provider_total) : '\u2014') + ' tokens',
+          'subagent share <b>' + (total ? Math.round(d.subagentTokens / total * 100) : 0) + '%</b> of everything burned']
+      };
+    }
+    if (slide === 'cost') {
+      /* the money slide leads with ACTUAL SPEND: the dollars out the door are
+         the hero figure; the budget-utilization ratio rides the meter + caption
+         as the guardrail it is, not the headline */
+      var b = d.budget;
+      var sp = Math.round(b.spentMTD / b.monthlyLimit * 100);
+      var pj = Math.round(b.projectedMTD / b.monthlyLimit * 100);
+      var apiPct = d.costSplit.combinedMicro ? Math.round(d.costSplit.apiMicro / d.costSplit.combinedMicro * 100) : 0;
+      var headroom = b.monthlyLimit - b.spentMTD;
+      var pace = Math.min(100, Math.round(d.burn.perDay * 30 / b.monthlyLimit * 100));
+      /* counter decimals mirror USfmt.cost's precision ladder exactly */
+      var cAbs = Math.abs(b.spentMTD);
+      var cDec = cAbs > 0 && cAbs < 0.01 ? 6 : cAbs < 1 ? 4 : 2;
+      return {
+        k: 'actual spend · month to date',
+        cnt: { v: b.spentMTD, d: cDec, p: '$' }, big: fmt.cost(b.spentMTD), unit: '',
+        pct: sp, tone: R.fillTone(sp),
+        cap: '<b>' + sp + '%</b> of the ' + fmt.cost(b.monthlyLimit) + ' budget · projected <b>' +
+          fmt.cost(b.projectedMTD) + '</b> · policy <b>block at limit</b>',
+        sideK: 'where the month goes',
+        bars: heroBarRows([
+          { label: 'projected MTD', pct: pj, val: fmt.cost(b.projectedMTD) },
+          { label: 'burn pace', pct: pace, val: fmt.cost(d.burn.perDay) + '/day' },
+          { label: 'API billed', pct: apiPct, val: fmt.cost(d.costSplit.apiMicro / 1e6) }
+        ]),
+        chips: [fmt.cost(headroom) + ' headroom left', 'burn ' + fmt.cost(d.burn.perHour) + '/hr',
+          'cache \u2212' + fmt.cost(d.cacheTotalSaved) + ' today', 'block at limit'],
+        facts: ['projected to land at <b>' + fmt.cost(b.projectedMTD) + '</b> by month end',
+          'cache is paying back <b>' + fmt.cost(d.cacheTotalSaved) + '</b> today',
+          'single cost authority · ' + R.human(d.costSplit.settlement_status)]
+      };
+    }
+    if (slide === 'tools') {
+      var calls = d.tools.reduce(function (s, t) { return s + t.calls; }, 0);
+      var worst = d.tools.slice().sort(function (a, b) { return b.err - a.err; })[0];
+      var maxP95 = d.tools.reduce(function (m, t) { return Math.max(m, t.p95); }, 0);
+      var clean = Math.round(100 - (worst ? worst.err : 0));
+      var topMax = d.tools.reduce(function (m, t) { return Math.max(m, t.calls); }, 1);
+      var top = d.tools.slice().sort(function (a, b) { return b.calls - a.calls; }).slice(0, 3);
+      /* hero figure counts through the shared counter; the exact comma-grouped
+         total stays in the caption fact line below */
+      var tScale = calls >= 1e6 ? { v: calls / 1e6, d: 1, u: 'M calls' }
+        : calls >= 1e3 ? { v: calls / 1e3, d: 1, u: 'k calls' } : { v: calls, d: 0, u: 'calls' };
+      return {
+        k: 'tool calls · clean run rate',
+        cnt: tScale, big: fmt.num(calls), unit: tScale.u,
+        pct: clean, tone: R.fillTone(clean),
+        cap: d.tools.length + ' tools · worst error <b>' + (worst ? worst.err + '%' : '\u2014') + '</b>' +
+          (worst ? ' (' + R.humanCap(worst.tool) + ')' : ''),
+        sideK: 'most-called tools',
+        bars: heroBarRows(top.map(function (t) {
+          return { label: R.humanCap(t.tool), pct: Math.round(t.calls / topMax * 100), val: fmt.num(t.calls) + ' calls' };
+        })),
+        chips: ['p95 tail ' + fmt.num(maxP95) + 'ms', 'retry tax ' + d.efficiency.retryTaxPct + '%',
+          'worst errors ' + (worst ? worst.err + '%' : '\u2014'), d.tools.length + ' tools wired'],
+        facts: ['<b>' + fmt.num(calls) + '</b> calls across <b>' + d.tools.length + '</b> tools',
+          'clean run rate <b>' + clean + '%</b> end to end',
+          'most-called <b>' + (top[0] ? R.humanCap(top[0].tool) : '\u2014') + '</b> · ' +
+            (top[0] ? fmt.num(top[0].calls) + ' calls' : '\u2014')]
+      };
+    }
+    /* overview + quotas: the tightest window leads the whole deck */
+    if (!peak) {
+      return { k: 'tightest window', big: '\u2014', unit: '', pct: null, tone: null,
+        cap: 'no readable windows right now — states carry chips, never silent zeroes',
+        sideK: 'next tightest', bars: [], chips: [], facts: [] };
+    }
+    var rst = (peak.reset && peak.reset !== 'unknown') ? 'resets in <b>' + peak.reset + '</b>' : 'reset <b>' + (peak.reset || 'unknown') + '</b>';
+    return {
+      k: 'tightest window',
+      cnt: { v: peak.used, d: 0 }, big: String(peak.used), unit: '%',
+      pct: peak.used, tone: R.fillTone(peak.used),
+      cap: '<b>' + peak.label + '</b> · ' + R.human(peak.window_kind) + ' · ' + rst + ' ' + R.chip(peak.value_state),
+      sideK: 'next tightest windows',
+      bars: heroWinRows(peak, 3),
+      chips: [R.human(peak.window_kind) + ' window', 'resets ' + (peak.reset || '\u2014'),
+        R.human(peak.source_class), R.human(peak.source_confidence) + ' confidence'],
+      facts: ['<b>' + blocked + '</b> of ' + d.guards.length + ' guards blocked · <b>' + warned + '</b> on warn',
+        '<b>' + d.quotas.length + '</b> providers · <b>' + winTotal + '</b> windows tracked live',
+        'run-out <b>' + (peak.runOutLabel || '\u2014') + '</b>']
+    };
+  }
+  /* the supporting column is density-tier aware so the band fills at every
+     width: tier >=2 (hero rendered 4+ wide) runs the full column — three
+     readings, the 2x2 chip grid, three fact lines — beside the headline;
+     tier 1 (the narrow 2-col tier) stacks the readings alone under it; the
+     meter always rides the headline figure. */
+  function renderHero(item, sk) {
+    var R = window.USrender;
+    var slide = (item.cfg && item.cfg.slide) || 'overview';
+    var t = heroTier(sk, item);
+    var m = heroModel(slide);
+    var meter = m.pct == null ? '' :
+      '<span class="us-meter u9-hmeter">' + R.meter(m.pct, m.tone) + '<span class="pc">' + m.pct + '%</span></span>';
+    var side = '';
+    if (t >= 2 && m.bars.length) {
+      side = '<div class="u9-hside"><span class="u9-hsk">' + m.sideK + '</span>' + m.bars.join('') +
+        (m.chips.length ? '<div class="u9-hstats">' + m.chips.map(function (s) { return '<span class="u9-hstat">' + s + '</span>'; }).join('') + '</div>' : '') +
+        (m.facts.length ? '<div class="u9-hfacts">' + m.facts.map(function (f) { return '<span class="u9-hfact">' + f + '</span>'; }).join('') + '</div>' : '') +
+        '</div>';
+    } else if (t === 1 && m.bars.length) {
+      side = '<div class="u9-hside"><span class="u9-hsk">' + m.sideK + '</span>' + m.bars.join('') + '</div>';
+    }
+    var bigHtml = m.big;
+    if (m.cnt) {
+      bigHtml = '<span class="u9-hnum" data-counter="' + m.cnt.v + '" data-decimals="' + m.cnt.d + '"' +
+        (m.cnt.p ? ' data-prefix="' + m.cnt.p + '"' : '') + '>' +
+        (m.cnt.p || '') + (0).toFixed(m.cnt.d) + '</span>';
+    }
+    return '<div class="u9-hero' + (t >= 2 ? ' u9-hero-wide' : '') + '">' +
+      '<div class="u9-hmain"><span class="u9-hk">' + m.k + '</span>' +
+      '<div class="u9-hfig"><span class="u9-hbig">' + bigHtml + (m.unit ? '<small>' + m.unit + '</small>' : '') + '</span>' +
+      meter + '</div>' +
+      '<span class="u9-hcap">' + m.cap + '</span></div>' + side + '</div>';
+  }
+
+  /* Per-slide default boards: a curated deck of mixed-width bands. The u9hero
+     headline opens every slide (items[0], so it also carries the .u9-lead
+     treatment) as a full-width composed band; below it, 4-wide features pair
+     with 2-wide flanks, 2-wide trios interlock, and full-width statements
+     (ledger / tools table / closer) break the rhythm — never a flat run of
+     equal slabs.
+     Spans are drawn from {2, 4, 6} only, against the deck's own track tiers
+     (2 / 4 / 6 cols, see the canvas rule above). That span set is the unique
+     one that clamps to complete rows at all three tiers: at 6 cols the 4+2
+     pairs and 2+2+2 three-ups sum to 6; at 4 cols every 4/6-wide band is a
+     full row and the 2-wides pair (so their count is always even); at 2 cols
+     everything clamps to a full-width stack. Each board is ordered so the
+     dense packer interlocks the pairs with zero dead cells — verified by
+     simulating grid auto-placement: 0% dead space and a straight right edge
+     at 900/1280/1700/2200/2500 on every slide.
+     The hero outsizes every support band's cell area by >=1.1x (54 cells vs
+     <=48), and its focal number scales with the viewport. Each band's rows
+     are sized to its area-aware density tier so the rendered content soaks
+     the band with no body scroll at any tier: 2-wide bands render tier-1
+     lists and carry the rows those lists need (sessions sits at r11 — the
+     +1 row that fixes the 900px scroll), 4/6-wide bands render tier-3
+     content and are sized to it. The renderers recompose to any box, so a
+     flank dropped beside a feature simply re-tiers.
+     - Overview leads with peak quota pressure; the token-flow chart pairs
+         with the context window, quota rail / token shape / guards run the
+         three-up, the ledger and provenance close. Cost-free by design: no
+         budget / spend / cost type anywhere on this slide.
+     - Quotas pairs the quota board with plan-gating and the guard rail with
+         what-counts; the hero carries the tightest window.
+     - Tokens runs two tall pairs — the 24h chart with the model split, the
+         context window beside the live sessions (r11, no scroll at 900).
+     - Cost leads with ACTUAL SPEND: the hero figure is dollars spent MTD and
+         the spend chart is seeded as the first feature, flanked by cache;
+         accounts and the budget rail pair below, provenance closes.
+     - Tools opens the tools table full-width, then pairs sessions with
+         signals and what-counts with provenance as a tall closing duo. */
+  var BOARDS = {
+    'u9-overview': [
+      { type: 'u9hero', c: 6, r: 9, cfg: { slide: 'overview' } },
+      { type: 'analytics', c: 4, r: 8 }, { type: 'context', c: 2, r: 8 },
+      { type: 'quota', c: 2, r: 8 }, { type: 'tokens', c: 2, r: 8 }, { type: 'guard', c: 2, r: 8 },
+      { type: 'ledger', c: 6, r: 6 }, { type: 'provenance', c: 6, r: 7 }
+    ],
+    'u9-quotas': [
+      { type: 'u9hero', c: 6, r: 9, cfg: { slide: 'quotas' } },
+      { type: 'quota', c: 4, r: 8 }, { type: 'planGating', c: 2, r: 8 },
+      { type: 'guard', c: 4, r: 8 }, { type: 'whatcounts', c: 2, r: 8 },
+      { type: 'provenance', c: 6, r: 7 }
+    ],
+    'u9-tokens': [
+      { type: 'u9hero', c: 6, r: 9, cfg: { slide: 'tokens' } },
+      { type: 'analytics', c: 4, r: 11 }, { type: 'tokens', c: 2, r: 11 },
+      { type: 'context', c: 2, r: 11 }, { type: 'sessions', c: 4, r: 11 },
+      { type: 'provenance', c: 6, r: 7 }
+    ],
+    'u9-cost': [
+      { type: 'u9hero', c: 6, r: 9, cfg: { slide: 'cost' } },
+      { type: 'spend', c: 4, r: 9 }, { type: 'cache', c: 2, r: 9 },
+      { type: 'accounts', c: 4, r: 9 }, { type: 'budget', c: 2, r: 9 },
+      { type: 'provenance', c: 6, r: 7 }
+    ],
+    'u9-tools': [
+      { type: 'u9hero', c: 6, r: 9, cfg: { slide: 'tools' } },
+      { type: 'tools', c: 6, r: 8 },
+      { type: 'sessions', c: 4, r: 11 }, { type: 'signals', c: 2, r: 11 },
+      { type: 'whatcounts', c: 4, r: 11 }, { type: 'provenance', c: 2, r: 11 }
+    ]
+  };
+
+  function pad2(n) { return ('0' + n).slice(-2); }
+
+  /* ---------- deck motion ----------------------------------------------------
+     The shell transition is CSS (pmU9DeckIn/Out repaint of the shared pm-in /
+     pm-out classes); everything inside the slide is WAAPI with fill backwards
+     and NOTHING retained after finish, so the shared widget hover-lift, FLIP
+     reorder and drag ghost are never frozen by a leftover animation. */
+  var EASE = {
+    out: 'cubic-bezier(0.22, 1, 0.36, 1)',      /* --pm-ease-out */
+    spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)', /* --pm-ease-spring, restrained */
+    follow: 'cubic-bezier(0.25, 1.45, 0.45, 1)'  /* --mo-follow-ease */
+  };
+  function isRM() { return window.USrender ? window.USrender.isRM() : false; }
+  function u9tok(name, fb) {
+    try {
+      var p = document.createElement('i');
+      p.style.visibility = 'hidden';
+      p.style.transitionDuration = 'var(' + name + ')';
+      document.documentElement.appendChild(p);
+      var s = getComputedStyle(p).transitionDuration || '';
+      document.documentElement.removeChild(p);
+      var v = parseFloat(s);
+      if (isNaN(v)) return fb;
+      return s.indexOf('ms') === -1 ? v * 1000 : v;
+    } catch (e) { return fb; }
+  }
+  function tabIndex(id) {
+    for (var k = 0; k < TABS.length; k++) { if (TABS[k].id === id) return k; }
+    return -1;
+  }
+
+  /* content follow-through: the shell arrives first (CSS), the kicker and hero
+     land a beat later, then the supporting bands cascade down the slide. The
+     lead card springs in ahead of the pack with a scale emphasis — featured,
+     primary — while the rest settle on the follow-through curve. */
+  function present(panel) {
+    (panel.u9Anims || []).forEach(function (a) { try { a.cancel(); } catch (e) {} });
+    panel.u9Anims = [];
+    if (isRM()) return;
+    var springDur = u9tok('--mo-spring-dur', 420);
+    var followDur = u9tok('--mo-follow-dur', 560);
+    var settleDur = u9tok('--mo-settle-dur', 300);
+    var stag = u9tok('--mo-stagger', 24);
+    function play(el, kf, opt) { var a = el.animate(kf, opt); panel.u9Anims.push(a); }
+    var kick = panel.querySelector('.u9-kick');
+    if (kick) play(kick,
+      [{ opacity: 0, transform: 'translate3d(0, 10px, 0)' }, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+      { duration: settleDur, delay: 40, easing: EASE.out, fill: 'backwards' });
+    var lead = panel.querySelector('.uw.u9-lead');
+    if (lead) play(lead,
+      [{ opacity: 0, transform: 'translate3d(0, 18px, 0) scale(0.985)' }, { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }],
+      { duration: springDur, delay: 80, easing: EASE.spring, fill: 'backwards' });
+    var ci = 0;
+    panel.querySelectorAll('.uw-canvas .uw').forEach(function (el) {
+      if (el === lead) return;
+      play(el,
+        [{ opacity: 0, transform: 'translate3d(0, 16px, 0)' }, { opacity: 1, transform: 'translate3d(0, 0, 0)' }],
+        { duration: followDur, delay: 150 + Math.min(ci++, 12) * stag, easing: EASE.follow, fill: 'backwards' });
+    });
+    /* any grab mid-slide cancels the choreography — drag always wins */
+    if (!panel.u9Pd) {
+      panel.u9Pd = true;
+      panel.addEventListener('pointerdown', function () {
+        (panel.u9Anims || []).forEach(function (a) { try { a.cancel(); } catch (e) {} });
+      });
+    }
+  }
+
+  /* the hero is the moment: on a slide's FIRST presentation its figure counts
+     up 0→value through the shared counter (landing tick on arrival) and its
+     meters draw from zero; later switches keep the settled number, which then
+     only moves value→value (with a tick) when the data actually changes. */
+  var heroLanded = {};
+  function heroSettle(panel) {
+    var pid = panel.getAttribute('data-pm-panel');
+    if (heroLanded[pid]) return;
+    heroLanded[pid] = true;
+    var body = panel.querySelector('.uw.u9-lead .uw-body');
+    if (!body) return;
+    var rm = isRM();
+    var springDur = u9tok('--mo-spring-dur', 420);
+    body.querySelectorAll('[data-counter]').forEach(function (el) { el._usCnt = null; el.dataset.usLast = '0'; });
+    body.querySelectorAll('.us-fill[data-fill]').forEach(function (el) {
+      var t = parseFloat(el.getAttribute('data-fill')) || 0;
+      el.style.transition = 'none';
+      el.style.width = '0%';
+      if (rm) { el.style.width = t + '%'; return; }
+      void el.offsetWidth;
+      el.style.transition = 'width ' + springDur + 'ms ' + EASE.spring;
+      el.style.width = t + '%';
+    });
+    if (window.USrender) window.USrender.animateCounters(body);
+  }
+
+  /* slide-position readout beside the rail: the number and the slide name flip
+     in place (direction-aware) whenever the position changes */
+  function setDeckPos(id, prevId) {
+    var i = tabIndex(id), p = prevId == null ? -1 : tabIndex(prevId);
+    if (i < 0) return;
+    var dir = i >= p ? 1 : -1;
+    function flip(el, txt) {
+      if (!el || el.textContent === txt) return;
+      el.textContent = txt;
+      if (prevId == null || isRM() || !el.animate) return;
+      try {
+        el.animate(
+          [{ transform: 'translate3d(0,' + (dir * 0.7) + 'em,0)', opacity: 0 },
+           { transform: 'translate3d(0,0,0)', opacity: 1 }],
+          { duration: u9tok('--mo-settle-dur', 300), easing: EASE.out });
+      } catch (e) {}
+    }
+    flip(document.getElementById('u9DeckNo'), pad2(i + 1));
+    flip(document.getElementById('u9DeckName'), TABS[i].label);
+  }
+
+  /* deck chrome sync per canvas: the first card carries the .u9-lead
+     treatment (so a reorder re-features the new lead), and the tab's card
+     count badge tracks the live item list (add / remove / reset). */
+  function syncDeck(cv) {
+    var items = cv._pmw.items;
+    var leadUid = items.length ? items[0].uid : null;
+    cv.querySelectorAll('.uw').forEach(function (el) {
+      el.classList.toggle('u9-lead', el.getAttribute('data-uid') === leadUid);
+    });
+    var tabId = cv.getAttribute('data-pmw-page').replace('u9-', '');
+    var badge = document.querySelector('#pm-tab-' + tabId + ' .pm-tab-badge');
+    if (badge) badge.textContent = String(items.length);
+  }
+
+  /* Widget ledger sort headers (th[data-wd-sort]) are rendered by the shared
+     catalog and re-created on every sort, so keyboard support is wired here at
+     the concept level: make each header focusable, expose aria-sort from the
+     active .on/.rev state, and activate on Enter/Space by re-firing the click
+     the shared delegation already handles (then restore focus to the
+     re-rendered header so keyboard users keep their place). */
+  function wireSortKeys(cv) {
+    function decor(th) {
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      th.setAttribute('aria-sort', th.classList.contains('on') ? (th.classList.contains('rev') ? 'descending' : 'ascending') : 'none');
+    }
+    cv.querySelectorAll('th[data-wd-sort]').forEach(decor);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.matches && n.matches('th[data-wd-sort]')) decor(n);
+          if (n.querySelectorAll) n.querySelectorAll('th[data-wd-sort]').forEach(decor);
+        });
+      });
+    }).observe(cv, { childList: true, subtree: true });
+    cv.addEventListener('keydown', function (e) {
+      var th = e.target.closest && e.target.closest('th[data-wd-sort]');
+      if (!th || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var key = th.getAttribute('data-wd-sort');
+      var uw = th.closest('.uw');
+      th.click();
+      requestAnimationFrame(function () {
+        var scope = (uw && uw.isConnected) ? uw : cv;
+        var nt = scope.querySelector('th[data-wd-sort="' + key + '"]');
+        if (nt) { decor(nt); nt.focus(); }
+      });
+    });
+  }
+
+  /* card count for a tab's badge before its canvas mounts: the persisted
+     board when one exists, else the curated seed */
+  function storedCount(tabId) {
+    try {
+      var raw = localStorage.getItem('pmw:u9-' + tabId);
+      if (!raw) return null;
+      var env = JSON.parse(raw);
+      var items = Array.isArray(env) ? env : (env && env.items);
+      if (!Array.isArray(items) || !items.length) return null;
+      var cv0 = document.querySelector('[data-pmw-page="u9-' + tabId + '"]');
+      var types = (cv0.getAttribute('data-pmw-types') || '').split(',');
+      /* the seeded u9hero headline is deck chrome, not a picker type, but it
+         is a live card — count it so the badge matches the mounted board */
+      var n = items.filter(function (it) { return it && (types.indexOf(it.type) !== -1 || it.type === 'u9hero'); }).length;
+      return n || null;
+    } catch (e) { return null; }
+  }
+
+  window.PMUsageChrome.boot({ badge: { id: 'U9', name: 'Deck' } });
+  if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+  window.PMWidgetDefs.register(window.PMWidgets, { only: CATALOG });
+  /* the deck's headline card: registered before the badges read stored counts
+     and before the canvases mount, so a persisted hero round-trips like any
+     other card (load() keeps registered types; reset() re-seeds the board) */
+  window.PMWidgets.register('u9hero', {
+    icon: (window.PMIcons && window.PMIcons.gauge) || '',
+    label: 'Slide headline',
+    desc: 'The headline metric this slide leads with',
+    span: [6, 9],
+    render: renderHero
+  });
+
+  /* Tabs mount BEFORE the canvases: PMTabs hides the inactive panels, so the
+     hidden canvases mount without .uw-enter and revealing a tab can never
+     replay the entrance. Badges read persisted/seed counts up front and are
+     re-synced live by syncDeck once the canvases mount. */
+  TABS.forEach(function (t) {
+    var seed = (BOARDS['u9-' + t.id] || []).length;
+    t.badge = String(storedCount(t.id) || seed);
+  });
+  var tabsEl = document.getElementById('u9tabs');
+  var panelsEl = document.getElementById('u9panels');
+  /* stamp the travel direction on the panels root in the capture phase, ahead
+     of PMTabs' own handler, so the very first frame of the depth slide already
+     knows which way the deck is moving (forward slides in from the right) */
+  function stampDir(e) {
+    var b = e.target.closest ? e.target.closest('.pm-tab') : null;
+    if (!b) return;
+    var i = tabIndex(b.getAttribute('data-tab')), next = i;
+    if (e.type === 'keydown') {
+      if (e.key === 'ArrowRight') next = Math.min(i + 1, TABS.length - 1);
+      else if (e.key === 'ArrowLeft') next = Math.max(i - 1, 0);
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = TABS.length - 1;
+      else if (e.key !== 'Enter' && e.key !== ' ') return;
+    }
+    var cur = tabsEl.querySelector('.pm-tab.active');
+    var from = cur ? tabIndex(cur.getAttribute('data-tab')) : next;
+    panelsEl.style.setProperty('--pm-dir', next >= from ? 1 : -1);
+  }
+  tabsEl.addEventListener('click', stampDir, true);
+  tabsEl.addEventListener('keydown', stampDir, true);
+  window.PMTabs.mount(tabsEl, {
+    tabs: TABS, panelsRoot: panelsEl, active: 'overview',
+    onSelect: function (id, prev) {
+      if (prev != null && id === prev) return; /* re-selecting is a no-op */
+      var from = prev == null ? -1 : tabIndex(prev);
+      panelsEl.style.setProperty('--pm-dir', tabIndex(id) >= from ? 1 : -1);
+      setDeckPos(id, prev);
+      var panel = panelsEl.querySelector('[data-pm-panel="' + id + '"]');
+      if (panel) { heroSettle(panel); present(panel); }
+    }
+  });
+  document.getElementById('u9DeckOf').textContent = '/ ' + pad2(TABS.length);
+  setDeckPos('overview');
+  /* Overview presents itself at load (its hero counts up on mount, visible),
+     so it has already had its first-landing moment before any tab switch */
+  heroLanded['overview'] = true;
+
+  document.querySelectorAll('.uw-canvas[data-pmw-page]').forEach(function (cv) {
+    var types = (cv.getAttribute('data-pmw-types') || '').split(',').filter(Boolean);
+    var pageId = cv.getAttribute('data-pmw-page');
+    window.PMWidgets.mount(cv, { pageId: pageId, types: types, defaultBoard: BOARDS[pageId] || null });
+    window.PMWidgetDefs.wireCanvas(cv);
+    wireSortKeys(cv);
+    new MutationObserver(function () { syncDeck(cv); }).observe(cv, { childList: true });
+    syncDeck(cv);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U10 · Prism — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<link rel="stylesheet" href="_shared/usage-widgets.css">
+<link rel="stylesheet" href="_shared/usage-widget-renderers.css">
+<style>
+/* =====================================================================
+   U10 — PRISM
+   U4's focus rail, rebuilt as living widget panes. One roomy section at
+   a time via the depth rail; every section is a shared PMWidgets canvas
+   composed from the U7–U9 widget catalog. The rail is slimmer and rides
+   at content height — no dead box below the last tab. The Provider tab
+   under Overview opens a pop-out prism on the right: pick "all combined"
+   or one provider and every provider-attributed panel re-scopes itself
+   (U6's join logic), while account-wide panels stay combined and say so.
+   Selection reads through lit icon-chips and halos — never a left edge
+   bar. All motion rides the shared --mo-* tokens and stands down under
+   reduced motion.
+   ===================================================================== */
+
+/* ---------- body: rail + reading panes ---------- */
+.u10-body { flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; gap: var(--us-gap); padding: var(--us-pad); }
+
+/* ---------- the rail (slimmer, content-height) ---------- */
+.u10-rail {
+  position: relative;
+  flex: none; width: 188px; min-width: 0; align-self: flex-start;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 6px 10px 10px; border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface-elevated) 62%, transparent);
+  border: var(--border-width) solid var(--border-light);
+  max-height: 100%; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent;
+}
+.u10-rail::-webkit-scrollbar { width: 8px; }
+.u10-rail::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border-radius: 8px; }
+[data-theme^="glass"] .u10-rail { border-color: var(--glass-hairline); background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); }
+[data-theme^="basic"] .u10-rail { box-shadow: none; }
+
+.u10-railind {
+  position: absolute; z-index: 0; border-radius: var(--radius-md); pointer-events: none;
+  background: color-mix(in srgb, var(--accent-primary) 11%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+.u10-railind.live {
+  transition: top var(--mo-spring-dur) var(--mo-follow-ease), left var(--mo-spring-dur) var(--mo-follow-ease),
+    width var(--mo-spring-dur) var(--mo-follow-ease), height var(--mo-spring-dur) var(--mo-follow-ease);
+}
+.u10-railind.snap { transition: none !important; }
+
+.u10-item {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 7px 8px 7px 10px; border-radius: var(--radius-md); border: 1px solid transparent;
+  color: var(--text-secondary); text-align: left; min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+.u10-item:hover { background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-primary); transform: translateX(2px); }
+.u10-item.active { color: var(--text-primary); }
+.u10-iico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent); color: var(--text-muted);
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u10-iico svg { width: 12px; height: 12px; }
+.u10-item:hover .u10-iico { color: var(--text-primary); }
+.u10-item.active .u10-iico { background: var(--accent-primary); color: var(--surface-elevated); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 24%, transparent); }
+:is([data-theme^="basic"], [data-theme^="retro"]) .u10-item.active .u10-iico { box-shadow: none; }
+.u10-itxt { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u10-ilbl { display: flex; align-items: center; gap: 6px; min-width: 0;
+  font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.u10-ilbl-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u10-imeta { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+.u10-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--tone-mute);
+  transition: background-color var(--mo-settle-dur) var(--mo-settle-ease), box-shadow var(--mo-settle-dur) var(--mo-settle-ease); }
+.u10-dot.ok { background: var(--tone-ok); } .u10-dot.warn { background: var(--tone-warn); }
+.u10-dot.err { background: var(--tone-err); } .u10-dot.info { background: var(--tone-info); }
+.u10-dot.warn { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-warn) 18%, transparent); }
+.u10-dot.err { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-err) 18%, transparent); }
+.u10-dot.warn, .u10-dot.err { animation: usPulse 1.8s var(--ease-out) infinite; }
+@keyframes u10RailIn { from { opacity: 0; transform: translateX(-7px); } to { opacity: 1; transform: none; } }
+.u10-rail .u10-item { animation: u10RailIn var(--mo-reveal-dur) var(--mo-reveal-ease) backwards;
+  animation-delay: calc(var(--u10-ri, 0) * 30ms); }
+
+/* the provider item carries the live scope chip */
+.u10-scopechip { flex: none; max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--mono-font); font-size: 8px; font-weight: 700; letter-spacing: .04em;
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  color: var(--text-muted); background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  transition: all var(--mo-settle-dur) var(--mo-settle-ease); }
+.u10-item.u10-prov { padding-right: 6px; }
+.u10-scopechip.scoped { color: var(--accent-primary); background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+
+/* ---------- reading panes ---------- */
+.u10-panes { flex: 1 1 auto; min-width: 0; min-height: 0; position: relative; display: flex; }
+.u10-panes::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(80% 44% at 6% -8%, color-mix(in srgb, var(--accent-primary) 6%, transparent), transparent 60%),
+    radial-gradient(60% 40% at 100% 104%, color-mix(in srgb, var(--accent-magenta) 5%, transparent), transparent 60%); }
+.u10-scopeflash { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; border-radius: var(--radius-lg);
+  background: radial-gradient(90% 70% at 78% 8%, color-mix(in srgb, var(--accent-primary) 16%, transparent), transparent 62%); }
+.u10-pane {
+  flex: 1 1 auto; min-width: 0; min-height: 0; position: relative; z-index: 1;
+  overflow-y: auto; overflow-x: hidden;
+  padding: calc(var(--us-pad) + 6px) calc(var(--us-pad) + 8px) calc(var(--us-pad) + 14px);
+  scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent;
+  display: flex; flex-direction: column; gap: var(--us-gap);
+}
+.u10-pane::-webkit-scrollbar { width: 10px; }
+.u10-pane::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+.u10-pane:not(.pm-hidden):not(.u10-anim) { animation: u10In var(--mo-tab-in-dur, 200ms) var(--pm-ease-out, ease-out); }
+@keyframes u10In { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.u10-pane.u10-entering { z-index: 2; }
+.u10-pane.u10-leaving { position: absolute; inset: 0; z-index: 1; }
+
+/* ---------- pane kicker (chapter opening) ---------- */
+.u10-kick { display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: none; }
+.u10-kn { flex: none; font-family: var(--num-font); font-size: var(--fs-md); font-weight: 800; line-height: 1.35;
+  letter-spacing: .5px; color: var(--accent-primary); font-variant-numeric: tabular-nums; }
+.u10-kmain { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.u10-kt { margin: 0; font-family: var(--num-font); font-size: var(--fs-2xl); font-weight: 800; letter-spacing: .2px; line-height: 1.12; color: var(--text-primary); }
+.u10-kd { margin: 0; font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); max-width: 74ch; }
+.u10-kmeta { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 3px; min-width: 0; max-width: 34%; }
+.u10-km { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.u10-scope { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--radius-pill);
+  font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; letter-spacing: .05em; white-space: nowrap;
+  transition: all var(--mo-settle-dur) var(--mo-settle-ease); }
+.u10-scope svg { width: 9px; height: 9px; flex: none; }
+.u10-scope.scoped { color: var(--accent-primary); background: var(--accent-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+.u10-scope.wide { color: var(--text-muted); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u10-scope.mixed { color: var(--tone-info-text); background: color-mix(in srgb, var(--tone-info) 12%, transparent); }
+.u10-scope.pm-hidden { display: none; }
+
+/* ---------- canvases: U10 track tiers (rail takes ~230px off the viewport) ---------- */
+.u10 .uw-canvas { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; }
+@media (max-width: 1020px) { .u10 .uw-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .u10 .uw-canvas { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 2000px) { .u10 .uw-canvas { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.u10 .uw-addbar { margin-bottom: 0; }
+
+/* keyboard-operable ledger sort headers */
+th[data-wd-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+/* guard cards: severity reads through a tinted shield medallion + border tint,
+   never a left edge bar */
+.u10 .wd-gcard { border-left-width: var(--border-width, 1px); border-left-color: var(--border-light); }
+.u10 .wd-gcard.blocked { border-color: color-mix(in srgb, var(--tone-err) 36%, var(--border-light)); }
+.u10 .wd-gcard.warn { border-color: color-mix(in srgb, var(--tone-warn) 36%, var(--border-light)); }
+.u10 .wd-gcard.okk { border-color: color-mix(in srgb, var(--tone-ok) 28%, var(--border-light)); }
+.u10 .wd-gh svg { padding: 5px; box-sizing: content-box; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.u10 .wd-gcard.blocked .wd-gh svg { background: color-mix(in srgb, var(--tone-err) 16%, transparent); color: var(--tone-err-text); }
+.u10 .wd-gcard.warn .wd-gh svg { background: color-mix(in srgb, var(--tone-warn) 16%, transparent); color: var(--tone-warn-text); }
+.u10 .wd-gcard.okk .wd-gh svg { background: color-mix(in srgb, var(--tone-ok) 16%, transparent); color: var(--tone-ok-text); }
+
+/* ---------- provider pop-out (parked on <body>: never clipped) ---------- */
+.u10-pop-scrim { position: fixed; inset: 0; z-index: 520; background: color-mix(in srgb, var(--bg) 48%, transparent);
+  opacity: 0; pointer-events: none; transition: opacity var(--mo-popup-open-dur) var(--pm-ease-out); }
+.u10-pop-scrim.on { opacity: 1; pointer-events: auto; }
+.u10-pop { position: fixed; z-index: 525; width: 348px; max-height: min(78vh, 720px);
+  display: flex; flex-direction: column; min-height: 0;
+  background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3); overflow: hidden;
+  opacity: 0; transform: translateX(26px) scale(.985); transform-origin: top right;
+  pointer-events: none;
+  transition: transform var(--mo-popup-close-dur) var(--pm-ease-in), opacity var(--mo-popup-close-dur) var(--pm-ease-in); }
+.u10-pop.on { opacity: 1; transform: none; pointer-events: auto;
+  transition: transform var(--mo-spring-dur) var(--pm-ease-spring), opacity var(--mo-popup-open-fade) var(--pm-ease-out); }
+[data-theme^="glass"] .u10-pop { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12)); border-color: var(--glass-hairline);
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+[data-theme^="retro"] .u10-pop { border-width: 2px; }
+
+.u10-pop-head { flex: none; display: flex; align-items: flex-start; gap: 10px; padding: 14px 14px 10px; }
+.u10-pop-ico { flex: none; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md); background: var(--accent-soft); color: var(--accent-primary); }
+.u10-pop-ico svg { width: 14px; height: 14px; }
+.u10-pop-t { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.u10-pop-tt { font-family: var(--display-font); font-size: 13px; font-weight: 700; letter-spacing: .02em; color: var(--text-primary); }
+.u10-pop-td { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.45; }
+.u10-pop-x { flex: none; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm); border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer;
+  transition: all var(--motion-fast) var(--ease-out); }
+.u10-pop-x:hover { color: var(--text-primary); border-color: var(--border-light); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u10-pop-x svg { width: 12px; height: 12px; }
+
+.u10-pop-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 4px 8px 8px; display: flex; flex-direction: column; gap: 3px;
+  scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.u10-pop-list::-webkit-scrollbar { width: 8px; }
+.u10-pop-list::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border-radius: 8px; }
+.u10-pop-g { padding: 8px 8px 3px; font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1.3px;
+  text-transform: uppercase; color: var(--text-muted); }
+
+.u10-pop-row { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 8px 10px; border-radius: var(--radius-md); border: 1px solid transparent; background: transparent; cursor: pointer; min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u10-pop-row:hover { background: color-mix(in srgb, var(--text-primary) 5%, transparent); transform: translateX(2px); }
+.u10-pop-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.u10-pop-row.on { background: color-mix(in srgb, var(--accent-primary) 9%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary) 34%, transparent); }
+.u10-pop-row.pick { animation: u10Pick var(--mo-settle-dur) var(--mo-settle-ease); }
+@keyframes u10Pick { 0% { background: color-mix(in srgb, var(--accent-primary) 26%, transparent); } }
+.u10-pop-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--tone-mute);
+  transition: box-shadow var(--mo-settle-dur) var(--mo-settle-ease), background var(--mo-settle-dur) var(--mo-settle-ease); }
+.u10-pop-dot.ok { background: var(--tone-ok); } .u10-pop-dot.warn { background: var(--tone-warn); }
+.u10-pop-dot.err { background: var(--tone-err); } .u10-pop-dot.mute { background: var(--tone-mute); }
+.u10-pop-row.on .u10-pop-dot { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.u10-pop-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.u10-pop-top { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.u10-pop-name { flex: 1 1 auto; min-width: 0; font-family: var(--display-font); font-size: 11px; font-weight: 700;
+  color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u10-pop-row.on .u10-pop-name { color: var(--accent-primary); }
+.u10-pop-val { flex: none; font-family: var(--mono-font); font-size: 10px; font-weight: 700; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.u10-pop-val.hot { color: var(--tone-err-text); } .u10-pop-val.warm { color: var(--tone-warn-text); }
+.u10-pop-bar { display: block; height: 4px; border-radius: var(--radius-pill); overflow: hidden;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+.u10-pop-bar .us-fill { height: 100%; border-radius: var(--radius-pill); }
+.u10-pop-meta { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u10-pop-ck { flex: none; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--accent-primary); color: var(--surface-elevated);
+  opacity: 0; transform: scale(.5); transition: all var(--mo-spring-dur) var(--pm-ease-spring); }
+.u10-pop-ck svg { width: 10px; height: 10px; }
+.u10-pop-row.on .u10-pop-ck { opacity: 1; transform: none; }
+.u10-pop-row.u10-all .u10-pop-ico2 { flex: none; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--accent-primary); }
+.u10-pop-row.u10-all .u10-pop-ico2 svg { width: 12px; height: 12px; }
+
+.u10-pop-foot { flex: none; padding: 9px 14px; border-top: 1px solid var(--border-light);
+  font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.u10-pop-foot b { color: var(--text-secondary); }
+
+/* row cascade on open — capped so the list lands in under ~300ms */
+@keyframes u10RowIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+.u10-pop.on .u10-pop-row, .u10-pop.on .u10-pop-g { animation: u10RowIn var(--mo-tab-in-dur, 200ms) var(--pm-ease-out) backwards;
+  animation-delay: calc(40ms + min(var(--u10-pi, 0), 10) * 18ms); }
+.u10-pop.on .u10-pop-head { animation: u10RowIn var(--mo-tab-in-dur, 200ms) var(--pm-ease-out) backwards; }
+
+/* ---------- responsive: rail folds to a top strip ---------- */
+@media (max-width: 820px) {
+  .u10-body { flex-direction: column; gap: var(--us-row); }
+  .u10-rail { width: auto; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 3px; overflow: visible; align-self: stretch; padding: 8px; }
+  .u10-item { flex: 0 0 auto; width: auto; padding: 6px 9px; }
+  .u10-imeta { display: none; }
+  .u10-kmeta { display: none; }
+  .u10-pop { width: min(348px, calc(100vw - 24px)); }
+}
+
+/* warm light themes: keep the kicker title weighty */
+:is([data-theme="friendly-light"], [data-theme="glass-light"]) .u10 .u10-kt { color: color-mix(in srgb, var(--text-primary) 52%, #000); }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .u10-pane:not(.pm-hidden), .u10-dot.warn, .u10-dot.err, .u10-rail .u10-item,
+  .u10-pop.on .u10-pop-row, .u10-pop.on .u10-pop-g, .u10-pop.on .u10-pop-head, .u10-pop-row.pick { animation: none; }
+  .u10-railind, .u10-railind.live, .u10-dot, .u10-pop, .u10-pop-scrim, .u10-scopechip, .u10-scope { transition: none; }
+}
+html[data-reduced-motion="1"] .u10-pane:not(.pm-hidden),
+html[data-reduced-motion="1"] .u10-dot.warn,
+html[data-reduced-motion="1"] .u10-dot.err,
+html[data-reduced-motion="1"] .u10-rail .u10-item,
+html[data-reduced-motion="1"] .u10-pop.on .u10-pop-row,
+html[data-reduced-motion="1"] .u10-pop.on .u10-pop-g,
+html[data-reduced-motion="1"] .u10-pop.on .u10-pop-head,
+html[data-reduced-motion="1"] .u10-pop-row.pick { animation: none; }
+html[data-reduced-motion="1"] .u10-railind,
+html[data-reduced-motion="1"] .u10-railind.live,
+html[data-reduced-motion="1"] .u10-dot,
+html[data-reduced-motion="1"] .u10-pop,
+html[data-reduced-motion="1"] .u10-pop.on,
+html[data-reduced-motion="1"] .u10-pop-scrim,
+html[data-reduced-motion="1"] .u10-scopechip,
+html[data-reduced-motion="1"] .u10-scope { transition: none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u10">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub" id="u10HeadSub"></div>
+      <span class="us-fresh" id="u10Fresh" title="Projection freshness"><span class="d"></span><span id="u10FreshTxt"></span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u10Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" data-demo-action="usage.export" data-demo-arg="Export usage as JSON (demo)" title="Export usage as JSON" aria-label="Export usage as JSON"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div class="us-pane-scope u10-body">
+
+      <nav class="u10-rail" aria-label="Usage sections">
+        <button class="u10-item active" data-tab="overview"><span class="u10-iico"><i data-ico="gauge" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Overview</span><span class="u10-dot" data-dot="overview"></span></span><span class="u10-imeta" data-meta="overview"></span></span></button>
+        <button class="u10-item u10-prov" data-prov-open aria-haspopup="listbox" title="Choose the data provider"><span class="u10-iico"><i data-ico="filter" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Provider</span><span class="u10-dot ok" data-dot="provider"></span></span><span class="u10-imeta" data-meta="provider">all combined</span></span><span class="u10-scopechip" id="u10ScopeChip">All</span></button>
+        <button class="u10-item" data-tab="guard"><span class="u10-iico"><i data-ico="shield" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Guard</span><span class="u10-dot" data-dot="guard"></span></span><span class="u10-imeta" data-meta="guard"></span></span></button>
+        <button class="u10-item" data-tab="quotas"><span class="u10-iico"><i data-ico="dial" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Quotas</span><span class="u10-dot" data-dot="quotas"></span></span><span class="u10-imeta" data-meta="quotas"></span></span></button>
+        <button class="u10-item" data-tab="cache"><span class="u10-iico"><i data-ico="layers" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Cache</span><span class="u10-dot" data-dot="cache"></span></span><span class="u10-imeta" data-meta="cache"></span></span></button>
+        <button class="u10-item" data-tab="context"><span class="u10-iico"><i data-ico="inbox" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Context</span><span class="u10-dot" data-dot="context"></span></span><span class="u10-imeta" data-meta="context"></span></span></button>
+        <button class="u10-item" data-tab="analytics"><span class="u10-iico"><i data-ico="trend" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Analytics</span><span class="u10-dot" data-dot="analytics"></span></span><span class="u10-imeta" data-meta="analytics"></span></span></button>
+        <button class="u10-item" data-tab="budget"><span class="u10-iico"><i data-ico="wallet" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Budget</span><span class="u10-dot" data-dot="budget"></span></span><span class="u10-imeta" data-meta="budget"></span></span></button>
+        <button class="u10-item" data-tab="tools"><span class="u10-iico"><i data-ico="chip" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Tools</span><span class="u10-dot" data-dot="tools"></span></span><span class="u10-imeta" data-meta="tools"></span></span></button>
+        <button class="u10-item" data-tab="accounts"><span class="u10-iico"><i data-ico="users" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Accounts</span><span class="u10-dot" data-dot="accounts"></span></span><span class="u10-imeta" data-meta="accounts"></span></span></button>
+        <button class="u10-item" data-tab="ledger"><span class="u10-iico"><i data-ico="clipboard" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Ledger</span><span class="u10-dot" data-dot="ledger"></span></span><span class="u10-imeta" data-meta="ledger"></span></span></button>
+        <button class="u10-item" data-tab="coaching"><span class="u10-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u10-itxt"><span class="u10-ilbl"><span class="u10-ilbl-t">Coaching</span><span class="u10-dot" data-dot="coaching"></span></span><span class="u10-imeta" data-meta="coaching"></span></span></button>
+      </nav>
+
+      <div class="u10-panes">
+        <div class="u10-scopeflash" id="u10ScopeFlash" aria-hidden="true"></div>
+
+        <section class="u10-pane" data-pane="overview" aria-label="Overview">
+          <header class="u10-kick">
+            <b class="u10-kn">01</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Right now</h2>
+              <p class="u10-kd">The short version — money, pressure, and the things that need a decision. Every domain below has its own room, composed of widgets you can move, resize and re-stack.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-overview" data-pmw-types="spend,guard,quota,tokens,cache,context,analytics,signals,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="guard" aria-label="Guard">
+          <header class="u10-kick">
+            <b class="u10-kn">02</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Anomaly &amp; quota guard</h2>
+              <p class="u10-kd">A 1-hour window with a 3.0× spike rule. Every decision — blocked, warned, allowed, watching — carries its why.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-guard" data-pmw-types="guard,whatcounts,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="quotas" aria-label="Quotas">
+          <header class="u10-kick">
+            <b class="u10-kn">03</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Quota &amp; plan visibility</h2>
+              <p class="u10-kd">One window model per provider — rolling, fixed reset, billing cycle, session or unknown. A missing bar is explained by its chip, never assumed to be zero.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-quotas" data-pmw-types="quota,accounts,cache,tokens,sessions,whatcounts,planGating,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="cache" aria-label="Prompt cache">
+          <header class="u10-kick">
+            <b class="u10-kn">04</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Prompt-cache savings</h2>
+              <p class="u10-kd">Zero is a measurement. Unsupported is a capability. They are never rendered the same way.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-cache" data-pmw-types="cache,tokens,sessions,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="context" aria-label="Context budget">
+          <header class="u10-kick">
+            <b class="u10-kn">05</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Context budget by source</h2>
+              <p class="u10-kd">What is eating the context window, family by family — and what was deliberately left out, with a reason receipt.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-context" data-pmw-types="context,sessions,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="analytics" aria-label="Analytics">
+          <header class="u10-kick">
+            <b class="u10-kn">06</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Token analytics</h2>
+              <p class="u10-kd">Input, output, reasoning and cache traffic across the window, stacked per bucket. Click a legend entry to mute its series.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-analytics" data-pmw-types="analytics,spend,tokens,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="budget" aria-label="Budget">
+          <header class="u10-kick">
+            <b class="u10-kn">07</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Budgets &amp; spend</h2>
+              <p class="u10-kd">A monthly limit with warn presets. A budget informs policy — it does not cap spend by itself; the policy decides what happens at the limit.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-budget" data-pmw-types="budget,cost,spend,whatcounts,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="tools" aria-label="Tool usage">
+          <header class="u10-kick">
+            <b class="u10-kn">08</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Tool usage</h2>
+              <p class="u10-kd">Latency and error tax by tool over the last 24h. <span class="pm-mono">index_used</span> shows where retrieval actually helped.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-tools" data-pmw-types="tools,sessions,signals,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="accounts" aria-label="Accounts">
+          <header class="u10-kick">
+            <b class="u10-kn">09</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Accounts &amp; pressure</h2>
+              <p class="u10-kd">Requested is the account you chose; effective is the one doing the work. Cost lands on the effective account. Cooldowns tick live.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-accounts" data-pmw-types="accounts,sessions,whatcounts,cost,planGating,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="ledger" aria-label="Event ledger">
+          <header class="u10-kick">
+            <b class="u10-kn">10</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Event ledger</h2>
+              <p class="u10-kd">Normalized UsageRecords. Every row carries a stable <span class="pm-mono">usage event ref</span> so drill-through never loses the source.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-ledger" data-pmw-types="ledger,provenance"></div>
+        </section>
+
+        <section class="u10-pane pm-hidden" data-pane="coaching" aria-label="Coaching">
+          <header class="u10-kick">
+            <b class="u10-kn">11</b>
+            <div class="u10-kmain"><h2 class="u10-kt">Signals &amp; efficiency</h2>
+              <p class="u10-kd">Wins, improvements and risks — plus the what-counts matrix, so the number you see is the number you trust.</p></div>
+            <div class="u10-kmeta"><span class="u10-scope pm-hidden" data-scope></span><span class="u10-km" data-kmeta></span></div>
+          </header>
+          <div class="uw-canvas" data-pmw-page="u10-coaching" data-pmw-types="signals,whatcounts,tokens,provenance"></div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<div class="u10-pop-scrim" id="u10PopScrim" aria-hidden="true"></div>
+<aside class="u10-pop" id="u10Pop" role="dialog" aria-label="Choose the data provider">
+  <div class="u10-pop-head">
+    <span class="u10-pop-ico"><i data-ico="filter"></i></span>
+    <div class="u10-pop-t">
+      <span class="u10-pop-tt">Data provider</span>
+      <span class="u10-pop-td">Choose what the numbers are made of. Provider panels re-scope themselves; account-wide panels stay combined and say so.</span>
+    </div>
+    <button type="button" class="u10-pop-x" id="u10PopX" title="Close" aria-label="Close provider picker"><i data-ico="x"></i></button>
+  </div>
+  <div class="u10-pop-list" id="u10PopList" role="listbox" aria-label="Providers"></div>
+  <div class="u10-pop-foot" id="u10PopFoot"></div>
+</aside>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script src="_shared/usage-widgets.js"></script>
+<script src="_shared/usage-widget-renderers.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var CATALOG = ['quota', 'guard', 'analytics', 'budget', 'cache', 'tools', 'accounts', 'context',
+    'ledger', 'signals', 'whatcounts', 'planGating', 'spend', 'provenance', 'sessions', 'cost', 'tokens'];
+
+  /* curated boards: spans {2,4,6} interlock hole-free on the 2/4/6 track tiers */
+  var BOARDS = {
+    'u10-overview': [
+      { type: 'spend', c: 4, r: 9 }, { type: 'guard', c: 2, r: 9 },
+      { type: 'quota', c: 2, r: 9 }, { type: 'tokens', c: 2, r: 9 }, { type: 'cache', c: 2, r: 9 },
+      { type: 'provenance', c: 6, r: 6 }
+    ],
+    'u10-guard': [{ type: 'guard', c: 6, r: 11 }],
+    'u10-quotas': [
+      { type: 'quota', c: 4, r: 8 }, { type: 'accounts', c: 2, r: 8 },
+      { type: 'cache', c: 2, r: 8 }, { type: 'tokens', c: 2, r: 8 }, { type: 'sessions', c: 2, r: 8 },
+      { type: 'provenance', c: 6, r: 6 }
+    ],
+    'u10-cache': [
+      { type: 'cache', c: 4, r: 8 }, { type: 'tokens', c: 2, r: 8 },
+      { type: 'sessions', c: 4, r: 8 }, { type: 'provenance', c: 2, r: 8 }
+    ],
+    'u10-context': [{ type: 'context', c: 6, r: 10 }],
+    'u10-analytics': [{ type: 'analytics', c: 6, r: 12 }],
+    'u10-budget': [
+      { type: 'spend', c: 4, r: 9 }, { type: 'budget', c: 2, r: 9 },
+      { type: 'whatcounts', c: 4, r: 8 }, { type: 'cost', c: 2, r: 8 }
+    ],
+    'u10-tools': [{ type: 'tools', c: 6, r: 10 }],
+    'u10-accounts': [
+      { type: 'accounts', c: 4, r: 10 }, { type: 'provenance', c: 2, r: 10 },
+      { type: 'whatcounts', c: 4, r: 8 }, { type: 'sessions', c: 2, r: 8 }
+    ],
+    'u10-ledger': [{ type: 'ledger', c: 6, r: 10 }],
+    'u10-coaching': [
+      { type: 'signals', c: 4, r: 10 }, { type: 'whatcounts', c: 2, r: 10 },
+      { type: 'tokens', c: 4, r: 8 }, { type: 'provenance', c: 2, r: 8 }
+    ]
+  };
+
+  /* which panes follow the provider filter vs stay account-wide */
+  var PANE_SCOPE = {
+    overview: 'mixed', guard: 'wide', quotas: 'scoped', cache: 'scoped', context: 'wide',
+    analytics: 'wide', budget: 'wide', tools: 'wide', accounts: 'scoped', ledger: 'scoped', coaching: 'wide'
+  };
+
+  var SHORT = {
+    'claude': 'Claude', 'claude-code': 'Claude Code', 'codex-plan': 'Codex plan', 'codex-api': 'Codex API',
+    'copilot': 'Copilot', 'gemini': 'Gemini', 'antigravity': 'Antigravity', 'cursor': 'Cursor',
+    'opencode': 'OpenCode', 'gemini-ws': 'Gemini WS', 'windsurf': 'Windsurf', 'ollama': 'Ollama'
+  };
+
+  window.PMUsageChrome.boot({ badge: { id: 'U10', name: 'Prism' } });
+  if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+  window.PMWidgetDefs.register(window.PMWidgets, { only: CATALOG });
+
+  var D0 = window.USAGE;   /* pristine dataset; window.USAGE swaps under it */
+  var state = { prov: null };
+  var HANDLES = [];
+
+  function $(id) { return document.getElementById(id); }
+  var D = function () { return window.USAGE; };
+  var fmt = window.USfmt, R = window.USrender;
+  function ic(n) { return R.ic(n); }
+  function reduced() { return R.isRM(); }
+  function flipText(el, txt) {
+    if (!el || el.textContent === txt) return;
+    el.textContent = txt;
+    if (reduced() || !el.animate) return;
+    try {
+      el.animate(
+        [{ opacity: 0, transform: 'translate3d(0, .5em, 0)' }, { opacity: 1, transform: 'none' }],
+        { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+    } catch (e) {}
+  }
+
+  /* ---------- provider joins (ported from U6) ---------- */
+  function quotaIdForProvName(name) {
+    var p = String(name).toLowerCase();
+    if (p === 'claude') return 'claude';
+    if (p === 'claude code') return 'claude-code';
+    if (p.indexOf('codex') === 0) return p.indexOf('api') !== -1 ? 'codex-api' : 'codex-plan';
+    if (p.indexOf('copilot') !== -1) return 'copilot';
+    if (p.indexOf('gemini') === 0) return p.indexOf('workspace') !== -1 ? 'gemini-ws' : 'gemini';
+    if (p.indexOf('antigravity') === 0) return 'antigravity';
+    if (p === 'cursor') return 'cursor';
+    if (p === 'opencode') return 'opencode';
+    if (p.indexOf('ollama') === 0) return 'ollama';
+    if (p.indexOf('windsurf') === 0) return 'windsurf';
+    return null;
+  }
+  function quotaOf(qid) {
+    for (var i = 0; i < D0.quotas.length; i++) if (D0.quotas[i].id === qid) return D0.quotas[i];
+    return null;
+  }
+
+  function buildScoped(qid) {
+    var thr = window.USAGE.budget.warningThreshold;
+    if (!qid) { window.USAGE = D0; return; }
+    var q = quotaOf(qid);
+    var c = JSON.parse(JSON.stringify(D0));
+    c.quotas = c.quotas.filter(function (x) { return x.id === qid; });
+    c.cache = c.cache.filter(function (x) { return quotaIdForProvName(x.name) === qid; });
+    c.accounts = c.accounts.filter(function (a) {
+      return q.name.indexOf(a.prov) === 0 || q.id.indexOf(a.prov.toLowerCase()) === 0;
+    });
+    c.planGating = c.planGating.filter(function (x) { return x.prov === q.name; });
+    c.byModel = c.byModel.filter(function (m) { return quotaIdForProvName(m.provider) === qid; });
+    c.sessions = c.sessions.filter(function (s) { return quotaIdForProvName(s.provider) === qid; });
+    c.bySession = c.bySession.filter(function (s) { return quotaIdForProvName(s.provider) === qid; });
+    c.usedTokensByProvider = c.usedTokensByProvider.filter(function (u) { return quotaIdForProvName(u.provider) === qid; });
+    var utt = 0, any = false;
+    c.usedTokensByProvider.forEach(function (u) { if (u.usedTokens != null) { utt += u.usedTokens; any = true; } });
+    c.usedTokensTotal = any ? utt : null;
+    c.ledger = c.ledger.filter(function (r) { return quotaIdForProvName(r.prov) === qid; });
+    c.livePool = c.livePool.filter(function (r) { return quotaIdForProvName(r.prov) === qid; });
+    c.addons = c.addons.filter(function (a) { return a.prov === q.name || a.prov.indexOf(q.name) === 0; });
+    c.budget.warningThreshold = thr;
+    window.USAGE = c;
+  }
+
+  /* ---------- head + rail + kicker text ---------- */
+  function headLine() {
+    $('u10HeadSub').innerHTML = 'AI cost &amp; usage for <b>' + D0.project + '</b> — one section at a time, composed as widgets. Refreshes every <b>' + D0.refreshMin + ' min</b> · history kept <b>' + D0.retentionDays + ' days</b>';
+    var f = $('u10Fresh');
+    f.classList.remove('stale', 'degraded');
+    if (D0.projectionHealth === 'stale') f.classList.add('stale');
+    if (D0.projectionHealth === 'degraded') f.classList.add('degraded');
+    f.title = 'Projection health: ' + D0.projectionHealth + ' · next auto-refresh ' + D0.nextAutoRefresh;
+    $('u10FreshTxt').textContent = D0.projectionHealth + ' · as of ' + D0.asOf;
+  }
+
+  function railStatus() {
+    var d = D();
+    function dot(name, tone) {
+      var el = document.querySelector('[data-dot="' + name + '"]');
+      if (!el) return;
+      el.className = 'u10-dot ' + tone;
+      el.title = name + ': ' + tone;
+    }
+    function meta(name, txt) {
+      var el = document.querySelector('[data-meta="' + name + '"]');
+      if (el) flipText(el, txt);
+    }
+    var used = d.quotas.filter(function (q) { return q.used != null; });
+    var hot = used.some(function (q) { return q.used >= 90; });
+    var warm = used.some(function (q) { return q.used >= 70; });
+    var blocked = d.guards.some(function (g) { return g.state === 'blocked'; });
+    dot('quotas', hot ? 'err' : (warm ? 'warn' : 'ok'));
+    dot('analytics', 'ok');
+    var projPct = Math.round(d.budget.projectedMTD / d.budget.monthlyLimit * 100);
+    dot('budget', projPct >= 90 ? 'err' : (projPct >= d.budget.warningThreshold ? 'warn' : 'ok'));
+    dot('cache', d.cache.some(function (c) { return c.missReason; }) ? 'warn' : 'ok');
+    dot('tools', d.tools.some(function (t) { return t.err >= 5; }) ? 'warn' : 'ok');
+    dot('accounts', d.accounts.some(function (a) { return a.pressure !== 'ok'; }) ? 'warn' : 'ok');
+    dot('guard', blocked ? 'err' : (d.guards.some(function (g) { return g.state === 'warn'; }) ? 'warn' : 'ok'));
+    var ctxPct = d.contextBudget.totalTokens / d.contextBudget.limit * 100;
+    dot('context', ctxPct >= 90 ? 'warn' : 'ok');
+    dot('ledger', 'ok');
+    dot('overview', blocked || hot ? 'warn' : 'ok');
+
+    meta('overview', 'as of ' + d.asOf);
+    meta('guard', blocked ? '1 blocked' : 'none blocked');
+    meta('quotas', state.prov ? (used[0] ? used[0].win + ' window' : 'no reading') : d.quotas.length + ' providers');
+    meta('cache', d.cache.length ? '\u2212$' + d.cache.reduce(function (s, c) { return s + (c.save || 0); }, 0).toFixed(2) + ' today' : 'no cache data');
+    meta('context', fmt.tok(d.contextBudget.totalTokens) + '/' + fmt.tok(d.contextBudget.limit));
+    meta('analytics', 'stacked · 3 windows');
+    meta('budget', '$' + Math.round(d.budget.spentMTD) + ' / $' + d.budget.monthlyLimit);
+    meta('tools', d.tools.length + ' tools · 24h');
+    meta('accounts', d.accounts.length ? d.accounts.length + ' accounts' : 'no accounts');
+    meta('ledger', d.ledger.length + ' events');
+    meta('coaching', d.efficiency.grade + ' · ' + d.efficiency.score);
+
+    var provDot = 'ok';
+    if (state.prov) {
+      var q = quotaOf(state.prov);
+      provDot = q && q.used != null ? (q.used >= 90 ? 'err' : (q.used >= 70 ? 'warn' : 'ok')) : 'info';
+      meta('provider', SHORT[state.prov] || 'scoped');
+    } else {
+      meta('provider', 'all combined');
+    }
+    dot('provider', provDot);
+  }
+
+  function kickerMeta() {
+    var d = D();
+    var q = state.prov ? quotaOf(state.prov) : null;
+    var km = {
+      overview: 'as of ' + d.asOf + ' · next ' + d.nextAutoRefresh,
+      guard: d.guards.length + ' decisions · ' + d.guards.filter(function (g) { return g.state === 'blocked'; }).length + ' blocked',
+      quotas: state.prov && q ? q.name + ' · ' + (q.windows ? q.windows.length : 0) + ' windows' : d.quotas.length + ' providers · window model each',
+      cache: (function () { var m = d.cache.filter(function (c) { return c.state !== 'unsupported'; }).length; return m + ' reporting · ' + (d.cache.length - m) + ' unsupported'; })(),
+      context: fmt.tok(d.contextBudget.totalTokens) + ' / ' + fmt.tok(d.contextBudget.limit) + ' · ' + Math.round(d.contextBudget.totalTokens / d.contextBudget.limit * 100) + '%',
+      analytics: (d.chart['24h'] ? d.chart['24h'].note : '') + ' · stacked shares',
+      budget: 'limit ' + fmt.cost(d.budget.monthlyLimit) + ' · warn at ' + d.budget.warningThreshold + '%',
+      tools: d.tools.length + ' tools · last 24h',
+      accounts: d.accounts.length + ' accounts · requested vs effective',
+      ledger: d.ledger.length + ' of ' + D0.ledger.length + ' events',
+      coaching: d.efficiency.grade + ' · ' + d.efficiency.score
+    };
+    document.querySelectorAll('.u10-pane').forEach(function (p) {
+      var name = p.getAttribute('data-pane');
+      var m = p.querySelector('[data-kmeta]');
+      if (m) flipText(m, km[name] || '');
+      var chip = p.querySelector('[data-scope]');
+      if (!chip) return;
+      if (!state.prov) { chip.classList.add('pm-hidden'); return; }
+      chip.classList.remove('pm-hidden');
+      var kind = PANE_SCOPE[name] || 'wide';
+      chip.className = 'u10-scope ' + kind;
+      if (kind === 'scoped') chip.innerHTML = ic('filter') + 'scoped · ' + (SHORT[state.prov] || 'provider');
+      else if (kind === 'mixed') chip.innerHTML = ic('filter') + 'mixed scope';
+      else chip.innerHTML = ic('globe2') + 'account-wide';
+    });
+  }
+
+  function updateScopeChip() {
+    var chip = $('u10ScopeChip');
+    if (!chip) return;
+    var txt = state.prov ? (SHORT[state.prov] || 'scoped') : 'All';
+    chip.classList.toggle('scoped', !!state.prov);
+    if (chip.textContent !== txt) {
+      chip.textContent = txt;
+      if (!reduced() && chip.animate) {
+        try {
+          chip.animate(
+            [{ transform: 'translate3d(0, .6em, 0)', opacity: 0 }, { transform: 'translate3d(0,0,0)', opacity: 1 }],
+            { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+        } catch (e) {}
+      }
+    }
+  }
+
+  /* ---------- provider pop-out ---------- */
+  var pop = $('u10Pop'), scrim = $('u10PopScrim'), popList = $('u10PopList');
+  var popOpen = false, lastFocus = null;
+
+  function provOrder() {
+    return D0.quotas.slice().sort(function (a, b) {
+      var au = a.used == null ? -1 : a.used, bu = b.used == null ? -1 : b.used;
+      if (au !== bu) return bu - au;
+      return a.name.localeCompare(b.name);
+    });
+  }
+  function resetText(q) {
+    if (q.reset == null) return 'no reset exposed';
+    if (q.reset === 'unknown') return 'unknown reset';
+    return 'resets ' + q.reset;
+  }
+  function buildPopList() {
+    var html = '<button type="button" class="u10-pop-row u10-all" role="option" aria-selected="' + (!state.prov) + '" tabindex="-1" data-qid="" style="--u10-pi:0">' +
+      '<span class="u10-pop-ico2">' + ic('layers') + '</span>' +
+      '<span class="u10-pop-main">' +
+        '<span class="u10-pop-top"><span class="u10-pop-name">All providers</span><span class="u10-pop-val">' + D0.quotas.length + ' combined</span></span>' +
+        '<span class="u10-pop-meta">the default view · every provider, one set of numbers</span>' +
+      '</span><span class="u10-pop-ck">' + ic('check') + '</span></button>';
+    html += '<div class="u10-pop-g">Providers · by pressure</div>';
+    html += provOrder().map(function (q, i) {
+      var has = q.used != null;
+      var tone = has ? (q.used >= 90 ? 'err' : (q.used >= 70 ? 'warn' : 'ok')) : 'mute';
+      var val = has ? '<span class="u10-pop-val' + (q.used >= 90 ? ' hot' : (q.used >= 70 ? ' warm' : '')) + '">' + q.used + '%</span>'
+        : '<span class="u10-pop-val" style="color:var(--text-muted)">\u2014</span>';
+      var bar = has ? '<span class="u10-pop-bar"><span class="us-fill ' + R.fillTone(q.used) + '" data-fill="' + q.used + '" style="--wf:' + q.used + '%"></span></span>' : '';
+      return '<button type="button" class="u10-pop-row" role="option" aria-selected="' + (state.prov === q.id) + '" tabindex="-1" data-qid="' + q.id + '" style="--u10-pi:' + (i + 1) + '" title="' + q.name + ' · ' + q.plan + '">' +
+        '<span class="u10-pop-dot ' + tone + '"></span>' +
+        '<span class="u10-pop-main">' +
+          '<span class="u10-pop-top"><span class="u10-pop-name">' + q.name + '</span>' + val + '</span>' +
+          bar +
+          '<span class="u10-pop-meta">' + q.plan + ' · ' + q.win + ' · ' + resetText(q) + '</span>' +
+        '</span><span class="u10-pop-ck">' + ic('check') + '</span></button>';
+    }).join('');
+    popList.innerHTML = html;
+    updatePopSel();
+    R.animateFills(popList);
+  }
+  function updatePopSel() {
+    popList.querySelectorAll('.u10-pop-row').forEach(function (r) {
+      var on = r.getAttribute('data-qid') === (state.prov || '');
+      r.classList.toggle('on', on);
+      r.setAttribute('aria-selected', String(on));
+    });
+    var n = state.prov ? D0.ledger.filter(function (r) { return quotaIdForProvName(r.prov) === state.prov; }) : D0.ledger;
+    var cost = n.reduce(function (s, r) { return s + (r.cost || 0); }, 0);
+    var who = state.prov ? quotaOf(state.prov).name : 'all providers';
+    $('u10PopFoot').innerHTML = '<b>' + n.length + '</b> ledger events · <b>' + fmt.cost(cost) + '</b> measured cost for <b>' + who + '</b>. Global panels (analytics, budget, tools, context, guard) always stay account-wide.';
+  }
+  function placePop() {
+    var body = document.querySelector('.u10-body');
+    var r = body ? body.getBoundingClientRect() : { right: window.innerWidth - 16, top: 60 };
+    var w = Math.min(348, window.innerWidth - 24);
+    pop.style.width = w + 'px';
+    var left = Math.max(12, r.right - 16 - w);
+    var top = Math.max(12, r.top + 2);
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    requestAnimationFrame(function () {
+      var h = pop.offsetHeight;
+      if (top + h > window.innerHeight - 12) pop.style.top = Math.max(12, window.innerHeight - h - 12) + 'px';
+    });
+  }
+  function openPop() {
+    if (popOpen) return;
+    popOpen = true;
+    lastFocus = document.activeElement;
+    buildPopList();
+    placePop();
+    scrim.classList.add('on');
+    pop.classList.add('on');
+    var sel = popList.querySelector('.u10-pop-row.on') || popList.querySelector('.u10-pop-row');
+    if (sel) sel.focus();
+  }
+  function closePop() {
+    if (!popOpen) return;
+    popOpen = false;
+    scrim.classList.remove('on');
+    pop.classList.remove('on');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function pickProv(qid, rowEl) {
+    if (rowEl && !reduced()) rowEl.classList.add('pick');
+    var changed = state.prov !== qid;
+    state.prov = qid || null;
+    updatePopSel();
+    setTimeout(function () {
+      closePop();
+      if (changed) applyScope();
+    }, reduced() ? 0 : 190);
+  }
+  scrim.addEventListener('click', closePop);
+  $('u10PopX').addEventListener('click', closePop);
+  popList.addEventListener('click', function (e) {
+    var row = e.target.closest('.u10-pop-row');
+    if (!row) return;
+    pickProv(row.getAttribute('data-qid'), row);
+  });
+  popList.addEventListener('keydown', function (e) {
+    var rows = Array.prototype.slice.call(popList.querySelectorAll('.u10-pop-row'));
+    var idx = rows.indexOf(document.activeElement);
+    var next = null;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = Math.min(idx + 1, rows.length - 1);
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = Math.max(idx - 1, 0);
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = rows.length - 1;
+    else if ((e.key === 'Enter' || e.key === ' ') && idx > -1) { e.preventDefault(); pickProv(rows[idx].getAttribute('data-qid'), rows[idx]); return; }
+    if (next == null || !rows[next]) return;
+    e.preventDefault();
+    rows[next].focus();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && popOpen) closePop(); });
+  window.addEventListener('resize', function () { if (popOpen) placePop(); });
+
+  function applyScope() {
+    buildScoped(state.prov);
+    HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
+    railStatus();
+    kickerMeta();
+    updateScopeChip();
+    var fl = $('u10ScopeFlash');
+    if (fl && !reduced() && fl.animate) {
+      try { fl.animate([{ opacity: 0 }, { opacity: 1, offset: .3 }, { opacity: 0 }], { duration: 640, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }); } catch (e) {}
+    }
+  }
+
+  /* ---------- depth flight (U4's calm page-stack switch) ---------- */
+  var DEPTH = { cur: null, flight: null };
+  function railItems() { return Array.prototype.slice.call(document.querySelectorAll('.u10-rail .u10-item[data-tab]')); }
+  function paneEl(n) { return document.querySelector('.u10-pane[data-pane="' + n + '"]'); }
+  function moProbe(prop, cssProp, fb) {
+    var probe = document.createElement('i');
+    probe.style.cssText = 'position:absolute;visibility:hidden;' + cssProp + ':var(' + prop + ')';
+    document.documentElement.appendChild(probe);
+    var v = getComputedStyle(probe)[cssProp === 'transition-duration' ? 'transitionDuration' : 'transitionTimingFunction'];
+    document.documentElement.removeChild(probe);
+    return v || fb;
+  }
+  function moDur(name, fb) {
+    var s = moProbe(name, 'transition-duration', fb + 'ms');
+    var v = parseFloat(s);
+    if (!isFinite(v) || v <= 0) return fb;
+    return s.indexOf('ms') < 0 ? v * 1000 : v;
+  }
+  function moEase(name, fb) {
+    var v = moProbe(name, 'transition-timing-function', fb).trim();
+    return v && v !== 'ease' ? v : fb;
+  }
+  function currentPane() {
+    if (DEPTH.cur) return DEPTH.cur;
+    var p = document.querySelector('.u10-pane:not(.pm-hidden)');
+    return p ? p.getAttribute('data-pane') : 'overview';
+  }
+  function settlePanes(name) {
+    document.querySelectorAll('.u10-pane').forEach(function (p) {
+      var on = p.getAttribute('data-pane') === name;
+      p.classList.toggle('pm-hidden', !on);
+      p.classList.remove('u10-leaving', 'u10-entering');
+      if (!on) p.classList.remove('u10-anim');
+    });
+  }
+  function landFlight(f) {
+    if (!f || f.done) return;
+    f.done = true;
+    if (DEPTH.flight === f) DEPTH.flight = null;
+    clearTimeout(f.timer);
+    if (f.aIn) { f.aIn.onfinish = null; f.aIn.cancel(); }
+    if (f.aOut) { f.aOut.onfinish = null; f.aOut.cancel(); }
+    settlePanes(f.target);
+  }
+  /* content follow-through: the pane shell arrives first (depth flight), the
+     widgets inside settle a beat later in a staggered wave. Fill is backwards
+     only, so hover-lift / FLIP / drag are never frozen afterwards. */
+  function presentPane(name) {
+    var pane = paneEl(name);
+    if (!pane || reduced()) return;
+    (pane._u10Anims || []).forEach(function (a) { try { a.cancel(); } catch (e) {} });
+    pane._u10Anims = [];
+    var follow = moDur('--mo-follow-dur', 560);
+    var stag = moDur('--mo-stagger', 24);
+    var i = 0;
+    pane.querySelectorAll('.uw-addbar, .uw-canvas .uw').forEach(function (el) {
+      var a = el.animate(
+        [{ opacity: 0, transform: 'translate3d(0, 14px, 0)' }, { opacity: 1, transform: 'none' }],
+        { duration: follow, delay: 110 + Math.min(i++, 12) * stag, easing: 'cubic-bezier(0.25, 1.45, 0.45, 1)', fill: 'backwards' });
+      pane._u10Anims.push(a);
+    });
+    if (!pane._u10Pd) {
+      pane._u10Pd = true;
+      pane.addEventListener('pointerdown', function () {
+        (pane._u10Anims || []).forEach(function (a) { try { a.cancel(); } catch (e) {} });
+      });
+    }
+  }
+  function goTo(name) {
+    if (!name || !paneEl(name)) return;
+    landFlight(DEPTH.flight);
+    var cur = currentPane();
+    if (name === cur) return;
+    var items = railItems();
+    var order = items.map(function (it) { return it.getAttribute('data-tab'); });
+    var deeper = order.indexOf(name) > order.indexOf(cur);
+    items.forEach(function (it) { it.classList.toggle('active', it.getAttribute('data-tab') === name); });
+    placeRailInd(true);
+    DEPTH.cur = name;
+    var out = paneEl(cur), inn = paneEl(name);
+    var dIn = moDur('--mo-follow-dur', 560);
+    if (reduced() || dIn <= 0) { settlePanes(name); return; }
+    out.classList.add('u10-anim', 'u10-leaving');
+    inn.classList.add('u10-anim', 'u10-entering');
+    inn.classList.remove('pm-hidden');
+    var dOut = Math.round(moDur('--mo-settle-dur', 300) * 1.15);
+    var eSettle = moEase('--mo-settle-ease', 'cubic-bezier(0.22, 1, 0.36, 1)');
+    var eFollow = moEase('--mo-follow-ease', 'cubic-bezier(0.25, 1.45, 0.45, 1)');
+    var f = { target: name, out: out, inn: inn, aIn: null, aOut: null, timer: null, done: false };
+    DEPTH.flight = f;
+    f.aIn = inn.animate(
+      [{ opacity: 0, transform: deeper ? 'translateY(22px) scale(0.972)' : 'translateY(-16px) scale(1.02)' },
+       { opacity: 1, transform: 'none' }],
+      { duration: dIn, easing: eFollow });
+    f.aOut = out.animate(
+      [{ opacity: 1, transform: 'none' },
+       { opacity: 0, transform: deeper ? 'translateY(-14px) scale(0.982)' : 'translateY(12px) scale(1.016)' }],
+      { duration: dOut, easing: eSettle, fill: 'forwards' });
+    f.aIn.onfinish = function () { landFlight(f); };
+    f.timer = setTimeout(function () { landFlight(f); }, Math.max(dIn, dOut) + 240);
+    inn.scrollTop = 0;
+    presentPane(name);
+  }
+  document.querySelector('.u10-rail').addEventListener('click', function (ev) {
+    var prov = ev.target.closest('[data-prov-open]');
+    if (prov) { ev.stopPropagation(); if (popOpen) closePop(); else openPop(); return; }
+    var tab = ev.target.closest('[data-tab]');
+    if (!tab) return;
+    ev.stopPropagation();
+    goTo(tab.getAttribute('data-tab'));
+  });
+  document.querySelector('.u10-rail').addEventListener('keydown', function (ev) {
+    var items = Array.prototype.slice.call(document.querySelectorAll('.u10-rail .u10-item'));
+    var idx = items.indexOf(document.activeElement);
+    if (idx === -1) return;
+    var next = null;
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') next = Math.min(idx + 1, items.length - 1);
+    else if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') next = Math.max(idx - 1, 0);
+    else if (ev.key === 'Home') next = 0;
+    else if (ev.key === 'End') next = items.length - 1;
+    if (next == null || !items[next]) return;
+    ev.preventDefault();
+    items[next].focus();
+  });
+
+  /* ---------- sliding rail indicator ---------- */
+  var railInd = null;
+  function placeRailInd(animate) {
+    var act = document.querySelector('.u10-rail .u10-item.active');
+    if (!railInd || !act) return;
+    if (!animate) railInd.classList.add('snap');
+    railInd.style.top = act.offsetTop + 'px';
+    railInd.style.left = act.offsetLeft + 'px';
+    railInd.style.width = act.offsetWidth + 'px';
+    railInd.style.height = act.offsetHeight + 'px';
+    if (!animate) { void railInd.offsetWidth; railInd.classList.remove('snap'); }
+  }
+  function initRailInd() {
+    var rail = document.querySelector('.u10-rail');
+    railInd = document.createElement('span');
+    railInd.className = 'u10-railind';
+    railInd.setAttribute('aria-hidden', 'true');
+    rail.insertBefore(railInd, rail.firstChild);
+    placeRailInd(false);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { if (railInd) railInd.classList.add('live'); });
+    });
+    window.addEventListener('resize', function () { placeRailInd(false); });
+    if (window.ResizeObserver) new ResizeObserver(function () { placeRailInd(false); }).observe(rail);
+  }
+
+  /* ---------- ledger sort header keyboard support (U9 pattern) ---------- */
+  function wireSortKeys(cv) {
+    function decor(th) {
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      th.setAttribute('aria-sort', th.classList.contains('on') ? (th.classList.contains('rev') ? 'descending' : 'ascending') : 'none');
+    }
+    cv.querySelectorAll('th[data-wd-sort]').forEach(decor);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.matches && n.matches('th[data-wd-sort]')) decor(n);
+          if (n.querySelectorAll) n.querySelectorAll('th[data-wd-sort]').forEach(decor);
+        });
+      });
+    }).observe(cv, { childList: true, subtree: true });
+    cv.addEventListener('keydown', function (e) {
+      var th = e.target.closest && e.target.closest('th[data-wd-sort]');
+      if (!th || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var key = th.getAttribute('data-wd-sort');
+      var uw = th.closest('.uw');
+      th.click();
+      requestAnimationFrame(function () {
+        var scope = (uw && uw.isConnected) ? uw : cv;
+        var nt = scope.querySelector('th[data-wd-sort="' + key + '"]');
+        if (nt) { decor(nt); nt.focus(); }
+      });
+    });
+  }
+
+  /* ---------- mount canvases ---------- */
+  document.querySelectorAll('.uw-canvas[data-pmw-page]').forEach(function (cv) {
+    var types = (cv.getAttribute('data-pmw-types') || '').split(',').filter(Boolean);
+    var pageId = cv.getAttribute('data-pmw-page');
+    var h = window.PMWidgets.mount(cv, { pageId: pageId, types: types, defaultBoard: BOARDS[pageId] || null });
+    HANDLES.push(h);
+    window.PMWidgetDefs.wireCanvas(cv);
+    wireSortKeys(cv);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType !== 1) return;
+          if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(n);
+        });
+      });
+    }).observe(cv, { childList: true, subtree: true });
+    if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(cv);
+  });
+
+  /* ---------- refresh ---------- */
+  $('u10Refresh').addEventListener('click', function () {
+    var b = this; b.classList.add('spinning');
+    $('u10FreshTxt').textContent = 'refreshing\u2026';
+    $('u10Fresh').classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u10Fresh').classList.remove('stale');
+      headLine();
+      HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
+      railStatus();
+      kickerMeta();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+
+  /* ---------- boot ---------- */
+  headLine();
+  railStatus();
+  kickerMeta();
+  updateScopeChip();
+  initRailInd();
+  document.querySelectorAll('.u10-rail .u10-item').forEach(function (it, i) { it.style.setProperty('--u10-ri', String(i)); });
+  document.querySelectorAll('.u10-pop-head i[data-ico], .u10-pop-x i[data-ico]').forEach(function (el) {
+    el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className);
+  });
+  R.deText(document);
+})();
+</script>
+</body>
+</html>

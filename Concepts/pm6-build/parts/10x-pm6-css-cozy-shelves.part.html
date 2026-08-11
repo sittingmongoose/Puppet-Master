@@ -1,0 +1,1512 @@
+<style id="pm6-css-cozy-shelves">
+/* ============================================================================
+   Cozy Shelves panel layer — ported from Concepts/rail-concepts (c2 winning
+   concept + c2 files concept + _shared/base.css primitives) per the 2026-07-27
+   Cozy Shelves reconciliation. Contracts: Concepts/ChatGuiUpdates2.md
+   "Cozy Shelves rail concepts (2026-07-27)" and Plans/FinalGUISpec.md
+   F3-471..F3-481 (width envelope 240/280/480, unified shelf expander, motion
+   portability map, --cat-* palette indirection, one-shot panel enter,
+   measure-based label fitting, unclipped portal popups, direct-child chevron
+   rule). No raw hex outside [data-theme]-scoped rules (check_css gate).
+   ============================================================================ */
+
+/* ---- cat token layer + reduced-motion supplement + icon sizing (from _shared/base.css) ---- */
+/* ---------------------------------------------------------------------------
+   Category palette layer (concept-layer addition, promotes to the PM7 token sections).
+   Shelf category tints bind to --cat-* indirection tokens, NEVER directly to
+   accent tokens: in retro-dark --accent-primary IS --accent-lime, and in
+   basic-light warning==orange and magenta reads as error. Defaults alias the
+   current colors (6 of 8 themes render pixel-identical); only the colliding
+   themes override, using colors already in their own token tables.
+   --accent-primary stays reserved for selection / primary action.
+   --------------------------------------------------------------------------- */
+:root {
+  --cat-blue: var(--accent-blue);
+  --cat-green: var(--accent-lime);
+  --cat-purple: var(--accent-magenta);
+  --cat-amber: var(--accent-orange);
+  --cat-warn: var(--accent-warning);
+  --cat-neutral: var(--text-muted);
+  --cat-fail: var(--graph-failed);
+}
+[data-theme="retro-dark"] {
+  --cat-green: #4CAF50; /* its --graph-passed; frees #00FF41 for selection only */
+  --cat-blue: #2196F3;  /* its --graph-planning; fixes 2.06:1 ink on #1A1A1A */
+}
+[data-theme="basic-light"] {
+  --cat-purple: #9C27B0; /* its --graph-gating; splits from error red */
+  --cat-amber: #F57C00;  /* splits category amber from --accent-warning */
+}
+
+/* Reduced-motion supplement: the theme kill-switch zeroes durations but not
+   delays, so closed sprout menus lingered ~220ms as inert ghosts and late
+   scroll-reveals snapped in after their stagger delay. */
+html[data-reduced-motion="1"] *,
+html[data-motion="reduced"] *,
+html[data-reduced-motion="1"] *::before,
+html[data-motion="reduced"] *::before,
+html[data-reduced-motion="1"] *::after,
+html[data-motion="reduced"] *::after { transition-delay: 0ms !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-delay: 0ms !important; }
+}
+svg { display: block; flex-shrink: 0; }
+/* icon placeholder hydration targets: <i data-ico="name" class="pm-ico ..."> */
+i[data-ico] { display: inline-flex; align-items: center; justify-content: center; }
+i[data-ico] > svg { width: 100%; height: 100%; display: block; }
+.pm-ico { width: 14px; height: 14px; }
+.pm-ico.sm { width: 11px; height: 11px; }
+.pm-ico.lg { width: 18px; height: 18px; }
+
+/* ---- menu portal/ctx additions (from _shared/base.css) ---- */
+.pm6-tb-menu-left, .pm6-tb-menu.pm6-tb-menu-left { right: auto; left: 0; --pm6-sprout-ox: 12%; }
+.pm-ctx-menu { position: fixed; max-height: 70vh; overflow-y: auto; }
+body > .pm6-tb-menu.is-open,
+body > .pm6-tb-menu.is-closing { z-index: 400; }
+.pm6-tb-menu-meta { flex: none !important; font-size: 10px; color: var(--text-muted); font-weight: 500; }
+
+/* ---- one-shot panel enter (from _shared/base.css) ---- */
+#sidePanelSlot .side-panel-view { position: relative; }
+.side-panel-view.active.pm-panel-enter { animation: railPanelIn .22s var(--ease-out); }
+@keyframes railPanelIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+.pm-hidden { display: none !important; }
+
+/* ---- cozy primitives (from _shared/base.css) ---- */
+.pm-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .04em;
+  padding: 1.5px 7px; border-radius: var(--radius-pill);
+  background: var(--accent-soft); color: var(--accent-primary);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  white-space: nowrap; flex: none;
+  max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+}
+.pm-chip .chip-full, .pm-chip .chip-abbr { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pm-chip-ok { background: color-mix(in srgb, var(--graph-passed) 14%, transparent); color: var(--graph-passed); border-color: color-mix(in srgb, var(--graph-passed) 32%, transparent); }
+.pm-chip-warn { background: color-mix(in srgb, var(--accent-warning) 14%, transparent); color: var(--accent-warning); border-color: color-mix(in srgb, var(--accent-warning) 32%, transparent); }
+.pm-chip-err { background: color-mix(in srgb, var(--graph-failed) 14%, transparent); color: var(--graph-failed); border-color: color-mix(in srgb, var(--graph-failed) 32%, transparent); }
+
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; display: inline-block; }
+.dot-ok { background: var(--graph-passed); }
+.dot-err { background: var(--graph-failed); }
+.dot-warn { background: var(--accent-warning); }
+.dot-run { background: var(--graph-running); animation: dotPulse 1.4s var(--ease-out) infinite; }
+.dot-idle { background: var(--graph-pending); }
+@keyframes liveRail { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@keyframes dotPulse { 0%, 100% { opacity: .45; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
+
+.pm-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  padding: 6px 10px; min-height: 28px;
+  background: var(--surface-elevated);
+  border: var(--border-width-inner, var(--border-width)) solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.pm-btn svg { width: 12px; height: 12px; }
+.pm-btn:hover { color: var(--text-primary); border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border)); box-shadow: var(--elev-1); }
+/* press feedback consolidated in the motion layer (scale .96) — keep one rule */
+.pm-btn[disabled], .pm-btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; box-shadow: none; }
+.pm-btn-primary {
+  background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated));
+  border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
+  color: var(--text-primary);
+}
+.pm-btn-primary:hover { background: color-mix(in srgb, var(--accent-primary) 26%, var(--surface-elevated)); }
+.pm-minibtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; flex: none;
+  border: 1px solid var(--border-light); border-radius: var(--radius-xs);
+  color: var(--text-muted); background: transparent;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pm-minibtn svg { width: 12px; height: 12px; }
+.pm-minibtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface-elevated); }
+.pm-minibtn.danger:hover { color: var(--accent-error); border-color: color-mix(in srgb, var(--accent-error) 50%, transparent); background: color-mix(in srgb, var(--accent-error) 8%, transparent); }
+.pm-minibtn[disabled], .pm-minibtn[aria-disabled="true"] { opacity: .4; cursor: not-allowed; }
+
+.pm-input {
+  display: flex; align-items: center; gap: var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width-inner, var(--border-width)) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 6px 9px; color: var(--text-muted);
+  transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+}
+.pm-input:focus-within { border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.pm-input input { flex: 1; min-width: 0; background: none; border: none; outline: none; font-size: 12px; color: var(--text-primary); }
+.pm-input input::placeholder { color: var(--text-muted); }
+.pm-input-ico { width: 13px; height: 13px; }
+
+.pm-btnrow { display: flex; gap: var(--sm); margin-bottom: var(--md); }
+.pm-btnrow .pm-btn { flex: 1; min-width: 0; }
+.pm-footnote { font-size: 10px; color: var(--text-muted); line-height: 1.45; padding: 2px 0 var(--md); }
+.pm-note {
+  display: flex; gap: var(--md); align-items: flex-start;
+  font-size: 10.5px; color: var(--text-secondary); line-height: 1.45;
+  background: color-mix(in srgb, var(--accent-warning) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-warning) 24%, transparent);
+  border-radius: var(--radius-sm);
+  padding: var(--md);
+  margin-bottom: var(--md);
+}
+.pm-note svg { width: 13px; height: 13px; color: var(--accent-warning); margin-top: 1px; }
+.pm-note-glyph { flex: none; }
+.pm-empty { font-size: 10.5px; color: var(--text-muted); padding: var(--md); border: 1px dashed var(--border-light); border-radius: var(--radius-sm); margin-bottom: var(--md); }
+
+/* segmented chip row (docker subviews, artifact filters) */
+.pm-chiprow { display: flex; flex-wrap: wrap; gap: var(--sm); padding: 0 var(--lg) var(--md); flex: none; }
+.pm-chipbtn {
+  font-size: 10px; font-weight: 700; letter-spacing: .03em;
+  padding: 4px 9px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border-light); color: var(--text-secondary); background: none; cursor: pointer;
+  transition: all var(--motion-fast) var(--ease-out); white-space: nowrap;
+}
+.pm-chipbtn:hover { color: var(--text-primary); border-color: var(--border); }
+.pm-chipbtn.active { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+.pm-gs { font-family: var(--mono-font); font-size: 9px; font-weight: 700; width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-xs); margin-left: auto; flex: none; }
+.pm-gs-mod { color: var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 14%, transparent); }
+.pm-gs-staged { color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); }
+
+/* ---- accordion spring + acc inner (from _shared/base.css) ---- */
+/* spring accordions: the body animates its row track 0fr -> 1fr. chrome.js
+   wraps the body's children in .pm-acc-inner (the required overflow clip). */
+[data-acc] > .cr-acc-b,
+[data-acc] > .sh-wt-b,
+[data-acc] > .sh-accb,
+[data-acc] > .sr-wt-b,
+[data-acc] > .st-wt-b,
+[data-acc] > .bA-accb,
+[data-acc] > .bB-accb,
+[data-acc] > .dA-accb,
+[data-acc] > .dB-accb,
+[data-acc] > .aA-accb,
+[data-acc] > .aB-accb {
+  display: grid !important;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--motion-med) var(--ease-spring),
+    opacity var(--motion-med) var(--ease-out);
+}
+[data-acc].open > .cr-acc-b,
+[data-acc].open > .sh-wt-b,
+[data-acc].open > .sh-accb,
+[data-acc].open > .sr-wt-b,
+[data-acc].open > .st-wt-b,
+[data-acc].open > .bA-accb,
+[data-acc].open > .bB-accb,
+[data-acc].open > .dA-accb,
+[data-acc].open > .dB-accb,
+[data-acc].open > .aA-accb,
+[data-acc].open > .aB-accb { grid-template-rows: 1fr; opacity: 1; }
+.pm-acc-inner { overflow: hidden; min-height: 0; }
+
+/* ---- live shimmer + grain (from _shared/base.css) ---- */
+.pm-live { position: relative; overflow: hidden; }
+.pm-live::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-primary) 11%, transparent), transparent);
+  transform: translateX(-100%);
+  animation: pmShimmer 2s var(--ease-out) infinite;
+}
+@keyframes pmShimmer { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+
+/* a gentle, theme-tied ambient grain on the side panel so it never reads flat */
+.side-panel-view::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--accent-primary) 5%, transparent), transparent 55%);
+  opacity: .8;
+}
+.side-panel-view > * { position: relative; z-index: 1; }
+
+/* ===========================================================================
+   POLISH LAYER — fill cards, occupancy, wide-band enrichment, glass edge,
+   living home backdrop. All shared so every concept stays consistent.
+   =========================================================================== */
+
+/* ---- sumcard/occ/li/acts/rmetric/2col + wtier shrinks (from _shared/base.css) ---- */
+.pm-sumcard { border: 1px solid var(--border-light); border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+  padding: var(--md) var(--lg); margin-top: var(--md); }
+.pm-sumcard-h { font-family: var(--display-font); font-size: 8.5px; letter-spacing: 1.3px;
+  color: var(--text-muted); margin-bottom: var(--sm); display: flex; align-items: center; gap: var(--md); }
+.pm-sumcard-h .c { margin-left: auto; font-family: var(--mono-font); color: var(--text-secondary); letter-spacing: 0; font-size: 9px; }
+/* occupancy / meter row */
+.pm-occ { display: flex; align-items: center; gap: var(--md); padding: 3px 0; font-size: 10px; min-width: 0; }
+.pm-occ .nm { flex: 0 1 auto; max-width: 46%; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-occ .bar { flex: 1 1 auto; height: 5px; border-radius: 3px; background: var(--border-light); overflow: hidden; min-width: 24px; }
+.pm-occ .bar i { display: block; height: 100%; border-radius: 3px; background: var(--accent-lime); transition: width .6s var(--ease-out); }
+.pm-occ .bar.warn i { background: var(--accent-warning); }
+.pm-occ .bar.err i { background: var(--graph-failed); }
+.pm-occ .v { flex: none; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+/* compact list row inside a sumcard */
+.pm-li { display: flex; align-items: center; gap: var(--md); padding: 4px 0; min-width: 0;
+  border-top: 1px solid var(--border-light); }
+.pm-li:first-of-type { border-top: none; }
+.pm-li .dot { width: 7px; height: 7px; }
+.pm-li-n { flex: 0 1 auto; max-width: 50%; font-size: 10.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-li-m { flex: 1 1 auto; min-width: 0; font-size: 9.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+.pm-acts { display: flex; flex-wrap: wrap; gap: var(--sm); margin-top: var(--md); }
+.pm-acts .pm-btn { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* right-aligned inline metric — hidden until the wide band, where it makes
+   stretched rows earn their width (F3-196: richer at 480+) */
+.pm-rmetric { display: none; margin-left: auto; flex: none; align-items: center; gap: 4px;
+  font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); white-space: nowrap; }
+.side-panel-slot[data-wtier="wide"] .pm-rmetric { display: inline-flex; }
+/* 2-col opt-in at the wide band */
+.side-panel-slot[data-wtier="wide"] .pm-2col { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--lg); }
+
+/* responsive: at the mid band, shrink the chips that flank a receipt title so
+   the title is not crushed to a sliver */
+.side-panel-slot[data-wtier="mid"] .cr-fam,
+.side-panel-slot[data-wtier="mid"] .sh-fam,
+.side-panel-slot[data-wtier="mid"] .st-fam,
+.side-panel-slot[data-wtier="mid"] .pt-fam,
+.side-panel-slot[data-wtier="mid"] .sr-fam { font-size: 7.5px; padding: 1px 5px; }
+.side-panel-slot[data-wtier="mid"] .cr-r1 > .pm-chip,
+.side-panel-slot[data-wtier="mid"] .sh-r1 > .pm-chip,
+
+/* ---- c2 page layer (panel-specific) ---- */
+/* =====================================================================
+   C2 — COZY SHELVES
+   The rail as a set of soft, category-tinted shelves: rounded pill
+   banners, comfortable pill rows, gentle lift on hover. Tints derive from
+   the per-shelf category accent so it stays theme-correct on all 8 themes
+   (no hardcoded pastels). The opposite register to C1's hard gauges —
+   warmth, rounded corners, breathing room — collapsing gracefully to a
+   tinted tab strip at minimum width.
+
+   Unified chrome (this revision): a single segmented tab bar (.pm-segtab:
+   line-icon stacked over an uppercase label, active = accent + 2px
+   underline) drives the sub-views of every multi-section panel, and one
+   compact button vocabulary (square per-row icon buttons, equal-width
+   segmented action rows, pill text buttons) replaces the old scattered
+   pills. Shelves no longer clip their children, so the PM sprout menus
+   float cleanly over the shelf below them.
+   ===================================================================== */
+.side-panel-view { background: var(--surface); }
+
+/* pill banner head */
+.sh-banner {
+  flex: none; display: flex; align-items: center; gap: var(--md);
+  /* padding/margin promoted from the ship-tested min band: the --lg well read
+     as dead air at every width, not just under 250px */
+  padding: var(--md); min-width: 0; overflow: visible;
+  margin: var(--sm) var(--sm) 0;
+  border-radius: var(--radius-lg);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  position: relative; z-index: 3;
+}
+.sh-bico {
+  width: 26px; height: 26px; flex: none; border-radius: var(--radius-pill);
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  color: var(--accent-primary);
+}
+.sh-bico svg { width: 13px; height: 13px; }
+/* banner title keeps a guaranteed share so the status pill yields (ellipsizes) first at 240-280px (retro fonts run wide) */
+.sh-title { font-family: var(--display-font); font-size: 11px; font-weight: 700; letter-spacing: .4px; flex: 1 1 auto; min-width: 45%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-bstatus { margin-left: auto; flex: 0 4 auto; min-width: 0; max-width: 50%; display: inline-flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); color: var(--graph-passed); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-bstatus .sh-btext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* status chip that doubles as a toggle for the advanced-index panel */
+.sh-bstatus.sh-idxtoggle { cursor: pointer; user-select: none; display: inline-flex; align-items: center; min-width: 0; max-width: 68%; transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out); }
+.sh-bstatus.sh-idxtoggle:hover { background: color-mix(in srgb, var(--graph-passed) 24%, transparent); }
+.sh-bstatus .sh-idxlabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-bstatus .sh-bchev { width: 10px; height: 10px; flex: none; transition: transform var(--motion-med) var(--ease-default); }
+.sh-bstatus.open .sh-bchev { transform: rotate(180deg); }
+/* a shelf whose sprout menu is open must paint above the shelves below it.
+   State class (.menu-open) is toggled by page JS off the shared menu.js
+   is-open hooks — no :has(), so the Slint port gets an explicit boolean. */
+.sh-shelf.menu-open { position: relative; z-index: 6; }
+/* Rail menus body-portal — do not lift overflow on rows (that expands nowrap meta past the panel). */
+.pm6-tb-menu-wrap.menu-open { position: relative; z-index: 50; }
+/* Rail menus portal to body while open (see _shared/menu.js) */
+/* history commits: no inset left accent rail on hover (base.css .sh-commit:hover) */
+.sh-commit:hover, .sh-commit-h:hover { box-shadow: none !important; border-left-color: transparent !important; }
+/* no flashing left rail on running rows (keep the dot pulse, drop the blink
+   stripe). Rows that contain a running dot carry an explicit .is-running
+   class in markup (Slint: per-row boolean) instead of :has(.dot-run). */
+.sh-row.is-running::after { content: none; }
+/* banner status that collapses to its indicator light at the min band (Docker ctx) */
+.sh-bstatus[data-narrow="light"] .sh-btext { transition: opacity var(--motion-fast) var(--ease-out); }
+/* defensive ellipsis so bold row names never hard-clip (basic theme exposed these) */
+.sh-name, .sh-rlabel, .fm-path, .ad-cttl, .ad-rname, .sh-fileh { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* inside the column wrapper, size the name to content but let it shrink so the
+   nested status chip never overflows the row (base rule is flex:1 = grow) */
+.sh-main > .sh-name { flex: 0 1 auto; }
+/* the name's text lives in its own shrinkable span so it can ellipsize inside
+   the flex container; the nested status chip keeps its natural width */
+.sh-name > .sh-nm-txt { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-name > .pm-chip, .sh-name > .pm-gs { flex: none; }
+.sh-run-h, .sh-ctr-h { min-width: 0; max-width: 100%; }
+.sh-run-h .pm-chip, .sh-ctr-h .pm-chip, .sh-bstatus .pm-chip { flex: 0 1 auto; max-width: 42%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Docker's 6-tab bar: labels shorten by measure (data-fit on the segtab) */
+.pm-segtab.fm-docktabs .pm-segtab-item > .eq-full,
+.pm-segtab.fm-docktabs .pm-segtab-item > .eq-abbr { display: none; }
+.pm-segtab.fm-docktabs .pm-segtab-item svg { width: 16px; height: 16px; }
+.pm-segtab.fm-docktabs[data-fit="abbr"] .pm-segtab-item > .eq-abbr { display: inline; }
+.pm-segtab.fm-docktabs[data-fit="abbr"] .pm-segtab-item svg { width: 15px; height: 15px; }
+.pm-segtab.fm-docktabs[data-fit="full"] .pm-segtab-item > .eq-full { display: inline; }
+.pm-segtab.fm-docktabs[data-fit="full"] .pm-segtab-item svg { width: 15px; height: 15px; }
+/* at the min band the artifacts type-pill yields its space to the title */
+.side-panel-slot[data-wtier="min"] .sh-card .sh-fam { display: none; }
+/* at the min band agent/container rows drop the secondary meta line so the
+   name + status chip fit without clipping (there's no room for all three) */
+.side-panel-slot[data-wtier="min"] .sh-run-h .sh-meta,
+.side-panel-slot[data-wtier="min"] .sh-ctr-h .sh-meta { display: none; }
+/* cap the secondary meta line so name + status chip always fit (basic @220) */
+.sh-run-h .sh-meta, .sh-ctr-h .sh-meta { flex: 0 1 38%; min-width: 0; }
+.fm-regrow { display: flex; flex-direction: column; gap: 4px; padding: 6px 2px; border-bottom: 1px solid color-mix(in srgb, var(--border-light) 70%, transparent); }
+.fm-regrow:last-of-type { border-bottom: 0; }
+.fm-regname { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.fm-regstat { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.fm-regnote { font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* worktree filter chips: one line; abbreviate at the min band */
+/* scrollbar-width lives in the css-tokens opt-in list — declaring it here
+   without a scrollbar-color left Chrome with no bar at all (the mirror of
+   .sh-scroll's WebKit-only bug). */
+.sh-wtchips { flex-wrap: nowrap !important; overflow-x: auto; }
+.sh-wtchips .pm-chipbtn { flex: 0 0 auto; }
+.sh-wtchips .pm-chipbtn .wt-abbr { display: none; }
+.sh-wtchips .pm-chipbtn .wt-full { display: inline; }
+/* advanced-index panel that drops from under the banner.
+   Only max-height + opacity animate (Slint: height + opacity); the open
+   spacing lives INSIDE the clipped box (inner shelf margin-top) so no
+   margin transition is needed. */
+.sh-idxpanel { overflow: hidden; max-height: 0; opacity: 0; margin: 0 var(--sm); transition: max-height var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out); }
+.sh-idxpanel.open { max-height: 268px; opacity: 1; }
+.sh-idxpanel .sh-shelf { margin-top: var(--sm); margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { .sh-idxpanel { transition: opacity var(--motion-fast) var(--ease-out); } .sh-idxpanel:not(.open) { max-height: 0; } .sh-idxpanel.open { max-height: 268px; } }
+[data-reduced-motion="1"] .sh-idxpanel,
+[data-motion="reduced"] .sh-idxpanel { transition: opacity var(--motion-fast) var(--ease-out); }
+[data-reduced-motion="1"] .sh-idxpanel,
+[data-motion="reduced"] .sh-idxpanel:not(.open) { max-height: 0; }
+[data-reduced-motion="1"] .sh-idxpanel,
+[data-motion="reduced"] .sh-idxpanel.open { max-height: 268px; }
+/* branch picker — full width of the Changes pane at every band */
+.sh-bbranch { display: block; width: 100%; flex: none; margin-left: 0; max-width: none; min-width: 0; }
+/* menu trigger component (from _shared/base.css, scoped to the rail + bottom
+   debug host so PM7's title-bar-scoped rules never leak UA ButtonFace in) */
+#sidePanelSlot .pm6-tb-menu-trigger,
+#bottomDebugHost .pm6-tb-menu-trigger {
+  display: inline-flex; align-items: center; gap: var(--sm);
+  font-family: var(--body-font); font-weight: 600; font-size: 12px;
+  line-height: 1.2; white-space: nowrap; box-sizing: border-box;
+  color: var(--text-secondary); background: none; cursor: pointer;
+  padding: 5px 9px; border-radius: var(--radius-sm);
+  transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+#sidePanelSlot .pm6-tb-menu-trigger:hover,
+#bottomDebugHost .pm6-tb-menu-trigger:hover { color: var(--text-primary); background: var(--accent-soft); }
+#sidePanelSlot .pm6-tb-menu-trigger[aria-expanded="true"],
+#bottomDebugHost .pm6-tb-menu-trigger[aria-expanded="true"] { color: var(--text-primary); background: var(--accent-soft); }
+#sidePanelSlot .pm6-tb-menu-item > span,
+#bottomDebugHost .pm6-tb-menu-item > span { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* Portaled rail menus: keep item labels inside the menu plate */
+body > .pm6-tb-menu .pm6-tb-menu-item,
+#sidePanelSlot .pm6-tb-menu-item,
+#bottomDebugHost .pm6-tb-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+body > .pm6-tb-menu .pm6-tb-menu-item-label,
+#sidePanelSlot .pm6-tb-menu-item-label,
+#bottomDebugHost .pm6-tb-menu-item-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sh-bbranch .pm6-tb-menu-trigger { display: flex; align-items: center; gap: 6px; min-width: 0; width: 100%; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 3px 9px; box-sizing: border-box; }
+.sh-bbranch .pm6-tb-menu-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-bbranch .pm6-tb-menu { min-width: 100%; width: 100%; box-sizing: border-box; }
+
+/* --sm is the ship-tested min-band value AND the hard floor: overflow-x is
+   hidden here, so the global button:focus-visible ring (2px outline + 2px
+   offset, 05-css-shell) needs all 4px of side room. Never go below --sm. */
+.sh-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: var(--sm); }
+/* let sprout popups float over neighbouring chrome instead of being clipped
+   at narrow widths (a 210px menu inside a 220px panel must not be cut off) */
+.side-panel-slot { overflow: visible; }
+
+/* ---- unified segmented tab bar (icon over label, sliding ink underline) ---- */
+.pm-segtab {
+  flex: none; display: flex; position: relative;
+  /* fully superseded by the later .pm-segtab in the c2-files layer; the inset
+     is kept in sync so a reorder can't silently re-widen the gutter */
+  margin: var(--md) var(--sm) 0;
+  border-bottom: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--cat, var(--accent-primary)) 5%, var(--surface-elevated));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
+/* sliding active underline (ported from the files variant, adapted to
+   transform-only motion: fixed 100px basis scaled/translated by JS —
+   Slint: animated x + width on a 2px Rectangle, never a width transition) */
+.pm-segtab-ink { position: absolute; left: 0; bottom: 0; height: 2px; width: 100px; background: var(--cat, var(--accent-primary)); border-radius: 2px 2px 0 0; transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--motion-med) var(--ease-default); pointer-events: none; }
+.pm-segtab-item {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 9px 2px 8px; margin-bottom: -1px;
+  background: none; border: 0; border-bottom: 2px solid transparent;
+  cursor: pointer; color: var(--text-muted);
+  font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1px;
+  transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+.pm-segtab-item svg { width: 15px; height: 15px; flex: none; transition: transform var(--motion-med) var(--ease-default); }
+.pm-segtab-item.active svg { transform: translateY(-1px) scale(1.1); }
+.pm-segtab-item > span { max-width: 100%; padding: 0 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-segtab-item:hover { color: var(--text-secondary); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 6%, transparent); }
+.pm-segtab-item.active { color: var(--cat, var(--accent-primary)); }
+
+/* shelves */
+.sh-shelf {
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, var(--surface-elevated));
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, var(--border-light));
+  margin-bottom: var(--md);
+  overflow: visible;
+  box-shadow: var(--elev-1);
+}
+.sh-head {
+  display: flex; align-items: center; gap: var(--md);
+  padding: var(--md); /* promoted from the ship-tested min band */
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 11%, transparent);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.sh-head[data-collapse] { cursor: pointer; }
+.sh-hico {
+  width: 22px; height: 22px; flex: none; border-radius: var(--radius-pill);
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 20%, transparent);
+  color: var(--cat, var(--accent-blue));
+}
+.sh-hico svg { width: 12px; height: 12px; }
+.sh-hlabel { font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; color: var(--text-primary); }
+.sh-hcount { margin-left: auto; flex: 0 1 auto; max-width: 48%; font-size: 9.5px; font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent); color: var(--cat, var(--accent-blue)); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sh-hcount .hc-full, .sh-hcount .hc-abbr { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sh-hstatus { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); color: var(--graph-passed); white-space: nowrap; }
+.sh-hstatus .dot { width: 7px; height: 7px; flex: none; }
+.sh-body { padding: var(--sm) var(--md) var(--md); } /* promoted from the ship-tested min band */
+/* staged/unstaged shelves: tighten the well around file rows (esp. below) */
+#panel-source [data-pane="changes"] .sh-shelf > .sh-body { padding: var(--sm) var(--md) var(--sm); }
+/* worktree collapsed pills: reduce the air under the header text */
+#panel-source .sh-wt > .sh-wt-h { padding-bottom: 4px; }
+
+/* cozy buttons */
+.side-panel-view .pm-btn { border-radius: var(--radius-pill); }
+.side-panel-view .pm-btn:hover { transform: translateY(-1px); box-shadow: var(--elev-hover); }
+.side-panel-view .pm-minibtn { border-radius: var(--radius-pill); width: 24px; height: 24px; }
+
+/* ---- generic accordion body (base.css spring grid owns expand/collapse;
+   keep padding only — do not fight display:grid !important) ----
+   padding promoted from the ship-tested min band; the component-specific
+   `X > .sh-accb` rules below (chg / file / commit / stage / sumcard) still
+   win on specificity and keep their own tighter or indented values. */
+.sh-accb { padding: 0 var(--md) var(--md); width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.sh-accchev { width: 10px; height: 10px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); flex: none; }
+/* only the owning row's host chevron (direct child) — never nested SVGs or nested expanders */
+[data-acc].open > [data-collapse] > .sh-accchev { transform: rotate(90deg); }
+
+/* pill rows */
+.sh-row {
+  display: flex; align-items: center; gap: var(--md);
+  padding: 6px 8px; border-radius: var(--radius-md); min-width: 0;
+  transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+  cursor: pointer;
+}
+.sh-row:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 10%, transparent); transform: translateX(2px); }
+.sh-row.flat { cursor: default; }
+.sh-row.flat:hover { transform: none; }
+.sh-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.sh-main { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.sh-name { font-size: 11.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+.sh-meta { font-size: 9.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-mono { font-family: var(--mono-font); }
+.sh-rowact { display: flex; gap: var(--xs); flex: none; margin-left: auto; }
+
+/* changed-file / branch / stash rows as collapsed expanders: header keeps the
+   pill-row look (button-free — actions live in the sprung .sh-accb body) */
+.sh-chg { border-radius: var(--radius-md); min-width: 0; }
+.sh-chg-h { display: flex; align-items: center; gap: var(--md); padding: 6px 8px; border-radius: var(--radius-md); cursor: pointer; min-width: 0; }
+.sh-chg-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 10%, transparent); }
+.sh-chg > .sh-accb { padding: 0 8px 6px 24px; }
+/* compact +N/-N diffstat chip so collapsed headers carry the triage signal */
+.sh-ds { flex: none; font-family: var(--mono-font); font-size: 9px; white-space: nowrap; }
+.sh-ds .add { color: var(--graph-passed); font-weight: 700; }
+.sh-ds .del { color: var(--graph-failed); font-weight: 700; }
+/* first-hunk preview line inside a changed-file body (mono, dim) */
+.sh-hunkprev { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 2px 0 0; }
+/* files-touched mini rows (commit / stash bodies): path ellipsizes, stat stays */
+.sh-cfl { display: flex; align-items: baseline; gap: var(--md); font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); padding: 1px 0; min-width: 0; }
+.sh-cfl .f { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.sh-kv { display: flex; align-items: baseline; justify-content: space-between; gap: var(--md); padding: 3px 2px; font-size: 11.5px; min-width: 0; max-width: 100%; width: 100%; box-sizing: border-box; overflow: hidden; }
+.sh-k { color: var(--text-muted); flex: none; }
+.sh-v { color: var(--text-primary); text-align: right; min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Keep meta rows clamped (menus portal — no overflow lift needed) */
+.menu-open .sh-kv,
+.sh-run.menu-open .sh-kv,
+[data-acc].menu-open .sh-kv {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+/* wrapping kv for long mono keys (secrets / image digests) */
+.sh-kvwrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2px var(--md); padding: 3px 2px; font-size: 11.5px; }
+.sh-kvwrap .sh-k { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; word-break: break-word; white-space: normal; }
+.sh-kvwrap .pm-chip { flex: none; }
+
+/* equal-width + commit action rows */
+.pm-eqrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sm); margin-top: var(--sm); }
+.pm-eqrow .pm-btn { min-width: 0; padding: 5px 6px; }
+.eq-abbr { display: none; }
+.pm-commitrow { display: flex; align-items: center; gap: var(--sm); margin-top: var(--sm); }
+.pm-commitrow .pm-input { flex: 1; min-width: 0; }
+.pm-commitrow .pm-minibtn { flex: none; }
+.pm-commitrow .pm-btn { flex: 0 0 auto; }
+
+/* search */
+.sh-flags { display: flex; align-items: center; gap: var(--sm); margin-top: var(--md); }
+.sh-flag { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat) 8%, transparent); border: 1px solid color-mix(in srgb, var(--cat) 16%, transparent); color: var(--text-secondary); transition: all var(--motion-fast) var(--ease-out); }
+.sh-flag:hover { color: var(--text-primary); }
+.sh-flag.on { color: var(--cat); background: color-mix(in srgb, var(--cat) 18%, transparent); border-color: color-mix(in srgb, var(--cat) 40%, transparent); }
+/* scope trigger shrinks with an ellipsized label instead of overflowing the flags row at 240px */
+.sh-flags .sh-scope { margin-left: auto; flex: 0 1 auto; min-width: 0; }
+.sh-scope .pm6-tb-menu-trigger { border: 1px solid color-mix(in srgb, var(--cat) 18%, transparent); border-radius: var(--radius-pill); padding: 4px 9px; display: flex; align-items: center; gap: 4px; max-width: 100%; }
+.sh-scope .pm6-tb-menu-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-stats { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sm); margin-top: var(--md); font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); }
+.sh-stats b { color: var(--text-primary); font-weight: 700; }
+.sh-stats .dot { width: 7px; height: 7px; flex: none; }
+/* min band: drop the timing chunk so the stats stay one line (Slint has no wrapping row) */
+.sh-stats .sh-stat-time { display: inline-flex; align-items: center; gap: var(--sm); }
+.side-panel-slot[data-wtier="min"] .sh-stats .sh-stat-time { display: none; }
+/* segmented tabs sitting directly under the banner (search find/replace) */
+/* must track the base .pm-segtab inset — this .flat rule outranks it, so it
+   would otherwise re-widen the gutter the min band had already tightened */
+.pm-segtab.flat { margin: var(--sm) var(--sm) 0; border-radius: 0; background: transparent; }
+/* sticky action footer pinned to the panel bottom (independent of scroll) */
+.sh-foot { flex: none; display: flex; align-items: center; gap: var(--sm); padding: var(--sm); background: var(--surface-elevated); border-top: 1px solid var(--border-light); box-shadow: 0 -6px 14px -10px color-mix(in srgb, var(--text-primary) 40%, transparent); }
+.sh-foot .sh-footcount { font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+.sh-foot .sh-footcount b { color: var(--text-primary); font-weight: 700; }
+
+.sh-file { background: color-mix(in srgb, var(--cat) 5%, var(--surface-elevated)); border-radius: var(--radius-md); margin-bottom: var(--sm); overflow: hidden; }
+.sh-fileh { display: flex; align-items: center; gap: var(--sm); padding: 6px 9px; cursor: pointer; font-family: var(--mono-font); font-size: 10.5px; color: var(--cat); }
+/* the path lives in its own shrinkable span so it ellipsizes and the count <b> stays visible */
+.sh-fileh .sh-fp { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-fileh b { margin-left: auto; flex: none; font-weight: 400; color: var(--text-muted); }
+.sh-hit { display: flex; gap: var(--md); align-items: baseline; padding: 3px 9px; cursor: pointer; border-left: 2px solid transparent; }
+.sh-hit:hover { background: color-mix(in srgb, var(--cat) 9%, transparent); border-left-color: var(--cat); }
+.sh-ln { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); min-width: 22px; text-align: right; flex: none; }
+.sh-hit code { font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.sh-hit em { font-style: normal; color: var(--text-primary); background: color-mix(in srgb, var(--cat) 22%, transparent); border-radius: var(--radius-pill); padding: 0 3px; }
+/* search file-group expanders: hits live in a sprung .sh-accb body; header keeps path + count */
+.sh-file > .sh-accb { padding: 0 0 3px; }
+.sh-fileh .sh-accchev { width: 9px; height: 9px; }
+.sh-fileh .sh-fp:hover { text-decoration: underline; }
+/* results-shelf head mini actions sit after the count pill */
+.sh-head .pm-minibtn { flex: none; }
+/* replace-pane per-file preview rows: old line (strike tint) then new line (green) */
+.sh-rr { display: flex; gap: var(--md); align-items: baseline; padding: 3px 9px; }
+.sh-rr code { font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.sh-rr em { font-style: normal; color: var(--text-primary); border-radius: var(--radius-pill); padding: 0 3px; }
+.sh-rr.old em { background: color-mix(in srgb, var(--graph-failed) 20%, transparent); text-decoration: line-through; }
+.sh-rr.new em { background: color-mix(in srgb, var(--graph-passed) 20%, transparent); }
+.sh-rr-stub { padding: 4px 9px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); }
+/* filters disclosure under the query (idxpanel pattern: max-height + opacity) */
+.sh-filtoggle { display: flex; align-items: center; gap: 6px; margin-top: var(--md); padding: 3px 2px; width: 100%; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.4px; color: var(--text-secondary); background: none; border: 0; cursor: pointer; }
+.sh-filtoggle:hover { color: var(--text-primary); }
+.sh-filtoggle .sh-accchev { width: 9px; height: 9px; }
+.sh-filtoggle.open > .sh-accchev { transform: rotate(90deg); }
+.sh-filtpanel { overflow: hidden; max-height: 0; opacity: 0; transition: max-height var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out); }
+.sh-filtpanel.open { max-height: 140px; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .sh-filtpanel { transition: opacity var(--motion-fast) var(--ease-out); } }
+[data-reduced-motion="1"] .sh-filtpanel { transition: opacity var(--motion-fast) var(--ease-out); }
+.sh-filtrow { display: flex; align-items: center; gap: var(--sm); margin-top: var(--sm); }
+/* transient index-state strip under the banner (rebuild demo cycle: building / stale) */
+/* horizontal inset tracks .sh-banner above it — it hangs directly under the
+   banner and a mismatched gutter reads as a misaligned strip */
+.sh-idxstate { display: flex; align-items: center; gap: var(--sm); margin: var(--sm) var(--sm) 0; padding: 4px 9px; border-radius: var(--radius-md); background: color-mix(in srgb, var(--accent-warning) 10%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-warning) 22%, transparent); font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); }
+.sh-idxstate[hidden] { display: none; }
+.sh-idxstate span:not(.dot) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-idxstate .pm-minibtn { margin-left: auto; width: auto; padding: 0 8px; height: 20px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.sh-idxstate .pm-minibtn svg { width: 11px; height: 11px; flex: none; }
+.sh-idxstate .pm-minibtn[hidden] { display: none; }
+
+/* soft log */
+.sh-log { font-family: var(--mono-font); font-size: 9.5px; line-height: 1.55; background: color-mix(in srgb, var(--graph-failed) 6%, var(--surface-elevated)); border-radius: var(--radius-md); padding: var(--md); margin: var(--sm) 0; }
+.sh-log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-log .fail { color: var(--graph-failed); }
+
+/* worktree cozy rows */
+.sh-wt { border-radius: var(--radius-md); margin-bottom: var(--sm); background: var(--surface-elevated); overflow: hidden; border: 1px solid var(--border-light); }
+.sh-wt-h { display: flex; align-items: center; gap: var(--md); padding: 7px 9px; cursor: pointer; min-width: 0; }
+.sh-wt-h .chev { width: 10px; height: 10px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); flex: none; }
+.sh-wt.open > .sh-wt-h > .chev { transform: rotate(90deg); }
+.sh-wt-b { padding: 4px 9px 9px; }
+.sh-pill { font-size: 9px; font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); flex: none; }
+.sh-pill.clean { color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); }
+.sh-pill.dirty { color: var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 16%, transparent); }
+.sh-pill.orphan { color: var(--accent-orange); background: color-mix(in srgb, var(--accent-orange) 16%, transparent); }
+/* always-visible worktree state note (outside the collapsible body, like .sh-runfail) */
+.sh-wtnote { font-family: var(--mono-font); font-size: 9px; color: var(--accent-orange); padding: 0 9px 6px 29px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-branch { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-primary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-owner { font-size: 9.5px; color: var(--text-muted); margin-left: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 42%; }
+.sh-acts { display: flex; flex-wrap: wrap; gap: var(--sm); margin-top: var(--sm); }
+.sh-acts .pm-btn { padding: 4px 9px; min-height: 22px; font-size: 9.5px; }
+
+/* commits — [data-acc] expanders: collapsed = sha + age + message, sprung
+   .sh-accb body = author, files touched w/ +/- stats, per-commit actions */
+.sh-commit { border-radius: var(--radius-md); min-width: 0; }
+.sh-commit-h { padding: 6px 8px; border-radius: var(--radius-md); cursor: pointer; min-width: 0; }
+.sh-commit-h:hover { background: color-mix(in srgb, var(--cat) 10%, transparent); }
+.sh-commit-t { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.sh-commit > .sh-accb { padding: 0 8px 6px 24px; }
+.sh-sha { font-family: var(--mono-font); font-size: 10px; color: var(--cat); }
+.sh-age { font-size: 9.5px; color: var(--text-muted); margin-left: auto; }
+.sh-msg { font-size: 10.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* graph */
+.sh-graph { font-family: var(--mono-font); font-size: 10px; display: flex; flex-direction: column; gap: 4px; padding: var(--sm) 0; }
+.sh-gn { display: flex; align-items: center; gap: var(--md); }
+.sh-gn .dot { width: 8px; height: 8px; }
+.sh-gind { padding-left: 16px; position: relative; }
+.sh-gind::before { content: ''; position: absolute; left: 3px; top: -7px; width: 8px; height: 13px; border-left: 2px solid color-mix(in srgb, var(--cat) 30%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--cat) 30%, transparent); border-radius: 0 0 0 4px; }
+
+/* publish chain — soft numbered bubbles */
+.sh-chain { position: relative; padding-left: 26px; margin: var(--sm) 0; }
+.sh-chain::before { content: ''; position: absolute; left: 10px; top: 12px; bottom: 12px; width: 2px; border-radius: 2px; background: color-mix(in srgb, var(--cat) 24%, transparent); }
+.sh-stage { position: relative; display: block; padding: 0; min-width: 0; }
+/* each stage is now a mini-expander: header row carries the number bubble
+   (rescoped to .sh-stgnum so the accordion chevron <i> keeps its own style),
+   the .sh-accb body carries the receipt / pending marker */
+.sh-stage-h { display: flex; align-items: center; gap: var(--md); padding: 4px 0; min-width: 0; cursor: pointer; }
+.sh-stage .sh-stgnum { position: absolute; left: -26px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-family: var(--mono-font); font-size: 9px; font-style: normal; border-radius: 50%; background: var(--surface-elevated); border: 2px solid color-mix(in srgb, var(--cat) 30%, transparent); color: var(--text-muted); }
+.sh-stage.done .sh-stgnum { border-color: var(--graph-passed); color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 12%, var(--surface-elevated)); }
+.sh-stage.now .sh-stgnum { border-color: var(--graph-running); color: var(--graph-running); }
+.sh-stage > .sh-accb { padding: 0 0 6px; }
+/* pulse = a pre-sized halo ring animating opacity + scale only (Slint-safe; no box-shadow keyframes) */
+.sh-stage.now .sh-stgnum::after { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid var(--graph-running); animation: shPulse 1.6s var(--ease-out) infinite; pointer-events: none; }
+@keyframes shPulse { 0% { opacity: .55; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.5); } }
+.sh-stage-l { font-size: 11px; color: var(--text-secondary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-stage.done .sh-stage-l { color: var(--text-primary); }
+
+/* docker per-container expandable rows + meters */
+.sh-ctr { border-radius: var(--radius-md); margin-bottom: var(--sm); background: var(--surface-elevated); border: 1px solid var(--border-light); overflow: hidden; }
+/* running containers carry .is-running in markup (explicit state, no :has()) */
+.sh-ctr.is-running { border-color: color-mix(in srgb, var(--graph-running) 45%, transparent); }
+.sh-ctr-h { display: flex; align-items: center; gap: var(--md); padding: 7px 9px; cursor: pointer; min-width: 0; }
+.sh-ctx .pm6-tb-menu-trigger { width: 100%; display: flex; align-items: center; gap: 6px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); font-family: var(--mono-font); font-size: 10px; padding: 5px 9px; }
+/* label is its own flex item (icon sits beside it, not inside) so .sh-branch ellipsis actually engages */
+.sh-ctx .pm6-tb-menu-label { flex: 1 1 auto; min-width: 0; text-align: left; }
+.sh-ctx .pm6-tb-menu { min-width: 210px; }
+/* daemon-unreachable diagnosis line under an offline context menu item */
+.pm6-tb-menu-diag { font-size: 9px; color: var(--accent-warning); padding-left: 22px; }
+/* compose identity row: project chip · elided compose-file path · env/profile
+   chips · open-in-editor handoff (the file stays the single source of truth) */
+/* .sh-cmpid rules moved to progressive-disclosure block */
+/* aggregate compose state line */
+.sh-cmpstate { display: flex; align-items: center; gap: 6px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); padding: 0 2px var(--md); min-width: 0; }
+.sh-cmpstate .dot { width: 7px; height: 7px; flex: none; }
+.sh-cmpstate .sh-cmps-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-cmpstate b { color: var(--text-primary); }
+/* port bindings as clickable chips (open-in-browser / copy affordances) */
+.sh-ports { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sm); padding: 3px 2px; }
+.sh-ports .sh-k { flex: none; font-size: 10.5px; }
+.sh-portchip { font-family: var(--mono-font); font-size: 9.5px; line-height: 1.5; padding: 1px 8px; border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 26%, transparent); border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 10%, transparent); color: var(--cat, var(--accent-blue)); cursor: pointer; transition: background var(--motion-fast) var(--ease-out); }
+.sh-portchip:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 20%, transparent); }
+/* image rows: repo span ellipsizes while the tag span survives (middle-elide
+   effect without new machinery); size pinned right, always visible */
+.sh-name .sh-imgtag { flex: none; color: var(--text-muted); }
+.sh-imgsz { margin-left: auto; flex: none; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); }
+.sh-imgsum { display: flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); padding: 0 2px var(--md); min-width: 0; }
+.sh-imgsum .sh-imgsum-t { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-imgsum .pm-chipbtn { flex: none; }
+.sh-kvwrap .pm-minibtn { flex: none; }
+
+/* artifact receipts as cozy cards */
+.sh-card { border-radius: var(--radius-lg); padding: var(--md) var(--lg); margin-bottom: var(--sm); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 6%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent); cursor: pointer; transition: box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.sh-card:hover { box-shadow: var(--elev-hover); transform: translateY(-1px); }
+.sh-r1 { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.sh-fam { font-size: 8.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent); color: var(--cat, var(--accent-blue)); flex: none; }
+.sh-rlabel { font-size: 11px; font-weight: 600; color: var(--text-primary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-prev { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-rmeta { font-size: 9px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-prov { display: flex; flex-wrap: wrap; gap: var(--sm); align-items: center; margin-top: var(--sm); }
+.sh-prov .pm-minibtn { width: auto; padding: 0 9px; height: 22px; font-size: 9.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+.sh-prov .pm-minibtn svg { width: 12px; height: 12px; flex: none; }
+.sh-time { display: flex; align-items: center; gap: 6px; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); margin-top: 4px; }
+.sh-time .dot { width: 7px; height: 7px; flex: none; }
+.sh-thumb { position: relative; height: 56px; border-radius: var(--radius-md); margin-top: var(--sm); overflow: hidden; border: 1px solid var(--border-light); }
+.sh-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 32%, color-mix(in srgb, var(--text-primary) 12%, transparent) 46%, transparent 60%); transform: translateX(-130%); transition: transform .7s var(--ease-out); pointer-events: none; }
+.sh-card:hover .sh-thumb::after { transform: translateX(130%); }
+.sh-th-editor { background: linear-gradient(180deg, color-mix(in srgb, var(--text-primary) 9%, transparent) 0 13%, transparent 13%), linear-gradient(90deg, color-mix(in srgb, var(--accent-blue) 16%, transparent) 0 24%, transparent 24%), repeating-linear-gradient(180deg, color-mix(in srgb, var(--text-primary) 12%, transparent) 0 3px, transparent 3px 11px), linear-gradient(140deg, color-mix(in srgb, var(--accent-blue) 14%, var(--surface)), color-mix(in srgb, var(--accent-magenta) 9%, var(--surface))); }
+.sh-th-matrix { background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent-lime) 18%, transparent) 0 1px, transparent 1px 17%), repeating-linear-gradient(180deg, color-mix(in srgb, var(--accent-lime) 18%, transparent) 0 1px, transparent 1px 20%), linear-gradient(180deg, transparent 0 58%, color-mix(in srgb, var(--accent-lime) 22%, transparent) 58% 79%, transparent 79%), linear-gradient(140deg, color-mix(in srgb, var(--accent-lime) 12%, var(--surface)), var(--surface)); }
+.sh-th-ci { background: radial-gradient(circle at 12px 9px, color-mix(in srgb, var(--graph-failed) 80%, transparent) 0 3px, transparent 3px), radial-gradient(circle at 24px 9px, color-mix(in srgb, var(--accent-warning) 80%, transparent) 0 3px, transparent 3px), radial-gradient(circle at 36px 9px, color-mix(in srgb, var(--graph-passed) 80%, transparent) 0 3px, transparent 3px), repeating-linear-gradient(180deg, color-mix(in srgb, var(--text-primary) 10%, transparent) 0 4px, transparent 4px 13px), linear-gradient(140deg, color-mix(in srgb, var(--accent-blue) 10%, var(--surface)), color-mix(in srgb, var(--accent-orange) 8%, var(--surface))); }
+.sh-vals { display: flex; align-items: flex-end; gap: var(--lg); margin: var(--sm) 0 2px; }
+.sh-val { display: flex; flex-direction: column; }
+.sh-valn { font-family: var(--mono-font); font-size: 15px; font-weight: 700; line-height: 1.1; color: var(--text-primary); }
+.sh-valn.ok { color: var(--graph-passed); }
+.sh-valn.err { color: var(--graph-failed); }
+.sh-valk { font-family: var(--display-font); font-size: 7px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+.sh-logline { font-family: var(--mono-font); font-size: 9px; color: var(--graph-failed); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px; }
+.sh-recrow { display: flex; align-items: center; gap: var(--md); margin-top: var(--sm); }
+.sh-play { width: 24px; height: 24px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid color-mix(in srgb, var(--accent-orange) 45%, transparent); background: color-mix(in srgb, var(--accent-orange) 15%, transparent); color: var(--accent-orange); cursor: pointer; }
+.sh-play svg { width: 11px; height: 11px; }
+.sh-ticks { height: 12px; flex: 1; min-width: 0; border-radius: var(--radius-xs); border: 1px solid var(--border-light); background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent-orange) 50%, transparent) 0 2px, color-mix(in srgb, var(--accent-orange) 14%, transparent) 2px 4px, transparent 4px 11px); }
+/* receipt cards as collapsed-by-default expanders: header row carries the
+   padding, always-visible exception lines (panic logline, live stream row)
+   sit between header and the sprung .sh-accb body */
+.sh-card[data-acc] { padding: 0; cursor: default; }
+/* insets promoted from the ship-tested min band */
+.sh-card[data-acc] > .sh-r1 { padding: var(--md); cursor: pointer; }
+.sh-card[data-acc] > .sh-logline, .sh-card[data-acc] > .sh-liveline { margin-top: 0; padding: 0 var(--md) var(--md); }
+.sh-card[data-acc] > .sh-accb { padding: 0 var(--md) var(--md); }
+.sh-card .sh-age { flex: none; margin-left: 0; display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 9px; }
+.sh-card .sh-age .dot { width: 7px; height: 7px; }
+.sh-liveline { display: flex; align-items: center; gap: var(--md); font-size: 9px; color: var(--text-muted); min-width: 0; }
+.sh-liveline .pm-minibtn { margin-left: auto; width: auto; padding: 0 9px; height: 22px; font-size: 9.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.sh-liveline .pm-minibtn svg { width: 12px; height: 12px; flex: none; }
+.sh-idrow { display: flex; align-items: center; gap: var(--sm); margin-top: var(--sm); min-width: 0; }
+.sh-id { font-family: var(--mono-font); font-size: 9px; color: var(--text-secondary); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 10%, transparent); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent); padding: 1px 7px; border-radius: var(--radius-pill); user-select: all; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-idrow .pm-minibtn { width: auto; padding: 0 8px; height: 20px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.sh-idrow .pm-minibtn svg { width: 11px; height: 11px; flex: none; }
+.sh-retn { display: flex; align-items: center; gap: var(--sm); font-size: 9px; color: var(--text-muted); margin-top: 4px; min-width: 0; }
+.sh-retn .pm-minibtn { width: auto; padding: 0 8px; height: 20px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.sh-retn .pm-minibtn svg { width: 11px; height: 11px; flex: none; }
+.sh-card.expired { opacity: .62; }
+.sh-card.expired:hover { transform: none; box-shadow: none; }
+.sh-grpbadge { font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; padding: 0 6px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent); color: var(--cat, var(--accent-blue)); flex: none; }
+/* investigation stage rows + agents overflow stub navigate -> style them clickable */
+#panel-artifacts .sh-body .sh-row.flat[data-demo-action], #panel-agents .sh-body .sh-row.flat[data-demo-action] { cursor: pointer; }
+#panel-artifacts .sh-body .sh-row.flat[data-demo-action]:hover, #panel-agents .sh-body .sh-row.flat[data-demo-action]:hover { transform: translateX(2px); }
+.sh-sortrow { display: flex; align-items: center; gap: var(--sm); padding: 0 0 var(--md); }
+.sh-sortrow .sh-sortlab { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.4px; color: var(--text-muted); }
+.sh-sortrow .pm6-tb-menu-wrap { margin-left: auto; }
+.sh-sortrow .pm6-tb-menu-trigger { border: 1px solid var(--border-light); border-radius: var(--radius-pill); font-family: var(--mono-font); font-size: 9.5px; padding: 3px 9px; }
+
+/* tests runs expandable rows (attention-deck style: wrapping meta line) */
+.sh-run { border-radius: var(--radius-md); margin-bottom: var(--sm); background: var(--surface-elevated); border: 1px solid var(--border-light); overflow: hidden; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.sh-run-h { display: flex; align-items: center; gap: var(--md); padding: 7px 9px; cursor: pointer; min-width: 0; }
+/* two-line clamp via fixed max-height clip (Slint-portable: fixed-height wrapped Text with clip, no -webkit-line-clamp) */
+.sh-runmeta { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: normal; overflow: hidden; max-height: 26px; line-height: 1.4; }
+/* GitHub Actions run expanders: always-visible failure banner (outside .sh-accb),
+   per-job mini-rows, step sublines, artifacts strip, dispatch mini-form */
+.sh-runfail { font-family: var(--mono-font); font-size: 9px; color: var(--graph-failed); padding: 0 9px 6px 29px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-job { display: flex; align-items: center; gap: var(--sm); padding: 2px; font-size: 10.5px; min-width: 0; }
+.sh-job .sh-dot { width: 7px; height: 7px; }
+.sh-jname { color: var(--text-primary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-jdur { margin-left: auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); flex: none; }
+.sh-jstep { font-family: var(--mono-font); font-size: 9px; color: var(--graph-failed); padding: 0 2px 3px 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-jstep.muted { color: var(--text-muted); }
+.sh-arth { font-size: 9.5px; font-weight: 700; letter-spacing: .4px; color: var(--text-secondary); margin-top: var(--sm); padding: 2px; }
+.sh-art { display: flex; align-items: center; gap: var(--sm); padding: 2px 2px 2px 15px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-primary); min-width: 0; cursor: pointer; border-radius: var(--radius-sm); }
+.sh-art:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 9%, transparent); }
+.sh-art.expired { color: var(--text-muted); cursor: default; }
+.sh-art.expired:hover { background: none; }
+.sh-grp { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px; color: var(--text-muted); padding: var(--md) 2px 1px; }
+.sh-dispform { display: flex; flex-direction: column; gap: var(--sm); margin-top: var(--sm); padding: var(--md); border: 1px dashed var(--border-light); border-radius: var(--radius-md); width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+.sh-dfk { font-size: 8.5px; font-weight: 700; letter-spacing: 1px; color: var(--text-muted); }
+.sh-dfrow { display: flex; align-items: center; gap: var(--md); min-width: 0; width: 100%; max-width: 100%; box-sizing: border-box; }
+.sh-dfrow > .sh-k { flex: none; font-size: 10px; min-width: 44px; }
+.sh-dfrow .pm6-tb-menu-wrap { flex: 1 1 auto; min-width: 0; max-width: 100%; }
+.sh-dfrow .pm6-tb-menu-trigger { width: 100%; min-width: 0; max-width: 100%; }
+.sh-chk { display: flex; align-items: center; gap: var(--sm); font-size: 10.5px; color: var(--text-primary); cursor: pointer; }
+.sh-chk input { accent-color: var(--cat, var(--accent-blue)); width: 12px; height: 12px; margin: 0; flex: none; }
+
+/* agents expandable detail */
+.sh-agdetail { padding: 2px 2px 4px; }
+
+/* name text absorbs shrinkage before nested status chips do — chips keep
+   their natural width until the name is fully ellipsized (fit intent above) */
+.sh-name > .sh-nm-txt { flex-shrink: 40; }
+/* testing/agents state additions: live-run border (explicit .is-running class,
+   mirrors .sh-ctr.is-running — Slint: per-row boolean, no :has()) */
+.sh-run.is-running { border-color: color-mix(in srgb, var(--graph-running) 45%, transparent); background: linear-gradient(90deg, color-mix(in srgb, var(--graph-running) 7%, transparent), var(--surface-elevated) 62%); }
+/* errored (harness/compile/setup failure) is NOT failed (assertion) — distinct orange chip */
+.pm-chip-errored { background: color-mix(in srgb, var(--accent-orange) 14%, transparent); color: var(--accent-orange); border-color: color-mix(in srgb, var(--accent-orange) 32%, transparent); }
+/* informational pm-note variant: neutral border + muted glyph instead of the warning tint */
+.pm-note-info { background: color-mix(in srgb, var(--accent-blue) 7%, transparent); border-color: var(--border-light); }
+.pm-note-info svg { color: var(--text-muted); }
+/* assurance note that sits between a shelf head and its collapsed body */
+.sh-shelf > .pm-note { margin: var(--md) var(--lg); }
+/* changed-since-last-view marker on collapsed agent headers (real app clears it on expand) */
+.sh-chgdot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-primary); flex: none; }
+/* tiny model mark in identity kvs — tooltip carries the full model string */
+.sh-modelmark { font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; padding: 0 6px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent); color: var(--cat, var(--accent-blue)); }
+/* collapsible sumcards (lane capacity): header toggles, body springs via the shared .sh-accb layer */
+.pm-sumcard[data-acc] .pm-sumcard-h[data-collapse] { cursor: pointer; }
+.pm-sumcard[data-acc] > .sh-accb { padding: 0; }
+.pm-sumcard .sh-accchev { width: 9px; height: 9px; }
+/* one-line last-run receipt summary */
+.sh-lrline { display: flex; align-items: center; gap: var(--md); margin-bottom: var(--md); min-width: 0; }
+.sh-lrsum { font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* chip row as soft segmented pills */
+.side-panel-view .pm-chipbtn { border-radius: var(--radius-pill); }
+
+
+/* progressive disclosure — labels shorten by MEASURE (data-fit), not by a
+   hardcoded width band. JS tries full, then abbr/symbol when the pill or its
+   row overflows at the current rail width (see pillFit below). */
+.sh-bstatus .sh-bshort { display: none; }
+.sh-bstatus.sh-idxtoggle { max-width: 68%; }
+.pm-chip .chip-abbr { display: none; }
+.sh-hcount .hc-abbr { display: none; } /* paired with .hc-full default */
+
+/* data-fit states */
+.sh-bstatus .sh-idxabbr { display: none; }
+.sh-bstatus[data-narrow="short"][data-fit="abbr"] .sh-bfull { display: none; }
+.sh-bstatus[data-narrow="short"][data-fit="abbr"] .sh-bshort { display: inline; }
+.sh-bstatus[data-narrow="short"][data-fit="abbr"] .sh-idxfull { display: none; }
+.sh-bstatus[data-narrow="short"][data-fit="abbr"] .sh-idxabbr { display: inline; }
+.sh-bstatus[data-narrow="extra"][data-fit="abbr"] .sh-bextra,
+.sh-bstatus[data-narrow="extra"][data-fit="symbol"] .sh-bextra { display: none; }
+.sh-bstatus[data-narrow="symbol"][data-fit="abbr"] .sh-btext,
+.sh-bstatus[data-narrow="symbol"][data-fit="abbr"] .sh-idxlabel,
+.sh-bstatus[data-narrow="symbol"][data-fit="symbol"] .sh-btext,
+.sh-bstatus[data-narrow="symbol"][data-fit="symbol"] .sh-idxlabel { display: none; }
+.sh-bstatus[data-narrow="symbol"][data-fit="abbr"],
+.sh-bstatus[data-narrow="symbol"][data-fit="symbol"] { flex: 0 0 auto; max-width: none; padding: 5px 7px; gap: 4px; }
+.sh-bstatus[data-narrow="light"][data-fit="abbr"] .sh-btext,
+.sh-bstatus[data-narrow="light"][data-fit="symbol"] .sh-btext { display: none; }
+.sh-bstatus[data-narrow="light"][data-fit="abbr"],
+.sh-bstatus[data-narrow="light"][data-fit="symbol"] { display: inline-flex; padding: 5px; }
+.sh-bstatus[data-fit="abbr"] .sh-bextra,
+.sh-bstatus[data-fit="symbol"] .sh-bextra { display: none; }
+.pm-chip[data-narrow-chip][data-fit="abbr"] .chip-full { display: none; }
+.pm-chip[data-narrow-chip][data-fit="abbr"] .chip-abbr { display: inline; }
+.pm-chip[data-narrow-chip][data-fit="abbr"] { max-width: none; padding: 1px 6px; }
+.sh-hcount[data-fit="abbr"] .hc-full { display: none; }
+.sh-hcount[data-fit="abbr"] .hc-abbr { display: inline; }
+.sh-wtchips[data-fit="abbr"] .pm-chipbtn { padding: 4px 7px; }
+.sh-wtchips[data-fit="abbr"] .wt-full { display: none; }
+.sh-wtchips[data-fit="abbr"] .wt-abbr { display: inline; }
+.pm-eqrow[data-fit="abbr"] .eq-full,
+.pm-btnrow[data-fit="abbr"] .eq-full,
+.pm-segtab[data-fit="abbr"] .eq-full { display: none; }
+.pm-eqrow[data-fit="abbr"] .eq-abbr,
+.pm-btnrow[data-fit="abbr"] .eq-abbr,
+.pm-segtab[data-fit="abbr"] .eq-abbr { display: inline; }
+/* Measure pass: lay out the ACTIVE panel's hidden panes INVISIBLY so banner
+   tabs and always-visible pills can be fitted. Do NOT force-expand closed
+   accordion bodies (that thrashed layout while dragging). Body chips refit
+   when the row opens via PMPillFit(acc). Do NOT set animation:none on the
+   whole slot — restoring it retriggers railPanelIn (black flash).
+   The eight INACTIVE .side-panel-views are deliberately not laid out here.
+   Force-showing them made one fit pass a full layout of nine panels, and the
+   ladder then forced a sync layout per candidate inside all of them — the
+   bulk of the left-panel drag cost. They are fitted on first show instead:
+   the .active MutationObserver below schedules a scoped run in the same task
+   the class flips, so the rAF fit lands before the panel's first paint, and
+   the slot ResizeObserver covers the hide/re-show path. Elements with no box
+   are skipped outright (isFittable's caller) rather than measured as zero. */
+/* The measure pass lays out the INACTIVE views too. That was narrowed once to
+   only the active view as a drag optimisation and it broke fitting: a hidden
+   pill has no box, fitOne bails, and the pill keeps whatever data-fit it last
+   had — Source Control sat trapped at 'abbr' showing "origin" instead of
+   "tastebook · origin", and GitHub Actions never got fitted at all. The drag
+   cost is already solved the right way, by deferring the whole ladder to
+   dragend behind body.pm-resizing, so this pass can stay complete. */
+.side-panel-slot.pill-fit-measure .side-panel-view:not(.active),
+.side-panel-slot.pill-fit-measure [data-pane].pm-hidden {
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  inset: 0;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -1;
+}
+.side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > *,
+.side-panel-slot.pill-fit-measure [data-pane].pm-hidden > * {
+  animation: none !important;
+}
+
+/* history: no left border / rail on hover */
+.sh-commit, .sh-commit-h { border-left: 0 !important; box-shadow: none !important; }
+.sh-commit:hover, .sh-commit-h:hover { background: color-mix(in srgb, var(--cat) 10%, transparent); box-shadow: none !important; border-left: 0 !important; }
+.sh-commit::before, .sh-commit::after, .sh-commit-h::before, .sh-commit-h::after { content: none !important; }
+/* investigation body must clear the head — deliberately NOT demoted to --sm
+   alongside .sh-body's new top padding: head and body are z-stacked here
+   (2 over 1) and the min band kept these at --md too, so --md is ship-tested
+   clearance, not slack. */
+.sh-body.sh-accb { padding-top: var(--md); }
+.sh-shelf[data-acc] > .sh-head { position: relative; z-index: 2; }
+.sh-shelf[data-acc] > .sh-body.sh-accb { position: relative; z-index: 1; padding-top: var(--md); }
+/* investigation starts open so the chip row is visible for fit-checks */
+#panel-artifacts .sh-shelf[data-acc] > .sh-body.sh-accb .pm-chip { position: relative; z-index: 0; }
+/* compose identity split rows */
+.sh-cmpid { display: flex; flex-direction: column; align-items: stretch; gap: var(--sm); padding: 0 2px var(--sm); min-width: 0; }
+.sh-cmpid-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sm); min-width: 0; }
+.sh-cmpid .sh-cmpf { flex: 1 1 90px; min-width: 56px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-cmpid .pm-minibtn { flex: none; margin-left: auto; }
+
+
+/* agent timing sits under the header row so it fits at mid/min (not only wide) */
+.sh-agtime { display: flex; align-items: center; gap: var(--sm); padding: 0 8px 5px 28px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); min-width: 0; }
+.sh-agtime b { color: var(--text-secondary); font-weight: 700; }
+#panel-agents .sh-run-h .pm-rmetric { display: none !important; }
+#panel-agents .sh-agtime { display: flex; }
+
+/* width bands — content demotion and icon-only tabs. Pill *labels* are
+   data-fit measured, not band-gated.
+   The container padding/margin demotions that used to live here (head, body,
+   banner, segtab, scroll, foot, idxpanel, selbar, receipt-card rows) were
+   promoted into the base rules — they now apply at every width. */
+.side-panel-slot[data-wtier="min"] .sh-owner { display: none; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch { width: 100%; max-width: none; }
+.side-panel-slot[data-wtier="min"] .sh-bbranch .pm6-tb-menu-trigger { width: 100%; max-width: none; padding: 4px 8px; }
+/* NOT redundant with the promoted base .sh-accb: this outranks the
+   component-specific `.sh-chg|.sh-file|.sh-commit|.sh-stage|.pm-sumcard >
+   .sh-accb` rules, flattening their indents/zero-insets at the min band.
+   Deleting it would re-widen those bodies under 250px. */
+.side-panel-slot[data-wtier="min"] .sh-accb { padding: 0 var(--md) var(--md); }
+.side-panel-slot[data-wtier="min"] .sh-title { font-size: 10.5px; letter-spacing: .2px; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item { gap: 0; padding: 8px 1px 7px; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item > span { display: none; }
+.side-panel-slot[data-wtier="min"] .pm-segtab-item svg { width: 16px; height: 16px; }
+
+/* pane entrance: staggered rise on subview switches (ported fmPaneIn pattern;
+   transform/opacity only, delays capped at the 4th child, reduced-motion safe) */
+@keyframes shPaneIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+[data-pane]:not(.pm-hidden) > * { animation: shPaneIn .3s var(--ease-out) both; }
+[data-pane]:not(.pm-hidden) > *:nth-child(2) { animation-delay: .05s; }
+[data-pane]:not(.pm-hidden) > *:nth-child(3) { animation-delay: .1s; }
+[data-pane]:not(.pm-hidden) > *:nth-child(n+4) { animation-delay: .15s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-stage.now .sh-stgnum::after { content: none; }
+  .sh-thumb::after { transition: none; }
+  .pm-segtab-ink { transition: none; }
+  [data-pane]:not(.pm-hidden) > * { animation: none; }
+}
+[data-reduced-motion="1"] .sh-stage.now .sh-stgnum::after { content: none; }
+[data-reduced-motion="1"] .sh-thumb::after { transition: none; }
+[data-reduced-motion="1"] .pm-segtab-ink { transition: none; }
+[data-reduced-motion="1"] [data-pane]:not(.pm-hidden) > * { animation: none; }
+
+/* ---- c2 files layer (File Manager, deduped vs c2) ---- */
+/* =====================================================================
+   C2 — COZY SHELVES · FILE MANAGER
+   The File Manager re-cut in the cozy-shelves language: a soft pill
+   banner carrying the worktree-root picker, a toolbar carrying the
+   Hide-ignored toggle, a segmented tab bar (Explorer / Changed / Open),
+   a comfortable nested
+   tree of pill rows with hover-reveal quick actions, a reskinned PM
+   sprout context menu (Slint has no native one), and a sticky status
+   footer. Tints derive from theme tokens so it stays correct on all 8
+   themes; glyphs are bundled stroke SVGs only (F3-417: no emoji /
+   pictographs / CDN icons; every icon-only control carries a label and
+   a non-icon status word). Tree behavior defers to Plans/FileManager.md:
+   virtualized (row 24px, lazy expand, 10k row-cap + Show more), current-
+   file reveal with hidden-by-filter disclosure, read-only git badges
+   sourced from Source Control, path-based narrow open, single-row open
+   (no bulk-open), worktree-keyed roots.
+   ===================================================================== */
+.side-panel-view { background: var(--surface); display: flex; flex-direction: column; min-height: 0; }
+.side-panel-view:not(.active) { display: none; }
+
+/* ---- banner ---- */
+.sh-banner {
+  flex: none; display: flex; align-items: center; gap: var(--md);
+  /* promoted from the ship-tested min band (mirrors the base .sh-banner) */
+  padding: var(--md); min-width: 0; overflow: visible;
+  margin: var(--sm) var(--sm) 0; border-radius: var(--radius-lg);
+  background:
+    radial-gradient(135% 150% at 6% -30%, color-mix(in srgb, var(--accent-primary) 17%, transparent), transparent 56%),
+    radial-gradient(120% 150% at 100% 0%, color-mix(in srgb, var(--accent-blue) 11%, transparent), transparent 52%),
+    var(--surface-elevated);
+  box-shadow: var(--elev-1); position: relative; z-index: 2;
+}
+.sh-banner:hover .sh-bico { transform: rotate(-7deg) scale(1.06); }
+.sh-title { font-family: var(--display-font); font-size: 12px; font-weight: 700; letter-spacing: .9px; flex: 0 0 auto; }
+#panel-files .sh-bbranch { margin-left: auto; flex: 0 1 52%; min-width: 0; }
+/* c2-files banner: title is content-sized (no 45% reservation) so the root
+   menu keeps its 52% flex share — the 45% rule is for status-pill banners */
+#panel-files .sh-banner .sh-title { flex: 0 0 auto; min-width: 0; }
+.sh-bhead-acts { display: flex; align-items: center; gap: var(--xs); flex: none; }
+
+/* ---- segmented tab bar (shared idiom) ---- */
+.pm-segtab { flex: none; display: flex; margin: var(--sm) var(--sm) 0; border-bottom: 1px solid var(--border-light); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 5%, var(--surface-elevated)); border-radius: var(--radius-lg) var(--radius-lg) 0 0; overflow: hidden; position: relative; }
+.pm-segtab-ink { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--cat, var(--accent-primary)); border-radius: 2px 2px 0 0; transition: transform var(--motion-med) var(--ease-default), width var(--motion-med) var(--ease-default); pointer-events: none; box-shadow: 0 0 10px color-mix(in srgb, var(--cat, var(--accent-primary)) 55%, transparent); }
+
+/* ---- selection bar (appears on multi-select) ---- */
+.fm-selbar { flex: none; display: none; align-items: center; gap: var(--sm); padding: var(--sm) var(--md); margin: var(--sm) var(--sm) 0; border-radius: var(--radius-md); background: color-mix(in srgb, var(--accent-primary) 12%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.fm-selbar.show { display: flex; }
+.fm-selbar .fm-selcount { font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; }
+.fm-selbar .fm-selcount b { color: var(--text-primary); }
+.fm-selbar .fm-selacts { display: flex; gap: var(--xs); margin-left: auto; flex-wrap: wrap; }
+/* (.sh-scroll's width-only ::-webkit-scrollbar rule is gone — it was
+   WebKit-only, so Firefox rendered no bar at all on all nine side panels.
+   .sh-scroll is opted in to the standard bar at css-tokens instead.) */
+
+/* ---- filter / type-ahead (collapsible; toggled from the toolbar) ---- */
+.fm-filter { display: none; opacity: 0; overflow: hidden; margin-bottom: 0; align-items: center; gap: var(--sm); transition: max-height var(--motion-med) var(--ease-default), opacity var(--motion-med) var(--ease-out), margin-bottom var(--motion-med) var(--ease-default); }
+.fm-filter.open { display: flex; opacity: 1; margin-bottom: var(--md); }
+.fm-filter .pm-input { flex: 1 1 auto; min-width: 0; border-radius: var(--radius-pill); }
+.fm-filtercount { flex: 0 0 auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+.fm-filterclear { flex: none; }
+
+/* ---- tree ---- */
+.fm-tree { display: flex; flex-direction: column; }
+.fm-node { border-radius: var(--radius-md); }
+.fm-row { display: grid; grid-template-columns: auto var(--sm) minmax(0, 1fr) auto; align-items: center; padding: 2px 6px; border-radius: var(--radius-md); min-width: 0; cursor: pointer; position: relative; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.fm-row > .fm-chevron, .fm-row > .fm-ficon { grid-column: 1; }
+.fm-row > .fm-name { grid-column: 3; }
+.fm-row > .fm-trail { grid-column: 4; }
+.fm-row:hover { background: color-mix(in srgb, var(--accent-primary) 8%, transparent); transform: translateX(2px); }
+.fm-row:active { transform: scale(.985); }
+.fm-row.selected { background: color-mix(in srgb, var(--accent-primary) 16%, transparent); }
+.fm-row.active-file { background: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+.fm-row.ignored { opacity: .5; }
+.fm-row.ignored .fm-name { font-style: italic; }
+.fm-chevron { width: 12px; height: 12px; flex: none; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); }
+.fm-node.open > .fm-row > .fm-chevron { transform: rotate(90deg); }
+.fm-ficon { width: 15px; height: 15px; flex: none; color: var(--text-muted); }
+.fm-ficon.folder { color: var(--accent-warning); }
+.fm-ficon.rs { color: var(--accent-orange); }
+.fm-ficon.ts, .fm-ficon.tsx { color: var(--accent-blue); }
+.fm-ficon.js, .fm-ficon.jsx { color: var(--cat-amber); }
+.fm-ficon.svelte { color: var(--accent-magenta); }
+.fm-ficon.sql { color: var(--accent-lime); }
+.fm-ficon.toml { color: var(--accent-orange); }
+.fm-ficon.yml, .fm-ficon.yaml { color: var(--accent-lime); }
+.fm-ficon.xml { color: var(--accent-magenta); }
+.fm-ficon.md { color: var(--text-secondary); }
+.fm-ficon.docker { color: var(--accent-blue); }
+.fm-name { min-width: 0; font-size: 11px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color var(--motion-fast) var(--ease-out); }
+.fm-name.mono { font-family: var(--mono-font); font-size: 10.5px; }
+.fm-folder > .fm-row > .fm-name { font-weight: 600; }
+/* filename colour by git state: clean = normal text; ignored = muted/dull */
+.fm-row.M > .fm-name { color: var(--accent-warning); }
+.fm-row.A > .fm-name { color: var(--graph-passed); }
+.fm-row.Q > .fm-name { color: var(--accent-blue); }
+.fm-row.D > .fm-name { color: var(--graph-failed); }
+.fm-row.C > .fm-name { color: var(--accent-blue); }
+.fm-row.ignored > .fm-name { color: var(--text-muted); }
+/* trailing cell: fixed-width right column so counts + badges align on every row;
+   quick actions overlay it on hover (gradient backdrop) so nothing jumps */
+.fm-trail { position: relative; display: flex; align-items: center; justify-content: flex-end; gap: 4px; min-width: 46px; height: 20px; }
+.fm-trail .fm-markers { display: flex; align-items: center; gap: 4px; transition: opacity var(--motion-fast) var(--ease-out); }
+.fm-count { flex: none; font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); }
+.fm-gitbadge { flex: none; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono-font); font-size: 8px; font-weight: 700; padding: 0 5px; border-radius: var(--radius-pill); }
+.fm-gitbadge svg { width: 9px; height: 9px; }
+.fm-gitbadge.M { color: var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 16%, transparent); }
+.fm-gitbadge.A { color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 16%, transparent); }
+.fm-gitbadge.Q { color: var(--text-muted); background: color-mix(in srgb, var(--text-muted) 18%, transparent); }
+.fm-gitbadge.D { color: var(--graph-failed); background: color-mix(in srgb, var(--graph-failed) 16%, transparent); }
+.fm-gitbadge.C { color: var(--accent-blue); background: color-mix(in srgb, var(--accent-blue) 16%, transparent); }
+.fm-quick { position: absolute; right: 0; top: 50%; transform: translateY(-50%) translateX(6px); display: flex; align-items: center; gap: 2px; padding-left: 12px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--surface-elevated) 94%, transparent) 30%, var(--surface-elevated) 62%); opacity: 0; pointer-events: none; transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-quick .pm-minibtn { width: 20px; height: 20px; border-radius: var(--radius-pill); transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out); }
+.fm-quick .pm-minibtn:hover { transform: translateY(-1px) scale(1.08); }
+.fm-quick .pm-minibtn svg { width: 11px; height: 11px; }
+.fm-row:hover .fm-quick, .fm-row.selected .fm-quick { opacity: 1; transform: translateY(-50%) translateX(0); pointer-events: auto; }
+.fm-row:hover .fm-markers, .fm-row.selected .fm-markers { opacity: 0; }
+[data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-trail .fm-markers { transition: none; }
+/* nesting — closed = display:none (guaranteed 0 height, no gaps); open/close
+   height is animated via JS-measured max-height (see collapse IIFE) */
+.fm-children { display: none; opacity: 0; overflow: hidden; padding-left: 7px; border-left: 1px solid color-mix(in srgb, var(--border-light) 80%, transparent); margin-left: 5px; transition: max-height var(--motion-med) var(--ease-default), opacity var(--motion-med) var(--ease-out); will-change: max-height, opacity; }
+.fm-node.open > .fm-children { display: block; opacity: 1; }
+/* row-cap + show more */
+.fm-showmore { display: flex; align-items: center; gap: var(--sm); padding: 4px 8px 4px 20px; font-family: var(--mono-font); font-size: 9px; color: var(--accent-primary); cursor: pointer; }
+.fm-showmore:hover { text-decoration: underline; }
+.fm-emptytree { padding: var(--lg); text-align: center; color: var(--text-muted); font-size: 10.5px; line-height: 1.6; }
+
+/* ---- cozy shelf cards (Changed / Open groups) ---- */
+.sh-shelf { border-radius: var(--radius-lg); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, var(--border-light)); margin-bottom: var(--md); overflow: visible; box-shadow: var(--elev-1); }
+.side-panel-view .pm-btn { border-radius: var(--radius-pill); }
+.fm-changerow { display: flex; align-items: center; gap: var(--sm); padding: 5px 6px 5px 9px; border-radius: var(--radius-md); min-width: 0; position: relative; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-changerow::before { content: ''; position: absolute; left: 0; top: 5px; bottom: 5px; width: 2px; border-radius: 2px; background: var(--cat, var(--accent-blue)); opacity: 0; transform: scaleY(.4); transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-changerow:hover { background: color-mix(in srgb, var(--cat) 9%, transparent); transform: translateX(2px); }
+.fm-changerow:hover::before { opacity: 1; transform: scaleY(1); }
+.fm-openrow { display: flex; align-items: center; gap: var(--sm); padding: 5px 6px; border-radius: var(--radius-md); min-width: 0; cursor: pointer; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.fm-openrow:hover { background: color-mix(in srgb, var(--cat) 9%, transparent); transform: translateX(2px); }
+.fm-openrow.active-file { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
+.fm-openrow .fm-path { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-openrow .fm-dirty { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); }
+/* changed/open row expanders — collapsed header = badge/dot + filename (+ elided
+   parent dir, filename-first); the .sh-accb body (shared spring layer) carries the
+   full path, hunk stats, and the per-row actions moved out of the header */
+.fm-changerow { cursor: pointer; }
+.fm-cfile { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-cdir { flex: 0 1 auto; max-width: 42%; min-width: 0; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-cchev { flex: none; width: 11px; height: 11px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); }
+[data-acc].open > [data-collapse] > .fm-cchev { transform: rotate(90deg); }
+[data-acc].open > [data-collapse] > .sh-accchev { transform: rotate(90deg); }
+.fm-cbody { display: flex; flex-direction: column; gap: 5px; padding: 2px 8px 7px 9px; }
+.fm-cpath { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); word-break: break-all; }
+.fm-chunks { display: flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: 9px; }
+.fm-chunks .add { color: var(--graph-passed); }
+.fm-chunks .del { color: var(--graph-failed); }
+.fm-chunks .meta { color: var(--text-muted); }
+.fm-cacts { display: flex; gap: var(--xs); flex-wrap: wrap; }
+.fm-cacts .pm-btn { font-size: 9px; padding: 3px 9px; }
+.fm-cacts .pm-btn.danger { color: var(--accent-error); border-color: color-mix(in srgb, var(--accent-error) 40%, transparent); }
+/* toolbar selection chip (always visible while a selection exists) */
+.fm-tbtn.fm-selchip { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.fm-tbtn.fm-selchip b { font-family: var(--mono-font); font-weight: 700; }
+.fm-reveal-note { display: flex; align-items: center; gap: var(--sm); padding: var(--sm) var(--md); margin-bottom: var(--md); border-radius: var(--radius-md); background: color-mix(in srgb, var(--accent-warning) 10%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-warning) 28%, transparent); font-size: 9.5px; color: var(--text-secondary); }
+.fm-reveal-note svg { width: 12px; height: 12px; flex: none; color: var(--accent-warning); }
+.fm-indexchip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 8.5px; color: var(--accent-warning); }
+.fm-indexchip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warning); animation: shPulse 1.6s var(--ease-out) infinite; }
+
+/* ---- reskinned file context menu (sprout family) ---- */
+.fm-ctx { position: fixed; z-index: 300; min-width: 224px; padding: 5px; border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; transform-origin: var(--pm6-sprout-ox, 12%) var(--pm6-sprout-oy, 0%); }
+.fm-ctx.is-open { display: block; animation: fmSprout .16s var(--ease-out); }
+@keyframes fmSprout { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+.fm-ctx-item { display: flex; align-items: center; gap: var(--sm); width: 100%; padding: 6px 9px; border: 0; background: none; border-radius: var(--radius-xs); color: var(--text-secondary); font-size: 11px; cursor: pointer; text-align: left; }
+.fm-ctx-item:hover { background: var(--accent-soft); color: var(--text-primary); }
+.fm-ctx-item svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
+.fm-ctx-item:hover svg { color: var(--text-primary); }
+.fm-ctx-item .fm-ctx-label { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-ctx-item .fm-ctx-key { flex: none; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+.fm-ctx-item.destructive { color: var(--accent-error); }
+.fm-ctx-item.destructive svg { color: var(--accent-error); }
+.fm-ctx-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.fm-ctx-sep { height: 1px; background: var(--border-light); margin: 4px 6px; }
+
+/* ---- sticky footer ---- */
+.sh-foot { flex: none; display: flex; align-items: center; gap: var(--sm); padding: var(--sm); background: var(--surface-elevated); border-top: 1px solid var(--border-light); box-shadow: 0 -6px 14px -10px color-mix(in srgb, var(--text-primary) 40%, transparent); }
+.sh-foot .fm-footstat { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+.sh-foot .fm-footstat .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--graph-passed); flex: none; }
+.sh-foot .fm-footstat.warn .dot { background: var(--accent-warning); }
+.sh-foot .fm-footmeta { margin-left: auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* opacity pulse (shPulse idiom) — the dot's background already follows its state,
+   so the pulse colour tracks it for free (no box-shadow keyframes: Slint 1.17) */
+.sh-foot .fm-footstat .dot { animation: fmbreathe 2.6s var(--ease-out) infinite; }
+@keyframes fmbreathe { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+/* active-pane entrance */
+@keyframes fmPaneIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+[data-pane]:not(.pm-hidden) > *:nth-child(4) { animation-delay: .15s; }
+
+/* ---- file toolbar (new file / new folder / collapse-all / ignored / filter) ---- */
+.fm-toolbar-wrap { flex: none; margin: var(--sm) var(--md) 0; padding: 6px 8px; border-radius: var(--radius-lg); background: color-mix(in srgb, var(--accent-blue) 6%, var(--surface-elevated)); border: 1px solid color-mix(in srgb, var(--accent-blue) 14%, var(--border-light)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent), var(--elev-1); position: relative; overflow: hidden; }
+.fm-toolbar-wrap::before { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 140% at 0% -40%, color-mix(in srgb, var(--accent-blue) 12%, transparent), transparent 60%); pointer-events: none; }
+.fm-toolbar { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--xs); position: relative; z-index: 1; }
+.fm-toolbar-hint { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 5px; padding-left: 8px; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; opacity: .9; }
+.fm-toolbar-hint svg { width: 12px; height: 12px; flex: none; color: var(--accent-blue); }
+.fm-toolbar-hint b { color: var(--text-secondary); font-weight: 700; }
+.fm-tbtn { display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; max-width: 100%; font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: .5px; padding: 4px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: var(--surface-elevated); color: var(--text-secondary); cursor: pointer; white-space: nowrap; transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.fm-tbtn svg { width: 12px; height: 12px; flex: none; }
+.fm-tbtn > span { display: none; overflow: hidden; text-overflow: ellipsis; }
+.fm-toolbar.txt .fm-tbtn > span { display: inline; }
+.fm-tbtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); box-shadow: var(--elev-1); }
+.fm-tbtn:active { transform: translateY(0) scale(.96); }
+.fm-tbtn.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+/* ---- context-menu submenus (Open with / Copy path) ---- */
+.fm-ctx-wrap { position: relative; }
+/* The file context menu carries BOTH .fm-ctx and .pm-ctx-menu, and
+   .pm-ctx-menu sets overflow-y:auto + max-height:70vh. Per CSS overflow, a
+   computed `visible` on one axis paired with a non-visible value on the other
+   becomes `auto` — so overflow-x silently became auto too and clipped these
+   flyouts ("Open with…", "Copy path") at the parent menu's right edge.
+   A menu that hosts flyout submenus cannot also be a scroll container. This
+   one is ~12 items, so it does not need the cap; other .pm-ctx-menu users
+   keep theirs. */
+.fm-ctx.pm-ctx-menu { max-height: none; overflow: visible; }
+.fm-ctx-sub { position: absolute; left: calc(100% - 4px); top: -5px; min-width: 196px; padding: 5px; border-radius: var(--radius-md); background: var(--surface-elevated); border: 1px solid var(--border); box-shadow: var(--elev-2); display: none; z-index: 1; }
+.fm-ctx-wrap.open > .fm-ctx-sub { display: block; animation: fmSprout .14s var(--ease-out); }
+.fm-ctx-item .fm-ctx-caret { margin-left: auto; width: 12px; height: 12px; color: var(--text-muted); flex: none; }
+
+/* width bands */
+.side-panel-slot[data-wtier="min"] .sh-foot .fm-footmeta { display: none; }
+/* worktree trigger: full label+chevron when room, branch glyph only when tight
+   (File Manager root menu ONLY — other .sh-bbranch triggers keep label+chev) */
+#panel-files .sh-bbranch .pm6-tb-menu-label { font-family: var(--mono-font); font-size: 10px; }
+.side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch { flex: 0 0 auto; max-width: none; width: auto; }
+.side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger { width: auto; padding: 4px 8px; }
+#panel-files .sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: none; }
+.side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .fm-root-ico { display: inline-flex; }
+.side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm6-tb-menu-label,
+.side-panel-slot[data-wtier="min"] #panel-files .sh-bbranch .pm6-tb-menu-trigger .pm-ico.sm:not(.fm-root-ico) { display: none; }
+[data-reduced-motion="1"] .fm-ctx.is-open { animation: none; }
+[data-reduced-motion="1"] .fm-indexchip .dot { animation: none; }
+[data-reduced-motion="1"] .sh-foot .fm-footstat .dot { animation: none; }
+[data-reduced-motion="1"] .fm-children, [data-reduced-motion="1"] .pm-segtab-ink, [data-reduced-motion="1"] .fm-row, [data-reduced-motion="1"] .fm-quick, [data-reduced-motion="1"] .fm-chevron, [data-reduced-motion="1"] .fm-cchev, [data-reduced-motion="1"] .fm-changerow::before { transition: none; }
+/* glass themes: give sprout menus a near-solid backing so tree rows don't bleed through */
+[data-theme^="glass"] .pm6-tb-menu, [data-theme^="glass"] .fm-ctx, [data-theme^="glass"] .fm-ctx-sub { background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), color-mix(in srgb, var(--surface) 92%, transparent); }
+
+/* ---- Left-rail frosted scroll-under — ALL NINE panels, files included. ----
+   The chrome above .sh-scroll is one row in some panels, two in others and
+   five in #panel-files (.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar,
+   .fm-filter — the last two come and go). Rather than key on any of that,
+   PM_FROST measures --pm6-shrun-banner-h with gap:true: it walks back from the
+   scroller to the last VISIBLE row above it. Shape stops mattering, which is
+   what finally made #panel-files tractable.
+   EVERY chrome row carries the plate, not just the banner: content passing
+   behind an unplated row shows through the gap between plates.
+   The banner is an inset pill (margin var(--sm), radius var(--radius-lg),
+   elev-1, two-radial-gradient fill), so only its background-COLOR goes
+   translucent — both accent radials survive. z-index 2 -> 5 keeps it under
+   .sh-shelf.menu-open's 6 so sprout menus still float over it, and above the
+   lifted scroller so the tab strip and toolbar stay clickable. ---- */
+.side-panel-view .sh-banner,
+.side-panel-view .pm-segtab,
+.side-panel-view .fm-toolbar-wrap,
+.side-panel-view .fm-selbar,
+.side-panel-view .fm-filter {
+  position: relative;
+  z-index: 5;
+  background-color: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+  -webkit-backdrop-filter: blur(11px) saturate(140%);
+  backdrop-filter: blur(11px) saturate(140%);
+}
+/* glass blur budget: no nested backdrop-filter inside the panel */
+[data-theme^="glass"] .side-panel-view .sh-banner,
+[data-theme^="glass"] .side-panel-view .pm-segtab,
+[data-theme^="glass"] .side-panel-view .fm-toolbar-wrap,
+[data-theme^="glass"] .side-panel-view .fm-selbar,
+[data-theme^="glass"] .side-panel-view .fm-filter {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background-color: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+}
+/* The lift. Fallback 42px is a banner-only panel; PM_FROST overwrites it with
+   the real measured chrome height per panel. */
+.side-panel-view { --pm6-shrun-banner-h: 42px; }
+/* The flex arithmetic here is exact, not approximate, and it is worth stating
+   because it is easy to "fix" into a bug: for a flex:1 item, margin-top:-H
+   raises free space by H, so the item claims H MORE height and its top moves
+   up by H. Net: top 0, bottom = container bottom. It fills the panel with no
+   overflow and leaves no dead strip. padding-top then puts content back below
+   the chrome. Do not add a compensating margin-bottom — that WOULD create the
+   gap it looks like it should close. */
+.side-panel-view .sh-scroll {
+  margin-top: calc(-1 * var(--pm6-shrun-banner-h, 42px));
+  padding-top: calc(var(--pm6-shrun-banner-h, 42px) + var(--sm));
+}
+
+/* ---- Debug & Run panel + bottom Debug tab (Run & Debug Revival 2026-07-27;
+   fixtures per Plans/FinalGUISpec.md F3-496; layout per F3-485/F3-490) ---- */
+#panel-run .sh-launchrow { display: flex; align-items: center; gap: var(--sm); margin-bottom: var(--md); flex-wrap: nowrap; min-width: 0; }
+#panel-run .sh-launch-cluster { display: flex; align-items: center; gap: var(--sm); flex-wrap: nowrap; min-width: 0; width: 100%; }
+#panel-run .sh-cfgwrap { flex: 1 1 0; min-width: 0; }
+#panel-run .sh-cfgbtn { display: flex; align-items: center; gap: 6px; width: 100%; min-width: 0; padding: 5px 9px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); color: var(--text-secondary); font-size: 12px; font-weight: 600; background: none; cursor: pointer; }
+#panel-run .sh-cfgbtn:hover { color: var(--text-primary); background: var(--accent-soft); }
+#panel-run .sh-cfglabel { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+#panel-run .sh-cfglabel .eq-abbr { display: none; }
+#panel-run .sh-cfgwrap[data-fit="abbr"] .sh-cfglabel .eq-full { display: none; }
+#panel-run .sh-cfgwrap[data-fit="abbr"] .sh-cfglabel .eq-abbr { display: inline; }
+/* symbol band: icon-only config trigger (layers glyph — never empty/dot) */
+#panel-run .sh-cfgwrap[data-fit="symbol"] { flex: 0 0 auto; min-width: 0; }
+#panel-run .sh-cfgwrap[data-fit="symbol"] .sh-cfglabel,
+#panel-run .sh-cfgwrap[data-fit="symbol"] .pm-ico.sm:last-child { display: none; }
+#panel-run .sh-cfgwrap[data-fit="symbol"] .sh-cfgbtn {
+  width: auto; min-width: 30px; min-height: 28px; padding: 5px 8px;
+  justify-content: center; gap: 0; flex: none;
+}
+#panel-run .sh-cfgwrap[data-fit="symbol"] .sh-cfgbtn > .pm-ico.sm:first-child,
+#panel-run .sh-cfgwrap[data-fit="symbol"] .sh-cfgbtn > .pm-ico[data-ico="layers"] {
+  display: inline-flex !important;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  opacity: 1;
+  visibility: visible;
+}
+#panel-run .sh-launch-acts { display: inline-flex; align-items: center; gap: var(--sm); flex: 0 0 auto; }
+#panel-run .sh-startbtn { display: inline-flex; align-items: center; gap: 6px; flex: none; }
+#panel-run .sh-startbtn .eq-abbr { display: none; }
+#panel-run .sh-launchrow[data-fit="abbr"] .sh-startbtn .eq-full { display: none; }
+#panel-run .sh-launchrow[data-fit="abbr"] .sh-startbtn .eq-abbr { display: inline; }
+#panel-run .sh-launchrow[data-fit="abbr"] .sh-keyhint { display: none; }
+#panel-run .sh-keyhint { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: 0 4px; margin-left: 2px; }
+#panel-run .sh-startalt { flex: none; }
+
+/* Shelf heads: wrap acts as a unit; abbr count never crushed */
+#panel-run .sh-head {
+  flex-wrap: wrap;
+  row-gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#panel-run .sh-hlabel {
+  flex: 1 1 4rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#panel-run .sh-hcount { margin-left: 0; }
+#panel-run .sh-head > .sh-hcount { margin-left: auto; }
+#panel-run .sh-hcount[data-fit="abbr"] {
+  flex: 0 0 auto;
+  max-width: none;
+  min-width: 1.25rem;
+}
+#panel-run .sh-htrail {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+}
+#panel-run .sh-hacts {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  margin-left: 0;
+}
+#panel-run .sh-head > .sh-hacts { margin-left: auto; }
+#panel-run .sh-shelf[data-acc]:not(.open) > .sh-head .sh-hacts { display: none; }
+#panel-run .sh-shelf[data-acc].open > .sh-head .sh-hacts-wide {
+  flex: 1 1 100%;
+  justify-content: center;
+  margin-left: 0;
+}
+
+#panel-run .sh-addform { border: 1px solid var(--border-light); border-radius: var(--radius-md); background: color-mix(in srgb, var(--surface-elevated) 72%, transparent); padding: var(--md); margin-bottom: var(--md); }
+#panel-run .sh-af-row { display: flex; align-items: center; gap: var(--sm); margin-bottom: var(--sm); }
+#panel-run .sh-af-row:last-child { margin-bottom: 0; }
+#panel-run .sh-af-label { flex: none; width: 64px; font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+#panel-run .sh-af-adapter { flex: 1 1 auto; min-width: 0; }
+#panel-run .sh-af-adapter .pm6-tb-menu-trigger { width: 100%; justify-content: space-between; }
+#panel-run .sh-af-input { flex: 1 1 auto; min-width: 0; }
+#panel-run .sh-af-acts { justify-content: flex-end; }
+
+/* Transport: always wrap; Disconnect+sesspick+Reveal travel as one trail unit */
+#panel-run .sh-transport { display: flex; align-items: center; gap: 4px; padding: 2px 0 var(--sm); flex-wrap: wrap; row-gap: 6px; }
+#panel-run .sh-tsep { flex: none; width: 1px; height: 14px; background: var(--border-light); margin: 0 3px; }
+#panel-run .sh-tspace { flex: 1 1 auto; min-width: 4px; }
+#panel-run .sh-transport .is-primary { color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); background: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+#panel-run .sh-ttrail { display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto; flex-wrap: nowrap; min-width: 0; }
+#panel-run .sh-sesspick { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--text-secondary); flex: 0 1 auto; min-width: 0; max-width: 100%; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 3px 8px; background: none; cursor: pointer; }
+#panel-run .sh-sesspick:hover { color: var(--text-primary); background: var(--accent-soft); }
+#panel-run .sh-sesspick .pm6-tb-menu-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#panel-run .sh-sesswrap { flex: 0 1 auto; min-width: 0; }
+#panel-run .sh-sesspick .eq-abbr { display: none; }
+#panel-run .sh-sesspick .sh-sess-sym { display: none; flex: none; width: 14px; height: 14px; }
+#panel-run .sh-sesswrap[data-fit="abbr"] .pm6-tb-menu-label .eq-full { display: none; }
+#panel-run .sh-sesswrap[data-fit="abbr"] .pm6-tb-menu-label .eq-abbr { display: inline; }
+/* Symbol: terminal SVG only — never a lone status dot */
+#panel-run .sh-sesswrap[data-fit="symbol"] .pm6-tb-menu-label,
+#panel-run .sh-sesswrap[data-fit="symbol"] .sh-sdot,
+#panel-run .sh-sesswrap[data-fit="symbol"] .pm-ico.sm:last-child { display: none; }
+#panel-run .sh-sesswrap[data-fit="symbol"] .sh-sess-sym { display: inline-flex !important; }
+#panel-run .sh-sesswrap[data-fit="symbol"] .sh-sesspick { max-width: none; min-width: 28px; min-height: 26px; padding: 3px 7px; justify-content: center; }
+.side-panel-slot[data-wtier="min"] #panel-run .sh-keyhint { display: none; }
+
+#panel-run .sh-sdot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); display: inline-block; }
+#panel-run .sh-sdot.is-paused, .rd-sestabs .sh-sdot.is-paused, .rd-sestab .sh-sdot.is-paused { background: var(--cat-amber); }
+#panel-run .sh-sdot.is-running, .rd-sestabs .sh-sdot.is-running, .rd-sestab .sh-sdot.is-running { background: var(--cat-green); animation: liveRail 1.8s var(--ease-out) infinite; }
+.sh-sdot.is-paused { background: var(--cat-amber); }
+.sh-sdot.is-running { background: var(--cat-green); animation: liveRail 1.8s var(--ease-out) infinite; }
+.sh-sdot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); display: inline-block; }
+
+#panel-run .sh-sess { display: flex; align-items: center; gap: var(--sm); padding: 5px 6px; border-radius: var(--radius-sm); border: 1px solid transparent; cursor: pointer; min-width: 0; }
+#panel-run .sh-sess:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-sess.is-active { border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); background: color-mix(in srgb, var(--accent-primary) 8%, transparent); }
+#panel-run .sh-sess.is-child { margin-left: 18px; }
+#panel-run .sh-sessmeta { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+#panel-run .sh-sessname { font-size: 11px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-sessline { font-size: 9.5px; color: var(--text-muted); font-family: var(--mono-font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-chip { flex: none; font-size: 8.5px; font-weight: 600; padding: 1px 6px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); color: var(--text-muted); white-space: nowrap; }
+#panel-run .sh-chip.is-warn { color: var(--accent-warning); border-color: color-mix(in srgb, var(--accent-warning) 35%, transparent); background: color-mix(in srgb, var(--accent-warning) 10%, transparent); }
+#panel-run .sh-elapsed { font-variant-numeric: tabular-nums; }
+
+#panel-run .sh-glabel { font-family: var(--display-font); font-size: 8px; letter-spacing: 1.2px; color: var(--text-muted); padding: var(--sm) 0 3px; }
+#panel-run .sh-watch { display: flex; align-items: baseline; gap: var(--sm); padding: 3px 4px; border-radius: var(--radius-sm); min-width: 0; position: relative; }
+#panel-run .sh-watch:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-wexpr { flex: 0 1 auto; font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-wval { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+#panel-run .sh-rowbtns { flex: none; display: none; gap: 2px; }
+#panel-run .sh-watch:hover .sh-rowbtns, #panel-run .sh-var:hover .sh-rowbtns, #panel-run .sh-bp:hover .sh-rowbtns, #panel-run .sh-frame:hover .sh-rowbtns { display: inline-flex; }
+
+#panel-run .sh-scope-h { display: flex; align-items: center; gap: 4px; padding: 3px 2px; border-radius: var(--radius-sm); cursor: pointer; }
+#panel-run .sh-scope-h:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-var { display: flex; align-items: baseline; gap: var(--sm); padding: 2px 4px 2px 18px; border-radius: var(--radius-sm); min-width: 0; position: relative; }
+#panel-run .sh-var:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-var-h { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; min-width: 0; cursor: pointer; }
+#panel-run .sh-var[data-acc] { flex-direction: column; align-items: stretch; padding-left: 4px; }
+#panel-run .sh-var.is-childvar { padding-left: 34px; }
+#panel-run .sh-vname { flex: 0 1 auto; font-family: var(--mono-font); font-size: 10px; color: var(--accent-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45%; }
+#panel-run .sh-vval { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+#panel-run .sh-thread-h { display: flex; align-items: center; gap: var(--sm); font-size: 10.5px; font-weight: 700; color: var(--text-secondary); padding: 3px 2px; }
+#panel-run .sh-frame { display: flex; align-items: baseline; gap: var(--sm); padding: 3px 4px; border-radius: var(--radius-sm); cursor: pointer; min-width: 0; position: relative; }
+#panel-run .sh-frame:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-frame.is-active { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
+#panel-run .sh-frame.is-lib { opacity: 0.62; }
+#panel-run .sh-fname { flex: 0 1 auto; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-floc { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-more { padding: 4px 4px 4px 14px; font-size: 10px; color: var(--accent-blue); cursor: pointer; border-radius: var(--radius-sm); }
+#panel-run .sh-more:hover { background: color-mix(in srgb, var(--accent-blue) 8%, transparent); }
+
+#panel-run .sh-bp { display: flex; align-items: center; gap: 6px; padding: 3px 4px; border-radius: var(--radius-sm); min-width: 0; position: relative; }
+#panel-run .sh-bp:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-bp.is-disabled { opacity: 0.55; }
+#panel-run .sh-bptog { flex: none; }
+#panel-run .sh-bploc { flex: 1 1 auto; min-width: 0; font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-run .sh-bploc .sh-meta { color: var(--text-muted); font-size: 9px; }
+/* width:auto + calc max-width so margin-left indent never overflows .pm-acc-inner */
+#panel-run .sh-bpedit { display: flex; align-items: center; gap: var(--sm); padding: var(--sm); margin: 2px 0 4px 22px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--surface-elevated) 80%, transparent); flex-wrap: wrap; min-width: 0; width: auto; max-width: calc(100% - 22px); box-sizing: border-box; }
+#panel-run .sh-bpedit > .pm6-tb-menu-wrap,
+#panel-run .sh-bpedit > .sh-bpedit-mode { flex: 1 1 7rem; min-width: 0; max-width: 100%; }
+#panel-run .sh-bpedit .pm6-tb-menu-trigger { min-width: 0; max-width: 100%; width: 100%; box-sizing: border-box; justify-content: space-between; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 3px 9px; }
+#panel-run .sh-bpedit .pm6-tb-menu-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#panel-run .sh-bpedit-input { flex: 1 1 7rem; min-width: 0; max-width: 100%; box-sizing: border-box; }
+#panel-run .sh-bpedit-acts { display: inline-flex; align-items: center; gap: var(--sm); flex: 0 0 auto; flex-wrap: wrap; min-width: 0; }
+#panel-run .sh-bpedit-acts .pm-btn { flex: none; }
+/* Measure-driven stack: Expression → qty → Apply|Cancel */
+#panel-run .sh-bpedit[data-stack="1"] > .pm6-tb-menu-wrap,
+#panel-run .sh-bpedit[data-stack="1"] > .sh-bpedit-mode { flex: 1 1 100%; min-width: 0; }
+#panel-run .sh-bpedit[data-stack="1"] .sh-bpedit-input { flex: 1 1 100%; min-width: 0; }
+#panel-run .sh-bpedit[data-stack="1"] .sh-bpedit-acts { flex: 1 1 100%; min-width: 0; flex-wrap: wrap; }
+#panel-run .sh-bpedit[data-stack="1"] .pm6-tb-menu-trigger { min-width: 0; }
+#panel-run .sh-bpx { display: flex; align-items: center; gap: var(--sm); padding: 3px 4px; font-size: 10.5px; color: var(--text-secondary); cursor: pointer; border-radius: var(--radius-sm); }
+#panel-run .sh-bpx:hover { background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+#panel-run .sh-bpx input { accent-color: var(--accent-primary); }
+
+/* ---- bottom Debug tab ---- */
+#bottomDebugHost { display: flex; flex-direction: column; min-height: 0; }
+#bottomDebugHost .rd-empty { display: none; }
+#bottomDebugHost .rd-live { display: none; }
+#bottomDebugHost .rd-term { display: none; }
+#bottomDebugHost[data-rd-state="empty"] .rd-empty { display: flex; flex-direction: column; min-height: 0; }
+#bottomDebugHost[data-rd-state="live"] .rd-live { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+#bottomDebugHost[data-rd-state="term"] .rd-term { display: flex; flex-direction: column; }
+#bottomDebugHost .rd-empty-acts { display: flex; align-items: center; gap: var(--sm); margin-top: var(--md); flex-wrap: wrap; }
+#bottomDebugHost .rd-sestabs { display: flex; align-items: center; gap: 2px; padding: 0 var(--md); border-bottom: 1px solid var(--border-light); flex: none; }
+#bottomDebugHost .rd-sestab { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; color: var(--text-muted); padding: 4px 8px; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+#bottomDebugHost .rd-sestab:hover { color: var(--text-primary); }
+#bottomDebugHost .rd-sestab.active { color: var(--text-primary); border-bottom-color: var(--accent-primary); }
+#bottomDebugHost .rd-chrome { display: flex; align-items: center; gap: var(--md); padding: 4px var(--md); border-bottom: 1px solid var(--border-light); flex: none; font-size: 10px; color: var(--text-muted); }
+#bottomDebugHost .rd-adapter { font-family: var(--mono-font); font-size: 9.5px; }
+#bottomDebugHost .rd-state { font-size: 8.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: var(--radius-pill); }
+#bottomDebugHost .rd-state.is-paused { color: var(--cat-amber); background: color-mix(in srgb, var(--cat-amber) 12%, transparent); }
+#bottomDebugHost .rd-state.is-running { color: var(--cat-green); background: color-mix(in srgb, var(--cat-green) 12%, transparent); }
+#bottomDebugHost .rd-elapsed { font-family: var(--mono-font); font-variant-numeric: tabular-nums; }
+#bottomDebugHost .rd-chrome-btns { margin-left: auto; display: flex; gap: var(--sm); }
+#bottomDebugHost .rd-console { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: var(--sm) var(--md); font-family: var(--mono-font); font-size: 10px; line-height: 1.6; }
+#bottomDebugHost .rd-line { display: flex; align-items: baseline; gap: var(--sm); min-width: 0; }
+#bottomDebugHost .rd-tag { flex: none; font-size: 7.5px; font-weight: 700; letter-spacing: 0.08em; padding: 0 5px; border-radius: var(--radius-xs); width: 52px; text-align: center; }
+#bottomDebugHost .rd-tag-adapter { color: var(--cat-blue); background: color-mix(in srgb, var(--cat-blue) 12%, transparent); }
+#bottomDebugHost .rd-tag-stdout { color: var(--text-muted); background: color-mix(in srgb, var(--text-muted) 10%, transparent); }
+#bottomDebugHost .rd-tag-stderr { color: var(--cat-fail); background: color-mix(in srgb, var(--cat-fail) 12%, transparent); }
+#bottomDebugHost .rd-tag-repl { color: var(--cat-purple); background: color-mix(in srgb, var(--cat-purple) 12%, transparent); }
+#bottomDebugHost .rd-text { flex: 1 1 auto; min-width: 0; color: var(--text-secondary); white-space: pre-wrap; word-break: break-word; }
+#bottomDebugHost .rd-replrow { display: flex; align-items: center; gap: var(--sm); padding: 4px var(--md); border-top: 1px solid var(--border-light); flex: none; }
+#bottomDebugHost .rd-prompt { color: var(--cat-purple); font-weight: 700; }
+#bottomDebugHost .rd-replrow input { flex: 1 1 auto; min-width: 0; background: none; border: none; outline: none; font-family: var(--mono-font); font-size: 10.5px; color: var(--text-primary); }
+#bottomDebugHost .rd-replrow input::placeholder { color: var(--text-muted); }
+#bottomDebugHost .rd-termnote { padding: var(--sm) var(--md); }
+#bottomDebugHost .rd-startbtn { color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); background: color-mix(in srgb, var(--accent-primary) 12%, transparent); font-weight: 700; }
+</style>

@@ -298,23 +298,7 @@
     if (summary) summary.textContent = 'RESULTS (' + visibleCount + ' in 3 files)';
   };
 
-  // ── File context menu ──
-  window.showFileContextMenu = function(event) {
-    event.preventDefault();
-    var menu = document.getElementById('fileContextMenu');
-    if (!menu) return;
-    menu.style.display = 'block';
-    var tree = event.currentTarget;
-    var rect = tree.getBoundingClientRect();
-    menu.style.left = Math.min(event.clientX - rect.left, 180) + 'px';
-    menu.style.top = (event.clientY - rect.top) + 'px';
-  };
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.context-menu-mock')) {
-      var m = document.getElementById('fileContextMenu');
-      if (m) m.style.display = 'none';
-    }
-  });
+  // ── File context menu is owned by the Cozy Shelves layer (PMMenu.openAt) ──
 
   // ── Source Control subview switching ──
   window.switchSCSubview = function(tabEl, viewName) {
@@ -1243,8 +1227,16 @@
     codeEl.onmousemove = function(e) {
       var rect = codeEl.getBoundingClientRect();
       var y = e.clientY - rect.top + codeEl.scrollTop;
-      var lineY = Math.floor(y / 18) * 18;
-      highlight.style.top = lineY + 'px';
+      /* Snap to the line under the cursor. Anchor to the first .code-line's
+         real offsetTop and rendered box height, not to padding/computed
+         line-height — the old /18 math assumed an origin at padding-top and
+         an 18px grid, so the highlight sat ~1-2 lines too high. */
+      var first = codeEl.querySelector('.code-line');
+      var origin = first ? first.offsetTop : 0;
+      var lh = first ? first.offsetHeight : 18;
+      var row = Math.floor((y - origin) / lh);
+      if (row < 0) { highlight.style.display = 'none'; return; }
+      highlight.style.top = (origin + row * lh) + 'px';
       highlight.style.display = 'block';
     };
     codeEl.onmouseleave = function() { highlight.style.display = 'none'; };

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3502-L21926
+Source lines: L3538-L22078
 
-Source SHA256: `dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67`
+Source SHA256: `22a536be201afa59dbfb36d2f5c8a08b5c69a0fb9a7b6c45f93d3b1aacc9de9c`
 
 ---
 
@@ -407,8 +407,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header exposes platform, model, reasoning/effort, and worktree
-  controls. Selections apply to the next turn and do not interrupt a streaming
+  The chat header exposes model, reasoning/effort, and worktree
+  controls; requested platform/provider selection is owned by the assistant chat
+  surface rather than a standing header dropdown or a status-bar chip. Selections
+  apply to the next turn and do not interrupt a streaming
   response.
 gui_related: true
 gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
@@ -417,6 +419,7 @@ unblocks: []
 acceptance_criteria:
   - Provider and model lists come from the account-bound Provider -> models registry plus the Models_System capability resolver rather than hardcoded UI lists.
   - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
+  - Requested platform selection is reachable from the assistant chat surface without a standing chat-header platform dropdown or status-bar platform chip.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -444,6 +447,8 @@ negative_constraints:
   - "Do not use legacy `platform_specs` or `platform_specs.rs` as the active provider/model capability source."
 compatibility_only_notes:
   - "Legacy `platform_specs` and `fallback_model_ids(platform)` tokens are retired source-lineage only."
+stale_retired_dispositions:
+  - "Standing chat-header platform dropdown retired (superseded by ACD-437 selector-row canon); the interim status-bar platform chip relocation is also retired per the PMConcept7 status-bar trim - requested platform is owned by the assistant chat surface with applies-next-turn semantics."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Models_System.md
@@ -3393,7 +3398,11 @@ plan_unit_id: ACD-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thread lifecycle state is separate from operational status markers and follows creating -> active -> suspended -> archived -> deleted with explicit, auditable transitions.
+canonical_text: >-
+  Thread lifecycle state is separate from operational status markers and follows
+  creating -> active -> suspended -> archived -> deleted with explicit, auditable
+  transitions. Deleted is terminal: logical hide is immediate, unheld active-canon
+  content is purged within 24 hours, and the content-free tombstone is indefinite.
 gui_related: false
 gui_classification_reason: Thread lifecycle state and transitions are storage/runtime behavior, not GUI implementation.
 depends_on: [ACD-071]
@@ -3402,6 +3411,8 @@ acceptance_criteria:
   - Lifecycle state stays separate from attention_required, blocked, completed, or failed operational status markers.
   - Lifecycle transitions follow the canonical path and allowed transitions.
   - Lifecycle transitions are explicit and auditable.
+  - Deleted has no ordinary restore edge and is removed immediately from navigation, search, context, and export projections.
+  - A protected hold may delay physical purge but cannot unhide or restore the source thread.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3417,13 +3428,18 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+  - Case-L:L-005
+  - Case-L:L-015
+  - Case-L:PD-L015-04
 preserved_exact_tokens:
   - "creating -> active -> suspended -> archived -> deleted"
   - "attention_required"
   - "blocked"
   - "completed"
   - "failed"
-negative_constraints: []
+negative_constraints:
+  - Do not represent a hold-delayed physical purge as an undo window.
+  - Do not restore a deleted source thread through conversation restore-point branching.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -3437,9 +3453,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Thread lifecycle persistence keeps or prunes transcript, queue state,
-  metadata, restorable UI state, caches, and tombstones by lifecycle state while
-  preserving lineage and treating deletion as terminal for ordinary navigation.
+  Thread lifecycle persistence keeps or prunes transcript, queue state, metadata,
+  restorable UI state, caches, and tombstones by lifecycle state. Thread deletion
+  immediately hides content, physically purges unheld active canon within 24 hours,
+  retains a content-free tombstone indefinitely, and permits backup bytes for at most
+  30 days unless held, with tombstone replay before restored visibility.
 gui_related: false
 gui_classification_reason: Lifecycle persistence and retention behavior are storage/runtime requirements.
 depends_on: [ACD-074]
@@ -3447,7 +3465,10 @@ unblocks: []
 acceptance_criteria:
   - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
   - Suspended and archived states prune only the allowed transient state.
-  - Deletion removes the thread from normal user-visible chat surfaces while retaining only required integrity, sync, or compliance metadata.
+  - Deletion immediately removes the thread from normal user-visible chat surfaces and active context/export projections.
+  - Unheld canonical message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours.
+  - The content-free tombstone remains indefinitely, backups retain deleted bytes for no more than 30 days unless held, and restore replays tombstones before visibility.
+  - Legal, preserve, restore-point source-lineage, descendant, and in-flight application holds delay byte purge without restoring the source thread.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3463,6 +3484,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+  - Case-L:L-005
+  - Case-L:L-015
+  - Case-L:PD-L015-04
 preserved_exact_tokens:
   - "creating"
   - "active"
@@ -3472,6 +3496,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "archiving does not rewrite message ids, thread lineage, or worktree lineage"
   - "deletion is terminal for ordinary user navigation"
+  - Delete confirmation and completion copy must not promise ordinary undo.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -3935,34 +3960,65 @@ plan_unit_id: ACD-086
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Restore-and-branch creates a new thread_id and branch_id linked to the source restore point and source thread, and branch lineage remains queryable for restore, history, and usage attribution.
-gui_related: false
-gui_classification_reason: Branch identity and lineage are storage/history behavior, not GUI implementation.
-depends_on: [ACD-071]
+canonical_text: >-
+  Assistant Chat owns immutable conversation-boundary restore points. Explicit
+  creation freezes conversation and provenance refs without file bodies; applying
+  an available exact-hash record creates a new thread_id and branch_id while leaving
+  the source thread/worktree unchanged; holds govern delete/expiry eligibility; and
+  unavailable or source-deleted-content states refuse without fabricating a branch.
+gui_related: true
+gui_classification_reason: Conversation restore-point creation, status, unavailable reasons, branching, and source-preservation disclosure are user-visible behavior.
+depends_on: [ACD-071, CV-320, SP-242, CS-057]
 unblocks: [ACD-087]
 acceptance_criteria:
-  - Restore-and-branch creates new thread and branch identities.
-  - Branch lineage is linked to the source restore point and source thread.
-  - Branch lineage remains queryable for restore/history and usage attribution.
+  - cmd.chat.create_restore_point freezes one inclusive source message boundary with conversation/provenance/attachment/citation refs, record hash, and no workspace file bodies.
+  - Equal create identity and semantic content returns the same record; conflicting content never overwrites it.
+  - Only branched creates new thread and conversation branch identities and appends exactly one restore_point.applied; refused and failed return no target IDs and emit no application event.
+  - Replaying one branch command/application identity returns the same recorded result and target identities without a duplicate restore_point.applied; a second intentional branch requires a new identity.
+  - Branched, refused, failed, and replay leave source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged.
+  - Lifecycle is immutable available -> expired, deleted, or corrupt; successful application does not consume the record.
+  - RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 expires only at the inclusive owner-proven reference_release plus 7,776,000 seconds or oldest-eligible count pressure, after every hold/live/recovery/preserve/backup/rollback/maintenance ref is released.
+  - Descendant branch, application, preserve, legal, in-flight application, and source-lineage refs protect the record and required material.
+  - A deleted source remains hidden; branching is allowed only from still-verified held boundary material and is labeled a new branch, never undo.
+  - Missing purged source material returns refused with source_deleted_content_unavailable and creates no new identity.
+  - Restore-point record and artifact routes use restore_point_id, record_ref, and record_sha256; optional safe_point_id is lineage only.
 validation_surfaces:
+  - RSP-RP-001
+  - RSP-RP-002
+  - RSP-RP-003
+  - RSP-RP-004
+  - RSP-CMD-001
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: branch_lineage
-reasoning_tier: standard
+risk_class: conversation_restore_point_lifecycle_or_source_mutation
+reasoning_tier: high
 context_scope: branching
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
-  mode: branch_conversation_lineage
+  mode: conversation_restore_point_lifecycle
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
 preserved_exact_tokens:
   - "restore-and-branch"
   - "thread_id"
   - "branch_id"
-negative_constraints: []
+  - "rp:{project_id}:{restore_point_id}"
+  - "available"
+  - "expired"
+  - "deleted"
+  - "corrupt"
+negative_constraints:
+  - Do not conflate conversation restore points with runtime safe points or cmd.chat.revert.
+  - Do not branch from unavailable or unverifiable content and do not resurrect a deleted source thread.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -3975,32 +4031,53 @@ plan_unit_id: ACD-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Branch labels are visible in history and thread navigation, and branching from a running or dirty thread requires confirmation that names the preserved source state and new branch target.
+canonical_text: >-
+  Restore-point controls disclose the exact source conversation boundary and new
+  target before branching, expose record/artifact status and unavailable reason,
+  and consume their current canonical command rows and one-handler wiring.
+  Branching is a new conversation branch and never source-thread undo or
+  filesystem restore.
 gui_related: true
 gui_classification_reason: Branch labels and confirmation prompts are user-visible UI behavior.
 depends_on: [ACD-086]
 unblocks: []
 acceptance_criteria:
   - Branch labels appear in history and thread navigation.
-  - Branching from running or dirty threads requires explicit confirmation naming source state and branch target.
+  - Branching discloses the exact source thread, branch, message boundary, running or dirty source state, and new target before creation.
+  - cmd.chat.create_restore_point, cmd.chat.branch_from_restore, and cmd.chat.delete_restore_point each resolve to one current catalog row and one sole-handler production-wiring row; mismatch fails closed.
+  - Branch payload requires project_id, restore_point_id, source_thread_id, and expected_restore_point_sha256; only branched creates a target.
+  - Only branched emits exactly one restore_point.applied; replay emits no duplicate, and refused/failed return no target IDs or application event.
+  - Every branch result and replay preserves source thread/branch/worktree/files/Git/index/queue/safe points.
+  - Expired, deleted, corrupt, stale-hash, source-content-unavailable, permission, storage, hold, and in-progress states show the exact unavailable reason and no enabled invalid action.
+  - Delete uses expected-hash and hold preflight, is idempotent, never clears a protected ref, and never implies deleted-thread undo.
 validation_surfaces:
+  - RSP-RP-002
+  - RSP-RP-004
+  - RSP-CMD-001
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: branch_user_confirmation
-reasoning_tier: standard
+risk_class: restore_point_ghost_command_or_misleading_undo
+reasoning_tier: high
 context_scope: branching
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: branch_conversation_ui_confirmation
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
 preserved_exact_tokens:
   - "branch labels"
   - "running or dirty thread"
-negative_constraints: []
+  - "cmd.chat.branch_from_restore"
+negative_constraints:
+  - Do not infer registration from Assistant Chat prose; require current live-derived catalog and production-wiring coverage.
+  - Do not present restore-and-branch as undo or file restoration.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -8953,7 +9030,9 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Context Lens is a top-right chat control immediately right of chat search,
   rendered as an icon plus dropdown exposing `Mute`, `Focus`, `Subcompact`,
-  and `Turn Off`.
+  and `Turn Off`. The dropdown is a click-to-open corner-origin sprout popover
+  per the header chrome menu contract (ACD-442); hover does not open it and
+  `aria-expanded` is tracked on the trigger.
 gui_related: true
 gui_classification_reason: Context Lens placement and dropdown controls are visible chat UI.
 depends_on: [ACD-191]
@@ -8962,6 +9041,7 @@ acceptance_criteria:
   - Context Lens lives in the top-right of the chat window.
   - The control appears immediately to the right of chat search.
   - Dropdown exposes Mute, Focus, Subcompact, and Turn Off.
+  - The popover opens on click as a corner-origin sprout with aria-expanded tracked on the trigger; hover alone does not open it.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -10032,34 +10112,57 @@ plan_unit_id: ACD-217
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Chat separates `cmd.chat.revert` file restore from `cmd.chat.rewind` conversation rewind.
+canonical_text: >-
+  Chat resolves cmd.chat.revert to one immutable whole-turn mutation manifest and
+  delegates exact replacement to the FileSafe manifest, journal, rollback,
+  equality, restart, remote-custody, hold, and closed-outcome contract. It never
+  rewinds conversation state, merges, partially succeeds, or re-resolves paths
+  through current working_directory; cmd.chat.rewind remains conversation-only.
 gui_related: true
 gui_classification_reason: Revert and rewind are visible chat command behaviors.
-depends_on: [ACD-215]
+depends_on: [ACD-215, F2-200, F2-201, F2-202, F2-204, CV-320]
 unblocks: []
 acceptance_criteria:
-  - cmd.chat.revert restores files.
+  - cmd.chat.revert resolves one eligible assistant turn and the complete canonical-absolute whole-turn mutation manifest before FileSafe admission.
+  - Omitted target selects the latest eligible mutating assistant turn; no eligible turn returns no_eligible_mutating_turn without a restore transaction.
+  - restored_clean and restore_failed require target and rollback equality respectively; restore_recovery_required retains every fence and hold.
+  - restored_with_conflicts and partial per-file success are invalid.
+  - Same command identity returns the recorded result or reconciles the same nonterminal transaction without selecting a newer turn.
   - cmd.chat.rewind rewinds conversation state.
   - The two command IDs are not conflated.
+  - Prompt-versus-proceed remains command and permission policy latitude and cannot weaken target immutability or FileSafe guarantees.
 validation_surfaces:
+  - RSP-CHAT-001
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: chat_gap
+risk_class: chat_revert_partial_or_unverified_restore
 reasoning_tier: high
 context_scope: commands
 implementation_surfaces:
   - Plans/assistant-chat-design.md
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
   - Plans/UI_Command_Catalog.md
 node_compile_hint:
-  mode: revert_rewind_split
+  mode: chat_revert_filesafe_parity
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0101
+  - Case-L:L-006
+  - Case-L:L-024
+  - Case-L:PD-RSP-09
 preserved_exact_tokens:
   - "cmd.chat.revert"
   - "cmd.chat.rewind"
+  - "restore_recovery_required"
 negative_constraints:
   - "cmd.chat.revert and cmd.chat.rewind must remain separate."
+  - Do not turn prompt-versus-proceed latitude into a weaker restore contract.
+  - Do not report success for a subset of the immutable whole-turn mutation scope.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -14517,16 +14620,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat header appends the Worktree button after Reasoning/effort; mode buttons
-  remain separate; the button is visible in Ask, Agent, Debug, Plan, and Deep
-  Plan and hidden when the active project has no git repository.
+  Chat header appends the Worktree button after the Persona, Model, Mode
+  selector row (ACD-437); the button is a click-to-open trigger for the
+  worktree sprout popout (ACD-442); the button is visible in Ask, Agent,
+  Debug, Plan, and Deep Plan and hidden when the active project has no git
+  repository.
 gui_related: true
 gui_classification_reason: Chat header placement, visibility, and mode presentation are visible Assistant Chat UI.
 depends_on: [ACD-318]
 unblocks: [ACD-323]
 acceptance_criteria:
-  - The Worktree button appears after the Reasoning/effort control in the chat header strip.
-  - Mode buttons remain separate from the header strip and are not adjacent to the Worktree button.
+  - The Worktree button appears after the Persona, Model, Mode selector row in the chat header strip.
+  - Clicking the button toggles the worktree sprout popout; hover alone does not open it.
   - The button is visible in Ask, Agent, Debug, Plan, and Deep Plan and hidden when no git repository is active.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -14544,14 +14649,15 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
 preserved_exact_tokens:
-  - "Reasoning/effort"
   - "Ask"
   - "Agent"
   - "Debug"
   - "Plan"
   - "Deep Plan"
 negative_constraints:
-  - "Mode buttons are separate from the header strip and not adjacent to this button."
+  - "Hover alone must not open the worktree popout."
+stale_retired_dispositions:
+  - "Placement after a standing Reasoning/effort header control retired; effort is reached through model-selection chaining (ACD-437/ACD-438) and the Worktree button follows the Persona, Model, Mode selector row."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -14564,14 +14670,19 @@ plan_unit_id: ACD-323
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Worktree header icon states are unbound, bound clean, bound dirty, and bound conflict, using theme tokens and compact overflow behavior.
+canonical_text: >-
+  Worktree header icon states are unbound, bound clean, bound dirty, and bound
+  conflict, using theme tokens and compact overflow behavior. State colors are
+  applied through stylesheet rules only, never inline style pinning, so trigger
+  hover matches the Context Lens trigger hover treatment in all themes.
 gui_related: true
 gui_classification_reason: Worktree icon states, colors, indicators, tooltips, and overflow behavior are visible UI.
 depends_on: [ACD-322]
 unblocks: [ACD-324, ACD-341]
 acceptance_criteria:
   - Unbound, bound clean, bound dirty, and bound conflict icon states render with the specified tooltips and indicators.
-  - Icon colors resolve through theme tokens rather than hardcoded hex values.
+  - Icon colors resolve through theme tokens rather than hardcoded hex values, applied via stylesheet rules rather than inline styles.
+  - Worktree trigger hover matches the Context Lens trigger hover treatment in all themes, including bound states.
   - Accessibility announcements and compact overflow behavior match the source span.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -14598,6 +14709,7 @@ preserved_exact_tokens:
   - "aria-live=\"polite\""
 negative_constraints:
   - "Icon colors must not use hardcoded hex values."
+  - "State colors must not be pinned via inline style attributes; hover treatment is CSS-owned."
   - "Narrow controls degrade to icon-only controls rather than wrapping text into the compact chat header."
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -14614,7 +14726,10 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Worktree dropdown rows differ for unbound and bound states, including `None`,
   `Create Worktree…`, branch/path/status info, `Unbind`, `Merge into Base…`,
-  `Create PR…`, and destructive `Remove Worktree`.
+  `Create PR…`, and destructive `Remove Worktree`. The dropdown is hosted as a
+  click-to-open corner-origin sprout popout with the theme-matched popout
+  chrome shared by the other chat header menus (ACD-442); the row set is
+  unchanged by that hosting.
 gui_related: true
 gui_classification_reason: Worktree dropdown rows and actions are visible chat header UI.
 depends_on: [ACD-323]
@@ -14623,6 +14738,7 @@ acceptance_criteria:
   - The unbound dropdown shows `None` and `Create Worktree…`.
   - The bound dropdown shows branch name, path, status, `Unbind`, `Merge into Base…`, `Create PR…`, and destructive `Remove Worktree`.
   - Info labels and status pills have no action.
+  - The dropdown opens on click as a corner-origin sprout popout using the shared theme-matched popout chrome, with the same row set.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

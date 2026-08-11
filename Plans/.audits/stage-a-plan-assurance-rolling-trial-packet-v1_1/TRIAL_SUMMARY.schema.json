@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/trial-summary.v1.1.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "packet_core_population_sha256", "trial_id", "generation_id", "effective_contract_sha256", "v1_1_artifact_validator_sha256", "source_snapshot_sha256", "source_population_sha256", "protected_before_receipt_sha256", "protected_after_receipt_sha256", "protected_invariance_sha256", "artifact_budget_manifest_ref", "artifact_budget_manifest_sha256", "v1_semantic_summary", "v1_semantic_summary_sha256", "authority_lineage", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"}, "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "packet_core_population_sha256": {"$ref": "#/$defs/sha"}, "trial_id": {"type": "string", "minLength": 1}, "generation_id": {"type": "string", "minLength": 1},
+    "effective_contract_sha256": {"$ref": "#/$defs/sha"}, "v1_1_artifact_validator_sha256": {"$ref": "#/$defs/sha"},
+    "source_snapshot_sha256": {"$ref": "#/$defs/sha"}, "source_population_sha256": {"$ref": "#/$defs/sha"},
+    "protected_before_receipt_sha256": {"$ref": "#/$defs/sha"}, "protected_after_receipt_sha256": {"$ref": "#/$defs/sha"}, "protected_invariance_sha256": {"$ref": "#/$defs/sha"},
+    "artifact_budget_manifest_ref": {"const": "ARTIFACT_BUDGET_MANIFEST.json"}, "artifact_budget_manifest_sha256": {"$ref": "#/$defs/sha"},
+    "v1_semantic_summary": {"type": "object"}, "v1_semantic_summary_sha256": {"$ref": "#/$defs/sha"},
+    "authority_lineage": {"type": "object", "additionalProperties": false, "required": ["request_sha256", "capability_sha256", "authority_sha256", "marker_sha256", "fresh_v1_1_only", "live_sender_attestation_observed", "one_use_marker_observed"], "properties": {"request_sha256": {"$ref": "#/$defs/sha"}, "capability_sha256": {"$ref": "#/$defs/sha"}, "authority_sha256": {"$ref": "#/$defs/sha"}, "marker_sha256": {"$ref": "#/$defs/sha"}, "fresh_v1_1_only": {"const": true}, "live_sender_attestation_observed": {"const": true}, "one_use_marker_observed": {"const": true}}},
+    "terminal": {"enum": ["READY_FOR_SCALE_DECISION", "VALID_NEGATIVE_METHOD_REVISE", "RESEARCH_LIMITED", "BUDGET_STOP", "TRIAL_BLOCKED", "TRIAL_INVALID", "INPUT_DRIFT_STOP", "SAFETY_ABORT"]}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

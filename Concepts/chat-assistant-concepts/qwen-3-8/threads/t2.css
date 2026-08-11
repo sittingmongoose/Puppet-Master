@@ -1,0 +1,460 @@
+/* T2 · turn plates — every turn is a bordered plate with a header band
+   (role · model chip · time) and a footer meta band. Card-stack settle is
+   expressed via the resting under-plate lip that deepens on hover; static
+   identity only, no replaying entrance animation. */
+
+.pmq-thread[data-structure="plates"] {
+  container-type: inline-size;
+  container-name: pmqt2;
+}
+
+.pmq-t2 .pmq-stream {
+  padding: 16px 16px 26px;
+  gap: 12px;
+}
+
+/* ---- the plate ---- */
+
+.pmq-t2 .pmq-msg {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: 0;
+  overflow: hidden;
+  box-shadow:
+    0 2px 0 -1px var(--surface),
+    0 2px 0 0 var(--border),
+    var(--elev-1);
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-med) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t2 .pmq-msg:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow:
+    0 5px 0 -3px var(--surface),
+    0 5px 0 -2px var(--border),
+    var(--elev-2);
+}
+
+.pmq-t2 .pmq-msg.pmq-user {
+  background: var(--user-bubble);
+  align-self: flex-end;
+  max-width: min(100%, 640px);
+}
+
+.pmq-t2 .pmq-msg.pmq-assistant {
+  align-self: flex-start;
+  max-width: min(100%, 900px);
+}
+
+/* ---- header band ---- */
+
+.pmq-plate-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 7px 13px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+}
+
+.pmq-t2 .pmq-msg.pmq-user .pmq-plate-head {
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+}
+
+.pmq-plate-glyph {
+  width: 13px;
+  height: 13px;
+  color: var(--text-faint);
+}
+
+.pmq-t2 .pmq-msg.pmq-assistant .pmq-plate-glyph { color: var(--accent-primary); }
+
+.pmq-plate-sender {
+  font-family: var(--display-font);
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pmq-plate-model {
+  font-family: var(--mono-font);
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--text-faint);
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  white-space: nowrap;
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t2 .pmq-msg:hover .pmq-plate-model {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.pmq-plate-time {
+  margin-left: auto;
+  font-family: var(--mono-font);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+/* ---- plate body ---- */
+
+.pmq-t2 .pmq-msg-inner { padding-bottom: 2px; }
+
+.pmq-t2 .pmq-msg-inner > *:not(.pmq-plate-head):not(.pmq-msg-hover) {
+  margin: 10px 13px 0;
+  min-width: 0;
+}
+
+.pmq-t2 .pmq-msg.pmq-user .pmq-body {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 500;
+  max-width: 56ch;
+}
+
+.pmq-t2 .pmq-msg.pmq-assistant .pmq-body {
+  padding: 0;
+  max-width: 72ch;
+}
+
+/* ---- footer meta band ---- */
+
+.pmq-t2 .pmq-msg-hover {
+  opacity: 1;
+  transform: none;
+  margin: 10px 0 0;
+  padding: 7px 13px 8px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+}
+
+.pmq-t2 .pmq-msg-hover .pmq-hact {
+  color: var(--text-faint);
+  border-color: transparent;
+  background: none;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t2 .pmq-msg-hover .pmq-hmeta { color: var(--text-faint); }
+
+.pmq-t2 .pmq-msg:hover .pmq-msg-hover .pmq-hact,
+.pmq-t2 .pmq-msg:focus-within .pmq-msg-hover .pmq-hact {
+  color: var(--text-secondary);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.pmq-t2 .pmq-msg:hover .pmq-msg-hover .pmq-hmeta { color: var(--text-secondary); }
+
+.pmq-t2 .pmq-msg-hover .pmq-hact:hover { transform: translateY(-1px); }
+
+.pmq-t2 .pmq-msg.pmq-user .pmq-msg-hover { justify-content: flex-end; }
+
+/* ---- orphan footers (plate head scrolled out of view) ---- */
+
+.pmq-t2 .pmq-msg-hover { transition: opacity var(--dur-fast) var(--ease-out); }
+
+.pmq-t2 .pmq-msg.pmq-t2-footless .pmq-msg-hover { opacity: 0; }
+
+/* ---- wide: a centered measure column instead of hard L/R alternation ---- */
+
+@container pmqt2 (min-width: 900px) {
+  .pmq-t2 .pmq-stream {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 14px;
+  }
+
+  .pmq-t2 .pmq-msg.pmq-user,
+  .pmq-t2 .pmq-msg.pmq-assistant {
+    align-self: stretch;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* ---- narrow plates ---- */
+
+@container pmqt2 (max-width: 619px) {
+  .pmq-t2 .pmq-stream { gap: 10px; }
+  .pmq-plate-head { padding: 6px 11px; gap: 7px; }
+  .pmq-t2 .pmq-msg-inner > *:not(.pmq-plate-head):not(.pmq-msg-hover) { margin: 9px 11px 0; }
+  .pmq-t2 .pmq-msg-hover { padding: 6px 11px 7px; }
+  .pmq-plate-model { display: none; }
+}
+
+/* ---- questionnaire: the questionnaire IS a turn plate ----
+   Same bordered plate + header band as a turn, so "Puppet Master asks"
+   reads as who-said-what, not as a modal interruption. */
+
+.pmq-t2 .pmq-t2-quest {
+  position: relative;
+  z-index: 1;
+  max-width: min(100%, 800px);
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow:
+    0 2px 0 -1px var(--surface),
+    0 2px 0 0 var(--border),
+    var(--elev-1);
+}
+
+.pmq-t2 .pmq-t2-quest .pmq-t2q-head { border-bottom: 1px solid var(--border); }
+
+.pmq-t2-quest .pmq-plate-glyph { color: var(--accent-primary); }
+
+.pmq-t2q-chip {
+  padding: 1px 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  font-family: var(--mono-font);
+  font-size: 10px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.pmq-t2q-x {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-faint);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t2q-x:hover { color: var(--text-primary); background: var(--hover-fill); }
+
+/* slides share one grid cell so the content swap can crossfade in place */
+.pmq-t2q-body { display: grid; padding: 12px 13px 12px; }
+.pmq-t2q-slide { grid-area: 1 / 1; min-width: 0; }
+
+.pmq-t2q-prompt {
+  max-width: 64ch;
+  margin: 0 0 10px;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.pmq-t2q-optional {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.pmq-t2q-opts { display: flex; flex-direction: column; gap: 6px; }
+
+.pmq-t2q-opt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  padding: 6px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  text-align: left;
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t2q-opt:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.pmq-t2q-opt.pmq-on {
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border));
+  background: var(--accent-softer);
+  color: var(--text-primary);
+}
+
+.pmq-t2q-mark {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  color: transparent;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t2q-mark .pmq-ico { width: 9px; height: 9px; }
+
+.pmq-t2q-opt.pmq-on .pmq-t2q-mark {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: var(--surface);
+}
+
+.pmq-t2q-mark-radio { border-radius: 50%; }
+
+.pmq-t2q-opt.pmq-on .pmq-t2q-mark-radio {
+  background: none;
+  border-color: var(--accent-primary);
+}
+
+.pmq-t2q-opt.pmq-on .pmq-t2q-mark-radio::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
+.pmq-t2q-free {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t2q-free:focus { outline: none; border-color: var(--border-strong); }
+
+.pmq-t2q-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+}
+
+.pmq-t2q-spacer { flex: 1; }
+
+/* ---- work: a row of small plate chips opening sidecar popovers ---- */
+
+.pmq-t2 .pmq-stream > .pmq-t2-workchips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.pmq-t2-wchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 0 0 var(--border);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t2-wchip:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.pmq-t2-wchip[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border));
+  background: var(--accent-softer);
+  color: var(--text-primary);
+}
+
+.pmq-t2-wchip .pmq-ico { width: 12px; height: 12px; color: var(--text-faint); }
+.pmq-t2-wchip[aria-expanded="true"] .pmq-ico { color: var(--accent-primary); }
+
+.pmq-t2-wlabel { color: var(--text-secondary); }
+
+.pmq-t2-wval {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.pmq-t2-wchip[data-domain="alerts"] .pmq-t2-wval { color: var(--accent-warning); }
+.pmq-t2-wchip[data-domain="diff"] .pmq-t2-wval { color: var(--accent-secondary); }
+
+/* sidecar popup body: stacked kit cards, chrome stripped to fit the popover */
+.pmq-t2-wpop { display: flex; flex-direction: column; min-height: 0; }
+
+.pmq-t2-wpop-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.pmq-t2-wpop-body .pmq-surface,
+.pmq-t2-wpop-body .pmq-agroup { box-shadow: none; }
+
+.pmq-t2-wpop-none {
+  padding: 8px 4px;
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}

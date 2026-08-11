@@ -1,24 +1,25 @@
 # Shard Index: Plans/GitHub_Integration.md
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8`
+Source SHA256: `ca98a6f62948a97779ea383dd564964b485e8863072dd42e40730cc7ccccbfa9`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `35fab4f32c786d366803f222afeafeee829396bf5c44739e8f7c5ab3229ab9ef`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L30 `708a34360c1320aaa79cee7051551bed2f088e2e8ab089870d085315518b4bdd`
-- [003 - Change Summary](003-change-summary.md) L32-L41 `a04720fb52a4175228fec709de8bb6c9f2d774e3b0253d53322535447010fb54`
-- [004 - SSOT References (DRY)](004-ssot-references-dry.md) L43-L78 `1618cae63a0dc6bac6d628700daa69932439b9328eb199d20228dc0c25def129`
-- [005 - Canonical owner and consumer reconciliation](005-canonical-owner-and-consumer-reconciliation.md) L80-L227 `bc5c23d1014b20d151b010ffd99b03b5c6c8cfc709e61401ff9cba1694710763`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L229-L233 `501d36496947c91f65473c9e8c6fee3c91f7fb356082c95d49d4f920d8e7b2d7`
-- [007 - PlanUnits](007-planunits.md) L235-L1793 `267efa1edef593694df531c9d329e77e346250acd0fe028b6c94b766d69d04bd`
-- [008 - Migration Coverage](008-migration-coverage.md) L1795-L1805 `af5bd511d72e852d554f225bd22543531378728cdd030fc6562e18bd2cd35e48`
-- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1807-L1853 `8a5fa20712bd9c40fce34dc9a13a441a385fee418c0a52f53ef080840734c3e4`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1856-L1945 `6ab64bebbaf6d85737b9bc1adb72689ab2d60f2bbc1acbbae5dec4fb320536d1`
-- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1947-L1989 `bfb6ba4ca233f4168c6e7d233dd69cd7e22a59eb3c783bac5b1678529fca7b4f`
-- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1991-L2063 `1f64fdb335eacdb19dc6de3bb50c6714658f36a770675e13616029a6465f0792`
-- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2065-L2109 `1c7c66b37c94b9a4c60c53578315048aa76b0cd2339ad2233c402f581a8085fb`
-- [014 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](014-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2110-L2116 `9be72e9b804c7674a3959c3de3af89c2504ab28110ffb902ce532fa54b979e6c`
+- [001 - Preamble](001-preamble.md) L1-L1 `72b9d16d630ab1c90a2ca2099a58e41ebb8af15dd43828dc47cbd04ab37c1a65`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L30 `5002c258b94b44d879e413ee7a791e4f539d811c8169a6f4628ed6a7070e8f3c`
+- [003 - Change Summary](003-change-summary.md) L32-L41 `ed253b3a0a89d3d6e49d352bca6b77a5e12dbf0dfc28dfb5c69c9ccf7921d1b1`
+- [004 - SSOT References (DRY)](004-ssot-references-dry.md) L43-L78 `90e24cfe3c28a6dde07101038abcfbd3291eaa47e51ed3e5a1f64d32a3fd29a8`
+- [005 - Canonical owner and consumer reconciliation](005-canonical-owner-and-consumer-reconciliation.md) L80-L227 `e8bb929e0afb1c8885d87fd23b57e06ebe9ad70e57bf7de682041989a6f0655f`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L229-L233 `8f3c56ce9e6d2800729bf1bf9ce24316fe9151ad3cad54f72dd9307eb2c954aa`
+- [007 - PlanUnits](007-planunits.md) L235-L1793 `012733b80c6e2e295245778ceacef09e2aa266778783b98a21da0e6d548b714c`
+- [008 - Migration Coverage](008-migration-coverage.md) L1795-L1805 `f64722ee0fd726a636abeceea92e41af756e994126e3174f58866e251a7cd459`
+- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1807-L1853 `7b99330b2a6ba0d2e0926e4f1d096662656437ee3c1707236c2ec001dd73ed5b`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1856-L1945 `cd805e2c12d3771895e4e03cb08d44c65a9d5cf9052ef89da9523b055c5e9413`
+- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L1947-L1989 `db33c06eeb1699f3a9f7493bb5b8991fa2f2e12ce98adbc791cbb44b034931ef`
+- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1991-L2063 `1e8b680d0255ba49d5f722b96c7cc701affad9002d45f240252f8d6d24fb8d01`
+- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2065-L2109 `a65307925634a080c674afc7daebbd3ec1dc618c0622ac243bef964dc3286ee3`
+- [014 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](014-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2110-L2116 `d1883f0474e50d3f3326440fa3b229905b8935efc95ec1a0621ee33dfb219a72`
+- [015 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](015-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L2118-L2516 `7fc74fda51453ac1eae3bb13d8402230de3e2d233f83a2371081e0dfd5e081df`

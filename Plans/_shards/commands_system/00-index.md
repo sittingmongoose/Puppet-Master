@@ -1,29 +1,33 @@
 # Shard Index: Plans/Commands_System.md
 
-Generated: 2026-07-12T02:20:55Z
+Generated: 2026-08-11T01:30:02Z
 
-Source SHA256: `f7aaca1cd05a7cdfbf63169869b4c53407c80cebe0b27e7437e4f8111a1c8255`
+Source SHA256: `75c2c8b8c75bf5eecbcc516272f7bdd944f0ff29b3c66b913a1c2f19adc0d3d0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `d08e60cafe330036de79a901a434a65d9741f3e4048c48f6570389fc0c53de8c`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L100 `1434cb844b123d7efa27a50d432bf250baf674a6221ad9b9bfdb68c7bd0a390a`
-- [003 - 1. Definitions](003-1.-definitions.md) L102-L142 `9fbecb6b4a653e16cc3e4d55d360a82ad362f863de846d2bc59e6b5d0e3c4f0a`
-- [004 - 2. Storage and discovery](004-2.-storage-and-discovery.md) L144-L209 `f87caaa2e66114f59190c3e16951e70d8d714198bc9dfa93919f4fbb957048d6`
-- [005 - 3. Command schema](005-3.-command-schema.md) L211-L283 `4af8b3dfbec1a9c01eb536aafa32b34ed16b66a149ae83eb4b4c677be9a3593d`
-- [006 - 4. Execution semantics](006-4.-execution-semantics.md) L285-L372 `37bf41e81460b82a21ce610c38434ebabf99529ac58227bf68b9500012a7dbee`
-- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L374-L406 `43fa201959847fa32846c9ff31039b7a9f3180d3b9adf716afa05ab218ddda82`
-- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L408-L491 `23dee33a13a00b30e8b46c3f32c5afbde662365ce20afab58c1c40a946993de1`
-- [009 - 7. Reserved built-in slash commands](009-7.-reserved-built-in-slash-commands.md) L493-L576 `a01bef71c77e30af7db84c4c084febb3e3d89622aed906026dc4c9aee2d0c67c`
-- [010 - 7. UICommand catalog entry](010-7.-uicommand-catalog-entry.md) L578-L613 `83e239dc2fe26ffe9a217a0d9971f3a1df718230cfe7a7e264981dfc90766785`
-- [011 - 8. OpenCode baseline and Puppet Master deltas](011-8.-opencode-baseline-and-puppet-master-deltas.md) L615-L641 `30d099ded25226bad45c7bd8564804482706e5ae6f79a670844950477316325f`
-- [012 - 9. Acceptance criteria](012-9.-acceptance-criteria.md) L643-L685 `3200067e76759de245279fe3d8bcf51c7989c50ad5f7140ed0fd48b6b5ed8725`
-- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L687-L691 `fae57cf3a0cdab815640a7b8dabc7a244e67862f1708e75d1a84f103bf0128a0`
-- [014 - PlanUnits](014-planunits.md) L693-L3421 `ae5f51b0f972d14bb7450fc162caff83f3402293875da24b2ad15609b78a1ae0`
-- [015 - Migration Coverage](015-migration-coverage.md) L3423-L3433 `a4685dd25dc1546fc8b1ef2675ebb21c4deac2f1de8a440a8fccd6d28401b67b`
-- [016 - Ledger Compile Addendum - pldg-20260614-001](016-ledger-compile-addendum-pldg-20260614-001.md) L3435-L3525 `8e5928aca5ee1a690248d7cfabdf2065490ee317653265ef52410ae2998d0347`
-- [017 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3528-L3585 `0cc88b810daafdc462438c83410c4f1e97723f9eb352bbe949b6aa66c3868210`
-- [018 - Ledger Compile Addendum - pldg-20260626-001-feature-name](018-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3588-L3694 `5dc819a8fca8f97e0d5a9f0e808f87c3d7ba7b3e2089ae04471c82bff8732f25`
-- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3696-L3702 `feb68edc39992dd758552fd9fafb9b182d215f9ace2525149ef127776b2a26a2`
+- [001 - Preamble](001-preamble.md) L1-L4 `070429ac4a4bb1eb2f384d5df2f5e3cf89d84edba2b4742baeb23795f4a134b2`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L182 `329a0cb47bfdf4782d5164aaa757707955353522bc3c5d7661c8bad0289ccca3`
+- [003 - 1. Definitions](003-1.-definitions.md) L184-L224 `7be1e8de59efcfc9dde7deb4ed026ce6a5590a0fad3bcd9966c7975c0747e105`
+- [004 - 2. Storage and discovery](004-2.-storage-and-discovery.md) L226-L291 `9bf790292632614b658de8ea9b71d4df6951d565724f08d2d18756b3682521c2`
+- [005 - 3. Command schema](005-3.-command-schema.md) L293-L365 `e8e541562df35cfabdfeaa22e07fa7a7d19893a30611f3e2a0d1a968e7affcf1`
+- [006 - 4. Execution semantics](006-4.-execution-semantics.md) L367-L454 `391e956afe3825ebe41f1b6cc3276e0e1e2ea2c8b75bd99994374d34f37dc54e`
+- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L456-L488 `64de1ac75027073c7584c89b10c99b6a01e5b3dbae8166d764fa5217a26e56b2`
+- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L490-L573 `2ecdfc4bb764fe06256799ad57586622ba10104edc2757ec9144af544a568550`
+- [009 - 7. Reserved built-in slash commands](009-7.-reserved-built-in-slash-commands.md) L575-L658 `2747b7cefbdb8b49751042267776712da3d4993544d9e4d6afd61a7333af7a5a`
+- [010 - 8. UICommand catalog entry](010-8.-uicommand-catalog-entry.md) L660-L695 `9a4d78a9925abebdd9b5dd2ec67a80d848fcf177247eb011323b8f2340038372`
+- [011 - 9. OpenCode baseline and Puppet Master deltas](011-9.-opencode-baseline-and-puppet-master-deltas.md) L697-L723 `166ae0b8cadfa05c3bddb18a4761f9362d20b7c8b621a685ef90c2e5ce0af95a`
+- [012 - 10. Acceptance criteria](012-10.-acceptance-criteria.md) L725-L767 `9028698648544646f69979813a04ff8e911e66d748fbae642e653590da47e2a2`
+- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L769-L773 `1124b8a2e932d2eccc95194136f40f6ea126fbd328aef58e76750a62258f3659`
+- [014 - PlanUnits](014-planunits.md) L775-L3503 `906b4a7f5271bc86b4e741e7ce2cf202e2a6885be48056fd15c4d8f2fe41bef5`
+- [015 - Migration Coverage](015-migration-coverage.md) L3505-L3515 `12bff4726954c0b390ef77db75e29d6938de962a748d1e72ea58d27003a9064b`
+- [016 - Ledger Compile Addendum - pldg-20260614-001](016-ledger-compile-addendum-pldg-20260614-001.md) L3517-L3607 `1e10f0089baef0f58b93e4ce607ce9469683ab5cdb4a45e7edbe32bfecd115bf`
+- [017 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3610-L3667 `69957d273c450f9e8de023e06f88375bd18713859d0e170a4cbf1973eba00bcb`
+- [018 - Ledger Compile Addendum - pldg-20260626-001-feature-name](018-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3670-L3776 `ed20319bed26ce472696ef89727d611f96b79017b8f2f2cb3861c7a13b66e7f8`
+- [019 - Case L Command Consumer Propagation Addendum - 2026-07-17](019-case-l-command-consumer-propagation-addendum-2026-07-17.md) L3778-L4153 `e12575ec2da767c91dcc8568022c1ea0a02b74bb0dd64e33ebc10752539316b9`
+- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4155-L4161 `26d3672a8f4cd9478e30b7b9341c0be49442743a786a817bdc04e15e022d3f52`
+- [021 - Known-37 recovery-unavailable command registration - 2026-07-18](021-known-37-recovery-unavailable-command-registration-2026-07-18.md) L4163-L4178 `9d41eef2862bb74bc4736c11f97ed22213c2fdde76d21db4bf4de1fcbbb964f7`
+- [022 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L4180-L4359 `80b16875c7684550d725ffaac2a5572160d875aa7deba7f6611d50ca39c4ab4b`
+- [023 - Run & Debug Revival Addendum - 2026-07-27](023-run-debug-revival-addendum-2026-07-27.md) L4361-L4613 `488e3c3829bb0eedc925350fa6199bc5f65f2abc59af603007afe1bc19927d4b`

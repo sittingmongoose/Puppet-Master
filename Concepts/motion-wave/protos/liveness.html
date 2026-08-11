@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>W7 liveness proto</title>
+<style>
+:root {
+  --motion-fast: 120ms; --motion-med: 220ms;
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-pop: cubic-bezier(.3,1.36,.34,1);
+  --surface: #14181f; --surface-elevated: #1c222c; --border: #2c3442;
+  --border-light: #232a36; --text-primary: #e8ecf3; --text-secondary: #9aa4b4;
+  --text-muted: #67707f; --accent-soft: rgba(96,150,255,.14); --accent-primary: #6096ff;
+  --graph-running: #5ad1a8; --graph-passed: #7ec46a;
+  --radius-pill: 999px; --radius-sm: 8px; --radius-xs: 6px;
+  --xs: 4px; --sm: 6px; --md: 10px;
+}
+body { margin: 0; background: var(--surface); color: var(--text-primary); font: 13px/1.4 system-ui, sans-serif; padding: 28px; }
+h1 { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
+.row { display: flex; gap: 18px; align-items: flex-start; margin: 18px 0; flex-wrap: wrap; }
+.card { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 16px; min-width: 240px; }
+.card h2 { font-size: 10px; letter-spacing: .08em; color: var(--text-muted); margin: 0 0 10px; text-transform: uppercase; }
+button { font: inherit; color: inherit; }
+.log { font: 10px ui-monospace, monospace; color: var(--text-muted); white-space: pre-wrap; max-height: 200px; overflow: auto; width: 420px; }
+
+/* ---- (a) value flash: ::after overlay, NO box-shadow keyframes ---- */
+.pm-flashing { position: relative; }
+.pm-flashing::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: var(--accent-soft); opacity: 0; pointer-events: none;
+  animation: pmValueFlash .55s var(--ease-out);
+}
+@keyframes pmValueFlash { 0% { opacity: 0; } 25% { opacity: .55; } 100% { opacity: 0; } }
+
+.stat { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light); background: var(--surface); font-weight: 700; }
+
+/* ---- (c) legacy rows: instant hover BEFORE, transition AFTER ---- */
+.hit { padding: 4px 8px; cursor: pointer; border-radius: var(--radius-xs); font-size: 12px; }
+.hit:hover { background: var(--accent-soft); }
+.hit.fixed { transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.hit.fixed:hover { transform: translateX(2px); }
+
+/* ---- (e) chip select pop ---- */
+.chip { padding: 3px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-light);
+  background: none; color: var(--text-secondary); cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.chip:hover { color: var(--text-primary); border-color: var(--border); }
+.chip.active { color: var(--accent-primary); background: var(--accent-soft); border-color: var(--accent-primary); }
+.chip:active { transform: scale(.97); }
+.pm-chip-pop { animation: pmChipPop .22s var(--ease-pop); }
+@keyframes pmChipPop { 0% { transform: scale(.94); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+
+/* ---- (b) paired dots breathe out of phase ---- */
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot-run { background: var(--graph-running); animation: dotPulse 1.4s var(--ease-out) infinite; }
+.dot-run:nth-of-type(2) { animation-delay: .35s; }
+@keyframes dotPulse { 0%, 100% { opacity: .45; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
+.pair { display: flex; gap: 10px; align-items: center; }
+
+/* ---- (h) reduced motion: kill everything, correct end states ---- */
+html[data-motion="reduced"] .pm-flashing::after,
+html[data-motion="reduced"] .pm-chip-pop,
+html[data-motion="reduced"] .dot-run { animation: none !important; }
+html[data-motion="reduced"] .pm-flashing::after { opacity: 0 !important; }
+html[data-motion="reduced"] .hit.fixed { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-flashing::after, .pm-chip-pop, .dot-run { animation: none !important; }
+  .pm-flashing::after { opacity: 0 !important; }
+  .hit.fixed { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<h1>W7 liveness + W8 hygiene — recipes</h1>
+
+<div class="row">
+  <div class="card">
+    <h2>(a) value flash — overlay pulse, no box-shadow keyframes</h2>
+    <span class="stat" id="stat1">CPU 12%</span>
+    <span class="stat" id="stat2">MEM 34%</span>
+    <div style="margin-top:10px"><button class="chip" id="flashBtn">Change values + flash</button></div>
+  </div>
+  <div class="card">
+    <h2>(b) paired dots breathe out of phase</h2>
+    <div class="pair"><span class="dot dot-run"></span><span class="dot dot-run"></span><span style="color:var(--text-muted);font-size:11px">2nd dot delayed .35s</span></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h2>(c) legacy instant-hover row (BEFORE)</h2>
+    <div class="hit">recipes.rs:41 — parse_quantity</div>
+    <div class="hit">image.rs:17 — decode_thumb</div>
+  </div>
+  <div class="card">
+    <h2>(c) fixed: transitioned hover + translateX(2px)</h2>
+    <div class="hit fixed">recipes.rs:41 — parse_quantity</div>
+    <div class="hit fixed">image.rs:17 — decode_thumb</div>
+  </div>
+  <div class="card">
+    <h2>(e) chip select pop + press squash</h2>
+    <div id="chipGrp" style="display:flex;gap:6px">
+      <button class="chip active">all</button>
+      <button class="chip">web</button>
+      <button class="chip">browser</button>
+      <button class="chip">evidence</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h2>(h) reduced motion</h2>
+    <button class="chip" id="redBtn">toggle data-motion="reduced"</button>
+  </div>
+  <pre class="log" id="log"></pre>
+</div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(s) { logEl.textContent += s + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+function reduce() { var de = document.documentElement; return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || de.getAttribute('data-motion') === 'reduced'; }
+
+/* pmFlash: reduce-guarded, removed on animationend + 700ms safety */
+function pmFlash(el) {
+  if (!el || reduce()) return;
+  el.classList.remove('pm-flashing');
+  void el.offsetWidth;
+  el.classList.add('pm-flashing');
+  function off() { el.classList.remove('pm-flashing'); el.removeEventListener('animationend', onEnd); clearTimeout(safe); }
+  function onEnd(ev) { if (ev.target === el) off(); }
+  el.addEventListener('animationend', onEnd);
+  var safe = setTimeout(off, 700);
+}
+window.pmFlash = pmFlash;
+
+/* pmChipPop: reduce-guarded, removed on animationend */
+function pmChipPop(el) {
+  if (!el || reduce()) return;
+  el.classList.remove('pm-chip-pop');
+  void el.offsetWidth;
+  el.classList.add('pm-chip-pop');
+  el.addEventListener('animationend', function h(ev) { if (ev.target === el) { el.classList.remove('pm-chip-pop'); el.removeEventListener('animationend', h); } });
+}
+window.pmChipPop = pmChipPop;
+
+var n = 0;
+document.getElementById('flashBtn').addEventListener('click', function () {
+  n++;
+  document.getElementById('stat1').textContent = 'CPU ' + (12 + n * 3) + '%';
+  pmFlash(document.getElementById('stat1'));
+  document.getElementById('stat2').textContent = 'MEM ' + (34 + n * 2) + '%';
+  pmFlash(document.getElementById('stat2'));
+  log('flashed stat chips (reduce=' + reduce() + ')');
+});
+
+document.getElementById('chipGrp').addEventListener('click', function (ev) {
+  var c = ev.target.closest('.chip'); if (!c) return;
+  this.querySelectorAll('.chip').forEach(function (x) { x.classList.toggle('active', x === c); });
+  pmChipPop(c);
+  log('chip pop: ' + c.textContent + ' (reduce=' + reduce() + ')');
+});
+
+document.getElementById('redBtn').addEventListener('click', function () {
+  var de = document.documentElement;
+  var on = de.getAttribute('data-motion') === 'reduced';
+  if (on) de.removeAttribute('data-motion'); else de.setAttribute('data-motion', 'reduced');
+  log('reduced=' + !on);
+});
+</script>
+</body>
+</html>

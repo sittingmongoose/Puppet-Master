@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>Concept 01 — YOUR MODEL</title>
+  <link rel="stylesheet" href="concept.css">
+</head>
+<body>
+  <div class="demo">
+    <header class="topbar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6.5 12 2l8 4.5v9L12 20l-8-4.5z"/><path d="m4 6.5 8 4.5 8-4.5M12 11v9"/></svg>
+      <span class="brand">PUPPET MASTER</span>
+      <span class="model" data-concept-model="YOUR MODEL">YOUR MODEL</span>
+    </header>
+    <nav class="activity" aria-label="Fake surrounding navigation">
+      <button type="button" aria-label="Toggle left rail" aria-pressed="true" id="railToggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16v16H4zM9 4v16"/></svg></button>
+      <button type="button" aria-label="Toggle chat panel" aria-pressed="true" id="chatToggle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5h14v11H9l-4 3z"/></svg></button>
+    </nav>
+    <aside class="rail" id="fakeRail"><h2>Project rail</h2><div class="rail-line"></div><div class="rail-line"></div><div class="rail-line"></div><div class="rail-line"></div></aside>
+    <main class="stage">
+      <div class="eyebrow">Concept 01</div>
+      <h1>Describe the design direction</h1>
+      <p class="lead">Replace this starter content with the real interactive concept. Keep the surrounding shell quiet enough to judge spacing when adjacent panels are open.</p>
+      <section class="concept-surface" aria-label="Concept surface">
+        <strong>Primary concept area</strong>
+        <div class="controls" aria-label="Concept configuration">
+          <button type="button" data-density-button="comfortable" aria-pressed="true">Comfortable</button>
+          <button type="button" data-density-button="compact" aria-pressed="false">Compact</button>
+        </div>
+      </section>
+    </main>
+    <aside class="chat" id="fakeChat"><strong>Assistant</strong><div class="rail-line"></div><div class="rail-line"></div><div class="rail-line"></div></aside>
+    <footer class="status">Fake system chrome · spacing reference only</footer>
+  </div>
+  <script src="concept-hub-bridge.js"></script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      function toggle(button, panel) {
+        var next = !panel.hidden;
+        panel.hidden = next;
+        button.setAttribute('aria-pressed', String(!next));
+      }
+      document.getElementById('railToggle').addEventListener('click', function () { toggle(this, document.getElementById('fakeRail')); });
+      document.getElementById('chatToggle').addEventListener('click', function () { toggle(this, document.getElementById('fakeChat')); });
+      document.querySelectorAll('[data-density-button]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          root.setAttribute('data-density', button.dataset.densityButton);
+          document.querySelectorAll('[data-density-button]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

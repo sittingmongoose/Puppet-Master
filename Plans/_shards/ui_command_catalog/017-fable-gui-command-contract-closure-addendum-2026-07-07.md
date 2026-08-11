@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7954-L8082
+Source lines: L7971-L8099
 
-Source SHA256: `23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7`
+Source SHA256: `675341194e15f562897bd18f552ac6582a1198cc4095730f8d4ab219e0c87b88`
 
 ---
 
@@ -20,7 +20,7 @@ Every command in this addendum returns the `UICommandResponse` envelope from `Pl
 
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
 | `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
 | `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
 | `cmd.theme.preview` | `scope`, `theme_patch`, `preview_surface`, `ttl_ms` | `preview_id`, `expires_at_utc` | `invalid_args`, `handler_unavailable` | explicit dispatch receipt |

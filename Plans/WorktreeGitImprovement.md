@@ -223,9 +223,64 @@ Allocation rules:
 - Worktree ownership transfer requires an explicit runtime lineage event; replan must either rebind explicitly to new attempt lineage or allocate new worktree lineage, never silently inherit prior ownership.
 - Manual prune/remove stays forbidden while the worktree is `active` or `blocked_preserved` unless the explicit override policy permits it and records the override.
 - Restore and retry payloads, including `cmd.runtime.restore_safe_point_then_retry`, carry exact SCM targeting: `repo_id`, `worktree_id`, and `baseline_target`.
-- `baseline_target` is a closed candidate enum for restore/retry targeting: `safe_point`, `historical_commit`, and `worktree_head`.
-- Retry and `/fresh-attempt` commands must support the same SCM targeting and reuse policy; runtime rejects restore/retry when the targeted worktree or baseline cannot be validated instead of substituting another worktree.
+- Orchestrator wrapper and compatibility-alias admission must strip wrapper-only permission evidence before Source Control sees the request. Worktree receives only the exact canonical `cmd.runtime.restore_safe_point_then_retry` payload; it has no wrapper-specific field, handler, result, effect, admission rule, or idempotency domain.
+- `baseline_target` is closed to `safe_point`, `historical_commit`, and `worktree_head`. The exact mutation and postcondition contract is defined below; this is no longer a candidate enum.
+- Retry and `/fresh-attempt` commands consume the same exact SCM targeting and reuse policy. Source Control rejects restore/retry when the named repository, worktree, immutable OID, safe point, or state digest cannot be validated and never substitutes another worktree, branch, moving ref, safe point, or baseline.
 - Legacy `git_panel/*` and `git_panel` state is one-time migration input into `source_control.project_state.{project_id}` only. Settings-owned policy such as `branching.base_branch` remains canonical settings policy, followed by canonical Source Control project state, with legacy `git_panel/*` consulted only when the canonical key is absent; no new build writes both legacy and canonical keys.
+
+#### Approved exact baseline-target SCM contract
+
+This section owns the filesystem/Git effect and verified postcondition of approved `PD-RSP-07`. Executor owns command admission, attempt identity, blocked-episode transitions, and dispatch sequencing. FileSafe owns the canonical manifest, exact-replace restore, rollback snapshot, journal, equality, and restart reconciliation. Contracts owns closed restore outcomes/reason codes; storage owns safe-point/transaction records, snapshot refs, custody, and retention. Source Control MUST call those owners rather than recreate their schemas or use `git status` as a substitute for FileSafe equality.
+
+Shared admission rules:
+
+- The sole admitted safe-point restore domain/handler pair is `cmd.runtime.restore_safe_point_then_retry` / `handlers::runtime::restore_safe_point_then_retry`. Both Orchestrator spellings deterministically normalize to its exact payload before this owner is called; Source Control never branches on the visible spelling.
+- Resolve `repo_id` and `worktree_id` to one current durable Source Control identity before any mutation. Display path, selected row, branch name, current directory, or UI focus is never identity authority.
+- Canonicalize and scope-check the resolved worktree through FileSafe. Acquire the FileSafe mutation fence before a `safe_point` restore; historical worktree allocation uses the Source Control allocation/lease protocol without mutating the source worktree.
+- Git commit inputs use the repository's full immutable object ID in its configured object format. An abbreviated hash, tag, branch, remote-tracking ref, symbolic ref, reflog expression, or other moving revision is invalid. Resolve the supplied object, require commit type, and compare the full resolved OID to the supplied value before use.
+- A baseline preparation has no success state until its target-specific postcondition is recomputed and a durable baseline receipt links the exact inputs and outputs. Executor may then mint a successor attempt; Source Control never dispatches it directly.
+- No path uses `git reset --hard`, implicit stash, implicit commit, `git clean`, source-branch checkout, or destructive conflict cleanup as a baseline shortcut.
+
+| `baseline_target` | Required SCM inputs | Required operation | Verified success postcondition |
+| --- | --- | --- | --- |
+| `safe_point` | exact `safe_point_id`, `repo_id`, `worktree_id` | In the exact named worktree, validate repo/worktree/branch identity and invoke the FileSafe exact-replace restore transaction. | FileSafe reports `restored_clean` or `restore_skipped` with target-manifest equality; repo/worktree/branch identity still matches the safe-point record. |
+| `historical_commit` | exact `historical_commit_oid`, `repo_id`, source `worktree_id` for lineage | Leave the source untouched. Allocate a new isolated Puppet Master attempt worktree and branch at the exact commit OID, with a new durable `worktree_id`. | New worktree `HEAD` equals the full OID; index and tracked tree equal that commit; no untracked files or active Git operation exist; source manifest/OID/branch/index remain equal to their admission observation. |
+| `worktree_head` | `repo_id`, `worktree_id`, `expected_head_oid`, `expected_state_sha256` | Perform no restore, checkout, reset, stash, clean, branch move, index rewrite, or file mutation. Recompute the exact full `HEAD` OID and FileSafe state digest and bind only if both match. | The same worktree remains byte-for-byte equal to the admission digest and at the expected OID; the receipt records dirty/conflict/Git-operation observations and explicit dirty confirmation when required. |
+
+`safe_point` replaces the manifest-owned state, including tracked, index, supported untracked, and explicit mutation-scope ignored state defined by FileSafe. This deliberately restores any pre-attempt dirty state captured in the safe point; it neither forces a clean tree nor merges later edits. A branch/repo/worktree mismatch refuses before path mutation. Once FileSafe begins, its journal and restart reconciliation—not ad hoc Git recovery—determine whether the tree reaches the target, verified rollback, or recovery-required posture.
+
+`historical_commit` preserves the source worktree even when it is dirty: source changes remain untouched and the source stays `blocked_preserved` while referenced. The new worktree starts clean at the exact OID. A missing object, non-commit object, full-OID mismatch, allocation collision, or post-create dirty state refuses the baseline. If a failed partial allocation cannot be proven empty and PM-owned, it becomes blocked recovery with receipts; it is not recursively removed. No network fetch is implied. An unavailable OID may be fetched only by a separately authorized Source Control action and must then be resubmitted as the exact local OID.
+
+`worktree_head` is an explicit bind to live state, not a cleanup action. A dirty tree requires confirmation that names the dirty file count and digest; accepted dirt remains attributed to the successor attempt. Confirmation does not waive unresolved conflicts, an active merge/rebase/cherry-pick, scope violations, FileSafe denial, or missing write authority. Any OID/digest change between confirmation and durable bind is `baseline_stale` and refuses without mutation.
+
+#### SCM sequencing and failure aftermath
+
+1. Persist command/baseline intent and exact input identity through the runtime command owner; resolve the target against durable Source Control state.
+2. Capture the source admission observation: full OID, branch/detached state, FileSafe digest, index/dirty/conflict summary, active Git operation, lease/ownership, and worktree instance identity.
+3. Apply only the selected row's operation. Replayed command identity resumes/reconciles a nonterminal FileSafe restore or Source Control allocation; it never starts a concurrent duplicate.
+4. Recompute the row's full postcondition. Persist the baseline receipt before exposing the worktree as runnable.
+5. On refusal before mutation, leave all observed source state unchanged. On safe-point apply failure, consume FileSafe's exact outcome. On historical partial-provision failure, preserve uncertain material and block cleanup. On worktree-head mismatch, make no mutation.
+6. Keep active-attempt, blocked-episode, restore-transaction, preserved-run, and legal-hold refs under the storage/FileSafe owner rules. Worktree release/prune cannot race those refs. A missing/corrupt required snapshot leaves the source worktree preserved and the episode `recovery_unavailable`; it does not authorize a fresh cleanup or alternate baseline.
+
+Safe-point outcome consumption is exact: `restored_clean`/`restore_skipped` satisfy the SCM baseline only with the owner equality proof; `restore_refused` leaves the source unchanged and blocked; `restore_failed` means verified rollback equality and does not satisfy the target; `restore_recovery_required` retains the fence and `blocked_preserved`; `restored_with_conflicts` is invalid for exact safe-point restore and must not be converted into a runnable worktree.
+
+Storage/root recovery is a prerequisite, not an SCM fallback. If durable baseline intent or receipt persistence encounters an exhausted/non-retryable storage error, Source Control stops before further mutation where possible, preserves any in-flight owner transaction, and reports the storage-owned posture. It does not redirect snapshot custody, switch storage roots, retry against a backup, or continue with an in-memory receipt. Storage restore/migration and unsafe-root reconciliation remain owned by `Plans/storage-plan.md`.
+
+#### Baseline acceptance oracles
+
+| Fixture | SCM oracle |
+| --- | --- |
+| `RSP-BASELINE-001` | Start from tracked/staged/unstaged/untracked captured dirt, mutate it, then select the named safe point. The exact target worktree equals the FileSafe manifest and captured pre-attempt dirty state; no other worktree changes. |
+| `RSP-BASELINE-002` | Start with a dirty source and exact commit OID. The source admission manifest, branch, index, and bytes remain unchanged; a distinct clean worktree is created with full `HEAD` equal to the OID. |
+| `RSP-BASELINE-003` | Bind a dirty live worktree with matching OID/digest and explicit confirmation. Zero SCM/file mutations occur and a second digest is identical. |
+| `RSP-BASELINE-004` | Unknown enum, missing field, abbreviated/moving ref, missing/non-commit OID, repo/worktree mismatch, or digest drift refuses with no baseline substitution. |
+| `RSP-ATOMIC-001` | Kill at each safe-point restore operation boundary. Restart exposes the worktree only after exact target or verified rollback; an intermediate tree stays fenced. |
+| `RSP-ATOMIC-003` | Inject a third-party edit during restore. The edit is not overwritten; the worktree remains `blocked_preserved` in recovery-required posture. |
+| `RSP-RETENTION-001` / `RSP-RETENTION-003` | A restore-required blocked worktree cannot be pruned after the ordinary 90-day/64-per-run/2,048-per-project released-safe-point policy; missing/corrupt recovery material disables restore without releasing ownership. |
+
+Negative oracles: no source mutation for `historical_commit`; no mutation at all for `worktree_head`; no branch/ref-to-OID substitution; no silent dirty-state discard; no new attempt worktree reported clean without an empty index/untracked set and exact OID; no `restored_with_conflicts` baseline; no cleanup while a recovery ref remains; and no runnable exposure before the baseline receipt is durable.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, DecisionID:PD-RSP-07, DecisionID:PD-RSP-04, DecisionID:PD-RSP-06
 
 #### Worktree identity, active context, and copy contracts
 
@@ -4262,6 +4317,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - "W-063 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "safe_point exact-restores the named worktree through FileSafe equality and never merges or substitutes another target."
+- "historical_commit creates a distinct clean worktree at the exact full commit OID while leaving the source dirty state unchanged."
+- "worktree_head performs zero SCM mutation and binds only when exact HEAD and FileSafe state digest match, with explicit dirty confirmation where required."
+- "Baseline fixtures prove exact postconditions, refusal without substitution, and fenced recovery after interruption or third-party edits."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
@@ -4319,6 +4378,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - "W-064 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "A restore-required blocked worktree remains blocked_preserved and anchored until the storage/FileSafe release rule is satisfied."
+- "restore_refused, restore_failed after verified rollback, and restore_recovery_required never expose the target worktree as runnable."
+- "Missing/corrupt required snapshot state becomes recovery_unavailable without prune, alternate-baseline substitution, or silent resolution."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
@@ -4923,6 +4985,8 @@ acceptance_criteria:
   - Mutation-capable WorkNodes preserve repo and worktree identity before execution.
   - Parallel writes use isolated worktrees or explicit clean allocation.
   - Dirty, conflicted, contaminated, blocked-preserved, and lineage-mismatched worktrees block silent reuse.
+  - Exact baseline targeting distinguishes safe-point restore, historical clean isolation at an immutable OID, and no-mutation binding to a verified live worktree digest.
+  - Dirty source state is preserved unless the explicitly selected safe-point manifest owns its replacement; no command silently stashes, commits, resets, cleans, or discards it.
   - Local worktree state remains source-control truth even when GitHub promotion is configured.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -5109,3 +5173,252 @@ This addendum repairs non-runtime worktree rows without creating WorkNodes, impl
 - Repairs `sfk-b3fbf73ded6ce2be14dd9c88`: `worktree_exists` validity checks path existence, `.git` link or gitdir validity, `git rev-parse --is-inside-work-tree`, expected repo id, expected branch/ref when supplied, and permission policy. Result states are `exists_valid`, `missing`, `gitdir_missing`, `wrong_repo`, `wrong_branch`, `permission_denied`, and `unknown_error`.
 - Repairs `sfk-be3c6367e06fceee5d56722a`: conflict-worktree persistence uses `worktree_conflict_state.v1:{project_id}:{worktree_id}`. In-memory hints and branch-name derivations are projections only.
 - Repairs `sfk-6bbb00970054c395801c3aab`: Source Control graph, AI commit batching, and conflict assistant commands are enabled only when repo identity is valid, worktree status is fresh, no protected-branch mutation is pending, and permission snapshot allows the requested command. Disabled reason codes are `repo_missing`, `status_stale`, `protected_branch`, `permission_denied`, and `operation_in_progress`.
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+The winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, illustrative source lineage only; no HTML, CSS, or class names from those files are canon) exposed spec gaps this doc must close as the Git/worktree policy owner: the mandated "persisted worktree panel filters" (section 4.0) never enumerated filterable dimensions; the concept fixture term `blocked_by_gate` has no home in the reserved lifecycle vocabulary; the `locked` flag (section 4.0) has no lock/unlock command surface or provenance rule; `cmd.git.worktree.remove` has no graduated confirmation ladder; and the worktree row has no ruling on what the unified expander row contract shows collapsed versus expanded. The five PlanUnits below close those gaps. The implementation base is the c2 concept files patched in place (user decision 2026-07-27). The unified expander row contract (collapsed-by-default rows, single accessible header button with aria-expanded, fixed body slot order, body height cap, blocked reasons outside the collapsible body, shared confirm surface for destructive actions) is owned outside this doc and is consumed by reference here, never redefined. No existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited; supersession is expressed only through the new units' explicit amendment notes. This addendum creates no WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+### W-075 - Worktree Panel Filter Taxonomy And Chip Presentation
+
+```yaml
+plan_unit_id: W-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  The persisted worktree panel filters mandated by section 4.0 filter on exactly four dimensions: lifecycle state
+  (reserved, active, blocked_preserved, released, orphaned), owner class (thread, orchestrator-lane, manual, agent-role),
+  row flags (locked, prunable, dirty, repairable), and blocked-reason family (approval-gated, policy-blocked,
+  preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked). Owner class is a display/filter
+  classification projected from the canonical package/lane ownership and effective-scope precedence truth; it never
+  replaces those vocabularies as ownership canon. Filters present as toggleable chips above the worktree list;
+  multi-select within a dimension is OR, across dimensions is AND; active chip selection persists per project with the
+  panel state alongside the existing sort mode, hide-stale toggle, and ownership display mode, and rehydrates on
+  startup. A zero-result filter state shows an explicit filtered-empty explainer with a clear-filters action, distinct
+  from the true zero-worktrees empty state.
+gui_related: true
+gui_classification_reason: This defines the visible filter chip row and persisted filter behavior of the Worktrees topology panel.
+depends_on: [W-032, W-070]
+unblocks: []
+acceptance_criteria:
+  - Filter chips cover exactly the four dimensions with the enumerated values and no invented lifecycle states.
+  - Chip selection persists per project and rehydrates with the worktree panel state.
+  - Filtered-empty and zero-worktrees states render distinct explainers.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future worktree panel filter persistence and filtered-empty tests.
+risk_class: worktree_panel_filter_drift
+reasoning_tier: standard
+context_scope: worktree_panel_filters
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control Worktrees panel]
+node_compile_hint: {mode: worktree_panel_filter_taxonomy, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+  - Plans/WorktreeGitImprovement.md:437-439
+  - Plans/WorktreeGitImprovement.md:297
+  - user decision 2026-07-27
+source_atom_ids: []
+preserved_exact_tokens: ["persisted worktree panel filters", "hide-stale", "blocked_preserved", "owner class", "filtered-empty"]
+negative_constraints:
+  - Do not add filter dimensions beyond lifecycle state, owner class, row flags, and blocked-reason family without a new PlanUnit.
+  - Do not let owner class supersede package/lane ownership or effective-scope precedence as ownership canon.
+compatibility_only_notes:
+  - "Slint compatibility: filter chips render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, color math precomputed; any glass treatment uses a pre-blurred wallpaper asset only."
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/storage-plan.md, Plans/FinalGUISpec.md]
+```
+
+### W-076 - Concept Vocabulary Reconciliation Blocked By Gate
+
+```yaml
+plan_unit_id: W-076
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  blocked_by_gate is a concept fixture term from the Cozy Shelves prototype, never a lifecycle state. Any worktree the
+  concept labeled blocked_by_gate maps to lifecycle state blocked_preserved carrying a canonical blocked_reason_code
+  from the reason-family layer (approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked,
+  stale-data-blocked) or the payload codes dirty_worktree / worktree_conflict, plus ordered allowed_action_ids[].
+  The reserved lifecycle vocabulary stays exactly reserved, active, blocked_preserved, released, orphaned; locked
+  remains a row flag, not a lifecycle state. No UI surface, storage key, event payload, or projection may introduce
+  blocked_by_gate as a state value.
+gui_related: true
+gui_classification_reason: This governs which state values the worktree state chip and blocked explainers may display.
+depends_on: [W-017, W-033]
+unblocks: []
+acceptance_criteria:
+  - blocked_by_gate appears nowhere as a lifecycle state in UI, storage, events, or projections.
+  - Every concept blocked_by_gate fixture maps to blocked_preserved plus a canonical blocked_reason_code and ordered allowed_action_ids[].
+  - locked renders as a flag badge, never as the lifecycle state chip value.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future lifecycle-state vocabulary lint over UI fixtures and payload schemas.
+risk_class: worktree_lifecycle_vocabulary_drift
+reasoning_tier: standard
+context_scope: worktree_lifecycle_vocabulary
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control Worktrees panel]
+node_compile_hint: {mode: worktree_vocabulary_reconciliation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Plans/WorktreeGitImprovement.md:297
+  - Plans/WorktreeGitImprovement.md:301
+  - user decision 2026-07-27
+source_atom_ids: []
+preserved_exact_tokens: ["blocked_by_gate", "blocked_preserved", "blocked_reason_code", "allowed_action_ids[]"]
+negative_constraints:
+  - Do not register blocked_by_gate as a lifecycle state, storage value, or event payload state.
+  - Do not promote row flags into lifecycle states.
+compatibility_only_notes: []
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+### W-077 - Worktree Lock And Unlock Surface With Provenance
+
+```yaml
+plan_unit_id: W-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  The locked row flag gains a command surface: cmd.git.worktree.lock and cmd.git.worktree.unlock (minted in the
+  UI_Command_Catalog Cozy Shelves reconciliation). Lock requires a reason string, stored and displayed with the lock.
+  Every lock records provenance as user or run-owned. While a run, lane, or package owns a worktree, the system
+  auto-locks it with run-owned provenance referencing the owner; the cleanup reaper may release run-owned locks whose
+  owning run has terminally ended, and must never release user locks. Unlocking a user lock is an explicit user action
+  through cmd.git.worktree.unlock; unlock of a run-owned lock while the owner is live is refused with a blocked
+  explanation naming the owner. Locked worktrees refuse prune/remove/reuse with the lock reason and provenance in the
+  disabled explanation, consistent with the existing rule that unsafe actions are disabled with explanation rather
+  than hidden.
+gui_related: true
+gui_classification_reason: Lock badges, lock reason display, and disabled explanations are user-visible worktree row surfaces.
+depends_on: [W-032, W-033]
+unblocks: []
+acceptance_criteria:
+  - cmd.git.worktree.lock requires and persists a reason string; the lock records user or run-owned provenance.
+  - Run ownership auto-locks the worktree with run-owned provenance referencing the owner.
+  - The reaper releases only run-owned locks of terminally ended owners and never user locks.
+  - Locked worktrees surface lock reason and provenance in prune/remove/reuse disabled explanations.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future lock provenance and reaper-scope tests.
+risk_class: worktree_lock_provenance_drift
+reasoning_tier: high
+context_scope: worktree_lock_lifecycle
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md, future worktree lock manager]
+node_compile_hint: {mode: worktree_lock_surface, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Plans/WorktreeGitImprovement.md:439
+  - Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+  - user decision 2026-07-27
+source_atom_ids: []
+preserved_exact_tokens: ["cmd.git.worktree.lock", "cmd.git.worktree.unlock", "run-owned", "user lock", "reaper"]
+negative_constraints:
+  - Never allow any automated process to release a user lock.
+  - Do not hide lock-blocked actions; disable them with the lock reason and provenance.
+compatibility_only_notes: []
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md, Plans/Executor_Protocol.md, Plans/storage-plan.md]
+```
+
+### W-078 - Worktree Remove Escalation Ladder Canon
+
+```yaml
+plan_unit_id: W-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  cmd.git.worktree.remove follows a graduated escalation ladder. A clean, unowned worktree removes after a single
+  confirmation. A dirty worktree requires a confirmation that previews the dirty paths before removal. A run-owned or
+  blocked_preserved worktree is not removable through the normal flow: the row presents the blocked_preserved posture
+  with an explicit owner reference, and removal requires the recorded override policy with a double confirmation that
+  names the owner and the consequence. The main worktree is never removable at any ladder step. All confirmations
+  route through the shared confirm surface referenced by the unified expander row contract; this unit amends no prior
+  unit and layers the ladder on top of the existing lineage-safety rules (W-033) and the active/blocked_preserved
+  prune/remove prohibition with recorded override.
+gui_related: true
+gui_classification_reason: Confirmation dialogs, dirty-path previews, and blocked override flows are user-visible removal surfaces.
+depends_on: [W-033]
+unblocks: []
+acceptance_criteria:
+  - Clean unowned removal takes exactly one confirmation; dirty removal previews dirty paths in the confirmation.
+  - Run-owned removal presents blocked_preserved with owner reference and requires the recorded override double confirmation.
+  - The main worktree exposes no remove action at any ladder step.
+  - All ladder confirmations use the shared confirm surface.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future remove-ladder confirmation and main-worktree guard tests.
+risk_class: destructive_worktree_removal_drift
+reasoning_tier: high
+context_scope: worktree_remove_escalation
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control worktree actions]
+node_compile_hint: {mode: worktree_remove_ladder, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Plans/WorktreeGitImprovement.md:224
+  - Plans/WorktreeGitImprovement.md:439
+  - user decision 2026-07-27
+source_atom_ids: []
+preserved_exact_tokens: ["cmd.git.worktree.remove", "dirty-path preview", "blocked_preserved", "recorded override", "main worktree"]
+negative_constraints:
+  - Never remove the main worktree.
+  - Never bypass the override policy recording for run-owned or blocked_preserved removal.
+  - Do not route ladder confirmations through any surface other than the shared confirm surface.
+compatibility_only_notes: []
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md, Plans/Executor_Protocol.md]
+```
+
+### W-079 - Worktree Row Expander Consumption
+
+```yaml
+plan_unit_id: W-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  Worktree rows consume the unified expander row contract owned outside this doc; this unit maps worktree content into
+  that contract without redefining it. The collapsed header shows worktree name, branch, lifecycle state chip, owner
+  dot, and relative last-activity time. The expanded body populates the contract's slots with ahead/behind counts,
+  last commit summary, dirty file summary, disk size (computed asynchronously with a pending placeholder, never
+  blocking expansion), absolute path, and the action strip. Blocked reasons stay visible outside the collapsible body
+  per the contract, sourced from blocked_reason_code plus ordered allowed_action_ids[]. Orphaned worktrees render as a
+  collapsed ORPHANED group beneath live rows, with Repair and Prune actions; Prune always presents a dry-run preview
+  of what would be pruned before any confirmation, and destructive actions route through the shared confirm surface.
+gui_related: true
+gui_classification_reason: This is the visible collapsed/expanded content mapping of worktree rows and the orphaned group.
+depends_on: [W-032, W-033]
+unblocks: []
+acceptance_criteria:
+  - Collapsed header shows exactly name, branch, state chip, owner dot, and relative activity.
+  - Expanded body shows ahead/behind, last commit, dirty summary, async disk size, absolute path, and action strip in the contract's slot order.
+  - Blocked reasons render outside the collapsible body from blocked_reason_code plus ordered allowed_action_ids[].
+  - Orphaned worktrees group collapsed with Repair and Prune, and Prune always shows a dry-run preview first.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future worktree row expander mapping and orphaned-group prune-preview tests.
+risk_class: worktree_row_presentation_drift
+reasoning_tier: standard
+context_scope: worktree_row_expander
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, future Source Control Worktrees panel]
+node_compile_hint: {mode: worktree_row_expander_consumption, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+  - Plans/WorktreeGitImprovement.md:437-441
+  - user decision 2026-07-27
+source_atom_ids: []
+preserved_exact_tokens: ["state chip", "owner dot", "ahead/behind", "ORPHANED", "dry-run preview", "allowed_action_ids[]"]
+negative_constraints:
+  - Do not redefine or fork the unified expander row contract; consume it by reference.
+  - Never execute Prune without the dry-run preview step.
+  - Do not block row expansion on disk size computation.
+compatibility_only_notes:
+  - "Slint compatibility: expander rows and the orphaned group render as opaque precomputed surfaces with transform-driven expansion; no arbitrary-content backdrop blur, no SVG filters, color math precomputed; any glass treatment uses a pre-blurred wallpaper asset only."
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+```

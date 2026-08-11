@@ -1,0 +1,470 @@
+{
+  "$defs": {
+    "byte_range": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        }
+      ],
+      "type": "array"
+    },
+    "sequence_gap": {
+      "additionalProperties": false,
+      "properties": {
+        "first_sequence_id": {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "last_sequence_id": {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "reason": {
+          "enum": [
+            "allocator_lease_abandoned",
+            "corruption_loss"
+          ]
+        }
+      },
+      "required": [
+        "first_sequence_id",
+        "last_sequence_id",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "storage_recovery_applied_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "checkpoint_action": {
+          "type": "string"
+        },
+        "durability_receipt_ref": {
+          "type": "string"
+        },
+        "excluded_ranges": {
+          "items": {},
+          "type": "array"
+        },
+        "integrity_id": {
+          "type": "string"
+        },
+        "post_length": {
+          "type": "integer"
+        },
+        "post_manifest_hash": {
+          "type": "string"
+        },
+        "post_segment_hash": {
+          "type": "string"
+        },
+        "pre_length": {
+          "type": "integer"
+        },
+        "pre_manifest_hash": {
+          "type": "string"
+        },
+        "pre_segment_hash": {
+          "type": "string"
+        },
+        "projection_action": {
+          "type": "string"
+        },
+        "recovery_id": {
+          "type": "string"
+        },
+        "schema_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sequence_gaps": {
+          "items": {},
+          "type": "array"
+        },
+        "survivor_digest": {
+          "type": "string"
+        },
+        "user_disclosure_required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "recovery_id",
+        "action",
+        "pre_segment_hash",
+        "post_segment_hash",
+        "pre_manifest_hash",
+        "post_manifest_hash",
+        "pre_length",
+        "post_length",
+        "excluded_ranges",
+        "sequence_gaps",
+        "survivor_digest",
+        "checkpoint_action",
+        "projection_action",
+        "durability_receipt_ref",
+        "user_disclosure_required"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "integrity_id"
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "action": {
+          "const": "adopt_valid_tail"
+        },
+        "checkpoint_action": {
+          "const": "advance_to_verified_survivor"
+        },
+        "excluded_ranges": {
+          "maxItems": 0
+        },
+        "projection_action": {
+          "const": "resume_from_verified_checkpoint"
+        },
+        "sequence_gaps": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "first_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "last_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "const": "allocator_lease_abandoned"
+              }
+            },
+            "required": [
+              "first_sequence_id",
+              "last_sequence_id",
+              "reason"
+            ],
+            "type": "object"
+          }
+        },
+        "user_disclosure_required": {
+          "const": false
+        }
+      }
+    },
+    {
+      "properties": {
+        "action": {
+          "const": "seal_degraded"
+        },
+        "checkpoint_action": {
+          "const": "hold_without_advance"
+        },
+        "excluded_ranges": {
+          "maxItems": 0
+        },
+        "projection_action": {
+          "const": "remain_stopped"
+        },
+        "sequence_gaps": {
+          "maxItems": 0
+        },
+        "user_disclosure_required": {
+          "const": true
+        }
+      },
+      "required": [
+        "integrity_id"
+      ]
+    },
+    {
+      "properties": {
+        "action": {
+          "const": "truncate_unacknowledged_tail"
+        },
+        "checkpoint_action": {
+          "const": "preserve_verified_checkpoint"
+        },
+        "excluded_ranges": {
+          "maxItems": 1,
+          "minItems": 1
+        },
+        "projection_action": {
+          "const": "resume_from_verified_checkpoint"
+        },
+        "sequence_gaps": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "first_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "last_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "enum": [
+                  "allocator_lease_abandoned",
+                  "corruption_loss"
+                ]
+              }
+            },
+            "required": [
+              "first_sequence_id",
+              "last_sequence_id",
+              "reason"
+            ],
+            "type": "object"
+          }
+        },
+        "user_disclosure_required": {
+          "const": true
+        }
+      },
+      "required": [
+        "integrity_id"
+      ]
+    },
+    {
+      "properties": {
+        "action": {
+          "const": "exclude_proven_range"
+        },
+        "checkpoint_action": {
+          "const": "invalidate_and_rebuild"
+        },
+        "excluded_ranges": {
+          "minItems": 1
+        },
+        "projection_action": {
+          "const": "rebuild_from_verified_survivor"
+        },
+        "user_disclosure_required": {
+          "const": true
+        }
+      },
+      "required": [
+        "integrity_id"
+      ]
+    },
+    {
+      "properties": {
+        "action": {
+          "const": "restore_verified_backup"
+        },
+        "checkpoint_action": {
+          "const": "restore_verified_checkpoint"
+        },
+        "excluded_ranges": {
+          "maxItems": 0
+        },
+        "projection_action": {
+          "const": "rebuild_from_verified_survivor"
+        },
+        "sequence_gaps": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "first_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "last_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "const": "corruption_loss"
+              }
+            },
+            "required": [
+              "first_sequence_id",
+              "last_sequence_id",
+              "reason"
+            ],
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "integrity_id"
+      ]
+    },
+    {
+      "properties": {
+        "action": {
+          "const": "block_mutation"
+        },
+        "checkpoint_action": {
+          "const": "hold_without_advance"
+        },
+        "excluded_ranges": {
+          "maxItems": 0
+        },
+        "projection_action": {
+          "const": "remain_stopped"
+        },
+        "sequence_gaps": {
+          "maxItems": 0
+        },
+        "user_disclosure_required": {
+          "const": true
+        }
+      },
+      "required": [
+        "integrity_id"
+      ]
+    }
+  ],
+  "properties": {
+    "action": {
+      "enum": [
+        "adopt_valid_tail",
+        "seal_degraded",
+        "truncate_unacknowledged_tail",
+        "exclude_proven_range",
+        "restore_verified_backup",
+        "block_mutation"
+      ]
+    },
+    "checkpoint_action": {
+      "enum": [
+        "advance_to_verified_survivor",
+        "preserve_verified_checkpoint",
+        "invalidate_and_rebuild",
+        "restore_verified_checkpoint",
+        "hold_without_advance"
+      ]
+    },
+    "durability_receipt_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "excluded_ranges": {
+      "items": {
+        "$ref": "#/$defs/byte_range"
+      },
+      "maxItems": 4096,
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "integrity_id": {
+      "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "post_length": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "post_manifest_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "post_segment_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "pre_length": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "pre_manifest_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "pre_segment_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "projection_action": {
+      "enum": [
+        "resume_from_verified_checkpoint",
+        "rebuild_from_verified_survivor",
+        "remain_stopped"
+      ]
+    },
+    "recovery_id": {
+      "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "sequence_gaps": {
+      "items": {
+        "$ref": "#/$defs/sequence_gap"
+      },
+      "maxItems": 4096,
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "survivor_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "user_disclosure_required": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "recovery_id",
+    "action",
+    "pre_segment_hash",
+    "post_segment_hash",
+    "pre_manifest_hash",
+    "post_manifest_hash",
+    "pre_length",
+    "post_length",
+    "excluded_ranges",
+    "sequence_gaps",
+    "survivor_digest",
+    "checkpoint_action",
+    "projection_action",
+    "durability_receipt_ref",
+    "user_disclosure_required"
+  ],
+  "type": "object"
+}

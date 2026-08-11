@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L693-L3421
+Source lines: L775-L3503
 
-Source SHA256: `f7aaca1cd05a7cdfbf63169869b4c53407c80cebe0b27e7437e4f8111a1c8255`
+Source SHA256: `75c2c8b8c75bf5eecbcc516272f7bdd944f0ff29b3c66b913a1c2f19adc0d3d0`
 
 ---
 
@@ -262,7 +262,7 @@ unblocks: [CS-007, CS-008, CS-011, CS-013]
 acceptance_criteria:
   - /compact stays reserved when cmd.chat.compact_context exists.
   - cmd.chat.run_user_command cannot claim chat.message.submitted unless the event owner registers it.
-  - cmd.chat.branch_from_restore remains invalid until registered or marked /superseded.
+  - Live-derived command validation confirms cmd.chat.branch_from_restore has one current catalog row and one sole-handler production-wiring row; stale hand-maintained ghost examples do not override that result.
   - Route-like commands normalize object identity through route_target, /route, or /subject contracts before carrying object identity.
   - cmd.panel.switch and cmd.source_control.switch_subview remain pure /view state commands with controlled destination vocabularies.
   - Palette object results route through the deep-link contract and shared route_target or subject-open family.

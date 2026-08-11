@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-motion="full" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fable · Settings Bakeoff — Puppet Master Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="_shared/pm-shell.css">
+  <style>
+    /* Index-local styles only. Token-driven, quiet, editorial. No status color-coding,
+       no left-accent borders, no pills-as-navigation. */
+    .bx-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: var(--2xl, 40px) var(--xl, 28px) var(--3xl, 56px);
+    }
+    .bx-kicker {
+      font-family: var(--mono-font);
+      font-size: var(--fs-xs);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--sm, 8px);
+    }
+    .bx-title {
+      font-family: var(--display-font);
+      font-size: var(--fs-3xl);
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin: 0 0 var(--sm, 8px);
+    }
+    .bx-lede {
+      font-size: var(--fs-md);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 68ch;
+      margin: 0 0 var(--xl, 28px);
+    }
+    .bx-rule {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: var(--xl, 28px) 0;
+    }
+    .bx-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
+      gap: var(--lg, 20px);
+    }
+    .bx-card {
+      background: var(--surface);
+      border: var(--border-width, 1px) solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--lg, 20px) var(--xl, 24px);
+      display: flex;
+      flex-direction: column;
+      gap: var(--md, 14px);
+      min-width: 0;
+    }
+    .bx-card-head {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sm, 10px);
+    }
+    .bx-card-num {
+      font-family: var(--mono-font);
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+    }
+    .bx-card-name {
+      font-family: var(--display-font);
+      font-size: var(--fs-xl);
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .bx-card-principle {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .bx-thesis {
+      font-size: var(--fs-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .bx-answers {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 6px var(--md, 14px);
+      margin: 0;
+      font-size: var(--fs-xs);
+      border-top: 1px solid var(--border-light);
+      padding-top: var(--md, 14px);
+    }
+    .bx-answers dt {
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .bx-answers dd {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      min-width: 0;
+    }
+    .bx-open-row {
+      margin-top: auto;
+      padding-top: var(--sm, 10px);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .bx-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      background: var(--surface-alt);
+      border: var(--border-width, 1px) solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      transition: border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+    }
+    .bx-open:hover { border-color: var(--accent-primary); }
+    .bx-open:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+    .bx-open i[data-ico] {
+      display: inline-flex;
+      width: 15px;
+      height: 15px;
+    }
+    .bx-open i[data-ico] svg { width: 100%; height: 100%; }
+    .bx-compare {
+      background: var(--surface-alt);
+      border: var(--border-width, 1px) solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: var(--lg, 20px) var(--xl, 24px);
+    }
+    .bx-compare h2 {
+      font-family: var(--display-font);
+      font-size: var(--fs-lg);
+      color: var(--text-primary);
+      margin: 0 0 var(--sm, 10px);
+    }
+    .bx-compare ul {
+      margin: 0;
+      padding-left: 1.2em;
+      color: var(--text-secondary);
+      font-size: var(--fs-sm);
+      line-height: 1.7;
+    }
+    @media (max-width: 640px) {
+      .bx-answers { grid-template-columns: 1fr; gap: 2px; }
+      .bx-answers dd { margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pm-shell" id="pmShell">
+    <header class="pm-titlebar">
+      <span class="pm-app-name">Puppet Master</span>
+      <span class="pm-model-badge" data-concept-model="fable">fable · Settings Bakeoff</span>
+      <nav class="pm-page-tabs" aria-label="Pages">
+        <span class="pm-page-tab">Dashboard</span><span class="pm-page-tab">Projects</span>
+        <span class="pm-page-tab">Wizard</span><span class="pm-page-tab">Orchestrator</span>
+        <span class="pm-page-tab">Usage</span><span class="pm-page-tab is-active" aria-current="page">Settings</span>
+      </nav>
+      <div class="pm-tb-controls">
+        <button class="pm-tb-btn" id="pmRailToggle" aria-pressed="true" title="Toggle left rail"><i data-ico="rail"></i><span class="pm-visually-hidden">Toggle left rail</span></button>
+        <button class="pm-tb-btn" id="pmChatToggle" aria-pressed="false" title="Toggle Assistant panel"><i data-ico="chat"></i><span class="pm-visually-hidden">Toggle Assistant panel</span></button>
+        <button class="pm-tb-btn" id="pmMotionToggle" aria-pressed="false" title="Toggle reduced motion"><i data-ico="motion"></i><span class="pm-visually-hidden">Toggle reduced motion</span></button>
+        <div class="pm-theme-wrap">
+          <button class="pm-tb-btn" id="pmThemeBtn" aria-haspopup="menu" aria-expanded="false" title="Theme"><i data-ico="palette"></i><span class="pm-visually-hidden">Theme</span></button>
+          <div class="pm-theme-menu" id="pmThemeMenu" role="menu" hidden></div>
+        </div>
+      </div>
+    </header>
+    <div class="pm-main">
+      <aside class="pm-rail" id="pmRail" aria-label="Activity"><!-- PMShell fills quiet rail icons --></aside>
+      <main class="pm-stage" id="pmStage">
+        <div class="bx-wrap">
+          <p class="bx-kicker">fable · Settings Bakeoff</p>
+          <h1 class="bx-title">Four answers to one question: what organizes Settings?</h1>
+          <p class="bx-lede">
+            Each concept replaces the current bloom-modal Settings with the same three-surface
+            architecture — a search-centric Home, a one-category-at-a-time Workspace, and dedicated
+            Managers — but each is organized around a different first principle. They share demo data,
+            semantics, and themes; they deliberately do not share a skeleton. This page describes each
+            concept's thesis and its distinct answers so they can be compared on their own terms.
+          </p>
+
+          <div class="bx-grid">
+            <article class="bx-card">
+              <div class="bx-card-head">
+                <span class="bx-card-num">C1</span>
+                <h2 class="bx-card-name">fable · Atlas</h2>
+              </div>
+              <p class="bx-card-principle">Settings as a well-edited reference manual</p>
+              <p class="bx-thesis">
+                Atlas makes the humanized taxonomy the hero and uses editorial devices as structure,
+                not skin: every domain is a numbered section with a running header, a short prologue,
+                and status typeset as marginalia in a dedicated margin column. Editing happens inline
+                in the document itself, and the managers become appendices of the same book — reached
+                through the table of contents and inline cross-references such as "See Appendix A".
+              </p>
+              <dl class="bx-answers">
+                <dt>Search</dt>
+                <dd>A full-width bar above the directory; typing morphs the directory in place into grouped results under persistent part headers — no overlay.</dd>
+                <dt>Navigation</dt>
+                <dd>A persistent leader-dot table-of-contents tree; the loaded section expands and a sliding ink dot in the right gutter tracks the active subcategory.</dd>
+                <dt>Managers</dt>
+                <dd>Appendices in the same book (Providers &amp; models, Memory, Connected servers), cross-referenced from the document.</dd>
+                <dt>Editing</dt>
+                <dd>Inline in the document rows; advanced and diagnostic entries sit behind per-subcategory disclosures.</dd>
+                <dt>Motion</dt>
+                <dd>"Typesetting" — content composes once in reading order with short staggered steps; reduced motion collapses to a single simultaneous state.</dd>
+              </dl>
+              <div class="bx-open-row">
+                <a class="bx-open" href="c1-atlas.html">Open Atlas <i data-ico="arrowR"></i></a>
+              </div>
+            </article>
+
+            <article class="bx-card">
+              <div class="bx-card-head">
+                <span class="bx-card-num">C2</span>
+                <h2 class="bx-card-name">fable · Mission Control</h2>
+              </div>
+              <p class="bx-card-principle">Settings as an operational console</p>
+              <p class="bx-thesis">
+                Mission Control makes system state the hero: Home leads with a strictly ranked triage
+                stack above a grid of destination stations that each show live health, and a persistent
+                global health strip stays present on every surface. The manager relation is inverted —
+                managers are the primary surfaces, and ordinary settings hang off stations as secondary
+                configure drawers. It is built for the user who opens Settings because something needs doing.
+              </p>
+              <dl class="bx-answers">
+                <dt>Search</dt>
+                <dd>A docked command bar in the home header; results open as a keyboard-first palette layer with owner-category breadcrumbs.</dd>
+                <dt>Navigation</dt>
+                <dd>Station cards on Home; inside a category, a proportional minimap is the primary scroll-position instrument.</dd>
+                <dt>Managers</dt>
+                <dd>Primary surfaces — live consoles that settings attach to, rather than pages settings link out to.</dd>
+                <dt>Editing</dt>
+                <dd>In configure drawers attached to stations; status changes morph glyph and label together, never color alone.</dd>
+                <dt>Motion</dt>
+                <dd>"Instrumental" — quick, precise, state-driven; refresh shimmers only the refreshing region while last-known-good data stays solid.</dd>
+              </dl>
+              <div class="bx-open-row">
+                <a class="bx-open" href="c2-mission-control.html">Open Mission Control <i data-ico="arrowR"></i></a>
+              </div>
+            </article>
+
+            <article class="bx-card">
+              <div class="bx-card-head">
+                <span class="bx-card-num">C3</span>
+                <h2 class="bx-card-name">fable · Focus Stack</h2>
+              </div>
+              <p class="bx-card-principle">Settings as layered focus</p>
+              <p class="bx-thesis">
+                Focus Stack makes attention the hero: Home is nearly empty — one dominant search field,
+                a short stack of large typographic destination plates, and notices folded into a single
+                collapsed queue. Every navigation pushes a full-height sheet onto a visible layer spine
+                (Home, then Category, then Manager) that can be popped, and disclosure is always
+                navigation — advanced settings, row help, and warnings each push their own sheet rather
+                than expanding in place. It is the lowest-density concept, with progressive disclosure
+                taken furthest.
+              </p>
+              <dl class="bx-answers">
+                <dt>Search</dt>
+                <dd>The hero object of Home — one large field; results replace the destination plates within the same stack.</dd>
+                <dt>Navigation</dt>
+                <dd>A spatial sheet stack with a visible layer spine; an outline chip opens the in-category jump overlay; plates remember position and offer resume.</dd>
+                <dt>Managers</dt>
+                <dd>Sheets on the same spine as categories — one surface at a time, always poppable back to Home.</dd>
+                <dt>Editing</dt>
+                <dd>On the focused sheet only; anything deeper (advanced, help, warnings) pushes a half-sheet instead of expanding inline.</dd>
+                <dt>Motion</dt>
+                <dd>"Spatial continuity" — origin-anchored push and pop carries wayfinding; the reduced-motion mode is designed first-class, with the spine and breadcrumb making depth legible without animation.</dd>
+              </dl>
+              <div class="bx-open-row">
+                <a class="bx-open" href="c3-focus-stack.html">Open Focus Stack <i data-ico="arrowR"></i></a>
+              </div>
+            </article>
+
+            <article class="bx-card">
+              <div class="bx-card-head">
+                <span class="bx-card-num">C4</span>
+                <h2 class="bx-card-name">fable · Ledger</h2>
+              </div>
+              <p class="bx-card-principle">Settings as an object browser</p>
+              <p class="bx-thesis">
+                Ledger makes metadata the hero and the inspector the interaction surface: every setting
+                is a record with provenance, document rows are read-only, and selecting a row loads it
+                into a persistent inspector where all editing happens — provenance chain,
+                requested-versus-effective diff, and reset included. The navigator is a query engine,
+                and Home is a sortable, filterable settings table rather than a directory. It is the
+                highest-density concept, built for the expert who wants to interrogate configuration.
+              </p>
+              <dl class="bx-answers">
+                <dt>Search</dt>
+                <dd>A persistent query bar with state chips ("managed", "differs from default") mounted at the top of the navigator on every surface; it filters navigator and document simultaneously by dimming non-matches.</dd>
+                <dt>Navigation</dt>
+                <dd>A navigator column plus query filtering; the scrollspy marker steps discretely; Home mirrors the navigator as a compact index table.</dd>
+                <dt>Managers</dt>
+                <dd>Record collections browsed through the same navigator-and-inspector pattern as ordinary settings.</dd>
+                <dt>Editing</dt>
+                <dd>Inspector-side only — rows are records, the inspector is the sole editing surface.</dd>
+                <dt>Motion</dt>
+                <dd>"Instantaneous" — zero choreography as a deliberate philosophy; state swaps are immediate, and the concept doubles as proof the design system works motionless.</dd>
+              </dl>
+              <div class="bx-open-row">
+                <a class="bx-open" href="c4-ledger.html">Open Ledger <i data-ico="arrowR"></i></a>
+              </div>
+            </article>
+          </div>
+
+          <hr class="bx-rule">
+
+          <section class="bx-compare" aria-label="How to compare">
+            <h2>How to compare</h2>
+            <ul>
+              <li><strong>Width:</strong> use the hub's Page width control (760–2500, presets at 760 / 900 / 1280 / 1700 / 2200 / 2500) and combine it with the shell's rail and Assistant toggles — effective content width is what matters.</li>
+              <li><strong>Themes:</strong> all eight themes (Friendly, Glass, Retro, Basic, each in dark and light) are available from the palette button in the titlebar; semantic status language is identical across themes.</li>
+              <li><strong>States:</strong> each concept page mounts a States drawer (bottom-right) with scenario presets — baseline, calm, attention-heavy, usage-exhausted, invocation-failed, managed-workspace — plus transient triggers like refresh and reconnect.</li>
+              <li><strong>Reduced motion:</strong> toggle it from the titlebar on any page; every concept reaches identical end states, and the calm scenario renders with no permanent animation.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <aside class="pm-chat" id="pmChat" hidden aria-label="Assistant">
+        <div class="pm-chat-head">Assistant<button class="pm-tb-btn" id="pmChatOverflow" aria-haspopup="menu" title="Thread options"><i data-ico="more"></i><span class="pm-visually-hidden">Thread options</span></button></div>
+        <div class="pm-chat-body" id="pmChatBody"><!-- PMShell fills quiet placeholder + spellcheck demo composer --></div>
+      </aside>
+    </div>
+    <footer class="pm-statusbar"><span id="pmStatusLeft">Ready</span><span id="pmStatusRight"></span></footer>
+  </div>
+  <script src="_shared/pm-icons.js"></script>
+  <script src="_shared/pm-demo-data.js"></script>
+  <script src="_shared/pm-state.js"></script>
+  <script src="_shared/pm-scrollspy.js"></script>
+  <script src="_shared/pm-spell.js"></script>
+  <script src="_shared/pm-shell.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      try {
+        if (window.PMShell && typeof window.PMShell.init === "function") {
+          window.PMShell.init({ concept: "index" });
+        }
+      } catch (err) {
+        /* Shell hydration failure must not blank the gallery; static markup stands alone. */
+      }
+    })();
+  </script>
+</body>
+</html>

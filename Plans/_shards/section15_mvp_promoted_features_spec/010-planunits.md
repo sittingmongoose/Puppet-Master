@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L808-L8167
+Source lines: L822-L8356
 
-Source SHA256: `c2e3721e4910120edde397fa014b807831c57621b234f0e81472ee4c5ad4e4fb`
+Source SHA256: `dc0625ec8d68b6f9d9f74f7b9268e96f5e178277dfb8ee427f13efdd0fd512d2`
 
 ---
 
@@ -715,7 +715,7 @@ plan_unit_id: SMPFS-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The terminal is the canonical interactive shell surface with up to two terminal sections, tab and pane layout families, bottom-default placement, detach/move/resize behavior, labels, and settings vocabulary.
+canonical_text: The terminal is the canonical interactive shell surface with up to four terminal sections, tab and pane layout families, bottom-default placement, detach/move/resize behavior, labels, and settings vocabulary.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -748,7 +748,7 @@ source_lineage:
 preserved_exact_tokens:
 - 1.6 Dev-loop and terminal surface model
 - canonical interactive shell
-- up to two terminal sections
+- up to four terminal sections
 - tabs
 - panes
 - bottom default
@@ -1867,7 +1867,13 @@ plan_unit_id: SMPFS-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: FileSafe dangerous-command blocks are first-class blocked outcomes, and rerun after destructive blocks respects restore-before-rerun requirements when local work or safe-point rules require them.
+canonical_text: >-
+  FileSafe dangerous-command blocks are first-class blocked outcomes. When requires_safe_point_restore
+  is true, only cmd.runtime.restore_safe_point_then_retry may exact-replace the named worktree from
+  the canonical sp safe point through a durable FileSafe restore transaction; exact target or rollback
+  equality and a durable receipt precede any successor attempt, while refused, failed, recovery-required,
+  unavailable, missing, corrupt, and unsupported-scope outcomes preserve the blocked identity, local work,
+  mutation fence, worktree ownership, and recovery holds.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -1878,14 +1884,38 @@ depends_on:
 - PNC-001
 - PS-001
 - UCC-001
+- CV-320
+- F2-200
+- F2-201
+- F2-202
+- F2-203
+- SP-242
+- EP-072
+- W-063
+- CS-056
 unblocks: []
 acceptance_criteria:
 - SMPFS-033 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- When requires_safe_point_restore is true, generic retry, fresh-attempt, resume, focus-derived substitution, and latest-safe-point substitution are rejected.
+- New safe-point writes resolve only through sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}; restore execution uses the materialized safe_point_restore_transaction family and exact FileSafe equality.
+- restored_clean and restore_skipped require target equality; restore_failed requires rollback equality; restore_refused and restore_recovery_required mint no successor attempt; exact restore never emits restored_with_conflicts.
+- Missing, corrupt, unsupported-scope, ambiguous, or unavailable recovery material preserves local work and every mutation fence, blocked identity, worktree ownership, and recovery hold.
+- Storage-owned active-attempt, blocked, restore-transaction, preserved-run, and legal-hold refs override the released-safe-point TTL and cardinality policy.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-ATOMIC-001
+- RSP-ATOMIC-002
+- RSP-ATOMIC-003
+- RSP-EQUAL-001
+- RSP-INTEGRITY-001
+- RSP-INTEGRITY-002
+- RSP-INTEGRITY-003
+- RSP-RETENTION-001
+- RSP-RETENTION-003
+- RSP-BASELINE-001
 risk_class: filesafe_block_semantics_drift
 reasoning_tier: standard
 context_scope: filesafe_blocking
@@ -1896,6 +1926,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0024
+- Case-L:L-006
+- Case-L:L-010
+- Case-L:L-020
+- Case-L:L-021
+- Case-L:L-024
+- Case-L:PD-RSP-01..PD-RSP-07
 preserved_exact_tokens:
 - Dangerous-Command Blocking (FileSafe)
 - FileSafe blocks
@@ -1903,14 +1939,32 @@ preserved_exact_tokens:
 - rerun
 - restore-before-rerun
 - safe-point
-negative_constraints: []
-preserved_contractrefs: []
+- cmd.runtime.restore_safe_point_then_retry
+- requires_safe_point_restore
+- "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+- safe_point_restore_transaction
+- restored_clean
+- restore_refused
+- restore_failed
+- restore_recovery_required
+- recovery_unavailable
+negative_constraints:
+- Do not merge, best-effort rewrite, substitute another baseline, use git reset --hard, or dispatch from an unproved restore state.
+- Do not emit restored_with_conflicts from exact safe-point restore or release recovery holds because the remedy aged, was cleaned, or became unavailable.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/Permissions_System.md
 - Plans/UI_Command_Catalog.md
+- Plans/FileSafe.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Executor_Protocol.md
+- Plans/WorktreeGitImprovement.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-034 - FileSafe Visible Blocked UI
@@ -1936,6 +1990,8 @@ acceptance_criteria:
 - SMPFS-034 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Thread, terminal/output, and action-needed surfaces distinguish restore_refused, restore_failed, restore_recovery_required, recovery_unavailable, snapshot_missing, snapshot_corrupt, and snapshot_scope_unsupported instead of flattening them to a generic retry error.
+- The visible recovery action stays disabled when the required safe-point family, transaction family, snapshot refs, hold, storage writer admission, or command registration is unavailable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1949,21 +2005,33 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0024
+- Case-L:L-006
+- Case-L:L-010
+- Case-L:L-024
+- Case-L:PD-RSP-01..PD-RSP-06
 preserved_exact_tokens:
 - blocked UI
 - thread
 - terminal/output surfaces
 - action-needed routing
 - terminal-only messaging
+- restore_recovery_required
+- recovery_unavailable
 negative_constraints:
 - The feature does not rely on terminal-only messaging.
-preserved_contractrefs: []
+- Visible copy must not imply target restoration, rollback preservation, retry eligibility, or cleanup release without the corresponding owner proof.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
+- Plans/FileSafe.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-035 - Branch Restore Boundary And Lineage
@@ -1973,7 +2041,12 @@ plan_unit_id: SMPFS-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Branching conversations always start from a restore point or equivalent preserved state boundary, create a new thread/session identity linked to the source branch and restore point, and leave the source thread intact.
+canonical_text: >-
+  Conversation branching starts only from an immutable Assistant Chat restore_point_record at the
+  canonical rp project key. Applying an available expected-hash boundary creates a new thread_id and
+  conversation branch_id, leaves the source thread and source worktree unchanged, restores no files,
+  treats an optional safe_point_id as lineage only, does not consume the record, and never substitutes
+  a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved boundary.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -1984,14 +2057,31 @@ depends_on:
 - PNC-001
 - ACD-008
 - SP-001
+- CV-320
+- SP-242
+- CS-057
+- UCC-001
+- UCC-126
+- ACD-086
 unblocks: []
 acceptance_criteria:
 - SMPFS-035 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- The materialized family is restore_point_record at rp:{project_id}:{restore_point_id} with schema pm.storage_value.restore_point_record.v1 and closed status available, expired, deleted, or corrupt.
+- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused and failed create none.
+- Successful application does not consume the record, change the source conversation, change SCM/worktree state, or invoke FileSafe restore.
+- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record; Section 15 does not invent an expiry window beyond the current registry policy.
+- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed only from an available record whose required frozen refs remain retained.
+- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs nothing from tombstone or backup projection, and leaves the record/status unchanged.
+- unavailable and deleted-source state remain derived availability/provenance facts and do not expand the closed status or application-result enums.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-RP-001
+- RSP-RP-003
+- RSP-RP-004
+- RSP-CMD-001
 risk_class: branch_restore_lineage_drift
 reasoning_tier: standard
 context_scope: branching_conversations
@@ -2002,6 +2092,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - Branching Conversations (Restore Then Fork)
 - restore point
@@ -2009,14 +2101,33 @@ preserved_exact_tokens:
 - new thread/session identity
 - source branch
 - source thread remains intact
-negative_constraints: []
-preserved_contractrefs: []
+- restore_point_record
+- "rp:{project_id}:{restore_point_id}"
+- pm.storage_value.restore_point_record.v1
+- available
+- expired
+- deleted
+- corrupt
+- branched
+- refused
+- failed
+- source_deleted_content_unavailable
+negative_constraints:
+- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches, indexes, or worktrees.
+- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved state as a conversation restore point.
+- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict any record other than the oldest eligible record above `2,048` per project, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage, live, recovery, backup, rollback, or maintenance refs.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/assistant-chat-design.md
 - Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/Contracts_V0.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
 ```
 
 ### SMPFS-036 - Branch Navigation And Confirmation UI
@@ -2026,7 +2137,13 @@ plan_unit_id: SMPFS-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Branch labels, source-origin lineage, branch origin time, and dirty or active thread confirmation are visible in history and navigation surfaces before branching from risky source state.
+canonical_text: >-
+  Before a restore-point branch, the UI discloses the immutable source thread/message boundary,
+  source active, dirty, or deleted provenance, expected record hash, and new conversation target.
+  It renders available, expired, deleted, corrupt, held, permission/storage unavailable, stale-hash,
+  refused, failed, and branched truth without implying workspace restore. Create and repeated command
+  identities are idempotent, and no restore-point command is enabled until catalog registration,
+  materialized registry authority, handler wiring, and reverse coverage all exist.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -2037,14 +2154,30 @@ depends_on:
 - PNC-001
 - ACD-008
 - UCC-001
+- CV-320
+- SP-242
+- CS-057
+- UCC-126
+- ACD-087
 unblocks: []
 acceptance_criteria:
 - SMPFS-036 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Disclosure names the source thread/message boundary, source active, dirty, or deleted provenance, expected record hash, and new target before branch creation.
+- Create replay with the same semantic idempotency key returns the original restore_point_id; conflicting digest creates no duplicate.
+- Replaying the same branch or delete command identity returns the original result/event and never creates a second branch or second lifecycle transition.
+- Expired, deleted, corrupt, stale-hash, source_deleted_content_unavailable, missing-required-boundary, held, permission-denied, storage-unavailable, or in-progress states refuse without a new thread.
+- unavailable is a derived command/UI posture and deleted-source state is provenance; neither becomes a fifth record status or fourth application result.
+- UCC-126 supplies the three canonical command rows; dispatch remains disabled until each ID also has one handler plus Wiring Matrix and UI Wiring Rules reverse coverage.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-RP-001
+- RSP-RP-002
+- RSP-RP-003
+- RSP-RP-004
+- RSP-CMD-001
 risk_class: branch_navigation_ui_drift
 reasoning_tier: standard
 context_scope: branching_gui
@@ -2055,6 +2188,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - branch labels
 - source-origin lineage
@@ -2062,14 +2197,28 @@ preserved_exact_tokens:
 - history/navigation surfaces
 - dirty or active thread
 - confirmation
-negative_constraints: []
-preserved_contractrefs: []
+- source_deleted_content_unavailable
+- idempotency_key
+- expected_restore_point_sha256
+- cmd.chat.create_restore_point
+- cmd.chat.branch_from_restore
+- cmd.chat.delete_restore_point
+negative_constraints:
+- Confirmation and labels must not imply that branching restores files, changes the source worktree, consumes the restore point, or resurrects a deleted source thread.
+- Section 15 command references must not be represented as registered or dispatch-valid before UI Command Catalog and wiring reverse coverage exist.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/assistant-chat-design.md
 - Plans/UI_Command_Catalog.md
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/Contracts_V0.md
+- Plans/Commands_System.md
+- Plans/Wiring_Matrix.md
 ```
 
 ### SMPFS-037 - Project Instructions Runtime Source Boundary
@@ -4471,10 +4620,10 @@ owner_hints:
 
 ```yaml
 plan_unit_id: SMPFS-079
-unit_type: requirement
-status: accepted
+unit_type: compatibility_disposition
+status: retired
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal acceptance requires deterministic two-section, multi-tab, one-to-four pane behavior across docked/detached presentation, same-session reveal, restart identity minting, honest historical restore, terminal/output/problems/debug/ports linkback, and responsive huge-output/search/scrollback paths.
+canonical_text: SMPFS-079 is retired because its deterministic two-terminal-section ceiling conflicts with the accepted four-section Home terminal contract in SMPFS-138; it remains migration/source lineage only and cannot be indexed as current implementation-facing terminal authority.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -4488,7 +4637,8 @@ depends_on:
 - WM-001
 unblocks: []
 acceptance_criteria:
-- SMPFS-079 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- SMPFS-079 remains addressable only as a retired compatibility disposition with source-span coverage.
+- SMPFS-138 is the sole current terminal-section maximum and Home placement authority.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -4505,7 +4655,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0043
 preserved_exact_tokens:
-- two terminal sections
+- up to four terminal sections
 - multi-tab behavior
 - one-to-four pane tabs
 - docked
@@ -4520,7 +4670,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The two-terminal-section ceiling is retired and replaced by SMPFS-138.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -5903,7 +6054,13 @@ plan_unit_id: SMPFS-101
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The UI command catalog exposes stable command families for project switching/open-new-tab, workspace tabs, detached windows, thread context detail, branching, browser controls, terminal actions, dev-session actions, and catalog lifecycle actions.
+canonical_text: >-
+  The UI Command Catalog is the sole registration owner for promoted project, workspace, detached,
+  context, conversation-restore-point, browser, terminal, dev-session, and catalog actions. UCC-126
+  registers cmd.chat.create_restore_point, cmd.chat.branch_from_restore, and
+  cmd.chat.delete_restore_point, while Section 15 consumes rather than re-registers them; dispatch
+  additionally requires conditional arguments, one handler, Wiring Matrix and UI Wiring Rules reverse
+  coverage, materialized restore-point storage authority, and owner preconditions.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -5915,14 +6072,23 @@ depends_on:
 - UCC-001
 - WM-001
 - ACD-008
+- CS-057
+- CV-320
+- SP-242
+- UCC-126
+- ACD-086
+- ACD-087
 unblocks: []
 acceptance_criteria:
 - SMPFS-101 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- UCC-126 supplies one canonical row per restore-point command ID; Section 15 naming creates no peer row or alias.
+- Catalog registration alone cannot enable the commands until one-handler wiring/reverse coverage exists, restore_point_record is materialized, and the exact owner lifecycle, permission, storage, hold, idempotency, expected-hash, and EventRecord contracts are consumable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- RSP-CMD-001
 risk_class: promoted_command_family_drift
 reasoning_tier: standard
 context_scope: command_catalog_gui
@@ -5933,6 +6099,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0048
+- Case-L:L-022
+- Case-L:PD-RSP-08
 preserved_exact_tokens:
 - project switch
 - project open-in-new-workspace-tab
@@ -5944,7 +6112,12 @@ preserved_exact_tokens:
 - terminal show
 - dev-session start
 - catalog install
-negative_constraints: []
+- cmd.chat.create_restore_point
+- cmd.chat.branch_from_restore
+- cmd.chat.delete_restore_point
+negative_constraints:
+- Section 15 does not re-register commands, clear a wiring/reverse-coverage blocker, invent private aliases, or claim dispatch validity from prose, registry presence, a catalog row alone, or a visible control.
+- Conversation restore-point commands must not combine branching with FileSafe or workspace restore.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
@@ -5955,6 +6128,8 @@ owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
 - Plans/assistant-chat-design.md
+- Plans/Commands_System.md
+- Plans/storage_value_registry.json
 ```
 
 ### SMPFS-102 - Command Category And Identity Reveal Rules

@@ -1,0 +1,162 @@
+{
+  "schema_id": "pm.agent_packet_restrictions.implementation_gated_tests.v1",
+  "inventory_id": "apr-surfaces-v1.0.0",
+  "method_id": "apr-method-v1.0.0",
+  "claim_boundary": "These tests are specified but cannot be treated as executed until the named production prerequisites exist and are enabled. Isolated simulation results never auto-close them.",
+  "tests": [
+    {
+      "test_id": "IG-001",
+      "title": "Every automated caller routes through one shared compiler",
+      "surface_ids": ["APR-001", "PP-001", "ORIGIN-001"],
+      "production_prerequisites": ["implemented_agent_packet_compiler", "closed_caller_registry", "production_dispatch_instrumentation"],
+      "acceptance": "Enumerate every production automated caller and prove no feature-local raw-prompt dispatch can reach a provider."
+    },
+    {
+      "test_id": "IG-002",
+      "title": "Trusted origin and closed-world route enforcement",
+      "surface_ids": ["ORIGIN-001", "PP-004", "CONTRACT-001"],
+      "production_prerequisites": ["controller_issued_execution_origin", "route_registry", "provider_boundary_gate"],
+      "acceptance": "Registered strict automation is enforced, registered Chat lanes are excluded, and unknown/self-asserted/unmigrated origins or routes block."
+    },
+    {
+      "test_id": "IG-003",
+      "title": "Packet Admission and FileSafe co-bind the exact final request",
+      "surface_ids": ["APR-001", "FS-001", "PERM-001", "PP-004"],
+      "production_prerequisites": ["packet_admission_receipt", "filesafe_guard_receipt", "final_payload_digest", "attachment_manifest_digest"],
+      "acceptance": "Both independently current receipts bind identical bytes, attachments, route, run, node, attempt, and permission context before dispatch."
+    },
+    {
+      "test_id": "IG-004",
+      "title": "Late transforms invalidate both program gates",
+      "surface_ids": ["PP-002", "PP-004", "FS-001", "RECEIPT-001"],
+      "production_prerequisites": ["transform_manifest", "immutable_dispatch_intent", "adapter_pre_send_compare"],
+      "acceptance": "Any post-gate prompt, parameter, attachment, route, or serialization mutation blocks and requires a new intent plus both gates."
+    },
+    {
+      "test_id": "IG-005",
+      "title": "Provider-effective identity and exact-byte attestation",
+      "surface_ids": ["PP-004", "MODEL-001", "CONTRACT-001"],
+      "production_prerequisites": ["provider_effective_identity_evidence", "provider_request_identity", "requested_effective_runtime_record"],
+      "acceptance": "Requested and effective provider/model/account/route/effort are preserved; silent substitution or absent attestation is not accepted."
+    },
+    {
+      "test_id": "IG-006",
+      "title": "Least-authority instruction and capability bundle",
+      "surface_ids": ["PP-003", "PERSONA-001", "SKILL-001", "RULES-001", "PERM-002"],
+      "production_prerequisites": ["instruction_bundle_manifest", "component_versions", "inclusion_reasons", "rendered_input_ceiling"],
+      "acceptance": "Only mandatory-global and objective-required components are present, each with identity/version/authority/inclusion reason, and unrelated catalogs are absent."
+    },
+    {
+      "test_id": "IG-007",
+      "title": "Bounded automated later-turn reconstruction",
+      "surface_ids": ["HISTORY-001", "CONTINUE-001", "GRT-004", "EXE-004"],
+      "production_prerequisites": ["typed_current_state", "history_custody", "bounded_excerpt_admission", "attempt_currentness"],
+      "acceptance": "Continuation, compaction, rotation, retry, and resume use current bounded state and never revive stale authority or append the full transcript."
+    },
+    {
+      "test_id": "IG-008",
+      "title": "Bounded tool and data-result evidence adapter",
+      "surface_ids": ["RESULT-001", "WEB-001", "VISION-001", "SKILL-001", "CONTRACT-001"],
+      "production_prerequisites": ["shared_evidence_adapter", "complete_result_store", "preview_and_omission_schema", "trust_and_currentness_labels"],
+      "acceptance": "Oversized, partial, prompt-like, secret-bearing, or stale results are retained by governed ref and only bounded current untrusted evidence reaches a model."
+    },
+    {
+      "test_id": "IG-009",
+      "title": "Response conformance and defect-only repair",
+      "surface_ids": ["RESPONSE-001", "GRT-001", "ORC-003", "EXE-002"],
+      "production_prerequisites": ["response_schema_validator", "requirement_coverage_validator", "evidence_join_validator", "bounded_repair_controller"],
+      "acceptance": "Malformed, missing/duplicate-ID, evidence-invalid, uncertainty-hiding, forbidden-action, or false-complete output never enters a reducer; repair calls are visible and bounded."
+    },
+    {
+      "test_id": "IG-010",
+      "title": "Dependency currentness and non-transferable execution authority",
+      "surface_ids": ["RECEIPT-001", "PERM-001", "FS-001", "MODEL-001"],
+      "production_prerequisites": ["dependency_version_graph", "receipt_currentness_checker", "run_attempt_binding"],
+      "acceptance": "Changed dependencies invalidate affected descendants; current derivations may be reused as data but old gate/override/dispatch receipts cannot authorize another context."
+    },
+    {
+      "test_id": "IG-011",
+      "title": "Lossless source and requirement split coverage",
+      "surface_ids": ["APR-001", "PRD-002", "PNC-001", "ORC-002"],
+      "production_prerequisites": ["source_span_manifest", "stable_requirement_registry", "assignment_receipts"],
+      "acceptance": "Every mandatory source span and requirement ID is assigned; any gap, overlap conflict, duplicate, or missing disposition blocks completion."
+    },
+    {
+      "test_id": "IG-012",
+      "title": "Redundant unstructured extraction and exact-span fidelity",
+      "surface_ids": ["PRD-002", "ATS-001", "WEB-001", "PW-001"],
+      "production_prerequisites": ["deterministic_segmentation", "redundant_extractor_controller", "source_span_provenance", "conflict_reconciler"],
+      "acceptance": "New/changed unstructured sources are fully segmented and redundantly extracted; imperative material cannot be downgraded and unresolved meaning remains blocking."
+    },
+    {
+      "test_id": "IG-013",
+      "title": "Hierarchical reducer completeness and absorbed-suffix accounting",
+      "surface_ids": ["GRT-002", "ORC-004", "ORC-007", "PRD-003", "INT-002"],
+      "production_prerequisites": ["typed_child_results", "reducer_receipt", "coverage_checker", "conflict_disposition"],
+      "acceptance": "Reducers account for every started and absorbed assignment, reject partial/conflicting/unknown-evidence results, and never concatenate raw child transcripts."
+    },
+    {
+      "test_id": "IG-014",
+      "title": "Planning Wizard and PRD role packet integration",
+      "surface_ids": ["PW-001", "PW-002", "PW-003", "PRD-001", "PRD-002", "PRD-003", "INT-001", "INT-002"],
+      "production_prerequisites": ["planning_runtime", "role_specific_packet_builder", "single_writer_controller", "planning_receipt_store"],
+      "acceptance": "Topic, conversion, audit, repair, integration, interview, extraction, and reduction calls all use the shared restrictions with explicit role identity and visible call counts."
+    },
+    {
+      "test_id": "IG-015",
+      "title": "Goal Runtime role, completion, and repair integration",
+      "surface_ids": ["GRT-001", "GRT-002", "GRT-003", "GRT-004", "GRT-005"],
+      "production_prerequisites": ["native_goal_runtime", "goal_role_policy", "goal_completion_receipt", "verification_and_repair_runtime"],
+      "acceptance": "Workers cannot certify completion; planner/evaluator/reducer/verifier/adjudicator/repair/child calls are bounded, current, receipt-linked, and explicit."
+    },
+    {
+      "test_id": "IG-016",
+      "title": "Orchestrator crew, reviewer, verifier, Overseer, and rollup integration",
+      "surface_ids": ["ORC-001", "ORC-002", "ORC-003", "ORC-004", "ORC-005", "ORC-006", "ORC-007"],
+      "production_prerequisites": ["orchestrator_runtime", "crew_scheduler", "child_run_records", "review_and_fanin_reducers"],
+      "acceptance": "All dispatch, parallel, reviewer, verifier, specialist, Overseer, and parent synthesis calls use stable bounded assignments and lossless result lineage."
+    },
+    {
+      "test_id": "IG-017",
+      "title": "Executor worker, verification, repair, and retry integration",
+      "surface_ids": ["EXE-001", "EXE-002", "EXE-003", "EXE-004"],
+      "production_prerequisites": ["enabled_executor_runtime", "execution_unit_context_runtime", "verification_routes", "repair_and_retry_controller"],
+      "acceptance": "WorkNode dispatch and every review/corroboration/repair/retry attempt uses current immutable packet/permission/provider identity and no stale receipt."
+    },
+    {
+      "test_id": "IG-018",
+      "title": "Model fallback, reroute, retry, and switch identity",
+      "surface_ids": ["MODEL-001", "PP-004", "CONTINUE-001"],
+      "production_prerequisites": ["model_resolver_runtime", "attempt_identity", "fallback_and_switch_events", "provider_attestation"],
+      "acceptance": "Fallbacks and switches remain visible distinct attempts, do not silently replace preregistered subjects, and trigger required packet/currentness checks."
+    },
+    {
+      "test_id": "IG-019",
+      "title": "Plugin mutation and hook failure enforcement",
+      "surface_ids": ["PP-002", "PERM-002", "RESULT-001"],
+      "production_prerequisites": ["plugin_runtime", "hook_receipts", "post_hook_permission_recheck", "final_request_re_admission"],
+      "acceptance": "Prompt, parameter, compaction, argument, and result mutations are attributable and rechecked; failure policy cannot create a late unadmitted request."
+    },
+    {
+      "test_id": "IG-020",
+      "title": "Vision and web research packet/result integration",
+      "surface_ids": ["VISION-001", "WEB-001", "RESULT-001", "PERM-001"],
+      "production_prerequisites": ["vision_bridge_runtime", "web_dispatcher", "source_citation_store", "provider_egress_permissions"],
+      "acceptance": "Media/web fan-out, provider fallback, page summaries, citations, OCR, uncertainty, and returned artifacts remain bounded, current, redacted, and route-attested."
+    },
+    {
+      "test_id": "IG-021",
+      "title": "Automated Testing research, generation, and visual evidence integration",
+      "surface_ids": ["ATS-001", "ATS-002", "ATS-003"],
+      "production_prerequisites": ["enabled_automated_testing_runtime", "test_strategy_runtime", "browser_gui_device_adapters", "evidence_receipts"],
+      "acceptance": "Testing research/generation/evaluation uses bounded source-backed packets and produces replayable evidence without model-only or human-eyeballing completion."
+    },
+    {
+      "test_id": "IG-022",
+      "title": "End-to-end production fleet across every registered automated route",
+      "surface_ids": ["APR-001", "PP-001", "PP-004", "FS-001", "ORIGIN-001", "RESPONSE-001", "CONTRACT-001"],
+      "production_prerequisites": ["all_prior_integration_prerequisites", "closed_production_route_registry", "clean_room_harness", "provider_effective_identity_evidence"],
+      "acceptance": "Every registered strict-automation route runs the same production packet profile and negative fixtures with raw lineage; unknown routes remain blocked and Chat lanes remain separately verified exclusions."
+    }
+  ]
+}

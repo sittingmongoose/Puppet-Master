@@ -1,0 +1,323 @@
+/* t8 "Reading Mode" — Opus 5
+ * Prose first. Machinery is one line per turn, hidden behind a single global toggle.
+ * All rules scoped under [data-pmx-thread="t8"]; a test fails anything outside that scope.
+ */
+
+[data-pmx-thread="t8"] .t8-root {
+  container-type: inline-size;
+  container-name: pmx-thread;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+[data-pmx-thread="t8"] .t8-head {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: 4px var(--md); flex: 0 0 auto;
+  font-size: var(--fs-2xs); color: var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+[data-pmx-thread="t8"] .t8-head-name { font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+[data-pmx-thread="t8"] .t8-head-model { margin-left: var(--sm); letter-spacing: .05em; }
+
+[data-pmx-thread="t8"] .t8-workbtn {
+  margin-left: auto;
+  padding: 2px var(--sm);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  background: transparent; color: var(--text-muted);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-workbtn:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+[data-pmx-thread="t8"] .t8-workbtn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: var(--accent-primary); color: var(--text-primary); font-weight: 600;
+}
+
+[data-pmx-thread="t8"] .t8-scroll {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; overflow-x: hidden; overflow-anchor: none;
+}
+[data-pmx-thread="t8"] .t8-list {
+  display: flex; flex-direction: column;
+  padding: var(--md) var(--lg) var(--xl);
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------- the turn */
+
+[data-pmx-thread="t8"] .t8-turn {
+  position: relative;
+  min-width: 0;
+  /* Room on the right for the micro-gutter, so a dot never collides with prose. */
+  padding: 2px 18px var(--sm) 0;
+}
+[data-pmx-thread="t8"] .t8-turn[data-turn-start="1"] { margin-top: var(--md); }
+[data-pmx-thread="t8"] .t8-turn[data-turn-start="1"]:first-child { margin-top: 0; }
+
+[data-pmx-thread="t8"] .t8-role {
+  display: block;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+[data-pmx-thread="t8"] .t8-turn[data-pmx-role="assistant"] .t8-role { color: var(--accent-primary); }
+
+/* The reading measure is the point of the concept. */
+[data-pmx-thread="t8"] .t8-prose {
+  font-size: var(--fs-sm);
+  line-height: 1.68;
+  color: var(--text-primary);
+  max-width: 66ch;
+  overflow-wrap: anywhere;
+}
+[data-pmx-thread="t8"] .t8-p { margin: 0 0 .68em; }
+[data-pmx-thread="t8"] .t8-p:last-child { margin-bottom: 0; }
+[data-pmx-thread="t8"] .t8-turn[data-pmx-role="user"] .t8-prose { color: var(--text-secondary); }
+
+[data-pmx-thread="t8"] .t8-body[data-collapsible="1"][data-expanded="0"] .t8-prose {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 76%, transparent 100%);
+}
+[data-pmx-thread="t8"] .t8-more {
+  margin-top: 3px; padding: 0; border: none; background: transparent;
+  color: var(--accent-primary); font: inherit; font-size: var(--fs-2xs); font-weight: 600;
+  cursor: pointer; opacity: 0; transition: opacity 140ms var(--ease-out);
+}
+[data-pmx-thread="t8"] .t8-turn:hover .t8-more,
+[data-pmx-thread="t8"] .t8-turn:focus-within .t8-more,
+[data-pmx-thread="t8"] .t8-body[data-expanded="1"] .t8-more { opacity: 1; }
+
+/* ---------------------------------------------------------------- work line
+ * Present in the DOM at all times, revealed only by the global toggle. */
+
+[data-pmx-thread="t8"] .t8-work { display: none; margin-top: 3px; }
+[data-pmx-thread="t8"][data-work="1"] .t8-work,
+[data-pmx-thread="t8"] .t8-root[data-work="1"] .t8-work { display: block; }
+[data-pmx-thread="t8"] .t8-work-btn {
+  padding: 0; border: none; background: transparent;
+  color: var(--text-muted); font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text-muted) 40%, transparent);
+  text-underline-offset: 3px;
+}
+[data-pmx-thread="t8"] .t8-work-btn:hover { color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- micro-gutter
+ * Discrete markers with real spacing between them. Deliberately NOT a continuous edge —
+ * a solid colored strip would read as an accent border, which is prohibited. */
+
+[data-pmx-thread="t8"] .t8-gutter {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  pointer-events: none;
+}
+[data-pmx-thread="t8"] .t8-dot {
+  display: inline-flex;
+  color: var(--text-muted);
+  opacity: .55;
+  pointer-events: auto;
+}
+[data-pmx-thread="t8"] .t8-turn:hover .t8-dot { opacity: 1; color: var(--accent-primary); }
+
+/* ---------------------------------------------------------------- misc */
+
+[data-pmx-thread="t8"] .t8-older-wrap { display: flex; justify-content: center; padding: var(--sm) 0 var(--md); }
+[data-pmx-thread="t8"] .t8-older {
+  padding: 5px var(--md); border: 1px solid var(--border); border-radius: var(--radius-pill);
+  background: var(--surface-elevated); color: var(--text-secondary);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-older:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+
+[data-pmx-thread="t8"] .t8-live {
+  display: flex; align-items: center; gap: var(--sm);
+  margin-top: var(--md); padding: var(--sm) 0;
+  font-size: var(--fs-xs); color: var(--text-muted);
+}
+[data-pmx-thread="t8"] .t8-live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-primary); flex: 0 0 auto; }
+[data-pmx-thread="t8"] .t8-live-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-pmx-thread="t8"] .t8-live-time { font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- surfaces */
+
+[data-pmx-thread="t8"] .t8-inline-surfaces,
+[data-pmx-thread="t8"] .t8-inline-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-thread="t8"] .t8-inline-surfaces:empty,
+[data-pmx-thread="t8"] .t8-inline-question:empty { display: none; }
+
+[data-pmx-thread="t8"] .t8-surface {
+  display: flex; align-items: baseline; gap: var(--sm);
+  padding: 4px var(--md); min-width: 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  font-size: var(--fs-2xs);
+}
+[data-pmx-thread="t8"] .t8-surface-kind {
+  flex: 0 0 auto; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+[data-pmx-thread="t8"] .t8-surface-text {
+  flex: 1 1 auto; min-width: 0; color: var(--text-secondary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+[data-pmx-thread="t8"] .t8-surface-status {
+  flex: 0 0 auto; padding: 0 6px; border-radius: var(--radius-pill);
+  background: var(--surface-elevated); color: var(--text-secondary);
+}
+
+/* ---------------------------------------------------------------- questionnaire */
+
+[data-pmx-thread="t8"] .t8-question {
+  padding: var(--md); border-top: 1px solid var(--border);
+  /* Must be OPAQUE: a questionnaire card is a surface the user must be able to read
+   * cleanly, never a translucent tint over live content. In the glass themes
+   * `--surface-elevated` alone is translucent, so paint it over an opaque base. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  min-width: 0;
+}
+[data-pmx-thread="t8"] .t8-question-head { display: flex; gap: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-question-req { margin-left: auto; }
+[data-pmx-thread="t8"] .t8-question-prompt { margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary); }
+[data-pmx-thread="t8"] .t8-question-opts { display: flex; flex-direction: column; gap: 4px; }
+[data-pmx-thread="t8"] .t8-opt {
+  padding: 6px var(--md); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text-primary);
+  font: inherit; font-size: var(--fs-xs); text-align: left; cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-opt:hover { border-color: var(--accent-primary); }
+[data-pmx-thread="t8"] .t8-opt[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: var(--accent-primary); font-weight: 600;
+}
+[data-pmx-thread="t8"] .t8-question-free {
+  width: 100%; min-height: 62px; resize: vertical; padding: var(--sm);
+  font: inherit; font-size: var(--fs-xs); color: var(--text-primary);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+[data-pmx-thread="t8"] .t8-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
+[data-pmx-thread="t8"] .t8-act {
+  padding: 3px var(--sm); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-secondary);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-act:hover { background: var(--surface); color: var(--text-primary); }
+[data-pmx-thread="t8"] .t8-act-primary {
+  background: var(--accent-primary); border-color: var(--accent-primary);
+  color: var(--background); font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- sheets */
+
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-title {
+  padding: var(--sm) var(--md) var(--xs);
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-list { max-height: 240px; overflow-y: auto; padding: 0 var(--md) var(--sm); }
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-row {
+  display: flex; gap: var(--sm); padding: 4px 0; font-size: var(--fs-2xs);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-row:last-child { border-bottom: none; }
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-k { flex: 0 0 auto; min-width: 82px; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-v { flex: 1 1 auto; min-width: 0; color: var(--text-primary); overflow-wrap: anywhere; }
+.pmx-popup[data-pmx-thread="t8"] .t8-sheet-foot {
+  padding: var(--sm) var(--md); font-size: var(--fs-2xs);
+  color: var(--text-muted); border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- Context Lens */
+
+[data-pmx-thread="t8"] .t8-turn[data-lens="muted"] .t8-prose { opacity: .45; }
+[data-pmx-thread="t8"] .t8-turn[data-lens="focused"] .t8-prose {
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border-radius: var(--radius-sm); padding: 2px 6px; margin-left: -6px;
+}
+[data-pmx-thread="t8"] .t8-turn[data-lens="subcompacted"] .t8-prose,
+[data-pmx-thread="t8"] .t8-turn[data-lens="source"] .t8-prose { opacity: .6; font-style: italic; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t8"] .t8-list { padding: var(--sm) var(--md) var(--lg); }
+  [data-pmx-thread="t8"] .t8-turn { padding-right: 14px; }
+  [data-pmx-thread="t8"] .t8-prose { font-size: var(--fs-xs); line-height: 1.6; }
+  .pmx-popup[data-pmx-thread="t8"] .t8-sheet-k { min-width: 66px; }
+}
+
+/* ---------------------------------------------------------------- reduced motion
+ * The global toggle must flip instantly, with no staggered per-element reveal. */
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-more,
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-dot,
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-work{ transition: none !important; }
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-more { opacity: 1 !important; }
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-live-dot { animation: none !important; opacity: 1 !important; }
+
+/* Persistent expand affordance. Hover-only discovery was the weakest point in the
+ * set: a faded message gave no standing signal that it could be opened. The control
+ * now always shows at low contrast and hover only raises it. */
+[data-pmx-thread="t8"] .t8-more { opacity: .62 !important; }
+[data-pmx-thread="t8"] .t8-turn:hover .t8-more,
+[data-pmx-thread="t8"] .t8-turn:focus-within .t8-more,
+[data-pmx-thread="t8"] .t8-more:hover,
+[data-pmx-thread="t8"] .t8-more:focus-visible { opacity: 1 !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * Reading mode protects the prose, so the SURROUNDING chrome recedes while a turn
+ * is being read and returns the moment attention moves. Nothing is hidden — the
+ * recessed state stays well above invisible — because a reading mode that removes
+ * the controls is just a broken interface with a friendly name.
+ */
+/* Fade only, no displacement. Two reasons, and both matter: a reading mode that
+ * shifts its own prose as it arrives works against the one thing it exists to
+ * protect; and the question card is hosted OUTSIDE the animated turn, so a 6px
+ * downward offset on the turn slid its hover row into the card's first option
+ * for the duration of the animation. */
+@keyframes pmx-t8-read-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+[data-pmx-thread="t8"] .t8-turn {
+  animation: pmx-t8-read-in var(--motion-med) var(--ease-default) both;
+}
+[data-pmx-thread="t8"] .t8-gutter,
+[data-pmx-thread="t8"] .t8-workbtn {
+  opacity: .58;
+  transition: opacity var(--motion-med) var(--ease-default),
+              transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t8"] .t8-turn:hover .t8-gutter,
+[data-pmx-thread="t8"] .t8-turn:focus-within .t8-gutter,
+[data-pmx-thread="t8"] .t8-turn:hover .t8-workbtn,
+[data-pmx-thread="t8"] .t8-turn:focus-within .t8-workbtn,
+[data-pmx-thread="t8"] .t8-workbtn:focus-visible { opacity: 1; }
+[data-pmx-thread="t8"] .t8-workbtn:active { transform: scale(.96); }
+
+/* Reduced motion: chrome is simply always at full contrast, since a fade that
+ * cannot run would otherwise strand it at the recessed value. */
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-turn {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}[data-motion="reduced"][data-pmx-thread="t8"] .t8-gutter,
+[data-motion="reduced"][data-pmx-thread="t8"] .t8-workbtn{ opacity: 1 !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t8"] .t8-turn {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  [data-pmx-thread="t8"] .t8-gutter,
+  [data-pmx-thread="t8"] .t8-workbtn { opacity: 1 !important; }
+}

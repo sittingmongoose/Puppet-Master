@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "capsule_id": "cap-feature-intake-current",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "collaborative_agent_prompt_and_work_packet_hardening_planning",
+  "phase": "course_correction_reconciliation_open",
+  "current_phase": "course_correction_reconciliation_open",
+  "governance_status": "not_started",
+  "last_event_id": "evt-0026",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "next_action": "Resolve q-0045 and q-0046, then re-audit affected live owner docs after the separate Settings/Assistant Chat/system planning work updates canonical Plans. Keep q-0022 deferred until explicit testing authority and an exact roster exist.",
+  "next_safe_action": "Remain ledger-only; preserve the fixed low-end profile and exact 8-low/2-high cohort unless Jared decides otherwise; do not resume testing, import packet numeric examples, edit excluded concept surfaces, relabel drafts as results, compile canonical Plans, or create governance/build artifacts.",
+  "allowed_reads_default": [
+    "state/handoff.json",
+    "state/current.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "state/compile_queue.json"
+  ],
+  "allowed_writes_after_turn": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json",
+    "validation/ledger_health.json",
+    "manifest.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "forbidden_until_explicit_compile": [
+    "canonical Plans edits",
+    "Plans/.plan_index",
+    "Spec_Lock",
+    "shards",
+    "evidence",
+    "plan_graph",
+    "auto_decisions"
+  ],
+  "forbidden_without_future_implementation_scope": [
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "runtime/build surfaces",
+    "implementation files",
+    "legacy Iced app recreation"
+  ],
+  "forbidden_in_this_ledger_task_after_terminal_preflight_closeout": [
+    "low-end model experiments",
+    "prompt threshold trials",
+    "packet split behavior tests",
+    "reduction fidelity tests",
+    "retry and re-admission behavior tests",
+    "automation-surface test runs",
+    "retroactive Checkpoint 1 or Checkpoint 2 issuance",
+    "empirical or production-enforcement claims from preregistration drafts",
+    "deletion or movement of `/tmp/apr_blocked_ids`, `/tmp/apr_ig_ids`, `/tmp/apr_all_ids`, or `/tmp/apr_dim_ids` without explicit authority"
+  ],
+  "external_assurance_boundary": {
+    "status": "aligned_no_conflict",
+    "source_ref": "thread:019faf32-0047-7e10-ba41-a9f46ac89b79:coordination-reply",
+    "product_owner": "this ledger until explicit canonical Plans compile",
+    "assurance_owner": "AssuranceLab for method qualification, execution, raw evidence, failure classification, and empirical test inputs",
+    "non_transfer": "Audit packets, selector, native transport, canary, terminals, route bindings, and cooperative read boundaries are not production architecture or FileSafe security authority."
+  },
+  "course_correction_handoff": {
+    "source_path": "/Users/jaredsmacbookair/Downloads/PM_Prompt_Complexity_Automation_Handoff_2026-08-05.zip",
+    "sha256": "d330c74042f52cfccb2835a78fe5960db7bfb5047bcd04373c1fe2294766bf34",
+    "authority": "noncanonical_additive_source_input",
+    "review_status": "read_in_required_order_and_reconciled_against_live_ledger_and_plans",
+    "validation_receipt_status": "stale_inconsistent_non_authoritative",
+    "accepted_atom_range": "atom-0056..atom-0061",
+    "candidate_atom_ids": [
+      "atom-0062",
+      "atom-0063"
+    ],
+    "open_question_ids": [
+      "q-0045",
+      "q-0046"
+    ],
+    "canonical_plan_edits_made": false,
+    "tests_resumed": false
+  },
+  "delegated_testing_task": {
+    "status": "terminal_preflight_closed",
+    "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+    "host_id": "local",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "execution_environment": "local_dirty_checkout",
+    "exclusive_write_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/tests/agent_packet_restrictions/",
+    "required_low_end_subject_models": 8,
+    "required_high_end_subject_models": 2,
+    "exact_roster_supplied": false,
+    "matrix_frozen": false,
+    "scope": "Closed-world affected automated model-call inventory and preregistration drafts for exactly eight lower-end and two higher-end routes; no exact roster or subject launch occurred.",
+    "excluded": [
+      "direct Assistant Chat",
+      "Chat-originated delegation"
+    ],
+    "terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+    "terminal_closeout_ref": "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
+    "method_v4_status": "invalidated_by_control_plane_defect-0004",
+    "call_counts": {
+      "route_canary": 0,
+      "pilot": 0,
+      "fleet": 0,
+      "total_model_or_provider_calls": 0
+    },
+    "current_task_executes_tests": false,
+    "superseded_worktree_client_id": "client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8",
+    "empirical_claims_supported": false
+  },
+  "completion_blockers_visible_to_agent": [
+    "q-0045 requires explicit adjudication of the packet's tier/budget language against the accepted fixed-profile and no-predicted-budget boundary.",
+    "q-0046 requires explicit adjudication of the packet's at-least-three-tier language against the exact eight-low/two-high primary cohort.",
+    "q-0022 is deferred because the exact 8-low/2-high roster was never supplied or authorized and testing stopped before subject launch.",
+    "Any future empirical continuation requires a new corrected post-V4 method, exact immutable route bindings, bound deterministic qualification, and ten nonsemantic route canaries before semantic pilot.",
+    "No compile request has been given."
+  ],
+  "required_end_of_turn_actions": [
+    "append one event for each substantive turn",
+    "update touched record streams",
+    "preserve exact tokens and corrections",
+    "infer gui_related for every new or changed design atom",
+    "refresh current, handoff, open_items, and compile_queue",
+    "keep canonical and governance surfaces closed until explicit compile or seal authority",
+    "run only ledger structural validation in this task; no subject-model or provider testing resumes without explicit Jared direction"
+  ],
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "latest_projection_updated_at_utc": "2026-08-05T19:28:29Z",
+    "ledger_health": "pass",
+    "governance_status": "not_started",
+    "node_readiness_status": "not_started",
+    "no_worknodes_created": true,
+    "no_nodeseeds_created": true,
+    "no_executable_queues_created": true,
+    "no_implementation_files_created": true,
+    "no_feature_or_model_tests_run": true,
+    "no_subject_model_or_provider_calls": true,
+    "invalidated_controller_preflight_history_preserved": true
+  }
+}

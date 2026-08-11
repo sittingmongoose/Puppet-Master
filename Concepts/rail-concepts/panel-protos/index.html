@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMConcept7 — Panel Redesign Prototypes</title>
+  <!-- fonts: Cal Sans + Nunito (friendly), Inter (basic/glass), Orbitron + Rajdhani (retro) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/proto-tokens.css">
+  <link rel="stylesheet" href="css/proto-sprout-menu.css">
+  <link rel="stylesheet" href="css/proto-shell.css">
+  <link rel="stylesheet" href="css/proto-polish.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ TITLE BAR (with PM sprout menus — no native <select>) ============ -->
+    <header class="title-bar">
+      <div class="tb-brand">
+        <svg class="tb-brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.8 9.4 9 11 5.2-1.6 9-6 9-11V7l-9-5z"/><circle cx="12" cy="11" r="2.5"/><path d="M8 16c1-2 6-2 8 0"/></svg>
+        Puppet Master
+      </div>
+      <div class="tb-divider"></div>
+
+      <!-- Project menu (sprout, left-anchored) -->
+      <div class="pm6-tb-menu-wrap" id="projectMenuWrap" data-select="single">
+        <button type="button" class="pm6-tb-menu-trigger" id="projectMenuBtn"
+                aria-haspopup="menu" aria-expanded="false" aria-controls="projectMenu" title="Switch project">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h12"/></svg>
+          <span id="projectMenuLabel">tastebook</span>
+          <span class="pm6-tb-chev">&#9662;</span>
+        </button>
+        <div class="pm6-tb-menu sprout-left" id="projectMenu" role="menu" aria-label="Switch project">
+          <div class="pm6-tb-menu-group-label">Projects</div>
+          <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="tastebook">
+            <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="pm6-mi-label">tastebook</span>
+            <span class="pm6-mi-meta">current</span>
+          </button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="ledger-sync">
+            <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="pm6-mi-label">ledger-sync</span>
+          </button>
+          <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="r2-spike">
+            <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="pm6-mi-label">r2-spike</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- page tabs (static) -->
+      <nav class="tb-page-tabs">
+        <button class="page-tab active">Home</button>
+        <button class="page-tab">Projects</button>
+        <button class="page-tab">Wizard</button>
+        <button class="page-tab">Orchestrator</button>
+        <button class="page-tab">Usage</button>
+        <button class="page-tab">Settings</button>
+      </nav>
+
+      <div class="tb-right">
+        <!-- Theme menu (sprout — dogfoods the component) -->
+        <div class="pm6-tb-menu-wrap" id="themeMenuWrap" data-select="single">
+          <button type="button" class="pm6-tb-menu-trigger" id="themeSelect"
+                  aria-haspopup="menu" aria-expanded="false" aria-controls="themeMenu" title="Switch theme">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <span id="themeMenuLabel">Friendly Dark</span>
+            <span class="pm6-tb-chev">&#9662;</span>
+          </button>
+          <div class="pm6-tb-menu" id="themeMenu" role="menu" aria-label="Switch theme">
+            <div class="pm6-tb-menu-group-label">Friendly</div>
+            <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-theme-value="friendly-dark" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Friendly Dark</span>
+              <span class="pm6-mi-meta">default</span>
+            </button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="friendly-light" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Friendly Light</span>
+            </button>
+            <div class="pm6-tb-menu-sep"></div>
+            <div class="pm6-tb-menu-group-label">Retro</div>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="retro-dark" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Retro Dark</span>
+            </button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="retro-light" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Retro Light</span>
+            </button>
+            <div class="pm6-tb-menu-sep"></div>
+            <div class="pm6-tb-menu-group-label">Basic</div>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="basic-dark" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Basic Dark</span>
+            </button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="basic-light" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Basic Light</span>
+            </button>
+            <div class="pm6-tb-menu-sep"></div>
+            <div class="pm6-tb-menu-group-label">Glass</div>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="glass-dark" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Glass Dark</span>
+            </button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-theme-value="glass-light" data-on-select="protoSelectTheme">
+              <svg class="pm6-mi-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="pm6-mi-label">Glass Light</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ MAIN ROW ============ -->
+    <div class="main-row">
+
+      <!-- ACTIVITY BAR -->
+      <nav class="activity-bar" id="activityBar">
+        <button class="ab-icon" id="abToggle" title="Collapse activity bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <span class="ab-label">Collapse</span>
+        </button>
+        <button class="ab-icon" data-panel="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="ab-label">Search</span>
+        </button>
+        <button class="ab-icon" data-panel="source">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9v3a3 3 0 0 1-3 3H9"/></svg>
+          <span class="ab-label">Source</span>
+        </button>
+        <button class="ab-icon" data-panel="actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span class="ab-label">Actions</span>
+        </button>
+        <button class="ab-icon" data-panel="docker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="ab-label">Docker</span>
+        </button>
+        <button class="ab-icon" data-panel="tests">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/></svg>
+          <span class="ab-label">Tests</span>
+        </button>
+        <button class="ab-icon" data-panel="agents">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9.5 12.5h.01M14.5 12.5h.01"/><path d="M9.5 16h5"/></svg>
+          <span class="ab-label">Agents</span>
+        </button>
+        <button class="ab-icon" data-panel="artifacts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+          <span class="ab-label">Artifacts</span>
+        </button>
+        <div class="ab-spacer"></div>
+        <button class="ab-icon" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="ab-label">Settings</span>
+        </button>
+      </nav>
+
+      <!-- LEFT PANEL SLOT — the redesign target -->
+      <div class="left-panel">
+        <div class="side-panel-slot" id="sidePanelSlot">
+          <!-- panel header (title) -->
+          <div class="proto-panel-header">
+            <span id="panelTitle">Search</span>
+          </div>
+          <!-- design renders here -->
+          <div class="panel-host" id="panelHost"></div>
+        </div>
+      </div>
+
+      <!-- CENTER STAGE (simplified home — non-interactive) -->
+      <main class="center-column">
+        <div class="center-stage">
+          <div class="cs-bento">
+            <div class="bento-card">
+              <span class="bc-label">Active run</span>
+              <span class="bc-value">#47</span>
+              <span class="bc-meta">lane-b API · 4 nodes</span>
+            </div>
+            <div class="bento-card">
+              <span class="bc-label">Tests</span>
+              <span class="bc-value">214</span>
+              <span class="bc-meta">passing · import suite green</span>
+            </div>
+            <div class="bento-card">
+              <span class="bc-label">Containers</span>
+              <span class="bc-value">3/5</span>
+              <span class="bc-meta">web · worker · db running</span>
+            </div>
+            <div class="bento-card">
+              <span class="bc-label">Outgoing</span>
+              <span class="bc-value">2</span>
+              <span class="bc-meta">commits on main · 0 incoming</span>
+            </div>
+          </div>
+          <div class="cs-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v12H4z"/><path d="M2 20h20M9 16v4M15 16v4"/></svg>
+            <h2>Center stage is simplified</h2>
+            <p>This prototype focuses on the <b>left panel</b>. Use the floating controls below to swap the 6 design directions, switch between the 7 panels, change the panel width, and cycle all 8 themes. Press <kbd>[</kbd> <kbd>]</kbd> to cycle designs and <kbd>,</kbd> <kbd>.</kbd> to cycle panels.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ============ STATUS BAR ============ -->
+    <footer class="status-bar">
+      <span class="sb-item"><span class="pm6-status-dot pm6-dot-ok" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-lime)"></span> Ready</span>
+      <span class="sb-item">main</span>
+      <span class="sb-item">tantivy · 1,284 docs</span>
+      <span class="sb-spacer"></span>
+      <span class="sb-item">UTF-8</span>
+      <span class="sb-item">Rust</span>
+      <span class="sb-item">Ln 12, Col 4</span>
+    </footer>
+
+    <!-- ============ PROTOTYPE CONTROLS BAR ============ -->
+    <div class="proto-controls">
+      <div class="pc-group">
+        <span class="pc-label">Design</span>
+        <button class="pc-btn active" data-design="A" title="Progressive Reveal">A</button>
+        <button class="pc-btn" data-design="B" title="Segmented Sub-nav">B</button>
+        <button class="pc-btn" data-design="C" title="Command-Rail">C</button>
+        <button class="pc-btn" data-design="D" title="Vertical Timeline">D</button>
+        <button class="pc-btn" data-design="E" title="Dense KV Grid">E</button>
+        <button class="pc-btn" data-design="F" title="Floating Cards">F</button>
+      </div>
+      <div class="pc-sep"></div>
+      <div class="pc-group">
+        <span class="pc-label">Panel</span>
+        <button class="pc-btn active" data-panel="search" title="Search">Sch</button>
+        <button class="pc-btn" data-panel="source" title="Source Control">Src</button>
+        <button class="pc-btn" data-panel="actions" title="GitHub Actions">Act</button>
+        <button class="pc-btn" data-panel="docker" title="Docker Manager">Dkr</button>
+        <button class="pc-btn" data-panel="tests" title="Testing">Tst</button>
+        <button class="pc-btn" data-panel="agents" title="Agents">Agt</button>
+        <button class="pc-btn" data-panel="artifacts" title="Runtime Artifacts">Art</button>
+      </div>
+      <div class="pc-sep"></div>
+      <div class="pc-group">
+        <span class="pc-label">Width</span>
+        <button class="pc-btn" data-width="220" title="Min (220px)">220</button>
+        <button class="pc-btn active" data-width="260" title="Default (260px)">260</button>
+        <button class="pc-btn" data-width="320" title="320px">320</button>
+        <button class="pc-btn" data-width="480" title="Max (480px)">480</button>
+      </div>
+      <div class="pc-sep"></div>
+      <div class="pc-group">
+        <span class="pc-label">Density</span>
+        <button class="pc-btn active" data-density="sparse" title="Calm day (the volume the concept ships with)">Sparse</button>
+        <button class="pc-btn" data-density="realistic" title="A normal working session (2-3x sparse)">Realistic</button>
+        <button class="pc-btn" data-density="extreme" title="The nightmare volume that broke the old panels">Extreme</button>
+      </div>
+    </div>
+
+    <!-- toast -->
+    <div class="proto-toast" id="protoToast"></div>
+  </div>
+
+  <!-- panel header style (small, scoped addition for the redesign) -->
+  <style>
+    .proto-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--md) var(--md) var(--sm);
+      font-family: var(--display-font);
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-secondary);
+      border-bottom: var(--border-width) solid var(--border-light);
+      flex-shrink: 0;
+    }
+    kbd {
+      font-family: var(--mono-font);
+      font-size: 10px;
+      padding: 1px 4px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      background: var(--surface);
+    }
+  </style>
+
+  <script src="js/proto-data.js"></script>
+  <script src="js/proto-theme.js"></script>
+  <script src="js/proto-sprout.js"></script>
+  <script src="js/proto-picker.js"></script>
+</body>
+</html>

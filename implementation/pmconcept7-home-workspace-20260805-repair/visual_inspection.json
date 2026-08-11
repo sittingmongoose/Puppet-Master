@@ -1,0 +1,137 @@
+{
+  "contact_sheet_results": [
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-01.jpg",
+      "status": "PASS"
+    },
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-02.jpg",
+      "status": "PASS"
+    },
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-03.jpg",
+      "status": "PASS"
+    },
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-04.jpg",
+      "status": "PASS"
+    },
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-05.jpg",
+      "status": "PASS"
+    },
+    {
+      "clipping": false,
+      "false_controls": false,
+      "major_overlap": false,
+      "notes": "Inspected at full contact-sheet scale; no blocker or major visual defect observed.",
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/visual_evidence/contact_sheets/contact-sheet-06.jpg",
+      "status": "PASS"
+    }
+  ],
+  "cross_case_observations": [
+    "The compact More options popup remains a restrained three-row surface at all tested widths and themes.",
+    "All-open, edge-docked, floating, terminal-max, and reduced-motion layouts remain legible without major overlap or clipping.",
+    "Theme surfaces, shared resizer glow, four-edge scroll dissolve, focus restoration, and disabled-state projection remain visually coherent.",
+    "No console or page errors were recorded by the 72-case matrix or direct in-app Browser pass."
+  ],
+  "direct_interaction": {
+    "browser": "Codex In-app Browser",
+    "checks": {
+      "browser_visible_route_panel_3": "pass",
+      "cancellation_cleanup": {
+        "body_class": "",
+        "classes": "pm-home-resize-handle resizer-col",
+        "cursor": "auto"
+      },
+      "collapse_disabled_reason": {
+        "aria_description": "Bottom terminal is already collapsed",
+        "status": "pass"
+      },
+      "direct_drag_reflow": "pass",
+      "exact_compact_menu": {
+        "rows": [
+          "Open Panel",
+          "Open Browser in Panel",
+          "Collapse Bottom Terminal"
+        ],
+        "status": "pass"
+      },
+      "four_edge_scroll_dissolve": "pass",
+      "keyboard_flyout_and_focus_restore": "pass",
+      "popup_web_disposition": {
+        "new_os_tab_created": false,
+        "status": "pass",
+        "value": "in_canvas_float"
+      },
+      "real_os_blur": {
+        "detail": "Finder raise, tab switch, and browser visibility transitions did not deliver a window blur event to the controlled webview; executable harness and source listener evidence cover blur cancellation.",
+        "status": "not_observed_by_tooling"
+      },
+      "resizer_glow_and_escape_cleanup": "pass",
+      "settings_reset_location_and_action": "pass",
+      "stable_browser_session": "pass",
+      "surface_menu_and_dock_right": "pass"
+    },
+    "console_errors": [],
+    "console_warnings": [],
+    "generated_build_sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
+    "result": "pass_with_blur_delivery_note",
+    "schema_version": 1,
+    "screenshots": [
+      "01-home-default.png",
+      "02-more-menu.png",
+      "03-panel-flyout-keyboard.png",
+      "04-browser-flyout.png",
+      "05-browser-panel-3.png",
+      "06-panel-surface-menu.png",
+      "07-panel-docked-right.png",
+      "08-panel-dragged-left.png",
+      "09-resizer-glow.png",
+      "10-resized.png",
+      "11-scroll-dissolve.png",
+      "12-collapse-disabled.png",
+      "13-accessible-disabled-reason.png",
+      "14-settings-reset-location.png",
+      "15-popup-fallback.png",
+      "16-blur-cleanup.png",
+      "18-final-clean.png"
+    ],
+    "target": "http://127.0.0.1:8876/PMConcept7.html"
+  },
+  "generated_at_utc": "2026-08-05T15:51:33.702368+00:00",
+  "reviewed": {
+    "contact_sheets": 6,
+    "headful_screenshots": 17,
+    "matrix_screenshots": 72,
+    "recordings": 6,
+    "traces": 6
+  },
+  "reviewer": "main repair agent",
+  "schema_id": "pm.pm7_home_workspace_repair_visual_inspection.v1",
+  "status": "PASS_WITH_DOCUMENTED_TOOLING_LIMITATION",
+  "tooling_boundary": {
+    "detail": "Finder raise, tab switch, and browser visibility transitions did not deliver a window blur event to the controlled webview; executable harness and source listener evidence cover blur cancellation.",
+    "status": "not_observed_by_tooling"
+  }
+}

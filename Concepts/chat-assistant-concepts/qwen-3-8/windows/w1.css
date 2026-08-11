@@ -1,0 +1,74 @@
+.pmq-w1 { display: flex; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w1-root { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w1-masthead {
+  flex: none;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  padding: 9px 13px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pmq-w1-identity { display: flex; align-items: center; gap: 8px; min-width: 0; }
+
+.pmq-w1-identity .pmq-concept-badge { margin-left: auto; }
+.pmq-w1-identity .pmq-ring { margin-left: 4px; }
+
+.pmq-w1-tools { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.pmq-w1-tools .pmq-selrow { flex: 1; min-width: 0; }
+
+.pmq-w1-body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+.pmq-w1-body > .pmq-thread-slot { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+
+.pmq-w1 .pmq-thread { flex: 1; min-height: 0; }
+
+.pmq-w1-body > .pmq-pincol { --pmq-pincol-w: 236px; animation: pmq-w1-pin-in var(--dur-med) var(--ease-out); }
+.pmq-w1-body > .pmq-artws { animation: pmq-w1-pin-in var(--dur-med) var(--ease-out); }
+
+@keyframes pmq-w1-pin-in {
+  from { opacity: 0; transform: translateX(calc(-1 * var(--slide-x))); }
+  to { opacity: 1; transform: none; }
+}
+
+.pmq-w1-pinrow {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.pmq-w1-pinrow:hover, .pmq-w1-pinrow.pmq-active { background: var(--hover-fill); }
+.pmq-w1-pinrow-main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.pmq-w1-pinrow-t { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmq-w1-pinrow-m { font-size: 10px; color: var(--text-faint); }
+.pmq-w1-pinmicro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 32px;
+  margin: 2px auto;
+  padding: 4px 0;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.pmq-w1-pinmicro:hover, .pmq-w1-pinmicro.pmq-active { background: var(--hover-fill); }
+.pmq-w1-micro-i { font-size: 10px; font-weight: 800; color: var(--text-faint); }
+
+@media (max-width: 640px) {
+  .pmq-w1-tools .pmq-sel-k { display: none; }
+  .pmq-w1-identity .pmq-concept-badge { display: none; }
+}

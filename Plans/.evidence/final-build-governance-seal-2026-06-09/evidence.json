@@ -2,23 +2,23 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "91ceb0b84346e06aa77a9ca7e76733084171803bd4481920f4e73ddbf650b2d3"
+      "sha256": "fb6aaaf8fa4f5cff7e615a33464878ce38e84e2517572604980b4dcb9ddf88c3"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "912d0afbf3a8491a7b17513ef2bceb6551daba3fae97eb78892649e24102f57d"
+      "sha256": "e0ef6825d10bc437e00edd7db8a6a0f284357eb2e8234c2e9a32b19652b9737f"
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "93e850ac3d380d0e6591f59f23fc8eef9067c914d686b1fe631489cf9f6e7e40"
+      "sha256": "a9343524f4d2520661a10e6073a32ee1d477bdb2b28bc27672594e275ec330a8"
     },
     {
       "path": "Plans/sharding_config.json",
-      "sha256": "77d2e744986156a5f07b669db95e84cc74ad4d9d2c34c0de0ec586962ad485f0"
+      "sha256": "532f9612496515eb4ff1931e0d2baef2a9c57741db89e0bd70f4ab87b1439d65"
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "1ce51088f55bcc9810dc51fcd74cb4283505b20532f81835285b419113d5e100"
+      "sha256": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "04cafa81f5516b61a80ef5889a73054811c2461c2b6729e293ff6d91f3e093f0"
+      "sha256": "31fa6d3fa3f470f9d955a69a83959c9779046e53d1eaf7753cb5a7ecbe82f03a"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "38fa9ac2bd15d4c21c5f813a95388c41707d3693a494ead621c1d51add18bd70"
+      "sha256": "4d763a7b62e1473a24535b8d1ab952f803662504568f15faaad4ecc37639b22d"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0"
+      "sha256": "9abfa7cc43decb33d50419a154fbd25e72540c09cb8c852c22553405e629e2d1"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "b737d906836e6f2f57e1daf832c2fc9df64d82a268fefb8280700e9885dc6f6b"
+      "sha256": "9560e4700ad81ebed871bfd13f611899ff879d29f072209929d009b866cc9eac"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "72e168db14c1301afa8eb48f54c11ed99f2e38807ed4dee0dde6efc1d17f4160"
+      "sha256": "7dd5eac23fba34cfdfa28e7b93ba494c4ee44cca16957b942a7c1a05d391ee54"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485"
+      "sha256": "4c52b736bfa5f5e050f39b4c029daa48c7a4d707c84b0ab93cf75ddf975ec15b"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c6c1fe2d5162aed1b29e7bd42c31ed331dae3443ce7a54c4b60a9441e479d933"
+      "sha256": "20cde55bcd6251c240a9998db357d00731d6b6c9a6beaeaea05bd137bdcea253"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "ee85227c4f012d12c1c56b978a056e1d55e95e5ec05bdb89b27805c15be89e99"
+      "sha256": "9a29111e4a3cc1d19678b90c81ed267324f64b1624f8eab4624690e7eef1a4e1"
     }
   ],
   "checks": [

@@ -1,0 +1,27 @@
+.pm-tabs { position: relative; display: flex; align-items: center; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; gap: 2px; }
+.pm-tabs::-webkit-scrollbar { display: none; }
+.pm-tab { position: relative; z-index: 1; flex: 0 0 auto; min-width: 56px; max-width: 180px; height: 30px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 14px; border: 0; background: transparent; border-radius: var(--radius-md, 8px); color: var(--text-secondary); font-family: var(--display-font, inherit); font-size: var(--fs-xs, 11px); font-weight: 700; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; transition: color var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); will-change: translate; }
+.pm-tab:hover { color: var(--text-primary); }
+.pm-tab.active { color: var(--text-primary); }
+.pm-tab-lb { overflow: hidden; text-overflow: ellipsis; }
+.pm-tab-badge { font-family: var(--mono-font, monospace); font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius-pill, 999px); background: color-mix(in srgb, var(--accent-primary) 16%, transparent); color: var(--accent-primary); }
+/* AA badge recipe (WCAG 1.4.3, >=4.5:1 on every theme, on ANY tab backdrop):
+   opaque per-theme well+ink tokens from themes.css. Higher specificity than
+   concept skins (e.g. u9's active-tab recolor) so the contrast floor holds;
+   geometry is untouched so those skins' layout still applies. */
+html[data-theme] .pm-tabs .pm-tab .pm-tab-badge { background: var(--pm-badge-bg, color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated))); color: var(--pm-badge-ink, var(--accent-primary)); }
+.pm-tab-ink { position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none; height: 30px; border-radius: var(--radius-md, 8px); background: var(--accent-lime, #8FD9A5); will-change: transform, width; }
+[data-theme^="basic"] .pm-tab-ink { background: var(--accent-blue, #7E8BE0); }
+[data-theme^="glass"] .pm-tab-ink { background: var(--pm6-glass-step-3, rgba(255,255,255,.10)); border-radius: var(--radius-pill, 999px); box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.35)); }
+[data-theme^="friendly"] .pm-tab-ink { background: var(--pm6-cozy-card-base, #2A2731); border: 1px solid color-mix(in srgb, var(--pm6-cozy-mint, #6FDABC) 40%, transparent); border-radius: var(--radius-pill, 999px); box-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint, #6FDABC) 40%, transparent); }
+[data-theme^="retro"] .pm-tab-ink { border-radius: 0; }
+.pm-tabpanels { position: relative; }
+.pm-tabpanels > [data-pm-panel].pm-in { position: relative; z-index: 2; animation: pmTabIn var(--mo-tab-in-dur, 200ms) var(--mo-tab-in-ease, cubic-bezier(0.22, 1, 0.36, 1)) both; }
+.pm-tabpanels > [data-pm-panel].pm-out { position: absolute; inset: 0; z-index: 1; animation: pmTabOut var(--mo-tab-out-dur, 120ms) var(--mo-tab-out-ease, ease-in) both; }
+@keyframes pmTabIn { from { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * 24px)); } to { opacity: 1; transform: none; } }
+@keyframes pmTabOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -24px)); } }
+html[data-reduced-motion="1"] .pm-tabpanels > [data-pm-panel].pm-in,
+html[data-reduced-motion="1"] .pm-tabpanels > [data-pm-panel].pm-out { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-tabpanels > [data-pm-panel].pm-in, .pm-tabpanels > [data-pm-panel].pm-out { animation: none; }
+}

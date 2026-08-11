@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PM Side-panel Prototypes — Index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared/tokens.css?v=20260724v8" />
+  <style>
+    body { overflow: auto; }
+    .wrap { max-width: 880px; margin: 36px auto; padding: 0 20px 80px; }
+    h1 { font-family: var(--display-font); margin: 0 0 8px; font-size: 28px; }
+    h2 { font-family: var(--display-font); margin: 32px 0 12px; font-size: 18px; }
+    .lead { color: var(--text-secondary); margin: 0 0 20px; line-height: 1.5; }
+    .grid { display: grid; gap: 10px; }
+    @media (min-width: 720px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+    a.card {
+      display: block; padding: 14px 16px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-1);
+      text-decoration: none; color: var(--text-primary);
+      transition: transform var(--motion-fast) var(--ease-default), box-shadow var(--motion-fast);
+    }
+    a.card:hover { transform: translateY(-2px); box-shadow: var(--elev-2); }
+    a.card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    a.card span { color: var(--text-muted); font-size: 13px; line-height: 1.4; }
+    .note {
+      margin-top: 28px; padding: 12px 14px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      font-size: 13px; color: var(--text-secondary); line-height: 1.45;
+    }
+    .theme-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .theme-row button {
+      font: inherit; font-size: 11px; padding: 4px 10px; cursor: pointer;
+      border-radius: var(--radius-pill);
+      border: var(--border-width) solid var(--border);
+      background: var(--surface-elevated); color: var(--text-secondary);
+    }
+    .theme-row button[aria-pressed="true"] {
+      color: var(--accent-primary); border-color: var(--accent-primary);
+      background: var(--accent-soft);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Side-panel prototypes</h1>
+    <p class="lead">
+      Hybrid gallery for Puppet Master left/activity side panels:
+      <strong>6 coherent shell concepts</strong> (all seven panels redesigned together)
+      and a <strong>lab studio</strong> with all seven panels switchable in one IDE shell (6 unique concepts each = 42 experiments).
+      Concept / source-lineage only — not a PMConcept7 edit. Slint 1.17.1–portable patterns; PM sprout menus only (no OS selects); no emoji.
+    </p>
+    <div class="theme-row" id="themeRow"></div>
+
+    <h2>Lab studio (recommended)</h2>
+    <div class="grid" id="studioGrid"></div>
+
+    <h2>Shell concepts (pick a whole system)</h2>
+    <div class="grid two" id="shellGrid"></div>
+
+    <h2>Panel labs (deep-links into studio)</h2>
+    <div class="grid two" id="labGrid"></div>
+
+    <p class="note">
+      Review tip: open <strong>Lab studio</strong>, switch panels from the activity bar, cycle Width (220 / 260 / 420) and themes.
+      Prefer winners that stay readable at 220px without overlapping borders.
+      See <code>README.md</code> for the feature checklist and Slint notes.
+    </p>
+  </div>
+  <script src="_shared/demo-data.js?v=20260724v8"></script>
+  <script>
+    (function () {
+      var THEMES = SPData.themes;
+      var t = localStorage.getItem('pm.sidePanelProto.theme') || 'friendly-dark';
+      if (THEMES.indexOf(t) === -1) t = 'friendly-dark';
+      document.documentElement.setAttribute('data-theme', t);
+      var row = document.getElementById('themeRow');
+      THEMES.forEach(function (th) {
+        var b = document.createElement('button');
+        b.textContent = SPData.themeLabels[th] || th;
+        b.setAttribute('aria-pressed', th === t ? 'true' : 'false');
+        b.addEventListener('click', function () {
+          document.documentElement.setAttribute('data-theme', th);
+          localStorage.setItem('pm.sidePanelProto.theme', th);
+          row.querySelectorAll('button').forEach(function (x) {
+            x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+          });
+        });
+        row.appendChild(b);
+      });
+
+      var studio = document.createElement('a');
+      studio.className = 'card';
+      studio.href = 'labs/studio.html';
+      studio.innerHTML = '<strong>Lab studio — all 7 panels</strong><span>Full left IDE shell: activity bar switches panels; variant chips swap that panel’s 6 concepts; editor stub for scale. Deep-link: studio.html?panel=docker&amp;variant=2</span>';
+      document.getElementById('studioGrid').appendChild(studio);
+
+      var sg = document.getElementById('shellGrid');
+      SPData.shells.forEach(function (s) {
+        var a = document.createElement('a');
+        a.className = 'card';
+        a.href = 'shells/' + s.file;
+        a.innerHTML = '<strong>' + s.id + ' — ' + s.name + '</strong><span>' + s.blurb + '</span>';
+        sg.appendChild(a);
+      });
+
+      var labs = [
+        ['search', 'Search', '6 unique: Hit rail, Query dock, Path tree, Match tape, Scope ribbon, Replace studio'],
+        ['source', 'Source', '6 unique: Changes, Worktrees, Commit composer, Sync traffic, Conflict radar, Graph'],
+        ['actions', 'Actions', '6 unique: Branch pulse, Run ticker, Triage, Pin board, Dispatch pad, Settings'],
+        ['docker', 'Docker', '6 unique: Fleet, Compose map, Runtime switch, Ops console, Image shelf, Publish chain'],
+        ['tests', 'Tests', '6 unique: Run board, Failure first, Receipt, Watch, Artifact drawer, Policy gate'],
+        ['agents', 'Agents', '6 unique: Active pulse, Roster, Lineage tree, Lane cards, Handoff, Registry'],
+        ['artifacts', 'Artifacts', '6 unique: Type filter, Freshness, Cost spotlight, Health rail, Identity, Preview']
+      ];
+      var lg = document.getElementById('labGrid');
+      labs.forEach(function (L) {
+        var a = document.createElement('a');
+        a.className = 'card';
+        a.href = 'labs/studio.html?panel=' + L[0];
+        a.innerHTML = '<strong>' + L[1] + ' · open in studio</strong><span>' + L[2] + '</span>';
+        lg.appendChild(a);
+      });
+    })();
+  </script>
+</body>
+</html>

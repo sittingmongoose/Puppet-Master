@@ -1,0 +1,526 @@
+/* 5.6 Sol — Wayfinder: goals become a legible route with recoverable checkpoints. */
+body[data-concept="wayfinder"] {
+  --font-display: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+  --motion-scene: 410ms;
+  --wf-line: color-mix(in oklch, var(--line-strong) 72%, var(--canvas));
+  --wf-camp: color-mix(in oklch, var(--surface-raised) 84%, var(--canvas));
+}
+
+.wf-home,
+.wf-workspace-view,
+.wayfinder-manager {
+  width: min(1380px, 100%);
+  margin-inline: auto;
+  padding: clamp(26px, 5vw, 70px);
+}
+
+body[data-concept="wayfinder"] .view-enter { animation-name: wf-arrive; }
+@keyframes wf-arrive {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.wf-home { position: relative; overflow: clip; }
+.wf-home::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-inline-end: clamp(24px, 8vw, 120px);
+  inset-block-start: 54px;
+  width: clamp(160px, 22vw, 300px);
+  aspect-ratio: 1;
+  border: var(--border-size) solid var(--wf-line);
+  border-radius: 50%;
+  opacity: 0.32;
+}
+.wf-home .home-head { max-width: 830px; margin-block-end: 36px; }
+.wf-home .view-title {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 7.5vw, 6.8rem);
+  font-weight: 650;
+  line-height: 0.93;
+}
+
+.wf-origin {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  margin-block: 20px 44px;
+}
+.wf-origin::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 31px;
+  inset-block-start: 58px;
+  width: 2px;
+  height: 92px;
+  background: var(--wf-line);
+  transform: scaleY(1);
+  transform-origin: top;
+}
+.wf-origin-dot {
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  margin-inline-start: 21px;
+  border: 5px solid var(--canvas);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.wf-origin > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 19px;
+  border: var(--border-size) solid var(--wf-line);
+  border-radius: clamp(10px, var(--radius-lg), 22px);
+  background: var(--wf-camp);
+  box-shadow: var(--shadow-sm);
+}
+.wf-origin > div > span { color: var(--ink-muted); font-size: 0.78rem; line-height: 1.35; }
+.wf-origin > div > strong { font-family: var(--font-display); font-size: 1rem; }
+.wf-origin .search-box { box-shadow: none; }
+
+.wf-routes {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  padding-inline-start: 64px;
+}
+.wf-routes::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 31px;
+  inset-block: -10px 26px;
+  width: 2px;
+  background: var(--wf-line);
+  transform: scaleY(1);
+  transform-origin: top;
+}
+.wf-route {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto 22px;
+  align-items: center;
+  gap: 14px;
+  min-height: 82px;
+  padding: 12px 16px;
+  border: 0;
+  border-block-end: var(--border-size) solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  text-align: start;
+  transition: transform 210ms var(--ease-out), opacity 120ms linear;
+}
+.wf-route::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -33px;
+  inset-block-start: 50%;
+  width: 33px;
+  height: 2px;
+  background: var(--wf-line);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+.wf-route:hover,
+.wf-route:focus-visible { transform: translate3d(9px, 0, 0); }
+.wf-route:hover .wf-waypoint,
+.wf-route:focus-visible .wf-waypoint { transform: scale(1.08); }
+.wf-waypoint {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: var(--border-size) solid var(--wf-line);
+  border-radius: 50%;
+  background: var(--surface-raised);
+  color: var(--accent);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  transition: transform 180ms var(--ease-out), opacity 120ms linear;
+}
+.wf-route strong,
+.wf-route small { display: block; min-width: 0; }
+.wf-route strong { font-family: var(--font-display); font-size: 1.08rem; line-height: 1.2; }
+.wf-route small {
+  margin-block-start: 4px;
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+.wf-distance { color: var(--ink-muted); font-size: 0.75rem; white-space: nowrap; }
+.wf-camp {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(270px, 0.8fr);
+  gap: clamp(32px, 6vw, 84px);
+  margin-block-start: 54px;
+  padding-block-start: 30px;
+  border-block-start: var(--border-size) solid var(--wf-line);
+}
+.wf-camp .notice-row { border-radius: clamp(8px, var(--radius-lg), 18px); }
+
+.wf-journey {
+  display: grid;
+  grid-template-columns: minmax(190px, 240px) minmax(400px, 1fr) minmax(160px, 195px);
+  gap: clamp(20px, 3vw, 42px);
+  align-items: start;
+}
+.wf-journey-map,
+.wf-checkpoint-nav { position: sticky; inset-block-start: 0; display: grid; }
+.wf-journey-map { position: sticky; }
+.wf-journey-map::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 18px;
+  inset-block: 54px 22px;
+  width: 2px;
+  background: var(--line);
+}
+.wf-journey-map button {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 9px;
+  min-height: 52px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  text-align: start;
+}
+.wf-journey-map button:first-child { display: flex; align-items: center; color: var(--ink-soft); }
+.wf-map-dot {
+  align-self: center;
+  justify-self: center;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--canvas);
+  border-radius: 50%;
+  background: var(--line-strong);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  transition: transform 200ms var(--ease-out), opacity 120ms linear;
+}
+.wf-journey-map button.active .wf-map-dot { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); transform: scale(1.16); }
+.wf-journey-map strong,
+.wf-journey-map small { display: block; min-width: 0; overflow-wrap: break-word; word-break: normal; }
+.wf-journey-map strong { font-size: 0.75rem; }
+.wf-journey-map small { margin-block-start: 3px; font-size: 0.75rem; line-height: 1.35; }
+.wf-journey-map button.active { color: var(--accent); }
+.wf-checkpoints { min-width: 0; }
+.wf-route-banner {
+  margin-block-end: 38px;
+  padding: 20px 23px;
+  border: var(--border-size) solid color-mix(in oklch, var(--accent) 45%, var(--line));
+  border-radius: clamp(9px, var(--radius-lg), 20px);
+  background: var(--accent-soft);
+}
+.wf-route-banner span,
+.wf-route-banner small { display: block; color: var(--ink-muted); font-size: 0.75rem; }
+.wf-route-banner strong { display: block; margin-block: 6px; font-family: var(--font-display); font-size: clamp(1.35rem, 2.4vw, 1.8rem); }
+.wf-checkpoint {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 18px;
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+.wf-checkpoint + .wf-checkpoint { margin-block-start: 52px; padding-block-start: 0; }
+.wf-checkpoint-marker {
+  position: sticky;
+  inset-block-start: 14px;
+  align-self: start;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 12px 5px;
+  border: var(--border-size) solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.wf-checkpoint-marker span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-code);
+  font-weight: 800;
+}
+.wf-checkpoint-marker small { color: var(--ink-muted); font-size: 0.75rem; writing-mode: vertical-rl; text-transform: uppercase; letter-spacing: 0.08em; }
+.wf-checkpoint-nav { gap: 0; border-block-start: var(--border-size) solid var(--wf-line); }
+.wf-checkpoint-nav button {
+  min-height: 46px;
+  padding: 8px 4px;
+  border: 0;
+  border-block-end: var(--border-size) solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  text-align: start;
+  font-size: 0.75rem;
+}
+.wf-checkpoint-nav button.active { background: transparent; color: var(--accent); font-weight: 750; }
+.wf-checkpoint-nav button.active::before { content: "Here · "; font-family: var(--font-code); font-size: 0.75rem; }
+
+/* Guided setup/inspect/repair managers. */
+.wayfinder-manager { max-width: 1440px; }
+.wayfinder-manager .manager-head { max-width: 1040px; margin-block-end: 24px; }
+.wayfinder-manager .manager-tabs {
+  justify-content: flex-start;
+  gap: 0;
+  overflow: auto;
+  border-block: var(--border-size) solid var(--wf-line);
+}
+.wayfinder-manager .manager-tab {
+  position: relative;
+  min-height: 48px;
+  border-inline-end: var(--border-size) solid var(--line);
+  border-radius: 0;
+}
+.wayfinder-manager .manager-tab.active { background: transparent; box-shadow: inset 0 -3px 0 var(--accent); }
+.wayfinder-manager .manager-content,
+.wayfinder-manager .wf-manager-stage { padding-block-start: 26px; }
+.wayfinder-manager .provider-layout,
+.wayfinder-manager .memory-layout,
+.wayfinder-manager .terminal-layout,
+.wayfinder-manager .wf-setup-journey,
+.wayfinder-manager .wf-memory-journey,
+.wayfinder-manager .wf-terminal-journey {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.68fr) minmax(420px, 1.32fr);
+  gap: clamp(26px, 4vw, 58px);
+  min-width: 0;
+  align-items: start;
+}
+.wayfinder-manager .provider-list,
+.wayfinder-manager .memory-index,
+.wayfinder-manager .terminal-shelf,
+.wayfinder-manager .manager-primary {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding-inline-start: 38px;
+}
+.wayfinder-manager .provider-list::before,
+.wayfinder-manager .memory-index::before,
+.wayfinder-manager .terminal-shelf::before,
+.wayfinder-manager .manager-primary::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 15px;
+  inset-block: 18px;
+  width: 2px;
+  background: var(--wf-line);
+}
+.wayfinder-manager .resource-row {
+  position: relative;
+  min-width: 0;
+  border-inline: 0;
+  border-block-start: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.wayfinder-manager .resource-row::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -28px;
+  inset-block-start: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--canvas);
+  border-radius: 50%;
+  background: var(--line-strong);
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+.wayfinder-manager .resource-row.selected::before { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.wayfinder-manager .resource-row.selected { background: var(--accent-soft); }
+.wayfinder-manager .resource-copy strong,
+.wayfinder-manager .resource-copy p { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; word-break: normal; }
+.wayfinder-manager .detail-panel,
+.wayfinder-manager .manager-secondary {
+  border-radius: clamp(10px, var(--radius-lg), 22px);
+  background: var(--wf-camp);
+  box-shadow: var(--shadow-sm);
+}
+.wayfinder-manager .manager-summary { margin-block-end: 20px; padding: 18px; border: var(--border-size) solid var(--wf-line); border-radius: var(--radius-lg); }
+.wayfinder-manager .detail-fact { border-radius: var(--radius-md); }
+.wayfinder-manager .terminal-preview { border-radius: var(--radius-md); }
+.wayfinder-manager .journey-steps,
+.wayfinder-manager .journey-branch { position: relative; display: grid; gap: 12px; }
+.wayfinder-manager .journey-steps {
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+}
+.wayfinder-manager .journey-steps::before {
+  content: "";
+  position: absolute;
+  inset-block: 22px;
+  inset-inline-start: 14px;
+  width: 2px;
+  background: var(--wf-line);
+}
+.wayfinder-manager .journey-steps li {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 38px;
+  color: var(--ink-muted);
+}
+.wayfinder-manager .journey-steps li > span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: var(--border-size) solid var(--wf-line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+}
+.wayfinder-manager .journey-steps li.complete { color: var(--ink); }
+.wayfinder-manager .journey-steps li.complete > span {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  box-shadow: 0 0 0 3px var(--surface);
+}
+.wayfinder-manager .journey-branch { margin-inline-start: 24px; padding-inline-start: 22px; border-inline-start: var(--border-size) solid var(--wf-line); }
+
+/* Route choreography: origin, line, waypoint, checkpoint. */
+.wf-home.view-enter .home-head,
+.wf-workspace-view.view-enter .workspace-head,
+.wayfinder-manager.view-enter .manager-head,
+[data-motion-role="masthead"] { animation: wf-banner-arrive 330ms var(--ease-out) both; }
+.wf-home.view-enter .wf-origin,
+.wf-workspace-view.view-enter .wf-route-banner,
+[data-motion-role="origin"] { animation: wf-origin-arrive 350ms 35ms var(--ease-out) both; }
+.wf-home.view-enter .wf-routes::before,
+.wf-home.view-enter .wf-origin::after,
+[data-motion-role="route"],
+.motion-route-line { animation: wf-route-resolve 380ms 65ms var(--ease-out) both; }
+.wf-home.view-enter .wf-route:nth-child(-n+6),
+.wf-workspace-view.view-enter .wf-checkpoint,
+[data-motion-role="marker"],
+.motion-waypoint { animation: wf-waypoint-arrive 300ms 100ms var(--ease-out) both; }
+.wf-home.view-enter .wf-camp,
+.wayfinder-manager.view-enter .manager-content,
+[data-motion-role="content"] { animation: wf-checkpoint-arrive 320ms 150ms var(--ease-out) both; }
+.motion-branch,
+.wayfinder-manager .journey-branch { animation: wf-branch-open 280ms var(--ease-out) both; transform-origin: top; }
+@keyframes wf-banner-arrive {
+  from { opacity: 0; transform: translate3d(0, -10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes wf-origin-arrive {
+  from { opacity: 0; transform: translate3d(-12px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes wf-route-resolve {
+  from { opacity: 0; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+@keyframes wf-waypoint-arrive {
+  from { opacity: 0; transform: translate3d(-10px, 0, 0) scale(0.96); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes wf-checkpoint-arrive {
+  from { opacity: 0; transform: translate3d(0, 13px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes wf-branch-open {
+  from { opacity: 0; transform: translate3d(0, -8px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@container concept-main (max-width: 1100px) {
+  .wf-camp { grid-template-columns: minmax(0, 1fr); }
+  .wf-journey { grid-template-columns: minmax(165px, 205px) minmax(0, 1fr); }
+  .wf-checkpoint-nav { grid-column: 2; position: static; display: flex; flex-wrap: wrap; border-block-start: 0; }
+  .wf-checkpoint-nav button { min-width: 150px; border-block-start: var(--border-size) solid var(--line); }
+  .wayfinder-manager .provider-layout,
+  .wayfinder-manager .memory-layout,
+  .wayfinder-manager .terminal-layout,
+  .wayfinder-manager .wf-setup-journey,
+  .wayfinder-manager .wf-memory-journey,
+  .wayfinder-manager .wf-terminal-journey { grid-template-columns: minmax(220px, 0.62fr) minmax(0, 1.38fr); }
+}
+
+@container concept-main (max-width: 780px) {
+  .wf-home,
+  .wf-workspace-view,
+  .wayfinder-manager { padding: 24px 16px 46px; }
+  .wf-home::before { inset-inline-end: -70px; opacity: 0.2; }
+  .wf-home .view-title { font-size: clamp(2.5rem, 15vw, 5rem); }
+  .wf-origin { grid-template-columns: 46px minmax(0, 1fr); }
+  .wf-origin-dot { margin-inline-start: 11px; }
+  .wf-origin::after,
+  .wf-routes::before { inset-inline-start: 21px; }
+  .wf-routes { padding-inline-start: 46px; }
+  .wf-route { grid-template-columns: 40px minmax(0, 1fr) 20px; min-height: 90px; }
+  .wf-route .wf-waypoint { grid-column: 1; grid-row: 1 / span 2; }
+  .wf-route > span:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .wf-distance { grid-column: 2; grid-row: 2; justify-self: start; white-space: normal; }
+  .wf-route > .icon:last-child { grid-column: 3; grid-row: 1 / span 2; }
+  .wf-route::before { inset-inline-start: -25px; width: 25px; }
+  .wf-journey { grid-template-columns: minmax(0, 1fr); }
+  .wf-journey-map { display: none; position: static; }
+  .wf-journey-map.open { display: grid; }
+  .wf-checkpoint-nav { grid-column: 1; }
+  .wf-checkpoint { grid-template-columns: 50px minmax(0, 1fr); gap: 11px; }
+  .wf-checkpoint-marker { border-radius: var(--radius-md); }
+  .wf-checkpoint-marker small { display: none; }
+  .wayfinder-manager .provider-layout,
+  .wayfinder-manager .memory-layout,
+  .wayfinder-manager .terminal-layout,
+  .wayfinder-manager .wf-setup-journey,
+  .wayfinder-manager .wf-memory-journey,
+  .wayfinder-manager .wf-terminal-journey { grid-template-columns: minmax(0, 1fr); }
+  .wayfinder-manager .provider-list,
+  .wayfinder-manager .memory-index,
+  .wayfinder-manager .terminal-shelf,
+  .wayfinder-manager .manager-primary { padding-inline-start: 34px; }
+}
+
+@media (any-pointer: coarse), (any-hover: none) {
+  body[data-concept="wayfinder"] .wf-route,
+  body[data-concept="wayfinder"] .wf-journey-map button,
+  body[data-concept="wayfinder"] .wf-checkpoint-nav button { min-height: 44px; }
+}
+
+:dir(rtl) .wf-route:hover,
+:dir(rtl) .wf-route:focus-visible { transform: translate3d(-9px, 0, 0); }
+:dir(rtl) .wf-route > .icon:last-child { transform: scaleX(-1); }
+:dir(rtl) .wf-route::before { transform-origin: right center; }
+:dir(rtl) .wf-checkpoint-marker small { writing-mode: vertical-lr; }
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-concept="wayfinder"] .view-enter,
+  body[data-concept="wayfinder"] .view-enter *,
+  body[data-concept="wayfinder"] [data-motion-role],
+  body[data-concept="wayfinder"] .motion-route-line,
+  body[data-concept="wayfinder"] .motion-waypoint,
+  body[data-concept="wayfinder"] .motion-branch { animation: none !important; transform: none !important; opacity: 1 !important; }
+  body[data-concept="wayfinder"] [data-motion-role="marker"] { box-shadow: 0 0 0 3px var(--accent-soft); }
+}
+[data-reduced-motion="1"] body[data-concept="wayfinder"] .view-enter,
+[data-reduced-motion="1"] body[data-concept="wayfinder"] .view-enter *,
+[data-reduced-motion="1"] body[data-concept="wayfinder"] [data-motion-role],
+[data-reduced-motion="1"] body[data-concept="wayfinder"] .motion-route-line,
+[data-reduced-motion="1"] body[data-concept="wayfinder"] .motion-waypoint,
+[data-reduced-motion="1"] body[data-concept="wayfinder"] .motion-branch,
+body[data-concept="wayfinder"][data-reduced-motion="1"] .view-enter,
+body[data-concept="wayfinder"][data-reduced-motion="1"] .view-enter * { animation: none !important; transform: none !important; opacity: 1 !important; }

@@ -1,0 +1,454 @@
+{
+  "$defs": {
+    "platform_capability_evaluated_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "capability_key": {
+          "type": "string"
+        },
+        "degraded_reason": {
+          "type": "string"
+        },
+        "effective_capability": {
+          "type": "string"
+        },
+        "evidence_ref": {
+          "type": "string"
+        },
+        "platform_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "provider_id": {
+          "type": "string"
+        },
+        "requested_capability": {
+          "type": "string"
+        },
+        "ts": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "platform_id",
+        "capability_key",
+        "effective_capability",
+        "ts"
+      ],
+      "type": "object"
+    },
+    "platform_capability_evidence_ref": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "evidence_ref_type": {
+              "const": "runtime_probe_receipt"
+            },
+            "source_kind": {
+              "const": "live_runtime_discovery"
+            }
+          }
+        },
+        {
+          "properties": {
+            "evidence_ref_type": {
+              "const": "provider_policy_snapshot"
+            },
+            "source_kind": {
+              "const": "provider_policy_snapshot"
+            }
+          }
+        },
+        {
+          "properties": {
+            "evidence_ref_type": {
+              "const": "platform_baseline_revision"
+            },
+            "source_kind": {
+              "const": "static_platform_baseline"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "evidence_ref": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "evidence_ref_type": {
+          "enum": [
+            "runtime_probe_receipt",
+            "provider_policy_snapshot",
+            "platform_baseline_revision"
+          ]
+        },
+        "finding": {
+          "enum": [
+            "supports_available",
+            "supports_degraded",
+            "supports_unavailable"
+          ]
+        },
+        "observed_at_utc": {
+          "format": "date-time",
+          "pattern": "Z$",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "live_runtime_discovery",
+            "provider_policy_snapshot",
+            "static_platform_baseline"
+          ]
+        },
+        "source_revision_ref": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_kind",
+        "evidence_ref_type",
+        "evidence_ref",
+        "finding",
+        "observed_at_utc",
+        "source_revision_ref"
+      ],
+      "type": "object"
+    },
+    "platform_capability_ref": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_id": {
+          "pattern": "^platform\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+          "type": "string"
+        },
+        "catalog_id": {
+          "const": "pm.platform_capability_catalog"
+        },
+        "catalog_revision": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "catalog_schema_version": {
+          "const": "1.0.0"
+        },
+        "ref_type": {
+          "const": "platform_capability_catalog_entry"
+        }
+      },
+      "required": [
+        "ref_type",
+        "catalog_id",
+        "catalog_schema_version",
+        "catalog_revision",
+        "capability_id"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "effective_state": {
+              "enum": [
+                "available",
+                "degraded",
+                "unavailable"
+              ]
+            },
+            "requested_state": {
+              "enum": [
+                "required",
+                "preferred"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "effective_state": {
+              "const": "not_evaluated"
+            },
+            "requested_state": {
+              "const": "not_requested"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "none"
+            },
+            "effective_state": {
+              "const": "available"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "enum": [
+                "live_runtime_discovery",
+                "provider_policy_snapshot",
+                "static_platform_baseline"
+              ]
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "runtime_partial"
+            },
+            "effective_state": {
+              "const": "degraded"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "live_runtime_discovery"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "provider_policy_limited"
+            },
+            "effective_state": {
+              "const": "degraded"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "provider_policy_snapshot"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "static_baseline_only"
+            },
+            "effective_state": {
+              "const": "degraded"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "static_platform_baseline"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "runtime_absent"
+            },
+            "effective_state": {
+              "const": "unavailable"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "live_runtime_discovery"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "provider_policy_denied"
+            },
+            "effective_state": {
+              "const": "unavailable"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "provider_policy_snapshot"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "platform_unsupported"
+            },
+            "effective_state": {
+              "const": "unavailable"
+            },
+            "evidence_refs": {
+              "minItems": 1
+            },
+            "resolution_source": {
+              "const": "static_platform_baseline"
+            },
+            "selected_evidence_ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "properties": {
+            "degradation_reason": {
+              "const": "none"
+            },
+            "effective_state": {
+              "const": "not_evaluated"
+            },
+            "evidence_refs": {
+              "maxItems": 0
+            },
+            "resolution_source": {
+              "type": "null"
+            },
+            "selected_evidence_ref": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "capability_ref": {
+      "$ref": "#/$defs/platform_capability_ref"
+    },
+    "degradation_reason": {
+      "enum": [
+        "none",
+        "runtime_partial",
+        "provider_policy_limited",
+        "static_baseline_only",
+        "runtime_absent",
+        "provider_policy_denied",
+        "platform_unsupported"
+      ]
+    },
+    "effective_state": {
+      "enum": [
+        "available",
+        "degraded",
+        "unavailable",
+        "not_evaluated"
+      ]
+    },
+    "evidence_refs": {
+      "items": {
+        "$ref": "#/$defs/platform_capability_evidence_ref"
+      },
+      "maxItems": 3,
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "platform_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "provider_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "requested_state": {
+      "enum": [
+        "required",
+        "preferred",
+        "not_requested"
+      ]
+    },
+    "resolution_source": {
+      "anyOf": [
+        {
+          "enum": [
+            "live_runtime_discovery",
+            "provider_policy_snapshot",
+            "static_platform_baseline"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "selected_evidence_ref": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "platform_id",
+    "provider_id",
+    "capability_ref",
+    "requested_state",
+    "effective_state",
+    "degradation_reason",
+    "resolution_source",
+    "selected_evidence_ref",
+    "evidence_refs"
+  ],
+  "type": "object"
+}

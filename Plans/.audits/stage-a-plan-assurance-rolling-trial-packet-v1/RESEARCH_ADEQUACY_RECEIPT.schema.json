@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/research-adequacy-receipt.v1.json",
+  "title": "Plan Assurance Research Adequacy Receipt",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "schema_id", "receipt_id", "trial_id", "family_id", "generation_id", "risk_tier", "open_portfolio_ref", "open_portfolio_sha256", "trigger_evaluations", "recovery", "unresolved_adequacy_gap_ids", "final_state", "limitations", "controller_derived", "receipt_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "schema_id": {"const": "pm.plan_assurance.research_adequacy_receipt.v1"},
+    "receipt_id": {"type": "string", "minLength": 1}, "trial_id": {"type": "string", "minLength": 1},
+    "family_id": {"enum": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"]},
+    "generation_id": {"type": "string", "minLength": 1}, "risk_tier": {"enum": ["R1", "R2", "R3"]},
+    "open_portfolio_ref": {"type": "string", "minLength": 1}, "open_portfolio_sha256": {"$ref": "#/$defs/sha256"},
+    "trigger_evaluations": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"$ref": "#/$defs/trigger"}},
+    "recovery": {"$ref": "#/$defs/recovery"},
+    "unresolved_adequacy_gap_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "final_state": {"enum": ["sufficient", "sufficient_with_named_residual", "research_limited", "blocked", "invalid"]},
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}, "controller_derived": {"const": true},
+    "receipt_payload_sha256": {"$ref": "#/$defs/sha256"}, "terminal": {"enum": ["PASS", "RESEARCH_LIMITED", "BLOCKED", "INVALID"]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "trigger": {"type": "object", "additionalProperties": false, "required": ["trigger_id", "state", "evidence_refs", "affected_ids", "rationale", "controller_derived"], "properties": {"trigger_id": {"enum": ["RA_FAILURE_EVIDENCE", "RA_AUTHORITY_CURRENTNESS", "RA_ALTERNATIVE_IMPLEMENTATION", "RA_APPLICABILITY_PLATFORM", "RA_CONTRADICTION", "RA_NAMED_CRITICAL_SURFACE"]}, "state": {"enum": ["true", "false", "not_applicable"]}, "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "affected_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "rationale": {"type": "string", "minLength": 1}, "controller_derived": {"const": true}}},
+    "recovery": {"type": "object", "additionalProperties": false, "required": ["required", "reason_trigger_ids", "worker_context_id", "worker_terminal", "failure_portfolio_ref", "failure_portfolio_sha256", "remaining_gap_ids", "unavailable_reason"], "properties": {"required": {"type": "boolean"}, "reason_trigger_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "worker_context_id": {"type": ["string", "null"]}, "worker_terminal": {"enum": ["DONE", "STOPPED", "MATERIAL_BLOCKER", null]}, "failure_portfolio_ref": {"type": ["string", "null"]}, "failure_portfolio_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}, "remaining_gap_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "unavailable_reason": {"type": ["string", "null"]}}}
+  }
+}

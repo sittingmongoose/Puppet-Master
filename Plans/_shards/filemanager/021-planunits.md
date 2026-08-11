@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L584-L4212
+Source lines: L584-L4215
 
-Source SHA256: `eba865c52fd3ce123ed9ec45af477b915c42c6acafd17b83da4c7e8725b0bf80`
+Source SHA256: `e2ab56c877541e4bfaf3c69fab1ecfe81fa4ad96e5f0f032c68a8b309a8f3694`
 
 ---
 
@@ -832,7 +832,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  Editor placement uses the File Editor strip and supports docked visibility, detach/redock, one floating editor window, tabs with active-buffer switching, close/unsaved prompts, reorder, and persistence.
+  Editor placement uses the File Editor strip and supports docked visibility, detach/redock, four stable independently floating editor panels, tabs with active-buffer switching, close/unsaved prompts, reorder, and persistence.
 gui_related: true
 gui_classification_reason: This unit defines editor placement, layout, detach, and tab UI behavior.
 split_recommended: false
@@ -862,7 +862,7 @@ preserved_exact_tokens:
 - layout
 - detach
 - redock
-- one floating editor window
+- four independently floating editor panels
 - tabs
 - reorder
 - persistence
@@ -1866,7 +1866,7 @@ preserved_exact_tokens:
 - "route_target"
 - "OpenSubject"
 - "Crosswalk"
-- "OpenFile { path, line?, range?, target_group? }"
+- "OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }"
 - "open-file"
 - "file-open"
 - "/navigation"
@@ -2174,9 +2174,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  FileManager owns the editor breadcrumb strip and outline; available LSP data uses
-  documentSymbol, fallback uses heuristic or regex outline data, and degraded state is labeled
-  when LSP is unavailable.
+  The editor breadcrumb strip and outline rail chrome are retired per Jared's 2026-07-16
+  decision; no breadcrumb or outline chrome renders in the editor. FileManager continues to own
+  the underlying symbol data pipeline: available LSP data uses documentSymbol, fallback uses
+  heuristic or regex outline data, and degraded state is labeled when LSP is unavailable, with
+  that data available to search and navigation consumers. Retired lineage (kept findable): the
+  prior contract had FileManager own the editor breadcrumb strip and outline surfaces.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible editor breadcrumb and outline surfaces.

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2321-L14943
+Source lines: L2323-L14966
 
-Source SHA256: `66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1`
+Source SHA256: `21bd16a8872bfbd2f641dac39e4b02bb8f311eb5f90d27fbb3c5de62157c5706`
 
 ---
 
@@ -7530,7 +7530,8 @@ plan_unit_id: SP-131
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: All non-append durable-store rewrites use same-directory temporary files, fsync, and rename/promote; append-only seglog writers remain subject to durable flush and corruption detection, and replacement-write failures are hard errors without direct-overwrite fallback.
+canonical_text: >-
+  All non-append durable-store rewrites use same-directory temporary files, fsync, rename/promote, and affected/destination-parent synchronization before durable success or acknowledgement. Canonical file create, link, unlink, segment creation/closure, manifest promotion, recovery-intent promotion/removal, and compaction-file promotion synchronize the file and affected/destination parent; any allowed cross-directory rename synchronizes both source and destination parents without this unit authorizing cross-directory rename. Failure of the strongest OS-equivalent directory-entry durability primitive is a hard error, forbids direct-overwrite fallback or durable acknowledgement, and fails writable startup when canonical-store directory durability cannot be established; append-only seglog writers remain subject to durable flush and corruption detection.
 gui_related: false
 gui_classification_reason: This unit preserves backend durable storage rewrite atomicity and failure rules.
 split_recommended: false
@@ -7544,6 +7545,9 @@ acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Durable success or acknowledgement is impossible until staged-content fsync, rename/promote, and affected/destination-parent synchronization complete.
+- Canonical create, link, unlink, segment creation/closure, manifest promotion, recovery-intent promotion/removal, and compaction-file promotion synchronize the affected/destination parent; any allowed cross-directory rename synchronizes both source and destination parents, and unavailable platform-equivalent directory-entry durability fails canonical-store writable startup.
+- SEG-FX-009 with SEG-OR-010 proves that a fault after rename/promote and before parent-directory synchronization is a hard error with no durable success or acknowledgement and restart never claims an unproven promotion.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -7569,9 +7573,22 @@ preserved_exact_tokens:
 - same-filesystem atomic rename
 - hard error
 - direct overwrite
+- affected parent directory
+- destination parent directory
+- both source and destination parent directories
+- durable success
+- durable acknowledgement
+- platform-equivalent directory-entry durability
+- canonical-store directory durability
+- fail writable startup
+- SEG-FX-009
+- SEG-OR-010
 negative_constraints:
 - Per-session temp directories MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
 - Failure to create the temp file, fsync it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
+- PM MUST NOT report durable success or return a durable acknowledgement before affected/destination-parent synchronization completes.
+- An allowed cross-directory rename MUST NOT report durable success until both source and destination parent directories are synchronized; this conditional rule MUST NOT be read as authorization for cross-directory rename.
+- PM MUST NOT fall back to direct overwrite or admit writable startup when platform-equivalent directory-entry durability cannot be established for the canonical store.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md'
 compatibility_only_notes: []
@@ -8128,7 +8145,7 @@ plan_unit_id: SP-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Analytics scans read seglog or JSONL mirror in order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint last scanned sequence or timestamp idempotently.
+canonical_text: Analytics scans read seglog or JSONL mirror in sequence order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint sequence plus survivor identity idempotently; timestamps filter windows but never resume replay.
 gui_related: false
 gui_classification_reason: This unit preserves backend analytics scan, computation, and checkpoint semantics.
 split_recommended: false
@@ -8173,13 +8190,14 @@ preserved_exact_tokens:
 - tool.denied
 - FileSafe blocks
 - last scanned up to seq X
-- last scanned timestamp
+- last scanned timestamp (retired compatibility wording only)
 - Idempotent
 negative_constraints:
 - tool.denied events and FileSafe blocks do not contribute to tool_usage.{window}.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Last-scanned timestamp checkpoints are retired; sequence and survivor identity are canonical.
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -10494,7 +10512,7 @@ plan_unit_id: SP-179
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage recovery rules preserve seglog last-complete-record recovery, redb backup or canonical-seglog rebuild, bounded projector commits, checkpoint loss rebuild, and projector panic/crash behavior that restarts from the last good checkpoint without advancing it.
+canonical_text: Storage recovery validates SeglogFrameV2 against the durable watermark and deterministic survivor set, restores canonical non-rebuildable redb only from verified backup, rebuilds only registry-declared derived state from retained canon, and keeps checkpoint/projector crash recovery sequence- and survivor-bound without advancing on failed commit.
 gui_related: false
 gui_classification_reason: This unit preserves backend seglog, redb, checkpoint, and projector recovery rules.
 split_recommended: false
@@ -10526,7 +10544,7 @@ preserved_exact_tokens:
 - Append-only with flush
 - last-complete-record recovery
 - CRC32
-- corrupt record -> skip + recovery event
+- corrupt record -> skip + recovery event (retired except when one-frame boundary and successor are independently validated)
 - redb corruption
 - Restore from backup
 - canonical seglog
@@ -10543,8 +10561,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
 - 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Last-complete-record and bare skip wording is compatibility lineage only; SP-236 owns current recovery mechanics.
+stale_retired_dispositions:
+- Unproven one-record skip and generic redb rebuild are retired.
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -10710,7 +10730,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
 preserved_exact_tokens:
 - Compaction
-- §2.2.1
+- '## 7. Backup, restore, compaction, and optional storage enhancements'
+- '#### Immutable-segment compaction and publication'
 - Optional for MVP
 - MUST preserve seq
 - exclude the active segment
@@ -10778,7 +10799,7 @@ preserved_exact_tokens:
 - server-backed store
 - dashboard/Usage reads
 - Per-project seglog
-- §2.1.2
+- '#### 2.2.5 EventRecord persistence boundary'
 - app-global
 - Event schema registry
 - payload validation

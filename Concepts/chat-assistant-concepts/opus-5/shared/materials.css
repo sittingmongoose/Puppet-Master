@@ -1,0 +1,406 @@
+/* ==========================================================================
+   PMX materials — Opus 5 concept workspace
+
+   tokens.css holds values. This file holds the RECIPES that turn those values
+   into a material. The distinction matters: the four theme families in
+   Puppet Master are not palette swaps of one another. Retro is ink on paper
+   with hard offset shadows. Basic is deliberately flat. Glass is a single
+   translucent slab with a four-tier interior. Friendly is tinted card stock on
+   a softly-lit ground. A theme that only changes colour reads as plain no
+   matter how well the colours are chosen.
+
+   Two rules hold throughout:
+
+   1. ONE BLUR PER SURFACE, meaning one blur in the ancestor chain at a time — NOT,
+      as this line used to claim, that .pmx-stage is the only carrier. It is not.
+      Two others exist, and the difference matters because nesting backdrop-filters
+      is what produces black flashes on Windows compositing:
+        - [data-theme^="friendly"] .pmx-chrome-header::before (blur 14px, below).
+          Safe: the stage blur is glass-only, so these two never coexist.
+        - windows/w8-frameless.css .w8 floating pill (blur 10px). This one applies
+          in EVERY theme, so under glass it does nest inside the stage blur.
+      Before adding a backdrop-filter, check which themes put one on an ancestor.
+      Interior glass surfaces are flat rgba fills at rising opacity — that
+      four-tier ladder IS the material. Nested blurs are a recorded project
+      performance risk and buy nothing visually here.
+
+   2. BARE SELECTORS ONLY. Every theme selector is an attribute selector on
+      data-theme alone, never qualified with html or :root, so a theme can be
+      scoped to any container. The eight-theme contact sheet depends on this.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- helpers */
+
+/* Opt-in material surface. A concept applies this to anything that should
+   read as a raised card in whatever theme is active. */
+.pmx-mat {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elev-1);
+}
+
+/* Opt-in hover affordance. --pmx-lift is per-family: retro does not lift at
+   all (it shifts diagonally instead, below), basic barely moves, glass and
+   friendly rise. */
+.pmx-lift {
+  transition:
+    transform var(--motion-fast) var(--ease-default),
+    box-shadow var(--motion-fast) var(--ease-default),
+    border-color var(--motion-fast) var(--ease-default);
+}
+.pmx-lift:hover { transform: translateY(var(--pmx-lift)); box-shadow: var(--elev-hover); }
+.pmx-lift:active { transform: scale(.985); }
+
+/* ==========================================================================
+   GLASS — one pane, four interior tiers
+   ========================================================================== */
+
+/* The stage is the pane. Its gradient is a non-uniform wash across the slab
+   (k1/k2/k3), the shadow doubles as edge lighting via the inset highlight,
+   and the backdrop-filter is the only one in the document. The radial layers
+   beneath the tint stand in for the baked cloudscape wallpaper — without
+   something behind the glass, a translucent pane has nothing to be
+   translucent against and collapses to a flat fill. */
+/* Both mount shapes must be covered: [data-theme] can sit on an ancestor of
+   the stage (gallery) or on the stage element itself (stage + contact sheet).
+   A descendant-only selector silently matches neither in the second case. */
+/* Both mount shapes must be covered: [data-theme] can sit on an ancestor of
+   the stage (gallery) or on the stage element itself (stage + contact sheet).
+   A descendant-only selector silently matches neither in the second case.
+
+   The third selector exists because shell.css declares
+   `.pmx-shell, .pmx-stage.pmx-shell { background: var(--background) }` at the
+   same specificity and loads later, so it would otherwise reset this material
+   to a flat fill. Matching its class-pair and adding the theme attribute wins
+   on specificity rather than on load order, which is the stable fix. */
+[data-theme^="glass"] .pmx-stage,
+.pmx-stage[data-theme^="glass"],
+.pmx-stage.pmx-shell[data-theme^="glass"] {
+  border: 1px solid var(--pm6-glass-pane-edge);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(165deg,
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k1))),
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k2))) 40%,
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k3)))),
+    radial-gradient(58% 44% at 14% 8%,  rgba(var(--pm6-glass-a-rgb), .34), transparent 68%),
+    radial-gradient(52% 40% at 88% 16%, rgba(var(--pm6-glass-b-rgb), .30), transparent 66%),
+    radial-gradient(64% 48% at 62% 104%, rgba(var(--pm6-glass-a-rgb), .22), transparent 70%),
+    var(--background);
+  backdrop-filter: blur(34px) saturate(160%);
+  -webkit-backdrop-filter: blur(34px) saturate(160%);
+  box-shadow:
+    0 40px 90px var(--pm6-glass-pane-shadow),
+    0 6px 18px var(--pm6-glass-pane-shadow2),
+    inset 0 1.5px 0 var(--glass-edge),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+/* Sheen across the slab.
+ *
+ * This previously used `mix-blend-mode: screen` to keep the highlight reading as
+ * light rather than as a grey film. It had to go: blending a layer over a parent
+ * that carries `backdrop-filter` forces the compositor to re-resolve the blurred
+ * backdrop through the blend on every paint, and in that state it intermittently
+ * painted the whole pane BLACK for a frame — the flicker reported during scroll
+ * and menu opening.
+ *
+ * A plain translucent white gradient gets most of the way there. It is fractionally
+ * softer than a true screen blend over a dark tint, which is a fair price for a
+ * pane that never flashes. The sheen values already carry their own alpha, so no
+ * blend mode is needed to keep them from muddying the surface. */
+[data-theme^="glass"] .pmx-stage::after,
+.pmx-stage[data-theme^="glass"]::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 80;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg,
+    var(--pm6-glass-pane-sheen), transparent 30%,
+    transparent 82%, var(--pm6-glass-pane-sheen2));
+}
+
+/* Interior tiers. Flat fills, inset hairlines, no blur of their own. */
+[data-theme^="glass"] .pmx-shell-rail,
+[data-theme^="glass"] .pmx-chrome-header,
+[data-theme^="glass"] .pmx-shell-card,
+[data-theme^="glass"] .pmx-mat {
+  background: var(--pm6-glass-step-1);
+  border: none;
+  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline);
+}
+[data-theme^="glass"] .pmx-composer-box,
+[data-theme^="glass"] .pmx-chrome-btn,
+[data-theme^="glass"] .pmx-chrome-sel {
+  background: var(--pm6-glass-step-2);
+  border-color: var(--glass-hairline);
+}
+[data-theme^="glass"] .pmx-composer-chip,
+[data-theme^="glass"] .pmx-shell-rail-item.is-active,
+[data-theme^="glass"] .pmx-popup-item.is-active {
+  background: var(--pm6-glass-step-3);
+}
+
+/* Anything that must read as solid jumps to the plate tier — but the plate is
+   still translucent by construction (alpha tops out around .82, never 1), so it
+   cannot be used on its own as a menu background.
+
+   This rule previously set `background-color: var(--pm6-glass-plate)` with
+   `background-image: none`, which cancelled the opaque base that popup.css
+   deliberately paints and made every menu see-through in both glass themes —
+   transcript prose read straight through the option labels. That is the exact
+   failure popup.css's own comment warns about.
+
+   The fix keeps the material and the opacity: an opaque base colour underneath,
+   with the plate painted over it as a background-image. Same trick popup.css
+   uses, same tint, guaranteed to hide what is behind. */
+[data-theme^="glass"] .pmx-popup {
+  background-color: var(--background);
+  background-image: linear-gradient(var(--pm6-glass-plate), var(--pm6-glass-plate));
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--pm6-glass-drop);
+}
+
+[data-theme^="glass"] :where(button, [href], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .20);
+}
+
+/* ==========================================================================
+   FRIENDLY — tinted card stock on a lit ground
+   ========================================================================== */
+
+/* Dot grid plus three corner glows. This ground is the single biggest reason
+   friendly reads cozy rather than merely round-cornered. */
+/* Declared at family specificity (0,1,0) on purpose, NOT inside the stage rule
+   below — the scaled-preview override further down must be able to win, and it
+   could not outrank a declaration made at (0,3,0). */
+[data-theme^="friendly"] { --pmx-dot-ink: var(--pm6-cozy-dot); }
+
+[data-theme^="friendly"] .pmx-stage,
+.pmx-stage[data-theme^="friendly"],
+.pmx-stage.pmx-shell[data-theme^="friendly"] {
+  background:
+    radial-gradient(var(--pmx-dot-ink) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(46% 38% at 16% 6%,   var(--pm6-cozy-glow-mint), transparent 65%),
+    radial-gradient(50% 42% at 88% 12%,  var(--pm6-cozy-glow-lav),  transparent 65%),
+    radial-gradient(55% 40% at 55% 108%, var(--pm6-cozy-glow-sky),  transparent 65%),
+    var(--background);
+}
+
+/* Category cards are a colour-mix of one pastel into the neutral card base.
+   Concepts pick the category by setting --pmx-cozy on the element; the recipe
+   is identical everywhere so the family stays coherent. */
+[data-theme^="friendly"] .pmx-mat,
+[data-theme^="friendly"] .pmx-shell-card {
+  --pmx-cozy: var(--pm6-cozy-sky);
+  background: color-mix(in srgb, var(--pmx-cozy) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
+  border: 1px solid color-mix(in srgb, var(--pmx-cozy) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-1);
+}
+[data-theme^="friendly"] [data-pmx-cozy="files"]        { --pmx-cozy: var(--pm6-cozy-mint); }
+[data-theme^="friendly"] [data-pmx-cozy="orchestrator"] { --pmx-cozy: var(--pm6-cozy-sky); }
+[data-theme^="friendly"] [data-pmx-cozy="lanes"]        { --pmx-cozy: var(--pm6-cozy-lav); }
+[data-theme^="friendly"] [data-pmx-cozy="warn"]         { --pmx-cozy: var(--pm6-cozy-butter); }
+[data-theme^="friendly"] [data-pmx-cozy="error"]        { --pmx-cozy: var(--pm6-cozy-coral); }
+
+/* Floating chrome. The blur sits on a ::before at z-index -1 so the filter
+   never touches the text layer and labels stay crisp. */
+[data-theme^="friendly"] .pmx-chrome-header {
+  position: relative;
+  isolation: isolate;
+  margin: var(--md) var(--lg) var(--xs);
+  max-width: calc(100% - (2 * var(--lg)));
+  background: var(--pm6-cozy-chrome);
+  border: 1px solid var(--pm6-cozy-chrome-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-2);
+}
+[data-theme^="friendly"] .pmx-chrome-header::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Own-accent glow instead of a generic outline. */
+[data-theme^="friendly"] .pmx-lift:hover {
+  border-color: color-mix(in srgb, var(--pmx-cozy, var(--accent-primary)) 45%, var(--border));
+  box-shadow:
+    0 0 0 2px var(--pmx-cozy, var(--accent-primary)),
+    0 0 22px color-mix(in srgb, var(--pmx-cozy, var(--accent-primary)) 55%, transparent);
+}
+[data-theme^="friendly"] :where(button, [href], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--pmx-cozy, var(--accent-primary));
+  outline-offset: 2px;
+  box-shadow: 0 0 22px color-mix(in srgb, var(--pmx-cozy, var(--accent-primary)) 55%, transparent);
+}
+[data-theme^="friendly"] .pmx-composer-send { border-radius: var(--radius-pill); }
+
+/* ==========================================================================
+   RETRO — hard edges, no blur anywhere
+   ========================================================================== */
+
+/* The signature interaction: the box shifts diagonally INTO its own shadow
+   rather than lifting vertically. Retro's shadow is a hard offset with no
+   blur, so a vertical lift reads as a mistake; the diagonal shift reads as
+   the object being pressed toward the light. */
+[data-theme^="retro"] .pmx-lift:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--accent-primary);
+}
+[data-theme^="retro"] .pmx-lift:active {
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0 var(--accent-primary);
+}
+[data-theme^="retro"] .pmx-mat,
+[data-theme^="retro"] .pmx-shell-card { box-shadow: var(--elev-2); }
+
+/* Pixel grid. A 3px lattice at very low alpha over everything inside the
+   stage — cheap, and it is what stops large flat fills reading as dead
+   space in a theme with no gradients and no blur. */
+[data-theme^="retro"] .pmx-stage::after,
+.pmx-stage[data-theme^="retro"]::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 90;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--pmx-grid-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pmx-grid-ink) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+[data-theme="retro-dark"]  { --pmx-grid-ink: rgba(224,224,224,.030); }
+[data-theme="retro-light"] { --pmx-grid-ink: rgba(26,26,26,.015); }
+
+[data-theme="retro-dark"] :where(button, [href], input, select, textarea, [tabindex]):focus-visible {
+  outline-color: var(--accent-lime);
+}
+
+/* ==========================================================================
+   BASIC — flat on purpose, but never bare
+   ========================================================================== */
+
+/* Basic zeroes --shadow entirely, which is the point: its restraint is a
+   deliberate position, not an oversight. It still carries a full elevation
+   ladder so surfaces separate, and it still responds to hover — just quietly. */
+[data-theme^="basic"] .pmx-mat,
+[data-theme^="basic"] .pmx-shell-card { box-shadow: var(--elev-1); }
+[data-theme^="basic"] .pmx-lift:hover { box-shadow: var(--elev-2); border-color: var(--border); }
+
+/* ==========================================================================
+   Scaled previews — suppress the fine textures
+   ========================================================================== */
+
+/* The gallery renders each stage at scale(0.5) and the contact sheet at
+   scale(0.32). At those factors the retro 3px lattice lands at 1.5px and
+   0.96px — on top of, and beating against, the device pixel grid. The result
+   is a large-period moiré that reads as a faint SECOND COPY of the layout
+   ghosted over the real one, most visible across the flat rail and dashboard
+   on the left where there is no text to mask it. The friendly 18px dot grid
+   aliases the same way at 0.32.
+
+   These textures exist for 1:1 viewing and carry no information, so they are
+   switched off wherever a stage is scaled down rather than being redrawn at a
+   scale-corrected size — correcting the size would keep the beat, just at a
+   different period. Both custom properties are declared at family specificity
+   above so this (0,2,0) rule can override them. */
+.ws-card-scaler .pmx-stage,
+.ws-contact-frame > .pmx-stage {
+  --pmx-grid-ink: transparent;
+  --pmx-dot-ink: transparent;
+}
+
+/* ==========================================================================
+   Hover engine — row surfaces only
+   ========================================================================== */
+
+/* PMConcept7 runs a pointer-tracked ring and interior wash on cards and rows,
+   and deliberately excludes the chat composer and the model/mode menus from
+   it. That exclusion is copied here on purpose: the transcript is where the
+   user is reading, and a surface that glows under the pointer while they read
+   is a distraction. Rows in side panels, search results and history lists are
+   navigation targets, so they get it.
+
+   --pmx-mx/--pmx-my are written by hover.js. The 50% fallbacks mean the
+   effect degrades to a centred glow rather than disappearing if JS is off. */
+.pmx-search-hit,
+.pmx-shell-file-row,
+.pmx-shell-rail-item,
+.pmx-chrome-hrow,
+.pmx-chrome-ctx-row,
+.pmx-hoverable {
+  position: relative;
+  isolation: isolate;
+  transition:
+    background var(--motion-fast) var(--ease-default),
+    box-shadow var(--motion-fast) var(--ease-default),
+    transform var(--motion-fast) var(--ease-default);
+}
+
+.pmx-search-hit::before,
+.pmx-shell-file-row::before,
+.pmx-shell-rail-item::before,
+.pmx-chrome-hrow::before,
+.pmx-chrome-ctx-row::before,
+.pmx-hoverable::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    calc(var(--pmx-ramp) * 6px) circle at var(--pmx-mx, 50%) var(--pmx-my, 50%),
+    color-mix(in srgb, var(--accent-primary) calc(var(--pmx-wash) * 40%), transparent),
+    transparent 72%);
+  transition: opacity var(--motion-fast) var(--ease-default);
+}
+
+.pmx-search-hit:hover::before,
+.pmx-shell-file-row:hover::before,
+.pmx-shell-rail-item:hover::before,
+.pmx-chrome-hrow:hover::before,
+.pmx-chrome-ctx-row:hover::before,
+.pmx-hoverable:hover::before { opacity: 1; }
+
+.pmx-search-hit:hover,
+.pmx-shell-file-row:hover,
+.pmx-shell-rail-item:hover,
+.pmx-chrome-hrow:hover,
+.pmx-chrome-ctx-row:hover,
+.pmx-hoverable:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) calc(var(--pmx-glow) * 45%), transparent);
+}
+
+/* Retro rows shift diagonally like every other retro surface, rather than
+   inheriting the soft ring the other families use. */
+[data-theme^="retro"] .pmx-search-hit:hover,
+[data-theme^="retro"] .pmx-shell-file-row:hover,
+[data-theme^="retro"] .pmx-shell-rail-item:hover,
+[data-theme^="retro"] .pmx-chrome-hrow:hover,
+[data-theme^="retro"] .pmx-chrome-ctx-row:hover,
+[data-theme^="retro"] .pmx-hoverable:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--accent-primary);
+}
+
+/* Under reduced motion the pointer-tracked wash is removed rather than
+   snapped: a gradient that teleports as the pointer moves is worse than none. */
+[data-motion="reduced"] .pmx-search-hit::before,
+[data-motion="reduced"] .pmx-shell-file-row::before,
+[data-motion="reduced"] .pmx-shell-rail-item::before,
+[data-motion="reduced"] .pmx-chrome-hrow::before,
+[data-motion="reduced"] .pmx-chrome-ctx-row::before,
+[data-motion="reduced"] .pmx-hoverable::before { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pmx-search-hit::before,
+  .pmx-shell-file-row::before,
+  .pmx-shell-rail-item::before,
+  .pmx-chrome-hrow::before,
+  .pmx-chrome-ctx-row::before,
+  .pmx-hoverable::before { display: none !important; }
+}

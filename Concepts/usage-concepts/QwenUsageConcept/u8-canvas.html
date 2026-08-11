@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U8 · Canvas — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<link rel="stylesheet" href="_shared/usage-widgets.css">
+<link rel="stylesheet" href="_shared/usage-widget-renderers.css">
+<style>
+/* =====================================================================
+   U8 — CANVAS · the varied-span bento mosaic
+   Runs the shared STANDARD grid engine (like U7/U9 — drag reorders,
+   tiles never overlap), but where U7 keeps the orderly uniform
+   instrument grid and U9 the tabbed deck, U8 is the mixed-span mosaic:
+    a curated flow of c×r spans — a full-width 6-col quota hero band, a
+    9-col ledger band, 1-col slims — packed dense in usage-first order.
+    This page owns only its canvas character + masthead:
+   1. GROUND — a soft plotting field: two ambient washes under a fine
+      dot grid (not U7's graph paper, not U9's flat stage wash).
+   2. TILE CHROME — plump radius, a slim category spine per tile
+      (pressure / attention / flow / execution / money / record), a
+      always-visible grip pill so "drag me" reads at rest, and a gentle
+       hover lift. The hero treatment follows geometry (a tile grown to a
+       full-width 6 cols and 9+ rows earns the accent wash), never a fixed
+       slot — the default board reserves that footprint for the quota lead.
+    3. MASTHEAD — a light arrange-hint bar with a live tile count and the
+       peak quota pressure, so the usage-first framing leads before any
+       tile is read. Cost rides along; spend stays one modest tile. The
+       two numbers count in and land with a small tick.
+    4. MOTION — the mosaic's tactile signature, built on the shared widget
+       motion (stagger, hover depth, press squash, drag lift/ghost/settle):
+       a drop-settle entrance on --mo-bounce-ease (tiles seat into their
+       slots with a hair of overshoot — the set's one playful bounce), a
+       3D lean toward the pointer on hover (transform-only, <=1.6 deg),
+       category spines that ease in with their tile and glow on touch, and
+       a slow ambient breath under the quota hero's geometry wash. All of
+       it freezes under reduced motion; the drag channel is never fought
+       (the held clone even keeps its spine + hero wash while carried).
+
+    The default mosaic below was curated against a dense-packing simulation
+    of the responsive grid (2/3/4/5/6 live tracks): every tier's effective
+    spans tile their rows with ZERO interior holes and ZERO trailing dead
+    columns. Widths vary 1..6 + a 9-col ledger (full-width band at every
+    width), heights sit on a 5/10 rhythm so the tall list columns and the
+    flex/scroll tiles fill out, and the four 1-col slims back-fill the seams
+    the wide tiles leave as deliberate vertical accents — so the mosaic reads
+    intentional and stays hole-free at 900/1280/1700/2200/2500.
+    ===================================================================== */
+
+/* keyboard-operable ledger sort headers (wired in the concept script) */
+th[data-wd-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+/* ---------- ground: the plotting field ----------
+   html[data-theme] pads the specificity to (0,3,1) so U8's bespoke ground
+   out-specifies the shared friendly-family reset (usage-shared.css's
+   `html[data-theme^="friendly"] .us-scroll { background: transparent }`,
+   0,2,1 — the shorthand there would otherwise wipe the washes + dot grid on
+   the default themes). Every theme keeps its own ground; the glass override
+   below rides the same padded shape so it still wins for background-color. */
+html[data-theme] .u8 .us-scroll {
+  padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px);
+  background-color: var(--surface);
+  background-image:
+    radial-gradient(1100px 420px at 4% -140px, color-mix(in srgb, var(--accent-primary) 8%, transparent), transparent 70%),
+    radial-gradient(900px 380px at 100% -120px, color-mix(in srgb, var(--tone-info) 6%, transparent), transparent 72%),
+    radial-gradient(color-mix(in srgb, var(--text-primary) 7%, transparent) 1px, transparent 1.4px);
+  background-size: auto, auto, 26px 26px;
+}
+html[data-theme^="glass"] .u8 .us-scroll { background-color: transparent; }
+
+/* ---------- masthead: arrange hints + live readout ---------- */
+.u8-mast { display: flex; align-items: center; gap: var(--md); flex-wrap: wrap; margin-bottom: var(--md); }
+/* pill rides the opaque per-theme badge well (themes.css) with the matching
+   legible ink, so the kicker clears 4.5:1 on every ground — including the
+   translucent glass surfaces — while staying in the accent's hue family (1.4.3) */
+.u8-mh-kick { font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--pm-badge-ink, var(--accent-primary)); padding: 4px 10px; border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent-primary) 12%, var(--pm-badge-bg, var(--surface-elevated))); border: 1px solid color-mix(in srgb, var(--accent-primary) 38%, transparent); }
+.u8-mh-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-secondary);
+  padding: 4px 9px; border-radius: var(--radius-pill); border: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--surface-elevated) 66%, transparent);
+  transition: color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u8-mh-chip svg { width: 11px; height: 11px; flex: none; color: var(--text-muted); transition: color var(--motion-fast) var(--ease-out); }
+.u8-mh-chip:hover { color: var(--text-primary); border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border-light)); transform: translateY(-1px); }
+.u8-mh-chip:hover svg { color: var(--accent-primary); }
+.u8-mh-chip.dim { color: var(--text-muted); }
+.u8-mh-r { margin-left: auto; display: inline-flex; align-items: center; gap: var(--md); flex-wrap: wrap;
+  font-size: 10px; color: var(--text-secondary); }
+.u8-mh-stat { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; }
+.u8-mh-stat.dim { color: var(--text-muted); }
+/* inline-block so the landing-tick pulse (WAAPI scale) has a transform box */
+.u8-mh-stat b { display: inline-block; font-family: var(--num-font); font-weight: 800; font-size: 13px; line-height: 1;
+  color: var(--text-primary); font-variant-numeric: tabular-nums; letter-spacing: .2px; }
+.u8-mh-stat b.hot { color: var(--tone-err-text); }
+.u8-mh-pct { font-style: normal; font-family: var(--num-font); font-weight: 700; font-size: 10px; color: var(--tone-err-text); margin-left: -3px; }
+.u8-mh-sep { width: 1px; height: 12px; background: var(--border-light); flex: none; }
+@media (max-width: 1180px) { .u8-mh-r { margin-left: 0; flex-basis: 100%; } }
+
+/* ---------- the mosaic field ----------
+   dense packing is the canvas contract: tiles flow in usage-first DOM order
+   but back-fill every seam, so the curated spans leave no interior holes and
+   no trailing dead columns at any live track count (see board rationale above). */
+.u8-grid { gap: var(--us-gap); grid-auto-flow: dense; }
+.u8 .uw-addbar { padding: 2px 2px 9px; }
+
+/* page-chrome wordmark: the two soft light themes render PUPPET MASTER in a
+   mid-tone ink that washes out on their pale title bars — deepen it locally
+   so the wordmark holds a strong ~12:1 without touching the shared tokens. */
+[data-theme="friendly-light"] .tb-appname { color: #2D2833; }
+[data-theme="glass-light"] .tb-appname { color: #211A38; }
+
+/* ---------- tile chrome: plump bento with a category spine ----------
+   The spine color rides --cat, stamped per type by the concept script;
+   the shared shell already honors --cat for the icon chip + hover border,
+   so the whole tile keys off one variable. The chrome selectors also match
+   the drag clone (.uw-lifted) and the parked focus card (.uw.is-focus) —
+   both carry [data-u8t] + the inline --cat — so a tile keeps its plump
+   radius, spine and hero wash while it is being carried or expanded. */
+.u8-grid .uw, .uw-lifted[data-u8t], .uw.is-focus[data-u8t] { border-radius: var(--radius-xl);
+  transition: box-shadow var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u8-grid .uw::before, .uw-lifted[data-u8t]::before, .uw.is-focus[data-u8t]::before { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; z-index: 2;
+  border-radius: 0 3px 3px 0; pointer-events: none;
+  background: color-mix(in srgb, var(--cat, var(--accent-primary)) 70%, transparent);
+  opacity: .6; transition: opacity var(--motion-fast) var(--ease-out), width var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+/* the spine answers touch: full opacity + a fatter bar + a category glow */
+.u8-grid .uw:hover::before, .u8-grid .uw.is-resizing::before, .uw-lifted[data-u8t]::before { opacity: 1; width: 4px;
+  box-shadow: 0 0 12px 1px color-mix(in srgb, var(--cat, var(--accent-primary)) 45%, transparent); }
+/* the landing ghost is a pure dashed slot — no spine inside it */
+.u8-grid .uw.is-placeholder::before { content: none; }
+
+/* ---------- signature settle: tiles drop into the bento and seat ----------
+   The shared module owns the .uw-enter class, the inline stagger delay
+   (--mo-stagger x flow index, capped at the 700ms budget) and the
+   --mo-spring-dur duration; U8 swaps the keyframes + curve. Each tile drops
+   in from a hair above on --mo-bounce-ease, dipping ~1px PAST its landing
+   line before seating — tiles settling into a box, the one playful bounce
+   in the set (kept tight: 12px fall, 2% scale, ~12% overshoot). Fill stays
+   backwards so the transform channel hands back to hover/FLIP at the end;
+   the kill-switch freezes the duration and the shared rule zeroes the
+   stagger under RM, so tiles simply appear, already seated. */
+.u8-grid .uw.uw-enter { animation-name: u8Settle; animation-timing-function: var(--mo-bounce-ease, cubic-bezier(0.28, 1.8, 0.45, 1)); }
+@keyframes u8Settle { from { opacity: 0; transform: translateY(-12px) scale(0.98); } to { opacity: 1; transform: none; } }
+/* the spine rides in with its tile: scaleY grow + fade, delayed by the
+   tile's own inline stagger step (inherit reads the article's value) */
+.u8-grid .uw.uw-enter::before { animation: u8SpineIn calc(var(--mo-spring-dur, 420ms) * 0.85) var(--ease-out, cubic-bezier(.22,1,.36,1)) backwards; animation-delay: inherit; }
+@keyframes u8SpineIn { from { opacity: 0; transform: scaleY(0.3); } to { opacity: var(--u8sp-o, .6); transform: none; } }
+
+/* ---------- tactile hover: the tile leans toward the pointer ----------
+   The shared module owns the -2px lift, cat-tinted shadow and RM/hover
+   gates; U8 composes a subtle 3D lean on top (<=1.6 deg, perspective 760px)
+   driven by --u8-rx/--u8-ry from the concept script's rAF-gated pointermove.
+   Transform-only, so the shared FLIP inline transform always outranks it
+   mid-reflow, and the 120ms transform transition doubles as damping so the
+   lean feels weighted rather than twitchy. The drag stand-down mirrors the
+   shared rule shape: while a tile is held, neighbors do not bob. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html:not([data-reduced-motion="1"]) .u8-grid .uw:hover:not(.uw-lifted):not(.is-placeholder):not(.is-focus):not(.is-resizing) {
+    transform: perspective(760px) translateY(-2px) rotateX(var(--u8-rx, 0deg)) rotateY(var(--u8-ry, 0deg)); }
+  html:not([data-reduced-motion="1"]).pmw-drag .u8-grid .uw:hover:not(.uw-lifted):not(.is-placeholder):not(.is-focus):not(.is-resizing) { transform: none; }
+}
+
+/* the grip reads as "drag me" at rest: a tinted pill, not a ghost dot */
+.u8-grid .uw-grip, .uw-lifted[data-u8t] .uw-grip { width: 22px; height: 16px; border-radius: var(--radius-sm); opacity: .9;
+  background: color-mix(in srgb, var(--cat, var(--accent-primary)) 10%, transparent); color: var(--text-secondary); }
+.u8-grid .uw:hover .uw-grip { opacity: 1; color: var(--text-primary);
+  background: color-mix(in srgb, var(--cat, var(--accent-primary)) 18%, transparent); }
+
+/* hero follows geometry: a tile grown to a full-width 6 cols and 4+ rows earns
+   the wash. The default board gives that footprint only to the quota hero, so
+   the hierarchy reads one clear lead; guard/accounts and the thin ledger band
+   stay supporting. */
+.u8-grid .uw.u8-hero, .uw-lifted.u8-hero[data-u8t], .uw.is-focus.u8-hero[data-u8t] { --u8sp-o: 1; box-shadow: var(--elev-2);
+  background-image: radial-gradient(560px 220px at 0% 0%, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 70%); }
+.u8-grid .uw.u8-hero::before, .uw-lifted.u8-hero[data-u8t]::before, .uw.is-focus.u8-hero[data-u8t]::before { opacity: 1; width: 4px; }
+.u8-grid .uw.u8-hero .uw-tt, .uw-lifted.u8-hero[data-u8t] .uw-tt { font-size: 12px; }
+/* the hero band BREATHES: a second gradient layer drifts and brightens on a
+   slow alternate loop. Transform + opacity only (compositor-friendly), inset
+   overscan so no edge ever shows, and the head/body sit above it on z. The
+   kill-switch freezes the loop flat under reduced motion. */
+.u8-grid .uw.u8-hero::after, .uw-lifted.u8-hero[data-u8t]::after, .uw.is-focus.u8-hero[data-u8t]::after { content: ''; position: absolute; inset: -14%; z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(480px 220px at 20% 10%, color-mix(in srgb, var(--accent-primary) 9%, transparent), transparent 70%),
+    radial-gradient(400px 200px at 82% 90%, color-mix(in srgb, var(--tone-info) 7%, transparent), transparent 72%);
+  animation: u8WashDrift 9s ease-in-out infinite alternate; }
+@keyframes u8WashDrift { from { transform: translate3d(-1.6%, -1%, 0); opacity: .45; } to { transform: translate3d(1.8%, 1.4%, 0) scale(1.08); opacity: .95; } }
+.u8-grid .uw.u8-hero > .uw-head, .u8-grid .uw.u8-hero > .uw-body,
+.uw-lifted.u8-hero[data-u8t] > .uw-head, .uw-lifted.u8-hero[data-u8t] > .uw-body,
+.uw.is-focus.u8-hero[data-u8t] > .uw-head, .uw.is-focus.u8-hero[data-u8t] > .uw-body { position: relative; z-index: 1; }
+.u8-grid .uw.u8-hero .uw-resize, .uw-lifted.u8-hero[data-u8t] .uw-resize, .uw.is-focus.u8-hero[data-u8t] .uw-resize { z-index: 2; }
+
+/* the hero leads with a headline number: the tightest-window % rides the
+   hero head — big, tonal, tabular — and its fill track soaks the wide
+   band's right side, so the lead tile opens with one confident focal
+   point instead of a flat meter row. Living in the head costs the body
+   zero height (content-fit stays intact); the who/which-window context
+   stays in the masthead readout and the cluster's aria-label. Injected
+   by the concept script on the geometry-earned hero only. */
+.u8-grid .uw.u8-hero .uw-tt { flex: 0 1 auto; }
+.u8-focal { display: inline-flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 84px; margin: 0 2px 0 6px; }
+.u8-focal-n { font-family: var(--display-font); font-weight: 800; font-size: 20px; line-height: 1; letter-spacing: -.3px;
+  font-variant-numeric: tabular-nums; color: var(--u8f-num, var(--accent-primary)); white-space: nowrap; }
+.u8-focal-n i { font-style: normal; font-size: 11px; font-weight: 700; opacity: .72; margin-left: 1px; }
+.u8-focal-track { flex: 1 1 auto; height: 5px; min-width: 36px; border-radius: var(--radius-pill); overflow: hidden;
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent); }
+.u8-focal-track > span { display: block; height: 100%; border-radius: inherit;
+  background: var(--u8f-bar, var(--accent-primary));
+  transition: width var(--motion-med, 260ms) var(--ease-out); }
+
+/* ---------- content-fit trims (local; shared renderers untouched) ---------- */
+.u8 .wd-chart { min-height: 0; }
+.u8 .uw-body:has(> .wd-note):not(:has(> .wd-stats)) { justify-content: space-between; }
+/* wide-band void fix: the shared key/value grid uses auto-fill, which leaves
+   empty tracks (and a right-side void) when a guard/provenance card stretches
+   across a full-width band. auto-fit collapses those tracks so the cells soak
+   the band; identical to auto-fill on the narrow tiers (no empty tracks there). */
+.u8 .wd-dgrid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u8">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI usage for <b>Tastebook</b> — a mixed-span bento you arrange yourself: quota pressure and attention lead, token flow fills the field, and dollar spend rides along as one modest tile. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u8Fresh"><span class="d"></span><span id="u8FreshTxt">current · as of 14:42</span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u8Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" title="Export usage as JSON" aria-label="Export usage as JSON" data-demo-action="demo.toast" data-demo-arg="Exported usage snapshot as JSON (demo)"><i data-ico="exportIc" class="pm-ico"></i></button>
+        <button class="pm-btn" id="u8Reset" title="Reset the canvas to the default mosaic" aria-label="Reset the canvas to the default mosaic"><i data-ico="grid" class="pm-ico sm"></i>Reset mosaic</button>
+      </div>
+    </header>
+
+    <div class="us-scroll">
+      <div class="u8-mast" aria-label="Canvas hints and live readout">
+        <span class="u8-mh-kick">Bento canvas</span>
+        <span class="u8-mh-chip"><i data-ico="grip" class="pm-ico sm"></i>drag any tile</span>
+        <span class="u8-mh-chip"><i data-ico="expand" class="pm-ico sm"></i>resize any corner</span>
+        <span class="u8-mh-chip"><i data-ico="grid" class="pm-ico sm"></i>drag to reorder — the mosaic reflows on the grid, never overlaps</span>
+        <span class="u8-mh-chip dim"><i data-ico="layers" class="pm-ico sm"></i>S/M/L/XL stay non-binding shortcuts</span>
+        <span class="u8-mh-r" role="status" aria-label="Canvas readout">
+          <span class="u8-mh-stat"><b id="u8Tiles">—</b> tiles</span>
+          <span class="u8-mh-sep" aria-hidden="true"></span>
+          <span class="u8-mh-stat">peak pressure <b id="u8PeakPct" class="hot">—</b><i class="u8-mh-pct">%</i><span id="u8PeakWho"></span></span>
+          <span class="u8-mh-sep" aria-hidden="true"></span>
+          <span class="u8-mh-stat dim">cost rides along — quota pressure leads</span>
+        </span>
+      </div>
+      <div class="uw-canvas u8-grid" id="u8Mosaic" aria-label="Usage widget canvas — bento mosaic"></div>
+      <div class="us-foot" style="margin-top:var(--us-gap);padding:0 2px var(--md)"><i data-ico="help" class="pm-ico sm"></i><span>Projections as of <b>14:42</b> · next auto-refresh <b>14:47</b> · 90-day retention. Spend figures are <b>list-rate estimates</b> and may differ from the actual bill. Every missing number carries a value-state chip — <b>missing is never zero</b>. Drag a grip to reorder — the mosaic reflows around the moved tile and nothing ever overlaps. Drag any corner to resize — free spans, always on-grid (S/M/L/XL stay shortcuts in each menu). Open a menu to focus, configure or remove.</span></div>
+    </div>
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script src="_shared/usage-widgets.js"></script>
+<script src="_shared/usage-widget-renderers.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U8', name: 'Canvas' } });
+if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+
+(function () {
+  'use strict';
+  var D = window.USAGE;
+  function $(id) { return document.getElementById(id); }
+
+  /* the full shared catalog: the varied-span mosaic + its own ground/chrome
+     are U8's differentiator, not gated widgets */
+  var U8_TYPES = ['quota', 'guard', 'analytics', 'budget', 'cache', 'tools', 'accounts', 'context',
+    'ledger', 'signals', 'whatcounts', 'planGating', 'spend', 'provenance', 'sessions', 'cost', 'tokens'];
+
+  /* default add-picker sizes are the CURRENT tier's span per type (set by
+     registerFor below) so a re-added tile drops back into the dense mosaic.
+     Free resize stays canonical; S/M/L/XL remain non-binding shortcuts. */
+
+  /* ---------- tier-aware bento boards (curated, hole-free by construction) ----
+     Unlike the old single board (whose 5/6-col tiles clamped to full-width at
+     ≤5 tracks, collapsing the primary 4-track view into a stack of wide rows
+     with big right-side voids), each tier here is a ROW-BANDED mosaic: every
+     band's column spans sum EXACTLY to the live track count and every tile in
+     a band shares the band's row height — so dense-packing can never leave an
+     interior hole or a trailing dead column at 1280/1700/2200/2500. The mosaic
+     identity comes from VARIED column widths (a full-width quota hero, 3+1 and
+     2+2 rails, a quartet of 1-col accent slims, a full-width ledger close) and
+     from varied band heights — each band's height is the tight fit of its
+     tallest tile (measured against the area-aware renderers' natural output),
+     so tiles soak their boxes instead of floating in a half-empty column. The
+     four 1-col slims (whatcounts / provenance / cost / spend) are tier-0 by
+     design (fitOf caps c1 at tier 0), so they sit as compact cards in their own
+     quartet band — short, never tall-and-empty. A pristine mosaic re-locks to
+     the new tier on breakpoint crossings (resize handler below). */
+  var TIER_BOARDS = {
+    /* 3 tracks: full-width hero / 2+1 rails pairing each rich tile with one
+       compact 1-col slim (the four slims used once each — a separate quartet is
+       impossible here: with only four 1-col tiles, using them in a quartet would
+       leave the c2 rich tiles no slim to pair with) / full-width decks. budget &
+       sessions are c2+ (fitOf caps 1-col tiles at tier 0 → empty otherwise). */
+    3: [['quota', 3, 4], ['guard', 2, 5], ['whatcounts', 1, 4], ['accounts', 2, 5], ['cost', 1, 4],
+        ['signals', 2, 6], ['provenance', 1, 4], ['cache', 2, 6], ['spend', 1, 4],
+        ['planGating', 3, 5], ['budget', 3, 6], ['context', 3, 5], ['analytics', 3, 5],
+        ['tokens', 3, 5], ['sessions', 3, 5], ['tools', 3, 5], ['ledger', 3, 5]],
+    /* 4 tracks: full-width hero / four 3+1 rails (rich tile + compact slim, the
+       four slims used once each) / 2+2 rails with budget c2 rich / full-width
+       decks. tools drops to c2 so the column count closes with the quartet-free
+       3+1 rails (no slim left orphaned, no tile duplicated). */
+    4: [['quota', 4, 4], ['guard', 3, 5], ['whatcounts', 1, 4], ['signals', 3, 5], ['provenance', 1, 4],
+        ['accounts', 3, 5], ['cost', 1, 4], ['cache', 3, 5], ['spend', 1, 4],
+        ['context', 2, 5], ['planGating', 2, 5], ['sessions', 2, 5], ['tokens', 2, 5],
+        ['tools', 2, 5], ['budget', 2, 6], ['analytics', 4, 5], ['ledger', 4, 5]],
+    /* 5 tracks — DOM order is band order (each band's cols sum to 5) so dense
+       packing lays clean row-bands with no holes. budget & sessions c2+ rich. */
+    5: [['quota', 5, 4],
+        ['guard', 3, 5], ['cache', 2, 5],
+        ['signals', 3, 6], ['sessions', 2, 6],
+        ['accounts', 3, 5], ['tools', 2, 5],
+        ['planGating', 2, 6], ['budget', 3, 6],
+        ['analytics', 3, 6], ['provenance', 1, 4], ['cost', 1, 4],
+        ['context', 3, 6], ['whatcounts', 1, 4], ['spend', 1, 4],
+        ['tokens', 2, 5], ['ledger', 3, 5]],
+    /* 6 tracks — DOM order is band order (each band's cols sum to 6). */
+    6: [['quota', 6, 4],
+        ['guard', 3, 5], ['context', 3, 5],
+        ['signals', 3, 6], ['sessions', 3, 5],
+        ['cache', 3, 5], ['tools', 3, 5],
+        ['accounts', 3, 5], ['planGating', 3, 5],
+        ['analytics', 2, 6], ['budget', 2, 6], ['tokens', 2, 5],
+        ['whatcounts', 1, 4], ['provenance', 1, 4], ['cost', 1, 4], ['spend', 1, 4],
+        ['ledger', 6, 5]]
+  };
+
+  function tierCols() {
+    var w = window.innerWidth;
+    if (w <= 600) return 1;
+    if (w <= 900) return 2;
+    if (w <= 1280) return 3;
+    if (w < 1800) return 4;
+    if (w < 2300) return 5;
+    return 6;
+  }
+  function boardFor(cols) {
+    var b = TIER_BOARDS[cols];
+    if (b) return b.map(function (x) { return { type: x[0], c: x[1], r: x[2] }; });
+    return window.PMWidgetDefs.defaultBoard.map(function (t) {
+      var sp = (window.PMWidgetDefs.TYPES[t] || {}).span || [2, 5];
+      return { type: t, c: sp[0], r: sp[1] };
+    });
+  }
+  function spanTable(cols) {
+    var tbl = {};
+    (TIER_BOARDS[cols] || []).forEach(function (x) { tbl[x[0]] = [x[1], x[2]]; });
+    return tbl;
+  }
+  var bootCols = tierCols();
+  var U8_DEFAULT_BOARD = boardFor(bootCols);
+  var bootSpans = spanTable(bootCols);
+  function spanFor(t) { return bootSpans[t] || (window.PMWidgetDefs.TYPES[t] || {}).span || [2, 5]; }
+
+  /* category spines: one quiet accent family per tile kind. Stamped as
+     --cat so the shared shell (icon chip, hover border) keys off it too. */
+  var U8_CAT = {
+    quota: 'var(--accent-primary)',
+    guard: 'var(--accent-warning)', planGating: 'var(--accent-warning)', accounts: 'var(--accent-warning)',
+    analytics: 'var(--tone-info)', tokens: 'var(--tone-info)', context: 'var(--tone-info)',
+    cache: 'var(--tone-info)', sessions: 'var(--tone-info)',
+    tools: 'var(--accent-orange)',
+    signals: 'var(--accent-magenta)',
+    budget: 'var(--accent-lime)', cost: 'var(--accent-lime)', spend: 'var(--accent-lime)',
+    ledger: 'var(--text-muted)', whatcounts: 'var(--text-muted)', provenance: 'var(--text-muted)'
+  };
+
+  window.PMWidgetDefs.register(window.PMWidgets, { only: U8_TYPES });
+  function registerFor(cols) {
+    var tbl = spanTable(cols);
+    U8_TYPES.forEach(function (id) {
+      var d = window.PMWidgetDefs.TYPES[id];
+      if (!d) return;
+      var def = { icon: (window.PMIcons && window.PMIcons[d.icon]) || '', label: d.label, desc: d.desc, span: (tbl[id] || d.span || [2, 5]).slice(), render: d.render };
+      if (d.config) def.config = d.config;
+      if (d.live) def.live = d.live;
+      window.PMWidgets.register(id, def);
+    });
+  }
+  registerFor(bootCols);
+
+  /* canvas chrome sync (runs on every rebuild via MutationObserver): the
+     category spine per tile, the geometry-driven hero wash, and the live
+     masthead readout (tile count + peak quota pressure). */
+  function peakPressure() {
+    var best = null;
+    (D.quotas || []).forEach(function (q) { if (q.used != null && (!best || q.used > best.used)) best = q; });
+    return best;
+  }
+  var PEAK = peakPressure();
+  if (PEAK) {
+    $('u8PeakWho').textContent = PEAK.name + ' · ' + PEAK.win + ' window';
+  }
+
+  /* masthead count-in: tween VALUE->VALUE (never restarts from 0 once a value
+     has landed) and mark the landing with a small spring tick — same pulse
+     shape as the shared MO.tick. Reduced motion swaps straight to the value. */
+  function countIn(el, to) {
+    var from = parseInt(el.textContent, 10);
+    if (isNaN(from)) from = 0;
+    if (from === to) { el.textContent = String(to); return; }
+    var rm = window.USrender && USrender.isRM && USrender.isRM();
+    if (rm || !window.requestAnimationFrame) { el.textContent = String(to); return; }
+    if (el._u8cnt) cancelAnimationFrame(el._u8cnt);
+    var dur = 620, t0 = performance.now();
+    var step = function (now) {
+      var p = Math.min((now - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(from + (to - from) * e));
+      if (p < 1) { el._u8cnt = requestAnimationFrame(step); return; }
+      el._u8cnt = 0;
+      try {
+        if (el.animate) el.animate(
+          [{ transform: 'scale(1)' }, { transform: 'scale(1.12)', offset: 0.4 }, { transform: 'scale(1)' }],
+          { duration: 260, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' });
+      } catch (err) {}
+    };
+    el._u8cnt = requestAnimationFrame(step);
+  }
+
+  /* the hero's focal number — the tightest window's pressure, tonal by
+     severity, with a fill track that soaks the head's width. It lives in
+     the hero head (never the body, so content-fit is untouched); full
+     rebuilds re-create the head, and the MutationObserver below re-runs
+     syncU8 on every childList change, so this converges. */
+  function focalTone(p) {
+    return p >= 85 ? ['var(--tone-err-text)', 'var(--tone-err)']
+      : p >= 70 ? ['var(--tone-warn-text)', 'var(--tone-warn)']
+      : ['var(--accent-primary)', 'var(--accent-primary)'];
+  }
+  function focalHTML() {
+    if (!PEAK || PEAK.used == null) return '';
+    var tone = focalTone(PEAK.used);
+    return '<span class="u8-focal" role="img" style="--u8f-num:' + tone[0] + ';--u8f-bar:' + tone[1] + '"' +
+      ' aria-label="Tightest window ' + PEAK.used + '% \u2014 ' + PEAK.name + ', ' + PEAK.win + '">' +
+      '<span class="u8-focal-n" aria-hidden="true">' + PEAK.used + '<i>%</i></span>' +
+      '<span class="u8-focal-track" aria-hidden="true"><span style="width:' + PEAK.used + '%"></span></span></span>';
+  }
+  function tileEl(cv, uid) {
+    /* a focused card is parked on <body> (usage-widgets hoistFocus), so a
+       canvas-only lookup misses it — resolve through the parked card first,
+       the same way the shared module's uwEl does */
+    var p = cv._pmw && cv._pmw.parked;
+    if (p && p.getAttribute && p.getAttribute('data-uid') === uid) return p;
+    return cv.querySelector('.uw[data-uid="' + uid + '"]');
+  }
+  function syncU8(cv) {
+    var items = cv._pmw.items;
+    items.forEach(function (it) {
+      var el = tileEl(cv, it.uid);
+      if (!el) return;
+      el.style.setProperty('--cat', U8_CAT[it.type] || 'var(--accent-primary)');
+      el.setAttribute('data-u8t', it.type);
+      var hero = it.type === 'quota';
+      el.classList.toggle('u8-hero', hero);
+      var head = el.querySelector('.uw-head');
+      var focal = head && head.querySelector('.u8-focal');
+      if (it.type === 'quota' && hero) {
+        var tt = head && head.querySelector('.uw-tt');
+        if (tt && !focal) tt.insertAdjacentHTML('afterend', focalHTML());
+      } else if (focal) {
+        focal.parentNode.removeChild(focal);
+      }
+    });
+    countIn($('u8Tiles'), items.length);
+    if (PEAK && PEAK.used != null) countIn($('u8PeakPct'), PEAK.used);
+  }
+
+  /* Widget ledger sort headers (th[data-wd-sort]) are rendered by the shared
+     catalog and re-created on every sort, so keyboard support is wired here at
+     the concept level: make each header focusable, expose aria-sort from the
+     active .on/.rev state, and activate on Enter/Space by re-firing the click
+     the shared delegation already handles (then restore focus to the
+     re-rendered header so keyboard users keep their place). */
+  function wireSortKeys(cv) {
+    function decor(th) {
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      th.setAttribute('aria-sort', th.classList.contains('on') ? (th.classList.contains('rev') ? 'descending' : 'ascending') : 'none');
+    }
+    cv.querySelectorAll('th[data-wd-sort]').forEach(decor);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        Array.prototype.forEach.call(m.addedNodes, function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.matches && n.matches('th[data-wd-sort]')) decor(n);
+          if (n.querySelectorAll) n.querySelectorAll('th[data-wd-sort]').forEach(decor);
+        });
+      });
+    }).observe(cv, { childList: true, subtree: true });
+    cv.addEventListener('keydown', function (e) {
+      var th = e.target.closest && e.target.closest('th[data-wd-sort]');
+      if (!th || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var key = th.getAttribute('data-wd-sort');
+      var uw = th.closest('.uw');
+      th.click();
+      requestAnimationFrame(function () {
+        var scope = (uw && uw.isConnected) ? uw : cv;
+        var nt = scope.querySelector('th[data-wd-sort="' + key + '"]');
+        if (nt) { decor(nt); nt.focus(); }
+      });
+    });
+  }
+
+  var canvas = $('u8Mosaic');
+  var handle = window.PMWidgets.mount(canvas, {
+    pageId: 'u8-canvas', types: U8_TYPES, defaultBoard: U8_DEFAULT_BOARD
+  });
+  window.PMWidgetDefs.wireCanvas(canvas);
+  wireSortKeys(canvas);
+  new MutationObserver(function () { syncU8(canvas); }).observe(canvas, { childList: true });
+  syncU8(canvas);
+
+  /* tier-crossing re-lock: a pristine mosaic (never reordered/focused) snaps to
+     the new tier's curated bento when the window crosses a track breakpoint, so
+     the bands always sum to the live track count and stay hole-free. A touched
+     mosaic is never rewritten — the user's arrangement is sacred. */
+  function stampOf(items) { return items.map(function (it) { return it.type + ':' + it.c + 'x' + it.r; }).join(','); }
+  var curCols = bootCols;
+  var seedStamp = stampOf(handle.items);
+  var rszT = null;
+  window.addEventListener('resize', function () {
+    if (rszT) clearTimeout(rszT);
+    rszT = setTimeout(function () {
+      var c = tierCols();
+      if (c === curCols) return;
+      curCols = c;
+      var items = handle.items;
+      var pristine = stampOf(items) === seedStamp && !items.some(function (it) { return it.focus; });
+      if (pristine && TIER_BOARDS[c]) {
+        registerFor(c);
+        canvas._pmw.defaultBoard = boardFor(c);
+        handle.reset();
+        seedStamp = stampOf(handle.items);
+      }
+    }, 220);
+  });
+
+  /* tactile hover: drive the --u8-rx/--u8-ry lean from the pointer position
+     (rAF-gated; the stylesheet composes it with the shared -2px lift under
+     its own hover/RM gates). Push-toward-the-cursor: the near edge recedes.
+     FLIP owns the inline transform mid-reflow, so this never fights the
+     drag; while a tile is held the lean stands down entirely. */
+  (function () {
+    var MAX = 1.6, raf = 0, last = null, ev = null;
+    function calm() {
+      if (!last) return;
+      last.style.setProperty('--u8-rx', '0deg');
+      last.style.setProperty('--u8-ry', '0deg');
+      last = null;
+    }
+    function setTilt(el, e) {
+      var r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var rx = (0.5 - (e.clientY - r.top) / r.height) * 2 * MAX;
+      var ry = ((e.clientX - r.left) / r.width - 0.5) * 2 * MAX;
+      el.style.setProperty('--u8-rx', rx.toFixed(2) + 'deg');
+      el.style.setProperty('--u8-ry', ry.toFixed(2) + 'deg');
+    }
+    canvas.addEventListener('pointermove', function (e) {
+      ev = e;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        if (document.documentElement.classList.contains('pmw-drag')) { calm(); return; }
+        var el = ev && ev.target && ev.target.closest ? ev.target.closest('.uw') : null;
+        if (el && (el.classList.contains('is-placeholder') || el.classList.contains('is-resizing') || el.classList.contains('is-focus'))) el = null;
+        if (el !== last) calm();
+        last = el;
+        if (el) setTilt(el, ev);
+      });
+    });
+    canvas.addEventListener('pointerleave', calm);
+  })();
+
+  /* demo-action buttons inside widget bodies are rendered dynamically, after
+     the chrome's one-time wiring pass — delegate them here */
+  canvas.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('[data-demo-action]');
+    if (el && window.toast) window.toast(el.getAttribute('data-demo-arg') || el.getAttribute('data-demo-action'));
+  });
+
+  $('u8Reset').addEventListener('click', function () {
+    handle.reset();
+    if (window.toast) window.toast('Canvas reset to the default mosaic');
+  });
+
+  $('u8Refresh').addEventListener('click', function () {
+    var b = this; b.classList.add('spinning');
+    $('u8Fresh').classList.add('stale'); $('u8FreshTxt').textContent = 'refreshing\u2026';
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u8Fresh').classList.remove('stale');
+      $('u8FreshTxt').textContent = 'current · as of ' + D.asOf;
+      handle.rerender();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+})();
+</script>
+</body>
+</html>

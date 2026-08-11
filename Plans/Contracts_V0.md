@@ -302,6 +302,39 @@ The minimum serialized shape is:
 {"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
 ```
 
+## PMConcept7 Home Workspace OpenFile placement addendum (2026-08-04)
+
+Home Workspace consumers use the canonical workspace-file shape
+`OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }`.
+`target_editor_panel_id` selects `editor_panel_1` through `editor_panel_4`;
+`target_editor_group_id` selects an explicit group within that panel; and
+`target_group` remains a compatibility alias that normalizes to
+`target_editor_group_id`. These fields are placement selectors only and never
+replace route identity, OpenSubject, buffer ownership, or dirty-state authority.
+`cmd.file.open_with` and `cmd.panel.switch` do not gain Panel 1..4 values.
+
+## Known-37 Case L owner materialization - requested/effective runtime and recovery unavailable
+
+### requested-effective-runtime
+
+`requested_effective_runtime` is the immutable, complete run-activation identity snapshot. Its sole new-writer schema is `Plans/requested_effective_runtime.schema.json`, schema ID `pm.requested_effective_runtime`, schema version `1.0.0`, and family ID `requested_effective_runtime`. The stable key and ref are both `requested_effective_runtime.v1:{scope_partition}:{snapshot_id}:{snapshot_sha256}`; `scope_partition` is the project partition and the canonical ref must match `^requested_effective_runtime\.v1:project~[A-Za-z0-9_-]+:[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[0-9a-f]{64}$`. The SHA-256 covers the canonical complete record. A second write under the same identity with different bytes is `requested_effective_runtime_identity_conflict`, is quarantined, cannot replace the first record, and cannot append `run.started`.
+
+The closed record requires exactly these fields: `schema_id`, `schema_version`, `snapshot_id`, `snapshot_ref`, `snapshot_sha256`, `project_id`, `run_id`, `thread_id`, `created_at_utc`, `requested_runtime_mode`, `runtime_mode`, `requested_mode_overlay`, `effective_mode_overlay`, `requested_strategy`, `strategy`, `strategy_resolution_reason`, `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `effective_provider_identity`, `account_switch_reason`, `requested_persona`, `effective_persona`, `run_modes_resolution_ref`, `models_resolution_ref`, `capability_snapshot_ref`, `multi_account_resolution_ref`, `persona_resolution_ref`, and `auth_resolution_ref`. Only `thread_id`, `requested_strategy`, `requested_account_id`, `effective_account_id`, and `account_switch_reason` admit `null`; all are required-present. `optional_fields` is empty.
+
+Executor resolves and durably commits this snapshot after all named owners resolve and before activation. `run.started` then carries the required `requested_effective_snapshot_ref` plus the immutable minimum inline joins. The inline paths are exactly `requested_runtime_mode` / `runtime_mode`, `requested_mode_overlay` / `effective_mode_overlay`, `requested_strategy` / `strategy`, `requested_platform` / `effective_platform`, `requested_model` / `effective_model`, `requested_account_id` / `effective_account_id`, and `requested_persona` / `effective_persona`. They must equal the referenced snapshot. The EventRecord envelope repeats `project_id`, `run_id`, and optional `thread_id`; every repeated non-null value must equal the payload and snapshot, and envelope absence cannot weaken a required payload value. No `effective_runtime_mode`, `workflow_overlay`, `effective_strategy`, or Persona `_id` alias is emitted.
+
+The exact strategy-resolution vocabulary is `read_only_mode_forces_hte | regular_hte_default | regular_hte_requested | regular_dae_allowed | regular_dae_disallowed | yolo_requires_dae`. Requested and effective identity may differ only when the named owner evidence and resolution reference establish the difference. Provider/model, account, and Persona consumers may not infer the mapping from display labels, string prefixes, focus, current preferences, or current credentials. Historical replay resolves the immutable snapshot, not current configuration. Missing, corrupt, mismatched, or incomplete snapshot authority blocks activation and `run.started`; it is never reconstructed from the event's inline subset.
+
+### recovery-unavailable command and result contracts
+
+The only new action IDs are `locate_and_verify_recovery` and `abandon_recovery`, mapping one-to-one to `cmd.runtime.locate_and_verify_recovery` and `cmd.runtime.abandon_recovery`. The governed `safe_point.recovery_unavailable` v2 payload requires one of the two exact ordered arrays: `[open_details, locate_and_verify_recovery, replan, abandon_recovery]`, or `[open_details, locate_and_verify_recovery, replan, start_fresh_attempt, abandon_recovery]` only when the existing isolated `historical_commit` or `worktree_head` fresh-attempt predicate is currently satisfied. The UI must preserve owner order. The reason enum is exactly `snapshot_missing | snapshot_corrupt | snapshot_scope_unsupported | snapshot_identity_stale | snapshot_unanchored`. Unknown values fail closed and do not map to a nearby value.
+
+`LocateAndVerifyRecoveryRequest` and `AbandonRecoveryRequest` are closed `1.0.0` contracts. Both bind the current `project_id`, `run_id`, `node_id`, `blocked_sequence`, `safe_point_id`, `anchor_ref`, exact `expected_snapshot_refs`, exact `expected_recovery_unavailable_reason_code`, actor/idempotency identity, and the pre/post-attempt branch. Locate additionally requires `recovery_source_ref`; abandon additionally requires `confirmation = abandon_recovery_and_preserve_local_work`, a durable `confirmation_ref`, and `preserved_local_work_acknowledged = true`. A pre-attempt request omits `attempt_id`; a post-attempt request requires the exact prior attempt identity. Optional permission evidence is always revalidated.
+
+`LocateAndVerifyRecoveryResult` and `AbandonRecoveryResult` are closed `1.0.0` domain results with `outcome = applied | replayed | refused | failed_recoverable` and `receipt_state = committed | not_committed`. Successful locate requires owner-verified refs, manifest hash and evidence, `anchor_state = released`, `release_reason = resolved`, and a committed `recovery_unavailable_resolution_receipt`. Successful abandonment requires `anchor_state = released`, `release_reason = abandoned_by_user`, and the same committed receipt family. Every nonsuccess leaves `anchor_state = recovery_unavailable`, has no release claim, and preserves work. `cleanup_performed` is always `false`. Replay returns the original result and receipt without a second transition. The shared `UICommandResponse` wraps the typed result; a generic acknowledgement is never domain success.
+
+The receipt is `pm.storage_value.recovery_unavailable_resolution_receipt.v1`, not an EventRecord. No `runtime.command_applied`, `safe_point.recovery_resolved`, alias event, generic repair command, or second handler is created. Admission order is current identity and ordered-membership revalidation, command-specific owner verification or explicit confirmation, durable typed result and receipt, atomic anchor release, then projection refresh. Any identity drift, storage failure, receipt failure, or owner disagreement preserves the anchor, refs, holds, local work, worktree ownership, and no-cleanup invariant.
+
 ### Concern ownership / authority direction
 
 Concern ownership flows from source event to durable record to projections. Projections may request actions, but record mutation must go through the owning command/contract path and return a typed UICommandResponse or validator closure receipt.
@@ -884,7 +917,7 @@ Closed runtime enum families:
 | `attention_required_reason_code` | `approval_required`, `clarification_required`, `auth_required`, `permission_required`, `budget_review_required`, `recovery_action_required`, `verification_review_required`, `conflict_resolution_required`, `external_resource_required`, `policy_decision_required` |
 | `budget_kind` | `wall_time`, `model_tokens`, `cost`, `attempt_count`, `retry_count`, `tool_call_count`, `parallel_agent_count`, `context_window` |
 | `node.unblocked.resolution` | `approval_granted`, `clarification_provided`, `auth_recovered`, `prerequisite_resolved`, `safe_point_restored`, `remediation_resolved`, `replan_applied`, `policy_or_permission_changed`, `capacity_available`, `manual_override_granted` |
-| `conflict_reason_code` | `worktree_path_mismatch`, `branch_mismatch`, `head_mismatch`, `baseline_stale`, `snapshot_missing`, `target_path_conflict`, `restore_conflict`, `canonicalization_failed`, `permission_denied` |
+| `conflict_reason_code` | `worktree_path_mismatch`, `branch_mismatch`, `head_mismatch`, `baseline_stale`, `snapshot_missing`, `snapshot_corrupt`, `snapshot_scope_unsupported`, `target_path_conflict`, `restore_conflict`, `concurrent_edit_conflict`, `historical_commit_missing`, `restore_recovery_required`, `canonicalization_failed`, `permission_denied` |
 
 Compatibility aliases:
 - `attention_reason_code` normalizes to `attention_required_reason_code` and is not a persisted canonical field.
@@ -925,6 +958,8 @@ Legacy `lsp.server_started` and `lsp.server_crashed` event names normalize to `l
 
 `seglog.event_appended` records append observability only; it must not replace the appended event itself. Runtime event records may carry `ttl_policy_ref?`, `retention_anchor_kind?`, and `retention_anchor_at_utc?`; default TTL values, max-cardinality bounds, janitor cleanup triggers, and legal-hold exceptions remain storage-owned and must not be inferred from file mtime.
 
+Every persisted event family has one storage-registered `scope_policy`: `application_only`, `project_only`, `application_or_project`, or `inherits_referenced_event`. The initial Contracts-owned catalog disposition is closed as follows: `storage.boot_recovery` and app-global defaults/config lifecycle are `application_only`; `seglog.event_appended` is `inherits_referenced_event`; `platform.capability_evaluated`, `tool.execution_*`, bundle events, and auth/account capability events are `application_or_project`; `memory.gist_state_changed`, `run.*`, `node.*`, `gate.*`, `worktree.*`, `lsp.*`, `approval.*`, coordination, FileSafe, safe-point, attempt, receipt, and worktree lifecycle families are `project_only`. A family without a registered policy, an unknown family, or a conflicting scope candidate is quarantined before append or projection; it never defaults to application scope or a fabricated project.
+
 Gate event payloads reference the `Plans/Executor_Protocol.md` dispatch score tuple when they expose `score?` or `score_threshold?`; `Plans/Progression_Gates.md` remains the semantic owner for gate evaluation rules.
 
 Payload detail remains with the producer docs for these registered families: `Plans/LSPSupport.md` owns LSP lifecycle states, `Plans/newtools.md` and `Plans/orchestrator-subagent-integration.md` own platform capability evaluation, `Plans/assistant-memory-subsystem.md` owns memory gist verification and indexing, and `Plans/chain-wizard-flexibility.md` plus `Plans/assistant-chat-design.md` own annotation, selection, and targeted revision behavior.
@@ -961,18 +996,19 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 
 ### 1.2 EventRecord
 
-`EventRecord` is the canonical persisted event envelope for `schema_id = pm.event.v0`. The normative machine-readable schema is `Plans/event_record.schema.json` with `schema_version = 1.0.0`. New persisted writers MUST emit this envelope; `EventEnvelopeV1` remains reader/upgrader compatibility only.
+`EventRecord` is the canonical persisted event envelope for `schema_id = pm.event.v0`. The normative current-writer schema is `Plans/event_record.schema.json` with `schema_version = 2.0.0`; its `$defs.event_record_1_0_0_compatibility_reader` freezes the prior `1.0.0` reader shape. New persisted writers MUST emit `2.0.0`; `1.0.0` EventRecord and `EventEnvelopeV1` remain reader/upgrader compatibility only and are never silently reinterpreted as `2.0.0`.
 
 Field contract:
 
 | Field | Rule |
 |---|---|
 | `schema_id` | Required string const `pm.event.v0`. |
-| `schema_version` | Required string const `1.0.0`; every persisted EventRecord value carries the version. |
+| `schema_version` | Required string const `2.0.0` for new writes; every persisted EventRecord value carries the version and selects an exact registered reader. |
+| `scope_kind` | Required enum `application` or `project`. Unknown, missing, or inferred scope is invalid. |
 | `event_id` | Required stable event identity; writers MUST NOT reuse it for a different semantic event. |
 | `event_type` | Required canonical event name such as `run.started`; this is the persisted field name. |
 | `type` | Compatibility alias only for legacy `EventEnvelopeV1` readers and mirrors; it MUST normalize to `event_type` before EventRecord persistence and MUST NOT be stored as a second top-level EventRecord field. |
-| `project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id` | Required identity join fields; nullable fields are present with `null` when the event is outside that scope. |
+| `project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id` | Required identity join fields. `scope_kind=application` requires `project_id=null`; `scope_kind=project` requires a non-empty `project_id`. Other out-of-scope joins are present with `null`. A fake application/default project identifier is forbidden. |
 | `actor_ref`, `requested_account_ref`, `effective_account_ref` | Required actor/account identity references. Raw account identifiers, tokens, OAuth values, credential paths, and local secret material are forbidden; account-sensitive details live behind refs owned by the relevant account or permission contract. |
 | `occurred_at_utc`, `observed_at_utc`, `persisted_at_utc` | Required timestamp fields for source/authored time, writer-observed time, and durable append time. Timestamp values do not define replay order. |
 | `sequence_id`, `producer_sequence_id` | Required monotonic ordering fields. `sequence_id` is the storage-assigned canonical replay sequence; `producer_sequence_id` is nullable and may preserve an upstream monotonic source sequence. |
@@ -988,7 +1024,11 @@ Rules:
 - `Plans/storage-plan.md` owns seglog/redb persistence mechanics, replay ordering, retention/compaction, migration execution, and the concrete persisted event-type payload schema registry.
 - Producer docs own event semantics and payload meaning, but they MUST reference `Contracts_V0.md#EventRecord` and MUST NOT define local EventRecord field lists.
 - Payload schemas MAY close event-specific fields independently; the top-level EventRecord envelope stays closed while `payload` remains the dispatch region for the selected schema.
-- Migration is forward-only. A schema change requires a governed successor schema/version and a storage-owned upgrader; readers may accept older envelopes only by recording the migration fields.
+- `event_id` is globally unique across application and project scopes for the lifetime of the app data root. For policies that select the idempotency key, its identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime, where `scope_partition` is `app` or the storage-owned reversible project partition. Same identity plus the same producer semantic digest returns the original result; the same identity plus a different digest is `idempotency_conflict` and never appends.
+- `producer_semantic_digest` is lowercase SHA-256 of RFC 8785 canonical JSON over the producer-owned semantic fields: `event_type`, `scope_kind`, `project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id`, `actor_ref`, requested/effective account refs, `occurred_at_utc`, `producer_sequence_id`, correlation/causation/parent IDs, `idempotency_key`, `payload_schema_id`, `payload`, `payload_ref`, `redaction_profile`, and `migration`. Storage-assigned `sequence_id`, `observed_at_utc`, and `persisted_at_utc` are excluded.
+- `append_once` requires both identities unseen; `dedupe_by_event_id` selects global `event_id`; `dedupe_by_idempotency_key` selects the scoped key while global event-ID integrity still applies. `projector_replay_only` is compatibility-reader-only, is rejected by normal append as `replay_only_not_appendable`, and may affect only the projector's rebuildable state and atomically committed checkpoint. It cannot append, mutate canonical redb values, dispatch work, publish an outbox, execute commands/tools/network calls, charge usage, notify, or create another canonical event.
+- A rebuildable dedupe index is an accelerator, not authority. Append admission synchronously catches it up to the verified seglog tail under the append-writer lock or returns `dedupe_unavailable` without append, buffering, or deferred in-memory acceptance.
+- Migration is forward-only. A schema change requires a governed successor schema/version and a storage-owned upgrader. A `1.0.0` reader/writer encountering `2.0.0` performs no mutation; metadata-only compatibility diagnostics are allowed, but live read-only project/viewer access requires a validating `2.0.0` reader and is otherwise refused.
 - No validator, schema file, or doc reference by itself makes Puppet Master buildable. This closes only the EventRecord envelope materialization slice; provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, and broader storage value schemas remain blockers.
 
 ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractName:Plans/event_record.schema.json
@@ -1004,6 +1044,43 @@ ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractN
   "payload": {}
 }
 ```
+
+Projectors normalize this shape in memory for replay only; they never append or rewrite it during ordinary read/replay. The normalizer's inputs are the exact admitted envelope/extensions, the verified seglog header and source cursor, and the registered event-family row containing scope policy, payload schema, and explicit legacy identity JSON pointers. Current time, randomness, filesystem mtime, absolute paths, process identity, hash-map order, UI-selected project, and mutable account/session state are forbidden inputs.
+
+Deterministic normalization uses UTC RFC3339 with exactly nine fractional digits and trailing `Z`, then RFC 8785 canonical JSON over `{ts, seq, type, payload, extensions}`. Let `legacy_digest` be lowercase SHA-256 hex of its UTF-8 bytes. The normalized `event_id` is `legacy-event-v1:{legacy_digest}` and `idempotency_key` is `legacy-envelope-v1:{legacy_digest}`. Canonical MessagePack recursively orders map keys by UTF-8 bytes, uses shortest valid integer/length encodings and UTF-8 strings, and forbids NaN/infinity.
+
+The normalized field formulas are closed:
+
+| EventRecord 2.0 field | EventEnvelopeV1 normalization formula |
+|---|---|
+| `schema_id` | Constant `pm.event.v0`. |
+| `schema_version` | Constant `2.0.0` in the transient normalized view. |
+| `scope_kind` | Registered `scope_policy`: application-only -> application; project-only -> project or quarantine when absent; dual -> project when one candidate exists, otherwise application; inherited -> referenced scope or quarantine. |
+| `event_id` | `legacy-event-v1:{legacy_digest}`. |
+| `event_type` | Exact legacy `type` after a registered compatibility alias; unregistered aliases quarantine. |
+| `project_id` | Resolved registered project candidate for project scope; exact null for application scope. |
+| `thread_id`, `run_id`, `node_id`, `attempt_id` | Registered candidate when present; otherwise null; conflicting candidates quarantine. |
+| `actor_ref` | Registered non-secret actor ref or reserved `pm.actor_ref/legacy-unknown`. |
+| `requested_account_ref`, `effective_account_ref` | Registered non-secret ref when present; otherwise null. |
+| `occurred_at_utc` | Canonicalized legacy `ts`; invalid/ambiguous time quarantines. |
+| `observed_at_utc` | Verified header observation timestamp in canonical form, otherwise occurred time. |
+| `persisted_at_utc` | Equal to normalized observed time; read time is forbidden. |
+| `sequence_id` | Equal verified header sequence when present, otherwise legacy `seq`; disagreement quarantines. |
+| `producer_sequence_id` | Null; legacy `seq` is the storage sequence and no upstream sequence is invented. |
+| `correlation_id` | Registered ref or `event_id`, making the legacy event its own correlation root. |
+| `causation_event_id`, `parent_event_id` | Registered candidate or null; adjacency, time, and sequence do not infer either. |
+| `idempotency_key` | `legacy-envelope-v1:{legacy_digest}`. |
+| `payload_schema_id` | Exact registered compatibility schema for normalized event type; missing registration quarantines. |
+| `payload` | Legacy payload unchanged after schema and no-secret validation. |
+| `payload_ref` | Explicit registered legacy ref or null. |
+| `redaction_profile` | `no_secrets` after deterministic validation, or `redacted` only from a registered versioned transform. |
+| `replay_policy` | Constant `projector_replay_only`. |
+| `migration.migrated_from_schema_id` | Constant `pm.event.envelope_v1`. |
+| `migration.migrated_from_schema_version` | Null because the legacy envelope carried no version. |
+| `migration.migration_id` | Constant `event-envelope-v1-to-event-record-v2@1`. |
+| `migration.compatibility_event_type` | Exact original legacy `type` before alias normalization. |
+
+Conflicting identity candidates quarantine as `legacy_identity_conflict`. Invalid/ambiguous timestamps, unknown scope or alias, missing payload registration, and raw-secret content quarantine without checkpoint advance. For a fixed `(legacy envelope, verified header/cursor, registry revision)`, two runs and two conforming implementations produce byte-identical canonical JSON, MessagePack, identity, index row, and one idempotent projection effect. Changing a registered alias, identity pointer, scope policy, payload schema, or redaction transform is a governed migration revision, never a silent reinterpretation.
 
 ## Provider/Model Capability Snapshot Reference Envelope
 
@@ -2360,17 +2437,30 @@ Minimum payload:
 - `baseline_ref`
 - `replan_generation`
 - `creation_reason`
+- `snapshot_format_version`
+- `content_scope_version`
+- `snapshot_manifest_ref`
+- `snapshot_manifest_sha256`
+- `content_state_sha256`
+- `capture_status`
 - `ts`
 
 When a safe point is created from a worktree-bound execution unit, `safe_point.created` carries the worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`) so restore, retry, and UI history can return to the same worktree context instead of silently substituting the main project root. `worktree_branch` is a compatibility alias for `branch_name`; `working_directory` is not a substitute for `worktree_path`.
 
 #### `safe_point.restored`
 Minimum payload:
+- `schema_version`
+- `restore_transaction_id`
 - `safe_point_id`
 - `run_id`
 - `node_id`
 - `attempt_id`
 - `restore_outcome`
+- `target_state_sha256`
+- `pre_restore_state_sha256`
+- `post_restore_state_sha256`
+- `conflict_reason_code?`
+- `recovered_after_restart`
 - `ts`
 
 #### `restore_outcome` enum
@@ -2379,16 +2469,18 @@ Canonical values for the `restore_outcome` field in `safe_point.restored` events
 
 | Value | Meaning |
 |-------|---------|
-| `restored_clean` | All files and state restored to safe-point snapshot without conflicts. |
-| `restored_with_conflicts` | Restore completed but one or more files had merge conflicts requiring resolution. |
-| `restore_failed` | Restore could not be applied; original state preserved. |
-| `restore_skipped` | Restore was requested but determined unnecessary (state already matches safe-point). |
+| `restored_clean` | The post-restore canonical manifest and SCM identity equal the target and no unresolved conflict exists. |
+| `restored_with_conflicts` | Compatibility value reserved for an explicitly merge-capable owner; safe-point restore and Chat revert never emit it. |
+| `restore_failed` | Apply failed, rollback completed, and the final canonical manifest equals the recorded pre-restore manifest. |
+| `restore_skipped` | Preflight manifest already equaled the target, so no path mutation occurred. |
+| `restore_refused` | Preconditions failed before path mutation; the observed preflight state remained unchanged. |
+| `restore_recovery_required` | Neither target nor pre-restore equality can be proved; the mutation fence and blocked recovery episode remain active. |
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 #### FileSafe snapshot event compatibility
 
-FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`. `conflict_reason_code` is closed to `worktree_path_mismatch | branch_mismatch | head_mismatch | baseline_stale | snapshot_missing | target_path_conflict | restore_conflict | canonicalization_failed | permission_denied`.
+FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`. `conflict_reason_code` is closed to `worktree_path_mismatch | branch_mismatch | head_mismatch | baseline_stale | snapshot_missing | snapshot_corrupt | snapshot_scope_unsupported | target_path_conflict | restore_conflict | concurrent_edit_conflict | historical_commit_missing | restore_recovery_required | canonicalization_failed | permission_denied`.
 
 #### FileSafe fail-closed security event payloads
 
@@ -3295,6 +3387,113 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```
+
+## PMConcept7 Home Workspace event contracts — 2026-08-04
+
+The existing `UICommand` and `EventRecord` envelopes remain canonical. Home
+commands carry `project_id`, `workspace_tab_id` where applicable, a stable
+surface/workgroup identity, expected revision, idempotency key, origin, and
+correlation ID. Pointer-move and resize-preview frames are UI-local and emit no
+persisted event.
+
+Where no equivalent exists, the event registry adds these typed EventRecord
+families:
+
+- `workspace.layout_changed` uses
+  `Plans/event_payloads/workspace_layout_changed.schema.json` and records the
+  prior/new layout revision, mutation kind, affected surface identities,
+  source/target host, target slot, target surface/insertion edge when applicable,
+  command/correlation identity, and `persisted=true` only after verified durable
+  commit.
+- `terminal.workgroup_moved` uses
+  `Plans/event_payloads/terminal_workgroup_moved.schema.json` and records the
+  workgroup, source/target sections, contained pane/session references, section
+  creation, and the invariant `preserve_session_identity=true`.
+
+Existing `panel.undocked`, `panel.redocked`, Browser session, file-open, and
+terminal session events remain authoritative for their domains. Home movement
+does not create a parallel panel, browser, chat, terminal-session, PTY, or widget
+identity contract.
+
+Every selected Home leaf action produces a typed dispatch receipt. Successful
+layout mutation has `outcome=applied` and links the committed EventRecord;
+idempotent focus/already-open actions use `outcome=no_change` with a reason and
+never fabricate a changed event; disabled actions do not dispatch; cancellation
+uses `outcome=cancelled` only when a domain command was already admitted and
+otherwise remains view-local; persistence failure uses `outcome=failed` with
+`rolled_back=true`, prior revision, and failure reason, and has no success
+EventRecord. Disclosure-only menu/flyout opening has no receipt because it is not
+a UICommand.
+
+### CV-323 - Home Command Event And Receipt Contract
+
+```yaml
+plan_unit_id: CV-323
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Home leaf actions bind the canonical UICommand envelope to precise applied, no_change, cancelled, disabled-before-dispatch, and failed-rollback outcomes; workspace.layout_changed and terminal.workgroup_moved carry exact identity, revision, host, insertion, correlation, and persistence truth without fabricated command-applied events.
+gui_related: true
+gui_classification_reason: The contract drives visible Home success, disabled, cancellation, failure, and recovery projections.
+split_recommended: false
+depends_on: [CV-322, F3-501, SP-245, UCC-144]
+unblocks: []
+acceptance_criteria:
+- workspace.layout_changed includes exact changed surface IDs, prior/new revision, source/target host, target slot, target/insertion fields, command/correlation identity, and persisted=true only after readback.
+- terminal.workgroup_moved includes workgroup, source/target section, contained pane/session IDs, section-created state, command/correlation identity, and preserve_session_identity=true.
+- Persistence failure emits a failed rolled-back receipt and no success event; no-change and cancellation never fabricate changed events.
+- Disclosure-only popup/flyout actions remain view-local and do not dispatch.
+validation_surfaces:
+- python3 scripts/pm-implementation-readiness.py validate
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: home_receipt_truth_drift
+reasoning_tier: standard
+context_scope: home_command_event_receipts
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/event_payloads/workspace_layout_changed.schema.json, Plans/event_payloads/terminal_workgroup_moved.schema.json]
+node_compile_hint:
+  mode: home_command_event_contract
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+preserved_exact_tokens: [workspace.layout_changed, terminal.workgroup_moved, persisted=true, no_change, rolled_back=true]
+negative_constraints:
+- Do not emit generated or fabricated command-applied events.
+- Do not emit a success event for failed persistence or unchanged/cancelled gestures.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-plan.md]
+```
+
+## Known-37 Goal Runtime v2 schema registration
+
+The following 21 project-scoped payload roots are the only current Goal/GoalRun writers. Each family revision is `2.0.0`, the registry selects root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
+
+| Event type | Current root | Exact schema ID |
+|---|---|---|
+| `goal.blocked` | `Plans/event_payloads/goal_runtime/goal_blocked.schema.json#` | `pm.goal_runtime_event.goal_blocked.schema.v2` |
+| `goal.cancelled` | `Plans/event_payloads/goal_runtime/goal_cancelled.schema.json#` | `pm.goal_runtime_event.goal_cancelled.schema.v2` |
+| `goal.child_status_changed` | `Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json#` | `pm.goal_runtime_event.goal_child_status_changed.schema.v2` |
+| `goal.completed` | `Plans/event_payloads/goal_runtime/goal_completed.schema.json#` | `pm.goal_runtime_event.goal_completed.schema.v2` |
+| `goal.created` | `Plans/event_payloads/goal_runtime/goal_created.schema.json#` | `pm.goal_runtime_event.goal_created.schema.v2` |
+| `goal.degraded` | `Plans/event_payloads/goal_runtime/goal_degraded.schema.json#` | `pm.goal_runtime_event.goal_degraded.schema.v2` |
+| `goal.evidence_captured` | `Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json#` | `pm.goal_runtime_event.goal_evidence_captured.schema.v2` |
+| `goal.progressed` | `Plans/event_payloads/goal_runtime/goal_progressed.schema.json#` | `pm.goal_runtime_event.goal_progressed.schema.v2` |
+| `goal.receipt_recorded` | `Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json#` | `pm.goal_runtime_event.goal_receipt_recorded.schema.v2` |
+| `goal.replanned` | `Plans/event_payloads/goal_runtime/goal_replanned.schema.json#` | `pm.goal_runtime_event.goal_replanned.schema.v2` |
+| `goal_run.blocked` | `Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json#` | `pm.goal_runtime_event.goal_run_blocked.schema.v2` |
+| `goal_run.cancelled` | `Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json#` | `pm.goal_runtime_event.goal_run_cancelled.schema.v2` |
+| `goal_run.certified` | `Plans/event_payloads/goal_runtime/goal_run_certified.schema.json#` | `pm.goal_runtime_event.goal_run_certified.schema.v2` |
+| `goal_run.replanned` | `Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json#` | `pm.goal_runtime_event.goal_run_replanned.schema.v2` |
+| `goal_run.started` | `Plans/event_payloads/goal_runtime/goal_run_started.schema.json#` | `pm.goal_runtime_event.goal_run_started.schema.v2` |
+| `goal_run.stopped` | `Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json#` | `pm.goal_runtime_event.goal_run_stopped.schema.v2` |
+| `goal.scheduled` | `Plans/event_payloads/goal_runtime/goal_scheduled.schema.json#` | `pm.goal_runtime_event.goal_scheduled.schema.v2` |
+| `goal.stopped` | `Plans/event_payloads/goal_runtime/goal_stopped.schema.json#` | `pm.goal_runtime_event.goal_stopped.schema.v2` |
+| `goal.tool_check_recorded` | `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#` | `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` |
+| `goal.updated` | `Plans/event_payloads/goal_runtime/goal_updated.schema.json#` | `pm.goal_runtime_event.goal_updated.schema.v2` |
+| `goal.verification_decided` | `Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json#` | `pm.goal_runtime_event.goal_verification_decided.schema.v2` |
+
+Unknown schema/event/version, an unresolved ref, a raw secret, an outer/inner identity conflict, stale revision, illegal transition, idempotency conflict, or unavailable dedupe authority appends nothing and advances no projection checkpoint. Receipt, verification, certification, completion, and transition authority remain with the exact Goal owner contract; schema validation or event delivery does not create those outcomes.
 
 ### CV-009 - Temporal Wait Timeout Recovery Envelope Fields
 
@@ -6847,8 +7046,9 @@ canonical_text: >-
   seglog.event_appended records append observability only and must not replace
   the appended event itself; runtime event records may carry ttl_policy_ref?,
   retention_anchor_kind?, and retention_anchor_at_utc?, while storage owns TTL
-  defaults, max-cardinality bounds, janitor cleanup triggers, legal-hold
-  exceptions, and the prohibition on inferring retention from file mtime.
+  defaults, max-cardinality bounds, janitor cleanup triggers, semantic
+  retention-policy and anchor references, legal-hold exceptions, and the
+  prohibition on inferring retention from file mtime or physical offsets.
 gui_related: false
 gui_classification_reason: This unit defines persistence and retention ownership boundaries.
 split_recommended: true
@@ -6858,7 +7058,7 @@ acceptance_criteria:
   - seglog.event_appended is append observability only.
   - Runtime event records may carry ttl_policy_ref?, retention_anchor_kind?, and retention_anchor_at_utc?.
   - Storage owns default TTL values, max-cardinality bounds, janitor cleanup triggers, and legal-hold exceptions.
-  - Retention is not inferred from file mtime.
+  - Retention and legal-hold identity use storage-owned semantic refs and are not inferred from file mtime or segment offsets.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -7045,9 +7245,12 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   EventEnvelopeV1 is a minimal intermediate compatibility envelope with ts,
-  seq, type, and payload; writers should include run_id and thread_id whenever
-  available, readers must tolerate both envelope shapes, and projectors should
-  upgrade in-memory to EventRecord form.
+  seq, type, and payload. Readers normalize admitted legacy values
+  deterministically in memory to EventRecord 2.0 projector_replay_only form
+  using the registered scope/payload/identity mapping, verified source cursor,
+  RFC 8785 canonical input, and SHA-256 identity. Ordinary readers never append
+  or rewrite the legacy bytes, and conflicting, unknown, or secret-bearing
+  values quarantine without advancing the projector checkpoint.
 gui_related: false
 gui_classification_reason: This unit defines event envelope compatibility fields and reader/writer behavior.
 split_recommended: true
@@ -7055,8 +7258,9 @@ depends_on: [CV-002, CV-060]
 unblocks: [CV-088, CV-089]
 acceptance_criteria:
   - EventEnvelopeV1 preserves ts, seq, type, and payload as the minimal envelope.
-  - Writers should include run_id and thread_id whenever available.
-  - Readers tolerate both envelope shapes and projectors upgrade in-memory to EventRecord form.
+  - Readers tolerate registered legacy input and normalize it deterministically in memory only.
+  - The same legacy bytes, verified source context, and registry revision yield byte-identical EventRecord identity and projection effect.
+  - Unknown scope/payload mappings, identity conflicts, invalid timestamps, and unhandled raw secrets quarantine without source mutation or checkpoint advance.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13985,15 +14189,17 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   safe_point.created minimum payload carries safe point, run, node, attempt,
-  optional worktree context, baseline, replan generation, and timestamp fields.
+  optional worktree context, baseline, replan generation, snapshot format and
+  content-scope versions, manifest ref/hash, state digest, capture status, and
+  timestamp fields.
 gui_related: false
 gui_classification_reason: This unit defines safe-point event payload fields.
 split_recommended: false
 depends_on: []
 unblocks: [CV-225, CV-226, CV-228]
 acceptance_criteria:
-  - "safe_point.created payload includes safe_point_id, run_id, node_id, attempt_id, baseline_ref, replan_generation, and ts."
-  - "Worktree-bound safe points may carry worktree_id, worktree_path, worktree_branch, and working_directory."
+  - "safe_point.created payload includes safe_point_id, run_id, node_id, attempt_id, baseline_ref, replan_generation, snapshot_format_version, content_scope_version, snapshot_manifest_ref, snapshot_manifest_sha256, content_state_sha256, capture_status, and ts."
+  - "Worktree-bound safe points carry worktree_id, worktree_path, branch_name, and HEAD_sha; compatibility aliases do not replace these fields."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14080,15 +14286,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  safe_point.restored minimum payload carries safe_point_id, run_id, node_id,
-  attempt_id, restore_outcome, and timestamp.
+  safe_point.restored minimum payload carries restore_transaction_id,
+  safe_point_id, run_id, node_id, attempt_id, restore_outcome, target,
+  pre-restore, and post-restore state digests, optional conflict reason,
+  restart-recovery flag, and timestamp.
 gui_related: false
 gui_classification_reason: This unit defines safe-point restore event payload fields.
 split_recommended: false
 depends_on: [CV-224]
 unblocks: [CV-227, CV-228]
 acceptance_criteria:
-  - "safe_point.restored payload includes safe_point_id, run_id, node_id, attempt_id, restore_outcome, and ts."
+  - "safe_point.restored payload includes restore_transaction_id, safe_point_id, run_id, node_id, attempt_id, restore_outcome, target_state_sha256, pre_restore_state_sha256, post_restore_state_sha256, recovered_after_restart, and ts."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -14124,16 +14332,19 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   restore_outcome is closed to restored_clean, restored_with_conflicts,
-  restore_failed, and restore_skipped with the source meanings for clean,
-  conflicted, failed, and unnecessary restores.
+  restore_failed, restore_skipped, restore_refused, and
+  restore_recovery_required. Clean and failed outcomes require verified target
+  or rollback equality; skipped/refused perform no path mutation; recovery
+  required retains the mutation fence. Safe-point restore and Chat revert do
+  not emit the compatibility-only merge value restored_with_conflicts.
 gui_related: false
 gui_classification_reason: This unit defines safe-point enum semantics rather than visual presentation.
 split_recommended: false
 depends_on: [CV-226]
 unblocks: [CV-228]
 acceptance_criteria:
-  - "restore_outcome accepts only restored_clean, restored_with_conflicts, restore_failed, and restore_skipped."
-  - "Each enum value preserves its source meaning."
+  - "restore_outcome accepts only restored_clean, restored_with_conflicts, restore_failed, restore_skipped, restore_refused, and restore_recovery_required."
+  - "restored_clean requires target equality; restore_failed requires verified rollback equality; restore_recovery_required preserves the mutation fence."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -19621,24 +19832,28 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Contracts_V0 owns the canonical persisted EventRecord envelope for schema_id
-  pm.event.v0 and schema_version 1.0.0 through Plans/event_record.schema.json.
-  The envelope requires schema_id, schema_version, event_id, canonical
-  event_type, project/thread/run/node/attempt identity fields, actor and
+  pm.event.v0 and current-writer schema_version 2.0.0 through
+  Plans/event_record.schema.json, with a frozen 1.0.0 compatibility reader.
+  The envelope requires schema_id, schema_version, scope_kind, event_id,
+  canonical event_type, conditional project identity, thread/run/node/attempt identity fields, actor and
   requested/effective account refs, occurred/observed/persisted timestamps,
   monotonic sequence fields, correlation and causation ids, idempotency_key,
   payload_schema_id, payload and payload_ref dispatch fields, redaction_profile,
   replay_policy, and closed migration metadata. Legacy type is a compatibility
   alias for EventEnvelopeV1 only and must normalize to event_type before
-  EventRecord persistence.
+  EventRecord persistence. Event identity is app-root-global for the store
+  lifetime, scoped idempotency is lifetime-bound to scope partition and event
+  type, and projector_replay_only is non-appendable and side-effect-free.
 gui_related: false
 gui_classification_reason: This unit defines a persisted event schema envelope and storage contract boundary, not GUI presentation.
 depends_on: [CV-002, CV-087, CV-088]
 unblocks: []
 acceptance_criteria:
   - Contracts_V0 contains canonical section 1.2 EventRecord for pm.event.v0.
-  - Plans/event_record.schema.json is Draft 2020-12, top-level closed, and requires schema_version.
+  - Plans/event_record.schema.json is Draft 2020-12, top-level closed, requires schema_version and scope_kind, and enforces application-null/project-nonempty project_id.
   - EventRecord uses event_type as the persisted field name; type remains compatibility-only.
   - EventRecord forbids raw secrets and stores account-sensitive values only by reference.
+  - Global event identity, scoped lifetime idempotency, fail-closed dedupe currentness, and replay-only side-effect constraints are explicit.
   - This unit closes only the EventRecord envelope slice and does not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral, or broad storage blockers.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate
@@ -20241,5 +20456,413 @@ negative_constraints:
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+```
+
+## Case L Durable-State Contract Addendum - 2026-07-17
+
+This addendum is the Contracts-owner portion of the approved Case L repair package. Approval source: `PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md`, which approves bundles A-F without exception. Storage owns framing, persistence, migration, backup, retention, compaction, quarantine custody, and recovery algorithms; FileSafe owns restore execution and equality. Contracts owns only the shared envelopes, closed outcomes, event registrations, and cross-surface status shapes below. These contracts create no runtime implementation, WorkNodes, NodeSeeds, executable queues, build tasks, or certification evidence.
+
+### Durable append receipt and storage recovery events
+
+`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the storage-owned frame and manifest/watermark durability barriers complete. `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
+
+Contracts registers these `application_only` EventRecord families; storage owns their exact payload schemas and recovery behavior:
+
+| Event type | Cross-contract payload minimum |
+|---|---|
+| `storage.integrity_detected` | payload `schema_version`, `integrity_id`, non-secret storage-root ref/hash, segment identity/hash/state, frame version, `failure_class`, detection/last-good/next-good offsets, expected/observed CRC when known, `impact_precision`, affected byte/sequence/event ranges when proven, durable-watermark relation, `report_ref` |
+| `storage.recovery_applied` | payload `schema_version`, `recovery_id`, `integrity_id?`, `action`, pre/post segment and manifest hashes, pre/post lengths, excluded ranges, sequence gaps, survivor digest, checkpoint action, projection action, `durability_receipt_ref`, `user_disclosure_required` |
+| `storage.boot_recovery` | payload `schema_version`, deterministic `recovery_set_id`, referenced integrity/recovery IDs, interrupted transaction kinds, final manifest generation/recovery epoch/active segment identity, `repeat_of?` |
+
+`impact_precision` is `exact_event | exact_byte_range | bounded_sequence_range | unknown_segment_remainder`. The IDs and idempotency keys are deterministic from action kind, target preimage hash, affected range, and precondition manifest generation. Retrying one recovery episode returns the original event/result and never appends a semantic duplicate. Application scope requires `project_id=null`; affected project/run/event identities appear only when proven in the payload and never as a fabricated envelope project.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+### Retention, compaction, deletion, quarantine, and recovery-unavailable events
+
+`CV-083` remains the boundary: `Plans/storage-plan.md` owns policy values, cadence, caps, eligibility, holds, compaction, deletion, and quarantine custody. Contracts registers only these payload envelopes:
+
+| Event type | Scope policy | Cross-contract payload minimum and closed state |
+|---|---|---|
+| `storage.retention_hold_changed` | `application_or_project` | `schema_version`, `hold_id`, semantic scope ref, `action=set|clear`, actor ref, reason, occurred time, policy/anchor refs, affected semantic refs, receipt ref |
+| `storage.compaction_lifecycle_changed` | `application_only` | `schema_version`, `compaction_id`, source/target generation refs, `phase=preparing|building|verified|commit_pending|committed|finalized|recovery_required|failed`, policy revision/hash, survivor/removal-map refs, `checkpoint_action=translate_by_semantic_identity|invalidate_and_rebuild`, `projection_action=activate_verified_target_shadow|rebuild_from_survivors`; non-empty `failure_reason` is required exactly for `recovery_required|failed` and forbidden for the six ordinary phases |
+| `storage.value_quarantine_changed` | `application_or_project` | `schema_version`, `quarantine_id`, semantic source ref, expected/observed schema, raw-byte custody hash/ref, risk class, `state=detected|secured|migrated|rebuilt|reset_to_default|restored|recovery_blocked|purged`, actor/reason, receipt ref |
+| `storage.deletion_lifecycle_changed` | `application_or_project` | `schema_version`, `deletion_id`, semantic deletion scope, `state=requested|logically_hidden|held|purge_pending|purged|failed`, actor/ref, hold blockers, purge deadline, content-free tombstone ref; generation is absent for `requested|logically_hidden|held|failed`, optional non-negative integer for `purge_pending`, and required non-negative integer for terminal `purged`; non-empty failure reason is required exactly for `failed` and forbidden otherwise |
+| `safe_point.recovery_unavailable` | `project_only` | `schema_version`, `safe_point_id`, `run_id`, `node_id`, `attempt_id?`, `blocked_sequence`, missing/corrupt snapshot refs, last verified manifest hash?, preserved-local-work state, allowed action IDs, anchor ref, receipt ref |
+
+Storage remains the sole lifecycle and visibility owner for both rows. Compaction's only ordinary chain is `preparing -> building -> verified -> commit_pending -> committed -> finalized`. Proven pre-publication source authority permits `preparing|building|verified|commit_pending -> failed`; ambiguity at any nonterminal ordinary phase, and incomplete/unproven post-`CURRENT` convergence at `commit_pending|committed`, enters `recovery_required`. Its only exits are proof-gated `recovery_required -> failed` with source authority or `recovery_required -> committed` with verified target authority, followed by ordinary finalization. `finalized` and `failed` are terminal for one `compaction_id`; retry after terminal failure is a new identity after owner revalidation. Synchronized `CURRENT` is the sole source/target visibility authority: source wins before it and target wins after it. Action tokens record selected modes but cannot claim their effect before the phase predicate.
+
+Deletion's ordinary owner graph is `requested -> logically_hidden`, then `logically_hidden -> held|purge_pending`, `held -> purge_pending` only after owner-cleared holds and complete revalidation, and `purge_pending -> purged` only after verified committed successor-generation authority. `failed` ingress is admitted only from `requested|logically_hidden|purge_pending`; `held` remains held, and `purged` is terminal. Retry from fenced `failed` reuses the same `deletion_id` and existing deletion-operation idempotency identity and revalidates holds, tombstone, scope, storage-writer posture, and purge/compaction authority. For `application_or_project`, absent payload `project_id` requires application envelope scope with envelope `project_id=null`; present non-empty payload `project_id` requires project scope and byte equality with the envelope project ID. Conflict or ambiguity quarantines before append. These summaries consume Storage semantics and do not create a peer lifecycle owner.
+
+Policy, hold, anchor, deletion, and quarantine references use semantic identities such as project/thread/run/event/safe-point/receipt IDs or closed selector objects. Segment offsets, file mtimes, and physical path strings are not legal retention authority. A required but unregistered policy fails safe to indefinite/no-count-eviction and marks the family materially incomplete; it never authorizes deletion.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+### Restore-point lifecycle event registration
+
+The safe-point outcome and conflict enums in §3 are authoritative. `restored_clean` requires target-manifest equality; `restore_failed` requires rollback-manifest equality; `restore_refused` precedes path mutation; `restore_recovery_required` preserves the mutation fence. Snapshot corruption and unsupported content scope are distinct from a missing snapshot.
+
+Contracts also registers project-scoped user restore-point lifecycle events, distinct from `safe_point.*` and `runtime_artifact.restore_point`:
+
+| Event type | Cross-contract payload minimum |
+|---|---|
+| `restore_point.created` | `schema_version`, `restore_point_id`, `project_id`, source thread/branch/message boundary refs, record ref/hash, context/provenance/attachment/citation refs, optional `safe_point_id`, status `available`, created time |
+| `restore_point.applied` | `schema_version`, `application_id`, `restore_point_id`, `project_id`, source thread/branch refs, required new thread/branch IDs, equal lowercase 64-hex expected/observed record hashes, persisted result const `branched`, applied time |
+| `restore_point.expired` | `schema_version`, `restore_point_id`, `project_id`, prior hash, status `expired`, retention policy/ref-release evidence, occurred time |
+| `restore_point.deleted` | `schema_version`, `restore_point_id`, `project_id`, prior hash, status `deleted`, actor/ref, reason, occurred time |
+| `restore_point.corrupt` | `schema_version`, `restore_point_id`, expected/observed hash, status `corrupt`, reason code, occurred time |
+
+Restore-point status is `available | expired | deleted | corrupt`; successful application does not consume the record. `refused | failed` are typed `cmd.chat.branch_from_restore` command results, carry no target IDs, and emit no `restore_point.applied` EventRecord; they are not persisted payload variants. An optional `safe_point_id` is lineage only and never silently restores files. Assistant Chat owns creation/application/branch behavior; storage owns `rp:` persistence/retention; Runtime Artifacts projects the record but owns neither lifecycle nor identity.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+### Storage fallback divergence command envelopes
+
+Storage owns divergence detection, lock/maintenance ordering, root/binding mutation, encrypted custody, crash reconciliation, and receipt persistence. This section owns the shared typed request/result/receipt shapes consumed by command, GUI, wiring, and test surfaces. It does not authorize a consumer to select authority, infer a command from a generic disposition, or persist an EventRecord.
+
+`StorageFallbackDispositionRequest` is a closed tagged union over exactly these command IDs:
+
+| `command_id` | Required variant fields | Required confirmation |
+|---|---|---|
+| `cmd.storage.fallback.keep_logical_root` | common fields only | `retain_fallback_and_select_logical` |
+| `cmd.storage.fallback.fork_new_instance` | common fields only | `create_inactive_candidate_without_switch` |
+| `cmd.storage.fallback.export_both` | common fields plus `destination_ref`, `encryption_key_ref` | `encrypt_exact_bytes_and_retain_sources` |
+
+Common required fields are `command_id`, non-empty `idempotency_key`, non-secret `actor_ref`, `confirmation`, `expected_storage_instance_id`, `expected_logical_root_fingerprint`, non-negative `expected_root_generation`, `expected_fallback_branch_id`, non-secret `expected_fallback_base_ref`, `expected_logical_head_sha256`, `expected_fallback_head_sha256`, and `expected_bootstrap_binding_sha256`. The storage/branch instance IDs are UUIDs. Every fingerprint/head/binding SHA-256 is lowercase 64-hex. The export refs are explicit, non-secret stable references; `encryption_key_ref` contains no key material. Additional or wrong-variant fields are invalid. The storage owner revalidates all eight CAS components; no consumer-computed aggregate replaces them.
+
+`StorageFallbackDispositionResult` is closed with required fields `command_id`, `idempotency_key`, `outcome`, `reason_code`, `storage_access_mode`, `storage_mode_reason`, `active_bootstrap_binding_sha256`, `logical_head_sha256`, `fallback_head_sha256`, `retained_logical_root_ref`, `retained_fallback_root_ref`, `binding_changed`, `cleanup_performed`, `owner_receipt_ref`, `candidate_binding`, and `export_custody`. `outcome = applied | replayed | refused | failed_recoverable`. Applied/replayed requires `reason_code=null` and non-null `owner_receipt_ref`; refused/failed returns the storage-owner reason and may have a nullable receipt only when the owner could durably record the refusal/failure. `cleanup_performed` is const false.
+
+Result variants are exact:
+
+- Keep-logical success has `binding_changed=true`, both candidate/export fields null, and active binding equal to the verified logical-root binding. Both root refs remain retained.
+- Fork success has `binding_changed=false`, export null, and non-null closed `candidate_binding = {storage_instance_id, parent_storage_instance_id, parent_fallback_branch_id, candidate_binding_ref, candidate_bootstrap_binding_sha256, candidate_binding_state:"inactive"}`. The active binding is unchanged.
+- Export success has `binding_changed=false`, candidate null, and non-null closed `export_custody = {destination_ref, package_ref, manifest_ref, encryption_algorithm, encryption_key_ref, logical_bytes, logical_sha256, fallback_bytes, fallback_sha256, verified_at_utc}`. Both source heads and active binding are unchanged.
+- Refused/failed results set both variant objects null and cannot claim a changed binding, cleanup, custody verification, candidate activation, or imported bytes.
+
+`StorageFallbackResolutionReceipt` is closed and requires `receipt_id`, `command_id`, `idempotency_key`, `canonical_request_sha256`, `disposition`, `outcome`, `reason_code`, `actor_ref`, `observed_cas`, `before_active_bootstrap_binding_sha256`, `after_active_bootstrap_binding_sha256`, `before_logical_head_sha256`, `after_logical_head_sha256`, `before_fallback_head_sha256`, `after_fallback_head_sha256`, `retained_logical_root_ref`, `retained_fallback_root_ref`, `resulting_storage_instance_id`, `candidate_binding_ref`, `candidate_bootstrap_binding_sha256`, `export_package_ref`, `export_manifest_ref`, `encryption_key_ref`, `binding_changed`, `cleanup_performed`, and `completed_at_utc`; nullable variant fields remain required-present. `observed_cas` repeats exactly the eight common CAS components. `canonical_request_sha256` and every recorded hash are lowercase 64-hex. The receipt is durable owner audit/query evidence only: it is not an EventRecord payload, does not register `storage.fallback_reconciled`, and cannot be substituted by a command dispatch receipt or GUI projection.
+
+ContractRef: ContractName:Plans/storage-plan.md#approved-fallback-divergence-disposition-owner-contract, ContractName:Plans/Decision_Log.md#DL-033
+
+### Storage compatibility and migration status envelope
+
+`StorageCompatibilityStatus` is a cross-surface startup diagnostic, not an EventRecord written into the store being diagnosed. Required fields are `status_id`, `storage_root_ref`, `open_state`, `store_results[]`, `writer_app_version?`, `running_app_version`, `max_supported_versions`, `data_unchanged`, `allowed_action_ids[]`, `diagnostic_ref?`, and `checked_at_utc`. `open_state` is `checking_compatibility | blocked_newer_store | blocked_corrupt_or_incomplete_store | blocked_recovery_failed | ready`. Each store result names a stable store kind/ref, observed version, maximum supported version, reader availability, and reason code without exposing an absolute local path. `blocked_newer_store` requires `data_unchanged=true` and allows only update check, compatible-backup choice, diagnostics, or quit; it never exposes `try_anyway` or live viewer mode.
+
+`MigrationPreflightResult` resolves to `Plans/storage_recovery_contracts.schema.json#/$defs/migration_preflight_result`. It requires exactly `outcome`, required-present `reason_code`, `filesystem_ref`, `free_bytes`, `required_free_bytes`, `backup_bytes`, `staging_bytes`, `reserve_bytes`, and `checked_at_utc`. The selected vocabulary is `outcome = ready | blocked` and `reason_code = null | blocked_insufficient_space`; ready pairs only with null and sufficient free bytes, while blocked pairs only with `blocked_insufficient_space` and insufficient free bytes. The storage sidecar's mandatory arithmetic assertions own the reserve and required-free formulas. Contracts does not restate or weaken them.
+
+`MigrationProgressSnapshot` resolves to `Plans/storage_recovery_contracts.schema.json#/$defs/migration_progress_snapshot` and is derived only from the matching durable migration journal. Required fields are `migration_id`, `journal_ref`, `phase`, `stable_step_label`, `completed_steps`, `total_steps`, `cancellable`, and `updated_at_utc`; paired optional `bytes_done`/`bytes_total`, `preflight_result`, `backup_ref`, `data_loss_risk`, and `terminal_receipt_ref` are admitted only as the sidecar permits. Closed phases are exactly `preflight | backup_in_progress | backup_verified | applying | pre_stamp_verified | stamp_committed | post_stamp_verifying | committed | restore_required | restoring | rolled_back | blocked`. Counts obey `0 <= completed_steps <= total_steps`; byte fields are both present or both absent and, when present, obey `0 <= bytes_done <= bytes_total`. Only preflight is cancellable. Percentage and ETA fields are forbidden rather than inferred.
+
+Terminal linkage follows the sidecar: committed/rolled-back progress and post-admission blocked progress reference the one storage-registry `pm.storage_value.migration_receipt.v1`; an insufficient-space no-mutation preflight block has no terminal migration receipt; nonterminal progress forbids one. The progress snapshot is not durable receipt authority, and Contracts creates no peer migration receipt.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_recovery_contracts.schema.json#/$defs/migration_preflight_result, ContractName:Plans/storage_recovery_contracts.schema.json#/$defs/migration_progress_snapshot, ContractName:Plans/storage_value_registry.json#/families/migration_receipt/value_schema, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/FinalGUISpec.md
+
+### CV-317 - Case L EventRecord Scope, Legacy Normalization, And Replay Contract
+
+```yaml
+plan_unit_id: CV-317
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  EventRecord 2.0 requires scope_kind application or project and conditionally
+  null/non-empty project_id; enforces app-root-global event identity and
+  scope-partition/event-type lifetime idempotency; normalizes admitted
+  EventEnvelopeV1 values deterministically in memory only; and makes
+  projector_replay_only non-appendable, idempotent, checkpoint-atomic, and
+  incapable of external or canonical side effects.
+gui_related: false
+gui_classification_reason: Defines durable event identity, compatibility normalization, and replay safety.
+depends_on: [CV-087, CV-088, CV-309]
+unblocks: []
+acceptance_criteria:
+  - Application events validate only with scope_kind application and project_id null; project events require a non-empty project_id.
+  - Repeated legacy normalization under the same verified source context and registry revision is byte-identical and does not mutate source bytes or append.
+  - Global event-id and scoped idempotency duplicates return the original only for the same semantic digest; conflicts do not append.
+  - A stale/unavailable dedupe accelerator catches up through the verified tail or append fails closed.
+  - projector_replay_only cannot produce external, canonical-storage, scheduling, outbox, usage, command, tool, network, notification, or append side effects.
+validation_surfaces:
+  - python3 -m json.tool Plans/event_record.schema.json
+  - future EventRecord scope, legacy golden-file, dedupe, and replay-only fixtures
+risk_class: case_l_eventrecord_scope_replay_drift
+reasoning_tier: high
+context_scope: case_l_eventrecord_contract
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: case_l_eventrecord_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-008
+  - Case-L:L-009
+  - Case-L:L-023
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/EVENT_RECORD_REPAIR_PLAN.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+preserved_exact_tokens:
+  - scope_kind
+  - application
+  - project
+  - projector_replay_only
+  - dedupe_unavailable
+  - legacy-event-v1
+negative_constraints:
+  - Do not fabricate a project for application scope.
+  - Do not append or durably rewrite EventEnvelopeV1 during ordinary replay.
+  - Do not admit an append while dedupe state is behind the verified seglog tail.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+```
+
+### CV-318 - Case L Durable Append And Recovery Event Envelopes
+
+```yaml
+plan_unit_id: CV-318
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  AppendReceipt proves a synced frame-plus-manifest durability boundary, and
+  application-scoped storage.integrity_detected, storage.recovery_applied, and
+  storage.boot_recovery payloads carry deterministic recovery identity, proven
+  impact, survivor/checkpoint aftermath, and truthful disclosure references
+  without fabricating a project or re-owning storage algorithms.
+gui_related: false
+gui_classification_reason: Defines shared durability and recovery payloads; GUI consumes disclosure separately.
+depends_on: [CV-309, CV-317, SP-230]
+unblocks: []
+acceptance_criteria:
+  - AppendReceipt success is possible only with durability_state synced after both storage barriers.
+  - Recovery events are application-scoped, deterministic, idempotent, and carry only proven impact identities.
+  - persisted_at_utc without a matching synced AppendReceipt is not successful persistence evidence.
+validation_surfaces:
+  - future seglog durability and crash-recovery fixture suite
+risk_class: case_l_append_recovery_contract_drift
+reasoning_tier: high
+context_scope: case_l_seglog_contract_envelopes
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: case_l_append_recovery_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-004
+  - Case-L:L-007
+  - Case-L:L-013
+  - Case-L:L-019
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/SEGLOG_RECOVERY_REPAIR_PLAN.md
+negative_constraints:
+  - Do not treat write or buffer-flush completion as durable acknowledgement.
+  - Do not use timestamps or projections to invent lost event identity.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-319 - Case L Retention And Quarantine Event Envelopes
+
+```yaml
+plan_unit_id: CV-319
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts registers closed retention-hold, compaction, deletion, quarantine,
+  and recovery-unavailable event payload envelopes using semantic scope and
+  policy/anchor refs, while storage and FileSafe retain ownership of policy
+  values, custody, eligibility, recovery anchors, and lifecycle mechanics.
+gui_related: false
+gui_classification_reason: Defines backend event envelopes consumed by later settings, recovery, and audit presentation.
+depends_on: [CV-083, CV-309, CV-317]
+unblocks: []
+acceptance_criteria:
+  - Every registered payload uses the closed action/phase/state enum and semantic identity refs.
+  - Physical offsets, mtimes, and local paths cannot become retention or legal-hold authority.
+  - Missing policy registration fails safe to indefinite/no-count-eviction and materially incomplete.
+validation_surfaces:
+  - future retention, compaction, deletion, and quarantine fixture suite
+risk_class: case_l_retention_quarantine_contract_drift
+reasoning_tier: high
+context_scope: case_l_retention_event_envelopes
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+node_compile_hint:
+  mode: case_l_retention_event_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-005
+  - Case-L:L-010
+  - Case-L:L-015
+  - Case-L:L-033
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RETENTION_COMPACTION_REPAIR_PLAN.md
+negative_constraints:
+  - Do not let this envelope table re-own storage retention or compaction mechanics.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-320 - Case L Restore Outcomes And Restore-Point Events
+
+```yaml
+plan_unit_id: CV-320
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Restore outcomes distinguish verified target equality, verified rollback,
+  no-mutation refusal/skipping, and unresolved recovery; the closed conflict
+  family distinguishes missing, corrupt, unsupported, concurrent, and recovery
+  states; safe-point payloads carry manifest/digest evidence; and user-facing
+  restore-point lifecycle events remain distinct from safe points and artifacts.
+gui_related: true
+gui_classification_reason: Restore outcomes and restore-point lifecycle are surfaced to users, while mechanics remain owner-routed.
+depends_on: [CV-224, CV-225, CV-226, CV-227, CV-228, CV-309]
+unblocks: []
+acceptance_criteria:
+  - restored_clean and restore_failed cannot be emitted without target or rollback equality respectively.
+  - restore_refused performs no path mutation and restore_recovery_required retains the mutation fence.
+  - Safe-point created/restored payloads carry snapshot and pre/target/post digest evidence.
+  - Restore-point application creates new thread/branch identity and never silently restores files.
+validation_surfaces:
+  - future FileSafe restore, corruption, restart, and restore-point lifecycle fixture suite
+risk_class: case_l_restore_outcome_contract_drift
+reasoning_tier: high
+context_scope: case_l_restore_contracts
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: case_l_restore_outcome_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-006
+  - Case-L:L-010
+  - Case-L:L-020
+  - Case-L:L-021
+  - Case-L:L-022
+  - Case-L:L-024
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+negative_constraints:
+  - Do not claim original state preserved unless rollback equality is verified.
+  - Do not collapse restore points into safe points or runtime artifacts.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+```
+
+### CV-321 - Case L Storage Compatibility And Migration Status Envelope
+
+```yaml
+plan_unit_id: CV-321
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  StorageCompatibilityStatus carries fail-closed version/open diagnostics and
+  exact allowed actions without mutating an incompatible target, while
+  the strict storage recovery sidecar owns MigrationPreflightResult arithmetic,
+  ready/blocked pairing, and MigrationProgressSnapshot journal projection with
+  closed phases, paired bounded counts, preflight-only cancellation, and exact
+  terminal relationships to the one durable migration receipt authority.
+gui_related: true
+gui_classification_reason: Defines the shared status/progress envelopes rendered by startup and recovery UI.
+depends_on: [CV-309, CV-317]
+unblocks: []
+acceptance_criteria:
+  - A newer-store status is diagnostic-only, data_unchanged, and never appended to the incompatible EventRecord target.
+  - Blocked newer-store actions exclude try-anyway and live viewer mode.
+  - Preflight uses the approved required-free formula and only ready/null/sufficient or blocked/blocked_insufficient_space/insufficient pairings.
+  - Migration progress uses all twelve exact journal phases, paired measurable bytes, bounded steps, and never invents percentage or ETA.
+  - Only preflight is cancellable; terminal receipt refs obey the sidecar and reference rather than duplicate the storage-owned migration receipt.
+validation_surfaces:
+  - python3 Draft202012Validator check and representative sidecar instance suite
+  - future storage compatibility, downgrade, migration, and recovery fixture suite
+risk_class: case_l_storage_compatibility_envelope_drift
+reasoning_tier: high
+context_scope: case_l_migration_status_contract
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/storage_recovery_contracts.schema.json
+  - Plans/Release_Supply_Chain.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: case_l_storage_compatibility_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-001
+  - Case-L:L-002
+  - Case-L:L-003
+  - Case-L:L-016
+  - Case-L:L-025
+  - Case-L:L-032
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/MIGRATION_BACKUP_REPAIR_PLAN.md
+negative_constraints:
+  - Do not append compatibility status to a store whose EventRecord version is unsupported.
+  - Do not let a cross-surface envelope re-own storage migration or backup algorithms.
+  - Do not create a peer migration receipt or accept structural schema validation without mandatory arithmetic assertions.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-322 - Case L Fallback Divergence Command Envelopes
+
+```yaml
+plan_unit_id: CV-322
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Three closed fallback-divergence requests carry exact command identity,
+  command-specific confirmation, and eight owner-revalidated CAS components;
+  their closed results distinguish keep-logical binding selection, inactive
+  fork candidate, and exact-byte encrypted dual-root custody; and one owner
+  receipt supplies durable audit without an EventRecord family.
+gui_related: true
+gui_classification_reason: The shared request/result shapes drive three independently visible recovery controls and their blocking outcomes.
+depends_on: [CV-309, CV-321, SP-240]
+unblocks: []
+acceptance_criteria:
+  - The request union contains exactly cmd.storage.fallback.keep_logical_root, cmd.storage.fallback.fork_new_instance, and cmd.storage.fallback.export_both with no generic disposition command.
+  - Each command carries and owner-revalidates all eight explicit CAS fields; any mismatch returns state_changed with no root, binding, destination, or successful-receipt mutation.
+  - Fork success returns candidate_binding_state inactive and binding_changed false; export success verifies exact bytes, reports non-secret manifest/key refs, and performs no cleanup.
+  - Same-key retry returns the same owner receipt; no success or failure requires or emits storage.fallback_reconciled or any other new EventRecord family.
+validation_surfaces:
+  - future fallback divergence request/result/receipt and crash-cut fixture suite
+risk_class: fallback_divergence_authority_and_custody_drift
+reasoning_tier: high
+context_scope: case_l_fallback_divergence_envelopes
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: case_l_fallback_divergence_envelopes
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-011
+  - Case-L:PD-PROBE-L011-01-A/A/A/A/A
+  - Plans/Decision_Log.md#DL-033
+negative_constraints:
+  - Do not switch active bootstrap selection during fork or cleanup either source after export.
+  - Do not replace explicit CAS fields with a compound digest or create a fallback-reconciled EventRecord.
+owner_hints:
+  - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```

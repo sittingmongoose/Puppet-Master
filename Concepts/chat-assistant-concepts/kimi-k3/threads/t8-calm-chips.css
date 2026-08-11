@@ -1,0 +1,117 @@
+/* ============================================================================
+   Kimi K3 — T8 Calm Chips presentation (scoped [data-k3-thread="t8"]).
+   The most conversation-first treatment in the set:
+     - unbordered, spacious turns (18px gaps, transparent backgrounds, no card
+       chrome) so the prose is the whole experience;
+     - the largest prose: base size +0.5px and a relaxed 1.65 line-height;
+     - work records collapse to quiet, low-contrast chips (workMode:'chip')
+       that recede until opened;
+     - a minimal hover row that fades in only on attention.
+   Token-driven so all 8 themes render complete; status rides weight / tint —
+   never a colored left-side accent border.
+
+   Geometry (list padding 18px 22px):
+     turn:     transparent, 18px air, centered reading measure (max 68ch)
+     chip:     low-contrast pill beneath the prose
+   ========================================================================== */
+
+[data-k3-thread="t8"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t8"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the list: spacious, centered reading measure ------------------------ */
+[data-k3-thread="t8"] .k3t-list {
+  gap: 18px;
+  padding: 18px 22px 28px;
+}
+
+/* ---- turns: unbordered, transparent, breathing --------------------------- */
+[data-k3-thread="t8"] .k3t-turn {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+[data-k3-thread="t8"] .k3t-turn-body { gap: 16px; }
+
+/* ---- turn head: quiet, almost-weightless label --------------------------- */
+[data-k3-thread="t8"] .k3t-turn-head {
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: .8;
+}
+
+/* ---- the largest prose in the set ---------------------------------------- */
+[data-k3-thread="t8"] .k3t-msg { padding: 0; }
+[data-k3-thread="t8"] .k3t-msg-body {
+  font-size: calc(var(--fs-md, 14px) + 0.5px);
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+[data-k3-thread="t8"] .k3t-msg[data-role="user"] .k3t-msg-body {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* focus tint without neighbor-shifting negative margins */
+[data-k3-thread="t8"] .k3t-msg.is-focused {
+  margin: 0;
+  padding: 8px 12px;
+}
+
+/* ---- work chips: quiet low-contrast pills -------------------------------- */
+[data-k3-thread="t8"] .k3t-work-chip {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  box-shadow: none;
+  opacity: .85;
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-thread="t8"] .k3t-work-chip:hover {
+  opacity: 1;
+  background: var(--surface-elevated);
+}
+[data-k3-thread="t8"] .k3t-work-chip .k3t-rowhead {
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* expanded chip contents keep the calm treatment */
+[data-k3-thread="t8"] .k3t-card { background: var(--surface); border-color: var(--border-light); }
+
+/* ---- thread-level work zone + live region ride the measure ---------------- */
+[data-k3-thread="t8"] .k3t-endzone { padding: 0 22px 24px; }
+[data-k3-thread="t8"] .k3t-endzone > * {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+}
+[data-k3-thread="t8"] .k3t-endzone .k3t-card { margin-top: 0; }
+[data-k3-thread="t8"] .k3t-live {
+  margin: 0 auto 14px;
+  width: calc(100% - 44px);
+  max-width: calc(68ch);
+  box-sizing: border-box;
+  background: transparent;
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: minimal, fades in on attention --------------------------- */
+[data-k3-thread="t8"] .k3t-msg-hover { margin-top: 6px; }

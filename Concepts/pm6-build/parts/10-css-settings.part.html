@@ -649,6 +649,31 @@
 .s4-reset:hover { color: var(--accent-warning); border-color: var(--accent-warning); }
 .s4-reset.confirm { color: var(--accent-error); border-color: var(--accent-error); animation: s4-pulse 1s ease infinite; }
 .s4-panel-body { flex: 1; overflow-y: auto; padding: var(--lg) var(--xl) 40px; }
+/* Frosted scroll-under (Task 5): the category body scrolls BEHIND the panel
+   head. Measured (PM_FROST -> --pm6-s4-panel-head-h) because the head carries
+   a per-category description that wraps to two lines on the long ones, so the
+   height is content-dependent. The head is built by the settings engine when
+   the panel opens, which is why PM_FROST keeps a childList watch on .s4-panel
+   rather than only seeding at boot. .s4-panel is the overflow:hidden clipper
+   and the head sits flush at its top, so the head's own box is the whole lift. */
+.s4-panel { --pm6-s4-panel-head-h: 84px; }
+.s4-panel-head {
+  position: relative;
+  z-index: 5;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  -webkit-backdrop-filter: blur(11px) saturate(140%);
+  backdrop-filter: blur(11px) saturate(140%);
+}
+/* glass blur budget: no nested backdrop-filter inside the panel */
+[data-theme^="glass"] .s4-panel-head {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+.s4-panel-body {
+  margin-top: calc(-1 * var(--pm6-s4-panel-head-h, 84px));
+  padding-top: calc(var(--pm6-s4-panel-head-h, 84px) + var(--lg));
+}
 .s4-sub { margin-top: var(--xl); }
 .s4-sub:first-child { margin-top: var(--sm); }
 .s4-sub-head { margin-bottom: var(--md); }
@@ -790,6 +815,38 @@
   transition: left 0.35s cubic-bezier(0.34, 1.4, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 .s4-psm-body { flex: 1; overflow-y: auto; padding: var(--lg) var(--xl); min-height: 220px; }
+/* Frosted scroll-under (Task 5): the pane body scrolls BEHIND the TAB STRIP,
+   not behind .s4-psm-head. The sheet stacks head -> search bar -> tabs -> body,
+   so the head is two rows removed from the scroller, and .s4-psm-bar is an
+   inset rounded field (margin: 0 var(--xl) var(--md)) — folding those into the
+   plate would let rows slide through the var(--xl) gutters beside the search
+   box. .s4-psm-tabs is the one full-bleed row directly above the scroller, so
+   it is the real header-over-scroller surface here. Measured (PM_FROST ->
+   --pm6-s4-psm-tabs-h): the strip is hidden at boot, and a hidden element
+   measures 0, so the constant below holds until the sheet is first shown.
+   Already position:relative for .s4-psm-tab-ink; only the z-index is new. */
+.s4-psm { --pm6-s4-psm-tabs-h: 39px; }
+.s4-psm-tabs {
+  z-index: 5;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  -webkit-backdrop-filter: blur(11px) saturate(140%);
+  backdrop-filter: blur(11px) saturate(140%);
+}
+/* glass blur budget: no nested backdrop-filter inside the sheet */
+[data-theme^="glass"] .s4-psm-tabs {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+.s4-psm-body {
+  margin-top: calc(-1 * var(--pm6-s4-psm-tabs-h, 39px));
+  padding-top: calc(var(--pm6-s4-psm-tabs-h, 39px) + var(--lg));
+  /* .s4-psm is auto-height (capped at 86vh), so unlike every other site here
+     the negative margin is not absorbed by a flex:1 in a definite box — it
+     would shorten the sheet and eat the same amount out of the 220px floor.
+     Growing the floor by the lift keeps the VISIBLE minimum where it was. */
+  min-height: calc(220px + var(--pm6-s4-psm-tabs-h, 39px));
+}
 .s4-psm-pane { display: none; flex-direction: column; gap: var(--sm); }
 .s4-psm-pane.active { display: flex; }
 .s4-psm-pane .s4-row { animation-duration: 0.3s; }

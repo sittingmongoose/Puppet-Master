@@ -3463,3 +3463,10 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 285` (explicitly_deferred; source line 990; `sfk-a0b10c29e5616a01ecab3d13`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L1963-2014: `requested_persona`/`effective_persona`/`persona_selection_source` etc. are field names only no types, enums, or persistence schema.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+
+## `run.started` Persona owner join
+
+Status: `STATICALLY_MATERIALIZED`; Persona resolution is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+The v2 event and complete immutable runtime snapshot require non-null `requested_persona` and `effective_persona` using canonical lower-kebab IDs. Equal values mean the request was honored; unequal values require immutable owner-valid policy override/fallback evidence in `persona_resolution_ref`. `requested_persona_id`, `effective_persona_id`, display aliases, unknown aliases, protected-ID shadowing, and replay from current settings are invalid.

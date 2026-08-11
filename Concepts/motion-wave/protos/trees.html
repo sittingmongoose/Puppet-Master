@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>W5 proto — trees / accordions / disclosures</title>
+<style>
+  :root {
+    --motion-fast:120ms; --motion-med:240ms; --motion-slow:420ms;
+    --ease-out:cubic-bezier(.22,1,.36,1); --ease-smooth:cubic-bezier(.4,0,.2,1);
+    --ease-snap:cubic-bezier(.2,0,0,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+    --ease-settle:cubic-bezier(.22,1.5,.36,1);
+    --pm-travel:10px; --pm-stagger:26ms; --pm-row-step:22ms;
+    --acc-ease:var(--ease-spring);
+    --surface:#14161c; --surface-2:#1b1e26; --surface-3:#20242e;
+    --border:#2a2e39; --border-soft:#232733; --text:#e7e9ee;
+    --muted:#8b90a0; --accent:#5aa9ff; --accent-soft:rgba(90,169,255,.14);
+  }
+  /* per-theme personalities: only --acc-ease / --pm-row-step / --ease-settle vary here */
+  [data-theme="friendly-dark"] { --acc-ease:var(--ease-spring); --pm-row-step:26ms; --ease-settle:cubic-bezier(.22,1.68,.36,1); }
+  [data-theme="basic-light"]   { --acc-ease:var(--ease-settle); --pm-row-step:18ms; --ease-settle:cubic-bezier(.26,1.4,.36,1);
+                                 --surface:#f3f4f7; --surface-2:#ffffff; --surface-3:#eef0f4; --border:#d5d9e2; --border-soft:#e3e6ec; --text:#1c2230; --muted:#5b6272; --accent:#2563eb; --accent-soft:rgba(37,99,235,.10); }
+  [data-theme="retro-light"]   { --acc-ease:var(--ease-snap);   --pm-row-step:10ms; --motion-med:140ms; --ease-settle:cubic-bezier(.3,1.14,.38,1);
+                                 --surface:#F5F0E8; --surface-2:#FAF7F2; --surface-3:#EFE9DD; --border:#4A463F; --border-soft:#D8D1C7; --text:#1A1A1A; --muted:#524F49; --accent:#0047AB; --accent-soft:rgba(0,71,171,.10); }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--surface); color:var(--text); font:13px/1.45 system-ui, sans-serif; padding:22px; }
+  h2 { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 8px; }
+  .wrap { max-width:600px; }
+  .ctl { display:flex; gap:8px; margin:10px 0 20px; flex-wrap:wrap; }
+  button.tog { background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:6px 12px; cursor:pointer; }
+  #log { font:10px/1.5 ui-monospace, monospace; color:var(--muted); white-space:pre-wrap; min-height:64px; border:1px dashed var(--border); border-radius:8px; padding:8px; margin-top:20px; }
+
+  /* ===================== (a) FM-tree-like measured max-height node ===================== */
+  .fm-row { display:flex; align-items:center; gap:8px; padding:6px 9px; border-radius:8px; cursor:pointer; }
+  .fm-row:hover { background:var(--accent-soft); }
+  .fm-chevron { width:12px; height:12px; flex:none; color:var(--muted);
+    transition:transform var(--motion-med) var(--ease-smooth); }   /* kept as fallback; animation wins */
+  .fm-node.open > .fm-row > .fm-chevron { transform:rotate(90deg); }
+  .fm-children { display:none; opacity:0; overflow:hidden; padding-left:7px; margin-left:5px;
+    border-left:1px solid var(--border-soft);
+    transition:max-height var(--motion-med) var(--ease-smooth), opacity var(--motion-med) var(--ease-out);
+    will-change:max-height, opacity; }
+  .fm-node.open > .fm-children { display:block; opacity:1; }
+  .fname { flex:0 1 auto; } .fcount { margin-left:auto; color:var(--muted); font:10px ui-monospace,monospace; }
+
+  /* ===================== (b) grid-rows shelf accordion ===================== */
+  .sh-shelf { background:var(--surface-2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .sh-head { display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer;
+    background:color-mix(in srgb, var(--accent) 11%, transparent);
+    transition:background var(--motion-fast) var(--ease-out); }
+  .sh-head[data-collapse]:hover { background:color-mix(in srgb, var(--accent) 17%, transparent); }
+  .sh-head[data-collapse]:hover .sh-accchev { transform:translateX(1px); }
+  [data-acc].open > [data-collapse] > .sh-accchev { transform:rotate(90deg); }
+  [data-acc].open > [data-collapse]:hover > .sh-accchev { transform:translateX(1px) rotate(90deg); }
+  .sh-accchev { width:10px; height:10px; color:var(--muted); flex:none;
+    transition:transform var(--motion-fast) var(--ease-out); }
+  [data-acc] > .sh-accb { display:grid !important; grid-template-rows:0fr; opacity:0;
+    transition:grid-template-rows var(--motion-med) var(--acc-ease, var(--ease-spring)),
+               opacity var(--motion-med) var(--ease-out); }
+  [data-acc].open > .sh-accb { grid-template-rows:1fr; opacity:1; }
+  .pm-acc-inner { overflow:hidden; min-height:0; }
+  .sh-accb .r { display:flex; align-items:center; gap:8px; padding:7px 12px; border-top:1px solid var(--border-soft); }
+  .sh-accb .r:first-child { border-top:0; }
+  .hlabel { font-size:10px; font-weight:700; letter-spacing:.12em; }
+
+  /* ===================== (c) max-height disclosure ===================== */
+  .disc { overflow:hidden; max-height:0; opacity:0;
+    transition:max-height var(--motion-med) var(--ease-settle), opacity var(--motion-med) var(--ease-out); }
+  .disc.open { max-height:140px; opacity:1; }
+  .disc .kv { display:flex; gap:8px; padding:6px 10px; }
+  .disc input { flex:1; background:var(--surface-3); color:var(--text); border:1px solid var(--border); border-radius:7px; padding:5px 8px; }
+  .filtoggle { display:flex; align-items:center; gap:6px; background:none; border:0; color:var(--text); cursor:pointer; font-weight:700; font-size:11px; padding:6px 4px; }
+
+  /* ===================== W5 recipes ===================== */
+  /* kid cascade: one mechanism for tree + shelf bodies + disclosures */
+  @keyframes pmKidIn {
+    from { opacity:0; transform:translateX(-5px); }
+    to   { opacity:1; transform:none; }
+  }
+  .pm-kid-in > *,
+  [data-acc].open .pm-kid-in > * {
+    animation:pmKidIn .26s var(--ease-out) both;
+    animation-delay:calc(var(--pi,0) * var(--pm-row-step));
+  }
+  /* chevron overshoot: --pm-chev-deg lets 180deg banner chevrons reuse the recipe */
+  @keyframes chevOpen {
+    0%   { transform:rotate(0deg); }
+    70%  { transform:rotate(calc(var(--pm-chev-deg, 90deg) * 1.1333)); }
+    100% { transform:rotate(var(--pm-chev-deg, 90deg)); }
+  }
+  @keyframes chevClose {
+    0%   { transform:rotate(var(--pm-chev-deg, 90deg)); }
+    60%  { transform:rotate(calc(var(--pm-chev-deg, 90deg) * -.0889)); }
+    100% { transform:rotate(0deg); }
+  }
+  .pm-chev-open  { animation:chevOpen  .3s var(--ease-out) both; }
+  .pm-chev-close { animation:chevClose .3s var(--ease-out) both; }
+
+  /* reduced motion: correct end states, no stagger-delay ghosts */
+  @media (prefers-reduced-motion: reduce) {
+    .pm-kid-in > * { animation:none !important; opacity:1; transform:none; }
+    .pm-chev-open, .pm-chev-close { animation:none !important; }
+    .disc { transition:opacity var(--motion-fast) var(--ease-out); }
+  }
+  [data-motion="reduced"] .pm-kid-in > * { animation:none !important; opacity:1; transform:none; }
+  [data-motion="reduced"] .pm-chev-open,
+  [data-motion="reduced"] .pm-chev-close { animation:none !important; }
+  [data-motion="reduced"] * { transition-duration:.01ms !important; animation-duration:.01ms !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ctl">
+    <button class="tog" data-set-theme="friendly-dark">friendly-dark</button>
+    <button class="tog" data-set-theme="basic-light">basic-light</button>
+    <button class="tog" data-set-theme="retro-light">retro-light</button>
+    <button class="tog" id="reduceBtn">reduce: off</button>
+  </div>
+
+  <h2>(a) nested measured max-height tree — 5 kids, one nested</h2>
+  <div id="tree">
+    <div class="fm-node fm-folder">
+      <div class="fm-row" data-collapse tabindex="0" role="button" aria-expanded="false">
+        <svg class="fm-chevron" viewBox="0 0 10 10"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span class="fname">src</span><span class="fcount">5</span>
+      </div>
+      <div class="fm-children">
+        <div class="fm-row"><span class="fname">main.rs</span></div>
+        <div class="fm-row"><span class="fname">lib.rs</span></div>
+        <div class="fm-node fm-folder">
+          <div class="fm-row" data-collapse tabindex="0" role="button" aria-expanded="false">
+            <svg class="fm-chevron" viewBox="0 0 10 10"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span class="fname">services</span><span class="fcount">3</span>
+          </div>
+          <div class="fm-children">
+            <div class="fm-row"><span class="fname">image.rs</span></div>
+            <div class="fm-row"><span class="fname">import.rs</span></div>
+            <div class="fm-row"><span class="fname">units.rs</span></div>
+          </div>
+        </div>
+        <div class="fm-row"><span class="fname">routes.rs</span></div>
+        <div class="fm-row"><span class="fname">state.rs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>(b) grid-rows shelf accordion — theme-aware --acc-ease</h2>
+  <div class="sh-shelf" data-acc>
+    <div class="sh-head" data-collapse tabindex="0" role="button" aria-expanded="false">
+      <svg class="sh-accchev" viewBox="0 0 10 10"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      <span class="hlabel">HISTORY</span>
+    </div>
+    <div class="sh-accb"><div class="pm-acc-inner">
+      <div class="r">fix: fraction normalization edge</div>
+      <div class="r">feat: ratings migration</div>
+      <div class="r">chore: ci bump</div>
+      <div class="r">docs: spec lock refresh</div>
+    </div></div>
+  </div>
+
+  <h2>(c) max-height disclosure</h2>
+  <button class="filtoggle" id="discToggle" aria-expanded="false">
+    <svg class="sh-accchev" viewBox="0 0 10 10"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    Filters
+  </button>
+  <div class="disc" id="discPanel" aria-hidden="true">
+    <div class="kv"><input placeholder="glob include"><input placeholder="glob exclude"></div>
+  </div>
+
+  <div id="log">log:</div>
+</div>
+<script>
+  function reduce() { var de = document.documentElement;
+    return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      || de.getAttribute('data-motion') === 'reduced'; }
+  function log(s) { var l = document.getElementById('log'); l.textContent = (s + '\n' + l.textContent).split('\n').slice(0, 8).join('\n'); }
+
+  /* ---- W5 helpers (the exact recipes shipping to base) ---- */
+  function pmCascadeKids(container, cap) {
+    if (!container || reduce()) return;
+    var kids = container.children; if (!kids.length) return;
+    var max = Math.min((cap || 6) - 1, kids.length - 1);
+    Array.prototype.forEach.call(kids, function (k, i) { k.style.setProperty('--pi', String(Math.min(i, max))); });
+    if (container._pmKidT) clearTimeout(container._pmKidT);
+    container.classList.remove('pm-kid-in');
+    void container.offsetWidth;
+    container.classList.add('pm-kid-in');
+    container._pmKidT = setTimeout(function () { container.classList.remove('pm-kid-in'); container._pmKidT = null; }, 640);
+  }
+  window.pmCascadeKids = pmCascadeKids;
+  function pmChev(el, open) {
+    if (!el || reduce()) return;
+    var on = open ? 'pm-chev-open' : 'pm-chev-close', off = open ? 'pm-chev-close' : 'pm-chev-open';
+    el.classList.remove(off); el.classList.remove(on);
+    void el.offsetWidth;
+    el.classList.add(on);
+  }
+  window.pmChev = pmChev;
+
+  /* ---- (a) measured max-height collapse (copy of base collapseAnim core) ---- */
+  var tree = document.getElementById('tree');
+  function kidsOf(node) { return node.querySelector(':scope > .fm-children'); }
+  function animate(node, open) {
+    var c = kidsOf(node); if (!c) return;
+    var row = node.querySelector(':scope > .fm-row');
+    var st = node._fm || (node._fm = {});
+    if (st.timer) { clearTimeout(st.timer); st.timer = null; }
+    if (st.onEnd) { c.removeEventListener('transitionend', st.onEnd); st.onEnd = null; }
+    if (row) row.setAttribute('aria-expanded', String(open));
+    pmChev(row && row.querySelector('.fm-chevron'), open);
+    if (reduce()) { c.style.maxHeight = ''; c.style.opacity = ''; node.classList.toggle('open', open); return; }
+    if (open) {
+      var wasOpen = node.classList.contains('open');
+      var fromH = wasOpen ? c.getBoundingClientRect().height : 0;
+      var fromO = wasOpen ? (parseFloat(getComputedStyle(c).opacity) || 1) : 0.001;
+      node.classList.add('open');
+      pmCascadeKids(c, 6);
+      c.style.transition = 'none'; c.style.maxHeight = fromH + 'px'; c.style.opacity = String(Math.max(0.001, fromO));
+      void c.offsetHeight;
+      c.style.transition = ''; c.style.maxHeight = c.scrollHeight + 'px'; c.style.opacity = '1';
+    } else {
+      c.style.transition = 'none'; c.style.maxHeight = c.scrollHeight + 'px'; c.style.opacity = '1';
+      void c.offsetHeight;
+      c.style.transition = ''; c.style.maxHeight = '0px'; c.style.opacity = '0';
+    }
+    st.onEnd = function (e) { if (e.propertyName !== 'max-height') return; finish(); };
+    c.addEventListener('transitionend', st.onEnd);
+    st.timer = setTimeout(finish, 340);
+    function finish() {
+      if (st.timer) { clearTimeout(st.timer); st.timer = null; }
+      if (st.onEnd) { c.removeEventListener('transitionend', st.onEnd); st.onEnd = null; }
+      if (open) { c.style.maxHeight = 'none'; c.style.opacity = ''; }
+      else { node.classList.remove('open'); c.style.maxHeight = ''; c.style.opacity = ''; }
+    }
+  }
+  window.__fmAnimate = animate;
+  tree.addEventListener('click', function (ev) {
+    var head = ev.target.closest('[data-collapse]'); if (!head) return;
+    var node = head.closest('.fm-folder'); if (!node) return;
+    animate(node, !node.classList.contains('open'));
+  });
+
+  /* ---- (b) shelf accordion ---- */
+  document.querySelectorAll('[data-acc] [data-collapse]').forEach(function (head) {
+    head.addEventListener('click', function () {
+      var acc = head.closest('[data-acc]');
+      var open = acc.classList.toggle('open');
+      head.setAttribute('aria-expanded', String(open));
+      var body = acc.querySelector(':scope > .sh-accb');
+      var inner = body && (body.querySelector(':scope > .pm-acc-inner') || body);
+      if (open) pmCascadeKids(inner, 6);
+      pmChev(head.querySelector('.sh-accchev'), open);
+    });
+  });
+
+  /* ---- (c) disclosure ---- */
+  var dt = document.getElementById('discToggle'), dp = document.getElementById('discPanel');
+  dt.addEventListener('click', function () {
+    var open = dp.classList.toggle('open');
+    dt.setAttribute('aria-expanded', String(open));
+    dp.setAttribute('aria-hidden', String(!open));
+    if (open) pmCascadeKids(dp, 6);
+    pmChev(dt.querySelector('.sh-accchev'), open);
+  });
+
+  /* ---- controls ---- */
+  document.querySelectorAll('[data-set-theme]').forEach(function (b) {
+    b.addEventListener('click', function () { document.documentElement.setAttribute('data-theme', b.getAttribute('data-set-theme')); });
+  });
+  document.getElementById('reduceBtn').addEventListener('click', function () {
+    var de = document.documentElement;
+    var on = de.getAttribute('data-motion') !== 'reduced';
+    de.setAttribute('data-motion', on ? 'reduced' : '');
+    this.textContent = 'reduce: ' + (on ? 'on' : 'off');
+  });
+
+  /* ---- instrumentation: grid-rows easing probe. NOTE: an auto-height grid
+     clamps fr tracks at content size, so >1fr overshoot cannot exceed rest
+     height — per-theme personality shows up in the velocity profile instead
+     (spring/settle arrive at full height early; snap approaches asymptotically).
+     Metric: fraction of duration elapsed when height first reaches rest. ---- */
+  window.__probeAcc = async function () {
+    var acc = document.querySelector('.sh-shelf[data-acc]');
+    var head = acc.querySelector('.sh-head');
+    var body = acc.querySelector(':scope > .sh-accb');
+    var inner = body.querySelector(':scope > .pm-acc-inner');
+    if (acc.classList.contains('open')) { head.click(); await new Promise(function (r) { setTimeout(r, 420); }); }
+    var rest = inner.scrollHeight;
+    var ttf = getComputedStyle(body).transitionTimingFunction;
+    head.click();
+    var t0 = performance.now(), firstFull = -1;
+    while (performance.now() - t0 < 600) {
+      if (firstFull < 0 && body.getBoundingClientRect().height >= rest - 0.5) firstFull = performance.now() - t0;
+      await new Promise(function (r) { setTimeout(r, 8); });
+    }
+    head.click();
+    log('grid-rows probe: ttf=' + ttf + ' time-to-full=' + Math.round(firstFull) + 'ms');
+    return { ttf: ttf, timeToFull: Math.round(firstFull) };
+  };
+  /* nested probe: expand parent, then nested mid-flight, then verify containment after settle */
+  window.__probeNested = function () {
+    var top = tree.querySelector('.fm-node');
+    var nested = top.querySelector('.fm-children .fm-node');
+    animate(top, true);
+    setTimeout(function () { animate(nested, true); }, 90);   /* mid-parent-flight */
+    setTimeout(function () {
+      var pc = kidsOf(top), nc = kidsOf(nested);
+      var pb = pc.getBoundingClientRect(), nb = nc.getBoundingClientRect();
+      var ok = (pb.bottom >= nb.bottom - 1) && (pb.top <= nb.top + 1);
+      log('nested containment: parent[' + pb.height.toFixed(0) + 'px] nested[' + nb.height.toFixed(0) + 'px] contained=' + ok);
+    }, 700);
+  };
+  log('ready — click around, or run __probeAcc() / __probeNested()');
+</script>
+</body>
+</html>

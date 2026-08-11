@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/launch-authority-used.v1.1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "packet_core_population_sha256", "trial_id", "generation_id", "marker_id", "request_sha256", "launch_binding_sha256", "capability_sha256", "capability_id", "authority_sha256", "one_use_nonce_sha256", "use_ordinal", "prior_marker_absent", "consumed_at_utc", "first_external_action_not_started", "terminal", "marker_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "packet_core_population_sha256": {"$ref": "#/$defs/sha"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "marker_id": {"type": "string", "minLength": 1},
+    "request_sha256": {"$ref": "#/$defs/sha"},
+    "launch_binding_sha256": {"$ref": "#/$defs/sha"},
+    "capability_sha256": {"$ref": "#/$defs/sha"},
+    "capability_id": {"type": "string", "minLength": 1},
+    "authority_sha256": {"$ref": "#/$defs/sha"},
+    "one_use_nonce_sha256": {"$ref": "#/$defs/sha"},
+    "use_ordinal": {"const": 1},
+    "prior_marker_absent": {"const": true},
+    "consumed_at_utc": {"type": "string", "format": "date-time"},
+    "first_external_action_not_started": {"const": true},
+    "terminal": {"const": "AUTHORITY_CONSUMED_PREACTION"},
+    "marker_payload_sha256": {"$ref": "#/$defs/sha"}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

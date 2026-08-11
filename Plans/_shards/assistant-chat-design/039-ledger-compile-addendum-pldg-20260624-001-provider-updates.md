@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L2802-L3441
+Source lines: L2835-L3477
 
-Source SHA256: `dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67`
+Source SHA256: `22a536be201afa59dbfb36d2f5c8a08b5c69a0fb9a7b6c45f93d3b1aacc9de9c`
 
 ---
 
@@ -65,7 +65,7 @@ Source Control owns the Worktrees row layout and filters that Assistant Chat lin
 
 ### W.1 Chat header worktree button
 
-**Placement:** Chat header strip, after the Reasoning/effort control (rightmost existing control). The header strip currently contains: Platform, Model, Reasoning/effort. The Worktree button is appended after these. Mode buttons (Ask, Agent, Debug, Plan, Deep Plan) are separate from the header strip and not adjacent to this button.
+**Placement:** Chat header strip, after the selector row (rightmost control). The header strip contains the selector row: Persona, Model, Mode. The Worktree button is appended after these. Mode selection (Ask, Agent, Debug, Plan, Deep Plan) is the third selector-row slot rather than a separate button strip adjacent to this button.
 
 **Visual states:**
 - **Unbound (default):** Dimmed worktree glyph icon. No label text. Tooltip: "No worktree — click to create"
@@ -102,6 +102,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
 
 **Behavior rules:**
+- The dropdown is hosted as a click-to-open corner-origin sprout popout with the theme-matched popout chrome shared by the other chat header menus (ACD-442); the trigger's state color is applied through stylesheet rules only (no inline style pinning), and trigger hover matches the Context Lens trigger hover treatment in all themes
 - Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
 - While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
 - `Unbind` sets thread binding to None; agent's next turn uses main project dir
@@ -278,6 +279,8 @@ Thread worktree cleanup is scoped to thread delete, not archive/unarchive lifecy
 When the extended delete confirmation uses explicit button copy, `Delete and keep worktree` deletes the thread, unbinds it, and leaves the worktree on disk as orphaned/manual Source Control inventory. `Delete and remove worktree` deletes the thread, unbinds it, and prunes the worktree; if the worktree is dirty and the user chooses that destructive option, PM uses `git worktree remove --force <path>` plus `git branch -D <branch>` after the warning label has been shown.
 
 Unbind has no dedicated undo in MVP: the worktree remains on disk as a manual worktree, and any future undo toast is post-MVP rather than part of the initial cleanup flow.
+
+Worktree keep/remove is independent of the storage-owned thread-content deletion result. On confirmation, the thread is logically deleted and hidden immediately; unheld active-canon content is purged within 24 hours, the content-free tombstone remains indefinitely, and backup bytes remain at most 30 days unless held with tombstone replay before visibility. A protected content hold may defer byte purge but does not defer logical deletion or create an undo. The dialog MUST NOT offer `Undo delete`; if a separately retained conversation restore point can still branch verified held boundary material, that action creates a new thread/branch and never restores this deleted source thread or its worktree binding.
 
 
 **Trigger:** Thread is deleted while it has a worktree binding.

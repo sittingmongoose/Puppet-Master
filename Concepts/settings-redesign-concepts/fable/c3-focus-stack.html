@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-motion="full" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fable · Focus Stack — Puppet Master Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="_shared/pm-shell.css">
+  <link rel="stylesheet" href="c3-focus-stack.css">
+</head>
+<body>
+  <div class="pm-shell" id="pmShell">
+    <header class="pm-titlebar">
+      <span class="pm-app-name">Puppet Master</span>
+      <span class="pm-model-badge" data-concept-model="fable">fable · Focus Stack</span>
+      <nav class="pm-page-tabs" aria-label="Pages">
+        <span class="pm-page-tab">Dashboard</span><span class="pm-page-tab">Projects</span>
+        <span class="pm-page-tab">Wizard</span><span class="pm-page-tab">Orchestrator</span>
+        <span class="pm-page-tab">Usage</span><span class="pm-page-tab is-active" aria-current="page">Settings</span>
+      </nav>
+      <div class="pm-tb-controls">
+        <button class="pm-tb-btn" id="pmRailToggle" aria-pressed="true" title="Toggle left rail"><i data-ico="rail"></i><span class="pm-visually-hidden">Toggle left rail</span></button>
+        <button class="pm-tb-btn" id="pmChatToggle" aria-pressed="false" title="Toggle Assistant panel"><i data-ico="chat"></i><span class="pm-visually-hidden">Toggle Assistant panel</span></button>
+        <button class="pm-tb-btn" id="pmMotionToggle" aria-pressed="false" title="Toggle reduced motion"><i data-ico="motion"></i><span class="pm-visually-hidden">Toggle reduced motion</span></button>
+        <div class="pm-theme-wrap">
+          <button class="pm-tb-btn" id="pmThemeBtn" aria-haspopup="menu" aria-expanded="false" title="Theme"><i data-ico="palette"></i><span class="pm-visually-hidden">Theme</span></button>
+          <div class="pm-theme-menu" id="pmThemeMenu" role="menu" hidden></div>
+        </div>
+      </div>
+    </header>
+    <div class="pm-main">
+      <aside class="pm-rail" id="pmRail" aria-label="Activity"><!-- PMShell fills quiet rail icons --></aside>
+      <main class="pm-stage" id="pmStage"><!-- Focus Stack renders here --></main>
+      <aside class="pm-chat" id="pmChat" hidden aria-label="Assistant">
+        <div class="pm-chat-head">Assistant<button class="pm-tb-btn" id="pmChatOverflow" aria-haspopup="menu" title="Thread options"><i data-ico="more"></i><span class="pm-visually-hidden">Thread options</span></button></div>
+        <div class="pm-chat-body" id="pmChatBody"><!-- PMShell fills quiet placeholder + spellcheck demo composer --></div>
+      </aside>
+    </div>
+    <footer class="pm-statusbar"><span id="pmStatusLeft">Ready</span><span id="pmStatusRight"></span></footer>
+  </div>
+  <script src="_shared/pm-icons.js"></script>
+  <script src="_shared/pm-demo-data.js"></script>
+  <script src="_shared/pm-state.js"></script>
+  <script src="_shared/pm-scrollspy.js"></script>
+  <script src="_shared/pm-spell.js"></script>
+  <script src="_shared/pm-shell.js"></script>
+  <script src="c3-focus-stack.js"></script>
+</body>
+</html>

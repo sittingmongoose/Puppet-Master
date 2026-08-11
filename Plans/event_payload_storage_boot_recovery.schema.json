@@ -1,0 +1,146 @@
+{
+  "$defs": {
+    "storage_boot_recovery_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "active_segment_ref": {
+          "type": "string"
+        },
+        "integrity_ids": {
+          "items": {},
+          "type": "array"
+        },
+        "interrupted_transaction_kinds": {
+          "items": {},
+          "type": "array"
+        },
+        "manifest_generation": {
+          "type": "integer"
+        },
+        "recovery_epoch": {
+          "type": "integer"
+        },
+        "recovery_ids": {
+          "items": {},
+          "type": "array"
+        },
+        "recovery_set_id": {
+          "type": "string"
+        },
+        "repeat_of": {
+          "type": "string"
+        },
+        "schema_version": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "recovery_set_id",
+        "integrity_ids",
+        "recovery_ids",
+        "interrupted_transaction_kinds",
+        "manifest_generation",
+        "recovery_epoch",
+        "active_segment_ref"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "properties": {
+        "integrity_ids": {
+          "minItems": 1
+        }
+      }
+    },
+    {
+      "properties": {
+        "recovery_ids": {
+          "minItems": 1
+        }
+      }
+    }
+  ],
+  "properties": {
+    "active_segment_ref": {
+      "pattern": "^pm\\.storage\\.segment\\.v1:(?:0|[1-9][0-9]*):(?:0|[1-9][0-9]*):(opening|active|closed|sealed_degraded):[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "integrity_ids": {
+      "items": {
+        "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "maxItems": 4096,
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "interrupted_transaction_kinds": {
+      "items": {
+        "enum": [
+          "migration",
+          "backup_restore",
+          "rotation_truncation",
+          "compaction",
+          "deletion_quarantine",
+          "root_relocation"
+        ]
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "manifest_generation": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "recovery_epoch": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "recovery_ids": {
+      "items": {
+        "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "maxItems": 4096,
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "recovery_set_id": {
+      "pattern": "^pm\\.storage\\.recovery_set\\.v1:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "repeat_of": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "recovery_set_id",
+    "integrity_ids",
+    "recovery_ids",
+    "interrupted_transaction_kinds",
+    "manifest_generation",
+    "recovery_epoch",
+    "active_segment_ref"
+  ],
+  "type": "object"
+}
