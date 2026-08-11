@@ -164,7 +164,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-08-11T01:28:43Z",
+  "generated_at_utc": "2026-08-11T01:49:30Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -315,7 +315,7 @@
     "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62",
     "Plans/.implementation_readiness/readiness_blockers.jsonl": "a2c7ebc8b98fe8565a63ca974b1b32d694812b35bd4f5f8e739124e2cb36b3d4",
     "Plans/.implementation_readiness/readiness_matrix.json": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897",
-    "Plans/.plan_index/node_readiness_report.json": "1bfa03b7ccba068a0d61c438b4b0893497316b8ea61aad2422b152e23d028193",
+    "Plans/.plan_index/node_readiness_report.json": "9a29111e4a3cc1d19678b90c81ed267324f64b1624f8eab4624690e7eef1a4e1",
     "Plans/00-plans-index.md": "e0358f4d0c5cdce2cbbac0fdef1e70a80ba910ff84c72d999f77c9fc01893eb2",
     "Plans/CLI_Bridged_Providers.md": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9",
     "Plans/Commands_System.md": "75c2c8b8c75bf5eecbcc516272f7bdd944f0ff29b3c66b913a1c2f19adc0d3d0",
@@ -347,10 +347,10 @@
     "Plans/storage_recovery_contracts.schema.json": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814",
     "Plans/storage_value_registry.json": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a",
     "Plans/storage_value_registry.schema.json": "61a9a0ddd19ab642235848b85a254bdb19219aa1aa1b2d11b64eaf9624149c92",
-    "scripts/pm-implementation-readiness.py": "b797fea4eef268f232d943a550254d8d5517f014ed3cfda67a511bedc7c86996",
-    "scripts/pm-plan-index.py": "04a5aca73043d24a99a2622f89fbcb6e35ba49375ade7a4e048b3bc647b35396",
+    "scripts/pm-implementation-readiness.py": "a8af164fb673737569bb42ac519d9a6c0c9fa40e4985e7508664cd0285dae58a",
+    "scripts/pm-plan-index.py": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293",
     "scripts/pm-plans-verify.py": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6",
-    "scripts/pm-pnc019-certification-harness.py": "64eda5ee8f931b545b228569db6e3cb55de009811327bd52d11358599bf90314",
+    "scripts/pm-pnc019-certification-harness.py": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d",
     "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json": "bd4af2eba6acdc463cc1c70113fd5fada1f3177c27cb6a1c5e0020a4ac064893"
   },
   "validation_status_semantics": "The validator passes when this report is current and truthful; buildability_gate_passed is the product gate used by Planning Wizard."
