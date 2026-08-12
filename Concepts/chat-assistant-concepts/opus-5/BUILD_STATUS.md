@@ -166,3 +166,90 @@ open http://127.0.0.1:<port>/tests/runner.html?run=1
 # hub validation, from the repository root
 py Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/opus-5
 ```
+
+## Phase E - per-concept question systems, work clusters, BSD surfaces, handoff cards
+
+Written from the runs recorded below, not from intent.
+
+### Landed and verified in a real browser
+
+- **E0 - `shared/reveal.js` is primitives only.** `question(spec)` and `afterRender(host, svc, tid, from)`
+  are gone. They were what made all eight thread concepts move identically. What remains is
+  `stagger / clearStagger / oneShot / springHeight / measure / reject / ripple / capsule / keyFor /
+  reduced / changed / celebrate` - materials, not choreography.
+- **`shared/qflow.js` -> `PMXQFlow` (new).** The ACTION layer for questionnaires. Renders nothing, owns
+  no DOM. `read()` returns one coherent snapshot per render pass; `act(svc, tid, verb, arg)` covers
+  answer / answerAt / skip / unskip / goto / prev / next / submit / cancel and returns
+  `{ ok, reason, offenderIndex, resolved }`. Registered in `index.html`, `stage.html`, `contact.html`,
+  `tests/runner.html` and in `workspace.js` `buildServices()` as `ctx.services.qflow`.
+  This is deliberately the opposite kind of sharing from what E0 deleted: a question *form* must differ
+  per concept, but "what does Skip do to the store, and where does a refusal belong" is one behaviour
+  with one right answer. Three of the four defects found while building t3 were in that plumbing.
+- **`shared/questionnaire.js` gained two read-only accessors:** `isSkipped(qid, questionId)` and
+  `historyFor(threadId)`. The skip map is keyed by a **NUL-delimited** composite (`qid + '\0' + id`);
+  eight renderers reconstructing that key is eight chances to silently match nothing, which is exactly
+  what happened on the first attempt.
+- **t3 Timeline Spine - complete.** Spine stepper (each question is a square node ON the spine; the
+  filled-node run *is* the progress, so there is no `N of M` label anywhere); spine work units where a
+  completed closed group is its **marker alone**; single-open with independent reopen; BSD advice as a
+  **side node** off the spine (read-only, Dismiss only, severity carried by border style *and* the
+  words "caution"/"note"); artifact handoff node with `compiling -> ready` and a `Worked for` line.
+- **t4 Digest - complete.** The question is one more **digest entry** using the concept's own
+  `data-open` fold, with `2/3` inside the digest line while open and a `- skipped` trail; the work
+  surfaces are ONE **work digest line** (`Phase 4 of 4 - 6/8 Todos - 3 agents - +182 -41`) condensing to
+  `Verified - 1 artifact - 22m` and opening a bounded internal-scroll ledger; advice is its own digest
+  line; handoff is a one-line card in the same register.
+
+### Defects found by building E and fixed
+
+1. **Nothing ever released `surfacesYielded`.** Only Cancel cleared it, so a *submitted* flow left the
+   work surfaces yielded for the rest of the session and the cluster never came back. Now released by
+   `PMXQFlow` on both submit and cancel, and by the no-question render path.
+2. **The yield flag is read one render too early.** Every concept's `update()` renders work surfaces
+   *before* the question, so reading `surfacesYielded` there painted the whole cluster for one frame
+   before the question displaced it, and an open group appeared to close itself. `PMXQFlow.pending()` is
+   the authoritative answer and is what t3/t4 now ask.
+3. **A submit refusal had nowhere to land.** `submit()` names the offending question; showing its reason
+   under the Submit button is the toast behaviour the packet forbids in different clothes. The refusal
+   now travels to the offending question and renders at that field.
+4. **`skipped` outranked `active`.** Travelling back to a skipped question rendered it as an inert
+   marker with no field, so the run looked frozen. Active now outranks skipped, and the skip rides
+   along as its own attribute so the cue is not lost.
+5. **Diff counters read the wrong fixture keys** (`additions`/`deletions` instead of `added`/`removed`),
+   which rendered every change set as `+0 -0`.
+6. **Six concepts were calling a function that no longer exists.** t1, t2, t5, t6, t7 and t8 still
+   called `PMXReveal.afterRender(...)` after E0 removed it - a latent `TypeError` on every question
+   render. Those call sites and their now-unused `measure()` results are removed.
+
+### Outstanding - honest list
+
+- **t1, t2, t5, t6, t7, t8 keep their PRE-EXISTING question card.** It renders, advances, and throws
+  nothing (verified: all eight pairings, zero console errors), but it is *not* the form the packet
+  assigns them: the margin interview (t1), the composer-capsule morph (t2), the lane dialogue (t5), the
+  monospace field form (t6), the card deck (t7) and the prose footnote (t8) are all unbuilt. Those six
+  currently have **no** entrance/advance choreography at all, which is honest rather than borrowed.
+- **The same six keep their existing work surfaces.** The two-row work strip (t1), chip run (t2), third
+  work rail (t5), exec log (t6), segmented phase bar (t7) and micro-gutter dots (t8) are unbuilt, as are
+  their six BSD advice surfaces and six handoff cards.
+- **Reports are stale for Phase E.** `TEST_REPORT.md`, `COVERAGE.md`, `GAP_REPORT.md` and
+  `VISUAL_AUDIT.md` describe the state before this phase.
+
+### Verification runs recorded this phase
+
+- Interaction suite, `tests/runner.html?run=1` at 1920x1000: **237 total, 237 passed, 0 failed,
+  0 console errors, 0 console warnings** (2,855 ms).
+- All eight `w1+tN` pairings mounted through `PMXWorkspace.setPairing`: each renders its own question
+  DOM (`t1-question`, `t2-question`, `t3-qrun`, `t4-qdigest`, `t5-question`, `t6-question`,
+  `t7-question`, `t8-question`), each advances on Next/Submit, **zero** console errors or warnings.
+- t3 behavioural probes: refusal travels and renders `This question is required.` at the field with
+  zero toasts; skip leaves a hollow dashed node with Unskip reachable; submit yields a `3 answered`
+  receipt whose popup lists three rows; cancel collapses the whole run to one `Questions cancelled`
+  node; `todo.complete` fired twice morphs `4/8 -> 5/8 -> 6/8` with the row count fixed at 7;
+  advice dismiss removes the node; handoff walks `idle/compiling -> loading/compiling -> ready/ready`
+  and an open work group survives an artifact tick; under reduced motion 10 rendered nodes report zero
+  running animations.
+- t4 behavioural probes: the question digest carries `1/3` inside its line, folds to `data-open="0"`
+  with the counter and body gone, unfolds back, and a skip writes a `- skipped` trail row with Unskip
+  reachable while the counter advances to `2/3`.
+- **The 64-pairing matrix sweep was NOT re-run to completion this phase.** The probe driving it hit a
+  CDP protocol timeout mid-run; that is a harness timeout, not a failure, and no result is claimed.

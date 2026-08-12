@@ -140,6 +140,13 @@
     this.surfacesTail = U().el('div', { class: 't3-tail' });
     this.list.appendChild(this.surfacesTail);
 
+    /* Artifact state lives outside the store, so its ticks arrive here and nowhere else. */
+    var self2 = this;
+    if (this.ctx.services.artifacts && this.ctx.services.artifacts.subscribe && !this._artOff) {
+      this._artOff = this.ctx.services.artifacts.subscribe(function () {
+        if (self2._handoffHost) self2._renderHandoff(self2._handoffHost);
+      });
+    }
     this.renderSurfaces();
     this.renderQuestion();
     this.syncLive();
@@ -357,75 +364,392 @@
 
   /* ---------------------------------------------------------------- thread-level surfaces (spine foot) */
 
+  /* ---------------------------------------------------------------- compact work: spine units
+   *
+   * The matrix assigns this concept SPINE UNITS: the active group is a detailed square-marker unit,
+   * completed groups collapse to marker-only nodes with no labels at all, and clicking a marker
+   * expands that unit inline — ONE AT A TIME, because a spine that opens three units at once stops
+   * being a chronology and becomes a list of panels.
+   *
+   * Compact by default is the requirement, and on a spine "compact" means the marker alone. That is
+   * why the completed form drops labels entirely rather than shortening them: a column of markers is
+   * scannable, a column of truncated labels is not.
+   *
+   * The single-open rule uses `view[tid].surfaces.expanded`, which the store already carries for
+   * exactly this — concepts that promise single-detail behaviour keep one open domain there, and it
+   * survives a remount.
+   */
   T3Thread.prototype.renderSurfaces = function () {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
-    var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
     var thread = this.ctx.data.threadById(this.tid());
+    var v = this.ctx.store.view(this.tid());
+    var openKind = (v.surfaces && v.surfaces.expanded) || null;
 
-    function each(v) { return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]); }
+    /* Ask the questionnaire whether a question is pending rather than reading `surfacesYielded`. That
+     * flag is written by renderQuestion, and update() renders surfaces FIRST on every pass - so
+     * reading it here painted the whole cluster for one frame before the question displaced it, and an
+     * open group appeared to close itself. The pending question is the authoritative fact; the flag
+     * mirrors it one render later. */
+    var pendingQuestion = svc.questionnaire ? svc.questionnaire.activeFor(this.tid()) : null;
+    var active = (!pendingQuestion && svc.surfaces) ? svc.surfaces.activeFor(this.tid()) : null;
+
+    function each(val) { return val == null ? [] : (Object.prototype.toString.call(val) === '[object Array]' ? val : [val]); }
 
     var entries = [];
-    if (active && active.goal) entries.push({ kind: 'goal', label: 'Goal · ' + F().label(active.goal.status), build: function (h, api) { self.buildGoalDetail(h, active.goal, api); } });
-    if (active && active.todo) {
-      var done = (active.todo.items || []).filter(function (i) { return i.state === 'complete'; }).length;
-      entries.push({ kind: 'todo', label: 'Todo · ' + done + ' of ' + (active.todo.items || []).length, build: function (h) { self.buildTodoDetail(h, active.todo); } });
+
+    /* GOAL — carries the phase index, which is the one fact a compact work cluster must never lose:
+     * "where are we" outranks "what is happening" when the surface is one line tall. */
+    if (active && active.goal) {
+      var phase = svc.goals && svc.goals.phaseOf ? svc.goals.phaseOf(active.goal) : null;
+      var goalLabel = phase
+        ? ('Phase ' + phase.index + ' of ' + phase.total + ' \u00b7 ' + phase.label)
+        : ('Goal \u00b7 ' + F().label(active.goal.status));
+      entries.push({
+        kind: 'goal', label: goalLabel, state: active.goal.status,
+        build: function (h, api) { self.buildGoalDetail(h, active.goal, api); }
+      });
     }
+
+    if (active && active.todo) {
+      var items = active.todo.items || [];
+      var done = items.filter(function (i) { return i.state === 'complete' || i.state === 'done'; }).length;
+      var blocked = items.filter(function (i) { return i.state === 'blocked'; }).length;
+      entries.push({
+        kind: 'todo',
+        label: done + '/' + items.length + ' Todos' + (blocked ? ' \u00b7 ' + blocked + ' blocked' : ''),
+        state: blocked ? 'blocked' : (done === items.length ? 'complete' : 'working'),
+        build: function (h) { self.buildTodoDetail(h, active.todo); }
+      });
+    }
+
     if (active) {
       each(active.subagents).forEach(function (g) {
         var c = g.counts || {};
         var parts = [];
+        /* Human-readable prose for every state, per CONTRACT 8.3: `waiting_for_parent` is never
+         * shown as an underscored enum. */
         if (c.working) parts.push(c.working + ' working');
-        if (c.complete) parts.push(c.complete + ' complete');
+        if (c.queued) parts.push(c.queued + ' queued');
         if (c.blocked) parts.push(c.blocked + ' blocked');
+        if (c.failed) parts.push(c.failed + ' failed');
+        if (c.complete) parts.push(c.complete + ' complete');
         if (c.waiting) parts.push(c.waiting + ' waiting for parent');
-        entries.push({ kind: 'subagents', label: 'Agents · ' + (parts.join(', ') || 'none active'), build: function (h) { self.buildAgentsDetail(h, g); } });
+        entries.push({
+          kind: 'subagents', label: parts.join(', ') || 'No agents active',
+          state: c.blocked ? 'blocked' : (c.working ? 'working' : 'complete'),
+          build: function (h) { self.buildAgentsDetail(h, g); }
+        });
       });
+
+      /* ACTIVITY — reads, searches, web and browser work, tests and verification. Without this the
+       * cluster cannot convey the six activity kinds the packet requires. */
+      var stages = (thread && thread.activityStages) || [];
+      if (stages.length) {
+        var kinds = {};
+        stages.forEach(function (st) { kinds[st.kind] = (kinds[st.kind] || 0) + 1; });
+        var kindParts = [];
+        if (kinds.read) kindParts.push(kinds.read + ' read');
+        if (kinds.search) kindParts.push(kinds.search + ' searched');
+        if (kinds.web) kindParts.push(kinds.web + ' fetched');
+        if (kinds.browser) kindParts.push(kinds.browser + ' inspected');
+        if (kinds.test) kindParts.push(kinds.test + ' tested');
+        if (kinds.verify) kindParts.push(kinds.verify + ' verified');
+        entries.push({
+          kind: 'activity', label: kindParts.join(', '), state: 'complete',
+          build: function (h) { self.buildActivityStages(h, stages); }
+        });
+      }
+
       each(active.diffs).forEach(function (g) {
         var files = g.files || [];
-        entries.push({ kind: 'diff', label: 'Changes · ' + files.length + (files.length === 1 ? ' file' : ' files'), build: function (h) { self.buildDiffDetail(h, g); } });
+        var add = 0, del = 0;
+        files.forEach(function (f) { add += f.added || 0; del += f.removed || 0; });
+        entries.push({
+          kind: 'diff',
+          label: files.length + (files.length === 1 ? ' file' : ' files') + ' \u00b7 +' + add + ' \u2212' + del,
+          state: 'complete',
+          build: function (h) { self.buildDiffDetail(h, g); }
+        });
       });
     }
+
     if (thread && thread.artifacts && thread.artifacts.length) {
-      entries.push({ kind: 'artifacts', label: 'Artifacts · ' + thread.artifacts.length, build: function (h) { self.buildArtifactsDetail(h, thread.artifacts); } });
+      entries.push({
+        kind: 'artifacts', label: thread.artifacts.length + ' artifacts', state: 'complete',
+        build: function (h) { self.buildArtifactsDetail(h, thread.artifacts); }
+      });
     }
 
-    if (this.ctx.capabilities.workSurfaceHost) {
-      var hostEl = this.ctx.regions.workSurfaceHost;
-      U().empty(hostEl);
-      entries.forEach(function (e) { hostEl.appendChild(self.buildSurfaceNode(e, true)); });
-      if (this.surfacesTail) U().empty(this.surfacesTail);
+    /* VERIFICATION — the final state the packet asks to be visible. It is derived from the message
+     * that carries it rather than from a separate flag, so it cannot claim a verification that no
+     * turn recorded. */
+    var verified = this._verificationRecord();
+    if (verified) {
+      entries.push({
+        kind: 'verify',
+        label: 'Verified \u00b7 ' + F().duration(verified.elapsedSeconds),
+        state: 'complete',
+        build: function (h) {
+          h.appendChild(u.el('p', { class: 't3-wunit-note', text: verified.note }));
+          h.appendChild(u.el('p', { class: 't3-wunit-note', text: 'Worked for ' + F().duration(verified.workedSeconds) }));
+        }
+      });
+    }
+
+    var hostEl = this.ctx.capabilities.workSurfaceHost ? this.ctx.regions.workSurfaceHost : this.surfacesTail;
+    if (!hostEl) return;
+    U().empty(hostEl);
+    if (this.ctx.capabilities.workSurfaceHost && this.surfacesTail) U().empty(this.surfacesTail);
+
+    /* A pending question yields the WORK surfaces and only those. Advice is a comment on the work
+     * rather than a work surface, and the handoff is the work's product, so both stay reachable while
+     * the question is answered. The yielded state underneath is untouched, so the cluster returns
+     * exactly as it was - including which group was open. */
+    if (pendingQuestion) {
+      this._mountTail(hostEl);
       return;
     }
 
-    if (!this.surfacesTail) return;
-    U().empty(this.surfacesTail);
-    entries.forEach(function (e) { self.surfacesTail.appendChild(self.buildSurfaceNode(e, false)); });
+    /* Same DOM either way. The only difference between a hosted and an inline cluster is the parent
+     * it is appended to — two implementations would drift the moment one was edited. */
+    var runEl = u.el('div', { class: 't3-wgroup', data: { hosted: this.ctx.capabilities.workSurfaceHost ? '1' : '0' } });
+
+    entries.forEach(function (e) {
+      var isOpen = openKind === e.kind;
+      /* Completed groups are marker-only when closed: that IS the condensation for this concept. */
+      var condensed = !isOpen && e.state === 'complete';
+
+      var unit = u.el('div', {
+        class: 't3-wunit',
+        data: { kind: e.kind, state: e.state, open: isOpen ? '1' : '0', condensed: condensed ? '1' : '0' }
+      });
+
+      var mark = u.el('button', {
+        class: 't3-wunit-mark', type: 'button',
+        aria: { expanded: isOpen ? 'true' : 'false', label: e.kind + ', ' + e.label }
+      });
+      mark.title = e.label;
+      self._on(mark, 'click', function () {
+        /* Single open at a time, and clicking the open one closes it. Reopening is independent:
+         * every group is addressable by its own marker regardless of which one was last open. */
+        var vv = self.ctx.store.view(self.tid());
+        vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+        vv.surfaces.expanded = (vv.surfaces.expanded === e.kind) ? null : e.kind;
+        /* touchView is enough: update() re-renders the surfaces for any `view*` change, so calling
+         * renderSurfaces here too would rebuild this run twice per click. */
+        self.ctx.store.touchView('surfaces');
+      });
+      unit.appendChild(mark);
+
+      var label = u.el('span', { class: 't3-wunit-label' });
+      /* In-place text morph. A new row per count change would grow the spine on every tick, which is
+       * the behaviour the packet's "counts update inside the existing line" rule rules out. */
+      if (svc.motion && svc.motion.swapText) svc.motion.swapText(label, e.label);
+      else label.textContent = e.label;
+      unit.appendChild(label);
+
+      if (isOpen) {
+        var detail = u.el('div', { class: 't3-wunit-detail' });
+        e.build(detail, { close: function () {
+          var vv2 = self.ctx.store.view(self.tid());
+          if (vv2.surfaces) vv2.surfaces.expanded = null;
+          self.ctx.store.touchView('surfaces');
+          self.renderSurfaces();
+        } });
+        unit.appendChild(detail);
+      }
+
+      runEl.appendChild(unit);
+    });
+
+    hostEl.appendChild(runEl);
+
+    /* The BSD advice surface and the handoff card hang off the same spine, below the units, because
+     * both are consequences of the work the units describe. */
+    this._mountTail(hostEl);
   };
 
-  /* A thread-level surface entry, styled with the same square execution-unit marker as
-   * activity: it too is "work", just not a discrete timestamped moment. inHost drops the
-   * marker/spine framing since a work-surface host is its own region, outside the transcript. */
-  T3Thread.prototype.buildSurfaceNode = function (entry, inHost) {
+  /* Advice and handoff each get a stable container. The artifact service ticks its own state on its
+   * own subscription - not through the store - so the handoff has to be re-renderable WITHOUT
+   * rebuilding the unit run underneath it, or every load frame would tear down an open group. */
+  T3Thread.prototype._mountTail = function (hostEl) {
+    var u = U();
+    this._bsdHost = u.el('div', { class: 't3-bsd-host' });
+    this._handoffHost = u.el('div', { class: 't3-handoff-host' });
+    hostEl.appendChild(this._bsdHost);
+    hostEl.appendChild(this._handoffHost);
+    this._renderBsdAdvice(this._bsdHost);
+    this._renderHandoff(this._handoffHost);
+  };
+
+  /* The verification record comes from the message that carries it. */
+  T3Thread.prototype._verificationRecord = function () {
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) {
+      if (msgs[i].verification) return msgs[i].verification;
+    }
+    return null;
+  };
+
+  /* Activity detail, including the six kinds. Browser work uses PM-native vocabulary; the labels
+   * come from the fixture and are printed rather than reworded. */
+  T3Thread.prototype.buildActivityStages = function (host, stages) {
+    var u = U();
+    var self = this;
+    stages.forEach(function (st) {
+      var row = u.el('div', { class: 't3-act-row', data: { kind: st.kind } });
+      row.appendChild(u.el('span', { class: 't3-act-kind', text: F().label(st.kind) }));
+      row.appendChild(u.el('span', { class: 't3-act-label', text: st.label }));
+      if (st.durationMs != null) {
+        row.appendChild(u.el('span', { class: 't3-act-dur', text: F().duration(Math.round(st.durationMs / 1000)) }));
+      }
+      if (st.detail) {
+        var more = u.el('button', { class: 't3-qmini', type: 'button', text: 'Detail' });
+        self._on(more, 'click', function () {
+          self.ctx.services.popup.open({
+            anchorEl: more, kind: 'panel', width: 280,
+            build: function (h) {
+              h.appendChild(u.el('div', { class: 'pmx-pop-title', text: st.label }));
+              h.appendChild(u.el('p', { class: 't3-wunit-note', text: st.detail }));
+            }
+          });
+        });
+        row.appendChild(more);
+      }
+      host.appendChild(row);
+    });
+  };
+
+  /* ---------------------------------------------------------------- BSD: a side node off the spine
+   *
+   * The matrix gives this concept "a side node hanging off the spine". That is the right shape here
+   * for a reason worth stating: advice is NOT part of the chronology — it is a comment on it — so it
+   * must be attached to the spine without being a node in the run. Hence a side node, offset from the
+   * column, rather than another square marker in sequence.
+   */
+  T3Thread.prototype._renderBsdAdvice = function (host) {
     var self = this;
     var u = U();
-    var row = u.el('div', { class: inHost ? 't3-host-unit' : 't3-unit', data: { surface: entry.kind } });
-    if (!inHost) row.appendChild(u.el('div', { class: 't3-marker' }, [this.markerNode('unit')]));
-    var content = inHost ? row : u.el('div', { class: 't3-unit-content' });
-    var btn = u.el('button', { class: 't3-unit-btn' }, [
-      u.el('span', { class: 't3-unit-label', text: entry.label })
-    ]);
-    this._on(btn, 'click', function (ev) {
-      self.ctx.services.popup.open({
-        anchorEl: ev.currentTarget, kind: 'panel', width: 340,
-        build: function (host, api) { entry.build(host, api); }
+    var bsd = this.ctx.services.bsd;
+    if (!bsd || !bsd.advice) return;
+
+    U().empty(host);
+    var list = bsd.advice(this.tid()) || [];
+    if (!list.length) return;
+
+    var state = bsd.visualState ? bsd.visualState(this.tid()) : 'auto-idle';
+    var wrap = u.el('div', { class: 't3-bsd', data: { state: state } });
+
+    list.forEach(function (adv) {
+      var node = u.el('div', { class: 't3-bsd-node', data: { severity: adv.severity } });
+      node.appendChild(u.el('span', { class: 't3-bsd-stem' }));
+      var body = u.el('div', { class: 't3-bsd-body' });
+      body.appendChild(u.el('span', {
+        class: 't3-bsd-kind',
+        text: adv.severity === 'caution' ? 'Back Seat Driver, caution' : 'Back Seat Driver, note'
+      }));
+      body.appendChild(u.el('p', { class: 't3-bsd-text', text: adv.text }));
+
+      if (adv.evidenceRefs && adv.evidenceRefs.length) {
+        body.appendChild(u.el('span', { class: 't3-bsd-ev', text: adv.evidenceRefs.join(', ') }));
+      }
+
+      /* Dismiss is the ONLY action. Advice is read-only by construction: an "Apply" here would be a
+       * write path from an advisor into the thread's authority, which is exactly what the packet
+       * forbids and what PMXBsd has no API for. */
+      var dis = u.el('button', { class: 't3-qmini', type: 'button', text: 'Dismiss' });
+      self._on(dis, 'click', function () {
+        bsd.dismiss(self.tid(), adv.id);
+        self.renderSurfaces();
       });
+      body.appendChild(dis);
+
+      node.appendChild(body);
+      wrap.appendChild(node);
     });
-    content.appendChild(btn);
-    if (!inHost) row.appendChild(content);
-    return row;
+
+    host.appendChild(wrap);
   };
+
+  /* ---------------------------------------------------------------- artifact handoff card
+   *
+   * The video-B principle: a compact card CONNECTED to the work that produced it, showing
+   * `compiling -> ready` and how long it took, opening the left workspace rather than inlining the
+   * artifact. On this concept the card is a spine node with a square marker, so the handoff reads as
+   * the next event in the chronology instead of a floating attachment.
+   */
+  T3Thread.prototype._renderHandoff = function (host) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+    var A = svc.artifacts;
+    if (!A || !A.list) return;
+
+    U().empty(host);
+    var thread = this.ctx.data.threadById(this.tid());
+    var refs = (thread && thread.artifacts) || [];
+    if (!refs.length) return;
+
+    /* The most recently produced artifact is the one the handoff is about. The thread's own record
+     * IS the definition (title, kind, projectPath); `artifacts.get` is the per-THREAD catalog, not a
+     * by-id lookup, so reaching for it here would hand back the wrong shape. */
+    var ref = refs[refs.length - 1];
+    var id = ref.id;
+    if (!id) return;
+
+    var state = A.stateOf ? A.stateOf(id) : 'idle';
+    var card = u.el('div', { class: 't3-handoff', data: { state: state } });
+    card.appendChild(u.el('span', { class: 't3-handoff-mark' }));
+
+    var body = u.el('div', { class: 't3-handoff-body' });
+    body.appendChild(u.el('span', { class: 't3-handoff-title', text: ref.title }));
+
+    /* One line that morphs between the two states rather than two lines that swap visibility: the
+     * card is showing one fact whose value changes. */
+    var stateEl = u.el('span', { class: 't3-handoff-state' });
+    var stateText = (state === 'loading' || state === 'idle') ? 'compiling' : (state === 'error' ? 'could not be read' : 'ready');
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(stateEl, stateText);
+    else stateEl.textContent = stateText;
+    body.appendChild(stateEl);
+
+    var worked = this._handoffWorkedSeconds();
+    if (worked != null) {
+      body.appendChild(u.el('span', { class: 't3-handoff-worked', text: 'Worked for ' + F().duration(worked) }));
+    }
+
+    var open = u.el('button', { class: 't3-handoff-open', type: 'button', text: 'Open' });
+    this._on(open, 'click', function () {
+      A.open(id);
+      /* Land on the settled state in the same interaction rather than leaving the reviewer watching
+       * the simulated transport. The card repaints through the artifact subscription, not from here:
+       * `open` alone only writes session state, which no `view*` key covers. */
+      if (A.forceReady) A.forceReady(id);
+      if (svc.motion && svc.motion.handoff) svc.motion.handoff(card);
+    });
+    body.appendChild(open);
+
+    card.appendChild(body);
+    host.appendChild(card);
+  };
+
+  /* Worked time for the handoff line, taken from the goal's own receipt when it has one and from the
+   * producing turn otherwise. Never invented: a card with no duration simply omits the line. */
+  T3Thread.prototype._handoffWorkedSeconds = function () {
+    var svc = this.ctx.services;
+    var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+    if (active && active.goal && svc.goals && svc.goals.completionReceipt) {
+      var receipt = svc.goals.completionReceipt(active.goal);
+      if (receipt && receipt.workedSeconds != null) return receipt.workedSeconds;
+    }
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) {
+      if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
+    }
+    return null;
+  };
+
 
   T3Thread.prototype.buildGoalDetail = function (host, goal, api) {
     var self = this;
@@ -622,6 +946,10 @@
 
     var q = svc.questionnaire ? svc.questionnaire.activeFor(this.tid()) : null;
     if (!q) {
+      /* Release the yield. Only the Cancel handler ever cleared it before, so a SUBMITTED flow left
+       * `surfacesYielded` true forever and every reader of surfaces.activeFor - this cluster and any
+       * window chrome that asks - saw an empty thread for the rest of the session. */
+      if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(this.tid(), false);
       /* A resolved flow leaves its receipt on the spine. The receipt is durable state, so it is
        * rendered from history rather than remembered in a module local. */
       this._renderQuestionReceipt(host);
@@ -656,11 +984,16 @@
       var skipped = self._isSkipped(q, question.id);
       var isActive = i === idx && !atEnd;
 
-      /* Four node states, and they are mutually exclusive by construction: a skipped node is
-       * hollow even if it carries a stale draft, because the user's last instruction was skip. */
-      var state = skipped ? 'skipped' : (isActive ? 'active' : (answered ? 'answered' : 'pending'));
+      /* ACTIVE outranks skipped. Travelling back to a skipped question makes it the current one, and
+       * ranking `skipped` first rendered it as an inert hollow marker with no option list and no
+       * field for a refusal to land on - the run looked frozen with nothing active anywhere. The skip
+       * is still true, so it rides along as its own attribute rather than being lost. */
+      var state = isActive ? 'active' : (skipped ? 'skipped' : (answered ? 'answered' : 'pending'));
 
-      var node = u.el('div', { class: 't3-qnode', data: { state: state, q: question.id } });
+      var node = u.el('div', {
+        class: 't3-qnode',
+        data: { state: state, q: question.id, skipped: skipped ? '1' : '0' }
+      });
 
       var mark = u.el('button', {
         class: 't3-qmark', type: 'button',
@@ -703,13 +1036,23 @@
          * separate the complaint from the thing it is about, which is the whole reason the service
          * returns a per-question reason rather than a single boolean. */
         var reason = u.el('p', { class: 't3-qreason', data: { show: '0' } });
+        /* A refusal raised by the terminal node is carried across the one render it takes to travel
+         * to the offending question, then consumed - it must not survive into a later render. */
+        if (self._pendingReason) {
+          reason.textContent = self._pendingReason;
+          reason.setAttribute('data-show', '1');
+          self._pendingReason = null;
+        }
         body.appendChild(reason);
         node._reasonEl = reason;
 
         body.appendChild(self._buildQuestionActions(q, question, i, reason));
-      } else if (skipped) {
-        /* Unskip is reachable, which it was not anywhere before: the service has always had it and
-         * no concept surfaced it, so a skip was effectively permanent. */
+      }
+
+      /* Unskip is reachable from EITHER form - active or not. It was reachable from nowhere before
+       * this build: the service has always had it and no concept surfaced it, so a skip was
+       * effectively permanent. */
+      if (skipped) {
         var un = u.el('button', { class: 't3-qmini', type: 'button', text: 'Unskip' });
         self._on(un, 'click', function () {
           svc.questionnaire.unskip(q.id, question.id);
@@ -739,14 +1082,12 @@
     host.appendChild(run);
   };
 
-  /* Skip state lives in the service's own map, keyed by questionnaire id plus question id, and is
-   * never written onto the question object. Reading it through one helper keeps that detail in one
-   * place instead of four call sites. */
+  /* Skip state is owned by the questionnaire service, whose key format is private to it. Asking the
+   * service is the only correct read; reconstructing the key here would couple this renderer to a
+   * delimiter it cannot see. */
   T3Thread.prototype._isSkipped = function (q, questionId) {
-    var v = this.ctx.store.view(this.tid());
-    var slice = v.questionnaire;
-    if (!slice || !slice.skipped) return false;
-    return !!slice.skipped[q.id + '' + questionId];
+    var svc = this.ctx.services.questionnaire;
+    return !!(svc && svc.isSkipped && svc.isSkipped(q.id, questionId));
   };
 
   T3Thread.prototype._buildQuestionActions = function (q, question, idx, reasonEl) {
@@ -787,7 +1128,24 @@
     this._on(primary, 'click', function () {
       if (atEnd) {
         var res = svc.questionnaire.submit(q.id);
-        if (!res.ok) { showReason(res.reason || 'Answer the required questions first.'); return; }
+        if (!res.ok) {
+          /* The terminal node has no field of its own, so a refusal shown HERE would be a complaint
+           * detached from its cause - which is the toast behaviour the packet rules out. Travel back
+           * to the offending question instead; the reason then renders at that field, and the run's
+           * markers show which node is being complained about. */
+          var offender = (res.missingRequired || [])[0];
+          if (offender) {
+            var questions = q.questions || [];
+            for (var i = 0; i < questions.length; i++) {
+              if (questions[i].id === (offender.id || offender)) { svc.questionnaire.goTo(q.id, i); break; }
+            }
+            self._pendingReason = res.reason || 'This question is required.';
+            self.renderQuestion();
+            return;
+          }
+          showReason(res.reason || 'Answer the required questions first.');
+          return;
+        }
         /* Settle the submitting beat so the receipt exists at the end of this interaction rather
          * than 700 ms later, which is also what makes the probe deterministic. */
         svc.questionnaire.finishSubmit(q.id);
@@ -974,6 +1332,7 @@
   };
 
   T3Thread.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window
      * survives would otherwise leave a second questionnaire card behind. Clear what it

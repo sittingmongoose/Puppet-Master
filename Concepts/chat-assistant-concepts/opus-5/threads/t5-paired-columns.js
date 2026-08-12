@@ -212,19 +212,14 @@
      * questionnaires on screen. */
     if (this._inRenderQuestion) return;
 
-    /* Measure the outgoing card BEFORE the rebuild empties the host, so an
-     * advance between questions has a height to spring from. The reveal call
-     * sits outside the guard because the guard's whole job is to suppress the
-     * re-entrant inner pass, and the choreography must run once, on the outer. */
+    /* NO CHOREOGRAPHY YET. The shared entrance/advance this concept used to call was deleted in
+     * Phase E0 because it made all eight thread concepts move identically; this concept's own form is
+     * still outstanding, and a no-op is the honest interim - not a borrowed animation. */
     var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-    var pmxFrom = global.PMXReveal ? global.PMXReveal.measure(pmxHost && pmxHost.firstElementChild) : undefined;
 
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
 
-    if (global.PMXReveal) {
-      global.PMXReveal.afterRender(pmxHost, this.ctx.services, this.tid(), pmxFrom);
-    }
   };
 
 T5.prototype._renderQuestionBody = function () {

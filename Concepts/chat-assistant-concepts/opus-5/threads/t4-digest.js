@@ -208,60 +208,290 @@
     return this.ctx.capabilities.workSurfaceHost ? this.ctx.regions.workSurfaceHost : this.inlineSurfaces;
   };
 
+  /* ---------------------------------------------------------------- work: ONE digest line
+   *
+   * The matrix assigns this concept a WORK DIGEST LINE: every live surface reduced to one sentence -
+   * `Phase 3 of 5 · 6/8 Todos · 3 agents · +182 −41` - condensing to `Verified · 4 artifacts · 22m`
+   * when the work is done, and opening into a bounded internal-scroll ledger.
+   *
+   * That is a different claim from the old code, which drew one `t4-surface` row PER surface: four
+   * rows is not a digest, it is a list with digest styling. A digest concept must be able to say
+   * everything in one line, and the cost of that decision is that the line has to be BUILT from the
+   * live facts rather than picked from them - which is exactly what makes it worth building here.
+   */
   T4Thread.prototype.renderSurfaces = function () {
     var self = this;
     var u = U();
+    var svc = this.ctx.services;
     var host = this.surfaceHost();
     if (!host) return;
     U().empty(host);
-    var active = this.ctx.services.surfaces.activeFor(this.tid());
-    if (!active) return;
 
-    function each(v) {
-      return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]);
+    /* Ask the flow, not `surfacesYielded`: that flag is written by renderQuestion, which runs AFTER
+     * this on every pass, so reading it here paints the digest for one frame before the question
+     * displaces it. */
+    var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
+
+    /* Advice and the handoff are not work surfaces - one is a comment on the work, the other is its
+     * product - so they survive the yield and hang below in their own hosts. */
+    this._bsdHost = u.el('div', { class: 't4-bsd-host' });
+    this._handoffHost = u.el('div', { class: 't4-handoff-host' });
+
+    if (!pendingQuestion) {
+      var active = svc.surfaces.activeFor(this.tid());
+      var thread = this.ctx.data.threadById(this.tid());
+      var parts = [];
+      var detail = [];
+
+      function each(v) { return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]); }
+
+      if (active && active.goal) {
+        /* The phase index leads. On one line, "where are we" outranks everything else. */
+        var phase = svc.goals && svc.goals.phaseOf ? svc.goals.phaseOf(active.goal) : null;
+        parts.push(phase ? ('Phase ' + phase.index + ' of ' + phase.total) : F().label(active.goal.status));
+        detail.push({ kind: 'Goal', build: function (h) { self.goalDetail(h, active.goal); } });
+      }
+
+      if (active && active.todo) {
+        var items = active.todo.items || [];
+        var done = items.filter(function (i) { return i.state === 'complete' || i.state === 'done'; }).length;
+        var blocked = items.filter(function (i) { return i.state === 'blocked'; }).length;
+        parts.push(done + '/' + items.length + ' Todos' + (blocked ? ' (' + blocked + ' blocked)' : ''));
+        detail.push({ kind: 'Todo', build: function (h) { self.todoDetail(h, active.todo); } });
+      }
+
+      each(active && active.subagents).forEach(function (g) {
+        var c = g.counts || {};
+        var n = (c.working || 0) + (c.queued || 0) + (c.blocked || 0) + (c.complete || 0) + (c.failed || 0) + (c.waiting || 0);
+        parts.push(n + (n === 1 ? ' agent' : ' agents'));
+        detail.push({ kind: 'Agents', build: function (h) { self.agentDetail(h, g); } });
+      });
+
+      each(active && active.diffs).forEach(function (g) {
+        var files = g.files || [];
+        var add = 0, rem = 0;
+        files.forEach(function (f) { add += f.added || 0; rem += f.removed || 0; });
+        parts.push('+' + add + ' \u2212' + rem);
+        detail.push({ kind: 'Changes', build: function (h) { self.diffDetail(h, g); } });
+      });
+
+      /* Activity is six kinds on one line: the digest register cannot afford six rows, and dropping
+       * them entirely would lose the read/search/web/browser/test/verify coverage the packet wants. */
+      var stages = (thread && thread.activityStages) || [];
+      if (stages.length) {
+        parts.push(stages.length + ' steps');
+        detail.push({ kind: 'Activity', build: function (h) { self.activityDetail(h, stages); } });
+      }
+
+      /* The CONDENSED form. The matrix names it exactly: `Verified · 4 artifacts · 22m`. It replaces
+       * the live digest rather than shortening it - a finished run has different facts, not fewer. */
+      var verified = this._verificationRecord();
+      var complete = !!(active && active.goal && (active.goal.status === 'complete' || active.goal.completed));
+      var arts = (thread && thread.artifacts) || [];
+
+      var text, condensed = false;
+      if (complete && verified) {
+        condensed = true;
+        text = ['Verified',
+                arts.length + (arts.length === 1 ? ' artifact' : ' artifacts'),
+                F().duration(verified.workedSeconds)].join(' \u00b7 ');
+      } else {
+        text = parts.join(' \u00b7 ');
+      }
+
+      if (text) {
+        host.appendChild(this._workDigest(text, condensed, detail));
+      }
     }
 
-    /* Consistent with the concept: each surface is itself a digest line that opens. */
-    if (active.goal) host.appendChild(this.surfaceLine('Goal', active.goal.title || active.goal.objective,
-      F().label(active.goal.status), function (h) { self.goalDetail(h, active.goal); }));
+    host.appendChild(this._bsdHost);
+    host.appendChild(this._handoffHost);
+    this._renderBsdDigest(this._bsdHost);
+    this._renderHandoff(this._handoffHost);
+  };
 
-    if (active.todo) {
-      var items = active.todo.items || [];
-      var done = items.filter(function (i) { return i.state === 'complete'; }).length;
-      host.appendChild(this.surfaceLine('Todo', done + ' of ' + items.length + ' complete', '',
-        function (h) { self.todoDetail(h, active.todo); }));
-    }
+  /* The digest line itself. Opening uses the concept's OWN `data-open` mechanism - the same attribute
+   * its turns use - rather than a popup: the matrix says "opening expands a bounded internal-scroll
+   * ledger", and a popup is not an expansion, it is a different surface. */
+  T4Thread.prototype._workDigest = function (text, condensed, detail) {
+    var self = this;
+    var u = U();
+    var v = this.ctx.store.view(this.tid());
+    var open = !!(v.surfaces && v.surfaces.expanded === 'work');
 
-    each(active.subagents).forEach(function (g) {
-      host.appendChild(self.surfaceLine('Agents', self.ctx.services.surfaces.subagentSummary(g), '',
-        function (h) { self.agentDetail(h, g); }));
+    var wrap = u.el('div', { class: 't4-work', data: { open: open ? '1' : '0', condensed: condensed ? '1' : '0' } });
+
+    var line = u.el('button', {
+      class: 't4-work-line', type: 'button',
+      aria: { expanded: open ? 'true' : 'false' }
     });
+    line.appendChild(u.el('span', { class: 't4-work-kind', text: condensed ? 'Done' : 'Work' }));
 
-    each(active.diffs).forEach(function (g) {
-      var files = g.files || [];
-      var add = files.reduce(function (a, f) { return a + (f.added || 0); }, 0);
-      var rem = files.reduce(function (a, f) { return a + (f.removed || 0); }, 0);
-      host.appendChild(self.surfaceLine('Changes',
-        files.length + ' files, ' + add + ' added, ' + rem + ' removed', '',
-        function (h) { self.diffDetail(h, g); }));
+    /* In-place morph. Counts change constantly in a live run and a digest that appends a second line
+     * per tick stops being a digest by the third one. */
+    var textEl = u.el('span', { class: 't4-work-text' });
+    if (this.ctx.services.motion && this.ctx.services.motion.swapText) this.ctx.services.motion.swapText(textEl, text);
+    else textEl.textContent = text;
+    line.appendChild(textEl);
+    line.appendChild(u.el('span', { class: 't4-work-chevron', text: open ? '\u2212' : '+' }));
+
+    this._on(line, 'click', function () {
+      var vv = self.ctx.store.view(self.tid());
+      vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+      vv.surfaces.expanded = vv.surfaces.expanded === 'work' ? null : 'work';
+      /* update() re-renders surfaces for any `view*` change, so one touch is the whole job. */
+      self.ctx.store.touchView('surfaces');
+    });
+    wrap.appendChild(line);
+
+    if (open) {
+      /* The bounded ledger. `pmx-scroll` is the shared scrollbar treatment and the max-height lives in
+       * CSS, so the ledger can never grow the transcript past the digest register. */
+      var ledger = u.el('div', { class: 't4-ledger pmx-scroll' });
+      detail.forEach(function (d) {
+        var section = u.el('div', { class: 't4-ledger-section' });
+        section.appendChild(u.el('div', { class: 't4-ledger-kind', text: d.kind }));
+        var body = u.el('div', { class: 't4-ledger-body' });
+        d.build(body);
+        section.appendChild(body);
+        ledger.appendChild(section);
+      });
+      wrap.appendChild(ledger);
+    }
+
+    return wrap;
+  };
+
+  T4Thread.prototype.activityDetail = function (host, stages) {
+    var u = U();
+    stages.forEach(function (st) {
+      host.appendChild(u.el('div', { class: 't4-sheet-row' }, [
+        u.el('span', { class: 't4-sheet-k', text: F().label(st.kind) }),
+        u.el('span', { class: 't4-sheet-v', text: st.label + (st.detail ? ' \u2014 ' + st.detail : '') })
+      ]));
     });
   };
 
-  T4Thread.prototype.surfaceLine = function (kind, text, status, build) {
+  T4Thread.prototype._verificationRecord = function () {
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].verification) return msgs[i].verification;
+    return null;
+  };
+
+  /* ---------------------------------------------------------------- BSD: its own digest line */
+
+  T4Thread.prototype._renderBsdDigest = function (host) {
     var self = this;
     var u = U();
-    var row = u.el('button', { class: 't4-surface' }, [
-      u.el('span', { class: 't4-surface-kind', text: kind }),
-      u.el('span', { class: 't4-surface-text', text: text })
-    ]);
-    if (status) row.appendChild(u.el('span', { class: 't4-surface-status', text: status }));
-    this._on(row, 'click', function (ev) {
-      self.ctx.services.popup.open({
-        anchorEl: ev.currentTarget, kind: 'panel', width: 320,
-        build: function (host) { build(host); }
-      });
+    U().empty(host);
+    var bsd = this.ctx.services.bsd;
+    if (!bsd || !bsd.advice) return;
+
+    var list = bsd.advice(this.tid()) || [];
+    if (!list.length) return;
+
+    var cautions = list.filter(function (a) { return a.severity === 'caution'; }).length;
+    var v = this.ctx.store.view(this.tid());
+    var open = !!(v.surfaces && v.surfaces.expanded === 'bsd');
+
+    var wrap = u.el('div', { class: 't4-bsd', data: { open: open ? '1' : '0' } });
+    var line = u.el('button', { class: 't4-work-line', type: 'button', aria: { expanded: open ? 'true' : 'false' } });
+    line.appendChild(u.el('span', { class: 't4-work-kind', text: 'Advice' }));
+    /* The summary states the severity in words. A digest line has no room for a legend, so the
+     * distinction cannot rest on colour. */
+    line.appendChild(u.el('span', {
+      class: 't4-work-text',
+      text: cautions
+        ? (cautions + (cautions === 1 ? ' caution' : ' cautions') + (list.length > cautions ? ', ' + (list.length - cautions) + ' notes' : ''))
+        : (list.length + (list.length === 1 ? ' note' : ' notes'))
+    }));
+    line.appendChild(u.el('span', { class: 't4-work-chevron', text: open ? '\u2212' : '+' }));
+    this._on(line, 'click', function () {
+      var vv = self.ctx.store.view(self.tid());
+      vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+      vv.surfaces.expanded = vv.surfaces.expanded === 'bsd' ? null : 'bsd';
+      self.ctx.store.touchView('surfaces');
     });
-    return row;
+    wrap.appendChild(line);
+
+    if (open) {
+      var body = u.el('div', { class: 't4-ledger pmx-scroll' });
+      list.forEach(function (adv) {
+        var row = u.el('div', { class: 't4-advice', data: { severity: adv.severity } });
+        row.appendChild(u.el('span', { class: 't4-advice-kind', text: adv.severity === 'caution' ? 'Caution' : 'Note' }));
+        row.appendChild(u.el('span', { class: 't4-advice-text', text: adv.text }));
+        if (adv.evidenceRefs && adv.evidenceRefs.length) {
+          row.appendChild(u.el('span', { class: 't4-advice-ev', text: adv.evidenceRefs.join(', ') }));
+        }
+        /* Dismiss is the only verb. Advice is read-only: there is no API to apply it and there must
+         * not be one - an advisor that can write is not an advisor. */
+        var dis = u.el('button', { class: 't4-act', type: 'button', text: 'Dismiss' });
+        self._on(dis, 'click', function () { bsd.dismiss(self.tid(), adv.id); });
+        row.appendChild(dis);
+        body.appendChild(row);
+      });
+      wrap.appendChild(body);
+    }
+
+    host.appendChild(wrap);
+  };
+
+  /* ---------------------------------------------------------------- artifact handoff card */
+
+  T4Thread.prototype._renderHandoff = function (host) {
+    var self = this;
+    var u = U();
+    U().empty(host);
+    var svc = this.ctx.services;
+    var A = svc.artifacts;
+    if (!A) return;
+
+    var thread = this.ctx.data.threadById(this.tid());
+    var refs = (thread && thread.artifacts) || [];
+    if (!refs.length) return;
+
+    var ref = refs[refs.length - 1];
+    if (!ref.id) return;
+    var state = A.stateOf ? A.stateOf(ref.id) : 'idle';
+
+    /* Compact, and connected to the work: it sits directly under the work digest it came out of, in the
+     * same register - one line plus a control, no card chrome, because this concept has none. */
+    var card = u.el('div', { class: 't4-handoff', data: { state: state } });
+    card.appendChild(u.el('span', { class: 't4-work-kind', text: 'Artifact' }));
+    card.appendChild(u.el('span', { class: 't4-handoff-title', text: ref.title }));
+
+    var stateEl = u.el('span', { class: 't4-handoff-state' });
+    var label = (state === 'loading' || state === 'idle') ? 'compiling' : (state === 'error' ? 'could not be read' : 'ready');
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(stateEl, label);
+    else stateEl.textContent = label;
+    card.appendChild(stateEl);
+
+    var worked = this._handoffWorkedSeconds();
+    if (worked != null) card.appendChild(u.el('span', { class: 't4-handoff-worked', text: 'Worked for ' + F().duration(worked) }));
+
+    var open = u.el('button', { class: 't4-act t4-handoff-open', type: 'button', text: 'Open' });
+    this._on(open, 'click', function () {
+      A.open(ref.id);
+      /* Settle the simulated transport in the same interaction. The card repaints through the artifact
+       * subscription, not from here: `open` writes session state, which no `view*` key covers. */
+      if (A.forceReady) A.forceReady(ref.id);
+      if (svc.motion && svc.motion.handoff) svc.motion.handoff(card);
+    });
+    card.appendChild(open);
+
+    host.appendChild(card);
+  };
+
+  T4Thread.prototype._handoffWorkedSeconds = function () {
+    var svc = this.ctx.services;
+    var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+    if (active && active.goal && svc.goals && svc.goals.completionReceipt) {
+      var r = svc.goals.completionReceipt(active.goal);
+      if (r && r.workedSeconds != null) return r.workedSeconds;
+    }
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
+    return null;
   };
 
   T4Thread.prototype.goalDetail = function (host, goal) {
@@ -345,29 +575,66 @@
 
   /* ---------------------------------------------------------------- questionnaire */
 
+  /* ---------------------------------------------------------------- question: the digest that unfolds
+   *
+   * This concept renders every turn as a 2-3 line digest that opens to full and re-condenses. A
+   * questionnaire is therefore not a card dropped into the transcript - it is ONE MORE DIGEST ENTRY,
+   * with the same `data-open` mechanism and the same open/close affordance as every other entry.
+   *
+   * That has a consequence worth stating: the progress indicator lives INSIDE the digest line while
+   * open (`2/3`), and when the flow resolves the entry re-condenses carrying its own answer, so the
+   * transcript keeps reading as a list of digests rather than growing a foreign surface.
+   *
+   * Skip writes `— skipped` into the line. Cancel closes the entry and marks it `Cancelled`. Neither
+   * removes it: a digest concept whose digest disappears has lost the record of what happened.
+   */
   T4Thread.prototype.renderQuestion = function () {
-    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update()
-     * and therefore this function, mid-render. The inner pass appends a card, the outer
-     * pass then appends a second one into a host it already emptied — two identical
-     * questionnaires on screen. */
+    /* Re-entrancy guard. Claiming the work surfaces notifies the store, which re-enters update() and
+     * therefore this function mid-render: the inner pass appends the entry and the outer pass appends
+     * a second one into a host it already emptied. */
     if (this._inRenderQuestion) return;
 
-    /* Measure the outgoing card BEFORE the rebuild empties the host, so an
-     * advance between questions has a height to spring from. The reveal call
-     * sits outside the guard because the guard's whole job is to suppress the
-     * re-entrant inner pass, and the choreography must run once, on the outer. */
-    var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-    var pmxFrom = global.PMXReveal ? global.PMXReveal.measure(pmxHost && pmxHost.firstElementChild) : undefined;
+    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var from = global.PMXReveal ? global.PMXReveal.measure(host && host.firstElementChild) : undefined;
+    var prevKey = this._qkey || '';
 
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
 
-    if (global.PMXReveal) {
-      global.PMXReveal.afterRender(pmxHost, this.ctx.services, this.tid(), pmxFrom);
-    }
+    this._unfoldQuestion(host, from, prevKey);
   };
 
-T4Thread.prototype._renderQuestionBody = function () {
+  /* This concept's OWN choreography, and deliberately the quietest of the eight: it reuses the digest
+   * unfold and adds no new motion vocabulary. The shared `afterRender` that used to live here sprang a
+   * height for all eight concepts identically - which on a digest read as a panel inflating, in a
+   * register whose entire premise is that entries open and close the same restrained way. */
+  T4Thread.prototype._unfoldQuestion = function (host, from, prevKey) {
+    var R = global.PMXReveal;
+    if (!R || !host) return;
+
+    var svc = this.ctx.services;
+    var key = R.keyFor(svc, this.tid());
+    this._qkey = key;
+
+    /* Same question, one more keystroke: silence. A freeform answer re-renders per character because
+     * typing writes a draft and the draft notifies the store. */
+    if (prevKey === key) return;
+
+    var entry = host.querySelector('.t4-qdigest');
+    if (!entry || R.reduced(entry)) return;
+
+    if (!prevKey) {
+      /* ENTRANCE: the same unfold an ordinary digest entry uses when it opens. */
+      if (svc.motion && svc.motion.collapseTo) svc.motion.collapseTo(entry, true, { collapsedHeight: 0, duration: 240 });
+      return;
+    }
+
+    /* ADVANCE: spring from the outgoing entry's height so the fold reads as one surface changing its
+     * mind, not two surfaces swapping. */
+    if (from != null) R.springHeight(entry, from);
+  };
+
+  T4Thread.prototype._renderQuestionBody = function () {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
@@ -375,61 +642,210 @@ T4Thread.prototype._renderQuestionBody = function () {
     if (!host) return;
     U().empty(host);
 
-    var q = svc.questionnaire.activeFor(this.tid());
-    if (!q) { svc.surfaces.yieldForQuestion(this.tid(), false); return; }
-    svc.surfaces.yieldForQuestion(this.tid(), true);
+    var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
+    if (!flow) return;
 
-    var idx = q.currentQuestionIndex || 0;
-    var question = (q.questions || [])[idx];
-    if (!question) return;
-
-    var card = u.el('div', { class: 't4-question' });
-    card.appendChild(u.el('div', { class: 't4-question-head' }, [
-      u.el('span', { text: (idx + 1) + ' of ' + (q.questions || []).length }),
-      u.el('span', { class: 't4-question-req', text: question.required ? 'Required' : 'Optional' })
-    ]));
-    card.appendChild(u.el('p', { class: 't4-question-prompt', text: question.prompt }));
-
-    if (question.options && question.options.length) {
-      var opts = u.el('div', { class: 't4-question-opts' });
-      question.options.forEach(function (opt) {
-        var sel = (question.selected || []).indexOf(opt) >= 0;
-        var b = u.el('button', { class: 't4-opt', text: opt, aria: { pressed: sel ? 'true' : 'false' } });
-        u.on(b, 'click', function (ev) { if (global.PMXReveal) global.PMXReveal.ripple(this, ev); svc.questionnaire.answer(q.id, question.id, opt); self.renderQuestion(); });
-        opts.appendChild(b);
-      });
-      card.appendChild(opts);
-    } else {
-      var ta = u.el('textarea', { class: 't4-question-free pmx-scroll' });
-      ta.setAttribute('spellcheck', 'false');
-      ta.value = question.draft || '';
-      u.on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
-      card.appendChild(ta);
+    if (!flow.record) {
+      /* Resolved. The entry re-condenses carrying its answer - it does not vanish. */
+      this._renderQuestionReceipt(host, flow.receipt);
+      return;
     }
 
-    var acts = u.el('div', { class: 't4-question-acts' });
-    var isLast = idx === (q.questions || []).length - 1;
-    [['Skip', function () { svc.questionnaire.skip(q.id, question.id); }],
-     [isLast ? 'Submit' : 'Next', function () {
-       if (isLast) {
-         var can = svc.questionnaire.canSubmit(q.id);
-         if (!can.ok) { if (global.PMXReveal) global.PMXReveal.reject(this); svc.toast.show('Answer the required questions first'); return; }
-         svc.questionnaire.submit(q.id);
-       } else { svc.questionnaire.next(q.id); }
-     }],
-     ['Cancel', function () { svc.questionnaire.cancel(q.id); }]
-    ].forEach(function (a, i) {
-      var b = u.el('button', { class: 't4-act' + (i === 1 ? ' t4-act-primary' : ''), text: a[0] });
-      u.on(b, 'click', function () { a[1](); self.renderQuestion(); self.renderSurfaces(); });
-      acts.appendChild(b);
+    svc.qflow.claim(svc, this.tid());
+
+    var open = this._questionOpen !== false; // an active question opens by default; the user may fold it
+    var entry = u.el('div', { class: 't4-qdigest', data: { open: open ? '1' : '0', phase: flow.status } });
+
+    /* ---- the digest line. `2/3` lives HERE, inside the line, per the matrix. */
+    var line = u.el('div', { class: 't4-qdigest-line' });
+    line.appendChild(u.el('span', { class: 't4-work-kind', text: 'Question' }));
+
+    var summary = u.el('span', { class: 't4-qdigest-text' });
+    var q = flow.question;
+    if (flow.status === 'preparing') {
+      summary.textContent = 'Preparing questions';
+    } else if (flow.status === 'submitting') {
+      summary.textContent = 'Submitting answers';
+    } else if (flow.atEnd) {
+      summary.textContent = 'Every question visited';
+    } else {
+      /* Two-to-three lines of digest: the prompt, clamped by CSS, never re-worded here. */
+      summary.textContent = q ? q.prompt : '';
+    }
+    line.appendChild(summary);
+
+    if (flow.status !== 'preparing' && flow.total) {
+      /* Progress INSIDE the digest line, and only while open - the matrix is explicit, and a closed
+       * digest that carries a live counter would be claiming to be open. */
+      if (open) line.appendChild(u.el('span', { class: 't4-qdigest-count', text: flow.position + '/' + flow.total }));
+    }
+
+    var fold = u.el('button', {
+      class: 't4-work-chevron', type: 'button',
+      text: open ? '\u2212' : '+', aria: { label: open ? 'Fold the question' : 'Unfold the question', expanded: open ? 'true' : 'false' }
     });
-    card.appendChild(acts);
-    host.appendChild(card);
+    this._on(fold, 'click', function () {
+      self._questionOpen = !open;
+      self.renderQuestion();
+    });
+    line.appendChild(fold);
+    entry.appendChild(line);
+
+    if (!open || flow.status === 'preparing' || flow.status === 'submitting') {
+      host.appendChild(entry);
+      return;
+    }
+
+    /* ---- the unfolded body */
+    var body = u.el('div', { class: 't4-qdigest-body' });
+
+    if (q && !flow.atEnd) {
+      if (q.options && q.options.length) {
+        var opts = u.el('div', { class: 't4-qopts' });
+        q.options.forEach(function (opt) {
+          var sel = (q.selected || []).indexOf(opt) >= 0;
+          var b = u.el('button', { class: 't4-qopt', type: 'button', text: opt, aria: { pressed: sel ? 'true' : 'false' } });
+          self._on(b, 'click', function (ev) {
+            if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
+            svc.qflow.act(svc, self.tid(), 'answer', opt);
+            self.renderQuestion();
+          });
+          opts.appendChild(b);
+        });
+        body.appendChild(opts);
+      } else {
+        var ta = u.el('textarea', { class: 't4-qfree pmx-scroll', aria: { label: q.prompt } });
+        ta.setAttribute('spellcheck', 'false');
+        ta.value = q.draft || '';
+        this._on(ta, 'input', function () { svc.qflow.act(svc, self.tid(), 'answer', ta.value); });
+        body.appendChild(ta);
+      }
+    }
+
+    /* The refusal renders at the field. `_pendingReason` carries a submit refusal across the single
+     * render it takes to travel to the offending question, then is consumed. */
+    var reason = u.el('p', { class: 't4-qreason', data: { show: this._pendingReason ? '1' : '0' } });
+    if (this._pendingReason) { reason.textContent = this._pendingReason; this._pendingReason = null; }
+    body.appendChild(reason);
+
+    /* ---- actions */
+    var acts = u.el('div', { class: 't4-qacts' });
+
+    function refuse(res, fallback) {
+      var text = res.reason || fallback;
+      reason.textContent = text;
+      reason.setAttribute('data-show', '1');
+      if (global.PMXReveal) global.PMXReveal.reject(reason);
+      /* If the refusal belongs to a DIFFERENT question, carry it across the travel. */
+      if (res.offenderIndex != null && res.offenderIndex !== flow.index) {
+        self._pendingReason = text;
+        self.renderQuestion();
+      }
+    }
+
+    if (flow.index > 0) {
+      var back = u.el('button', { class: 't4-act', type: 'button', text: 'Back' });
+      this._on(back, 'click', function () { svc.qflow.act(svc, self.tid(), 'prev'); self.renderQuestion(); });
+      acts.appendChild(back);
+    }
+
+    if (q && !flow.atEnd) {
+      var skip = u.el('button', { class: 't4-act', type: 'button', text: 'Skip' });
+      this._on(skip, 'click', function () {
+        svc.qflow.act(svc, self.tid(), 'skip');
+        self.renderQuestion();
+      });
+      acts.appendChild(skip);
+    }
+
+    if (q && flow.isSkipped(q)) {
+      var un = u.el('button', { class: 't4-act', type: 'button', text: 'Unskip' });
+      this._on(un, 'click', function () { svc.qflow.act(svc, self.tid(), 'unskip', flow.index); self.renderQuestion(); });
+      acts.appendChild(un);
+    }
+
+    var primary = u.el('button', { class: 't4-act t4-act-primary', type: 'button', text: flow.atEnd ? 'Submit' : 'Next' });
+    this._on(primary, 'click', function () {
+      var res = svc.qflow.act(svc, self.tid(), flow.atEnd ? 'submit' : 'next');
+      if (!res.ok) { refuse(res, 'Answer the required questions first.'); return; }
+      self.renderQuestion();
+      self.renderSurfaces();
+    });
+    acts.appendChild(primary);
+
+    var cancel = u.el('button', { class: 't4-act', type: 'button', text: 'Cancel' });
+    this._on(cancel, 'click', function () {
+      svc.qflow.act(svc, self.tid(), 'cancel');
+      self.renderQuestion();
+      self.renderSurfaces();
+    });
+    acts.appendChild(cancel);
+
+    body.appendChild(acts);
+
+    /* The skipped trail. `— skipped` is written into the digest for each skipped question, which is what
+     * makes a skip visible after you have moved past it. */
+    var trail = [];
+    flow.questions.forEach(function (question, i) {
+      if (!flow.isSkipped(question)) return;
+      trail.push({ i: i, prompt: question.prompt });
+    });
+    if (trail.length) {
+      var trailEl = u.el('div', { class: 't4-qtrail' });
+      trail.forEach(function (t) {
+        var row = u.el('div', { class: 't4-qtrail-row' });
+        row.appendChild(u.el('span', { class: 't4-qtrail-text', text: t.prompt }));
+        row.appendChild(u.el('span', { class: 't4-qtrail-mark', text: '\u2014 skipped' }));
+        var back2 = u.el('button', { class: 't4-qtrail-back', type: 'button', text: 'Unskip' });
+        self._on(back2, 'click', function () { svc.qflow.act(svc, self.tid(), 'unskip', t.i); self.renderQuestion(); });
+        row.appendChild(back2);
+        trailEl.appendChild(row);
+      });
+      body.appendChild(trailEl);
+    }
+
+    entry.appendChild(body);
+    host.appendChild(entry);
   };
 
-  /* ---------------------------------------------------------------- live */
+  /* The re-condensed entry. Submitted carries the answer count; cancelled is marked `Cancelled`. */
+  T4Thread.prototype._renderQuestionReceipt = function (host, receipt) {
+    var self = this;
+    var u = U();
+    if (!receipt) return;
 
-  T4Thread.prototype.syncLive = function () {
+    var entry = u.el('div', { class: 't4-qdigest t4-qdigest-done', data: { open: '0', status: receipt.status } });
+    var line = u.el('div', { class: 't4-qdigest-line' });
+    line.appendChild(u.el('span', { class: 't4-work-kind', text: 'Question' }));
+
+    var text = receipt.cancelled
+      ? 'Cancelled'
+      : (receipt.answered + ' answered' + (receipt.skipped ? ', ' + receipt.skipped + ' skipped' : ''));
+    line.appendChild(u.el('span', { class: 't4-qdigest-text', text: text }));
+
+    var show = u.el('button', { class: 't4-work-chevron', type: 'button', text: '+', aria: { label: 'Show the answers' } });
+    this._on(show, 'click', function (ev) {
+      self.ctx.services.popup.open({
+        anchorEl: ev.currentTarget, kind: 'panel', width: 320,
+        build: function (h) {
+          h.appendChild(u.el('div', { class: 't4-sheet-title', text: receipt.cancelled ? 'Cancelled questions' : 'Answers' }));
+          (receipt.questions || []).forEach(function (question) {
+            var val = receipt.answers[question.id];
+            var wasSkipped = (receipt.record.receipt.skipped || []).indexOf(question.id) >= 0;
+            h.appendChild(u.el('div', { class: 't4-sheet-row' }, [
+              u.el('span', { class: 't4-sheet-k', text: wasSkipped ? 'skipped' : 'answered' }),
+              u.el('span', { class: 't4-sheet-v', text: question.prompt + (val == null ? '' : ' \u2014 ' + [].concat(val).join(', ')) })
+            ]));
+          });
+        }
+      });
+    });
+    line.appendChild(show);
+    entry.appendChild(line);
+    host.appendChild(entry);
+  };
+
+    T4Thread.prototype.syncLive = function () {
     var u = U();
     var status = this.ctx.services.runtime.liveStatus(this.tid());
     if (!status) {

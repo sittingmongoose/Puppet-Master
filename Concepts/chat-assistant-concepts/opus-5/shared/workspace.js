@@ -54,7 +54,7 @@
     ['PMXObservable', 'PMXRoute', 'PMXAccess', 'PMXBsd', 'PMXApprovals', 'PMXContextAdmit',
      'PMXThreadOps', 'PMXOps', 'PMXAttach', 'PMXSync', 'PMXSpell', 'PMXNotify', 'PMXCapacity',
      'PMXCrew', 'PMXDrafts', 'PMXLens', 'PMXSearch', 'PMXSurfaces', 'PMXRuntime',
-     'PMXQuestionnaire', 'PMXArtifacts', 'PMXThreadHistory', 'PMXDemo']
+     'PMXQuestionnaire', 'PMXQFlow', 'PMXArtifacts', 'PMXThreadHistory', 'PMXDemo']
       .forEach(function (name) {
         var svc = global[name];
         if (svc && typeof svc.bind === 'function') svc.bind(s, d);
@@ -68,6 +68,7 @@
       search: global.PMXSearch,
       lens: global.PMXLens,
       questionnaire: global.PMXQuestionnaire,
+      qflow: global.PMXQFlow,
       drafts: global.PMXDrafts,
       runtime: global.PMXRuntime,
       activity: global.PMXActivity || global.PMXSurfaces,
