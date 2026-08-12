@@ -1,0 +1,112 @@
+{
+  "event_type": "docker.publish.blocked",
+  "bucket": "quarantined_not_admitted",
+  "july_classification": "emit_only",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently deepened from exact-token Plans evidence; absent dimensions fail closed and are not inferred."
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "note": "The cited plan explicitly names canonical ownership or the Contracts-owned family boundary for this exact behavior."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:484-499",
+      "note": "The cited span explicitly names emission or compatibility production of `docker.publish.blocked`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "note": "The owner plan requires registration before durable canonical use; no exact registered member/version is supplied."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The plan requires reason_code, blocked_step, and allowed_action_ids but does not declare an exhaustive payload/schema version."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Exact project/run/attempt/repository event identity fields are absent."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event replay key, duplicate rule, or idempotency rule is declared for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No retention class or TTL is declared for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific redaction/custody rule is declared for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:491-499",
+      "note": "Cancellation, rejection, or policy block emits this token while preserving the local build."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No durable consumer or checkpoint-advance rule is declared for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No alias, deprecation, compatibility, or withdrawal rule is declared."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:477-485",
+      "note": "Blocked means the side effect was intentionally not executed; failed means publication was attempted."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:484-499",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:491-499",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:477-485",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    }
+  ],
+  "owner_veto": null,
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "quarantined_not_admitted",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

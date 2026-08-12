@@ -1,0 +1,105 @@
+{
+  "event_type": "memory.gist_state_changed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:965",
+      "note": "The payload-detail paragraph explicitly assigns memory gist verification and indexing to Plans/assistant-memory-subsystem.md."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:948",
+      "note": "The exact catalog row names the assistant memory subsystem as producer."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:961",
+      "note": "The closed scope-policy paragraph assigns memory.gist_state_changed project_only scope."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for allowed lifecycle transition semantics of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:948",
+      "note": "The exact catalog row names prompt assembly, memory GUI, and audit as primary consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for compatibility aliases and withdrawal behavior of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `memory.gist_state_changed`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:928-948",
+      "status": "ok",
+      "notes": "Runtime catalog states that Contracts registers persisted names and identifies this event's producer, consumers, and cross-contract payload minimum."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:959-965",
+      "status": "ok",
+      "notes": "Defines project-only scope, delegates concrete persisted payload schemas to storage, and identifies Assistant Memory as payload-detail owner."
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:235,251-293",
+      "status": "ok",
+      "notes": "Defines Verified-only eligibility, deterministic verification behavior, verification states, idempotent evidence promotion, and discard behavior, but not the full persisted-event authority contract."
+    },
+    {
+      "citation": "Input shard Contracts/Assistant Memory anchors",
+      "status": "drift",
+      "notes": "The shard's cited line windows no longer contain the exact event row; current supporting locations are recorded above."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay13",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-08-04.1",
+  "registry_revision": "2026-08-12.1",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -2308,82 +2308,6 @@
       "source_refs": [
         "Plans/Contracts_V0.md#retention-compaction-deletion-quarantine-and-recovery-unavailable-events",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
-      ],
-      "retention_policy_ref": {
-        "registry_schema_id": "pm.storage_value_registry.v2",
-        "policy_id": "RP-AUTHORITY-INDEFINITE",
-        "policy_version": "1.0.0"
-      }
-    },
-    {
-      "family_id": "event-family-workspace-layout-changed",
-      "family_revision": "1.0.0",
-      "event_type": "workspace.layout_changed",
-      "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/FinalGUISpec.md#f3-home-002",
-      "payload_owner_doc": "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0",
-      "payload_schema_ref": {
-        "path": "Plans/event_payloads/workspace_layout_changed.schema.json",
-        "json_pointer": "#",
-        "schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0"
-      },
-      "legacy": {
-        "aliases": [],
-        "admitted_extensions": [],
-        "identity_json_pointers": {
-          "project_id": [
-            "/payload/project_id"
-          ]
-        },
-        "referenced_event_id_pointer": null,
-        "redaction": {
-          "mode": "reject_unhandled_secrets",
-          "transform_id": null,
-          "transform_version": null
-        }
-      },
-      "source_refs": [
-        "Plans/event_payloads/workspace_layout_changed.schema.json#",
-        "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts"
-      ],
-      "retention_policy_ref": {
-        "registry_schema_id": "pm.storage_value_registry.v2",
-        "policy_id": "RP-AUTHORITY-INDEFINITE",
-        "policy_version": "1.0.0"
-      }
-    },
-    {
-      "family_id": "event-family-terminal-workgroup-moved",
-      "family_revision": "1.0.0",
-      "event_type": "terminal.workgroup_moved",
-      "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation",
-      "payload_owner_doc": "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0",
-      "payload_schema_ref": {
-        "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
-        "json_pointer": "#",
-        "schema_id": "https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0"
-      },
-      "legacy": {
-        "aliases": [],
-        "admitted_extensions": [],
-        "identity_json_pointers": {
-          "project_id": [
-            "/payload/project_id"
-          ]
-        },
-        "referenced_event_id_pointer": null,
-        "redaction": {
-          "mode": "reject_unhandled_secrets",
-          "transform_id": null,
-          "transform_version": null
-        }
-      },
-      "source_refs": [
-        "Plans/event_payloads/terminal_workgroup_moved.schema.json#",
-        "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

@@ -1,0 +1,121 @@
+{
+  "event_type": "run.node_backoff_expired",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`run.node_backoff_expired` has an exact minimum identity/failure payload and an explicit contract owner route for runtime event vocabulary, but the checked sources do not explicitly name the accountable event owner or producer and the minimum payload is not an exhaustive closed schema. Replay, retention, custody, transition, checkpoint, withdrawal, and oracle evidence also remain open, so the row stays individually quarantined as NEEDS_OWNER_VETO.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked canonical registry declares schema_version 2.0.0, registry revision 2026-08-04.1, and unknown-event quarantine, but contains no exact `run.node_backoff_expired` entry; versioned membership remains owner-required."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes an explicitly named accountable event-contract owner; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['scheduler / executor']"
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes an exhaustive closed event payload schema; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2404-2410",
+      "note": "The exact event minimum binds run_id, node_id, attempt_id, failure_class, and ts, providing concrete event identity and failure scope."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes replay and idempotency rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes retention rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes redaction and custody rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes lifecycle transition semantics; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes consumer and checkpoint obligations; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes compatibility and withdrawal rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.node_backoff_expired` establishes complete positive and negative Event Authority oracles; the gap remains owner-required and is not filled by namespace or family analogy."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2393-2399",
+      "status": "drift",
+      "notes": "The cited range starts the backoff section and the beginning of run.node_backoff_started; the exact expired contract is at lines 2404-2410."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2404-2410",
+      "status": "ok",
+      "notes": "Defines run/node/attempt identity, failure class, and timestamp minimum payload."
+    },
+    {
+      "citation": "Plans/DRY_Rules.md:70",
+      "status": "ok",
+      "notes": "Assigns retry/backoff and ready-set policy to Executor_Protocol and runtime event/payload vocabulary to Contracts_V0."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:4-8",
+      "status": "ok",
+      "notes": "Canonical registry metadata defines version/revision and unknown-event quarantine; exact-token search found no `run.node_backoff_expired` family entry, so it supplies fail-closed absence evidence rather than membership PASS."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-run-node-backoff-expired-authority-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Does the cited minimum run/node/attempt/failure payload constitute an owner-approved durable backoff-expiry event, and who produces it with closed versioning, replay timing, transition/checkpoint semantics, retention, withdrawal, and expiry-specific negative oracle; otherwise should it remain quarantined/reclassified?",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Checked citations leave these `run.node_backoff_expired` authority fields unresolved: membership_version, owner_doc, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles. No owner or producer is inferred from its namespace, family, or neighboring rows.",
+    "event_types": [
+      "run.node_backoff_expired"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding individual-disposition schema and admission freeze.",
+    "Immutable july248 cohort pin preserved; working bucket recorded separately.",
+    "All twelve evidence fields adjudicated field-locally; every PASS has a concrete Plans citation.",
+    "No admission, bulk registration, analogy, inferred owner, or OD-EA-003 substitution."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

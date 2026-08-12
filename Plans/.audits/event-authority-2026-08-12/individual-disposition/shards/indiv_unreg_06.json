@@ -1,0 +1,1092 @@
+[
+  {
+    "event_type": "dev.session.restarting",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms a concrete dev-session command producer and exact event emission, but the July citations drift and no event payload/owner registration contract closes the remaining mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:901",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:911",
+        "status": "drift",
+        "notes": "Current line is a generic catalog-lifecycle rule, not a dev-session event contract."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:926",
+        "status": "drift",
+        "notes": "Current line concerns terminal reveal/recovery behavior, not this exact event declaration."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:901",
+        "status": "ok",
+        "notes": "cmd.dev.restart_session emits dev.session.restarting and dev.session.started."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `dev.session.restarting` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "dev.session.restarting"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "dev.session.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms a concrete dev-session command producer and exact event emission, but the July citations drift and no event payload/owner registration contract closes the remaining mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:899,901",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:911",
+        "status": "drift",
+        "notes": "Current line is a generic catalog-lifecycle rule, not a dev-session event contract."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:924",
+        "status": "drift",
+        "notes": "Current line concerns terminal reveal/recovery behavior, not this exact event declaration."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:899,901",
+        "status": "ok",
+        "notes": "cmd.dev.start_session and cmd.dev.restart_session emit dev.session.started."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `dev.session.started` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "dev.session.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "dev.session.stopped",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms a concrete dev-session command producer and exact event emission, but the July citations drift and no event payload/owner registration contract closes the remaining mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:900",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:911",
+        "status": "drift",
+        "notes": "Current line is a generic catalog-lifecycle rule, not a dev-session event contract."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:925",
+        "status": "drift",
+        "notes": "Current line concerns terminal reveal/recovery behavior, not this exact event declaration."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:900",
+        "status": "ok",
+        "notes": "cmd.dev.stop_session emits dev.session.stopping and dev.session.stopped."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `dev.session.stopped` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "dev.session.stopped"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "dev.session.stopping",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms a concrete dev-session command producer and exact event emission, but the July citations drift and no event payload/owner registration contract closes the remaining mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:900",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:911",
+        "status": "drift",
+        "notes": "Current line is a generic catalog-lifecycle rule, not a dev-session event contract."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:925",
+        "status": "drift",
+        "notes": "Current line concerns terminal reveal/recovery behavior, not this exact event declaration."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:900",
+        "status": "ok",
+        "notes": "cmd.dev.stop_session emits dev.session.stopping and dev.session.stopped."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `dev.session.stopping` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "dev.session.stopping"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "doctor.custom_headless.checked",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Doctor is explicitly the producer and the event is required as implementation evidence, but no closed event payload, semantic owner/version authority, lifecycle, replay, retention, consumer, withdrawal, or oracle contract is specified. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/newtools.md:509",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/newtools.md:509",
+        "status": "ok",
+        "notes": "Requires Doctor to emit the exact event as implementation evidence recording detection outcome."
+      },
+      {
+        "citation": "Plans/newtools.md:505-509",
+        "status": "ok",
+        "notes": "Defines valid, invalid, and absent detection behavior and identifies Doctor as the emitting check."
+      },
+      {
+        "citation": "Plans/newtools.md:4278-4308",
+        "status": "ok",
+        "notes": "Accepted PlanUnit preserves the exact event token and deterministic Doctor detection requirement."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `doctor.custom_headless.checked` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "doctor.custom_headless.checked"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "file.copied",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The File Manager catalog confirms a concrete command producer and exact event emission, but the July shared citations drift and no closed event payload or semantic registration contract closes the mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:355",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "drift",
+        "notes": "Current line declares cmd.project.open with no persisted event; it is unrelated to the File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:355",
+        "status": "ok",
+        "notes": "cmd.file.paste_nodes emits file.copied or file.moved according to mode."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.copied` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "file.copied"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "file.created",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The File Manager catalog confirms a concrete command producer and exact event emission, but the July shared citations drift and no closed event payload or semantic registration contract closes the mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:348",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "drift",
+        "notes": "Current line declares cmd.project.open with no persisted event; it is unrelated to the File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:348",
+        "status": "ok",
+        "notes": "cmd.file.new_file emits file.created."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.created` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "file.created"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "file.deleted",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The File Manager catalog confirms a concrete command producer and exact event emission, but the July shared citations drift and no closed event payload or semantic registration contract closes the mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:351",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "drift",
+        "notes": "Current line declares cmd.project.open with no persisted event; it is unrelated to the File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:351",
+        "status": "ok",
+        "notes": "cmd.file.delete emits file.deleted or folder.deleted according to target."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.deleted` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "file.deleted"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "file.exported",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The File Manager catalog confirms a concrete command producer and exact event emission, but the July shared citations drift and no closed event payload or semantic registration contract closes the mandatory dimensions. Owner decision is required; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:357",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "drift",
+        "notes": "Current line declares cmd.project.open with no persisted event; it is unrelated to the File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines only the generic handler_location field, not this event producer or contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:357",
+        "status": "ok",
+        "notes": "cmd.file.save_local_copy emits file.exported or folder.exported according to target."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.exported` remain quarantined, be completed as an owner-backed contract and individually registered, or be reclassified with cited authority?",
+      "options": [
+        "Complete the owner-backed 12-dimension contract, then review this event for individual registration",
+        "Continue fail-closed quarantine as confirmed persisted but unregistered",
+        "Reclassify with exact cited semantic-authority rationale"
+      ],
+      "evidence_gap": "The cited Plans establish emission or persistence but do not assign complete semantic registration authority or close every mandatory contract dimension; choosing the product contract is an owner decision, not an evidentiary inference.",
+      "event_types": [
+        "file.exported"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay09",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "folder.created",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms a persisted expected event and its producing command, but does not supply a semantic owner or the remaining Event Authority contract dimensions; retain fail-closed owner escalation.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:349",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "drift",
+        "notes": "The cited location is stale for this event; the token exists elsewhere in the same file."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "missing",
+        "notes": "The cited location/file does not contain this event token and does not prove the event-specific dimension."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:349",
+        "status": "ok",
+        "notes": "The cited location directly contains the event token or asserted contract text."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable semantic owner publish and approve a complete, versioned Event Authority contract for `folder.created`, or authorize continued quarantine/reclassification?",
+      "options": [
+        "Publish an owner-backed contract completing all 12 dimensions, then adjudicate this event individually",
+        "Continue quarantine with fail-closed consumption and no checkpoint advance",
+        "Reclassify as an excluded/non-event outcome with event-specific cited rationale"
+      ],
+      "evidence_gap": "The Plans establish persisted emission but do not specify every authority value. Missing owner policy, replay, retention, custody, compatibility, and oracle decisions cannot be inferred from analogous event names.",
+      "event_types": [
+        "folder.created"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay11",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

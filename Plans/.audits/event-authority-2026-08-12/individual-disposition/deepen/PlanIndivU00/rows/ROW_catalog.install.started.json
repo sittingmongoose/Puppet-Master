@@ -1,0 +1,136 @@
+{
+  "event_type": "catalog.install.started",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`catalog.install.started` remains quarantined after row-local review.  Independent review checked Plans/UI_Command_Catalog.md:916, Plans/UI_Command_Catalog.md:920, Plans/Wiring_Matrix.production.json:2357-2378, Plans/Wiring_Matrix.production.json:2398-2409. The command catalog declares this exact effect while production wiring declares receipt-only/no-persist behavior for the corresponding command; that conflict prevents either declaration from becoming event authority by inference. The missing product-owned values cannot be supplied by analogy, OD-EA-003, or namespace inference, so a stable owner veto is required before any disposition change.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly names the authority owner for `catalog.install.started`; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly designates the authoritative producer for `catalog.install.started`; command handlers or storage mentions cannot be promoted by inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is mentioned, but no individually versioned registry membership for `catalog.install.started` is cited."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed durable payload schema is cited for `catalog.install.started`; command inputs/results and neighboring event schemas are insufficient."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `catalog.install.started`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `catalog.install.started`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No retention, compaction, tombstone, or deletion policy is cited for `catalog.install.started`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No sensitive-field redaction and custody boundary is cited for `catalog.install.started`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No legal predecessor/successor or invalid-transition contract is cited for `catalog.install.started`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `catalog.install.started`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `catalog.install.started`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `catalog.install.started`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:916",
+      "status": "ok",
+      "notes": "Current row binds cmd.catalog.install_item payload {item_type,item_id,version?} to catalog.install.started and catalog.install.completed and labels the Catalog surface."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:920",
+      "status": "ok",
+      "notes": "Current ContractRef points to promoted-features, wiring, and storage plans but does not materialize the event-authority contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:928",
+      "status": "drift",
+      "notes": "Original shard citation is now a blank line; declaration moved to line 916."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "missing",
+      "notes": "The cited location contains no catalog.install.started token or event-specific authority contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:941",
+      "status": "drift",
+      "notes": "Original event-specific citation now describes cmd.chat.add_file_reference; declaration is at line 916."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2357-2378",
+      "status": "ok",
+      "notes": "Production entry names handlers::catalog::install_item but sets expected_event_types empty and effect_kind receipt, explicitly saying no persisted event is declared."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2398-2409",
+      "status": "ok",
+      "notes": "Receipt assertion and event test require a no-persist disposition and forbid unexpected persisted domain events, contradicting UI_Command_Catalog line 916."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-catalog-install-started-contract",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the Catalog event owner publish and version the complete individual Event Authority contract for catalog.install.started, or authorize continued quarantine/reclassification?",
+    "options": [
+      "Publish the complete owner-backed contract and re-adjudicate this exact event",
+      "Keep quarantined with no checkpoint advance",
+      "Reclassify as a non-authoritative command receipt with cited withdrawal semantics"
+    ],
+    "evidence_gap": "Only the semantic owner can reconcile the catalog's event declaration with production wiring's explicit no-event contract and decide whether persisted evidence is canonical or must be withdrawn.",
+    "event_types": [
+      "catalog.install.started"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

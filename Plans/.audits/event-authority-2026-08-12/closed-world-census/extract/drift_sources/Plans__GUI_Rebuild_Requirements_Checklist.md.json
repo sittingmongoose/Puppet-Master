@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.assurance.event_authority.drift_source_census_row.v1",
+  "generated_at_utc": "2026-08-12T10:34:29Z",
+  "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+  "source_class": "canonical_product_prose",
+  "frozen": {
+    "bytes": 107509,
+    "sha256": "171f065b11ff22f97b3cfe1bf884d75b4048fc9656fc91306f25e9da5f8735ab"
+  },
+  "live": {
+    "bytes": 108520,
+    "sha256": "706621f63d64d09122cea29208ce19c805002d89aee23ebc15df994033a763ca"
+  },
+  "drift": true,
+  "byte_delta": 1011,
+  "frozen_content_recovered": true,
+  "freeze_baseline": {
+    "inventory": "closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "occurrence_ledger_frozen_token_count": 14
+  },
+  "event_type_mentions": {
+    "live_full_lexical_count": 29,
+    "frozen_full_lexical_count": 29,
+    "new_full_lexical_tokens": [],
+    "removed_full_lexical_tokens": [],
+    "changed_line_context_tokens": [],
+    "new_vs_ledger_tokens": [
+      "anchor_aliases.json",
+      "cmd.chat.compact_context",
+      "coverage_map.jsonl",
+      "design.md",
+      "e.g",
+      "feature.md",
+      "index.py",
+      "migration.py",
+      "newtools.md",
+      "original_hashes.json",
+      "plan.md",
+      "plans.py",
+      "span_map.jsonl",
+      "subsystem.md",
+      "verify.py"
+    ],
+    "removed_vs_ledger_tokens": [],
+    "live_contract_lexical_count": 0,
+    "frozen_contract_lexical_count": 0,
+    "new_contract_lexical_tokens": [],
+    "removed_contract_lexical_tokens": []
+  },
+  "contract_references": {
+    "live_triple_bound_count": 0,
+    "frozen_triple_bound_count": 0,
+    "new_triple_bound_tokens": [],
+    "removed_triple_bound_tokens": [],
+    "new_triple_bound_detail": [],
+    "removed_triple_bound_detail": [],
+    "new_md_binding_count": 0,
+    "removed_md_binding_count": 0,
+    "new_md_bindings": [],
+    "removed_md_bindings": []
+  },
+  "admission_claim": false,
+  "denominator_effect": "none_until_adjudicated",
+  "notes": [
+    "Discovery-only drift pass; no admission inference per CENSUS_ADMISSION_RULE_V2.",
+    "full_lexical uses dotted lowercase token regex on file text; not admission."
+  ]
+}

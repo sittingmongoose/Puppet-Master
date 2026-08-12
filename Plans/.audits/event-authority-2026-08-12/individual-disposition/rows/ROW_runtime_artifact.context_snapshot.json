@@ -1,0 +1,120 @@
+{
+  "event_type": "runtime_artifact.context_snapshot",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+      "note": "The cited panel assigns runtime-artifact payload/schema ownership for runtime_artifact.context_snapshot."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation binds an exact producer to runtime_artifact.context_snapshot; the Runtime Artifacts owner must supply that field-local authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "runtime_artifact.context_snapshot is absent from the live Event Authority registry, so individually versioned membership is not established."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked schema Plans/runtime_artifact_context_snapshot.schema.json closes the outer envelope but defines type_payload only as an object with minProperties 1; arbitrary payload keys remain allowed, so the per-type payload is not exhaustive or closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+      "note": "The cited panel defines the common runtime-artifact identity fields applied to runtime_artifact.context_snapshot."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes replay and idempotency behavior for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a retention class or duration for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes redaction and custody responsibilities for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a complete transition or emission-trigger contract for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes consumer and checkpoint behavior for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes compatibility and withdrawal rules for runtime_artifact.context_snapshot; this field remains fail-closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes complete positive and negative test oracles for runtime_artifact.context_snapshot; this field remains fail-closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:64",
+      "status": "ok",
+      "notes": "Names runtime_artifact.context_snapshot in the canonical Option-2 19-family map."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+      "status": "ok",
+      "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+      "status": "ok",
+      "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+    },
+    {
+      "citation": "Plans/runtime_artifact_context_snapshot.schema.json",
+      "status": "ok",
+      "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+      "status": "ok",
+      "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+      "status": "ok",
+      "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+    },
+    {
+      "citation": "Plans/event_family_registry.json",
+      "status": "missing",
+      "notes": "No exact runtime_artifact.context_snapshot membership row is present; no registry append is authorized by this overlay."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay19",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against field-local checked citations; unresolved dimensions remain fail-closed without analogy or owner/producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

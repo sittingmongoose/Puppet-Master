@@ -1,0 +1,1033 @@
+[
+  {
+    "event_type": "goal_verification_decided.schema.json",
+    "occurrence_count": 4,
+    "path_count": 3,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3494,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line": 2694,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 863,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 886,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/event_family_registry.json",
+        2
+      ],
+      [
+        "Plans/Contracts_V0.md",
+        1
+      ],
+      [
+        "Plans/Goal_Runtime_System.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "local_path.exists",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 356,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 366,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1079,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 5883,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "pm.activity_bar_order",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30248,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30258,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30287,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30290,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "pm.theme",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30247,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30258,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30284,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30290,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "preview_source_artifact.v1",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2616,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2640,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 16037,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 16104,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "registry.rs",
+    "occurrence_count": 4,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2495,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 15429,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 616,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 3542,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ],
+      [
+        "Plans/LSPSupport.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "search_panel_state.v1",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2581,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 15880,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 15916,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 31678,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "self.bash_guard.check_command",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 3,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 178,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 777,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1922,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 2165,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "settings.rs",
+    "occurrence_count": 4,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 3142,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 16903,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/MiscPlan.md",
+        "line": 1258,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/MiscPlan.md",
+        "line": 1282,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ],
+      [
+        "Plans/MiscPlan.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "terminal_workgroup_moved.schema.json",
+    "occurrence_count": 4,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3409,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3453,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 2365,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 2385,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Contracts_V0.md",
+        2
+      ],
+      [
+        "Plans/event_family_registry.json",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "tier_start.rs",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1585,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1647,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 12489,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 12525,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "visualizer_state.v1",
+    "occurrence_count": 4,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 19154,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 19200,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 15753,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 15790,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Contracts_V0.md",
+        2
+      ],
+      [
+        "Plans/storage-plan.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "workspace_layout_changed.schema.json",
+    "occurrence_count": 4,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3403,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3453,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 2327,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "line": 2347,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Contracts_V0.md",
+        2
+      ],
+      [
+        "Plans/event_family_registry.json",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "alerts.jsonl",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 719,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 3589,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 3620,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/usage-feature.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "aofp.github.io",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 124,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 138,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/usage-feature.md",
+        "line": 154,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/usage-feature.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run.view_log.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 3,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 37046,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 37074,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 37088,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run_debug.breakpoint.goto_source.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35912,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35940,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35954,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run_debug.callstack.show_execution_point.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36668,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36696,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36710,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run_debug.config.open_file.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35534,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35562,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 35576,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run_debug.console.reveal.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36857,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36885,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36899,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.run_debug.terminal.reveal.route_open_receipt",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36920,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36948,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 36962,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "config.validation.passed",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1582,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 12489,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 12523,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "deno.json",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_MIXED_NOISE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 117,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 217,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 1623,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/LSPSupport.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "deno.jsonc",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 117,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 217,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/LSPSupport.md",
+        "line": 1624,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/LSPSupport.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "doctor.live_visualization.evidence",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 0,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/newtools.md",
+        "line": 857,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/newtools.md",
+        "line": 5996,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/newtools.md",
+        "line": 6021,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/newtools.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  }
+]

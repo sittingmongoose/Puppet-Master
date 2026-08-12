@@ -1,0 +1,103 @@
+{
+  "event_type": "plugin.loaded",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The plugin contract confirms canonical EventRecord persistence, the exact emission meaning, and Plugins ownership of semantics and payload content. It does not provide a complete individually versioned, closed Event Authority contract. Keep quarantined for sequenced owner completion; no admission or family analogy.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:447-464",
+      "note": "The cited plugin ledger contract assigns Plugins ownership of event semantics and payload content for this exact token."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked plugin event table names the trigger for plugin.loaded but does not explicitly identify its producing component; the exact producer binding requires owner authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an individually versioned Event Authority membership row for plugin.loaded; this field remains fail-closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an exhaustive closed payload schema for plugin.loaded; this field remains fail-closed."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes the complete scope and identity rules for plugin.loaded; this field remains fail-closed."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes replay and idempotency behavior for plugin.loaded; this field remains fail-closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a retention class or duration for plugin.loaded; this field remains fail-closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes redaction and custody responsibilities for plugin.loaded; this field remains fail-closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:447-464",
+      "note": "The cited event table names the exact emission condition for this token."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes consumer and checkpoint behavior for plugin.loaded; this field remains fail-closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes compatibility and withdrawal rules for plugin.loaded; this field remains fail-closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes complete positive and negative test oracles for plugin.loaded; this field remains fail-closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Plugins_System.md:447-464",
+      "status": "ok",
+      "notes": "Defines the plugin ledger event table, exact emission meaning, canonical EventRecord persistence, and Plugins ownership of event semantics/payload content."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unreg-plugin-loaded",
+    "field_or_decision": "membership_version,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Event owner must either supply the missing complete Event Authority contract for `plugin.loaded` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Plugins owns the semantics and identifies the emission condition but not the producing component through the canonical EventRecord ledger, but no individually versioned membership row or exhaustive closed payload schema is supplied; replay/idempotency, retention class, redaction custody, consumer checkpoints, compatibility withdrawal, and complete positive/negative oracles remain incomplete.",
+    "event_types": [
+      "plugin.loaded"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against field-local checked citations; unresolved dimensions remain fail-closed without analogy or owner/producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

@@ -1,0 +1,627 @@
+[
+  {
+    "event_type": "cmd.debug.add_breakpoint.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7080,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.clear_breakpoints.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7136,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.collect_snapshot.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7192,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.pause.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7358,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.record_verification.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7247,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.remove_breakpoint.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7414,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.resume.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7470,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.run_cleanup.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7302,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.start.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7526,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.step.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7582,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.stop.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7638,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.debug.view_evidence.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7694,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.restart_session.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7749,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.show_output.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7804,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.show_ports.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7859,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.show_problems.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7914,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.start_session.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 7969,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.dev.stop_session.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8024,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.bake.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8079,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.bake.preview.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8134,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.bake.run.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8189,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.browser_login.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 34395,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.build.bake.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8299,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.build.compose.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8354,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  },
+  {
+    "event_type": "cmd.docker.build.dispatch_receipt",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 8244,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated"
+  }
+]

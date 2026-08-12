@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.assurance.event_authority.individual_disposition_merge_receipt.v1",
+  "generated_at_utc": "2026-08-12T07:10:54Z",
+  "ledger_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+  "backup_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.BACKUP_20260812T071054Z.jsonl",
+  "changes": [
+    {
+      "event_type": "testing.capability_policy.updated",
+      "action": "deepen_merge",
+      "source": "DeepenTestingEmit",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "testing.visibility_policy.updated",
+      "action": "deepen_merge",
+      "source": "DeepenTestingEmit",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "workspace.layout_changed",
+      "action": "august_checkpoint_draft_link",
+      "source": "AugustCPDraft",
+      "provisional_before": true,
+      "provisional_after": true
+    },
+    {
+      "event_type": "terminal.workgroup_moved",
+      "action": "august_checkpoint_draft_link",
+      "source": "AugustCPDraft",
+      "provisional_before": true,
+      "provisional_after": true
+    }
+  ],
+  "counts": {
+    "ledger_rows": 321,
+    "provisional_after": 26
+  },
+  "ledger_sha256": "f5f1f1d5d213efba0bad301034ef9d173c0b453d188afc9c684acc1c1f936015"
+}

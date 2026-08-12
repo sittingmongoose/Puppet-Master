@@ -1,0 +1,1257 @@
+[
+  {
+    "event_type": "wizard.unblocked",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts identifies wizard.unblocked as a canonical ledger event, supplies its minimum payload, and pairs it with wizard.blocked. The evidence does not close the payload or establish the rest of the Event Authority obligations.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['wizard blocked-state owner']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2594-2604",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2594-2604",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2583-2588",
+        "status": "drift",
+        "notes": "The cited span starts the wizard.blocked contract; wizard.unblocked begins at 2594."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2594-2604",
+        "status": "ok",
+        "notes": "Defines wizard.unblocked minimum payload and declares the packet events canonical ledger events feeding UI/storage projections."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2583-2593",
+        "status": "ok",
+        "notes": "Defines the paired wizard.blocked state and route/remediation semantics."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `wizard.unblocked` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "Canonical ledger status, wizard/thread identity, a minimum payload, and the paired state are documented, but versioned membership, explicit owner/producer, payload closure, replay/idempotency, retention, custody, concrete checkpoints, compatibility withdrawal, and complete oracles are not.",
+      "event_types": [
+        "wizard.unblocked"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay24",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.plan_todo_updated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "This event has deeper evidence than the baseline: todowrite/auto-use paths emit it before execution observes changes, Storage owns the durable projection, and a minimal mutation shape identifies plan, TODO, field, old/new values, and source. That does not resolve semantic event ownership, and the schema remains open because field is an unconstrained string and old_value/new_value are any. Versioned membership, replay, retention, custody, checkpoints, compatibility, and complete oracles also remain unresolved.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/assistant-chat-design.md:667-671",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/assistant-chat-design.md:667-671",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/assistant-chat-design.md:667-671",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/assistant-chat-design.md:667-671",
+        "status": "ok",
+        "notes": "Defines durable mutation emission, revision gating, diff reconciliation, and visible history for the event."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:802-804",
+        "status": "ok",
+        "notes": "Requires emission before execution sees revised TODOs and identifies todowrite auto-use as a producer path."
+      },
+      {
+        "citation": "Plans/Tools.md:578-582",
+        "status": "ok",
+        "notes": "Confirms durable emission semantics and explicitly says an owner-contract definition is required."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1739-1741",
+        "status": "ok",
+        "notes": "Defines emission ordering, minimal payload shape, durable retained fields, source enum, and Storage ownership of the projection; unconstrained field and any-valued old/new fields do not form a closed payload schema."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1468",
+        "status": "ok",
+        "notes": "Canonical minimal payload is {plan_id,todo_id,field,old_value,new_value,source} with one event per affected todo_id allowed."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the responsible semantic event owner be designated and publish versioned membership plus a closed field/value schema and the remaining replay, retention, custody, checkpoint, compatibility, and oracle clauses for chat.plan_todo_updated, or keep it quarantined?",
+      "options": [
+        "Complete the owner-backed contract and individually register chat.plan_todo_updated",
+        "Keep quarantined and fail closed until every remaining clause is cited",
+        "Reclassify/withdraw with cited replacement and migration semantics"
+      ],
+      "evidence_gap": "The producer path and mutation identity are explicit, but projection ownership does not establish semantic event ownership and open field/any values cannot be closed by inference.",
+      "event_types": [
+        "chat.plan_todo_updated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay03",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_bound",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority canonically registers the exact worktree-seglog name and minimum fields, assigns storage ownership and project scope, identifies producer semantics, and describes ordered projector replay. It does not select an event-specific replay/idempotency policy, define a legal transition state machine, or close checkpoint behavior, and additional admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:981",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:981",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:981",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:948",
+        "status": "drift",
+        "notes": "Original anchor now describes memory.gist_state_changed."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3337",
+        "status": "drift",
+        "notes": "Original producer-table anchor is now the table header; the exact event row moved to line 3339."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token; current projector authority is at line 2964."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:981",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1572",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3339",
+        "status": "ok",
+        "notes": "Producer-owned event fields and bound transition semantics."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2964",
+        "status": "ok",
+        "notes": "Projectors replay bound/unbound events in sequence order."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1014-1030",
+        "status": "ok",
+        "notes": "Canonical ordering, replay, and idempotency rules for persisted EventRecord."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_bound`, provide and cite versioned individual membership, a closed payload schema, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer checkpoint rules, compatibility withdrawal, and complete positive/negative oracles, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Existing authority resolves several dimensions but not every admission gate; missing product-owned values cannot be inferred from the family table.",
+      "event_types": [
+        "chat.thread_worktree_bound"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_create_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:984",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:984",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:984",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/storage-plan.md:1574",
+        "status": "drift",
+        "notes": "Original anchor now contains the renamed event, not create_failed."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3340",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains the unbound event; create_failed moved to line 3342."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:984",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1575",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3342",
+        "status": "ok",
+        "notes": "Producer-owned fields and failure transition semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_create_failed`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Minimum fields and failure meaning do not establish all twelve admission gates, and the remaining product values cannot be inferred by analogy.",
+      "event_types": [
+        "chat.thread_worktree_create_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_merge_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:986",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:986",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:986",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/storage-plan.md:1576",
+        "status": "drift",
+        "notes": "Original anchor now contains the merged event, not merge_failed."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3342",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains create_failed; merge_failed moved to line 3344."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:986",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1577",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3344",
+        "status": "ok",
+        "notes": "Producer-owned fields and merge-failure semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_merge_failed`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Minimum fields and transition meaning do not establish every admission gate; missing product-owned contract values cannot be inferred from sibling events.",
+      "event_types": [
+        "chat.thread_worktree_merge_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_merged",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:985",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:985",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:985",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:952",
+        "status": "drift",
+        "notes": "Original anchor now describes approval.requested."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1575",
+        "status": "drift",
+        "notes": "Original storage anchor now contains create_failed; merged moved to line 1576."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3341",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains renamed; merged moved to line 3343."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:985",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1576",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3343",
+        "status": "ok",
+        "notes": "Producer-owned fields and merged transition semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_merged`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Minimum fields and transition meaning do not establish every admission gate; missing product-owned contract values cannot be inferred from sibling events.",
+      "event_types": [
+        "chat.thread_worktree_merged"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_pr_created",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:987",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:987",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:987",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:954",
+        "status": "drift",
+        "notes": "Original anchor now describes approval.denied."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1577",
+        "status": "drift",
+        "notes": "Original storage anchor now contains merge_failed; pr_created moved to line 1578."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3343",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains merged; pr_created moved to line 3345."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:987",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1578",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3345",
+        "status": "ok",
+        "notes": "Producer-owned fields and PR-created transition semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_pr_created`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Minimum fields and transition meaning do not establish every admission gate; missing product-owned contract values cannot be inferred from sibling events.",
+      "event_types": [
+        "chat.thread_worktree_pr_created"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_pr_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer, phase-specific failure semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a complete legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:988,993",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:988,993",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:988,993",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:960",
+        "status": "drift",
+        "notes": "Original anchor now discusses optional retention fields, not pr_failed."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3344",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains merge_failed; pr_failed moved to line 3346."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:988,993",
+        "status": "ok",
+        "notes": "Current exact registration, payload minimum, and closed push/api phase meanings."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1579,1584",
+        "status": "ok",
+        "notes": "Storage-owned schema minimum and exact phase enum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3242-3246,3346",
+        "status": "ok",
+        "notes": "Assistant Chat emits phase-specific failures and defines event fields."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_pr_failed`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Phase semantics are closed, but minimum fields and UI behavior do not establish every admission gate; missing product-owned values cannot be inferred.",
+      "event_types": [
+        "chat.thread_worktree_pr_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_pre_merge_test_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields including override state, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:991",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:991",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:991",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:958",
+        "status": "drift",
+        "notes": "Original anchor now discusses seglog.event_appended, not this event."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3347",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains test_started; test_failed moved to line 3349."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:991",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1582",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3349",
+        "status": "ok",
+        "notes": "Producer-owned fields and failed-test transition semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_pre_merge_test_failed`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Failure fields and override state do not establish every admission gate; missing product-owned values cannot be inferred from the sibling test events.",
+      "event_types": [
+        "chat.thread_worktree_pre_merge_test_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_worktree_pre_merge_test_passed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, producer semantics, minimum fields, and project scope. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:990",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:990",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:990",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:957",
+        "status": "drift",
+        "notes": "Original anchor now discusses legacy LSP normalization, not this event."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3346",
+        "status": "drift",
+        "notes": "Original producer-table anchor now contains pr_failed; test_passed moved to line 3348."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:2962",
+        "status": "drift",
+        "notes": "Original anchor no longer contains the event token."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:990",
+        "status": "ok",
+        "notes": "Current exact registration and payload minimum."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1581",
+        "status": "ok",
+        "notes": "Storage-owned exact event schema minimum."
+      },
+      {
+        "citation": "Plans/assistant-chat-design.md:3348",
+        "status": "ok",
+        "notes": "Producer-owned fields and passed-test transition semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:961,1014-1030",
+        "status": "ok",
+        "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-replay_idempotency-retention",
+      "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `chat.thread_worktree_pre_merge_test_passed`, provide and cite versioned individual membership plus the missing closed payload, event-specific replay/idempotency, retention/redaction custody, legal transitions, consumer/checkpoint, compatibility-withdrawal, and oracle contract, or authorize continued quarantine/reclassification.",
+      "options": [
+        "Complete the owner-backed contract and individually register the event",
+        "Keep quarantined and fail closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with cited semantic rationale"
+      ],
+      "evidence_gap": "Success fields and meaning do not establish every admission gate; missing product-owned values cannot be inferred from sibling test events.",
+      "event_types": [
+        "chat.thread_worktree_pre_merge_test_passed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay04",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

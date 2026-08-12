@@ -1,0 +1,104 @@
+{
+  "event_type": "media.artifact_cleanup_required",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The Partial Artifact Cleanup behavior explicitly defines PM emission, a closed payload/reason enumeration, artifact identity, and terminal cleanup states, but it does not explicitly name an accountable Event Authority owner. Versioned membership, replay, retention/custody, checkpoint behavior, withdrawal authority, and a complete negative oracle are also absent, so the event remains quarantined pending one row-specific owner veto.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The behavior section defines this exact event but does not explicitly name an accountable Event Authority owner_doc for it."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Media_Generation_and_Capabilities.md:6663",
+      "note": "The authority explicitly states that PM emits this exact event after partial-output persistence failure."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this exact token to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/Media_Generation_and_Capabilities.md:6663-6664",
+      "note": "The exact event has a bounded five-field payload and a closed cleanup_reason_code enumeration."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Media_Generation_and_Capabilities.md:6662-6664",
+      "note": "artifact_id, route_id, and partial_path bind the cleanup request to the temporary artifact and route."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Media_Generation_and_Capabilities.md:6662-6665",
+      "note": "The cited contract bounds the lifecycle from temporary write through deletion, quarantine, or explicit promotion."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed checkpoint rule is cited."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility window, withdrawal authority, or removal timing is cited for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Persistence failure after partial output is a positive emission condition, but no exact negative non-emission oracle is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Media_Generation_and_Capabilities.md:6662-6665",
+      "status": "ok",
+      "notes": "Exact token, emitter, payload fields, reason enum, and cleanup terminal states are present."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july40-media-artifact-cleanup-required-contract-authority",
+    "field_or_decision": "complete_event_contract_and_disposition",
+    "question": "Who is the accountable Event Authority owner for `media.artifact_cleanup_required`, and will that owner add versioned membership plus replay, retention/custody, checkpoint, withdrawal, and negative-oracle rules, or keep this partial-artifact cleanup signal quarantined?",
+    "options": [
+      "Authorize only after every failed checklist dimension has exact evidence and independent validation",
+      "Keep quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify with exact row-specific cited evidence"
+    ],
+    "evidence_gap": "Missing explicit accountable owner_doc authority, versioned membership, replay/idempotency, retention, redaction/custody, checkpoint behavior, compatibility/withdrawal, and a negative non-emission oracle.",
+    "event_types": [
+      "media.artifact_cleanup_required"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

@@ -1,0 +1,21 @@
+{
+  "affected_surface_instance_ids": [
+    "surface-001"
+  ],
+  "command_id": "cmd.workspace.apply_layout",
+  "correlation_id": "corr-001",
+  "insertion_edge": "before",
+  "mutation_kind": "move",
+  "new_layout_revision": 2,
+  "origin": "home_workspace",
+  "persisted": true,
+  "prior_layout_revision": 1,
+  "project_id": "proj-001",
+  "schema_id": "pm.event.workspace_layout_changed.v1",
+  "schema_version": "1.0.0",
+  "source_host": "dock_bottom",
+  "target_host": "dock_bottom",
+  "target_slot_index": 0,
+  "target_surface_instance_id": "surface-001",
+  "workspace_tab_id": "tab-001"
+}

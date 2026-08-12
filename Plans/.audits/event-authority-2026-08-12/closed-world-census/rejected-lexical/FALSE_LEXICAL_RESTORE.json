@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.assurance.event_authority.false_lexical_restore.v1",
+  "generated_at_utc": "2026-08-12T04:22:02Z",
+  "restored_from": "closed-world-census/rejected-lexical/REJECTED_LEXICAL_CANDIDATES.json",
+  "restored_to": "census-adjudication unresolved + individual-disposition unresolved emit candidates",
+  "count_before": 83,
+  "count_after": 81,
+  "restored": [
+    {
+      "event_type": "testing.capability_policy.updated",
+      "prior_verdict": "REJECTED_LEXICAL_CANDIDATE",
+      "prior_direct_event_bindings_claimed": [],
+      "corrected_direct_emit_bindings": [
+        "Plans/Wiring_Matrix.production.json:25650-25652",
+        "Plans/Wiring_Matrix.production.json:25663-25668",
+        "Plans/Wiring_Matrix.production.json:25666-25667"
+      ],
+      "ui_command_id": "cmd.testing.capability_policy.set",
+      "persistence_status": "open_needs_individual_adjudication",
+      "admit": false
+    },
+    {
+      "event_type": "testing.visibility_policy.updated",
+      "prior_verdict": "REJECTED_LEXICAL_CANDIDATE",
+      "prior_direct_event_bindings_claimed": [],
+      "corrected_direct_emit_bindings": [
+        "Plans/Wiring_Matrix.production.json:25960-25962",
+        "Plans/Wiring_Matrix.production.json:25973-25978",
+        "Plans/Wiring_Matrix.production.json:25976-25977"
+      ],
+      "ui_command_id": "cmd.testing.visibility_policy.set",
+      "persistence_status": "open_needs_individual_adjudication",
+      "admit": false
+    }
+  ]
+}

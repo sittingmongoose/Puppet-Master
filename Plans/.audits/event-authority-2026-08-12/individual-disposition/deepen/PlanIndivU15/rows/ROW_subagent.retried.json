@@ -1,0 +1,118 @@
+{
+  "event_type": "subagent.retried",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current canon explicitly names `subagent.retried` and defines new retry attempt with attempt number and retry reason. The shared stable-subagent contract closes lineage/scope and legacy chat-alias normalization, but it does not establish live registry membership, a closed typed payload, named owner authority, replay/idempotency, retention, redaction custody, checkpoint rules, or complete event-level oracles. This exact token therefore remains quarantined and requires an individual owner veto; OD-EA-003 program authorization is not row admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation explicitly assigns acceptance authority for the complete Event Authority contract of `subagent.retried`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2904",
+      "note": "The canonical stable-subagent contract explicitly names `subagent.retried` and describes new retry attempt with attempt number and retry reason."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token remains in the persisted-unregistered cohort; cited canon does not place it in a live versioned event-family registry."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The event row enumerates payload fields but does not declare that list exhaustive or provide a closed typed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2874-2887",
+      "note": "The stable subagent contract requires child identity and the PM run/thread/agent lineage envelope for every subagent event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines replay keys, duplicate handling, or idempotency for `subagent.retried`."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal hold, or cleanup for `subagent.retried`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction fields, timing, and custody for `subagent.retried`."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2904",
+      "note": "The event-specific canonical text defines the observable transition as new retry attempt with attempt number and retry reason."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation identifies authoritative consumers together with fail-closed checkpoint advancement for `subagent.retried`."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1466",
+      "note": "The runtime payload contract retires legacy chat.subagent aliases into the canonical subagent.* family and preserves producer-specific spawn names."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies a complete positive emission oracle and negative non-emission oracle for `subagent.retried`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2874-2887",
+      "status": "ok",
+      "notes": "Declares stable subagent runtime families and the mandatory PM lineage envelope."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2904",
+      "status": "ok",
+      "notes": "Explicitly names `subagent.retried` and defines new retry attempt with attempt number and retry reason."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1466",
+      "status": "ok",
+      "notes": "Retires legacy chat.subagent aliases and preserves the canonical subagent namespace and producer-specific spawn names."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2848-2855",
+      "status": "ok",
+      "notes": "Distinguishes retry and resume from reroute and replacement; these transitions must not collapse."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-subagent-retried",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,positive_negative_oracles",
+    "question": "For `subagent.retried` (new retry attempt with attempt number and retry reason), will the named contract owner supply the unresolved membership, closed-schema, replay, retention, redaction, checkpoint, and oracle decisions for this exact token, or keep this transition quarantined?",
+    "options": [
+      "Materialize every unresolved dimension under a named owner, then return this exact stable ID for individual veto before any registry append",
+      "Keep quarantined as persisted-unregistered with no checkpoint advance",
+      "Withdraw or reclassify only through an explicit cited compatibility decision"
+    ],
+    "evidence_gap": "Existing canon establishes selected event semantics but not the complete individually owned, versioned Event Authority contract required for registration.",
+    "event_types": [
+      "subagent.retried"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay22",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; unresolved dimensions are owner-required without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

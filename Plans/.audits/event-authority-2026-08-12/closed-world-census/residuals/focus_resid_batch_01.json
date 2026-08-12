@@ -1,0 +1,272 @@
+[
+  {
+    "event_type": "context_capture.rs",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2512,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 15494,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "context_files.rs",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1701,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 2767,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "effective_request.prompt",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 806,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1846,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "file_manager.worktree_follow_thread",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18980,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18986,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/assistant-chat-design.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "gui.use_plan_mode_all_tiers",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1140,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 10582,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "node_config.platform",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 21654,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 21665,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "orchestrator.project_state",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 131,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 131,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "pm.activity_bar_order",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30248,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 30290,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "pm.debug.launch_profiles",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 17897,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 17933,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "request.context_files",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 808,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1848,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  }
+]

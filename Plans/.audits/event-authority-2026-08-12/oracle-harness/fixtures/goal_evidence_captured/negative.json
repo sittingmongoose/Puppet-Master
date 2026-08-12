@@ -1,0 +1,35 @@
+{
+  "actor_ref": "actor:human:alice",
+  "artifact_refs": [],
+  "correlation_id": "corr-001",
+  "effective_account_ref": "account:001",
+  "effective_model_ref": "model:gpt-4",
+  "effective_provider_ref": "provider:openai",
+  "event_name": "goal.invalid_alias",
+  "evidence_refs": [],
+  "execution_role": "user",
+  "expected_goal_revision": 1,
+  "goal_id": "goal-001",
+  "goal_revision": 1,
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "payload": {
+    "content_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "currentness_state": "current",
+    "evidence_kind": "canonical_evidence",
+    "evidence_ref": "evidence:001",
+    "redaction_profile": "no_secrets",
+    "source_spans": [
+      {
+        "end_line": 1,
+        "locator_kind": "line_range",
+        "source_ref": "Plans/storage-plan.md",
+        "start_line": 1
+      }
+    ]
+  },
+  "project_id": "proj-001",
+  "requested_account_ref": "account:001",
+  "requested_model_ref": "model:gpt-4",
+  "requested_provider_ref": "provider:openai",
+  "schema_version": "pm.goal_runtime_event.goal_evidence_captured.schema.v2"
+}

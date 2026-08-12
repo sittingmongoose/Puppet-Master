@@ -1,0 +1,80 @@
+{
+  "schema_id": "pm.assurance.event_authority.census_admission_rule.v2",
+  "rule_id": "DIRECT_EVENT_TYPE_BINDING_REQUIRED",
+  "supersedes": [
+    "nearby_persist_cue_promotion",
+    "auth_cue_nearby_alone",
+    "window_persist_cue_alone",
+    "focus_pass_NEW_FOCUS_PERSIST_CUE_as_event_family"
+  ],
+  "effective_at_utc": "2026-08-12T04:12:09Z",
+  "token_regex": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$",
+  "admission_to_persisted_family_review_requires": [
+    "Direct authoritative binding of the EXACT token as an EventRecord / seglog event_type / family-registry member / EventRecord producer declaration.",
+    "Citation must show the binding clause itself (event_type=<tok>, EventRecord family table row, registry enum/list entry, producer emits EventRecord with that event_type), not merely lexical co-occurrence near persistence vocabulary.",
+    "NOTE: machine-contract expected_event_types + effect_kind=event + receipt_or_event_refs is a DIRECT EMIT binding that blocks REJECTED_LEXICAL_CANDIDATE, but alone does not prove persistence or authorize ADMIT."
+  ],
+  "insufficient_alone": [
+    "Nearby persistence cue (append/persist/seglog/EventRecord in adjacent window without binding this token)",
+    "redb / config:project keys",
+    "panel-state / UI filter keys",
+    "structured rewrite or concurrency error codes explicitly outside append-only seglog writers",
+    "method / function / field identifiers (e.g. self.log_blocked_command)",
+    "schema field names, filenames, bare command ids, or catalog entry ids WITHOUT expected_event_types/effect_kind=event/receipt_or_event_refs binding the exact token",
+    "negated mentions (do not use <tok> for ordinary append durability)"
+  ],
+  "reject_disposition": "REJECTED_LEXICAL_CANDIDATE",
+  "reject_sink": "closed-world-census/rejected-lexical/",
+  "forbidden_sinks_for_rejects": [
+    "individual-disposition/LEDGER.jsonl",
+    "individual-disposition/rows/",
+    "fresh denominator event_types set"
+  ],
+  "advisor2_blocker_examples": {
+    "branching.assistant_auto_worktree": "Plans/storage-plan.md:920-932 redb config key",
+    "branching.assistant_worktree_pre_merge_cmd": "Plans/storage-plan.md:920-932 redb config key",
+    "source_control.worktree_filter": "Plans/storage-plan.md:920-932 panel-state key",
+    "error.concurrent_edit_conflict": "Plans/FileSafe.md:1455-1464 structured rewrite error outside seglog",
+    "self.log_blocked_command": "Plans/FileSafe.md:770-783 method call"
+  },
+  "denominator_effect": "Rejected lexical candidates never become IndividualDisposition denominator rows and never enlarge the fresh census denominator.",
+  "bulk_registration": false,
+  "amended_at_utc": "2026-08-12T04:22:02Z",
+  "advisor2_amendment": "machine_contract_emit_binding_is_not_lexical_noise",
+  "direct_emit_binding_sufficient_to_block_lexical_reject": [
+    "Plans/Wiring_Matrix.production.json machine-contract entry lists the EXACT token in expected_event_types",
+    "AND effect_contract.effect_kind == \"event\"",
+    "AND effect_contract.receipt_or_event_refs contains the EXACT token"
+  ],
+  "direct_emit_binding_disposition": "UNRESOLVED_EMIT_CANDIDATE",
+  "direct_emit_binding_sink": "census-adjudication unresolved + individual-disposition unresolved (emit candidate)",
+  "direct_emit_binding_does_not_prove": [
+    "EventRecord / seglog persistence",
+    "registered Event Authority membership",
+    "ADMIT / registry append authorization"
+  ],
+  "restored_emit_candidates": [
+    "testing.capability_policy.updated",
+    "testing.visibility_policy.updated"
+  ],
+  "v3_amended_at_utc": "2026-08-12T07:17:26Z",
+  "v3_advisor2_amendment": "full_180_source_md_json_reconciliation_scan",
+  "v3_scan_schema_id": "pm.assurance.event_authority.machine_contract_event_binding_scan.v3",
+  "v3_scan_artifact": "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+  "v3_triple_bound_definition": "JSON entries.* only: expected_event_types AND effect_contract.receipt_or_event_refs with effect_kind=event",
+  "v3_md_binding_kind": "md_expected_event_binding",
+  "v3_md_binding_rule": "Markdown expected_event_types / Expected events without same-row effect_contract is NOT triple_bound",
+  "v3_reconciliation_fields": [
+    "md_tokens",
+    "json_tokens",
+    "triple_bound_tokens",
+    "md_only",
+    "json_only",
+    "md_json_overlap"
+  ],
+  "v3_triple_bound_token_count": 77,
+  "v3_md_only_token_count": 31,
+  "v3_triple_bound_count_changed_from_v2": false,
+  "v3_ledger_merge_policy": "scan_script_does_not_merge_ledger_rows",
+  "v3_census_ledger_triple_bound_missing_after_prior_merge": 0
+}

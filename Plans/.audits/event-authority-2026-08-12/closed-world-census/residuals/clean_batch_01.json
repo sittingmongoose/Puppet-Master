@@ -1,0 +1,274 @@
+[
+  {
+    "event_type": "source_control.worktree_filter",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 932,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "testing.capability_policy.updated",
+    "occurrence_count": 10,
+    "path_count": 1,
+    "auth_cue_hits": 2,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25651,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25660,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25667,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25700,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25704,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26784,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26793,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26800,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        10
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated",
+    "stage2": "NEW_PERSISTED_CANDIDATE_REVIEW",
+    "strong_authority_path_hits": 0,
+    "stage4": "EVENTISH_AUTH_RESIDUAL"
+  },
+  {
+    "event_type": "testing.visibility_policy.updated",
+    "occurrence_count": 10,
+    "path_count": 1,
+    "auth_cue_hits": 2,
+    "noise_cue_hits": 2,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25961,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25970,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 25977,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26010,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26014,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26846,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26855,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 26862,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Wiring_Matrix.production.json",
+        10
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated",
+    "stage2": "NEW_PERSISTED_CANDIDATE_REVIEW",
+    "strong_authority_path_hits": 0,
+    "stage4": "EVENTISH_AUTH_RESIDUAL"
+  },
+  {
+    "event_type": "tier.plan_mode",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1079,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "tier_node.tier_type",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 398,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "tier_overrides.get",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 1378,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "tools.custom_headless",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/newtools.md",
+        "line": 2729,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/newtools.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "type_payload.restore_point_id",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "line": 37,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Runtime_Artifacts_Panel.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  }
+]

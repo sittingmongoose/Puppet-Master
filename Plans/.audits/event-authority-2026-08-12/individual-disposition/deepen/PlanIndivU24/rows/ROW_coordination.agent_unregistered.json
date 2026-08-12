@@ -1,0 +1,118 @@
+{
+  "event_type": "coordination.agent_unregistered",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Normal terminal/unregister record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:514-548",
+      "note": "Storage expressly owns the durable coordination record/projection boundary containing this exact event family."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/storage_value_registry.json:5233-5244",
+      "note": "The registry names the exact coordination event family and explicitly assigns AgentCoordinator, platform hook/event adapters, and the coordination mirror exporter as producers."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact payload table is a minimum-field declaration, while the storage registry explicitly defers the full payload schemas; a closed storage-owned schema is not cited."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2917-2949",
+      "note": "The exact coordination event is bound to the PM lineage envelope and project/run/agent identity fields."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:535-539",
+      "note": "The PM append path requires an idempotency key and expected revision, with append/projection CAS and stale-write rejection."
+    },
+    "retention": {
+      "status": "PASS",
+      "citation": "Plans/storage_value_registry.json:5318",
+      "note": "The exact coordination_event_records family binds to RP-COORDINATION-180D here; the checked policy definition at lines 302-315 fixes its 180-day TTL anchored at run completion."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:508",
+      "note": "The storage-owned persisted-value boundary forbids raw secrets and restricts sensitive data to redacted or external-custody references."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The row defines normal terminal unregister semantics but does not close the complete legal coordination-agent transition system."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:528-546",
+      "note": "Storage names the authoritative coordination projections/checkpoint and requires authority consumers to use them rather than mirrors."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited complete positive-emission and negative-non-emission oracle pair exists for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2911",
+      "status": "drift",
+      "notes": "Input line now names subagent.escalated; corrected exact declaration is Contracts_V0.md:2944."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2919-2949",
+      "status": "ok",
+      "notes": "Defines lineage envelope, exact payload fields, terminal semantics, and authoritative projections."
+    },
+    {
+      "citation": "Plans/storage-plan.md:516-548",
+      "status": "ok",
+      "notes": "Storage ownership, persisted record, append/CAS idempotency, atomic checkpoints, mirror boundary, and secret/redaction constraints are explicit."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:3780,4029-4031",
+      "status": "ok",
+      "notes": "Orchestrator semantics and concrete append producer are explicit."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-membership_version-closed_payload_schema-transitions",
+    "field_or_decision": "membership_version,closed_payload_schema,transitions,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `coordination.agent_unregistered`, will the accountable owner supply and approve the missing membership_version, closed_payload_schema, transitions, compatibility_withdrawal, positive_negative_oracles dimensions, direct continued fail-closed quarantine, or provide cited reclassification authority?",
+    "options": [
+      "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+      "Continue quarantine fail-closed with no checkpoint advance",
+      "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+    ],
+    "evidence_gap": "The checked Plans evidence does not close these exact-token dimensions: membership_version, closed_payload_schema, transitions, compatibility_withdrawal, positive_negative_oracles. The exact terminal row is not a closed transition system, and the storage registry explicitly defers full payload schemas; none may be supplied by inference.",
+    "event_types": [
+      "coordination.agent_unregistered"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay07",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
+  ]
+}

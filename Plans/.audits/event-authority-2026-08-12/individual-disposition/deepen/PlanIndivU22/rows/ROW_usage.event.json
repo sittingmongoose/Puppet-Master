@@ -1,0 +1,141 @@
+{
+  "event_type": "usage.event",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Provider and storage plans establish persisted production, canonical attribution scope, ordered analytics consumption, and checkpointed idempotent rollups. Admission remains forbidden because the complete individually owned Event Authority contract is absent.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Current citations define usage behavior but do not explicitly appoint one semantic owner for the event type."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:646-653",
+      "note": "The OpenCode persistence mapping explicitly emits usage.event from message metadata; other producer coverage remains outside this PASS claim."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited live registry membership record or membership version exists for usage.event."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The cited usage/storage surfaces refer to a canonical shape and implementation checklist but do not close an exhaustive event payload schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:4321-4324",
+      "note": "The accepted runtime identity contract explicitly requires usage events to carry the complete project/thread/run/attempt/account snapshot directly or by canonical reference."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1556-1562",
+      "note": "The analytics consumer resumes by sequence checkpoint and recomputes sequence-bounded windows idempotently."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The seven-day scan window is an analytics window, not a cited retention/deletion policy for usage.event."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited authority assigns redaction custody for account, billing, or provider usage attributes."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No complete usage.event lifecycle or transition machine is cited."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1556-1562",
+      "note": "Storage explicitly names ordered analytics consumption, rollup outputs, and the sequence/recovery checkpoint."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited alias withdrawal boundary exists for the event type and payload fields."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No complete exact-event emission/non-emission oracle pair is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Provider_OpenCode.md:638-645",
+      "status": "drift",
+      "notes": "Cited span is token/budget handling; usage.event persistence is defined at 646-653."
+    },
+    {
+      "citation": "Plans/Provider_OpenCode.md:646-653",
+      "status": "ok",
+      "notes": "Maps OpenCode message metadata input/output tokens to persisted usage.event."
+    },
+    {
+      "citation": "Plans/usage-feature.md:375-392",
+      "status": "ok",
+      "notes": "Makes cost_usage use the same canonical usage.event pipeline and preserves thread/run filters."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1555-1562",
+      "status": "ok",
+      "notes": "Defines ordered usage.event scans, rollups, sequence checkpoints, and idempotent recomputation."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1593-1604",
+      "status": "ok",
+      "notes": "Requires the event schema and emission with thread, parent lineage, and canonical attribution fields, including hidden/background work."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:4321-4324",
+      "status": "ok",
+      "notes": "The accepted runtime identity contract explicitly requires usage events to carry the complete project/thread/run/attempt/account snapshot directly or by canonical reference."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1556-1562",
+      "status": "ok",
+      "notes": "The analytics consumer resumes by sequence checkpoint and recomputes sequence-bounded windows idempotently."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1556-1562",
+      "status": "ok",
+      "notes": "Storage explicitly names ordered analytics consumption, rollup outputs, and the sequence/recovery checkpoint."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-usage-event-owner_doc-membership_version-closed_payload_schema-retention",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,retention,redaction_custody,transitions,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the explicitly appointed event owner supply the missing cited authority for `usage.event` and return this exact row for individual disposition, or keep it quarantined?",
+    "options": [
+      "Supply the missing field-local Plans authorities and return this exact row for re-review",
+      "Keep this exact event quarantined with no registry or checkpoint advance",
+      "Withdraw or reclassify this exact event only through an explicit cited compatibility decision"
+    ],
+    "evidence_gap": "The non-PASS fields above lack exact field-local authority; no package-level authorization or sibling analogy closes them.",
+    "event_types": [
+      "usage.event"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current Plans citations; PASS is limited to the exact field proven.",
+    "Immutable cohort lineage retained separately from working_bucket.",
+    "No admission, package-level owner decision, analogy, or owner/producer inference used."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "source_deepener": "PlanIndivU22"
+}

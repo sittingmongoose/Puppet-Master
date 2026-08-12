@@ -1,0 +1,25 @@
+{
+  "actor_ref": "actor:human:alice",
+  "artifact_refs": [],
+  "correlation_id": "corr-001",
+  "effective_account_ref": "account:001",
+  "effective_model_ref": "model:gpt-4",
+  "effective_provider_ref": "provider:openai",
+  "event_name": "goal.child_status_changed",
+  "evidence_refs": [],
+  "execution_role": "user",
+  "expected_goal_revision": 1,
+  "goal_id": "goal-001",
+  "goal_revision": 1,
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "payload": {
+    "child_goal_id": "goal-child-001",
+    "next_status": "scheduled",
+    "previous_status": "created"
+  },
+  "project_id": "proj-001",
+  "requested_account_ref": "account:001",
+  "requested_model_ref": "model:gpt-4",
+  "requested_provider_ref": "provider:openai",
+  "schema_version": "pm.goal_runtime_event.goal_child_status_changed.schema.v2"
+}

@@ -1,0 +1,119 @@
+{
+  "event_type": "memory.gist.pinned",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The pin command row names this exact expected event and lists project/gist/pinned command arguments, but it does not establish persisted EventRecord identity or scope, cite the concrete handler that emits it, or name an accountable semantic owner. Versioned membership, closed payload, replay, retention/custody, complete transitions/checkpoints, withdrawal authority, and complete oracles are absent, so the row remains quarantined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "An accountable semantic owner is not explicitly named for this exact event; owner adjudication is required."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No concrete emitting handler or producer implementation is cited for this exact expected event."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this exact token to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, storage-owned persisted payload schema is cited for this exact event."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The UI command row supplies command input arguments and an expected event name only; it does not prove the persisted EventRecord scope or identity fields for this exact event."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal transition set is cited for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility and withdrawal authority, including removal timing, is cited for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No complete positive-emission and negative-non-emission oracle pair is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Current line defines handler_location generically; it does not name this event or an actual handler."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1119",
+      "status": "drift",
+      "notes": "The exact event moved; current authority is Plans/UI_Command_Catalog.md:1094."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1094",
+      "status": "ok",
+      "notes": "The pin command accepts project_id, gist_id, and pinned and expects this event."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:492-506",
+      "status": "ok",
+      "notes": "Defines expected_event_types as events a bound command handler must emit, but does not supply the row-specific handler path or semantic owner."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-memory-gist-pinned-contract-authority",
+    "field_or_decision": "semantic_owner_and_complete_event_contract",
+    "question": "The pin command lists `memory.gist.pinned` as one expected outcome but does not prove the emitter or persisted before/after identity; should an owner decision require pin-transition evidence, duplicate-pin replay behavior, payload/scope, checkpoints, and membership, or keep it quarantined?",
+    "options": [
+      "Authorize only after every failed checklist dimension has exact evidence and independent validation",
+      "Keep quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify with exact row-specific cited evidence"
+    ],
+    "evidence_gap": "The expected pin outcome and command arguments are cited, but the concrete emitter, persisted EventRecord identity/scope, semantic owner, versioned membership, closed before/after payload, duplicate-pin idempotency, retention/custody, transition checkpoints, withdrawal, and oracles are unproved.",
+    "event_types": [
+      "memory.gist.pinned"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay12",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ]
+}

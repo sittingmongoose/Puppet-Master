@@ -1,0 +1,105 @@
+{
+  "event_type": "subagent.parallel_group_failed",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The cited orchestration text proves the exact emission condition, enumerated payload fields, and failure/drain transitions, but does not explicitly close the payload schema, bind an Event Authority owner or producer, or prove durable membership and remaining authority dimensions. Quarantine remains fail closed.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited orchestration span defines failure policy but does not explicitly declare the event owner document or owner identity; no owner is inferred."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited orchestration policy specifies the emitting condition but does not explicitly bind a producer identity; owner confirmation is required without inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes membership_version for this exact event; fail closed without inference."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited orchestration span enumerates emitted fields but does not explicitly declare the payload schema closed or exhaustive; closure is not inferred."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes scope_identity for this exact event; fail closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes replay_idempotency for this exact event; fail closed without inference."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes retention for this exact event; fail closed without inference."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes redaction_custody for this exact event; fail closed without inference."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+      "note": "The cited Plans span explicitly supplies transitions authority or contract text for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes consumers_checkpoints for this exact event; fail closed without inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes compatibility_withdrawal for this exact event; fail closed without inference."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes positive_negative_oracles for this exact event; fail closed without inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+      "status": "ok",
+      "notes": "Exact cited span inspected and supports the stated semantic finding."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-subagent-parallel-group-failed",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `subagent.parallel_group_failed`, either supply explicit field-local Plans authority for owner_doc, producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or choose the cited fail-closed disposition; no admission follows from this veto.",
+    "options": [
+      "Supply cited complete contract fields for later reconsideration",
+      "Keep quarantined fail closed with no checkpoint advance",
+      "Reclassify as excluded or non-durable with cited rationale"
+    ],
+    "evidence_gap": "Missing explicit field-local Plans authority for: owner_doc, producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "subagent.parallel_group_failed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "deepened_against_binding_schema",
+    "all_passes_have_concrete_plans_citations",
+    "fail_closed_no_admission"
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

@@ -1,0 +1,96 @@
+{
+  "event_type": "gate.failed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:6883-6900",
+      "note": "Accepted PlanUnit CV-080 names all three gate tokens and explicitly binds Progression_Gates as semantic owner for gate evaluation rules."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:943",
+      "note": "The runtime event catalog explicitly names the progression gate runner as producer of `gate.failed`."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific citation fixes closed-world membership and payload/envelope version behavior."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines a closed payload schema for this exact event; a payload minimum or token listing is insufficient."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:943",
+      "note": "The event-specific payload minimum requires `gate_id` and `run_id`, with optional node and attempt correlation."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines replay normalization, deduplication, or idempotency for this exact event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines retention, compaction, or deletion policy for this exact event."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns sensitive-field redaction and custody responsibilities for this exact event."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines legal predecessor/successor states and invalid transitions for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:943",
+      "note": "The event-specific catalog explicitly names scheduler, UI, and validation reports as primary consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines aliases, compatibility normalization, or withdrawal criteria for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies event-specific positive and negative conformance oracles."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:943",
+      "status": "ok",
+      "notes": "Checked as field-local support for producer; no unstated contract dimensions are derived from it."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:6883-6900",
+      "status": "ok",
+      "notes": "Accepted CV-080 explicitly binds gate.evaluation_started, gate.passed, and gate.failed to Progression_Gates semantic ownership."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay11",
+  "provisional": false,
+  "quality_notes": [
+    "Individually deepened under the binding schema; all 12 dimensions are present, every PASS is field-local and cited, and residuals fail closed to a stable owner veto."
+  ],
+  "source_deepener": "PlanIndivU07"
+}

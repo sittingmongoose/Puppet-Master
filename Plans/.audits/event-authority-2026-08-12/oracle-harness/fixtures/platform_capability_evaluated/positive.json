@@ -1,0 +1,27 @@
+{
+  "capability_ref": {
+    "capability_id": "platform.filesystem.read",
+    "catalog_id": "pm.platform_capability_catalog",
+    "catalog_revision": 1,
+    "catalog_schema_version": "1.0.0",
+    "ref_type": "platform_capability_catalog_entry"
+  },
+  "degradation_reason": "none",
+  "effective_state": "available",
+  "evidence_refs": [
+    {
+      "evidence_ref": "evidence:probe-001",
+      "evidence_ref_type": "runtime_probe_receipt",
+      "finding": "supports_available",
+      "observed_at_utc": "2026-08-12T00:00:00Z",
+      "source_kind": "live_runtime_discovery",
+      "source_revision_ref": "revision:001"
+    }
+  ],
+  "platform_id": "platform:local",
+  "provider_id": "provider:local",
+  "requested_state": "required",
+  "resolution_source": "live_runtime_discovery",
+  "schema_version": "2.0.0",
+  "selected_evidence_ref": "evidence:probe-001"
+}

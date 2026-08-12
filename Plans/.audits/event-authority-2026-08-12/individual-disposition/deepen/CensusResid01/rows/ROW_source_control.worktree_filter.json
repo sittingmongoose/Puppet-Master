@@ -1,0 +1,91 @@
+{
+  "event_type": "source_control.worktree_filter",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "Exact source inspection shows `source_control.worktree_filter` is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type. The admission-filtered census matched persistence/event-shaped text, not a canonical persisted event declaration; it is excluded without owner or producer inference.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Exact source context classifies `source_control.worktree_filter` as a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type; no event-registry membership or version is applicable."
+    },
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "The cited document owns the surrounding configuration/field semantics, but does not declare `source_control.worktree_filter` to be an event requiring event-owner authority."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Because `source_control.worktree_filter` is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type, no event producer is defined or inferred."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `closed_payload_schema` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `scope_identity` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `replay_idempotency` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `retention` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `redaction_custody` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `transitions` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `consumers_checkpoints` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `compatibility_withdrawal` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:932",
+      "note": "Event-contract dimension `positive_negative_oracles` is inapplicable because the exact cited use is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:932",
+      "status": "ok",
+      "notes": "Exact context establishes that the token is a storage-backed configuration key and enum-valued Worktrees panel filter, not an event type."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "closed-world-census/clean_batch_01",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated",
+  "quality_notes": [
+    "Cohort pins remain empty because this is a fresh census residual, not a July or August cohort member.",
+    "The exclusion rests on this token’s exact grammatical role in the cited source, not namespace or sibling analogy."
+  ]
+}

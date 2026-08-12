@@ -1,0 +1,110 @@
+{
+  "event_type": "format.error",
+  "bucket": "unresolved",
+  "july_classification": "unknown",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The exact token has explicit failure trigger, producer behavior, partial payload, scope, and positive/negative oracle, but no registered member/version or complete durable Event Authority contract. It remains quarantined pending one row-specific owner veto; no admission or checkpoint advancement is authorized.",
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently deepened from exact-token Plans evidence; absent dimensions fail closed and are not inferred."
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:506-515",
+      "note": "The cited plan explicitly names canonical ownership or the Contracts-owned family boundary for this exact behavior."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The error-handling rule requires a format.error event to be logged, but it does not explicitly name the producing component or producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited registered member/version or persisted EventRecord schema entry exists for this exact token."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Formatter ID, path, exit code, and stderr are required, but no schema version or exhaustive payload is declared."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:85-92",
+      "note": "The event identifies the formatter and affected file path."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event replay key, duplicate rule, or idempotency rule is declared for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No retention class or TTL is declared for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific redaction/custody rule is declared for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:85-92",
+      "note": "A non-zero formatter exit preserves original output, logs this event, and lets the pipeline continue."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No durable consumer or checkpoint-advance rule is declared for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No alias, deprecation, compatibility, or withdrawal rule is declared."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:85-92",
+      "note": "Positive: non-zero formatter exit logs the event; negative: failure does not corrupt the file or block the run."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Formatters_System.md:506-515",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:85-92",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-format-error-authority",
+    "field_or_decision": "producer,durability,membership_version",
+    "question": "Who explicitly produces `format.error`, and is it durable EventRecord evidence or a non-durable formatter diagnostic emitted by the pipeline?",
+    "options": [
+      "Name the producer and define a durable registered EventRecord contract",
+      "Declare it a non-durable diagnostic with no checkpoint advancement",
+      "Map formatter failure to one cited registered tool/pipeline failure event"
+    ],
+    "evidence_gap": "Exact-token Plans evidence does not close: producer, membership_version, closed_payload_schema, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal.",
+    "event_types": [
+      "format.error"
+    ]
+  },
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

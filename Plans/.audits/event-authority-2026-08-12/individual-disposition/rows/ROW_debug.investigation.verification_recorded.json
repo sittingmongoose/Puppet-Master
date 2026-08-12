@@ -1,0 +1,110 @@
+{
+  "event_type": "debug.investigation.verification_recorded",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for explicit semantic acceptance owner of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for concrete emitting component and append boundary of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1523-1534",
+      "note": "The persisted family and exact row bind the record to investigation_id and artifact references."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1541-1546",
+      "note": "The family rules prohibit duplicated raw secrets and require artifact refs plus preserved redaction/omission state."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for allowed lifecycle transition semantics of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for named consumers and checkpoint behavior of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for compatibility aliases and withdrawal behavior of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `debug.investigation.verification_recorded`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:1490",
+      "status": "drift",
+      "notes": "Current line 1490 is the web HTTP-404 mapping, unrelated to this event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1500",
+      "status": "drift",
+      "notes": "Current line 1500 is blank within the web error section, unrelated to this event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1522",
+      "status": "drift",
+      "notes": "Section heading only; the exact event contract is now at lines 1523-1534."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1523-1534",
+      "status": "ok",
+      "notes": "Declares persisted EventRecord envelopes, the family consumer boundary, and this event minimum payload."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1541-1546",
+      "status": "ok",
+      "notes": "Defines no-secret, artifact-reference, bounded-summary, redaction, and omission-state rules for the family."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay09",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

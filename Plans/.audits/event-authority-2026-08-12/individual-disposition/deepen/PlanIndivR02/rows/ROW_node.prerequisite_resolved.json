@@ -1,0 +1,109 @@
+{
+  "event_type": "node.prerequisite_resolved",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Executor Protocol defines this exact token as canonical, closes its payload and resolution enum, binds node identities, and specifies the blocked-to-ready transition. It does not explicitly name a concrete producer and leaves versioned membership, replay, retention/custody, checkpoints, withdrawal, and a negative oracle uncited, so quarantine remains fail closed pending owner adjudication.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:2415-2420",
+      "note": "Accepted EP-029 explicitly names Executor_Protocol as owner_doc and preserves this exact event contract."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited authority says the event is emitted but does not explicitly name the concrete emitting component or handler."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this exact token to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:383-386",
+      "note": "The event payload has a closed four-field shape and a three-value resolution enum."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:384-386",
+      "note": "source_node_id, resolved_prerequisite_id, and target_node_ids bind the affected prerequisite relationship."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:378-386",
+      "note": "The authority defines dependency resolution followed by blocked-to-pending/ready-eligible transition in the same wake."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed checkpoint rule is cited."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility window, withdrawal authority, or removal timing is cited for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The prerequisite-success/skip/force-resolve cases are positive conditions, but no exact negative non-emission oracle is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Executor_Protocol.md:383-387",
+      "status": "ok",
+      "notes": "Exact canonical token, payload, resolution enum, wake behavior, and transition are present."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:2413-2430",
+      "status": "ok",
+      "notes": "Accepted EP-029 preserves this exact event and blocked-to-runnable behavior."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july40-node-prerequisite-resolved-contract-authority",
+    "field_or_decision": "complete_event_contract_and_disposition",
+    "question": "Will the Executor owner name the concrete emitter for `node.prerequisite_resolved` and close its versioning, replay, retention/custody, checkpoint, withdrawal, and negative-oracle contract, or keep prerequisite-resolution persistence quarantined?",
+    "options": [
+      "Authorize only after every failed checklist dimension has exact evidence and independent validation",
+      "Keep quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify with exact row-specific cited evidence"
+    ],
+    "evidence_gap": "Missing explicit producer authority, versioned membership, replay/idempotency, retention, redaction/custody, checkpoint behavior, compatibility/withdrawal, and a negative non-emission oracle.",
+    "event_types": [
+      "node.prerequisite_resolved"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

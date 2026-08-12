@@ -1,0 +1,91 @@
+{
+  "event_type": "type_payload.restore_point_id",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "Exact source inspection shows `type_payload.restore_point_id` is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names. The admission-filtered census matched persistence/event-shaped text, not a canonical persisted event declaration; it is excluded without owner or producer inference.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Exact source context classifies `type_payload.restore_point_id` as a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names; no event-registry membership or version is applicable."
+    },
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "The cited document owns the surrounding configuration/field semantics, but does not declare `type_payload.restore_point_id` to be an event requiring event-owner authority."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Because `type_payload.restore_point_id` is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names, no event producer is defined or inferred."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `closed_payload_schema` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `scope_identity` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `replay_idempotency` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `retention` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `redaction_custody` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `transitions` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `consumers_checkpoints` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `compatibility_withdrawal` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "note": "Event-contract dimension `positive_negative_oracles` is inapplicable because the exact cited use is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:29-37",
+      "status": "ok",
+      "notes": "Exact context establishes that the token is a payload identity field for restore_point artifacts; the plan separately reserves event_type for canonical event names."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "closed-world-census/clean_batch_01",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated",
+  "quality_notes": [
+    "Cohort pins remain empty because this is a fresh census residual, not a July or August cohort member.",
+    "The exclusion rests on this token’s exact grammatical role in the cited source, not namespace or sibling analogy."
+  ]
+}

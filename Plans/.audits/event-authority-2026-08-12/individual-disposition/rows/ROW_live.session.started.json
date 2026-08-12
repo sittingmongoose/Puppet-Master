@@ -1,0 +1,101 @@
+{
+  "event_type": "live.session.started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "An accountable semantic owner is not explicitly named for this exact event; owner adjudication is required."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:709-719",
+      "note": "The unified orchestrator flow explicitly directs its visible-target launch step to emit this exact event."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/newtools.md:845-851",
+      "note": "The live-tooling plan lists this exact token among seglog events, but the listing does not assign it to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, storage-owned persisted payload schema is cited for this exact event."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:717-719",
+      "note": "The exact emission contract carries run, platform, provider, process/session, display-target, and artifact-root identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal transition set is cited for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility and withdrawal authority, including removal timing, is cited for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No complete positive-emission and negative-non-emission oracle pair is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/newtools.md:846",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    },
+    {
+      "citation": "Plans/newtools.md:717-719",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    },
+    {
+      "citation": "Plans/newtools.md:845-851",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay12",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ]
+}

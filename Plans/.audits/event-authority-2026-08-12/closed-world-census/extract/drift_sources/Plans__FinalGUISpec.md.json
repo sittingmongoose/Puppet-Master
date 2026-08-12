@@ -1,0 +1,8066 @@
+{
+  "schema_id": "pm.assurance.event_authority.drift_source_census_row.v1",
+  "generated_at_utc": "2026-08-12T10:34:29Z",
+  "path": "Plans/FinalGUISpec.md",
+  "source_class": "canonical_product_prose",
+  "frozen": {
+    "bytes": 1674036,
+    "sha256": "62b38f0b20ec5ffd6300105382188f64d70f5c26b8a41eb6761addafbf8d9360"
+  },
+  "live": {
+    "bytes": 1683845,
+    "sha256": "dc51354b20dad6d8cf56051b7dcb649ab91d723ecfcf4a9dbbb2ab8a74341032"
+  },
+  "drift": true,
+  "byte_delta": 9809,
+  "frozen_content_recovered": true,
+  "freeze_baseline": {
+    "inventory": "closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "occurrence_ledger_frozen_token_count": 340
+  },
+  "event_type_mentions": {
+    "live_full_lexical_count": 384,
+    "frozen_full_lexical_count": 383,
+    "new_full_lexical_tokens": [
+      "cmd.workspace_layout.move_surface"
+    ],
+    "removed_full_lexical_tokens": [],
+    "changed_line_context_tokens": [
+      {
+        "event_type": "a.part.html",
+        "frozen_lines": [
+          28910,
+          29390,
+          29425,
+          29426
+        ],
+        "live_lines": [
+          29039,
+          29519,
+          29554,
+          29555
+        ]
+      },
+      {
+        "event_type": "about.slint",
+        "frozen_lines": [
+          2483,
+          15327
+        ],
+        "live_lines": [
+          2612,
+          15456
+        ]
+      },
+      {
+        "event_type": "account_pressure_episode.v1",
+        "frozen_lines": [
+          2627
+        ],
+        "live_lines": [
+          2756
+        ]
+      },
+      {
+        "event_type": "account_switch_event.v1",
+        "frozen_lines": [
+          2628
+        ],
+        "live_lines": [
+          2757
+        ]
+      },
+      {
+        "event_type": "activity_bar.slint",
+        "frozen_lines": [
+          2446
+        ],
+        "live_lines": [
+          2575
+        ]
+      },
+      {
+        "event_type": "agent_activity.slint",
+        "frozen_lines": [
+          2473,
+          3156,
+          15273,
+          16925,
+          16954
+        ],
+        "live_lines": [
+          2602,
+          3285,
+          15402,
+          17054,
+          17083
+        ]
+      },
+      {
+        "event_type": "agents_panel.slint",
+        "frozen_lines": [
+          31734,
+          31769
+        ],
+        "live_lines": [
+          31866,
+          31901
+        ]
+      },
+      {
+        "event_type": "agents_panel_state.v1",
+        "frozen_lines": [
+          31677,
+          31690,
+          31711
+        ],
+        "live_lines": [
+          31809,
+          31822,
+          31843
+        ]
+      },
+      {
+        "event_type": "anchor_aliases.json",
+        "frozen_lines": [
+          25384
+        ],
+        "live_lines": [
+          25513
+        ]
+      },
+      {
+        "event_type": "app.agent_rules.dry_method_default_guard",
+        "frozen_lines": [
+          26845,
+          26889
+        ],
+        "live_lines": [
+          26974,
+          27018
+        ]
+      },
+      {
+        "event_type": "app.rs",
+        "frozen_lines": [
+          2486,
+          15344,
+          15374
+        ],
+        "live_lines": [
+          2615,
+          15473,
+          15503
+        ]
+      },
+      {
+        "event_type": "app.slint",
+        "frozen_lines": [
+          258,
+          2428,
+          2430,
+          5965,
+          5995,
+          15229,
+          15260,
+          15261
+        ],
+        "live_lines": [
+          258,
+          2557,
+          2559,
+          6094,
+          6124,
+          15358,
+          15389,
+          15390
+        ]
+      },
+      {
+        "event_type": "artifact_panel_state.v1",
+        "frozen_lines": [
+          2584,
+          15882,
+          15919,
+          31679
+        ],
+        "live_lines": [
+          2713,
+          16011,
+          16048,
+          31811
+        ]
+      },
+      {
+        "event_type": "artifacts_panel.slint",
+        "frozen_lines": [
+          28002,
+          31735,
+          31770
+        ],
+        "live_lines": [
+          28131,
+          31867,
+          31902
+        ]
+      },
+      {
+        "event_type": "assembled.html",
+        "frozen_lines": [
+          33193
+        ],
+        "live_lines": [
+          33325
+        ]
+      },
+      {
+        "event_type": "assistant_provider_wizard_proposal_20260701.json",
+        "frozen_lines": [
+          27423
+        ],
+        "live_lines": [
+          27552
+        ]
+      },
+      {
+        "event_type": "b.part.html",
+        "frozen_lines": [
+          28910,
+          29357,
+          29359,
+          29371,
+          29390
+        ],
+        "live_lines": [
+          29039,
+          29486,
+          29488,
+          29500,
+          29519
+        ]
+      },
+      {
+        "event_type": "bookmarks.rs",
+        "frozen_lines": [
+          2511,
+          15492
+        ],
+        "live_lines": [
+          2640,
+          15621
+        ]
+      },
+      {
+        "event_type": "bottom_panel.slint",
+        "frozen_lines": [
+          2478,
+          15322
+        ],
+        "live_lines": [
+          2607,
+          15451
+        ]
+      },
+      {
+        "event_type": "boundaries.md",
+        "frozen_lines": [
+          26232
+        ],
+        "live_lines": [
+          26361
+        ]
+      },
+      {
+        "event_type": "breadcrumb.slint",
+        "frozen_lines": [
+          2448
+        ],
+        "live_lines": [
+          2577
+        ]
+      },
+      {
+        "event_type": "breakpoints.rs",
+        "frozen_lines": [
+          2516,
+          15543
+        ],
+        "live_lines": [
+          2645,
+          15672
+        ]
+      },
+      {
+        "event_type": "browser_panel.slint",
+        "frozen_lines": [
+          2479,
+          15323
+        ],
+        "live_lines": [
+          2608,
+          15452
+        ]
+      },
+      {
+        "event_type": "browser_profile_state.v1",
+        "frozen_lines": [
+          2618,
+          2640,
+          16039,
+          16106
+        ],
+        "live_lines": [
+          2747,
+          2769,
+          16168,
+          16235
+        ]
+      },
+      {
+        "event_type": "browser_session_state.v1",
+        "frozen_lines": [
+          2617,
+          2640,
+          16038,
+          16105
+        ],
+        "live_lines": [
+          2746,
+          2769,
+          16167,
+          16234
+        ]
+      },
+      {
+        "event_type": "browser_state.v1",
+        "frozen_lines": [
+          2640,
+          16071,
+          16107
+        ],
+        "live_lines": [
+          2769,
+          16200,
+          16236
+        ]
+      },
+      {
+        "event_type": "budget_donut.slint",
+        "frozen_lines": [
+          2450
+        ],
+        "live_lines": [
+          2579
+        ]
+      },
+      {
+        "event_type": "build.rs",
+        "frozen_lines": [
+          198,
+          254,
+          2428,
+          5965,
+          5992,
+          15229,
+          15259
+        ],
+        "live_lines": [
+          198,
+          254,
+          2557,
+          6094,
+          6121,
+          15358,
+          15388
+        ]
+      },
+      {
+        "event_type": "build_pm7.py",
+        "frozen_lines": [
+          431,
+          435
+        ],
+        "live_lines": [
+          493,
+          497
+        ]
+      },
+      {
+        "event_type": "buildability_repair_registry.jsonl",
+        "frozen_lines": [
+          27917
+        ],
+        "live_lines": [
+          28046
+        ]
+      },
+      {
+        "event_type": "builder.md",
+        "frozen_lines": [
+          26233
+        ],
+        "live_lines": [
+          26362
+        ]
+      },
+      {
+        "event_type": "builder.rs",
+        "frozen_lines": [
+          2541,
+          15705
+        ],
+        "live_lines": [
+          2670,
+          15834
+        ]
+      },
+      {
+        "event_type": "bundle_registry.v1",
+        "frozen_lines": [
+          2039,
+          2603,
+          12378,
+          15980
+        ],
+        "live_lines": [
+          2168,
+          2732,
+          12507,
+          16109
+        ]
+      },
+      {
+        "event_type": "callback_bridge.rs",
+        "frozen_lines": [
+          2491,
+          15380
+        ],
+        "live_lines": [
+          2620,
+          15509
+        ]
+      },
+      {
+        "event_type": "canon.md",
+        "frozen_lines": [
+          10135,
+          17645,
+          18507,
+          19306,
+          19375
+        ],
+        "live_lines": [
+          10264,
+          17774,
+          18636,
+          19435,
+          19504
+        ]
+      },
+      {
+        "event_type": "catalog.dashboard_add_widget",
+        "frozen_lines": [
+          28029
+        ],
+        "live_lines": [
+          28158
+        ]
+      },
+      {
+        "event_type": "chat.plan_todo_updated",
+        "frozen_lines": [
+          4075,
+          4314,
+          4316,
+          23411,
+          23443,
+          25621
+        ],
+        "live_lines": [
+          4204,
+          4443,
+          4445,
+          23540,
+          23572,
+          25750
+        ]
+      },
+      {
+        "event_type": "chat_panel.slint",
+        "frozen_lines": [
+          2476,
+          3157,
+          15320,
+          16925,
+          16955
+        ],
+        "live_lines": [
+          2605,
+          3286,
+          15449,
+          17054,
+          17084
+        ]
+      },
+      {
+        "event_type": "cmd.alert.open_source",
+        "frozen_lines": [
+          30870,
+          30883,
+          30903
+        ],
+        "live_lines": [
+          31001,
+          31014,
+          31034
+        ]
+      },
+      {
+        "event_type": "cmd.browser",
+        "frozen_lines": [
+          1955,
+          12002
+        ],
+        "live_lines": [
+          2084,
+          12131
+        ]
+      },
+      {
+        "event_type": "cmd.browser.focus_browser_tab",
+        "frozen_lines": [
+          1955
+        ],
+        "live_lines": [
+          2084
+        ]
+      },
+      {
+        "event_type": "cmd.browser.open_detached_preview",
+        "frozen_lines": [
+          1955,
+          4374,
+          24986
+        ],
+        "live_lines": [
+          2084,
+          4503,
+          25115
+        ]
+      },
+      {
+        "event_type": "cmd.browser.open_workspace_preview",
+        "frozen_lines": [
+          1955
+        ],
+        "live_lines": [
+          2084
+        ]
+      },
+      {
+        "event_type": "cmd.chat",
+        "frozen_lines": [
+          1027,
+          7407
+        ],
+        "live_lines": [
+          1156,
+          7536
+        ]
+      },
+      {
+        "event_type": "cmd.chat.branch_from_restore",
+        "frozen_lines": [
+          2834,
+          3116
+        ],
+        "live_lines": [
+          2963,
+          3245
+        ]
+      },
+      {
+        "event_type": "cmd.chat.create_restore_point",
+        "frozen_lines": [
+          2834,
+          3115
+        ],
+        "live_lines": [
+          2963,
+          3244
+        ]
+      },
+      {
+        "event_type": "cmd.chat.delete",
+        "frozen_lines": [
+          2821,
+          3005
+        ],
+        "live_lines": [
+          2950,
+          3134
+        ]
+      },
+      {
+        "event_type": "cmd.chat.delete_restore_point",
+        "frozen_lines": [
+          2836,
+          3117
+        ],
+        "live_lines": [
+          2965,
+          3246
+        ]
+      },
+      {
+        "event_type": "cmd.chat.revert",
+        "frozen_lines": [
+          2850,
+          3118
+        ],
+        "live_lines": [
+          2979,
+          3247
+        ]
+      },
+      {
+        "event_type": "cmd.chat.web",
+        "frozen_lines": [
+          3298
+        ],
+        "live_lines": [
+          3427
+        ]
+      },
+      {
+        "event_type": "cmd.dashboard.add_widget",
+        "frozen_lines": [
+          28029
+        ],
+        "live_lines": [
+          28158
+        ]
+      },
+      {
+        "event_type": "cmd.debug",
+        "frozen_lines": [
+          33025,
+          33036,
+          33053,
+          33060,
+          33064
+        ],
+        "live_lines": [
+          33157,
+          33168,
+          33185,
+          33192,
+          33196
+        ]
+      },
+      {
+        "event_type": "cmd.file",
+        "frozen_lines": [
+          1027,
+          1931,
+          7406,
+          11782,
+          11783
+        ],
+        "live_lines": [
+          1156,
+          2060,
+          7535,
+          11911,
+          11912
+        ]
+      },
+      {
+        "event_type": "cmd.github.actions.pin",
+        "frozen_lines": [
+          981,
+          6992
+        ],
+        "live_lines": [
+          1110,
+          7121
+        ]
+      },
+      {
+        "event_type": "cmd.github.actions.unpin",
+        "frozen_lines": [
+          981,
+          6993
+        ],
+        "live_lines": [
+          1110,
+          7122
+        ]
+      },
+      {
+        "event_type": "cmd.nav",
+        "frozen_lines": [
+          1562,
+          9725,
+          9755,
+          9756
+        ],
+        "live_lines": [
+          1691,
+          9854,
+          9884,
+          9885
+        ]
+      },
+      {
+        "event_type": "cmd.orchestrator.abort_node",
+        "frozen_lines": [
+          4030,
+          23118
+        ],
+        "live_lines": [
+          4159,
+          23247
+        ]
+      },
+      {
+        "event_type": "cmd.orchestrator.open_for_edit",
+        "frozen_lines": [
+          4029,
+          23116
+        ],
+        "live_lines": [
+          4158,
+          23245
+        ]
+      },
+      {
+        "event_type": "cmd.orchestrator.replan_node",
+        "frozen_lines": [
+          4028,
+          23114
+        ],
+        "live_lines": [
+          4157,
+          23243
+        ]
+      },
+      {
+        "event_type": "cmd.panel.switch",
+        "frozen_lines": [
+          975,
+          6936,
+          32111,
+          32123,
+          32149,
+          33272,
+          33285
+        ],
+        "live_lines": [
+          1104,
+          7065,
+          32243,
+          32255,
+          32281,
+          33404,
+          33417
+        ]
+      },
+      {
+        "event_type": "cmd.planning_wizard.approve_and_build",
+        "frozen_lines": [
+          542
+        ],
+        "live_lines": [
+          671
+        ]
+      },
+      {
+        "event_type": "cmd.planning_wizard.defer",
+        "frozen_lines": [
+          27961
+        ],
+        "live_lines": [
+          28090
+        ]
+      },
+      {
+        "event_type": "cmd.planning_wizard.open_topic",
+        "frozen_lines": [
+          27961
+        ],
+        "live_lines": [
+          28090
+        ]
+      },
+      {
+        "event_type": "cmd.project.delete_data",
+        "frozen_lines": [
+          2821,
+          3005,
+          3020
+        ],
+        "live_lines": [
+          2950,
+          3134,
+          3149
+        ]
+      },
+      {
+        "event_type": "cmd.project.remove",
+        "frozen_lines": [
+          2821,
+          3005,
+          3020
+        ],
+        "live_lines": [
+          2950,
+          3134,
+          3149
+        ]
+      },
+      {
+        "event_type": "cmd.provider.retry_after",
+        "frozen_lines": [
+          27959
+        ],
+        "live_lines": [
+          28088
+        ]
+      },
+      {
+        "event_type": "cmd.provider.switch_route",
+        "frozen_lines": [
+          27959
+        ],
+        "live_lines": [
+          28088
+        ]
+      },
+      {
+        "event_type": "cmd.run.resume",
+        "frozen_lines": [
+          27958
+        ],
+        "live_lines": [
+          28087
+        ]
+      },
+      {
+        "event_type": "cmd.run.stop",
+        "frozen_lines": [
+          27958
+        ],
+        "live_lines": [
+          28087
+        ]
+      },
+      {
+        "event_type": "cmd.run.view_log",
+        "frozen_lines": [
+          27958
+        ],
+        "live_lines": [
+          28087
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug",
+        "frozen_lines": [
+          32095,
+          32796,
+          32831,
+          33027,
+          33036,
+          33053,
+          33061,
+          33064
+        ],
+        "live_lines": [
+          32227,
+          32928,
+          32963,
+          33159,
+          33168,
+          33185,
+          33193,
+          33196
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.console.reveal",
+        "frozen_lines": [
+          32760,
+          32792
+        ],
+        "live_lines": [
+          32892,
+          32924
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.continue",
+        "frozen_lines": [
+          32817,
+          32859
+        ],
+        "live_lines": [
+          32949,
+          32991
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.start",
+        "frozen_lines": [
+          32816,
+          32858
+        ],
+        "live_lines": [
+          32948,
+          32990
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.start_no_debug",
+        "frozen_lines": [
+          32818,
+          32860
+        ],
+        "live_lines": [
+          32950,
+          32992
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.step_into",
+        "frozen_lines": [
+          32819,
+          32862
+        ],
+        "live_lines": [
+          32951,
+          32994
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.step_out",
+        "frozen_lines": [
+          32819,
+          32863
+        ],
+        "live_lines": [
+          32951,
+          32995
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.step_over",
+        "frozen_lines": [
+          32818,
+          32861
+        ],
+        "live_lines": [
+          32950,
+          32993
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.stop",
+        "frozen_lines": [
+          32820,
+          32864
+        ],
+        "live_lines": [
+          32952,
+          32996
+        ]
+      },
+      {
+        "event_type": "cmd.run_debug.terminal.reveal",
+        "frozen_lines": [
+          32760,
+          32793
+        ],
+        "live_lines": [
+          32892,
+          32925
+        ]
+      },
+      {
+        "event_type": "cmd.runtime.approve",
+        "frozen_lines": [
+          27957
+        ],
+        "live_lines": [
+          28086
+        ]
+      },
+      {
+        "event_type": "cmd.runtime.decline",
+        "frozen_lines": [
+          27957
+        ],
+        "live_lines": [
+          28086
+        ]
+      },
+      {
+        "event_type": "cmd.runtime.view_details",
+        "frozen_lines": [
+          27957
+        ],
+        "live_lines": [
+          28086
+        ]
+      },
+      {
+        "event_type": "cmd.search",
+        "frozen_lines": [
+          971,
+          1027,
+          3253,
+          6887,
+          7405
+        ],
+        "live_lines": [
+          1100,
+          1156,
+          3382,
+          7016,
+          7534
+        ]
+      },
+      {
+        "event_type": "cmd.search.clear_scope",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.collapse_all",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.expand_all",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.find_in_files",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.next_result",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.open_result",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.prev_result",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.replace_all",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.replace_in_files",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.replace_one",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.show",
+        "frozen_lines": [
+          1010,
+          1016,
+          7274,
+          7302
+        ],
+        "live_lines": [
+          1139,
+          1145,
+          7403,
+          7431
+        ]
+      },
+      {
+        "event_type": "cmd.search.toggle_case_sensitive",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.toggle_regex",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.search.toggle_whole_word",
+        "frozen_lines": [
+          1016
+        ],
+        "live_lines": [
+          1145
+        ]
+      },
+      {
+        "event_type": "cmd.settings.agent_rules.dry_method_default_guard.set",
+        "frozen_lines": [
+          26849,
+          26900
+        ],
+        "live_lines": [
+          26978,
+          27029
+        ]
+      },
+      {
+        "event_type": "cmd.settings.open_storage_retention",
+        "frozen_lines": [
+          2793,
+          3020
+        ],
+        "live_lines": [
+          2922,
+          3149
+        ]
+      },
+      {
+        "event_type": "cmd.source_control",
+        "frozen_lines": [
+          1027,
+          7408
+        ],
+        "live_lines": [
+          1156,
+          7537
+        ]
+      },
+      {
+        "event_type": "cmd.storage.compaction.request",
+        "frozen_lines": [
+          2793,
+          2804,
+          3004,
+          3020
+        ],
+        "live_lines": [
+          2922,
+          2933,
+          3133,
+          3149
+        ]
+      },
+      {
+        "event_type": "cmd.storage.fallback.export_both",
+        "frozen_lines": [
+          2789,
+          2977
+        ],
+        "live_lines": [
+          2918,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.fallback.fork_new_instance",
+        "frozen_lines": [
+          2789,
+          2977
+        ],
+        "live_lines": [
+          2918,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.fallback.keep_logical_root",
+        "frozen_lines": [
+          2789,
+          2977
+        ],
+        "live_lines": [
+          2918,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.fallback.return_fast_forward",
+        "frozen_lines": [
+          2789,
+          2963,
+          2977
+        ],
+        "live_lines": [
+          2918,
+          3092,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.legal_hold.manage",
+        "frozen_lines": [
+          2793,
+          3004,
+          3020
+        ],
+        "live_lines": [
+          2922,
+          3133,
+          3149
+        ]
+      },
+      {
+        "event_type": "cmd.storage.open_root",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.open_value",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.retry",
+        "frozen_lines": [
+          2781,
+          2962,
+          2977
+        ],
+        "live_lines": [
+          2910,
+          3091,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.root.choose",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.root.copy_and_switch",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.root.start_new_instance",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.root.use_previous",
+        "frozen_lines": [
+          2787
+        ],
+        "live_lines": [
+          2916
+        ]
+      },
+      {
+        "event_type": "cmd.storage.try_write_mode",
+        "frozen_lines": [
+          2779,
+          2960,
+          2977
+        ],
+        "live_lines": [
+          2908,
+          3089,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.storage.viewer.refresh",
+        "frozen_lines": [
+          2779,
+          2960,
+          2977
+        ],
+        "live_lines": [
+          2908,
+          3089,
+          3106
+        ]
+      },
+      {
+        "event_type": "cmd.terminal.open",
+        "frozen_lines": [
+          1931,
+          11788
+        ],
+        "live_lines": [
+          2060,
+          11917
+        ]
+      },
+      {
+        "event_type": "cmd.terminal.show",
+        "frozen_lines": [
+          1931,
+          11789
+        ],
+        "live_lines": [
+          2060,
+          11918
+        ]
+      },
+      {
+        "event_type": "cmd.usage.view_budget",
+        "frozen_lines": [
+          27959
+        ],
+        "live_lines": [
+          28088
+        ]
+      },
+      {
+        "event_type": "cmd.warning.acknowledge",
+        "frozen_lines": [
+          27960
+        ],
+        "live_lines": [
+          28089
+        ]
+      },
+      {
+        "event_type": "cmd.warning.open_owner",
+        "frozen_lines": [
+          27960
+        ],
+        "live_lines": [
+          28089
+        ]
+      },
+      {
+        "event_type": "code.execution.debug",
+        "frozen_lines": [
+          32595,
+          32609,
+          32646
+        ],
+        "live_lines": [
+          32727,
+          32741,
+          32778
+        ]
+      },
+      {
+        "event_type": "combo_box.slint",
+        "frozen_lines": [
+          2437
+        ],
+        "live_lines": [
+          2566
+        ]
+      },
+      {
+        "event_type": "command_palette.slint",
+        "frozen_lines": [
+          2449,
+          15267
+        ],
+        "live_lines": [
+          2578,
+          15396
+        ]
+      },
+      {
+        "event_type": "compaction_compile_readiness_matrix.json",
+        "frozen_lines": [
+          11404
+        ],
+        "live_lines": [
+          11533
+        ]
+      },
+      {
+        "event_type": "config.rs",
+        "frozen_lines": [
+          3141,
+          16902
+        ],
+        "live_lines": [
+          3270,
+          17031
+        ]
+      },
+      {
+        "event_type": "connection.rs",
+        "frozen_lines": [
+          2520,
+          15546
+        ],
+        "live_lines": [
+          2649,
+          15675
+        ]
+      },
+      {
+        "event_type": "context.compaction.failed",
+        "frozen_lines": [
+          11409
+        ],
+        "live_lines": [
+          11538
+        ]
+      },
+      {
+        "event_type": "context.md",
+        "frozen_lines": [
+          3286,
+          18846
+        ],
+        "live_lines": [
+          3415,
+          18975
+        ]
+      },
+      {
+        "event_type": "context_capture.rs",
+        "frozen_lines": [
+          2512,
+          15494
+        ],
+        "live_lines": [
+          2641,
+          15623
+        ]
+      },
+      {
+        "event_type": "context_menu.slint",
+        "frozen_lines": [
+          2444
+        ],
+        "live_lines": [
+          2573
+        ]
+      },
+      {
+        "event_type": "control.md",
+        "frozen_lines": [
+          26235
+        ],
+        "live_lines": [
+          26364
+        ]
+      },
+      {
+        "event_type": "coverage.rs",
+        "frozen_lines": [
+          3152
+        ],
+        "live_lines": [
+          3281
+        ]
+      },
+      {
+        "event_type": "coverage.slint",
+        "frozen_lines": [
+          2468,
+          3152
+        ],
+        "live_lines": [
+          2597,
+          3281
+        ]
+      },
+      {
+        "event_type": "coverage_map.jsonl",
+        "frozen_lines": [
+          25383
+        ],
+        "live_lines": [
+          25512
+        ]
+      },
+      {
+        "event_type": "credentials.json",
+        "frozen_lines": [
+          1678,
+          10486
+        ],
+        "live_lines": [
+          1807,
+          10615
+        ]
+      },
+      {
+        "event_type": "currentness_check_report.json",
+        "frozen_lines": [
+          27916
+        ],
+        "live_lines": [
+          28045
+        ]
+      },
+      {
+        "event_type": "cursor.com",
+        "frozen_lines": [
+          696
+        ],
+        "live_lines": [
+          825
+        ]
+      },
+      {
+        "event_type": "custom_loader.rs",
+        "frozen_lines": [
+          2507,
+          15442
+        ],
+        "live_lines": [
+          2636,
+          15571
+        ]
+      },
+      {
+        "event_type": "dap_client.rs",
+        "frozen_lines": [
+          2515,
+          15541
+        ],
+        "live_lines": [
+          2644,
+          15670
+        ]
+      },
+      {
+        "event_type": "dashboard.add_widget",
+        "frozen_lines": [
+          28029
+        ],
+        "live_lines": [
+          28158
+        ]
+      },
+      {
+        "event_type": "dashboard.rs",
+        "frozen_lines": [
+          3136,
+          16892
+        ],
+        "live_lines": [
+          3265,
+          17021
+        ]
+      },
+      {
+        "event_type": "dashboard.slint",
+        "frozen_lines": [
+          2457,
+          3136,
+          15269,
+          16893
+        ],
+        "live_lines": [
+          2586,
+          3265,
+          15398,
+          17022
+        ]
+      },
+      {
+        "event_type": "debug_investigation_record.v1",
+        "frozen_lines": [
+          2602,
+          15979
+        ],
+        "live_lines": [
+          2731,
+          16108
+        ]
+      },
+      {
+        "event_type": "debug_panel.slint",
+        "frozen_lines": [
+          2480,
+          15324
+        ],
+        "live_lines": [
+          2609,
+          15453
+        ]
+      },
+      {
+        "event_type": "decisions.jsonl",
+        "frozen_lines": [
+          10134,
+          17644,
+          18506,
+          19305,
+          19374,
+          27414,
+          27415,
+          27416,
+          27417,
+          27418,
+          27419
+        ],
+        "live_lines": [
+          10263,
+          17773,
+          18635,
+          19434,
+          19503,
+          27543,
+          27544,
+          27545,
+          27546,
+          27547,
+          27548
+        ]
+      },
+      {
+        "event_type": "design.md",
+        "frozen_lines": [
+          81,
+          100,
+          188,
+          949,
+          969,
+          997,
+          1005,
+          1044,
+          1059,
+          1076,
+          1107,
+          1126,
+          1140,
+          1153,
+          1159,
+          1560,
+          1891,
+          2005,
+          2010,
+          2609,
+          2690,
+          2702,
+          2715,
+          2733,
+          2737,
+          2852,
+          3124,
+          3256,
+          3276,
+          3280,
+          3328,
+          3715,
+          3723,
+          3836,
+          3838,
+          3990,
+          4007,
+          4019,
+          4063,
+          4267,
+          4284,
+          4365,
+          4371,
+          5789,
+          5845,
+          6587,
+          7209,
+          7469,
+          7574,
+          7627,
+          7679,
+          7731,
+          7778,
+          12284,
+          12285,
+          15984,
+          16530,
+          16780,
+          18788,
+          18840,
+          19034,
+          21655,
+          24172,
+          25543,
+          25552,
+          25591,
+          25634,
+          25680,
+          25728,
+          26176,
+          26413,
+          26455,
+          26478,
+          26658,
+          26739,
+          26909,
+          27122,
+          27476,
+          28070,
+          28206,
+          28212,
+          28226,
+          28229,
+          28336,
+          28350,
+          28395,
+          28411,
+          30521,
+          31359,
+          33019,
+          33051,
+          33069
+        ],
+        "live_lines": [
+          81,
+          100,
+          188,
+          1078,
+          1098,
+          1126,
+          1134,
+          1173,
+          1188,
+          1205,
+          1236,
+          1255,
+          1269,
+          1282,
+          1288,
+          1689,
+          2020,
+          2134,
+          2139,
+          2738,
+          2819,
+          2831,
+          2844,
+          2862,
+          2866,
+          2981,
+          3253,
+          3385,
+          3405,
+          3409,
+          3457,
+          3844,
+          3852,
+          3965,
+          3967,
+          4119,
+          4136,
+          4148,
+          4192,
+          4396,
+          4413,
+          4494,
+          4500,
+          5918,
+          5974,
+          6716,
+          7338,
+          7598,
+          7703,
+          7756,
+          7808,
+          7860,
+          7907,
+          12413,
+          12414,
+          16113,
+          16659,
+          16909,
+          18917,
+          18969,
+          19163,
+          21784,
+          24301,
+          25672,
+          25681,
+          25720,
+          25763,
+          25809,
+          25857,
+          26305,
+          26542,
+          26584,
+          26607,
+          26787,
+          26868,
+          27038,
+          27251,
+          27605,
+          28199,
+          28335,
+          28341,
+          28355,
+          28358,
+          28465,
+          28479,
+          28524,
+          28540,
+          30650,
+          31491,
+          33151,
+          33183,
+          33201
+        ]
+      },
+      {
+        "event_type": "design_atoms.jsonl",
+        "frozen_lines": [
+          613,
+          614,
+          615,
+          616,
+          617,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          625,
+          10133,
+          11405,
+          17643,
+          18505,
+          19304,
+          19373,
+          26716,
+          26717,
+          26795,
+          26796,
+          26797,
+          26798,
+          26799,
+          26800,
+          26881,
+          26882,
+          26883,
+          26884,
+          26885,
+          27174,
+          27233,
+          27298,
+          27387,
+          27388,
+          27389,
+          27390,
+          27391,
+          27392,
+          27393,
+          27394,
+          27395,
+          27396,
+          27397,
+          27398,
+          27399,
+          27400,
+          27401,
+          27402,
+          27403,
+          27404,
+          27405,
+          27406,
+          27407,
+          27408,
+          27409,
+          27410,
+          27411,
+          27412,
+          27413,
+          27528,
+          27602,
+          27682,
+          27754,
+          27827
+        ],
+        "live_lines": [
+          742,
+          743,
+          744,
+          745,
+          746,
+          747,
+          748,
+          749,
+          750,
+          751,
+          752,
+          753,
+          754,
+          10262,
+          11534,
+          17772,
+          18634,
+          19433,
+          19502,
+          26845,
+          26846,
+          26924,
+          26925,
+          26926,
+          26927,
+          26928,
+          26929,
+          27010,
+          27011,
+          27012,
+          27013,
+          27014,
+          27303,
+          27362,
+          27427,
+          27516,
+          27517,
+          27518,
+          27519,
+          27520,
+          27521,
+          27522,
+          27523,
+          27524,
+          27525,
+          27526,
+          27527,
+          27528,
+          27529,
+          27530,
+          27531,
+          27532,
+          27533,
+          27534,
+          27535,
+          27536,
+          27537,
+          27538,
+          27539,
+          27540,
+          27541,
+          27542,
+          27657,
+          27731,
+          27811,
+          27883,
+          27956
+        ]
+      },
+      {
+        "event_type": "doc_impact_matrix.json",
+        "frozen_lines": [
+          26471
+        ],
+        "live_lines": [
+          26600
+        ]
+      },
+      {
+        "event_type": "docker_hosts_view.slint",
+        "frozen_lines": [
+          27998
+        ],
+        "live_lines": [
+          28127
+        ]
+      },
+      {
+        "event_type": "docker_manager_panel.slint",
+        "frozen_lines": [
+          28001,
+          31736
+        ],
+        "live_lines": [
+          28130,
+          31868
+        ]
+      },
+      {
+        "event_type": "docker_manager_panel_state.v1",
+        "frozen_lines": [
+          31676,
+          31690,
+          31709
+        ],
+        "live_lines": [
+          31808,
+          31822,
+          31841
+        ]
+      },
+      {
+        "event_type": "docs.example.com",
+        "frozen_lines": [
+          4426
+        ],
+        "live_lines": [
+          4555
+        ]
+      },
+      {
+        "event_type": "doctor.rs",
+        "frozen_lines": [
+          3144,
+          16905
+        ],
+        "live_lines": [
+          3273,
+          17034
+        ]
+      },
+      {
+        "event_type": "doctor_onboarding_plan_review_20260701.json",
+        "frozen_lines": [
+          27420
+        ],
+        "live_lines": [
+          27549
+        ]
+      },
+      {
+        "event_type": "dry_method_compile_readiness_matrix.json",
+        "frozen_lines": [
+          26876,
+          26877
+        ],
+        "live_lines": [
+          27005,
+          27006
+        ]
+      },
+      {
+        "event_type": "dry_method_defaults_matrix.json",
+        "frozen_lines": [
+          26878,
+          26879,
+          26880
+        ],
+        "live_lines": [
+          27007,
+          27008,
+          27009
+        ]
+      },
+      {
+        "event_type": "e.g",
+        "frozen_lines": [
+          760,
+          1023,
+          1192,
+          1208,
+          1221,
+          1224,
+          1426,
+          2305,
+          2311,
+          3223,
+          3829,
+          4013,
+          4169,
+          32889,
+          32903
+        ],
+        "live_lines": [
+          889,
+          1152,
+          1321,
+          1337,
+          1350,
+          1353,
+          1555,
+          2434,
+          2440,
+          3352,
+          3958,
+          4142,
+          4298,
+          33021,
+          33035
+        ]
+      },
+      {
+        "event_type": "editor_state.v1",
+        "frozen_lines": [
+          2619,
+          2642,
+          2671,
+          3045,
+          3063,
+          16009,
+          16040,
+          16399,
+          28012
+        ],
+        "live_lines": [
+          2748,
+          2771,
+          2800,
+          3174,
+          3192,
+          16138,
+          16169,
+          16528,
+          28141
+        ]
+      },
+      {
+        "event_type": "editor_terminal_panel_state.v1",
+        "frozen_lines": [
+          2648,
+          16178
+        ],
+        "live_lines": [
+          2777,
+          16307
+        ]
+      },
+      {
+        "event_type": "editor_unsaved_buffer.v1",
+        "frozen_lines": [
+          16008,
+          16057
+        ],
+        "live_lines": [
+          16137,
+          16186
+        ]
+      },
+      {
+        "event_type": "editor_workspace_state.v1",
+        "frozen_lines": [
+          2579,
+          2642,
+          2643,
+          2671,
+          3045,
+          3064,
+          16112,
+          16398,
+          28012
+        ],
+        "live_lines": [
+          2708,
+          2771,
+          2772,
+          2800,
+          3174,
+          3193,
+          16241,
+          16527,
+          28141
+        ]
+      },
+      {
+        "event_type": "engine.part.html",
+        "frozen_lines": [
+          28910,
+          29390
+        ],
+        "live_lines": [
+          29039,
+          29519
+        ]
+      },
+      {
+        "event_type": "events.rs",
+        "frozen_lines": [
+          2526,
+          15597
+        ],
+        "live_lines": [
+          2655,
+          15726
+        ]
+      },
+      {
+        "event_type": "evidence.rs",
+        "frozen_lines": [
+          3147
+        ],
+        "live_lines": [
+          3276
+        ]
+      },
+      {
+        "event_type": "evidence.slint",
+        "frozen_lines": [
+          2462,
+          3147
+        ],
+        "live_lines": [
+          2591,
+          3276
+        ]
+      },
+      {
+        "event_type": "evidence_detail.rs",
+        "frozen_lines": [
+          3148
+        ],
+        "live_lines": [
+          3277
+        ]
+      },
+      {
+        "event_type": "evidence_detail.slint",
+        "frozen_lines": [
+          2463,
+          3148
+        ],
+        "live_lines": [
+          2592,
+          3277
+        ]
+      },
+      {
+        "event_type": "example.com",
+        "frozen_lines": [
+          4175
+        ],
+        "live_lines": [
+          4304
+        ]
+      },
+      {
+        "event_type": "exporter.rs",
+        "frozen_lines": [
+          2533,
+          15650
+        ],
+        "live_lines": [
+          2662,
+          15779
+        ]
+      },
+      {
+        "event_type": "fablereport.md",
+        "frozen_lines": [
+          27915
+        ],
+        "live_lines": [
+          28044
+        ]
+      },
+      {
+        "event_type": "feature.md",
+        "frozen_lines": [
+          701,
+          1652,
+          1662,
+          1833,
+          3282,
+          10268,
+          10272,
+          10275,
+          18842,
+          25949,
+          26022,
+          27292,
+          27325,
+          28068,
+          28081,
+          28107,
+          28114,
+          28155,
+          28213,
+          28271,
+          28287,
+          28337,
+          28396,
+          28452,
+          28468,
+          28519,
+          28583,
+          28645,
+          28706,
+          28762,
+          28827,
+          28891,
+          29465,
+          29512,
+          29576,
+          29641,
+          29701,
+          29756,
+          29829,
+          29900,
+          29972,
+          30027,
+          30091,
+          30162,
+          30216,
+          30276,
+          30302,
+          30341,
+          30394,
+          30452,
+          30507,
+          30562,
+          30610,
+          30660,
+          30710,
+          30763,
+          30830,
+          30898,
+          30955,
+          30965,
+          31007,
+          31066,
+          31132,
+          31184,
+          31232,
+          31280,
+          31341,
+          31397,
+          31458,
+          31525,
+          31589,
+          31644,
+          31706,
+          31763,
+          31832,
+          31895,
+          31949,
+          32095,
+          33090,
+          33114,
+          33120,
+          33134
+        ],
+        "live_lines": [
+          639,
+          830,
+          1781,
+          1791,
+          1962,
+          3411,
+          10397,
+          10401,
+          10404,
+          18971,
+          26078,
+          26151,
+          27421,
+          27454,
+          28197,
+          28210,
+          28236,
+          28243,
+          28284,
+          28342,
+          28400,
+          28416,
+          28466,
+          28525,
+          28581,
+          28597,
+          28648,
+          28712,
+          28774,
+          28835,
+          28891,
+          28956,
+          29020,
+          29594,
+          29641,
+          29705,
+          29770,
+          29830,
+          29885,
+          29958,
+          30029,
+          30101,
+          30156,
+          30220,
+          30291,
+          30345,
+          30405,
+          30431,
+          30470,
+          30523,
+          30581,
+          30636,
+          30691,
+          30739,
+          30789,
+          30839,
+          30892,
+          30960,
+          31029,
+          31086,
+          31096,
+          31138,
+          31197,
+          31264,
+          31316,
+          31364,
+          31412,
+          31473,
+          31529,
+          31590,
+          31657,
+          31721,
+          31776,
+          31838,
+          31895,
+          31964,
+          32027,
+          32081,
+          32227,
+          33222,
+          33246,
+          33252,
+          33266
+        ]
+      },
+      {
+        "event_type": "file_editor.slint",
+        "frozen_lines": [
+          2472,
+          3155,
+          15272,
+          16924,
+          16953
+        ],
+        "live_lines": [
+          2601,
+          3284,
+          15401,
+          17053,
+          17082
+        ]
+      },
+      {
+        "event_type": "file_manager_panel.slint",
+        "frozen_lines": [
+          2477,
+          3158,
+          15321,
+          16926,
+          16956,
+          31736
+        ],
+        "live_lines": [
+          2606,
+          3287,
+          15450,
+          17055,
+          17085,
+          31868
+        ]
+      },
+      {
+        "event_type": "files.html",
+        "frozen_lines": [
+          31415,
+          31526,
+          31590,
+          31707,
+          31896,
+          31950,
+          32024,
+          33134,
+          33185
+        ],
+        "live_lines": [
+          31547,
+          31658,
+          31722,
+          31839,
+          32028,
+          32082,
+          32156,
+          33266,
+          33317
+        ]
+      },
+      {
+        "event_type": "flexibility.md",
+        "frozen_lines": [
+          3284,
+          3723,
+          4044,
+          18844,
+          25682,
+          25714,
+          25730
+        ],
+        "live_lines": [
+          3413,
+          3852,
+          4173,
+          18973,
+          25811,
+          25843,
+          25859
+        ]
+      },
+      {
+        "event_type": "floating_panel.slint",
+        "frozen_lines": [
+          2482,
+          15326
+        ],
+        "live_lines": [
+          2611,
+          15455
+        ]
+      },
+      {
+        "event_type": "gha_panel_state.v1",
+        "frozen_lines": [
+          2583,
+          15881,
+          15918,
+          31678
+        ],
+        "live_lines": [
+          2712,
+          16010,
+          16047,
+          31810
+        ]
+      },
+      {
+        "event_type": "github.com",
+        "frozen_lines": [
+          27148,
+          27175,
+          27179,
+          28084,
+          28085,
+          28086
+        ],
+        "live_lines": [
+          27277,
+          27304,
+          27308,
+          28213,
+          28214,
+          28215
+        ]
+      },
+      {
+        "event_type": "github_actions_panel.slint",
+        "frozen_lines": [
+          28000,
+          31733,
+          31767
+        ],
+        "live_lines": [
+          28129,
+          31865,
+          31899
+        ]
+      },
+      {
+        "event_type": "global.part.html",
+        "frozen_lines": [
+          28910,
+          29427,
+          29428,
+          29429,
+          29461,
+          33239
+        ],
+        "live_lines": [
+          29039,
+          29556,
+          29557,
+          29558,
+          29590,
+          33371
+        ]
+      },
+      {
+        "event_type": "google_accounts.json",
+        "frozen_lines": [
+          1678,
+          10487
+        ],
+        "live_lines": [
+          1807,
+          10616
+        ]
+      },
+      {
+        "event_type": "grid_texture.rs",
+        "frozen_lines": [
+          2500,
+          15434
+        ],
+        "live_lines": [
+          2629,
+          15563
+        ]
+      },
+      {
+        "event_type": "help_tooltip.slint",
+        "frozen_lines": [
+          2454
+        ],
+        "live_lines": [
+          2583
+        ]
+      },
+      {
+        "event_type": "history.rs",
+        "frozen_lines": [
+          3149
+        ],
+        "live_lines": [
+          3278
+        ]
+      },
+      {
+        "event_type": "history.slint",
+        "frozen_lines": [
+          2465,
+          3149
+        ],
+        "live_lines": [
+          2594,
+          3278
+        ]
+      },
+      {
+        "event_type": "home_workspace_matrix.mjs",
+        "frozen_lines": [
+          391,
+          430,
+          470,
+          507
+        ],
+        "live_lines": [
+          453,
+          492,
+          532,
+          569,
+          629
+        ]
+      },
+      {
+        "event_type": "home_workspace_source.py",
+        "frozen_lines": [
+          395,
+          435,
+          474
+        ],
+        "live_lines": [
+          457,
+          497,
+          536
+        ]
+      },
+      {
+        "event_type": "host.example",
+        "frozen_lines": [
+          4424,
+          25212,
+          25248
+        ],
+        "live_lines": [
+          4553,
+          25341,
+          25377
+        ]
+      },
+      {
+        "event_type": "hotreload_state.v1",
+        "frozen_lines": [
+          2620,
+          2643,
+          2674,
+          3065,
+          16114,
+          16401,
+          28012
+        ],
+        "live_lines": [
+          2749,
+          2772,
+          2803,
+          3194,
+          16243,
+          16530,
+          28141
+        ]
+      },
+      {
+        "event_type": "icon.slint",
+        "frozen_lines": [
+          2453
+        ],
+        "live_lines": [
+          2582
+        ]
+      },
+      {
+        "event_type": "implementation_readiness_hardening_20260701.json",
+        "frozen_lines": [
+          626
+        ],
+        "live_lines": [
+          755
+        ]
+      },
+      {
+        "event_type": "import.rs",
+        "frozen_lines": [
+          32890,
+          32903,
+          32925
+        ],
+        "live_lines": [
+          33022,
+          33035,
+          33057
+        ]
+      },
+      {
+        "event_type": "importer.rs",
+        "frozen_lines": [
+          2534,
+          15652
+        ],
+        "live_lines": [
+          2663,
+          15781
+        ]
+      },
+      {
+        "event_type": "index.md",
+        "frozen_lines": [
+          26174,
+          26411,
+          27903
+        ],
+        "live_lines": [
+          26303,
+          26540,
+          28032
+        ]
+      },
+      {
+        "event_type": "index.py",
+        "frozen_lines": [
+          390,
+          508,
+          600,
+          684,
+          725,
+          2879,
+          2922,
+          2966,
+          3009,
+          3051,
+          3101,
+          4472,
+          4524,
+          4576,
+          4632,
+          4686,
+          4738,
+          4788,
+          4843,
+          4900,
+          4952,
+          5006,
+          5057,
+          5108,
+          5155,
+          5202,
+          5252,
+          5304,
+          5352,
+          5403,
+          5455,
+          5506,
+          5559,
+          5609,
+          5659,
+          5708,
+          5762,
+          5818,
+          5874,
+          5929,
+          5980,
+          6031,
+          6081,
+          6132,
+          6187,
+          6242,
+          6295,
+          6347,
+          6400,
+          6453,
+          6506,
+          6561,
+          6616,
+          6666,
+          6717,
+          6768,
+          6820,
+          6869,
+          6921,
+          6976,
+          7029,
+          7082,
+          7133,
+          7186,
+          7238,
+          7290,
+          7343,
+          7392,
+          7444,
+          7499,
+          7550,
+          7603,
+          7656,
+          7707,
+          7759,
+          7806,
+          7857,
+          7906,
+          7956,
+          8007,
+          8057,
+          8108,
+          8162,
+          8214,
+          8269,
+          8320,
+          8376,
+          8435,
+          8499,
+          8553,
+          8605,
+          8661,
+          8717,
+          8771,
+          8824,
+          8875,
+          8926,
+          8981,
+          9035,
+          9092,
+          9144,
+          9196,
+          9248,
+          9302,
+          9357,
+          9410,
+          9464,
+          9518,
+          9571,
+          9628,
+          9683,
+          9739,
+          9793,
+          9850,
+          9905,
+          9961,
+          10015,
+          10066,
+          10122,
+          10195,
+          10249,
+          10304,
+          10357,
+          10413,
+          10468,
+          10522,
+          10583,
+          10639,
+          10692,
+          10747,
+          10803,
+          10857,
+          10907,
+          10963,
+          11016,
+          11069,
+          11128,
+          11181,
+          11233,
+          11286,
+          11339,
+          11393,
+          11452,
+          11505,
+          11557,
+          11609,
+          11658,
+          11718,
+          11770,
+          11827,
+          11880,
+          11936,
+          11990,
+          12045,
+          12099,
+          12152,
+          12206,
+          12259,
+          12314,
+          12364,
+          12412,
+          12463,
+          12514,
+          12565,
+          12614,
+          12663,
+          12716,
+          12763,
+          12812,
+          12863,
+          12913,
+          12961,
+          13019,
+          13072,
+          13130,
+          13191,
+          13244,
+          13300,
+          13352,
+          13404,
+          13459,
+          13516,
+          13567,
+          13616,
+          13665,
+          13716,
+          13767,
+          13818,
+          13871,
+          13928,
+          13977,
+          14029,
+          14080,
+          14136,
+          14196,
+          14245,
+          14296,
+          14347,
+          14398,
+          14451,
+          14501,
+          14552,
+          14607,
+          14661,
+          14714,
+          14768,
+          14820,
+          14871,
+          14928,
+          14987,
+          15041,
+          15092,
+          15147,
+          15198,
+          15247,
+          15307,
+          15360,
+          15416,
+          15476,
+          15528,
+          15582,
+          15632,
+          15687,
+          15739,
+          15789,
+          15840,
+          15898,
+          15959,
+          16024,
+          16090,
+          16160,
+          16221,
+          16280,
+          16330,
+          16382,
+          16443,
+          16505,
+          16567,
+          16629,
+          16691,
+          16754,
+          16811,
+          16874,
+          16940,
+          16993,
+          17054,
+          17110,
+          17171,
+          17230,
+          17279,
+          17330,
+          17379,
+          17430,
+          17479,
+          17528,
+          17580,
+          17632,
+          17688,
+          17738,
+          17789,
+          17838,
+          17886,
+          17935,
+          17985,
+          18037,
+          18087,
+          18139,
+          18188,
+          18240,
+          18291,
+          18341,
+          18391,
+          18441,
+          18494,
+          18549,
+          18598,
+          18649,
+          18709,
+          18771,
+          18828,
+          18904,
+          18964,
+          19018,
+          19069,
+          19121,
+          19180,
+          19235,
+          19292,
+          19362,
+          19434,
+          19494,
+          19552,
+          19605,
+          19660,
+          19709,
+          19764,
+          19820,
+          19868,
+          19922,
+          19973,
+          20023,
+          20074,
+          20126,
+          20176,
+          20227,
+          20279,
+          20330,
+          20394,
+          20448,
+          20511,
+          20563,
+          20618,
+          20677,
+          20733,
+          20785,
+          20831,
+          20883,
+          20933,
+          20989,
+          21041,
+          21096,
+          21156,
+          21214,
+          21268,
+          21322,
+          21371,
+          21418,
+          21468,
+          21522,
+          21573,
+          21625,
+          21686,
+          21741,
+          21794,
+          21845,
+          21896,
+          21951,
+          22013,
+          22067,
+          22127,
+          22182,
+          22232,
+          22282,
+          22338,
+          22394,
+          22449,
+          22504,
+          22556,
+          22612,
+          22664,
+          22713,
+          22769,
+          22821,
+          22875,
+          22933,
+          22985,
+          23044,
+          23099,
+          23155,
+          23207,
+          23260,
+          23312,
+          23370,
+          23426,
+          23478,
+          23535,
+          23596,
+          23652,
+          23704,
+          23758,
+          23815,
+          23872,
+          23922,
+          23975,
+          24029,
+          24082,
+          24140,
+          24204,
+          24264,
+          24327,
+          24384,
+          24444,
+          24501,
+          24560,
+          24617,
+          24672,
+          24728,
+          24785,
+          24840,
+          24898,
+          24961,
+          25027,
+          25094,
+          25163,
+          25230,
+          25287,
+          25344,
+          25411,
+          25454,
+          25497,
+          25538,
+          25584,
+          25669,
+          25754,
+          25820,
+          25933,
+          26166,
+          26449,
+          26515,
+          26702,
+          26777,
+          26862,
+          26944,
+          27159,
+          27218,
+          27282,
+          27371,
+          27510,
+          27586,
+          27665,
+          27738,
+          27811,
+          27897,
+          28059,
+          28143,
+          28200,
+          28260,
+          28325,
+          28383,
+          28441,
+          28503,
+          28570,
+          28633,
+          28694,
+          28750,
+          28815,
+          28879,
+          29498,
+          29563,
+          29629,
+          29689,
+          29744,
+          29818,
+          29889,
+          29961,
+          30015,
+          30078,
+          30150,
+          30205,
+          30263,
+          30330,
+          30383,
+          30440,
+          30495,
+          30550,
+          30599,
+          30648,
+          30699,
+          30751,
+          30820,
+          30888,
+          30945,
+          30997,
+          31056,
+          31122,
+          31174,
+          31222,
+          31270,
+          31331,
+          31387,
+          31447,
+          31515,
+          31579,
+          31633,
+          31696,
+          31753,
+          31822,
+          31885,
+          31939,
+          32012,
+          32070,
+          32127,
+          32198,
+          32273,
+          32344,
+          32410,
+          32471,
+          32539,
+          32614,
+          32704,
+          32774,
+          32837,
+          32909,
+          32974,
+          33040,
+          33103,
+          33172,
+          33232,
+          33291,
+          33348
+        ],
+        "live_lines": [
+          452,
+          570,
+          630,
+          729,
+          813,
+          854,
+          3008,
+          3051,
+          3095,
+          3138,
+          3180,
+          3230,
+          4601,
+          4653,
+          4705,
+          4761,
+          4815,
+          4867,
+          4917,
+          4972,
+          5029,
+          5081,
+          5135,
+          5186,
+          5237,
+          5284,
+          5331,
+          5381,
+          5433,
+          5481,
+          5532,
+          5584,
+          5635,
+          5688,
+          5738,
+          5788,
+          5837,
+          5891,
+          5947,
+          6003,
+          6058,
+          6109,
+          6160,
+          6210,
+          6261,
+          6316,
+          6371,
+          6424,
+          6476,
+          6529,
+          6582,
+          6635,
+          6690,
+          6745,
+          6795,
+          6846,
+          6897,
+          6949,
+          6998,
+          7050,
+          7105,
+          7158,
+          7211,
+          7262,
+          7315,
+          7367,
+          7419,
+          7472,
+          7521,
+          7573,
+          7628,
+          7679,
+          7732,
+          7785,
+          7836,
+          7888,
+          7935,
+          7986,
+          8035,
+          8085,
+          8136,
+          8186,
+          8237,
+          8291,
+          8343,
+          8398,
+          8449,
+          8505,
+          8564,
+          8628,
+          8682,
+          8734,
+          8790,
+          8846,
+          8900,
+          8953,
+          9004,
+          9055,
+          9110,
+          9164,
+          9221,
+          9273,
+          9325,
+          9377,
+          9431,
+          9486,
+          9539,
+          9593,
+          9647,
+          9700,
+          9757,
+          9812,
+          9868,
+          9922,
+          9979,
+          10034,
+          10090,
+          10144,
+          10195,
+          10251,
+          10324,
+          10378,
+          10433,
+          10486,
+          10542,
+          10597,
+          10651,
+          10712,
+          10768,
+          10821,
+          10876,
+          10932,
+          10986,
+          11036,
+          11092,
+          11145,
+          11198,
+          11257,
+          11310,
+          11362,
+          11415,
+          11468,
+          11522,
+          11581,
+          11634,
+          11686,
+          11738,
+          11787,
+          11847,
+          11899,
+          11956,
+          12009,
+          12065,
+          12119,
+          12174,
+          12228,
+          12281,
+          12335,
+          12388,
+          12443,
+          12493,
+          12541,
+          12592,
+          12643,
+          12694,
+          12743,
+          12792,
+          12845,
+          12892,
+          12941,
+          12992,
+          13042,
+          13090,
+          13148,
+          13201,
+          13259,
+          13320,
+          13373,
+          13429,
+          13481,
+          13533,
+          13588,
+          13645,
+          13696,
+          13745,
+          13794,
+          13845,
+          13896,
+          13947,
+          14000,
+          14057,
+          14106,
+          14158,
+          14209,
+          14265,
+          14325,
+          14374,
+          14425,
+          14476,
+          14527,
+          14580,
+          14630,
+          14681,
+          14736,
+          14790,
+          14843,
+          14897,
+          14949,
+          15000,
+          15057,
+          15116,
+          15170,
+          15221,
+          15276,
+          15327,
+          15376,
+          15436,
+          15489,
+          15545,
+          15605,
+          15657,
+          15711,
+          15761,
+          15816,
+          15868,
+          15918,
+          15969,
+          16027,
+          16088,
+          16153,
+          16219,
+          16289,
+          16350,
+          16409,
+          16459,
+          16511,
+          16572,
+          16634,
+          16696,
+          16758,
+          16820,
+          16883,
+          16940,
+          17003,
+          17069,
+          17122,
+          17183,
+          17239,
+          17300,
+          17359,
+          17408,
+          17459,
+          17508,
+          17559,
+          17608,
+          17657,
+          17709,
+          17761,
+          17817,
+          17867,
+          17918,
+          17967,
+          18015,
+          18064,
+          18114,
+          18166,
+          18216,
+          18268,
+          18317,
+          18369,
+          18420,
+          18470,
+          18520,
+          18570,
+          18623,
+          18678,
+          18727,
+          18778,
+          18838,
+          18900,
+          18957,
+          19033,
+          19093,
+          19147,
+          19198,
+          19250,
+          19309,
+          19364,
+          19421,
+          19491,
+          19563,
+          19623,
+          19681,
+          19734,
+          19789,
+          19838,
+          19893,
+          19949,
+          19997,
+          20051,
+          20102,
+          20152,
+          20203,
+          20255,
+          20305,
+          20356,
+          20408,
+          20459,
+          20523,
+          20577,
+          20640,
+          20692,
+          20747,
+          20806,
+          20862,
+          20914,
+          20960,
+          21012,
+          21062,
+          21118,
+          21170,
+          21225,
+          21285,
+          21343,
+          21397,
+          21451,
+          21500,
+          21547,
+          21597,
+          21651,
+          21702,
+          21754,
+          21815,
+          21870,
+          21923,
+          21974,
+          22025,
+          22080,
+          22142,
+          22196,
+          22256,
+          22311,
+          22361,
+          22411,
+          22467,
+          22523,
+          22578,
+          22633,
+          22685,
+          22741,
+          22793,
+          22842,
+          22898,
+          22950,
+          23004,
+          23062,
+          23114,
+          23173,
+          23228,
+          23284,
+          23336,
+          23389,
+          23441,
+          23499,
+          23555,
+          23607,
+          23664,
+          23725,
+          23781,
+          23833,
+          23887,
+          23944,
+          24001,
+          24051,
+          24104,
+          24158,
+          24211,
+          24269,
+          24333,
+          24393,
+          24456,
+          24513,
+          24573,
+          24630,
+          24689,
+          24746,
+          24801,
+          24857,
+          24914,
+          24969,
+          25027,
+          25090,
+          25156,
+          25223,
+          25292,
+          25359,
+          25416,
+          25473,
+          25540,
+          25583,
+          25626,
+          25667,
+          25713,
+          25798,
+          25883,
+          25949,
+          26062,
+          26295,
+          26578,
+          26644,
+          26831,
+          26906,
+          26991,
+          27073,
+          27288,
+          27347,
+          27411,
+          27500,
+          27639,
+          27715,
+          27794,
+          27867,
+          27940,
+          28026,
+          28188,
+          28272,
+          28329,
+          28389,
+          28454,
+          28512,
+          28570,
+          28632,
+          28699,
+          28762,
+          28823,
+          28879,
+          28944,
+          29008,
+          29627,
+          29692,
+          29758,
+          29818,
+          29873,
+          29947,
+          30018,
+          30090,
+          30144,
+          30207,
+          30279,
+          30334,
+          30392,
+          30459,
+          30512,
+          30569,
+          30624,
+          30679,
+          30728,
+          30777,
+          30828,
+          30880,
+          30950,
+          31019,
+          31076,
+          31128,
+          31187,
+          31254,
+          31306,
+          31354,
+          31402,
+          31463,
+          31519,
+          31579,
+          31647,
+          31711,
+          31765,
+          31828,
+          31885,
+          31954,
+          32017,
+          32071,
+          32144,
+          32202,
+          32259,
+          32330,
+          32405,
+          32476,
+          32542,
+          32603,
+          32671,
+          32746,
+          32836,
+          32906,
+          32969,
+          33041,
+          33106,
+          33172,
+          33235,
+          33304,
+          33364,
+          33423,
+          33480
+        ]
+      },
+      {
+        "event_type": "index.rs",
+        "frozen_lines": [
+          2529,
+          15645
+        ],
+        "live_lines": [
+          2658,
+          15774
+        ]
+      },
+      {
+        "event_type": "inline_visualizer_v2_readiness_matrix.json",
+        "frozen_lines": [
+          26715
+        ],
+        "live_lines": [
+          26844
+        ]
+      },
+      {
+        "event_type": "installer.rs",
+        "frozen_lines": [
+          2530,
+          15647
+        ],
+        "live_lines": [
+          2659,
+          15776
+        ]
+      },
+      {
+        "event_type": "integration.md",
+        "frozen_lines": [
+          3132,
+          3289,
+          3290,
+          4327,
+          16890,
+          16891,
+          18849,
+          18850,
+          25459,
+          25473,
+          25830,
+          25891,
+          31833,
+          31854
+        ],
+        "live_lines": [
+          3261,
+          3418,
+          3419,
+          4456,
+          17019,
+          17020,
+          18978,
+          18979,
+          25588,
+          25602,
+          25959,
+          26020,
+          31965,
+          31986
+        ]
+      },
+      {
+        "event_type": "interview.rs",
+        "frozen_lines": [
+          3139,
+          16898
+        ],
+        "live_lines": [
+          3268,
+          17027
+        ]
+      },
+      {
+        "event_type": "interview.slint",
+        "frozen_lines": [
+          2460,
+          3139,
+          16899
+        ],
+        "live_lines": [
+          2589,
+          3268,
+          17028
+        ]
+      },
+      {
+        "event_type": "interview_panel.slint",
+        "frozen_lines": [
+          2455
+        ],
+        "live_lines": [
+          2584
+        ]
+      },
+      {
+        "event_type": "keychain.rs",
+        "frozen_lines": [
+          2522,
+          15549
+        ],
+        "live_lines": [
+          2651,
+          15678
+        ]
+      },
+      {
+        "event_type": "launch.json",
+        "frozen_lines": [
+          32593,
+          32594,
+          32608,
+          32625,
+          32645
+        ],
+        "live_lines": [
+          32725,
+          32726,
+          32740,
+          32757,
+          32777
+        ]
+      },
+      {
+        "event_type": "launch_config.rs",
+        "frozen_lines": [
+          2517,
+          15544
+        ],
+        "live_lines": [
+          2646,
+          15673
+        ]
+      },
+      {
+        "event_type": "layout.rs",
+        "frozen_lines": [
+          2496,
+          15431
+        ],
+        "live_lines": [
+          2625,
+          15560
+        ]
+      },
+      {
+        "event_type": "ledger.rs",
+        "frozen_lines": [
+          3150
+        ],
+        "live_lines": [
+          3279
+        ]
+      },
+      {
+        "event_type": "ledger.slint",
+        "frozen_lines": [
+          2467,
+          3150
+        ],
+        "live_lines": [
+          2596,
+          3279
+        ]
+      },
+      {
+        "event_type": "list.md",
+        "frozen_lines": [
+          3295,
+          18855
+        ],
+        "live_lines": [
+          3424,
+          18984
+        ]
+      },
+      {
+        "event_type": "locked_decisions.ui",
+        "frozen_lines": [
+          3187,
+          17197
+        ],
+        "live_lines": [
+          3316,
+          17326
+        ]
+      },
+      {
+        "event_type": "login.rs",
+        "frozen_lines": [
+          3143,
+          16904
+        ],
+        "live_lines": [
+          3272,
+          17033
+        ]
+      },
+      {
+        "event_type": "loop.md",
+        "frozen_lines": [
+          1578,
+          3283,
+          3990,
+          9819,
+          18843,
+          25681,
+          25729
+        ],
+        "live_lines": [
+          1707,
+          3412,
+          4119,
+          9948,
+          18972,
+          25810,
+          25858
+        ]
+      },
+      {
+        "event_type": "lsp_diagnostics_snapshot.v1",
+        "frozen_lines": [
+          2624,
+          16043
+        ],
+        "live_lines": [
+          2753,
+          16172
+        ]
+      },
+      {
+        "event_type": "lsp_session_state.v1",
+        "frozen_lines": [
+          2623,
+          16042
+        ],
+        "live_lines": [
+          2752,
+          16171
+        ]
+      },
+      {
+        "event_type": "main.rs",
+        "frozen_lines": [
+          772,
+          2485,
+          15344,
+          15372
+        ],
+        "live_lines": [
+          901,
+          2614,
+          15473,
+          15501
+        ]
+      },
+      {
+        "event_type": "mcp_server_record.v1",
+        "frozen_lines": [
+          2629,
+          16045
+        ],
+        "live_lines": [
+          2758,
+          16174
+        ]
+      },
+      {
+        "event_type": "memo.md",
+        "frozen_lines": [
+          1107,
+          3170,
+          3306,
+          3328,
+          3668,
+          7574,
+          17020,
+          18866,
+          19036,
+          21287
+        ],
+        "live_lines": [
+          1236,
+          3299,
+          3435,
+          3457,
+          3797,
+          7703,
+          17149,
+          18995,
+          19165,
+          21416
+        ]
+      },
+      {
+        "event_type": "memory.rs",
+        "frozen_lines": [
+          3151
+        ],
+        "live_lines": [
+          3280
+        ]
+      },
+      {
+        "event_type": "memory.slint",
+        "frozen_lines": [
+          2466,
+          3151
+        ],
+        "live_lines": [
+          2595,
+          3280
+        ]
+      },
+      {
+        "event_type": "metrics.rs",
+        "frozen_lines": [
+          3146
+        ],
+        "live_lines": [
+          3275
+        ]
+      },
+      {
+        "event_type": "metrics.slint",
+        "frozen_lines": [
+          2464,
+          3146
+        ],
+        "live_lines": [
+          2593,
+          3275
+        ]
+      },
+      {
+        "event_type": "migration.py",
+        "frozen_lines": [
+          4471,
+          4523,
+          4575,
+          4631,
+          4685,
+          4737,
+          4787,
+          4842,
+          4899,
+          4951,
+          5005,
+          5056,
+          5107,
+          5154,
+          5201,
+          5251,
+          5303,
+          5351,
+          5402,
+          5454,
+          5505,
+          5558,
+          5608,
+          5658,
+          5707,
+          5761,
+          5817,
+          5873,
+          5928,
+          5979,
+          6030,
+          6080,
+          6131,
+          6186,
+          6241,
+          6294,
+          6346,
+          6399,
+          6452,
+          6505,
+          6560,
+          6615,
+          6665,
+          6716,
+          6767,
+          6819,
+          6868,
+          6920,
+          6975,
+          7028,
+          7081,
+          7132,
+          7185,
+          7237,
+          7289,
+          7342,
+          7391,
+          7443,
+          7498,
+          7549,
+          7602,
+          7655,
+          7706,
+          7758,
+          7805,
+          7856,
+          7905,
+          7955,
+          8006,
+          8056,
+          8107,
+          8161,
+          8213,
+          8268,
+          8319,
+          8375,
+          8434,
+          8498,
+          8552,
+          8604,
+          8660,
+          8716,
+          8770,
+          8823,
+          8874,
+          8925,
+          8980,
+          9034,
+          9091,
+          9143,
+          9195,
+          9247,
+          9301,
+          9356,
+          9409,
+          9463,
+          9517,
+          9570,
+          9627,
+          9682,
+          9738,
+          9792,
+          9849,
+          9904,
+          9960,
+          10014,
+          10065,
+          10121,
+          10194,
+          10248,
+          10303,
+          10356,
+          10412,
+          10467,
+          10521,
+          10582,
+          10638,
+          10691,
+          10746,
+          10802,
+          10856,
+          10906,
+          10962,
+          11015,
+          11068,
+          11127,
+          11180,
+          11232,
+          11285,
+          11338,
+          11392,
+          11451,
+          11504,
+          11556,
+          11608,
+          11657,
+          11717,
+          11769,
+          11826,
+          11879,
+          11935,
+          11989,
+          12044,
+          12098,
+          12151,
+          12205,
+          12258,
+          12313,
+          12363,
+          12411,
+          12462,
+          12513,
+          12564,
+          12613,
+          12662,
+          12715,
+          12762,
+          12811,
+          12862,
+          12912,
+          12960,
+          13018,
+          13071,
+          13129,
+          13190,
+          13243,
+          13299,
+          13351,
+          13403,
+          13458,
+          13515,
+          13566,
+          13615,
+          13664,
+          13715,
+          13766,
+          13817,
+          13870,
+          13927,
+          13976,
+          14028,
+          14079,
+          14135,
+          14195,
+          14244,
+          14295,
+          14346,
+          14397,
+          14450,
+          14500,
+          14551,
+          14606,
+          14660,
+          14713,
+          14767,
+          14819,
+          14870,
+          14927,
+          14986,
+          15040,
+          15091,
+          15146,
+          15197,
+          15246,
+          15306,
+          15359,
+          15415,
+          15475,
+          15527,
+          15581,
+          15631,
+          15686,
+          15738,
+          15788,
+          15839,
+          15897,
+          15958,
+          16023,
+          16089,
+          16159,
+          16220,
+          16279,
+          16329,
+          16381,
+          16442,
+          16504,
+          16566,
+          16628,
+          16690,
+          16753,
+          16810,
+          16873,
+          16939,
+          16992,
+          17053,
+          17109,
+          17170,
+          17229,
+          17278,
+          17329,
+          17378,
+          17429,
+          17478,
+          17527,
+          17579,
+          17631,
+          17687,
+          17737,
+          17788,
+          17837,
+          17885,
+          17934,
+          17984,
+          18036,
+          18086,
+          18138,
+          18187,
+          18239,
+          18290,
+          18340,
+          18390,
+          18440,
+          18493,
+          18548,
+          18597,
+          18648,
+          18708,
+          18770,
+          18827,
+          18903,
+          18963,
+          19017,
+          19068,
+          19120,
+          19179,
+          19234,
+          19291,
+          19361,
+          19433,
+          19493,
+          19551,
+          19604,
+          19659,
+          19708,
+          19763,
+          19819,
+          19867,
+          19921,
+          19972,
+          20022,
+          20073,
+          20125,
+          20175,
+          20226,
+          20278,
+          20329,
+          20393,
+          20447,
+          20510,
+          20562,
+          20617,
+          20676,
+          20732,
+          20784,
+          20830,
+          20882,
+          20932,
+          20988,
+          21040,
+          21095,
+          21155,
+          21213,
+          21267,
+          21321,
+          21370,
+          21417,
+          21467,
+          21521,
+          21572,
+          21624,
+          21685,
+          21740,
+          21793,
+          21844,
+          21895,
+          21950,
+          22012,
+          22066,
+          22126,
+          22181,
+          22231,
+          22281,
+          22337,
+          22393,
+          22448,
+          22503,
+          22555,
+          22611,
+          22663,
+          22712,
+          22768,
+          22820,
+          22874,
+          22932,
+          22984,
+          23043,
+          23098,
+          23154,
+          23206,
+          23259,
+          23311,
+          23369,
+          23425,
+          23477,
+          23534,
+          23595,
+          23651,
+          23703,
+          23757,
+          23814,
+          23871,
+          23921,
+          23974,
+          24028,
+          24081,
+          24139,
+          24203,
+          24263,
+          24326,
+          24383,
+          24443,
+          24500,
+          24559,
+          24616,
+          24671,
+          24727,
+          24784,
+          24839,
+          24897,
+          24960,
+          25026,
+          25093,
+          25162,
+          25229,
+          25286,
+          25343,
+          28142,
+          28199,
+          28259,
+          28324,
+          28382,
+          28440,
+          28502,
+          28569,
+          28632,
+          28693,
+          28749,
+          28814,
+          28878,
+          29497,
+          29562,
+          29628,
+          29688,
+          29743,
+          29817,
+          29888,
+          29960,
+          30014,
+          30077,
+          30149,
+          30204,
+          30262,
+          30329,
+          30382,
+          30439,
+          30494,
+          30549,
+          30598,
+          30647,
+          30698,
+          30750,
+          30819,
+          30887,
+          30944,
+          30996,
+          31055,
+          31121,
+          31173,
+          31221,
+          31269,
+          31330,
+          31386,
+          31446,
+          31514,
+          31578,
+          31632,
+          31695,
+          31752,
+          31821,
+          31884,
+          31938,
+          32011,
+          32069,
+          32126,
+          32197,
+          32272,
+          32343,
+          32409,
+          32470,
+          32538,
+          32613,
+          32703,
+          32773,
+          32836,
+          32908,
+          32973,
+          33039,
+          33102,
+          33171,
+          33231,
+          33290,
+          33347
+        ],
+        "live_lines": [
+          4600,
+          4652,
+          4704,
+          4760,
+          4814,
+          4866,
+          4916,
+          4971,
+          5028,
+          5080,
+          5134,
+          5185,
+          5236,
+          5283,
+          5330,
+          5380,
+          5432,
+          5480,
+          5531,
+          5583,
+          5634,
+          5687,
+          5737,
+          5787,
+          5836,
+          5890,
+          5946,
+          6002,
+          6057,
+          6108,
+          6159,
+          6209,
+          6260,
+          6315,
+          6370,
+          6423,
+          6475,
+          6528,
+          6581,
+          6634,
+          6689,
+          6744,
+          6794,
+          6845,
+          6896,
+          6948,
+          6997,
+          7049,
+          7104,
+          7157,
+          7210,
+          7261,
+          7314,
+          7366,
+          7418,
+          7471,
+          7520,
+          7572,
+          7627,
+          7678,
+          7731,
+          7784,
+          7835,
+          7887,
+          7934,
+          7985,
+          8034,
+          8084,
+          8135,
+          8185,
+          8236,
+          8290,
+          8342,
+          8397,
+          8448,
+          8504,
+          8563,
+          8627,
+          8681,
+          8733,
+          8789,
+          8845,
+          8899,
+          8952,
+          9003,
+          9054,
+          9109,
+          9163,
+          9220,
+          9272,
+          9324,
+          9376,
+          9430,
+          9485,
+          9538,
+          9592,
+          9646,
+          9699,
+          9756,
+          9811,
+          9867,
+          9921,
+          9978,
+          10033,
+          10089,
+          10143,
+          10194,
+          10250,
+          10323,
+          10377,
+          10432,
+          10485,
+          10541,
+          10596,
+          10650,
+          10711,
+          10767,
+          10820,
+          10875,
+          10931,
+          10985,
+          11035,
+          11091,
+          11144,
+          11197,
+          11256,
+          11309,
+          11361,
+          11414,
+          11467,
+          11521,
+          11580,
+          11633,
+          11685,
+          11737,
+          11786,
+          11846,
+          11898,
+          11955,
+          12008,
+          12064,
+          12118,
+          12173,
+          12227,
+          12280,
+          12334,
+          12387,
+          12442,
+          12492,
+          12540,
+          12591,
+          12642,
+          12693,
+          12742,
+          12791,
+          12844,
+          12891,
+          12940,
+          12991,
+          13041,
+          13089,
+          13147,
+          13200,
+          13258,
+          13319,
+          13372,
+          13428,
+          13480,
+          13532,
+          13587,
+          13644,
+          13695,
+          13744,
+          13793,
+          13844,
+          13895,
+          13946,
+          13999,
+          14056,
+          14105,
+          14157,
+          14208,
+          14264,
+          14324,
+          14373,
+          14424,
+          14475,
+          14526,
+          14579,
+          14629,
+          14680,
+          14735,
+          14789,
+          14842,
+          14896,
+          14948,
+          14999,
+          15056,
+          15115,
+          15169,
+          15220,
+          15275,
+          15326,
+          15375,
+          15435,
+          15488,
+          15544,
+          15604,
+          15656,
+          15710,
+          15760,
+          15815,
+          15867,
+          15917,
+          15968,
+          16026,
+          16087,
+          16152,
+          16218,
+          16288,
+          16349,
+          16408,
+          16458,
+          16510,
+          16571,
+          16633,
+          16695,
+          16757,
+          16819,
+          16882,
+          16939,
+          17002,
+          17068,
+          17121,
+          17182,
+          17238,
+          17299,
+          17358,
+          17407,
+          17458,
+          17507,
+          17558,
+          17607,
+          17656,
+          17708,
+          17760,
+          17816,
+          17866,
+          17917,
+          17966,
+          18014,
+          18063,
+          18113,
+          18165,
+          18215,
+          18267,
+          18316,
+          18368,
+          18419,
+          18469,
+          18519,
+          18569,
+          18622,
+          18677,
+          18726,
+          18777,
+          18837,
+          18899,
+          18956,
+          19032,
+          19092,
+          19146,
+          19197,
+          19249,
+          19308,
+          19363,
+          19420,
+          19490,
+          19562,
+          19622,
+          19680,
+          19733,
+          19788,
+          19837,
+          19892,
+          19948,
+          19996,
+          20050,
+          20101,
+          20151,
+          20202,
+          20254,
+          20304,
+          20355,
+          20407,
+          20458,
+          20522,
+          20576,
+          20639,
+          20691,
+          20746,
+          20805,
+          20861,
+          20913,
+          20959,
+          21011,
+          21061,
+          21117,
+          21169,
+          21224,
+          21284,
+          21342,
+          21396,
+          21450,
+          21499,
+          21546,
+          21596,
+          21650,
+          21701,
+          21753,
+          21814,
+          21869,
+          21922,
+          21973,
+          22024,
+          22079,
+          22141,
+          22195,
+          22255,
+          22310,
+          22360,
+          22410,
+          22466,
+          22522,
+          22577,
+          22632,
+          22684,
+          22740,
+          22792,
+          22841,
+          22897,
+          22949,
+          23003,
+          23061,
+          23113,
+          23172,
+          23227,
+          23283,
+          23335,
+          23388,
+          23440,
+          23498,
+          23554,
+          23606,
+          23663,
+          23724,
+          23780,
+          23832,
+          23886,
+          23943,
+          24000,
+          24050,
+          24103,
+          24157,
+          24210,
+          24268,
+          24332,
+          24392,
+          24455,
+          24512,
+          24572,
+          24629,
+          24688,
+          24745,
+          24800,
+          24856,
+          24913,
+          24968,
+          25026,
+          25089,
+          25155,
+          25222,
+          25291,
+          25358,
+          25415,
+          25472,
+          28271,
+          28328,
+          28388,
+          28453,
+          28511,
+          28569,
+          28631,
+          28698,
+          28761,
+          28822,
+          28878,
+          28943,
+          29007,
+          29626,
+          29691,
+          29757,
+          29817,
+          29872,
+          29946,
+          30017,
+          30089,
+          30143,
+          30206,
+          30278,
+          30333,
+          30391,
+          30458,
+          30511,
+          30568,
+          30623,
+          30678,
+          30727,
+          30776,
+          30827,
+          30879,
+          30949,
+          31018,
+          31075,
+          31127,
+          31186,
+          31253,
+          31305,
+          31353,
+          31401,
+          31462,
+          31518,
+          31578,
+          31646,
+          31710,
+          31764,
+          31827,
+          31884,
+          31953,
+          32016,
+          32070,
+          32143,
+          32201,
+          32258,
+          32329,
+          32404,
+          32475,
+          32541,
+          32602,
+          32670,
+          32745,
+          32835,
+          32905,
+          32968,
+          33040,
+          33105,
+          33171,
+          33234,
+          33303,
+          33363,
+          33422,
+          33479
+        ]
+      },
+      {
+        "event_type": "mod.rs",
+        "frozen_lines": [
+          2488,
+          2494,
+          2499,
+          2503,
+          2509,
+          2514,
+          2519,
+          2524,
+          2528,
+          2532,
+          2536,
+          2539
+        ],
+        "live_lines": [
+          2617,
+          2623,
+          2628,
+          2632,
+          2638,
+          2643,
+          2648,
+          2653,
+          2657,
+          2661,
+          2665,
+          2668
+        ]
+      },
+      {
+        "event_type": "modal.slint",
+        "frozen_lines": [
+          2441
+        ],
+        "live_lines": [
+          2570
+        ]
+      },
+      {
+        "event_type": "model_bridge.rs",
+        "frozen_lines": [
+          2490,
+          15379
+        ],
+        "live_lines": [
+          2619,
+          15508
+        ]
+      },
+      {
+        "event_type": "navigation.md",
+        "frozen_lines": [
+          26238
+        ],
+        "live_lines": [
+          26367
+        ]
+      },
+      {
+        "event_type": "newfeatures.md",
+        "frozen_lines": [
+          3288,
+          18848
+        ],
+        "live_lines": [
+          3417,
+          18977
+        ]
+      },
+      {
+        "event_type": "newtools.md",
+        "frozen_lines": [
+          3296,
+          18856
+        ],
+        "live_lines": [
+          3425,
+          18985
+        ]
+      },
+      {
+        "event_type": "nodes.slint",
+        "frozen_lines": [
+          2461,
+          3140,
+          16901
+        ],
+        "live_lines": [
+          2590,
+          3269,
+          17030
+        ]
+      },
+      {
+        "event_type": "not_found.rs",
+        "frozen_lines": [
+          3153,
+          16907
+        ],
+        "live_lines": [
+          3282,
+          17036
+        ]
+      },
+      {
+        "event_type": "not_found.slint",
+        "frozen_lines": [
+          2474,
+          3153,
+          15274
+        ],
+        "live_lines": [
+          2603,
+          3282,
+          15403
+        ]
+      },
+      {
+        "event_type": "note_record.v1",
+        "frozen_lines": [
+          1980,
+          2039,
+          2604,
+          12164,
+          12379,
+          15981
+        ],
+        "live_lines": [
+          2109,
+          2168,
+          2733,
+          12293,
+          12508,
+          16110
+        ]
+      },
+      {
+        "event_type": "notifications_sounds_readiness_matrix.json",
+        "frozen_lines": [
+          26790,
+          26791,
+          26792,
+          26793,
+          26794
+        ],
+        "live_lines": [
+          26919,
+          26920,
+          26921,
+          26922,
+          26923
+        ]
+      },
+      {
+        "event_type": "onboarding_doctor_user_decisions_20260701.json",
+        "frozen_lines": [
+          27422
+        ],
+        "live_lines": [
+          27551
+        ]
+      },
+      {
+        "event_type": "onboarding_state.v1",
+        "frozen_lines": [
+          2621,
+          2643,
+          2675,
+          3066,
+          16116,
+          16402,
+          28012
+        ],
+        "live_lines": [
+          2750,
+          2772,
+          2804,
+          3195,
+          16245,
+          16531,
+          28141
+        ]
+      },
+      {
+        "event_type": "open.part.html",
+        "frozen_lines": [
+          33296
+        ],
+        "live_lines": [
+          33428
+        ]
+      },
+      {
+        "event_type": "orchestrator_page.slint",
+        "frozen_lines": [
+          27997
+        ],
+        "live_lines": [
+          28126
+        ]
+      },
+      {
+        "event_type": "original_hashes.json",
+        "frozen_lines": [
+          25381
+        ],
+        "live_lines": [
+          25510
+        ]
+      },
+      {
+        "event_type": "owner_note_closure_fidelity_after.jsonl",
+        "frozen_lines": [
+          28023
+        ],
+        "live_lines": [
+          28152
+        ]
+      },
+      {
+        "event_type": "palette.rs",
+        "frozen_lines": [
+          2504,
+          15438
+        ],
+        "live_lines": [
+          2633,
+          15567
+        ]
+      },
+      {
+        "event_type": "panel_card.slint",
+        "frozen_lines": [
+          2433,
+          15264
+        ],
+        "live_lines": [
+          2562,
+          15393
+        ]
+      },
+      {
+        "event_type": "panels.ack",
+        "frozen_lines": [
+          33332
+        ],
+        "live_lines": [
+          33464
+        ]
+      },
+      {
+        "event_type": "panels.art_filter",
+        "frozen_lines": [
+          33334
+        ],
+        "live_lines": [
+          33466
+        ]
+      },
+      {
+        "event_type": "panels.debug_start",
+        "frozen_lines": [
+          33333
+        ],
+        "live_lines": [
+          33465
+        ]
+      },
+      {
+        "event_type": "panels.docker_view",
+        "frozen_lines": [
+          33333
+        ],
+        "live_lines": [
+          33465
+        ]
+      },
+      {
+        "event_type": "panels.git_commit",
+        "frozen_lines": [
+          33333
+        ],
+        "live_lines": [
+          33465
+        ]
+      },
+      {
+        "event_type": "panels.part.html",
+        "frozen_lines": [
+          33147,
+          33177,
+          33297,
+          33353,
+          33354
+        ],
+        "live_lines": [
+          33279,
+          33309,
+          33429,
+          33485,
+          33486
+        ]
+      },
+      {
+        "event_type": "panels.show",
+        "frozen_lines": [
+          33151
+        ],
+        "live_lines": [
+          33283
+        ]
+      },
+      {
+        "event_type": "panels.snooze",
+        "frozen_lines": [
+          33332
+        ],
+        "live_lines": [
+          33464
+        ]
+      },
+      {
+        "event_type": "panels.test_run",
+        "frozen_lines": [
+          33333
+        ],
+        "live_lines": [
+          33465
+        ]
+      },
+      {
+        "event_type": "paper_texture.rs",
+        "frozen_lines": [
+          2501,
+          15435
+        ],
+        "live_lines": [
+          2630,
+          15564
+        ]
+      },
+      {
+        "event_type": "paper_texture.slint",
+        "frozen_lines": [
+          2443
+        ],
+        "live_lines": [
+          2572
+        ]
+      },
+      {
+        "event_type": "pixel_grid_overlay.slint",
+        "frozen_lines": [
+          2442
+        ],
+        "live_lines": [
+          2571
+        ]
+      },
+      {
+        "event_type": "plan.md",
+        "frozen_lines": [
+          93,
+          266,
+          408,
+          821,
+          832,
+          844,
+          934,
+          991,
+          1080,
+          1087,
+          1140,
+          1519,
+          1652,
+          1656,
+          1658,
+          1660,
+          2005,
+          2010,
+          2586,
+          2609,
+          2636,
+          2641,
+          2646,
+          2650,
+          2678,
+          2690,
+          2702,
+          2715,
+          2852,
+          2894,
+          2937,
+          2981,
+          3024,
+          3070,
+          3124,
+          3285,
+          3303,
+          3409,
+          3418,
+          3575,
+          3654,
+          3686,
+          3715,
+          3732,
+          3836,
+          4063,
+          4135,
+          6214,
+          6266,
+          6372,
+          6530,
+          7053,
+          7157,
+          7470,
+          7521,
+          7679,
+          9543,
+          10267,
+          10275,
+          12284,
+          12285,
+          15920,
+          16192,
+          16405,
+          16529,
+          18845,
+          19515,
+          19523,
+          20360,
+          21179,
+          21655,
+          24296,
+          25594,
+          25637,
+          25679,
+          25727,
+          25946,
+          26019,
+          26832,
+          26911,
+          28012,
+          30295,
+          31679,
+          31691,
+          31714,
+          31719,
+          32522,
+          32563,
+          32570,
+          32592,
+          32608,
+          32648,
+          32657
+        ],
+        "live_lines": [
+          93,
+          266,
+          470,
+          950,
+          961,
+          973,
+          1063,
+          1120,
+          1209,
+          1216,
+          1269,
+          1648,
+          1781,
+          1785,
+          1787,
+          1789,
+          2134,
+          2139,
+          2715,
+          2738,
+          2765,
+          2770,
+          2775,
+          2779,
+          2807,
+          2819,
+          2831,
+          2844,
+          2981,
+          3023,
+          3066,
+          3110,
+          3153,
+          3199,
+          3253,
+          3414,
+          3432,
+          3538,
+          3547,
+          3704,
+          3783,
+          3815,
+          3844,
+          3861,
+          3965,
+          4192,
+          4264,
+          6343,
+          6395,
+          6501,
+          6659,
+          7182,
+          7286,
+          7599,
+          7650,
+          7808,
+          9672,
+          10396,
+          10404,
+          12413,
+          12414,
+          16049,
+          16321,
+          16534,
+          16658,
+          18974,
+          19644,
+          19652,
+          20489,
+          21308,
+          21784,
+          24425,
+          25723,
+          25766,
+          25808,
+          25856,
+          26075,
+          26148,
+          26961,
+          27040,
+          28141,
+          30424,
+          31811,
+          31823,
+          31846,
+          31851,
+          32654,
+          32695,
+          32702,
+          32724,
+          32740,
+          32780,
+          32789
+        ]
+      },
+      {
+        "event_type": "plans.py",
+        "frozen_lines": [
+          28060
+        ],
+        "live_lines": [
+          28189
+        ]
+      },
+      {
+        "event_type": "player.rs",
+        "frozen_lines": [
+          2525,
+          15595
+        ],
+        "live_lines": [
+          2654,
+          15724
+        ]
+      },
+      {
+        "event_type": "pm.activity_bar_order",
+        "frozen_lines": [
+          30248,
+          30258,
+          30287,
+          30290
+        ],
+        "live_lines": [
+          30377,
+          30387,
+          30416,
+          30419
+        ]
+      },
+      {
+        "event_type": "pm.lock",
+        "frozen_lines": [
+          2647,
+          16118,
+          16123
+        ],
+        "live_lines": [
+          2776,
+          16247,
+          16252
+        ]
+      },
+      {
+        "event_type": "pm.settings_inventory.v1",
+        "frozen_lines": [
+          30055,
+          30072,
+          30095
+        ],
+        "live_lines": [
+          30184,
+          30201,
+          30224
+        ]
+      },
+      {
+        "event_type": "pm.theme",
+        "frozen_lines": [
+          30247,
+          30258,
+          30284,
+          30290
+        ],
+        "live_lines": [
+          30376,
+          30387,
+          30413,
+          30419
+        ]
+      },
+      {
+        "event_type": "pm_settings_data.json",
+        "frozen_lines": [
+          30061,
+          30090
+        ],
+        "live_lines": [
+          30190,
+          30219
+        ]
+      },
+      {
+        "event_type": "pmconcept_gui_reference_20260701.json",
+        "frozen_lines": [
+          27421
+        ],
+        "live_lines": [
+          27550
+        ]
+      },
+      {
+        "event_type": "policy.py",
+        "frozen_lines": [
+          27894,
+          27909
+        ],
+        "live_lines": [
+          28023,
+          28038
+        ]
+      },
+      {
+        "event_type": "preflight_result.free_bytes",
+        "frozen_lines": [
+          2757
+        ],
+        "live_lines": [
+          2886
+        ]
+      },
+      {
+        "event_type": "preflight_result.required_free_bytes",
+        "frozen_lines": [
+          2757
+        ],
+        "live_lines": [
+          2886
+        ]
+      },
+      {
+        "event_type": "preview_source_artifact.v1",
+        "frozen_lines": [
+          2616,
+          2640,
+          16037,
+          16104
+        ],
+        "live_lines": [
+          2745,
+          2769,
+          16166,
+          16233
+        ]
+      },
+      {
+        "event_type": "preview_state.v1",
+        "frozen_lines": [
+          2615,
+          2640,
+          16036,
+          16103
+        ],
+        "live_lines": [
+          2744,
+          2769,
+          16165,
+          16232
+        ]
+      },
+      {
+        "event_type": "production.json",
+        "frozen_lines": [
+          538,
+          32088
+        ],
+        "live_lines": [
+          667,
+          32220
+        ]
+      },
+      {
+        "event_type": "progress.account",
+        "frozen_lines": [
+          1534,
+          1535,
+          9592,
+          9593
+        ],
+        "live_lines": [
+          1663,
+          1664,
+          9721,
+          9722
+        ]
+      },
+      {
+        "event_type": "progress.approval",
+        "frozen_lines": [
+          1530,
+          9588
+        ],
+        "live_lines": [
+          1659,
+          9717
+        ]
+      },
+      {
+        "event_type": "progress.artifact",
+        "frozen_lines": [
+          1532,
+          9590
+        ],
+        "live_lines": [
+          1661,
+          9719
+        ]
+      },
+      {
+        "event_type": "progress.attention",
+        "frozen_lines": [
+          1537,
+          9595
+        ],
+        "live_lines": [
+          1666,
+          9724
+        ]
+      },
+      {
+        "event_type": "progress.blocked",
+        "frozen_lines": [
+          1529,
+          9587
+        ],
+        "live_lines": [
+          1658,
+          9716
+        ]
+      },
+      {
+        "event_type": "progress.current",
+        "frozen_lines": [
+          1526,
+          9584
+        ],
+        "live_lines": [
+          1655,
+          9713
+        ]
+      },
+      {
+        "event_type": "progress.escalation",
+        "frozen_lines": [
+          1536,
+          9594
+        ],
+        "live_lines": [
+          1665,
+          9723
+        ]
+      },
+      {
+        "event_type": "progress.lane",
+        "frozen_lines": [
+          1527,
+          9585
+        ],
+        "live_lines": [
+          1656,
+          9714
+        ]
+      },
+      {
+        "event_type": "progress.node",
+        "frozen_lines": [
+          1528,
+          9586
+        ],
+        "live_lines": [
+          1657,
+          9715
+        ]
+      },
+      {
+        "event_type": "progress.recovery",
+        "frozen_lines": [
+          1531,
+          9589
+        ],
+        "live_lines": [
+          1660,
+          9718
+        ]
+      },
+      {
+        "event_type": "progress.run",
+        "frozen_lines": [
+          1525,
+          9583
+        ],
+        "live_lines": [
+          1654,
+          9712
+        ]
+      },
+      {
+        "event_type": "progress.worktree",
+        "frozen_lines": [
+          1533,
+          9591
+        ],
+        "live_lines": [
+          1662,
+          9720
+        ]
+      },
+      {
+        "event_type": "progress_bar.slint",
+        "frozen_lines": [
+          2438
+        ],
+        "live_lines": [
+          2567
+        ]
+      },
+      {
+        "event_type": "project_attention_item.primary_route_payload",
+        "frozen_lines": [
+          1537,
+          1756
+        ],
+        "live_lines": [
+          1666,
+          1885
+        ]
+      },
+      {
+        "event_type": "projects.rs",
+        "frozen_lines": [
+          3137,
+          16894
+        ],
+        "live_lines": [
+          3266,
+          17023
+        ]
+      },
+      {
+        "event_type": "projects.slint",
+        "frozen_lines": [
+          2469,
+          3137,
+          16895
+        ],
+        "live_lines": [
+          2598,
+          3266,
+          17024
+        ]
+      },
+      {
+        "event_type": "provider_account_record.v1",
+        "frozen_lines": [
+          2625,
+          16044
+        ],
+        "live_lines": [
+          2754,
+          16173
+        ]
+      },
+      {
+        "event_type": "registry.rs",
+        "frozen_lines": [
+          2495,
+          15429
+        ],
+        "live_lines": [
+          2624,
+          15558
+        ]
+      },
+      {
+        "event_type": "remediation.resolved",
+        "frozen_lines": [
+          93,
+          5439,
+          5471
+        ],
+        "live_lines": [
+          93,
+          5568,
+          5600
+        ]
+      },
+      {
+        "event_type": "remote_fs.rs",
+        "frozen_lines": [
+          2521,
+          15548
+        ],
+        "live_lines": [
+          2650,
+          15677
+        ]
+      },
+      {
+        "event_type": "restore_point.applied",
+        "frozen_lines": [
+          2834,
+          3094
+        ],
+        "live_lines": [
+          2963,
+          3223
+        ]
+      },
+      {
+        "event_type": "root.current",
+        "frozen_lines": [
+          2550,
+          2551,
+          2552,
+          15723,
+          15752
+        ],
+        "live_lines": [
+          2679,
+          2680,
+          2681,
+          15852,
+          15881
+        ]
+      },
+      {
+        "event_type": "run_debug_panel.slint",
+        "frozen_lines": [
+          28004
+        ],
+        "live_lines": [
+          28133
+        ]
+      },
+      {
+        "event_type": "runtime_artifact.restore_point",
+        "frozen_lines": [
+          2838
+        ],
+        "live_lines": [
+          2967
+        ]
+      },
+      {
+        "event_type": "runtime_artifact_cost_usage.schema.json",
+        "frozen_lines": [
+          28083
+        ],
+        "live_lines": [
+          28212
+        ]
+      },
+      {
+        "event_type": "scanner.rs",
+        "frozen_lines": [
+          2537,
+          15700
+        ],
+        "live_lines": [
+          2666,
+          15829
+        ]
+      },
+      {
+        "event_type": "search_panel.slint",
+        "frozen_lines": [
+          28003,
+          31732,
+          31765
+        ],
+        "live_lines": [
+          28132,
+          31864,
+          31897
+        ]
+      },
+      {
+        "event_type": "search_panel_state.v1",
+        "frozen_lines": [
+          2581,
+          15880,
+          15916,
+          31678
+        ],
+        "live_lines": [
+          2710,
+          16009,
+          16045,
+          31810
+        ]
+      },
+      {
+        "event_type": "search_query_state.v1",
+        "frozen_lines": [
+          2622,
+          16041
+        ],
+        "live_lines": [
+          2751,
+          16170
+        ]
+      },
+      {
+        "event_type": "selectable_text.slint",
+        "frozen_lines": [
+          2445,
+          15266
+        ],
+        "live_lines": [
+          2574,
+          15395
+        ]
+      },
+      {
+        "event_type": "server_profile_record.v1",
+        "frozen_lines": [
+          2626
+        ],
+        "live_lines": [
+          2755
+        ]
+      },
+      {
+        "event_type": "settings.part.html",
+        "frozen_lines": [
+          28910,
+          29430,
+          29431
+        ],
+        "live_lines": [
+          29039,
+          29559,
+          29560
+        ]
+      },
+      {
+        "event_type": "settings.rs",
+        "frozen_lines": [
+          3142,
+          16903
+        ],
+        "live_lines": [
+          3271,
+          17032
+        ]
+      },
+      {
+        "event_type": "settings.slint",
+        "frozen_lines": [
+          2458,
+          3141,
+          3142,
+          3143,
+          3144,
+          15270,
+          16906
+        ],
+        "live_lines": [
+          2587,
+          3270,
+          3271,
+          3272,
+          3273,
+          15399,
+          17035
+        ]
+      },
+      {
+        "event_type": "settings_inventory.json",
+        "frozen_lines": [
+          1616,
+          29782,
+          29845,
+          30053,
+          30072,
+          30093,
+          30117,
+          32595,
+          32657
+        ],
+        "live_lines": [
+          1745,
+          29911,
+          29974,
+          30182,
+          30201,
+          30222,
+          30246,
+          32727,
+          32789
+        ]
+      },
+      {
+        "event_type": "settings_inventory.schema.json",
+        "frozen_lines": [
+          30054,
+          30072,
+          30094,
+          30118
+        ],
+        "live_lines": [
+          30183,
+          30201,
+          30223,
+          30247
+        ]
+      },
+      {
+        "event_type": "setup.rs",
+        "frozen_lines": [
+          3145
+        ],
+        "live_lines": [
+          3274
+        ]
+      },
+      {
+        "event_type": "setup.slint",
+        "frozen_lines": [
+          2470,
+          3145
+        ],
+        "live_lines": [
+          2599,
+          3274
+        ]
+      },
+      {
+        "event_type": "shelves.html",
+        "frozen_lines": [
+          31415,
+          31458,
+          31525,
+          31589,
+          31644,
+          31706,
+          31763,
+          31832,
+          31895,
+          31949,
+          32023,
+          32081,
+          33134,
+          33184
+        ],
+        "live_lines": [
+          31547,
+          31590,
+          31657,
+          31721,
+          31776,
+          31838,
+          31895,
+          31964,
+          32027,
+          32081,
+          32155,
+          32213,
+          33266,
+          33316
+        ]
+      },
+      {
+        "event_type": "shelves.part.html",
+        "frozen_lines": [
+          33178,
+          33179
+        ],
+        "live_lines": [
+          33310,
+          33311
+        ]
+      },
+      {
+        "event_type": "skill_record.v1",
+        "frozen_lines": [
+          2630,
+          16046
+        ],
+        "live_lines": [
+          2759,
+          16175
+        ]
+      },
+      {
+        "event_type": "snap.rs",
+        "frozen_lines": [
+          2497,
+          15432
+        ],
+        "live_lines": [
+          2626,
+          15561
+        ]
+      },
+      {
+        "event_type": "source_control.project_state",
+        "frozen_lines": [
+          2135,
+          12979,
+          31682,
+          31692
+        ],
+        "live_lines": [
+          2264,
+          13108,
+          31814,
+          31824
+        ]
+      },
+      {
+        "event_type": "source_control_panel.slint",
+        "frozen_lines": [
+          27999,
+          31733,
+          31766
+        ],
+        "live_lines": [
+          28128,
+          31865,
+          31898
+        ]
+      },
+      {
+        "event_type": "source_control_panel_state.v1",
+        "frozen_lines": [
+          31677,
+          31690,
+          31712
+        ],
+        "live_lines": [
+          31809,
+          31822,
+          31844
+        ]
+      },
+      {
+        "event_type": "span_map.jsonl",
+        "frozen_lines": [
+          4482,
+          4534,
+          4586,
+          4642,
+          4696,
+          4748,
+          4798,
+          4853,
+          4910,
+          4962,
+          5016,
+          5067,
+          5118,
+          5165,
+          5212,
+          5262,
+          5314,
+          5362,
+          5413,
+          5465,
+          5516,
+          5569,
+          5619,
+          5669,
+          5718,
+          5772,
+          5828,
+          5884,
+          5940,
+          5990,
+          6041,
+          6091,
+          6142,
+          6197,
+          6252,
+          6305,
+          6357,
+          6410,
+          6463,
+          6516,
+          6571,
+          6626,
+          6676,
+          6727,
+          6778,
+          6830,
+          6879,
+          6931,
+          6986,
+          7039,
+          7092,
+          7143,
+          7196,
+          7248,
+          7300,
+          7353,
+          7402,
+          7454,
+          7509,
+          7560,
+          7613,
+          7614,
+          7666,
+          7717,
+          7769,
+          7816,
+          7867,
+          7916,
+          7966,
+          8017,
+          8067,
+          8118,
+          8172,
+          8224,
+          8279,
+          8330,
+          8386,
+          8445,
+          8509,
+          8563,
+          8615,
+          8671,
+          8727,
+          8781,
+          8834,
+          8885,
+          8936,
+          8991,
+          9045,
+          9102,
+          9154,
+          9206,
+          9258,
+          9312,
+          9367,
+          9420,
+          9474,
+          9528,
+          9581,
+          9638,
+          9693,
+          9749,
+          9803,
+          9860,
+          9915,
+          9971,
+          10025,
+          10076,
+          10132,
+          10205,
+          10259,
+          10314,
+          10367,
+          10423,
+          10478,
+          10532,
+          10593,
+          10649,
+          10702,
+          10757,
+          10813,
+          10867,
+          10917,
+          10973,
+          11026,
+          11079,
+          11138,
+          11191,
+          11243,
+          11296,
+          11349,
+          11403,
+          11462,
+          11515,
+          11567,
+          11619,
+          11668,
+          11728,
+          11780,
+          11837,
+          11890,
+          11946,
+          12000,
+          12055,
+          12109,
+          12162,
+          12216,
+          12269,
+          12324,
+          12374,
+          12422,
+          12473,
+          12524,
+          12575,
+          12624,
+          12673,
+          12726,
+          12773,
+          12822,
+          12873,
+          12923,
+          12971,
+          13029,
+          13082,
+          13140,
+          13201,
+          13254,
+          13310,
+          13362,
+          13414,
+          13469,
+          13526,
+          13577,
+          13626,
+          13675,
+          13726,
+          13777,
+          13828,
+          13881,
+          13938,
+          13987,
+          14039,
+          14090,
+          14146,
+          14206,
+          14255,
+          14306,
+          14357,
+          14408,
+          14461,
+          14511,
+          14562,
+          14617,
+          14671,
+          14724,
+          14778,
+          14830,
+          14881,
+          14938,
+          14997,
+          15051,
+          15102,
+          15157,
+          15208,
+          15257,
+          15317,
+          15370,
+          15426,
+          15486,
+          15538,
+          15592,
+          15642,
+          15697,
+          15749,
+          15799,
+          15850,
+          15908,
+          15969,
+          16034,
+          16100,
+          16170,
+          16231,
+          16290,
+          16340,
+          16392,
+          16453,
+          16515,
+          16577,
+          16639,
+          16701,
+          16764,
+          16821,
+          16884,
+          16950,
+          17003,
+          17064,
+          17120,
+          17181,
+          17240,
+          17289,
+          17340,
+          17389,
+          17440,
+          17489,
+          17538,
+          17590,
+          17642,
+          17698,
+          17748,
+          17799,
+          17848,
+          17896,
+          17945,
+          17995,
+          18047,
+          18097,
+          18149,
+          18198,
+          18250,
+          18301,
+          18351,
+          18401,
+          18451,
+          18504,
+          18559,
+          18608,
+          18659,
+          18719,
+          18781,
+          18838,
+          18914,
+          18974,
+          19028,
+          19079,
+          19131,
+          19190,
+          19245,
+          19302,
+          19303,
+          19372,
+          19444,
+          19504,
+          19505,
+          19562,
+          19615,
+          19670,
+          19719,
+          19774,
+          19830,
+          19878,
+          19932,
+          19983,
+          20033,
+          20084,
+          20136,
+          20186,
+          20237,
+          20289,
+          20340,
+          20341,
+          20404,
+          20458,
+          20521,
+          20573,
+          20628,
+          20687,
+          20743,
+          20795,
+          20841,
+          20893,
+          20943,
+          20999,
+          21051,
+          21106,
+          21166,
+          21224,
+          21278,
+          21332,
+          21381,
+          21428,
+          21478,
+          21532,
+          21583,
+          21635,
+          21696,
+          21751,
+          21804,
+          21855,
+          21906,
+          21961,
+          21962,
+          21963,
+          22023,
+          22077,
+          22137,
+          22192,
+          22242,
+          22292,
+          22293,
+          22294,
+          22348,
+          22404,
+          22459,
+          22460,
+          22461,
+          22514,
+          22566,
+          22567,
+          22622,
+          22623,
+          22674,
+          22723,
+          22724,
+          22779,
+          22831,
+          22885,
+          22943,
+          22995,
+          23054,
+          23109,
+          23165,
+          23217,
+          23270,
+          23322,
+          23380,
+          23436,
+          23488,
+          23545,
+          23606,
+          23662,
+          23714,
+          23768,
+          23825,
+          23882,
+          23932,
+          23985,
+          24039,
+          24092,
+          24150,
+          24214,
+          24274,
+          24337,
+          24394,
+          24454,
+          24511,
+          24570,
+          24627,
+          24682,
+          24738,
+          24795,
+          24850,
+          24908,
+          24971,
+          25037,
+          25104,
+          25173,
+          25240,
+          25297,
+          25354,
+          25382
+        ],
+        "live_lines": [
+          4611,
+          4663,
+          4715,
+          4771,
+          4825,
+          4877,
+          4927,
+          4982,
+          5039,
+          5091,
+          5145,
+          5196,
+          5247,
+          5294,
+          5341,
+          5391,
+          5443,
+          5491,
+          5542,
+          5594,
+          5645,
+          5698,
+          5748,
+          5798,
+          5847,
+          5901,
+          5957,
+          6013,
+          6069,
+          6119,
+          6170,
+          6220,
+          6271,
+          6326,
+          6381,
+          6434,
+          6486,
+          6539,
+          6592,
+          6645,
+          6700,
+          6755,
+          6805,
+          6856,
+          6907,
+          6959,
+          7008,
+          7060,
+          7115,
+          7168,
+          7221,
+          7272,
+          7325,
+          7377,
+          7429,
+          7482,
+          7531,
+          7583,
+          7638,
+          7689,
+          7742,
+          7743,
+          7795,
+          7846,
+          7898,
+          7945,
+          7996,
+          8045,
+          8095,
+          8146,
+          8196,
+          8247,
+          8301,
+          8353,
+          8408,
+          8459,
+          8515,
+          8574,
+          8638,
+          8692,
+          8744,
+          8800,
+          8856,
+          8910,
+          8963,
+          9014,
+          9065,
+          9120,
+          9174,
+          9231,
+          9283,
+          9335,
+          9387,
+          9441,
+          9496,
+          9549,
+          9603,
+          9657,
+          9710,
+          9767,
+          9822,
+          9878,
+          9932,
+          9989,
+          10044,
+          10100,
+          10154,
+          10205,
+          10261,
+          10334,
+          10388,
+          10443,
+          10496,
+          10552,
+          10607,
+          10661,
+          10722,
+          10778,
+          10831,
+          10886,
+          10942,
+          10996,
+          11046,
+          11102,
+          11155,
+          11208,
+          11267,
+          11320,
+          11372,
+          11425,
+          11478,
+          11532,
+          11591,
+          11644,
+          11696,
+          11748,
+          11797,
+          11857,
+          11909,
+          11966,
+          12019,
+          12075,
+          12129,
+          12184,
+          12238,
+          12291,
+          12345,
+          12398,
+          12453,
+          12503,
+          12551,
+          12602,
+          12653,
+          12704,
+          12753,
+          12802,
+          12855,
+          12902,
+          12951,
+          13002,
+          13052,
+          13100,
+          13158,
+          13211,
+          13269,
+          13330,
+          13383,
+          13439,
+          13491,
+          13543,
+          13598,
+          13655,
+          13706,
+          13755,
+          13804,
+          13855,
+          13906,
+          13957,
+          14010,
+          14067,
+          14116,
+          14168,
+          14219,
+          14275,
+          14335,
+          14384,
+          14435,
+          14486,
+          14537,
+          14590,
+          14640,
+          14691,
+          14746,
+          14800,
+          14853,
+          14907,
+          14959,
+          15010,
+          15067,
+          15126,
+          15180,
+          15231,
+          15286,
+          15337,
+          15386,
+          15446,
+          15499,
+          15555,
+          15615,
+          15667,
+          15721,
+          15771,
+          15826,
+          15878,
+          15928,
+          15979,
+          16037,
+          16098,
+          16163,
+          16229,
+          16299,
+          16360,
+          16419,
+          16469,
+          16521,
+          16582,
+          16644,
+          16706,
+          16768,
+          16830,
+          16893,
+          16950,
+          17013,
+          17079,
+          17132,
+          17193,
+          17249,
+          17310,
+          17369,
+          17418,
+          17469,
+          17518,
+          17569,
+          17618,
+          17667,
+          17719,
+          17771,
+          17827,
+          17877,
+          17928,
+          17977,
+          18025,
+          18074,
+          18124,
+          18176,
+          18226,
+          18278,
+          18327,
+          18379,
+          18430,
+          18480,
+          18530,
+          18580,
+          18633,
+          18688,
+          18737,
+          18788,
+          18848,
+          18910,
+          18967,
+          19043,
+          19103,
+          19157,
+          19208,
+          19260,
+          19319,
+          19374,
+          19431,
+          19432,
+          19501,
+          19573,
+          19633,
+          19634,
+          19691,
+          19744,
+          19799,
+          19848,
+          19903,
+          19959,
+          20007,
+          20061,
+          20112,
+          20162,
+          20213,
+          20265,
+          20315,
+          20366,
+          20418,
+          20469,
+          20470,
+          20533,
+          20587,
+          20650,
+          20702,
+          20757,
+          20816,
+          20872,
+          20924,
+          20970,
+          21022,
+          21072,
+          21128,
+          21180,
+          21235,
+          21295,
+          21353,
+          21407,
+          21461,
+          21510,
+          21557,
+          21607,
+          21661,
+          21712,
+          21764,
+          21825,
+          21880,
+          21933,
+          21984,
+          22035,
+          22090,
+          22091,
+          22092,
+          22152,
+          22206,
+          22266,
+          22321,
+          22371,
+          22421,
+          22422,
+          22423,
+          22477,
+          22533,
+          22588,
+          22589,
+          22590,
+          22643,
+          22695,
+          22696,
+          22751,
+          22752,
+          22803,
+          22852,
+          22853,
+          22908,
+          22960,
+          23014,
+          23072,
+          23124,
+          23183,
+          23238,
+          23294,
+          23346,
+          23399,
+          23451,
+          23509,
+          23565,
+          23617,
+          23674,
+          23735,
+          23791,
+          23843,
+          23897,
+          23954,
+          24011,
+          24061,
+          24114,
+          24168,
+          24221,
+          24279,
+          24343,
+          24403,
+          24466,
+          24523,
+          24583,
+          24640,
+          24699,
+          24756,
+          24811,
+          24867,
+          24924,
+          24979,
+          25037,
+          25100,
+          25166,
+          25233,
+          25302,
+          25369,
+          25426,
+          25483,
+          25511
+        ]
+      },
+      {
+        "event_type": "status_badge.slint",
+        "frozen_lines": [
+          2434,
+          15265
+        ],
+        "live_lines": [
+          2563,
+          15394
+        ]
+      },
+      {
+        "event_type": "status_bar.slint",
+        "frozen_lines": [
+          2447
+        ],
+        "live_lines": [
+          2576
+        ]
+      },
+      {
+        "event_type": "step_circle.slint",
+        "frozen_lines": [
+          2452
+        ],
+        "live_lines": [
+          2581
+        ]
+      },
+      {
+        "event_type": "storage.legal_hold.manage",
+        "frozen_lines": [
+          2793,
+          3004,
+          3020
+        ],
+        "live_lines": [
+          2922,
+          3133,
+          3149
+        ]
+      },
+      {
+        "event_type": "storage_value_registry.json",
+        "frozen_lines": [
+          3070
+        ],
+        "live_lines": [
+          3199
+        ]
+      },
+      {
+        "event_type": "styled_button.slint",
+        "frozen_lines": [
+          2435
+        ],
+        "live_lines": [
+          2564
+        ]
+      },
+      {
+        "event_type": "styled_input.slint",
+        "frozen_lines": [
+          2436
+        ],
+        "live_lines": [
+          2565
+        ]
+      },
+      {
+        "event_type": "system.advanced.chat",
+        "frozen_lines": [
+          2799,
+          30097
+        ],
+        "live_lines": [
+          2928,
+          30226
+        ]
+      },
+      {
+        "event_type": "system.advanced.debug",
+        "frozen_lines": [
+          33022,
+          33035,
+          33059
+        ],
+        "live_lines": [
+          33154,
+          33167,
+          33191
+        ]
+      },
+      {
+        "event_type": "system.advanced.diagnostic",
+        "frozen_lines": [
+          2801,
+          30099
+        ],
+        "live_lines": [
+          2930,
+          30228
+        ]
+      },
+      {
+        "event_type": "system.advanced.inspect",
+        "frozen_lines": [
+          2805,
+          30103
+        ],
+        "live_lines": [
+          2934,
+          30232
+        ]
+      },
+      {
+        "event_type": "system.advanced.preserved",
+        "frozen_lines": [
+          2803,
+          30101
+        ],
+        "live_lines": [
+          2932,
+          30230
+        ]
+      },
+      {
+        "event_type": "system.advanced.released",
+        "frozen_lines": [
+          2802,
+          30100
+        ],
+        "live_lines": [
+          2931,
+          30229
+        ]
+      },
+      {
+        "event_type": "system.advanced.request",
+        "frozen_lines": [
+          2804,
+          30102
+        ],
+        "live_lines": [
+          2933,
+          30231
+        ]
+      },
+      {
+        "event_type": "system.advanced.runtime",
+        "frozen_lines": [
+          2800,
+          30098
+        ],
+        "live_lines": [
+          2929,
+          30227
+        ]
+      },
+      {
+        "event_type": "tab.active",
+        "frozen_lines": [
+          29385
+        ],
+        "live_lines": [
+          29514
+        ]
+      },
+      {
+        "event_type": "terminal_command_block.v1",
+        "frozen_lines": [
+          2648,
+          16180,
+          16182
+        ],
+        "live_lines": [
+          2777,
+          16309,
+          16311
+        ]
+      },
+      {
+        "event_type": "terminal_layout.v1",
+        "frozen_lines": [
+          2632,
+          2648,
+          2673,
+          16048,
+          16145,
+          16183,
+          16189,
+          16425,
+          16455
+        ],
+        "live_lines": [
+          2761,
+          2777,
+          2802,
+          16177,
+          16274,
+          16312,
+          16318,
+          16554,
+          16584
+        ]
+      },
+      {
+        "event_type": "terminal_leaf_pane_record.v1",
+        "frozen_lines": [
+          2648,
+          16176
+        ],
+        "live_lines": [
+          2777,
+          16305
+        ]
+      },
+      {
+        "event_type": "terminal_output.slint",
+        "frozen_lines": [
+          2439
+        ],
+        "live_lines": [
+          2568
+        ]
+      },
+      {
+        "event_type": "terminal_pane_record.v1",
+        "frozen_lines": [
+          2648,
+          16175
+        ],
+        "live_lines": [
+          2777,
+          16304
+        ]
+      },
+      {
+        "event_type": "terminal_section_record.v1",
+        "frozen_lines": [
+          2648,
+          16173
+        ],
+        "live_lines": [
+          2777,
+          16302
+        ]
+      },
+      {
+        "event_type": "terminal_session.v1",
+        "frozen_lines": [
+          2633,
+          2648,
+          2673,
+          16049,
+          16145,
+          16184,
+          16189,
+          16456
+        ],
+        "live_lines": [
+          2762,
+          2777,
+          2802,
+          16178,
+          16274,
+          16313,
+          16318,
+          16585
+        ]
+      },
+      {
+        "event_type": "terminal_session_record.v1",
+        "frozen_lines": [
+          2648,
+          16179
+        ],
+        "live_lines": [
+          2777,
+          16308
+        ]
+      },
+      {
+        "event_type": "terminal_tab_record.v1",
+        "frozen_lines": [
+          2648,
+          16174
+        ],
+        "live_lines": [
+          2777,
+          16303
+        ]
+      },
+      {
+        "event_type": "terminal_workgroup_record.v1",
+        "frozen_lines": [
+          2648,
+          16177
+        ],
+        "live_lines": [
+          2777,
+          16306
+        ]
+      },
+      {
+        "event_type": "terminal_workspace_state.v1",
+        "frozen_lines": [
+          2648,
+          16172,
+          16181
+        ],
+        "live_lines": [
+          2777,
+          16301,
+          16310
+        ]
+      },
+      {
+        "event_type": "testing_panel.slint",
+        "frozen_lines": [
+          31734,
+          31768
+        ],
+        "live_lines": [
+          31866,
+          31900
+        ]
+      },
+      {
+        "event_type": "testing_panel_state.v1",
+        "frozen_lines": [
+          31676,
+          31690,
+          31710
+        ],
+        "live_lines": [
+          31808,
+          31822,
+          31842
+        ]
+      },
+      {
+        "event_type": "theme.slint",
+        "frozen_lines": [
+          2431,
+          15229,
+          15262
+        ],
+        "live_lines": [
+          2560,
+          15358,
+          15391
+        ]
+      },
+      {
+        "event_type": "theme_bridge.rs",
+        "frozen_lines": [
+          2489,
+          15378
+        ],
+        "live_lines": [
+          2618,
+          15507
+        ]
+      },
+      {
+        "event_type": "themes.part.html",
+        "frozen_lines": [
+          33238
+        ],
+        "live_lines": [
+          33370
+        ]
+      },
+      {
+        "event_type": "tiers.rs",
+        "frozen_lines": [
+          3140,
+          16900
+        ],
+        "live_lines": [
+          3269,
+          17029
+        ]
+      },
+      {
+        "event_type": "tiers.slint",
+        "frozen_lines": [
+          1650,
+          10180,
+          10212,
+          10218
+        ],
+        "live_lines": [
+          1779,
+          10309,
+          10341,
+          10347
+        ]
+      },
+      {
+        "event_type": "toast.slint",
+        "frozen_lines": [
+          2440
+        ],
+        "live_lines": [
+          2569
+        ]
+      },
+      {
+        "event_type": "tokens.part.html",
+        "frozen_lines": [
+          28910,
+          28912,
+          28951,
+          29004,
+          29057,
+          29107,
+          29157,
+          29207,
+          29257,
+          29307,
+          29433,
+          29441,
+          33237
+        ],
+        "live_lines": [
+          29039,
+          29041,
+          29080,
+          29133,
+          29186,
+          29236,
+          29286,
+          29336,
+          29386,
+          29436,
+          29562,
+          29570,
+          33369
+        ]
+      },
+      {
+        "event_type": "tokens.rs",
+        "frozen_lines": [
+          2505,
+          15439
+        ],
+        "live_lines": [
+          2634,
+          15568
+        ]
+      },
+      {
+        "event_type": "ui.run",
+        "frozen_lines": [
+          777
+        ],
+        "live_lines": [
+          906
+        ]
+      },
+      {
+        "event_type": "usage.slint",
+        "frozen_lines": [
+          2471,
+          3154,
+          15271,
+          16924,
+          16952
+        ],
+        "live_lines": [
+          2600,
+          3283,
+          15400,
+          17053,
+          17081
+        ]
+      },
+      {
+        "event_type": "usage_chart.slint",
+        "frozen_lines": [
+          2451
+        ],
+        "live_lines": [
+          2580
+        ]
+      },
+      {
+        "event_type": "user_accepts_provider_wizard_proposal_20260701.json",
+        "frozen_lines": [
+          27424
+        ],
+        "live_lines": [
+          27553
+        ]
+      },
+      {
+        "event_type": "validate.py",
+        "frozen_lines": [
+          685,
+          726,
+          25539,
+          25585,
+          25670,
+          26167,
+          26514,
+          26943,
+          27511,
+          27587,
+          27666,
+          27739,
+          27812
+        ],
+        "live_lines": [
+          814,
+          855,
+          25668,
+          25714,
+          25799,
+          26296,
+          26643,
+          27072,
+          27640,
+          27716,
+          27795,
+          27868,
+          27941
+        ]
+      },
+      {
+        "event_type": "variants.rs",
+        "frozen_lines": [
+          2506,
+          15440
+        ],
+        "live_lines": [
+          2635,
+          15569
+        ]
+      },
+      {
+        "event_type": "verification.md",
+        "frozen_lines": [
+          26236
+        ],
+        "live_lines": [
+          26365
+        ]
+      },
+      {
+        "event_type": "verify.py",
+        "frozen_lines": [
+          5930,
+          26048,
+          26101,
+          27895,
+          27896,
+          28061
+        ],
+        "live_lines": [
+          6059,
+          26177,
+          26230,
+          28024,
+          28025,
+          28190
+        ]
+      },
+      {
+        "event_type": "watcher.rs",
+        "frozen_lines": [
+          2540,
+          15703
+        ],
+        "live_lines": [
+          2669,
+          15832
+        ]
+      },
+      {
+        "event_type": "webview.rs",
+        "frozen_lines": [
+          2510,
+          15489
+        ],
+        "live_lines": [
+          2639,
+          15618
+        ]
+      },
+      {
+        "event_type": "widget.analytics_chart",
+        "frozen_lines": [
+          3382,
+          19319,
+          19392
+        ],
+        "live_lines": [
+          3511,
+          19448,
+          19521
+        ]
+      },
+      {
+        "event_type": "widget.budget_donuts",
+        "frozen_lines": [
+          3382,
+          19318,
+          19391
+        ],
+        "live_lines": [
+          3511,
+          19447,
+          19520
+        ]
+      },
+      {
+        "event_type": "widget.current_task",
+        "frozen_lines": [
+          38,
+          39,
+          41,
+          45,
+          1481,
+          3382,
+          4858,
+          9157,
+          19323,
+          19396
+        ],
+        "live_lines": [
+          38,
+          39,
+          41,
+          45,
+          1610,
+          3511,
+          4987,
+          9286,
+          19452,
+          19525
+        ]
+      },
+      {
+        "event_type": "widget.multi_account",
+        "frozen_lines": [
+          3382,
+          19321,
+          19394
+        ],
+        "live_lines": [
+          3511,
+          19450,
+          19523
+        ]
+      },
+      {
+        "event_type": "widget.orchestrator_status",
+        "frozen_lines": [
+          1481,
+          3382,
+          9156,
+          19322,
+          19395
+        ],
+        "live_lines": [
+          1610,
+          3511,
+          9285,
+          19451,
+          19524
+        ]
+      },
+      {
+        "event_type": "widget.progress_bars",
+        "frozen_lines": [
+          38,
+          41,
+          45,
+          1473,
+          3382,
+          4859,
+          9055,
+          19324,
+          19397
+        ],
+        "live_lines": [
+          38,
+          41,
+          45,
+          1602,
+          3511,
+          4988,
+          9184,
+          19453,
+          19526
+        ]
+      },
+      {
+        "event_type": "widget.quota_summary",
+        "frozen_lines": [
+          3382,
+          19317,
+          19390
+        ],
+        "live_lines": [
+          3511,
+          19446,
+          19519
+        ]
+      },
+      {
+        "event_type": "widget.tier_tree",
+        "frozen_lines": [
+          38,
+          39,
+          1473,
+          4857,
+          9054
+        ],
+        "live_lines": [
+          38,
+          39,
+          1602,
+          4986,
+          9183
+        ]
+      },
+      {
+        "event_type": "widget.tool_usage",
+        "frozen_lines": [
+          3382,
+          19320,
+          19393
+        ],
+        "live_lines": [
+          3511,
+          19449,
+          19522
+        ]
+      },
+      {
+        "event_type": "window.open",
+        "frozen_lines": [
+          327,
+          504
+        ],
+        "live_lines": [
+          379,
+          566
+        ]
+      },
+      {
+        "event_type": "window_bridge.rs",
+        "frozen_lines": [
+          2492,
+          15381
+        ],
+        "live_lines": [
+          2621,
+          15510
+        ]
+      },
+      {
+        "event_type": "wizard.md",
+        "frozen_lines": [
+          26234
+        ],
+        "live_lines": [
+          26363
+        ]
+      },
+      {
+        "event_type": "wizard.rs",
+        "frozen_lines": [
+          3138,
+          16896
+        ],
+        "live_lines": [
+          3267,
+          17025
+        ]
+      },
+      {
+        "event_type": "wizard.slint",
+        "frozen_lines": [
+          2459,
+          3138,
+          16897
+        ],
+        "live_lines": [
+          2588,
+          3267,
+          17026
+        ]
+      },
+      {
+        "event_type": "worknodes.md",
+        "frozen_lines": [
+          26237
+        ],
+        "live_lines": [
+          26366
+        ]
+      }
+    ],
+    "new_vs_ledger_tokens": [
+      "anchor_aliases.json",
+      "buildability_repair_registry.jsonl",
+      "chat.plan_todo_updated",
+      "cmd.browser",
+      "cmd.chat.branch_from_restore",
+      "cmd.chat.revert",
+      "cmd.debug",
+      "cmd.file",
+      "cmd.panel.switch",
+      "cmd.run_debug",
+      "cmd.workspace_layout.move_surface",
+      "context.md",
+      "coverage_map.jsonl",
+      "design.md",
+      "design_atoms.jsonl",
+      "e.g",
+      "fablereport.md",
+      "feature.md",
+      "files.html",
+      "flexibility.md",
+      "github.com",
+      "implementation_readiness_hardening_20260701.json",
+      "index.md",
+      "index.py",
+      "integration.md",
+      "list.md",
+      "loop.md",
+      "memo.md",
+      "migration.py",
+      "newfeatures.md",
+      "newtools.md",
+      "original_hashes.json",
+      "plan.md",
+      "plans.py",
+      "production.json",
+      "remediation.resolved",
+      "restore_point.applied",
+      "shelves.html",
+      "span_map.jsonl",
+      "storage_value_registry.json",
+      "validate.py",
+      "verification.md",
+      "verify.py",
+      "wizard.md"
+    ],
+    "removed_vs_ledger_tokens": [],
+    "live_contract_lexical_count": 0,
+    "frozen_contract_lexical_count": 0,
+    "new_contract_lexical_tokens": [],
+    "removed_contract_lexical_tokens": []
+  },
+  "contract_references": {
+    "live_triple_bound_count": 0,
+    "frozen_triple_bound_count": 0,
+    "new_triple_bound_tokens": [],
+    "removed_triple_bound_tokens": [],
+    "new_triple_bound_detail": [],
+    "removed_triple_bound_detail": [],
+    "new_md_binding_count": 0,
+    "removed_md_binding_count": 0,
+    "new_md_bindings": [],
+    "removed_md_bindings": []
+  },
+  "admission_claim": false,
+  "denominator_effect": "none_until_adjudicated",
+  "notes": [
+    "Discovery-only drift pass; no admission inference per CENSUS_ADMISSION_RULE_V2.",
+    "full_lexical uses dotted lowercase token regex on file text; not admission."
+  ]
+}

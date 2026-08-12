@@ -1,0 +1,110 @@
+{
+  "event_type": "chat.plan_todo_updated",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the semantic Event Authority owner for `chat.plan_todo_updated`; storage or projection ownership is not treated as event ownership."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:667-671",
+      "note": "The cited mutation flow explicitly emits `chat.plan_todo_updated` durably after the plan write and before execution observes the revision."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation gives `chat.plan_todo_updated` an immutable versioned registry membership or withdrawal generation."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources provide a minimum payload for `chat.plan_todo_updated`, not a closed event-specific payload schema with additional-property, nullability, and enum rules fully bounded."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Identifiers appear in the documented minimum payload for `chat.plan_todo_updated`, but no checked field-local clause fixes the EventRecord `scope_kind` and complete identity/nullability rules for this event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `chat.plan_todo_updated`'s replay policy and idempotency identity; generic EventRecord options cannot select an event-specific value by inference."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns an event-specific retention, compaction, or tombstone rule for `chat.plan_todo_updated`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `chat.plan_todo_updated`'s redaction profile, sensitive-field treatment, and custody authority."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:667-671",
+      "note": "The cited flow defines the mutation transition: durable plan write, one update event carrying old/new values, revision gating, then execution observes the revised TODOs."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success/failure checkpoint behavior for `chat.plan_todo_updated`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines event-specific compatibility, migration, alias normalization, and withdrawal behavior for `chat.plan_todo_updated` as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources do not supply both positive emission and negative non-emission/rejection oracles for `chat.plan_todo_updated` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/assistant-chat-design.md:667-671",
+      "status": "ok",
+      "notes": "Defines durable mutation emission, revision gating, diff reconciliation, and visible history for the event."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:802-804",
+      "status": "ok",
+      "notes": "Requires emission before execution sees revised TODOs and identifies todowrite auto-use as a producer path."
+    },
+    {
+      "citation": "Plans/Tools.md:578-582",
+      "status": "ok",
+      "notes": "Confirms durable emission semantics and explicitly says an owner-contract definition is required."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1739-1741",
+      "status": "ok",
+      "notes": "Defines emission ordering, minimal payload shape, durable retained fields, source enum, and Storage ownership of the projection; unconstrained field and any-valued old/new fields do not form a closed payload schema."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1468",
+      "status": "ok",
+      "notes": "Canonical minimal payload is {plan_id,todo_id,field,old_value,new_value,source} with one event per affected todo_id allowed."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "event_type": "self.build_args",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1876,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.build_tier_context",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 391,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.load_state",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 21714,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.state_file.exists",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 5253,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.state_file.with_extension",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 5254,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.store.read_coordination_agents_by_file",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 5239,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.store.read_coordination_snapshot",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4034,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.store.read_file_conflict_projection",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 5151,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "self.subagent_selector.select_for_tier",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 397,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "source_control.worktree_filter",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 932,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  }
+]

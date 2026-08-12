@@ -1,0 +1,96 @@
+{
+  "event_type": "doctor.custom_headless.checked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns `doctor.custom_headless.checked` a registry membership state or contract version; owner authority is required before either can be fixed."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names the accountable semantic owner for `doctor.custom_headless.checked`; the emitting command/check is not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:498-509",
+      "note": "The plan explicitly names Doctor as reader/checker and requires the Doctor check to emit `doctor.custom_headless.checked` with the detection outcome."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines a closed persisted payload schema for `doctor.custom_headless.checked`; command arguments and a stated outcome are not assumed to be the event payload."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines `doctor.custom_headless.checked` scope and canonical entity identity; namespace or sibling-event identity is not inferred."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact specifies replay, deduplication key, or idempotency behavior for `doctor.custom_headless.checked`."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact sets a retention class or deletion horizon for `doctor.custom_headless.checked`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns redaction fields, custody, or access controls for `doctor.custom_headless.checked`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact closes the allowed predecessor, successor, and failure transitions for `doctor.custom_headless.checked`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names authorized consumers or checkpoint-advance rules for `doctor.custom_headless.checked`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines compatibility, migration, deprecation, or withdrawal rules for `doctor.custom_headless.checked`."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:503-509",
+      "note": "The plan distinguishes key-present valid, key-present invalid, and key-absent paths and requires the exact check event; these are concrete positive/negative detection oracles, without closing other event dimensions."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/newtools.md:498-509",
+      "status": "ok",
+      "notes": "The plan explicitly names Doctor as reader/checker and requires the Doctor check to emit `doctor.custom_headless.checked` with the detection outcome."
+    },
+    {
+      "citation": "Plans/newtools.md:503-509",
+      "status": "ok",
+      "notes": "Defines valid, invalid, and absent detection branches plus exact Doctor emission, supporting only producer and oracle fields."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay09",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 dimensions were adjudicated for this exact token; every PASS is field-local and cited.",
+    "Absent authority is recorded as OWNER_REQUIRED; no namespace, sibling, package, owner, or producer inference was used."
+  ]
+}

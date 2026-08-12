@@ -1,0 +1,119 @@
+{
+  "event_type": "chat.message",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "This token is independently ambiguous: Plugins defines it as a mutable pre-prompt hook, while Storage treats it as a persisted seglog type whose schema is still an implementation task and whose checkpointed search consumer has only a positive criterion. Without explicit semantic owner and versioned persisted contract resolving that collision, it remains quarantined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly names the semantic owner accountable for the persisted `chat.message` contract."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly identifies the component that appends persisted `chat.message` records; storage mention alone is not producer authority."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority registry row individually admits `chat.message`; observed naming or command emission is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The hook payload at Plans/Plugins_System.md:267-273 is not a persisted EventRecord schema, while Plans/storage-plan.md:1593 leaves that schema as work."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract closes project/thread/object scope and canonical identity fields for persisted `chat.message` records."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract defines persisted `chat.message` replay identity, deduplication key, or idempotent projector behavior; command idempotency inputs do not establish event replay identity."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns a retention class or deletion horizon specifically to `chat.message`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns redaction fields, custody, and deletion propagation specifically to `chat.message`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority closes legal predecessor/successor states and rejection behavior for `chat.message`; an expected-event mapping is not an event state machine."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1976-1977",
+      "note": "Storage explicitly declares the checkpointed Tantivy projector as a consumer of `chat.message`; optional indexing does not close other authority fields."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority defines aliases, schema evolution, deprecation, or withdrawal rules for `chat.message`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority provides both positive and negative observable oracles for persisted `chat.message`; a positive search criterion alone is insufficient."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1592-1596",
+      "status": "ok",
+      "notes": "Leaves the persisted event schema as implementation work."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1975-1977",
+      "status": "ok",
+      "notes": "Declares a checkpointed Tantivy consumer and positive search exit criterion."
+    },
+    {
+      "citation": "Plans/Plugins_System.md:263-273",
+      "status": "ok",
+      "notes": "Defines the same token as a pre-prompt plugin hook with a hook-specific input, exposing an unresolved semantic collision."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928-932",
+      "status": "ok",
+      "notes": "Defines the required persisted-event authority split."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-chat-message-contract-closure",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Is `chat.message` exclusively the mutable pre-prompt plugin hook, a persisted seglog EventRecord, or two concepts requiring distinct names; who owns the split and what persisted payload/replay contract prevents hook modifications from masquerading as durable messages?",
+    "options": [
+      "Provide the complete cited versioned contract for later independent re-adjudication",
+      "Keep quarantined with no checkpoint advance",
+      "Reclassify as excluded/non-event with exact cited semantic authority"
+    ],
+    "evidence_gap": "The current Plans citations do not close owner_doc, producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, compatibility_withdrawal, positive_negative_oracles for `chat.message`; owner or producer cannot be inferred from namespace, storage mention, or sibling commands.",
+    "event_types": [
+      "chat.message"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "Individually reasoned against exact current Plans citations; all twelve evidence fields are explicit and every PASS is field-local.",
+    "No admission, registry append, owner inference, producer inference, or package analogy is authorized."
+  ]
+}

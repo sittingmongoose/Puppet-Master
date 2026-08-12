@@ -1,0 +1,117 @@
+{
+  "event_type": "memory.monthly_summary.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`Plans/UI_Command_Catalog.md:1102` names `memory.monthly_summary.completed` as the completion outcome for `cmd.chat.memory.summarize_monthly`, but the exact production wiring row declares no persisted event and requires a receipt-only negative oracle. Neither source resolves the conflict or supplies a complete Event Authority contract, so this token remains quarantined.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `memory.monthly_summary.completed` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `memory.monthly_summary.completed`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans contract explicitly binds a producer to emission of `memory.monthly_summary.completed`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `memory.monthly_summary.completed`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `memory.monthly_summary.completed`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `memory.monthly_summary.completed`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `memory.monthly_summary.completed`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `memory.monthly_summary.completed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4468-4486",
+      "note": "The exact `cmd.chat.memory.summarize_monthly` production row declares expected_event_types [] and receipt-only behavior, contradicting the catalog transition to `memory.monthly_summary.completed`."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `memory.monthly_summary.completed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `memory.monthly_summary.completed`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4508-4518",
+      "note": "The exact production oracle requires `cmd.chat.memory.summarize_monthly` to emit no unexpected persisted event, conflicting with catalog persistence of `memory.monthly_summary.completed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1102",
+      "status": "ok",
+      "notes": "Exact catalog row names `memory.monthly_summary.completed` for `cmd.chat.memory.summarize_monthly`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4468-4486",
+      "status": "ok",
+      "notes": "Exact production row declares `cmd.chat.memory.summarize_monthly` receipt-only with no expected persisted event."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4508-4518",
+      "status": "ok",
+      "notes": "Exact production negative oracle forbids unexpected persisted events from `cmd.chat.memory.summarize_monthly`."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-memory-monthly-summary-completed-authority",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Does `cmd.chat.memory.summarize_monthly` persist the `memory.monthly_summary.completed` completion outcome, or is that stage non-persisted under the production receipt-only contract?",
+    "options": [
+      "Supply an explicit owner-backed, versioned contract for `memory.monthly_summary.completed` covering every residual field, then re-adjudicate individually",
+      "Keep `memory.monthly_summary.completed` quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify `memory.monthly_summary.completed` only with exact cited authority and migration or withdrawal terms"
+    ],
+    "evidence_gap": "No exact Plans citation closes the residual fields for `memory.monthly_summary.completed`: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "memory.monthly_summary.completed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay14",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

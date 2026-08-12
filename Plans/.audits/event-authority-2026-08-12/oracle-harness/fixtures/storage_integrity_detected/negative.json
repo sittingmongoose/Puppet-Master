@@ -1,0 +1,21 @@
+{
+  "affected_byte_range": [
+    0,
+    1
+  ],
+  "detection_offset": 0,
+  "durable_watermark_relation": "wholly_above_durable_watermark",
+  "failure_class": "frame_integrity",
+  "frame_version": 2,
+  "impact_precision": "exact_byte_range",
+  "integrity_id": "pm.storage.integrity.v1:0000000000000000000000000000000000000000000000000000000000000000",
+  "last_good_offset": 0,
+  "next_good_offset": 1,
+  "report_ref": "pm.storage.integrity_report.v1:0000000000000000000000000000000000000000000000000000000000000000",
+  "segment_generation": 1,
+  "segment_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "segment_name": "seg-001",
+  "segment_state": "active",
+  "storage_root_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "storage_root_ref": "pm.storage.root.v1:proj-001:0000000000000000000000000000000000000000000000000000000000000000"
+}

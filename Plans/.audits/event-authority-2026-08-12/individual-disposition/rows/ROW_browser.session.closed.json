@@ -1,0 +1,117 @@
+{
+  "event_type": "browser.session.closed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority explicitly names the semantic owner for this exact token; owner identification cannot be inferred from namespace or document location."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/UI_Command_Catalog.md:799,802-825",
+      "note": "The canonical browser command table explicitly maps concrete command payload(s) to emission of `browser.session.closed`, establishing the command boundary as producer evidence without inferring an organizational owner."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority gives this exact token individual versioned registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority closes the complete persisted payload, required/optional fields, enums, and unknown-field behavior for this exact token."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority closes tenant/project/thread/session identity and partition scope for this exact token."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines replay ordering, deduplication identity, or idempotency behavior for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines an event-specific retention class and deletion schedule for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority assigns sensitive-field redaction and custody obligations for this exact token."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines the complete legal and illegal transition set for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority names required consumers and their fail-closed checkpoint/acknowledgement behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines compatibility, migration, and withdrawal criteria for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:1460-1477",
+      "note": "Production wiring requires positive emission assertions for `browser.session.closed` with correlation/session identity and a negative receipt boundary forbidding fabricated `command_applied` events."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:816",
+      "status": "drift",
+      "notes": "Cited line emits browser.context_shared, not session closure."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines only the generic handler_location column, not this event contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:850",
+      "status": "drift",
+      "notes": "Cited line starts the terminal command table."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:825",
+      "status": "ok",
+      "notes": "Concrete keep-closed command emits this exact event with browser_session_id input."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:799,802-825",
+      "status": "ok",
+      "notes": "Current Plans text supports only the recorded limited evidence for `browser.session.closed`; it does not close the residual contract."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:1460-1477",
+      "status": "ok",
+      "notes": "Production event-test requirements supply a positive `browser.session.closed` emission assertion and the negative no-fabricated-command-applied boundary."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently: exactly 12 schema fields use binding statuses; each PASS has a field-local Plans citation; every residual field is OWNER_REQUIRED and is covered by the stable row-specific veto. Browser rows include the production positive/negative event-oracle evidence."
+  ],
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

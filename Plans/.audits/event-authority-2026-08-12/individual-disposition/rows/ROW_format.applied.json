@@ -1,0 +1,126 @@
+{
+  "event_type": "format.applied",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the accountable semantic Event Authority owner for `format.applied`; document title, namespace, storage ownership, and surrounding family context were not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:62,69-78",
+      "note": "The formatter subsystem is explicitly limited to recording HTE formatter events, and this exact event is recorded when formatting changes a file beyond whitespace-only changes."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:3-8",
+      "note": "Exact-token search found no `format.applied` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources describe occurrence semantics or minimum/example fields for `format.applied`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local authority closes `format.applied` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `format.applied` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns `format.applied` an event-specific retention, compaction, tombstone, or legal-hold rule."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `format.applied` redaction profile, sensitive-field treatment, payload-ref boundary, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `format.applied`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `format.applied`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines `format.applied` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Formatters_System.md:60-62,69-78,268",
+      "note": "Authority requires this event when an HTE formatter changes a file beyond whitespace-only changes and forbids post-hoc formatter/tool-event synthesis in DAE mode."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Formatters_System.md:69",
+      "status": "ok",
+      "notes": "The cited location directly contains the event token or asserted contract text."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:83",
+      "status": "drift",
+      "notes": "The cited location is stale for this event; the token exists elsewhere in the same file."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:66-77",
+      "status": "ok",
+      "notes": "The cited location directly contains the event token or asserted contract text."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:264-268",
+      "status": "ok",
+      "notes": "The cited location directly contains the event token or asserted contract text."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:62",
+      "status": "ok",
+      "notes": "Semantic overlay checked the current location; it directly supports the limited PASS findings described in the rationale."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:69-78",
+      "status": "ok",
+      "notes": "Semantic overlay checked the current location; it directly supports the limited PASS findings described in the rationale."
+    },
+    {
+      "citation": "Plans/Formatters_System.md:268",
+      "status": "ok",
+      "notes": "Semantic overlay checked the current location; it directly supports the limited PASS findings described in the rationale."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:3-8",
+      "status": "ok",
+      "notes": "Live registry identity/revision and unknown-event quarantine rule checked; exact-token search found no `format.applied` membership entry."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay11",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed.",
+    "Immutable July confirmed-unregistered cohort identity is preserved as july248; working bucket remains confirmed_persisted_unregistered."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

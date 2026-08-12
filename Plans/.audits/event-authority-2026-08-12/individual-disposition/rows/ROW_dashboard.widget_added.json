@@ -1,0 +1,102 @@
+{
+  "event_type": "dashboard.widget_added",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority membership names this exact event; an accountable owner must decide whether to propose membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans statement explicitly names the semantic authority for this exact event; namespace and nearby contracts are not authority evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:6942-6965",
+      "note": "The exact wiring entry binds cmd.dashboard.add_widget through handlers::dashboard::add_widget to dashboard.widget_added."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/UI_Command_Catalog.md:8015",
+      "note": "The row closes command payload/result/error fields, not the persisted dashboard.widget_added event payload or envelope."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/UI_Command_Catalog.md:8015",
+      "note": "The command row defines command-side identifiers and CAS/idempotency inputs, but does not define the persisted event scope key or event identity semantics."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No citation defines duplicate recognition, replay behavior, ordering, or idempotent application for this exact persisted event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific retention class, duration, compaction, or deletion authority is cited; the accountable owner must supply it."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific sensitive-field inventory, redaction rule, or custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited allowed-from/allowed-to lifecycle transition contract exists for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, projection contract, or checkpoint advancement rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No compatibility window, schema evolution rule, withdrawal condition, or migration authority is cited."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:6942-7002",
+      "note": "The wiring contract requires a positive emission assertion and rejects fabricated *.command_applied events, but does not assert dashboard.widget_added absence for invalid_args or stale_projection."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8015",
+      "status": "ok",
+      "notes": "Exact add-widget command payload/result/errors and dashboard.widget_added effect."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:6942-7002",
+      "status": "ok",
+      "notes": "Exact handler, expected event, effect contract, and positive event-test requirement; no command-error non-emission oracle."
+    },
+    {
+      "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:245-247",
+      "status": "ok",
+      "notes": "Immutable cohort map assigns dashboard.widget_added to july248; retained independently of working bucket."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay08",
+  "provisional": false,
+  "quality_notes": [
+    "Fresh row-local review of exact current Plans citations; drifted baseline line references were not reused.",
+    "All 12 schema evidence dimensions, including owner_doc, have status, citation, and row-specific note; each PASS has a field-local Plans citation.",
+    "Fail-closed NEEDS_OWNER_VETO only: no admission, registry append, owner/producer inference, or OD-EA-003 dependence."
+  ]
+}

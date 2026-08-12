@@ -1,0 +1,1062 @@
+[
+  {
+    "event_type": "memory.gist.verification_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.verify` explicitly declares `memory.gist.verification_failed` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1092",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.verify` to `memory.gist.verification_failed` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1092."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.gist.verification_failed` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.verify` explicitly expects `memory.gist.verification_failed`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.gist.verification_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.verification_requested",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.verify` explicitly declares `memory.gist.verification_requested` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1092",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.verify` to `memory.gist.verification_requested` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1092."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.gist.verification_requested` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.verify` explicitly expects `memory.gist.verification_requested`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.gist.verification_requested"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.verified",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.verify` explicitly declares `memory.gist.verified` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1092",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.verify` to `memory.gist.verified` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1092."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.gist.verified` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.verify` explicitly expects `memory.gist.verified`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.gist.verified"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.index.lexical.rebuild.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.rebuild_lexical_index` explicitly declares `memory.index.lexical.rebuild.completed` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1098",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.rebuild_lexical_index` to `memory.index.lexical.rebuild.completed` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1098."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.index.lexical.rebuild.completed` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.rebuild_lexical_index` explicitly expects `memory.index.lexical.rebuild.completed`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.index.lexical.rebuild.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.index.lexical.rebuild.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.rebuild_lexical_index` explicitly declares `memory.index.lexical.rebuild.started` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1098",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.rebuild_lexical_index` to `memory.index.lexical.rebuild.started` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1098."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.index.lexical.rebuild.started` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.rebuild_lexical_index` explicitly expects `memory.index.lexical.rebuild.started`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.index.lexical.rebuild.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.index.semantic.rebuild.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.rebuild_semantic_index` explicitly declares `memory.index.semantic.rebuild.completed` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1099",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.rebuild_semantic_index` to `memory.index.semantic.rebuild.completed` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1099."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.index.semantic.rebuild.completed` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.rebuild_semantic_index` explicitly expects `memory.index.semantic.rebuild.completed`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.index.semantic.rebuild.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.index.semantic.rebuild.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.rebuild_semantic_index` explicitly declares `memory.index.semantic.rebuild.started` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1099",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.rebuild_semantic_index` to `memory.index.semantic.rebuild.started` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1099."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.index.semantic.rebuild.started` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.rebuild_semantic_index` explicitly expects `memory.index.semantic.rebuild.started`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.index.semantic.rebuild.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "parser.error",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Semantic overlay confirms the platform-specific output parser records parser.error to seglog on parse failure and defines subsequent fallback/retry behavior. The text supplies only one diagnostic field and preservation intent, not a complete Event Authority contract; keep quarantined.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:1222",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:1222",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1222",
+        "status": "ok",
+        "notes": "Exact producer condition and seglog event name; bounds the raw-output diagnostic excerpt to 500 characters."
+      },
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1221-1226",
+        "status": "ok",
+        "notes": "Defines parse-failure logging, generic fallback, retry/user-error transitions, and raw-output preservation."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `parser.error` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The parser fallback specifies the producer condition, bounded diagnostic excerpt, fallback/retry transitions, and preservation intent, but not versioned membership, an exhaustive event schema, scope identity, replay/idempotency, retention duration, redaction custody, consumers/checkpoints, compatibility withdrawal, or complete test oracles.",
+      "event_types": [
+        "parser.error"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay15",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "phase.force_completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The cited runtime contract precisely identifies the producer condition, event name, reason, and immediate force-completion behavior. It does not close the Event Authority checklist or name the acceptance owner. Continue individual materialization under owner veto; keep quarantined and do not admit.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:1441",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:1441",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1441",
+        "status": "ok",
+        "notes": "Names the exact seglog event and its reason value at the force-completion producer point."
+      },
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1439-1443",
+        "status": "ok",
+        "notes": "Defines the max-plus-one trigger, forced phase-output behavior, and warning side effect."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `phase.force_completed` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The interview orchestrator producer, trigger, reason value, and immediate behavior are explicit, but versioned membership, acceptance owner, exhaustive closed payload schema, scope identity, replay, retention, redaction custody, consumers/checkpoints, compatibility withdrawal, and full positive/negative oracles are not.",
+      "event_types": [
+        "phase.force_completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay16",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "project.added",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The UI command catalog requires `project.added` as the expected persisted outcome of the add-existing project operation. That establishes a command-side producer trigger, not the missing Event Authority contract; keep quarantined.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:319",
+        "status": "drift",
+        "notes": "Current line 319 is the affected-surfaces entry for GitHub disconnect; the project command table begins at lines 327-334."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "ok",
+        "notes": "Defines handler_location in the generic wiring-row schema; adjacent line 504 requires expected EventRecord types, but no event-specific handler row or semantic owner is supplied here."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:332",
+        "status": "ok",
+        "notes": "The project command table binds cmd.project.add_existing to expected event `project.added`. Command arguments do not constitute an event payload schema."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `project.added` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The command catalog binds `project.added` to cmd.project.add_existing and therefore establishes a command-side emission trigger, but it does not identify the semantic acceptance owner, define a closed event payload (command args are not the event payload), or specify versioned membership, event scope identity, replay/idempotency, retention, redaction custody, consumer checkpoints, compatibility withdrawal, and complete positive and negative oracles.",
+      "event_types": [
+        "project.added"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay17",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

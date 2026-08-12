@@ -1,0 +1,105 @@
+{
+  "event_type": "worktree.created",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation explicitly assigns event-contract acceptance authority for this exact token."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:944",
+      "note": "The runtime catalog explicitly names source control / lane allocator as producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from the live versioned family registry; persisted documentation is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Cited payload fields are minima or prose, not an explicitly exhaustive closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:944",
+      "note": "The catalog minimum explicitly carries project, worktree, optional run/package/lane lineage, branch, and path."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines this event’s replay key, duplicate handling, and idempotency rule."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction fields, timing, and custody for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/WorktreeGitImprovement.md:214-220",
+      "note": "Allocation must emit worktree.created before node work begins and the surrounding allocation/reuse/cleanup transitions are explicit."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:944",
+      "note": "The runtime catalog explicitly names orchestrator, storage, and recovery as primary consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies complete positive and negative event-level acceptance oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:911",
+      "status": "drift",
+      "notes": "Current line is the closed-runtime-enum table introduction, not a worktree.created contract."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:219",
+      "status": "ok",
+      "notes": "Requires worktree.created to record allocation path, branch, lane/run/package lineage, and source-control owner before node work begins."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:214-220",
+      "status": "ok",
+      "notes": "Defines allocation/reuse/cleanup constraints and ownership transition rules around creation."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:944",
+      "status": "ok",
+      "notes": "The runtime catalog explicitly names source control / lane allocator as producer."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; absent dimensions fail closed without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

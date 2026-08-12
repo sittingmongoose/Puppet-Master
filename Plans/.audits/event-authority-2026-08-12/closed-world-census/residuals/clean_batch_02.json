@@ -1,0 +1,86 @@
+[
+  {
+    "event_type": "ui.chat.in_memory_cap_messages",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 2302,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/assistant-chat-design.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "widget.completed_prose",
+    "occurrence_count": 6,
+    "path_count": 2,
+    "auth_cue_hits": 1,
+    "noise_cue_hits": 1,
+    "provisional_class": "NEW_AUTH_CUE_CANDIDATE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 39,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 41,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 45,
+        "auth_cue_nearby": true,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 60,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 60,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": false
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 2571,
+        "auth_cue_nearby": false,
+        "noise_cue_nearby": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        3
+      ],
+      [
+        "Plans/storage-plan.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "denominator_effect": "none_until_adjudicated",
+    "stage2": "NEW_PERSISTED_CANDIDATE_REVIEW",
+    "strong_authority_path_hits": 0,
+    "stage4": "EVENTISH_AUTH_RESIDUAL"
+  }
+]

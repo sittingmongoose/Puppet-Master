@@ -1,0 +1,96 @@
+{
+  "event_type": "node.prerequisite_resolved",
+  "bucket": "quarantined_not_admitted",
+  "july_classification": "emit_only",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:2415-2420",
+      "note": "Accepted EP-029 explicitly names Executor_Protocol as owner_doc and preserves this exact event contract."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited authority says the event is emitted but does not explicitly name the concrete emitting component or handler."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this exact token to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:383-386",
+      "note": "The event payload has a closed four-field shape and a three-value resolution enum."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:384-386",
+      "note": "source_node_id, resolved_prerequisite_id, and target_node_ids bind the affected prerequisite relationship."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:378-386",
+      "note": "The authority defines dependency resolution followed by blocked-to-pending/ready-eligible transition in the same wake."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed checkpoint rule is cited."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility window, withdrawal authority, or removal timing is cited for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The prerequisite-success/skip/force-resolve cases are positive conditions, but no exact negative non-emission oracle is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Executor_Protocol.md:383-387",
+      "status": "ok",
+      "notes": "Exact canonical token, payload, resolution enum, wake behavior, and transition are present."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:2413-2430",
+      "status": "ok",
+      "notes": "Accepted EP-029 preserves this exact event and blocked-to-runnable behavior."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "quarantined_not_admitted"
+}

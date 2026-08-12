@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.assurance.event_authority.census_adjudication_partition.v1",
+  "generated_at_utc": "2026-08-12T12:05:58Z",
+  "total_rows": 528,
+  "unique_candidate_ids": 528,
+  "collisions": [],
+  "category_counts": {
+    "registered_keep": 37,
+    "quarantined_not_admitted": 57,
+    "persisted_unregistered_quarantine": 252,
+    "alias": 12,
+    "exact_excluded": 63,
+    "non_exact_excluded": 26,
+    "rejected_lexical_candidate": 81
+  },
+  "expected_category_counts": {
+    "registered_keep": 37,
+    "quarantined_not_admitted": 57,
+    "persisted_unregistered_quarantine": 252,
+    "alias": 12,
+    "exact_excluded": 63,
+    "non_exact_excluded": 26,
+    "rejected_lexical_candidate": 81
+  },
+  "expected_category_counts_source": "independent_derivation:cohort_pins+machine_contract_scan+rejected_lexical+owner_UNRESOLVED-54-CLOSE-PATH+AUG-CP-RECLASSIFY+COMPACT-001",
+  "category_count_ok": true,
+  "independent_set_equality_ok": true,
+  "pin_row_counts_including_multi": {
+    "known37": 37,
+    "august2": 2,
+    "july248": 253,
+    "july68": 68,
+    "july40": 40,
+    "july26": 26,
+    "emit_restore": 26
+  },
+  "immutable_pin_set_coverage": {
+    "july248": {
+      "expected_count": 248,
+      "covered_count": 248,
+      "missing": [],
+      "ok": true
+    },
+    "july40": {
+      "expected_count": 40,
+      "covered_count": 40,
+      "missing": [],
+      "ok": true
+    },
+    "july68": {
+      "expected_count": 68,
+      "covered_count": 68,
+      "missing": [],
+      "ok": true
+    },
+    "july26": {
+      "expected_count": 26,
+      "covered_count": 26,
+      "missing": [],
+      "ok": true
+    },
+    "august2": {
+      "expected_count": 2,
+      "covered_count": 2,
+      "missing": [],
+      "ok": true
+    },
+    "known37": {
+      "expected_count": 37,
+      "covered_count": 37,
+      "missing": [],
+      "ok": true
+    }
+  },
+  "auth_github_multi_cohort": {
+    "auth.github.authenticated": [
+      "persisted_unregistered_quarantine"
+    ],
+    "auth.github.device_code.issued": [
+      "persisted_unregistered_quarantine"
+    ],
+    "auth.github.disconnected": [
+      "persisted_unregistered_quarantine"
+    ],
+    "auth.github.failed": [
+      "persisted_unregistered_quarantine"
+    ],
+    "auth.github.token.polling": [
+      "persisted_unregistered_quarantine"
+    ]
+  },
+  "advisor2_emit_restore_in_unresolved": [],
+  "exact_partition_rule": "Each candidate_id has exactly one primary category. Immutable cohort pin coverage is checked over cohort_pins (multi-cohort reclass rows count toward every listed pin). Exact denominator equality applies only to admitted persisted event families, not this full partition.",
+  "partition_ok": true,
+  "advisor2_triple_bound_emit_merge_in_unresolved": [],
+  "notes": "Rebuilt 2026-08-12T12:05:58Z after owner apply: quarantined_not_admitted=57, unresolved=0, registered_keep=37, persisted_unregistered_quarantine=252."
+}

@@ -1,0 +1,113 @@
+{
+  "event_type": "tool.execution_started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts registers the event but delegates concrete schemas and retention to storage without explicitly appointing this event’s semantic owner."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:939",
+      "note": "The runtime catalog explicitly names tool runner as producer of tool.execution_started."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited live registry membership record or membership version exists for tool.execution_started."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Contracts_V0.md:939 is explicitly a cross-contract payload minimum, not a closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:939",
+      "note": "The catalog minimum binds tool.execution_started to run_id, tool_use_id, tool_name, optional attempt/runtime identity, and timestamp."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited duplicate key, replay behavior, or projector idempotency rule is event-specific."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Contracts delegates retention to storage, but no cited storage rule covers this exact event."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited rule assigns custody for tool results, error details, or referenced data."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Started/completed names imply a pairing, but no cited authority defines the complete transition machine; no inference is used."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:939",
+      "note": "The catalog explicitly names run graph, history, usage, audit, and recovery as primary consumers of tool.execution_started."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited alias mapping or withdrawal boundary exists for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited event-specific emission and prohibited-emission oracle pair exists."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:906",
+      "status": "drift",
+      "notes": "Original July line no longer declares `tool.execution_started`; the current catalog row is Plans/Contracts_V0.md:939."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928",
+      "status": "drift",
+      "notes": "Original July line no longer declares `tool.execution_started`; the current catalog row is Plans/Contracts_V0.md:939."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928-932",
+      "status": "ok",
+      "notes": "States Contracts registers persisted names, producer/consumer boundaries, and cross-contract minima, while storage owns concrete schemas, mechanics, retention, and cleanup."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:939",
+      "status": "ok",
+      "notes": "Current runtime catalog names `tool.execution_started`, tool runner producer, run graph/history/usage/audit/recovery consumers, and tool-use identity, tool name, attempt/runtime snapshot references, and timestamp."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:907-910",
+      "status": "ok",
+      "notes": "Requires per-event schema_version only for runtime payloads participating in listed behaviors; it does not itself assign this exact event a closed schema."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay23",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current Plans citations; PASS is limited to the exact field proven.",
+    "Immutable cohort lineage retained separately from working_bucket.",
+    "No admission, package-level owner decision, analogy, or owner/producer inference used."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "source_deepener": "PlanIndivU22"
+}

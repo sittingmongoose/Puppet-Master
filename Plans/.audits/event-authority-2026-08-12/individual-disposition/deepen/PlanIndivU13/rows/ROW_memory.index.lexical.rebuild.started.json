@@ -1,0 +1,111 @@
+{
+  "event_type": "memory.index.lexical.rebuild.started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`cmd.chat.memory.rebuild_lexical_index` lists `memory.index.lexical.rebuild.started` as an expected event, supporting persisted-event classification only. It does not name a canonical emitter, establish EventRecord scope/identity, identify semantic acceptance authority, or close the event contract; keep quarantined pending resolution by an event-contract authority.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan names the semantic acceptance authority for this exact token; owner resolution is required."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan names a canonical implementation module/function that emits this exact persisted token; producer evidence is owner-required."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The row is pinned to the July confirmed-unregistered cohort, but no accepted membership/version declaration is cited; membership remains owner-required."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan closes the persisted payload fields and field semantics for this exact token."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan closes the EventRecord scope and identity fields for this exact token; command arguments are not treated as event payload evidence."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies replay ordering, deduplication, or idempotency semantics for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies retention or compaction policy for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies redaction rules or custody authority for this exact token."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan closes the allowed predecessor/successor transitions for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan names authoritative consumers or checkpoint behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies compatibility, migration, or withdrawal rules for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan supplies both positive and negative acceptance oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503-505",
+      "status": "ok",
+      "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1098",
+      "status": "ok",
+      "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.rebuild_lexical_index` to `memory.index.lexical.rebuild.started` and provides project-scoped command arguments."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-JULY248-memory-index-lexical-rebuild-started",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the event-contract owner or semantic acceptance authority authorize `memory.index.lexical.rebuild.started` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+    "options": [
+      "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+      "Continue quarantine fail-closed; do not advance consumer checkpoints",
+      "Reclassify as an excluded non-event with event-specific cited rationale"
+    ],
+    "evidence_gap": "`cmd.chat.memory.rebuild_lexical_index` explicitly expects `memory.index.lexical.rebuild.started`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+    "event_types": [
+      "memory.index.lexical.rebuild.started"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay13",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against the binding 12-field schema; absent field-local authority remains OWNER_REQUIRED rather than inferred.",
+    "ADMISSION_FREEZE preserved: this disposition does not authorize admission, registry append, or consumer checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_census_residuals_separate"
+}

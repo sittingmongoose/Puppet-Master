@@ -1,0 +1,122 @@
+{
+  "event_type": "file.renamed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The production wiring contract explicitly binds `cmd.file.rename` and `handlers::file::rename` to `file.renamed` and provides an event oracle. It still lacks semantic ownership, versioned membership, a closed event payload, and lifecycle controls, so the event stays quarantined pending owner veto.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `file.renamed` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `file.renamed`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:12879-12882",
+      "note": "The exact command row binds `cmd.file.rename` to `handlers::file::rename` and names `file.renamed` as its expected event."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `file.renamed`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `file.renamed`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `file.renamed`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `file.renamed`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `file.renamed`."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The wiring effect contract requires `file.renamed` emission, but it does not define the event’s authoritative before/after state model or transition invariants."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `file.renamed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `file.renamed`."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Wiring_Matrix.production.json:12929-12935 specifies a future event-test requirement, not cited executed positive/negative oracle evidence for `file.renamed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:350",
+      "status": "ok",
+      "notes": "Exact catalog row maps `cmd.file.rename` to `file.renamed` or `folder.renamed`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12879-12882",
+      "status": "ok",
+      "notes": "Exact production row names the handler and `file.renamed`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12894-12900",
+      "status": "ok",
+      "notes": "Exact effect contract binds the event outcome."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12929-12935",
+      "status": "ok",
+      "notes": "Exact event oracle requires `file.renamed` emission."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-file-renamed-contract",
+    "field_or_decision": "membership_version,owner_doc,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Who owns `file.renamed` and what versioned payload, scope, replay, retention, custody, consumer, and withdrawal contract governs the explicit rename producer?",
+    "options": [
+      "Supply an explicit owner-backed, versioned contract for `file.renamed` covering every residual field, then re-adjudicate individually",
+      "Keep `file.renamed` quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify `file.renamed` only with exact cited authority and migration or withdrawal terms"
+    ],
+    "evidence_gap": "No exact Plans citation closes the residual fields for `file.renamed`: membership_version, owner_doc, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "file.renamed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay10",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

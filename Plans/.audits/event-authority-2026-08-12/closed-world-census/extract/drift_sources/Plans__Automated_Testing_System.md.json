@@ -1,0 +1,191 @@
+{
+  "schema_id": "pm.assurance.event_authority.drift_source_census_row.v1",
+  "generated_at_utc": "2026-08-12T10:34:29Z",
+  "path": "Plans/Automated_Testing_System.md",
+  "source_class": "canonical_product_prose",
+  "frozen": {
+    "bytes": 239947,
+    "sha256": "e31f410d13c34109b0e8f74e9a342035c71d0ced1bf04c8c8ac6a087851b96b3"
+  },
+  "live": {
+    "bytes": 242190,
+    "sha256": "cbf113bc3497116549e38ee16407505136466fca3596837cc3acbcfddb699533"
+  },
+  "drift": true,
+  "byte_delta": 2243,
+  "frozen_content_recovered": true,
+  "freeze_baseline": {
+    "inventory": "closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "occurrence_ledger_frozen_token_count": 89
+  },
+  "event_type_mentions": {
+    "live_full_lexical_count": 100,
+    "frozen_full_lexical_count": 100,
+    "new_full_lexical_tokens": [],
+    "removed_full_lexical_tokens": [],
+    "changed_line_context_tokens": [
+      {
+        "event_type": "home_workspace_matrix.mjs",
+        "frozen_lines": [
+          2876,
+          2883
+        ],
+        "live_lines": [
+          2898,
+          2905
+        ]
+      },
+      {
+        "event_type": "index.py",
+        "frozen_lines": [
+          339,
+          404,
+          469,
+          534,
+          598,
+          666,
+          746,
+          820,
+          906,
+          988,
+          1068,
+          1254,
+          1324,
+          1397,
+          1474,
+          1562,
+          1652,
+          1742,
+          1803,
+          2170,
+          2590,
+          2654,
+          2716,
+          2786,
+          2879
+        ],
+        "live_lines": [
+          339,
+          404,
+          469,
+          534,
+          598,
+          666,
+          746,
+          820,
+          906,
+          988,
+          1068,
+          1254,
+          1324,
+          1397,
+          1474,
+          1562,
+          1652,
+          1742,
+          1803,
+          2170,
+          2590,
+          2654,
+          2716,
+          2786,
+          2901
+        ]
+      },
+      {
+        "event_type": "smoke.mjs",
+        "frozen_lines": [
+          2877
+        ],
+        "live_lines": [
+          2899
+        ]
+      },
+      {
+        "event_type": "verify.py",
+        "frozen_lines": [
+          50,
+          51,
+          52,
+          94,
+          131,
+          132,
+          133,
+          184,
+          227,
+          228,
+          280,
+          281,
+          340,
+          341,
+          342,
+          1991,
+          1992,
+          1995,
+          2591,
+          2787,
+          2878
+        ],
+        "live_lines": [
+          50,
+          51,
+          52,
+          94,
+          131,
+          132,
+          133,
+          184,
+          227,
+          228,
+          280,
+          281,
+          340,
+          341,
+          342,
+          1991,
+          1992,
+          1995,
+          2591,
+          2787,
+          2900
+        ]
+      }
+    ],
+    "new_vs_ledger_tokens": [
+      "design.md",
+      "design_atoms.jsonl",
+      "event_record.schema.json",
+      "index.py",
+      "loop.md",
+      "newfeatures.md",
+      "plan.md",
+      "plans_to_code_handoff.schema.json",
+      "readiness.py",
+      "storage_value_registry.json",
+      "validate.py"
+    ],
+    "removed_vs_ledger_tokens": [],
+    "live_contract_lexical_count": 0,
+    "frozen_contract_lexical_count": 0,
+    "new_contract_lexical_tokens": [],
+    "removed_contract_lexical_tokens": []
+  },
+  "contract_references": {
+    "live_triple_bound_count": 0,
+    "frozen_triple_bound_count": 0,
+    "new_triple_bound_tokens": [],
+    "removed_triple_bound_tokens": [],
+    "new_triple_bound_detail": [],
+    "removed_triple_bound_detail": [],
+    "new_md_binding_count": 0,
+    "removed_md_binding_count": 0,
+    "new_md_bindings": [],
+    "removed_md_bindings": []
+  },
+  "admission_claim": false,
+  "denominator_effect": "none_until_adjudicated",
+  "notes": [
+    "Discovery-only drift pass; no admission inference per CENSUS_ADMISSION_RULE_V2.",
+    "full_lexical uses dotted lowercase token regex on file text; not admission."
+  ]
+}

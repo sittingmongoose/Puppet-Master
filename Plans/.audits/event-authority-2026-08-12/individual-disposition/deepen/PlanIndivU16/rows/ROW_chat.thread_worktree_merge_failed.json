@@ -1,0 +1,133 @@
+{
+  "event_type": "chat.thread_worktree_merge_failed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current authority establishes the exact persisted name, storage owner, minimum fields. It does not select an event-specific replay/idempotency policy or define a legal transition state machine, and other admission gates remain unresolved; admission stays fail-closed.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the semantic Event Authority owner for `chat.thread_worktree_merge_failed`; storage or projection ownership is not treated as event ownership."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked contract and schema rows name `chat.thread_worktree_merge_failed` and its meaning, but do not explicitly designate the component authorized to produce it; namespace and surrounding family context were not used as evidence."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation gives `chat.thread_worktree_merge_failed` an immutable versioned registry membership or withdrawal generation."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources provide a minimum payload for `chat.thread_worktree_merge_failed`, not a closed event-specific payload schema with additional-property, nullability, and enum rules fully bounded."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Identifiers appear in the documented minimum payload for `chat.thread_worktree_merge_failed`, but no checked field-local clause fixes the EventRecord `scope_kind` and complete identity/nullability rules for this event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `chat.thread_worktree_merge_failed`'s replay policy and idempotency identity; generic EventRecord options cannot select an event-specific value by inference."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns an event-specific retention, compaction, or tombstone rule for `chat.thread_worktree_merge_failed`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `chat.thread_worktree_merge_failed`'s redaction profile, sensitive-field treatment, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources describe `chat.thread_worktree_merge_failed`'s occurrence and minimum fields but do not provide a complete legal predecessor/successor state machine for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success/failure checkpoint behavior for `chat.thread_worktree_merge_failed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines event-specific compatibility, migration, alias normalization, and withdrawal behavior for `chat.thread_worktree_merge_failed` as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources do not supply both positive emission and negative non-emission/rejection oracles for `chat.thread_worktree_merge_failed` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1576",
+      "status": "drift",
+      "notes": "Original anchor now contains the merged event, not merge_failed."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3342",
+      "status": "drift",
+      "notes": "Original producer-table anchor now contains create_failed; merge_failed moved to line 3344."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2962",
+      "status": "drift",
+      "notes": "Original anchor no longer contains the event token."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:986",
+      "status": "ok",
+      "notes": "Current exact registration and payload minimum."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1577",
+      "status": "ok",
+      "notes": "Storage-owned exact event schema minimum."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3344",
+      "status": "ok",
+      "notes": "Producer-owned fields and merge-failure semantics."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961,1014-1030",
+      "status": "ok",
+      "notes": "Contracts gives generic worktree lifecycle families a project_only scope policy and supplies generic EventRecord replay/idempotency rules, but it does not directly bind this exact `chat.thread_worktree_*` token to that scope policy or select its event-specific replay_policy; neither field is passed by family inference."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-chat-thread-worktree-merge-failed-contract-closure",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `chat.thread_worktree_merge_failed`, will the responsible authority publish field-local citations closing every OWNER_REQUIRED obligation, authorize continued quarantine, or provide exact authority for reclassification?",
+    "options": [
+      "Publish the missing individually owned contract for a later fresh adjudication",
+      "Keep the event quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify or withdraw the token with exact cited semantic and migration authority"
+    ],
+    "evidence_gap": "Current citations establish selected occurrence semantics for `chat.thread_worktree_merge_failed` but do not close all twelve Event Authority obligations; no owner, producer, or policy value was inferred from namespace, family membership, or generic envelope rules.",
+    "event_types": [
+      "chat.thread_worktree_merge_failed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay04",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

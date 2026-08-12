@@ -1,0 +1,109 @@
+{
+  "event_type": "git.clone.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Production wiring assigns `cmd.project.new_github_repo` the events `github.repo.create_requested` and `project.github_repo_bound`, contradicting the catalog mapping to `git.clone.completed`. Because the confirmed persisted token may have another producer, do not infer exclusion or ownership; keep it quarantined for explicit producer and semantic-owner reconciliation.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation names an accountable semantic owner document for this event; an owner decision is required."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21681",
+      "note": "The production wiring entry for `cmd.project.new_github_repo` declares `github.repo.create_requested` and `project.github_repo_bound`, not `git.clone.completed`; that command cannot remain PASS producer evidence for this token."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific citation fixes closed-world membership and payload/envelope version behavior."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines a closed payload schema for this exact event; a payload minimum or token listing is insufficient."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes the identifiers that scope and correlate this exact event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines replay normalization, deduplication, or idempotency for this exact event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines retention, compaction, or deletion policy for this exact event."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns sensitive-field redaction and custody responsibilities for this exact event."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines legal predecessor/successor states and invalid transitions for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation identifies authorized consumers and whether this event may advance checkpoints."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines aliases, compatibility normalization, or withdrawal criteria for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies event-specific positive and negative conformance oracles."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:334",
+      "status": "ok",
+      "notes": "The cited command-catalog location does contain this exact token mapping. The mapping is retained as valid source evidence but conflicts with the separate production Wiring Matrix effect and therefore does not establish final producer authority."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21681",
+      "status": "ok",
+      "notes": "The production Wiring Matrix directly defines the mapped command effect and is retained as explicit contradiction evidence for producer adjudication."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-git-clone-completed",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Is clone completion represented solely through `github.repo.create_requested` plus `project.github_repo_bound`, or does a clone executor separately emit `git.clone.completed`; what terminal clone outcome and repository/project correlation distinguish those events?",
+    "options": [
+      "Publish an owner-approved contract for the listed missing dimensions, then adjudicate this event individually",
+      "Continue quarantine with fail-closed consumption and no checkpoint advance",
+      "Reclassify the token with event-specific owner authority and cited rationale"
+    ],
+    "evidence_gap": "Production wiring contradicts the earlier command-catalog producer mapping. The actual producer and all other listed residual dimensions require event-specific authority; none is inferred from the conflicting mapping, namespace, neighboring events, or OD-EA-003.",
+    "event_types": [
+      "git.clone.completed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay11",
+  "provisional": false,
+  "quality_notes": [
+    "Individually deepened under the binding schema; all 12 dimensions are present, every PASS is field-local and cited, and residuals fail closed to a stable owner veto."
+  ],
+  "source_deepener": "PlanIndivU07"
+}

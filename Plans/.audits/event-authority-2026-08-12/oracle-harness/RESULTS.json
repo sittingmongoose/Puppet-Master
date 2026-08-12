@@ -1,0 +1,1262 @@
+{
+  "families": [
+    {
+      "errors": [],
+      "event_type": "goal.blocked",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.cancelled",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.child_status_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.completed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.created",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.degraded",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.evidence_captured",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.progressed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.receipt_recorded",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.replanned",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.scheduled",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.stopped",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.tool_check_recorded",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.updated",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal.verification_decided",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.blocked",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.cancelled",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.certified",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.replanned",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.started",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "BuildStarted alias rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_run_started_rejects_build_started_alias"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "goal_run.stopped",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3468-3496",
+          "detail": "event_name equals family.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "goal_runtime_event_name_matches_family"
+        },
+        {
+          "citation": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3496",
+          "detail": "wrong event_name rejected.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "goal_runtime_rejects_alias_event_name"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "platform.capability_evaluated",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_platform_capability_evaluated.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_platform_capability_evaluated.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "restore_point.applied",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.applied)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.applied)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "restore_point.corrupt",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_restore_point_corrupt.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_restore_point_corrupt.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "restore_point.created",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.created)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.created)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "restore_point.deleted",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.deleted)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.deleted)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "restore_point.expired",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.expired)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for restore_point.expired)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "run.started",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_run_started.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_run_started.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "safe_point.recovery_unavailable",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_safe_point_recovery_unavailable.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_safe_point_recovery_unavailable.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "seglog.event_appended",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for seglog.event_appended)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for seglog.event_appended)",
+          "detail": "dotted type.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "seglog_type_matches_event_namespace_pattern"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for seglog.event_appended)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for seglog.event_appended)",
+          "detail": "invalid type.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "seglog_rejects_non_dotted_type"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.boot_recovery",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_storage_boot_recovery.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_storage_boot_recovery.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.compaction_lifecycle_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.compaction_lifecycle_changed)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.compaction_lifecycle_changed)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.deletion_lifecycle_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.deletion_lifecycle_changed)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.deletion_lifecycle_changed)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.integrity_detected",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_storage_integrity_detected.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_storage_integrity_detected.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.recovery_applied",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payload_storage_recovery_applied.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_payload_storage_recovery_applied.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.retention_hold_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.retention_hold_changed)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.retention_hold_changed)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "storage.value_quarantine_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.value_quarantine_changed)",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/storage-plan.md#case-l-7-required-acceptance-oracles",
+          "detail": "Case L-7 fixture oracle.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "storage_case_l7_fixture_oracle_surface"
+        },
+        {
+          "citation": "Plans/event_family_registry.json (embedded payload_schema for storage.value_quarantine_changed)",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "terminal.workgroup_moved",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3441-3445",
+          "detail": "preserve_session_identity=true.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "terminal_workgroup_preserves_session_identity"
+        },
+        {
+          "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:8496-8518",
+          "detail": "cmd.terminal.move_workgroup.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "terminal_workgroup_command_identity"
+        },
+        {
+          "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3460-3462",
+          "detail": "fabricated command blocked.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "home_workspace_forbids_fabricated_success"
+        }
+      ]
+    },
+    {
+      "errors": [],
+      "event_type": "workspace.layout_changed",
+      "pass": true,
+      "rules": [
+        {
+          "citation": "Plans/event_payloads/workspace_layout_changed.schema.json",
+          "detail": "Positive fixture validates closed payload schema.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "closed_payload_schema_accepts_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3441-3445",
+          "detail": "persisted=true.",
+          "pass": true,
+          "polarity": "positive",
+          "rule_id": "workspace_layout_persisted_after_readback"
+        },
+        {
+          "citation": "Plans/event_payloads/workspace_layout_changed.schema.json",
+          "detail": "Negative fixture fails closed payload schema.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "closed_payload_schema_rejects_incomplete_fixture"
+        },
+        {
+          "citation": "Plans/Contracts_V0.md:3460-3462",
+          "detail": "non-persisted blocked.",
+          "pass": true,
+          "polarity": "negative",
+          "rule_id": "workspace_layout_no_success_without_persisted"
+        }
+      ]
+    }
+  ],
+  "generated_at_utc": "2026-08-12T07:00:00Z",
+  "harness_path": "Plans/.audits/event-authority-2026-08-12/oracle-harness/HARNESS.py",
+  "pass": true,
+  "registered_family_count": 39,
+  "schema_id": "pm.assurance.event_authority.oracle_harness_results.v1"
+}

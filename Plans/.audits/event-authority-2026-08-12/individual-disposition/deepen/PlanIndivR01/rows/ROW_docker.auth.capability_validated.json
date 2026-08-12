@@ -1,0 +1,115 @@
+{
+  "event_type": "docker.auth.capability_validated",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "This exact token is a defined terminal browser-login outcome with an explicit producer, but the owner plan requires external registration before durable canonical use and does not close its payload, identity, replay, retention, redaction, checkpoint, or withdrawal contract. It remains quarantined pending one row-specific owner veto; no admission or checkpoint advancement is authorized.",
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently deepened from exact-token Plans evidence; absent dimensions fail closed and are not inferred."
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "note": "The cited plan explicitly names canonical ownership or the Contracts-owned family boundary for this exact behavior."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:281-288",
+      "note": "The cited span explicitly names emission or compatibility production of `docker.auth.capability_validated`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "note": "The owner plan requires registration before durable canonical use; no exact registered member/version is supplied."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The terminal list supplies no closed payload fields or schema version."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Credential scope is described, but event identity fields binding validation to OS-user/project context are absent."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event replay key, duplicate rule, or idempotency rule is declared for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No retention class or TTL is declared for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific redaction/custody rule is declared for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:281-288",
+      "note": "This exact token is one of four terminal outcomes after browser-login polling."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No durable consumer or checkpoint-advance rule is declared for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No alias, deprecation, compatibility, or withdrawal rule is declared."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:281-288",
+      "note": "The flow terminates with one of exactly four outcomes; polling continues only until terminal outcome."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:281-288",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-docker-auth-capability-durability",
+    "field_or_decision": "durability,membership_version,closed_payload_schema,scope_identity",
+    "question": "Is `docker.auth.capability_validated` a durable canonical terminal event requiring registered payload/version and OS-user/project identity, or only an ephemeral projection of effective capability state?",
+    "options": [
+      "Define it as durable and supply exact membership, payload/version, and identity rules",
+      "Declare it ephemeral UI/state projection with no durable checkpoint advancement",
+      "Replace it with one cited registered terminal event"
+    ],
+    "evidence_gap": "Exact-token Plans evidence does not close: membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal.",
+    "event_types": [
+      "docker.auth.capability_validated"
+    ]
+  },
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

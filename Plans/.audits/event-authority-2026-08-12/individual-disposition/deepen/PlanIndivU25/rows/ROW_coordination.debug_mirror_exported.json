@@ -1,0 +1,128 @@
+{
+  "event_type": "coordination.debug_mirror_exported",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The exact token is a Storage-owned canonical coordination record emitted by the PM mirror exporter with project identity, replay/CAS rules, checkpointed consumers, mirror-failure transitions, compatibility boundaries, and explicit failure oracles. Contracts explicitly characterizes the event table as payload minima, the token is absent from registry revision 2026-08-04.1, and no event-specific retention rule is cited, so it remains quarantined pending an individual owner decision.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:516-526",
+      "note": "Storage explicitly owns the durable coordination record/projection boundary and names this exact token as a canonical seglog record family."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:3803-3809",
+      "note": "The mirror contract explicitly restricts writes to PM projector/exporter code and requires PM to emit this exact token for mirror failures."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from live event-family registry revision 2026-08-04.1; persisted prose does not confer versioned membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "CV-310 explicitly characterizes the coordination event rows as payload minima; the exact event row therefore does not establish a closed, exhaustive payload schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2947",
+      "note": "The exact payload declaration requires project_id and mirror_path identity together with source checkpoint and sequence identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:535-539",
+      "note": "The coordination-family append contract requires an idempotency key and expected revision/last-event identity, with append and projection as one CAS boundary."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation fixes retention class, anchor, expiry, legal-hold interaction, or cleanup for this exact debug-mirror outcome record."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:508",
+      "note": "The storage-owned persisted-value rule prohibits raw secrets and limits sensitive data to redacted, masked, hashed, evidence, or external-custody references."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:542-546",
+      "note": "The exact mirror contract distinguishes lag/absence from invalid JSON, partial write, stale checkpoint, missing mirror, and disk-full failures, then requires quarantine or overwrite from canonical state."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:528-538",
+      "note": "Storage names the coordination projections and projector.checkpoint.coordination and requires projection rows plus checkpoint to advance atomically."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:3801-3809",
+      "note": "The compatibility/debug mirror boundary is explicit: mirrors may lag or be absent and are never authority for scheduling, admission, cleanup, or prompt injection."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:542-546",
+      "note": "The contract supplies positive export/recovery behavior and exact negative cases for corrupt, partial, stale, missing, and disk-full mirrors, including forbidden authority use."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/event_family_registry.json:1-8",
+      "status": "ok",
+      "notes": "Full revision 2026-08-04.1 was checked; the exact token is absent and unknown events quarantine without checkpoint advance."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2914",
+      "status": "drift",
+      "notes": "The prior citation is only a ContractRef; the exact payload declaration is now at lines 2938-2947."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2938-2951",
+      "status": "ok",
+      "notes": "Declares the exact payload minimum and the authoritative projection/checkpoint consumer boundary; CV-310 confirms this table is not schema closure."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:19929-19931",
+      "status": "ok",
+      "notes": "CV-310 explicitly states that stable coordination event rows list payload minima, preventing a closed-schema PASS."
+    },
+    {
+      "citation": "Plans/storage-plan.md:508,516-548",
+      "status": "ok",
+      "notes": "Declares persisted-value custody plus Storage ownership, producer boundary, CAS/replay, projections/checkpoints, mirror transitions, and failure cases."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:3775-3809",
+      "status": "ok",
+      "notes": "Names the exact canonical record and the PM-only compatibility mirror exporter and authority boundary."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-coordination-debug-mirror-exported",
+    "field_or_decision": "membership_version,closed_payload_schema,retention",
+    "question": "For `coordination.debug_mirror_exported`, will Storage materialize versioned event-family membership, a closed exhaustive payload schema, and an exact retention/hold/cleanup rule, or direct continued quarantine or cited reclassification?",
+    "options": [
+      "Materialize and approve versioned membership, a closed payload schema, and the exact retention contract, then evaluate this token individually for registration",
+      "Continue persisted-unregistered quarantine with unknown-event handling and no checkpoint advance",
+      "Reclassify only with an authoritative citation that this token is not a persisted semantic event"
+    ],
+    "evidence_gap": "The event contract is otherwise deep, but current Plans provide only payload minima and do not establish live registry membership or event-specific retention authority; schema closure, membership, and retention cannot be inferred from the coordination family.",
+    "event_types": [
+      "coordination.debug_mirror_exported"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay07",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against exact current Plans citations; two absent authority dimensions remain owner-required and fail closed."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

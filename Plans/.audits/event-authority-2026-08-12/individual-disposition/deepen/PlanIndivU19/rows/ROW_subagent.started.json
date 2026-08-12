@@ -1,0 +1,124 @@
+{
+  "event_type": "subagent.started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The contract directly names `subagent.started` and its lineage payload for execution start, but does not close producer authority, registry version, replay, retention, custody, legal transitions, checkpoints, compatibility, or conformance oracles. The named lifecycle row cannot inherit missing authority from sibling subagent events.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "`subagent.started` is absent from the live Event Authority registry; the contract table does not establish registry membership or version."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts_V0 names `subagent.started` but does not explicitly designate the accountable semantic owner for this row."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The lifecycle table describes `subagent.started` but does not explicitly bind an implementation producer; the orchestrator namespace is not used as producer inference."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts_V0 enumerates fields for `subagent.started` but does not define a closed persisted schema or reject additional fields."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2874-2896",
+      "note": "The contract explicitly requires the PM lineage envelope and names the identity fields for `subagent.started`."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority specifies replay, deduplication key, or idempotency behavior for this exact event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority binds this exact event to a retention policy and deletion horizon."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority closes field-level redaction, custody, and access-control responsibilities for this exact event."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The one-line description for `subagent.started` states event meaning but does not define legal from/to states, CAS/concurrency behavior, or unknown, degraded, and late-event handling."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority names authorized consumers and checkpoint-advance or poison-record rules for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority defines compatibility, migration, deprecation, and withdrawal rules for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority supplies positive and negative conformance oracles for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2883",
+      "status": "drift",
+      "notes": "The original July line no longer declares `subagent.started`; the current event-specific table row is Plans/Contracts_V0.md:2894."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2874-2887",
+      "status": "ok",
+      "notes": "Declares stable subagent runtime families canonical, requires child identity/lineage, and defines the shared PM lineage envelope."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2894",
+      "status": "ok",
+      "notes": "Current canonical table row names `subagent.started`, enumerates its payload fields, and states: Subagent begins execution."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2823-2842",
+      "status": "ok",
+      "notes": "Defines canonical child-run identity, lifecycle, lineage preservation, and reversible event projections."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2874-2894",
+      "status": "ok",
+      "notes": "Directly names `subagent.started`, its lineage identity, payload fields, and lifecycle meaning; it does not explicitly close owner or producer authority."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-started-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the subagent semantic owner publish explicit owner/producer authority and the missing closed schema, replay, retention/custody, legal-transition, checkpoint, compatibility, and oracle contract for `subagent.started`?",
+    "options": [
+      "Publish and approve the missing event-specific authority, then re-evaluate this token",
+      "Continue fail-closed quarantine with no registration or checkpoint authority",
+      "Reclassify the token only with exact event-specific cited authority"
+    ],
+    "evidence_gap": "For `subagent.started`, cited Plans evidence does not close: membership_version, owner_doc, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "subagent.started"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay23",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 evidence dimensions were adjudicated for this exact token; every PASS is backed by field-local Plans authority.",
+    "Absent authority is fail-closed as OWNER_REQUIRED or FAIL; no namespace, sibling, package, owner, or producer inference was used."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

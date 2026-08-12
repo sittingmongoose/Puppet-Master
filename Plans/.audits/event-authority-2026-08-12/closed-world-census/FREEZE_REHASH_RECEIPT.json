@@ -1,0 +1,178 @@
+{
+  "verified_at_utc": "2026-08-12T03:59:03Z",
+  "source_count": 180,
+  "matched": 159,
+  "drift_count": 21,
+  "drift": [
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "d0a655a6e14dbfaa845c7da3216b1149e87b35a1c62024478b1eb79b03c4fc42",
+      "got_sha": "5f163401479fd25cd1eaf315ed30c7369c879393b70ceca4bb663e5eb7534043",
+      "expected_bytes": 31781,
+      "got_bytes": 32777
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "bc835472ac41662a37d2da32f3717325c14514c2ba5feebdbb098257b7ea3d72",
+      "got_sha": "18eb1c51c3871dc7a514f80d87ee03a54b01227dcc7e78e8755d77c647e95005",
+      "expected_bytes": 20126,
+      "got_bytes": 20674
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "e17cda99d12ced6b31e97769a0873d5bcb84badb1325a94860f9a3b554131e5f",
+      "got_sha": "2f091330ab01fb60fbf72db373552adaeef340a81dcb5534b2acf148478f8373",
+      "expected_bytes": 28360,
+      "got_bytes": 29280
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "f1f11e573f1d00b07ffa61a8cb6f504509fbbb2ff4e2a28ad541478d1610f01e",
+      "got_sha": "d712ff295226949fca6eaf145125954cc823cac392a524ae00df8544a447fd09",
+      "expected_bytes": 21936,
+      "got_bytes": 22555
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "cbea871de1b4bd69b9261b34d84093982811e4d7a341911dd16e6fb7a63dd740",
+      "got_sha": "96b0330d79b71c1a9894f6c1f1d7061578a1aaf8a8d05446e77cb58f953a32bd",
+      "expected_bytes": 20339,
+      "got_bytes": 21135
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "565e621bd51efe8b0c269abebf7d12bf175641274026721a28d7d7be7e2fd271",
+      "got_sha": "9529c06e3d266f59b9106e65ad92bf97f88bd2fdefa232fcd2b2889c1ffaade5",
+      "expected_bytes": 20478,
+      "got_bytes": 21036
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "97cde031e99fbcae5894bc921d5622ca64d4ab34aa915efad5400f31cd869d20",
+      "got_sha": "30a379ac3da448743ef3c2b4b255a074d92128090d220e37d27c5a125fff25b1",
+      "expected_bytes": 20972,
+      "got_bytes": 21552
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "22265a13f1eaad5c2d5f5505891fd9e5d3bb17fcaf5bd677478f37bc721b00c5",
+      "got_sha": "4297d3b7fceb0edb24e7f7aaf47a7afe6387f0b59410b9c5794331db8a6b90c9",
+      "expected_bytes": 21787,
+      "got_bytes": 22401
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "849a32b1fb05db3779925400925347dee52c811e1304fe758bd9936d61c34b94",
+      "got_sha": "2a9015cc35918a821d555193ec9c50a1d1230e973c185850a2f1a5176f5cfc6b",
+      "expected_bytes": 22634,
+      "got_bytes": 23289
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "a14bc00e18017619c0efa3b47cdde62013b4be1c176ee5c42b631248081be8ec",
+      "got_sha": "45ccb8df68b83796945a9ed459c5ff218f659131eb0b57a55bc90f7afad5080e",
+      "expected_bytes": 20137,
+      "got_bytes": 20677
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "cd3246d219134011e7eabcb99f433bce5fb1dd3b10bccc4227423b3dc49539e6",
+      "got_sha": "4d1761f1bd2cc32c1cf3f976a759a88ed154c735c283dd36d1491ad22110b826",
+      "expected_bytes": 21035,
+      "got_bytes": 21595
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "52954196788eba09ba66bf39ff547990fc7d5a157e3ccd094954549017465aa2",
+      "got_sha": "834caaeda0ce351f55d29685d297a7539e0ea5363ede204e683bfe33e34442de",
+      "expected_bytes": 20602,
+      "got_bytes": 21169
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "98a514dd5b512ad17f40c2d27c256c242322afca6e7fec7880f83aa959fd8193",
+      "got_sha": "c46d9fd493968d638b83c5616761d6f29fe2c4ced173a71067a858138a958e0f",
+      "expected_bytes": 22080,
+      "got_bytes": 22703
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "d9c47a4c2a19dcfeaf81b809eef28b537fc5840ab78f0e86133d0805d338034b",
+      "got_sha": "17ae56c56fdc9b4e8e0db2863e8fa4c04c4bb0f7808bea98ecbc21463cc85028",
+      "expected_bytes": 19729,
+      "got_bytes": 20252
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "82d27cbd353f35f0d917c3454ca114ac8eed9a4df58d003caba6c149a38067c6",
+      "got_sha": "7bb6fd604adf71f2bd8902277f3cc37a0b23d4d3c2cde2799dbafe629743f7fa",
+      "expected_bytes": 19883,
+      "got_bytes": 20406
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "f7f8801e0a08c86f07eb74586781d82334ea6c4de9c0fd1dd6b198afcf0df816",
+      "got_sha": "cbccac1c571f6fc272dff0f91021b767676c78600518ebf091bfa33b0f2b40a4",
+      "expected_bytes": 20024,
+      "got_bytes": 20560
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "e1c33e7812f497c37f6b8960abb08bafed13b401a0e725a5ca4ade9d5e860c67",
+      "got_sha": "68d71790e1d43a4d83ee599108b6e4ad181d41b730db738208205c35e1260178",
+      "expected_bytes": 20079,
+      "got_bytes": 20626
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "9a0863e977794eb909b6fe96b9e3734d2429100d05e66d200403e53b3da63a22",
+      "got_sha": "47049a9f6dbfee971f76c3514a632fbce0bbc564785215d5d06086994ad4478d",
+      "expected_bytes": 21832,
+      "got_bytes": 22442
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "0111be327902b484060c1a44dfb35ece2d6964f77ad1d76bd8fa59033a6af4a1",
+      "got_sha": "3caf29eda71e29a7b0d678866673189c8504b3b8e24cedc3708289a9440cda52",
+      "expected_bytes": 22636,
+      "got_bytes": 23305
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "6d24e7e0d291ff10a5e96ab3d45815549bfd3809979845a602a110458cebe91f",
+      "got_sha": "70bdaed06ff04b6e8e10c27fc8873a4aa3fa56c12f2f8d37693baf09bf14fb1a",
+      "expected_bytes": 19834,
+      "got_bytes": 20372
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+      "error": "hash_or_bytes_drift",
+      "expected_sha": "3998b06d188092f77a6877f2870d85b937704643af5cef991e0bb6c98f03ed14",
+      "got_sha": "0d6bc354487b0c99b24a334bc30e1d255f09e6c62ea46852313e7e089285f17b",
+      "expected_bytes": 22648,
+      "got_bytes": 23316
+    }
+  ],
+  "freeze_usable": false,
+  "advisor2": "admission-filtered census required; 295 EA-27 coverage is not fresh denominator"
+}

@@ -1,0 +1,113 @@
+{
+  "event_type": "chat.thread_archived",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly names the authority owner for `chat.thread_archived`; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly designates the authoritative producer for `chat.thread_archived`; command handlers or storage mentions cannot be promoted by inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is mentioned, but no individually versioned registry membership for `chat.thread_archived` is cited."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed durable payload schema is cited for `chat.thread_archived`; command inputs/results and neighboring event schemas are insufficient."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `chat.thread_archived`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `chat.thread_archived`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No retention, compaction, tombstone, or deletion policy is cited for `chat.thread_archived`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No sensitive-field redaction and custody boundary is cited for `chat.thread_archived`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No legal predecessor/successor or invalid-transition contract is cited for `chat.thread_archived`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `chat.thread_archived`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `chat.thread_archived`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `chat.thread_archived`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:975",
+      "status": "ok",
+      "notes": "States that newly registered assistant-worktree events follow the existing chat.thread_created/chat.thread_archived/chat.thread_deleted convention and that dotted proposals normalize before persistence."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1566",
+      "status": "ok",
+      "notes": "Storage likewise describes these names as the existing underscore convention for seglog events; it does not state the archive payload."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:964",
+      "status": "drift",
+      "notes": "Original citation is now blank; the relevant convention text is line 975."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2632-2653",
+      "status": "ok",
+      "notes": "Production cmd.chat.archive handler has expected_event_types empty and an explicit receipt-only effect saying no persisted event is declared."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2673-2684",
+      "status": "ok",
+      "notes": "Production receipt assertion and event test require no-persist behavior and forbid unexpected persisted events, conflicting with the persisted chat.thread_archived convention unless another producer is explicitly authoritative."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

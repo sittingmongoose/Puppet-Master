@@ -1,0 +1,125 @@
+{
+  "event_type": "scheduler.pass",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No accountable semantic owner is explicitly cited for this exact token; owner adjudication is required."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No concrete emitting component or handler is explicitly cited for this exact token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited storage-owned schema closes every persisted payload field for this exact token."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2315-2339",
+      "note": "The cited contract expressly supports the scope identity dimension for `scheduler.pass`."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:367-372",
+      "note": "The scheduler keeps one pending wake set, emits at most one pass for that set, coalesces additional wakes, and invalidates stale prior-generation attempts."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited event-specific retention anchor, TTL, legal-hold, or deletion rule is complete for this exact token."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited contract closes both redaction behavior and accountable custody authority for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2315-2339",
+      "note": "The cited contract expressly supports the transitions dimension for `scheduler.pass`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited contract closes authoritative consumer checkpoint advancement and fail-closed checkpoint behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:7125-7129",
+      "note": "The cited acceptance contract supplies positive scheduler-pass behavior and prohibited non-emission/duplication cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2282",
+      "status": "drift",
+      "notes": "Current exact scheduler.pass contract is at 2315-2339."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2315-2339",
+      "status": "ok",
+      "notes": "Defines the canonical name, closed wake reasons, legacy alias, schema-version-bearing minimum payload, identity, and scoring outputs."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:323-325",
+      "status": "ok",
+      "notes": "Requires the complete deterministic score tuple and non-selected reason on every scheduler pass."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:367-372",
+      "status": "ok",
+      "notes": "Defines one pending wake set, deterministic primary/coalesced wakes, at-most-one pass, and stale-generation invalidation."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:7125-7129",
+      "status": "ok",
+      "notes": "Provides positive acceptance criteria for wake reasons, coalescing, scoring, and fail-closed classification."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8014",
+      "status": "ok",
+      "notes": "Maps resume to scheduler.pass and exposes the scheduler pass reference."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8026",
+      "status": "ok",
+      "notes": "Maps runtime allowed actions to canonical event dispatch including scheduler.pass."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "The cited line does not materially close scheduler event authority; consumer evidence is stronger in UI Command Catalog and Executor Protocol."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay20",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
+  ]
+}

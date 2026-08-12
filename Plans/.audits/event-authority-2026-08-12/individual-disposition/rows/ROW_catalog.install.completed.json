@@ -1,0 +1,101 @@
+{
+  "event_type": "catalog.install.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly names the semantic owner accountable for the persisted `catalog.install.completed` contract."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "UI_Command_Catalog names the token as an expected outcome, while production wiring at Plans/Wiring_Matrix.production.json:2357-2411 explicitly declares no persisted event; no producer PASS is possible until reconciled."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority registry row individually admits `catalog.install.completed`; observed naming or command emission is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority supplies a closed persisted EventRecord payload and envelope for `catalog.install.completed`."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract closes project/thread/object scope and canonical identity fields for persisted `catalog.install.completed` records."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract defines persisted `catalog.install.completed` replay identity, deduplication key, or idempotent projector behavior; command idempotency inputs do not establish event replay identity."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns a retention class or deletion horizon specifically to `catalog.install.completed`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns redaction fields, custody, and deletion propagation specifically to `catalog.install.completed`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority closes legal predecessor/successor states and rejection behavior for `catalog.install.completed`; an expected-event mapping is not an event state machine."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority names persisted `catalog.install.completed` consumers and their checkpoint/ack behavior."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority defines aliases, schema evolution, deprecation, or withdrawal rules for `catalog.install.completed`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Production wiring supplies a negative no-unexpected-event oracle that conflicts with UI_Command_Catalog's expected catalog.install.completed outcome; no coherent positive/negative persisted-event oracle pair exists."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:916-916",
+      "status": "ok",
+      "notes": "Declares catalog.install.completed as an expected cmd.catalog.install_item outcome."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2357-2411",
+      "status": "ok",
+      "notes": "Production wiring instead declares an empty expected-event set, a no-persist receipt, and a negative oracle forbidding unexpected persisted domain events."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928-932",
+      "status": "ok",
+      "notes": "Defines the persisted-event authority split needed to resolve the contradiction."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay02",
+  "provisional": false,
+  "quality_notes": [
+    "Individually reasoned against exact current Plans citations; all twelve evidence fields are explicit and every PASS is field-local.",
+    "No admission, registry append, owner inference, producer inference, or package analogy is authorized."
+  ]
+}

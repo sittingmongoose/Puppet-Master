@@ -1,0 +1,43 @@
+{
+  "actor_ref": "actor:human:alice",
+  "artifact_refs": [],
+  "correlation_id": "corr-001",
+  "effective_account_ref": "account:001",
+  "effective_model_ref": "model:gpt-4",
+  "effective_provider_ref": "provider:openai",
+  "event_name": "goal.completed",
+  "evidence_refs": [],
+  "execution_role": "user",
+  "expected_goal_revision": 1,
+  "goal_id": "goal-001",
+  "goal_revision": 1,
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "payload": {
+    "acceptance_criteria_disposition": [
+      {
+        "criterion_id": "crit-001",
+        "disposition": "satisfied",
+        "evidence_refs": [
+          "evidence:001"
+        ]
+      }
+    ],
+    "changed_artifact_refs": [
+      "artifact:001"
+    ],
+    "completion_receipt_ref": "receipt:001",
+    "final_certifier_decision": "certified",
+    "validator_outputs": [
+      {
+        "evidence_ref": "evidence:001",
+        "outcome": "passed",
+        "validator_id": "validator:001"
+      }
+    ]
+  },
+  "project_id": "proj-001",
+  "requested_account_ref": "account:001",
+  "requested_model_ref": "model:gpt-4",
+  "requested_provider_ref": "provider:openai",
+  "schema_version": "pm.goal_runtime_event.goal_completed.schema.v2"
+}

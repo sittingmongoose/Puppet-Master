@@ -1,0 +1,534 @@
+{
+  "schema_id": "pm.assurance.event_authority.known37_pin.v1",
+  "derived_at_utc": "2026-08-12T04:06:03Z",
+  "source": {
+    "path": "Plans/storage-plan.md",
+    "anchor": "RET-K37-ASSIGNMENT-001@1.0.0",
+    "method": "parse owner event-types/exact-policy matrix table; not array-position inference"
+  },
+  "historical_registry_revision": "2026-07-18.2",
+  "live_registry_revision": "2026-08-04.1",
+  "count": 37,
+  "event_types": [
+    "goal.blocked",
+    "goal.cancelled",
+    "goal.child_status_changed",
+    "goal.completed",
+    "goal.created",
+    "goal.degraded",
+    "goal.evidence_captured",
+    "goal.progressed",
+    "goal.receipt_recorded",
+    "goal.replanned",
+    "goal.scheduled",
+    "goal.stopped",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal.verification_decided",
+    "goal_run.blocked",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.replanned",
+    "goal_run.started",
+    "goal_run.stopped",
+    "platform.capability_evaluated",
+    "restore_point.applied",
+    "restore_point.corrupt",
+    "restore_point.created",
+    "restore_point.deleted",
+    "restore_point.expired",
+    "run.started",
+    "safe_point.recovery_unavailable",
+    "seglog.event_appended",
+    "storage.boot_recovery",
+    "storage.compaction_lifecycle_changed",
+    "storage.deletion_lifecycle_changed",
+    "storage.integrity_detected",
+    "storage.recovery_applied",
+    "storage.retention_hold_changed",
+    "storage.value_quarantine_changed"
+  ],
+  "retention_distribution": {
+    "RP-AUTHORITY-INDEFINITE@1.0.0": {
+      "count": 23,
+      "event_types": [
+        "goal.blocked",
+        "goal.cancelled",
+        "goal.child_status_changed",
+        "goal.completed",
+        "goal.created",
+        "goal.degraded",
+        "goal.evidence_captured",
+        "goal.progressed",
+        "goal.receipt_recorded",
+        "goal.replanned",
+        "goal.scheduled",
+        "goal.stopped",
+        "goal.tool_check_recorded",
+        "goal.updated",
+        "goal.verification_decided",
+        "goal_run.blocked",
+        "goal_run.cancelled",
+        "goal_run.certified",
+        "goal_run.stopped",
+        "storage.deletion_lifecycle_changed",
+        "storage.integrity_detected",
+        "storage.retention_hold_changed",
+        "storage.value_quarantine_changed"
+      ]
+    },
+    "RP-OPERATIONAL-2555D@1.0.0": {
+      "count": 4,
+      "event_types": [
+        "platform.capability_evaluated",
+        "storage.boot_recovery",
+        "storage.compaction_lifecycle_changed",
+        "storage.recovery_applied"
+      ]
+    },
+    "RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0": {
+      "count": 5,
+      "event_types": [
+        "restore_point.applied",
+        "restore_point.corrupt",
+        "restore_point.created",
+        "restore_point.deleted",
+        "restore_point.expired"
+      ]
+    },
+    "RP-RUNTIME-365D@1.0.0": {
+      "count": 3,
+      "event_types": [
+        "goal_run.replanned",
+        "goal_run.started",
+        "run.started"
+      ]
+    },
+    "RP-SAFEPOINT-90D-AFTER-RELEASE@1.0.0": {
+      "count": 1,
+      "event_types": [
+        "safe_point.recovery_unavailable"
+      ]
+    },
+    "RP-SEGLOG-7D@1.0.0": {
+      "count": 1,
+      "event_types": [
+        "seglog.event_appended"
+      ]
+    }
+  },
+  "live_presence": {
+    "goal.blocked": {
+      "family_id": "event-family-goal-blocked",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.cancelled": {
+      "family_id": "event-family-goal-cancelled",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.child_status_changed": {
+      "family_id": "event-family-goal-child-status-changed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.completed": {
+      "family_id": "event-family-goal-completed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.created": {
+      "family_id": "event-family-goal-created",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_created.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.degraded": {
+      "family_id": "event-family-goal-degraded",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_degraded.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.evidence_captured": {
+      "family_id": "event-family-goal-evidence-captured",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.progressed": {
+      "family_id": "event-family-goal-progressed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_progressed.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.receipt_recorded": {
+      "family_id": "event-family-goal-receipt-recorded",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.replanned": {
+      "family_id": "event-family-goal-replanned",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_replanned.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.scheduled": {
+      "family_id": "event-family-goal-scheduled",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_scheduled.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.stopped": {
+      "family_id": "event-family-goal-stopped",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_stopped.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.tool_check_recorded": {
+      "family_id": "event-family-goal-tool-check-recorded",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.updated": {
+      "family_id": "event-family-goal-updated",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_updated.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal.verification_decided": {
+      "family_id": "event-family-goal-verification-decided",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_verification_decided.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.blocked": {
+      "family_id": "event-family-goal-run-blocked",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.cancelled": {
+      "family_id": "event-family-goal-run-cancelled",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.certified": {
+      "family_id": "event-family-goal-run-certified",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.replanned": {
+      "family_id": "event-family-goal-run-replanned",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.started": {
+      "family_id": "event-family-goal-run-started",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_started.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "goal_run.stopped": {
+      "family_id": "event-family-goal-run-stopped",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v2",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "platform.capability_evaluated": {
+      "family_id": "event-family-platform-capability-evaluated",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "restore_point.applied": {
+      "family_id": "event-family-restore-point-applied",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_applied/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "restore_point.corrupt": {
+      "family_id": "event-family-restore-point-corrupt",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "restore_point.created": {
+      "family_id": "event-family-restore-point-created",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "restore_point.deleted": {
+      "family_id": "event-family-restore-point-deleted",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_deleted/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "restore_point.expired": {
+      "family_id": "event-family-restore-point-expired",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_expired/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "run.started": {
+      "family_id": "event-family-run-started",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "safe_point.recovery_unavailable": {
+      "family_id": "event-family-safe-point-recovery-unavailable",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-SAFEPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "seglog.event_appended": {
+      "family_id": "event-family-seglog-event-appended",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/seglog_event_appended/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-SEGLOG-7D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.boot_recovery": {
+      "family_id": "event-family-storage-boot-recovery",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.compaction_lifecycle_changed": {
+      "family_id": "event-family-storage-compaction-lifecycle-changed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_compaction_lifecycle_changed/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.deletion_lifecycle_changed": {
+      "family_id": "event-family-storage-deletion-lifecycle-changed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_deletion_lifecycle_changed/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.integrity_detected": {
+      "family_id": "event-family-storage-integrity-detected",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.recovery_applied": {
+      "family_id": "event-family-storage-recovery-applied",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0",
+      "payload_mode": "ref",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.retention_hold_changed": {
+      "family_id": "event-family-storage-retention-hold-changed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    "storage.value_quarantine_changed": {
+      "family_id": "event-family-storage-value-quarantine-changed",
+      "family_revision": "2.0.0",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0",
+      "payload_mode": "inline",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    }
+  },
+  "august_beyond_known37": [
+    "terminal.workgroup_moved",
+    "workspace.layout_changed"
+  ],
+  "noncanonical_paths_forbidden": true
+}

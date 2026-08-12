@@ -1,0 +1,146 @@
+{
+  "event_type": "plan_compile.run_created_or_bound",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "emit_restore"
+  ],
+  "july_classification": "emit_candidate_machine_contract_triple_bound",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (no registry admit) + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "The matrix entry declares expected_event_types and certification evidence but supplies no event-registry membership record, contract version, or registry row for `plan_compile.run_created_or_bound`."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.production.json:20550",
+      "note": "evidence_required conditions production certification on typed wiring/receipt/event assertion evidence for `cmd.planning_wizard.approve_and_build`; it does not name a semantic owner empowered to approve the persisted `plan_compile.run_created_or_bound` contract."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:20536,20535,20554-20559",
+      "note": "The matrix names handler_location `handlers::planning_wizard::approve_and_build` and effect_contract effect_kind=event requiring `cmd.planning_wizard.approve_and_build` to emit the declared event types via receipt_or_event_refs. This closes the command-path emit producer only; it does not name an EventRecord/seglog append authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "acceptance_checks require a typed payload/result contract or explicit route/open no-persist disposition but do not define a closed persisted payload schema for this exact event type."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "The checked wiring block does not close canonical scope and identity fields carried by the emitted `plan_compile.run_created_or_bound` event itself."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "No replay key, duplicate rule, or idempotency semantics for `plan_compile.run_created_or_bound` appear in the checked matrix contract block."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "No retention class, deletion horizon, or retention authority for `plan_compile.run_created_or_bound` appears in the checked matrix contract block."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "No event-payload redaction or custody rule for `plan_compile.run_created_or_bound` appears in the checked matrix contract block."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "The command effect is declared, but predecessor, successor, failure, and duplicate transition rules for `plan_compile.run_created_or_bound` are not closed in the checked block."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20551-20552",
+      "note": "state_selector `state.planning_wizard.final_review.approve_and_build.availability` and disabled_reason_projection `state.planning_wizard.final_review.approve_and_build.disabled_reason` are named for UI availability, but authorized persisted-event consumers and checkpoint-advance rules for `plan_compile.run_created_or_bound` are not defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "note": "No compatibility alias, migration, deprecation, or withdrawal contract for `plan_compile.run_created_or_bound` appears in the checked matrix block."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:20595-20598",
+      "note": "event_test_requirements state a future assert that `cmd.planning_wizard.approve_and_build` emits `plan_compile.run_created_or_bound` with command_id, origin, correlation_id, and handler target; this is open requirement text, not a completed positive/negative oracle pair."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "closed-world-census/admission/TRIPLE_BOUND_EMIT_MERGE.json",
+      "status": "ok",
+      "notes": "Token in merged_event_types (merged_count=24); advisor2_blocker=materialize_missing_triple_bound_before_partition_seal."
+    },
+    {
+      "citation": "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+      "status": "ok",
+      "notes": "Triple-bound scan: entry_ids=['catalog.planning_wizard_approve_and_build'], ui_command_ids=['cmd.planning_wizard.approve_and_build'], in_census_ledger=True; persistence_adjudication still_open_no_admit."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:20532-20600",
+      "status": "ok",
+      "notes": "Full `catalog.planning_wizard_approve_and_build` block checked for membership, schema, lifecycle, consumer, and persistence dimensions."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:20540",
+      "status": "ok",
+      "notes": "Exact token appears in expected_event_types for `cmd.planning_wizard.approve_and_build`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:20553",
+      "status": "ok",
+      "notes": "effect_contract declares effect_kind=event and receipt_or_event_refs containing the exact token."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:20595",
+      "status": "ok",
+      "notes": "event_test_requirements assert future emission; requirement is not executed oracle evidence."
+    },
+    {
+      "citation": "Plans/PMConcept_Control_Reconciliation.json:9032",
+      "status": "ok",
+      "notes": "Non-wiring Plans mention exact token; checked for EventRecord/seglog persistence — not proven. Snippet: \"receipt_or_event_effect\": \"planning.approval_cas_receipt.written, planning.plan_approved, plan_compile.run_created_or_bound\","
+    },
+    {
+      "citation": "Plans/_shards/non_executable_closure_evidence/002-lines-201-400.md:18",
+      "status": "ok",
+      "notes": "Non-wiring Plans mention exact token; checked for EventRecord/seglog persistence — not proven. Snippet: \"event_type\": \"plan_compile.run_created_or_bound\","
+    },
+    {
+      "citation": "Plans/_shards/non_executable_closure_evidence/002-lines-201-400.md:19",
+      "status": "ok",
+      "notes": "Non-wiring Plans mention exact token; checked for EventRecord/seglog persistence — not proven. Snippet: \"payload_schema_id\": \"pm.event_payload.plan_compile.run_created_or_bound.v1\","
+    },
+    {
+      "citation": "Plans/_shards/non_executable_closure_evidence/003-lines-401-600.md:202",
+      "status": "ok",
+      "notes": "Non-wiring Plans mention exact token; checked for EventRecord/seglog persistence — not proven. Snippet: \"disabled_dispatch_rule\": \"When disabled, the control cannot emit planning.plan_approved or plan_compile.run_created_or_bound.\""
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "TripleBoundEmitMerge",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "unresolved_emit_candidate_deepened",
+  "quality_notes": [
+    "Triple-bound emit candidate adjudicated individually; not rejected_lexical.",
+    "Machine-contract emit binding is PASS for producer only; EventRecord/seglog persistence remains the blocking evidence gap.",
+    "Token appears in 4 non-wiring Plans file(s) (Plans/PMConcept_Control_Reconciliation.json, Plans/_shards/non_executable_closure_evidence/002-lines-201-400.md, Plans/_shards/non_executable_closure_evidence/002-lines-201-400.md) without EventRecord/seglog persistence proof for this exact event type.",
+    "No admission, registry append, analogy, or owner/producer inference used."
+  ],
+  "source_deepener": "DeepenEmit24",
+  "emit_meta": {
+    "ui_command_id": "cmd.planning_wizard.approve_and_build",
+    "wiring_entry_id": "catalog.planning_wizard_approve_and_build",
+    "merge_wave": "triple_bound_24"
+  }
+}

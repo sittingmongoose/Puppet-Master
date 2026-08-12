@@ -1,0 +1,232 @@
+[
+  {
+    "event_type": "widget.quota_summary",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 3382,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 19317,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "widget.tool_usage",
+    "occurrence_count": 2,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 3382,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 19320,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "agent_id.to_string",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4668,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "attachments.is_empty",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1710,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "branching.assistant_worktree_pre_merge_cmd",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 928,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "branching.assistant_worktree_pre_merge_test_target",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 930,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "branching.worktree_pre_merge_test_timeout_s",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 929,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "chat.thread_worktree_pr_failed.phase",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7196,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Contracts_V0.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "current_project.path",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/WorktreeGitImprovement.md",
+        "line": 3555,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/WorktreeGitImprovement.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "dap_client.rs",
+    "occurrence_count": 1,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2515,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  }
+]

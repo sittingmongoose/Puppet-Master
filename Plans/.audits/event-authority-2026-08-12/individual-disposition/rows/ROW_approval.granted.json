@@ -1,0 +1,110 @@
+{
+  "event_type": "approval.granted",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:930-953",
+      "note": "Contracts explicitly registers the persisted event and its producer/consumer boundary and payload minimum."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:953",
+      "note": "The catalog explicitly names HITL / approval resolver as producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from the live versioned family registry; persisted documentation is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Cited payload fields are minima or prose, not an explicitly exhaustive closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:953",
+      "note": "The payload minimum explicitly identifies run, node, blocked sequence, approval scope, and approver identity."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines this event’s replay key, duplicate handling, and idempotency rule."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction fields, timing, and custody for this exact token."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines the complete allowed/forbidden lifecycle transitions for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:953",
+      "note": "The catalog explicitly names UI, orchestrator, permissions, and recovery as consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies complete positive and negative event-level acceptance oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/human-in-the-loop.md:283",
+      "status": "missing",
+      "notes": "The exact event token is absent from the cited file."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:942",
+      "status": "drift",
+      "notes": "Current line is gate.passed; approval.granted is at line 953."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:5-8",
+      "status": "ok",
+      "notes": "Registry revision 2026-08-04.1 declares quarantine_without_checkpoint_advance for unknown events; exact name approval.granted is absent from all family entries."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:930-953",
+      "status": "ok",
+      "notes": "Contracts explicitly registers the persisted event and its producer/consumer boundary and payload minimum."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:953",
+      "status": "ok",
+      "notes": "The catalog explicitly names HITL / approval resolver as producer."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay00",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; absent dimensions fail closed without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

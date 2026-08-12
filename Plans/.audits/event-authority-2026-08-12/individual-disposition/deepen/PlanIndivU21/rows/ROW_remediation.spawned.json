@@ -1,0 +1,118 @@
+{
+  "event_type": "remediation.spawned",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts and Executor canon define the remediation-child creation trigger, minimum lineage identity, and legacy-alias withdrawal direction. The remaining Event Authority dimensions are incomplete, so individual admission is not justified.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish an explicitly accountable owner approval for this exact event; this dimension therefore fails closed."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:288-292",
+      "note": "The remediation-lineage wiring explicitly assigns remediation.spawned to the executor/orchestrator remediation manager."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2523-2536",
+      "note": "The exact contract requires run_id, node_id, remediation root, child attempt, generation, failure class, and timestamp."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish complete replay and idempotency rules; this dimension therefore fails closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish complete legal and illegal transition rules; this dimension therefore fails closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` names consumers and/or a storage projection, but does not define durable checkpoint identity, atomic advancement, or failure behavior for this exact event; the combined dimension fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2523-2527",
+      "note": "The migration rule marks run.remediation_started a deprecated alias and requires new producers to emit remediation.spawned."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `remediation.spawned` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2490",
+      "status": "drift",
+      "notes": "Current line 2490 introduces the FileSafe event table, not remediation.spawned; the canonical event starts at line 2523."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:537",
+      "status": "ok",
+      "notes": "Anchors the remediation child-lineage section; lines 539-547 define the automatic-fix trigger and required lineage behavior."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2512",
+      "status": "drift",
+      "notes": "Current line 2512 is a FileSafe receipt field, not remediation.spawned evidence."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2523-2538",
+      "status": "ok",
+      "notes": "Defines remediation.spawned, its minimum lineage/identity payload, and the requirement that new producers use it instead of deprecated run.remediation_started."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-remediation-spawned",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+    "question": "Event owner must either supply the missing complete Event Authority contract for `remediation.spawned` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Contracts canon defines the spawned-event minimum identity payload and directs new producers away from the legacy alias; Wiring Matrix explicitly establishes the producer, consumers, and storage projection. The checked authority still lacks versioned registry membership, an exhaustive closed payload schema, replay/idempotency, retention, redaction custody, complete transition rules, durable checkpoint identity/atomic advancement/failure behavior, and complete positive/negative oracles; exact semantic acceptance ownership is not explicit enough to infer.",
+    "event_types": [
+      "remediation.spawned"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

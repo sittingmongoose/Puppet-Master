@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.assurance.event_authority.census_adjudication_coverage.v1",
+  "generated_at_utc": "2026-08-12T12:06:14Z",
+  "ledger": "census-adjudication/LEDGER.jsonl",
+  "total_rows": 528,
+  "category_counts": {
+    "registered_keep": 37,
+    "quarantined_not_admitted": 57,
+    "persisted_unregistered_quarantine": 252,
+    "alias": 12,
+    "exact_excluded": 63,
+    "non_exact_excluded": 26,
+    "rejected_lexical_candidate": 81
+  },
+  "admitted_persisted_event_families_count": 252,
+  "admitted_equality_ledger": "individual-disposition/LEDGER.jsonl",
+  "partition_ok": true,
+  "individual_disposition_unresolved_bucket_count": 0,
+  "individual_disposition_alias_bucket_count": 12,
+  "paths": {
+    "schema": "census-adjudication/SCHEMA.md",
+    "ledger": "census-adjudication/LEDGER.jsonl",
+    "partition": "census-adjudication/PARTITION.json",
+    "coverage": "census-adjudication/COVERAGE.json",
+    "summary": "census-adjudication/SUMMARY.md",
+    "rejected_lexical_source": "closed-world-census/rejected-lexical/REJECTED_LEXICAL_CANDIDATES.json",
+    "advisor2_restore_outside_package": [
+      "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+      "closed-world-census/rejected-lexical/FALSE_LEXICAL_RESTORE.json"
+    ]
+  },
+  "note": "Rebuilt after owner apply: registered_keep=37 Known37 only; QNA=57; CPU quarantine=252; unresolved=0."
+}

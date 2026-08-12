@@ -1,0 +1,104 @@
+{
+  "event_type": "testing.capability_policy.updated",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The production wiring matrix treats `testing.capability_policy.updated` as an expected command event, so it is not excluded as field/config noise. The same exact block explicitly conditions production certification on missing typed owner evidence and leaves registry version, persisted payload closure, replay, retention, custody, transitions, consumers/checkpoints, compatibility, and completed oracles unclosed; the token therefore requires an explicit owner veto decision while remaining fail-closed and unadmitted.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "The matrix lists `testing.capability_policy.updated` as an expected event effect but supplies no event-registry membership record or contract version."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The matrix says production certification requires typed Automated Testing owner evidence for `testing.capability_policy.updated`; that required owner evidence is not present in the checked block."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "A handler location is named for the command, but the source does not explicitly declare that handler or another component as authoritative producer of `testing.capability_policy.updated`; producer is not inferred."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "The matrix requires a typed command payload/result and emission correlation, but does not define a closed persisted payload schema for `testing.capability_policy.updated`."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "The capability policy may persist at global/project scope, but the matrix does not close canonical event scope and identity fields for `testing.capability_policy.updated`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "No replay, deduplication key, or idempotency rule for `testing.capability_policy.updated` appears in the checked matrix contract."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "No retention class or deletion horizon for `testing.capability_policy.updated` appears in the checked matrix contract."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "No event payload redaction or custody rule for `testing.capability_policy.updated` appears in the checked matrix contract."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "The command effect is declared, but predecessor, successor, failure, and duplicate transitions for `testing.capability_policy.updated` are not closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "State selectors and UI evidence are required, but authorized persisted-event consumers and checkpoint advancement rules for `testing.capability_policy.updated` are not defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "No compatibility, migration, deprecation, or withdrawal contract for `testing.capability_policy.updated` appears in the checked matrix block."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "note": "The matrix states required future dispatcher/state/event regression evidence; requirements are not completed positive and negative event-contract oracles."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:25645-25706",
+      "status": "ok",
+      "notes": "Exact matrix entry declares `testing.capability_policy.updated` as an expected effect while also documenting still-required production-certification evidence."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-fresh-testing-capability_policy-updated-contract",
+    "field_or_decision": "owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles,membership_version",
+    "question": "Will the accountable Automated Testing authority publish and approve the missing event-specific certification contract for `testing.capability_policy.updated`, or keep this capability-policy token quarantined without registry membership?",
+    "options": [
+      "Publish and approve exact event-specific owner, producer, schema, lifecycle, consumer/checkpoint, compatibility, and oracle evidence, then re-evaluate registry membership",
+      "Keep the token quarantined with no registry membership or checkpoint authority",
+      "Reclassify only if exact token-specific evidence establishes a different non-event or alias role"
+    ],
+    "evidence_gap": "The checked production-wiring entry for `testing.capability_policy.updated` explicitly requires typed Automated Testing owner evidence and does not close the remaining persisted-event contract dimensions.",
+    "event_types": [
+      "testing.capability_policy.updated"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "closed-world-census/clean_batch_01",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated",
+  "quality_notes": [
+    "Cohort pins remain empty because this is a fresh census residual, not a July or August cohort member.",
+    "Expected-event wiring is not treated as registry admission, owner authority, producer authority, or a complete persisted-event contract."
+  ]
+}

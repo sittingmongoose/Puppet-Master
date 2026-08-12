@@ -1,0 +1,109 @@
+{
+  "event_type": "plugin.hook.invoked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Live registry revision `2026-08-04.1` contains no exact `plugin.hook.invoked` member, so membership_version is FAIL. Checked authority supplies 2 field-local PASS finding(s); 9 dimensions remain OWNER_REQUIRED. The row remains quarantined without checkpoint advance; no owner, producer, or policy value was inferred.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:461-467",
+      "note": "The plugin contract explicitly owns plugin event semantics and plugin-owned payload content."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:450-463",
+      "note": "The exact event condition is defined and plugin writers are explicitly instructed to set EventRecord.event_type to the applicable plugin value."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:3-8",
+      "note": "Exact-token search found no `plugin.hook.invoked` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources describe occurrence semantics or minimum/example fields for `plugin.hook.invoked`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local authority closes `plugin.hook.invoked` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `plugin.hook.invoked` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns `plugin.hook.invoked` an event-specific retention, compaction, tombstone, or legal-hold rule."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `plugin.hook.invoked` redaction profile, sensitive-field treatment, payload-ref boundary, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `plugin.hook.invoked`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `plugin.hook.invoked`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines `plugin.hook.invoked` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `plugin.hook.invoked` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Plugins_System.md:447-464",
+      "status": "ok",
+      "notes": "Defines the plugin ledger event table, exact emission meaning, canonical EventRecord persistence, and Plugins ownership of event semantics/payload content."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:3-8",
+      "status": "ok",
+      "notes": "Live registry identity/revision and unknown-event quarantine rule checked; exact-token search found no `plugin.hook.invoked` membership entry."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-plugin-hook-invoked-contract-closure",
+    "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "What versioned contract for `plugin.hook.invoked` closes plugin_id, hook name, duration, invocation identity and scope, and defines duplicate/replay handling, retention, checkpoints, withdrawal, and when a hook call must not emit?",
+    "options": [
+      "Publish the missing individually owned contract for a later fresh adjudication",
+      "Keep the event quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify or withdraw the token with exact cited semantic and migration authority"
+    ],
+    "evidence_gap": "Plugins owns semantics and names hook-call emission with plugin_id, event name, and duration_ms, but the live registry omits the token and does not close invocation identity/scope, payload bounds, replay, retention/custody, checkpoints, compatibility, or non-emission cases.",
+    "event_types": [
+      "plugin.hook.invoked"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed.",
+    "Immutable July confirmed-unregistered cohort identity is preserved as july248; working bucket remains confirmed_persisted_unregistered."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

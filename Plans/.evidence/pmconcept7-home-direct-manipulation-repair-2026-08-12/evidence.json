@@ -1,0 +1,354 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pmconcept7-home-direct-manipulation-repair-2026-08-12",
+  "created_at_utc": "2026-08-12T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Repaired ten reported PMConcept7 Home regressions and replaced the surface movement affordance. Nine of the ten were caused by the Home projection layer overriding the shell it sits on (blanket !important sizing over reparented surfaces, flex sizing on grid items, controls mounted over existing chrome, and capture-phase click hijacks), not by missing features. Movement is now direct manipulation from a top-left grab handle with a lifted item, an in-flow placeholder and live neighbour reflow, plus a keyboard path; the centre-screen target-picker rail is retired along with the 77 per-surface move/redock wiring rows. Adds the contact-aware editor tab silhouette (F3-505) and moves the title-bar notification stack after the search field. Command, event, receipt, schema and storage contracts are unchanged.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm6-build/assemble.py --gate g2",
+      "exit_code": 0,
+      "stdout_excerpt": "gate g2: PASS (9/9 checks)"
+    },
+    {
+      "cmd": "python3 Concepts/pm6-build/assemble.py --gate g3",
+      "exit_code": 0,
+      "stdout_excerpt": "gate g3: PASS (9/9); assembled copied to Concepts/PMConcept6.html"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch> --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; brace_balance/css_vars_defined/js_node_check/no_emoji PASS"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 95 docs, 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 95 docs checked"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; plan_unit_count 5775"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; failures []"
+    },
+    {
+      "cmd": "node <scratch>/verify/probe.mjs (geometry-based functional probe)",
+      "exit_code": 0,
+      "stdout_excerpt": "58/58 checks passed"
+    },
+    {
+      "cmd": "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs --file PMConcept7.html --outdir <scratch> --modules <scratch>/node_modules --server http://127.0.0.1:<port>/",
+      "exit_code": 0,
+      "stdout_excerpt": "22/22 checks pass, 72 deterministic visual cases, 0 runtime errors"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "pm6-assemble-pipeline",
+      "count": 6,
+      "denied_count": 0,
+      "error_count": 1,
+      "note": "One g2 failure from the macOS-pinned NODE path in check_js.py, resolved by making that lookup portable."
+    },
+    {
+      "tool_id": "pm7-build-pipeline",
+      "count": 8,
+      "denied_count": 0,
+      "error_count": 1,
+      "note": "One T20 abort after the legacy DnD band anchor moved; the pattern was re-anchored and the build re-run."
+    },
+    {
+      "tool_id": "headless-browser-probe",
+      "count": 9,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Geometry-based functional probe against the built artifact."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-12-pm7-home-direct-manipulation-repair",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Home-Direct-Manipulation-Repair:2026-08-12",
+        "note": "Jared reported ten defects and directed widget-style grab-and-drag movement plus the contact-aware tab silhouette."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/README.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/02-css-tokens.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/05-css-shell.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-dashboard.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/11-html-shell-open.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/25-js-terminal-demo.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/checks/check_js.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/PMConcept6.html",
+      "change_type": "modified",
+      "note": "Generated only by Concepts/pm6-build/assemble.py."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20."
+    },
+    {
+      "path": "Concepts/PMConcept7-NOTES.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-505",
+    "PlanUnit:F3-460",
+    "PlanUnit:F3-464",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-466",
+    "PlanUnit:F3-501",
+    "PlanUnit:F3-502",
+    "PlanUnit:F3-503",
+    "PlanUnit:F-080",
+    "PlanUnit:UCC-144",
+    "PlanUnit:ATS-029",
+    "ContractName:Plans/FinalGUISpec.md",
+    "ContractName:Plans/UI_Command_Catalog.md",
+    "ContractName:Plans/Wiring_Matrix.production.json",
+    "ContractName:Plans/Widget_System.md",
+    "ContractName:Plans/FileManager.md",
+    "ContractName:Plans/Automated_Testing_System.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:43b5b635c",
+    "note": "Concepts/PMConcept7.html is content-addressed by the base pin plus the authored T20 source; rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA, then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Authored T20 Home Workspace source (direct-manipulation move, repaired resize/collapse/open-in-panel).",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "f407621e56cb9f5f7482711d1c812ed88a2c944cca921a894ac181b48e4e1c3f"
+    },
+    {
+      "note": "Transform driver with the re-pinned BASE_SHA and the re-anchored legacy DnD band.",
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "sha256": "e6105cf741477b35cec6e69550cfe994118f8b7899e71cf0a25c8f62c809fc01"
+    },
+    {
+      "note": "Live matrix updated to assert observable geometry and rendered content rather than dispatch counts.",
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "sha256": "c9d87685bbce94e4548d3bb529485c1a243bc8cce9957a754db9a3c4a1f611c7"
+    },
+    {
+      "note": "Generated concept artifact (never hand-edited).",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2"
+    },
+    {
+      "note": "Transform/gate receipt for the generated artifact.",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "51cffff8ea9c4b5c138d7e7845226df83bc22ed1b7a440f9d67498d8716218e7"
+    },
+    {
+      "note": "Production wiring after retiring the 77 move/redock rows (128 -> 51 home. rows).",
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "f9942023b0bc2bd32216652d80eaf762c38bec8d1f8ca6a166c68231fa0b5341"
+    },
+    {
+      "note": "Control reconciliation with the refreshed census and source hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "e7cb17ccd43b85ab05892f35bef5247f8aea7e35940dcee9527077d38ef14fb2"
+    },
+    {
+      "note": "GUI owner document carrying the amended F3-HOME-002/003, F3-460 and the new F3-505.",
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "dc51354b20dad6d8cf56051b7dcb649ab91d723ecfcf4a9dbbb2ab8a74341032"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm6-assemble-g2-g3",
+      "result": "PASS",
+      "details": "Concepts/pm6-build/assemble.py reports 9/9 on both gates after the parts wave."
+    },
+    {
+      "name": "pm7-transforms-t01-t20",
+      "result": "PASS",
+      "details": "All 20 assertion-guarded transforms apply against the re-pinned base."
+    },
+    {
+      "name": "pm7-static-gates",
+      "result": "PASS",
+      "details": "brace_balance, css_vars_defined, js_node_check and no_emoji all pass on the generated artifact."
+    },
+    {
+      "name": "home-functional-geometry-probe",
+      "result": "PASS",
+      "details": "58/58 checks against the built artifact, asserting observable outcomes: live neighbour reflow during a drag, changed rendered geometry on resize, collapse/expand round-trip with post-commit aria state, rendered buffers for Open in Panel in all four panels, keyboard move across hosts, tab reorder surviving a re-render, overflow chips in panels 1 and 3, silhouette flush and independent-corner states, and widget drag plus grid-snap resize."
+    },
+    {
+      "name": "catalog-wiring-closure",
+      "result": "PASS",
+      "details": "scripts/pm-plans-verify.py validate-wiring-matrix passes with zero failures after the 77 row retirement; cmd.workspace_layout.move_surface keeps closure through the grab and drop-target rows."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "scripts/pm-plan-index.py validate passes with 5,775 PlanUnits after adding F3-505."
+    },
+    {
+      "name": "plan-sharding-check",
+      "result": "PASS",
+      "details": "scripts/pm-shard-plans.py --check passes across 95 source documents and 1,788 shards."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "storage-and-schema-unchanged",
+      "result": "PASS",
+      "details": "Plans/home_workspace_layout.schema.json and Plans/storage-plan.md are untouched: the record shape, storage key and revision/readback rules are unaffected."
+    },
+    {
+      "name": "home-workspace-live-matrix",
+      "result": "PASS",
+      "details": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs reports 22/22 checks and the exact 72-case fresh-context visual matrix with zero console or page errors against the shipped artifact. The rewritten fixtures assert observable outcomes: resize asserts changed rendered geometry (excusing only surfaces whose host is over-subscribed), move asserts a lifted item, a placeholder seated in the target host and a mid-drag change in some neighbour's layout position (offsetLeft/offsetTop, so the FLIP transform cannot fake it; the transform itself is recorded alongside as evidence the reflow is animated), collapse asserts panel height on both sides of the toggle, and open-in-panel asserts the rendered buffer in all four panels."
+    },
+    {
+      "name": "editor-tab-silhouette-eight-theme-audit",
+      "result": "PASS",
+      "details": "13/13 packet-requirement checks across all eight themes plus reduced motion: the silhouette and the code canvas resolve to an identical paint stack over a shared opaque ground (glass adopts its own near-opaque plate as that fill, so the two no longer composite over different backdrops), the rail is darker in every theme by a mean channel step of 5.9-20.4/255, no seam at the join, unselected tabs paint their own quiet chip and de-emphasised label, editor tabs are keyboard-focusable with Enter/Space activation and arrow roving producing the identical shape transition, reduced motion snaps without spring travel, and the shape recomputes stable bounds on window resize."
+    },
+    {
+      "name": "editor-tab-silhouette-frame-step-and-pixel-sample",
+      "result": "PASS",
+      "details": "Frame-stepped every rAF tick of a click-to-select transition and recomputed the corner geometry from each frame's own position: 16/16 checks over four themes, worst drift 0.0003px, zero one-frame corner pops, zero degenerate frames. This is how a real defect surfaced: the re-render's snap-sync was landing before the animated one, so the silhouette teleported between tabs instead of springing; a selection change now always springs while layout-driven syncs still snap. Pixel-sampled 24 join crops (8 themes x flush-left / interior / flush-right) at 4x device scale with a stdlib PNG decoder: 24/24 free of hairline seams. Detection required three discriminators because the naive test is defeated by tab-label ink flush to the join, by ordinary step and curved boundaries, and by retro's periodic phosphor grid, which is genuine theme texture in both axes rather than a seam."
+    }
+  ]
+}

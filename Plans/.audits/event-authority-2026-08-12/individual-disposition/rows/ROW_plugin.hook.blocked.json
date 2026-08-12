@@ -1,0 +1,95 @@
+{
+  "event_type": "plugin.hook.blocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:461-464",
+      "note": "Plugins_System explicitly owns plugin event semantics and plugin-owned payload content."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:450-463",
+      "note": "The plugin event table defines the exact hook Block emission and explicitly requires plugin writers to set the applicable plugin event_type."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish a complete scope and identity contract; this dimension therefore fails closed."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish complete replay and idempotency rules; this dimension therefore fails closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:590-604",
+      "note": "The blocked hook must enter canonical blocked-state handling with blocked_reason_code plugin_hook_blocked and cannot use plugin-private retry semantics."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish complete consumer and checkpoint behavior; this dimension therefore fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish compatibility and withdrawal rules; this dimension therefore fails closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plugin.hook.blocked` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Plugins_System.md:447-464",
+      "status": "ok",
+      "notes": "Defines the plugin ledger event table, exact emission meaning, canonical EventRecord persistence, and Plugins ownership of event semantics/payload content."
+    },
+    {
+      "citation": "Plans/Plugins_System.md:590-604",
+      "status": "ok",
+      "notes": "Maps execution-affecting blocked hooks into canonical blocked-state handling and forbids plugin-private retry/recovery semantics."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

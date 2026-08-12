@@ -1,0 +1,352 @@
+{
+  "schema_id": "pm.assurance.event_authority.drift_source_census_row.v1",
+  "generated_at_utc": "2026-08-12T10:34:29Z",
+  "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+  "source_class": "canonical_machine_registry_or_contract",
+  "frozen": {
+    "bytes": 10406,
+    "sha256": "643366a5e2dc8073623ccccea4113884bcf1f4a5c5b24f4a28aca9d9fe0a661b"
+  },
+  "live": {
+    "bytes": 12102,
+    "sha256": "7d115787cf9b3595efce910f194bfb1a6ebd77b32592d4052b70d6b0154a2551"
+  },
+  "drift": true,
+  "byte_delta": 1696,
+  "frozen_content_recovered": true,
+  "freeze_baseline": {
+    "inventory": "closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "occurrence_ledger_frozen_token_count": 27
+  },
+  "event_type_mentions": {
+    "live_full_lexical_count": 34,
+    "frozen_full_lexical_count": 33,
+    "new_full_lexical_tokens": [
+      "home.drop_target"
+    ],
+    "removed_full_lexical_tokens": [],
+    "changed_line_context_tokens": [
+      {
+        "event_type": "build_pm7.py",
+        "frozen_lines": [
+          105
+        ],
+        "live_lines": [
+          113
+        ]
+      },
+      {
+        "event_type": "build_reproducibility.json",
+        "frozen_lines": [
+          200
+        ],
+        "live_lines": [
+          222
+        ]
+      },
+      {
+        "event_type": "changed_files.json",
+        "frozen_lines": [
+          197
+        ],
+        "live_lines": [
+          219
+        ]
+      },
+      {
+        "event_type": "cmd.editor.close_panel",
+        "frozen_lines": [
+          79
+        ],
+        "live_lines": [
+          87
+        ]
+      },
+      {
+        "event_type": "cmd.editor.open_panel",
+        "frozen_lines": [
+          78
+        ],
+        "live_lines": [
+          86
+        ]
+      },
+      {
+        "event_type": "cmd.file.open_with",
+        "frozen_lines": [
+          96
+        ],
+        "live_lines": [
+          104
+        ]
+      },
+      {
+        "event_type": "cmd.panel.switch",
+        "frozen_lines": [
+          97
+        ],
+        "live_lines": [
+          105
+        ]
+      },
+      {
+        "event_type": "cmd.terminal.move_pane",
+        "frozen_lines": [
+          99
+        ],
+        "live_lines": [
+          107
+        ]
+      },
+      {
+        "event_type": "cmd.terminal.move_workgroup",
+        "frozen_lines": [
+          54,
+          84
+        ],
+        "live_lines": [
+          59,
+          92
+        ]
+      },
+      {
+        "event_type": "cmd.widget",
+        "frozen_lines": [
+          61,
+          98
+        ],
+        "live_lines": [
+          66,
+          106
+        ]
+      },
+      {
+        "event_type": "cmd.workspace_layout.move_surface",
+        "frozen_lines": [
+          54,
+          80
+        ],
+        "live_lines": [
+          59,
+          88,
+          195
+        ]
+      },
+      {
+        "event_type": "cmd.workspace_layout.reset",
+        "frozen_lines": [
+          83
+        ],
+        "live_lines": [
+          91
+        ]
+      },
+      {
+        "event_type": "cmd.workspace_layout.resize_surface",
+        "frozen_lines": [
+          81
+        ],
+        "live_lines": [
+          89
+        ]
+      },
+      {
+        "event_type": "cmd.workspace_layout.set_collapsed",
+        "frozen_lines": [
+          82
+        ],
+        "live_lines": [
+          90
+        ]
+      },
+      {
+        "event_type": "control_census.json",
+        "frozen_lines": [
+          167,
+          199
+        ],
+        "live_lines": [
+          181,
+          221
+        ]
+      },
+      {
+        "event_type": "general.startup.reset",
+        "frozen_lines": [
+          155
+        ],
+        "live_lines": [
+          169
+        ]
+      },
+      {
+        "event_type": "governance_results.json",
+        "frozen_lines": [
+          202
+        ],
+        "live_lines": [
+          224
+        ]
+      },
+      {
+        "event_type": "home_workspace_layout.schema.json",
+        "frozen_lines": [
+          66,
+          173
+        ],
+        "live_lines": [
+          71,
+          187
+        ]
+      },
+      {
+        "event_type": "home_workspace_layout.v1",
+        "frozen_lines": [
+          68
+        ],
+        "live_lines": [
+          73
+        ]
+      },
+      {
+        "event_type": "home_workspace_matrix.json",
+        "frozen_lines": [
+          203
+        ],
+        "live_lines": [
+          225
+        ]
+      },
+      {
+        "event_type": "home_workspace_matrix.mjs",
+        "frozen_lines": [
+          166,
+          171
+        ],
+        "live_lines": [
+          180,
+          185
+        ]
+      },
+      {
+        "event_type": "home_workspace_source.py",
+        "frozen_lines": [
+          103,
+          170
+        ],
+        "live_lines": [
+          111,
+          184
+        ]
+      },
+      {
+        "event_type": "production.json",
+        "frozen_lines": [
+          20,
+          120,
+          172
+        ],
+        "live_lines": [
+          20,
+          134,
+          186
+        ]
+      },
+      {
+        "event_type": "repair_report.json",
+        "frozen_lines": [
+          196
+        ],
+        "live_lines": [
+          218
+        ]
+      },
+      {
+        "event_type": "requirement_traceability.jsonl",
+        "frozen_lines": [
+          198
+        ],
+        "live_lines": [
+          220
+        ]
+      },
+      {
+        "event_type": "storage_value_registry.json",
+        "frozen_lines": [
+          67
+        ],
+        "live_lines": [
+          72
+        ]
+      },
+      {
+        "event_type": "terminal.workgroup_moved",
+        "frozen_lines": [
+          93
+        ],
+        "live_lines": [
+          101
+        ]
+      },
+      {
+        "event_type": "test_results.json",
+        "frozen_lines": [
+          201
+        ],
+        "live_lines": [
+          223
+        ]
+      },
+      {
+        "event_type": "window.open",
+        "frozen_lines": [
+          111
+        ],
+        "live_lines": [
+          119
+        ]
+      },
+      {
+        "event_type": "workspace.layout_changed",
+        "frozen_lines": [
+          92
+        ],
+        "live_lines": [
+          100
+        ]
+      }
+    ],
+    "new_vs_ledger_tokens": [
+      "cmd.file.open_with",
+      "cmd.panel.switch",
+      "home.drop_target",
+      "home_workspace_matrix.mjs",
+      "plan.md",
+      "production.json",
+      "storage_value_registry.json"
+    ],
+    "removed_vs_ledger_tokens": [],
+    "live_contract_lexical_count": 0,
+    "frozen_contract_lexical_count": 0,
+    "new_contract_lexical_tokens": [],
+    "removed_contract_lexical_tokens": []
+  },
+  "contract_references": {
+    "live_triple_bound_count": 0,
+    "frozen_triple_bound_count": 0,
+    "new_triple_bound_tokens": [],
+    "removed_triple_bound_tokens": [],
+    "new_triple_bound_detail": [],
+    "removed_triple_bound_detail": [],
+    "new_md_binding_count": 0,
+    "removed_md_binding_count": 0,
+    "new_md_bindings": [],
+    "removed_md_bindings": []
+  },
+  "admission_claim": false,
+  "denominator_effect": "none_until_adjudicated",
+  "notes": [
+    "Discovery-only drift pass; no admission inference per CENSUS_ADMISSION_RULE_V2.",
+    "full_lexical uses dotted lowercase token regex on file text; not admission."
+  ]
+}

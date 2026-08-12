@@ -1,0 +1,127 @@
+{
+  "event_type": "browser.context_captured",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `browser.context_captured`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:1236-1245",
+      "note": "Production wiring explicitly binds handlers::browser::add_selection_to_chat to the browser.context_captured expected event effect."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `browser.context_captured`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `browser.context_captured`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1136",
+      "note": "The storage-owned capture handoff directly identifies chip_id and browser_session_id, with optional thread_id, for the captured context."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `browser.context_captured`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `browser.context_captured`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `browser.context_captured`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `browser.context_captured`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `browser.context_captured`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `browser.context_captured`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `browser.context_captured`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1136",
+      "status": "ok",
+      "notes": "Defines storage-owned capture persistence and bounded browser context fields."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1273",
+      "status": "ok",
+      "notes": "Lists the exact related event."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8740",
+      "status": "drift",
+      "notes": "Cited line is browser.session.resized; exact event moved to line 8741."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:822",
+      "status": "drift",
+      "notes": "Cited line emits browser.session.promoted; capture producers are at lines 810-813."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:840",
+      "status": "drift",
+      "notes": "Cited line is terminal guidance; capture payload rule is at line 828."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:810-813",
+      "status": "ok",
+      "notes": "Four concrete browser commands emit the exact event."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:828",
+      "status": "ok",
+      "notes": "Defines required capture payload fields and discriminated attachment_type."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:1236-1245",
+      "status": "ok",
+      "notes": "Production wiring explicitly binds handlers::browser::add_selection_to_chat to the browser.context_captured expected event effect."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; remaining non-PASS dimensions fail closed, and owner_doc remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

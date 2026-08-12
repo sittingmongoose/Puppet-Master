@@ -1,0 +1,102 @@
+{
+  "event_type": "crew.disbanded",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority membership names this exact event; an accountable owner must decide whether to propose membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans statement explicitly names the semantic authority for this exact event; namespace and nearby contracts are not authority evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts_V0 declares the event payload and meaning but does not explicitly name an accepted producing component; “crew” naming is not producer authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:2973",
+      "note": "The exact crew.disbanded row enumerates payload field names but does not provide field types/constraints, envelope closure, or unknown-field behavior."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2953-2973",
+      "note": "The crew lineage floor and exact crew.disbanded row require run_id, thread_id, crew_id, and applicable parent/child/member identities."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No citation defines duplicate recognition, replay behavior, ordering, or idempotent application for this exact persisted event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific retention class, duration, compaction, or deletion authority is cited; the accountable owner must supply it."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific sensitive-field inventory, redaction rule, or custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:2973",
+      "note": "The description states the meaning of crew.disbanded but does not define allowed source states, target state, revision/CAS behavior, or rejected transitions."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, projection contract, or checkpoint advancement rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No compatibility window, schema evolution rule, withdrawal condition, or migration authority is cited."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No paired positive and negative persisted-event oracle is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2953-2973",
+      "status": "ok",
+      "notes": "Exact crew lineage floor plus crew.disbanded payload inventory and meaning."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2975",
+      "status": "ok",
+      "notes": "References storage-plan and Run_Modes contracts but does not itself name owner/producer or close the missing event dimensions."
+    },
+    {
+      "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:233-235",
+      "status": "ok",
+      "notes": "Immutable cohort map assigns crew.disbanded to july248; retained independently of working bucket."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay07",
+  "provisional": false,
+  "quality_notes": [
+    "Fresh row-local review of exact current Plans citations; drifted baseline line references were not reused.",
+    "All 12 schema evidence dimensions, including owner_doc, have status, citation, and row-specific note; each PASS has a field-local Plans citation.",
+    "Fail-closed NEEDS_OWNER_VETO only: no admission, registry append, owner/producer inference, or OD-EA-003 dependence."
+  ]
+}

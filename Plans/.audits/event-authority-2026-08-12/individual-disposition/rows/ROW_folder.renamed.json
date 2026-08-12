@@ -1,0 +1,96 @@
+{
+  "event_type": "folder.renamed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation names an accountable semantic owner document for this event; an owner decision is required."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:12876-12899",
+      "note": "The production wiring entry for `cmd.file.rename` declares only `file.renamed`; it does not authorize that command as producer of `folder.renamed`."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific citation fixes closed-world membership and payload/envelope version behavior."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines a closed payload schema for this exact event; a payload minimum or token listing is insufficient."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes the identifiers that scope and correlate this exact event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines replay normalization, deduplication, or idempotency for this exact event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines retention, compaction, or deletion policy for this exact event."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns sensitive-field redaction and custody responsibilities for this exact event."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines legal predecessor/successor states and invalid transitions for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation identifies authorized consumers and whether this event may advance checkpoints."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines aliases, compatibility normalization, or withdrawal criteria for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies event-specific positive and negative conformance oracles."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:350",
+      "status": "ok",
+      "notes": "The cited command-catalog location does contain this exact token mapping. The mapping is retained as valid source evidence but conflicts with the separate production Wiring Matrix effect and therefore does not establish final producer authority."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12876-12899",
+      "status": "ok",
+      "notes": "The production Wiring Matrix directly defines the mapped command effect and is retained as explicit contradiction evidence for producer adjudication."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay11",
+  "provisional": false,
+  "quality_notes": [
+    "Individually deepened under the binding schema; all 12 dimensions are present, every PASS is field-local and cited, and residuals fail closed to a stable owner veto."
+  ],
+  "source_deepener": "PlanIndivU07"
+}

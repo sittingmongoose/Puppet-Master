@@ -1,0 +1,130 @@
+{
+  "event_type": "settings.updated",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The corrected command row and production wiring establish exact command-side producers and required emission tests for this generic settings event. The July command citation drifted and neither source closes the event payload or semantic authority. Keep quarantined pending an individual owner decision.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `settings.updated`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:23266-23325",
+      "note": "Production wiring explicitly binds handlers::settings::agent_rules_dry_method_default_guard_set to a settings.updated event effect and emission assertion."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `settings.updated`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `settings.updated`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked command citation scopes the triggering command but does not state that the emitted `settings.updated` payload carries the same identity; event scope therefore fails closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `settings.updated`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `settings.updated`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `settings.updated`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `settings.updated`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `settings.updated`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `settings.updated`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `settings.updated`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines only the generic handler_location matrix column; it is not this event contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1121",
+      "status": "drift",
+      "notes": "Current line is the Search table header and does not name this event."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1096",
+      "status": "ok",
+      "notes": "cmd.chat.memory.toggle_auto_save_unverified declares settings.updated as its expected event."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:23271-23325",
+      "status": "ok",
+      "notes": "Exact dry-method-default wiring declares settings.updated and a required event emission test with command/origin/correlation/handler evidence."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:23333-23387",
+      "status": "ok",
+      "notes": "Exact notification-settings wiring independently declares settings.updated and the same emission-test envelope."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:23266-23325",
+      "status": "ok",
+      "notes": "Production wiring explicitly binds handlers::settings::agent_rules_dry_method_default_guard_set to a settings.updated event effect and emission assertion."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-settings-updated",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `settings.updated`, must the acceptance authority supply an owned, versioned Event Authority contract closing owner_doc, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct continued quarantine/reclassification with an exact cited rationale?",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Field-local citations establish only the PASS dimensions recorded for `settings.updated`. The remaining 11 dimensions are FAIL or OWNER_REQUIRED and cannot be closed by namespace, command, package, or sibling-event inference.",
+    "event_types": [
+      "settings.updated"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay21",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; remaining non-PASS dimensions fail closed, and owner_doc remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

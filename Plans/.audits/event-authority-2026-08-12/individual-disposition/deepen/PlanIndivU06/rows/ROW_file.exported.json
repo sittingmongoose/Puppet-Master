@@ -1,0 +1,104 @@
+{
+  "event_type": "file.exported",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The catalog maps local-copy export to file or folder expected outcomes, but does not name producer/owner authority. Because export crosses from managed project state to an external destination without a closed payload or destination-redaction/custody rules, this exact token remains quarantined.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns `file.exported` a registry membership state or contract version; owner authority is required before either can be fixed."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names the accountable semantic owner for `file.exported`; the emitting command/check is not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The command catalog maps a command to expected `file.exported` emission but does not explicitly name the implementation producer authority; producer identity is therefore not inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines a closed persisted payload schema for `file.exported`; command arguments and a stated outcome are not assumed to be the event payload."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines `file.exported` scope and canonical entity identity; namespace or sibling-event identity is not inferred."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact specifies replay, deduplication key, or idempotency behavior for `file.exported`."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact sets a retention class or deletion horizon for `file.exported`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns redaction fields, custody, or access controls for `file.exported`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact closes the allowed predecessor, successor, and failure transitions for `file.exported`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names authorized consumers or checkpoint-advance rules for `file.exported`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines compatibility, migration, deprecation, or withdrawal rules for `file.exported`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact supplies event-level positive and negative conformance oracles for `file.exported`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:357",
+      "status": "ok",
+      "notes": "The catalog directly maps a command to expected `file.exported` emission, but this is contextual token evidence only and does not earn producer PASS without an explicitly named producer authority."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-file-exported-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the accountable semantic owner (not identified by cited Plans) decide whether `file.exported` is durable and, if so, what destination data may be recorded, redacted, retained, and exposed to consumers?",
+    "options": [
+      "Publish and approve the missing event-specific authority contract, then re-evaluate this token",
+      "Continue fail-closed quarantine with no registration or checkpoint authority",
+      "Reclassify the token only with exact event-specific cited authority"
+    ],
+    "evidence_gap": "For `file.exported`, cited Plans evidence does not close: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "file.exported"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay09",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 dimensions were adjudicated for this exact token; PASS is withheld where the citation does not explicitly name the relevant authority.",
+    "Absent authority is recorded as OWNER_REQUIRED; no namespace, sibling, package, owner, or producer inference was used."
+  ]
+}

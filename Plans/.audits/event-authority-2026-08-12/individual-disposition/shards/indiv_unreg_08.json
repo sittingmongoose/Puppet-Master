@@ -1,0 +1,1092 @@
+[
+  {
+    "event_type": "live.session.degraded",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The accepted live-visualization requirement confirms this exact persisted seglog event and its producer context; however, no versioned registry membership, accountable semantic owner, closed storage payload schema, replay/idempotency, event-specific retention and redaction custody, complete legal transitions/consumer checkpoints, compatibility withdrawal, or full oracles are cited. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/newtools.md:850",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/newtools.md:850",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:845-851",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:5946-5976",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `live.session.degraded` (exact emission and producer context are established), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "live.session.degraded"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "live.step.updated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The accepted live-visualization requirement confirms this exact persisted seglog event and its producer context; however, no versioned registry membership, accountable semantic owner, closed storage payload schema, replay/idempotency, event-specific retention and redaction custody, complete legal transitions/consumer checkpoints, compatibility withdrawal, or full oracles are cited. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/newtools.md:847",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/newtools.md:847",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:845-851",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:5946-5976",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `live.step.updated` (exact emission and producer context are established), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "live.step.updated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "model.catalog_refreshed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification remains supported: Model refresh command declares this persisted event and its typed command result. Exact current citations replace drifted input anchors. Only 1/12 admission dimensions are proven; semantic ownership, versioned membership, and contract closure remain unresolved, so admission is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8032",
+        "status": "drift",
+        "notes": "Input line no longer contains `model.catalog_refreshed`; current exact declaration is Plans/UI_Command_Catalog.md:8007."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8007",
+        "status": "ok",
+        "notes": "Model refresh command declares this persisted event and its typed command result."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:16528-16550",
+        "status": "ok",
+        "notes": "Production wiring names handlers::model::refresh and declares model.catalog_refreshed as the expected event/effect."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:16581-16587",
+        "status": "ok",
+        "notes": "Positive event-test requirement asserts the exact emitted event and correlation fields; no complete Event Authority negative-oracle set is supplied."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `model.catalog_refreshed` remain quarantined, be individually registered after an owner-backed 12-dimension contract is completed, or be reclassified with cited rationale?",
+      "options": [
+        "Complete owner-backed contract then individual registration",
+        "Continue quarantine fail-closed",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "Current evidence supports a persisted event declaration and producer surface, but does not establish versioned membership, semantic owner, and every remaining admission dimension; agents cannot invent those product decisions.",
+      "event_types": [
+        "model.catalog_refreshed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "node.blocked",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification remains supported: Runtime contract declares canonical node.blocked, producer contract ref, identity, and minimum payload. Exact current citations replace drifted input anchors. Only 1/12 admission dimensions are proven; semantic ownership, versioned membership, and contract closure remain unresolved, so admission is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2350-2373",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2317,2325,2339",
+        "status": "drift",
+        "notes": "Input line references shifted and no longer land on the `node.blocked` declaration."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2350-2373",
+        "status": "ok",
+        "notes": "Runtime contract declares canonical node.blocked, producer contract ref, identity, and minimum payload."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2659-2668",
+        "status": "ok",
+        "notes": "Attempt-lineage required fields reinforce the blocked event payload and identity."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `node.blocked` remain quarantined, be individually registered after an owner-backed 12-dimension contract is completed, or be reclassified with cited rationale?",
+      "options": [
+        "Complete owner-backed contract then individual registration",
+        "Continue quarantine fail-closed",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "Current evidence supports a persisted event declaration and producer surface, but does not establish versioned membership, semantic owner, and every remaining admission dimension; agents cannot invent those product decisions.",
+      "event_types": [
+        "node.blocked"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "node.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification remains supported: Persisted runtime catalog declares node.completed with executor producer, consumers, and payload minimum. Exact current citations replace drifted input anchors. Only 1/12 admission dimensions are proven; semantic ownership, versioned membership, and contract closure remain unresolved, so admission is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:928-938",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:905,927",
+        "status": "drift",
+        "notes": "Input line references shifted and no longer land on the `node.completed` declaration."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:928-938",
+        "status": "ok",
+        "notes": "Persisted runtime catalog declares node.completed with executor producer, consumers, and payload minimum."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `node.completed` remain quarantined, be individually registered after an owner-backed 12-dimension contract is completed, or be reclassified with cited rationale?",
+      "options": [
+        "Complete owner-backed contract then individual registration",
+        "Continue quarantine fail-closed",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "Current evidence supports a persisted event declaration and producer surface, but does not establish versioned membership, semantic owner, and every remaining admission dimension; agents cannot invent those product decisions.",
+      "event_types": [
+        "node.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "node.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification remains supported: Persisted runtime catalog declares node.started with executor producer, consumers, and payload minimum. Exact current citations replace drifted input anchors. Only 1/12 admission dimensions are proven; semantic ownership, versioned membership, and contract closure remain unresolved, so admission is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:928-937",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:904,926",
+        "status": "drift",
+        "notes": "Input line references shifted and no longer land on the `node.started` declaration."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:928-937",
+        "status": "ok",
+        "notes": "Persisted runtime catalog declares node.started with executor producer, consumers, and payload minimum."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `node.started` remain quarantined, be individually registered after an owner-backed 12-dimension contract is completed, or be reclassified with cited rationale?",
+      "options": [
+        "Complete owner-backed contract then individual registration",
+        "Continue quarantine fail-closed",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "Current evidence supports a persisted event declaration and producer surface, but does not establish versioned membership, semantic owner, and every remaining admission dimension; agents cannot invent those product decisions.",
+      "event_types": [
+        "node.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "onboarding.free_models_refresh_retried",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Semantic overlay confirms an exact command-side producer and machine-readable wiring test requirement. The cited UI wiring schema is generic and the July catalog line drifted; neither the corrected command row nor wiring entry supplies the complete Event Authority contract. Keep quarantined; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:8018",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines the generic handler_location column only; it is not this event contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8043",
+        "status": "drift",
+        "notes": "Current cited line does not contain this exact event; the exact command row is recorded below."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8018",
+        "status": "ok",
+        "notes": "Declares the exact `retry command` payload/result/error row and its event effect."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:17349-17403",
+        "status": "ok",
+        "notes": "Machine-readable wiring names the expected event and requires an event test asserting the command emits it with command/origin/correlation/handler data."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `onboarding.free_models_refresh_retried` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The `retry command` establishes a concrete command-side producer and a required emission test, but it does not establish versioned event membership, an exhaustive event payload schema, event replay/retention/custody rules, lifecycle transitions, consumer checkpoints, compatibility withdrawal, or complete positive and negative Event Authority oracles.",
+      "event_types": [
+        "onboarding.free_models_refresh_retried"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay15",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "onboarding.free_models_refreshed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Semantic overlay confirms an exact command-side producer and machine-readable wiring test requirement. The cited UI wiring schema is generic and the July catalog line drifted; neither the corrected command row nor wiring entry supplies the complete Event Authority contract. Keep quarantined; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:8017",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines the generic handler_location column only; it is not this event contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8042",
+        "status": "drift",
+        "notes": "Current cited line does not contain this exact event; the exact command row is recorded below."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8017",
+        "status": "ok",
+        "notes": "Declares the exact `refresh command` payload/result/error row and its event effect."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:17287-17341",
+        "status": "ok",
+        "notes": "Machine-readable wiring names the expected event and requires an event test asserting the command emits it with command/origin/correlation/handler data."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `onboarding.free_models_refreshed` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The `refresh command` establishes a concrete command-side producer and a required emission test, but it does not establish versioned event membership, an exhaustive event payload schema, event replay/retention/custody rules, lifecycle transitions, consumer checkpoints, compatibility withdrawal, or complete positive and negative Event Authority oracles.",
+      "event_types": [
+        "onboarding.free_models_refreshed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay15",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "onboarding.provider_setup_opened",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Semantic overlay confirms an exact command-side producer and machine-readable wiring test requirement. The cited UI wiring schema is generic and the July catalog line drifted; neither the corrected command row nor wiring entry supplies the complete Event Authority contract. Keep quarantined; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:8019",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines the generic handler_location column only; it is not this event contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8044",
+        "status": "drift",
+        "notes": "Current cited line does not contain this exact event; the exact command row is recorded below."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8019",
+        "status": "ok",
+        "notes": "Declares the exact `provider-setup command` payload/result/error row and its event effect."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:17466-17520",
+        "status": "ok",
+        "notes": "Machine-readable wiring names the expected event and requires an event test asserting the command emits it with command/origin/correlation/handler data."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `onboarding.provider_setup_opened` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The `provider-setup command` establishes a concrete command-side producer and a required emission test, but it does not establish versioned event membership, an exhaustive event payload schema, event replay/retention/custody rules, lifecycle transitions, consumer checkpoints, compatibility withdrawal, or complete positive and negative Event Authority oracles.",
+      "event_types": [
+        "onboarding.provider_setup_opened"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay15",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "panel.redocked",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Semantic overlay confirms an exact command-side producer and machine-readable wiring test requirement. The cited UI wiring schema is generic and the July catalog line drifted; neither the corrected command row nor wiring entry supplies the complete Event Authority contract. Keep quarantined; no admission or analogy.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:8012",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Defines the generic handler_location column only; it is not this event contract."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8037",
+        "status": "drift",
+        "notes": "Current cited line does not contain this exact event; the exact command row is recorded below."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8012",
+        "status": "ok",
+        "notes": "Declares the exact `panel redock command` payload/result/error row and its event effect."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:19365-19419",
+        "status": "ok",
+        "notes": "Machine-readable wiring names the expected event and requires an event test asserting the command emits it with command/origin/correlation/handler data."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `panel.redocked` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "The `panel redock command` establishes a concrete command-side producer and a required emission test, but it does not establish versioned event membership, an exhaustive event payload schema, event replay/retention/custody rules, lifecycle transitions, consumer checkpoints, compatibility withdrawal, or complete positive and negative Event Authority oracles.",
+      "event_types": [
+        "panel.redocked"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay15",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

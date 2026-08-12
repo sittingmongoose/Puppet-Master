@@ -1,0 +1,120 @@
+{
+  "event_type": "bundle.note_status_changed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "For `bundle.note_status_changed`, storage authority preserves the exact durable audit token and states limited event semantics, but does not explicitly name its producer or semantic owner and does not close individual versioned membership, the full payload, identity scope, replay/idempotency, event-specific retention/custody, complete transitions, checkpoint consumers, withdrawal rules, or paired oracles. The partial semantic statement cannot be promoted by analogy, so this token remains quarantined pending its own owner veto.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority explicitly names the semantic owner for this exact token; owner identification cannot be inferred from namespace or document location."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "`bundle.note_status_changed` is described as a durable bundle audit event, but the cited storage text does not explicitly name its producer; storage document location is not producer authority."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority gives this exact token individual versioned registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority closes the complete persisted payload, required/optional fields, enums, and unknown-field behavior for this exact token."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority closes tenant/project/thread/session identity and partition scope for this exact token."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines replay ordering, deduplication identity, or idempotency behavior for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines an event-specific retention class and deletion schedule for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority assigns sensitive-field redaction and custody obligations for this exact token."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines the complete legal and illegal transition set for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority names required consumers and their fail-closed checkpoint/acknowledgement behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority defines compatibility, migration, and withdrawal criteria for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans authority supplies both positive and negative executable oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1140",
+      "status": "ok",
+      "notes": "Current line names the event and its persisted audit meaning."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8480",
+      "status": "drift",
+      "notes": "Original line anchor no longer contains the event token; current authority is cited separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:930",
+      "status": "ok",
+      "notes": "Contracts requires registered names and delegates concrete persisted schemas, retention, and cleanup to storage."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1138-1140",
+      "status": "ok",
+      "notes": "Current Plans text supports only the recorded limited evidence for `bundle.note_status_changed`; it does not close the residual contract."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-bundle-note-status-changed",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `bundle.note_status_changed`, should the accountable owner supply and cite the missing field-local Event Authority decisions, keep the token quarantined with fail-closed checkpoint behavior, or reclassify it as excluded/non-event?",
+    "options": [
+      "Supply explicit owner authority and a complete individually versioned contract for a later admission review; do not append any registry",
+      "Keep quarantined as persisted-unregistered and prohibit checkpoint advancement",
+      "Reclassify as excluded/non-event with exact token-specific cited rationale"
+    ],
+    "evidence_gap": "The cited Plans text proves only the limited PASS evidence recorded above; every OWNER_REQUIRED field lacks field-local authority and cannot be filled from namespace, siblings, package membership, OD-EA-003, or document location.",
+    "event_types": [
+      "bundle.note_status_changed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay02",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently: exactly 12 schema fields use binding statuses; each PASS has a field-local Plans citation; every residual field is OWNER_REQUIRED and is covered by the stable row-specific veto. Browser rows include the production positive/negative event-oracle evidence."
+  ],
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

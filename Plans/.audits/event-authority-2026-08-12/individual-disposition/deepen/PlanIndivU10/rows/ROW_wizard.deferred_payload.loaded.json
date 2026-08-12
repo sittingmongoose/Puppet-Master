@@ -1,0 +1,120 @@
+{
+  "event_type": "wizard.deferred_payload.loaded",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "A project command explicitly expects this persisted domain event and identifies command arguments and affected surfaces, but the semantic event owner and event-level payload contract remain unresolved. The retained legacy command alias also lacks an accepted withdrawal point.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `wizard.deferred_payload.loaded`."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked citations associate `wizard.deferred_payload.loaded` with scheduler, command, or storage behavior but do not explicitly name an accountable emitting component without inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `wizard.deferred_payload.loaded`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `wizard.deferred_payload.loaded`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked command citation scopes the triggering command but does not state that the emitted `wizard.deferred_payload.loaded` payload carries the same identity; event scope therefore fails closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `wizard.deferred_payload.loaded`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `wizard.deferred_payload.loaded`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `wizard.deferred_payload.loaded`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `wizard.deferred_payload.loaded`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `wizard.deferred_payload.loaded`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `wizard.deferred_payload.loaded`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `wizard.deferred_payload.loaded`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:319",
+      "status": "drift",
+      "notes": "Current line is an affected-surfaces line for GitHub disconnect and does not define this wizard event."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines the generic handler_location column only; it does not name this event or its handler."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:336",
+      "status": "ok",
+      "notes": "Declares cmd.project.chain_wizard_open_deferred arguments and expects wizard.opened plus wizard.deferred_payload.loaded."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:327-338",
+      "status": "ok",
+      "notes": "Identifies project/Planning Wizard surfaces and retains chain_wizard spelling as a compatibility alias pending an accepted migration."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-wizard-deferred-payload-loaded",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `wizard.deferred_payload.loaded`, must the acceptance authority supply an owned, versioned Event Authority contract closing owner_doc, producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct continued quarantine/reclassification with an exact cited rationale?",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Field-local citations establish only the PASS dimensions recorded for `wizard.deferred_payload.loaded`. The remaining 12 dimensions are FAIL or OWNER_REQUIRED and cannot be closed by namespace, command, package, or sibling-event inference.",
+    "event_types": [
+      "wizard.deferred_payload.loaded"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; absent contracts fail closed and owner/producer authority remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

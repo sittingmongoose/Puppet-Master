@@ -1,0 +1,130 @@
+{
+  "event_type": "chat.thread_worktree_renamed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Storage and chat catalogs confirm a persisted rename event, exact identity fields, and lifecycle producer context; cited line drift is repaired. Membership version, accountable owner, closed schema, and remaining authority dimensions are not complete, so quarantine remains.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `chat.thread_worktree_renamed`."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked citations associate `chat.thread_worktree_renamed` with scheduler, command, or storage behavior but do not explicitly name an accountable emitting component without inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `chat.thread_worktree_renamed`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `chat.thread_worktree_renamed`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1574",
+      "note": "The exact event row directly binds thread_id and worktree_id with the old and new branch names."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `chat.thread_worktree_renamed`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `chat.thread_worktree_renamed`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `chat.thread_worktree_renamed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `chat.thread_worktree_renamed`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `chat.thread_worktree_renamed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `chat.thread_worktree_renamed`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `chat.thread_worktree_renamed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:950",
+      "status": "drift",
+      "notes": "Current line is bundle.selection_sent_to_chat, not this event."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1573",
+      "status": "drift",
+      "notes": "Current line is unbound; renamed is at line 1574 with minimum payload."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3339",
+      "status": "drift",
+      "notes": "Current event row is at line 3341 and supplies fields/description."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2962",
+      "status": "ok",
+      "notes": "Inverse worktree-to-thread binding lookup supports identity context."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1574",
+      "status": "ok",
+      "notes": "Storage registration table gives the exact event and minimum payload."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3341",
+      "status": "ok",
+      "notes": "Seglog catalog gives exact fields and rename meaning."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-chat-thread-worktree-renamed",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `chat.thread_worktree_renamed`, must the acceptance authority supply an owned, versioned Event Authority contract closing owner_doc, producer, membership_version, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct continued quarantine/reclassification with an exact cited rationale?",
+    "options": [
+      "Provide cited, owner-approved membership version and complete contract; then evaluate this event individually for registration",
+      "Continue quarantine as persisted-unregistered with no checkpoint advance",
+      "Reclassify or exclude only with event-specific cited semantic rationale"
+    ],
+    "evidence_gap": "Field-local citations establish only the PASS dimensions recorded for `chat.thread_worktree_renamed`. The remaining 11 dimensions are FAIL or OWNER_REQUIRED and cannot be closed by namespace, command, package, or sibling-event inference.",
+    "event_types": [
+      "chat.thread_worktree_renamed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay05",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; absent contracts fail closed and owner/producer authority remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

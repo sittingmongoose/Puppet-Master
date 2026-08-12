@@ -1,0 +1,129 @@
+{
+  "event_type": "debug.investigation.instrumentation_state_changed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Live registry revision `2026-08-04.1` contains no exact `debug.investigation.instrumentation_state_changed` member, so membership_version is FAIL. Checked authority supplies 1 field-local PASS finding(s); 10 dimensions remain OWNER_REQUIRED. The row remains quarantined without checkpoint advance; no owner, producer, or policy value was inferred.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the accountable semantic Event Authority owner for `debug.investigation.instrumentation_state_changed`; document title, namespace, storage ownership, and surrounding family context were not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the component authorized to emit `debug.investigation.instrumentation_state_changed`; namespace and neighboring event rows were not used to infer a producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:3-8",
+      "note": "Exact-token search found no `debug.investigation.instrumentation_state_changed` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources describe occurrence semantics or minimum/example fields for `debug.investigation.instrumentation_state_changed`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local authority closes `debug.investigation.instrumentation_state_changed` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `debug.investigation.instrumentation_state_changed` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns `debug.investigation.instrumentation_state_changed` an event-specific retention, compaction, tombstone, or legal-hold rule."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1541-1546",
+      "note": "The debug-family rule explicitly forbids duplicated raw secrets/logs/traces/binary bytes and assigns raw material to artifact/blob refs while requiring bounded summaries to preserve redaction and omission state."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `debug.investigation.instrumentation_state_changed`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `debug.investigation.instrumentation_state_changed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines `debug.investigation.instrumentation_state_changed` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `debug.investigation.instrumentation_state_changed` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:1490",
+      "status": "drift",
+      "notes": "Input line now belongs to web error taxonomy."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1499",
+      "status": "drift",
+      "notes": "Input line now describes content_not_found."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1521",
+      "status": "drift",
+      "notes": "Input line is the moved section heading, not the event row."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1521-1537",
+      "status": "ok",
+      "notes": "Current persisted family declaration and exact instrumentation state payload row."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1541-1546",
+      "status": "ok",
+      "notes": "Current raw-material, redaction, and custody floor."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:3-8",
+      "status": "ok",
+      "notes": "Live registry identity/revision and unknown-event quarantine rule checked; exact-token search found no `debug.investigation.instrumentation_state_changed` membership entry."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-debug-investigation-instrumentation-state-changed-contract-closure",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `debug.investigation.instrumentation_state_changed`, what owner-approved contract binds instrumentation state to rollback_state, defines the authorized emitter and replay identity, and specifies retention, checkpoints, withdrawal, and invalid rollback-state oracles?",
+    "options": [
+      "Publish the missing individually owned contract for a later fresh adjudication",
+      "Keep the event quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify or withdraw the token with exact cited semantic and migration authority"
+    ],
+    "evidence_gap": "The payload names instrumentation_id, scope_kind, state, rollback_state, and optional detail_ref, but the live registry omits the token and does not close state/rollback coupling, emitter authority, replay, retention, checkpoint, compatibility, or rejection behavior.",
+    "event_types": [
+      "debug.investigation.instrumentation_state_changed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay08",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed.",
+    "Immutable July confirmed-unregistered cohort identity is preserved as july248; working bucket remains confirmed_persisted_unregistered."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

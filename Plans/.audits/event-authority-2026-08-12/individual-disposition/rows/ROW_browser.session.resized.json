@@ -1,0 +1,103 @@
+{
+  "event_type": "browser.session.resized",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly names the authority owner for `browser.session.resized`; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly designates the authoritative producer for `browser.session.resized`; command handlers or storage mentions cannot be promoted by inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is mentioned, but no individually versioned registry membership for `browser.session.resized` is cited."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed durable payload schema is cited for `browser.session.resized`; command inputs/results and neighboring event schemas are insufficient."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `browser.session.resized`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `browser.session.resized`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No retention, compaction, tombstone, or deletion policy is cited for `browser.session.resized`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No sensitive-field redaction and custody boundary is cited for `browser.session.resized`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No legal predecessor/successor or invalid-transition contract is cited for `browser.session.resized`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `browser.session.resized`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `browser.session.resized`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `browser.session.resized`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1272",
+      "status": "ok",
+      "notes": "Lists the exact related storage event."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8739",
+      "status": "drift",
+      "notes": "Cited line is browser.session.navigated; exact event moved to line 8740."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8740",
+      "status": "ok",
+      "notes": "Preserves the exact event token in accepted PlanUnit SP-112."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay01",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

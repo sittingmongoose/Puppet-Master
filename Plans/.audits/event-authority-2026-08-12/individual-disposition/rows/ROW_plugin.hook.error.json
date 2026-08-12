@@ -1,0 +1,96 @@
+{
+  "event_type": "plugin.hook.error",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:461-467",
+      "note": "The plugin contract explicitly owns plugin event semantics and plugin-owned payload content."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:450-463",
+      "note": "The exact event condition is defined and plugin writers are explicitly instructed to set EventRecord.event_type to the applicable plugin value."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:3-8",
+      "note": "Exact-token search found no `plugin.hook.error` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources describe occurrence semantics or minimum/example fields for `plugin.hook.error`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local authority closes `plugin.hook.error` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `plugin.hook.error` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns `plugin.hook.error` an event-specific retention, compaction, tombstone, or legal-hold rule."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `plugin.hook.error` redaction profile, sensitive-field treatment, payload-ref boundary, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `plugin.hook.error`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `plugin.hook.error`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines `plugin.hook.error` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `plugin.hook.error` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Plugins_System.md:447-464",
+      "status": "ok",
+      "notes": "Defines the plugin ledger event table, exact emission meaning, canonical EventRecord persistence, and Plugins ownership of event semantics/payload content."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:3-8",
+      "status": "ok",
+      "notes": "Live registry identity/revision and unknown-event quarantine rule checked; exact-token search found no `plugin.hook.error` membership entry."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed.",
+    "Immutable July confirmed-unregistered cohort identity is preserved as july248; working bucket remains confirmed_persisted_unregistered."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

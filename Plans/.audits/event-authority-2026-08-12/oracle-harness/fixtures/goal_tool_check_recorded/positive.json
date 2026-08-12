@@ -1,0 +1,28 @@
+{
+  "actor_ref": "actor:human:alice",
+  "artifact_refs": [],
+  "correlation_id": "corr-001",
+  "effective_account_ref": "account:001",
+  "effective_model_ref": "model:gpt-4",
+  "effective_provider_ref": "provider:openai",
+  "event_name": "goal.tool_check_recorded",
+  "evidence_refs": [],
+  "execution_role": "user",
+  "expected_goal_revision": 1,
+  "goal_id": "goal-001",
+  "goal_revision": 1,
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "payload": {
+    "check_kind": "permission",
+    "check_result": "passed",
+    "output_ref": "output:001",
+    "policy_decision": "allow",
+    "tool_call_id": "toolcall:001",
+    "tool_name": "read_file"
+  },
+  "project_id": "proj-001",
+  "requested_account_ref": "account:001",
+  "requested_model_ref": "model:gpt-4",
+  "requested_provider_ref": "provider:openai",
+  "schema_version": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+}

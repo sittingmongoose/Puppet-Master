@@ -1,0 +1,115 @@
+{
+  "event_type": "run.node_retry_scheduled",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Semantic overlay confirms a canonical scheduler event and its minimum payload (run/node/prior-attempt identity, retry count, failure class, and optional safe point). The source does not close the complete authority contract, so the unregistered row remains quarantined for owner adjudication.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `run.node_retry_scheduled`."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked citations associate `run.node_retry_scheduled` with scheduler, command, or storage behavior but do not explicitly name an accountable emitting component without inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `run.node_retry_scheduled`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `run.node_retry_scheduled`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2412-2420",
+      "note": "The exact minimum payload directly binds run_id, node_id, and prior_attempt_id for this scheduled retry."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `run.node_retry_scheduled`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `run.node_retry_scheduled`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `run.node_retry_scheduled`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `run.node_retry_scheduled`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `run.node_retry_scheduled`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `run.node_retry_scheduled`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `run.node_retry_scheduled`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2401-2409",
+      "status": "drift",
+      "notes": "The cited range overlaps the preceding backoff events; the exact retry-scheduled contract is at lines 2412-2420."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2412-2420",
+      "status": "ok",
+      "notes": "Defines run/node identity, prior attempt, retry count, failure class, optional safe point, and timestamp minimum payload."
+    },
+    {
+      "citation": "Plans/DRY_Rules.md:70",
+      "status": "ok",
+      "notes": "Assigns retry/backoff and ready-set policy to Executor_Protocol and runtime event/payload vocabulary to Contracts_V0."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-run-node-retry-scheduled",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `run.node_retry_scheduled`, must the acceptance authority supply an owned, versioned Event Authority contract closing owner_doc, producer, membership_version, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct continued quarantine/reclassification with an exact cited rationale?",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Field-local citations establish only the PASS dimensions recorded for `run.node_retry_scheduled`. The remaining 11 dimensions are FAIL or OWNER_REQUIRED and cannot be closed by namespace, command, package, or sibling-event inference.",
+    "event_types": [
+      "run.node_retry_scheduled"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; absent contracts fail closed and owner/producer authority remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

@@ -1,0 +1,118 @@
+{
+  "event_type": "bundle.annotation_state_changed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current Contracts authority establishes the exact name, producer/owner boundary, consumers, payload minimum, and scope policy, but no versioned registry membership, storage-owned closed payload schema, replay/idempotency, event-specific retention/redaction custody, compatibility withdrawal, and complete oracles were found. Admission therefore remains fail-closed pending owner completion.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:930-949",
+      "note": "Contracts explicitly registers the persisted event and its producer/consumer boundary and payload minimum."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:949",
+      "note": "The catalog explicitly names document bundle / review owner as producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from the live versioned family registry; persisted documentation is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Cited payload fields are minima or prose, not an explicitly exhaustive closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:949",
+      "note": "The payload minimum explicitly identifies bundle, document, and annotation."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines this event’s replay key, duplicate handling, and idempotency rule."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction fields, timing, and custody for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:949",
+      "note": "The payload minimum explicitly carries previous_state and state for the annotation state change."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:949",
+      "note": "The catalog explicitly names builder, chat, audit, and targeted revision as consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies complete positive and negative event-level acceptance oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:938",
+      "status": "drift",
+      "notes": "Original line anchor no longer contains the event token; current authority is cited separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:949",
+      "status": "ok",
+      "notes": "Current runtime catalog registers the exact persisted name, producer boundary, consumers, and payload minimum."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961",
+      "status": "ok",
+      "notes": "Current catalog assigns bundle events the application_or_project scope policy."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:930-949",
+      "status": "ok",
+      "notes": "Contracts explicitly registers the persisted event and its producer/consumer boundary and payload minimum."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-bundle-annotation-state-changed",
+    "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `bundle.annotation_state_changed`, will the cited contract owner materialize every unresolved Event Authority dimension and return this exact token for individual veto, or keep it quarantined?",
+    "options": [
+      "Materialize the complete cited contract and individually register the event",
+      "Keep quarantined and fail closed with no checkpoint advance",
+      "Reclassify as excluded/non-event with cited semantic rationale"
+    ],
+    "evidence_gap": "The exact token is absent from the live versioned family registry; persisted documentation is not membership. Cited payload fields are minima or prose, not an explicitly exhaustive closed schema. No citation defines this event’s replay key, duplicate handling, and idempotency rule. No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token. No citation assigns redaction fields, timing, and custody for this exact token. No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token. No citation supplies complete positive and negative event-level acceptance oracles for this exact token.",
+    "event_types": [
+      "bundle.annotation_state_changed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay02",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; absent dimensions fail closed without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

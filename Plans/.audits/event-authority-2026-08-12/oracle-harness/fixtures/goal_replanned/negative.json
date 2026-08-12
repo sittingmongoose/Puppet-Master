@@ -1,0 +1,46 @@
+{
+  "actor_ref": "x",
+  "artifact_refs": [
+    "x"
+  ],
+  "correlation_id": "x",
+  "effective_account_ref": "x",
+  "effective_model_ref": "x",
+  "effective_provider_ref": "x",
+  "event_name": "goal.invalid_alias",
+  "evidence_refs": [
+    "x"
+  ],
+  "execution_role": "user",
+  "expected_goal_revision": 1,
+  "goal_id": "x",
+  "goal_revision": 1,
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "payload": {
+    "affected_child_goal_ids": [
+      "x"
+    ],
+    "affected_worknode_refs": [
+      "x"
+    ],
+    "child_decisions": [
+      {
+        "child_goal_id": "x",
+        "decision": "continue",
+        "reason": "x"
+      }
+    ],
+    "impact_summary": "x",
+    "interruption_class": "pause_resume",
+    "new_revision": 1,
+    "next_action": "continue_running",
+    "remaining_evidence_refs": [
+      "x"
+    ]
+  },
+  "project_id": "x",
+  "requested_account_ref": "x",
+  "requested_model_ref": "x",
+  "requested_provider_ref": "x",
+  "schema_version": "pm.goal_runtime_event.goal_replanned.schema.v2"
+}

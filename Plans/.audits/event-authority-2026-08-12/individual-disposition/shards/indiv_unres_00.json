@@ -1,0 +1,1034 @@
+[
+  {
+    "event_type": "chat.message.submitted",
+    "bucket": "unresolved",
+    "july_classification": "candidate_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Explicitly invalid until the event registry owns the name; do not count as persisted canonical. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['UI command catalog candidate; Assistant Chat semantic owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Commands_System.md:277",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Commands_System.md:668",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `chat.message.submitted` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "chat.message.submitted"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "chat.subagent_spawned",
+    "bucket": "unresolved",
+    "july_classification": "alias",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: The cited material identifies a compatibility relationship or behavior but does not close the full Event Authority contract. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:1433",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:1433",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:1433",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:1433",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2854",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1455",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "Should `chat.subagent_spawned` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "chat.subagent_spawned"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread.worktree_bound",
+    "bucket": "unresolved",
+    "july_classification": "alias",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: The cited material identifies a compatibility relationship or behavior but does not close the full Event Authority contract. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:942",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:942",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:942",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:942",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/storage-plan.md:1566",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "Should `chat.thread.worktree_bound` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "chat.thread.worktree_bound"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "chat.thread_title_generated",
+    "bucket": "unresolved",
+    "july_classification": "unknown",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Named as a trigger event, but no EventRecord persistence, producer registration, scope, schema, retention, or canonical/compatibility disposition was found. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/assistant-chat-design.md:3027",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/assistant-chat-design.md:3027",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `chat.thread_title_generated` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "chat.thread_title_generated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "diag.compaction_immune_overflow",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Current owner emits it without storage registration or persisted EventRecord schema. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Prompt_Pipeline.md:267-273",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Prompt_Pipeline.md:267-273",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Prompt_Pipeline.md:267-273",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Prompt_Pipeline.md:267-273",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Prompt_Pipeline.md:1442-1474",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `diag.compaction_immune_overflow` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "diag.compaction_immune_overflow"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "docker.auth.browser_login.cancelled",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Owner defines terminal outcome, but durable registration is absent. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:286",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `docker.auth.browser_login.cancelled` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "docker.auth.browser_login.cancelled"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "docker.auth.browser_login.device_code_issued",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Owner emits it, but durable registration is absent. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-scope_identity-replay_idempotency-retention",
+      "field_or_decision": "membership_version,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `docker.auth.browser_login.device_code_issued` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "docker.auth.browser_login.device_code_issued"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "docker.auth.browser_login.polling",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Owner emits it, but durable registration is absent. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `docker.auth.browser_login.polling` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "docker.auth.browser_login.polling"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "docker.auth.browser_login.started",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Owner emits it, but owner explicitly prohibits durable-canonical treatment until Contracts and Storage registration. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:279-285",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `docker.auth.browser_login.started` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "docker.auth.browser_login.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "docker.auth.browser_login.timed_out",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Fail closed: Owner defines terminal outcome, but durable registration is absent. Registered membership and every remaining required contract dimension are not owner-complete, so no admission is authorized.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:281-285",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:287",
+        "status": "ok",
+        "notes": "Cited span reviewed; it supports the named behavior or relationship but not a complete registered Event Authority contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `docker.auth.browser_login.timed_out` be individually registered, retained only under a cited compatibility disposition, or excluded? Supply owner-backed membership and every unresolved Event Authority contract dimension.",
+      "options": [
+        "Complete an owner-backed contract then consider individual registration",
+        "Continue quarantine fail-closed/no checkpoint advance",
+        "Reclassify with cited rationale"
+      ],
+      "evidence_gap": "The cited evidence does not prove registered membership plus all 12 Event Authority contract dimensions; exact authority values cannot be inferred or supplied by analogy.",
+      "event_types": [
+        "docker.auth.browser_login.timed_out"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem00",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

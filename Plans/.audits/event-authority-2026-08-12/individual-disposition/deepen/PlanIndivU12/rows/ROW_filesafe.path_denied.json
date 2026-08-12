@@ -1,0 +1,119 @@
+{
+  "event_type": "filesafe.path_denied",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The FileSafe path guard explicitly emits this event for a TOCTOU recheck failure, and the contract fixes its path/operation and project/run/worktree identity minimum. The record lacks cited versioned membership, accountable semantic owner, closed persisted schema, replay, retention/custody, full transition/checkpoint, withdrawal, and complete oracle authority; keep it quarantined pending one owner veto.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "An accountable semantic owner is not explicitly named for this exact event; owner adjudication is required."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/FileSafe.md:1405-1417",
+      "note": "The FileSafe realpath-before-scope-check invariant names FileSafe enforcement and explicitly emits this exact event on pre-mutation TOCTOU drift."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:1128-1135",
+      "note": "FileSafe lists this exact token among stable EventRecord event_type values, but the listing does not assign it to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, storage-owned persisted payload schema is cited for this exact event."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2495",
+      "note": "The exact event row requires project_id and optional run_id/worktree_id plus normalized path and operation identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal transition set is cited for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility and withdrawal authority, including removal timing, is cited for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No complete positive-emission and negative-non-emission oracle pair is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/FileSafe.md:1131",
+      "status": "ok",
+      "notes": "FileSafe text names filesafe.path_denied and/or its emission condition."
+    },
+    {
+      "citation": "Plans/FileSafe.md:1417",
+      "status": "ok",
+      "notes": "FileSafe text names filesafe.path_denied and/or its emission condition."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2462",
+      "status": "drift",
+      "notes": "Event token/payload contract moved; current exact row is Plans/Contracts_V0.md:2495."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2495",
+      "status": "ok",
+      "notes": "Current canonical EventRecord minimum-payload row names the producer-relevant event and project/run/worktree scope fields."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-filesafe-path-denied-contract-authority",
+    "field_or_decision": "semantic_owner_and_complete_event_contract",
+    "question": "FileSafe proves `filesafe.path_denied` for TOCTOU recheck failure and Contracts fixes its path/operation payload minimum; should the responsible authority complete the missing membership, persisted-schema, replay/custody/checkpoint contract or keep this security-boundary event quarantined?",
+    "options": [
+      "Authorize only after every failed checklist dimension has exact evidence and independent validation",
+      "Keep quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify with exact row-specific cited evidence"
+    ],
+    "evidence_gap": "The TOCTOU producer condition and path-denial payload minimum are cited, but semantic ownership, versioned membership, persisted-schema closure, replay, retention/custody, lifecycle/checkpoint, withdrawal, and complete oracle authority are absent.",
+    "event_types": [
+      "filesafe.path_denied"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay10",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ]
+}

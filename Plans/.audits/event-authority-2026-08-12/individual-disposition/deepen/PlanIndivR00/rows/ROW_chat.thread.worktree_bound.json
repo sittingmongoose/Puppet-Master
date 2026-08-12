@@ -1,0 +1,98 @@
+{
+  "event_type": "chat.thread.worktree_bound",
+  "bucket": "unresolved",
+  "working_bucket": "unresolved",
+  "cohort_pins": [
+    "july40"
+  ],
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Exact authority classifies `chat.thread.worktree_bound` as a non-canonical alias normalized to `chat.thread_worktree_bound` before persistence. Reclassification only; never admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:972-975",
+      "note": "Explicit authoritative storage ownership and exact normalization."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract explicitly assigns the authoritative producer for `chat.thread.worktree_bound`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:975",
+      "note": "Exact token is migration/review alias only."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The cited row is explicitly a minimum payload, not proof of an exhaustive closed payload schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:981",
+      "note": "Canonical target requires thread_id/worktree_id."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Ordered replay into rebuildable projections does not specify duplicate-event idempotency."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:975",
+      "note": "Dot-form must normalize before persistence."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:972-982",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1566-1568",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently adjudicated from row-local cited evidence.",
+    "PASS is limited to the exact field proposition established by the citation; minimum or included fields are not treated as closed schemas.",
+    "No admission, registry append, owner inference, producer inference, analogy, or OD-EA-003 dependence."
+  ],
+  "alias_target": "chat.thread_worktree_bound"
+}

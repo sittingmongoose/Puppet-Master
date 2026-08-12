@@ -1,0 +1,97 @@
+{
+  "event_type": "docker.auth.browser_login.cancelled",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "july40"
+  ],
+  "july_classification": "emit_only",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited document explicitly accepts authority for `docker.auth.browser_login.cancelled` as canonical."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract explicitly assigns the authoritative producer for `docker.auth.browser_login.cancelled`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No registry authority establishes versioned membership for `docker.auth.browser_login.cancelled`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:279-288",
+      "note": "Exact token occupies a defined login transition."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:283-288",
+      "note": "Exact distinct terminal outcome."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:279-289",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently adjudicated from row-local cited evidence.",
+    "PASS is limited to the exact field proposition established by the citation; minimum or included fields are not treated as closed schemas.",
+    "No admission, registry append, owner inference, producer inference, analogy, or OD-EA-003 dependence."
+  ]
+}

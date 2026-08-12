@@ -1,0 +1,1257 @@
+[
+  {
+    "event_type": "runtime_artifact.cost_usage",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.cost_usage remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:65",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:65",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:65",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:65",
+        "status": "ok",
+        "notes": "Names runtime_artifact.cost_usage in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_cost_usage.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false; strict type-specific payload/redaction fields are present."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.cost_usage membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.cost_usage`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.cost_usage"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_artifact.document",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.document remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:60",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:60",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:60",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:60",
+        "status": "ok",
+        "notes": "Names runtime_artifact.document in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_document.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.document membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.document`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.document"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_artifact.evidence",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.evidence remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:59",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:59",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:59",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:59",
+        "status": "ok",
+        "notes": "Names runtime_artifact.evidence in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_evidence.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.evidence membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.evidence`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.evidence"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_artifact.failed_attempts",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.failed_attempts remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:67",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:67",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:67",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:67",
+        "status": "ok",
+        "notes": "Names runtime_artifact.failed_attempts in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.failed_attempts membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.failed_attempts`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.failed_attempts"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_artifact.hitl_approval",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.hitl_approval remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:66",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:66",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:66",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:66",
+        "status": "ok",
+        "notes": "Names runtime_artifact.hitl_approval in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_hitl_approval.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.hitl_approval membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.hitl_approval`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.hitl_approval"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_artifact.implementation_plan",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "runtime_artifact.implementation_plan remains a canonical persisted runtime-artifact family and has an individually closed v1 payload schema, schema ownership, and scoped artifact identity. It is still absent from the live Event Authority registry, and the current authority does not close the exact producer binding, replay/idempotency, retention-policy reference, custody, transitions, checkpoint rules, compatibility withdrawal, or oracle pack. OD-EA-003 authorizes sequenced owner-complete materialization, not admission; this row therefore remains quarantined pending its individual producer-owner package and later veto/approval.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:55",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Runtime Artifacts owner: Plans/Runtime_Artifacts_Panel.md']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:55",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Runtime_Artifacts_Panel.md:55",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:55",
+        "status": "ok",
+        "notes": "Names runtime_artifact.implementation_plan in the canonical Option-2 19-family map."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+        "status": "ok",
+        "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+        "status": "ok",
+        "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+      },
+      {
+        "citation": "Plans/runtime_artifact_implementation_plan.schema.json",
+        "status": "ok",
+        "notes": "Materialized closed JSON Schema v1 exists with additionalProperties false and required envelope/type_payload fields."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+        "status": "ok",
+        "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+      },
+      {
+        "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+        "status": "ok",
+        "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+      },
+      {
+        "citation": "Plans/event_family_registry.json",
+        "status": "missing",
+        "notes": "No exact runtime_artifact.implementation_plan membership row is present; no registry append is authorized by this overlay."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_DECISION_SHEET.json:59-81",
+        "status": "ok",
+        "notes": "OD-EA-003 authorizes sequenced owner-complete materialization with producer-owner packages returning for veto before any registry append."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-producer-replay_idempotency-retention",
+      "field_or_decision": "membership_version,producer,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "For `runtime_artifact.implementation_plan`, provide cited values/authority for incomplete fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles",
+      "event_types": [
+        "runtime_artifact.implementation_plan"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay19",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.spawned",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current Contracts canon explicitly lists `subagent.spawned` with producer semantics and an event-specific payload field set inside the stable subagent family. This materially establishes producer, scope/lineage, and lifecycle transition semantics, but no live-registry membership/version, explicitly closed schema, replay/idempotency, retention, redaction custody, checkpoint contract, withdrawal path, or complete oracle pair is cited. Under locked OD-EA-001..003, it remains individually quarantined pending owner-complete materialization and veto.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2860",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.spawned`; the current event-specific table row is Plans/Contracts_V0.md:2893."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2882",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.spawned`; the current event-specific table row is Plans/Contracts_V0.md:2893."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families canonical, requires child identity/lineage, and defines the shared PM lineage envelope."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2893",
+        "status": "ok",
+        "notes": "Current canonical table row names `subagent.spawned`, enumerates its payload fields, and states: New subagent created and linked to parent lineage."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2823-2842",
+        "status": "ok",
+        "notes": "Defines canonical child-run identity, lifecycle, lineage preservation, and reversible event projections."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the child-runtime owner (Contracts/orchestrator/storage) materialize the complete, versioned Event Authority contract for `subagent.spawned` and return this exact event for individual owner veto, or keep it quarantined?",
+      "options": [
+        "Materialize the missing contract depth under the named owner, then return this exact stable ID for individual veto before any registry append",
+        "Keep quarantined as persisted-unregistered with no checkpoint advance",
+        "Withdraw or reclassify only with an explicit cited compatibility/withdrawal decision"
+      ],
+      "evidence_gap": "The locked owner answer authorizes only a sequenced owner-complete materialization program and forbids bulk registration; current evidence still lacks live membership/version, an explicitly closed payload schema, replay/idempotency, retention, redaction custody, checkpoint behavior, compatibility withdrawal, and positive/negative oracles.",
+      "event_types": [
+        "subagent.spawned"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay23",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current Contracts canon explicitly lists `subagent.started` with producer semantics and an event-specific payload field set inside the stable subagent family. This materially establishes producer, scope/lineage, and lifecycle transition semantics, but no live-registry membership/version, explicitly closed schema, replay/idempotency, retention, redaction custody, checkpoint contract, withdrawal path, or complete oracle pair is cited. Under locked OD-EA-001..003, it remains individually quarantined pending owner-complete materialization and veto.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2883",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.started`; the current event-specific table row is Plans/Contracts_V0.md:2894."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families canonical, requires child identity/lineage, and defines the shared PM lineage envelope."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2894",
+        "status": "ok",
+        "notes": "Current canonical table row names `subagent.started`, enumerates its payload fields, and states: Subagent begins execution."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2823-2842",
+        "status": "ok",
+        "notes": "Defines canonical child-run identity, lifecycle, lineage preservation, and reversible event projections."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the child-runtime owner (Contracts/orchestrator/storage) materialize the complete, versioned Event Authority contract for `subagent.started` and return this exact event for individual owner veto, or keep it quarantined?",
+      "options": [
+        "Materialize the missing contract depth under the named owner, then return this exact stable ID for individual veto before any registry append",
+        "Keep quarantined as persisted-unregistered with no checkpoint advance",
+        "Withdraw or reclassify only with an explicit cited compatibility/withdrawal decision"
+      ],
+      "evidence_gap": "The locked owner answer authorizes only a sequenced owner-complete materialization program and forbids bulk registration; current evidence still lacks live membership/version, an explicitly closed payload schema, replay/idempotency, retention, redaction custody, checkpoint behavior, compatibility withdrawal, and positive/negative oracles.",
+      "event_types": [
+        "subagent.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay23",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.timeout",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current Contracts canon explicitly lists `subagent.timeout` with producer semantics and an event-specific payload field set inside the stable subagent family. This materially establishes producer, scope/lineage, and lifecycle transition semantics, but no live-registry membership/version, explicitly closed schema, replay/idempotency, retention, redaction custody, checkpoint contract, withdrawal path, or complete oracle pair is cited. Under locked OD-EA-001..003, it remains individually quarantined pending owner-complete materialization and veto.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2870",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.timeout`; the current event-specific table row is Plans/Contracts_V0.md:2903."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2892",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.timeout`; the current event-specific table row is Plans/Contracts_V0.md:2903."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families canonical, requires child identity/lineage, and defines the shared PM lineage envelope."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2903",
+        "status": "ok",
+        "notes": "Current canonical table row names `subagent.timeout`, enumerates its payload fields, and states: Subagent exceeded its time limit."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2823-2842",
+        "status": "ok",
+        "notes": "Defines canonical child-run identity, lifecycle, lineage preservation, and reversible event projections."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the child-runtime owner (Contracts/orchestrator/storage) materialize the complete, versioned Event Authority contract for `subagent.timeout` and return this exact event for individual owner veto, or keep it quarantined?",
+      "options": [
+        "Materialize the missing contract depth under the named owner, then return this exact stable ID for individual veto before any registry append",
+        "Keep quarantined as persisted-unregistered with no checkpoint advance",
+        "Withdraw or reclassify only with an explicit cited compatibility/withdrawal decision"
+      ],
+      "evidence_gap": "The locked owner answer authorizes only a sequenced owner-complete materialization program and forbids bulk registration; current evidence still lacks live membership/version, an explicitly closed payload schema, replay/idempotency, retention, redaction custody, checkpoint behavior, compatibility withdrawal, and positive/negative oracles.",
+      "event_types": [
+        "subagent.timeout"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay23",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.tool_called",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Current Contracts canon explicitly lists `subagent.tool_called` with producer semantics and an event-specific payload field set inside the stable subagent family. This materially establishes producer, scope/lineage, and lifecycle transition semantics, but no live-registry membership/version, explicitly closed schema, replay/idempotency, retention, redaction custody, checkpoint contract, withdrawal path, or complete oracle pair is cited. Under locked OD-EA-001..003, it remains individually quarantined pending owner-complete materialization and veto.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2863",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.tool_called`; the current event-specific table row is Plans/Contracts_V0.md:2896."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2885",
+        "status": "drift",
+        "notes": "The original July line no longer declares `subagent.tool_called`; the current event-specific table row is Plans/Contracts_V0.md:2896."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families canonical, requires child identity/lineage, and defines the shared PM lineage envelope."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2896",
+        "status": "ok",
+        "notes": "Current canonical table row names `subagent.tool_called`, enumerates its payload fields, and states: Subagent invoked a tool."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2823-2842",
+        "status": "ok",
+        "notes": "Defines canonical child-run identity, lifecycle, lineage preservation, and reversible event projections."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the child-runtime owner (Contracts/orchestrator/storage) materialize the complete, versioned Event Authority contract for `subagent.tool_called` and return this exact event for individual owner veto, or keep it quarantined?",
+      "options": [
+        "Materialize the missing contract depth under the named owner, then return this exact stable ID for individual veto before any registry append",
+        "Keep quarantined as persisted-unregistered with no checkpoint advance",
+        "Withdraw or reclassify only with an explicit cited compatibility/withdrawal decision"
+      ],
+      "evidence_gap": "The locked owner answer authorizes only a sequenced owner-complete materialization program and forbids bulk registration; current evidence still lacks live membership/version, an explicitly closed payload schema, replay/idempotency, retention, redaction custody, checkpoint behavior, compatibility withdrawal, and positive/negative oracles.",
+      "event_types": [
+        "subagent.tool_called"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay23",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

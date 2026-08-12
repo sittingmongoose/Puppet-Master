@@ -1,0 +1,153 @@
+{
+  "event_type": "tool.denied",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Architecture and tool contracts require this event but do not explicitly appoint one semantic event owner."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Plans/Tools.md:1401 excludes FileSafe blocks while line 1403 requires tool-policy denial emission; the exact producer boundary requires owner reconciliation."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited live registry membership record or membership version exists for tool.denied."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Tools.md:1403 gives minimum fields and Contracts web meta is optional; neither is an exhaustive closed payload schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:518-520",
+      "note": "The runtime contract explicitly requires tool.denied runtime attribution and enumerates canonical optional execution identity references."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited tool.denied replay key, duplicate rule, or idempotent projection rule exists."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited event-specific retention or deletion rule exists for tool.denied."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited authority assigns redaction custody for denial reason or input-preview data."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The denial meaning is defined, but no complete predecessor/successor state machine is cited."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Current citations identify runtime significance but do not close checkpoint ownership for all consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Contracts_V0.md:1452-1458 defines canonical web denial aliases and normalization, but cites no withdrawal authority, deadline, or completion criterion."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Tools.md:1401 supplies a FileSafe non-emission branch, but no complete positive/negative oracle pair for all denial producers is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Architecture_Invariants.md:39",
+      "status": "ok",
+      "notes": "Requires canonical persisted tool.invoked/tool.denied with stable run_id and thread_id correlation."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:485",
+      "status": "drift",
+      "notes": "Original line now describes package-overseer scope and does not declare tool.denied."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:511",
+      "status": "drift",
+      "notes": "Original line is blank before child/orchestrator lineage; it does not declare tool.denied."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:478",
+      "status": "ok",
+      "notes": "Requires tool-denial surfaces to preserve blocked-episode identity and ordered allowed_action_ids."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:518-520",
+      "status": "ok",
+      "notes": "Declares tool.denied a runtime-attributed, first-class runtime trace and enumerates optional runtime identity refs."
+    },
+    {
+      "citation": "Plans/Tools.md:1080",
+      "status": "ok",
+      "notes": "Lists tool.denied as a canonical seglog event."
+    },
+    {
+      "citation": "Plans/Tools.md:1403",
+      "status": "ok",
+      "notes": "Names event emission producer behavior and minimum fields tool_name, run_id, thread_id, reason."
+    },
+    {
+      "citation": "Plans/Provider_OpenCode.md:638-645",
+      "status": "drift",
+      "notes": "Original range covers token/budget streaming and does not contain the tool denial mapping; the current mapping is lines 646-653."
+    },
+    {
+      "citation": "Plans/Provider_OpenCode.md:646-653",
+      "status": "ok",
+      "notes": "Maps OpenCode response-part denials into the shared persisted tool.denied family."
+    },
+    {
+      "citation": "Plans/Provider_OpenCode.md:2830-2877",
+      "status": "ok",
+      "notes": "Accepted PO-040 preserves the OpenCode-to-seglog tool.denied mapping."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1450-1458",
+      "status": "ok",
+      "notes": "Defines tool.denied for policy/user-denied web operations, optional web meta, and legacy alias normalization."
+    },
+    {
+      "citation": "Plans/Tools.md:1401",
+      "status": "ok",
+      "notes": "Explicitly requires FileSafe to run after allow/approval and forbids emitting tool.denied for FileSafe blocks, contradicting the shard producer label that includes FileSafe denial co-ownership."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1452-1458",
+      "status": "ok",
+      "notes": "The web contract forbids a parallel web.operation event family and explicitly normalizes legacy denial payload aliases."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay23",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current Plans citations; PASS is limited to the exact field proven.",
+    "Immutable cohort lineage retained separately from working_bucket.",
+    "No admission, package-level owner decision, analogy, or owner/producer inference used."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "source_deepener": "PlanIndivU22"
+}

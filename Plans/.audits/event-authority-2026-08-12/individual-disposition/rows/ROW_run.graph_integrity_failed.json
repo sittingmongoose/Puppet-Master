@@ -1,0 +1,100 @@
+{
+  "event_type": "run.graph_integrity_failed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names an explicit acceptance owner for run.graph_integrity_failed; that authority must be supplied by the owner."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:332-334",
+      "note": "The cited wiring explicitly names graph builder/replan reconciler as producer for run.graph_integrity_failed."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an individually versioned Event Authority membership row for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an exhaustive closed payload schema for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2572-2578",
+      "note": "The cited row fixes run_id and replan_generation identity for run.graph_integrity_failed."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes replay and idempotency behavior for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a retention class or duration for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes redaction and custody responsibilities for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a complete transition or emission-trigger contract for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.md:332-334",
+      "note": "The cited wiring names executor admission, progression gates, and blocked/replan consumers, but does not establish checkpoint semantics; the combined evidence field therefore fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes compatibility and withdrawal rules for run.graph_integrity_failed; this field remains fail-closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes complete positive and negative test oracles for run.graph_integrity_failed; this field remains fail-closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2561-2569",
+      "status": "drift",
+      "notes": "The cited range defines plan.decomposition_degraded; run.graph_integrity_failed is now at lines 2572-2578."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2572-2578",
+      "status": "ok",
+      "notes": "Defines run_id, reason_code, detail_ref, replan_generation, and timestamp minimum payload."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:332-334",
+      "status": "ok",
+      "notes": "Names graph builder/replan reconciler as producer and executor admission, progression gates, and blocked/replan surfaces as consumers."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against field-local checked citations; unresolved dimensions remain fail-closed without analogy or owner/producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

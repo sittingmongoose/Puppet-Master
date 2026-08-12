@@ -1,0 +1,1207 @@
+[
+  {
+    "event_type": "subagent.message_sent",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.message_sent` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child communication controller']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2898",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2898",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2865,2887",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.message_sent` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2898` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2898",
+        "status": "ok",
+        "notes": "Defines the event payload fields and follow-up-message semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.message_sent`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.message_sent"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.model_switched",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.model_switched` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child runtime resolver']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2906",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2906",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2873,2895",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.model_switched` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2906` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2906",
+        "status": "ok",
+        "notes": "Defines the event payload fields and mid-execution model-change semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.model_switched`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.model_switched"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.output_truncated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.output_truncated` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child output handler']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2909",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2909",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2876,2898",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.output_truncated` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2909` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2909",
+        "status": "ok",
+        "notes": "Defines the event payload fields and output-truncation semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.output_truncated`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.output_truncated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.paused",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.paused` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child supervisor']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2907",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2907",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2874,2896",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.paused` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2907` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2907",
+        "status": "ok",
+        "notes": "Defines the event payload fields and paused semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.paused`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.paused"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.progress",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.progress` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child runner']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2895",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2895",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2884",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.progress` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2895` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2895",
+        "status": "ok",
+        "notes": "Defines the event payload fields and progress-update semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.progress`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.progress"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.resumed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.resumed` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child supervisor']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2908",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2908",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2897",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.resumed` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2908` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2908",
+        "status": "ok",
+        "notes": "Defines the event payload fields and resumed semantics."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.resumed`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.resumed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.retried",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.retried` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical table proves the event name, descriptive semantics, and a field list, but not a typed closed schema, producer/owner authority, transition/checkpoint contract, replay rules, or positive/negative oracles. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child supervisor']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2904",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2904",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2871,2893",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.retried` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2904` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2904",
+        "status": "ok",
+        "notes": "Defines the event payload fields and retry-attempt semantics; lines 2848-2855 separately distinguish retry from resume, reroute, and replacement."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.retried`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.retried"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.spawn_completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.spawn_completed` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical text proves namespace, lineage, and alias withdrawal, but supplies no event-specific closed payload, transition/checkpoint contract, or replay and oracle evidence. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child dispatcher']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2854,2876",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.spawn_completed` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2887` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2887",
+        "status": "ok",
+        "notes": "Names the producer-specific event and requires the shared PM lineage envelope while retaining the canonical subagent namespace."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.spawn_completed`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.spawn_completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.spawn_requested",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_MORE_EVIDENCE",
+    "disposition_rationale": "`subagent.spawn_requested` remains a supported persisted-unregistered event: the corrected canonical citation names it and the shared subagent contract fixes its scope identity and legacy-alias boundary. The canonical text proves namespace, lineage, and alias withdrawal, but supplies no event-specific closed payload, transition/checkpoint contract, or replay and oracle evidence. OD-EA-003/004 authorize sequenced individual materialization and completion of missing depth under named owners, not admission on partial evidence. The referenced producer-discovery artifact is absent from this run package, so producer ownership cannot be promoted from the shard label to PASS. Keep quarantined pending contract evidence; bulk registration is forbidden.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator child dispatcher']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2887",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2854,2876",
+        "status": "drift",
+        "notes": "Shard citation(s) do not land on the specific `subagent.spawn_requested` declaration in the current Contracts_V0; `Plans/Contracts_V0.md:2887` is the corrected event authority."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2887",
+        "status": "ok",
+        "notes": "Names the producer-specific event and requires the shared PM lineage envelope while retaining the canonical subagent namespace."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2874-2887",
+        "status": "ok",
+        "notes": "Declares stable subagent runtime families and requires the PM lineage envelope, including run/thread/agent lineage and requested/effective runtime descriptors when they differ."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1466",
+        "status": "ok",
+        "notes": "Makes subagent.* canonical, retires legacy chat.subagent aliases, and preserves the lineage envelope for producer-specific spawn request/completion names."
+      },
+      {
+        "citation": "phase2-case-L/wave5/event_producer_owner_discovery/SLICE_B_RUNTIME_ORCHESTRATION.json#confirmed_persisted_canonical",
+        "status": "missing",
+        "notes": "Referenced producer/owner discovery artifact is not materialized anywhere in the supplied EA run directory; the shard's producer_owner_refs label is therefore not independently checkable here."
+      },
+      {
+        "citation": "out/OwnerSheetDraft/OWNER_ANSWERS.json#OD-EA-003,OD-EA-004,OD-EA-002",
+        "status": "ok",
+        "notes": "Owner authorizes sequenced materialization, directs missing depth to be finished under named owners, and affirms the prohibition on bulk registration."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `subagent.spawn_requested`, provide cited values/authority for incomplete fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, owner, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "subagent.spawn_requested"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay22",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "wizard.blocked",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts identifies wizard.blocked as a canonical ledger event, supplies a minimum payload and route/remediation decoding rule, and pairs it with wizard.unblocked. The minimum is not a closed schema and the remaining authority obligations are unresolved.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['wizard blocked-state owner']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2583-2599",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2583-2599",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2572-2581",
+        "status": "drift",
+        "notes": "The cited span covers run.graph_integrity_failed and the section heading; wizard.blocked begins at 2583."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2583-2599",
+        "status": "ok",
+        "notes": "Defines wizard.blocked routing semantics and minimum payload and the paired wizard.unblocked minimum payload."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2601-2604",
+        "status": "ok",
+        "notes": "States that events in this packet are canonical ledger events whose UI and storage projections derive from them."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `wizard.blocked` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "Canonical ledger status, wizard/thread identity, a minimum payload, and the blocked/unblocked pair are documented, but versioned membership, explicit owner/producer, payload closure, replay/idempotency, retention, custody, concrete consumer checkpoints, compatibility withdrawal, and complete oracles are not.",
+      "event_types": [
+        "wizard.blocked"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay24",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

@@ -1,0 +1,105 @@
+{
+  "event_type": "diag.compaction_immune_overflow",
+  "bucket": "unresolved",
+  "working_bucket": "unresolved",
+  "cohort_pins": [
+    "july40"
+  ],
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`diag.compaction_immune_overflow` remains quarantined pending one owner veto. Evidence closes only cited behavior or a negative boundary, not membership, owner, producer, and all authority dimensions. No inference or OD-EA-003 dependence.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited document explicitly accepts authority for `diag.compaction_immune_overflow` as canonical."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract explicitly assigns the authoritative producer for `diag.compaction_immune_overflow`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No registry authority establishes versioned membership for `diag.compaction_immune_overflow`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:269-273",
+      "note": "Exact condition emits and continues."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:269-273",
+      "note": "Untouchable overflow emits; trimmable overflow trims."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Prompt_Pipeline.md:254-273",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-diag-compaction-immune-overflow",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal",
+    "question": "Should `diag.compaction_immune_overflow` remain quarantined, be excluded, or receive a completed owner-backed contract?",
+    "options": [
+      "KEEP_QUARANTINED with no checkpoint advance",
+      "RECLASSIFY_TO_EXCLUDED with exact authority",
+      "Complete all missing fields for later review"
+    ],
+    "evidence_gap": "No citation closes membership plus every non-PASS field for `diag.compaction_immune_overflow`.",
+    "event_types": [
+      "diag.compaction_immune_overflow"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently adjudicated from row-local cited evidence.",
+    "PASS is limited to the exact field proposition established by the citation; minimum or included fields are not treated as closed schemas.",
+    "No admission, registry append, owner inference, producer inference, analogy, or OD-EA-003 dependence."
+  ]
+}

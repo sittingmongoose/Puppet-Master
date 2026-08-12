@@ -1,0 +1,117 @@
+{
+  "event_type": "context.compaction.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_MORE_EVIDENCE",
+  "disposition_rationale": "The UI catalog and ATS describe context.compaction.completed as a persisted lifecycle event, but current production wiring explicitly declares cmd.chat.compact_context has no persisted event and must emit only a no-persist receipt. This direct authority conflict is unresolved, so the token remains quarantined and cannot proceed to owner veto or admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `context.compaction.completed`."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:2807-2860",
+      "note": "Production wiring names handlers::chat::compact_context but explicitly declares no persisted event and requires that the command emit no unexpected persisted domain event, contradicting this event token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `context.compaction.completed`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `context.compaction.completed`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked command citation scopes the triggering command but does not state that the emitted `context.compaction.completed` payload carries the same identity; event scope therefore fails closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `context.compaction.completed`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `context.compaction.completed`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `context.compaction.completed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `context.compaction.completed`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `context.compaction.completed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `context.compaction.completed`."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Automated_Testing_System.md:1371-1398",
+      "note": "ATS-017 directly specifies successful completion and negative failed/cancelled/degraded result checks for the exact compaction lifecycle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:788",
+      "status": "drift",
+      "notes": "Current line is blank; the event declaration moved to line 776."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Current line defines handler_location generically and does not name this event."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:801",
+      "status": "drift",
+      "notes": "Current line is blank; the event declaration moved to line 776."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:776",
+      "status": "ok",
+      "notes": "Exact command payload, all three compaction event names, result statuses, and UI producer surface are present."
+    },
+    {
+      "citation": "Plans/Automated_Testing_System.md:1371-1398",
+      "status": "ok",
+      "notes": "Accepted ATS-017 supplies exact event/result positive and negative acceptance checks."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:2807-2860",
+      "status": "ok",
+      "notes": "Direct conflict: production wiring declares expected_event_types empty, a no-persist receipt effect, and an assertion that cmd.chat.compact_context emits no unexpected persisted event."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay06",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field without inference. Blocking source conflict: UI_Command_Catalog/ATS assert a persisted compaction lifecycle while production wiring requires a no-persist receipt and no unexpected persisted event."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

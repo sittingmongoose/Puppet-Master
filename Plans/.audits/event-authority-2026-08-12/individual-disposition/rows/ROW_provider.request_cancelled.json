@@ -1,0 +1,96 @@
+{
+  "event_type": "provider.request_cancelled",
+  "bucket": "quarantined_not_admitted",
+  "july_classification": "emit_only",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:2646-2653",
+      "note": "Accepted PO-037 explicitly names Provider_OpenCode as owner_doc and preserves this exact cancellation event."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "note": "The contract explicitly states that PM MUST emit this exact token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this exact token to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "note": "The MUST-emit clause gives a closed payload field list and bounded values where applicable."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "note": "provider_id and request_id bind the cancellation to a provider request; tokens_received and reason close the outcome context."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "note": "The authority distinguishes cancellation from ordinary failure and timeout, preserves partial tokens, marks completion_reason cancelled, and resolves connection health."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed checkpoint rule is cited."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility window, withdrawal authority, or removal timing is cited for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "note": "Positive oracle: PM MUST emit on cancellation; negative oracle: cancellation is explicitly distinct from ordinary request failure."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Provider_OpenCode.md:597-604",
+      "status": "ok",
+      "notes": "Current source span contains exact token, MUST-emit rule, payload, identity, transition, and emission boundary."
+    },
+    {
+      "citation": "Plans/Provider_OpenCode.md:2643-2702",
+      "status": "ok",
+      "notes": "Accepted fine-grained PlanUnit preserves the exact provider contract."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "quarantined_not_admitted"
+}

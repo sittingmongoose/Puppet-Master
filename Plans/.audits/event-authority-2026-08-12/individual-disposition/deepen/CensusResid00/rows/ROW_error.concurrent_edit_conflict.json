@@ -1,0 +1,88 @@
+{
+  "event_type": "error.concurrent_edit_conflict",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "FileSafe says a changed read revision aborts with this structured result to the caller; its accepted concurrency boundary separately says append-only event writers do not use this error at Plans/FileSafe.md:L7338-L7342.",
+  "evidence": {
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L1455-L1459",
+      "note": "The cited authority classifies `error.concurrent_edit_conflict` as a structured error/result identifier for mutable rewrite concurrency, not as an owned event contract."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event producer applies: `error.concurrent_edit_conflict` is adjudicated as a structured error/result identifier for mutable rewrite concurrency; no producer is inferred."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L1455-L1459",
+      "note": "No event-registry membership/version applies to this excluded non-event token."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event payload exists for this excluded non-event token."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event scope/identity contract applies; the cited token has the non-event role stated in the rationale."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event replay/idempotency contract applies to this excluded non-event token."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event retention contract applies to this excluded non-event token."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event payload redaction/custody contract applies to this excluded non-event token."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event lifecycle transitions apply to this excluded non-event token."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event consumers/checkpoints apply to this excluded non-event token."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Event compatibility/withdrawal does not apply; any config/error/storage compatibility remains outside event authority."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L1455-L1459",
+      "note": "No event positive/negative oracle applies; the cited non-event classification is the exclusion oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/FileSafe.md:L1455-L1459",
+      "status": "ok",
+      "notes": "Direct row-specific authority for the non-event classification."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated_excluded",
+  "source_overlay": "closed-world-census/clean_batch_00.json",
+  "denominator_effect": "excluded_no_admission"
+}

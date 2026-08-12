@@ -1,0 +1,135 @@
+{
+  "event_type": "coordination.agent_operation_updated",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:514-548",
+      "note": "Storage expressly owns the durable coordination record/projection boundary containing this exact event family."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/storage_value_registry.json:5233-5244",
+      "note": "The registry names the exact coordination event family and explicitly assigns AgentCoordinator, platform hook/event adapters, and the coordination mirror exporter as producers."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited storage-owned schema closes every persisted payload field for this exact token."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2917-2949",
+      "note": "The exact coordination event is bound to the PM lineage envelope and project/run/agent identity fields."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:535-539",
+      "note": "The PM append path requires an idempotency key and expected revision, with append/projection CAS and stale-write rejection."
+    },
+    "retention": {
+      "status": "PASS",
+      "citation": "Plans/storage_value_registry.json:5318",
+      "note": "The exact coordination_event_records family binds to RP-COORDINATION-180D here; the checked policy definition at lines 302-315 fixes its 180-day TTL anchored at run completion."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:508",
+      "note": "The storage-owned persisted-value boundary forbids raw secrets and restricts sensitive data to redacted or external-custody references."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited contract closes the complete legal transition set for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:528-546",
+      "note": "Storage names the authoritative coordination projections/checkpoint and requires authority consumers to use them rather than mirrors."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited complete positive-emission and negative-non-emission oracle pair exists for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2909",
+      "status": "drift",
+      "notes": "Current line no longer contains this coordination event or its registry membership."
+    },
+    {
+      "citation": "Plans/storage-plan.md:521",
+      "status": "ok",
+      "notes": "Exact event family role or canonical producer/owner context is present at the cited line."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:5179",
+      "status": "drift",
+      "notes": "Current line no longer contains this coordination event or its registry membership."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:3778",
+      "status": "ok",
+      "notes": "Exact event family role or canonical producer/owner context is present at the cited line."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2917-2949",
+      "status": "ok",
+      "notes": "Canonical envelope, event-specific closed payload fields, projection consumers, and checkpoint authority are explicit."
+    },
+    {
+      "citation": "Plans/storage-plan.md:514-548",
+      "status": "ok",
+      "notes": "Storage ownership, canonical persistence, idempotent append/CAS, checkpoint transaction, redaction baseline linkage, and mirror compatibility boundary are explicit."
+    },
+    {
+      "citation": "Plans/storage-plan.md:508",
+      "status": "ok",
+      "notes": "All persisted values require schema_version, forbid raw secrets, and reject unsupported replay schema versions."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:5233-5287",
+      "status": "ok",
+      "notes": "The exact coordination family row names producers/consumers/version and replay, retention, and redaction rules, but explicitly marks the family deferred and full payload schemas outside the repair."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:302-315",
+      "status": "ok",
+      "notes": "RP-COORDINATION-180D defines fixed-TTL retention anchored at run completion, 15,552,000 seconds, compaction on expiry, and policy version 1.0.0."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:5318",
+      "status": "ok",
+      "notes": "The coordination event family explicitly binds to RP-COORDINATION-180D."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay06",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
+  ]
+}

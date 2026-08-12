@@ -1,0 +1,120 @@
+{
+  "event_type": "runtime_artifact.api_web_call",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:300-304",
+      "note": "The panel explicitly declares itself schema owner for the runtime-artifact envelope and per-type payload split."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for concrete emitting component and append boundary of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "EventRecord 2.0.0 and per-type schema versions do not establish versioned Event Authority registry membership for `runtime_artifact.api_web_call`; no assigned registry token is cited."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_api_web_call.schema.json:1-107",
+      "note": "The exact per-type schema fixes the v1 schema ID, rejects additional envelope properties, requires stable identity/projection/retention/routing fields, and binds type_payload to its closed definition."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2033",
+      "note": "The contract requires project scope, a non-empty owning project ID, and the canonical EventRecord index identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2035",
+      "note": "The contract pins lifetime identity, selected replay policy, dedupe failure semantics, and projector-only replay limits."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:286,300-304",
+      "note": "The exact per-type payload requires redacted request/response refs under the panel-owned schema boundary."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for allowed lifecycle transition semantics of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029-2035",
+      "note": "The durable-state addendum defines canonical history, projector-only replay, and atomic projection checkpoint behavior."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:286",
+      "note": "The exact payload rule identifies web_input and blocked_reason_code as compatibility aliases normalized before persistence."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:71",
+      "status": "ok",
+      "notes": "Lists runtime_artifact.api_web_call as one of the canonical exact artifact event names."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:296",
+      "status": "ok",
+      "notes": "Requires envelope plus matching per-type schema validation before Seglog append and artifact-index write."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2025",
+      "status": "ok",
+      "notes": "Begins the Case L durable-state consumer addendum governing current EventRecord continuity."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029",
+      "status": "ok",
+      "notes": "Begins canonical-history and projection-truth rules."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:285-304",
+      "status": "ok",
+      "notes": "Defines strict api_web_call payload content, schema ownership, common identity, producer/actor refs, and validation boundaries."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "status": "ok",
+      "notes": "Defines EventRecord 2.0.0 project scope, idempotency identity, replay policy, dedupe failure semantics, and projector-only replay limits."
+    },
+    {
+      "citation": "Plans/runtime_artifact_api_web_call.schema.json:1-107",
+      "status": "ok",
+      "notes": "Exact materialized per-type schema establishes the closed envelope and api_web_call payload binding; it does not establish Event Authority membership."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

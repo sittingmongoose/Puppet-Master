@@ -1,0 +1,20 @@
+{
+  "allowed_action_ids": [
+    "open_details",
+    "locate_and_verify_recovery",
+    "replan",
+    "abandon_recovery"
+  ],
+  "anchor_ref": "x",
+  "blocked_sequence": 0,
+  "node_id": "x",
+  "preserved_local_work": true,
+  "project_id": "x",
+  "receipt_ref": "x",
+  "recovery_unavailable_reason_code": "snapshot_missing",
+  "run_id": "x",
+  "safe_point_id": "x",
+  "snapshot_refs": [
+    "x"
+  ]
+}

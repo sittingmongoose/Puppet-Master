@@ -1,0 +1,114 @@
+{
+  "event_type": "live.session.degraded",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The accepted PlanUnit explicitly identifies its owner document and states that live visualization emits `live.session.degraded`. These facts support owner_doc and producer only; the other 10 admission dimensions remain uncited and require explicit owner evidence. `live.session.degraded` therefore remains fail-closed as NEEDS_OWNER_VETO.",
+  "evidence": {
+    "membership_version": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited versioned registry membership exists for this exact token."
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:5946-5948",
+      "note": "The accepted PlanUnit explicitly identifies Plans/newtools.md as owner_doc for the canonical text containing `live.session.degraded`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:5946-5948",
+      "note": "The canonical text explicitly states that live visualization emits `live.session.degraded`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes the persisted payload schema, field types, optionality, and unknown-field behavior for this exact token."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes the persisted scope and identity keys for this exact token."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines replay and idempotency behavior for this exact token."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines event-specific retention for this exact token."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation assigns redaction policy and custody for this exact token."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes legal predecessor/successor transitions for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines complete consumer checkpoint and failure behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines compatibility normalization and withdrawal criteria for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation supplies both positive and negative persisted-event oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/newtools.md:845-853",
+      "status": "ok",
+      "notes": "Checked for the exact `live.session.degraded` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/newtools.md:5946-5976",
+      "status": "ok",
+      "notes": "Checked for the exact `live.session.degraded` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/newtools.md:5946-5948",
+      "status": "ok",
+      "notes": "Checked exact owner_doc metadata and canonical emission statement for `live.session.degraded`."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-live-session-degraded-contract",
+    "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `live.session.degraded`, will the accountable owner supply cited decisions for membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct a cited non-admission reclassification?",
+    "options": [
+      "Supply exact Plans citations closing every listed dimension for a later independent adjudication",
+      "Keep this exact token quarantined with no checkpoint advance",
+      "Direct a cited reclassification and denominator treatment for this exact token"
+    ],
+    "evidence_gap": "Existing citations establish 2 of 12 dimensions for this exact token; the listed missing decisions cannot be inferred from namespace, sibling events, package membership, or OD-EA-003.",
+    "event_types": [
+      "live.session.degraded"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay12",
+  "provisional": false,
+  "quality_notes": [
+    "Individually rechecked against current cited Plans spans; missing dimensions remain explicitly UNKNOWN and owner-bound.",
+    "Immutable cohort pin july248 preserved; working bucket does not alter cohort membership."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

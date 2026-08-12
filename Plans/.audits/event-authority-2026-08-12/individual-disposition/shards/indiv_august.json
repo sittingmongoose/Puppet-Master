@@ -1,0 +1,250 @@
+[
+  {
+    "event_type": "terminal.workgroup_moved",
+    "bucket": "august",
+    "working_bucket": "august",
+    "cohort_pins": [
+      "august2"
+    ],
+    "july_classification": "live_registry_august",
+    "disposition": "KEEP_REGISTERED",
+    "disposition_rationale": "Individually registered 1.0.0 project-scoped family remains KEEP_REGISTERED. AugustDepthClose field_evidence cites membership, owners, Section15 producer semantics, closed payload, scope/identity, EventRecord replay/redaction/version rules, retention resolution, Home transitions/oracles, and compatibility state. consumers_checkpoints stays OWNER_REQUIRED (not PASS): storage-plan projector mechanics are shared only and do not name an event-specific consumer/checkpoint registration. No ADMIT and no invented consumer IDs.",
+    "evidence": {
+      "owner_doc": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2357-2367",
+        "note": "Exact terminal.workgroup_moved registry entry names semantic_owner_doc=Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation and payload_owner_doc=Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts."
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:8458-8525",
+        "note": "Accepted SMPFS-138 owns whole-workgroup move via cmd.terminal.move_workgroup, section/pane limits, preserve-all pane/session bindings, explicit empty-section behavior, and negatives forbidding PTY mint/destroy during layout movement (AugustDepthClose producer surface)."
+      },
+      "membership_version": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2357-2367",
+        "note": "Live family event-family-terminal-workgroup-moved at family_revision 1.0.0 with matching payload_schema_id .../terminal_workgroup_moved/1.0.0."
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json:1-81",
+        "note": "Closed payload object (additionalProperties=false) with required workgroup/section/pane/session/command identities and preserve_session_identity=true."
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2357-2376",
+        "note": "Registry fixes scope_policy=project_only and binds project identity to /payload/project_id; payload requires domain identities with preserve_session_identity=true."
+      },
+      "replay_idempotency": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:1022-1030",
+        "note": "EventRecord owner states cross-cutting identity, idempotency, redaction, replay, and version rules; storage-plan.md:464-479 supplies append-once/dedupe/replay persistence mechanics reused by EventRecord families."
+      },
+      "retention": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2388-2392",
+        "note": "Family assigns RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage_value_registry.json:68-81 resolves that policy to indefinite, fail-closed, hold-eligible retention."
+      },
+      "redaction_custody": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2378-2382",
+        "note": "Exact family requires reject_unhandled_secrets with null transform; Contracts_V0.md:1018-1031 owns EventRecord redaction_profile/custody rules."
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:3418-3425",
+        "note": "Home leaf actions bind applied/no_change/cancelled/failed+rolled_back receipts; success EventRecord only after verified commit. Section15 SMPFS-138 supplies terminal workgroup move transition truth."
+      },
+      "consumers_checkpoints": {
+        "status": "OWNER_REQUIRED",
+        "citation": "Plans/storage-plan.md:1519-1524",
+        "note": "DEPTH GAP (AugustDepthClose): storage-plan defines generic projector checkpoint ordering/durability only; event_family_registry.schema.json:283-453 has no event-specific consumer/projector/checkpoint binding. No event-specific terminal.workgroup_moved consumer_id/checkpoint key/schema/version is cited; none invented. Follow-up label OV-EA-august-consumers_checkpoints (evidence-only; no quarantine veto emitted)."
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2369-2377",
+        "note": "Exact family has empty aliases/admitted_extensions and null referenced_event_id_pointer; Contracts_V0.md:1029-1031 supplies governed forward-version refusal without mutation."
+      },
+      "positive_negative_oracles": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:3441-3445",
+        "note": "Accepted CV-323 requires exact workgroup/section/pane/session identity and preserve_session_identity=true; negatives forbid fabricated success for failure/no-change/cancellation and PTY mint during movement (Section15:8515-8517)."
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/event_family_registry.json:2357-2392",
+        "status": "ok",
+        "notes": "Exact terminal family membership, owners, schema, scope/identity, redaction, compatibility, retention."
+      },
+      {
+        "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json:1-81",
+        "status": "ok",
+        "notes": "Closed payload contract."
+      },
+      {
+        "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:8458-8525",
+        "status": "ok",
+        "notes": "AugustDepthClose producer/transition/oracle surface (SMPFS-138)."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1018-1031,3390-3463",
+        "status": "ok",
+        "notes": "EventRecord spine + CV-323 Home transitions/oracles."
+      },
+      {
+        "citation": "Plans/storage-plan.md:464-479,1510-1538",
+        "status": "ok",
+        "notes": "Shared persistence/replay/checkpoint mechanics; insufficient alone for consumers_checkpoints PASS."
+      },
+      {
+        "citation": "Plans/storage_value_registry.json:68-81",
+        "status": "ok",
+        "notes": "RP-AUTHORITY-INDEFINITE@1.0.0 resolution."
+      },
+      {
+        "citation": "Plans/event_family_registry.schema.json:283-453",
+        "status": "ok",
+        "notes": "Registry family schema has no event-specific consumer/checkpoint fields."
+      }
+    ],
+    "owner_veto": null,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "AugustDepthClose",
+    "provisional": true,
+    "quality_notes": [
+      "Repaired from mechanical registry-only PASS / invalid UNKNOWN and from PlanIndivAug NEEDS_OWNER_VETO quarantine options.",
+      "consumers_checkpoints remains OWNER_REQUIRED until an owner-authored event-specific consumer/checkpoint registration artifact is cited; follow-up OV-EA-august-consumers_checkpoints is evidence-tracked only (owner_veto=null).",
+      "provisional=true until that quality bar is met with real event-specific citations."
+    ],
+    "fresh_census_merged": false,
+    "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+  },
+  {
+    "event_type": "workspace.layout_changed",
+    "bucket": "august",
+    "working_bucket": "august",
+    "cohort_pins": [
+      "august2"
+    ],
+    "july_classification": "live_registry_august",
+    "disposition": "KEEP_REGISTERED",
+    "disposition_rationale": "Individually registered 1.0.0 project-scoped family remains KEEP_REGISTERED. AugustDepthClose field_evidence cites membership, owners, FinalGUISpec producer semantics, closed payload, scope/identity, EventRecord replay/redaction/version rules, retention resolution, Home transitions/oracles, and compatibility state. consumers_checkpoints stays OWNER_REQUIRED (not PASS): storage-plan projector mechanics are shared only and do not name an event-specific consumer/checkpoint registration. No ADMIT and no invented consumer IDs.",
+    "evidence": {
+      "owner_doc": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2319-2329",
+        "note": "Exact workspace.layout_changed registry entry names semantic_owner_doc=Plans/FinalGUISpec.md#f3-home-002 and payload_owner_doc=Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts."
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/FinalGUISpec.md:270-351",
+        "note": "F3-HOME-002/004 own expected-revision movement/resize flow, verified write/readback persistence, rollback on failure, no false success EventRecord, and identity preservation (AugustDepthClose producer surface)."
+      },
+      "membership_version": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2319-2329",
+        "note": "Live family event-family-workspace-layout-changed at family_revision 1.0.0 with matching payload_schema_id .../workspace_layout_changed/1.0.0."
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:1-152",
+        "note": "Closed payload object with required identity/revision/mutation/placement fields and persisted=true semantics."
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2319-2338",
+        "note": "Registry fixes scope_policy=project_only and binds project identity to /payload/project_id; payload requires project and domain surface identities."
+      },
+      "replay_idempotency": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:1022-1030",
+        "note": "EventRecord owner states cross-cutting identity, idempotency, redaction, replay, and version rules; storage-plan.md:464-479 supplies append-once/dedupe/replay persistence mechanics reused by EventRecord families."
+      },
+      "retention": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2350-2354",
+        "note": "Family assigns RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage_value_registry.json:68-81 resolves that policy to indefinite, fail-closed, hold-eligible retention."
+      },
+      "redaction_custody": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2340-2344",
+        "note": "Exact family requires reject_unhandled_secrets with null transform; Contracts_V0.md:1018-1031 owns EventRecord redaction_profile/custody rules."
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:3418-3425",
+        "note": "Home leaf actions bind applied/no_change/cancelled/failed+rolled_back receipts; success EventRecord only after verified durable commit (FinalGUISpec F3-HOME-004)."
+      },
+      "consumers_checkpoints": {
+        "status": "OWNER_REQUIRED",
+        "citation": "Plans/storage-plan.md:1519-1524",
+        "note": "DEPTH GAP (AugustDepthClose): storage-plan defines generic projector checkpoint ordering/durability only; event_family_registry.schema.json:283-453 has no event-specific consumer/projector/checkpoint binding. No event-specific workspace.layout_changed consumer_id/checkpoint key/schema/version is cited; none invented. Follow-up label OV-EA-august-consumers_checkpoints (evidence-only; no quarantine veto emitted)."
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/event_family_registry.json:2331-2339",
+        "note": "Exact family has empty aliases/admitted_extensions and null referenced_event_id_pointer; Contracts_V0.md:1029-1031 supplies governed forward-version refusal without mutation."
+      },
+      "positive_negative_oracles": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:3441-3445",
+        "note": "Accepted CV-323 requires exact changed surface IDs, prior/new revision, hosts/slot/insertion, command/correlation identity, and persisted=true only after readback; negatives forbid fabricated success events."
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/event_family_registry.json:2319-2354",
+        "status": "ok",
+        "notes": "Exact workspace family membership, owners, schema, scope/identity, redaction, compatibility, retention."
+      },
+      {
+        "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:1-152",
+        "status": "ok",
+        "notes": "Closed payload contract."
+      },
+      {
+        "citation": "Plans/FinalGUISpec.md:270-351",
+        "status": "ok",
+        "notes": "AugustDepthClose producer/transition/oracle surface (F3-HOME-002/004)."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:1018-1031,3390-3463",
+        "status": "ok",
+        "notes": "EventRecord spine + CV-323 Home transitions/oracles."
+      },
+      {
+        "citation": "Plans/storage-plan.md:464-479,1510-1538",
+        "status": "ok",
+        "notes": "Shared persistence/replay/checkpoint mechanics; insufficient alone for consumers_checkpoints PASS."
+      },
+      {
+        "citation": "Plans/storage_value_registry.json:68-81",
+        "status": "ok",
+        "notes": "RP-AUTHORITY-INDEFINITE@1.0.0 resolution."
+      },
+      {
+        "citation": "Plans/event_family_registry.schema.json:283-453",
+        "status": "ok",
+        "notes": "Registry family schema has no event-specific consumer/checkpoint fields."
+      }
+    ],
+    "owner_veto": null,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "AugustDepthClose",
+    "provisional": true,
+    "quality_notes": [
+      "Repaired from mechanical registry-only PASS / invalid UNKNOWN and from PlanIndivAug NEEDS_OWNER_VETO quarantine options.",
+      "consumers_checkpoints remains OWNER_REQUIRED until an owner-authored event-specific consumer/checkpoint registration artifact is cited; follow-up OV-EA-august-consumers_checkpoints is evidence-tracked only (owner_veto=null).",
+      "provisional=true until that quality bar is met with real event-specific citations."
+    ],
+    "fresh_census_merged": false,
+    "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+  }
+]
