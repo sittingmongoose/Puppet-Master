@@ -313,7 +313,7 @@
         });
         PM.shared.wireSettings(document.querySelector(".st-stack"));
         PM.shared.wireThemePicker();
-        PM.shared.wireOwnedStrip(stage);
+        PM.shared.wireOwnedStrip(document.querySelector("[data-stage]"));
         // search results stagger (C2 motion moment #2)
         var resInner2 = document.querySelector(".st-results-inner");
         PM.shared.wireProseFields(document.querySelector(".st-stack"));
