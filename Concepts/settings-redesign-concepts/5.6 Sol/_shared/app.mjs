@@ -108,6 +108,8 @@ let destroyed = false;
 let queuedReview = null;
 let reviewFlushScheduled = false;
 let lastMotionResult = null;
+let applyingHistory = false;
+let lastRouteHash = "";
 
 function syncReviewPopover() {
   const open = Boolean(reviewPopover?.open);
@@ -180,9 +182,12 @@ function decorateMotionRoles() {
   addRole(".setting-row", "setting");
   addRole(".setting-section", "section");
   addRole(".advanced-group,.domain-details,.manager-evidence-disclosure,.more-actions", "disclosure");
-  addRole(".model-row,.resource-row,.ledger-resource-row", "reorder-item");
-  addRole(".provider-list,.manager-master,.manager-tabs", "source");
-  addRole(".model-board,.manager-content", "catalogue");
+  addRole(".model-row,.resource-row,.ledger-resource-row,.installation-row", "reorder-item");
+  addRole(".provider-list,.manager-master,.manager-tabs,.installation-list", "source");
+  addRole(".model-board,.manager-content,.installation-board,.operation-flow", "catalogue");
+  addRole(".operation-flow,.flow-stages,.flow-choice", "transaction");
+  addRole(".theme-studio,.theme-gallery,.sound-studio,.sound-wave", "preview");
+  addRole(".fixture-tray,.persistence-bar", "review-state");
   addRole(".detail-panel,.catalogue-inspector", "evidence");
   addRole(".drawer-backdrop", "drawer-backdrop");
   addRole("#categoryNavigator", "drawer");
@@ -491,6 +496,8 @@ function motionKind(event) {
   if (action === "navigation" || action === "inspector") return "drawer";
   if (action === "disclosure" || action === "manager-tab" || /select/.test(action)) return "disclosure";
   if (/refresh/.test(action)) return "refresh";
+  if (["manager-flow", "provider-installation", "fixture"].includes(action)) return "transaction";
+  if (action === "theme-preview" || event?.scopes?.includes("preview")) return "preview";
   if (event?.motionKey?.includes("move") || event?.motionKey?.includes("reorder")) return "reorder";
   if (action === "scenario" || action === "review.apply") return "category";
   return "save";
@@ -621,7 +628,10 @@ function enqueueEvent(event, hint = pendingHint, flushed = false) {
   return task;
 }
 
-store.subscribe((_state, event) => enqueueEvent(event, pendingHint));
+store.subscribe((_state, event) => {
+  syncRouteHistory(event);
+  enqueueEvent(event, pendingHint);
+});
 
 function setupScrollspy() {
   observer?.disconnect();
@@ -645,6 +655,75 @@ function dispatch(action, hint = null) {
   queueMicrotask(() => { if (pendingHint === hint) pendingHint = null; });
   if (result && typeof result.then === "function") return result;
   return Promise.resolve(result);
+}
+
+function encodeRouteSegment(value) {
+  return encodeURIComponent(String(value || ""));
+}
+
+function routeHash(event = null) {
+  if (store.state.screen === "home") return "#home";
+  if (store.state.screen === "workspace") {
+    if (event?.focusRequest?.kind === "setting" && event.focusRequest.id) return `#setting/${encodeRouteSegment(event.focusRequest.id)}`;
+    return `#category/${encodeRouteSegment(store.state.categoryId)}/${encodeRouteSegment(store.state.subcategoryId || "")}`;
+  }
+  if (store.state.screen === "manager") {
+    const managerId = store.state.managerId || "providers";
+    const tab = store.state.managerTab || "overview";
+    const params = new URLSearchParams();
+    let resourceId = null;
+    let childResourceId = null;
+    if (managerId === "providers") {
+      resourceId = store.state.selectedProviderId;
+      childResourceId = tab === "installations" ? store.state.selectedInstallationId : tab === "accounts" ? store.state.selectedAccountId : null;
+    } else if (managerId === "memory") resourceId = store.state.selectedMemoryId;
+    else if (managerId === "terminal") resourceId = store.state.selectedTerminalId;
+    else resourceId = store.state.selectedManagerResource?.[managerId] || null;
+    if (resourceId) params.set("resource", resourceId);
+    if (childResourceId) params.set("child", childResourceId);
+    const suffix = params.toString() ? `?${params.toString()}` : "";
+    return `#manager/${encodeRouteSegment(managerId)}/${encodeRouteSegment(tab)}${suffix}`;
+  }
+  return "#home";
+}
+
+function syncRouteHistory(event) {
+  if (applyingHistory || !event) return;
+  const routeActions = new Set(["navigate", "category", "manager-tab", "manager-resource", "manager-select", "provider-installation"]);
+  if (!routeActions.has(event.action)) return;
+  const nextHash = routeHash(event);
+  if (!nextHash || nextHash === lastRouteHash && window.location.hash === nextHash) return;
+  const replace = !lastRouteHash || event.action === "manager-resource" || event.action === "manager-select" || event.action === "provider-installation";
+  window.history[replace ? "replaceState" : "pushState"]({ conceptId, route: nextHash }, "", nextHash);
+  lastRouteHash = nextHash;
+}
+
+async function applyDeepLink(hash = window.location.hash || "#home") {
+  const value = String(hash || "#home").replace(/^#/, "");
+  const [path, query = ""] = value.split("?");
+  const parts = path.split("/").map((part) => decodeURIComponent(part || ""));
+  const params = new URLSearchParams(query);
+  applyingHistory = true;
+  try {
+    if (parts[0] === "home" || !parts[0]) await dispatch({ type: "navigate.home" });
+    else if (parts[0] === "setting" && parts[1]) await dispatch({ type: "navigate.setting", settingId: parts[1] });
+    else if (parts[0] === "category" && parts[1]) await dispatch({ type: "navigate.category", categoryId: parts[1], subcategoryId: parts[2] || null });
+    else if (parts[0] === "manager" && parts[1]) {
+      managerDrillMode = params.get("resource") ? "detail" : "master";
+      await dispatch({
+        type: "navigate.manager",
+        managerId: parts[1],
+        tab: parts[2] || "overview",
+        resourceId: params.get("resource") || null,
+        childResourceId: params.get("child") || null
+      });
+    } else await dispatch({ type: "navigate.home" });
+    lastRouteHash = routeHash();
+    if (window.location.hash !== lastRouteHash) window.history.replaceState({ conceptId, route: lastRouteHash }, "", lastRouteHash);
+  } finally {
+    applyingHistory = false;
+  }
+  return store.snapshot();
 }
 
 function parseDestination(value) {
@@ -771,26 +850,55 @@ app.addEventListener("click", (event) => {
     closeSpellMenu({ restore: false });
   } else if (target.dataset.receiptDismiss) {
     dispatch({ type: "receipt.dismiss", receiptId: target.dataset.receiptDismiss });
+  } else if (target.dataset.installationAction) {
+    dispatch({ type: "provider.installation.action", providerId: target.dataset.providerId, installationId: target.dataset.installationId, installationAction: target.dataset.installationAction });
+  } else if (target.dataset.installationId) {
+    captureManagerOrigin(target);
+    managerDrillMode = "detail";
+    dispatch({ type: "provider.installation.select", providerId: target.dataset.providerId, installationId: target.dataset.installationId });
+  } else if (target.dataset.flowChoice) {
+    dispatch({ type: "flow.choose", choice: target.dataset.flowChoice });
+  } else if (target.hasAttribute("data-flow-advance")) {
+    dispatch({ type: "flow.advance" });
+  } else if (target.hasAttribute("data-flow-fail")) {
+    dispatch({ type: "flow.advance", outcome: "fail", reason: "Deterministic verification fixture rejected the staged change." });
+  } else if (target.hasAttribute("data-flow-rollback")) {
+    dispatch({ type: "flow.rollback" });
+  } else if (target.hasAttribute("data-flow-close")) {
+    dispatch({ type: "flow.close" });
+  } else if (target.dataset.startFlow) {
+    dispatch({ type: "flow.start", kind: target.dataset.startFlow, managerId: store.state.managerId, resourceId: target.dataset.flowResource || null });
+  } else if (target.dataset.themePreview) {
+    dispatch({ type: "theme.preview", theme: target.dataset.themePreview });
+  } else if (target.hasAttribute("data-theme-validate")) {
+    const draft = scroller.querySelector("[data-custom-theme-draft]")?.value || store.state.customThemeDraft;
+    dispatch({ type: "theme.validate", draft });
+  } else if (target.hasAttribute("data-theme-apply")) {
+    dispatch({ type: "theme.apply" });
+  } else if (target.hasAttribute("data-theme-revert")) {
+    dispatch({ type: "theme.revert" });
+  } else if (target.dataset.soundPreview) {
+    dispatch({ type: "sound.preview", resourceId: target.dataset.soundPreview });
+  } else if (target.hasAttribute("data-sound-stop")) {
+    dispatch({ type: "sound.stop" });
+  } else if (target.dataset.externalChoice) {
+    dispatch({ type: "external.reconcile", choice: target.dataset.externalChoice });
+  } else if (target.dataset.fixtureId) {
+    dispatch({ type: "fixture.trigger", fixtureId: target.dataset.fixtureId });
+  } else if (target.hasAttribute("data-persistence-reset")) {
+    dispatch({ type: "persistence.reset" });
   } else if (target.dataset.managerItemAction) {
-    const inventory = store.managerItems(target.dataset.managerId);
-    const rows = Array.isArray(inventory) ? inventory : inventory?.items || [];
-    const resource = rows.find((entry) => entry.id === target.dataset.resourceId);
-    const action = target.dataset.managerItemAction;
-    const external = /connect|reconnect|install|start|stop|restart|generate|remap|reset|rescan|continue|discard|disable|set future/i.test(action);
-    store.receipt(`${action} ${external ? "simulated" : "opened"}`, external
-      ? `${resource?.title || "The selected resource"} recorded the requested boundary action without login, installation, command execution, provider calls, or durable mutation.`
-      : `${resource?.title || "The selected resource"} exposed its deterministic local evidence for this review.`, external ? "managed" : "success", { persistent: true, simulation: external });
+    dispatch({ type: "manager.action", managerId: target.dataset.managerId, resourceId: target.dataset.resourceId, name: target.dataset.managerItemAction });
   } else if (target.dataset.genericAction) {
-    const managerLabel = managerById(target.dataset.genericAction)?.title || "This manager";
-    store.receipt("Simulated manager action", `${managerLabel} recorded a local concept receipt; no install, authentication, command, or provider call occurred.`, "managed", { persistent: true, simulation: true });
+    dispatch({ type: "manager.action", managerId: target.dataset.genericAction, resourceId: store.state.selectedManagerResource?.[target.dataset.genericAction] || null, name: "Inspect evidence" });
   } else if (target.dataset.genericInspect) {
     store.receipt("Evidence opened", "Health history, requested and effective state, and redacted diagnostic evidence are visible in this fixture only.", "managed", { persistent: true, simulation: true });
   } else if (target.dataset.managerResource) {
-    const [managerId, resourceId] = target.dataset.managerResource.split(":");
+    const [managerId, ...resourceParts] = target.dataset.managerResource.split(":");
+    const resourceId = resourceParts.join(":");
     captureManagerOrigin(target);
     managerDrillMode = "detail";
-    store.state.selectedManagerResource = { ...(store.state.selectedManagerResource || {}), [managerId]: resourceId };
-    store.emit({ action: "manager-select", scopes: ["manager", "detail", "focus"], motionKey: `${conceptId}:manager-select` });
+    dispatch({ type: "manager.resource.select", managerId, resourceId });
   } else if (target.hasAttribute("data-drill-back")) {
     managerDrillMode = "master";
     applyManagerDrill();
@@ -811,6 +919,8 @@ app.addEventListener("input", (event) => {
     store.emit({ action: "manager-search", scopes: ["manager", "search"], motionKey: "search" });
   } else if (target.dataset.terminalField === "opacity") {
     dispatch({ type: "terminal.update", key: "opacity", value: Number(target.value) / 100 });
+  } else if (target.hasAttribute("data-custom-theme-draft")) {
+    store.state.customThemeDraft = target.value;
   }
 });
 
@@ -840,6 +950,8 @@ app.addEventListener("change", (event) => {
     dispatch({ type: "role.assign", roleId: target.dataset.role, route: target.value });
   } else if (target.dataset.memoryFilter !== undefined) {
     dispatch({ type: "memory.filter", key: target.dataset.memoryFilter || "state", value: target.value });
+  } else if (target.dataset.testingPolicy) {
+    dispatch({ type: "manager.resource.update", managerId: "testing-debug", resourceId: target.dataset.testingPolicy, changes: { requested: target.value } });
   } else if (target.dataset.terminalField) {
     const numeric = ["fontSize", "lineHeight"].includes(target.dataset.terminalField);
     dispatch({ type: "terminal.update", key: target.dataset.terminalField, value: numeric ? Number(target.value) : target.value });
@@ -1004,6 +1116,10 @@ syncShell();
 renderReceipts();
 setupScrollspy();
 notifyRendered({ action: "initial", scopes: ["view"] });
+lastRouteHash = routeHash();
+if (window.location.hash && window.location.hash !== "#home") applyDeepLink(window.location.hash);
+else window.history.replaceState({ conceptId, route: lastRouteHash }, "", lastRouteHash);
+window.addEventListener("popstate", () => applyDeepLink(window.location.hash));
 
 async function whenIdle() {
   await store.whenIdle();
@@ -1041,5 +1157,14 @@ window.PMSettingsDemo = {
   openHome: () => dispatch({ type: "navigate.home" }),
   openCategory: (categoryId, subcategoryId) => dispatch({ type: "navigate.category", categoryId, subcategoryId }),
   openManager: (managerId, tab, options = {}) => dispatch({ type: "navigate.manager", managerId, tab, ...options }),
-  openSetting: (settingId) => dispatch({ type: "navigate.setting", settingId })
+  openSetting: (settingId) => dispatch({ type: "navigate.setting", settingId }),
+  deepLink: () => routeHash(),
+  applyDeepLink,
+  fixtures: () => store.fixtureTriggers.map((entry) => ({ ...entry })),
+  triggerFixture: (fixtureId) => dispatch({ type: "fixture.trigger", fixtureId }),
+  startFlow: (kind, options = {}) => dispatch({ type: "flow.start", kind, ...options }),
+  advanceFlow: (options = {}) => dispatch({ type: "flow.advance", ...options }),
+  chooseFlow: (choice) => dispatch({ type: "flow.choose", choice }),
+  rollbackFlow: () => dispatch({ type: "flow.rollback" }),
+  reset: () => dispatch({ type: "persistence.reset" })
 };

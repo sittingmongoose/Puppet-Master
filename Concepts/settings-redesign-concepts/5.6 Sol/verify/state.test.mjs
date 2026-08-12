@@ -11,6 +11,9 @@ import {
   TERMINAL_PROFILES,
   MANAGERS,
   MANAGER_INVENTORIES,
+  CONCEPT_MANAGER_ASSIGNMENTS,
+  FLOW_TEMPLATES,
+  DETERMINISTIC_TRIGGERS,
   SCENARIOS,
   VALUE_STATES,
   SPELLING_FIXTURE,
@@ -33,7 +36,7 @@ test("flagship fixtures keep exact model identity and packet-sized inventories",
   assert.equal(THEMES.length, 8);
   assert.equal(CATEGORIES.length, 10);
   assert.equal(Object.keys(SCENARIOS).length, 12);
-  assert.equal(PROVIDERS.length, 6);
+  assert.equal(PROVIDERS.length, 7);
   assert.equal(ROLE_ASSIGNMENTS.length, 11);
   assert.ok(MANAGERS.length >= 10);
   assert.ok(allSettings().length >= 70);
@@ -49,7 +52,7 @@ test("flagship fixtures keep exact model identity and packet-sized inventories",
 });
 
 test("four motion systems cover every semantic moment with distinct signatures and bounded timing", () => {
-  assert.deepEqual(MOTION_KINDS, ["navigate", "category", "search", "jump", "scrollspy", "disclosure", "refresh", "save", "reorder", "drawer"]);
+  assert.deepEqual(MOTION_KINDS, ["navigate", "category", "search", "jump", "scrollspy", "disclosure", "refresh", "save", "reorder", "drawer", "transaction", "preview"]);
   const expectedReducedRoles = {
     "index-house": "address-marker",
     switchboard: "signal-marker",
@@ -407,7 +410,7 @@ test("whenIdle resolves to a detached normalized snapshot after pending work set
   const snapshot = await store.whenIdle();
   assert.equal(await refresh, true);
   assert.equal(snapshot.state.refreshingProviderIds.length, 0);
-  assert.equal(snapshot.providers.length, 6);
+  assert.equal(snapshot.providers.length, 7);
   assert.equal(snapshot.roles.length, 11);
   assert.equal(snapshot.memories.length, store.memories.length);
   snapshot.state.screen = "tampered";
@@ -415,3 +418,101 @@ test("whenIdle resolves to a detached normalized snapshot after pending work set
   assert.notEqual(store.state.screen, "tampered");
   assert.notEqual(store.providers[0].name, "tampered");
 });
+
+
+test("final concept assignments cover every packet manager family without collapsing distinct systems", () => {
+  assert.deepEqual(Object.fromEntries(Object.entries(CONCEPT_MANAGER_ASSIGNMENTS).map(([id, managers]) => [id, managers.length])), {
+    "index-house": 8,
+    switchboard: 6,
+    wayfinder: 11,
+    ledger: 13
+  });
+  for (const [conceptId, managerIds] of Object.entries(CONCEPT_MANAGER_ASSIGNMENTS)) {
+    assert.equal(new Set(managerIds).size, managerIds.length, `${conceptId} repeats a manager family`);
+    for (const managerId of managerIds) {
+      assert.ok(MANAGERS.some((entry) => entry.id === managerId), `${conceptId} references unknown ${managerId}`);
+      if (!["providers", "memory", "terminal"].includes(managerId)) assert.ok(MANAGER_INVENTORIES[managerId]?.items?.length, `${conceptId}/${managerId} has no inventory`);
+    }
+  }
+  for (const distinct of ["commands-shortcuts", "mcp", "skills", "plugins", "tools"]) {
+    assert.ok(CONCEPT_MANAGER_ASSIGNMENTS.wayfinder.includes(distinct), `${distinct} was improperly collapsed`);
+  }
+});
+
+test("provider installations preserve explicit ownership, auth, official-source, update, shadow, and rollback boundaries", () => {
+  const store = new SettingsStore("switchboard");
+  const all = store.providers.flatMap((provider) => (provider.installations || []).map((installation) => ({ provider, installation })));
+  assert.ok(all.some(({ installation }) => installation.selected));
+  assert.ok(all.some(({ installation }) => installation.shadowed));
+  assert.ok(all.some(({ installation }) => /unknown/i.test(installation.ownershipConfidence)));
+  assert.ok(all.some(({ installation }) => /CLI-owned OAuth/i.test(installation.authBoundary)));
+  assert.ok(all.some(({ installation }) => /PM-direct OAuth/i.test(installation.authBoundary)));
+  assert.ok(all.every(({ installation }) => installation.officialSource));
+  assert.ok(all.every(({ installation }) => installation.updatePolicy));
+  const selected = all.find(({ installation }) => installation.actions?.some((action) => /update/i.test(action)));
+  assert.ok(selected);
+  assert.ok(store.runProviderInstallationAction(selected.provider.id, selected.installation.id, "Update from official source"));
+  assert.equal(store.state.activeFlow.kind, "provider-update");
+  assert.equal(store.advanceFlow({ outcome: "fail" }).status, "failed");
+  assert.equal(store.state.activeFlow.rollbackAvailable, true);
+  assert.equal(store.rollbackFlow().status, "rolled-back");
+});
+
+test("settings import transaction hard-gates conflict choice and records verified completion", () => {
+  const store = new SettingsStore("ledger");
+  assert.ok(FLOW_TEMPLATES["settings-import"].choices.includes("Merge"));
+  store.openManager("settings-lifecycle");
+  store.startFlow("settings-import", { managerId: "settings-lifecycle", resourceId: "settings-import" });
+  for (let index = 0; index < 3; index += 1) store.advanceFlow();
+  assert.equal(store.state.activeFlow.stageIndex, 3);
+  assert.equal(store.advanceFlow(), false);
+  assert.equal(store.state.activeFlow.status, "choice-required");
+  assert.equal(store.chooseFlow("Merge"), true);
+  while (store.state.activeFlow.status !== "complete") store.advanceFlow();
+  assert.ok(store.state.flowHistory.some((flow) => flow.kind === "settings-import" && flow.choice === "Merge"));
+});
+
+test("all deterministic review triggers are unique, reachable, and disclose fixture status", () => {
+  assert.equal(DETERMINISTIC_TRIGGERS.length, 24);
+  assert.equal(new Set(DETERMINISTIC_TRIGGERS.map((entry) => entry.id)).size, 24);
+  for (const fixture of DETERMINISTIC_TRIGGERS) {
+    const concept = fixture.managerId && Object.entries(CONCEPT_MANAGER_ASSIGNMENTS).find(([, managers]) => managers.includes(fixture.managerId))?.[0] || "index-house";
+    const store = new SettingsStore(concept);
+    const result = store.triggerFixture(fixture.id);
+    assert.equal(result.id, fixture.id);
+    assert.equal(store.state.activeFixture, fixture.id);
+    assert.ok(store.receiptHistory.some((entry) => /review fixture/i.test(entry.title)));
+  }
+});
+
+test("appearance preview is reversible and custom theme validation exposes safe fallback", () => {
+  const store = new SettingsStore("switchboard");
+  const original = store.state.theme;
+  assert.equal(store.previewTheme("retro-dark"), true);
+  assert.equal(store.state.theme, "retro-dark");
+  assert.equal(store.revertThemePreview(), true);
+  assert.equal(store.state.theme, original);
+  const invalid = store.validateCustomTheme('unsupported_token = "yes"');
+  assert.equal(invalid.state, "invalid");
+  assert.equal(invalid.fallback, "friendly-dark");
+});
+
+test("persistent reset restores the complete authored state", () => {
+  const store = new SettingsStore("switchboard");
+  store.applyReviewState({ theme: "retro-light", density: "compact", reducedMotion: true, direction: "rtl", textScale: 1.35 });
+  store.openManager("appearance");
+  store.triggerFixture("theme-invalid-token");
+  store.startFlow("theme", { managerId: "appearance" });
+  store.resetPersistentDemo();
+  assert.equal(store.state.screen, "home");
+  assert.equal(store.state.managerId, null);
+  assert.equal(store.state.theme, "friendly-dark");
+  assert.equal(store.state.density, "automatic");
+  assert.equal(store.state.reducedMotionOverride, null);
+  assert.equal(store.state.presentation.direction, "ltr");
+  assert.equal(store.state.presentation.textScale, 1);
+  assert.equal(store.state.activeFixture, null);
+  assert.equal(store.state.activeFlow, null);
+  assert.equal(store.state.persistence.restored, false);
+});
+

@@ -1,3 +1,15 @@
+import {
+  EXTRA_MANAGERS,
+  CONCEPT_MANAGER_ASSIGNMENTS,
+  EXTRA_MANAGER_INVENTORIES,
+  PROVIDER_INSTALLATIONS,
+  FLOW_TEMPLATES,
+  DETERMINISTIC_TRIGGERS,
+  MANAGER_COVERAGE_LABELS
+} from "./manager-data.mjs";
+
+export { CONCEPT_MANAGER_ASSIGNMENTS, FLOW_TEMPLATES, DETERMINISTIC_TRIGGERS, MANAGER_COVERAGE_LABELS };
+
 export const MODEL_NAME = "5.6 Sol";
 
 export const THEMES = [
@@ -453,7 +465,7 @@ export const CATEGORIES = [
   }
 ];
 
-export const MANAGERS = [
+const CORE_MANAGERS = [
   { id: "providers", title: "Providers, agents & models", purpose: "Accounts, connections, plans, catalogues, role assignments, usage snapshots, and diagnostics.", icon: "provider", full: true },
   { id: "memory", title: "Assistant memory", purpose: "Evidence-backed Gists, verification, provenance, versions, retention, and recall controls.", icon: "memory", full: true },
   { id: "terminal", title: "Terminal profiles", purpose: "Shells, typography, palette, cursor, behavior, retention, performance, and diagnostics.", icon: "terminal", full: true },
@@ -464,6 +476,11 @@ export const MANAGERS = [
   { id: "lsp", title: "Language servers", purpose: "Detected servers, language coverage, conflicts, startup, restart, and logs.", icon: "code" },
   { id: "extensions", title: "Skills, plugins & tools", purpose: "Discovery, trust, updates, scope, progressive exposure, and compatibility.", icon: "tool" },
   { id: "media", title: "Media providers", purpose: "Image, audio, and video routes, formats, policy, allowance, history, and diagnostics.", icon: "media" }
+];
+
+export const MANAGERS = [
+  ...CORE_MANAGERS,
+  ...EXTRA_MANAGERS.filter((candidate) => !CORE_MANAGERS.some((manager) => manager.id === candidate.id))
 ];
 
 const PROVIDER_BASE = [
@@ -477,13 +494,13 @@ const PROVIDER_BASE = [
     activeAccountId: "openai-personal",
     inFlightAccountId: "openai-personal",
     accounts: [
-      { id: "openai-personal", name: "Personal Codex", identity: "Jared — personal", connection: "PM direct sign-in", authOwner: "Puppet Master", isolation: "PM-managed direct connection", product: "Codex subscription", state: "ready", usage: "Included usage exhausted; resets in 2 hours", lastUse: "Generation succeeded 18 minutes ago", next: "Ask before API billing" },
-      { id: "openai-work", name: "Work Codex", identity: "Tastebook Studio", connection: "PM direct sign-in", authOwner: "Puppet Master", isolation: "PM-managed direct connection", product: "Team workspace", state: "ready", usage: "61 percent remains", lastUse: "Generation succeeded 7 minutes ago", next: "Stop and wait" },
-      { id: "openai-api", name: "Work API", identity: "Tastebook billing project", connection: "API credential pool", authOwner: "Puppet Master secret store", isolation: "API credential pool", product: "API billing", state: "ready", usage: "Monthly guard is 37 percent used", lastUse: "Safe probe succeeded today", next: "Stop at monthly guard" }
+      { id: "openai-personal", name: "Personal Codex", identity: "Personal account fixture", connection: "PM direct sign-in", authOwner: "Puppet Master", isolation: "PM-managed direct connection", product: "Codex subscription", state: "ready", usage: "Included usage exhausted; resets in 2 hours", lastUse: "Deterministic generation fixture succeeded", next: "Ask before API billing" },
+      { id: "openai-work", name: "Work Codex", identity: "Organization account fixture", connection: "PM direct sign-in", authOwner: "Puppet Master", isolation: "PM-managed direct connection", product: "Team workspace", state: "ready", usage: "61 percent remains", lastUse: "Deterministic generation fixture succeeded", next: "Stop and wait" },
+      { id: "openai-api", name: "Work API", identity: "Organization billing fixture", connection: "API credential pool", authOwner: "Puppet Master secret store", isolation: "API credential pool", product: "API billing", state: "ready", usage: "Monthly guard is 37 percent used", lastUse: "Deterministic safe probe succeeded", next: "Stop at monthly guard" }
     ],
     models: [
-      { id: "sol-56", name: "5.6 Sol", alias: "Primary builder", favorite: true, priority: 1, state: "ready", evidence: "Observed success, 18 minutes ago", capabilities: "Text, vision, tools, structured output", effort: ["Low", "Medium", "High", "Extra high"], selectedEffort: "High", fastSupported: true, speed: "Normal" },
-      { id: "sol-56-mini", name: "5.6 Sol Mini", alias: "Bounded research", favorite: false, priority: 2, state: "ready", evidence: "Authenticated discovery, today", capabilities: "Text, tools, structured output", effort: ["Low", "Medium", "High"], selectedEffort: "Medium", fastSupported: false, speed: "Normal" },
+      { id: "sol-56", name: "5.6 Sol", alias: "Primary builder", favorite: true, priority: 1, state: "ready", evidence: "Observed deterministic success fixture", capabilities: "Text, vision, tools, structured output", effort: ["Low", "Medium", "High", "Extra high"], selectedEffort: "High", fastSupported: true, speed: "Normal" },
+      { id: "sol-56-mini", name: "5.6 Sol Mini", alias: "Bounded research", favorite: false, priority: 2, state: "ready", evidence: "Authenticated deterministic discovery fixture", capabilities: "Text, tools, structured output", effort: ["Low", "Medium", "High"], selectedEffort: "Medium", fastSupported: false, speed: "Normal" },
       { id: "vision-route", name: "Vision route", alias: "Media analysis", favorite: false, priority: 3, state: "unavailable", evidence: "Account entitlement not confirmed", capabilities: "Image input likely", effort: ["Medium", "High"], selectedEffort: "High", fastSupported: false, speed: "Normal", reason: "Personal account entitlement needs refresh" }
     ]
   },
@@ -497,13 +514,13 @@ const PROVIDER_BASE = [
     activeAccountId: "claude-personal",
     inFlightAccountId: "claude-personal",
     accounts: [
-      { id: "claude-personal", name: "Personal CLI profile", identity: "Jared — Claude account", connection: "Claude CLI-owned OAuth", authOwner: "Claude CLI", isolation: "Isolated CLI home and config", product: "Claude Max", state: "ready", usage: "Reset in 3 hours; moderate pressure", lastUse: "Generation succeeded 31 minutes ago", next: "Stop and wait" },
-      { id: "claude-work", name: "Work CLI profile", identity: "Tastebook Studio", connection: "Claude CLI-owned OAuth", authOwner: "Claude CLI", isolation: "Authentication-isolated profile", product: "Claude Team", state: "failed", usage: "Usage available", lastUse: "Authenticated, but safe generation failed", next: "Repair profile" },
-      { id: "claude-api", name: "Claude API", identity: "Tastebook API project", connection: "API key connection", authOwner: "Puppet Master secret store", isolation: "PM-managed direct connection", product: "API billing", state: "ready", usage: "Monthly guard is 18 percent used", lastUse: "Safe probe succeeded today", next: "Stop at monthly guard" }
+      { id: "claude-personal", name: "Personal CLI profile", identity: "Personal Claude fixture", connection: "Claude CLI-owned OAuth", authOwner: "Claude CLI", isolation: "Isolated CLI home and config", product: "Claude Max", state: "ready", usage: "Reset in 3 hours; moderate pressure", lastUse: "Deterministic generation fixture succeeded", next: "Stop and wait" },
+      { id: "claude-work", name: "Work CLI profile", identity: "Organization account fixture", connection: "Claude CLI-owned OAuth", authOwner: "Claude CLI", isolation: "Authentication-isolated profile", product: "Claude Team", state: "failed", usage: "Usage available", lastUse: "Authenticated, but safe generation failed", next: "Repair profile" },
+      { id: "claude-api", name: "Claude API", identity: "Organization API fixture", connection: "API key connection", authOwner: "Puppet Master secret store", isolation: "PM-managed direct connection", product: "API billing", state: "ready", usage: "Monthly guard is 18 percent used", lastUse: "Deterministic safe probe succeeded", next: "Stop at monthly guard" }
     ],
     models: [
-      { id: "claude-sonnet", name: "Claude Sonnet", alias: "Planning alternate", favorite: true, priority: 1, state: "ready", evidence: "Observed success, today", capabilities: "Text, vision, tools", effort: ["Low", "Medium", "High"], selectedEffort: "High", fastSupported: false, speed: "Normal" },
-      { id: "claude-opus", name: "Claude Opus", alias: "Deep review", favorite: false, priority: 2, state: "ready", evidence: "Account discovery, today", capabilities: "Text, vision, tools", effort: ["High"], selectedEffort: "High", fastSupported: false, speed: "Normal" }
+      { id: "claude-sonnet", name: "Claude Sonnet", alias: "Planning alternate", favorite: true, priority: 1, state: "ready", evidence: "Observed deterministic success fixture", capabilities: "Text, vision, tools", effort: ["Low", "Medium", "High"], selectedEffort: "High", fastSupported: false, speed: "Normal" },
+      { id: "claude-opus", name: "Claude Opus", alias: "Deep review", favorite: false, priority: 2, state: "ready", evidence: "Deterministic account discovery fixture", capabilities: "Text, vision, tools", effort: ["High"], selectedEffort: "High", fastSupported: false, speed: "Normal" }
     ]
   },
   {
@@ -558,10 +575,10 @@ const PROVIDER_BASE = [
     activeAccountId: "local-endpoint",
     inFlightAccountId: null,
     accounts: [
-      { id: "local-endpoint", name: "Studio workstation", identity: "Local endpoint", connection: "Server connection", authOwner: "No authentication", isolation: "Local endpoint", product: "Local compute", state: "ready", usage: "No provider-reported balance", lastUse: "Safe probe succeeded 4 minutes ago", next: "Stop if unavailable" }
+      { id: "local-endpoint", name: "Local workstation fixture", identity: "Local endpoint", connection: "Server connection", authOwner: "No authentication", isolation: "Local endpoint", product: "Local compute", state: "ready", usage: "No provider-reported balance", lastUse: "Deterministic safe probe succeeded", next: "Stop if unavailable" }
     ],
     models: [
-      { id: "local-coder", name: "Local Coder 32B", alias: "Private local tasks", favorite: false, priority: 1, state: "ready", evidence: "Observed success, 4 minutes ago", capabilities: "Text and structured output; tools unverified", effort: [], selectedEffort: "Not supported", fastSupported: false, speed: "Normal" }
+      { id: "local-coder", name: "Local Coder 32B", alias: "Private local tasks", favorite: false, priority: 1, state: "ready", evidence: "Observed success, Review fixture", capabilities: "Text and structured output; tools unverified", effort: [], selectedEffort: "Not supported", fastSupported: false, speed: "Normal" }
     ]
   }
 ];
@@ -583,7 +600,7 @@ const PROVIDER_DETAILS = {
       { id: "openai-responses-adapter", label: "OpenAI direct adapter", kind: "Puppet Master direct", state: "ready", version: "2026.08", capabilitySource: "Observed successful use", lastVerified: "18 minutes ago", supports: ["Text", "Images", "Tools", "Structured output"] },
       { id: "codex-session-adapter", label: "Codex session adapter", kind: "Puppet Master direct", state: "ready", version: "2026.08", capabilitySource: "Authenticated account discovery", lastVerified: "Today", supports: ["Thread continuity", "Effort controls", "Tool calls"] }
     ],
-    catalogue: { source: "Provider discovery with models.dev annotations", sourceVersion: "openai-2026-08-05.2", sourceCommit: "models-dev 7c8a91d", checkedAt: "12 minutes ago", lastActivatedAt: "Yesterday at 9:42 PM", lastKnownGoodAt: "Today at 9:48 AM", state: "ready", quarantine: null, materialChanges: ["5.6 Sol context evidence refreshed"], removalHistory: ["5.5 preview retired on July 29"] },
+    catalogue: { source: "Provider discovery with models.dev annotations", sourceVersion: "openai-2026-08-05.2", sourceCommit: "models-dev 7c8a91d", checkedAt: "Review fixture", lastActivatedAt: "Yesterday at 9:42 PM", lastKnownGoodAt: "Today at 9:48 AM", state: "ready", quarantine: null, materialChanges: ["5.6 Sol context evidence refreshed"], removalHistory: ["5.5 preview retired on July 29"] },
     usage: { pressure: "High", nextReset: "In 2 hours", runOutProjection: "Included personal usage is exhausted", extraBalance: "API billing is available but not selected", freshness: "Provider-reported 6 minutes ago", quality: "Provider reported", detailDestination: { type: "usage", view: "provider", providerId: "openai" } }
   },
   claude: {
@@ -591,10 +608,10 @@ const PROVIDER_DETAILS = {
     requestedModelId: "claude-sonnet",
     effectiveModelId: "claude-sonnet",
     runtimeAdapters: [
-      { id: "claude-cli-adapter", label: "Claude CLI profile adapter", kind: "CLI-owned OAuth", state: "degraded", version: "2.1", capabilitySource: "Safe readiness probes", lastVerified: "31 minutes ago", supports: ["Isolated profile roots", "Text", "Images", "Tools"] },
+      { id: "claude-cli-adapter", label: "Claude CLI profile adapter", kind: "CLI-owned OAuth", state: "degraded", version: "2.1", capabilitySource: "Safe readiness probes", lastVerified: "Review fixture", supports: ["Isolated profile roots", "Text", "Images", "Tools"] },
       { id: "claude-api-adapter", label: "Claude API adapter", kind: "API credential pool", state: "ready", version: "2026.08", capabilitySource: "Observed successful use", lastVerified: "Today", supports: ["Text", "Images", "Tools"] }
     ],
-    catalogue: { source: "Provider discovery with models.dev annotations", sourceVersion: "claude-2026-08-05.1", sourceCommit: "models-dev 7c8a91d", checkedAt: "31 minutes ago", lastActivatedAt: "Yesterday at 8:17 PM", lastKnownGoodAt: "Today at 9:29 AM", state: "ready-with-warning", quarantine: "Work profile entitlement result excluded after invocation failure", materialChanges: ["Work profile remains authenticated but not ready"], removalHistory: [] },
+    catalogue: { source: "Provider discovery with models.dev annotations", sourceVersion: "claude-2026-08-05.1", sourceCommit: "models-dev 7c8a91d", checkedAt: "Review fixture", lastActivatedAt: "Yesterday at 8:17 PM", lastKnownGoodAt: "Today at 9:29 AM", state: "ready-with-warning", quarantine: "Work profile entitlement result excluded after invocation failure", materialChanges: ["Work profile remains authenticated but not ready"], removalHistory: [] },
     usage: { pressure: "Moderate", nextReset: "In 3 hours", runOutProjection: "Personal route likely lasts through the review", extraBalance: "API billing route is separate", freshness: "Provider-reported 22 minutes ago", quality: "Provider reported", detailDestination: { type: "usage", view: "provider", providerId: "claude" } }
   },
   antigravity: {
@@ -632,10 +649,10 @@ const PROVIDER_DETAILS = {
     requestedModelId: "local-coder",
     effectiveModelId: "local-coder",
     runtimeAdapters: [
-      { id: "openai-compatible-server-adapter", label: "OpenAI-compatible server adapter", kind: "Keyless local endpoint", state: "ready", version: "Protocol 2026.04", capabilitySource: "Observed successful use", lastVerified: "4 minutes ago", supports: ["Text", "Structured output", "Streaming"] }
+      { id: "openai-compatible-server-adapter", label: "OpenAI-compatible server adapter", kind: "Keyless local endpoint", state: "ready", version: "Protocol 2026.04", capabilitySource: "Observed successful use", lastVerified: "Review fixture", supports: ["Text", "Structured output", "Streaming"] }
     ],
-    catalogue: { source: "Live server model discovery", sourceVersion: "server-etag 98b1", sourceCommit: "Not applicable", checkedAt: "4 minutes ago", lastActivatedAt: "4 minutes ago", lastKnownGoodAt: "4 minutes ago", state: "ready", quarantine: null, materialChanges: [], removalHistory: ["Local Coder 14B removed by server administrator on July 30"] },
-    usage: { pressure: "Local capacity available", nextReset: "Not applicable", runOutProjection: "No provider balance; capacity depends on the workstation", extraBalance: "Not applicable", freshness: "Live endpoint 4 minutes ago", quality: "Observed", detailDestination: { type: "usage", view: "provider", providerId: "local-server" } }
+    catalogue: { source: "Live server model discovery", sourceVersion: "server-etag 98b1", sourceCommit: "Not applicable", checkedAt: "Review fixture", lastActivatedAt: "Review fixture", lastKnownGoodAt: "Review fixture", state: "ready", quarantine: null, materialChanges: [], removalHistory: ["Local Coder 14B removed by server administrator on July 30"] },
+    usage: { pressure: "Local capacity available", nextReset: "Not applicable", runOutProjection: "No provider balance; capacity depends on the workstation", extraBalance: "Not applicable", freshness: "Live endpoint Review fixture", quality: "Observed", detailDestination: { type: "usage", view: "provider", providerId: "local-server" } }
   }
 };
 
@@ -650,7 +667,7 @@ const capabilityEvidenceFor = (model, provider) => {
   ];
 };
 
-export const PROVIDERS = PROVIDER_BASE.map((provider) => {
+const NORMALIZED_PROVIDERS = PROVIDER_BASE.map((provider) => {
   const detail = PROVIDER_DETAILS[provider.id];
   const accountRows = provider.accounts.map((account, index) => ({
     ...account,
@@ -660,7 +677,7 @@ export const PROVIDERS = PROVIDER_BASE.map((provider) => {
     stickySession: index === 0,
     health: account.state,
     healthLabel: account.state === "failed" ? "Authenticated; invocation failed" : account.state === "ready" ? "Ready for new requests" : account.state === "signed-out" ? "Installed; sign-in required" : "Setup required",
-    lastCatalogRefresh: provider.id === "openai" ? "12 minutes ago" : provider.id === "claude" ? "31 minutes ago" : "No successful refresh",
+    lastCatalogRefresh: provider.id === "openai" ? "Review fixture" : provider.id === "claude" ? "Review fixture" : "No successful refresh",
     lastSuccessfulGeneration: /succeeded/.test(account.lastUse) ? account.lastUse : "No successful generation",
     usagePressure: /exhausted/.test(account.usage) ? "Exhausted" : /Unavailable|Unknown/.test(account.usage) ? "Unknown" : "Available",
     continuation: account.next,
@@ -729,10 +746,48 @@ export const PROVIDERS = PROVIDER_BASE.map((provider) => {
   };
 });
 
+const OPENCODE_EXTERNAL_PROVIDER = {
+  id: "opencode-server",
+  name: "OpenCode external server",
+  group: "Server connections",
+  state: "ready",
+  stateLabel: "External server ready",
+  summary: "A deterministic external-server fixture; Puppet Master manages the connection, not the server installation.",
+  activeAccountId: "opencode-external-account",
+  inFlightAccountId: null,
+  accounts: [{
+    id: "opencode-external-account", name: "External server profile", nickname: "External server profile",
+    identity: "Deterministic server fixture", connection: "External OpenCode server", authOwner: "Server-defined",
+    authenticationOwner: "Server-defined", isolation: "Explicit endpoint connection", product: "External service", state: "ready", enabled: true, priority: 1, stickySession: true,
+    usage: "Usage details unavailable; readiness is independent", usagePressure: "Unknown", lastUse: "Deterministic safe probe succeeded", lastSuccessfulGeneration: "Deterministic safe probe succeeded", next: "Stop if unavailable", continuation: "Stop if unavailable", connectionIds: ["opencode-external-connection"], productIds: ["opencode-external-product"]
+  }],
+  connections: [{ id: "opencode-external-connection", accountId: "opencode-external-account", label: "External server connection", kind: "External OpenCode server", authenticationOwner: "Server-defined", isolationModel: "Explicit endpoint connection", state: "ready", enabled: true, protocol: "OpenCode server API", readiness: "Ready for new requests", lastSuccessfulCatalogue: "Deterministic fixture", lastSuccessfulGeneration: "Deterministic fixture", actions: ["Test deterministic connection", "Open redacted logs"] }],
+  products: [{ id: "opencode-external-product", accountId: "opencode-external-account", connectionId: "opencode-external-connection", name: "External service", entitlementState: "declared", allowance: "Unavailable", billingRoute: "Externally managed", continuation: "Stop if unavailable", modelIds: ["opencode-auto"], usageDestination: { type: "usage", view: "provider", providerId: "opencode-server" } }],
+  models: [{ id: "opencode-auto", name: "OpenCode server route", alias: "External coding route", favorite: false, priority: 1, state: "ready", evidence: "Deterministic connection fixture", capabilities: "Text, tools, structured output", effort: ["Normal"], selectedEffort: "Normal", fastSupported: false, speed: "Normal", visible: true, productIds: ["opencode-external-product"], runtimeAdapterIds: ["opencode-server-adapter"], requested: true, effective: true, contextLimit: "Server reported after connection", inputModalities: ["Text"], outputModalities: ["Text"], toolSupport: "Supported by declared fixture", mcpSupport: "Server-defined", structuredOutputSupport: "Supported by declared fixture", capabilityEvidence: [
+    { capability: "Text input and output", status: "supported", source: "Deterministic fixture", observedAt: "Review state", note: "Not live qualification evidence." },
+    { capability: "Tool use", status: "supported", source: "Deterministic fixture", observedAt: "Review state", note: "Server-declared fixture." },
+    { capability: "Structured output", status: "supported", source: "Deterministic fixture", observedAt: "Review state", note: "Server-declared fixture." },
+    { capability: "Image input", status: "unverified", source: "Deterministic fixture", observedAt: "Review state", note: "No image-input claim." }
+  ], evidenceFreshness: "Deterministic fixture", unavailableReason: "" }],
+  runtimeAdapters: [{ id: "opencode-server-adapter", label: "OpenCode external server adapter", kind: "External endpoint", state: "ready", version: "Fixture API", capabilitySource: "Declared fixture", lastVerified: "Review state", supports: ["Text", "Tools", "Structured output"] }],
+  catalogue: { source: "External server declaration", sourceVersion: "fixture", sourceCommit: "Not applicable", checkedAt: "Review state", lastActivatedAt: "Review state", lastKnownGoodAt: "Review state", state: "ready", quarantine: null, materialChanges: [], removalHistory: [] },
+  usage: { pressure: "Unknown", nextReset: "Unavailable", runOutProjection: "Unavailable", extraBalance: "Unavailable", freshness: "Unavailable", quality: "Not reported", detailDestination: { type: "usage", view: "provider", providerId: "opencode-server" } },
+  usageSnapshot: { pressure: "Unknown", nextReset: "Unavailable", runOutProjection: "Unavailable", extraBalance: "Unavailable", freshness: "Unavailable", quality: "Not reported", readOnly: true, owner: "Usage", accountRows: [{ accountId: "opencode-external-account", label: "External server profile", pressure: "Unknown", balance: "Usage details unavailable", nextAction: "Stop if unavailable" }] },
+  routing: { requestedAccountId: "opencode-external-account", effectiveAccountId: "opencode-external-account", requestedModelId: "opencode-auto", effectiveModelId: "opencode-auto", fallbackPolicy: "Stop if unavailable" },
+  history: [{ at: "Deterministic fixture", event: "Connection fixture recorded", outcome: "Ready" }],
+  diagnostics: { secretsIncluded: false, lastRun: "Deterministic fixture", checks: ["Endpoint ownership", "Connection", "Catalogue declaration"] },
+  installations: (PROVIDER_INSTALLATIONS["opencode-server"] || []).map((entry) => ({ ...entry }))
+};
+
+export const PROVIDERS = [
+  ...NORMALIZED_PROVIDERS.map((provider) => ({ ...provider, installations: (PROVIDER_INSTALLATIONS[provider.id] || []).map((entry) => ({ ...entry })) })),
+  OPENCODE_EXTERNAL_PROVIDER
+];
+
 export const ROLE_ASSIGNMENTS = [
   { id: "assistant", label: "Main Assistant", route: "5.6 Sol — Personal Codex", quality: "High-quality conversation", minimumQuality: "high", source: "Global default", scope: "New threads", eligibleRoutes: ["5.6 Sol — Personal Codex", "Claude Sonnet — Personal profile"], guard: "Keeps user discussion on a qualified conversational route." },
   { id: "planning", label: "PRD and planning conversation", route: "Use Main Assistant", quality: "High-quality planning conversation required", minimumQuality: "high", source: "Project default", scope: "New PlanningRuns", eligibleRoutes: ["Use Main Assistant", "5.6 Sol — Personal Codex", "Claude Opus — Personal profile"], guard: "Cannot silently fall back to an unqualified low-quality route." },
-  { id: "goal", label: "Goal worker", route: "Qualified route pool", quality: "Adaptive within qualifications", minimumQuality: "task-qualified", source: "Goal default", scope: "Future Goal runs", eligibleRoutes: ["Qualified route pool", "5.6 Sol Mini — Personal Codex", "Local Coder 32B — Studio workstation"], guard: "Live Orchestrator capacity still decides admission." },
+  { id: "goal", label: "Goal worker", route: "Qualified route pool", quality: "Adaptive within qualifications", minimumQuality: "task-qualified", source: "Goal default", scope: "Future Goal runs", eligibleRoutes: ["Qualified route pool", "5.6 Sol Mini — Personal Codex", "Local Coder 32B — Local workstation fixture"], guard: "Live Orchestrator capacity still decides admission." },
   { id: "verifier", label: "Verifier and auditor", route: "Claude Sonnet — Personal profile", quality: "Independent provider preferred", minimumQuality: "high", source: "Project verification policy", scope: "Future verification work", eligibleRoutes: ["Claude Sonnet — Personal profile", "5.6 Sol — Work Codex"], guard: "Maintains independence from the primary builder when a qualified route is ready." },
   { id: "vision", label: "Vision and media analysis", route: "5.6 Sol — Personal Codex", quality: "Current image evidence required", minimumQuality: "capability-qualified", source: "Media route", scope: "Future media analysis", eligibleRoutes: ["5.6 Sol — Personal Codex", "Claude Sonnet — Personal profile"], guard: "Requires current image-input evidence; model names alone are not evidence." },
   { id: "compression", label: "Compression and context maintenance", route: "5.6 Sol Mini — Personal Codex", quality: "Continuity-preserving summarization", minimumQuality: "task-qualified", source: "Context policy", scope: "Future compaction", eligibleRoutes: ["5.6 Sol Mini — Personal Codex", "Use Main Assistant"], guard: "Durable records remain outside the model summary." },
@@ -981,7 +1036,7 @@ export const SETUP_SESSIONS = [
 export const RECENT_CHANGES = [
   { id: "change-theme", at: "10 minutes ago", title: "Theme changed to Friendly Dark", detail: "Applied globally; no restart required.", actor: "You", scope: "Global", reversible: true, destination: { type: "setting", categoryId: "experience", subcategoryId: "appearance-input", settingId: "experience.appearance.theme" } },
   { id: "change-codex-account", at: "18 minutes ago", title: "Work Codex selected for future requests", detail: "The captured Personal Codex in-flight request did not move.", actor: "You", scope: "Provider family", reversible: true, destination: { type: "manager", managerId: "providers", tab: "accounts", resourceId: "openai" } },
-  { id: "change-catalogue", at: "31 minutes ago", title: "Claude catalogue refreshed", detail: "Two last-known-good rows stayed active; the failed work profile remains excluded.", actor: "Puppet Master", scope: "Provider family", reversible: false, destination: { type: "manager", managerId: "providers", tab: "models", resourceId: "claude" } },
+  { id: "change-catalogue", at: "Review fixture", title: "Claude catalogue refreshed", detail: "Two last-known-good rows stayed active; the failed work profile remains excluded.", actor: "Puppet Master", scope: "Provider family", reversible: false, destination: { type: "manager", managerId: "providers", tab: "models", resourceId: "claude" } },
   { id: "change-memory", at: "Yesterday", title: "Concept review preference verified", detail: "Version 3 preserved the prior summaries in immutable history.", actor: "You", scope: "Assistant memory", reversible: true, destination: { type: "manager", managerId: "memory", resourceId: "gist-review-style" } },
   { id: "change-terminal", at: "Yesterday", title: "Focused Build profile saved", detail: "Berkeley Mono, 14 px, Low Glare palette, 7-day transcript.", actor: "You", scope: "Terminal profile", reversible: true, destination: { type: "manager", managerId: "terminal", resourceId: "focused-build" } },
   { id: "change-mcp", at: "2 days ago", title: "Local docs tools set to progressive exposure", detail: "Tool details load only after the server or tool is selected.", actor: "You", scope: "Project", reversible: true, destination: { type: "manager", managerId: "mcp", resourceId: "local-docs" } },
@@ -995,7 +1050,7 @@ export const RECEIPT_HISTORY = [
   { id: "receipt-terminal", at: "Yesterday at 4:06 PM", title: "Terminal diagnostics represented", detail: "No shell command ran; the local concept recorded the expected checks and result.", tone: "managed", persistent: true, simulated: true }
 ];
 
-const MANAGER_INVENTORY_FIXTURES = {
+const BASE_MANAGER_INVENTORY_FIXTURES = {
   context: {
     title: "Context & instructions",
     state: "ready",
@@ -1005,8 +1060,8 @@ const MANAGER_INVENTORY_FIXTURES = {
       { id: "project-instructions", title: "Scoped project instructions", kind: "Instruction chain", status: "Ready", scope: "Project and nested folders", requested: "Include applicable sources", effective: "Four sources admitted in precedence order", detail: "The applicable project instruction chain is admitted without exposing a giant raw prompt.", history: "Precedence inspected today", diagnostics: ["4 admitted", "1 omitted because its folder was out of scope"], actions: ["Inspect precedence", "Preview compact form"] },
       { id: "parent-handoff", title: "Parent-agent handoff", kind: "Continuity source", status: "Scoped", scope: "Current child task", requested: "Include when delegated", effective: "Included for this task", detail: "Carries the bounded objective, ownership, and constraints without importing the whole parent transcript.", history: "Admitted this turn", diagnostics: ["2.4 KB compact handoff"], actions: ["Preview handoff"] },
       { id: "attempt-journal", title: "Current attempt journal", kind: "Goal state", status: "Scoped", scope: "Current Goal only", requested: "Include recent failures when relevant", effective: "One retry note admitted", detail: "Attempt state remains distinct from Assistant memory and transcript history.", history: "Updated 6 minutes ago", diagnostics: ["1 active attempt", "2 prior attempts omitted"], actions: ["Inspect attempt history"] },
-      { id: "previous-chats", title: "Relevant project conversations", kind: "Retrieval source", status: "Progressive", scope: "Project", requested: "Search automatically", effective: "Two excerpts admitted", detail: "Focused excerpts were retrieved; full conversations stayed outside the request.", history: "Last retrieval 12 minutes ago", diagnostics: ["2 admitted", "14 candidates not selected"], actions: ["Review excerpts"] },
-      { id: "project-code", title: "Relevant project code", kind: "Retrieval source", status: "Ready", scope: "Project", requested: "Search automatically", effective: "Three bounded source windows admitted", detail: "Source windows preserve line provenance and avoid injecting the whole project.", history: "Last retrieval 4 minutes ago", diagnostics: ["3 windows", "178 lines total"], actions: ["Review source windows"] },
+      { id: "previous-chats", title: "Relevant project conversations", kind: "Retrieval source", status: "Progressive", scope: "Project", requested: "Search automatically", effective: "Two excerpts admitted", detail: "Focused excerpts were retrieved; full conversations stayed outside the request.", history: "Last retrieval Review fixture", diagnostics: ["2 admitted", "14 candidates not selected"], actions: ["Review excerpts"] },
+      { id: "project-code", title: "Relevant project code", kind: "Retrieval source", status: "Ready", scope: "Project", requested: "Search automatically", effective: "Three bounded source windows admitted", detail: "Source windows preserve line provenance and avoid injecting the whole project.", history: "Last retrieval Review fixture", diagnostics: ["3 windows", "178 lines total"], actions: ["Review source windows"] },
       { id: "tool-details", title: "Selected tool details", kind: "Progressive capability", status: "Progressive", scope: "Current turn", requested: "Load when selected", effective: "Two selected tools admitted", detail: "Installed tool schemas remain out of context until the task selects them.", history: "Selection updated this turn", diagnostics: ["2 admitted", "46 installed tools omitted"], actions: ["Inspect selection"] },
       { id: "compaction", title: "Continuity capsule", kind: "Compaction", status: "Healthy", scope: "Current thread", requested: "Compact automatically when needed", effective: "No compaction required yet", detail: "The capsule preserves decisions, open work, and source references without replacing durable history.", history: "Last capsule yesterday", diagnostics: ["Context pressure 42 percent", "Cache route unchanged"], actions: ["Preview capsule", "Explain cache strategy"] }
     ]
@@ -1043,7 +1098,7 @@ const MANAGER_INVENTORY_FIXTURES = {
   mcp: {
     title: "MCP servers", state: "degraded", summary: "Three servers are connected; one provider-owned sign-in needs attention.", primaryAction: "Connect MCP server",
     items: [
-      { id: "github-server", title: "GitHub server", kind: "Remote MCP server", status: "Healthy", transport: "HTTPS streaming", protocol: "Requested latest stable · negotiated latest stable", scope: "Project", authentication: "Puppet Master direct connection", health: "14 tools and 3 resources discovered", exposure: "Progressive — schemas load when selected", approval: "Ask once per Goal for write tools", cache: "Refreshed 4 minutes ago", requested: "Enabled for this project", effective: "Enabled; write tools require approval", actions: ["Refresh capabilities", "Review permissions", "Open redacted logs"] },
+      { id: "github-server", title: "GitHub server", kind: "Remote MCP server", status: "Healthy", transport: "HTTPS streaming", protocol: "Requested latest stable · negotiated latest stable", scope: "Project", authentication: "Puppet Master direct connection", health: "14 tools and 3 resources discovered", exposure: "Progressive — schemas load when selected", approval: "Ask once per Goal for write tools", cache: "Refreshed Review fixture", requested: "Enabled for this project", effective: "Enabled; write tools require approval", actions: ["Refresh capabilities", "Review permissions", "Open redacted logs"] },
       { id: "design-assets", title: "Design assets server", kind: "Remote MCP server", status: "Needs attention", transport: "HTTPS streaming", protocol: "Requested latest stable · negotiation paused", scope: "Project", authentication: "Provider-owned sign-in expired", health: "Tools unavailable; last-known-good inventory retained", exposure: "Unavailable until reconnect", approval: "Existing approval does not bypass sign-in", cache: "Last successful refresh yesterday", requested: "Enabled", effective: "Unavailable", actions: ["Reconnect", "Inspect last-known-good inventory", "Open redacted logs"] },
       { id: "local-docs", title: "Local documentation server", kind: "Local MCP server", status: "Healthy", transport: "Standard input/output", protocol: "Requested latest stable · negotiated latest stable", scope: "Project", authentication: "No authentication", health: "8 tools, 2 resources, and 1 extension discovered", exposure: "Progressive — two tools selected this turn", approval: "Read tools allowed; writes disabled", cache: "Refreshed 8 minutes ago", requested: "Start when needed", effective: "Running for the active task", actions: ["Stop server", "Refresh capabilities", "Open logs"] },
       { id: "legacy-bridge", title: "Legacy provider bridge", kind: "Provider projection", status: "Managed", transport: "Provider CLI projection", protocol: "Provider-owned", scope: "Global", authentication: "Owned by provider CLI", health: "Projection available; not Puppet Master canon", exposure: "Read-only projection", approval: "Managed by provider policy", cache: "Checked today", requested: "Display projection", effective: "Displayed with ownership label", actions: ["Inspect ownership", "Open diagnostics"] }
@@ -1066,10 +1121,10 @@ const MANAGER_INVENTORY_FIXTURES = {
       { id: "audit-skill", title: "Interface audit", kind: "Skill", status: "Available", source: "Repository skill", trust: "Reviewed local source", permissions: "Read-only inspection by default", scope: "This project", requested: "Enabled", effective: "Available; not selected", history: "Last used today", actions: ["Inspect source", "Disable for project"] },
       { id: "browser-plugin", title: "Browser control", kind: "Plugin", status: "Healthy", source: "Installed plugin", trust: "Signed distribution", permissions: "Controls an isolated browser session when explicitly used", scope: "Global installation", requested: "Stable channel", effective: "Installed and compatible", history: "Updated July 31", actions: ["Inspect permissions", "Review update channel"] },
       { id: "design-export-plugin", title: "Design export", kind: "Plugin", status: "Review update", source: "Installed plugin", trust: "Current version reviewed", permissions: "Proposed update requests project write access", scope: "Project", requested: "Stable channel", effective: "Old version remains active", history: "Update held yesterday", actions: ["Review permission change", "Keep current version"] },
-      { id: "local-file-tool", title: "Project file reader", kind: "Tool", status: "Available", source: "Puppet Master core", trust: "Core", permissions: "Project read scope", scope: "Current task", requested: "Available", effective: "Available; selected this turn", history: "Invoked 4 minutes ago", actions: ["Inspect invocation history", "Review approval policy"] },
+      { id: "local-file-tool", title: "Project file reader", kind: "Tool", status: "Available", source: "Puppet Master core", trust: "Core", permissions: "Project read scope", scope: "Current task", requested: "Available", effective: "Available; selected this turn", history: "Invoked Review fixture", actions: ["Inspect invocation history", "Review approval policy"] },
       { id: "github-mcp-tool", title: "Create GitHub pull request", kind: "MCP tool", status: "Approval required", source: "GitHub server", trust: "Owned by GitHub server", permissions: "Write action; ask once per Goal", scope: "Current project", requested: "Progressively available", effective: "Schema omitted until selected", history: "Not invoked", actions: ["Inspect owner server", "Review approval policy"] },
       { id: "settings-command", title: "Open Settings", kind: "Command", status: "Ready", source: "Puppet Master core", shortcut: "Command + comma", conflict: "None", scope: "Global", requested: "Enabled", effective: "Enabled", history: "Used today", actions: ["Remap shortcut", "Reset shortcut"] },
-      { id: "search-command", title: "Search all Settings", kind: "Command", status: "Ready", source: "Puppet Master core", shortcut: "Command + K in Settings", conflict: "None", scope: "Settings", requested: "Enabled", effective: "Enabled", history: "Used 12 minutes ago", actions: ["Remap shortcut", "Reset shortcut"] },
+      { id: "search-command", title: "Search all Settings", kind: "Command", status: "Ready", source: "Puppet Master core", shortcut: "Command + K in Settings", conflict: "None", scope: "Settings", requested: "Enabled", effective: "Enabled", history: "Used Review fixture", actions: ["Remap shortcut", "Reset shortcut"] },
       { id: "terminal-command", title: "Toggle Terminal", kind: "Command", status: "Conflict", source: "Puppet Master core", shortcut: "Control + grave accent", conflict: "Also assigned to cycle panels", scope: "Project", requested: "Enabled", effective: "Old binding retained until conflict is resolved", history: "Conflict detected yesterday", actions: ["Resolve conflict", "Reset shortcut"] },
       { id: "release-note-command", title: "Create release note", kind: "Custom command", status: "Managed", source: "Organization command pack", shortcut: "Not assigned", conflict: "None", scope: "Organization projects", requested: "Enabled", effective: "Enabled read-only", history: "Updated last week", actions: ["Inspect source", "Inspect policy"] }
     ]
@@ -1085,6 +1140,8 @@ const MANAGER_INVENTORY_FIXTURES = {
     ]
   }
 };
+
+const MANAGER_INVENTORY_FIXTURES = { ...BASE_MANAGER_INVENTORY_FIXTURES, ...EXTRA_MANAGER_INVENTORIES };
 
 function normalizeManagerInventoryItem(managerId, item, index) {
   const status = item.status || item.health || "Ready";
@@ -1276,7 +1333,13 @@ export const SEARCH_ACTIONS = [
   { id: "manage-project-dictionary", title: "Manage project dictionary", subtitle: "Review project-specific recognized terms and writing overrides", destination: { type: "setting", categoryId: "experience", subcategoryId: "appearance-input", settingId: "experience.input.project-dictionary-manage" }, search: ["spellcheck", "project words"] },
   { id: "inspect-context-admission", title: "Inspect last-turn context", subtitle: "See admitted and omitted sources, precedence, and compact context size", destination: { type: "manager", managerId: "context", resourceId: "project-instructions" }, search: ["instructions", "handoff", "attempt journal", "tools"] },
   { id: "review-shortcut-conflicts", title: "Resolve shortcut conflicts", subtitle: "Compare requested and effective bindings before saving a remap", destination: { type: "manager", managerId: "extensions", resourceId: "terminal-command" }, search: ["commands", "keyboard", "remap"] },
-  { id: "open-usage-detail", title: "Open provider usage detail", subtitle: "Continue to the Settings handoff for measured balance, history, projection, and forecast", destination: { type: "manager", managerId: "providers", tab: "usage", resourceId: "openai", selector: "[data-focus-key=\"provider-usage-heading\"]" }, search: ["balance", "reset", "cooldown", "extra usage"] }
+  { id: "open-usage-detail", title: "Open provider usage detail", subtitle: "Continue to the Settings handoff for measured balance, history, projection, and forecast", destination: { type: "manager", managerId: "providers", tab: "usage", resourceId: "openai", selector: "[data-focus-key=\"provider-usage-heading\"]" }, search: ["balance", "reset", "cooldown", "extra usage"] },
+  { id: "inspect-provider-installations", title: "Inspect provider installations", subtitle: "Review selected, shadowed, unknown-owner, official-source, and update states", destination: { type: "manager", managerId: "providers", tab: "installations", resourceId: "openai" }, search: ["cli", "install", "update", "shadowed", "ownership"] },
+  { id: "import-settings", title: "Import settings with conflict preview", subtitle: "Validate, preview, merge or replace, verify, and roll back", destination: { type: "manager", managerId: "settings-lifecycle", resourceId: "settings-import" }, search: ["export", "copy settings", "reset"] },
+  { id: "import-sound-pack", title: "Import a compatible sound pack", subtitle: "Validate manifest, license, formats, mappings, and local previews", destination: { type: "manager", managerId: "notifications-sounds", resourceId: "pack-openpeon" }, search: ["PeonPing", "OpenPeon", "audio upload"] },
+  { id: "preview-custom-theme", title: "Preview custom theme TOML", subtitle: "Validate semantic tokens and fall back visibly without committing", destination: { type: "manager", managerId: "appearance", resourceId: "theme-custom" }, search: ["appearance", "colors", "TOML"] },
+  { id: "testing-capabilities", title: "Configure testing and debugging", subtitle: "Set browser, native, accessibility, performance, and security capabilities to Auto, On, or Off", destination: { type: "manager", managerId: "testing-debug", resourceId: "test-browser" }, search: ["debugger", "simulator", "hot reload", "live preview"] },
+  { id: "preview-workspace-cleanup", title: "Preview workspace cleanup", subtitle: "Exclude protected paths before removing caches, worktrees, or artifacts", destination: { type: "manager", managerId: "workspace-cleanup", resourceId: "cleanup-caches" }, search: ["storage", "delete", "cache"] }
 ];
 
 export function buildSearchIndex() {
@@ -1315,7 +1378,8 @@ export function buildSearchIndex() {
   const providerDocs = PROVIDERS.flatMap((provider) => [
     { kind: "Provider", id: provider.id, title: provider.name, subtitle: `${provider.group} · ${provider.stateLabel}`, targetType: "manager", targetId: "providers", destination: { type: "manager", managerId: "providers", resourceId: provider.id }, haystack: [provider.name, provider.group, provider.summary, provider.stateLabel].join(" ").toLowerCase() },
     ...provider.accounts.map((account) => ({ kind: "Account", id: account.id, title: account.name, subtitle: `${provider.name} · ${account.identity}`, targetType: "manager", targetId: "providers", destination: { type: "manager", managerId: "providers", tab: "accounts", resourceId: provider.id, childResourceId: account.id }, haystack: [provider.name, account.name, account.identity, account.connection, account.authOwner, account.isolation, account.product, account.usage, account.next].join(" ").toLowerCase() })),
-    ...provider.models.map((model) => ({ kind: "Model", id: model.id, title: model.name, subtitle: `${provider.name} · ${model.alias}`, targetType: "manager", targetId: "providers", destination: { type: "manager", managerId: "providers", tab: "models", resourceId: provider.id, childResourceId: model.id }, haystack: [provider.name, model.name, model.alias, model.capabilities, model.evidence, model.contextLimit, model.reason].join(" ").toLowerCase() }))
+    ...provider.models.map((model) => ({ kind: "Model", id: model.id, title: model.name, subtitle: `${provider.name} · ${model.alias}`, targetType: "manager", targetId: "providers", destination: { type: "manager", managerId: "providers", tab: "models", resourceId: provider.id, childResourceId: model.id }, haystack: [provider.name, model.name, model.alias, model.capabilities, model.evidence, model.contextLimit, model.reason].join(" ").toLowerCase() })),
+    ...(provider.installations || []).map((installation) => ({ kind: "Installation", id: installation.id, title: installation.name, subtitle: `${provider.name} · ${installation.state}`, targetType: "manager", targetId: "providers", destination: { type: "manager", managerId: "providers", tab: "installations", resourceId: provider.id, childResourceId: installation.id }, haystack: [provider.name, installation.name, installation.owner, installation.ownershipConfidence, installation.method, installation.version, installation.authBoundary, installation.updatePolicy, installation.updateState, installation.officialSource, installation.resolvedCommand].join(" ").toLowerCase() }))
   ]);
   const resourceDocs = Object.entries(MANAGER_INVENTORIES).flatMap(([managerId, manager]) => manager.items.map((item) => ({
     kind: item.kind || "Manager resource",

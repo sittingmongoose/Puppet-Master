@@ -1,0 +1,295 @@
+{
+  "schema_id": "pm.settings_manager_coverage.v1",
+  "concept_id": "concept-02-switchboard",
+  "model": "5.6 Sol",
+  "concept_thesis": "Operational readiness surface for notifications, appearance, input, and desktop behavior.",
+  "shared_required": [
+    {
+      "family": "Full quiet PM shell",
+      "route": "all concept pages",
+      "evidence": [
+        ".pm-shell",
+        ".shell-topbar",
+        ".activity-bar",
+        ".project-rail",
+        ".assistant-panel",
+        ".status-bar"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Home",
+      "route": "#home",
+      "evidence": [
+        "[data-view-heading]",
+        ".manager-directory",
+        ".persistence-bar",
+        ".fixture-tray"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Search",
+      "route": "#home and every workspace/manager",
+      "evidence": [
+        "[data-search-input]",
+        "[data-search-results]",
+        "aria-activedescendant",
+        "Cmd/Ctrl+K"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Workspace",
+      "route": "#category/<category>/<subcategory>",
+      "evidence": [
+        "category navigation",
+        "continuous setting document",
+        "scrollspy",
+        "deep-link focus"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "route": "all categories",
+      "evidence": [
+        "default/custom/inherited/managed/unavailable/validation/restart/reconnect/requested-effective"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "route": "#manager/providers/<tab>",
+      "evidence": [
+        "overview",
+        "accounts",
+        "models",
+        "installations",
+        "usage",
+        "routing",
+        "roles",
+        "support"
+      ],
+      "status": "demonstrated"
+    }
+  ],
+  "assigned_manager_families": [
+    {
+      "manager_id": "providers",
+      "family": "Provider / Account / Model / Installation",
+      "assignment": "shared_core",
+      "route": "#manager/providers/installations",
+      "deep_link_example": "#manager/providers/installations",
+      "resource_count": 7,
+      "primary_actions": [
+        "discover installations",
+        "select installation",
+        "authenticate at correct owner",
+        "refresh catalogue",
+        "update",
+        "verify",
+        "roll back",
+        "select future account/model route"
+      ],
+      "deterministic_fixture_ids": [
+        "provider-selected-shadowed",
+        "provider-unknown-owner",
+        "provider-cli-oauth-signed-out",
+        "provider-not-installed",
+        "provider-catalog-stale",
+        "provider-refresh-last-good",
+        "provider-route-difference"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('providers'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "notifications-sounds",
+      "family": "Notifications, Sounds, Uploads & Packs",
+      "assignment": "assigned",
+      "route": "#manager/notifications-sounds/overview",
+      "deep_link_example": "#manager/notifications-sounds/overview?resource=notice-inbox",
+      "resource_count": 4,
+      "primary_actions": [
+        "add/edit/test destination",
+        "upload audio",
+        "preview locally",
+        "import/validate/map sound pack"
+      ],
+      "deterministic_fixture_ids": [
+        "sound-pack-invalid-license"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('notifications-sounds'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "appearance",
+      "family": "Appearance",
+      "assignment": "assigned",
+      "route": "#manager/appearance/overview",
+      "deep_link_example": "#manager/appearance/overview?resource=theme-system",
+      "resource_count": 3,
+      "primary_actions": [
+        "preview all eight themes",
+        "validate custom TOML",
+        "apply",
+        "revert"
+      ],
+      "deterministic_fixture_ids": [
+        "validation-error",
+        "theme-invalid-token"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('appearance'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "spellcheck",
+      "family": "Spellcheck & Dictionaries",
+      "assignment": "assigned",
+      "route": "#manager/spellcheck/overview",
+      "deep_link_example": "#manager/spellcheck/overview?resource=spell-service",
+      "resource_count": 3,
+      "primary_actions": [
+        "replace/ignore/add dictionary",
+        "set scope",
+        "verify no autocorrect"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('spellcheck'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "desktop",
+      "family": "Desktop, Tray & Window",
+      "assignment": "assigned",
+      "route": "#manager/desktop/overview",
+      "deep_link_example": "#manager/desktop/overview?resource=desktop-startup",
+      "resource_count": 3,
+      "primary_actions": [
+        "set startup/tray/window behavior",
+        "show restart requirement"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('desktop'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "teacher-help",
+      "family": "Teacher & Help",
+      "assignment": "assigned",
+      "route": "#manager/teacher-help/overview",
+      "deep_link_example": "#manager/teacher-help/overview?resource=teacher-default",
+      "resource_count": 3,
+      "primary_actions": [
+        "open Teacher",
+        "inspect built-in demo and help route"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('teacher-help'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    }
+  ],
+  "provider_fixture_coverage": {
+    "route": "#manager/providers/installations",
+    "fixtures": [
+      "ready/authenticated CLI",
+      "found but signed out",
+      "selected and shadowed installs",
+      "unknown ownership manual-only",
+      "explicit official-source install",
+      "Ask-first update",
+      "idle update",
+      "verify failure and rollback",
+      "Claude CLI-owned OAuth",
+      "OpenAI PM-direct OAuth",
+      "API key",
+      "OpenCode external server",
+      "Free Models underlying setup",
+      "ready with usage unavailable",
+      "catalog refresh last-known-good",
+      "account fallback requested/effective",
+      "Fast/Normal and effort variation"
+    ],
+    "deterministic_trigger_ids": [
+      "provider-selected-shadowed",
+      "provider-unknown-owner",
+      "provider-cli-oauth-signed-out",
+      "provider-not-installed",
+      "provider-catalog-stale",
+      "provider-refresh-last-good",
+      "provider-route-difference"
+    ],
+    "status": "demonstrated"
+  },
+  "responsive_and_accessibility": {
+    "widths": [
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "squeezed_height": 640,
+    "reduced_motion": true,
+    "themes": 8,
+    "keyboard": true,
+    "focus_restoration": true,
+    "no_primary_filter_pills": true
+  },
+  "missing": []
+}

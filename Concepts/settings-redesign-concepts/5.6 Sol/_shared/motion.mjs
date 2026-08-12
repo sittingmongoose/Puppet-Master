@@ -41,7 +41,9 @@ export const MOTION_KINDS = Object.freeze([
   "refresh",
   "save",
   "reorder",
-  "drawer"
+  "drawer",
+  "transaction",
+  "preview"
 ]);
 
 const KIND_SET = new Set(MOTION_KINDS);
@@ -101,6 +103,15 @@ export const MOTION_BLUEPRINTS = Object.freeze({
     drawer: Object.freeze([
       step("drawer-backdrop", "backdrop", "crossfade", { pace: "feedback" }),
       step("drawer", "directory", "from-start", { pace: "major", delay: 20 })
+    ]),
+    transaction: Object.freeze([
+      step("address", "transaction-address", "rise", { pace: "feedback" }),
+      step("transaction", "evidence-unfold", "rise", { delay: 35 }),
+      step("inspector-field", "receipt-index", "from-end", { delay: 80 })
+    ]),
+    preview: Object.freeze([
+      step("preview", "sample-mounted", "crossfade", { pace: "feedback" }),
+      step("document", "semantic-preview", "focus", { delay: 45 })
     ])
   }),
   switchboard: Object.freeze({
@@ -139,6 +150,15 @@ export const MOTION_BLUEPRINTS = Object.freeze({
     drawer: Object.freeze([
       step("drawer-backdrop", "backdrop", "crossfade", { pace: "feedback" }),
       step("drawer", "station", "from-start", { pace: "major", delay: 20 })
+    ]),
+    transaction: Object.freeze([
+      step("signal", "route-armed", "line-x", { pace: "major", origin: "0 50%" }),
+      step("transaction", "verification-bay", "latch", { delay: 45 }),
+      step("instrument", "receipt-latched", "latch", { pace: "feedback", delay: 90 })
+    ]),
+    preview: Object.freeze([
+      step("signal", "preview-signal", "line-x", { pace: "feedback", origin: "0 50%" }),
+      step("preview", "monitor-online", "latch", { delay: 40 })
     ])
   }),
   wayfinder: Object.freeze({
@@ -178,6 +198,15 @@ export const MOTION_BLUEPRINTS = Object.freeze({
     drawer: Object.freeze([
       step("route-map", "map", "crossfade", { pace: "feedback" }),
       step("drawer", "navigator", "from-start", { pace: "major", delay: 20 })
+    ]),
+    transaction: Object.freeze([
+      step("route-line", "operation-route", "line-x", { pace: "major", origin: "0 50%" }),
+      step("transaction", "checkpoint-sequence", "rise", { delay: 55 }),
+      step("waypoint-current", "verified-arrival", "latch", { pace: "feedback", delay: 105 })
+    ]),
+    preview: Object.freeze([
+      step("route-branch", "preview-branch", "line-x", { pace: "feedback", origin: "0 50%" }),
+      step("preview", "preview-checkpoint", "rise", { delay: 45 })
     ])
   }),
   ledger: Object.freeze({
@@ -213,6 +242,15 @@ export const MOTION_BLUEPRINTS = Object.freeze({
     drawer: Object.freeze([
       step("drawer-backdrop", "backdrop", "crossfade", { pace: "feedback" }),
       step("outline", "outline", "from-start", { pace: "major", delay: 15 })
+    ]),
+    transaction: Object.freeze([
+      step("rule", "transaction-rule", "line-x", { pace: "feedback", origin: "0 50%" }),
+      step("transaction", "entry-amendment", "rise", { delay: 35 }),
+      step("ledger-row", "receipt-posted", "focus", { pace: "feedback", delay: 75 })
+    ]),
+    preview: Object.freeze([
+      step("rule", "preview-reference", "line-x", { pace: "feedback", origin: "0 50%" }),
+      step("preview", "folio-proof", "crossfade", { delay: 35 })
     ])
   })
 });

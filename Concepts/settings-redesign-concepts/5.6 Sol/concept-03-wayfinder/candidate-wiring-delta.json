@@ -1,0 +1,286 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-03-wayfinder",
+  "model": "5.6 Sol",
+  "rule": "UI \u2192 command \u2192 owner \u2192 validation/permission \u2192 state/operation \u2192 event/receipt \u2192 projection \u2192 attribution \u2192 recovery/deep link",
+  "flows": [
+    {
+      "flow_id": "wayfinder.providers.primary",
+      "manager_id": "providers",
+      "ui_source": "Settings manager Provider / Account / Model / Installation resource/detail action",
+      "command_ref": "cmd.provider.installation.verify",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/providers",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.file-manager.primary",
+      "manager_id": "file-manager",
+      "ui_source": "Settings manager File Manager & Editor resource/detail action",
+      "command_ref": "cmd.settings.manager.open",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/file-manager",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.terminal.primary",
+      "manager_id": "terminal",
+      "ui_source": "Settings manager Terminal resource/detail action",
+      "command_ref": "cmd.terminal.open",
+      "command_status": "reuse_or_adjudicate",
+      "canonical_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Commands_System.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/terminal",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.lsp.primary",
+      "manager_id": "lsp",
+      "ui_source": "Settings manager LSP resource/detail action",
+      "command_ref": "cmd.lsp.restart_server",
+      "command_status": "reuse_or_adjudicate",
+      "canonical_owner_docs": [
+        "Plans/LSPSupport.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/lsp",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.formatters.primary",
+      "manager_id": "formatters",
+      "ui_source": "Settings manager Formatters resource/detail action",
+      "command_ref": "cmd.formatter.test",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/Formatters_System.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/formatters",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.commands-shortcuts.primary",
+      "manager_id": "commands-shortcuts",
+      "ui_source": "Settings manager Commands & Shortcuts resource/detail action",
+      "command_ref": "cmd.shortcuts.bind",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/Commands_System.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/commands-shortcuts",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.mcp.primary",
+      "manager_id": "mcp",
+      "ui_source": "Settings manager MCP resource/detail action",
+      "command_ref": "cmd.mcp.server.restart",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/MCP_Integration.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/mcp",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.skills.primary",
+      "manager_id": "skills",
+      "ui_source": "Settings manager Skills resource/detail action",
+      "command_ref": "cmd.skills.setup_dependency",
+      "command_status": "provisional_candidate",
+      "canonical_owner_docs": [
+        "Plans/Skills_System.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/skills",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.plugins.primary",
+      "manager_id": "plugins",
+      "ui_source": "Settings manager Plugins resource/detail action",
+      "command_ref": "cmd.catalog.update_item",
+      "command_status": "reuse_or_adjudicate",
+      "canonical_owner_docs": [
+        "Plans/Plugins_System.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/plugins",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.tools.primary",
+      "manager_id": "tools",
+      "ui_source": "Settings manager Tools resource/detail action",
+      "command_ref": "cmd.catalog.update_item",
+      "command_status": "reuse_or_adjudicate",
+      "canonical_owner_docs": [
+        "Plans/Tools.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/tools",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.testing-debug.primary",
+      "manager_id": "testing-debug",
+      "ui_source": "Settings manager Testing & Debug resource/detail action",
+      "command_ref": "cmd.testing.run",
+      "command_status": "reuse_or_adjudicate",
+      "canonical_owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "validation_permission": [
+        "resource identity/current revision",
+        "capability/availability",
+        "scope and policy",
+        "secret redaction or FileSafe where applicable"
+      ],
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
+      "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
+      "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
+      "recovery_deep_link": "settings://wayfinder/manager/testing-debug",
+      "concept_simulation_boundary": "The concept mutates isolated browser demo state only and never performs login, installation, filesystem, provider, container, backup, or remote operations."
+    },
+    {
+      "flow_id": "wayfinder.provider.update.rollback",
+      "manager_id": "providers",
+      "ui_source": "Installation detail \u2192 Update from official source",
+      "command_ref": "cmd.provider.installation.update \u2192 verify \u2192 rollback",
+      "command_status": "provisional_candidate_chain",
+      "canonical_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "validation_permission": [
+        "selected executable identity",
+        "owner confidence",
+        "official source",
+        "update policy",
+        "explicit user action"
+      ],
+      "state_or_operation": "ObservableWork stages update in isolation, verifies invocation/ownership, and restores prior version on failure.",
+      "event_receipt": "Update staged / verification failed / rollback completed receipts.",
+      "ui_projection": "Selected/shadowed identity, progress, failure reason, rollback availability, final readiness.",
+      "usage_diagnostic_attribution": "Provider/tooling installation diagnostics only; never provider token usage.",
+      "recovery_deep_link": "settings://wayfinder/manager/providers?tab=installations",
+      "concept_simulation_boundary": "Deterministic state machine only."
+    }
+  ],
+  "production_claim": false
+}

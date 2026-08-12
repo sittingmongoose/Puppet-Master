@@ -1,75 +1,108 @@
 {
-  "schemaVersion": 1,
-  "topic": "settings-redesign",
-  "model": "5.6 Sol",
-  "presentation": "hybrid",
-  "order": 100,
-  "widthControl": {
-    "enabled": true,
-    "label": "Settings page width",
-    "role": "page",
-    "min": 760,
-    "max": 2500,
-    "step": 10,
-    "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
-    "previewWidth": "test"
-  },
-  "workspace": {
-    "id": "workspace",
-    "title": "5.6 Sol — Settings Bakeoff Workspace",
-    "path": "index.html",
-    "openPath": "index.html",
-    "openActions": "both",
-    "controlMode": "internal",
-    "tags": ["settings", "comparison", "workspace"],
-    "order": 1,
-    "previewWidth": 1700
-  },
-  "entries": [
-    {
-      "id": "concept-01-index-house",
-      "title": "5.6 Sol — Index House",
-      "path": "concept-01-index-house.html",
-      "openPath": "concept-01-index-house.html",
-      "openActions": "both",
-      "controlMode": "standard",
-      "tags": ["settings", "directory", "editorial"],
-      "order": 10,
-      "previewWidth": "test"
+    "schemaVersion": 1,
+    "topic": "settings-redesign",
+    "model": "5.6 Sol",
+    "presentation": "hybrid",
+    "order": 100,
+    "widthControl": {
+        "enabled": true,
+        "label": "Settings page width",
+        "role": "page",
+        "min": 520,
+        "max": 2500,
+        "step": 10,
+        "default": 1280,
+        "presets": [
+            520,
+            760,
+            900,
+            1280,
+            1700,
+            2200,
+            2500
+        ],
+        "previewWidth": "test"
     },
-    {
-      "id": "concept-02-switchboard",
-      "title": "5.6 Sol — Switchboard",
-      "path": "concept-02-switchboard.html",
-      "openPath": "concept-02-switchboard.html",
-      "openActions": "both",
-      "controlMode": "standard",
-      "tags": ["settings", "operations", "status"],
-      "order": 20,
-      "previewWidth": "test"
+    "workspace": {
+        "id": "workspace",
+        "title": "5.6 Sol — Settings Bakeoff Workspace",
+        "path": "index.html",
+        "openPath": "index.html",
+        "openActions": "both",
+        "controlMode": "internal",
+        "tags": [
+            "settings",
+            "comparison",
+            "workspace",
+            "persistent-fixtures"
+        ],
+        "order": 1,
+        "previewWidth": 1700
     },
-    {
-      "id": "concept-03-wayfinder",
-      "title": "5.6 Sol — Wayfinder",
-      "path": "concept-03-wayfinder.html",
-      "openPath": "concept-03-wayfinder.html",
-      "openActions": "both",
-      "controlMode": "standard",
-      "tags": ["settings", "journey", "outcomes"],
-      "order": 30,
-      "previewWidth": "test"
-    },
-    {
-      "id": "concept-04-ledger",
-      "title": "5.6 Sol — Ledger",
-      "path": "concept-04-ledger.html",
-      "openPath": "concept-04-ledger.html",
-      "openActions": "both",
-      "controlMode": "standard",
-      "tags": ["settings", "reference", "dense"],
-      "order": 40,
-      "previewWidth": "test"
-    }
-  ]
+    "entries": [
+        {
+            "id": "concept-01-index-house",
+            "title": "5.6 Sol — Index House",
+            "path": "concept-01-index-house.html",
+            "openPath": "concept-01-index-house.html",
+            "openActions": "both",
+            "controlMode": "standard",
+            "tags": [
+                "settings",
+                "directory",
+                "provenance",
+                "policy"
+            ],
+            "order": 10,
+            "previewWidth": "test"
+        },
+        {
+            "id": "concept-02-switchboard",
+            "title": "5.6 Sol — Switchboard",
+            "path": "concept-02-switchboard.html",
+            "openPath": "concept-02-switchboard.html",
+            "openActions": "both",
+            "controlMode": "standard",
+            "tags": [
+                "settings",
+                "operations",
+                "preview",
+                "notifications"
+            ],
+            "order": 20,
+            "previewWidth": "test"
+        },
+        {
+            "id": "concept-03-wayfinder",
+            "title": "5.6 Sol — Wayfinder",
+            "path": "concept-03-wayfinder.html",
+            "openPath": "concept-03-wayfinder.html",
+            "openActions": "both",
+            "controlMode": "standard",
+            "tags": [
+                "settings",
+                "journey",
+                "toolchain",
+                "testing"
+            ],
+            "order": 30,
+            "previewWidth": "test"
+        },
+        {
+            "id": "concept-04-ledger",
+            "title": "5.6 Sol — Ledger",
+            "path": "concept-04-ledger.html",
+            "openPath": "concept-04-ledger.html",
+            "openActions": "both",
+            "controlMode": "standard",
+            "tags": [
+                "settings",
+                "reference",
+                "lifecycle",
+                "dense"
+            ],
+            "order": 40,
+            "previewWidth": "test"
+        }
+    ]
 }
