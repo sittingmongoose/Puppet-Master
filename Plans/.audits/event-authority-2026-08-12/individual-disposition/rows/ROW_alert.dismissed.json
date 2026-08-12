@@ -1,0 +1,100 @@
+{
+  "event_type": "alert.dismissed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited plan names the semantic authority empowered to approve the `alert.dismissed` contract."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited occurrence does not name the component authorized to persist `alert.dismissed`; a command-to-effect mapping is not producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:5-8",
+      "note": "Registry revision 2026-08-04.1 contains no `alert.dismissed` family entry; unknown events remain quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/UI_Command_Catalog.md:7997",
+      "note": "The cited material does not provide a versioned closed schema for `alert.dismissed` or reject additional fields."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/UI_Command_Catalog.md:7997",
+      "note": "The cited occurrence does not define the persisted event scope/identity tuple for `alert.dismissed`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation defines duplicate, replay, or idempotency behavior for `alert.dismissed`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation assigns `alert.dismissed` a retention class or expiry rule."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation assigns redaction responsibility or custody boundaries for `alert.dismissed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation closes the allowed predecessor/successor states and invalid transitions for `alert.dismissed`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:5-8",
+      "note": "Only the generic unknown-event quarantine rule applies; no accepted consumer/checkpoint contract exists for `alert.dismissed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation defines version compatibility, deprecation, or withdrawal for `alert.dismissed`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation supplies both acceptance and rejection oracles for `alert.dismissed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:7997",
+      "status": "ok",
+      "notes": "The command catalog maps cmd.alert.dismiss to this exact effect and specifies command inputs, results, and errors; it does not define the emitted event contract or its authority."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:5-8",
+      "status": "ok",
+      "notes": "Registry revision and fail-closed unknown-event disposition checked; exact `alert.dismissed` membership search returned no entry."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay00",
+  "provisional": false,
+  "quality_notes": [
+    "individually_reasoned",
+    "all_12_evidence_fields_present",
+    "all_PASS_fields_have_field_local_Plans_citations",
+    "registry_nonmembership_checked",
+    "owner_and_producer_not_inferred",
+    "immutable_cohort_pin_preserved"
+  ]
+}

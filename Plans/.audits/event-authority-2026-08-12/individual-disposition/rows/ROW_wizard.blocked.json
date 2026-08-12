@@ -1,0 +1,105 @@
+{
+  "event_type": "wizard.blocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation explicitly assigns acceptance authority for the complete Event Authority contract of `wizard.blocked`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:278-280",
+      "note": "The canonical blocked/unblocked wiring packet explicitly assigns production to the executor/orchestrator blocked-state manager."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token remains in the persisted-unregistered cohort; canonical ledger status is not live versioned registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts labels the listed payload as a minimum; it is not an explicitly exhaustive closed typed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2583-2592",
+      "note": "The contract binds the event to wizard_id plus route_target and blocked/remediation identity; resume_url is transport only."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines replay identity, duplicate handling, or idempotency for a blocked wizard episode."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal hold, or cleanup for wizard.blocked."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction timing or custody for report_ref, resume_url, or other wizard.blocked fields."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2583-2599",
+      "note": "The paired blocked/unblocked contract defines entry into blocked routing and the corresponding resolution-side event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Wiring names Run Graph, chat, dashboard, and storage consumers, but no citation defines their fail-closed checkpoint advancement rule."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation supplies a version compatibility and withdrawal decision for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "CV-233 constrains routing and payload preservation, but no citation supplies complete emission and non-emission oracles for a blocked wizard episode."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2583-2599",
+      "status": "ok",
+      "notes": "Defines wizard.blocked routing/remediation semantics, minimum payload, and its paired wizard.unblocked transition."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2601-2604",
+      "status": "ok",
+      "notes": "Declares the packet events canonical ledger events and UI/storage projections derivative."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:278-280",
+      "status": "ok",
+      "notes": "Names the blocked-state producer, consumers, and storage projection."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:14637-14680",
+      "status": "ok",
+      "notes": "Accepted CV-233 preserves routing/payload constraints and a negative semantic constraint; it is not a complete event-level oracle pair."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; unresolved dimensions are owner-required without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

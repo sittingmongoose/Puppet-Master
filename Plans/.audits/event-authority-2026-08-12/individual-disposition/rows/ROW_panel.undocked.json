@@ -1,0 +1,118 @@
+{
+  "event_type": "panel.undocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked canonical registry declares schema_version 2.0.0, registry revision 2026-08-04.1, and unknown-event quarantine, but contains no exact `panel.undocked` entry; versioned membership remains owner-required."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes an explicitly named accountable event-contract owner; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:19477-19536",
+      "note": "The exact wiring record binds cmd.panel.undock to handlers::panel::undock and declares `panel.undocked` as its expected emitted event; this is command-side producer evidence only, not owner authority."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes an exhaustive closed event payload schema; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes the complete event scope and identity key; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes replay and idempotency rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes retention rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes redaction and custody rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes lifecycle transition semantics; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes consumer and checkpoint obligations; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `panel.undocked` establishes compatibility and withdrawal rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The exact wiring record supplies a positive `panel.undocked` emission assertion, but its fabricated-event prohibition is generic and does not define token-specific negative cases; complete positive and negative Event Authority oracles remain owner-required."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines the generic handler_location column only; it is not this event contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8036",
+      "status": "drift",
+      "notes": "Current cited line does not contain this exact event; the exact command row is recorded below."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8011",
+      "status": "ok",
+      "notes": "Declares the exact `panel undock command` payload/result/error row and its event effect."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:19482-19536",
+      "status": "ok",
+      "notes": "Machine-readable wiring names the expected event and requires an event test asserting the command emits it with command/origin/correlation/handler data."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:19477-19536",
+      "status": "ok",
+      "notes": "Exact wiring block for `panel.undocked` names the command-side handler, expected event, required emission assertion, and fabricated-event prohibition."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:4-8",
+      "status": "ok",
+      "notes": "Canonical registry metadata defines version/revision and unknown-event quarantine; exact-token search found no `panel.undocked` family entry, so it supplies fail-closed absence evidence rather than membership PASS."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay15",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding individual-disposition schema and admission freeze.",
+    "Immutable july248 cohort pin preserved; working bucket recorded separately.",
+    "No admission, bulk registration, analogy, inferred owner, or OD-EA-003 substitution.",
+    "All twelve evidence fields adjudicated field-locally; every PASS has a concrete Plans citation, and generic negative wiring rules are not treated as token-specific oracles."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

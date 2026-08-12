@@ -1,0 +1,116 @@
+{
+  "event_type": "subagent.escalated",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`subagent.escalated` remains individually quarantined. Plans/Contracts_V0.md:2911 names the exact canonical runtime event, enumerates its payload fields, and describes its occurrence; Plans/Contracts_V0.md:2874-2887 additionally requires the PM lineage envelope and establishes the legacy source-alias boundary. The table does not declare its field list closed or versioned and does not name an accountable persisted-event producer or semantic owner. Replay/idempotency, retention/custody, legal transitions, checkpoint rules, and complete oracles also remain uncited, so admission stays fail-closed.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked Plans citation explicitly names the semantic authority empowered to approve the `subagent.escalated` Event Authority contract; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked Plans citation explicitly designates the accountable persisted-event producer for `subagent.escalated`; a command trigger or descriptive table row does not establish producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No individually versioned registry membership is cited for `subagent.escalated`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, versioned durable payload schema is cited for `subagent.escalated`; a field list without an exhaustiveness or schema-version rule is insufficient."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2874-2885",
+      "note": "The binding family rule applies to every `subagent.*` event and requires run, thread, agent, parent, child, parent-thread, and requested/effective runtime lineage for `subagent.escalated`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, or idempotency rule is cited for `subagent.escalated`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local retention, compaction, tombstone, or deletion policy is cited for `subagent.escalated`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local sensitive-field redaction and custody boundary is cited for `subagent.escalated`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal predecessor/successor set or invalid-transition rule is cited for `subagent.escalated`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, checkpoint key, or fail-closed advancement rule is cited for `subagent.escalated`."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2887",
+      "note": "The accepted family boundary keeps canonical names under `subagent.*` and classifies `chat.subagent_*` / `chat.subagent_spawned` as legacy source aliases for `subagent.escalated`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `subagent.escalated`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2874-2887",
+      "status": "ok",
+      "notes": "Applies the mandatory PM lineage envelope and canonical subagent alias boundary to `subagent.escalated`."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2911",
+      "status": "ok",
+      "notes": "The canonical runtime table names `subagent.escalated`, enumerates its payload fields, and describes its occurrence; it does not name an accountable producer or declare the list closed/versioned."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:16304-16358",
+      "status": "ok",
+      "notes": "Accepted CV-266 preserves the family lineage envelope and legacy source-alias boundary; it is compatibility authority, not individual registry authority."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-subagent-escalated-membership_version-owner-producer-closed_payload_schema",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+    "question": "Will the accountable Subagent Runtime event owner publish and version the complete individual Event Authority contract for `subagent.escalated`, including the persisted-event producer, or direct continued quarantine/reclassification?",
+    "options": [
+      "Publish the complete owner-backed contract and re-adjudicate this exact event",
+      "Keep quarantined with no consumer checkpoint advance",
+      "Reclassify or withdraw the token with cited compatibility semantics"
+    ],
+    "evidence_gap": "The canonical table and lineage rule establish token semantics, fields, scope identity, and alias compatibility, but do not supply owner/producer authority or the remaining durable-event contract.",
+    "event_types": [
+      "subagent.escalated"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay21",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

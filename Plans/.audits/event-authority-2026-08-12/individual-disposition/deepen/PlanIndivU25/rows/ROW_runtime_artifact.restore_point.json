@@ -1,0 +1,123 @@
+{
+  "event_type": "runtime_artifact.restore_point",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The exact token is a Runtime Artifacts-owned projection with a closed v1 schema, project and restore-point identity, EventRecord 2.0 replay semantics, projected source-record retention/hold and redaction state, closed lifecycle/action behavior, checkpointed projection custody, and fail-closed compatibility behavior. It remains absent from registry revision 2026-08-04.1, and current Plans do not identify one accountable event producer, event-level retention policy, or complete event-authority oracle set, so it remains quarantined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:292-304",
+      "note": "Runtime Artifacts explicitly owns the per-type payload schemas and envelope split, including the restore_point identity exception."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The schema permits a producer_ref, but no checked citation assigns this exact event to one accountable producer; schema ownership is not producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from live event-family registry revision 2026-08-04.1; a schema id and EventRecord wrapper version are not membership authorization."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_restore_point.schema.json:1-367",
+      "note": "The v1 schema rejects additional properties and closes the outer projection, required restore identity/status/retention/hold/action/workspace/redaction fields, and key enums and constants."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "note": "Runtime-artifact events are explicitly project scoped, cannot invent a default project, and preserve global event identity plus scoped event/idempotency identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2033-2035",
+      "note": "The panel requires EventRecord 2.0 validation, global event_id, scoped idempotency identity, selected replay_policy, and fail-closed dedupe/replay-only behavior."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The projection schema describes the source restore-point record's retention state, but no checked citation assigns an event-level retention policy to this persisted event token."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_restore_point.schema.json:107-130,358-365",
+      "note": "The exact payload requires redaction_profile and contains_raw_secrets=false; redaction is closed to no_secrets or redacted_refs_only."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2044-2050",
+      "note": "The owner contract closes status and action behavior, forbids filesystem/source mutation, and distinguishes clean, skipped, refused, failed, and recovery-required restore outcomes."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1198-1225",
+      "note": "Storage defines the runtime-artifact project projection and projector.checkpoint.runtime_artifacts authority with freshness and health state."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "note": "New writes require EventRecord 2.0; unsupported readers refuse the live panel rather than presenting a partial view, and projector_replay_only is barred from semantic side effects."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Schema conditionals and panel acceptance criteria are substantial, but no checked citation supplies a complete event-authority positive/negative/replay/quarantine oracle set for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/event_family_registry.json:1-8",
+      "status": "ok",
+      "notes": "Full revision 2026-08-04.1 was checked; the exact token is absent and unknown events quarantine without checkpoint advance."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:49-61,292-304",
+      "status": "ok",
+      "notes": "Names the exact event and assigns the per-type payload/schema-owner contract to Runtime Artifacts."
+    },
+    {
+      "citation": "Plans/runtime_artifact_restore_point.schema.json:1-1026",
+      "status": "ok",
+      "notes": "The exact live v1 schema was checked for closure, identity, status, retention/holds, actions, workspace effects, redaction, and conditional constraints."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2025-2058",
+      "status": "ok",
+      "notes": "Defines EventRecord scope/replay compatibility, restore-point projection semantics, lifecycle, actions, storage access, and fail-closed behavior."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1198-1225",
+      "status": "ok",
+      "notes": "Defines the runtime-artifact projection and its project-scoped checkpoint authority."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-runtime-artifact-restore-point",
+    "field_or_decision": "membership_version,producer,retention,positive_negative_oracles",
+    "question": "For `runtime_artifact.restore_point`, will the Runtime Artifacts owner identify the accountable producer, materialize versioned membership, event-level retention authority, and complete event-authority oracles, or direct continued quarantine or cited reclassification?",
+    "options": [
+      "Materialize and approve the exact producer, versioned membership, event-level retention policy, and complete oracle set, then evaluate this token individually for registration",
+      "Continue persisted-unregistered quarantine with unknown-event handling and no checkpoint advance",
+      "Reclassify only with an authoritative citation that this projection is not a persisted semantic event"
+    ],
+    "evidence_gap": "The projection contract is closed and unusually deep, but exact producer authority, live registry membership, event-level retention authority, and a complete event-level oracle set remain uncited; the source record's projected retention fields cannot substitute for persisted-event retention policy.",
+    "event_types": [
+      "runtime_artifact.restore_point"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay20",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against the exact live schema and current owner/storage contracts; unresolved authority dimensions fail closed."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

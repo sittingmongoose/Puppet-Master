@@ -1,0 +1,363 @@
+[
+  {
+    "event_type": "self.store.append_coordination_event",
+    "occurrence_count": 9,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4014,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4018,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4022,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4026,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4030,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4605,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        9
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "agent_coordination.rs",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4006,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 4151,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 19842,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 19874,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "chat.thread_worktree_",
+    "occurrence_count": 4,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 975,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7143,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7153,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7204,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/Contracts_V0.md",
+        4
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "source_control.project_state",
+    "occurrence_count": 4,
+    "path_count": 3,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 2135,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "line": 31682,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 529,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 6209,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FinalGUISpec.md",
+        2
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        1
+      ],
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "accounts.empty.no_profiles",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8304,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8848,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8889,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/UI_Command_Catalog.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "analytics.scan_batch_size",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 2060,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 13651,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 13689,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "error.concurrent_edit_conflict",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 1464,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 7342,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "line": 7373,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/FileSafe.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "github_actions.project_state",
+    "occurrence_count": 3,
+    "path_count": 2,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 529,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1898,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 6210,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/storage-plan.md",
+        2
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "storage.legal_hold.manage",
+    "occurrence_count": 3,
+    "path_count": 1,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8395,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8412,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 9328,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/UI_Command_Catalog.md",
+        3
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  },
+  {
+    "event_type": "branching.assistant_auto_worktree",
+    "occurrence_count": 2,
+    "path_count": 2,
+    "provisional_class": "NEW_FOCUS_PERSIST_CUE",
+    "cohort_pins": [],
+    "citations": [
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3052,
+        "window_persist_cue": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 921,
+        "window_persist_cue": true
+      }
+    ],
+    "top_paths": [
+      [
+        "Plans/assistant-chat-design.md",
+        1
+      ],
+      [
+        "Plans/storage-plan.md",
+        1
+      ]
+    ],
+    "admission_claim": false,
+    "focus_pass": "contracts_storage_primary_surfaces"
+  }
+]

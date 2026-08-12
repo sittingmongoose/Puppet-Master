@@ -1,0 +1,117 @@
+{
+  "event_type": "memory.prune_archive.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`Plans/UI_Command_Catalog.md:1103` names `memory.prune_archive.completed` as the completion outcome for `cmd.chat.memory.prune_archive`, but the exact production wiring row declares no persisted event and requires a receipt-only negative oracle. Neither source resolves the conflict or supplies a complete Event Authority contract, so this token remains quarantined.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `memory.prune_archive.completed` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `memory.prune_archive.completed`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans contract explicitly binds a producer to emission of `memory.prune_archive.completed`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `memory.prune_archive.completed`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `memory.prune_archive.completed`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `memory.prune_archive.completed`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `memory.prune_archive.completed`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `memory.prune_archive.completed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4303-4321",
+      "note": "The exact `cmd.chat.memory.prune_archive` production row declares expected_event_types [] and receipt-only behavior, contradicting the catalog transition to `memory.prune_archive.completed`."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `memory.prune_archive.completed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `memory.prune_archive.completed`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4343-4353",
+      "note": "The exact production oracle requires `cmd.chat.memory.prune_archive` to emit no unexpected persisted event, conflicting with catalog persistence of `memory.prune_archive.completed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1103",
+      "status": "ok",
+      "notes": "Exact catalog row names `memory.prune_archive.completed` for `cmd.chat.memory.prune_archive`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4303-4321",
+      "status": "ok",
+      "notes": "Exact production row declares `cmd.chat.memory.prune_archive` receipt-only with no expected persisted event."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4343-4353",
+      "status": "ok",
+      "notes": "Exact production negative oracle forbids unexpected persisted events from `cmd.chat.memory.prune_archive`."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-memory-prune-archive-completed-authority",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Does `cmd.chat.memory.prune_archive` persist the `memory.prune_archive.completed` completion outcome, or is that stage non-persisted under the production receipt-only contract?",
+    "options": [
+      "Supply an explicit owner-backed, versioned contract for `memory.prune_archive.completed` covering every residual field, then re-adjudicate individually",
+      "Keep `memory.prune_archive.completed` quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify `memory.prune_archive.completed` only with exact cited authority and migration or withdrawal terms"
+    ],
+    "evidence_gap": "No exact Plans citation closes the residual fields for `memory.prune_archive.completed`: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "memory.prune_archive.completed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay14",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

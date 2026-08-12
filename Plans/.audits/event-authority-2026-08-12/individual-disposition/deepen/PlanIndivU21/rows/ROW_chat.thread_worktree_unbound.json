@@ -1,0 +1,128 @@
+{
+  "event_type": "chat.thread_worktree_unbound",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Storage registration and chat lifecycle text confirm the unbind producer, thread/worktree identity, ordered replay projection, and unbound transition. No versioned authority membership, accountable owner, closed full schema, retention/redaction, consumers, compatibility, or complete oracles are cited; no admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish an explicitly accountable owner approval for this exact event; this dimension therefore fails closed."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:2970",
+      "note": "Startup revalidation explicitly emits chat.thread_worktree_unbound with reason=path_missing."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:2959-2964",
+      "note": "The reverse binding keys and ordered projector identify thread_id and worktree_id as the binding identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:2964",
+      "note": "Projectors replay bound and unbound events in sequence order; last event for thread_id determines state."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:2964-2970",
+      "note": "The binding projection defines bound-to-unbound state and startup revalidation explicitly performs the missing-path unbind transition."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish complete consumer and checkpoint behavior; this dimension therefore fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish compatibility and withdrawal rules; this dimension therefore fails closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `chat.thread_worktree_unbound` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/assistant-chat-design.md:3338",
+      "status": "drift",
+      "notes": "Current event row is at line 3340."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2962",
+      "status": "ok",
+      "notes": "Inverse lookup defines the worktree binding identity."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2964",
+      "status": "ok",
+      "notes": "Ordered replay and last-event projection semantics are explicit."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2970",
+      "status": "ok",
+      "notes": "Startup revalidation names an exact producer path and reason=path_missing."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1573",
+      "status": "ok",
+      "notes": "Storage registration table gives exact event and minimum payload."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3340",
+      "status": "ok",
+      "notes": "Seglog catalog closes the reason enum and describes unbinding."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-chat-thread-worktree-unbound",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the accountable domain/storage owner provide and approve the complete 12-dimension Event Authority contract for `chat.thread_worktree_unbound`, or authorize a fail-closed non-admission disposition?",
+    "options": [
+      "Provide cited, owner-approved membership version and complete contract; then evaluate this event individually for registration",
+      "Continue quarantine as persisted-unregistered with no checkpoint advance",
+      "Reclassify or exclude only with event-specific cited semantic rationale"
+    ],
+    "evidence_gap": "The available Plans establish persistence or emission but do not supply every authority-owned product value. Inventing missing values or transferring them by analogy would violate the individual, fail-closed admission rule.",
+    "event_types": [
+      "chat.thread_worktree_unbound"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay05",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

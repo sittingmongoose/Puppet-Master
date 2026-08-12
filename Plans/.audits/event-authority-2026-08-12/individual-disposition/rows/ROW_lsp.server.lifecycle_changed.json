@@ -1,0 +1,111 @@
+{
+  "event_type": "lsp.server.lifecycle_changed",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "An accountable semantic owner is not explicitly named for this exact event; owner adjudication is required."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:946",
+      "note": "The exact runtime-catalog row names LSP supervisor as producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:928-946",
+      "note": "The runtime event catalog registers this exact persisted event name, but the catalog listing does not assign a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, storage-owned persisted payload schema is cited for this exact event."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:946",
+      "note": "The exact row requires project, host, server, root, optional LSP session, state, and timestamp identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal transition set is cited for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:946",
+      "note": "The exact catalog row names editor, Problems, chat, and storage as primary consumers, but supplies no checkpoint advancement, duplicate handling, or fail-closed consumer rule."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:957",
+      "note": "The compatibility rule normalizes two legacy LSP names into this event, but does not name withdrawal authority or an alias removal deadline."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No complete positive-emission and negative-non-emission oracle pair is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:913-932",
+      "status": "drift",
+      "notes": "Original range now ends at the catalog header; the exact row is currently at line 946."
+    },
+    {
+      "citation": "Plans/LSPSupport.md:655-674",
+      "status": "missing",
+      "notes": "The exact event token is absent from the current LSPSupport document."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:935",
+      "status": "drift",
+      "notes": "Current line 935 describes run.started, not the LSP lifecycle event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:930,946",
+      "status": "ok",
+      "notes": "Contracts states the catalog registers persisted event names and gives the LSP supervisor, consumers, and cross-contract payload minimum for this exact event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:957",
+      "status": "ok",
+      "notes": "Defines legacy-name normalization and forbids a parallel LSP lifecycle family."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay12",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ]
+}

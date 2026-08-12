@@ -1,0 +1,99 @@
+{
+  "event_type": "preview.session.refreshed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `preview.session.refreshed` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `preview.session.refreshed`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans contract explicitly binds a producer to emission of `preview.session.refreshed`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `preview.session.refreshed`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `preview.session.refreshed`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `preview.session.refreshed`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `preview.session.refreshed`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `preview.session.refreshed`."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines authoritative state transitions for `preview.session.refreshed`."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `preview.session.refreshed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `preview.session.refreshed`."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation supplies both positive and negative persisted-event oracles for `preview.session.refreshed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1267-1285",
+      "status": "ok",
+      "notes": "The exact token appears in a related-event list followed by generic runtime-linked identity minima; the text does not bind those fields to this event."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8701-8747",
+      "status": "ok",
+      "notes": "Accepted SP-112 preserves the exact token and names only a plan owner hint, not an explicit semantic event owner."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

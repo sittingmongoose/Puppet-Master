@@ -1,0 +1,3220 @@
+{
+  "schema_id": "pm.assurance.event_authority.machine_contract_event_binding_scan.v3",
+  "generated_at_utc": "2026-08-12T11:08:34Z",
+  "advisor2_blocker": "full_180_source_binding_scan_v3_md_json_reconciliation",
+  "source_inventory": {
+    "schema_id": "pm.assurance.event_authority.fresh_census_source_freeze.v2",
+    "path": "Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.FRESH_20260812T0900.json",
+    "source_count": 180,
+    "canonical_digest_sha256": "9cbd87e6637377845c91b60ccea3de45371e8402b413b6f6257de0d85b88583e",
+    "frozen_at_utc": "2026-08-12T09:00:00Z",
+    "denominator_closed": false,
+    "note": "Input-path override only; CURRENT_SOURCE_INVENTORY.json freeze pin not rewritten; denominator not sealed; families not admitted"
+  },
+  "triple_bound_definition": "JSON entries.* catalog entry: token in expected_event_types AND effect_contract.receipt_or_event_refs with effect_contract.effect_kind=event",
+  "md_binding_definition": "Markdown expected_event_types / Expected events without same-row effect_contract recorded as md_expected_event_binding (not triple_bound)",
+  "fields_scanned": [
+    "entries.*.expected_event_types",
+    "entries.*.effect_contract.receipt_or_event_refs",
+    "entries.*.effect_contract.effect_kind",
+    "markdown command catalog Expected events column",
+    "markdown Wiring_Matrix expected_event_types column",
+    "markdown ```json fences",
+    "jsonl line objects"
+  ],
+  "sources_scanned_json_count": 107,
+  "sources_scanned_md_count": 72,
+  "sources_scanned_jsonl_count": 1,
+  "sources_missing_on_disk": [],
+  "reconciliation": {
+    "md_tokens": [
+      "auth.github.authenticated",
+      "auth.github.device_code.issued",
+      "auth.github.disconnected",
+      "auth.github.failed",
+      "auth.github.token.polling",
+      "chat.thread.created",
+      "file.created",
+      "file.deleted",
+      "file.exported",
+      "file.renamed",
+      "folder.created",
+      "folder.deleted",
+      "folder.exported",
+      "folder.renamed",
+      "git.clone.completed",
+      "memory.dedup_sweep.completed",
+      "memory.dedup_sweep.started",
+      "memory.gist.discarded",
+      "memory.gist.pinned",
+      "memory.gist.unpinned",
+      "memory.gist.updated",
+      "memory.gist.verification_failed",
+      "memory.gist.verification_requested",
+      "memory.gist.verified",
+      "memory.index.lexical.rebuild.completed",
+      "memory.index.lexical.rebuild.started",
+      "memory.index.semantic.rebuild.completed",
+      "memory.index.semantic.rebuild.started",
+      "memory.monthly_summary.completed",
+      "memory.monthly_summary.started",
+      "memory.prune_archive.completed",
+      "memory.prune_archive.started",
+      "memory.verification_sweep.completed",
+      "memory.verification_sweep.started",
+      "project.added",
+      "project.created",
+      "settings.updated",
+      "tool.denied",
+      "tool.invoked",
+      "wizard.deferred_payload.loaded",
+      "wizard.opened"
+    ],
+    "json_tokens": [
+      "alert.acknowledged",
+      "alert.dismissed",
+      "alert.rule_muted",
+      "alert.snoozed",
+      "auth.github.authenticated",
+      "auth.github.device_code.issued",
+      "auth.github.failed",
+      "auth.github.token.polling",
+      "browser.context_captured",
+      "browser.context_share_revoked",
+      "browser.context_shared",
+      "browser.session.closed",
+      "browser.session.created",
+      "browser.session.promoted",
+      "browser.session.state_changed",
+      "browser.session.takeover_state_changed",
+      "chat.message.submitted",
+      "cmd.actions.cancel.dispatch_receipt",
+      "cmd.actions.open_in_browser.dispatch_receipt",
+      "cmd.actions.pin.dispatch_receipt",
+      "cmd.actions.rerun.dispatch_receipt",
+      "cmd.actions.rerun_failed.dispatch_receipt",
+      "cmd.actions.show.dispatch_receipt",
+      "cmd.actions.switch_subview.dispatch_receipt",
+      "cmd.actions.unpin.dispatch_receipt",
+      "cmd.actions.view_logs.dispatch_receipt",
+      "cmd.agents.open_node.dispatch_receipt",
+      "cmd.agents.open_thread.dispatch_receipt",
+      "cmd.agents.show.dispatch_receipt",
+      "cmd.alert.open_source.dispatch_receipt",
+      "cmd.artifacts.play_recording.dispatch_receipt",
+      "cmd.artifacts.show_in_ledger.route_open_receipt",
+      "cmd.artifacts.show_in_usage.route_open_receipt",
+      "cmd.artifacts.show_sources.dispatch_receipt",
+      "cmd.artifacts.sort.dispatch_receipt",
+      "cmd.artifacts.watch_recording.dispatch_receipt",
+      "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_to_chat.dispatch_receipt",
+      "cmd.browser.detach_browser_tab.dispatch_receipt",
+      "cmd.browser.focus_browser_tab.dispatch_receipt",
+      "cmd.browser.keep_closed.dispatch_receipt",
+      "cmd.browser.let_agent_continue.dispatch_receipt",
+      "cmd.browser.navigate.dispatch_receipt",
+      "cmd.browser.open_detached_preview.dispatch_receipt",
+      "cmd.browser.open_devtools.dispatch_receipt",
+      "cmd.browser.pause_agent.dispatch_receipt",
+      "cmd.browser.pick_element_for_chat.dispatch_receipt",
+      "cmd.browser.promote_to_normal_browsing.dispatch_receipt",
+      "cmd.browser.reload.dispatch_receipt",
+      "cmd.browser.reopen.dispatch_receipt",
+      "cmd.browser.retry.dispatch_receipt",
+      "cmd.browser.revoke_share_with_agent.dispatch_receipt",
+      "cmd.browser.share_with_agent.dispatch_receipt",
+      "cmd.browser.stop_agent_keep_browser.dispatch_receipt",
+      "cmd.browser.take_over.dispatch_receipt",
+      "cmd.browser.toggle_devtools_dock.dispatch_receipt",
+      "cmd.catalog.install_item.dispatch_receipt",
+      "cmd.catalog.remove_item.dispatch_receipt",
+      "cmd.catalog.update_item.dispatch_receipt",
+      "cmd.chat.add_file_reference.dispatch_receipt",
+      "cmd.chat.apply_code_block.dispatch_receipt",
+      "cmd.chat.archive.dispatch_receipt",
+      "cmd.chat.close_thread_context_details.dispatch_receipt",
+      "cmd.chat.compact_context.dispatch_receipt",
+      "cmd.chat.context_lens.apply_subcompact.dispatch_receipt",
+      "cmd.chat.context_lens.clear_selection.dispatch_receipt",
+      "cmd.chat.context_lens.revert_subcompact.dispatch_receipt",
+      "cmd.chat.context_lens.set_mode.dispatch_receipt",
+      "cmd.chat.context_lens.toggle.dispatch_receipt",
+      "cmd.chat.context_lens.toggle_message_selection.dispatch_receipt",
+      "cmd.chat.context_lens.turn_off.dispatch_receipt",
+      "cmd.chat.copy_code_block.dispatch_receipt",
+      "cmd.chat.copy_message.dispatch_receipt",
+      "cmd.chat.debug_investigation.dismiss.dispatch_receipt",
+      "cmd.chat.debug_investigation.promote.dispatch_receipt",
+      "cmd.chat.delete_message.dispatch_receipt",
+      "cmd.chat.edit_last_user_message.dispatch_receipt",
+      "cmd.chat.effort.dispatch_receipt",
+      "cmd.chat.export.dispatch_receipt",
+      "cmd.chat.export_investigation_bundle.dispatch_receipt",
+      "cmd.chat.focus_thread_context_details.dispatch_receipt",
+      "cmd.chat.goal.start.dispatch_receipt",
+      "cmd.chat.goal.update.dispatch_receipt",
+      "cmd.chat.insert_code_block.dispatch_receipt",
+      "cmd.chat.memory.dedup_sweep.dispatch_receipt",
+      "cmd.chat.memory.discard.dispatch_receipt",
+      "cmd.chat.memory.edit.dispatch_receipt",
+      "cmd.chat.memory.pin.dispatch_receipt",
+      "cmd.chat.memory.preview_capsule.dispatch_receipt",
+      "cmd.chat.memory.prune_archive.dispatch_receipt",
+      "cmd.chat.memory.rebuild_lexical_index.dispatch_receipt",
+      "cmd.chat.memory.rebuild_semantic_index.dispatch_receipt",
+      "cmd.chat.memory.summarize_monthly.dispatch_receipt",
+      "cmd.chat.memory.toggle_auto_save_unverified.dispatch_receipt",
+      "cmd.chat.memory.verification_sweep.dispatch_receipt",
+      "cmd.chat.memory.verify.dispatch_receipt",
+      "cmd.chat.mode.dispatch_receipt",
+      "cmd.chat.model.dispatch_receipt",
+      "cmd.chat.new.dispatch_receipt",
+      "cmd.chat.open_debug_target_picker.dispatch_receipt",
+      "cmd.chat.open_thread.dispatch_receipt",
+      "cmd.chat.open_thread_context_details.dispatch_receipt",
+      "cmd.chat.pin.dispatch_receipt",
+      "cmd.chat.plan_thoroughness.dispatch_receipt",
+      "cmd.chat.platform.dispatch_receipt",
+      "cmd.chat.queue.remove.dispatch_receipt",
+      "cmd.chat.rename.dispatch_receipt",
+      "cmd.chat.resend_last_user_message.dispatch_receipt",
+      "cmd.chat.retry_message.dispatch_receipt",
+      "cmd.chat.revert.dispatch_receipt",
+      "cmd.chat.revoke_investigation_item.dispatch_receipt",
+      "cmd.chat.rewind.dispatch_receipt",
+      "cmd.chat.run_user_command.dispatch_receipt",
+      "cmd.chat.search.dispatch_receipt",
+      "cmd.chat.settings.dispatch_receipt",
+      "cmd.chat.stop.dispatch_receipt",
+      "cmd.chat.switch_thread.route_open_receipt",
+      "cmd.chat.toggle_message_details.dispatch_receipt",
+      "cmd.chat.web.cancel.dispatch_receipt",
+      "cmd.chat.web.crawl.dispatch_receipt",
+      "cmd.chat.web.extract.dispatch_receipt",
+      "cmd.chat.web.fetch.dispatch_receipt",
+      "cmd.chat.web.help.dispatch_receipt",
+      "cmd.chat.web.map.dispatch_receipt",
+      "cmd.chat.web.request_again.dispatch_receipt",
+      "cmd.chat.web.research.dispatch_receipt",
+      "cmd.chat.web.search.dispatch_receipt",
+      "cmd.chat.worktree.bind_existing.dispatch_receipt",
+      "cmd.chat.worktree.create.dispatch_receipt",
+      "cmd.chat.worktree.dispatch_receipt",
+      "cmd.chat.worktree.info.dispatch_receipt",
+      "cmd.chat.worktree.merge.dispatch_receipt",
+      "cmd.chat.worktree.pr.dispatch_receipt",
+      "cmd.chat.worktree.remove.dispatch_receipt",
+      "cmd.chat.worktree.unbind.dispatch_receipt",
+      "cmd.dashboard.catalog.dispatch_receipt",
+      "cmd.debug.add_breakpoint.dispatch_receipt",
+      "cmd.debug.clear_breakpoints.dispatch_receipt",
+      "cmd.debug.collect_snapshot.dispatch_receipt",
+      "cmd.debug.pause.dispatch_receipt",
+      "cmd.debug.record_verification.dispatch_receipt",
+      "cmd.debug.remove_breakpoint.dispatch_receipt",
+      "cmd.debug.resume.dispatch_receipt",
+      "cmd.debug.run_cleanup.dispatch_receipt",
+      "cmd.debug.start.dispatch_receipt",
+      "cmd.debug.step.dispatch_receipt",
+      "cmd.debug.stop.dispatch_receipt",
+      "cmd.debug.view_evidence.dispatch_receipt",
+      "cmd.dev.restart_session.dispatch_receipt",
+      "cmd.dev.show_output.dispatch_receipt",
+      "cmd.dev.show_ports.dispatch_receipt",
+      "cmd.dev.show_problems.dispatch_receipt",
+      "cmd.dev.start_session.dispatch_receipt",
+      "cmd.dev.stop_session.dispatch_receipt",
+      "cmd.docker.bake.dispatch_receipt",
+      "cmd.docker.bake.preview.dispatch_receipt",
+      "cmd.docker.bake.run.dispatch_receipt",
+      "cmd.docker.browser_login.dispatch_receipt",
+      "cmd.docker.build.bake.dispatch_receipt",
+      "cmd.docker.build.compose.dispatch_receipt",
+      "cmd.docker.build.dispatch_receipt",
+      "cmd.docker.build.image.dispatch_receipt",
+      "cmd.docker.build.run.dispatch_receipt",
+      "cmd.docker.build.select_target.dispatch_receipt",
+      "cmd.docker.cleanup.prune.dispatch_receipt",
+      "cmd.docker.cleanup.scan.dispatch_receipt",
+      "cmd.docker.compose.dispatch_receipt",
+      "cmd.docker.compose.down.dispatch_receipt",
+      "cmd.docker.compose.down_subset.dispatch_receipt",
+      "cmd.docker.compose.open_file.dispatch_receipt",
+      "cmd.docker.compose.restart.dispatch_receipt",
+      "cmd.docker.compose.scenario.delete.dispatch_receipt",
+      "cmd.docker.compose.scenario.edit.dispatch_receipt",
+      "cmd.docker.compose.scenario.run.dispatch_receipt",
+      "cmd.docker.compose.scenario.save.dispatch_receipt",
+      "cmd.docker.compose.up.dispatch_receipt",
+      "cmd.docker.compose.up_subset.dispatch_receipt",
+      "cmd.docker.compose_down.dispatch_receipt",
+      "cmd.docker.compose_up.dispatch_receipt",
+      "cmd.docker.container.attach_shell.dispatch_receipt",
+      "cmd.docker.container.delete.dispatch_receipt",
+      "cmd.docker.container.dispatch_receipt",
+      "cmd.docker.container.inspect.dispatch_receipt",
+      "cmd.docker.container.open.dispatch_receipt",
+      "cmd.docker.container.restart.dispatch_receipt",
+      "cmd.docker.container.start.dispatch_receipt",
+      "cmd.docker.container.stats.dispatch_receipt",
+      "cmd.docker.container.stop.dispatch_receipt",
+      "cmd.docker.container.view_logs.dispatch_receipt",
+      "cmd.docker.context.dispatch_receipt",
+      "cmd.docker.context.select.dispatch_receipt",
+      "cmd.docker.create_repository.cancel.dispatch_receipt",
+      "cmd.docker.create_repository.confirm.dispatch_receipt",
+      "cmd.docker.create_repository.dispatch_receipt",
+      "cmd.docker.drift.compare.dispatch_receipt",
+      "cmd.docker.exec.dispatch_receipt",
+      "cmd.docker.image.delete.dispatch_receipt",
+      "cmd.docker.image.dispatch_receipt",
+      "cmd.docker.image.inspect.dispatch_receipt",
+      "cmd.docker.image.push.dispatch_receipt",
+      "cmd.docker.image.tag.dispatch_receipt",
+      "cmd.docker.inspect.dispatch_receipt",
+      "cmd.docker.k8s.apply.dispatch_receipt",
+      "cmd.docker.k8s.diff.dispatch_receipt",
+      "cmd.docker.k8s.dispatch_receipt",
+      "cmd.docker.k8s.exec.dispatch_receipt",
+      "cmd.docker.k8s.helm_install.dispatch_receipt",
+      "cmd.docker.k8s.helm_preview.dispatch_receipt",
+      "cmd.docker.k8s.logs.dispatch_receipt",
+      "cmd.docker.k8s.port_forward.dispatch_receipt",
+      "cmd.docker.k8s.select_context.dispatch_receipt",
+      "cmd.docker.k8s.select_namespace.dispatch_receipt",
+      "cmd.docker.logs.dispatch_receipt",
+      "cmd.docker.network.dispatch_receipt",
+      "cmd.docker.open_dockerfile.dispatch_receipt",
+      "cmd.docker.registry.promote.dispatch_receipt",
+      "cmd.docker.registry.tag_push.dispatch_receipt",
+      "cmd.docker.remove.dispatch_receipt",
+      "cmd.docker.restart.dispatch_receipt",
+      "cmd.docker.run.dispatch_receipt",
+      "cmd.docker.save_pat.dispatch_receipt",
+      "cmd.docker.show.dispatch_receipt",
+      "cmd.docker.stop.dispatch_receipt",
+      "cmd.docker.switch_subview.dispatch_receipt",
+      "cmd.docker.template.commit.dispatch_receipt",
+      "cmd.docker.template.push.dispatch_receipt",
+      "cmd.docker.volume.dispatch_receipt",
+      "cmd.editor.close_tab.dispatch_receipt",
+      "cmd.file.copy_full_path.dispatch_receipt",
+      "cmd.file.copy_nodes.dispatch_receipt",
+      "cmd.file.copy_path.dispatch_receipt",
+      "cmd.file.copy_relative_path.dispatch_receipt",
+      "cmd.file.cut_nodes.dispatch_receipt",
+      "cmd.file.expand_capped.dispatch_receipt",
+      "cmd.file.open.dispatch_receipt",
+      "cmd.file.open_in_system_default.dispatch_receipt",
+      "cmd.file.open_with.dispatch_receipt",
+      "cmd.file.paste_nodes.dispatch_receipt",
+      "cmd.file.refresh.dispatch_receipt",
+      "cmd.file.reveal.dispatch_receipt",
+      "cmd.file.save_local_copy.dispatch_receipt",
+      "cmd.git.commit.dispatch_receipt",
+      "cmd.git.conflict_apply_resolution.dispatch_receipt",
+      "cmd.git.diff_open.dispatch_receipt",
+      "cmd.git.diff_search.dispatch_receipt",
+      "cmd.git.diff_set_compare_target.dispatch_receipt",
+      "cmd.git.diff_toggle_mode.dispatch_receipt",
+      "cmd.git.discard_hunks.dispatch_receipt",
+      "cmd.git.fetch.dispatch_receipt",
+      "cmd.git.open_diff.dispatch_receipt",
+      "cmd.git.pull.dispatch_receipt",
+      "cmd.git.push.dispatch_receipt",
+      "cmd.git.show_commit.dispatch_receipt",
+      "cmd.git.stage_hunks.dispatch_receipt",
+      "cmd.git.unstage_hunks.dispatch_receipt",
+      "cmd.git.worktree.compare.dispatch_receipt",
+      "cmd.git.worktree.create.dispatch_receipt",
+      "cmd.git.worktree.dispatch_receipt",
+      "cmd.git.worktree.focus_lineage.dispatch_receipt",
+      "cmd.git.worktree.list.dispatch_receipt",
+      "cmd.git.worktree.lock.dispatch_receipt",
+      "cmd.git.worktree.merge.dispatch_receipt",
+      "cmd.git.worktree.open.dispatch_receipt",
+      "cmd.git.worktree.open_files.dispatch_receipt",
+      "cmd.git.worktree.prune.dispatch_receipt",
+      "cmd.git.worktree.recover.dispatch_receipt",
+      "cmd.git.worktree.release.dispatch_receipt",
+      "cmd.git.worktree.remove.dispatch_receipt",
+      "cmd.git.worktree.request_prune.dispatch_receipt",
+      "cmd.git.worktree.reuse.dispatch_receipt",
+      "cmd.git.worktree.select.dispatch_receipt",
+      "cmd.git.worktree.switch.dispatch_receipt",
+      "cmd.git.worktree.unlock.dispatch_receipt",
+      "cmd.github.actions.cancel.dispatch_receipt",
+      "cmd.github.actions.dispatch.dispatch_receipt",
+      "cmd.github.actions.dispatch_receipt",
+      "cmd.github.actions.open_current_branch.dispatch_receipt",
+      "cmd.github.actions.open_in_github.dispatch_receipt",
+      "cmd.github.actions.open_job.dispatch_receipt",
+      "cmd.github.actions.open_related_diff.dispatch_receipt",
+      "cmd.github.actions.open_related_worktree.dispatch_receipt",
+      "cmd.github.actions.open_run.dispatch_receipt",
+      "cmd.github.actions.open_run_diff.dispatch_receipt",
+      "cmd.github.actions.open_run_in_browser.dispatch_receipt",
+      "cmd.github.actions.open_step_logs.dispatch_receipt",
+      "cmd.github.actions.pin.dispatch_receipt",
+      "cmd.github.actions.rerun.dispatch_receipt",
+      "cmd.github.actions.rerun_failed.dispatch_receipt",
+      "cmd.github.actions.settings.open.dispatch_receipt",
+      "cmd.github.actions.unpin.dispatch_receipt",
+      "cmd.github.connect.dispatch_receipt",
+      "cmd.github.disconnect.dispatch_receipt",
+      "cmd.github.pr.create.dispatch_receipt",
+      "cmd.github_actions.cancel_workflow.dispatch_receipt",
+      "cmd.github_actions.open_run_diff.dispatch_receipt",
+      "cmd.github_actions.open_run_log.dispatch_receipt",
+      "cmd.github_actions.pin_workflow.dispatch_receipt",
+      "cmd.github_actions.rerun_workflow.dispatch_receipt",
+      "cmd.github_actions.show.dispatch_receipt",
+      "cmd.github_actions.switch_subview.dispatch_receipt",
+      "cmd.graph.approve_hitl.dispatch_receipt",
+      "cmd.graph.deny_hitl.dispatch_receipt",
+      "cmd.lsp.code_action.dispatch_receipt",
+      "cmd.lsp.find_references.dispatch_receipt",
+      "cmd.lsp.format_document.dispatch_receipt",
+      "cmd.lsp.format_selection.dispatch_receipt",
+      "cmd.lsp.goto_definition.dispatch_receipt",
+      "cmd.lsp.goto_symbol.dispatch_receipt",
+      "cmd.lsp.open_problems.dispatch_receipt",
+      "cmd.lsp.rename_symbol.dispatch_receipt",
+      "cmd.lsp.restart_server.dispatch_receipt",
+      "cmd.model.list.dispatch_receipt",
+      "cmd.nav.focus_route.dispatch_receipt",
+      "cmd.nav.open_subject.dispatch_receipt",
+      "cmd.nav.open_usage_subject.route_open_receipt",
+      "cmd.notifications.destination.create.dispatch_receipt",
+      "cmd.notifications.destination.delete.dispatch_receipt",
+      "cmd.notifications.destination.test.dispatch_receipt",
+      "cmd.notifications.destination.toggle.dispatch_receipt",
+      "cmd.notifications.destination.update.dispatch_receipt",
+      "cmd.notifications.mapping.update.dispatch_receipt",
+      "cmd.notifications.override.set.dispatch_receipt",
+      "cmd.onboarding.first_run.open.dispatch_receipt",
+      "cmd.onboarding.free_models.defer.dispatch_receipt",
+      "cmd.onboarding.free_models.review.dispatch_receipt",
+      "cmd.onboarding.open_planning_wizard.dispatch_receipt",
+      "cmd.onboarding.provider_setup.open.dispatch_receipt",
+      "cmd.onboarding.provider_setup.use_provider.dispatch_receipt",
+      "cmd.onboarding.review_setup.dispatch_receipt",
+      "cmd.onboarding.skip_to_planning_wizard.dispatch_receipt",
+      "cmd.orchestrator.build_run.dispatch_receipt",
+      "cmd.orchestrator.compare_run_output.dispatch_receipt",
+      "cmd.orchestrator.copy_run_id.dispatch_receipt",
+      "cmd.orchestrator.export_ledger.dispatch_receipt",
+      "cmd.orchestrator.focus_object.dispatch_receipt",
+      "cmd.orchestrator.focus_run.dispatch_receipt",
+      "cmd.orchestrator.open_build_artifact.dispatch_receipt",
+      "cmd.orchestrator.open_concern.dispatch_receipt",
+      "cmd.orchestrator.open_conflict_assistant.dispatch_receipt",
+      "cmd.orchestrator.open_corroboration.dispatch_receipt",
+      "cmd.orchestrator.open_docker_manager.dispatch_receipt",
+      "cmd.orchestrator.open_github_actions.dispatch_receipt",
+      "cmd.orchestrator.open_graph_generation.dispatch_receipt",
+      "cmd.orchestrator.open_graph_patch.dispatch_receipt",
+      "cmd.orchestrator.open_in_docker_manager.dispatch_receipt",
+      "cmd.orchestrator.open_in_github_actions.dispatch_receipt",
+      "cmd.orchestrator.open_in_source_control.dispatch_receipt",
+      "cmd.orchestrator.open_kubernetes.dispatch_receipt",
+      "cmd.orchestrator.open_preview_artifact.dispatch_receipt",
+      "cmd.orchestrator.open_promotion.dispatch_receipt",
+      "cmd.orchestrator.open_receipt.dispatch_receipt",
+      "cmd.orchestrator.open_review.dispatch_receipt",
+      "cmd.orchestrator.open_source_control.dispatch_receipt",
+      "cmd.orchestrator.preview_open.dispatch_receipt",
+      "cmd.orchestrator.preview_stop.dispatch_receipt",
+      "cmd.orchestrator.push_image.dispatch_receipt",
+      "cmd.orchestrator.set_evidence_filter.dispatch_receipt",
+      "cmd.orchestrator.set_seam_expansion.dispatch_receipt",
+      "cmd.orchestrator.switch_tab.dispatch_receipt",
+      "cmd.panel.switch.dispatch_receipt",
+      "cmd.permissions.create_global_rule.dispatch_receipt",
+      "cmd.permissions.create_project_rule.dispatch_receipt",
+      "cmd.permissions.delete_rule.dispatch_receipt",
+      "cmd.permissions.open.route_open_receipt",
+      "cmd.permissions.pick_external_directory.dispatch_receipt",
+      "cmd.permissions.reorder_rule.dispatch_receipt",
+      "cmd.permissions.review_request.route_open_receipt",
+      "cmd.permissions.revoke.dispatch_receipt",
+      "cmd.permissions.update_rule.dispatch_receipt",
+      "cmd.permissions.validate_rule.dispatch_receipt",
+      "cmd.plan_compile.cancel.dispatch_receipt",
+      "cmd.plan_compile.inspect_assignment.dispatch_receipt",
+      "cmd.plan_compile.inspect_blocker.dispatch_receipt",
+      "cmd.plan_compile.inspect_evidence.dispatch_receipt",
+      "cmd.plan_compile.open_build.route_open_receipt",
+      "cmd.plan_compile.pause.dispatch_receipt",
+      "cmd.plan_compile.replay.dispatch_receipt",
+      "cmd.plan_compile.request_bounded_recompile.dispatch_receipt",
+      "cmd.plan_compile.resume.dispatch_receipt",
+      "cmd.plan_compile.retry.dispatch_receipt",
+      "cmd.planning_wizard.amendment.accept.dispatch_receipt",
+      "cmd.planning_wizard.replay.dispatch_receipt",
+      "cmd.planning_wizard.start.dispatch_receipt",
+      "cmd.planning_wizard.topic.add.dispatch_receipt",
+      "cmd.planning_wizard.topic.defer.dispatch_receipt",
+      "cmd.planning_wizard.topic.mark_impacted.dispatch_receipt",
+      "cmd.planning_wizard.topic.merge.dispatch_receipt",
+      "cmd.planning_wizard.topic.open.dispatch_receipt",
+      "cmd.planning_wizard.topic.rename.dispatch_receipt",
+      "cmd.planning_wizard.topic.reopen.dispatch_receipt",
+      "cmd.planning_wizard.topic.reorder.dispatch_receipt",
+      "cmd.planning_wizard.topic.split.dispatch_receipt",
+      "cmd.prd_builder.annotation.resolve.dispatch_receipt",
+      "cmd.prd_builder.annotation.upsert.dispatch_receipt",
+      "cmd.prd_builder.answer.upsert.dispatch_receipt",
+      "cmd.prd_builder.conflict.resolve.dispatch_receipt",
+      "cmd.prd_builder.pack.reopen.dispatch_receipt",
+      "cmd.prd_builder.source.import.dispatch_receipt",
+      "cmd.project.add_existing.dispatch_receipt",
+      "cmd.project.archive.dispatch_receipt",
+      "cmd.project.chain_wizard_open_deferred.dispatch_receipt",
+      "cmd.project.new_local.dispatch_receipt",
+      "cmd.project.open.dispatch_receipt",
+      "cmd.project.open_settings.route_open_receipt",
+      "cmd.project.refresh.dispatch_receipt",
+      "cmd.project.remove.dispatch_receipt",
+      "cmd.provider.switch_route.dispatch_receipt",
+      "cmd.run.resume.dispatch_receipt",
+      "cmd.run.stop.dispatch_receipt",
+      "cmd.run.view_log.route_open_receipt",
+      "cmd.run_debug.attach.dispatch_receipt",
+      "cmd.run_debug.breakpoint.add_function.dispatch_receipt",
+      "cmd.run_debug.breakpoint.edit.dispatch_receipt",
+      "cmd.run_debug.breakpoint.goto_source.route_open_receipt",
+      "cmd.run_debug.breakpoint.remove_all.dispatch_receipt",
+      "cmd.run_debug.breakpoint.set_exception_filters.dispatch_receipt",
+      "cmd.run_debug.breakpoint.toggle.dispatch_receipt",
+      "cmd.run_debug.breakpoint.toggle_activation.dispatch_receipt",
+      "cmd.run_debug.callstack.restart_frame.dispatch_receipt",
+      "cmd.run_debug.callstack.select_frame.dispatch_receipt",
+      "cmd.run_debug.callstack.show_execution_point.route_open_receipt",
+      "cmd.run_debug.config.add.dispatch_receipt",
+      "cmd.run_debug.config.delete.dispatch_receipt",
+      "cmd.run_debug.config.edit.dispatch_receipt",
+      "cmd.run_debug.config.open_file.route_open_receipt",
+      "cmd.run_debug.config.select.dispatch_receipt",
+      "cmd.run_debug.console.clear.dispatch_receipt",
+      "cmd.run_debug.console.evaluate.dispatch_receipt",
+      "cmd.run_debug.console.reveal.route_open_receipt",
+      "cmd.run_debug.continue.dispatch_receipt",
+      "cmd.run_debug.disconnect.dispatch_receipt",
+      "cmd.run_debug.pause.dispatch_receipt",
+      "cmd.run_debug.restart.dispatch_receipt",
+      "cmd.run_debug.session.select.dispatch_receipt",
+      "cmd.run_debug.start.dispatch_receipt",
+      "cmd.run_debug.start_no_debug.dispatch_receipt",
+      "cmd.run_debug.step_into.dispatch_receipt",
+      "cmd.run_debug.step_out.dispatch_receipt",
+      "cmd.run_debug.step_over.dispatch_receipt",
+      "cmd.run_debug.stop.dispatch_receipt",
+      "cmd.run_debug.terminal.reveal.route_open_receipt",
+      "cmd.run_debug.variables.add_to_watch.dispatch_receipt",
+      "cmd.run_debug.variables.copy_expression.dispatch_receipt",
+      "cmd.run_debug.variables.copy_value.dispatch_receipt",
+      "cmd.run_debug.variables.set_value.dispatch_receipt",
+      "cmd.run_debug.watch.add.dispatch_receipt",
+      "cmd.run_debug.watch.edit.dispatch_receipt",
+      "cmd.run_debug.watch.remove.dispatch_receipt",
+      "cmd.run_debug.watch.remove_all.dispatch_receipt",
+      "cmd.run_graph.drag_node.dispatch_receipt",
+      "cmd.run_graph.keyboard_navigate.dispatch_receipt",
+      "cmd.run_graph.open_context_menu.dispatch_receipt",
+      "cmd.run_graph.open_minimap_target.dispatch_receipt",
+      "cmd.run_graph.pan.dispatch_receipt",
+      "cmd.run_graph.search.dispatch_receipt",
+      "cmd.run_graph.set_problems_filter.dispatch_receipt",
+      "cmd.run_graph.set_selection.dispatch_receipt",
+      "cmd.run_graph.zoom.dispatch_receipt",
+      "cmd.runtime.decline.dispatch_receipt",
+      "cmd.runtime.open_attempt_details.dispatch_receipt",
+      "cmd.runtime.open_queue_analysis.dispatch_receipt",
+      "cmd.runtime.open_remediation_lineage.dispatch_receipt",
+      "cmd.runtime.open_safe_point_history.dispatch_receipt",
+      "cmd.runtime.retry_now.dispatch_receipt",
+      "cmd.search.evict_remote_cache.dispatch_receipt",
+      "cmd.search.find_in_files.dispatch_receipt",
+      "cmd.search.next_result.dispatch_receipt",
+      "cmd.search.open_result.dispatch_receipt",
+      "cmd.search.previous_result.dispatch_receipt",
+      "cmd.search.rebuild_index.dispatch_receipt",
+      "cmd.search.replace_all.dispatch_receipt",
+      "cmd.search.replace_in_files.dispatch_receipt",
+      "cmd.search.replace_selected.dispatch_receipt",
+      "cmd.search.set_scope.dispatch_receipt",
+      "cmd.search.show.dispatch_receipt",
+      "cmd.search.toggle_case.dispatch_receipt",
+      "cmd.search.toggle_regex.dispatch_receipt",
+      "cmd.search.toggle_word.dispatch_receipt",
+      "cmd.settings.bloom.open.dispatch_receipt",
+      "cmd.settings.category.reset.dispatch_receipt",
+      "cmd.settings.open_storage_retention.route_open_receipt",
+      "cmd.settings.suggestion.dismiss.dispatch_receipt",
+      "cmd.sound.asset.delete.dispatch_receipt",
+      "cmd.sound.asset.export.dispatch_receipt",
+      "cmd.sound.asset.restore.dispatch_receipt",
+      "cmd.sound.mapping.set.dispatch_receipt",
+      "cmd.sound.pack.import.dispatch_receipt",
+      "cmd.sound.preview.dispatch_receipt",
+      "cmd.sound.upload.dispatch_receipt",
+      "cmd.source_control.accept_commit_group.dispatch_receipt",
+      "cmd.source_control.branch.create.dispatch_receipt",
+      "cmd.source_control.branch.switch.dispatch_receipt",
+      "cmd.source_control.generate_commit_message.dispatch_receipt",
+      "cmd.source_control.graph.filter.dispatch_receipt",
+      "cmd.source_control.graph.focus.dispatch_receipt",
+      "cmd.source_control.graph.layout.dispatch_receipt",
+      "cmd.source_control.graph_filter.dispatch_receipt",
+      "cmd.source_control.graph_focus.dispatch_receipt",
+      "cmd.source_control.history_open_commit.dispatch_receipt",
+      "cmd.source_control.mark_conflict_resolved.dispatch_receipt",
+      "cmd.source_control.open_conflict.dispatch_receipt",
+      "cmd.source_control.open_merge_editor.dispatch_receipt",
+      "cmd.source_control.open_review.dispatch_receipt",
+      "cmd.source_control.pr.create.dispatch_receipt",
+      "cmd.source_control.pr.merge.dispatch_receipt",
+      "cmd.source_control.resolve_conflict_side.dispatch_receipt",
+      "cmd.source_control.review.filter.dispatch_receipt",
+      "cmd.source_control.review.open.dispatch_receipt",
+      "cmd.source_control.review.swap.dispatch_receipt",
+      "cmd.source_control.select_tab.dispatch_receipt",
+      "cmd.source_control.select_worktree.dispatch_receipt",
+      "cmd.source_control.set_compare_target.dispatch_receipt",
+      "cmd.source_control.stash.apply.dispatch_receipt",
+      "cmd.source_control.stash.create.dispatch_receipt",
+      "cmd.source_control.stash.dispatch_receipt",
+      "cmd.source_control.stash.drop.dispatch_receipt",
+      "cmd.source_control.stash.list.dispatch_receipt",
+      "cmd.source_control.stash.pop.dispatch_receipt",
+      "cmd.source_control.suggest_commit_batches.dispatch_receipt",
+      "cmd.source_control.suggest_commit_groups.dispatch_receipt",
+      "cmd.source_control.toggle_generated_filter.dispatch_receipt",
+      "cmd.storage.fallback.return_fast_forward.dispatch_receipt",
+      "cmd.storage.open_root.route_open_receipt",
+      "cmd.storage.open_value.route_open_receipt",
+      "cmd.storage.retry.dispatch_receipt",
+      "cmd.storage.root.choose.dispatch_receipt",
+      "cmd.storage.root.copy_and_switch.dispatch_receipt",
+      "cmd.storage.root.start_new_instance.dispatch_receipt",
+      "cmd.storage.root.use_previous.dispatch_receipt",
+      "cmd.storage.try_write_mode.dispatch_receipt",
+      "cmd.storage.viewer.refresh.dispatch_receipt",
+      "cmd.terminal.clear_scrollback.dispatch_receipt",
+      "cmd.terminal.close_pane.dispatch_receipt",
+      "cmd.terminal.detach.dispatch_receipt",
+      "cmd.terminal.focus.dispatch_receipt",
+      "cmd.terminal.focus_session.dispatch_receipt",
+      "cmd.terminal.kill_session.dispatch_receipt",
+      "cmd.terminal.move_pane.dispatch_receipt",
+      "cmd.terminal.open.dispatch_receipt",
+      "cmd.terminal.reattach_section.dispatch_receipt",
+      "cmd.terminal.rerun.dispatch_receipt",
+      "cmd.terminal.restart_replace.dispatch_receipt",
+      "cmd.terminal.reveal.dispatch_receipt",
+      "cmd.terminal.show.dispatch_receipt",
+      "cmd.terminal.split_pane.dispatch_receipt",
+      "cmd.terminal.terminate_session.dispatch_receipt",
+      "cmd.testing.cancel_run.dispatch_receipt",
+      "cmd.testing.export_bundle.dispatch_receipt",
+      "cmd.testing.open_failure.route_open_receipt",
+      "cmd.testing.open_panel.route_open_receipt",
+      "cmd.testing.open_receipt.route_open_receipt",
+      "cmd.testing.quarantine.dispatch_receipt",
+      "cmd.testing.quarantine.release.dispatch_receipt",
+      "cmd.testing.run.dispatch_receipt",
+      "cmd.testing.watch_run.dispatch_receipt",
+      "cmd.theme.preview.dispatch_receipt",
+      "cmd.usage.export.dispatch_receipt",
+      "cmd.usage.refresh.dispatch_receipt",
+      "cmd.widget.add.dispatch_receipt",
+      "cmd.widget.configure.dispatch_receipt",
+      "cmd.widget.move.dispatch_receipt",
+      "cmd.widget.remove.dispatch_receipt",
+      "cmd.widget.reset_layout.dispatch_receipt",
+      "cmd.widget.resize.dispatch_receipt",
+      "concern.assigned",
+      "concern.created",
+      "concern.evidence_linked",
+      "concern.promoted",
+      "concern.reopened",
+      "concern.resolved",
+      "concern.updated",
+      "dashboard.widget_added",
+      "dev.session.stopped",
+      "docker.host.access_open_requested",
+      "docker.host.instance_lifecycle_requested",
+      "docker.host.instance_retention_recorded",
+      "docker.host.preflight_requested",
+      "docker.host.profile_saved",
+      "docker.host.receipt_opened",
+      "docker.host.refresh_requested",
+      "docker.host.session_launch_requested",
+      "docker.hosts_route_opened",
+      "file.created",
+      "file.deleted",
+      "file.renamed",
+      "folder.created",
+      "github.actions.dispatch_readiness_validated",
+      "github.actions.readiness_compared",
+      "github.repo.create_requested",
+      "goal.replanned",
+      "goal_run.stopped",
+      "health.route_opened",
+      "model.catalog_refreshed",
+      "node.unblocked",
+      "onboarding.free_models_refresh_retried",
+      "onboarding.free_models_refreshed",
+      "onboarding.provider_setup_opened",
+      "panel.redocked",
+      "panel.undocked",
+      "persona.created",
+      "persona.deleted",
+      "persona.exported",
+      "persona.imported",
+      "persona.selected",
+      "persona.updated",
+      "plan_compile.run_created_or_bound",
+      "planning.approval_cas_receipt.written",
+      "planning.plan_approved",
+      "prd_builder.approval_snapshot.created",
+      "prd_builder.prd_pack_approved",
+      "project.github_repo_bound",
+      "remote.reconnect.requested",
+      "restore_point.applied",
+      "restore_point.created",
+      "restore_point.deleted",
+      "runtime_artifact.created",
+      "safe_point.restored",
+      "scheduler.pass",
+      "settings.theme.updated",
+      "settings.updated",
+      "storage.compaction_lifecycle_changed",
+      "storage.deletion_lifecycle_changed",
+      "storage.retention_hold_changed",
+      "terminal.workgroup_moved",
+      "testing.capability_policy.updated",
+      "testing.session.backgrounded",
+      "testing.session.opened",
+      "testing.session.redaction_inspected",
+      "testing.session.watch_started",
+      "testing.visibility_policy.updated",
+      "tool.invoked",
+      "workspace.layout_changed"
+    ],
+    "triple_bound_tokens": [
+      "alert.acknowledged",
+      "alert.dismissed",
+      "alert.rule_muted",
+      "alert.snoozed",
+      "browser.context_captured",
+      "browser.context_share_revoked",
+      "browser.context_shared",
+      "browser.session.closed",
+      "browser.session.created",
+      "browser.session.promoted",
+      "browser.session.state_changed",
+      "browser.session.takeover_state_changed",
+      "chat.message.submitted",
+      "concern.assigned",
+      "concern.created",
+      "concern.evidence_linked",
+      "concern.promoted",
+      "concern.reopened",
+      "concern.resolved",
+      "concern.updated",
+      "dashboard.widget_added",
+      "dev.session.stopped",
+      "docker.host.access_open_requested",
+      "docker.host.instance_lifecycle_requested",
+      "docker.host.instance_retention_recorded",
+      "docker.host.preflight_requested",
+      "docker.host.profile_saved",
+      "docker.host.receipt_opened",
+      "docker.host.refresh_requested",
+      "docker.host.session_launch_requested",
+      "docker.hosts_route_opened",
+      "file.created",
+      "file.deleted",
+      "file.renamed",
+      "folder.created",
+      "github.actions.dispatch_readiness_validated",
+      "github.actions.readiness_compared",
+      "github.repo.create_requested",
+      "goal.replanned",
+      "goal_run.stopped",
+      "health.route_opened",
+      "model.catalog_refreshed",
+      "node.unblocked",
+      "onboarding.free_models_refresh_retried",
+      "onboarding.free_models_refreshed",
+      "onboarding.provider_setup_opened",
+      "panel.redocked",
+      "panel.undocked",
+      "persona.created",
+      "persona.deleted",
+      "persona.exported",
+      "persona.imported",
+      "persona.selected",
+      "persona.updated",
+      "plan_compile.run_created_or_bound",
+      "planning.approval_cas_receipt.written",
+      "planning.plan_approved",
+      "prd_builder.approval_snapshot.created",
+      "prd_builder.prd_pack_approved",
+      "project.github_repo_bound",
+      "remote.reconnect.requested",
+      "restore_point.applied",
+      "restore_point.created",
+      "restore_point.deleted",
+      "runtime_artifact.created",
+      "safe_point.restored",
+      "scheduler.pass",
+      "settings.theme.updated",
+      "settings.updated",
+      "terminal.workgroup_moved",
+      "testing.capability_policy.updated",
+      "testing.session.backgrounded",
+      "testing.session.opened",
+      "testing.session.redaction_inspected",
+      "testing.session.watch_started",
+      "testing.visibility_policy.updated",
+      "workspace.layout_changed"
+    ],
+    "md_only": [
+      "auth.github.disconnected",
+      "chat.thread.created",
+      "file.exported",
+      "folder.deleted",
+      "folder.exported",
+      "folder.renamed",
+      "git.clone.completed",
+      "memory.dedup_sweep.completed",
+      "memory.dedup_sweep.started",
+      "memory.gist.discarded",
+      "memory.gist.pinned",
+      "memory.gist.unpinned",
+      "memory.gist.updated",
+      "memory.gist.verification_failed",
+      "memory.gist.verification_requested",
+      "memory.gist.verified",
+      "memory.index.lexical.rebuild.completed",
+      "memory.index.lexical.rebuild.started",
+      "memory.index.semantic.rebuild.completed",
+      "memory.index.semantic.rebuild.started",
+      "memory.monthly_summary.completed",
+      "memory.monthly_summary.started",
+      "memory.prune_archive.completed",
+      "memory.prune_archive.started",
+      "memory.verification_sweep.completed",
+      "memory.verification_sweep.started",
+      "project.added",
+      "project.created",
+      "tool.denied",
+      "wizard.deferred_payload.loaded",
+      "wizard.opened"
+    ],
+    "json_only": [
+      "alert.acknowledged",
+      "alert.dismissed",
+      "alert.rule_muted",
+      "alert.snoozed",
+      "browser.context_captured",
+      "browser.context_share_revoked",
+      "browser.context_shared",
+      "browser.session.closed",
+      "browser.session.created",
+      "browser.session.promoted",
+      "browser.session.state_changed",
+      "browser.session.takeover_state_changed",
+      "chat.message.submitted",
+      "cmd.actions.cancel.dispatch_receipt",
+      "cmd.actions.open_in_browser.dispatch_receipt",
+      "cmd.actions.pin.dispatch_receipt",
+      "cmd.actions.rerun.dispatch_receipt",
+      "cmd.actions.rerun_failed.dispatch_receipt",
+      "cmd.actions.show.dispatch_receipt",
+      "cmd.actions.switch_subview.dispatch_receipt",
+      "cmd.actions.unpin.dispatch_receipt",
+      "cmd.actions.view_logs.dispatch_receipt",
+      "cmd.agents.open_node.dispatch_receipt",
+      "cmd.agents.open_thread.dispatch_receipt",
+      "cmd.agents.show.dispatch_receipt",
+      "cmd.alert.open_source.dispatch_receipt",
+      "cmd.artifacts.play_recording.dispatch_receipt",
+      "cmd.artifacts.show_in_ledger.route_open_receipt",
+      "cmd.artifacts.show_in_usage.route_open_receipt",
+      "cmd.artifacts.show_sources.dispatch_receipt",
+      "cmd.artifacts.sort.dispatch_receipt",
+      "cmd.artifacts.watch_recording.dispatch_receipt",
+      "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt",
+      "cmd.browser.add_selection_to_chat.dispatch_receipt",
+      "cmd.browser.detach_browser_tab.dispatch_receipt",
+      "cmd.browser.focus_browser_tab.dispatch_receipt",
+      "cmd.browser.keep_closed.dispatch_receipt",
+      "cmd.browser.let_agent_continue.dispatch_receipt",
+      "cmd.browser.navigate.dispatch_receipt",
+      "cmd.browser.open_detached_preview.dispatch_receipt",
+      "cmd.browser.open_devtools.dispatch_receipt",
+      "cmd.browser.pause_agent.dispatch_receipt",
+      "cmd.browser.pick_element_for_chat.dispatch_receipt",
+      "cmd.browser.promote_to_normal_browsing.dispatch_receipt",
+      "cmd.browser.reload.dispatch_receipt",
+      "cmd.browser.reopen.dispatch_receipt",
+      "cmd.browser.retry.dispatch_receipt",
+      "cmd.browser.revoke_share_with_agent.dispatch_receipt",
+      "cmd.browser.share_with_agent.dispatch_receipt",
+      "cmd.browser.stop_agent_keep_browser.dispatch_receipt",
+      "cmd.browser.take_over.dispatch_receipt",
+      "cmd.browser.toggle_devtools_dock.dispatch_receipt",
+      "cmd.catalog.install_item.dispatch_receipt",
+      "cmd.catalog.remove_item.dispatch_receipt",
+      "cmd.catalog.update_item.dispatch_receipt",
+      "cmd.chat.add_file_reference.dispatch_receipt",
+      "cmd.chat.apply_code_block.dispatch_receipt",
+      "cmd.chat.archive.dispatch_receipt",
+      "cmd.chat.close_thread_context_details.dispatch_receipt",
+      "cmd.chat.compact_context.dispatch_receipt",
+      "cmd.chat.context_lens.apply_subcompact.dispatch_receipt",
+      "cmd.chat.context_lens.clear_selection.dispatch_receipt",
+      "cmd.chat.context_lens.revert_subcompact.dispatch_receipt",
+      "cmd.chat.context_lens.set_mode.dispatch_receipt",
+      "cmd.chat.context_lens.toggle.dispatch_receipt",
+      "cmd.chat.context_lens.toggle_message_selection.dispatch_receipt",
+      "cmd.chat.context_lens.turn_off.dispatch_receipt",
+      "cmd.chat.copy_code_block.dispatch_receipt",
+      "cmd.chat.copy_message.dispatch_receipt",
+      "cmd.chat.debug_investigation.dismiss.dispatch_receipt",
+      "cmd.chat.debug_investigation.promote.dispatch_receipt",
+      "cmd.chat.delete_message.dispatch_receipt",
+      "cmd.chat.edit_last_user_message.dispatch_receipt",
+      "cmd.chat.effort.dispatch_receipt",
+      "cmd.chat.export.dispatch_receipt",
+      "cmd.chat.export_investigation_bundle.dispatch_receipt",
+      "cmd.chat.focus_thread_context_details.dispatch_receipt",
+      "cmd.chat.goal.start.dispatch_receipt",
+      "cmd.chat.goal.update.dispatch_receipt",
+      "cmd.chat.insert_code_block.dispatch_receipt",
+      "cmd.chat.memory.dedup_sweep.dispatch_receipt",
+      "cmd.chat.memory.discard.dispatch_receipt",
+      "cmd.chat.memory.edit.dispatch_receipt",
+      "cmd.chat.memory.pin.dispatch_receipt",
+      "cmd.chat.memory.preview_capsule.dispatch_receipt",
+      "cmd.chat.memory.prune_archive.dispatch_receipt",
+      "cmd.chat.memory.rebuild_lexical_index.dispatch_receipt",
+      "cmd.chat.memory.rebuild_semantic_index.dispatch_receipt",
+      "cmd.chat.memory.summarize_monthly.dispatch_receipt",
+      "cmd.chat.memory.toggle_auto_save_unverified.dispatch_receipt",
+      "cmd.chat.memory.verification_sweep.dispatch_receipt",
+      "cmd.chat.memory.verify.dispatch_receipt",
+      "cmd.chat.mode.dispatch_receipt",
+      "cmd.chat.model.dispatch_receipt",
+      "cmd.chat.new.dispatch_receipt",
+      "cmd.chat.open_debug_target_picker.dispatch_receipt",
+      "cmd.chat.open_thread.dispatch_receipt",
+      "cmd.chat.open_thread_context_details.dispatch_receipt",
+      "cmd.chat.pin.dispatch_receipt",
+      "cmd.chat.plan_thoroughness.dispatch_receipt",
+      "cmd.chat.platform.dispatch_receipt",
+      "cmd.chat.queue.remove.dispatch_receipt",
+      "cmd.chat.rename.dispatch_receipt",
+      "cmd.chat.resend_last_user_message.dispatch_receipt",
+      "cmd.chat.retry_message.dispatch_receipt",
+      "cmd.chat.revert.dispatch_receipt",
+      "cmd.chat.revoke_investigation_item.dispatch_receipt",
+      "cmd.chat.rewind.dispatch_receipt",
+      "cmd.chat.run_user_command.dispatch_receipt",
+      "cmd.chat.search.dispatch_receipt",
+      "cmd.chat.settings.dispatch_receipt",
+      "cmd.chat.stop.dispatch_receipt",
+      "cmd.chat.switch_thread.route_open_receipt",
+      "cmd.chat.toggle_message_details.dispatch_receipt",
+      "cmd.chat.web.cancel.dispatch_receipt",
+      "cmd.chat.web.crawl.dispatch_receipt",
+      "cmd.chat.web.extract.dispatch_receipt",
+      "cmd.chat.web.fetch.dispatch_receipt",
+      "cmd.chat.web.help.dispatch_receipt",
+      "cmd.chat.web.map.dispatch_receipt",
+      "cmd.chat.web.request_again.dispatch_receipt",
+      "cmd.chat.web.research.dispatch_receipt",
+      "cmd.chat.web.search.dispatch_receipt",
+      "cmd.chat.worktree.bind_existing.dispatch_receipt",
+      "cmd.chat.worktree.create.dispatch_receipt",
+      "cmd.chat.worktree.dispatch_receipt",
+      "cmd.chat.worktree.info.dispatch_receipt",
+      "cmd.chat.worktree.merge.dispatch_receipt",
+      "cmd.chat.worktree.pr.dispatch_receipt",
+      "cmd.chat.worktree.remove.dispatch_receipt",
+      "cmd.chat.worktree.unbind.dispatch_receipt",
+      "cmd.dashboard.catalog.dispatch_receipt",
+      "cmd.debug.add_breakpoint.dispatch_receipt",
+      "cmd.debug.clear_breakpoints.dispatch_receipt",
+      "cmd.debug.collect_snapshot.dispatch_receipt",
+      "cmd.debug.pause.dispatch_receipt",
+      "cmd.debug.record_verification.dispatch_receipt",
+      "cmd.debug.remove_breakpoint.dispatch_receipt",
+      "cmd.debug.resume.dispatch_receipt",
+      "cmd.debug.run_cleanup.dispatch_receipt",
+      "cmd.debug.start.dispatch_receipt",
+      "cmd.debug.step.dispatch_receipt",
+      "cmd.debug.stop.dispatch_receipt",
+      "cmd.debug.view_evidence.dispatch_receipt",
+      "cmd.dev.restart_session.dispatch_receipt",
+      "cmd.dev.show_output.dispatch_receipt",
+      "cmd.dev.show_ports.dispatch_receipt",
+      "cmd.dev.show_problems.dispatch_receipt",
+      "cmd.dev.start_session.dispatch_receipt",
+      "cmd.dev.stop_session.dispatch_receipt",
+      "cmd.docker.bake.dispatch_receipt",
+      "cmd.docker.bake.preview.dispatch_receipt",
+      "cmd.docker.bake.run.dispatch_receipt",
+      "cmd.docker.browser_login.dispatch_receipt",
+      "cmd.docker.build.bake.dispatch_receipt",
+      "cmd.docker.build.compose.dispatch_receipt",
+      "cmd.docker.build.dispatch_receipt",
+      "cmd.docker.build.image.dispatch_receipt",
+      "cmd.docker.build.run.dispatch_receipt",
+      "cmd.docker.build.select_target.dispatch_receipt",
+      "cmd.docker.cleanup.prune.dispatch_receipt",
+      "cmd.docker.cleanup.scan.dispatch_receipt",
+      "cmd.docker.compose.dispatch_receipt",
+      "cmd.docker.compose.down.dispatch_receipt",
+      "cmd.docker.compose.down_subset.dispatch_receipt",
+      "cmd.docker.compose.open_file.dispatch_receipt",
+      "cmd.docker.compose.restart.dispatch_receipt",
+      "cmd.docker.compose.scenario.delete.dispatch_receipt",
+      "cmd.docker.compose.scenario.edit.dispatch_receipt",
+      "cmd.docker.compose.scenario.run.dispatch_receipt",
+      "cmd.docker.compose.scenario.save.dispatch_receipt",
+      "cmd.docker.compose.up.dispatch_receipt",
+      "cmd.docker.compose.up_subset.dispatch_receipt",
+      "cmd.docker.compose_down.dispatch_receipt",
+      "cmd.docker.compose_up.dispatch_receipt",
+      "cmd.docker.container.attach_shell.dispatch_receipt",
+      "cmd.docker.container.delete.dispatch_receipt",
+      "cmd.docker.container.dispatch_receipt",
+      "cmd.docker.container.inspect.dispatch_receipt",
+      "cmd.docker.container.open.dispatch_receipt",
+      "cmd.docker.container.restart.dispatch_receipt",
+      "cmd.docker.container.start.dispatch_receipt",
+      "cmd.docker.container.stats.dispatch_receipt",
+      "cmd.docker.container.stop.dispatch_receipt",
+      "cmd.docker.container.view_logs.dispatch_receipt",
+      "cmd.docker.context.dispatch_receipt",
+      "cmd.docker.context.select.dispatch_receipt",
+      "cmd.docker.create_repository.cancel.dispatch_receipt",
+      "cmd.docker.create_repository.confirm.dispatch_receipt",
+      "cmd.docker.create_repository.dispatch_receipt",
+      "cmd.docker.drift.compare.dispatch_receipt",
+      "cmd.docker.exec.dispatch_receipt",
+      "cmd.docker.image.delete.dispatch_receipt",
+      "cmd.docker.image.dispatch_receipt",
+      "cmd.docker.image.inspect.dispatch_receipt",
+      "cmd.docker.image.push.dispatch_receipt",
+      "cmd.docker.image.tag.dispatch_receipt",
+      "cmd.docker.inspect.dispatch_receipt",
+      "cmd.docker.k8s.apply.dispatch_receipt",
+      "cmd.docker.k8s.diff.dispatch_receipt",
+      "cmd.docker.k8s.dispatch_receipt",
+      "cmd.docker.k8s.exec.dispatch_receipt",
+      "cmd.docker.k8s.helm_install.dispatch_receipt",
+      "cmd.docker.k8s.helm_preview.dispatch_receipt",
+      "cmd.docker.k8s.logs.dispatch_receipt",
+      "cmd.docker.k8s.port_forward.dispatch_receipt",
+      "cmd.docker.k8s.select_context.dispatch_receipt",
+      "cmd.docker.k8s.select_namespace.dispatch_receipt",
+      "cmd.docker.logs.dispatch_receipt",
+      "cmd.docker.network.dispatch_receipt",
+      "cmd.docker.open_dockerfile.dispatch_receipt",
+      "cmd.docker.registry.promote.dispatch_receipt",
+      "cmd.docker.registry.tag_push.dispatch_receipt",
+      "cmd.docker.remove.dispatch_receipt",
+      "cmd.docker.restart.dispatch_receipt",
+      "cmd.docker.run.dispatch_receipt",
+      "cmd.docker.save_pat.dispatch_receipt",
+      "cmd.docker.show.dispatch_receipt",
+      "cmd.docker.stop.dispatch_receipt",
+      "cmd.docker.switch_subview.dispatch_receipt",
+      "cmd.docker.template.commit.dispatch_receipt",
+      "cmd.docker.template.push.dispatch_receipt",
+      "cmd.docker.volume.dispatch_receipt",
+      "cmd.editor.close_tab.dispatch_receipt",
+      "cmd.file.copy_full_path.dispatch_receipt",
+      "cmd.file.copy_nodes.dispatch_receipt",
+      "cmd.file.copy_path.dispatch_receipt",
+      "cmd.file.copy_relative_path.dispatch_receipt",
+      "cmd.file.cut_nodes.dispatch_receipt",
+      "cmd.file.expand_capped.dispatch_receipt",
+      "cmd.file.open.dispatch_receipt",
+      "cmd.file.open_in_system_default.dispatch_receipt",
+      "cmd.file.open_with.dispatch_receipt",
+      "cmd.file.paste_nodes.dispatch_receipt",
+      "cmd.file.refresh.dispatch_receipt",
+      "cmd.file.reveal.dispatch_receipt",
+      "cmd.file.save_local_copy.dispatch_receipt",
+      "cmd.git.commit.dispatch_receipt",
+      "cmd.git.conflict_apply_resolution.dispatch_receipt",
+      "cmd.git.diff_open.dispatch_receipt",
+      "cmd.git.diff_search.dispatch_receipt",
+      "cmd.git.diff_set_compare_target.dispatch_receipt",
+      "cmd.git.diff_toggle_mode.dispatch_receipt",
+      "cmd.git.discard_hunks.dispatch_receipt",
+      "cmd.git.fetch.dispatch_receipt",
+      "cmd.git.open_diff.dispatch_receipt",
+      "cmd.git.pull.dispatch_receipt",
+      "cmd.git.push.dispatch_receipt",
+      "cmd.git.show_commit.dispatch_receipt",
+      "cmd.git.stage_hunks.dispatch_receipt",
+      "cmd.git.unstage_hunks.dispatch_receipt",
+      "cmd.git.worktree.compare.dispatch_receipt",
+      "cmd.git.worktree.create.dispatch_receipt",
+      "cmd.git.worktree.dispatch_receipt",
+      "cmd.git.worktree.focus_lineage.dispatch_receipt",
+      "cmd.git.worktree.list.dispatch_receipt",
+      "cmd.git.worktree.lock.dispatch_receipt",
+      "cmd.git.worktree.merge.dispatch_receipt",
+      "cmd.git.worktree.open.dispatch_receipt",
+      "cmd.git.worktree.open_files.dispatch_receipt",
+      "cmd.git.worktree.prune.dispatch_receipt",
+      "cmd.git.worktree.recover.dispatch_receipt",
+      "cmd.git.worktree.release.dispatch_receipt",
+      "cmd.git.worktree.remove.dispatch_receipt",
+      "cmd.git.worktree.request_prune.dispatch_receipt",
+      "cmd.git.worktree.reuse.dispatch_receipt",
+      "cmd.git.worktree.select.dispatch_receipt",
+      "cmd.git.worktree.switch.dispatch_receipt",
+      "cmd.git.worktree.unlock.dispatch_receipt",
+      "cmd.github.actions.cancel.dispatch_receipt",
+      "cmd.github.actions.dispatch.dispatch_receipt",
+      "cmd.github.actions.dispatch_receipt",
+      "cmd.github.actions.open_current_branch.dispatch_receipt",
+      "cmd.github.actions.open_in_github.dispatch_receipt",
+      "cmd.github.actions.open_job.dispatch_receipt",
+      "cmd.github.actions.open_related_diff.dispatch_receipt",
+      "cmd.github.actions.open_related_worktree.dispatch_receipt",
+      "cmd.github.actions.open_run.dispatch_receipt",
+      "cmd.github.actions.open_run_diff.dispatch_receipt",
+      "cmd.github.actions.open_run_in_browser.dispatch_receipt",
+      "cmd.github.actions.open_step_logs.dispatch_receipt",
+      "cmd.github.actions.pin.dispatch_receipt",
+      "cmd.github.actions.rerun.dispatch_receipt",
+      "cmd.github.actions.rerun_failed.dispatch_receipt",
+      "cmd.github.actions.settings.open.dispatch_receipt",
+      "cmd.github.actions.unpin.dispatch_receipt",
+      "cmd.github.connect.dispatch_receipt",
+      "cmd.github.disconnect.dispatch_receipt",
+      "cmd.github.pr.create.dispatch_receipt",
+      "cmd.github_actions.cancel_workflow.dispatch_receipt",
+      "cmd.github_actions.open_run_diff.dispatch_receipt",
+      "cmd.github_actions.open_run_log.dispatch_receipt",
+      "cmd.github_actions.pin_workflow.dispatch_receipt",
+      "cmd.github_actions.rerun_workflow.dispatch_receipt",
+      "cmd.github_actions.show.dispatch_receipt",
+      "cmd.github_actions.switch_subview.dispatch_receipt",
+      "cmd.graph.approve_hitl.dispatch_receipt",
+      "cmd.graph.deny_hitl.dispatch_receipt",
+      "cmd.lsp.code_action.dispatch_receipt",
+      "cmd.lsp.find_references.dispatch_receipt",
+      "cmd.lsp.format_document.dispatch_receipt",
+      "cmd.lsp.format_selection.dispatch_receipt",
+      "cmd.lsp.goto_definition.dispatch_receipt",
+      "cmd.lsp.goto_symbol.dispatch_receipt",
+      "cmd.lsp.open_problems.dispatch_receipt",
+      "cmd.lsp.rename_symbol.dispatch_receipt",
+      "cmd.lsp.restart_server.dispatch_receipt",
+      "cmd.model.list.dispatch_receipt",
+      "cmd.nav.focus_route.dispatch_receipt",
+      "cmd.nav.open_subject.dispatch_receipt",
+      "cmd.nav.open_usage_subject.route_open_receipt",
+      "cmd.notifications.destination.create.dispatch_receipt",
+      "cmd.notifications.destination.delete.dispatch_receipt",
+      "cmd.notifications.destination.test.dispatch_receipt",
+      "cmd.notifications.destination.toggle.dispatch_receipt",
+      "cmd.notifications.destination.update.dispatch_receipt",
+      "cmd.notifications.mapping.update.dispatch_receipt",
+      "cmd.notifications.override.set.dispatch_receipt",
+      "cmd.onboarding.first_run.open.dispatch_receipt",
+      "cmd.onboarding.free_models.defer.dispatch_receipt",
+      "cmd.onboarding.free_models.review.dispatch_receipt",
+      "cmd.onboarding.open_planning_wizard.dispatch_receipt",
+      "cmd.onboarding.provider_setup.open.dispatch_receipt",
+      "cmd.onboarding.provider_setup.use_provider.dispatch_receipt",
+      "cmd.onboarding.review_setup.dispatch_receipt",
+      "cmd.onboarding.skip_to_planning_wizard.dispatch_receipt",
+      "cmd.orchestrator.build_run.dispatch_receipt",
+      "cmd.orchestrator.compare_run_output.dispatch_receipt",
+      "cmd.orchestrator.copy_run_id.dispatch_receipt",
+      "cmd.orchestrator.export_ledger.dispatch_receipt",
+      "cmd.orchestrator.focus_object.dispatch_receipt",
+      "cmd.orchestrator.focus_run.dispatch_receipt",
+      "cmd.orchestrator.open_build_artifact.dispatch_receipt",
+      "cmd.orchestrator.open_concern.dispatch_receipt",
+      "cmd.orchestrator.open_conflict_assistant.dispatch_receipt",
+      "cmd.orchestrator.open_corroboration.dispatch_receipt",
+      "cmd.orchestrator.open_docker_manager.dispatch_receipt",
+      "cmd.orchestrator.open_github_actions.dispatch_receipt",
+      "cmd.orchestrator.open_graph_generation.dispatch_receipt",
+      "cmd.orchestrator.open_graph_patch.dispatch_receipt",
+      "cmd.orchestrator.open_in_docker_manager.dispatch_receipt",
+      "cmd.orchestrator.open_in_github_actions.dispatch_receipt",
+      "cmd.orchestrator.open_in_source_control.dispatch_receipt",
+      "cmd.orchestrator.open_kubernetes.dispatch_receipt",
+      "cmd.orchestrator.open_preview_artifact.dispatch_receipt",
+      "cmd.orchestrator.open_promotion.dispatch_receipt",
+      "cmd.orchestrator.open_receipt.dispatch_receipt",
+      "cmd.orchestrator.open_review.dispatch_receipt",
+      "cmd.orchestrator.open_source_control.dispatch_receipt",
+      "cmd.orchestrator.preview_open.dispatch_receipt",
+      "cmd.orchestrator.preview_stop.dispatch_receipt",
+      "cmd.orchestrator.push_image.dispatch_receipt",
+      "cmd.orchestrator.set_evidence_filter.dispatch_receipt",
+      "cmd.orchestrator.set_seam_expansion.dispatch_receipt",
+      "cmd.orchestrator.switch_tab.dispatch_receipt",
+      "cmd.panel.switch.dispatch_receipt",
+      "cmd.permissions.create_global_rule.dispatch_receipt",
+      "cmd.permissions.create_project_rule.dispatch_receipt",
+      "cmd.permissions.delete_rule.dispatch_receipt",
+      "cmd.permissions.open.route_open_receipt",
+      "cmd.permissions.pick_external_directory.dispatch_receipt",
+      "cmd.permissions.reorder_rule.dispatch_receipt",
+      "cmd.permissions.review_request.route_open_receipt",
+      "cmd.permissions.revoke.dispatch_receipt",
+      "cmd.permissions.update_rule.dispatch_receipt",
+      "cmd.permissions.validate_rule.dispatch_receipt",
+      "cmd.plan_compile.cancel.dispatch_receipt",
+      "cmd.plan_compile.inspect_assignment.dispatch_receipt",
+      "cmd.plan_compile.inspect_blocker.dispatch_receipt",
+      "cmd.plan_compile.inspect_evidence.dispatch_receipt",
+      "cmd.plan_compile.open_build.route_open_receipt",
+      "cmd.plan_compile.pause.dispatch_receipt",
+      "cmd.plan_compile.replay.dispatch_receipt",
+      "cmd.plan_compile.request_bounded_recompile.dispatch_receipt",
+      "cmd.plan_compile.resume.dispatch_receipt",
+      "cmd.plan_compile.retry.dispatch_receipt",
+      "cmd.planning_wizard.amendment.accept.dispatch_receipt",
+      "cmd.planning_wizard.replay.dispatch_receipt",
+      "cmd.planning_wizard.start.dispatch_receipt",
+      "cmd.planning_wizard.topic.add.dispatch_receipt",
+      "cmd.planning_wizard.topic.defer.dispatch_receipt",
+      "cmd.planning_wizard.topic.mark_impacted.dispatch_receipt",
+      "cmd.planning_wizard.topic.merge.dispatch_receipt",
+      "cmd.planning_wizard.topic.open.dispatch_receipt",
+      "cmd.planning_wizard.topic.rename.dispatch_receipt",
+      "cmd.planning_wizard.topic.reopen.dispatch_receipt",
+      "cmd.planning_wizard.topic.reorder.dispatch_receipt",
+      "cmd.planning_wizard.topic.split.dispatch_receipt",
+      "cmd.prd_builder.annotation.resolve.dispatch_receipt",
+      "cmd.prd_builder.annotation.upsert.dispatch_receipt",
+      "cmd.prd_builder.answer.upsert.dispatch_receipt",
+      "cmd.prd_builder.conflict.resolve.dispatch_receipt",
+      "cmd.prd_builder.pack.reopen.dispatch_receipt",
+      "cmd.prd_builder.source.import.dispatch_receipt",
+      "cmd.project.add_existing.dispatch_receipt",
+      "cmd.project.archive.dispatch_receipt",
+      "cmd.project.chain_wizard_open_deferred.dispatch_receipt",
+      "cmd.project.new_local.dispatch_receipt",
+      "cmd.project.open.dispatch_receipt",
+      "cmd.project.open_settings.route_open_receipt",
+      "cmd.project.refresh.dispatch_receipt",
+      "cmd.project.remove.dispatch_receipt",
+      "cmd.provider.switch_route.dispatch_receipt",
+      "cmd.run.resume.dispatch_receipt",
+      "cmd.run.stop.dispatch_receipt",
+      "cmd.run.view_log.route_open_receipt",
+      "cmd.run_debug.attach.dispatch_receipt",
+      "cmd.run_debug.breakpoint.add_function.dispatch_receipt",
+      "cmd.run_debug.breakpoint.edit.dispatch_receipt",
+      "cmd.run_debug.breakpoint.goto_source.route_open_receipt",
+      "cmd.run_debug.breakpoint.remove_all.dispatch_receipt",
+      "cmd.run_debug.breakpoint.set_exception_filters.dispatch_receipt",
+      "cmd.run_debug.breakpoint.toggle.dispatch_receipt",
+      "cmd.run_debug.breakpoint.toggle_activation.dispatch_receipt",
+      "cmd.run_debug.callstack.restart_frame.dispatch_receipt",
+      "cmd.run_debug.callstack.select_frame.dispatch_receipt",
+      "cmd.run_debug.callstack.show_execution_point.route_open_receipt",
+      "cmd.run_debug.config.add.dispatch_receipt",
+      "cmd.run_debug.config.delete.dispatch_receipt",
+      "cmd.run_debug.config.edit.dispatch_receipt",
+      "cmd.run_debug.config.open_file.route_open_receipt",
+      "cmd.run_debug.config.select.dispatch_receipt",
+      "cmd.run_debug.console.clear.dispatch_receipt",
+      "cmd.run_debug.console.evaluate.dispatch_receipt",
+      "cmd.run_debug.console.reveal.route_open_receipt",
+      "cmd.run_debug.continue.dispatch_receipt",
+      "cmd.run_debug.disconnect.dispatch_receipt",
+      "cmd.run_debug.pause.dispatch_receipt",
+      "cmd.run_debug.restart.dispatch_receipt",
+      "cmd.run_debug.session.select.dispatch_receipt",
+      "cmd.run_debug.start.dispatch_receipt",
+      "cmd.run_debug.start_no_debug.dispatch_receipt",
+      "cmd.run_debug.step_into.dispatch_receipt",
+      "cmd.run_debug.step_out.dispatch_receipt",
+      "cmd.run_debug.step_over.dispatch_receipt",
+      "cmd.run_debug.stop.dispatch_receipt",
+      "cmd.run_debug.terminal.reveal.route_open_receipt",
+      "cmd.run_debug.variables.add_to_watch.dispatch_receipt",
+      "cmd.run_debug.variables.copy_expression.dispatch_receipt",
+      "cmd.run_debug.variables.copy_value.dispatch_receipt",
+      "cmd.run_debug.variables.set_value.dispatch_receipt",
+      "cmd.run_debug.watch.add.dispatch_receipt",
+      "cmd.run_debug.watch.edit.dispatch_receipt",
+      "cmd.run_debug.watch.remove.dispatch_receipt",
+      "cmd.run_debug.watch.remove_all.dispatch_receipt",
+      "cmd.run_graph.drag_node.dispatch_receipt",
+      "cmd.run_graph.keyboard_navigate.dispatch_receipt",
+      "cmd.run_graph.open_context_menu.dispatch_receipt",
+      "cmd.run_graph.open_minimap_target.dispatch_receipt",
+      "cmd.run_graph.pan.dispatch_receipt",
+      "cmd.run_graph.search.dispatch_receipt",
+      "cmd.run_graph.set_problems_filter.dispatch_receipt",
+      "cmd.run_graph.set_selection.dispatch_receipt",
+      "cmd.run_graph.zoom.dispatch_receipt",
+      "cmd.runtime.decline.dispatch_receipt",
+      "cmd.runtime.open_attempt_details.dispatch_receipt",
+      "cmd.runtime.open_queue_analysis.dispatch_receipt",
+      "cmd.runtime.open_remediation_lineage.dispatch_receipt",
+      "cmd.runtime.open_safe_point_history.dispatch_receipt",
+      "cmd.runtime.retry_now.dispatch_receipt",
+      "cmd.search.evict_remote_cache.dispatch_receipt",
+      "cmd.search.find_in_files.dispatch_receipt",
+      "cmd.search.next_result.dispatch_receipt",
+      "cmd.search.open_result.dispatch_receipt",
+      "cmd.search.previous_result.dispatch_receipt",
+      "cmd.search.rebuild_index.dispatch_receipt",
+      "cmd.search.replace_all.dispatch_receipt",
+      "cmd.search.replace_in_files.dispatch_receipt",
+      "cmd.search.replace_selected.dispatch_receipt",
+      "cmd.search.set_scope.dispatch_receipt",
+      "cmd.search.show.dispatch_receipt",
+      "cmd.search.toggle_case.dispatch_receipt",
+      "cmd.search.toggle_regex.dispatch_receipt",
+      "cmd.search.toggle_word.dispatch_receipt",
+      "cmd.settings.bloom.open.dispatch_receipt",
+      "cmd.settings.category.reset.dispatch_receipt",
+      "cmd.settings.open_storage_retention.route_open_receipt",
+      "cmd.settings.suggestion.dismiss.dispatch_receipt",
+      "cmd.sound.asset.delete.dispatch_receipt",
+      "cmd.sound.asset.export.dispatch_receipt",
+      "cmd.sound.asset.restore.dispatch_receipt",
+      "cmd.sound.mapping.set.dispatch_receipt",
+      "cmd.sound.pack.import.dispatch_receipt",
+      "cmd.sound.preview.dispatch_receipt",
+      "cmd.sound.upload.dispatch_receipt",
+      "cmd.source_control.accept_commit_group.dispatch_receipt",
+      "cmd.source_control.branch.create.dispatch_receipt",
+      "cmd.source_control.branch.switch.dispatch_receipt",
+      "cmd.source_control.generate_commit_message.dispatch_receipt",
+      "cmd.source_control.graph.filter.dispatch_receipt",
+      "cmd.source_control.graph.focus.dispatch_receipt",
+      "cmd.source_control.graph.layout.dispatch_receipt",
+      "cmd.source_control.graph_filter.dispatch_receipt",
+      "cmd.source_control.graph_focus.dispatch_receipt",
+      "cmd.source_control.history_open_commit.dispatch_receipt",
+      "cmd.source_control.mark_conflict_resolved.dispatch_receipt",
+      "cmd.source_control.open_conflict.dispatch_receipt",
+      "cmd.source_control.open_merge_editor.dispatch_receipt",
+      "cmd.source_control.open_review.dispatch_receipt",
+      "cmd.source_control.pr.create.dispatch_receipt",
+      "cmd.source_control.pr.merge.dispatch_receipt",
+      "cmd.source_control.resolve_conflict_side.dispatch_receipt",
+      "cmd.source_control.review.filter.dispatch_receipt",
+      "cmd.source_control.review.open.dispatch_receipt",
+      "cmd.source_control.review.swap.dispatch_receipt",
+      "cmd.source_control.select_tab.dispatch_receipt",
+      "cmd.source_control.select_worktree.dispatch_receipt",
+      "cmd.source_control.set_compare_target.dispatch_receipt",
+      "cmd.source_control.stash.apply.dispatch_receipt",
+      "cmd.source_control.stash.create.dispatch_receipt",
+      "cmd.source_control.stash.dispatch_receipt",
+      "cmd.source_control.stash.drop.dispatch_receipt",
+      "cmd.source_control.stash.list.dispatch_receipt",
+      "cmd.source_control.stash.pop.dispatch_receipt",
+      "cmd.source_control.suggest_commit_batches.dispatch_receipt",
+      "cmd.source_control.suggest_commit_groups.dispatch_receipt",
+      "cmd.source_control.toggle_generated_filter.dispatch_receipt",
+      "cmd.storage.fallback.return_fast_forward.dispatch_receipt",
+      "cmd.storage.open_root.route_open_receipt",
+      "cmd.storage.open_value.route_open_receipt",
+      "cmd.storage.retry.dispatch_receipt",
+      "cmd.storage.root.choose.dispatch_receipt",
+      "cmd.storage.root.copy_and_switch.dispatch_receipt",
+      "cmd.storage.root.start_new_instance.dispatch_receipt",
+      "cmd.storage.root.use_previous.dispatch_receipt",
+      "cmd.storage.try_write_mode.dispatch_receipt",
+      "cmd.storage.viewer.refresh.dispatch_receipt",
+      "cmd.terminal.clear_scrollback.dispatch_receipt",
+      "cmd.terminal.close_pane.dispatch_receipt",
+      "cmd.terminal.detach.dispatch_receipt",
+      "cmd.terminal.focus.dispatch_receipt",
+      "cmd.terminal.focus_session.dispatch_receipt",
+      "cmd.terminal.kill_session.dispatch_receipt",
+      "cmd.terminal.move_pane.dispatch_receipt",
+      "cmd.terminal.open.dispatch_receipt",
+      "cmd.terminal.reattach_section.dispatch_receipt",
+      "cmd.terminal.rerun.dispatch_receipt",
+      "cmd.terminal.restart_replace.dispatch_receipt",
+      "cmd.terminal.reveal.dispatch_receipt",
+      "cmd.terminal.show.dispatch_receipt",
+      "cmd.terminal.split_pane.dispatch_receipt",
+      "cmd.terminal.terminate_session.dispatch_receipt",
+      "cmd.testing.cancel_run.dispatch_receipt",
+      "cmd.testing.export_bundle.dispatch_receipt",
+      "cmd.testing.open_failure.route_open_receipt",
+      "cmd.testing.open_panel.route_open_receipt",
+      "cmd.testing.open_receipt.route_open_receipt",
+      "cmd.testing.quarantine.dispatch_receipt",
+      "cmd.testing.quarantine.release.dispatch_receipt",
+      "cmd.testing.run.dispatch_receipt",
+      "cmd.testing.watch_run.dispatch_receipt",
+      "cmd.theme.preview.dispatch_receipt",
+      "cmd.usage.export.dispatch_receipt",
+      "cmd.usage.refresh.dispatch_receipt",
+      "cmd.widget.add.dispatch_receipt",
+      "cmd.widget.configure.dispatch_receipt",
+      "cmd.widget.move.dispatch_receipt",
+      "cmd.widget.remove.dispatch_receipt",
+      "cmd.widget.reset_layout.dispatch_receipt",
+      "cmd.widget.resize.dispatch_receipt",
+      "concern.assigned",
+      "concern.created",
+      "concern.evidence_linked",
+      "concern.promoted",
+      "concern.reopened",
+      "concern.resolved",
+      "concern.updated",
+      "dashboard.widget_added",
+      "dev.session.stopped",
+      "docker.host.access_open_requested",
+      "docker.host.instance_lifecycle_requested",
+      "docker.host.instance_retention_recorded",
+      "docker.host.preflight_requested",
+      "docker.host.profile_saved",
+      "docker.host.receipt_opened",
+      "docker.host.refresh_requested",
+      "docker.host.session_launch_requested",
+      "docker.hosts_route_opened",
+      "github.actions.dispatch_readiness_validated",
+      "github.actions.readiness_compared",
+      "github.repo.create_requested",
+      "goal.replanned",
+      "goal_run.stopped",
+      "health.route_opened",
+      "model.catalog_refreshed",
+      "node.unblocked",
+      "onboarding.free_models_refresh_retried",
+      "onboarding.free_models_refreshed",
+      "onboarding.provider_setup_opened",
+      "panel.redocked",
+      "panel.undocked",
+      "persona.created",
+      "persona.deleted",
+      "persona.exported",
+      "persona.imported",
+      "persona.selected",
+      "persona.updated",
+      "plan_compile.run_created_or_bound",
+      "planning.approval_cas_receipt.written",
+      "planning.plan_approved",
+      "prd_builder.approval_snapshot.created",
+      "prd_builder.prd_pack_approved",
+      "project.github_repo_bound",
+      "remote.reconnect.requested",
+      "restore_point.applied",
+      "restore_point.created",
+      "restore_point.deleted",
+      "runtime_artifact.created",
+      "safe_point.restored",
+      "scheduler.pass",
+      "settings.theme.updated",
+      "storage.compaction_lifecycle_changed",
+      "storage.deletion_lifecycle_changed",
+      "storage.retention_hold_changed",
+      "terminal.workgroup_moved",
+      "testing.capability_policy.updated",
+      "testing.session.backgrounded",
+      "testing.session.opened",
+      "testing.session.redaction_inspected",
+      "testing.session.watch_started",
+      "testing.visibility_policy.updated",
+      "workspace.layout_changed"
+    ],
+    "md_json_overlap": [
+      "auth.github.authenticated",
+      "auth.github.device_code.issued",
+      "auth.github.failed",
+      "auth.github.token.polling",
+      "file.created",
+      "file.deleted",
+      "file.renamed",
+      "folder.created",
+      "settings.updated",
+      "tool.invoked"
+    ]
+  },
+  "md_expected_event_binding_count": 47,
+  "md_expected_event_bindings": [
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.device_code.issued",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_bullet",
+      "row_text": "`auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`."
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.token.polling",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_bullet",
+      "row_text": "`auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`."
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.authenticated",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_bullet",
+      "row_text": "`auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`."
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "project.added",
+      "ui_command_id": "cmd.project.add_existing",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`project.added`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "project.created",
+      "ui_command_id": "cmd.project.new_local",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`project.created`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "project.created",
+      "ui_command_id": "cmd.project.new_github_repo",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`project.created`, `git.clone.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "git.clone.completed",
+      "ui_command_id": "cmd.project.new_github_repo",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`project.created`, `git.clone.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "wizard.opened",
+      "ui_command_id": "cmd.project.chain_wizard_open_deferred",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`wizard.opened`, `wizard.deferred_payload.loaded`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "wizard.deferred_payload.loaded",
+      "ui_command_id": "cmd.project.chain_wizard_open_deferred",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`wizard.opened`, `wizard.deferred_payload.loaded`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "file.created",
+      "ui_command_id": "cmd.file.new_file",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.created`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "folder.created",
+      "ui_command_id": "cmd.file.new_folder",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`folder.created`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "file.renamed",
+      "ui_command_id": "cmd.file.rename",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.renamed` or `folder.renamed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "folder.renamed",
+      "ui_command_id": "cmd.file.rename",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.renamed` or `folder.renamed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "file.deleted",
+      "ui_command_id": "cmd.file.delete",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.deleted` or `folder.deleted`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "folder.deleted",
+      "ui_command_id": "cmd.file.delete",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.deleted` or `folder.deleted`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "file.exported",
+      "ui_command_id": "cmd.file.save_local_copy",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.exported` or `folder.exported`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "folder.exported",
+      "ui_command_id": "cmd.file.save_local_copy",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`file.exported` or `folder.exported`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.verification_requested",
+      "ui_command_id": "cmd.chat.memory.verify",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.verified",
+      "ui_command_id": "cmd.chat.memory.verify",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.verification_failed",
+      "ui_command_id": "cmd.chat.memory.verify",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.updated",
+      "ui_command_id": "cmd.chat.memory.edit",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.updated`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.pinned",
+      "ui_command_id": "cmd.chat.memory.pin",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.pinned` or `memory.gist.unpinned`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.unpinned",
+      "ui_command_id": "cmd.chat.memory.pin",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.pinned` or `memory.gist.unpinned`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.gist.discarded",
+      "ui_command_id": "cmd.chat.memory.discard",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.gist.discarded`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "settings.updated",
+      "ui_command_id": "cmd.chat.memory.toggle_auto_save_unverified",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`settings.updated`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "ui_command_id": "cmd.chat.memory.rebuild_lexical_index",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "ui_command_id": "cmd.chat.memory.rebuild_lexical_index",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "ui_command_id": "cmd.chat.memory.rebuild_semantic_index",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "ui_command_id": "cmd.chat.memory.rebuild_semantic_index",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.verification_sweep.started",
+      "ui_command_id": "cmd.chat.memory.verification_sweep",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.verification_sweep.started`, `memory.verification_sweep.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.verification_sweep.completed",
+      "ui_command_id": "cmd.chat.memory.verification_sweep",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.verification_sweep.started`, `memory.verification_sweep.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.dedup_sweep.started",
+      "ui_command_id": "cmd.chat.memory.dedup_sweep",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.dedup_sweep.started`, `memory.dedup_sweep.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.dedup_sweep.completed",
+      "ui_command_id": "cmd.chat.memory.dedup_sweep",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.dedup_sweep.started`, `memory.dedup_sweep.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.monthly_summary.started",
+      "ui_command_id": "cmd.chat.memory.summarize_monthly",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.monthly_summary.started`, `memory.monthly_summary.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.monthly_summary.completed",
+      "ui_command_id": "cmd.chat.memory.summarize_monthly",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.monthly_summary.started`, `memory.monthly_summary.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.prune_archive.started",
+      "ui_command_id": "cmd.chat.memory.prune_archive",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.prune_archive.started`, `memory.prune_archive.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "memory.prune_archive.completed",
+      "ui_command_id": "cmd.chat.memory.prune_archive",
+      "ui_element_id": null,
+      "source": "Plans/UI_Command_Catalog.md",
+      "parser": "command_catalog_table",
+      "row_text": "`memory.prune_archive.started`, `memory.prune_archive.completed`"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.device_code.issued",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": "btn.github.connect",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.token.polling",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": "btn.github.connect",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.authenticated",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": "btn.github.connect",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.failed",
+      "ui_command_id": "cmd.github.connect",
+      "ui_element_id": "btn.github.connect",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "auth.github.disconnected",
+      "ui_command_id": "cmd.github.disconnect",
+      "ui_element_id": "btn.github.disconnect",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "auth.github.disconnected"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "tool.invoked",
+      "ui_command_id": "cmd.lsp.goto_definition",
+      "ui_element_id": "menu.lsp.goto_def",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "tool.invoked"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "tool.invoked",
+      "ui_command_id": "cmd.lsp.find_references",
+      "ui_element_id": "menu.lsp.find_refs",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "tool.invoked"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "tool.invoked",
+      "ui_command_id": "cmd.graph.retry_node",
+      "ui_element_id": "btn.graph.retry",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "tool.invoked, tool.denied"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "tool.denied",
+      "ui_command_id": "cmd.graph.retry_node",
+      "ui_element_id": "btn.graph.retry",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "tool.invoked, tool.denied"
+    },
+    {
+      "binding_kind": "md_expected_event_binding",
+      "event_type": "chat.thread.created",
+      "ui_command_id": "cmd.chat.new",
+      "ui_element_id": "btn.chat.new",
+      "source": "Plans/Wiring_Matrix.md",
+      "parser": "wiring_matrix_md_table",
+      "row_text": "chat.thread.created"
+    }
+  ],
+  "triple_bound_token_count": 77,
+  "triple_bound_in_census_ledger_count": 77,
+  "triple_bound_missing_from_census_ledger_count": 0,
+  "triple_bound_missing_from_census_ledger": [],
+  "triple_bound_missing_from_individual_disposition_count": 6,
+  "false_rejects_restored": [
+    {
+      "event_type": "testing.capability_policy.updated",
+      "ui_command_id": "cmd.testing.capability_policy.set",
+      "restore_as": "unresolved_emit_candidate"
+    },
+    {
+      "event_type": "testing.visibility_policy.updated",
+      "ui_command_id": "cmd.testing.visibility_policy.set",
+      "restore_as": "unresolved_emit_candidate"
+    }
+  ],
+  "emit_candidates_total": [
+    "docker.host.access_open_requested",
+    "docker.host.instance_lifecycle_requested",
+    "docker.host.instance_retention_recorded",
+    "docker.host.preflight_requested",
+    "docker.host.profile_saved",
+    "docker.host.receipt_opened",
+    "docker.host.refresh_requested",
+    "docker.host.session_launch_requested",
+    "docker.hosts_route_opened",
+    "github.actions.dispatch_readiness_validated",
+    "github.actions.readiness_compared",
+    "github.repo.create_requested",
+    "health.route_opened",
+    "plan_compile.run_created_or_bound",
+    "planning.approval_cas_receipt.written",
+    "planning.plan_approved",
+    "prd_builder.approval_snapshot.created",
+    "prd_builder.prd_pack_approved",
+    "project.github_repo_bound",
+    "remote.reconnect.requested",
+    "testing.capability_policy.updated",
+    "testing.session.backgrounded",
+    "testing.session.opened",
+    "testing.session.redaction_inspected",
+    "testing.session.watch_started",
+    "testing.visibility_policy.updated"
+  ],
+  "triple_bound_tokens": {
+    "alert.acknowledged": {
+      "entry_ids": [
+        "catalog.alert_acknowledge"
+      ],
+      "ui_command_ids": [
+        "cmd.alert.acknowledge"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "alert.dismissed": {
+      "entry_ids": [
+        "catalog.alert_dismiss"
+      ],
+      "ui_command_ids": [
+        "cmd.alert.dismiss"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "alert.rule_muted": {
+      "entry_ids": [
+        "catalog.alert_mute_rule"
+      ],
+      "ui_command_ids": [
+        "cmd.alert.mute_rule"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "alert.snoozed": {
+      "entry_ids": [
+        "catalog.alert_snooze"
+      ],
+      "ui_command_ids": [
+        "cmd.alert.snooze"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.context_captured": {
+      "entry_ids": [
+        "catalog.browser_add_selection_full_screenshot_to_chat",
+        "catalog.browser_add_selection_screenshot_to_chat",
+        "catalog.browser_add_selection_to_chat",
+        "catalog.browser_pick_element_for_chat"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.add_selection_full_screenshot_to_chat",
+        "cmd.browser.add_selection_screenshot_to_chat",
+        "cmd.browser.add_selection_to_chat",
+        "cmd.browser.pick_element_for_chat"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.context_share_revoked": {
+      "entry_ids": [
+        "catalog.browser_revoke_share_with_agent"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.revoke_share_with_agent"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.context_shared": {
+      "entry_ids": [
+        "catalog.browser_share_with_agent"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.share_with_agent"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.session.closed": {
+      "entry_ids": [
+        "catalog.browser_keep_closed"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.keep_closed"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.session.created": {
+      "entry_ids": [
+        "catalog.browser_open_detached_preview",
+        "catalog.browser_open_workspace_preview",
+        "home.editor_panel_1.open_browser",
+        "home.editor_panel_2.open_browser",
+        "home.editor_panel_3.open_browser",
+        "home.editor_panel_4.open_browser",
+        "home.more_options.open_browser_panel_1",
+        "home.more_options.open_browser_panel_2",
+        "home.more_options.open_browser_panel_3",
+        "home.more_options.open_browser_panel_4"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.open_detached_preview",
+        "cmd.browser.open_workspace_preview"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.session.promoted": {
+      "entry_ids": [
+        "catalog.browser_promote_to_normal_browsing"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.promote_to_normal_browsing"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.session.state_changed": {
+      "entry_ids": [
+        "catalog.browser_detach_browser_tab",
+        "catalog.browser_open_detached_preview",
+        "catalog.browser_open_workspace_preview",
+        "catalog.browser_reopen",
+        "catalog.browser_retry",
+        "home.editor_panel_1.open_browser",
+        "home.editor_panel_2.open_browser",
+        "home.editor_panel_3.open_browser",
+        "home.editor_panel_4.open_browser",
+        "home.more_options.open_browser_panel_1",
+        "home.more_options.open_browser_panel_2",
+        "home.more_options.open_browser_panel_3",
+        "home.more_options.open_browser_panel_4"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.detach_browser_tab",
+        "cmd.browser.open_detached_preview",
+        "cmd.browser.open_workspace_preview",
+        "cmd.browser.reopen",
+        "cmd.browser.retry"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "browser.session.takeover_state_changed": {
+      "entry_ids": [
+        "catalog.browser_let_agent_continue",
+        "catalog.browser_pause_agent",
+        "catalog.browser_stop_agent_keep_browser",
+        "catalog.browser_take_over"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.let_agent_continue",
+        "cmd.browser.pause_agent",
+        "cmd.browser.stop_agent_keep_browser",
+        "cmd.browser.take_over"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "chat.message.submitted": {
+      "entry_ids": [
+        "catalog.chat_send"
+      ],
+      "ui_command_ids": [
+        "cmd.chat.send"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.assigned": {
+      "entry_ids": [
+        "catalog.concern_assign"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.assign"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.created": {
+      "entry_ids": [
+        "catalog.concern_create"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.create"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.evidence_linked": {
+      "entry_ids": [
+        "catalog.concern_link_evidence"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.link_evidence"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.promoted": {
+      "entry_ids": [
+        "catalog.concern_promote"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.promote"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.reopened": {
+      "entry_ids": [
+        "catalog.concern_reopen"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.reopen"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.resolved": {
+      "entry_ids": [
+        "catalog.concern_resolve"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.resolve"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "concern.updated": {
+      "entry_ids": [
+        "catalog.concern_update"
+      ],
+      "ui_command_ids": [
+        "cmd.concern.update"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "dashboard.widget_added": {
+      "entry_ids": [
+        "catalog.dashboard_add_widget"
+      ],
+      "ui_command_ids": [
+        "cmd.dashboard.add_widget"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "dev.session.stopped": {
+      "entry_ids": [
+        "catalog.browser_stop_agent_keep_browser"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.stop_agent_keep_browser"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.access_open_requested": {
+      "entry_ids": [
+        "catalog.docker_host_access_open_app"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.access.open_app"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.instance_lifecycle_requested": {
+      "entry_ids": [
+        "catalog.docker_host_instance_restart",
+        "catalog.docker_host_instance_start",
+        "catalog.docker_host_instance_stop"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.instance.restart",
+        "cmd.docker.host.instance.start",
+        "cmd.docker.host.instance.stop"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.instance_retention_recorded": {
+      "entry_ids": [
+        "catalog.docker_host_instance_retain"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.instance.retain"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.preflight_requested": {
+      "entry_ids": [
+        "catalog.docker_host_preflight"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.preflight"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.profile_saved": {
+      "entry_ids": [
+        "catalog.docker_host_profile_save"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.profile.save"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.receipt_opened": {
+      "entry_ids": [
+        "catalog.docker_host_receipt_open"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.receipt.open"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.refresh_requested": {
+      "entry_ids": [
+        "catalog.docker_host_refresh"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.refresh"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.host.session_launch_requested": {
+      "entry_ids": [
+        "catalog.docker_host_session_launch"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.host.session.launch"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "docker.hosts_route_opened": {
+      "entry_ids": [
+        "catalog.docker_hosts_open"
+      ],
+      "ui_command_ids": [
+        "cmd.docker.hosts.open"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "file.created": {
+      "entry_ids": [
+        "catalog.file_new_file"
+      ],
+      "ui_command_ids": [
+        "cmd.file.new_file"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "file.deleted": {
+      "entry_ids": [
+        "catalog.file_delete"
+      ],
+      "ui_command_ids": [
+        "cmd.file.delete"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "file.renamed": {
+      "entry_ids": [
+        "catalog.file_rename"
+      ],
+      "ui_command_ids": [
+        "cmd.file.rename"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "folder.created": {
+      "entry_ids": [
+        "catalog.file_new_folder"
+      ],
+      "ui_command_ids": [
+        "cmd.file.new_folder"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "github.actions.dispatch_readiness_validated": {
+      "entry_ids": [
+        "catalog.github_actions_validate_dispatch_readiness"
+      ],
+      "ui_command_ids": [
+        "cmd.github.actions.validate_dispatch_readiness"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "github.actions.readiness_compared": {
+      "entry_ids": [
+        "catalog.github_actions_compare_last_success"
+      ],
+      "ui_command_ids": [
+        "cmd.github.actions.compare_last_success"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "github.repo.create_requested": {
+      "entry_ids": [
+        "catalog.project_new_github_repo"
+      ],
+      "ui_command_ids": [
+        "cmd.project.new_github_repo"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "goal.replanned": {
+      "entry_ids": [
+        "catalog.runtime_replan"
+      ],
+      "ui_command_ids": [
+        "cmd.runtime.replan"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "goal_run.stopped": {
+      "entry_ids": [
+        "catalog.orchestrator_pause",
+        "catalog.runtime_abort_run",
+        "catalog.runtime_skip_node"
+      ],
+      "ui_command_ids": [
+        "cmd.orchestrator.pause",
+        "cmd.runtime.abort_run",
+        "cmd.runtime.skip_node"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "health.route_opened": {
+      "entry_ids": [
+        "catalog.health_provider_setup_open"
+      ],
+      "ui_command_ids": [
+        "cmd.health.provider_setup.open"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "model.catalog_refreshed": {
+      "entry_ids": [
+        "catalog.model_refresh"
+      ],
+      "ui_command_ids": [
+        "cmd.model.refresh"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "node.unblocked": {
+      "entry_ids": [
+        "catalog.runtime_approve",
+        "catalog.runtime_resume_after_prerequisite"
+      ],
+      "ui_command_ids": [
+        "cmd.runtime.approve",
+        "cmd.runtime.resume_after_prerequisite"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "onboarding.free_models_refresh_retried": {
+      "entry_ids": [
+        "catalog.onboarding_free_models_retry"
+      ],
+      "ui_command_ids": [
+        "cmd.onboarding.free_models.retry"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "onboarding.free_models_refreshed": {
+      "entry_ids": [
+        "catalog.onboarding_free_models_refresh"
+      ],
+      "ui_command_ids": [
+        "cmd.onboarding.free_models.refresh"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "onboarding.provider_setup_opened": {
+      "entry_ids": [
+        "catalog.onboarding_free_models_setup"
+      ],
+      "ui_command_ids": [
+        "cmd.onboarding.free_models.setup"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "panel.redocked": {
+      "entry_ids": [
+        "catalog.panel_redock"
+      ],
+      "ui_command_ids": [
+        "cmd.panel.redock"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "panel.undocked": {
+      "entry_ids": [
+        "catalog.panel_undock",
+        "home.editor_panel_1.pop_out",
+        "home.editor_panel_2.pop_out",
+        "home.editor_panel_3.pop_out",
+        "home.editor_panel_4.pop_out"
+      ],
+      "ui_command_ids": [
+        "cmd.panel.undock"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.created": {
+      "entry_ids": [
+        "catalog.persona_create",
+        "catalog.persona_duplicate"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.create",
+        "cmd.persona.duplicate"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.deleted": {
+      "entry_ids": [
+        "catalog.persona_delete"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.delete"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.exported": {
+      "entry_ids": [
+        "catalog.persona_export"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.export"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.imported": {
+      "entry_ids": [
+        "catalog.persona_import"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.import"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.selected": {
+      "entry_ids": [
+        "catalog.persona_select"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.select"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "persona.updated": {
+      "entry_ids": [
+        "catalog.persona_update"
+      ],
+      "ui_command_ids": [
+        "cmd.persona.update"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "plan_compile.run_created_or_bound": {
+      "entry_ids": [
+        "catalog.planning_wizard_approve_and_build",
+        "planning.wizard.final_review.approve_and_build"
+      ],
+      "ui_command_ids": [
+        "cmd.planning_wizard.approve_and_build"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "planning.approval_cas_receipt.written": {
+      "entry_ids": [
+        "catalog.planning_wizard_approve_and_build",
+        "planning.wizard.final_review.approve_and_build"
+      ],
+      "ui_command_ids": [
+        "cmd.planning_wizard.approve_and_build"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "planning.plan_approved": {
+      "entry_ids": [
+        "catalog.planning_wizard_approve_and_build",
+        "planning.wizard.final_review.approve_and_build"
+      ],
+      "ui_command_ids": [
+        "cmd.planning_wizard.approve_and_build"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "prd_builder.approval_snapshot.created": {
+      "entry_ids": [
+        "catalog.prd_builder_approve_for_planning_wizard"
+      ],
+      "ui_command_ids": [
+        "cmd.prd_builder.approve_for_planning_wizard"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "prd_builder.prd_pack_approved": {
+      "entry_ids": [
+        "catalog.prd_builder_approve_for_planning_wizard"
+      ],
+      "ui_command_ids": [
+        "cmd.prd_builder.approve_for_planning_wizard"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "project.github_repo_bound": {
+      "entry_ids": [
+        "catalog.project_new_github_repo"
+      ],
+      "ui_command_ids": [
+        "cmd.project.new_github_repo"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "remote.reconnect.requested": {
+      "entry_ids": [
+        "catalog.remote_reconnect"
+      ],
+      "ui_command_ids": [
+        "cmd.remote.reconnect"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "restore_point.applied": {
+      "entry_ids": [
+        "catalog.chat_branch_from_restore"
+      ],
+      "ui_command_ids": [
+        "cmd.chat.branch_from_restore"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "restore_point.created": {
+      "entry_ids": [
+        "assistant.chat.restore_point.create"
+      ],
+      "ui_command_ids": [
+        "cmd.chat.create_restore_point"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "restore_point.deleted": {
+      "entry_ids": [
+        "assistant.chat.restore_point.delete"
+      ],
+      "ui_command_ids": [
+        "cmd.chat.delete_restore_point"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "runtime_artifact.created": {
+      "entry_ids": [
+        "catalog.browser_add_full_screenshot_to_chat",
+        "catalog.browser_add_screenshot_to_chat",
+        "catalog.browser_add_selection_full_screenshot_to_chat",
+        "catalog.browser_add_selection_screenshot_to_chat"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.add_full_screenshot_to_chat",
+        "cmd.browser.add_screenshot_to_chat",
+        "cmd.browser.add_selection_full_screenshot_to_chat",
+        "cmd.browser.add_selection_screenshot_to_chat"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": false
+    },
+    "safe_point.restored": {
+      "entry_ids": [
+        "catalog.orchestrator_restore_safe_point_then_retry",
+        "catalog.orchestrator_safe_point_retry",
+        "catalog.runtime_restore_safe_point_then_retry"
+      ],
+      "ui_command_ids": [
+        "cmd.orchestrator.restore_safe_point_then_retry",
+        "cmd.orchestrator.safe_point_retry",
+        "cmd.runtime.restore_safe_point_then_retry"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "scheduler.pass": {
+      "entry_ids": [
+        "catalog.orchestrator_resume",
+        "catalog.runtime_resume_after_prerequisite",
+        "catalog.runtime_start_fresh_attempt"
+      ],
+      "ui_command_ids": [
+        "cmd.orchestrator.resume",
+        "cmd.runtime.resume_after_prerequisite",
+        "cmd.runtime.start_fresh_attempt"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "settings.theme.updated": {
+      "entry_ids": [
+        "catalog.theme_reset",
+        "catalog.theme_set_accent",
+        "catalog.theme_set_density",
+        "catalog.theme_set_mode"
+      ],
+      "ui_command_ids": [
+        "cmd.theme.reset",
+        "cmd.theme.set_accent",
+        "cmd.theme.set_density",
+        "cmd.theme.set_mode"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "settings.updated": {
+      "entry_ids": [
+        "catalog.settings_agent_rules_dry_method_default_guard_set",
+        "catalog.settings_open_notifications"
+      ],
+      "ui_command_ids": [
+        "cmd.settings.agent_rules.dry_method_default_guard.set",
+        "cmd.settings.open_notifications"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "terminal.workgroup_moved": {
+      "entry_ids": [
+        "home.terminal_section.move_workgroup",
+        "home.terminal_section.new_section"
+      ],
+      "ui_command_ids": [
+        "cmd.terminal.move_workgroup"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.capability_policy.updated": {
+      "entry_ids": [
+        "catalog.testing_capability_policy_set",
+        "settings.testing.capability_policy"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.capability_policy.set"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.session.backgrounded": {
+      "entry_ids": [
+        "catalog.testing_session_background",
+        "testing.session.background"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.session.background"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.session.opened": {
+      "entry_ids": [
+        "catalog.testing_session_open",
+        "testing.session.open"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.session.open"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.session.redaction_inspected": {
+      "entry_ids": [
+        "catalog.testing_session_redaction_inspect",
+        "testing.session.redaction.inspect"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.session.redaction.inspect"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.session.watch_started": {
+      "entry_ids": [
+        "catalog.testing_session_watch",
+        "testing.session.watch"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.session.watch"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "testing.visibility_policy.updated": {
+      "entry_ids": [
+        "catalog.testing_visibility_policy_set",
+        "settings.testing.visibility_policy"
+      ],
+      "ui_command_ids": [
+        "cmd.testing.visibility_policy.set"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    },
+    "workspace.layout_changed": {
+      "entry_ids": [
+        "catalog.browser_open_workspace_preview",
+        "home.chat.activity_toggle",
+        "home.chat.grab",
+        "home.dashboard.grab",
+        "home.drop_target.bottom",
+        "home.drop_target.floating",
+        "home.drop_target.left",
+        "home.drop_target.main",
+        "home.drop_target.right",
+        "home.drop_target.top",
+        "home.editor_panel_1.close",
+        "home.editor_panel_1.grab",
+        "home.editor_panel_1.open_browser",
+        "home.editor_panel_1.pop_out",
+        "home.editor_panel_2.close",
+        "home.editor_panel_2.grab",
+        "home.editor_panel_2.open_browser",
+        "home.editor_panel_2.pop_out",
+        "home.editor_panel_3.close",
+        "home.editor_panel_3.grab",
+        "home.editor_panel_3.open_browser",
+        "home.editor_panel_3.pop_out",
+        "home.editor_panel_4.close",
+        "home.editor_panel_4.grab",
+        "home.editor_panel_4.open_browser",
+        "home.editor_panel_4.pop_out",
+        "home.file_manager.open_panel_1",
+        "home.file_manager.open_panel_2",
+        "home.file_manager.open_panel_3",
+        "home.file_manager.open_panel_4",
+        "home.more_options.collapse_bottom",
+        "home.more_options.open_browser_panel_1",
+        "home.more_options.open_browser_panel_2",
+        "home.more_options.open_browser_panel_3",
+        "home.more_options.open_browser_panel_4",
+        "home.more_options.open_panel_1",
+        "home.more_options.open_panel_2",
+        "home.more_options.open_panel_3",
+        "home.more_options.open_panel_4",
+        "home.resizer.chat",
+        "home.resizer.dashboard",
+        "home.resizer.editor_panel_1",
+        "home.resizer.editor_panel_2",
+        "home.resizer.editor_panel_3",
+        "home.resizer.editor_panel_4",
+        "home.resizer.terminal_section",
+        "home.settings.reset_layout",
+        "home.terminal_section.bottom_toggle",
+        "home.terminal_section.grab",
+        "home.terminal_section.move_workgroup",
+        "home.terminal_section.new_section",
+        "home.terminal_section.split_pane"
+      ],
+      "ui_command_ids": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.editor.close_panel",
+        "cmd.editor.open_panel",
+        "cmd.file.open",
+        "cmd.panel.switch",
+        "cmd.panel.undock",
+        "cmd.terminal.move_workgroup",
+        "cmd.terminal.split_pane",
+        "cmd.workspace_layout.move_surface",
+        "cmd.workspace_layout.reset",
+        "cmd.workspace_layout.resize_surface",
+        "cmd.workspace_layout.set_collapsed"
+      ],
+      "sources": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "in_census_ledger": true,
+      "in_individual_disposition": true
+    }
+  },
+  "refs_only_enumeration_count": 18,
+  "refs_only_enumeration_note": "Enumerate only; do not treat as emit-candidate event families",
+  "refs_only_enumeration": [
+    "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt",
+    "cmd.browser.add_screenshot_to_chat.dispatch_receipt",
+    "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt",
+    "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt",
+    "cmd.browser.add_selection_to_chat.dispatch_receipt",
+    "cmd.browser.detach_browser_tab.dispatch_receipt",
+    "cmd.browser.keep_closed.dispatch_receipt",
+    "cmd.browser.let_agent_continue.dispatch_receipt",
+    "cmd.browser.open_detached_preview.dispatch_receipt",
+    "cmd.browser.pause_agent.dispatch_receipt",
+    "cmd.browser.pick_element_for_chat.dispatch_receipt",
+    "cmd.browser.promote_to_normal_browsing.dispatch_receipt",
+    "cmd.browser.reopen.dispatch_receipt",
+    "cmd.browser.retry.dispatch_receipt",
+    "cmd.browser.revoke_share_with_agent.dispatch_receipt",
+    "cmd.browser.share_with_agent.dispatch_receipt",
+    "cmd.browser.stop_agent_keep_browser.dispatch_receipt",
+    "cmd.browser.take_over.dispatch_receipt"
+  ],
+  "v2_comparison": {
+    "v2_triple_bound_token_count": 77,
+    "v3_triple_bound_token_count": 77,
+    "triple_bound_count_changed": false,
+    "v2_missing_from_census_ledger_baseline": [
+      "docker.host.access_open_requested",
+      "docker.host.instance_lifecycle_requested",
+      "docker.host.instance_retention_recorded",
+      "docker.host.preflight_requested",
+      "docker.host.profile_saved",
+      "docker.host.receipt_opened",
+      "docker.host.refresh_requested",
+      "docker.host.session_launch_requested",
+      "docker.hosts_route_opened",
+      "github.actions.dispatch_readiness_validated",
+      "github.actions.readiness_compared",
+      "github.repo.create_requested",
+      "health.route_opened",
+      "plan_compile.run_created_or_bound",
+      "planning.approval_cas_receipt.written",
+      "planning.plan_approved",
+      "prd_builder.approval_snapshot.created",
+      "prd_builder.prd_pack_approved",
+      "project.github_repo_bound",
+      "remote.reconnect.requested",
+      "testing.session.backgrounded",
+      "testing.session.opened",
+      "testing.session.redaction_inspected",
+      "testing.session.watch_started"
+    ],
+    "v3_missing_from_census_ledger": [],
+    "resolved_since_v2_merge": [
+      "docker.host.access_open_requested",
+      "docker.host.instance_lifecycle_requested",
+      "docker.host.instance_retention_recorded",
+      "docker.host.preflight_requested",
+      "docker.host.profile_saved",
+      "docker.host.receipt_opened",
+      "docker.host.refresh_requested",
+      "docker.host.session_launch_requested",
+      "docker.hosts_route_opened",
+      "github.actions.dispatch_readiness_validated",
+      "github.actions.readiness_compared",
+      "github.repo.create_requested",
+      "health.route_opened",
+      "plan_compile.run_created_or_bound",
+      "planning.approval_cas_receipt.written",
+      "planning.plan_approved",
+      "prd_builder.approval_snapshot.created",
+      "prd_builder.prd_pack_approved",
+      "project.github_repo_bound",
+      "remote.reconnect.requested",
+      "testing.session.backgrounded",
+      "testing.session.opened",
+      "testing.session.redaction_inspected",
+      "testing.session.watch_started"
+    ],
+    "new_missing_vs_v2_baseline": [],
+    "extra_in_ledger_not_triple_bound_count": 451,
+    "md_only_new_vs_v2_json_scan": [
+      "auth.github.disconnected",
+      "chat.thread.created",
+      "file.exported",
+      "folder.deleted",
+      "folder.exported",
+      "folder.renamed",
+      "git.clone.completed",
+      "memory.dedup_sweep.completed",
+      "memory.dedup_sweep.started",
+      "memory.gist.discarded",
+      "memory.gist.pinned",
+      "memory.gist.unpinned",
+      "memory.gist.updated",
+      "memory.gist.verification_failed",
+      "memory.gist.verification_requested",
+      "memory.gist.verified",
+      "memory.index.lexical.rebuild.completed",
+      "memory.index.lexical.rebuild.started",
+      "memory.index.semantic.rebuild.completed",
+      "memory.index.semantic.rebuild.started",
+      "memory.monthly_summary.completed",
+      "memory.monthly_summary.started",
+      "memory.prune_archive.completed",
+      "memory.prune_archive.started",
+      "memory.verification_sweep.completed",
+      "memory.verification_sweep.started",
+      "project.added",
+      "project.created",
+      "tool.denied",
+      "wizard.deferred_payload.loaded",
+      "wizard.opened"
+    ]
+  },
+  "fresh_vs_prior_095827": {
+    "prior_generated_at_utc": "2026-08-12T09:58:27Z",
+    "prior_canonical_digest_sha256": "b93ef8493d91b69beefbcfc9498e72fc01af9cabbbcd9259e684f3c15e540d56",
+    "prior_source_inventory_path": "Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "prior_triple_bound_token_count": 77,
+    "fresh_triple_bound_token_count": 77,
+    "triple_bound_added": [],
+    "triple_bound_removed": [],
+    "prior_md_only_count": 31,
+    "fresh_md_only_count": 31,
+    "md_only_added": [],
+    "md_only_removed": [],
+    "prior_missing_from_census_count": 0,
+    "fresh_missing_from_census_count": 0,
+    "missing_from_census_added": [],
+    "missing_from_census_removed": [],
+    "individual_disposition_merge": "not_performed"
+  },
+  "prior_v2_scan_limitation": "v2 recursive scan_node co-located fields on one node (missed nested effect_contract) and skipped 72 markdown binding-table sources.",
+  "owner_merge_scope": "do_not_merge_ledger_rows_in_scan_script",
+  "individual_disposition_merge": "not_performed"
+}

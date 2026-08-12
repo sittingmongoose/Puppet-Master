@@ -1,0 +1,116 @@
+{
+  "event_type": "project.created",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`project.created` remains individually quarantined. Plans/UI_Command_Catalog.md:333-334 declares it as the expected persisted outcome for two project-creation commands, while Plans/UI_Wiring_Rules.md:492-506 only defines the generic wiring-row obligation. Neither citation supplies the actual handler row, accountable semantic owner, versioned membership, closed event payload, scope identity, replay, retention/custody, legal transitions, checkpoint rules, withdrawal, or event-specific oracles. A command-side trigger is not Event Authority, so the missing values require an owner veto and cannot be inferred.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked Plans citation explicitly names the semantic authority empowered to approve the `project.created` Event Authority contract; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked Plans citation explicitly designates the accountable persisted-event producer for `project.created`; a command trigger or descriptive table row does not establish producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No individually versioned registry membership is cited for `project.created`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, versioned durable payload schema is cited for `project.created`; a field list without an exhaustiveness or schema-version rule is insufficient."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local tenant/project/run/thread/session scope and identity invariants are cited for `project.created`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, or idempotency rule is cited for `project.created`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local retention, compaction, tombstone, or deletion policy is cited for `project.created`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local sensitive-field redaction and custody boundary is cited for `project.created`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal predecessor/successor set or invalid-transition rule is cited for `project.created`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, checkpoint key, or fail-closed advancement rule is cited for `project.created`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local version compatibility, alias normalization, replacement, or withdrawal rule is cited for `project.created`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `project.created`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:319",
+      "status": "drift",
+      "notes": "The shard anchor no longer contains the project command row; the exact token is at lines 333-334."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:333-334",
+      "status": "ok",
+      "notes": "Two project creation commands name `project.created` as an expected event and enumerate command inputs, but do not define the event authority contract."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:492-506",
+      "status": "ok",
+      "notes": "Defines generic wiring fields and says listed expected events must be emitted, but does not identify the project command handler or confer event ownership."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-project-created-membership_version-owner-producer-closed_payload_schema",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the accountable Project Management event owner publish and version the complete individual Event Authority contract for `project.created`, or direct continued quarantine/reclassification?",
+    "options": [
+      "Publish the complete owner-backed contract and re-adjudicate this exact event",
+      "Keep quarantined with no consumer checkpoint advance",
+      "Reclassify the command outcome with cited compatibility and withdrawal semantics"
+    ],
+    "evidence_gap": "Current Plans prove command-side expected outcomes only; they do not name the event authority, accountable persisted-event producer, or complete durable-event contract.",
+    "event_types": [
+      "project.created"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

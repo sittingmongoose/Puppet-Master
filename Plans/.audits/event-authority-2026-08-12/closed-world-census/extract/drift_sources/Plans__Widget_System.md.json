@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.assurance.event_authority.drift_source_census_row.v1",
+  "generated_at_utc": "2026-08-12T10:34:29Z",
+  "path": "Plans/Widget_System.md",
+  "source_class": "canonical_product_prose",
+  "frozen": {
+    "bytes": 58640,
+    "sha256": "35371c337f13a7a43e31da7b629f9e2405fad713d188bb87915ab577078ea72d"
+  },
+  "live": {
+    "bytes": 59534,
+    "sha256": "4c3b870ad93bb8af380bcc86e47e6857f8f71946e59e620c00b51dc0d66d44ad"
+  },
+  "drift": true,
+  "byte_delta": 894,
+  "frozen_content_recovered": true,
+  "freeze_baseline": {
+    "inventory": "closed-world-census/CURRENT_SOURCE_INVENTORY.json",
+    "occurrence_ledger_frozen_token_count": 17
+  },
+  "event_type_mentions": {
+    "live_full_lexical_count": 29,
+    "frozen_full_lexical_count": 28,
+    "new_full_lexical_tokens": [
+      "home_workspace_layout.v1"
+    ],
+    "removed_full_lexical_tokens": [],
+    "changed_line_context_tokens": [
+      {
+        "event_type": "cmd.widget",
+        "frozen_lines": [
+          1099
+        ],
+        "live_lines": [
+          1110
+        ]
+      },
+      {
+        "event_type": "projection.widget.orchestrator_status",
+        "frozen_lines": [
+          1109
+        ],
+        "live_lines": [
+          1120
+        ]
+      },
+      {
+        "event_type": "widget.orchestrator_status",
+        "frozen_lines": [
+          1109
+        ],
+        "live_lines": [
+          1120
+        ]
+      }
+    ],
+    "new_vs_ledger_tokens": [
+      "anchor_aliases.json",
+      "cmd.widget",
+      "coverage_map.jsonl",
+      "feature.md",
+      "home_workspace_layout.v1",
+      "index.py",
+      "migration.py",
+      "original_hashes.json",
+      "plan.md",
+      "span_map.jsonl",
+      "verify.py",
+      "widget.tier_tree"
+    ],
+    "removed_vs_ledger_tokens": [],
+    "live_contract_lexical_count": 0,
+    "frozen_contract_lexical_count": 0,
+    "new_contract_lexical_tokens": [],
+    "removed_contract_lexical_tokens": []
+  },
+  "contract_references": {
+    "live_triple_bound_count": 0,
+    "frozen_triple_bound_count": 0,
+    "new_triple_bound_tokens": [],
+    "removed_triple_bound_tokens": [],
+    "new_triple_bound_detail": [],
+    "removed_triple_bound_detail": [],
+    "new_md_binding_count": 0,
+    "removed_md_binding_count": 0,
+    "new_md_bindings": [],
+    "removed_md_bindings": []
+  },
+  "admission_claim": false,
+  "denominator_effect": "none_until_adjudicated",
+  "notes": [
+    "Discovery-only drift pass; no admission inference per CENSUS_ADMISSION_RULE_V2.",
+    "full_lexical uses dotted lowercase token regex on file text; not admission."
+  ]
+}

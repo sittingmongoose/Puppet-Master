@@ -1,0 +1,146 @@
+{
+  "event_type": "auth.github.authenticated",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "excluded",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current AuthEvent canon requires persisted EventRecord auth events and explicitly names `auth.github.authenticated`, so the historical July exclusion is preserved only as cohort lineage while the working bucket is persisted-unregistered. This is not admission: registry membership/version and an exact producer remain unresolved, the payload is only a shared minimum, and replay, retention, transitions, consumer checkpoints, compatibility withdrawal, and paired oracles are not owner-complete.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1634-1642",
+      "note": "The AuthEvent contract explicitly says stable auth event strings are owned by the provider plan and names this GitHub event."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Plans/UI_Command_Catalog.md:306 declares expected emission but does not explicitly name the producing component; producer is not inferred from command placement."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited live registry membership record or membership version exists for auth.github.authenticated; payload schema_version is not registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Contracts supplies auth-event payload minima, not an exhaustive event-specific closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1644-1663",
+      "note": "AuthEvent minima explicitly cover provider/account realm, run/thread, requested/effective account, correlation, idempotency, and timestamp identity."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "An optional idempotency_key is listed, but duplicate handling and replay semantics are not defined for this exact event."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited event-specific retention duration or deletion authority exists."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/Contracts_V0.md:1659-1665 defines secret-reference, redaction-profile, and non-persistence rules, but does not appoint custody authority for applying, auditing, or changing redaction."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The closed auth_state values are listed, but legal predecessor/successor transitions for this exact event are not cited."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Affected UI surfaces are named, but durable consumer checkpoint ownership is not closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited compatibility alias and withdrawal deadline exists for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "UI wiring rules require an emission test, but no cited exact positive and forbidden-emission oracle pair is supplied."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:293",
+      "status": "drift",
+      "notes": "Current GitHub command section begins at line 295; cmd.github.connect expected events are at 306."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1599-1609",
+      "status": "drift",
+      "notes": "Now AuthPolicy enums/rules, not the cited event disposition."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:9693-9703",
+      "status": "drift",
+      "notes": "Now retired Gemini lineage/CV-134 boundary, unrelated to GitHub auth events."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:306",
+      "status": "ok",
+      "notes": "cmd.github.connect declares authenticated as a terminal expected event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1633-1667",
+      "status": "ok",
+      "notes": "AuthEvent MUST persist via EventRecord; exact type is listed with payload minima, closed auth_state, secret prohibition, and idempotency field."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:9808-9841",
+      "status": "ok",
+      "notes": "Accepted CV-136 says persisted provider-owned auth type strings include this exact GitHub name."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1634-1642",
+      "status": "ok",
+      "notes": "The AuthEvent contract explicitly says stable auth event strings are owned by the provider plan and names this GitHub event."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1644-1663",
+      "status": "ok",
+      "notes": "AuthEvent minima explicitly cover provider/account realm, run/thread, requested/effective account, correlation, idempotency, and timestamp identity."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1659-1665",
+      "status": "ok",
+      "notes": "The AuthEvent contract requires credential references/redaction_profile and prohibits persisting raw secrets."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-auth-github-authenticated-producer-membership_version-closed_payload_schema-replay_idempotency",
+    "field_or_decision": "producer,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the explicitly appointed event owner supply the missing cited authority for `auth.github.authenticated` and return this exact row for individual disposition, or keep it quarantined?",
+    "options": [
+      "Supply the missing field-local Plans authorities and return this exact row for re-review",
+      "Keep this exact event quarantined with no registry or checkpoint advance",
+      "Withdraw or reclassify this exact event only through an explicit cited compatibility decision"
+    ],
+    "evidence_gap": "The non-PASS fields above lack exact field-local authority; no package-level authorization or sibling analogy closes them.",
+    "event_types": [
+      "auth.github.authenticated"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "ExclSem00+owner_reclassify",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current Plans citations; PASS is limited to the exact field proven.",
+    "Immutable cohort lineage retained separately from working_bucket.",
+    "No admission, package-level owner decision, analogy, or owner/producer inference used."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july68"
+  ],
+  "source_deepener": "PlanIndivU22"
+}

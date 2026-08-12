@@ -1,0 +1,126 @@
+{
+  "event_type": "chat.response_stop_requested",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`chat.response_stop_requested` remains quarantined after row-local review.  Independent review checked Plans/UI_Command_Catalog.md:8010, Plans/Wiring_Matrix.production.json:5573-5594, Plans/Wiring_Matrix.production.json:5613-5625. The command catalog declares this exact effect while production wiring declares receipt-only/no-persist behavior; command arguments are not a closed durable-event schema. The missing product-owned values cannot be supplied by analogy, OD-EA-003, or namespace inference, so a stable owner veto is required before any disposition change.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly names the authority owner for `chat.response_stop_requested`; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked plan citation explicitly designates the authoritative producer for `chat.response_stop_requested`; command handlers or storage mentions cannot be promoted by inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is mentioned, but no individually versioned registry membership for `chat.response_stop_requested` is cited."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed durable payload schema is cited for `chat.response_stop_requested`; command inputs/results and neighboring event schemas are insufficient."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `chat.response_stop_requested`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `chat.response_stop_requested`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No retention, compaction, tombstone, or deletion policy is cited for `chat.response_stop_requested`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No sensitive-field redaction and custody boundary is cited for `chat.response_stop_requested`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No legal predecessor/successor or invalid-transition contract is cited for `chat.response_stop_requested`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `chat.response_stop_requested`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `chat.response_stop_requested`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `chat.response_stop_requested`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8010",
+      "status": "ok",
+      "notes": "cmd.chat.stop declares thread/run/turn identity, stop_reason_code, idempotency_key, results/errors, and chat.response_stop_requested effect."
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "missing",
+      "notes": "The cited location does not contain this event token or an event-authority contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8035",
+      "status": "drift",
+      "notes": "Original event-specific citation no longer contains the command row; current declaration is line 8010."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:5573-5594",
+      "status": "ok",
+      "notes": "Production cmd.chat.stop entry names handlers::chat::stop but has expected_event_types empty and a receipt-only effect explicitly saying no persisted event is declared."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:5613-5625",
+      "status": "ok",
+      "notes": "Production receipt assertion and event test require a no-persist disposition and forbid unexpected persisted events, contradicting UI_Command_Catalog line 8010."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-chat-response-stop-requested-contract",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the Chat semantic owner reconcile UI_Command_Catalog's chat.response_stop_requested effect with production wiring's explicit no-event receipt contract, then publish a complete versioned Event Authority contract or authorize quarantine/reclassification?",
+    "options": [
+      "Complete the owner-backed contract and individually register this event",
+      "Keep quarantined with no checkpoint advance",
+      "Reclassify as a command receipt and cite replacement/withdrawal semantics"
+    ],
+    "evidence_gap": "Only the semantic owner can decide whether the production no-event oracle or persisted-event evidence governs; command arguments cannot be promoted into durable-event scope or replay policy by inference.",
+    "event_types": [
+      "chat.response_stop_requested"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

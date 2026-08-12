@@ -1,0 +1,98 @@
+{
+  "event_type": "parser.error",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan names the semantic acceptance authority for this exact token; owner resolution is required."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:1221-1222",
+      "note": "The parse-failure branch explicitly requires recording the exact `parser.error` seglog event and bounds its diagnostic excerpt."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The row is pinned to the July confirmed-unregistered cohort, but no accepted membership/version declaration is cited; membership remains owner-required."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan closes the persisted payload fields and field semantics for this exact token."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan closes the EventRecord scope and identity fields for this exact token; command arguments are not treated as event payload evidence."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies replay ordering, deduplication, or idempotency semantics for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies retention or compaction policy for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies redaction rules or custody authority for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:1221-1226",
+      "note": "The cited branch closes the immediate parse-failure outcomes: generic fallback, one same-provider retry after fallback failure, user-visible failure after retry, and preservation of raw output."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan names authoritative consumers or checkpoint behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan specifies compatibility, migration, or withdrawal rules for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plan supplies both positive and negative acceptance oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:1222",
+      "status": "ok",
+      "notes": "Exact producer condition and seglog event name; bounds the raw-output diagnostic excerpt to 500 characters."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:1221-1226",
+      "status": "ok",
+      "notes": "Defines parse-failure logging, generic fallback, retry/user-error transitions, and raw-output preservation."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay15",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against the binding 12-field schema; absent field-local authority remains OWNER_REQUIRED rather than inferred.",
+    "ADMISSION_FREEZE preserved: this disposition does not authorize admission, registry append, or consumer checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_census_residuals_separate"
+}

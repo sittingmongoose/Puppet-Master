@@ -1,0 +1,104 @@
+{
+  "event_type": "dev.session.restarting",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The catalog maps the restart command to this pre-restart lifecycle marker, but that expected-event mapping does not identify producer or semantic-owner authority and no Plans contract defines payload or durable-processing rules. Keep this exact marker quarantined pending its own contract decision.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns `dev.session.restarting` a registry membership state or contract version; owner authority is required before either can be fixed."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names the accountable semantic owner for `dev.session.restarting`; the emitting command/check is not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The command catalog maps a command to expected `dev.session.restarting` emission but does not explicitly name the implementation producer authority; producer identity is therefore not inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines a closed persisted payload schema for `dev.session.restarting`; command arguments and a stated outcome are not assumed to be the event payload."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines `dev.session.restarting` scope and canonical entity identity; namespace or sibling-event identity is not inferred."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact specifies replay, deduplication key, or idempotency behavior for `dev.session.restarting`."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact sets a retention class or deletion horizon for `dev.session.restarting`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns redaction fields, custody, or access controls for `dev.session.restarting`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact closes the allowed predecessor, successor, and failure transitions for `dev.session.restarting`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names authorized consumers or checkpoint-advance rules for `dev.session.restarting`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines compatibility, migration, deprecation, or withdrawal rules for `dev.session.restarting`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact supplies event-level positive and negative conformance oracles for `dev.session.restarting`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:901",
+      "status": "ok",
+      "notes": "The catalog directly maps a command to expected `dev.session.restarting` emission, but this is contextual token evidence only and does not earn producer PASS without an explicitly named producer authority."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-dev-session-restarting-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will the accountable semantic owner (not identified by cited Plans) define whether `dev.session.restarting` is a durable pre-restart marker, including its payload, ordering before the later started marker, and replay rules?",
+    "options": [
+      "Publish and approve the missing event-specific authority contract, then re-evaluate this token",
+      "Continue fail-closed quarantine with no registration or checkpoint authority",
+      "Reclassify the token only with exact event-specific cited authority"
+    ],
+    "evidence_gap": "For `dev.session.restarting`, cited Plans evidence does not close: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "dev.session.restarting"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay09",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 dimensions were adjudicated for this exact token; PASS is withheld where the citation does not explicitly name the relevant authority.",
+    "Absent authority is recorded as OWNER_REQUIRED; no namespace, sibling, package, owner, or producer inference was used."
+  ]
+}

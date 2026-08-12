@@ -1,0 +1,1117 @@
+[
+  {
+    "event_type": "file.moved",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted-event intent is supported by the File Manager command catalog, but the cited wiring line does not identify a producer and no versioned membership, semantic owner, closed payload, or remaining authority contract is cited. Keep quarantined pending an individual owner decision; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['File Manager command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "missing",
+        "notes": "Cited line declares cmd.project.open as navigation with no persisted event; it does not support this File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "missing",
+        "notes": "Cited line only defines the generic handler_location column and gives no handler or producer mapping for this event."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:355",
+        "status": "ok",
+        "notes": "File Manager command row names file.moved as an expected persisted event."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.moved` receive an owner-approved, versioned Event Authority membership and a complete contract for the unresolved checklist dimensions, or remain quarantined/reclassified?",
+      "options": [
+        "Materialize the missing owner-backed contract dimensions, validate all 12 checks, then register this event individually",
+        "Continue quarantine (fail closed; no consumer checkpoint advance)",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "The checked sources establish persistence intent but do not authorize inventing membership, ownership, or missing contract values; admission requires all 12 checks to PASS with citations.",
+      "event_types": [
+        "file.moved"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay10",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "file.renamed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted-event intent is supported by the File Manager command catalog, but the cited wiring line does not identify a producer and no versioned membership, semantic owner, closed payload, or remaining authority contract is cited. Keep quarantined pending an individual owner decision; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['File Manager command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "missing",
+        "notes": "Cited line declares cmd.project.open as navigation with no persisted event; it does not support this File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "missing",
+        "notes": "Cited line only defines the generic handler_location column and gives no handler or producer mapping for this event."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:350",
+        "status": "ok",
+        "notes": "File Manager command row names file.renamed as an expected persisted event."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `file.renamed` receive an owner-approved, versioned Event Authority membership and a complete contract for the unresolved checklist dimensions, or remain quarantined/reclassified?",
+      "options": [
+        "Materialize the missing owner-backed contract dimensions, validate all 12 checks, then register this event individually",
+        "Continue quarantine (fail closed; no consumer checkpoint advance)",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "The checked sources establish persistence intent but do not authorize inventing membership, ownership, or missing contract values; admission requires all 12 checks to PASS with citations.",
+      "event_types": [
+        "file.renamed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay10",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "folder.copied",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted-event intent is supported by the File Manager command catalog, but the cited wiring line does not identify a producer and no versioned membership, semantic owner, closed payload, or remaining authority contract is cited. Keep quarantined pending an individual owner decision; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['File Manager command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Command_Catalog.md:335",
+        "status": "missing",
+        "notes": "Cited line declares cmd.project.open as navigation with no persisted event; it does not support this File Manager event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "missing",
+        "notes": "Cited line only defines the generic handler_location column and gives no handler or producer mapping for this event."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:355",
+        "status": "ok",
+        "notes": "File Manager command row names folder.copied as an expected persisted event."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `folder.copied` receive an owner-approved, versioned Event Authority membership and a complete contract for the unresolved checklist dimensions, or remain quarantined/reclassified?",
+      "options": [
+        "Materialize the missing owner-backed contract dimensions, validate all 12 checks, then register this event individually",
+        "Continue quarantine (fail closed; no consumer checkpoint advance)",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "The checked sources establish persistence intent but do not authorize inventing membership, ownership, or missing contract values; admission requires all 12 checks to PASS with citations.",
+      "event_types": [
+        "folder.copied"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay10",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.monthly_summary.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.summarize_monthly` to `memory.monthly_summary.completed`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1127",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.monthly_summary.completed`; current exact declaration is Plans/UI_Command_Catalog.md:1102."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1102",
+        "status": "ok",
+        "notes": "Assistant-memory monthly-summary command maps to the completed event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4466-4518",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.summarize_monthly` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.summarize_monthly`: the command-catalog mapping to `memory.monthly_summary.completed` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.monthly_summary.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.monthly_summary.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.summarize_monthly` to `memory.monthly_summary.started`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1127",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.monthly_summary.started`; current exact declaration is Plans/UI_Command_Catalog.md:1102."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1102",
+        "status": "ok",
+        "notes": "Assistant-memory monthly-summary command maps to the started event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4466-4518",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.summarize_monthly` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.summarize_monthly`: the command-catalog mapping to `memory.monthly_summary.started` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.monthly_summary.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.prune_archive.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.prune_archive` to `memory.prune_archive.completed`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1128",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.prune_archive.completed`; current exact declaration is Plans/UI_Command_Catalog.md:1103."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1103",
+        "status": "ok",
+        "notes": "Assistant-memory archive-prune command maps to the completed event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4301-4353",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.prune_archive` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.prune_archive`: the command-catalog mapping to `memory.prune_archive.completed` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.prune_archive.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.prune_archive.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.prune_archive` to `memory.prune_archive.started`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1128",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.prune_archive.started`; current exact declaration is Plans/UI_Command_Catalog.md:1103."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1103",
+        "status": "ok",
+        "notes": "Assistant-memory archive-prune command maps to the started event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4301-4353",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.prune_archive` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.prune_archive`: the command-catalog mapping to `memory.prune_archive.started` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.prune_archive.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.verification_sweep.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.verification_sweep` to `memory.verification_sweep.completed`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1125",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.verification_sweep.completed`; current exact declaration is Plans/UI_Command_Catalog.md:1100."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1100",
+        "status": "ok",
+        "notes": "Assistant-memory verification-sweep command maps to the completed event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4576-4628",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.verification_sweep` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.verification_sweep`: the command-catalog mapping to `memory.verification_sweep.completed` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.verification_sweep.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "memory.verification_sweep.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification is contested, not confirmed: the command catalog maps `cmd.chat.memory.verification_sweep` to `memory.verification_sweep.started`, but the production wiring contract explicitly declares no persisted event and requires receipt-only behavior. The persisted-producer dimension therefore fails pending authority reconciliation; admission is forbidden and the contradiction is escalated fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Memory and Settings visible-action command handlers; semantic event owner unresolved']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-506",
+        "status": "ok",
+        "notes": "Current wiring schema defines handler targets, expected persisted EventRecord event types, and acceptance evidence; it is generic rather than event-specific."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1125",
+        "status": "drift",
+        "notes": "Input line no longer contains `memory.verification_sweep.started`; current exact declaration is Plans/UI_Command_Catalog.md:1100."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1100",
+        "status": "ok",
+        "notes": "Assistant-memory verification-sweep command maps to the started event."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:4576-4628",
+        "status": "ok",
+        "notes": "Conflicting production authority: `cmd.chat.memory.verification_sweep` has expected_event_types [], effect_kind receipt, no declared persisted event, and a negative oracle forbidding unexpected persisted domain events."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Which current authority governs `cmd.chat.memory.verification_sweep`: the command-catalog mapping to `memory.verification_sweep.started` or the production wiring receipt-only/no-persist contract?",
+      "options": [
+        "Reconcile owner-backed contracts in favor of persisted emission, then complete all 12 dimensions before individual registration",
+        "Keep production receipt-only behavior and reclassify the named event with cited rationale",
+        "Continue quarantine fail-closed until the authoritative conflict is resolved"
+      ],
+      "evidence_gap": "Two current plan authorities directly conflict about whether the handler emits a persisted domain event. Selecting precedence or changing product behavior is an owner decision; an agent cannot infer it from analogy.",
+      "event_types": [
+        "memory.verification_sweep.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay14",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "preview.session.refreshed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Storage evidence preserves `preview.session.refreshed` in the preview-browser event set and places it beside runtime-linked identity guidance. It does not establish the complete per-event authority contract, so admission remains owner-gated.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Preview session producer with Storage session persistence co-ownership']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/storage-plan.md:1270",
+        "status": "ok",
+        "notes": "Exact event token appears in the Related events list for preview-browser/runtime-linked records."
+      },
+      {
+        "citation": "Plans/storage-plan.md:8737",
+        "status": "drift",
+        "notes": "The cited line is offset; the preserved exact token is at current line 8738 in SP-112. SP-112 preserves lineage and supplies only an owner hint, not a complete event contract."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Event owner must either supply the missing complete Event Authority contract for `preview.session.refreshed` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+      "options": [
+        "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+        "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+        "Reclassify as excluded non-event with exact cited rationale"
+      ],
+      "evidence_gap": "Storage canon lists the event as related to the preview-browser record family and preserves its exact token, but it does not identify a concrete emitter or semantic acceptance owner, bind a closed payload schema to this event, or specify versioned membership, replay/idempotency, retention, redaction custody, lifecycle/consumer checkpoints, compatibility withdrawal, and complete test oracles.",
+      "event_types": [
+        "preview.session.refreshed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay17",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  }
+]

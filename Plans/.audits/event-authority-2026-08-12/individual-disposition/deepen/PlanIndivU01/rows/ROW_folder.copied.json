@@ -1,0 +1,117 @@
+{
+  "event_type": "folder.copied",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`Plans/UI_Command_Catalog.md:355` names `folder.copied` as a persisted outcome of `cmd.file.paste_nodes`, while the exact production wiring contract declares that command receipt-only with no persisted event and a negative oracle. The contradiction remains unresolved; keep this token quarantined pending an individual authority decision.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `folder.copied` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `folder.copied`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans contract explicitly binds a producer to emission of `folder.copied`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `folder.copied`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `folder.copied`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `folder.copied`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `folder.copied`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `folder.copied`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:12823-12841",
+      "note": "The exact `cmd.file.paste_nodes` row declares no expected event and a receipt effect, conflicting with the catalog mapping to `folder.copied`."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `folder.copied`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `folder.copied`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:12863-12873",
+      "note": "The exact production oracle requires `cmd.file.paste_nodes` to emit no unexpected persisted event, conflicting with catalog persistence of `folder.copied`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:355",
+      "status": "ok",
+      "notes": "Exact catalog row names `folder.copied` as a persisted paste outcome."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12823-12841",
+      "status": "ok",
+      "notes": "Exact production row declares `cmd.file.paste_nodes` receipt-only with expected_event_types []."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:12863-12873",
+      "status": "ok",
+      "notes": "Exact production effect assertion and negative event oracle forbid an unexpected persisted event."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-folder-copied",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Should `cmd.file.paste_nodes` persist `folder.copied` as the catalog states, or remain receipt-only as the production wiring contract requires?",
+    "options": [
+      "Supply an explicit owner-backed, versioned contract for `folder.copied` covering every residual field, then re-adjudicate individually",
+      "Keep `folder.copied` quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify `folder.copied` only with exact cited authority and migration or withdrawal terms"
+    ],
+    "evidence_gap": "No exact Plans citation closes the residual fields for `folder.copied`: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "folder.copied"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay10",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.assurance.event_authority.individual_disposition_merge_receipt.v1",
+  "generated_at_utc": "2026-08-12T07:33:52Z",
+  "ledger_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+  "backup_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.BACKUP_20260812T073352ZZ.jsonl",
+  "changes": [
+    {
+      "event_type": "docker.host.access_open_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.instance_lifecycle_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.instance_retention_recorded",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.preflight_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.profile_saved",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.receipt_opened",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.refresh_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.host.session_launch_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "docker.hosts_route_opened",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "github.actions.dispatch_readiness_validated",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "github.actions.readiness_compared",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "github.repo.create_requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "health.route_opened",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "plan_compile.run_created_or_bound",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "planning.approval_cas_receipt.written",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "planning.plan_approved",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "prd_builder.approval_snapshot.created",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "prd_builder.prd_pack_approved",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "project.github_repo_bound",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "remote.reconnect.requested",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "testing.session.backgrounded",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "testing.session.opened",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "testing.session.redaction_inspected",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    },
+    {
+      "event_type": "testing.session.watch_started",
+      "action": "deepen_merge",
+      "source": "DeepenEmit24",
+      "provisional_before": true,
+      "provisional_after": false
+    }
+  ],
+  "counts": {
+    "ledger_rows": 321,
+    "provisional_after": 2
+  },
+  "ledger_sha256": "2225103ee546345d1afc7203bb89437e8887a370380bab166bf5a902a8852c07"
+}

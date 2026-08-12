@@ -1,0 +1,106 @@
+{
+  "event_type": "run.scheduler_analysis",
+  "bucket": "alias",
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Cited authority explicitly marks this as a legacy alias of `scheduler.pass`; new producers must not emit the alias. Reclassify to the canonical event rather than register a second family.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited heading and alias rule establish normalization behavior but do not explicitly bind an owner document or owner identity; no owner is inferred."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans citation explicitly binds producer for this exact event; owner decision or new evidence is required."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes membership_version for this exact event; fail closed without inference."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes closed_payload_schema for this exact event; fail closed without inference."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes scope_identity for this exact event; fail closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes replay_idempotency for this exact event; fail closed without inference."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes retention for this exact event; fail closed without inference."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes redaction_custody for this exact event; fail closed without inference."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes transitions for this exact event; fail closed without inference."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes consumers_checkpoints for this exact event; fail closed without inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:2103-2115",
+      "note": "The cited span names this exact legacy alias, its canonical replacement, migration-reader compatibility, normalization, and the prohibition on new alias emission."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes positive_negative_oracles for this exact event; fail closed without inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:2103",
+      "status": "ok",
+      "notes": "Exact cited storage alias span inspected; it names the legacy-to-canonical normalization."
+    },
+    {
+      "citation": "Plans/storage-plan.md:2099-2118",
+      "status": "ok",
+      "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+    },
+    {
+      "citation": "Plans/storage-plan.md:2103-2115",
+      "status": "ok",
+      "notes": "Exact span inspected; it names the alias, canonical event, compatibility-reader rule, normalization, and withdrawal from new emission."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "deepened_against_binding_schema",
+    "all_passes_have_concrete_plans_citations",
+    "fail_closed_no_admission",
+    "Rebucketed out of unresolved bucket after RECLASSIFY_ALIAS; remains non-admitted alias evidence row."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "alias",
+  "rebucket_target": "alias",
+  "rebucket_applied_at_utc": "2026-08-12T10:13:25Z",
+  "alias_target": "scheduler.pass"
+}

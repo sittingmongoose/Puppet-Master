@@ -1,0 +1,113 @@
+{
+  "event_type": "bundle.revision_requested",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current Contracts authority establishes the exact name, producer/owner boundary, consumers, payload minimum, and scope policy, but no versioned registry membership, storage-owned closed payload schema, replay/idempotency, event-specific retention/redaction custody, compatibility withdrawal, and complete oracles were found. Admission therefore remains fail-closed pending owner completion.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:951",
+      "note": "The exact catalog row explicitly assigns bundle.revision_requested to the document bundle / review owner."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:951",
+      "note": "The exact catalog row explicitly names the document bundle / review producer boundary."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:951-961",
+      "note": "The event row requires bundle_id and revision_id, and the scope policy explicitly assigns bundle events application_or_project scope."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish complete replay and idempotency rules; this dimension therefore fails closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish complete legal and illegal transition rules; this dimension therefore fails closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` names downstream consumers but does not define their durable checkpoint identity or advancement behavior; the combined dimension fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish compatibility and withdrawal rules; this dimension therefore fails closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `bundle.revision_requested` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:940",
+      "status": "drift",
+      "notes": "Original line anchor no longer contains the event token; current authority is cited separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:951",
+      "status": "ok",
+      "notes": "Current runtime catalog registers the exact persisted name, producer boundary, consumers, and payload minimum."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961",
+      "status": "ok",
+      "notes": "Current catalog assigns bundle events the application_or_project scope policy."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-bundle-revision-requested",
+    "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `bundle.revision_requested`, either provide and cite the missing owner-complete Event Authority contract and versioned individual registry membership, or authorize continued quarantine/reclassification.",
+    "options": [
+      "Materialize the complete cited contract and individually register the event",
+      "Keep quarantined and fail closed with no checkpoint advance",
+      "Reclassify as excluded/non-event with cited semantic rationale"
+    ],
+    "evidence_gap": "The available authority does not satisfy all twelve checklist gates, and exact product semantics or ownership cannot be inferred by analogy; durable consumer checkpoint identity and advancement rules are also missing.",
+    "event_types": [
+      "bundle.revision_requested"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay02",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

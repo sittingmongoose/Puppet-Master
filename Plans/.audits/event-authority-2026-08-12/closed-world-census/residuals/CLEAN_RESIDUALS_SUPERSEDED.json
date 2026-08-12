@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.assurance.event_authority.clean_residuals_superseded.v1",
+  "generated_at_utc": "2026-08-12T04:12:09Z",
+  "status": "SUPERSEDED_FALSE_POSITIVE_POLLUTION",
+  "former_count": 18,
+  "action": "Do not adjudicate as IndividualDisposition. See rejected-lexical/.",
+  "event_types": [
+    "branching.assistant_auto_worktree",
+    "branching.assistant_worktree_pre_merge_cmd",
+    "branching.assistant_worktree_pre_merge_test_target",
+    "branching.worktree_pre_merge_test_timeout_s",
+    "error.concurrent_edit_conflict",
+    "file_manager.worktree_follow_thread",
+    "safe_point.sp",
+    "self.log_blocked_command",
+    "source_control.worktree_filter",
+    "testing.capability_policy.updated",
+    "testing.visibility_policy.updated",
+    "tier.plan_mode",
+    "tier_node.tier_type",
+    "tier_overrides.get",
+    "tools.custom_headless",
+    "type_payload.restore_point_id",
+    "ui.chat.in_memory_cap_messages",
+    "widget.completed_prose"
+  ],
+  "rule": "DIRECT_EVENT_TYPE_BINDING_REQUIRED"
+}

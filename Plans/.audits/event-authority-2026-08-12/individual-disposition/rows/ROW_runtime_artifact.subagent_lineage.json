@@ -1,0 +1,125 @@
+{
+  "event_type": "runtime_artifact.subagent_lineage",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:292-304",
+      "note": "Runtime_Artifacts_Panel explicitly owns the payload/schema contract governing runtime_artifact.subagent_lineage."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish an explicitly accountable producing component for this exact event; this dimension therefore fails closed."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The materialized schema for runtime_artifact.subagent_lineage leaves type_payload open (minProperties only), so it does not establish a closed event-specific payload."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "note": "runtime_artifact.subagent_lineage is project-scoped and uses EventRecord identity plus the runtime-artifact idempotency identity and replay policy."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2033-2035",
+      "note": "The runtime-artifact contract explicitly defines idempotency-key lifetime, dedupe failure behavior, and replay-policy limits for runtime_artifact.subagent_lineage."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish complete legal and illegal transition rules; this dimension therefore fails closed."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` names consumers and/or a storage projection, but does not define durable checkpoint identity, atomic advancement, or failure behavior for this exact event; the combined dimension fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish compatibility and withdrawal rules; this dimension therefore fails closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `runtime_artifact.subagent_lineage` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:68",
+      "status": "ok",
+      "notes": "Names `runtime_artifact.subagent_lineage` as the exact canonical event for artifact_type `subagent_lineage`."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+      "status": "ok",
+      "notes": "Requires one exact event type per artifact type and the canonical EventRecord envelope; generic/subtype persistence is non-canonical."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:292-304",
+      "status": "ok",
+      "notes": "Assigns schema ownership, requires envelope-plus-per-type validation, and defines common identity and attribution fields."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "status": "ok",
+      "notes": "Pins project scope, EventRecord 2.0.0 identity, idempotency lifetime, and replay behavior."
+    },
+    {
+      "citation": "Plans/runtime_artifact_subagent_lineage.schema.json:1",
+      "status": "ok",
+      "notes": "Materialized root schema is closed, but type_payload is only an open object with minProperties:1; no event-specific closed payload exists."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:296",
+      "status": "ok",
+      "notes": "Requires validation before seglog append and artifacts-index projection."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2025",
+      "status": "ok",
+      "notes": "Begins the durable-state consumer addendum governing the family."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029-2035",
+      "status": "ok",
+      "notes": "Defines canonical-history, scope, identity, idempotency, and replay semantics for runtime artifacts."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay20",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

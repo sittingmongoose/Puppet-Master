@@ -1,0 +1,1047 @@
+[
+  {
+    "event_type": "concern.updated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The corrected command-catalog row confirms an individual command-to-concern.updated emission path and command-side identity/CAS inputs. It does not establish Event Authority membership/version, semantic owner, closed event payload/envelope, replay/retention/redaction, transition legality, checkpoint consumers, compatibility, or event oracles; owner adjudication remains required.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "ok",
+        "notes": "Defines canonical handler_location for command dispatch targets; adjacent lines require expected emitted event types and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8026",
+        "status": "drift",
+        "notes": "Current cited line does not name this event; exact command-to-event row is now Plans/UI_Command_Catalog.md:8001."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8001",
+        "status": "ok",
+        "notes": "Exact concern command row names payload/result/errors and this receipt/event effect."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable domain/storage owner provide and approve the complete 12-dimension Event Authority contract for `concern.updated`, or authorize a fail-closed non-admission disposition?",
+      "options": [
+        "Provide cited, owner-approved membership version and complete contract; then evaluate this event individually for registration",
+        "Continue quarantine as persisted-unregistered with no checkpoint advance",
+        "Reclassify or exclude only with event-specific cited semantic rationale"
+      ],
+      "evidence_gap": "The available Plans establish persistence or emission but do not supply every authority-owned product value. Inventing missing values or transferring them by analogy would violate the individual, fail-closed admission rule.",
+      "event_types": [
+        "concern.updated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay05",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "config.migrated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The cited migration rule confirms an individual first-load producer and persisted log event. It provides no versioned Event Authority membership, accountable event owner, payload/envelope schema, stable scope identity, replay contract, retention/redaction, transitions, consumers/checkpoints, withdrawal compatibility, or event acceptance oracles; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/WorktreeGitImprovement.md:609",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/WorktreeGitImprovement.md:607",
+        "status": "drift",
+        "notes": "Current line concerns GUI enum storage and does not name the event."
+      },
+      {
+        "citation": "Plans/WorktreeGitImprovement.md:609",
+        "status": "ok",
+        "notes": "First-load legacy-string migration explicitly logs config.migrated."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable domain/storage owner provide and approve the complete 12-dimension Event Authority contract for `config.migrated`, or authorize a fail-closed non-admission disposition?",
+      "options": [
+        "Provide cited, owner-approved membership version and complete contract; then evaluate this event individually for registration",
+        "Continue quarantine as persisted-unregistered with no checkpoint advance",
+        "Reclassify or exclude only with event-specific cited semantic rationale"
+      ],
+      "evidence_gap": "The available Plans establish persistence or emission but do not supply every authority-owned product value. Inventing missing values or transferring them by analogy would violate the individual, fail-closed admission rule.",
+      "event_types": [
+        "config.migrated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay05",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "config.validation.failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Backend execution explicitly emits this seglog event on invalid subagent configuration, confirming producer and persistence intent; no cited registration version, accountable semantic owner, closed event payload, or remaining authority dimensions support admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:1335",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1335",
+        "status": "ok",
+        "notes": "Exact event token and seglog emission requirement are present."
+      },
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:1333-1337",
+        "status": "ok",
+        "notes": "Backend failure path and emitting component context are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner materialize and approve the missing membership_version, owner, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles contract dimensions for `config.validation.failed`, or direct fail-closed quarantine/reclassification?",
+      "options": [
+        "Complete the missing owner-backed contract dimensions, cite each dimension, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no Event Authority checkpoint advance",
+        "Reclassify with event-specific cited rationale and explicit denominator treatment"
+      ],
+      "evidence_gap": "Configuration validation evidence confirms a persisted event name but does not resolve every mandatory Event Authority dimension; exact product policy cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "config.validation.failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay06",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted crew terminal-completion record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2972",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2961",
+        "status": "drift",
+        "notes": "Input line is a ContractRef; corrected declaration is Contracts_V0.md:2972."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2972",
+        "status": "ok",
+        "notes": "Crew lineage and completion field inventory/meaning are declared, but no full transition or schema constraints are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `crew.completed` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+      "options": [
+        "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "Only identity and an event-field inventory are authoritative; owner/producer, membership/version, typed schema, replay, retention, custody, transitions, consumers, compatibility, and oracles remain open.",
+      "event_types": [
+        "crew.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay07",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.coordination",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted general crew-coordination record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2968",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2935",
+        "status": "drift",
+        "notes": "Input line is the coordination idempotency-key bullet; corrected declaration is Contracts_V0.md:2968."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2968",
+        "status": "ok",
+        "notes": "Crew lineage is explicit, but open-ended `details` has no closed schema or type constraints."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `crew.coordination` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+      "options": [
+        "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The open-ended `details` payload fails the closed-schema gate; every other authority dimension beyond scope identity also needs an owner decision.",
+      "event_types": [
+        "crew.coordination"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay07",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.disbanded",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted crew terminal-disband record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2973",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2940",
+        "status": "drift",
+        "notes": "Input line now declares coordination.agent_registered; corrected declaration is Contracts_V0.md:2973."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2973",
+        "status": "ok",
+        "notes": "Crew lineage and disband field inventory/meaning are declared, but allowed-from states and remaining authority dimensions are absent."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `crew.disbanded` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+      "options": [
+        "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "Owner must define membership/version, producer, typed schema, replay, retention, custody, state transition rules, consumers/checkpoints, compatibility, and oracles.",
+      "event_types": [
+        "crew.disbanded"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay07",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.formed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted crew creation record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2965",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2932",
+        "status": "drift",
+        "notes": "Input line now names expected_previous_revision; corrected declaration is Contracts_V0.md:2965."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2965",
+        "status": "ok",
+        "notes": "Crew/child lineage and formation field inventory/meaning are declared, but no closed type or lifecycle contract is present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `crew.formed` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+      "options": [
+        "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "Owner must define membership/version, producer, typed schema, replay, retention, custody, allowed formation transition, consumers/checkpoints, compatibility, and oracles.",
+      "event_types": [
+        "crew.formed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay07",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.member_added",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted crew membership-change record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2966",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2933",
+        "status": "drift",
+        "notes": "Input line now names last_applied_event_id; corrected declaration is Contracts_V0.md:2966."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2966",
+        "status": "ok",
+        "notes": "Crew/child/member identity and field inventory/meaning are declared, but membership revision and allowed transition rules are absent."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `crew.member_added` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+      "options": [
+        "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "Owner must define event membership/version, producer, typed schema, idempotency and membership revision, retention, custody, allowed transitions, consumers/checkpoints, compatibility, and oracles.",
+      "event_types": [
+        "crew.member_added"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay07",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "crew.member_removed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Persisted crew event and minimum lineage/payload are explicit, but no versioned Event Authority membership, accepted owner/producer, or complete depth contract is cited; retain quarantine.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Orchestrator crew manager']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:2953-2961",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:2934",
+        "status": "drift",
+        "notes": "Input line no longer contains this event."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2956",
+        "status": "drift",
+        "notes": "Input line now contains only crew_id lineage."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2953-2961",
+        "status": "ok",
+        "notes": "Current crew lineage floor and cross-contract references."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2963-2975",
+        "status": "ok",
+        "notes": "Current event row gives payload, semantics, and storage/Run_Modes contract refs."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the crew authority individually register crew.member_removed and supply its complete contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Materialize the complete owner-backed contract and individually register it",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited non-event rationale"
+      ],
+      "evidence_gap": "The current contract proves persistence, identity, and payload only; it does not name accepted Event Authority membership/version, producer authority, replay, retention, custody, checkpoints, compatibility, or oracles.",
+      "event_types": [
+        "crew.member_removed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay08",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "dashboard.widget_added",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command contract and wiring require this emitted event, but semantic owner, versioned membership, event payload closure, and remaining authority dimensions are unresolved; retain quarantine.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:8015",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Exact event token is absent from the cited file."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8040",
+        "status": "drift",
+        "notes": "Input line moved; exact event is not at this line."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:8015",
+        "status": "ok",
+        "notes": "Command row identifies typed producer command and dashboard.widget_added outcome."
+      },
+      {
+        "citation": "Plans/Wiring_Matrix.production.json:6947-7001",
+        "status": "ok",
+        "notes": "Expected event, receipt reference, and event-test requirement are explicit."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Who owns dashboard.widget_added, and will that owner close and individually register its Event Authority contract?",
+      "options": [
+        "Name the semantic owner, materialize all contract dimensions, and individually register it",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited non-event rationale"
+      ],
+      "evidence_gap": "Command emission and an event-test requirement do not establish event membership/version, a closed event payload, custody, replay, retention, transitions, consumer checkpoints, compatibility, or full positive/negative oracles.",
+      "event_types": [
+        "dashboard.widget_added"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay08",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "schema_id": "pm.assurance.event_authority.clean_residuals_for_adjudication.v2",
+  "generated_at_utc": "2026-08-12T04:12:09Z",
+  "status": "EMPTY_AFTER_RULE_V2",
+  "count": 0,
+  "residuals": [],
+  "note": "Former 18-row set was heuristic false-positive pollution; moved to rejected-lexical under DIRECT_EVENT_TYPE_BINDING_REQUIRED. Do not seed IndividualDisposition.",
+  "superseded_path": "CLEAN_RESIDUALS_SUPERSEDED.json"
+}

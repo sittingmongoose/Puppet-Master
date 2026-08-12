@@ -1,0 +1,18 @@
+{
+  "source_batch": "Plans/.audits/event-authority-2026-08-12/closed-world-census/residuals/clean_batch_00.json",
+  "status": "REJECTED_LEXICAL_CANDIDATES",
+  "denominator_effect": "none",
+  "individual_disposition_effect": "none",
+  "fresh_census_merged": false,
+  "reason": "Admission-filtered census review found heuristic lexical false positives. Nearby persistence cues do not directly and authoritatively bind these exact tokens as EventRecord or seglog event_type families.",
+  "candidates": [
+    {"token":"branching.assistant_auto_worktree","classification":"config_key","citation":"Plans/storage-plan.md:L920-L921"},
+    {"token":"branching.assistant_worktree_pre_merge_cmd","classification":"config_key","citation":"Plans/storage-plan.md:L920-L928"},
+    {"token":"branching.assistant_worktree_pre_merge_test_target","classification":"config_key","citation":"Plans/storage-plan.md:L920-L930"},
+    {"token":"branching.worktree_pre_merge_test_timeout_s","classification":"config_key","citation":"Plans/storage-plan.md:L920-L929"},
+    {"token":"error.concurrent_edit_conflict","classification":"structured_rewrite_error","citation":"Plans/FileSafe.md:L1455-L1459"},
+    {"token":"file_manager.worktree_follow_thread","classification":"config_key","citation":"Plans/assistant-chat-design.md:L18973-L18988"},
+    {"token":"safe_point.sp","classification":"read_only_storage_migration_alias","citation":"Plans/storage-plan.md:L17303-L17311"},
+    {"token":"self.log_blocked_command","classification":"method_call_expression","citation":"Plans/FileSafe.md:L773-L790"}
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "event_type": "settings.theme.updated",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `settings.theme.updated`."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:26072-26131",
+      "note": "Production wiring explicitly binds handlers::theme::reset to settings.theme.updated and requires an exact emission assertion."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `settings.theme.updated`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not define an exhaustive, closed payload schema for `settings.theme.updated`; minimum fields or command arguments are not a closed event schema."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked command citation scopes the triggering command but does not state that the emitted `settings.theme.updated` payload carries the same identity; event scope therefore fails closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `settings.theme.updated`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no event-specific retention duration or deletion rule for `settings.theme.updated`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific redaction and custody rule for `settings.theme.updated`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not close the allowed predecessor/successor transition set for `settings.theme.updated`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `settings.theme.updated`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete compatibility and withdrawal contract for `settings.theme.updated`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `settings.theme.updated`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines only the generic handler_location matrix column; it is not this event contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8008",
+      "status": "drift",
+      "notes": "Current line is cmd.model.list and does not name this event."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:7983-7987",
+      "status": "ok",
+      "notes": "Exact set_mode, set_accent, set_density, and reset command rows declare settings.theme.updated and command-side fields."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:26072-26131",
+      "status": "ok",
+      "notes": "Production wiring explicitly binds handlers::theme::reset to settings.theme.updated and requires an exact emission assertion."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay21",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened field-by-field against checked Plans citations; remaining non-PASS dimensions fail closed, and owner_doc remains OWNER_REQUIRED without inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

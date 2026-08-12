@@ -1,0 +1,126 @@
+{
+  "event_type": "docker.host.profile_saved",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "emit_restore"
+  ],
+  "july_classification": "emit_candidate_machine_contract_triple_bound",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (no registry admit) + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "The matrix entry declares expected_event_types and certification evidence but supplies no event-registry membership record, contract version, or registry row for `docker.host.profile_saved`."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.production.json:10419",
+      "note": "evidence_required conditions production certification on typed wiring/receipt/event assertion evidence for `cmd.docker.host.profile.save`; it does not name a semantic owner empowered to approve the persisted `docker.host.profile_saved` contract."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:10409,10408,10423-10428",
+      "note": "The matrix names handler_location `handlers::docker::host_profile_save` and effect_contract effect_kind=event requiring `cmd.docker.host.profile.save` to emit the declared event types via receipt_or_event_refs. This closes the command-path emit producer only; it does not name an EventRecord/seglog append authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "acceptance_checks require a typed payload/result contract or explicit route/open no-persist disposition but do not define a closed persisted payload schema for this exact event type."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "The checked wiring block does not close canonical scope and identity fields carried by the emitted `docker.host.profile_saved` event itself."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "No replay key, duplicate rule, or idempotency semantics for `docker.host.profile_saved` appear in the checked matrix contract block."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "No retention class, deletion horizon, or retention authority for `docker.host.profile_saved` appears in the checked matrix contract block."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "No event-payload redaction or custody rule for `docker.host.profile_saved` appears in the checked matrix contract block."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "The command effect is declared, but predecessor, successor, failure, and duplicate transition rules for `docker.host.profile_saved` are not closed in the checked block."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10420-10421",
+      "note": "state_selector `state.commands.docker_host_profile_save.availability` and disabled_reason_projection `state.commands.docker_host_profile_save.disabled_reason` are named for UI availability, but authorized persisted-event consumers and checkpoint-advance rules for `docker.host.profile_saved` are not defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "note": "No compatibility alias, migration, deprecation, or withdrawal contract for `docker.host.profile_saved` appears in the checked matrix block."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10462-10465",
+      "note": "event_test_requirements state a future assert that `cmd.docker.host.profile.save` emits `docker.host.profile_saved` with command_id, origin, correlation_id, and handler target; this is open requirement text, not a completed positive/negative oracle pair."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "closed-world-census/admission/TRIPLE_BOUND_EMIT_MERGE.json",
+      "status": "ok",
+      "notes": "Token in merged_event_types (merged_count=24); advisor2_blocker=materialize_missing_triple_bound_before_partition_seal."
+    },
+    {
+      "citation": "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+      "status": "ok",
+      "notes": "Triple-bound scan: entry_ids=['catalog.docker_host_profile_save'], ui_command_ids=['cmd.docker.host.profile.save'], in_census_ledger=True; persistence_adjudication still_open_no_admit."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10405-10465",
+      "status": "ok",
+      "notes": "Full `catalog.docker_host_profile_save` block checked for membership, schema, lifecycle, consumer, and persistence dimensions."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10411",
+      "status": "ok",
+      "notes": "Exact token appears in expected_event_types for `cmd.docker.host.profile.save`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10422",
+      "status": "ok",
+      "notes": "effect_contract declares effect_kind=event and receipt_or_event_refs containing the exact token."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10462",
+      "status": "ok",
+      "notes": "event_test_requirements assert future emission; requirement is not executed oracle evidence."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "TripleBoundEmitMerge",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "unresolved_emit_candidate_deepened",
+  "quality_notes": [
+    "Triple-bound emit candidate adjudicated individually; not rejected_lexical.",
+    "Machine-contract emit binding is PASS for producer only; EventRecord/seglog persistence remains the blocking evidence gap.",
+    "Repository search finds exact token `docker.host.profile_saved` only in Plans/Wiring_Matrix.production.json among checked Plans surfaces.",
+    "No admission, registry append, analogy, or owner/producer inference used."
+  ],
+  "source_deepener": "DeepenEmit24",
+  "emit_meta": {
+    "ui_command_id": "cmd.docker.host.profile.save",
+    "wiring_entry_id": "catalog.docker_host_profile_save",
+    "merge_wave": "triple_bound_24"
+  }
+}

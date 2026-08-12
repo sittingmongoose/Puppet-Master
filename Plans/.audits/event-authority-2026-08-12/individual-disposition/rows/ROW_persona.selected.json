@@ -1,0 +1,118 @@
+{
+  "event_type": "persona.selected",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked canonical registry declares schema_version 2.0.0, registry revision 2026-08-04.1, and unknown-event quarantine, but contains no exact `persona.selected` entry; versioned membership remains owner-required."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes an explicitly named accountable event-contract owner; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:19849-19909",
+      "note": "The exact wiring record binds cmd.persona.select to handlers::persona::select and declares `persona.selected` as its expected emitted event; this is command-side producer evidence only, not owner authority."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes an exhaustive closed event payload schema; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes the complete event scope and identity key; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes replay and idempotency rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes retention rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes redaction and custody rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes lifecycle transition semantics; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes consumer and checkpoint obligations; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `persona.selected` establishes compatibility and withdrawal rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The exact wiring record supplies a positive `persona.selected` emission assertion, but its fabricated-event prohibition is generic and does not define token-specific negative cases; complete positive and negative Event Authority oracles remain owner-required."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:503",
+      "status": "drift",
+      "notes": "Defines the generic handler_location column only; it is not an event-specific Event Authority contract."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8016",
+      "status": "drift",
+      "notes": "The cited current line does not name this event; the exact command row is recorded below."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:7991",
+      "status": "ok",
+      "notes": "Declares the exact command payload, result, closed command-error set, and receipt/event effect for this event."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:19854-19908",
+      "status": "ok",
+      "notes": "Machine-readable wiring names the expected event and requires an emission test with command, origin, correlation, and handler data."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:19849-19909",
+      "status": "ok",
+      "notes": "Exact wiring block for `persona.selected` names the command-side handler, expected event, required emission assertion, and fabricated-event prohibition."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:4-8",
+      "status": "ok",
+      "notes": "Canonical registry metadata defines version/revision and unknown-event quarantine; exact-token search found no `persona.selected` family entry, so it supplies fail-closed absence evidence rather than membership PASS."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding individual-disposition schema and admission freeze.",
+    "Immutable july248 cohort pin preserved; working bucket recorded separately.",
+    "No admission, bulk registration, analogy, inferred owner, or OD-EA-003 substitution.",
+    "All twelve evidence fields adjudicated field-locally; every PASS has a concrete Plans citation, and generic negative wiring rules are not treated as token-specific oracles."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

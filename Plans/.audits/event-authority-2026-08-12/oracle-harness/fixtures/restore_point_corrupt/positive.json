@@ -1,0 +1,12 @@
+{
+  "evidence_kind": "record_hash_comparison",
+  "evidence_ref": "evidence:001",
+  "expected_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "observed_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "occurred_at_utc": "2026-08-12T00:00:00Z",
+  "project_id": "proj-001",
+  "reason_code": "record_hash_mismatch",
+  "restore_point_id": "rp-001",
+  "schema_version": "2.0.0",
+  "status": "corrupt"
+}

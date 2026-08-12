@@ -1,0 +1,114 @@
+{
+  "event_type": "live.session.started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The visible-target launch flow explicitly emits this event and lists run, platform, provider, process/session, display, and artifact-root identity. It does not cite versioned Event Authority membership, a semantic owner, a closed persisted payload, replay, retention/custody, legal transitions/checkpoints, withdrawal authority, or complete positive and negative oracles; admission therefore remains frozen.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "An accountable semantic owner is not explicitly named for this exact event; owner adjudication is required."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:709-719",
+      "note": "The unified orchestrator flow explicitly directs its visible-target launch step to emit this exact event."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/newtools.md:845-851",
+      "note": "The live-tooling plan lists this exact token among seglog events, but the listing does not assign it to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, storage-owned persisted payload schema is cited for this exact event."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:717-719",
+      "note": "The exact emission contract carries run, platform, provider, process/session, display-target, and artifact-root identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific redaction boundary and custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal transition set is cited for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No consumer checkpoint advancement or fail-closed rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No compatibility and withdrawal authority, including removal timing, is cited for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No complete positive-emission and negative-non-emission oracle pair is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/newtools.md:846",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    },
+    {
+      "citation": "Plans/newtools.md:717-719",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    },
+    {
+      "citation": "Plans/newtools.md:845-851",
+      "status": "ok",
+      "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-live-session-started-contract-authority",
+    "field_or_decision": "semantic_owner_and_complete_event_contract",
+    "question": "The visible-target launch flow explicitly emits `live.session.started` with run and session context; which accountable authority, if any, will define versioned membership and the closed persisted, replay, retention/custody, transition/checkpoint, withdrawal, and oracle contract, or direct continued quarantine?",
+    "options": [
+      "Authorize only after every failed checklist dimension has exact evidence and independent validation",
+      "Keep quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify with exact row-specific cited evidence"
+    ],
+    "evidence_gap": "Launch-time emission and listed session context are proved, but no semantic owner, versioned membership, closed persisted EventRecord schema, replay/idempotency, retention/redaction custody, legal transitions/checkpoints, withdrawal authority, or complete oracles are cited.",
+    "event_types": [
+      "live.session.started"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay12",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "event_type": "concern.reopened",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Production wiring independently names `handlers::concern::reopen` as the exact `cmd.concern.reopen` handler, requires `concern.reopened` emission with dispatch-correlation fields, and defines its positive event test. That closes the implementation producer only. The event still lacks versioned membership, semantic owner, closed persisted payload, event replay/custody/lifecycle/consumer/compatibility contracts, and the complementary error-path non-emission oracle, so it remains quarantined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly names the semantic owner accountable for the persisted `concern.reopened` contract."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:6756-6817",
+      "note": "The production wiring row explicitly binds `cmd.concern.reopen` to `handlers::concern::reopen` and requires it to emit `concern.reopened` with dispatch-correlation evidence."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority registry row individually admits `concern.reopened`; observed naming or command emission is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority supplies a closed persisted EventRecord payload and envelope for `concern.reopened`."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract closes project/thread/object scope and canonical identity fields for persisted `concern.reopened` records."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract defines persisted `concern.reopened` replay identity, deduplication key, or idempotent projector behavior; command idempotency inputs do not establish event replay identity."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns a retention class or deletion horizon specifically to `concern.reopened`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns redaction fields, custody, and deletion propagation specifically to `concern.reopened`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority closes legal predecessor/successor states and rejection behavior for `concern.reopened`; an expected-event mapping is not an event state machine."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority names persisted `concern.reopened` consumers and their checkpoint/ack behavior."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority defines aliases, schema evolution, deprecation, or withdrawal rules for `concern.reopened`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Plans/Wiring_Matrix.production.json:6756-6817 defines the positive emission test for `cmd.concern.reopen` -> `concern.reopened`, but does not define the complementary error/disabled/stale-path non-emission oracle for this persisted event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:6756-6817",
+      "status": "ok",
+      "notes": "Names `handlers::concern::reopen` as the exact handler, declares `concern.reopened` as the expected event, and requires a positive correlated-emission event test; no error-path non-emission event oracle is present."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8004-8004",
+      "status": "ok",
+      "notes": "Command catalog independently maps `cmd.concern.reopen` to `concern.reopened` and supplies command-side args/results/errors; it is not the persisted event schema."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928-932",
+      "status": "ok",
+      "notes": "Defines the persisted-event authority split still missing from the wiring row."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-concern-reopened-contract-closure",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `concern.reopened`, must `permission_denied` and `stale_projection` produce no event, and which prior terminal states, resulting revision, and reopen-reason/source identity make the transition legal and replay-safe?",
+    "options": [
+      "Provide the complete cited versioned contract for later independent re-adjudication",
+      "Keep quarantined with no checkpoint advance",
+      "Reclassify as excluded/non-event with exact cited semantic authority"
+    ],
+    "evidence_gap": "The exact producer and positive emission test are cited, but owner_doc, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles remain unclosed for `concern.reopened`; owner authority cannot be inferred from the Concern namespace.",
+    "event_types": [
+      "concern.reopened"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay05",
+  "provisional": false,
+  "quality_notes": [
+    "Individually reasoned against exact current Plans citations; all twelve evidence fields are explicit and every PASS is field-local.",
+    "No admission, registry append, owner inference, producer inference, or package analogy is authorized."
+  ]
+}

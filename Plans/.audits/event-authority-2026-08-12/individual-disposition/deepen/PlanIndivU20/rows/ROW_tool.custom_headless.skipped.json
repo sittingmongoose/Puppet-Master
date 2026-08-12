@@ -1,0 +1,113 @@
+{
+  "event_type": "tool.custom_headless.skipped",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The Doctor detection contract provides an exact positive branch: absence of tools.custom_headless causes a first-Doctor-run seglog emission, while key presence takes the validate/register-or-invalid branch. This establishes the Doctor producer, transition, and paired branch oracle, but not registry membership/version, event owner, payload schema, scope, replay semantics for 'first run', retention, redaction custody, consumers/checkpoints, or withdrawal.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation explicitly assigns event-contract acceptance authority for this exact token."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:508",
+      "note": "Doctor is explicitly the emitter when tools.custom_headless is absent on its first run."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from the live versioned family registry; persisted documentation is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Cited payload fields are minima or prose, not an explicitly exhaustive closed schema."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes the complete canonical scope and identity tuple for this exact token."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines this event’s replay key, duplicate handling, and idempotency rule."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation assigns redaction fields, timing, and custody for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:508",
+      "note": "Absence of tools.custom_headless takes the skip-without-error branch and emits this event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines both authoritative consumers and fail-closed checkpoint advancement for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/newtools.md:505-509",
+      "note": "The contract gives paired absent, valid, and invalid branches, including the exact emission branch."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/newtools.md:508",
+      "status": "ok",
+      "notes": "Exact event declaration: absent tools.custom_headless skips without error and emits tool.custom_headless.skipped on the first Doctor run."
+    },
+    {
+      "citation": "Plans/newtools.md:505-509",
+      "status": "ok",
+      "notes": "Defines the valid, invalid, absent, and evidence branches around the Doctor custom-headless check."
+    },
+    {
+      "citation": "Plans/newtools.md:496-509",
+      "status": "ok",
+      "notes": "Calls detection deterministic, names writer and Doctor reader responsibilities, and supplies branch conditions."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-tool-custom-headless-skipped",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal",
+    "question": "For `tool.custom_headless.skipped`, will the cited contract owner materialize every unresolved Event Authority dimension and return this exact token for individual veto, or keep it quarantined?",
+    "options": [
+      "Materialize the missing contract depth under the named owner, then return this exact stable ID for individual veto before any registry append",
+      "Keep quarantined as persisted-unregistered with no checkpoint advance",
+      "Withdraw or reclassify only with an explicit cited compatibility/withdrawal decision"
+    ],
+    "evidence_gap": "No citation explicitly assigns event-contract acceptance authority for this exact token. The exact token is absent from the live versioned family registry; persisted documentation is not membership. Cited payload fields are minima or prose, not an explicitly exhaustive closed schema. No citation fixes the complete canonical scope and identity tuple for this exact token. No citation defines this event’s replay key, duplicate handling, and idempotency rule. No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token. No citation assigns redaction fields, timing, and custody for this exact token. No citation defines both authoritative consumers and fail-closed checkpoint advancement for this exact token. No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token.",
+    "event_types": [
+      "tool.custom_headless.skipped"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay23",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current Plans citations; absent dimensions fail closed without namespace, sibling, or package inference."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "event_type": "worktree.deleted",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Source Control cleanup rules establish the cleanup producer boundary, deletion preconditions, and the created/deleted lifecycle. Admission remains forbidden because the deletion payload and most Event Authority controls are not defined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The catalog names a cleanup producer role but does not explicitly appoint a semantic event-contract owner."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:945",
+      "note": "The runtime catalog explicitly assigns source control / cleanup owner as producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited live registry membership record or membership version exists for worktree.deleted."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The catalog entry is a cross-contract minimum and does not declare an exhaustive closed schema."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:945",
+      "note": "The catalog explicitly carries project, repository, worktree, run, package, and lane identity plus cleanup controls."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited idempotency key or duplicate-deletion replay rule exists."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Historical preservation is required, but no event-record retention duration or deletion authority is cited."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited rule assigns redaction custody for worktree paths or active-reference lists."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/WorktreeGitImprovement.md:217-220",
+      "note": "The source-control rules explicitly place deletion after lineage-safe completion/archive, grace period, and reference checks, paired with worktree.created."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:945",
+      "note": "The runtime catalog explicitly names orchestrator, storage, and recovery as primary consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited alias mapping or withdrawal boundary exists for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/WorktreeGitImprovement.md:217-219",
+      "note": "Deletion may emit only after grace and lock checks; active locks, safe points, terminal/editor sessions, or blocked recovery references prohibit deletion."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:912",
+      "status": "drift",
+      "notes": "Current line is blank beneath the enum heading and does not define worktree.deleted."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:218",
+      "status": "ok",
+      "notes": "Requires grace-period and file-lock checks and refuses deletion while live references remain."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:219",
+      "status": "ok",
+      "notes": "Permits worktree.deleted only after those checks and pairs it with worktree.created."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:223-225",
+      "status": "ok",
+      "notes": "Forbids silent lineage inheritance and manual removal while active or blocked-preserved absent recorded override policy."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:945",
+      "status": "ok",
+      "notes": "The runtime catalog explicitly assigns source control / cleanup owner as producer."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:945",
+      "status": "ok",
+      "notes": "The catalog explicitly carries project, repository, worktree, run, package, and lane identity plus cleanup controls."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:217-220",
+      "status": "ok",
+      "notes": "The source-control rules explicitly place deletion after lineage-safe completion/archive, grace period, and reference checks, paired with worktree.created."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:945",
+      "status": "ok",
+      "notes": "The runtime catalog explicitly names orchestrator, storage, and recovery as primary consumers."
+    },
+    {
+      "citation": "Plans/WorktreeGitImprovement.md:217-219",
+      "status": "ok",
+      "notes": "Deletion may emit only after grace and lock checks; active locks, safe points, terminal/editor sessions, or blocked recovery references prohibit deletion."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-worktree-deleted-owner_doc-membership_version-closed_payload_schema-replay_idempotency",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,compatibility_withdrawal",
+    "question": "Will the explicitly appointed event owner supply the missing cited authority for `worktree.deleted` and return this exact row for individual disposition, or keep it quarantined?",
+    "options": [
+      "Supply the missing field-local Plans authorities and return this exact row for re-review",
+      "Keep this exact event quarantined with no registry or checkpoint advance",
+      "Withdraw or reclassify this exact event only through an explicit cited compatibility decision"
+    ],
+    "evidence_gap": "The non-PASS fields above lack exact field-local authority; no package-level authorization or sibling analogy closes them.",
+    "event_types": [
+      "worktree.deleted"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current Plans citations; PASS is limited to the exact field proven.",
+    "Immutable cohort lineage retained separately from working_bucket.",
+    "No admission, package-level owner decision, analogy, or owner/producer inference used."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "source_deepener": "PlanIndivU22"
+}

@@ -1,0 +1,111 @@
+{
+  "event_type": "subagent.context_rehydrated",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`subagent.context_rehydrated` remains individually quarantined. Plans/Contracts_V0.md:2989-2992 explicitly permits runtime projection to emit this exact effective-context event, and Plans/Contracts_V0.md:2874-2887 supplies the mandatory lineage envelope and accepted alias boundary. Those citations establish producer context, scope identity, and compatibility only; they do not establish individually versioned membership, an event semantic owner, a closed payload, replay/idempotency, retention/custody, legal transitions, checkpoints, or complete oracles. The missing authority cannot be inferred from Prompt Pipeline section ownership.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked Plans citation explicitly names the semantic authority empowered to approve the `subagent.context_rehydrated` Event Authority contract; namespace and adjacent-family ownership are not evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2989",
+      "note": "Contracts explicitly states that runtime projection may emit `subagent.context_rehydrated` when effective-context state changes need to be inspectable or replayable."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No individually versioned registry membership is cited for `subagent.context_rehydrated`."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed, versioned durable payload schema is cited for `subagent.context_rehydrated`; a field list without an exhaustiveness or schema-version rule is insufficient."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2874-2885",
+      "note": "The binding family rule applies to every `subagent.*` event and requires run, thread, agent, parent, child, parent-thread, and requested/effective runtime lineage for `subagent.context_rehydrated`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local replay ordering, duplicate handling, or idempotency rule is cited for `subagent.context_rehydrated`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local retention, compaction, tombstone, or deletion policy is cited for `subagent.context_rehydrated`."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-local sensitive-field redaction and custody boundary is cited for `subagent.context_rehydrated`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed legal predecessor/successor set or invalid-transition rule is cited for `subagent.context_rehydrated`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, checkpoint key, or fail-closed advancement rule is cited for `subagent.context_rehydrated`."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2887",
+      "note": "The accepted family boundary keeps canonical names under `subagent.*` and classifies `chat.subagent_*` / `chat.subagent_spawned` as legacy source aliases for `subagent.context_rehydrated`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event-specific positive and negative persistence/replay oracle is cited for `subagent.context_rehydrated`; token occurrence alone is not an oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2874-2887",
+      "status": "ok",
+      "notes": "Applies the mandatory PM lineage envelope and canonical subagent alias boundary to `subagent.context_rehydrated`."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2989-2992",
+      "status": "ok",
+      "notes": "Names `subagent.context_rehydrated` as an additive runtime projection event and preserves canonical child history/source references rather than replacing them."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-subagent-context-rehydrated-membership_version-owner-closed_payload_schema-replay_idempotency",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+    "question": "Will the accountable effective-context event owner publish and version the missing individual Event Authority dimensions for `subagent.context_rehydrated`, or direct continued quarantine/reclassification?",
+    "options": [
+      "Publish the complete owner-backed contract and re-adjudicate this exact event",
+      "Keep quarantined with no consumer checkpoint advance",
+      "Reclassify or withdraw the token with cited compatibility semantics"
+    ],
+    "evidence_gap": "Plans name runtime projection as the emitter context but do not name the event semantic authority or close the remaining durable-event dimensions.",
+    "event_types": [
+      "subagent.context_rehydrated"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay21",
+  "provisional": false,
+  "quality_notes": [
+    "row_local_citations_rechecked",
+    "all_12_fields_adjudicated",
+    "no_uncited_pass",
+    "fail_closed_pending_owner_veto"
+  ]
+}

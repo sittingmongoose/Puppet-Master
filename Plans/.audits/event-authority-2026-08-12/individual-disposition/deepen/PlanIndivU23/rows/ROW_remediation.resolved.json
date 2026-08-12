@@ -1,0 +1,128 @@
+{
+  "event_type": "remediation.resolved",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts canon defines the terminal remediation event, its minimum identity payload, closed resolution values, legacy mapping, and a parent-retry checkpoint. Because several authority dimensions remain unspecified, it stays quarantined pending individual owner action.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for explicit semantic acceptance owner of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:290-293",
+      "note": "The exact remediation wiring block names executor/orchestrator remediation manager as producer for remediation.resolved."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2540-2558",
+      "note": "The exact contract pins remediation, parent, run, and node identity in the payload minimum."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `remediation.resolved`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2540-2558",
+      "note": "The contract defines terminal resolution values and prohibits an invalid ceiling outcome."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:290-293",
+      "note": "The exact remediation wiring block names Run Graph, remediation_lineage_record, dashboard consumers, and the remediation projection key."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2540-2558",
+      "note": "The exact contract defines legacy alias normalization and canonical withdrawal direction."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `remediation.resolved`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2507",
+      "status": "drift",
+      "notes": "Current line 2507 is a FileSafe receipt field, not remediation evidence; remediation.resolved is at lines 2540-2558."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2518",
+      "status": "drift",
+      "notes": "Current line 2518 is the FileSafe ContractRef; remediation lineage begins at line 2520."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2529",
+      "status": "drift",
+      "notes": "Current line 2529 starts the remediation.spawned payload, not remediation.resolved."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2540-2558",
+      "status": "ok",
+      "notes": "Defines remediation.resolved, minimum identity payload, closed resolution enum, a negative ceiling rule, legacy alias withdrawal direction, and compatibility mappings."
+    },
+    {
+      "citation": "Plans/Executor_Protocol.md:537-547",
+      "status": "ok",
+      "notes": "Executor creates remediation child lineage and permits parent retry only after remediation completes and retry policy allows continuation."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:290-293",
+      "status": "ok",
+      "notes": "Exact remediation.resolved wiring names producer, consumers, and storage projection."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-remediation-resolved-contract-completion",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,positive_negative_oracles",
+    "question": "Event owner must either supply the missing complete Event Authority contract for `remediation.resolved` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Contracts canon defines the resolved-event minimum payload, closed resolution enum, prohibited ceiling outcome, legacy mapping, and Executor retry checkpoint. It still lacks versioned registry membership, an exhaustive closed payload schema, replay/idempotency, retention, redaction custody, and complete cross-field positive/negative oracles; exact semantic acceptance ownership is not explicit enough to infer.",
+    "event_types": [
+      "remediation.resolved"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

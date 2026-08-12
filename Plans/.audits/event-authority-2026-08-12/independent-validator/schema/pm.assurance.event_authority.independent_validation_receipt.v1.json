@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.assurance.event_authority.independent_validation_receipt.v1",
+  "title": "Independent Event Authority validation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "generated_at_utc",
+    "complete_denominator_known",
+    "contract_depth_complete",
+    "bulk_registration_allowed",
+    "pass",
+    "failures"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.assurance.event_authority.independent_validation_receipt.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "validator_id": {
+      "type": "string"
+    },
+    "validator_path": {
+      "type": "string"
+    },
+    "complete_denominator_known": {
+      "type": "boolean"
+    },
+    "contract_depth_complete": {
+      "type": "boolean"
+    },
+    "bulk_registration_allowed": {
+      "type": "boolean"
+    },
+    "pass": {
+      "type": "boolean"
+    },
+    "counts": {
+      "type": "object"
+    },
+    "input_pins": {
+      "type": "object"
+    },
+    "named_checks": {
+      "type": "object"
+    },
+    "failures": {
+      "type": "array"
+    },
+    "scripts_binding": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

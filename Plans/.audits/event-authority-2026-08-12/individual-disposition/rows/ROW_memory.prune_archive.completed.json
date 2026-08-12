@@ -1,0 +1,104 @@
+{
+  "event_type": "memory.prune_archive.completed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority assigns `memory.prune_archive.completed` to a named, versioned Event Authority membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans document explicitly names the semantic event owner for `memory.prune_archive.completed`; namespace and proximity are not ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans contract explicitly binds a producer to emission of `memory.prune_archive.completed`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No closed payload schema is cited for `memory.prune_archive.completed`."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines the complete scope and identity tuple for `memory.prune_archive.completed`."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines replay or idempotency behavior for `memory.prune_archive.completed`."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines retention for `memory.prune_archive.completed`."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines redaction and custody for `memory.prune_archive.completed`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4303-4321",
+      "note": "The exact `cmd.chat.memory.prune_archive` production row declares expected_event_types [] and receipt-only behavior, contradicting the catalog transition to `memory.prune_archive.completed`."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation names consumers or checkpoint behavior for `memory.prune_archive.completed`."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No field-local citation defines compatibility or withdrawal rules for `memory.prune_archive.completed`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:4343-4353",
+      "note": "The exact production oracle requires `cmd.chat.memory.prune_archive` to emit no unexpected persisted event, conflicting with catalog persistence of `memory.prune_archive.completed`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1103",
+      "status": "ok",
+      "notes": "Exact catalog row names `memory.prune_archive.completed` for `cmd.chat.memory.prune_archive`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4303-4321",
+      "status": "ok",
+      "notes": "Exact production row declares `cmd.chat.memory.prune_archive` receipt-only with no expected persisted event."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:4343-4353",
+      "status": "ok",
+      "notes": "Exact production negative oracle forbids unexpected persisted events from `cmd.chat.memory.prune_archive`."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay14",
+  "provisional": false,
+  "quality_notes": [
+    "all_12_fields_present",
+    "pass_citations_field_local",
+    "immutable_cohort_pin_preserved",
+    "owner_producer_not_inferred",
+    "residual_has_row_stable_id"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "event_type": "docker.repository.create.confirmation_requested",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "This token has a row-specific producer, action scope, transition, and non-bypass oracle, but no cited durable membership/version or complete persistence contract. It remains quarantined pending one row-specific owner veto; no admission or checkpoint advancement is authorized.",
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently deepened from exact-token Plans evidence; absent dimensions fail closed and are not inferred."
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "note": "The cited plan explicitly names canonical ownership or the Contracts-owned family boundary for this exact behavior."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:374-390",
+      "note": "The cited span explicitly names emission or compatibility production of `docker.repository.create.confirmation_requested`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "note": "The owner plan requires registration before durable canonical use; no exact registered member/version is supplied."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The displayed namespace/repository/privacy tuple does not constitute an exhaustive event payload/schema version."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:374-390",
+      "note": "The proposed namespace/repository/privacy tuple is the explicit confirmation scope."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event replay key, duplicate rule, or idempotency rule is declared for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No retention class or TTL is declared for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific redaction/custody rule is declared for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:383-390",
+      "note": "Validation emits this token; confirm and cancel are distinct, and push approval cannot imply creation approval."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No durable consumer or checkpoint-advance rule is declared for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No alias, deprecation, compatibility, or withdrawal rule is declared."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:374-390",
+      "note": "Confirmation is mandatory and cannot be bypassed or inherited from push approval."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:7-16",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:374-390",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-467",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:383-390",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-docker-repo-confirmation-record",
+    "field_or_decision": "approval_record,membership_version,replay_idempotency",
+    "question": "Is `docker.repository.create.confirmation_requested` the durable approval-request record for one namespace/repository/privacy tuple, or merely modal state derived from the command?",
+    "options": [
+      "Define durable request identity, replay behavior, payload version, and checkpoint rules",
+      "Declare it ephemeral modal state derived from cmd.docker.create_repository",
+      "Map it to one cited registered approval-request event"
+    ],
+    "evidence_gap": "Exact-token Plans evidence does not close: membership_version, closed_payload_schema, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal.",
+    "event_types": [
+      "docker.repository.create.confirmation_requested"
+    ]
+  },
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

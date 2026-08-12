@@ -1,0 +1,1112 @@
+[
+  {
+    "event_type": "filesafe.guard_init_failed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "FileSafe documentation proves a concrete producing guard and canonical project/run/worktree scope for filesafe.guard_init_failed; However, versioned membership, accountable semantic owner, closed payload schema, replay, retention, custody, lifecycle/checkpoint, and compatibility/withdrawal authority are not complete. Keep quarantined pending owner decision; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/FileSafe.md:1024",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/FileSafe.md:1024",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/FileSafe.md:1024",
+        "status": "ok",
+        "notes": "FileSafe text names filesafe.guard_init_failed and/or its emission condition."
+      },
+      {
+        "citation": "Plans/FileSafe.md:1129",
+        "status": "ok",
+        "notes": "FileSafe text names filesafe.guard_init_failed and/or its emission condition."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2460",
+        "status": "drift",
+        "notes": "Event token/payload contract moved; current exact row is Plans/Contracts_V0.md:2493."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2493",
+        "status": "ok",
+        "notes": "Current canonical EventRecord minimum-payload row names the producer-relevant event and project/run/worktree scope fields."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `filesafe.guard_init_failed` receive an owner-approved, versioned Event Authority membership and a complete contract for the unresolved checklist dimensions, or remain quarantined/reclassified?",
+      "options": [
+        "Materialize the missing owner-backed contract dimensions, validate all 12 checks, then register this event individually",
+        "Continue quarantine (fail closed; no consumer checkpoint advance)",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "The checked sources establish persistence intent but do not authorize inventing membership, ownership, or missing contract values; admission requires all 12 checks to PASS with citations.",
+      "event_types": [
+        "filesafe.guard_init_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay10",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "filesafe.path_denied",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "FileSafe documentation proves a concrete producing guard and canonical project/run/worktree scope for filesafe.path_denied; However, versioned membership, accountable semantic owner, closed payload schema, replay, retention, custody, lifecycle/checkpoint, and compatibility/withdrawal authority are not complete. Keep quarantined pending owner decision; no admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/FileSafe.md:1131",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/FileSafe.md:1131",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/FileSafe.md:1131",
+        "status": "ok",
+        "notes": "FileSafe text names filesafe.path_denied and/or its emission condition."
+      },
+      {
+        "citation": "Plans/FileSafe.md:1417",
+        "status": "ok",
+        "notes": "FileSafe text names filesafe.path_denied and/or its emission condition."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2462",
+        "status": "drift",
+        "notes": "Event token/payload contract moved; current exact row is Plans/Contracts_V0.md:2495."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:2495",
+        "status": "ok",
+        "notes": "Current canonical EventRecord minimum-payload row names the producer-relevant event and project/run/worktree scope fields."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Should `filesafe.path_denied` receive an owner-approved, versioned Event Authority membership and a complete contract for the unresolved checklist dimensions, or remain quarantined/reclassified?",
+      "options": [
+        "Materialize the missing owner-backed contract dimensions, validate all 12 checks, then register this event individually",
+        "Continue quarantine (fail closed; no consumer checkpoint advance)",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "The checked sources establish persistence intent but do not authorize inventing membership, ownership, or missing contract values; admission requires all 12 checks to PASS with citations.",
+      "event_types": [
+        "filesafe.path_denied"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay10",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "live.session.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The accepted live-visualization requirement confirms this exact persisted seglog event and its producer context, and the launch flow supplies run/platform/provider/session/artifact identity minima; however, no versioned registry membership, accountable semantic owner, closed storage payload schema, replay/idempotency, event-specific retention and redaction custody, complete legal transitions/consumer checkpoints, compatibility withdrawal, or full oracles are cited. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/newtools.md:846",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/newtools.md:846",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/newtools.md:846",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:717-719",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      },
+      {
+        "citation": "Plans/newtools.md:845-851",
+        "status": "ok",
+        "notes": "Current cited span preserves the exact event token and live-visualization emission context."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `live.session.started` (exact emission and producer context are established), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "live.session.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "lsp.server.lifecycle_changed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The current runtime catalog explicitly carries the exact persisted name, LSP-supervisor producer, primary consumers, identity-bearing payload minimum, and legacy-name normalization. It does not establish a separately accountable semantic owner or cited versioned registry membership, storage-owned closed payload schema, replay/idempotency, event-specific retention/redaction custody, closed legal transition set, consumer checkpoint rules, alias withdrawal timing, and complete positive/negative oracles; therefore the unregistered row cannot be admitted.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:930,946",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:930,946",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:913-932",
+        "status": "drift",
+        "notes": "Original range now ends at the catalog header; the exact row is currently at line 946."
+      },
+      {
+        "citation": "Plans/LSPSupport.md:655-674",
+        "status": "missing",
+        "notes": "The exact event token is absent from the current LSPSupport document."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:935",
+        "status": "drift",
+        "notes": "Current line 935 describes run.started, not the LSP lifecycle event."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:930,946",
+        "status": "ok",
+        "notes": "Contracts states the catalog registers persisted event names and gives the LSP supervisor, consumers, and cross-contract payload minimum for this exact event."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:957",
+        "status": "ok",
+        "notes": "Defines legacy-name normalization and forbids a parallel LSP lifecycle family."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `lsp.server.lifecycle_changed` (catalog producer, primary consumers, payload minimum, and compatibility normalization are established), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "lsp.server.lifecycle_changed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.dedup_sweep.completed",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms this exact expected persisted event, binds it to a memory UI command, and supplies project/gist command scope where applicable. The cited wiring rule is only a generic matrix schema and no row-specific handler or semantic event owner, versioned membership, closed event payload, replay/idempotency, retention/redaction custody, legal transitions, consumers/checkpoints, compatibility withdrawal, or complete oracles are provided. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Current line defines handler_location generically; it does not name this event or an actual handler."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1126",
+        "status": "drift",
+        "notes": "The exact event moved; current authority is Plans/UI_Command_Catalog.md:1101."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "status": "ok",
+        "notes": "The command accepts project_id and expects both sweep lifecycle events."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:492-506",
+        "status": "ok",
+        "notes": "Defines expected_event_types as events a bound command handler must emit, but does not supply the row-specific handler path or semantic owner."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `memory.dedup_sweep.completed` (command producer context and command scope are established, while semantic authority remains unresolved), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "memory.dedup_sweep.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.dedup_sweep.started",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms this exact expected persisted event, binds it to a memory UI command, and supplies project/gist command scope where applicable. The cited wiring rule is only a generic matrix schema and no row-specific handler or semantic event owner, versioned membership, closed event payload, replay/idempotency, retention/redaction custody, legal transitions, consumers/checkpoints, compatibility withdrawal, or complete oracles are provided. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Current line defines handler_location generically; it does not name this event or an actual handler."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1126",
+        "status": "drift",
+        "notes": "The exact event moved; current authority is Plans/UI_Command_Catalog.md:1101."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1101",
+        "status": "ok",
+        "notes": "The command accepts project_id and expects both sweep lifecycle events."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:492-506",
+        "status": "ok",
+        "notes": "Defines expected_event_types as events a bound command handler must emit, but does not supply the row-specific handler path or semantic owner."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `memory.dedup_sweep.started` (command producer context and command scope are established, while semantic authority remains unresolved), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "memory.dedup_sweep.started"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.discarded",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms this exact expected persisted event, binds it to a memory UI command, and supplies project/gist command scope where applicable. The cited wiring rule is only a generic matrix schema and no row-specific handler or semantic event owner, versioned membership, closed event payload, replay/idempotency, retention/redaction custody, legal transitions, consumers/checkpoints, compatibility withdrawal, or complete oracles are provided. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1095",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1095",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Current line defines handler_location generically; it does not name this event or an actual handler."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1120",
+        "status": "drift",
+        "notes": "The exact event moved; current authority is Plans/UI_Command_Catalog.md:1095."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1095",
+        "status": "ok",
+        "notes": "The discard command accepts project_id and gist_id and expects this event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:492-506",
+        "status": "ok",
+        "notes": "Defines expected_event_types as events a bound command handler must emit, but does not supply the row-specific handler path or semantic owner."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `memory.gist.discarded` (command producer context and command scope are established, while semantic authority remains unresolved), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "memory.gist.discarded"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.pinned",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The command catalog confirms this exact expected persisted event, binds it to a memory UI command, and supplies project/gist command scope where applicable. The cited wiring rule is only a generic matrix schema and no row-specific handler or semantic event owner, versioned membership, closed event payload, replay/idempotency, retention/redaction custody, legal transitions, consumers/checkpoints, compatibility withdrawal, or complete oracles are provided. Admission remains fail-closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1094",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Command_Catalog.md:1094",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503",
+        "status": "drift",
+        "notes": "Current line defines handler_location generically; it does not name this event or an actual handler."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1119",
+        "status": "drift",
+        "notes": "The exact event moved; current authority is Plans/UI_Command_Catalog.md:1094."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1094",
+        "status": "ok",
+        "notes": "The pin command accepts project_id, gist_id, and pinned and expects this event."
+      },
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:492-506",
+        "status": "ok",
+        "notes": "Defines expected_event_types as events a bound command handler must emit, but does not supply the row-specific handler path or semantic owner."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the accountable owner provide and approve the missing Event Authority dimensions for `memory.gist.pinned` (command producer context and command scope are established, while semantic authority remains unresolved), including versioned membership and all remaining checklist evidence, or direct a cited reclassification?",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually only after all 12 checklist dimensions are cited PASS",
+        "Continue quarantine fail-closed with no checkpoint advance",
+        "Reclassify with exact cited rationale and denominator treatment"
+      ],
+      "evidence_gap": "The current Plans establish only part of the event contract. Exact product policy for the missing dimensions cannot be inferred from naming, family analogy, or persistence evidence.",
+      "event_types": [
+        "memory.gist.pinned"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay12",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.unpinned",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.pin` explicitly declares `memory.gist.unpinned` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1094",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.pin` to `memory.gist.unpinned` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1094."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.gist.unpinned` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.pin` explicitly expects `memory.gist.unpinned`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.gist.unpinned"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "memory.gist.updated",
+    "bucket": "confirmed_persisted_unregistered",
+    "july_classification": "confirmed_persisted_unregistered",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Classification support is strong: `cmd.chat.memory.edit` explicitly declares `memory.gist.updated` as an expected persisted event and the wiring rules require handlers to emit their expected EventRecord types. The declaration proves producer path and project/gist scope inputs, but not semantic registration authority or the complete event contract; keep quarantined pending an individual owner decision.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "PASS",
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/UI_Wiring_Rules.md:503-505",
+        "status": "ok",
+        "notes": "Current row schema requires a handler location, expected EventRecord types, and deterministic acceptance checks."
+      },
+      {
+        "citation": "Plans/UI_Command_Catalog.md:1093",
+        "status": "ok",
+        "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.edit` to `memory.gist.updated` and provides project-scoped command arguments."
+      },
+      {
+        "citation": "Input shard command-catalog line anchor",
+        "status": "drift",
+        "notes": "The shard's older UI_Command_Catalog anchor has moved; the exact token is now at Plans/UI_Command_Catalog.md:1093."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-conf-membership_version-owner-closed_payload_schema-replay_idempotency",
+      "field_or_decision": "membership_version,owner,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Will the Assistant Memory owner authorize `memory.gist.updated` as an individually registered persisted event and supply its complete Event Authority contract, or keep it quarantined/reclassify it?",
+      "options": [
+        "Authorize an owner-backed, versioned contract and individual registration after all 12 checklist dimensions are evidenced",
+        "Continue quarantine fail-closed; do not advance consumer checkpoints",
+        "Reclassify as an excluded non-event with event-specific cited rationale"
+      ],
+      "evidence_gap": "`cmd.chat.memory.edit` explicitly expects `memory.gist.updated`, but the cited Plans do not identify semantic acceptance authority or close the event payload, replay, retention, redaction, transitions, consumers/checkpoints, compatibility/withdrawal, and oracle contract. Those product values cannot be inferred from the command declaration.",
+      "event_types": [
+        "memory.gist.updated"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnregOverlay13",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

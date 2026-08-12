@@ -1,0 +1,102 @@
+{
+  "event_type": "skill.invocation_timed_out",
+  "bucket": "quarantined_not_admitted",
+  "july_classification": "emit_only",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited Skills text defines canonical surface behavior but does not explicitly bind an Event Authority owner document or owner identity for this exact event; no owner is inferred."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited skill contract specifies timeout emission but does not explicitly name the producer authority; owner confirmation is required without inference."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes membership_version for this exact event; fail closed without inference."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes closed_payload_schema for this exact event; fail closed without inference."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes scope_identity for this exact event; fail closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes replay_idempotency for this exact event; fail closed without inference."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes retention for this exact event; fail closed without inference."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes redaction_custody for this exact event; fail closed without inference."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Skills_System.md:158-163",
+      "note": "The cited Plans span explicitly supplies transitions authority or contract text for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes consumers_checkpoints for this exact event; fail closed without inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes compatibility_withdrawal for this exact event; fail closed without inference."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes positive_negative_oracles for this exact event; fail closed without inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Skills_System.md:158-163",
+      "status": "ok",
+      "notes": "Exact cited span inspected and supports the stated semantic finding."
+    },
+    {
+      "citation": "Plans/Skills_System.md:2497-2513",
+      "status": "ok",
+      "notes": "Exact cited span inspected and supports the stated semantic finding."
+    },
+    {
+      "citation": "Plans/Skills_System.md:157-163",
+      "status": "ok",
+      "notes": "Exact span inspected; it declares canonical surface authority and defines timeout emission."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "deepened_against_binding_schema",
+    "all_passes_have_concrete_plans_citations",
+    "fail_closed_no_admission"
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "quarantined_not_admitted"
+}

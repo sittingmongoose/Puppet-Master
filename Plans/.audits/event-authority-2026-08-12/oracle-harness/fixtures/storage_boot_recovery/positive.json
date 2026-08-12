@@ -1,0 +1,14 @@
+{
+  "active_segment_ref": "pm.storage.segment.v1:1:1:active:0000000000000000000000000000000000000000000000000000000000000000",
+  "integrity_ids": [],
+  "interrupted_transaction_kinds": [
+    "migration"
+  ],
+  "manifest_generation": 1,
+  "recovery_epoch": 1,
+  "recovery_ids": [
+    "pm.storage.recovery.v1:0000000000000000000000000000000000000000000000000000000000000000"
+  ],
+  "recovery_set_id": "pm.storage.recovery_set.v1:0000000000000000000000000000000000000000000000000000000000000000",
+  "schema_version": "2.0.0"
+}

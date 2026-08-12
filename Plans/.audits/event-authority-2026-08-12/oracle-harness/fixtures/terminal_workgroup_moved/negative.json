@@ -1,0 +1,19 @@
+{
+  "command_id": "cmd.terminal.fabricated_success",
+  "contained_pane_ids": [
+    "pane-001"
+  ],
+  "contained_session_ids": [
+    "session-001"
+  ],
+  "correlation_id": "corr-001",
+  "origin": "home_workspace",
+  "preserve_session_identity": true,
+  "project_id": "proj-001",
+  "schema_id": "pm.event.terminal_workgroup_moved.v1",
+  "schema_version": "1.0.0",
+  "section_created": false,
+  "source_terminal_section_id": "section-001",
+  "target_terminal_section_id": "section-002",
+  "terminal_workgroup_id": "workgroup-001"
+}

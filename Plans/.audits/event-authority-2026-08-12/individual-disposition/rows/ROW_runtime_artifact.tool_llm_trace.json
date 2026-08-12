@@ -1,0 +1,125 @@
+{
+  "event_type": "runtime_artifact.tool_llm_trace",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:300-304",
+      "note": "The Runtime Artifacts document expressly owns the runtime-artifact payload envelope and per-type schema boundary."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No concrete emitting component or handler is explicitly cited for this exact token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_tool_llm_trace.schema.json:1-390",
+      "note": "The cited per-type JSON schema closes the persisted tool/LLM trace payload structure."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "note": "The contract fixes project scope plus global event identity and lifetime idempotency identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "note": "The contract preserves lifetime idempotency identity and defines replay-only projection behavior without re-emission."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited event-specific retention anchor, TTL, legal-hold, or deletion rule is complete for this exact token."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited contract closes both redaction behavior and accountable custody authority for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:285-296",
+      "note": "The per-type contract requires trace lifecycle, settlement, retry, escalation, and validation before append."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited durable-state addendum permits replay-only projection/checkpoint updates but does not identify and close authoritative consumer checkpoint advancement for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited complete positive-emission and negative-non-emission oracle pair exists for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:63",
+      "status": "ok",
+      "notes": "Names runtime_artifact.tool_llm_trace as an exact canonical event."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:285-296",
+      "status": "ok",
+      "notes": "Requires stable trace identity, lifecycle, usage/provider relations, raw-payload redaction refs, settlement, retry/escalation, and per-type validation."
+    },
+    {
+      "citation": "Plans/runtime_artifact_tool_llm_trace.schema.json:1-391",
+      "status": "ok",
+      "notes": "Materializes a closed trace payload with required lifecycle, raw payload, settlement, retry, refs, and flags structures."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2013-2017",
+      "status": "ok",
+      "notes": "Forbids envelope-only validation and unredacted Raw display."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "status": "ok",
+      "notes": "Defines project scope and EventRecord idempotency/replay behavior."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:296",
+      "status": "ok",
+      "notes": "Requires validation before append and index write."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2025",
+      "status": "ok",
+      "notes": "Durable-state consumer addendum applies to the event family."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029-2035",
+      "status": "ok",
+      "notes": "Pins history continuity, scope, identity, and replay semantics."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay20",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
+  ]
+}

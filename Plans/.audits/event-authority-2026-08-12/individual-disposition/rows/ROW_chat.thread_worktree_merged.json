@@ -1,0 +1,125 @@
+{
+  "event_type": "chat.thread_worktree_merged",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the semantic Event Authority owner for `chat.thread_worktree_merged`; storage or projection ownership is not treated as event ownership."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked contract and schema rows name `chat.thread_worktree_merged` and its meaning, but do not explicitly designate the component authorized to produce it; namespace and surrounding family context were not used as evidence."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation gives `chat.thread_worktree_merged` an immutable versioned registry membership or withdrawal generation."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources provide a minimum payload for `chat.thread_worktree_merged`, not a closed event-specific payload schema with additional-property, nullability, and enum rules fully bounded."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Identifiers appear in the documented minimum payload for `chat.thread_worktree_merged`, but no checked field-local clause fixes the EventRecord `scope_kind` and complete identity/nullability rules for this event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `chat.thread_worktree_merged`'s replay policy and idempotency identity; generic EventRecord options cannot select an event-specific value by inference."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns an event-specific retention, compaction, or tombstone rule for `chat.thread_worktree_merged`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `chat.thread_worktree_merged`'s redaction profile, sensitive-field treatment, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources describe `chat.thread_worktree_merged`'s occurrence and minimum fields but do not provide a complete legal predecessor/successor state machine for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success/failure checkpoint behavior for `chat.thread_worktree_merged`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines event-specific compatibility, migration, alias normalization, and withdrawal behavior for `chat.thread_worktree_merged` as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources do not supply both positive emission and negative non-emission/rejection oracles for `chat.thread_worktree_merged` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:952",
+      "status": "drift",
+      "notes": "Original anchor now describes approval.requested."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1575",
+      "status": "drift",
+      "notes": "Original storage anchor now contains create_failed; merged moved to line 1576."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3341",
+      "status": "drift",
+      "notes": "Original producer-table anchor now contains renamed; merged moved to line 3343."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2962",
+      "status": "drift",
+      "notes": "Original anchor no longer contains the event token."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:985",
+      "status": "ok",
+      "notes": "Current exact registration and payload minimum."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1576",
+      "status": "ok",
+      "notes": "Storage-owned exact event schema minimum."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3343",
+      "status": "ok",
+      "notes": "Producer-owned fields and merged transition semantics."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961,1014-1030",
+      "status": "ok",
+      "notes": "Contracts gives generic worktree lifecycle families a project_only scope policy and supplies generic EventRecord replay/idempotency rules, but it does not directly bind this exact `chat.thread_worktree_*` token to that scope policy or select its event-specific replay_policy; neither field is passed by family inference."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay04",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

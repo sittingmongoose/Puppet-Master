@@ -1,0 +1,126 @@
+{
+  "event_type": "project.github_repo_bound",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "emit_restore"
+  ],
+  "july_classification": "emit_candidate_machine_contract_triple_bound",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (no registry admit) + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "The matrix entry declares expected_event_types and certification evidence but supplies no event-registry membership record, contract version, or registry row for `project.github_repo_bound`."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.production.json:21673",
+      "note": "evidence_required conditions production certification on typed wiring/receipt/event assertion evidence for `cmd.project.new_github_repo`; it does not name a semantic owner empowered to approve the persisted `project.github_repo_bound` contract."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:21660,21659,21676-21680",
+      "note": "The matrix names handler_location `handlers::github::project_new_repo` and effect_contract effect_kind=event requiring `cmd.project.new_github_repo` to emit the declared event types via receipt_or_event_refs. This closes the command-path emit producer only; it does not name an EventRecord/seglog append authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "acceptance_checks require a typed payload/result contract or explicit route/open no-persist disposition but do not define a closed persisted payload schema for this exact event type."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "The checked wiring block does not close canonical scope and identity fields carried by the emitted `project.github_repo_bound` event itself."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "No replay key, duplicate rule, or idempotency semantics for `project.github_repo_bound` appear in the checked matrix contract block."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "No retention class, deletion horizon, or retention authority for `project.github_repo_bound` appears in the checked matrix contract block."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "No event-payload redaction or custody rule for `project.github_repo_bound` appears in the checked matrix contract block."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "The command effect is declared, but predecessor, successor, failure, and duplicate transition rules for `project.github_repo_bound` are not closed in the checked block."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21674-21675",
+      "note": "state_selector `state.commands.project_new_github_repo.availability` and disabled_reason_projection `state.commands.project_new_github_repo.disabled_reason` are named for UI availability, but authorized persisted-event consumers and checkpoint-advance rules for `project.github_repo_bound` are not defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "note": "No compatibility alias, migration, deprecation, or withdrawal contract for `project.github_repo_bound` appears in the checked matrix block."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:21717",
+      "note": "event_test_requirements state a future assert that `cmd.project.new_github_repo` emits `project.github_repo_bound` with command_id, origin, correlation_id, and handler target; this is open requirement text, not a completed positive/negative oracle pair."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "closed-world-census/admission/TRIPLE_BOUND_EMIT_MERGE.json",
+      "status": "ok",
+      "notes": "Token in merged_event_types (merged_count=24); advisor2_blocker=materialize_missing_triple_bound_before_partition_seal."
+    },
+    {
+      "citation": "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+      "status": "ok",
+      "notes": "Triple-bound scan: entry_ids=['catalog.project_new_github_repo'], ui_command_ids=['cmd.project.new_github_repo'], in_census_ledger=True; persistence_adjudication still_open_no_admit."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:21656-21720",
+      "status": "ok",
+      "notes": "Full `catalog.project_new_github_repo` block checked for membership, schema, lifecycle, consumer, and persistence dimensions."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:21663",
+      "status": "ok",
+      "notes": "Exact token appears in expected_event_types for `cmd.project.new_github_repo`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:21676",
+      "status": "ok",
+      "notes": "effect_contract declares effect_kind=event and receipt_or_event_refs containing the exact token."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:21717",
+      "status": "ok",
+      "notes": "event_test_requirements assert future emission; requirement is not executed oracle evidence."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "TripleBoundEmitMerge",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "unresolved_emit_candidate_deepened",
+  "quality_notes": [
+    "Triple-bound emit candidate adjudicated individually; not rejected_lexical.",
+    "Machine-contract emit binding is PASS for producer only; EventRecord/seglog persistence remains the blocking evidence gap.",
+    "Repository search finds exact token `project.github_repo_bound` only in Plans/Wiring_Matrix.production.json among checked Plans surfaces.",
+    "No admission, registry append, analogy, or owner/producer inference used."
+  ],
+  "source_deepener": "DeepenEmit24",
+  "emit_meta": {
+    "ui_command_id": "cmd.project.new_github_repo",
+    "wiring_entry_id": "catalog.project_new_github_repo",
+    "merge_wave": "triple_bound_24"
+  }
+}

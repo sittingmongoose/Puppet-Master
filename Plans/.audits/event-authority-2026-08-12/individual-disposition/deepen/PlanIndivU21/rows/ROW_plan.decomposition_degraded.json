@@ -1,0 +1,118 @@
+{
+  "event_type": "plan.decomposition_degraded",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Corrected citations establish a canonical persisted event, minimum payload, planning producer, pre-graph-lock boundary, and consumer classes. They do not close the payload or the remaining Event Authority controls. Sequenced materialization may continue, but registry admission remains quarantined pending individual owner completion and veto.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish an explicitly accountable owner approval for this exact event; this dimension therefore fails closed."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:296-298",
+      "note": "The wiring matrix explicitly assigns the planning/decomposition producer for plan.decomposition_degraded."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2562-2570",
+      "note": "The exact contract supplies the run, node, phase, reason, and timestamp identity-bearing minimum payload."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish complete replay and idempotency rules; this dimension therefore fails closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2603-2606",
+      "note": "The contract restricts plan.decomposition_degraded emission to the pre-canonical-graph-lock degradation boundary."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` names downstream consumers but does not define their durable checkpoint identity or advancement behavior; the combined dimension fails closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish compatibility and withdrawal rules; this dimension therefore fails closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The checked authority for `plan.decomposition_degraded` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2551-2559",
+      "status": "drift",
+      "notes": "The cited span currently finishes remediation.resolved and does not contain this event contract."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2562-2570",
+      "status": "ok",
+      "notes": "Names the exact canonical event and its seven-field minimum payload."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2603-2606",
+      "status": "ok",
+      "notes": "Declares these records canonical ledger events and restricts this event to before canonical graph lock."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:296-298",
+      "status": "ok",
+      "notes": "Names the planning/decomposition producer and wizard, storage, and audit/debug consumers."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-plan-decomposition-degraded",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Event owner must either supply the missing complete Event Authority contract for `plan.decomposition_degraded` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "The canonical name, minimum payload, producer, scope identity, pre-graph-lock boundary, and consumer classes are documented, but the payload is minimum rather than closed and the record lacks versioned membership, replay/idempotency, retention, redaction custody, compatibility withdrawal, complete oracles, and an explicit acceptance owner; durable consumer checkpoint identity and advancement rules are also missing.",
+    "event_types": [
+      "plan.decomposition_degraded"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay16",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding 12-dimension schema; UNKNOWN statuses were resolved fail-closed without owner or producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

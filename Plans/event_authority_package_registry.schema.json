@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_authority_package_registry.schema.v1",
+  "title": "Event Authority producer package registry (side-car)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "registry_revision",
+    "packages"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_authority_package_registry.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "registry_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "package_id",
+          "event_types",
+          "veto_status",
+          "registry_append_authorized",
+          "state"
+        ],
+        "properties": {
+          "package_id": {
+            "type": "string",
+            "pattern": "^PKG-EA-[0-9]{3}$"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_label": {
+            "type": "string"
+          },
+          "event_types": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "family_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "type": "string"
+          },
+          "veto_status": {
+            "type": "string"
+          },
+          "registry_append_authorized": {
+            "type": "boolean"
+          },
+          "worksheet_digest_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retention_policy_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at_utc": {
+            "type": "string"
+          },
+          "updated_at_utc": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

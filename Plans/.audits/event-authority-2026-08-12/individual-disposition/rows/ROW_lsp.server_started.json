@@ -1,0 +1,110 @@
+{
+  "event_type": "lsp.server_started",
+  "bucket": "alias",
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Accepted CV-081, owned by Contracts_V0, explicitly normalizes `lsp.server_started` to `lsp.server.lifecycle_changed` and forbids a second LSP lifecycle family. That exact compatibility rule supports RECLASSIFY_ALIAS; producer, payload, scope, replay, retention/custody, and checkpoint details for the legacy token remain failed rather than borrowed from the canonical row.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:6932-6941",
+      "note": "Accepted CV-081 explicitly names Contracts_V0 as owner_doc and preserves this exact alias normalization."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited authority names the canonical replacement producer, not an authorized producer for this exact legacy alias."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this legacy alias to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The canonical replacement payload minimum does not establish a closed persisted payload schema for this exact legacy token."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The canonical LSP family scope does not independently assign this exact legacy alias a registered scope/identity contract."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific redaction boundary or custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:957",
+      "note": "The alias deterministically normalizes to lifecycle_changed using state and optional state_reason."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Named consumers of the canonical replacement do not establish checkpoint advancement or fail-closed behavior for this exact alias."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:957",
+      "note": "The compatibility rule names the legacy alias, canonical replacement, and forbids a second emitted family."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:957",
+      "note": "Positive oracle: normalize this legacy token; negative oracle: producers must not fork a second LSP lifecycle family."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:946",
+      "status": "ok",
+      "notes": "Canonical replacement row names producer, consumers, payload minimum, and identity fields."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:957",
+      "status": "ok",
+      "notes": "Exact legacy token is normalized and duplicate-family emission is forbidden."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961",
+      "status": "ok",
+      "notes": "The lsp family is explicitly project_only."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:6937-6950",
+      "status": "ok",
+      "notes": "Accepted PlanUnit preserves the exact alias normalization requirement."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement.",
+    "Rebucketed out of unresolved bucket after RECLASSIFY_ALIAS; remains non-admitted alias evidence row."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "alias",
+  "rebucket_target": "alias",
+  "rebucket_applied_at_utc": "2026-08-12T10:13:25Z",
+  "alias_target": "lsp.server.lifecycle_changed"
+}

@@ -1,0 +1,118 @@
+{
+  "event_type": "wizard.unblocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts identifies wizard.unblocked as a canonical ledger event, supplies its minimum payload, and pairs it with wizard.blocked. The evidence does not close the payload or establish the rest of the Event Authority obligations.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the semantic Event Authority owner for `wizard.unblocked`; storage or projection ownership is not treated as event ownership."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:276-281",
+      "note": "The blocked/unblocked wiring section explicitly names `wizard.unblocked` and designates the executor/orchestrator blocked-state manager as producer."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation gives `wizard.unblocked` an immutable versioned registry membership or withdrawal generation."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources provide a minimum payload for `wizard.unblocked`, not a closed event-specific payload schema with additional-property, nullability, and enum rules fully bounded."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Identifiers appear in the documented minimum payload for `wizard.unblocked`, but no checked field-local clause fixes the EventRecord `scope_kind` and complete identity/nullability rules for this event."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `wizard.unblocked`'s replay policy and idempotency identity; generic EventRecord options cannot select an event-specific value by inference."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns an event-specific retention, compaction, or tombstone rule for `wizard.unblocked`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `wizard.unblocked`'s redaction profile, sensitive-field treatment, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources describe `wizard.unblocked`'s occurrence and minimum fields but do not provide a complete legal predecessor/successor state machine for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.md:276-281",
+      "note": "The citation explicitly names Run Graph, assistant-chat, dashboard, and storage projection consumers for `wizard.unblocked`, but does not define their atomic success/failure checkpoint behavior; the combined obligation remains open."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines event-specific compatibility, migration, alias normalization, and withdrawal behavior for `wizard.unblocked` as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked sources do not supply both positive emission and negative non-emission/rejection oracles for `wizard.unblocked` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2583-2588",
+      "status": "drift",
+      "notes": "The cited span starts the wizard.blocked contract; wizard.unblocked begins at 2594."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2594-2604",
+      "status": "ok",
+      "notes": "Defines wizard.unblocked minimum payload and declares the packet events canonical ledger events feeding UI/storage projections."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2583-2593",
+      "status": "ok",
+      "notes": "Defines the paired wizard.blocked state and route/remediation semantics."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:276-281",
+      "status": "ok",
+      "notes": "Explicitly names wizard.unblocked, its executor/orchestrator blocked-state-manager producer, four consumer surfaces, and the blocked_projection storage target."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-wizard-unblocked-contract-closure",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `wizard.unblocked`, will the responsible authority publish field-local citations closing every OWNER_REQUIRED obligation, authorize continued quarantine, or provide exact authority for reclassification?",
+    "options": [
+      "Publish the missing individually owned contract for a later fresh adjudication",
+      "Keep the event quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify or withdraw the token with exact cited semantic and migration authority"
+    ],
+    "evidence_gap": "Canonical status, minimum payload, paired blocked semantics, producer, consumer surfaces, and storage projection are cited. Versioned membership, semantic owner, closed payload, scope closure, event-specific replay/idempotency, retention, custody, legal transitions, atomic checkpoint behavior, compatibility withdrawal, and complete oracles remain uncited and were not inferred.",
+    "event_types": [
+      "wizard.unblocked"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay24",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

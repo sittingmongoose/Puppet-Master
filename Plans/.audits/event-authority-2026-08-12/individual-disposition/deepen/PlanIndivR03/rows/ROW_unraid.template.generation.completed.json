@@ -1,0 +1,115 @@
+{
+  "event_type": "unraid.template.generation.completed",
+  "bucket": "unresolved",
+  "july_classification": "emit_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The Unraid owner document proves emission and several outcome fields, but not a complete closed payload schema, durable catalog membership, or the remaining Event Authority dimensions. Quarantine remains fail closed.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Containers_Registry_and_Unraid.md:4038-4048",
+      "note": "The cited accepted plan unit explicitly names its owner_doc and exact event emission requirement."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited requirement says Puppet Master emits the event but does not bind a concrete producer component or producer authority; no producer is inferred."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes membership_version for this exact event; fail closed without inference."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes closed_payload_schema for this exact event; fail closed without inference."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes scope_identity for this exact event; fail closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes replay_idempotency for this exact event; fail closed without inference."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes retention for this exact event; fail closed without inference."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes redaction_custody for this exact event; fail closed without inference."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes transitions for this exact event; fail closed without inference."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes consumers_checkpoints for this exact event; fail closed without inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes compatibility_withdrawal for this exact event; fail closed without inference."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes positive_negative_oracles for this exact event; fail closed without inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:4045-4048",
+      "status": "ok",
+      "notes": "Exact cited span inspected and supports the stated semantic finding."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+      "status": "ok",
+      "notes": "Exact cited span inspected and supports the stated semantic finding."
+    },
+    {
+      "citation": "Plans/Containers_Registry_and_Unraid.md:4038-4048",
+      "status": "ok",
+      "notes": "Exact span inspected; accepted unit names owner_doc and the exact event emission requirement."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-unraid-template-generation-completed",
+    "field_or_decision": "producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `unraid.template.generation.completed`, either supply explicit field-local Plans authority for producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or choose the cited fail-closed disposition; no admission follows from this veto.",
+    "options": [
+      "Supply cited complete contract fields for later reconsideration",
+      "Keep quarantined fail closed with no checkpoint advance",
+      "Reclassify as excluded or non-durable with cited rationale"
+    ],
+    "evidence_gap": "Missing explicit field-local Plans authority for: producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "unraid.template.generation.completed"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "deepened_against_binding_schema",
+    "all_passes_have_concrete_plans_citations",
+    "fail_closed_no_admission"
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

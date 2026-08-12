@@ -1,0 +1,119 @@
+{
+  "event_type": "node.blocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The wiring matrix explicitly names the executor/orchestrator blocked-state manager as producer, while the exact runtime contract anchors node.blocked identity by run, node, and blocked_sequence. Producer and scope identity are supported; the other 10 dimensions remain uncited and owner-bound. `node.blocked` therefore remains fail-closed as NEEDS_OWNER_VETO.",
+  "evidence": {
+    "membership_version": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited versioned registry membership exists for this exact token."
+    },
+    "owner_doc": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation explicitly assigns accountable semantic authority for this exact token."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:278-281",
+      "note": "The blocked/unblocked wiring section explicitly names executor/orchestrator blocked-state manager as producer for node.blocked."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes the persisted payload schema, field types, optionality, and unknown-field behavior for this exact token."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2354-2371",
+      "note": "The exact node.blocked contract anchors blocked-episode identity by run, node, and blocked_sequence and requires those fields in the minimum payload."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines replay and idempotency behavior for this exact token."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines event-specific retention for this exact token."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation assigns redaction policy and custody for this exact token."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes legal predecessor/successor transitions for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines complete consumer checkpoint and failure behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines compatibility normalization and withdrawal criteria for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation supplies both positive and negative persisted-event oracles for this exact token."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2350-2373",
+      "status": "ok",
+      "notes": "Checked for the exact `node.blocked` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2659-2668",
+      "status": "ok",
+      "notes": "Checked for the exact `node.blocked` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2710-2712",
+      "status": "ok",
+      "notes": "Checked for the exact `node.blocked` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:278-281",
+      "status": "ok",
+      "notes": "Checked exact canonical-event grouping and explicit producer declaration for node.blocked."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-node-blocked-contract",
+    "field_or_decision": "membership_version,owner_doc,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `node.blocked`, will the accountable owner supply cited decisions for membership_version, owner_doc, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct a cited non-admission reclassification?",
+    "options": [
+      "Supply exact Plans citations closing every listed dimension for a later independent adjudication",
+      "Keep this exact token quarantined with no checkpoint advance",
+      "Direct a cited reclassification and denominator treatment for this exact token"
+    ],
+    "evidence_gap": "Existing citations establish 2 of 12 dimensions for this exact token; the listed missing decisions cannot be inferred from namespace, sibling events, package membership, or OD-EA-003.",
+    "event_types": [
+      "node.blocked"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay14",
+  "provisional": false,
+  "quality_notes": [
+    "Individually rechecked against current cited Plans spans; missing dimensions remain explicitly UNKNOWN and owner-bound.",
+    "Immutable cohort pin july248 preserved; working bucket does not alter cohort membership."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

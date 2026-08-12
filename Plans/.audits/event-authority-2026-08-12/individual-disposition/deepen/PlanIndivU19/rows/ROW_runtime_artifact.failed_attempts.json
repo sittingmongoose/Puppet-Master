@@ -1,0 +1,144 @@
+{
+  "event_type": "runtime_artifact.failed_attempts",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The `failed_attempts` schema fixes the envelope but leaves `type_payload` as an arbitrary non-empty object, so failure details and attempt identity are not closed. The taxonomy and schema-owner text establish the family and identity envelope, but exact producer, replay, retention/custody, checkpoint, compatibility, and oracle authority remain absent; the row stays quarantined pending one batched owner veto.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "`runtime_artifact.failed_attempts` is absent from the live Event Authority registry; the required membership/version row does not exist."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Runtime_Artifacts_Panel explicitly limits its ownership to the payload/schema envelope and panel routing; no cited authority names the full semantic-and-payload owner for this exact event."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The panel owns schema semantics but does not explicitly bind `runtime_artifact.failed_attempts` to an implementation producer; ownership is not treated as producer evidence."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/runtime_artifact_failed_attempts.schema.json:1",
+      "note": "The schema closes the outer envelope but permits `type_payload` as an arbitrary non-empty object, contrary to the panel requirement that per-type fields be enforced directly."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:304,308-318",
+      "note": "The panel explicitly defines the common artifact identity envelope and artifact-object identity for `runtime_artifact.failed_attempts`."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority specifies replay, deduplication key, or idempotency behavior for this exact event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority binds this exact event to a retention policy and deletion horizon."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority closes field-level redaction, custody, and access-control responsibilities for this exact event."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority closes allowed predecessor, successor, failure, and terminal transitions for `runtime_artifact.failed_attempts`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority names authorized consumers and checkpoint-advance or poison-record rules for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority defines compatibility, migration, deprecation, and withdrawal rules for this exact event."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority supplies positive and negative conformance oracles for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:67",
+      "status": "ok",
+      "notes": "Names runtime_artifact.failed_attempts in the canonical Option-2 19-family map."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:49-51",
+      "status": "ok",
+      "notes": "Requires exact per-artifact EventRecord event_type values and limits legacy shorthand to compatibility notes."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:290-305",
+      "status": "ok",
+      "notes": "Requires envelope plus per-type schema validation, assigns payload/schema ownership, and defines common identity fields."
+    },
+    {
+      "citation": "Plans/runtime_artifact_failed_attempts.schema.json",
+      "status": "ok",
+      "notes": "Schema file exists, but its arbitrary non-empty `type_payload` prevents closed-payload PASS."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:298,314",
+      "status": "ok",
+      "notes": "Defines the rebuildable artifacts projection and names storage-owned projector families, but does not supply this event's complete Event Authority retention/checkpoint contract."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:526",
+      "status": "ok",
+      "notes": "Accepted RAP-004 preserves all 19 exact runtime-artifact event names as required MVP taxonomy."
+    },
+    {
+      "citation": "Plans/event_family_registry.json",
+      "status": "missing",
+      "notes": "No exact runtime_artifact.failed_attempts membership row is present; no registry append is authorized by this overlay."
+    },
+    {
+      "citation": "Plans/runtime_artifact_failed_attempts.schema.json:1",
+      "status": "ok",
+      "notes": "The schema closes the outer envelope but permits `type_payload` as an arbitrary non-empty object, contrary to the panel requirement that per-type fields be enforced directly."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:294-304",
+      "status": "ok",
+      "notes": "Requires per-type payload fields directly and assigns only runtime-artifact payload/schema ownership plus common identity; this is insufficient for full semantic-owner PASS."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-failed-attempts-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Will an accountable semantic owner be designated for `runtime_artifact.failed_attempts` and close the open type payload plus explicit producer, replay, retention/custody, transition, checkpoint, compatibility, and oracle authority?",
+    "options": [
+      "Publish and approve the missing event-specific authority, then re-evaluate this token",
+      "Continue fail-closed quarantine with no registration or checkpoint authority",
+      "Reclassify the token only with exact event-specific cited authority"
+    ],
+    "evidence_gap": "For `runtime_artifact.failed_attempts`, cited Plans evidence does not close: membership_version, owner_doc, producer, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "runtime_artifact.failed_attempts"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay19",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 evidence dimensions were adjudicated for this exact token; every PASS is backed by field-local Plans authority.",
+    "Absent authority is fail-closed as OWNER_REQUIRED or FAIL; no namespace, sibling, package, owner, or producer inference was used."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

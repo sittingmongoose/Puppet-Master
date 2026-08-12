@@ -2,13 +2,24 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1093-L1109
+Source lines: L1093-L1120
 
-Source SHA256: `35371c337f13a7a43e31da7b629f9e2405fad713d188bb87915ab577078ea72d`
+Source SHA256: `4c3b870ad93bb8af380bcc86e47e6857f8f71946e59e620c00b51dc0d66d44ad`
 
 ---
 
 ## PMConcept7 Home Workspace boundary clarification — 2026-08-04
+
+Amended 2026-08-12 — shared interaction vocabulary, separate layout ownership. Dashboard
+widget reorder and resize adopt the same direct-manipulation vocabulary as Home surface
+movement: a lifted item that tracks the pointer one-to-one, a real in-flow placeholder in
+the vacated cell carrying that item's grid span, neighbour reflow animated from pre-move
+rects, a top-left grab handle, corner resize that snaps to grid tracks live and re-renders
+the widget body once on release, and Escape / pointer-cancel / blur as the cancellation
+contract. Sharing that vocabulary is a presentation decision and does not merge ownership:
+Home layout continues to own surface placement under `home_workspace_layout.v1`, while
+widget layout continues to own widget placement under `widget_layout:v1:dashboard`. A
+widget drag never writes the Home record and a surface drag never writes the widget record.
 
 Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
 sections) are shell presentation surfaces, not Dashboard widgets. The Home layout

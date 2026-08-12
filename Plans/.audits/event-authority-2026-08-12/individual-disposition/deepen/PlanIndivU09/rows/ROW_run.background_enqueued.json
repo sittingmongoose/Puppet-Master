@@ -1,0 +1,111 @@
+{
+  "event_type": "run.background_enqueued",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`run.background_enqueued` has an exact family statement and deterministic optional worktree-context semantics, but that citation does not name its accountable owner or producer and does not close versioned membership, exhaustive payload, replay, retention, custody, transitions, checkpoints, withdrawal, or oracles. It remains individually quarantined as NEEDS_OWNER_VETO.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked canonical registry declares schema_version 2.0.0, registry revision 2026-08-04.1, and unknown-event quarantine, but contains no exact `run.background_enqueued` entry; versioned membership remains owner-required."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes an explicitly named accountable event-contract owner; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['run-event producer / storage']"
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes an exhaustive closed event payload schema; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Plans/storage-plan.md:1586 defines optional worktree attribution and absent-field main-project context, but it does not establish the event identity key for `run.background_enqueued`; complete scope identity remains owner-required."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes replay and idempotency rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes retention rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes redaction and custody rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes lifecycle transition semantics; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes consumer and checkpoint obligations; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes compatibility and withdrawal rules; the gap remains owner-required and is not filled by namespace or family analogy."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local Plans citation for `run.background_enqueued` establishes complete positive and negative Event Authority oracles; the gap remains owner-required and is not filled by namespace or family analogy."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1586",
+      "status": "ok",
+      "notes": "States that the event remains in the run-event family, permits optional worktree_path and branch_name, and defines absent-field main-project semantics."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:4-8",
+      "status": "ok",
+      "notes": "Canonical registry metadata defines version/revision and unknown-event quarantine; exact-token search found no `run.background_enqueued` family entry, so it supplies fail-closed absence evidence rather than membership PASS."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-run-background-enqueued-authority-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Does `run.background_enqueued` have a durable event identity beyond the cited optional worktree attribution, and if so who owns/produces its versioned closed payload, replay/retention rules, enqueue transitions, consumers, and negative oracle; otherwise should it remain quarantined/reclassified?",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Checked citations leave these `run.background_enqueued` authority fields unresolved: membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles. The exact source defines optional worktree attribution, not an event identity key. No owner or producer is inferred from its namespace, family, or neighboring rows.",
+    "event_types": [
+      "run.background_enqueued"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against the binding individual-disposition schema and admission freeze.",
+    "Immutable july248 cohort pin preserved; working bucket recorded separately.",
+    "All twelve evidence fields adjudicated field-locally; every PASS has a concrete Plans citation.",
+    "No admission, bulk registration, analogy, inferred owner, or OD-EA-003 substitution."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

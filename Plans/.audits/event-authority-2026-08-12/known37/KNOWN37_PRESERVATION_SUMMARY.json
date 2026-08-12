@@ -1,0 +1,713 @@
+{
+  "known37_count": 37,
+  "all_present": true,
+  "verdict": "KEEP_REGISTERED",
+  "source": "Plans/storage-plan.md#RET-K37-ASSIGNMENT-001",
+  "rows": [
+    {
+      "event_type": "goal.blocked",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.cancelled",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.child_status_changed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_child_status_changed.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_child_status_changed.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.completed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_completed.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.created",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_created.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_created.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.degraded",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_degraded.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_degraded.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.evidence_captured",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.progressed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_progressed.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_progressed.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.receipt_recorded",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.replanned",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_replanned.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_replanned.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.scheduled",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_scheduled.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_scheduled.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.stopped",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_stopped.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_stopped.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.tool_check_recorded",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.updated",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_updated.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_updated.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal.verification_decided",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_verification_decided.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_verification_decided.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.blocked",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.cancelled",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.certified",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.replanned",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.started",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_started.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_started.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "goal_run.stopped",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v2",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v2"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "platform.capability_evaluated",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "restore_point.applied",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_applied/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "restore_point.corrupt",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_restore_point_corrupt.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "restore_point.created",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "restore_point.deleted",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_deleted/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "restore_point.expired",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_expired/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "run.started",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_run_started.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "safe_point.recovery_unavailable",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_safe_point_recovery_unavailable.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-SAFEPOINT-90D-AFTER-RELEASE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "seglog.event_appended",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/seglog_event_appended/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-SEGLOG-7D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.boot_recovery",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.compaction_lifecycle_changed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_compaction_lifecycle_changed/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.deletion_lifecycle_changed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_deletion_lifecycle_changed/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.integrity_detected",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.recovery_applied",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "payload_schema_ref",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0",
+      "payload_schema_ref": {
+        "path": "Plans/event_payload_storage_recovery_applied.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.retention_hold_changed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    },
+    {
+      "event_type": "storage.value_quarantine_changed",
+      "verdict": "KEEP_REGISTERED",
+      "family_revision": "2.0.0",
+      "payload_authority": "inline_payload_schema",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0",
+      "payload_schema_ref": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "drift": "none",
+      "gaps": [],
+      "preservation_ok": true
+    }
+  ],
+  "fully_wired": 37
+}

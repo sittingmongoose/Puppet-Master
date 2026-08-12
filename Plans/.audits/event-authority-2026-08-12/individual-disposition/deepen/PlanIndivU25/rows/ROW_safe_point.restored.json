@@ -1,0 +1,143 @@
+{
+  "event_type": "safe_point.restored",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts explicitly owns this canonical restore event, and the command contract fixes its sole runtime handler/producer path, project/worktree identity, command-envelope idempotency, closed restore outcomes, compatibility normalization, custody, consumers/checkpoint prerequisites, and a bounded static owner/consumer oracle. The token remains absent from registry revision 2026-08-04.1; its payload is expressly a minimum rather than a closed schema, no exact event retention rule is cited, and the bounded static oracle does not close complete Event Authority behavior, so it remains quarantined.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "Contracts explicitly owns the safe-point event contract; FileSafe snapshot names are compatibility wrappers, not peer event-family owners."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/UI_Command_Catalog.md:8439-8443,8552-8553",
+      "note": "The canonical runtime command and both normalized Orchestrator spellings reach one runtime handler and share one safe_point.restored producer with no peer/no-event path."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The exact token is absent from live event-family registry revision 2026-08-04.1; a payload schema_version field is not registry membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts labels the cited fields as a minimum payload and supplies no exact closed schema forbidding additional fields or closing every conditional field."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/UI_Command_Catalog.md:8437-8444",
+      "note": "The canonical command requires project/run/node/attempt/safe-point/repo/worktree identity and emits the event at project scope."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/UI_Command_Catalog.md:8439-8443,8552-8553",
+      "note": "The canonical producer emits once by command-envelope idempotency identity; wrappers normalize deterministically and share the same identity and admission decision."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation fixes retention class, anchor, TTL, legal holds, recovery-hold release, or cleanup for this exact event record."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/UI_Command_Catalog.md:8437-8444",
+      "note": "The command row assigns safe_point_record, restore-transaction, and recovery-anchor custody and routes mutation through FileSafe; wrapper paths cannot create peer custody."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2466-2477",
+      "note": "The restore_outcome vocabulary is closed and distinguishes equality-proven clean/skipped, pre-mutation refusal, rollback-proven failure, and fenced recovery-required state."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:284-286; Plans/storage-plan.md:1545-1547",
+      "note": "Wiring names runtime recovery, Run Graph detail, and audit/debug consumers; Storage requires safe-point lineage/checkpoint markers before restore flows continue and distinguishes them from projector checkpoints."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "FileSafe snapshot event names are explicitly compatibility wrappers mapped to the Contracts-owned safe-point family rather than separate authorities."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "L-020 is explicitly limited to a static owner/consumer oracle and cannot close EventRecord depth or certify runtime behavior; no complete event-authority positive/negative/replay/quarantine suite is cited."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/event_family_registry.json:1-8",
+      "status": "ok",
+      "notes": "Full revision 2026-08-04.1 was checked; the exact token is absent and unknown events quarantine without checkpoint advance."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2417",
+      "status": "drift",
+      "notes": "The prior line belongs to run.node_retry_scheduled; the exact safe-point restore declaration is at lines 2450-2479."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2450-2483",
+      "status": "ok",
+      "notes": "Defines the minimum payload, closed restore outcomes, and Contracts-owned compatibility mapping."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8435-8453,8547-8553",
+      "status": "ok",
+      "notes": "Defines exact producer, scope/identity, custody, outcomes, idempotency, deterministic wrappers, and no peer/no-event path."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2670-2679",
+      "status": "ok",
+      "notes": "Defines safe-point/worktree identity and fail-closed stale-baseline verification."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:284-286",
+      "status": "ok",
+      "notes": "Names the producer class and exact runtime/UI/audit consumers for this event family."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1545-1547",
+      "status": "ok",
+      "notes": "Requires runtime checkpoint-marker and safe-point lineage durability before restore continuation."
+    },
+    {
+      "citation": "Plans/Automated_Testing_System.md:1998-2006",
+      "status": "ok",
+      "notes": "Defines the exact L-020 static oracle while explicitly limiting it from closing denominator/runtime obligations."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:6891-6894",
+      "status": "drift",
+      "notes": "The related stored-value schema/version is custody evidence only; it is not versioned event-family membership for safe_point.restored."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-safe-point-restored",
+    "field_or_decision": "membership_version,closed_payload_schema,retention,positive_negative_oracles",
+    "question": "For `safe_point.restored`, will the Contracts owner materialize versioned membership, a closed event payload schema, an exact retention/hold/cleanup rule, and complete event-authority oracles, or direct continued quarantine or cited reclassification?",
+    "options": [
+      "Materialize and approve versioned membership, the closed schema, exact retention contract, and complete event-authority oracle suite, then evaluate this token individually for registration",
+      "Continue persisted-unregistered quarantine with unknown-event handling and no checkpoint advance",
+      "Reclassify only with an authoritative citation that this token is not a persisted semantic event"
+    ],
+    "evidence_gap": "The lifecycle and producer contract is deep, but the live registry omits the token, Contracts declares only a minimum payload, no event-specific retention authority is cited, and L-020 explicitly cannot close EventRecord depth or runtime behavior; stored-value versioning and a bounded static oracle cannot substitute for these gaps.",
+    "event_types": [
+      "safe_point.restored"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay20",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against current owner, command, storage, wiring, and oracle citations; unresolved dimensions remain owner-required and fail closed."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

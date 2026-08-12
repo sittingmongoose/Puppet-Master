@@ -1,0 +1,133 @@
+{
+  "event_type": "runtime_artifact.artifact_version",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Semantic overlay confirms this exact canonical artifact family, matching per-type schema validation, project scope, lifetime dedupe identity, replay policy, and projector checkpoint semantics. Its concrete producer, retention/custody, lifecycle, and complete oracle contract remain unresolved, requiring owner adjudication.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:300-304",
+      "note": "The panel explicitly declares itself schema owner for the runtime-artifact envelope and per-type payload split."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for concrete emitting component and append boundary of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "EventRecord 2.0.0 and per-type schema versions do not establish versioned Event Authority registry membership for `runtime_artifact.artifact_version`; no assigned registry token is cited."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_artifact_version.schema.json:1",
+      "note": "The exact materialized per-type schema fixes the v1 schema ID, rejects additional properties, requires stable identity/projection/retention/routing fields, and closes artifact_version type_payload."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2033",
+      "note": "The contract requires project scope, a non-empty owning project ID, and the canonical EventRecord index identity."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2035",
+      "note": "The contract pins lifetime identity, selected replay policy, dedupe failure semantics, and projector-only replay limits."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for allowed lifecycle transition semantics of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029-2035",
+      "note": "The durable-state addendum defines canonical history, projector-only replay, and atomic projection checkpoint behavior."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for compatibility aliases and withdrawal behavior of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `runtime_artifact.artifact_version`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:72",
+      "status": "ok",
+      "notes": "Lists runtime_artifact.artifact_version as one of the canonical exact artifact event names."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:296",
+      "status": "ok",
+      "notes": "Requires envelope plus matching per-type schema validation before Seglog append and artifact-index write."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2025",
+      "status": "ok",
+      "notes": "Begins the Case L durable-state consumer addendum governing current EventRecord continuity."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2029",
+      "status": "ok",
+      "notes": "Begins canonical-history and projection-truth rules."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:292-304",
+      "status": "ok",
+      "notes": "Requires a dedicated artifact_version schema and defines schema ownership, common identity, producer/actor refs, and validation boundaries."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2035",
+      "status": "ok",
+      "notes": "Defines EventRecord 2.0.0 project scope, idempotency identity, replay policy, dedupe failure semantics, and projector-only replay limits."
+    },
+    {
+      "citation": "Plans/runtime_artifact_artifact_version.schema.json:1",
+      "status": "ok",
+      "notes": "Exact materialized per-type schema establishes the closed artifact_version object; it does not establish Event Authority membership."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-runtime-artifact-artifact-version-contract-completion",
+    "field_or_decision": "producer,membership_version,retention,redaction_custody,transitions,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Event owner must either supply the missing complete Event Authority contract for `runtime_artifact.artifact_version` or authorize continued quarantine/reclassification; current evidence is insufficient for admission.",
+    "options": [
+      "Supply an individually owned, versioned contract satisfying every remaining checklist item, then adjudicate registration individually",
+      "Keep quarantined as persisted-unregistered with fail-closed checkpoint behavior",
+      "Reclassify as excluded non-event with exact cited rationale"
+    ],
+    "evidence_gap": "Exact membership, schema owner, closed per-type validation, project identity, replay/dedupe, and projector behavior are documented, but the evidence does not identify the concrete producer, define retention and redaction custody for this family, state lifecycle transitions or compatibility withdrawal, or provide complete positive and negative admission oracles.",
+    "event_types": [
+      "runtime_artifact.artifact_version"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay18",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "event_type": "widget.completed_prose",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "Current GUI authority classifies `widget.completed_prose` as legacy Progress widget catalog vocabulary and a compatibility input resolved through native Progress/runtime views, while Storage explicitly classifies the exact token as a migration alias, view overlay, or derived view that cannot own canonical execution truth (Plans/FinalGUISpec.md:39-45; Plans/storage-plan.md:59-61). It is therefore compatibility/view vocabulary, not a persisted event type.",
+  "evidence": {
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/FinalGUISpec.md:39-45",
+      "note": "The current GUI authority assigns the token compatibility-input status; it does not designate a semantic persisted-event owner."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "Storage identifies the token as migration/derived vocabulary and assigns canonical truth to other record families, not to an event producer for this token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "The explicit migration-alias/derived-view classification contradicts treating the token occurrence as versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "No persisted EventRecord payload is defined; canonical data belongs to attempt, blocked/runtime, work, lane/worktree, and record-summary families."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/FinalGUISpec.md:39-45",
+      "note": "Compatibility widget vocabulary does not establish canonical event scope or identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "A migration alias/view overlay is derived from canonical records and has no independent event replay or deduplication identity."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "The compatibility view token has no event-specific retention class; retention follows the canonical underlying record families."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "The compatibility/derived token owns no persisted payload and therefore supplies no independent redaction or custody contract."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/FinalGUISpec.md:39-45",
+      "note": "The cited lines describe migration from tier-centric widget vocabulary to native runtime views, not an event lifecycle for this token."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/FinalGUISpec.md:39-45",
+      "note": "Native Progress/runtime surfaces resolve this compatibility input, but no persisted-event consumer or checkpoint contract exists for it."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:39-45",
+      "note": "Current GUI authority explicitly confines the exact token to compatibility/legacy input status and routes live display through native Progress/runtime views."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:59-61",
+      "note": "The negative semantic boundary is explicit: this exact token cannot remain completed tier summaries or own canonical execution truth; canonical record families must be used instead."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/FinalGUISpec.md:37-46",
+      "status": "ok",
+      "notes": "Explicitly classifies `widget.completed_prose` as legacy widget catalog vocabulary/compatibility input and redirects live progress to native surfaces."
+    },
+    {
+      "citation": "Plans/storage-plan.md:57-61",
+      "status": "ok",
+      "notes": "Explicitly classifies the exact token as migration alias/view overlay/derived view and forbids it from owning canonical execution truth."
+    },
+    {
+      "citation": "Plans/storage-plan.md:2564-2584",
+      "status": "ok",
+      "notes": "Preserves the token for migration lineage while repeating that derived runtime compatibility must not own canonical execution-unit identity."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "closed-world-census/clean_batch_02",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated_excluded",
+  "quality_notes": [
+    "Fresh residual adjudicated from exact current GUI and Storage semantic authority; no July cohort pin was invented.",
+    "The one nearby auth cue and dot-separated spelling were not treated as admission evidence; the exact-token compatibility classification controls."
+  ]
+}

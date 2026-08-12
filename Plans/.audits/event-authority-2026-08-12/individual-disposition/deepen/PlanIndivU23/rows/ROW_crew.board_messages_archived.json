@@ -1,0 +1,118 @@
+{
+  "event_type": "crew.board_messages_archived",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Persisted crew-board archive transition record is supported by exact plan declarations, but the 12-part admission checklist is incomplete; fail closed pending an individual owner decision.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for explicit semantic acceptance owner of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:4673-4675",
+      "note": "The cited archival flow explicitly appends crew.board_messages_archived."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2953-2971",
+      "note": "The exact row pins run, thread, crew, archive cutoff, optional message IDs, and archive reason."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:3865-3873,4581-4587",
+      "note": "The cited archive rules define the 24-hour ordinary window and preservation of unresolved messages."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:3865-3873,4581-4587",
+      "note": "The cited lifecycle defines which crew-board messages may move into archived state."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for named consumers and checkpoint behavior of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The canonical-board versus optional-mirror boundary does not define compatibility acceptance, normalization, and withdrawal/sunset for `crew.board_messages_archived`; no such rule is inferred."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `crew.board_messages_archived`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2938",
+      "status": "drift",
+      "notes": "Input line is the coordination event table header; corrected declaration is Contracts_V0.md:2971."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2953-2971",
+      "status": "ok",
+      "notes": "Crew identity and archive payload inventory are declared."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:3865-3873,4581-4587",
+      "status": "ok",
+      "notes": "Archive lifecycle, 24-hour ordinary retention, and unresolved-message exception are explicit."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:4673-4675",
+      "status": "ok",
+      "notes": "Concrete archive append producer is shown."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-crew-board-messages-archived-contract-completion",
+    "field_or_decision": "owner_doc,membership_version,closed_payload_schema,replay_idempotency,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Should `crew.board_messages_archived` receive versioned Event Authority membership after the identified gaps are closed, remain quarantined, or be reclassified?",
+    "options": [
+      "Materialize the complete owner-backed contract, add explicit versioned membership, then adjudicate this event individually for registration",
+      "Continue quarantine fail-closed with no checkpoint advance",
+      "Reclassify as excluded/non-event with exact cited rationale and denominator treatment"
+    ],
+    "evidence_gap": "Owner must close archive scope/schema and supply membership/version, replay, custody, checkpoint, and oracle authority before registration Compatibility withdrawal/sunset for this exact token is also absent.",
+    "event_types": [
+      "crew.board_messages_archived"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay07",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

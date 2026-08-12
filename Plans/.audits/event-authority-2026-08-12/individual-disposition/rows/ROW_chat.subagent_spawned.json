@@ -1,0 +1,101 @@
+{
+  "event_type": "chat.subagent_spawned",
+  "bucket": "alias",
+  "working_bucket": "alias",
+  "cohort_pins": [
+    "july40"
+  ],
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Exact authority classifies `chat.subagent_spawned` as a non-canonical alias normalized to `subagent.*` before persistence. Reclassification only; never admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited document explicitly accepts authority for `chat.subagent_spawned` as canonical."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract explicitly assigns the authoritative producer for `chat.subagent_spawned`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:1466",
+      "note": "Exact token is retired as canonical."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The cited PM lineage envelope is not an exhaustive closed payload schema for the normalized canonical family."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1466",
+      "note": "Envelope names run/thread/agent parent-child identity."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1466",
+      "note": "Exact token is a retired alias normalized to subagent.*."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No row-local Plans evidence closes this field; fail closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:1464-1468",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2887-2889",
+      "status": "ok",
+      "notes": "Reviewed row-locally; supports only the stated field or boundary."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently adjudicated from row-local cited evidence.",
+    "PASS is limited to the exact field proposition established by the citation; minimum or included fields are not treated as closed schemas.",
+    "No admission, registry append, owner inference, producer inference, analogy, or OD-EA-003 dependence.",
+    "Rebucketed out of unresolved bucket after RECLASSIFY_ALIAS; remains non-admitted alias evidence row."
+  ],
+  "alias_target": "subagent.*",
+  "rebucket_target": "alias",
+  "rebucket_applied_at_utc": "2026-08-12T10:13:25Z"
+}

@@ -1,0 +1,1100 @@
+[
+  {
+    "event_type": "run.scheduler_analysis",
+    "bucket": "unresolved",
+    "july_classification": "alias",
+    "disposition": "RECLASSIFY_ALIAS",
+    "disposition_rationale": "Cited authority explicitly marks this as a legacy alias of `scheduler.pass`; new producers must not emit the alias. Reclassify to the canonical event rather than register a second family.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/storage-plan.md:2102",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Contracts/Storage compatibility reader']"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "PASS",
+        "citation": "Plans/storage-plan.md:2102",
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/storage-plan.md:2102",
+        "status": "ok",
+        "notes": "Exact cited storage alias span inspected; it names the legacy-to-canonical normalization."
+      },
+      {
+        "citation": "Plans/storage-plan.md:2103",
+        "status": "ok",
+        "notes": "Exact cited storage alias span inspected; it names the legacy-to-canonical normalization."
+      },
+      {
+        "citation": "Plans/storage-plan.md:2099-2118",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-producer-closed_payload_schema-scope_identity",
+      "field_or_decision": "membership_version,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,positive_negative_oracles",
+      "question": "For `run.scheduler_analysis`, provide cited values/authority for incomplete fields: membership_version, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles \u2014 or authorize continued quarantine / cited exclusion.",
+      "options": [
+        "Supply cited complete contract fields then reconsider individual registration",
+        "Keep quarantined fail-closed (no checkpoint advance)",
+        "Reclassify as excluded/non-event with cited rationale"
+      ],
+      "evidence_gap": "Incomplete evidence fields: membership_version, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, positive_negative_oracles",
+      "event_types": [
+        "run.scheduler_analysis"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "runtime_continuity.actor_bound",
+    "bucket": "unresolved",
+    "july_classification": "conflicting",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the runtime-continuity family and storage-key model but expressly limits it to spec-level continuity; no per-event closed payload, bound producer/owner, lifecycle authority, or complete durable Event Authority contract is cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Contracts runtime-continuity owner candidate', 'runtime continuity owner unresolved; Contracts declares family']"
+      },
+      "closed_payload_schema": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:17373",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20161",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20157",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20214",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20300-20305",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `runtime_continuity.actor_bound` (membership_version, owner, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "runtime_continuity.actor_bound"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "runtime_continuity.redaction_applied",
+    "bucket": "unresolved",
+    "july_classification": "conflicting",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the runtime-continuity family and storage-key model but expressly limits it to spec-level continuity; no per-event closed payload, bound producer/owner, lifecycle authority, or complete durable Event Authority contract is cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Contracts runtime-continuity owner candidate', 'runtime continuity owner unresolved; Contracts declares family']"
+      },
+      "closed_payload_schema": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:17373",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20161",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20157",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20214",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20300-20305",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `runtime_continuity.redaction_applied` (membership_version, owner, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "runtime_continuity.redaction_applied"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "runtime_continuity.replay_checkpointed",
+    "bucket": "unresolved",
+    "july_classification": "conflicting",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the runtime-continuity family and storage-key model but expressly limits it to spec-level continuity; no per-event closed payload, bound producer/owner, lifecycle authority, or complete durable Event Authority contract is cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Contracts runtime-continuity owner candidate', 'runtime continuity owner unresolved; Contracts declares family']"
+      },
+      "closed_payload_schema": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:17373",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20161",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20157",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20214",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20300-20305",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `runtime_continuity.replay_checkpointed` (membership_version, owner, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "runtime_continuity.replay_checkpointed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "runtime_continuity.route_resolved",
+    "bucket": "unresolved",
+    "july_classification": "conflicting",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the runtime-continuity family and storage-key model but expressly limits it to spec-level continuity; no per-event closed payload, bound producer/owner, lifecycle authority, or complete durable Event Authority contract is cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Contracts runtime-continuity owner candidate', 'runtime continuity owner unresolved; Contracts declares family']"
+      },
+      "closed_payload_schema": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:17373",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20161",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20157",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20214",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20300-20305",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-owner-producer-closed_payload_schema",
+      "field_or_decision": "membership_version,owner,producer,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `runtime_continuity.route_resolved` (membership_version, owner, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "runtime_continuity.route_resolved"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": [
+      "no_field_cited_PASS"
+    ]
+  },
+  {
+    "event_type": "skill.invocation_timed_out",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The Skills owner document proves timeout semantics, cancellation, and emission, but does not define a closed payload schema or prove durable catalog membership and the remaining Event Authority dimensions. Quarantine remains fail closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Skills_System.md:158-163",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Skills_System.md:158-163",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/Skills_System.md:158-163",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Skills_System.md:158-163",
+        "status": "ok",
+        "notes": "Exact cited span inspected and supports the stated semantic finding."
+      },
+      {
+        "citation": "Plans/Skills_System.md:2497-2513",
+        "status": "ok",
+        "notes": "Exact cited span inspected and supports the stated semantic finding."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `skill.invocation_timed_out` (membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "skill.invocation_timed_out"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "subagent.parallel_group_failed",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The owner document proves emission and a closed payload, but the shard and cited text do not prove durable catalog membership or the remaining Event Authority contract. Quarantine remains fail closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/orchestrator-subagent-integration.md:31415-31421",
+        "status": "ok",
+        "notes": "Exact cited span inspected and supports the stated semantic finding."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-scope_identity-replay_idempotency-retention",
+      "field_or_decision": "membership_version,scope_identity,replay_idempotency,retention,redaction_custody,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `subagent.parallel_group_failed` (membership_version, scope_identity, replay_idempotency, retention, redaction_custody, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "subagent.parallel_group_failed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "unraid.template.generation.completed",
+    "bucket": "unresolved",
+    "july_classification": "emit_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "The Unraid owner document proves emission and several outcome fields, but not a complete closed payload schema, durable catalog membership, or the remaining Event Authority dimensions. Quarantine remains fail closed.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:4045-4048",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "PASS",
+        "citation": "Plans/Containers_Registry_and_Unraid.md:4045-4048",
+        "note": "no field-local evidence in overlay"
+      },
+      "closed_payload_schema": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:4045-4048",
+        "status": "ok",
+        "notes": "Exact cited span inspected and supports the stated semantic finding."
+      },
+      {
+        "citation": "Plans/Containers_Registry_and_Unraid.md:465-469",
+        "status": "ok",
+        "notes": "Exact cited span inspected and supports the stated semantic finding."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-closed_payload_schema-scope_identity-replay_idempo",
+      "field_or_decision": "membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `unraid.template.generation.completed` (membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "unraid.template.generation.completed"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "usage.cost_adjusted",
+    "bucket": "unresolved",
+    "july_classification": "candidate_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the candidate family and closes its payload fields/enums, but no registered persistence row, exact scope/retention/replay policy, consumers, withdrawal policy, or test oracles are cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Usage cost reconciliation']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:20139-20146",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20194",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-producer-scope_identity-replay_idempotency",
+      "field_or_decision": "membership_version,producer,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `usage.cost_adjusted` (membership_version, producer, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "usage.cost_adjusted"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  },
+  {
+    "event_type": "usage.cost_clamped",
+    "bucket": "unresolved",
+    "july_classification": "candidate_only",
+    "disposition": "NEEDS_OWNER_VETO",
+    "disposition_rationale": "Contracts names the candidate family and closes its payload fields/enums, but no registered persistence row, exact scope/retention/replay policy, consumers, withdrawal policy, or test oracles are cited. No admission.",
+    "evidence": {
+      "membership_version": {
+        "status": "FAIL",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "owner": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "note": "no field-local evidence in overlay"
+      },
+      "producer": {
+        "status": "OWNER_REQUIRED",
+        "citation": null,
+        "note": "EA-27 producer_owner_refs present but not yet field-cited against CURRENT Plans: ['Usage budget enforcement']"
+      },
+      "closed_payload_schema": {
+        "status": "PASS",
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "note": "no field-local evidence in overlay"
+      },
+      "scope_identity": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "replay_idempotency": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "retention": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "redaction_custody": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "transitions": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "consumers_checkpoints": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "compatibility_withdrawal": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      },
+      "positive_negative_oracles": {
+        "status": "UNKNOWN",
+        "citation": null,
+        "note": "no field-local evidence in overlay"
+      }
+    },
+    "citations_checked": [
+      {
+        "citation": "Plans/Contracts_V0.md:20139-20146",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20194",
+        "status": "drift",
+        "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+      },
+      {
+        "citation": "Plans/Contracts_V0.md:20280-20286",
+        "status": "ok",
+        "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+      }
+    ],
+    "owner_veto": {
+      "stable_id": "OV-EA-unre-membership_version-producer-scope_identity-replay_idempotency",
+      "field_or_decision": "membership_version,producer,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+      "question": "Owner must either supply the missing Event Authority dimensions for `usage.cost_clamped` (membership_version, producer, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) and authorize individual registration, or choose its fail-closed disposition.",
+      "options": [
+        "Complete the owner-backed contract and then register this event individually",
+        "Continue quarantine as unresolved (fail closed; no checkpoint advance)",
+        "Reclassify as a non-canonical/non-durable event with cited rationale"
+      ],
+      "evidence_gap": "The cited producer/family text does not supply every required Event Authority dimension. Exact owner policy values cannot be inferred or borrowed by analogy.",
+      "event_types": [
+        "usage.cost_clamped"
+      ]
+    },
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "independent_of_od_ea_003": true,
+    "source_overlay": "UnresolvedSem01",
+    "provisional": true,
+    "quality_notes": []
+  }
+]

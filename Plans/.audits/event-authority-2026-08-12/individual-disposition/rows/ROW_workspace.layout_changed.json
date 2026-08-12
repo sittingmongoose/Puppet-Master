@@ -1,0 +1,140 @@
+{
+  "event_type": "workspace.layout_changed",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "august2"
+  ],
+  "july_classification": "live_registry_august",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner AUG-CP RECLASSIFY_OUT_OF_REGISTRY applied 2026-08-12T12:05:08Z. Removed from live registry. Not Known37. Not admitted. august2 pin retained.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2321-2324",
+      "note": "Project-only family names FinalGUISpec semantic_owner_doc and Contracts payload_owner_doc."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:37154-37175; Plans/Wiring_Matrix.production.json:44230-44254",
+      "note": "Bounded rows establish named reset and move-workgroup producers of workspace layout changes only; do not claim exhaustive producer coverage."
+    },
+    "membership_version": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2319-2321",
+      "note": "Registered family binds family_revision 1.0.0 to workspace.layout_changed."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:5-151",
+      "note": "Object is closed by additionalProperties=false, required fields, constrained mutation/host/edge values, and persisted=true."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2321-2337; Plans/event_payloads/workspace_layout_changed.schema.json:7-24,33-40",
+      "note": "Registry declares project_only and /payload/project_id; schema requires nonempty project_id and workspace_tab_id."
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:1016-1019,1027-1030; Plans/storage-plan.md:473-478",
+      "note": "Required replay/idempotency fields, selected dedupe identity/conflict behavior, canonical replay ordering/scope partition, and fail-closed dedupe admission are defined."
+    },
+    "retention": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2350-2354; Plans/storage_value_registry.json:68-81",
+      "note": "Family assigns RP-AUTHORITY-INDEFINITE v1.0.0 and registry defines indefinite retention, retain_indefinitely=true, null TTL, expiry_action=none."
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2340-2344; Plans/storage-plan.md:480",
+      "note": "Family rejects unhandled secrets with no transform; storage invalidates raw secrets and requires non-secret refs under permission/account custody."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:334-346; Plans/Contracts_V0.md:3418-3425",
+      "note": "Verified write/readback gates success; failure restores prior state and produces no success event, aligned to applied/no-change/cancelled/failed receipts."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/storage-plan.md:1510-1546",
+      "note": "DEPTH GAP (AugustDepthClose): only shared projector/checkpoint mechanics are cited; Plans/event_family_registry.schema.json defines family membership only and does not supply event-specific workspace.layout_changed consumer bindings or checkpoint key/schema/version authority. Invent no consumer ID; pending owner choice is tracked in OWNER_DECISION_SHEET AUG-CP-WLC-001."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2331-2339; Plans/Contracts_V0.md:1029-1031",
+      "note": "Exact empty aliases/extensions/referenced-event mapping plus forward-only migration and compatibility-reader rules close current compatibility posture."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:3441-3445; Plans/FinalGUISpec.md:283-291,334-346",
+      "note": "Positive criteria require exact surface/revision/host/insertion/correlation/durability truth; negatives forbid success for failed, unchanged, cancelled, or fabricated application."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/event_family_registry.json:2319-2354",
+      "status": "ok",
+      "notes": "membership/owner/scope/redaction/compatibility/retention windows."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:37154-37175; Plans/Wiring_Matrix.production.json:44230-44254",
+      "status": "ok",
+      "notes": "Bounded reset + move-workgroup producer rows (not exhaustive)."
+    },
+    {
+      "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:5-151",
+      "status": "ok",
+      "notes": "Closed payload."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:1016-1019,1027-1030; Plans/storage-plan.md:473-478",
+      "status": "ok",
+      "notes": "Replay/idempotency."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2350-2354; Plans/storage_value_registry.json:68-81",
+      "status": "ok",
+      "notes": "Retention policy resolution."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2340-2344; Plans/storage-plan.md:480",
+      "status": "ok",
+      "notes": "Redaction/custody."
+    },
+    {
+      "citation": "Plans/FinalGUISpec.md:334-346; Plans/Contracts_V0.md:3418-3425",
+      "status": "ok",
+      "notes": "Transitions."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1519-1524; Plans/event_family_registry.schema.json:305-370",
+      "status": "ok",
+      "notes": "Generic checkpoint protocol vs absent event-specific consumer."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2331-2339; Plans/Contracts_V0.md:1029-1031",
+      "status": "ok",
+      "notes": "Compatibility posture."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:3441-3445; Plans/FinalGUISpec.md:283-291,334-346",
+      "status": "ok",
+      "notes": "Positive/negative oracles."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "AugustDepthClose",
+  "provisional": false,
+  "quality_notes": [
+    "CiteAuthorityLibs field-local citation matrix applied (combined citation strings in citation fields, not notes-only).",
+    "producer uses bounded Wiring_Matrix.production.json handler+expected_event_types ranges (not FinalGUISpec/Section15 alone).",
+    "consumers_checkpoints remains OWNER_REQUIRED with shared-mechanics citation only; event_family_registry.schema.json is explicitly non-authoritative for checkpoint bindings; pending owner choice is tracked in AUG-CP-WLC-001, not row-local owner_veto.",
+    "provisional=true until the owner chooses an August checkpoint option and any attested event-specific consumer/checkpoint fields are applied."
+  ],
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+}

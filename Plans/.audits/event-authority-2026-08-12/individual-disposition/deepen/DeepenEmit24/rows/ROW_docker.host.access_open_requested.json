@@ -1,0 +1,126 @@
+{
+  "event_type": "docker.host.access_open_requested",
+  "bucket": "unresolved",
+  "working_bucket": "unresolved",
+  "cohort_pins": [
+    "emit_restore"
+  ],
+  "july_classification": "emit_candidate_machine_contract_triple_bound",
+  "disposition": "NEEDS_MORE_EVIDENCE",
+  "disposition_rationale": "`docker.host.access_open_requested` entered IndividualDisposition from the full 180-source triple-bound machine-contract scan (TRIPLE_BOUND_EMIT_MERGE.json merged_count=24, cohort pin emit_restore). Production wiring entry `catalog.docker_host_access_open_app` / command `cmd.docker.host.access.open_app` directly binds this exact token in expected_event_types with effect_kind=event and receipt_or_event_refs \u2014 a triple-bound emit obligation, not lexical noise. Checked Plans do not prove EventRecord/seglog persistence for this exact token: Repository search finds exact token `docker.host.access_open_requested` only in Plans/Wiring_Matrix.production.json among checked Plans surfaces. Persistence therefore remains unproven; row stays fail-closed at NEEDS_MORE_EVIDENCE with no ADMIT or registry append.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "The matrix entry declares expected_event_types and certification evidence but supplies no event-registry membership record, contract version, or registry row for `docker.host.access_open_requested`."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.production.json:10053",
+      "note": "evidence_required conditions production certification on typed wiring/receipt/event assertion evidence for `cmd.docker.host.access.open_app`; it does not name a semantic owner empowered to approve the persisted `docker.host.access_open_requested` contract."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:10043,10042,10057-10062",
+      "note": "The matrix names handler_location `handlers::docker::host_access_open_app` and effect_contract effect_kind=event requiring `cmd.docker.host.access.open_app` to emit the declared event types via receipt_or_event_refs. This closes the command-path emit producer only; it does not name an EventRecord/seglog append authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "acceptance_checks require a typed payload/result contract or explicit route/open no-persist disposition but do not define a closed persisted payload schema for this exact event type."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "The checked wiring block does not close canonical scope and identity fields carried by the emitted `docker.host.access_open_requested` event itself."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "No replay key, duplicate rule, or idempotency semantics for `docker.host.access_open_requested` appear in the checked matrix contract block."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "No retention class, deletion horizon, or retention authority for `docker.host.access_open_requested` appears in the checked matrix contract block."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "No event-payload redaction or custody rule for `docker.host.access_open_requested` appears in the checked matrix contract block."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "The command effect is declared, but predecessor, successor, failure, and duplicate transition rules for `docker.host.access_open_requested` are not closed in the checked block."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10054-10055",
+      "note": "state_selector `state.commands.docker_host_access_open_app.availability` and disabled_reason_projection `state.commands.docker_host_access_open_app.disabled_reason` are named for UI availability, but authorized persisted-event consumers and checkpoint-advance rules for `docker.host.access_open_requested` are not defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "note": "No compatibility alias, migration, deprecation, or withdrawal contract for `docker.host.access_open_requested` appears in the checked matrix block."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/Wiring_Matrix.production.json:10096-10099",
+      "note": "event_test_requirements state a future assert that `cmd.docker.host.access.open_app` emits `docker.host.access_open_requested` with command_id, origin, correlation_id, and handler target; this is open requirement text, not a completed positive/negative oracle pair."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "closed-world-census/admission/TRIPLE_BOUND_EMIT_MERGE.json",
+      "status": "ok",
+      "notes": "Token in merged_event_types (merged_count=24); advisor2_blocker=materialize_missing_triple_bound_before_partition_seal."
+    },
+    {
+      "citation": "closed-world-census/admission/MACHINE_CONTRACT_EVENT_BINDING_SCAN.json",
+      "status": "ok",
+      "notes": "Triple-bound scan: entry_ids=['catalog.docker_host_access_open_app'], ui_command_ids=['cmd.docker.host.access.open_app'], in_census_ledger=True; persistence_adjudication still_open_no_admit."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10039-10099",
+      "status": "ok",
+      "notes": "Full `catalog.docker_host_access_open_app` block checked for membership, schema, lifecycle, consumer, and persistence dimensions."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10045",
+      "status": "ok",
+      "notes": "Exact token appears in expected_event_types for `cmd.docker.host.access.open_app`."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10056",
+      "status": "ok",
+      "notes": "effect_contract declares effect_kind=event and receipt_or_event_refs containing the exact token."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:10096",
+      "status": "ok",
+      "notes": "event_test_requirements assert future emission; requirement is not executed oracle evidence."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "TripleBoundEmitMerge",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "unresolved_emit_candidate_deepened",
+  "quality_notes": [
+    "Triple-bound emit candidate adjudicated individually; not rejected_lexical.",
+    "Machine-contract emit binding is PASS for producer only; EventRecord/seglog persistence remains the blocking evidence gap.",
+    "Repository search finds exact token `docker.host.access_open_requested` only in Plans/Wiring_Matrix.production.json among checked Plans surfaces.",
+    "No admission, registry append, analogy, or owner/producer inference used."
+  ],
+  "source_deepener": "DeepenEmit24",
+  "emit_meta": {
+    "ui_command_id": "cmd.docker.host.access.open_app",
+    "wiring_entry_id": "catalog.docker_host_access_open_app",
+    "merge_wave": "triple_bound_24"
+  }
+}

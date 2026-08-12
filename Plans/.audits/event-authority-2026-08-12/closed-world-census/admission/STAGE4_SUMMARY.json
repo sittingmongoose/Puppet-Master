@@ -1,0 +1,39 @@
+{
+  "status": "STAGE4_EVENTISH_RESIDUALS_READY",
+  "count": 5,
+  "rejected": {
+    "state_projection_object": 4,
+    "versioned_or_blob_suffix": 62,
+    "last_segment_not_eventish": 1185,
+    "prefix": 265
+  },
+  "batch_count": 1,
+  "denominator_closed": false,
+  "sample": [
+    {
+      "event_type": "branching.worktree_pre_merge_test_timeout_s",
+      "auth": 1,
+      "strong": 1
+    },
+    {
+      "event_type": "testing.capability_policy.updated",
+      "auth": 2,
+      "strong": 0
+    },
+    {
+      "event_type": "testing.visibility_policy.updated",
+      "auth": 2,
+      "strong": 0
+    },
+    {
+      "event_type": "widget.completed_prose",
+      "auth": 1,
+      "strong": 0
+    },
+    {
+      "event_type": "self.log_blocked_command",
+      "auth": 1,
+      "strong": 0
+    }
+  ]
+}

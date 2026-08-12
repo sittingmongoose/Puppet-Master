@@ -1,0 +1,91 @@
+{
+  "event_type": "dev.session.stopped",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns `dev.session.stopped` a registry membership state or contract version; owner authority is required before either can be fixed."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names the accountable semantic owner for `dev.session.stopped`; the emitting command/check is not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The command catalog maps a command to expected `dev.session.stopped` emission but does not explicitly name the implementation producer authority; producer identity is therefore not inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines a closed persisted payload schema for `dev.session.stopped`; command arguments and a stated outcome are not assumed to be the event payload."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines `dev.session.stopped` scope and canonical entity identity; namespace or sibling-event identity is not inferred."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact specifies replay, deduplication key, or idempotency behavior for `dev.session.stopped`."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact sets a retention class or deletion horizon for `dev.session.stopped`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact assigns redaction fields, custody, or access controls for `dev.session.stopped`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact closes the allowed predecessor, successor, and failure transitions for `dev.session.stopped`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact names authorized consumers or checkpoint-advance rules for `dev.session.stopped`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact defines compatibility, migration, deprecation, or withdrawal rules for `dev.session.stopped`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans artifact supplies event-level positive and negative conformance oracles for `dev.session.stopped`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:900",
+      "status": "ok",
+      "notes": "The catalog directly maps a command to expected `dev.session.stopped` emission, but this is contextual token evidence only and does not earn producer PASS without an explicitly named producer authority."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay09",
+  "provisional": false,
+  "quality_notes": [
+    "All 12 dimensions were adjudicated for this exact token; PASS is withheld where the citation does not explicitly name the relevant authority.",
+    "Absent authority is recorded as OWNER_REQUIRED; no namespace, sibling, package, owner, or producer inference was used."
+  ]
+}

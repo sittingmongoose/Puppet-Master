@@ -1,0 +1,103 @@
+{
+  "event_type": "filesafe.snapshot_created",
+  "bucket": "unresolved",
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Plans/Contracts_V0.md:2481-2483 explicitly makes `filesafe.snapshot_created` a FileSafe-facing compatibility wrapper for `safe_point.created`, not a separate event-family owner. Therefore this row is reclassified as an alias rather than sent for admission or owner veto; unresolved wrapper lifecycle fields remain fail-closed and cannot authorize an independent family.",
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem00",
+  "provisional": false,
+  "quality_notes": [
+    "Independently deepened from exact-token Plans evidence; absent dimensions fail closed and are not inferred."
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2487",
+      "note": "The cited plan explicitly names canonical ownership or the Contracts-owned family boundary for this exact behavior."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "The cited span explicitly names emission or compatibility production of `filesafe.snapshot_created`."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "The exact name is authorized only as a compatibility producer wrapper mapping to safe_point.created."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The wrapper minimum payload is stated, but no wrapper schema/version rule is declared."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "The wrapper carries snapshot_id, safe_point_id, run_id and optional execution identity."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event replay key, duplicate rule, or idempotency rule is declared for this exact token."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No retention class or TTL is declared for this exact token."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific redaction/custody rule is declared for this exact token."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "FileSafe may emit it when creating a mutation safe-point snapshot."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No durable consumer or checkpoint-advance rule is declared for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "note": "The exact token maps to safe_point.created and is not a separate family."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/FileSafe.md:1331-1335",
+      "note": "Compatibility emission is allowed only when it maps to the Contracts-owned safe_point.created payload."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2481-2487",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2481-2483",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    },
+    {
+      "citation": "Plans/FileSafe.md:1331-1335",
+      "status": "ok",
+      "notes": "Exact cited span reviewed for the field-local claim in this row."
+    }
+  ],
+  "owner_veto": null,
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved",
+  "fresh_census_merged": false,
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge",
+  "alias_target": "safe_point.created"
+}

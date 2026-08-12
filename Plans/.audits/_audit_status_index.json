@@ -1,27 +1,6 @@
 {
-  "active_reopened_findings": [
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-pnc019-runtime-certification-currentness"
-      ],
-      "closure_id": "reopen-fable-20260706-remaining-registry-pnc019-20260810",
-      "closure_reason": "Reopened during the explicit 2026-08-10 governance currentness refresh because the governed PNC-019 receipt has stale source bindings, the event-family denominator is unresolved, node readiness is blocked_runtime_certification_incomplete, and buildability_gate_passed is false. Prior runtime-ready and buildable closure claims are no longer current authority.",
-      "finding_key": "sfk-5e3e2e181221c2aeea675f79",
-      "line": 736
-    },
-    {
-      "audit_ids": [
-        "fable-20260706",
-        "fable-20260706-pnc019-runtime-certification-currentness"
-      ],
-      "closure_id": "reopen-fable-20260706-pnc019-currentness-20260810",
-      "closure_reason": "Reopened during the explicit 2026-08-10 governance currentness refresh because the governed PNC-019 receipt is stale. Current Event Authority facts are 39 live registry rows, 37 evidence-registered rows, a persisted floor of >=285, an unregistered floor of >=248, an unresolved floor of >=40, and 68 excluded rows; the denominator is UNKNOWN_OPEN and material contract depth is incomplete. IRB-005 and IRB-011 are therefore effectively open, runtime remains disabled, and the prior current-receipt and buildability-pass claims are not current authority.",
-      "finding_key": "sfk-8d83d4bcc29328c680b11986",
-      "line": 737
-    }
-  ],
-  "generated_at_utc": "2026-08-11T01:31:55Z",
+  "active_reopened_findings": [],
+  "generated_at_utc": "2026-08-12T13:24:07Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1235,9 +1214,9 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 737,
-    "current_blocker_count": 2,
-    "current_reopened_finding_count": 2,
+    "closure_registry_row_count": 739,
+    "current_blocker_count": 0,
+    "current_reopened_finding_count": 0,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 24,
     "report_count": 66,

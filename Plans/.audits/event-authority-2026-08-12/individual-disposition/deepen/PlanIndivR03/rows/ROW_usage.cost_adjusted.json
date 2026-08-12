@@ -1,0 +1,115 @@
+{
+  "event_type": "usage.cost_adjusted",
+  "bucket": "unresolved",
+  "july_classification": "candidate_only",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts names the candidate family and closes its payload fields/enums, but no registered persistence row, exact scope/retention/replay policy, consumers, withdrawal policy, or test oracles are cited. No admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited Contracts span names the event and payload but does not explicitly declare the owning document or owner identity; owner confirmation is required without inference."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No field-local Plans citation explicitly binds producer for this exact event; owner decision or new evidence is required."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes membership_version for this exact event; fail closed without inference."
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:20280-20286",
+      "note": "The cited Plans span explicitly supplies closed_payload_schema authority or contract text for this exact event."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes scope_identity for this exact event; fail closed without inference."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes replay_idempotency for this exact event; fail closed without inference."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes retention for this exact event; fail closed without inference."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes redaction_custody for this exact event; fail closed without inference."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes transitions for this exact event; fail closed without inference."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes consumers_checkpoints for this exact event; fail closed without inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes compatibility_withdrawal for this exact event; fail closed without inference."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local Plans citation establishes positive_negative_oracles for this exact event; fail closed without inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:20139-20146",
+      "status": "drift",
+      "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:20194",
+      "status": "drift",
+      "notes": "Original citation is line-drifted; current corroborating span is listed separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:20280-20286",
+      "status": "ok",
+      "notes": "Current exact span inspected; event token and stated authority/compatibility semantics are present."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-unresolved-usage-cost-adjusted",
+    "field_or_decision": "owner_doc,producer,membership_version,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `usage.cost_adjusted`, either supply explicit field-local Plans authority for owner_doc, producer, membership_version, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or choose the cited fail-closed disposition; no admission follows from this veto.",
+    "options": [
+      "Supply cited complete contract fields for later reconsideration",
+      "Keep quarantined fail closed with no checkpoint advance",
+      "Reclassify as excluded or non-durable with cited rationale"
+    ],
+    "evidence_gap": "Missing explicit field-local Plans authority for: owner_doc, producer, membership_version, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "usage.cost_adjusted"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "deepened_against_binding_schema",
+    "all_passes_have_concrete_plans_citations",
+    "fail_closed_no_admission"
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

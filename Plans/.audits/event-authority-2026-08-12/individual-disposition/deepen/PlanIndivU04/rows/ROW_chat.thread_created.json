@@ -1,0 +1,119 @@
+{
+  "event_type": "chat.thread_created",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts and Storage recognize this exact underscore token as an existing chat naming convention, and Storage names a checkpointed optional search consumer, but the concrete schema remains implementation work and no versioned row, explicit owner/producer, replay/custody/lifecycle/compatibility contract, or complete oracles are cited. Recognition is not sufficient for admission.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly names the semantic owner accountable for the persisted `chat.thread_created` contract."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority explicitly identifies the component that appends persisted `chat.thread_created` records; storage mention alone is not producer authority."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority registry row individually admits `chat.thread_created`; observed naming or command emission is not membership."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans authority supplies a closed persisted EventRecord payload and envelope for `chat.thread_created`."
+    },
+    "scope_identity": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract closes project/thread/object scope and canonical identity fields for persisted `chat.thread_created` records."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited contract defines persisted `chat.thread_created` replay identity, deduplication key, or idempotent projector behavior; command idempotency inputs do not establish event replay identity."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns a retention class or deletion horizon specifically to `chat.thread_created`."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority assigns redaction fields, custody, and deletion propagation specifically to `chat.thread_created`."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority closes legal predecessor/successor states and rejection behavior for `chat.thread_created`; an expected-event mapping is not an event state machine."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1976-1977",
+      "note": "Storage explicitly declares the checkpointed Tantivy projector as a consumer of `chat.thread_created`; optional indexing does not close other authority fields."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority defines aliases, schema evolution, deprecation, or withdrawal rules for `chat.thread_created`."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited authority provides both positive and negative observable oracles for persisted `chat.thread_created`; a positive search criterion alone is insufficient."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:975-978",
+      "status": "ok",
+      "notes": "Treats the token as an existing naming convention but does not provide a versioned event row."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1592-1596",
+      "status": "ok",
+      "notes": "Leaves the concrete schema as implementation work."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1975-1977",
+      "status": "ok",
+      "notes": "Declares optional indexing by a checkpointed projector and a positive search criterion."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:928-932",
+      "status": "ok",
+      "notes": "Defines the required persisted-event authority split."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-chat-thread-created-contract-closure",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,compatibility_withdrawal,positive_negative_oracles",
+    "question": "What canonical thread-creation identity and uniqueness rule makes `chat.thread_created` replay-idempotent, and is optional Tantivy indexing allowed to checkpoint it only after the durable creation record is committed?",
+    "options": [
+      "Provide the complete cited versioned contract for later independent re-adjudication",
+      "Keep quarantined with no checkpoint advance",
+      "Reclassify as excluded/non-event with exact cited semantic authority"
+    ],
+    "evidence_gap": "The current Plans citations do not close owner_doc, producer, membership_version, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, compatibility_withdrawal, positive_negative_oracles for `chat.thread_created`; owner or producer cannot be inferred from namespace, storage mention, or sibling commands.",
+    "event_types": [
+      "chat.thread_created"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay03",
+  "provisional": false,
+  "quality_notes": [
+    "Individually reasoned against exact current Plans citations; all twelve evidence fields are explicit and every PASS is field-local.",
+    "No admission, registry append, owner inference, producer inference, or package analogy is authorized."
+  ]
+}

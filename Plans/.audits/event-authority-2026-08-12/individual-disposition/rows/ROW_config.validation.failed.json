@@ -1,0 +1,97 @@
+{
+  "event_type": "config.validation.failed",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority membership names this exact event; an accountable owner must decide whether to propose membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans statement explicitly names the semantic authority for this exact event; namespace and nearby contracts are not authority evidence."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:1333-1335",
+      "note": "The backend execution failure path explicitly emits config.validation.failed for an unknown configured subagent name."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/orchestrator-subagent-integration.md:1330-1337",
+      "note": "The backend rule names the error trigger and event but does not enumerate config.validation.failed envelope or payload fields."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/orchestrator-subagent-integration.md:1333-1337",
+      "note": "A bad subagent name is shown in the error text, but the plan does not define a stable event scope or identity key."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No citation defines duplicate recognition, replay behavior, ordering, or idempotent application for this exact persisted event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific retention class, duration, compaction, or deletion authority is cited; the accountable owner must supply it."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific sensitive-field inventory, redaction rule, or custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited allowed-from/allowed-to lifecycle transition contract exists for this exact event."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, projection contract, or checkpoint advancement rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No compatibility window, schema evolution rule, withdrawal condition, or migration authority is cited."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/orchestrator-subagent-integration.md:1330-1337",
+      "note": "The invalid-name trigger is stated, but no persisted-event test asserts exact payload/emission and no valid-name non-emission oracle is specified."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:1330-1337",
+      "status": "ok",
+      "notes": "Exact save/backend rejection behavior, event token, and registry context; no closed event product contract."
+    },
+    {
+      "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:182-184",
+      "status": "ok",
+      "notes": "Immutable cohort map assigns config.validation.failed to july248; retained independently of working bucket."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay06",
+  "provisional": false,
+  "quality_notes": [
+    "Fresh row-local review of exact current Plans citations; drifted baseline line references were not reused.",
+    "All 12 schema evidence dimensions, including owner_doc, have status, citation, and row-specific note; each PASS has a field-local Plans citation.",
+    "Fail-closed NEEDS_OWNER_VETO only: no admission, registry append, owner/producer inference, or OD-EA-003 dependence."
+  ]
+}

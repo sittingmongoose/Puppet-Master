@@ -1,0 +1,133 @@
+{
+  "event_type": "bundle.selection_sent_to_chat",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Current Contracts authority establishes the exact name, producer/owner boundary, consumers, payload minimum, and scope policy, but no versioned registry membership, storage-owned closed payload schema, replay/idempotency, event-specific retention/redaction custody, compatibility withdrawal, and complete oracles were found. Admission therefore remains fail-closed pending owner completion.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:965",
+      "note": "The payload-detail ownership paragraph explicitly assigns selection behavior to Plans/chain-wizard-flexibility.md and Plans/assistant-chat-design.md."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:950",
+      "note": "The catalog explicitly names document bundle / review as the producer boundary for this exact token."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:961",
+      "note": "The closed scope-policy paragraph assigns bundle events application_or_project scope."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:1142",
+      "note": "The exact row defines the successful selection-to-chat handoff and records requested versus effective target."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:950",
+      "note": "The exact catalog row names chat, prompt assembly, and audit as primary consumers."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for compatibility aliases and withdrawal behavior of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `bundle.selection_sent_to_chat`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:872",
+      "status": "drift",
+      "notes": "Original line anchor no longer contains the event token; current authority is cited separately."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:917",
+      "status": "drift",
+      "notes": "Original line anchor no longer contains the event token; current authority is cited separately."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1142",
+      "status": "ok",
+      "notes": "Current storage line names the exact event and its requested_target/effective_target handoff fields."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:950",
+      "status": "ok",
+      "notes": "Current runtime catalog registers the exact persisted name, producer boundary, consumers, and payload minimum."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961",
+      "status": "ok",
+      "notes": "Current catalog assigns bundle events the application_or_project scope policy."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:905",
+      "status": "ok",
+      "notes": "Defines payload semantics and negative oracle: chat handoff must not mutate durable annotation state."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:965",
+      "status": "ok",
+      "notes": "Explicitly names the owner documents for annotation, selection, and targeted revision behavior."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-conf-bundle-selection-sent-to-chat-contract-completion",
+    "field_or_decision": "membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `bundle.selection_sent_to_chat`, either provide and cite the missing owner-complete Event Authority contract and versioned individual registry membership, or authorize continued quarantine/reclassification.",
+    "options": [
+      "Materialize the complete cited contract and individually register the event",
+      "Keep quarantined and fail closed with no checkpoint advance",
+      "Reclassify as excluded/non-event with cited semantic rationale"
+    ],
+    "evidence_gap": "The available authority does not satisfy all twelve checklist gates, and exact product semantics or ownership cannot be inferred by analogy.",
+    "event_types": [
+      "bundle.selection_sent_to_chat"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay02",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

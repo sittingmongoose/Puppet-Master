@@ -1,0 +1,22 @@
+{
+  "effective_account_id": "account:001",
+  "effective_mode_overlay": "none",
+  "effective_model": "openai/gpt-4",
+  "effective_persona": "default",
+  "effective_platform": "openai",
+  "project_id": "proj-001",
+  "requested_account_id": "account:001",
+  "requested_effective_snapshot_ref": "requested_effective_runtime.v1:project~proj-001:default:0000000000000000000000000000000000000000000000000000000000000000",
+  "requested_mode_overlay": "none",
+  "requested_model": "openai/gpt-4",
+  "requested_persona": "default",
+  "requested_platform": "openai",
+  "requested_runtime_mode": "ask",
+  "requested_strategy": null,
+  "run_id": "run:001",
+  "runtime_mode": "ask",
+  "schema_version": "2.0.0",
+  "strategy": "hte",
+  "strategy_resolution_reason": "read_only_mode_forces_hte",
+  "ts": "2026-08-12T00:00:00Z"
+}

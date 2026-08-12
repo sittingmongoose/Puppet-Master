@@ -1,0 +1,96 @@
+{
+  "event_type": "run.remediation_started",
+  "bucket": "unresolved",
+  "july_classification": "alias",
+  "disposition": "RECLASSIFY_ALIAS",
+  "disposition_rationale": "Storage SP-197 explicitly classifies `run.remediation_started` as a legacy alias normalized to `remediation.spawned` before projection and forbids new legacy emission. The exact-token disposition is RECLASSIFY_ALIAS, not admission; scope, producer, payload, replay, retention/custody, and checkpoint dimensions remain failed rather than borrowed from the canonical family.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:13951-13956",
+      "note": "Accepted SP-197 explicitly names storage-plan as owner_doc and preserves legacy alias normalization and no-new-emission semantics."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited storage text names consumers and forbids new legacy emission but does not name an authorized producer for this legacy alias."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No cited artifact assigns this legacy alias to a versioned Event Authority membership."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No closed payload schema is supplied for this legacy token in the cited alias contract."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "The cited owner and alias mapping do not assign this exact legacy token a registered scope policy or complete identity key; canonical-family scope is not borrowed."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific replay ordering, duplicate handling, or idempotency rule is cited."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific retention anchor, TTL, legal-hold, or deletion rule is cited."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No alias-specific redaction boundary or custody authority is cited."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:2112",
+      "note": "The legacy token deterministically normalizes to `remediation.spawned` before projection."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Storage ingestion and normalization behavior does not define checkpoint advancement or fail-closed checkpoint behavior for this exact alias."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:2115",
+      "note": "The migration rule defines read compatibility, canonical normalization, and forbids new legacy emission."
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:2115",
+      "note": "Positive oracle: migration readers accept the alias; negative oracle: new storage code MUST NOT emit legacy names."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:2112",
+      "status": "ok",
+      "notes": "Exact legacy-to-canonical mapping `run.remediation_started` to `remediation.spawned` is present."
+    },
+    {
+      "citation": "Plans/storage-plan.md:2100-2115",
+      "status": "ok",
+      "notes": "Canonical ingestion, migration read compatibility, normalization, and no-new-legacy-emission rule are explicit."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnresolvedSem01",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against all 12 binding evidence dimensions; absent authority is marked FAIL or OWNER_REQUIRED without analogy or inference.",
+    "Admission freeze preserved; this row does not authorize registry append or checkpoint advancement."
+  ],
+  "cohort_pins": [
+    "july40"
+  ],
+  "working_bucket": "unresolved"
+}

@@ -1,0 +1,118 @@
+{
+  "event_type": "preview.session.stopped",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "`preview.session.stopped` remains individually quarantined. The storage plan lists this exact token as a related preview-browser event and preserves it in migration lineage, but supplies no event-level authority contract. The exact registry membership check is negative, so the row cannot be registered without an owner-approved contract; this conclusion does not rely on OD-EA-003, a package analogy, or inferred ownership.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited plan names the semantic authority empowered to approve the `preview.session.stopped` contract."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The cited occurrence does not name the component authorized to persist `preview.session.stopped`; a command-to-effect mapping is not producer authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:5-8",
+      "note": "Registry revision 2026-08-04.1 contains no `preview.session.stopped` family entry; unknown events remain quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:1269",
+      "note": "The cited material does not provide a versioned closed schema for `preview.session.stopped` or reject additional fields."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:1269",
+      "note": "The cited occurrence does not define the persisted event scope/identity tuple for `preview.session.stopped`."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation defines duplicate, replay, or idempotency behavior for `preview.session.stopped`."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation assigns `preview.session.stopped` a retention class or expiry rule."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation assigns redaction responsibility or custody boundaries for `preview.session.stopped`."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation closes the allowed predecessor/successor states and invalid transitions for `preview.session.stopped`."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:5-8",
+      "note": "Only the generic unknown-event quarantine rule applies; no accepted consumer/checkpoint contract exists for `preview.session.stopped`."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation defines version compatibility, deprecation, or withdrawal for `preview.session.stopped`."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No field-local plan citation supplies both acceptance and rejection oracles for `preview.session.stopped`."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/storage-plan.md:1269",
+      "status": "ok",
+      "notes": "The storage plan lists this exact token as a related preview-browser event and preserves it in migration lineage, but supplies no event-level authority contract."
+    },
+    {
+      "citation": "Plans/storage-plan.md:8737",
+      "status": "ok",
+      "notes": "Exact field-local constraint reviewed for `preview.session.stopped`."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:5-8",
+      "status": "ok",
+      "notes": "Registry revision and fail-closed unknown-event disposition checked; exact `preview.session.stopped` membership search returned no entry."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-preview-session-stopped-contract-authority",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Which named owner and producer must close the persisted `preview.session.stopped` contract, and what terminal preview identity, stop reason, repeated-stop rule, versioned payload closure, retention, and checkpoint behavior govern this established lifecycle event?",
+    "options": [
+      "Approve a named owner and producer plus a versioned closed contract for `preview.session.stopped` covering every failed field before any separate admission decision",
+      "Keep `preview.session.stopped` quarantined under the registry unknown-event rule without checkpoint advance",
+      "Reclassify `preview.session.stopped` only with an exact cited replacement contract or non-event/alias decision"
+    ],
+    "evidence_gap": "No cited plan closes the failed `preview.session.stopped` evidence fields or grants owner authority for an admission decision.",
+    "event_types": [
+      "preview.session.stopped"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "individually_reasoned",
+    "all_12_evidence_fields_present",
+    "all_PASS_fields_have_field_local_Plans_citations",
+    "registry_nonmembership_checked",
+    "owner_and_producer_not_inferred",
+    "immutable_cohort_pin_preserved"
+  ]
+}

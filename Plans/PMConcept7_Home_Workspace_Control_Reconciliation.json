@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_id": "pm.pmconcept7_home_workspace_control_reconciliation.v1",
   "title": "PMConcept7 Home Workspace control reconciliation",
-  "decision_date": "2026-08-05",
-  "status": "accepted_post_audit_repair_contract",
+  "decision_date": "2026-08-12",
+  "status": "accepted_post_direct_manipulation_repair",
   "authority": {
     "packet": "PMConcept7_Home_Workspace_Audit_Packet_v1",
     "implementation_packet_lineage": "PMConcept7_Home_Workspace_Implementation_Packet_v1",
@@ -33,7 +33,12 @@
     "terminal_section_maximum": 4,
     "terminal_visible_pane_maximum": 4,
     "home_main_host": true,
-    "outer_dock_hosts": ["dock_left", "dock_right", "dock_top", "dock_bottom"],
+    "outer_dock_hosts": [
+      "dock_left",
+      "dock_right",
+      "dock_top",
+      "dock_bottom"
+    ],
     "floating_host": "floating",
     "web_floating_authority": "in_canvas",
     "native_popout_authority": "slint_multi_window"
@@ -66,7 +71,10 @@
     "schema": "Plans/home_workspace_layout.schema.json",
     "storage_registry": "Plans/storage_value_registry.json",
     "storage_key": "home_workspace_layout.v1:{project_id}:{workspace_tab_id}",
-    "scope": ["project_id", "workspace_tab_id"],
+    "scope": [
+      "project_id",
+      "workspace_tab_id"
+    ],
     "identity_rules": [
       "Stable surface identities are references to editor, dashboard, chat, terminal section, workgroup, pane, session, and buffer owners.",
       "Movement, docking, resize, close, reopen, and reload do not mint buffers, browser sessions, chats, terminal sessions, or PTYs.",
@@ -111,11 +119,17 @@
       "Web guarantees in-canvas floating and all four in-app docks; window.open is optional degraded behavior.",
       "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, and Collapse Bottom Terminal.",
       "Open Panel and Open Browser in Panel are view-local disclosures; only Panel 1 through Panel 4 leaves dispatch commands. Collapse Bottom Terminal is never relabeled as Expand.",
-      "Reset Home Layout is owned by Settings > General & Appearance > Startup & Recovery, while Move or Dock remains surface-local and File Manager targeting remains File Manager-local."
-    ]
+      "Reset Home Layout is owned by Settings > General & Appearance > Startup & Recovery, while Move or Dock remains surface-local and File Manager targeting remains File Manager-local.",
+      "Movement is direct manipulation from a top-left grab handle: the held surface tracks the pointer one-to-one, the vacated slot becomes a real in-flow placeholder carrying the surface footprint, and the remaining surfaces animate from their pre-move rects. Preview never re-renders a surface subtree.",
+      "The centre-screen drop-target rail is retired. Drop targeting resolves surface-under-pointer, then outer edge band (the only route to a currently empty, zero-sized dock), then host-under-pointer, then home_main; leaving the window resolves to floating.",
+      "Loss of pointer capture is not a cancellation vector: live reflow re-parents projected items and drops capture. Escape, pointer cancellation and window blur are the cancellation contract.",
+      "Resize writes only the dragged surface geometry per frame, sits on the boundary the gesture moves, and must change rendered geometry; a commit that moves zero pixels is a failure.",
+      "Keyboard movement on the grab handle is the accessible equivalent of the pointer gesture and carries the contract the retired menu rows used to hold, announced through a polite live region."
+    ],
+    "generated_artifact_sha256": "bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2"
   },
   "control_census": {
-    "semantic_production_rows": 128,
+    "semantic_production_rows": 51,
     "production_wiring_prefix": "home.",
     "production_wiring_owner": "Plans/Wiring_Matrix.production.json",
     "view_local_disclosures": [
@@ -167,10 +181,18 @@
     "repair_evidence_census": "implementation/pmconcept7-home-workspace-20260805-repair/control_census.json",
     "zero_omission_required": true,
     "source_hashes": {
-      "Concepts/pm7-tools/home_workspace_source.py": "3e5a3fe2f8b5f5800a834ebe1e96ccdbc4c63ed735c1f559bbb2ff164d37b7b9",
-      "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "b3babe82caff9153cb8229d28c87f89b2eae3b9db7d1dee26fc94ea87e73ef2f",
-      "Plans/Wiring_Matrix.production.json": "42ff981beb8d456f0a442d1f2ec49134d389744fe6ec3a85a1d1db1a0b7828a7",
+      "Concepts/pm7-tools/home_workspace_source.py": "f407621e56cb9f5f7482711d1c812ed88a2c944cca921a894ac181b48e4e1c3f",
+      "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "c9d87685bbce94e4548d3bb529485c1a243bc8cce9957a754db9a3c4a1f611c7",
+      "Plans/Wiring_Matrix.production.json": "f9942023b0bc2bd32216652d80eaf762c38bec8d1f8ca6a166c68231fa0b5341",
       "Plans/home_workspace_layout.schema.json": "503cfcbdee9253a9c411b3e88a7f2dcb17394315f632485f1cd027604a1451b7"
+    },
+    "retired_rows_2026_08_12": {
+      "count": 77,
+      "families": [
+        "home.<surface>.move.<host>",
+        "home.<surface>.redock.<host>"
+      ],
+      "disposition": "Retired with the per-surface Move or dock menu inventory. cmd.workspace_layout.move_surface is unchanged and is dispatched from home.<surface>.grab (pointer and keyboard) and home.drop_target.<host>."
     }
   },
   "consumer_map": {

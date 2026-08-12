@@ -1,0 +1,115 @@
+{
+  "event_type": "crew.coordination",
+  "bucket": "confirmed_persisted_unregistered",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Contracts_V0 independently names crew.coordination, its crew/child lineage, coordination_type, and details fields. The open-ended details field is not a closed payload schema, and the plan does not explicitly name owner/producer or close membership, replay, retention, redaction, transitions, consumers/checkpoints, withdrawal, or paired event oracles. Keep quarantined.",
+  "evidence": {
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited versioned Event Authority membership names this exact event; an accountable owner must decide whether to propose membership."
+    },
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No cited Plans statement explicitly names the semantic authority for this exact event; namespace and nearby contracts are not authority evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Contracts_V0 declares the event payload and meaning but does not explicitly name an accepted producing component; “crew” naming is not producer authority."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:2968",
+      "note": "The exact row includes unconstrained details and gives no details variant/type closure or unknown-field rule."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2953-2968",
+      "note": "The crew lineage floor and exact crew.coordination row require run_id, thread_id, crew_id, and applicable parent/child/member identities."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No citation defines duplicate recognition, replay behavior, ordering, or idempotent application for this exact persisted event."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific retention class, duration, compaction, or deletion authority is cited; the accountable owner must supply it."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No event-specific sensitive-field inventory, redaction rule, or custody authority is cited."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/Contracts_V0.md:2968",
+      "note": "The description states the meaning of crew.coordination but does not define allowed source states, target state, revision/CAS behavior, or rejected transitions."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No authoritative consumer set, projection contract, or checkpoint advancement rule is cited for this exact event."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No compatibility window, schema evolution rule, withdrawal condition, or migration authority is cited."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No paired positive and negative persisted-event oracle is cited for this exact event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2953-2968",
+      "status": "ok",
+      "notes": "Exact crew lineage floor plus crew.coordination payload inventory and meaning."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2975",
+      "status": "ok",
+      "notes": "References storage-plan and Run_Modes contracts but does not itself name owner/producer or close the missing event dimensions."
+    },
+    {
+      "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:230-232",
+      "status": "ok",
+      "notes": "Immutable cohort map assigns crew.coordination to july248; retained independently of working bucket."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-crew-coordination-contract",
+    "field_or_decision": "membership_version,owner_doc,producer,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Should crew.coordination remain quarantined, or will the crew coordination authority name its producer and replace unconstrained details with a versioned closed variant schema plus replay, custody, checkpoint, and withdrawal rules?",
+    "options": [
+      "Keep this exact event quarantined with no Event Authority checkpoint advance",
+      "Supply owner-approved, field-cited values for every failed/owner-required dimension and then re-evaluate this event individually",
+      "Reclassify or exclude this exact event only with event-specific cited semantic evidence"
+    ],
+    "evidence_gap": "The cited Plans establish this exact token and limited local behavior, but the non-PASS dimensions above remain absent or incomplete. No namespace, sibling, package, or OD-EA-003 inference was used.",
+    "event_types": [
+      "crew.coordination"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay07",
+  "provisional": false,
+  "quality_notes": [
+    "Fresh row-local review of exact current Plans citations; drifted baseline line references were not reused.",
+    "All 12 schema evidence dimensions, including owner_doc, have status, citation, and row-specific note; each PASS has a field-local Plans citation.",
+    "Fail-closed NEEDS_OWNER_VETO only: no admission, registry append, owner/producer inference, or OD-EA-003 dependence."
+  ]
+}

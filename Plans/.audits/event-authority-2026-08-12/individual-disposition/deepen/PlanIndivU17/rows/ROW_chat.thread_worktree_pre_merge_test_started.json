@@ -1,0 +1,134 @@
+{
+  "event_type": "chat.thread_worktree_pre_merge_test_started",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Live registry revision `2026-08-04.1` contains no exact `chat.thread_worktree_pre_merge_test_started` member, so membership_version is FAIL. Checked authority supplies 1 field-local PASS finding(s), including direct project-only scope and identity rules; 10 dimensions remain OWNER_REQUIRED. The row remains quarantined without checkpoint advance; no owner, producer, or policy value was inferred.",
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the accountable semantic Event Authority owner for `chat.thread_worktree_pre_merge_test_started`; document title, namespace, storage ownership, and surrounding family context were not treated as ownership evidence."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation explicitly designates the component authorized to emit `chat.thread_worktree_pre_merge_test_started`; namespace and neighboring event rows were not used to infer a producer."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/event_family_registry.json:3-8",
+      "note": "Exact-token search found no `chat.thread_worktree_pre_merge_test_started` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources describe occurrence semantics or minimum/example fields for `chat.thread_worktree_pre_merge_test_started`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:961,977-991,1007-1017",
+      "note": "Contracts directly assigns worktree lifecycle families `project_only`, registers this exact event and minimum identity-bearing payload, and defines project-scope EventRecord identity/nullability fields."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked field-local citation selects `chat.thread_worktree_pre_merge_test_started` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation assigns `chat.thread_worktree_pre_merge_test_started` an event-specific retention, compaction, tombstone, or legal-hold rule."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation closes `chat.thread_worktree_pre_merge_test_started` redaction profile, sensitive-field treatment, payload-ref boundary, and custody authority."
+    },
+    "transitions": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `chat.thread_worktree_pre_merge_test_started`."
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `chat.thread_worktree_pre_merge_test_started`."
+    },
+    "compatibility_withdrawal": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No checked citation defines `chat.thread_worktree_pre_merge_test_started` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `chat.thread_worktree_pre_merge_test_started` across required boundary cases."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/assistant-chat-design.md:3345",
+      "status": "drift",
+      "notes": "Original anchor now contains pr_created, not pre_merge_test_started."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:2962",
+      "status": "drift",
+      "notes": "Original anchor no longer contains the event token."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:989",
+      "status": "ok",
+      "notes": "Current exact registration and payload minimum."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1580",
+      "status": "ok",
+      "notes": "Storage-owned exact event schema minimum."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:3347",
+      "status": "ok",
+      "notes": "Producer-owned fields and started-test transition semantics."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:961,1014-1030",
+      "status": "ok",
+      "notes": "Project-only worktree lifecycle scope and canonical replay/idempotency rules."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:3-8",
+      "status": "ok",
+      "notes": "Live registry identity/revision and unknown-event quarantine rule checked; exact-token search found no `chat.thread_worktree_pre_merge_test_started` membership entry."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-chat-thread-worktree-pre-merge-test-started-contract-closure",
+    "field_or_decision": "owner_doc,producer,membership_version,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "Which authority will register `chat.thread_worktree_pre_merge_test_started` and define how a started test is correlated with exactly one passed/failed successor, including its replay key, retention/redaction, checkpoint, withdrawal, and non-emission rules?",
+    "options": [
+      "Publish the missing individually owned contract for a later fresh adjudication",
+      "Keep the event quarantined with fail-closed consumer checkpoint behavior",
+      "Reclassify or withdraw the token with exact cited semantic and migration authority"
+    ],
+    "evidence_gap": "The exact start payload and project-only identity are cited, but the live registry omits the token and does not define terminal correlation, replay selection, lifecycle completion, retention/custody, consumers, withdrawal, or boundary oracles.",
+    "event_types": [
+      "chat.thread_worktree_pre_merge_test_started"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay04",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened independently against field-local citations; unresolved obligations remain explicit and fail closed.",
+    "Immutable July confirmed-unregistered cohort identity is preserved as july248; working bucket remains confirmed_persisted_unregistered."
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ]
+}

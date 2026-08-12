@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.assurance.event_authority.md_only_binding_adjudication_summary.v1",
+  "generated_at_utc": "2026-08-12T07:37:10Z",
+  "md_only_token_count": 31,
+  "adjudication_counts": {
+    "CONFIRM_CENSUS_PLACEMENT_NOT_EMIT_CANDIDATE": 30,
+    "CONFIRM_EXACT_EXCLUDE_MD_ONLY": 1
+  },
+  "census_category_counts": {
+    "persisted_unregistered_quarantine": 30,
+    "exact_excluded": 1
+  },
+  "all_census_category_unchanged": true,
+  "all_emit_candidate_false": true,
+  "missing_individual_disposition": [
+    "chat.thread.created"
+  ],
+  "artifact": "Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/MD_ONLY_BINDING_ADJUDICATION.jsonl"
+}

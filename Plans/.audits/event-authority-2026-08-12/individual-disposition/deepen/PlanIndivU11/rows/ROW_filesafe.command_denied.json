@@ -1,0 +1,119 @@
+{
+  "event_type": "filesafe.command_denied",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "Exact source review closes only producer for `filesafe.command_denied`. Remaining fields (membership_version, owner_doc, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles) lack field-local closure, so this persisted-unregistered token remains quarantined behind one event-specific owner veto. Command association, token listing, and generic redaction/scope text are not promoted into owner or producer authority.",
+  "evidence": {
+    "membership_version": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes exact registry membership and version for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "owner_doc": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes explicit semantic and payload owner authority for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/FileSafe.md:111",
+      "note": "Plans/FileSafe.md:106-113 explicitly requires approved-command identity mismatches to emit `filesafe.command_denied` with the named denial_code; this is an exact emission rule."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes closed exhaustive payload schema for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "Plans/FileSafe.md:106-113 defines guard/request scope generally but does not specify the complete canonical scope/identity payload of exact token `filesafe.command_denied`; this dimension remains UNKNOWN."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes replay ordering, dedupe, and idempotency for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes retention policy and lifecycle for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes redaction rules and sensitive-field custody for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes event-specific emission and state transitions for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes named consumers and durable checkpoint ownership for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes alias, migration, and withdrawal rules for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No checked Plans citation closes event-specific positive and negative acceptance oracles for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/FileSafe.md:111",
+      "status": "ok",
+      "notes": "FileSafe text names filesafe.command_denied and/or its emission condition."
+    },
+    {
+      "citation": "Plans/FileSafe.md:1130",
+      "status": "ok",
+      "notes": "FileSafe text names filesafe.command_denied and/or its emission condition."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2461",
+      "status": "drift",
+      "notes": "Event token/payload contract moved; current exact row is Plans/Contracts_V0.md:2494."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2494",
+      "status": "ok",
+      "notes": "Current canonical EventRecord minimum-payload row names the producer-relevant event and project/run/worktree scope fields."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-filesafe-command-denied",
+    "field_or_decision": "membership_version,owner_doc,closed_payload_schema,scope_identity,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For exact token `filesafe.command_denied`, which cited owner-approved values close membership_version, owner_doc, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or must this token remain quarantined/reclassified?",
+    "options": [
+      "Supply cited field-local authority for every listed gap and reconsider this token individually",
+      "Keep this exact token quarantined with fail-closed checkpoint behavior",
+      "Reclassify this exact token only with cited non-event or alias authority"
+    ],
+    "evidence_gap": "Checked row-specific sources do not close: membership_version, owner_doc, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles.",
+    "event_types": [
+      "filesafe.command_denied"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay10",
+  "provisional": false,
+  "quality_notes": [
+    "Advisor-2 correction applied: command association, stable-token listing, and generic redaction/scope rules were not treated as producer, custody, or scope closure. Every unresolved field fails closed."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered",
+  "source_deepener": "PlanIndivU11"
+}

@@ -1,0 +1,88 @@
+{
+  "event_type": "self.log_blocked_command",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "The cited span invokes self.log_blocked_command after a guard rejection; it does not declare that method-call token as an event type, payload schema, or persisted membership identity.",
+  "evidence": {
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L773-L790",
+      "note": "The cited authority classifies `self.log_blocked_command` as a method call expression in illustrative implementation code, not as an owned event contract."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event producer applies: `self.log_blocked_command` is adjudicated as a method call expression in illustrative implementation code; no producer is inferred."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L773-L790",
+      "note": "No event-registry membership/version applies to this excluded non-event token."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event payload exists for this excluded non-event token."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event scope/identity contract applies; the cited token has the non-event role stated in the rationale."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event replay/idempotency contract applies to this excluded non-event token."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event retention contract applies to this excluded non-event token."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event payload redaction/custody contract applies to this excluded non-event token."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event lifecycle transitions apply to this excluded non-event token."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No event consumers/checkpoints apply to this excluded non-event token."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Event compatibility/withdrawal does not apply; any config/error/storage compatibility remains outside event authority."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/FileSafe.md:L773-L790",
+      "note": "No event positive/negative oracle applies; the cited non-event classification is the exclusion oracle."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/FileSafe.md:L773-L790",
+      "status": "ok",
+      "notes": "Direct row-specific authority for the non-event classification."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated_excluded",
+  "source_overlay": "closed-world-census/clean_batch_00.json",
+  "denominator_effect": "excluded_no_admission"
+}

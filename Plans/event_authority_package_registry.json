@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.event_authority_package_registry.v1",
+  "schema_version": "1.0.0",
+  "registry_revision": "2026-08-12.1",
+  "notes": "Side-car veto-before-append tracker authorized by owner answer SS-004. Does not admit families. Bulk registration forbidden.",
+  "packages": [
+    {
+      "package_id": "PKG-EA-001",
+      "priority": 1,
+      "evidence_label": "Formatter engine producer; Formatter system",
+      "event_types": [
+        "format.applied"
+      ],
+      "family_count": 1,
+      "state": "DRAFT_AWAITING_SHARED_SPINE",
+      "veto_status": "PENDING_PARENT_VETO",
+      "registry_append_authorized": false,
+      "worksheet_digest_sha256": null,
+      "retention_policy_refs": [],
+      "created_at_utc": "2026-08-12T03:49:46Z",
+      "updated_at_utc": "2026-08-12T03:49:54Z",
+      "notes": "Seeded from ProducerPackagePlan; worksheets incomplete; no family registry append authorized."
+    },
+    {
+      "package_id": "PKG-EA-002",
+      "priority": 2,
+      "evidence_label": "Source Control / lane allocator",
+      "event_types": [
+        "worktree.created"
+      ],
+      "family_count": 1,
+      "state": "DRAFT_AWAITING_SHARED_SPINE",
+      "veto_status": "PENDING_PARENT_VETO",
+      "registry_append_authorized": false,
+      "worksheet_digest_sha256": null,
+      "retention_policy_refs": [],
+      "created_at_utc": "2026-08-12T03:49:46Z",
+      "updated_at_utc": "2026-08-12T03:49:54Z",
+      "notes": "Seeded from ProducerPackagePlan; worksheets incomplete; no family registry append authorized."
+    },
+    {
+      "package_id": "PKG-EA-003",
+      "priority": 3,
+      "evidence_label": "Source Control cleanup owner",
+      "event_types": [
+        "worktree.deleted"
+      ],
+      "family_count": 1,
+      "state": "DRAFT_AWAITING_SHARED_SPINE",
+      "veto_status": "PENDING_PARENT_VETO",
+      "registry_append_authorized": false,
+      "worksheet_digest_sha256": null,
+      "retention_policy_refs": [],
+      "created_at_utc": "2026-08-12T03:49:46Z",
+      "updated_at_utc": "2026-08-12T03:49:54Z",
+      "notes": "Seeded from ProducerPackagePlan; worksheets incomplete; no family registry append authorized."
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+    "schema_id":  "pm.assurance.event_authority.fresh_census_design_summary.v1",
+    "status":  "DESIGN_AND_INITIAL_FREEZE_COMPLETE",
+    "claim_boundary":  {
+                           "canonical_registration_write":  false,
+                           "plans_edited":  false,
+                           "denominator_closed":  false,
+                           "complete_denominator":  "UNKNOWN_OPEN",
+                           "known37_preserved":  true,
+                           "bulk_registration":  false
+                       },
+    "method":  {
+                   "exact_token_regex":  "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$",
+                   "admission_rule_changed_from_ea27":  false,
+                   "rule_change_owner_decisions":  [
+
+                                                   ],
+                   "bare_evidence_never_promoted":  [
+                                                        "emit",
+                                                        "log",
+                                                        "example",
+                                                        "command",
+                                                        "receipt",
+                                                        "schema",
+                                                        "field",
+                                                        "wildcard"
+                                                    ]
+               },
+    "initial_inventory":  {
+                              "path":  "CURRENT_SOURCE_INVENTORY.json",
+                              "source_count":  180,
+                              "canonical_product_prose":  72,
+                              "canonical_machine_schema":  83,
+                              "canonical_machine_registry_or_contract":  25,
+                              "content_addressed":  true
+                          },
+    "bounded_sample":  {
+                           "source_scope":  "broader sibling lexical pre-pass; not admission-filtered",
+                           "source_count":  177,
+                           "exact_regex_strings":  11137,
+                           "ea27_exact_rows_present":  385,
+                           "ea27_exact_rows_total":  393,
+                           "new_exact_strings_vs_ea27":  10752,
+                           "current_registry_rows_present":  39,
+                           "admission_claim":  false
+                       },
+    "next_executable_steps":  [
+                                  "Re-enumerate and rehash the 180-source freeze; abort and refreeze on drift.",
+                                  "Extract exact-token occurrences with current line citations.",
+                                  "Reject filename, abbreviation, URL, module-path, field, command, receipt, example, wildcard, and schema-ID noise.",
+                                  "Apply unchanged EA-27 EventRecord/seglog/canonical-ledger/current-registry admission.",
+                                  "Adjudicate every potentially persisted row against all 12 fields; incomplete rows become OWNER_DECISION_REQUIRED or NEEDS_MORE_EVIDENCE.",
+                                  "Run independent mechanical and semantic validation.",
+                                  "Report bounded deltas without closure; do not register families."
+                              ],
+    "artifacts":  [
+                      "CENSUS_PLAN.md",
+                      "CURRENT_SOURCE_INVENTORY.json",
+                      "DELTA_NOTES.md",
+                      "SUMMARY.json"
+                  ]
+}

@@ -1,0 +1,111 @@
+{
+  "event_type": "testing.capability_policy.updated",
+  "bucket": "quarantined_not_admitted",
+  "working_bucket": "quarantined_not_admitted",
+  "cohort_pins": [
+    "emit_restore"
+  ],
+  "july_classification": "emit_candidate_machine_contract_restore",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (no registry admit) + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "evidence": {
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "Not a registered Event Authority family; emit binding does not confer membership."
+    },
+    "owner": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Automated Testing owner evidence required by Wiring_Matrix evidence_required; not yet field-complete."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:25663-25668",
+      "note": "Machine-contract emit producer path via cmd.testing.capability_policy.set (effect_kind=event). Seglog/EventRecord persistence producer still open."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "emit candidate; payload schema not yet cited"
+    },
+    "scope_identity": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "emit candidate; scope identity not yet cited"
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "persistence adjudication open"
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "persistence adjudication open"
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "persistence adjudication open"
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "persistence adjudication open"
+    },
+    "consumers_checkpoints": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "Wiring_Matrix requires receipt/event assertion and regression evidence before certification"
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "not registered"
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/Wiring_Matrix.production.json:25700-25704",
+      "note": "assert text exists in machine contract; executable oracle harness still missing"
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:25650-25652",
+      "status": "ok",
+      "notes": "exact token in expected_event_types"
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:25663-25668",
+      "status": "ok",
+      "notes": "effect_kind:event + receipt_or_event_refs"
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:25666-25667",
+      "status": "ok",
+      "notes": "receipt_or_event_refs contains exact token"
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:25700-25704",
+      "status": "ok",
+      "notes": "regression assert requires emit of this event type"
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "FalseLexicalEmitRestore",
+  "provisional": false,
+  "quality_notes": [
+    "restored_from_false_lexical_reject",
+    "machine_contract_direct_emit_binding",
+    "persistence_adjudication_open",
+    "no_admit"
+  ],
+  "fresh_census_merged": true,
+  "fresh_census_status": "unresolved_emit_candidate_restored",
+  "restored_at_utc": "2026-08-12T04:23:09Z"
+}

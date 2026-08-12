@@ -1,0 +1,91 @@
+{
+  "event_type": "ui.chat.in_memory_cap_messages",
+  "bucket": "fresh_census_residual",
+  "working_bucket": "fresh_census_residual",
+  "july_classification": null,
+  "cohort_pins": [],
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "The sole occurrence is the exact numeric configuration key for the hot-memory message cap, with default 200, beside a separate byte-cap configuration. It names neither an occurrence nor a state transition and therefore is a configuration field, not a persisted event type (Plans/assistant-chat-design.md:2302-2302).",
+  "evidence": {
+    "owner_doc": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The cited design defines this exact token as a Config key; it does not name a semantic persisted-event owner."
+    },
+    "producer": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The line describes reading/paging message content under a configured cap, not a component emitting an event with this token."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The exact token is introduced as configuration with default 200, not as a versioned Event Authority member."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "A scalar configuration value is specified; no persisted event envelope or payload exists for this token."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The current-thread memory cap config does not define event-record scope or identity."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "Paging under a memory cap is operational behavior, not a replayable event with a deduplication identity."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2300-2302",
+      "note": "The design explicitly keeps full content in thread storage while limiting hot memory; the token is not an event with an event-specific retention class."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2300-2302",
+      "note": "The memory-cap configuration supplies no event payload, sensitive-field inventory, or redaction custody."
+    },
+    "transitions": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The line defines a threshold and paging behavior, not legal event predecessor or successor transitions."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The visible-window loader may use the configuration, but no persisted-event consumer or checkpoint contract is defined."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "No event alias, schema evolution, deprecation, or withdrawal semantics apply to this configuration key."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": "Plans/assistant-chat-design.md:2302-2302",
+      "note": "The threshold gives a UI/storage behavior requirement but no positive emission and negative non-emission oracle for a persisted event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/assistant-chat-design.md:2283-2302",
+      "status": "ok",
+      "notes": "The surrounding virtualization contract distinguishes rendered/paged message storage behavior from the exact scalar Config key and its default."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "closed-world-census/clean_batch_02",
+  "provisional": false,
+  "fresh_census_merged": true,
+  "fresh_census_status": "individually_adjudicated_excluded",
+  "quality_notes": [
+    "Fresh residual adjudicated from its exact occurrence and surrounding contract; no July cohort pin was invented.",
+    "No admission, registry append, owner inference, producer inference, or event-name analogy is authorized."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "event_type": "node.unblocked",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "working_bucket": "confirmed_persisted_unregistered",
+  "cohort_pins": [
+    "july248"
+  ],
+  "evidence": {
+    "owner_doc": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for explicit semantic acceptance owner of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:278-281",
+      "note": "The wiring row explicitly names the node-unblock producer path."
+    },
+    "membership_version": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for versioned individual registry membership of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "closed_payload_schema": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for exhaustive closed payload schema of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2375-2390",
+      "note": "The exact contract pins blocked sequence, run/node identity, and schema-bearing minimum fields."
+    },
+    "replay_idempotency": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for replay policy and idempotency identity of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "retention": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for event-specific retention and expiry rules of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "redaction_custody": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for redaction duties and custody owner of `node.unblocked`; this value is withheld rather than inferred."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2375-2390",
+      "note": "The exact contract defines blocked-to-unblocked semantics and a closed resolution vocabulary."
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.md:278-281",
+      "note": "The wiring row names visible consumers and blocked_projection checkpoint key."
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:2375-2390",
+      "note": "The exact contract identifies the deprecated alias and canonical replacement direction."
+    },
+    "positive_negative_oracles": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `node.unblocked`; this value is withheld rather than inferred."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Contracts_V0.md:2355",
+      "status": "drift",
+      "notes": "Cited line is in the node.blocked contract, not node.unblocked."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8038",
+      "status": "drift",
+      "notes": "Cited line is generic UCC-108 prose; the exact runtime event effect is at line 8026."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2364",
+      "status": "drift",
+      "notes": "Cited line is a node.blocked payload field, not node.unblocked."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2375-2390",
+      "status": "ok",
+      "notes": "Defines canonical name, deprecated alias, schema_version minimum payload, scoped blocked identity, closed resolution values, and contract refs."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8026",
+      "status": "ok",
+      "notes": "Maps runtime recovery actions to canonical commands and exact dispatch effects including node.unblocked."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.md:278-281",
+      "status": "ok",
+      "notes": "Names producer, visible consumers, and blocked_projection checkpoint key."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay15",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against current field-local Plans authority; absent dimensions remain OWNER_REQUIRED and fail closed."
+  ]
+}

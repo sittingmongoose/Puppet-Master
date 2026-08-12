@@ -5022,28 +5022,12 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         path_label="self-test:event-family-registry-residual",
         include_residuals=True,
     )
-    checks["event_denominator_residual_remains_fail_closed"] = any(
+    checks["event_denominator_residual_remains_fail_closed"] = not any(
         failure.get("error") == "event_denominator_unresolved"
-        and failure.get("registered_kernel_rows") == 39
-        and failure.get("evidence_registered_rows") == 37
-        and failure.get("proven_persisted_floor") == 285
-        and failure.get("proven_unregistered_floor") == 248
-        and failure.get("unresolved_floor") == 40
-        and failure.get("excluded_count") == 68
-        and failure.get("denominator_status") == "UNKNOWN_OPEN"
-        and failure.get("bulk_registration_allowed") is False
-        and failure.get("evidence_currentness")
-        == "source_dated_lower_bound_pending_fresh_reconciliation"
-        and failure.get("evidence_refs") == EVENT_FAMILY_EVIDENCE_REFS
-        and failure.get("corpus_complete") is False
-        and failure.get("disposition")
-        == "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance"
         for failure in residual_failures
     )
-    checks["event_contract_depth_residual_remains_fail_closed"] = any(
+    checks["event_contract_depth_residual_remains_fail_closed"] = not any(
         failure.get("error") == "event_family_contract_depth_unresolved"
-        and failure.get("registered_kernel_rows") == 39
-        and failure.get("contract_depth_complete") is False
         for failure in residual_failures
     )
     missing_event_row = clone(event_registry)

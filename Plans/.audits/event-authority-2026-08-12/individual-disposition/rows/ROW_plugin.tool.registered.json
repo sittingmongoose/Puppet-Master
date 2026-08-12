@@ -1,0 +1,90 @@
+{
+  "event_type": "plugin.tool.registered",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "KEEP_QUARANTINED",
+  "disposition_rationale": "Owner J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT applied 2026-08-12T12:05:08Z. No live-registry admit. Remains confirmed_persisted_unregistered denominator member.",
+  "evidence": {
+    "owner_doc": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:447-464",
+      "note": "The cited plugin ledger contract assigns Plugins ownership of event semantics and payload content for this exact token."
+    },
+    "producer": {
+      "status": "OWNER_REQUIRED",
+      "citation": null,
+      "note": "The checked plugin event table names the trigger for plugin.tool.registered but does not explicitly identify its producing component; the exact producer binding requires owner authority."
+    },
+    "membership_version": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an individually versioned Event Authority membership row for plugin.tool.registered; this field remains fail-closed."
+    },
+    "closed_payload_schema": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes an exhaustive closed payload schema for plugin.tool.registered; this field remains fail-closed."
+    },
+    "scope_identity": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes the complete scope and identity rules for plugin.tool.registered; this field remains fail-closed."
+    },
+    "replay_idempotency": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes replay and idempotency behavior for plugin.tool.registered; this field remains fail-closed."
+    },
+    "retention": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes a retention class or duration for plugin.tool.registered; this field remains fail-closed."
+    },
+    "redaction_custody": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes redaction and custody responsibilities for plugin.tool.registered; this field remains fail-closed."
+    },
+    "transitions": {
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:447-464",
+      "note": "The cited event table names the exact emission condition for this token."
+    },
+    "consumers_checkpoints": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes consumer and checkpoint behavior for plugin.tool.registered; this field remains fail-closed."
+    },
+    "compatibility_withdrawal": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes compatibility and withdrawal rules for plugin.tool.registered; this field remains fail-closed."
+    },
+    "positive_negative_oracles": {
+      "status": "FAIL",
+      "citation": null,
+      "note": "No checked citation establishes complete positive and negative test oracles for plugin.tool.registered; this field remains fail-closed."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/Plugins_System.md:447-464",
+      "status": "ok",
+      "notes": "The event table says it is emitted when a custom tool is registered, with tool name and plugin_id identified as payload content; lines 461-464 assign plugin semantics/payload ownership while retaining the canonical EventRecord envelope."
+    }
+  ],
+  "owner_veto": null,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay17",
+  "provisional": false,
+  "quality_notes": [
+    "Deepened against field-local checked citations; unresolved dimensions remain fail-closed without analogy or owner/producer inference."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}

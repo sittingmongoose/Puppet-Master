@@ -1,0 +1,114 @@
+{
+  "event_type": "onboarding.provider_setup_opened",
+  "bucket": "confirmed_persisted_unregistered",
+  "july_classification": "confirmed_persisted_unregistered",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "The command catalog and production wiring identify the setup command, handlers::onboarding::free_models::setup, and this exact event effect. They do not close the persisted event contract. Exactly 2 of 12 admission dimensions are field-locally supported; the remaining dimensions require explicit owner evidence. `onboarding.provider_setup_opened` therefore remains fail-closed as NEEDS_OWNER_VETO.",
+  "evidence": {
+    "membership_version": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No cited versioned registry membership exists for this exact token."
+    },
+    "owner_doc": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation explicitly assigns accountable semantic authority for this exact token."
+    },
+    "producer": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:17461-17484",
+      "note": "The cited production contract explicitly names the handler/producer surface for `onboarding.provider_setup_opened`."
+    },
+    "closed_payload_schema": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes the persisted payload schema, field types, optionality, and unknown-field behavior for this exact token."
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "citation": "Plans/Wiring_Matrix.production.json:17514-17520",
+      "note": "The exact event test requires `onboarding.provider_setup_opened` to carry command_id, origin, correlation_id, and handler target, closing the emitted event identity tuple."
+    },
+    "replay_idempotency": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines replay and idempotency behavior for this exact token."
+    },
+    "retention": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines event-specific retention for this exact token."
+    },
+    "redaction_custody": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation assigns redaction policy and custody for this exact token."
+    },
+    "transitions": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation closes legal predecessor/successor transitions for this exact token."
+    },
+    "consumers_checkpoints": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines complete consumer checkpoint and failure behavior for this exact token."
+    },
+    "compatibility_withdrawal": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "No citation defines compatibility normalization and withdrawal criteria for this exact token."
+    },
+    "positive_negative_oracles": {
+      "status": "UNKNOWN",
+      "citation": null,
+      "note": "The cited wiring test asserts positive emission and rejects fabricated command-applied effects, but it does not supply a negative oracle for suppression or invalid input of this exact persisted event."
+    }
+  },
+  "citations_checked": [
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8019",
+      "status": "ok",
+      "notes": "Checked for the exact `onboarding.provider_setup_opened` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:17461-17484",
+      "status": "ok",
+      "notes": "Checked for the exact `onboarding.provider_setup_opened` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/Wiring_Matrix.production.json:17514-17520",
+      "status": "ok",
+      "notes": "Checked for the exact `onboarding.provider_setup_opened` declaration and only the field-local facts credited in this row."
+    }
+  ],
+  "owner_veto": {
+    "stable_id": "OV-EA-july248-onboarding-provider-setup-opened-contract",
+    "field_or_decision": "membership_version,owner_doc,closed_payload_schema,replay_idempotency,retention,redaction_custody,transitions,consumers_checkpoints,compatibility_withdrawal,positive_negative_oracles",
+    "question": "For `onboarding.provider_setup_opened`, will the accountable owner supply cited decisions for membership_version, owner_doc, closed_payload_schema, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles, or direct a cited non-admission reclassification?",
+    "options": [
+      "Supply exact Plans citations closing every listed dimension for a later independent adjudication",
+      "Keep this exact token quarantined with no checkpoint advance",
+      "Direct a cited reclassification and denominator treatment for this exact token"
+    ],
+    "evidence_gap": "Existing citations establish 2 of 12 dimensions for this exact token; the listed missing decisions cannot be inferred from namespace, sibling events, package membership, or OD-EA-003.",
+    "event_types": [
+      "onboarding.provider_setup_opened"
+    ]
+  },
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "independent_of_od_ea_003": true,
+  "source_overlay": "UnregOverlay15",
+  "provisional": false,
+  "quality_notes": [
+    "Individually rechecked against current cited Plans spans; missing dimensions remain explicitly UNKNOWN and owner-bound.",
+    "Immutable cohort pin july248 preserved; working bucket does not alter cohort membership."
+  ],
+  "cohort_pins": [
+    "july248"
+  ],
+  "working_bucket": "confirmed_persisted_unregistered"
+}
