@@ -287,11 +287,48 @@ offset, lift, placeholder, neighbor reflow, edge-zone detection, cancellation, a
 reduced-motion behavior follow the approved U10 interaction semantics. DOM/Slint
 items are projections, not layout authority. A changed semantic drop or resize end
 validates the expected layout revision, dispatches one typed command, increments the
-revision, and persists once. Cancellation, invalid targets, lost capture, Escape,
-blur, and pointer cancellation restore the exact pre-gesture snapshot. The target
+revision, and persists once. Cancellation, invalid targets, Escape, blur, and pointer
+cancellation restore the exact pre-gesture snapshot. The target
 priority is explicit inner insertion/split, outer edge dock, floating, then invalid
 revert. All resize endpoints use the shared resizer glow/recovery contract and all
 new scrollports register with the four-edge scroll dissolve system.
+
+Amended 2026-08-12 — direct manipulation is the movement model. Movement is a
+direct-manipulation gesture from a grab handle, not a target picker. While a surface
+is held, the held surface tracks the pointer one-to-one, the slot it vacated becomes
+a real in-flow placeholder carrying that surface's footprint inside the prospective
+host, and the remaining surfaces animate to their new positions from their pre-move
+rects. Preview never re-renders a surface subtree, so editor buffers, terminal
+sessions, browser sessions, and chat history survive a gesture untouched. Drop
+targeting resolves in this order: a surface under the pointer resolves to that
+surface's host and an insertion index; otherwise an outer edge band resolves to that
+dock, which is the only way to reach a dock that currently holds nothing and is
+therefore zero-sized; otherwise the host under the pointer; otherwise `home_main`.
+Leaving the window resolves to `floating`.
+
+Loss of pointer capture is explicitly NOT a cancellation vector: live neighbor reflow
+re-parents projected items, which drops capture, so treating capture loss as a cancel
+ends every gesture on its first frame. Escape, pointer cancellation, and window blur
+remain the cancellation contract.
+
+Resize writes only the dragged surface's geometry during the gesture. A full layout
+re-projection per pointer frame is prohibited: it can destroy the very endpoint
+holding pointer capture, and it makes a resize that commits a new size while moving
+zero pixels indistinguishable from a working one. Resize endpoints sit on the
+boundary the gesture actually moves, not on the surface's outer edge, and the drag
+clamp band and the host track clamp band must agree so the reachable range is the
+committed range. Movement and resize gestures are independent: a stranded gesture of
+one kind must not disable the other.
+
+Keyboard movement is a first-class path on the same grab handle and is the accessible
+equivalent of the pointer gesture: activating the handle picks the surface up, arrow
+keys move it between slots and across host boundaries, activation drops it, Escape
+cancels, and each state change is announced through a polite live region. Host
+adjacency for the keyboard path is `home_main` at the centre with each edge dock
+adjacent to it, so a dock-to-dock move is two steps (back to `home_main`, then out to
+the target dock); an arrow that would leave the current host only does so once the
+surface is already at that end of the host's slot order, so the same key first
+reorders within the host and then crosses out of it.
 
 ### F3-HOME-003 — Shell controls and capability envelope
 
@@ -310,11 +347,26 @@ terminal is already collapsed; its label never changes into an Expand action.
 Reset, File Manager, Move/Dock, pop-out, close, counts, recovery diagnostics, and
 layout revision/debug data are forbidden in this popup. `Reset Home Layout` lives
 under Settings -> General & Appearance -> Startup & Recovery and resets shell
-presentation only. Move/Dock remains in each eligible surface's options menu;
-File Manager targets remain in File Manager; terminal limits remain in
-terminal-local controls. Each eligible editor, Dashboard, Chat, and terminal
-section menu exposes Main, Dock Left, Dock Right, Dock Top, Dock Bottom, and Float.
-Editor menus additionally expose Open Browser, Pop Out, and Close Panel.
+presentation only. File Manager targets remain in File Manager; terminal limits
+remain in terminal-local controls. Editor menus expose Open Browser, Pop Out, and
+Close Panel.
+
+Amended 2026-08-12 — every eligible editor, Dashboard, Chat, and terminal section
+carries one grab handle at the top-left of its own head row: a small, always-visible
+inline-SVG grip with a grab cursor, a stable accessible name, a focus ring, and a
+grabbed state. That handle is the only movement affordance. The per-surface
+`Main / Dock Left / Dock Right / Dock Top / Dock Bottom / Float` menu rows are
+retired; a surface options menu states the current placement and points at the handle
+instead of offering targets. Movement semantics, commands, receipts, and events are
+unchanged — only the affordance changed — and keyboard movement on the handle
+(F3-HOME-002) carries the accessibility contract the retired rows used to hold.
+
+The bottom terminal's own collapse control is a toggle: an inline-SVG chevron at the
+right end of the terminal bar that collapses the section and, from the collapsed
+strip, expands it again. The collapsed strip keeps that control visible and
+hit-testable — it is the expand affordance — and the control reports post-commit
+state. This does not weaken the rule above that the top-bar menu row
+`Collapse Bottom Terminal` is one-way and never relabels to Expand.
 
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
@@ -367,6 +419,16 @@ bottom placement. Historical HTML5/CSS-order panel swapping is prototype lineage
 not GUI canon; the implementation must use the model-first Pointer Events
 transaction described above. Existing Dashboard widget hostability and widget
 layout remain separate contracts and are not expanded by Home surface movement.
+
+Superseded 2026-08-12: the per-surface `Move or dock` menu inventory (Main, Dock
+Left, Dock Right, Dock Top, Dock Bottom, Float on every eligible surface menu) is
+retired in favour of the grab handle plus its keyboard path. The retired rows are
+compatibility lineage only; `cmd.workspace_layout.move_surface` and its payload are
+unchanged and are now dispatched from the handle and the live drop targets. A
+target-picker overlay presented during a gesture is likewise retired: it occluded the
+canvas and consumed the hit-test that positional drops depend on. Dashboard widget
+reorder and resize adopt the same direct-manipulation vocabulary (lifted item,
+in-flow placeholder, neighbor reflow) while remaining a separate layout contract.
 
 ### F3-501 - Home Workspace Model And Stable Identity
 
@@ -520,6 +582,73 @@ negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
 compatibility_only_notes: []
 stale_retired_dispositions: []
+owner_hints: [Plans/FinalGUISpec.md]
+```
+
+### F3-505 - Contact-Aware Editor Tab Silhouette
+
+```yaml
+plan_unit_id: F3-505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The active editor file tab and the code canvas below it render as one continuous
+  surface. A single shared silhouette travels between tabs on a darker tab rail: it
+  carries squircle top corners, no bottom border against the canvas, and concave
+  shoulders at its lower left and lower right, and the silhouette, its corner helpers
+  and the canvas share exactly one fill token while unselected tabs stay visually
+  independent in the rail. Corner geometry is a function of geometric contact and the
+  left and right sides are independent: with a local morph threshold of 20 px,
+  leftProgress = clamp(leftGap / 20, 0, 1) and rightProgress = clamp(rightGap / 20, 0, 1)
+  drive canvasRx = progress * 10 against a fixed canvasRy of 10, and cutoutRx =
+  progress * 8 against a fixed cutoutRy of 8, so a corner flattens sideways rather than
+  shrinking into a circular dimple, and a side that is flush against its boundary
+  flattens completely with no residual notch. Direct dragging is one-to-one with the
+  pointer and corner values are derived from the tab position in the same frame with no
+  independent easing, no momentum and no elastic overshoot; click, snap and keyboard
+  selection animate x and width with a firm low-bounce spring while the canvas stays
+  stationary and the connected shape visibly travels rather than crossfading. The shape
+  recomputes stable target bounds on window resize, tab-width change, theme or motion
+  change, and fonts-ready. Reduced motion removes the spring travel and retains
+  immediate state changes.
+gui_related: true
+gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
+split_recommended: false
+depends_on: [F3-421, F3-466]
+unblocks: []
+acceptance_criteria:
+- "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
+- "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
+- "Only the horizontal radius animates; canvasRy stays 10 px and cutoutRy stays 8 px throughout the morph."
+- "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
+- "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
+- "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: contact_aware_editor_tab_silhouette
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens: ["20", "10", "8", "clamp", "squircle"]
+negative_constraints:
+- "Do not render the active-editor-tab treatment as a pill or an underline sliding between labels."
+- "Do not retain a decorative notch where the tab and the canvas are flush."
+- "Do not ease the corner values independently of the tab position during a drag."
+- "Do not crossfade the whole surface between tabs."
+compatibility_only_notes:
+- "Slint portability: reproduce the silhouette with layered shapes or custom paths and preserve the geometry and motion rules rather than the CSS mechanism; corner-shape squircle or superellipse is progressive enhancement on the web with elliptical border-radius as the fallback."
+stale_retired_dispositions:
+- "The prior active editor file tab treatment (surface-tinted tab plus a 2 px accent underline, with per-theme underline recolours) is retired for this surface; the silhouette is the active-tab chrome."
+owner_boundary_notes:
+- "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit, which is scoped to editor file tabs only."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -809,7 +938,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
-| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, title-bar page tabs, rightward notification stack with count badge (between the page tabs and the title-bar search; F3-460), title-bar search, theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
+| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, title-bar page tabs, title-bar search, rightward notification stack with count badge (centred in the gap between the title-bar search and the theme/settings cluster; F3-460 as amended 2026-08-12), theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
@@ -857,7 +986,7 @@ Required visible behavior:
 - keyboard entrypoint for instant project switch
 - responsive collapse without losing the command-palette project switch path
 
-PMConcept7 promotion (2026-07-23): the title bar also hosts the rightward notification stack and count badge, sitting between the title-bar page tabs and the title-bar search. This stack is the sole in-app notification affordance; ephemeral toasts stage beneath it and durable alerts join it, with the sprout inbox panel opening from it. See F3-460 and F3-461.
+PMConcept7 promotion (2026-07-23, amended 2026-08-12): the title bar also hosts the rightward notification stack and count badge. It now sits AFTER the title-bar search, centred with equal clearance in the gap between the search field and the theme/settings cluster; the earlier placement between the page tabs and the search is retired as stale. This stack is the sole in-app notification affordance; ephemeral toasts stage beneath it and durable alerts join it, with the sprout inbox panel opening from it. See F3-460 and F3-461.
 
 Non-canonical after this section:
 - title-bar dropdown/strip as the primary project-switch shell
@@ -30794,7 +30923,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The title bar hosts a rightward notification stack with a count badge, sitting between
-  the title-bar page tabs and the title-bar search, and this stack is the sole in-app
+  the title-bar search and the theme/settings cluster with equal clearance on both sides,
+  and this stack is the sole in-app
   notification affordance. Ephemeral toasts stage beneath the stack per the F3-447 staging
   contract and never join the stack or the alert store. Durable or important notifications
   stage and then join the collapsed stack with a join animation; the unread count renders
@@ -30810,7 +30940,7 @@ split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- "The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar search, and no other in-app surface offers a standing notification affordance."
+- "The title bar renders the rightward notification stack and count badge between the title-bar search and the theme/settings cluster, centred in that gap, and no other in-app surface offers a standing notification affordance."
 - "Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry."
 - "Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count from the shared alert store."
 - "Glass renders the collapsed-stack left mask as a mild peek from rgba(0,0,0,.72) to solid by 4%, retro renders a hard offset shadow, and friendly renders free-floating cozy solid cards above page content."
@@ -30839,6 +30969,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: the collapsed stack, staged toasts, and count badge render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
+- "Amended 2026-08-12: the placement between the title-bar page tabs and the title-bar search is retired as stale. It read as crowded against the page tabs; the stack now sits after the search, centred in the gap before the theme/settings cluster. Staging, join, count-badge and alert-store semantics are unchanged."
 - "The bottom-right standing toast stack surface is retired; ephemeral toasts stage beneath the title-bar notification stack per the amended F3-447 contract."
 - "The status-bar notifications bell and its popover are retired per the amended F3-448 inventory; the unread affordance is this unit's count badge."
 owner_boundary_notes:
@@ -31079,6 +31210,7 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
+- "Scope clarified 2026-08-12: this unit covers the title-bar PAGE tabs only. Editor file tabs are owned by F3-505 (contact-aware silhouette) and F3-466 (friendly tab shape); the sliding ink is not applied to editor file tabs."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
