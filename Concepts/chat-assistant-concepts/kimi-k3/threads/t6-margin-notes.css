@@ -229,3 +229,13 @@
     justify-content: flex-end;
   }
 }
+
+/* packet fix: the parked margin meta must never escape the 140px column
+   (long mono meta could overhang the viewport on wide-container/narrow-chat
+   combos like w3@750) */
+@container (min-width: 700px) {
+  [data-k3-thread="t6"] .k3t-hover-meta {
+    max-width: 140px;
+    overflow: hidden;
+  }
+}

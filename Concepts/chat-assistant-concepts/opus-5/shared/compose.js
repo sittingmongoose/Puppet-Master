@@ -40,8 +40,23 @@
     var ui = store.get('ui');
 
     /* Scope attributes drive all concept CSS. Theme goes on the stage container, never on
-     * documentElement, so a contact sheet can render 8 themes as siblings in one document. */
-    this.stage.setAttribute('data-pmx-window', windowId);
+     * documentElement, so a contact sheet can render 8 themes as siblings in one document.
+     *
+     * `data-pmx-window` deliberately does NOT go on the stage. It marks the window concept's own
+     * area — the chat host — and it is set just below, after the shell has produced that element.
+     * Two things depend on that distinction:
+     *
+     *   1. `PMXThreadHistory.resolve()` measures the chat width with
+     *      `hostEl.closest('[data-pmx-window]')`. With the attribute on the stage that measured
+     *      the WHOLE STAGE, so `chatW` equalled `room` and every `minChat` floor was compared
+     *      against the wrong number — a pin was suspended or allowed for the wrong reason.
+     *   2. The application rail, the dashboard and the title bar are shell scenery, not Chat.
+     *      With the attribute on the stage they counted as "inside the window concept", which
+     *      made the notification boundary (CHAT-021: title bar only, never a Chat panel)
+     *      unassertable — the title-bar inbox looked like a Chat surface to any structural test.
+     *
+     * Window CSS is unaffected: every `wN-` element lives inside the chat host, so
+     * `[data-pmx-window="wN"] .wN-thing` still matches. */
     this.stage.setAttribute('data-pmx-thread', threadId);
     /* A theme-locked stage keeps its own theme. The contact sheet renders eight themes as
      * eight sibling stages, so a composition must not force the global theme onto a cell
@@ -55,6 +70,8 @@
     /* The fake Puppet Master shell: dashboard background + left application rail.
      * Shared across all eight window concepts. Provides the chat host element. */
     this.shell = global.PMXShell.mount(this.stage, this.ctxBase);
+    /* The window concept's scope marker, on the element the window concept actually fills. */
+    this.shell.chatHost.setAttribute('data-pmx-window', windowId);
 
     var ctx = Object.create(this.ctxBase);
     ctx.windowId = windowId;

@@ -114,7 +114,15 @@ windows/                 w1..w8, one .js and one .css each
 threads/                 t1..t8, one .js and one .css each
 demo/                    supplied dataset (unmodified), generated bundles, generator script
 tests/                   assert.js, suites.js, runner.html
-evidence/                screenshots and contact sheets
+evidence/                contact sheets and per-window compact-history captures
+concept-hub.json         ConceptHub manifest (hybrid: workspace + 3 entries)
+impact-register.json     pm.chat_concept_impact_register.v1
+candidate-command-delta.json   command id adjudications against the catalog
+candidate-wiring-delta.json    control to command to owner to receipt chains
+candidate-dry-delta.json       DRY roles mapped to modules and runtime owners
+plan-owner-delta.md      per owner: assumes, contradicts, needs
+demo-trigger-report.json every Director trigger with its measured store effect
+interaction-test-report.json   assertion counts, matrix results, console counts
 ```
 
 ---

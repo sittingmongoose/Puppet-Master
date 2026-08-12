@@ -4,9 +4,15 @@
  * header capsule and a floating composer capsule hover over it; the header auto-hides on
  * scroll down and returns on scroll up.
  *
- * This is the maximum-transcript extreme of the set. It provides NEITHER threadHistory NOR
- * workSurfaceHost, which makes it the strongest test that a thread module renders its work
- * surfaces inline when no host region exists.
+ * This is the maximum-transcript extreme of the set. It deliberately does NOT provide
+ * `workSurfaceHost`, which makes it the strongest test that a thread module renders its work
+ * surfaces INLINE in the transcript when no host region exists — the absent-region path is a
+ * first-class arrangement here, not an omission.
+ *
+ * It does provide `threadHistory` (a floating capsule rail) and `artifactHost` (a floating artifact
+ * capsule). The earlier header claimed it provided neither history nor work surfaces, which was
+ * wrong on the first count and is why this comment is now explicit about which single region is
+ * absent and why.
  */
 (function (global) {
   'use strict';
@@ -57,6 +63,27 @@
       u.el('span', { class: 'w8-brand-model', text: this.ctx.label })
     ]));
     this.shell.appendChild(this.headCap);
+    /* A real 12px hit target along the top edge. The CSS recovery path was
+     * `.w8-shell:hover .w8-cap-head[data-hidden="1"]:hover`, which cannot be satisfied: once the
+     * capsule has translated -140% it is outside the surface, so there is nothing left to hover.
+     * The header was therefore unrecoverable by pointer once it hid. This strip is always where the
+     * capsule WOULD be, so bringing it back is a click at the top edge — the gesture people already
+     * try. */
+    this.capRecover = u.el('button', {
+      class: 'w8-cap-recover', type: 'button',
+      aria: { label: 'Show header capsule' }
+    });
+    this._on(this.capRecover, 'click', function () {
+      self.headCap.setAttribute('data-hidden', '0');
+    });
+    this.shell.appendChild(this.capRecover);
+    /* Artifact workspace: a floating left capsule in the same frameless material, edge to edge in
+     * height and with no header bar. Both surfaces are capsules here, so the artifact capsule sits
+     * left of the history capsule stack. Switcher is a small capsule strip above it. */
+    this.artifactSwitch = u.el('div', { class: 'w8-artifact-strip' });
+    this.artifactBody = u.el('div', { class: 'w8-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w8-artifact-host' }, [this.artifactSwitch, this.artifactBody]);
+    this.shell.appendChild(this.artifactHost);
 
     /* ---------------------------------------------------------------- pinned history
      * This concept renders its own transient history (a popup, an overlay), which
@@ -111,6 +138,13 @@
 
     this.overlay = u.el('div', { class: 'w8-overlay', data: { pmxWindow: 'w8', pmxRegion: 'overlayRoot' } });
     this.root.appendChild(this.overlay);
+
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
 
     /* CAPTURE. The thread module renders its own scroller inside this region, and `scroll`
      * does not bubble — so a bubble-phase listener on the host heard nothing and the capsule
@@ -204,7 +238,13 @@
 
   W8Window.prototype.syncPin = function () {
     var TH = global.PMXThreadHistory;
-    var pin = TH.pinState(this.ctx, this.pinRailBody, 900);
+    /* The compact form is a vertical stack of small floating capsules, one per recent thread,
+     * which is why the floor is 44px rather than a column width. */
+    var r = TH.applyTo(this.pinRailBody, TH.resolve(this.ctx, this.pinRailBody, TH.floorsFor('w8')));
+    TH.reasonNode(this.pinRailBody, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
+    if (this.shell) this.shell.setAttribute('data-w8-history', r.effective);
     this.pinRail.setAttribute('data-w8-pinned', pin.active ? '1' : '0');
     if (this.shell) this.shell.setAttribute('data-w8-pinned', pin.active ? '1' : '0');
     TH.syncPinButton(this.pinBtn, pin.asked);
@@ -240,7 +280,48 @@
     }
   };
 
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W8Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w8-artifact', open ? '1' : '0');
+
+    /* The composer capsule floats and GROWS with the draft, so the artifact capsule's clearance is
+     * measured rather than assumed. A hard-coded gap covered the composer as soon as a draft ran to
+     * three lines — and the composer is the one control that must never be covered.
+     *
+     * The measurement is the capsule's TOP relative to the shell's bottom, not its height plus a
+     * spacing token: the capsule carries its own offset from the bottom edge, so composing the
+     * clearance from height + token was off by exactly that offset and left a few pixels of overlap. */
+    if (this.composerCap) {
+      var capRect = this.composerCap.getBoundingClientRect();
+      var shellRect = this.shell.getBoundingClientRect();
+      var clearance = Math.round(shellRect.bottom - capRect.top) + 6;
+      if (clearance > 0) this.shell.style.setProperty('--w8-artifact-bottom', clearance + 'px');
+    }
+
+    /* Small capsules above the artifact, same material and radius, so the strip reads as part of the
+     * same floating object instead of a header bar this concept refuses to have. */
+    var u = U();
+    u.empty(this.artifactSwitch);
+    if (!open) return;
+    var self = this;
+    A.list().forEach(function (a) {
+      var c = u.el('button', {
+        class: 'w8-artifact-cap', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false' }
+      }, [u.el('span', { text: a.title })]);
+      u.on(c, 'click', function () { A.switchTo(a.id); });
+      self.artifactSwitch.appendChild(c);
+    });
+  };
+
   W8Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this._ro) { try { this._ro.disconnect(); } catch (e) {} this._ro = null; }
@@ -251,7 +332,7 @@
   global.PMX.window.register('w8', {
     name: 'Frameless',
     blurb: 'No chrome at all. The transcript runs edge to edge while a header capsule and a composer capsule float above it, and the header steps out of the way as you read downward.',
-    provides: ['threadHistory', 'questionHost'],
+    provides: ['threadHistory', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W8Window(root, ctx);
       return {
@@ -261,7 +342,8 @@
           headerTools: inst.tools,
           overlayRoot: inst.overlay,
           threadHistory: inst.pinRailBody,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (o) { inst.setRail(o); },

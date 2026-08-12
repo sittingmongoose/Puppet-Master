@@ -97,6 +97,14 @@
     this.body.appendChild(this.rail);
 
     this.shell.appendChild(this.body);
+    /* Artifact workspace: the LEFT grid column of .w2-shell. The chip strip continues to span
+     * full width above it, which is the whole reason this concept can host an artifact without
+     * competing for width — its history costs height, not width, so the artifact gets the column.
+     * Switcher is a desk tab row across the artifact head. */
+    this.artifactSwitch = u.el('div', { class: 'w2-artifact-tabs' });
+    this.artifactBody = u.el('div', { class: 'w2-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w2-artifact-host' }, [this.artifactSwitch, this.artifactBody]);
+    this.shell.appendChild(this.artifactHost);
 
     /* --- question host sits above the composer, never behind anything --- */
     this.questionHost = u.el('div', { class: 'w2-question', data: { pmxRegion: 'questionHost' } });
@@ -115,11 +123,25 @@
       data: { pmxWindow: 'w2', pmxRegion: 'overlayRoot' }
     });
     this.root.appendChild(this.overlay);
+
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
   };
 
   W2Window.prototype.syncPin = function () {
     var TH = global.PMXThreadHistory;
-    var pin = TH.pinState(this.ctx, this.chips, 900);
+    /* Four-state resolution with this concept's own floors. `compactColumn: 0` is deliberate:
+     * the compact form here is a two-row wrapping chip strip, which costs HEIGHT and no width
+     * at all, so demanding horizontal room for it would suspend a pin that fits perfectly. */
+    var r = TH.applyTo(this.chips, TH.resolve(this.ctx, this.chips, TH.floorsFor('w2')));
+    TH.reasonNode(this.chips, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
+    this.shell.setAttribute('data-w2-history', r.effective);
     this.shell.setAttribute('data-w2-pinned', pin.active ? '1' : '0');
     TH.syncPinButton(this.pinBtn, pin.asked);
     var histRoot = this.chips.querySelector('.pmx-chrome-history');
@@ -147,20 +169,48 @@
     this.shell.setAttribute('data-w2-mount', form === 'popout' ? 'popout' : 'docked');
   };
 
+  /* ONE scan over changed keys. There were two identical `indexOf('session') === 0` loops here,
+   * one for the pin and one for the filter, walking the same array for the same answer — a second
+   * pass that could only ever agree with the first. */
   W2Window.prototype.update = function (state, changed) {
-    for (var p = 0; p < changed.length; p++) {
-      if (changed[p].indexOf('session') === 0) { this.syncPin(); break; }
-    }
     var touched = false;
     for (var i = 0; i < changed.length; i++) {
-      if (changed[i].indexOf('session') === 0) { touched = true; break; }
+      if (String(changed[i]).indexOf('session') === 0) { touched = true; break; }
     }
     if (!touched) return;
+    this.syncPin();
     var q = state.session.threadHistory ? (state.session.threadHistory.query || '') : '';
     if (this.filter.value !== q) this.filter.value = q;
   };
 
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W2Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w2-artifact', open ? '1' : '0');
+
+    /* Desk tabs: this concept already speaks in tabs, so the artifact switcher is a tab row rather
+     * than a new control vocabulary. */
+    var u = U();
+    u.empty(this.artifactSwitch);
+    if (!open) return;
+    var self = this;
+    A.list().forEach(function (a) {
+      var tab = u.el('button', {
+        class: 'w2-artifact-tab', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false' }
+      }, [u.el('span', { text: a.title })]);
+      u.on(tab, 'click', function () { A.switchTo(a.id); });
+      self.artifactSwitch.appendChild(tab);
+    });
+  };
+
   W2Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
@@ -170,7 +220,7 @@
   global.PMX.window.register('w2', {
     name: 'Split Desk',
     blurb: 'Thread history becomes a horizontal strip of chips so it costs height instead of width, and work surfaces occupy a right rail only when the chat is wide enough to spare it.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W2Window(root, ctx);
       return {
@@ -181,7 +231,8 @@
           overlayRoot: inst.overlay,
           threadHistory: inst.chips,
           workSurfaceHost: inst.surfaceHost,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (open) { inst.setRail(open); },

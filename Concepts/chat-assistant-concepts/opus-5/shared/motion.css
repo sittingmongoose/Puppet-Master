@@ -30,7 +30,11 @@
 .pmx-enter        { animation: pmx-enter-up var(--motion-med) var(--ease-default) both; }
 .pmx-enter-scale  { animation: pmx-enter-scale var(--motion-med) var(--ease-default) both; }
 .pmx-exit         { animation: pmx-exit-down 200ms var(--ease-default) both; }
-.pmx-pulse        { animation: pmx-pulse 1.5s ease-in-out infinite; }
+/* An indefinite pulse is a claim that work is happening RIGHT NOW, so it is gated on the element
+ * naming a live ObservableWork operation. Without `data-pmx-op` the class still marks the element
+ * (so a renderer can find it) and simply does not animate. This is the one place the rule needs to
+ * live, because every concept composes this class rather than writing its own keyframes. */
+.pmx-pulse[data-pmx-op] { animation: pmx-pulse 1.5s ease-in-out infinite; }
 .pmx-pop          { animation: pmx-pop var(--motion-med) var(--ease-default) both; }
 .pmx-press:active { animation: pmx-press var(--motion-fast) var(--ease-default); }
 .pmx-float        { animation: pmx-float 3.2s ease-in-out infinite; }
@@ -118,7 +122,11 @@
   animation: pmx-celebrate-ring 600ms var(--ease-out);
 }
 .pmx-spin  { animation: pmx-spin 900ms linear infinite; transform-origin: 50% 50%; }
-.pmx-bob   { animation: pmx-bob 2.2s ease-in-out infinite; }
+/* An attention nudge draws the eye and then STOPS. It used to loop forever, which is the failure
+ * mode the motion contract names: an indefinite animation is a claim that something is happening
+ * right now, and "this thread needs attention" is a persistent STATE, not live work. Three beats is
+ * enough to be noticed and short enough to leave the interface still. */
+.pmx-bob   { animation: pmx-bob 2.2s ease-in-out 3; }
 .pmx-changed { animation: pmx-changed 900ms var(--ease-out); }
 
 /* Anything that should settle like the theme rather than merely ease. */

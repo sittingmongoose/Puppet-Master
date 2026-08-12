@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.chat.5_6_sol.impact_register.v1",
+  "concept_or_shared_id": "fable-shared-runtime + window-01..08 + thread-c01..08",
+  "requirement_ids": [
+    "FPB-1 shell/mounts", "FPB-2 themes", "FPB-3 message metadata", "FPB-4 long messages",
+    "FPB-5 composer/draft/fake-send", "FPB-6 search", "FPB-7 lens/ring", "FPB-8 goal",
+    "FPB-9 work surfaces", "FPB-10 activity", "FPB-11 subagents", "FPB-12 questionnaires",
+    "FPB-13 artifacts", "FPB-14 thread history", "FPB-15 demo depth",
+    "CTD-1 pinned history", "CTD-2 left artifact workspace", "CTD-3 distinct questions/work",
+    "CTD-4 route picker", "CTD-5 access", "CTD-6 BSD", "CTD-7 material warnings",
+    "CTD-8 context/memory/persona", "CTD-9 cross-thread", "CTD-10 branch/rewind/redirect",
+    "CTD-11 thread-local state", "CTD-12 goal runtime/crew/capacity", "CTD-13 operational awareness",
+    "CTD-14 attachments", "CTD-15 provider setup", "CTD-16 server/offline", "CTD-17 tools/recovery",
+    "CTD-18 browser privacy", "CTD-19 notifications", "CTD-20 spellcheck",
+    "CHAT-001..021", "AGT-001..022", "CTX-001..020", "PRM-005..025", "PROV-001..026",
+    "USE-007..021", "MGR-003..030", "VIS-001..005", "SET-011", "ONB-014", "PROC-001..010"
+  ],
+  "plan_owner_impacts": [
+    { "owner": "Plans/assistant-chat-design.md", "contract_or_planunit": "ACD-437..444 header/selector row", "change_kind": "clarify", "evidence": "Instrument Deck (window-03) hosts the selector row in the deck band via a window-provided slot; the popup family contract is unchanged. If a window-hosted selector row becomes canon, ACD-443's placement language needs a hosted-slot clause." },
+    { "owner": "Plans/assistant-chat-design.md", "contract_or_planunit": "ACD-027..031 questionnaire", "change_kind": "add", "evidence": "Dossier's explicit Review page and Choreograph's stack/fan review are new question-review compositions beyond the canon card; both preserve queue, skip-reversal, and submit gating." },
+    { "owner": "Plans/assistant-chat-design.md", "contract_or_planunit": "ACD-100..129 activity cards", "change_kind": "clarify", "evidence": "Eight distinct compact-work compositions (scene blocks, manifest, postings, case file, prose record, pan, status line, troupe) all project the same operation records; the shared inline-operation-card family remains the data owner." },
+    { "owner": "Plans/FinalGUISpec.md", "contract_or_planunit": "F3-422/423 footer pill + composer row", "change_kind": "clarify", "evidence": "Jump-to-latest is a floating chip anchored to the scroll region in all eight thread concepts; composer/selector-row geometry follows F3-423 in seven concepts and moves selectors to the deck in window-03." },
+    { "owner": "Plans/Goal_Runtime_System.md", "contract_or_planunit": "GRS-002/005/012", "change_kind": "clarify", "evidence": "All Goal renderings are projections of one store-owned goal record; completion emits a receipt via the shared receipt channel, honoring GRS-012 receipt authority." }
+  ],
+  "command_impacts": [
+    { "visible_action": "Send / Stop / steer active turn", "existing_id": "canonical composer commands", "candidate_id": "", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "text+attachments+idempotency; stop preserves partial output; steer preserves original attempt" },
+    { "visible_action": "Pin/unpin/peek history", "existing_id": "", "candidate_id": "cmd.chat.history.pin / cmd.chat.history.unpin", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "requested state; effective state may degrade to compact; persisted" },
+    { "visible_action": "Open/close/switch artifact", "existing_id": "", "candidate_id": "cmd.chat.artifact.open / cmd.chat.artifact.close / cmd.chat.artifact.switch", "reuse_alias_conflict": "artifact.switch is in 08's list but missing from candidate_command_id_register.json (stale register)", "payload_result_error_cancel_restore": "artifactId; loading/ready/updated/error states; retry; per-thread restoration" },
+    { "visible_action": "Question answer/skip/navigate/cancel/submit", "existing_id": "", "candidate_id": "cmd.chat.question.answer / .skip / .navigate / .cancel / .submit", "reuse_alias_conflict": "question.navigate missing from the JSON register; cmd.questionnaire.expire must stay retired (no passive expiry implemented)", "payload_result_error_cancel_restore": "answers+explicit skips; required gate returns missing ids; cancel leaves historical record" },
+    { "visible_action": "Goal pause/resume/stop/edit/clear", "existing_id": "canonical Goal commands (reused)", "candidate_id": "cmd.chat.goal.* only as projection aliases", "reuse_alias_conflict": "goal.clear missing from the JSON register", "payload_result_error_cancel_restore": "edit produces visible impact analysis before apply; blocked exposes cause/scope/attempted/why/next-safe" },
+    { "visible_action": "Compact Now", "existing_id": "cmd.chat.compact_context (canon)", "candidate_id": "cmd.chat.context.compact_now", "reuse_alias_conflict": "ALIAS COLLISION: register id vs canon id — recorded for adjudication, canon reused in spirit", "payload_result_error_cancel_restore": "operation receipt; canonical history + branch ancestry preserved" },
+    { "visible_action": "Create restore point", "existing_id": "cmd.chat.create_restore_point (canon)", "candidate_id": "cmd.chat.restore_point.create", "reuse_alias_conflict": "ALIAS COLLISION with canon — recorded for adjudication", "payload_result_error_cancel_restore": "immutable marker; use = branch" },
+    { "visible_action": "Branch / rewind", "existing_id": "cmd.chat.branch_from_restore, cmd.chat.rewind (canon)", "candidate_id": "cmd.chat.thread.branch / cmd.chat.thread.rewind", "reuse_alias_conflict": "prefer canon ids", "payload_result_error_cancel_restore": "source unchanged; files never rolled back; receipts emitted" },
+    { "visible_action": "Thread request / await / spawn", "existing_id": "", "candidate_id": "cmd.chat.thread.request / .await / cmd.chat.thread.create", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "source/target/task/scope/budget/idempotency retained; result actions per CTD-9" },
+    { "visible_action": "Route select + effort + Normal/Fast", "existing_id": "cmd.provider.switch_route, cmd.account.select_profile (reused)", "candidate_id": "cmd.chat.route.select", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "requested vs effective retained with reason; unavailable routes deep-link to Provider Settings" },
+    { "visible_action": "Access / BSD set", "existing_id": "", "candidate_id": "cmd.chat.access.set / cmd.chat.bsd.set", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "BSD scope this-turn or thread; effective access renders limitation cause" },
+    { "visible_action": "Attachment resolve / alternate route", "existing_id": "", "candidate_id": "cmd.chat.attachment.resolve / cmd.chat.attachment.route", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "four classes; alternate route requires consent via material warning" },
+    { "visible_action": "Draft revision open/restore/clear", "existing_id": "", "candidate_id": "cmd.chat.draft.history.open / .restore / .clear", "reuse_alias_conflict": "all three missing from the stale JSON register", "payload_result_error_cancel_restore": "bounded deduplicated revisions; restore snapshots current first" },
+    { "visible_action": "Redirect active turn", "existing_id": "", "candidate_id": "cmd.chat.redirect", "reuse_alias_conflict": "none", "payload_result_error_cancel_restore": "original attempt + partial output + interruption state preserved" }
+  ],
+  "wiring_impacts": [],
+  "dry_impacts": [],
+  "schema_event_storage_impacts": [],
+  "usage_impacts": [
+    "BSD evaluations, Compact Now, replay, and attachment transforms are represented as receipts only; metering fields (USE-007/008/009/013/016) are consumed as display projections, never computed in Chat.",
+    "The capacity forecast popup renders Usage-owner data (window %, reset, sustainable pace, waves) verbatim; no chat-local cost model exists (ACD-434)."
+  ],
+  "provider_runtime_impacts": [
+    "Unavailable routes render reason strings and deep-link to Provider Settings with preserved return context; Chat never installs or authenticates (CTD-15, PROV-014).",
+    "Free Models render as a source-driven grouping over real routes with ready/setup/cooling/no-longer-free states."
+  ],
+  "server_sync_impacts": [
+    "Transport and per-domain sync states are separate in the badge; outbox commands carry idempotency keys and replay exactly once; snapshot catch-up is a distinct path with its own receipt."
+  ],
+  "slint_port_impacts": [
+    "All motion is translate/opacity/width/height property animation with easing (overshoot included); stepped easings map to Slint step curves.",
+    "Popups and Glass surfaces are opaque precomputed plates; no backdrop-filter, no SVG filters, no runtime color mixing (tokens are precomputed constants).",
+    "Transcript virtualization is data-backed (initialVisibleMessageCount window); pinned history consumes thread shells only.",
+    "Width-driven behavior uses observed width properties (ResizeObserver → data attributes), the sanctioned Slint pattern; CSS container query in thread-01 maps to the same observed-width property.",
+    "The Courier FLIP delivery maps to a Slint y-translate property animation from a captured start offset; the Choreograph orbit maps to a rotation property animation on a fixed path."
+  ],
+  "test_fixtures": [
+    "shared/fixture-demo-data.json — packet baseline, 15 threads / 400 messages, loaded verbatim",
+    "shared/data.js EXTRA_THREADS — thread-16 (archived), thread-17 (crew/capacity primary showcase), thread-18 (offline/outbox)",
+    "shared/triggers.js — 65 deterministic triggers incl. scenario.reset"
+  ],
+  "provisional_assumptions": [
+    "Impact register v2 template (pm.chat.5_6_sol.impact_register.v1) is authoritative over v1; rename map recorded in known-gaps.md.",
+    "08's 37-command list supersedes the stale candidate_command_id_register.json (which is missing six ids).",
+    "A window concept may host the shared selector row in its own chrome (Instrument Deck) so long as the same component instance and popup family are used."
+  ],
+  "true_open_decisions": [
+    "Alias adjudication: cmd.chat.restore_point.create vs canonical cmd.chat.create_restore_point; cmd.chat.context.compact_now vs canonical cmd.chat.compact_context.",
+    "ACD-410 still references cmd.chat.focus_thread_usage which ACD-434 retires — canon conflict, needs owner ruling.",
+    "Whether requested-vs-effective route display belongs on the selector chip (as built) or inside More Info only."
+  ]
+}

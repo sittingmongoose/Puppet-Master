@@ -7,78 +7,228 @@
       "id": "core",
       "classification": "demonstrated",
       "managers": {
-        "Settings Home": { "status": "demonstrated", "where": "Ledger Home: search, notice groups, manager and category ledger destinations, recents, calm state" },
-        "Settings Search": { "status": "demonstrated", "where": "Typed fuzzy results across all kinds" },
-        "Settings Workspace": { "status": "demonstrated", "where": "Ledger sections, left nav, scrollspy, deep links, Back/forward" },
-        "Provider/Account/Model/Installation": { "status": "demonstrated", "where": "Providers manager in ledger language; all 9 families, 17 fixtures" },
-        "Ordinary setting grammar": { "status": "demonstrated", "where": "Shared rowHtml across workspace and manager surfaces" }
+        "Settings Home": {
+          "status": "demonstrated",
+          "where": "Ledger Home: search, notice groups, manager and category ledger destinations, recents, calm state"
+        },
+        "Settings Search": {
+          "status": "demonstrated",
+          "where": "Typed fuzzy results across all kinds"
+        },
+        "Settings Workspace": {
+          "status": "demonstrated",
+          "where": "Ledger sections, left nav, scrollspy, deep links, Back/forward"
+        },
+        "Provider/Account/Model/Installation": {
+          "status": "demonstrated",
+          "where": "Providers manager in ledger language; all 9 families, 17 fixtures"
+        },
+        "Ordinary setting grammar": {
+          "status": "demonstrated",
+          "where": "Shared rowHtml across workspace and manager surfaces"
+        }
       }
     },
     {
       "id": "concept_4",
       "classification": "demonstrated",
       "managers": {
-        "Storage & Retention": { "status": "demonstrated", "where": "Capacity meters, scrubbable retention timelines, five separated areas" },
-        "Backup & Restore": { "status": "demonstrated", "where": "Setting vs action vs status vs diagnostic grammar split; receipts with hashes" },
-        "Settings Lifecycle": { "status": "demonstrated", "where": "Seven-step import flow, copy-from-project, reset preview, rollback" },
-        "History & Sessions": { "status": "demonstrated", "where": "Project/all filters, compare/export, archive and deletion policy" },
-        "Runtime Artifacts": { "status": "demonstrated", "where": "Ownership identity, redaction, retention, open/reveal/export/cleanup" },
-        "Source Control/Worktrees": { "status": "demonstrated", "where": "Worktree ledger, SVG branch graph, policy rows, tool health" },
-        "GitHub Actions": { "status": "demonstrated", "where": "Setup state default; connect scenario reveals workflows/runs/logs" },
-        "Containers & Registries": { "status": "demonstrated", "where": "Docker/Podman/Kubernetes cards with typed unavailable states" },
-        "Web/Search/Fetch": { "status": "demonstrated", "where": "Provider priority, limits, credit guards, caches, air-gap, privacy" },
-        "Project Search Index": { "status": "demonstrated", "where": "Facts, truthful rebuild phases, clear cache" },
-        "Workspace Cleanup": { "status": "demonstrated", "where": "Dry-run plan, exclusions, rollback with receipts" },
-        "Future Server Module Shell": { "status": "demonstrated", "where": "Servers & Hosting destination with six reserved insertion cards; modules below are deferred" }
+        "Storage & Retention": {
+          "status": "demonstrated",
+          "where": "Capacity meters, scrubbable retention timelines, five separated areas"
+        },
+        "Backup & Restore": {
+          "status": "demonstrated",
+          "where": "Setting vs action vs status vs diagnostic grammar split; receipts with hashes"
+        },
+        "Settings Lifecycle": {
+          "status": "demonstrated",
+          "where": "Seven-step import flow, copy-from-project, reset preview, rollback"
+        },
+        "History & Sessions": {
+          "status": "demonstrated",
+          "where": "Project/all filters, compare/export, archive and deletion policy"
+        },
+        "Runtime Artifacts": {
+          "status": "demonstrated",
+          "where": "Ownership identity, redaction, retention, open/reveal/export/cleanup"
+        },
+        "Source Control/Worktrees": {
+          "status": "demonstrated",
+          "where": "Worktree ledger, SVG branch graph, policy rows, tool health"
+        },
+        "GitHub Actions": {
+          "status": "demonstrated",
+          "where": "Setup state default; connect scenario reveals workflows/runs/logs"
+        },
+        "Containers & Registries": {
+          "status": "demonstrated",
+          "where": "Docker/Podman/Kubernetes cards with typed unavailable states; Podman install-from-official-source flow (state transition + receipt)"
+        },
+        "Web/Search/Fetch": {
+          "status": "demonstrated",
+          "where": "Provider priority reorder (persistent), per-provider test fetch, credit guards, caches, air-gap, privacy"
+        },
+        "Project Search Index": {
+          "status": "demonstrated",
+          "where": "Facts, truthful rebuild phases, clear cache"
+        },
+        "Workspace Cleanup": {
+          "status": "demonstrated",
+          "where": "Dry-run plan, exclusions, rollback with receipts"
+        },
+        "Future Server Module Shell": {
+          "status": "demonstrated",
+          "where": "Servers & Hosting destination with six reserved insertion cards; modules below are deferred"
+        }
       },
       "deferred_modules": [
-        { "module": "Servers", "status": "deferred_named_owner", "owner": "Server host owner", "contract": "accepts manager module, deep links, status cards, command wiring" },
-        { "module": "Execution Hosts", "status": "deferred_named_owner", "owner": "Server host owner", "contract": "same insertion contract" },
-        { "module": "Clients", "status": "deferred_named_owner", "owner": "Server host owner", "contract": "same insertion contract" },
-        { "module": "Project Hosting & Files", "status": "deferred_named_owner", "owner": "Storage owner", "contract": "same insertion contract" },
-        { "module": "Remote Access", "status": "deferred_named_owner", "owner": "Server host owner", "contract": "same insertion contract" },
-        { "module": "Updates", "status": "deferred_named_owner", "owner": "Release/updates owner", "contract": "same insertion contract" }
+        {
+          "module": "Servers",
+          "status": "deferred_named_owner",
+          "owner": "Server host owner",
+          "contract": "accepts manager module, deep links, status cards, command wiring"
+        },
+        {
+          "module": "Execution Hosts",
+          "status": "deferred_named_owner",
+          "owner": "Server host owner",
+          "contract": "same insertion contract"
+        },
+        {
+          "module": "Clients",
+          "status": "deferred_named_owner",
+          "owner": "Server host owner",
+          "contract": "same insertion contract"
+        },
+        {
+          "module": "Project Hosting & Files",
+          "status": "deferred_named_owner",
+          "owner": "Storage owner",
+          "contract": "same insertion contract"
+        },
+        {
+          "module": "Remote Access",
+          "status": "deferred_named_owner",
+          "owner": "Server host owner",
+          "contract": "same insertion contract"
+        },
+        {
+          "module": "Updates",
+          "status": "deferred_named_owner",
+          "owner": "Release/updates owner",
+          "contract": "same insertion contract"
+        }
       ]
     },
     {
       "id": "concept_1",
       "classification": "shared_grammar",
       "managers": {
-        "Context & Instructions": { "status": "shared_grammar", "where": "Context and Memory workspace rows" },
-        "Memory": { "status": "shared_grammar", "where": "Memory rows" },
-        "Personas": { "status": "shared_grammar", "where": "Persona default rows" },
-        "Goal & Automation": { "status": "shared_grammar", "where": "Goal rows" },
-        "Crew": { "status": "shared_grammar", "where": "Crew rows" },
-        "Permissions & FileSafe": { "status": "shared_grammar", "where": "Permissions rows" },
-        "Back Seat Driver": { "status": "shared_grammar", "where": "BSD mode row" }
+        "Context & Instructions": {
+          "status": "shared_grammar",
+          "where": "Context and Memory workspace rows"
+        },
+        "Memory": {
+          "status": "shared_grammar",
+          "where": "Memory rows"
+        },
+        "Personas": {
+          "status": "shared_grammar",
+          "where": "Persona default rows"
+        },
+        "Goal & Automation": {
+          "status": "shared_grammar",
+          "where": "Goal rows"
+        },
+        "Crew": {
+          "status": "shared_grammar",
+          "where": "Crew rows"
+        },
+        "Permissions & FileSafe": {
+          "status": "shared_grammar",
+          "where": "Permissions rows"
+        },
+        "Back Seat Driver": {
+          "status": "shared_grammar",
+          "where": "BSD mode row"
+        }
       }
     },
     {
       "id": "concept_2",
       "classification": "shared_grammar",
       "managers": {
-        "Notifications & Sounds": { "status": "shared_grammar", "where": "Notifications and Sounds workspace rows" },
-        "Sound Library/Uploads/Packs": { "status": "shared_grammar", "where": "Resonance family" },
-        "Appearance": { "status": "shared_grammar", "where": "Appearance workspace rows" },
-        "Spellcheck & Dictionaries": { "status": "shared_grammar", "where": "Resonance family" },
-        "Desktop/Tray/Window": { "status": "shared_grammar", "where": "General desktop rows" },
-        "Teacher/Help": { "status": "shared_grammar", "where": "Row-level help affordance" }
+        "Notifications & Sounds": {
+          "status": "shared_grammar",
+          "where": "Notifications and Sounds workspace rows"
+        },
+        "Sound Library/Uploads/Packs": {
+          "status": "shared_grammar",
+          "where": "Resonance family"
+        },
+        "Appearance": {
+          "status": "shared_grammar",
+          "where": "Appearance workspace rows"
+        },
+        "Spellcheck & Dictionaries": {
+          "status": "shared_grammar",
+          "where": "Resonance family"
+        },
+        "Desktop/Tray/Window": {
+          "status": "shared_grammar",
+          "where": "General desktop rows"
+        },
+        "Teacher/Help": {
+          "status": "shared_grammar",
+          "where": "Row-level help affordance"
+        }
       }
     },
     {
       "id": "concept_3",
       "classification": "shared_grammar",
       "managers": {
-        "File Manager/Editor": { "status": "shared_grammar", "where": "Files rows in Terminal and Editor" },
-        "Terminal": { "status": "shared_grammar", "where": "Terminal rows" },
-        "LSP": { "status": "shared_grammar", "where": "Developer Tools rows" },
-        "Formatters": { "status": "shared_grammar", "where": "Formatting rows" },
-        "Commands & Shortcuts": { "status": "shared_grammar", "where": "Foundry family" },
-        "MCP": { "status": "shared_grammar", "where": "Developer Tools MCP rows" },
-        "Skills": { "status": "shared_grammar", "where": "Foundry family" },
-        "Plugins": { "status": "shared_grammar", "where": "Foundry family" },
-        "Tools": { "status": "shared_grammar", "where": "Foundry family" },
-        "Testing & Debug": { "status": "shared_grammar", "where": "Foundry family" }
+        "File Manager/Editor": {
+          "status": "shared_grammar",
+          "where": "Files rows in Terminal and Editor"
+        },
+        "Terminal": {
+          "status": "shared_grammar",
+          "where": "Terminal rows"
+        },
+        "LSP": {
+          "status": "shared_grammar",
+          "where": "Developer Tools rows"
+        },
+        "Formatters": {
+          "status": "shared_grammar",
+          "where": "Formatting rows"
+        },
+        "Commands & Shortcuts": {
+          "status": "shared_grammar",
+          "where": "Foundry family"
+        },
+        "MCP": {
+          "status": "shared_grammar",
+          "where": "Developer Tools MCP rows"
+        },
+        "Skills": {
+          "status": "shared_grammar",
+          "where": "Foundry family"
+        },
+        "Plugins": {
+          "status": "shared_grammar",
+          "where": "Foundry family"
+        },
+        "Tools": {
+          "status": "shared_grammar",
+          "where": "Foundry family"
+        },
+        "Testing & Debug": {
+          "status": "shared_grammar",
+          "where": "Foundry family"
+        }
       }
     }
   ],

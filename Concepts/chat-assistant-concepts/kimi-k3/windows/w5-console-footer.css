@@ -167,8 +167,8 @@
   background: var(--surface);
 }
 [data-k3-window="w5"] .w5-art-bay[hidden] { display: none; }
-[data-k3-window="w5"] .w5-art-bay [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+[data-k3-window="w5"] .w5-art-bay > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
 [data-k3-window="w5"] .w5-artifacts-body { min-height: 140px; display: flex; flex-direction: column; }
-[data-k3-window="w5"] .w5-artifacts-body [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+[data-k3-window="w5"] .w5-artifacts-body > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
 [data-k3-window="w5"] .w5-artifacts[hidden], [data-k3-window="w5"] .w5-bsd[hidden] { display: none; }
 html[data-motion="reduced"] [data-k3-window="w5"] .w5-art-bay { transition: none; }

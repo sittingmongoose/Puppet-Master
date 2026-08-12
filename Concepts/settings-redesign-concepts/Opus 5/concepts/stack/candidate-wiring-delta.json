@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "stack",
+  "concept_title": "Opus 5 \u2014 Stack",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "navigation_model": "Pushed columns: home, category, manager and detail are stacked routes; depth is kinetic, the arriving column travels and the one behind recedes.",
+  "deep_link_grammar": {
+    "owner": "shared/pm-route.js",
+    "routes": [
+      "#/home",
+      "#/search/<query>",
+      "#/c/<categoryId>",
+      "#/c/<categoryId>/<subcategoryId>",
+      "#/c/<categoryId>/<subcategoryId>/<settingId>",
+      "#/m/<managerId>",
+      "#/m/<managerId>/<sectionId>",
+      "#/m/<managerId>/<sectionId>/<itemId>"
+    ],
+    "demo_suffix": "?demo=<demoStateId> \u2014 a demo state is part of the link so a reviewer can hand over an exact screen",
+    "arity_rule": "Exact arities only. A route with a stray segment is malformed, not a lenient prefix match.",
+    "unknown_target_rule": "A well-formed route that names nothing renders the home surface plus an inline notice quoting the link. No dead control, no blank screen.",
+    "history": "hashchange drives back and forward; a restored route is written with replace so it is not a phantom back step.",
+    "encoding_rule": "Every segment is encodeURIComponent-encoded; a broken escape such as %zz makes the whole hash malformed rather than a literal id.",
+    "verified": "34/34 parser cases pass (26 parse cases plus 8 format/parse round-trips)"
+  },
+  "state_wiring": {
+    "store": "shared/pm-store.js \u2014 semantic state only, never DOM measurements, so the model ports to a Slint property graph",
+    "persisted_keys": [
+      "values",
+      "managerEdits",
+      "dismissedNotices",
+      "demoState",
+      "route",
+      "theme",
+      "widthChoice",
+      "railOpen",
+      "panelOpen",
+      "reducedMotion"
+    ],
+    "persistence_scope": "localStorage, namespaced per concept id (stack)",
+    "restore_rule": "The hash wins on load. With no hash, the saved route is restored with replace."
+  },
+  "receipt_wiring": {
+    "simulation": "shared/pm-sim.js \u2014 seeded, not random; every operation returns a dated receipt naming the production call it would make",
+    "outcomes": [
+      "ok",
+      "degraded",
+      "partial",
+      "error",
+      "unavailable",
+      "handoff",
+      "simulated"
+    ],
+    "bridge": "Every receipt raised anywhere on the page is pushed to the title-bar notification inbox by the shell, so an operation can never appear twice or not at all",
+    "sound_rule": "PACKET/06: sound is never the only indication \u2014 the inbox entry is structural"
+  },
+  "notification_surface": {
+    "canonical": "Title-bar stack/inbox only: button.pm-notify[aria-haspopup=dialog] with span.pm-notify-count and div.pm-notify-panel[role=dialog]",
+    "banned_and_absent": [
+      "bottom-right toast stack",
+      "status-bar bell",
+      "rail shortcut",
+      "dedicated Notifications side panel"
+    ],
+    "verified": "No .toast class or toast function exists in any file in this folder"
+  },
+  "manager_insertion_contract": {
+    "register": "window.PMManagerKit.register(managerId, function (data, state) { return ManagerSpec; })",
+    "spec_shape": [
+      "title",
+      "purpose",
+      "icon",
+      "health{status,statusWord,headline,detail,counts[]}",
+      "primary",
+      "diagnostics[]",
+      "sections[]{id,label,summary,kind:cards|table|matrix|rows|list|prose,columns[],items[],settings[],actions[]}",
+      "items[]{id,name,secondary,status,statusWord,badges[],fields{},value,valueSource,editable[],detail[],actions[]}",
+      "owner{name,why,insertionContract}",
+      "notes[]"
+    ],
+    "rule": "A manager that is not registered still resolves: the kit returns an honest cross-concept pointer rather than an empty screen"
+  },
+  "shell_contract": {
+    "mount": "window.PMShell.mount({rootId, concept, conceptId, theme, demoState, onDemoState, onReceiptAction, onLayout, onWidthMode})",
+    "owns": [
+      "top bar",
+      "bottom bar",
+      "rail",
+      "panel",
+      "review strip (theme, width, reduced motion, demo state, reset)",
+      "notification inbox",
+      "live region"
+    ],
+    "width_modes": "squeezed <820, narrow <1100, normal \u2014 evaluated at explicit checkpoints and debounced, never per frame"
+  }
+}

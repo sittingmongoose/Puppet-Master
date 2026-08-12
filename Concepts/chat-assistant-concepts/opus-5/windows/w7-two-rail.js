@@ -76,6 +76,12 @@
     this.column.appendChild(this.workHost);
     this.column.appendChild(this.noteHost);
     this.shell.appendChild(this.column);
+    /* Artifact workspace: a persistent left column OUTSIDE the 44px inner rail, which grows a third
+     * icon for it. Rail icons are mutually exclusive, so opening the artifact leaves pinned history
+     * in its compact 72px rail rather than fighting for the borrowed column. */
+    this.artifactBody = u.el('div', { class: 'w7-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w7-artifact-host' }, [this.artifactBody]);
+    this.shell.appendChild(this.artifactHost);
 
     /* Main area. */
     this.main = u.el('div', { class: 'w7-main' });
@@ -104,6 +110,13 @@
 
     this.overlay = u.el('div', { class: 'w7-overlay', data: { pmxWindow: 'w7', pmxRegion: 'overlayRoot' } });
     this.root.appendChild(this.overlay);
+
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
 
     this.syncColumn();
   };
@@ -134,8 +147,15 @@
 
   W7Window.prototype.syncColumn = function () {
     var TH = global.PMXThreadHistory;
-    var pin = (TH && TH.pinState) ? TH.pinState(this.ctx, this.historyHost, 820)
-                                  : { asked: false, active: false };
+    /* `compactColumn: 72`: the compact form IS the inner rail grown from 44px to 72px, so the
+     * floor is the grown rail rather than a separate column. */
+    var r = TH
+      ? TH.applyTo(this.historyHost, TH.resolve(this.ctx, this.historyHost, TH.floorsFor('w7')))
+      : { state: 'closed', effective: 'closed', reason: null };
+    if (TH) TH.reasonNode(this.historyHost, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
+    if (this.shell) this.shell.setAttribute('data-w7-history', r.effective);
     this.pinned = pin.asked;
 
     /* A pinned column outlives an explicit close: the rail button still toggles the
@@ -173,18 +193,75 @@
      * the history root the shared module just rendered. */
     if (this.syncColumn) this.syncColumn(); this.shell.setAttribute('data-w7-mount', f === 'popout' ? 'popout' : 'docked'); };
 
+  /* The specific key is tested BEFORE the generic prefix. It was the other way round, and
+   * `'session.activeThreadId'.indexOf('session')` is 0 — so the generic branch always returned
+   * first and the "close the borrowed history column when the thread changes" rule was dead code.
+   * A borrowed column that survives a thread switch keeps covering the conversation the user just
+   * asked to read. */
   W7Window.prototype.update = function (state, changed) {
+    var sessionTouched = false;
     for (var i = 0; i < changed.length; i++) {
-      if (changed[i].indexOf('session') === 0) { this.syncColumn(); return; }
-      if (changed[i] === 'session.activeThreadId' && this.open === 'history' && !this.pinned) {
+      var k = String(changed[i]);
+      if (k === 'session.activeThreadId' && this.open === 'history' && !this.pinned) {
         this.open = null;
         this.syncColumn();
         return;
       }
+      if (k.indexOf('session') === 0) sessionTouched = true;
     }
+    if (sessionTouched) this.syncColumn();
+  };
+
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W7Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w7-artifact', open ? '1' : '0');
+
+    /* A third rail icon opens a long-list popup. The rail is this concept's only navigation surface,
+     * so the artifact joins it rather than growing a header somewhere else. */
+    var u = U();
+    if (!this.artifactRailBtn && this.rail) {
+      var self0 = this;
+      this.artifactRailBtn = u.el('button', {
+        class: 'w7-rail-btn', type: 'button',
+        aria: { label: 'Artifacts', haspopup: 'menu' }
+      }, [this.ctx.services.icons.get('artifact', 16)]);
+      u.on(this.artifactRailBtn, 'click', function (ev) { self0.openArtifactList(ev.currentTarget); });
+      this.rail.appendChild(this.artifactRailBtn);
+    }
+    if (this.artifactRailBtn) this.artifactRailBtn.setAttribute('aria-pressed', open ? 'true' : 'false');
+  };
+
+  /* The rail's long-list popup. Rail icons are mutually exclusive by design, so opening this closes
+   * the borrowed history column and leaves pinned history in its compact 72px rail. */
+  W7Window.prototype.openArtifactList = function (anchor) {
+    var A = global.PMXArtifacts;
+    var u = U();
+    var self = this;
+    if (!A) return null;
+    return this.ctx.services.popup.open({
+      anchorEl: anchor, kind: 'list', width: 260,
+      build: function (host, api) {
+        host.appendChild(u.el('div', { class: 'pmx-pop-title', text: 'Artifacts' }));
+        A.list().forEach(function (a) {
+          var row = u.el('button', { class: 'pmx-popup-item' }, [
+            u.el('span', { class: 'pmx-popup-item-label', text: a.title }),
+            u.el('span', { class: 'pmx-popup-item-hint', text: a.subtitle || '' })
+          ]);
+          u.on(row, 'click', function () { A.open(a.id); api.close(); self.syncArtifact(); });
+          host.appendChild(row);
+        });
+      }
+    });
   };
 
   W7Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
@@ -194,7 +271,7 @@
   global.PMX.window.register('w7', {
     name: 'Two-Rail',
     blurb: 'A deliberately thin icon rail inside the chat opens overlay columns that borrow width only while they are open, so history and work surfaces are one click away without ever holding space.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W7Window(root, ctx);
       return {
@@ -205,7 +282,8 @@
           overlayRoot: inst.overlay,
           threadHistory: inst.historyHost,
           workSurfaceHost: inst.workHost,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (o) { inst.setRail(o); },

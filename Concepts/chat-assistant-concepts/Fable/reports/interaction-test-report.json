@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.chat.fable.interaction_test_report.v1",
+  "model": "Fable",
+  "environment": {
+    "server": "python3 Concepts/ConceptHub/server.py (reuses a healthy instance or binds an OS-assigned ephemeral port; no processes killed)",
+    "driver": "playwright-core over the locally cached Chromium (chromium-1234), headless, fresh temporary profiles, viewport 1440×900",
+    "validation": "python3 Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/Fable → passed"
+  },
+  "automated_pairing_matrix": {
+    "combinations": 64,
+    "passed": 64,
+    "failed": 0,
+    "assertions_per_pairing": [
+      "mount resolves without exceptions",
+      "zero console errors",
+      "no horizontal page overflow",
+      "literal Fable label present",
+      "transcript rows rendered",
+      "composer (or truthful questionnaire lockout) reachable",
+      "selector row present"
+    ]
+  },
+  "behavior_probes": {
+    "search_current_thread_unloaded_jump": { "pass": true, "evidence": "thread-09: hit flagged unloaded=true, window widened 50→128, exact message highlighted with anchor" },
+    "search_all_threads_switch_and_jump": { "pass": true, "evidence": "'shelf lighting' group → thread-18 selected and jumped" },
+    "lens_mute_immediate": { "pass": true },
+    "lens_subcompact_apply_cap": { "pass": true, "evidence": "28 pending → first Apply 25 with remaining 3, second Apply 3; receipts recorded per operation" },
+    "compact_now_receipt": { "pass": true, "evidence": "ring reduced; receipt notes canonical history + rehydration handles" },
+    "dock_popout_state_preservation": { "pass": true, "evidence": "draft text, manual expansion, and thread survived docked→popout→docked" },
+    "popup_family": { "pass": true, "evidence": "single transient overlay enforced; collision kept in viewport; Escape closes and restores focus" },
+    "thread_local_state_isolation": { "pass": true, "evidence": "Full Access + BSD On set on thread-04 did not leak to thread-07 and survived return" },
+    "questionnaire_persistence_and_queue": { "pass": true, "evidence": "answer preserved across thread switch; second questionnaire stayed queued until resolution" },
+    "long_message_vs_execution_independence": { "pass": true },
+    "composer_state_machine": { "pass": true, "evidence": "active+empty→Stop, active+typed→Send with steer note, terminal→Send" },
+    "offline_queue_exactly_once": { "pass": true, "evidence": "offline send stayed out of transcript with outbox count 1; reconnect replayed once; second replay added nothing (idempotency keys + replayLog)" },
+    "redirect_active_turn": { "pass": true, "evidence": "redirect flag on message, in-place summary rewrite, receipt with preservation note" },
+    "goal_lifecycle": { "pass": true, "evidence": "block exposes five-field cause; recover/complete post receipts; controls disabled with reason in wrong states" },
+    "artifact_lifecycle": { "pass": true, "evidence": "loading→ready, error→Retry recovers, updated stamp on diff.update, per-thread selection restored" },
+    "bsd_truthful_glow": { "pass": true, "evidence": "glow only in auto+evaluating; static halo under reduced motion; On is a distinct static treatment" },
+    "approval_and_route_warning": { "pass": true, "evidence": "compact decision with Details expansion; Continue here records requested-vs-effective with reason; Branch with new model creates the leaf" },
+    "draft_crash_restore": { "pass": true, "evidence": "typed draft survived full page reload (crash/restart equivalent)" },
+    "chat_floor_under_pressure": { "pass": true, "evidence": "520 px chat width + open bench: history degraded to compact (56 px), chat kept exactly 520 px, no overflow" },
+    "search_query_persists_across_mounts": { "pass": true, "evidence": "typed query survived docked→popout→docked (input restored from stored search state)" },
+    "search_reveals_hidden_text": { "pass": true, "evidence": "hit inside a collapsed long message's hidden tail expanded the message before the jump; matched text present in DOM" },
+    "rename_uses_popup_family": { "pass": true, "evidence": "in-place popup stage with input + Save; Enter commits; no native dialog" },
+    "more_info_account_row": { "pass": true, "evidence": "Account · connection row rendered when the thread route's provider matches the message runtime" },
+    "showcase_story_25_beats": { "pass": true, "evidence": "runShowcase played 25/25 beats to completion: goal complete, transport back to Live, branch created, receipts accumulated, zero console errors" }
+  },
+  "commands_run": [
+    "node pairs.js (64-pairing matrix)",
+    "node exercise.js window-01 thread-c01 (trigger exercise)",
+    "node probes.js (behavior probes)",
+    "node matrix.js (36-frame visual matrix)",
+    "python3 Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/Fable"
+  ],
+  "notes": "Drivers live outside the model folder (session scratchpad) so no test artifacts ship with the concepts. The in-page reflection hook window.__fable exposes the semantic store to probes; production surfaces never depend on it."
+}

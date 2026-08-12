@@ -1,0 +1,209 @@
+/* Window 04 "Depth Field" — shallow depth: rim stack of rear planes, planes
+   advance to dock and recede to the rim. Precomputed shadows and sheens only. */
+
+.fw4-root {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  position: relative;
+  background: var(--bg-shell);
+  overflow: hidden;
+}
+
+/* ---------- rim stack ---------- */
+.fw4-rim {
+  flex: none;
+  width: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding-top: 14px;
+  background: var(--bg-shell);
+  border-right: 1px solid var(--edge-faint);
+  z-index: 10;
+}
+.fw4-rim-plane {
+  position: relative;
+  width: 24px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--text-faint);
+  border-radius: var(--radius-xs);
+}
+.fw4-rim-plane:hover { color: var(--text-secondary); background: var(--bg-hover); }
+.fw4-rim-plane[data-raised="true"] { color: var(--accent); }
+.fw4-rim-edge {
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--edge-strong);
+}
+.fw4-rim-edge:nth-child(2) { left: 7px; opacity: 0.65; }
+.fw4-rim-edge:nth-child(3) { left: 11px; opacity: 0.35; }
+.fw4-rim-plane[data-raised="true"] .fw4-rim-edge { background: var(--accent); }
+.fw4-rim-plane .pm-icon { position: relative; z-index: 1; margin-left: 8px; }
+
+/* ---------- planes ---------- */
+.fw4-plane {
+  flex: none;
+  width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--edge);
+  transform-origin: left center;
+  transition: width var(--dur-slow) var(--ease-settle);
+}
+.fw4-history { z-index: 6; }
+.fw4-artifact { z-index: 5; }
+
+.fw4-root[data-history="pinned-full"] .fw4-history { width: 246px; }
+.fw4-root[data-history="pinned-compact"] .fw4-history { width: 60px; }
+.fw4-root[data-history="peek"] .fw4-history {
+  position: absolute;
+  left: 40px; top: 12px; bottom: 12px;
+  width: 250px;
+  z-index: 60;
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3);
+  animation: fw4-advance var(--dur-slow) var(--ease-settle);
+}
+@keyframes fw4-advance {
+  from { transform: translateX(-14px) scale(0.94); opacity: 0.4; }
+  to   { transform: none; opacity: 1; }
+}
+.fw4-root[data-artifact="true"] .fw4-artifact {
+  width: clamp(290px, 30vw, 430px);
+  animation: fw4-advance var(--dur-slow) var(--ease-settle);
+}
+
+.fw4-plane-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px 8px;
+  min-width: 0;
+}
+.fw4-plane-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 630;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw4-depth-status {
+  font-size: 10px;
+  color: var(--text-faint);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+}
+.fw4-depth-status[data-status="updated"] { color: var(--accent); border-color: var(--accent); }
+.fw4-depth-status[data-status="error"] { color: var(--danger); border-color: var(--danger); }
+.fw4-plane-rows {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.fw4-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  padding: 9px 11px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-1);
+  min-width: 0;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+[data-theme="glass-dark"] .fw4-card, [data-theme="glass-light"] .fw4-card { background: var(--plate-sheen); }
+.fw4-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+.fw4-card[data-active="true"] { border-color: var(--accent); }
+.fw4-card-title {
+  font-size: 12.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fw4-card-meta { font-size: 10px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fw4-card-glyph { display: grid; place-items: center; color: var(--text-secondary); }
+.fw4-plane-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fw4-plane-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--edge-faint);
+  flex: none;
+}
+.fw4-stack-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  text-align: left;
+  min-width: 0;
+}
+.fw4-stack-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw4-stack-item:hover { background: var(--bg-hover); }
+.fw4-stack-item[data-active="true"] { background: var(--accent-soft); color: var(--accent); }
+
+/* ---------- front plane ---------- */
+.fw4-front {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-app);
+  box-shadow: -6px 0 18px rgba(0, 0, 0, 0.08);
+}
+.fw4-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--edge-faint);
+  min-width: 0;
+}
+.fw4-head-left, .fw4-head-right { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.fw4-head-right { flex: none; }
+.fw4-head-right .pmc-search { width: 180px; }
+.fw4-thread-slot {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--fw-chat-width, 750px);
+  display: flex;
+  flex-direction: column;
+  transition: max-width var(--dur-base) var(--ease-settle);
+}
+
+@media (max-width: 900px) { .fw4-head-right .pmc-search { width: 120px; } }
+
+[data-reduced-motion="1"] .fw4-root[data-history="peek"] .fw4-history,
+[data-reduced-motion="1"] .fw4-root[data-artifact="true"] .fw4-artifact,
+[data-motion="reduced"] .fw4-root[data-history="peek"] .fw4-history,
+[data-motion="reduced"] .fw4-root[data-artifact="true"] .fw4-artifact { animation: none; }

@@ -27,6 +27,7 @@
         '<span class="pm-brand">PUPPET MASTER</span>',
         '<span class="pm-crumb">' + crumbHTML + '</span>',
         '<span class="pm-spacer"></span>',
+        S.noticeSprout(),
         '<span class="pm-modelchip" data-concept-model="GLM-5.2">' + PM.svg("bolt",11) + modelLabel + '</span>',
       '</div>'
     ].join("");
@@ -82,6 +83,8 @@
     // sync toggle button states
     document.querySelectorAll('[data-shell-toggle="rail"]').forEach(function (b) { b.setAttribute("aria-pressed", String(PM.state.rail === "open")); });
     document.querySelectorAll('[data-shell-toggle="chat"]').forEach(function (b) { b.setAttribute("aria-pressed", String(PM.state.chat === "open")); });
+    // title-bar notification sprout (sole in-app notification surface)
+    S.wireNoticeSprout();
   };
 
   /* ---------- SETTINGS ROW RENDERER (packet 01 states) ---------- */
@@ -139,6 +142,10 @@
     var note = "";
     if (r.note) note = '<div class="muted small">' + r.note + '</div>';
     if (r.safety) note += '<span class="chip ' + (r.safety === "risky" ? "warn" : "warn") + '">' + r.safety + '</span>';
+    if (r.error) note += '<span class="mgr-note bad small">' + PM.svg("warn", 11) + " " + r.error + "</span>";
+    if (r.restart) note += '<span class="chip warn">' + PM.svg("refresh", 11) + " Restart required</span>";
+    if (r.reconnect) note += '<span class="chip warn">Reconnect required</span>';
+    if (r.elsewhere) note += '<span class="mgr-note warn small">Changed elsewhere — value refreshed from another window.</span>';
     var effDiff = displayState === "effective" ? '<span class="mgr-note warn small">Effective value differs from requested.</span>' : "";
     // Goal Mode warning callout (A9) — renders when a setting carries a `warning` (verbatim from packet 03)
     var warning = r.warning ? '<div class="goal-warning">' + PM.svg("info", 16) + '<div>' + r.warning + '</div></div>' : "";
@@ -409,6 +416,138 @@
       });
     }
     refreshSwatches();
+  };
+
+  /* ---------- NOTIFICATION SPROUT (title-bar inbox — sole in-app surface, packet 06) ---------- */
+  S.noticeSprout = function () {
+    var n = PM_DEMO.inbox || [];
+    var bad = n.filter(function (x) { return x.kind === "bad"; }).length;
+    var count = n.length;
+    return '<button class="pm-sprout' + (bad ? " warn" : "") + '" data-sprout type="button" aria-label="Notifications, ' + count + ' unread" aria-expanded="false">' +
+      PM.svg("bell", 16) + '<span class="pm-sprout-count' + (count ? "" : " hidden") + '">' + count + "</span></button>";
+  };
+  S.wireNoticeSprout = function () {
+    var btn = document.querySelector("[data-sprout]");
+    if (!btn || btn.dataset.wired) return; btn.dataset.wired = "1";
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var old = document.querySelector("[data-popover].pm-inbox");
+      if (old) { old.remove(); btn.setAttribute("aria-expanded", "false"); return; }
+      var items = (PM_DEMO.inbox || []).map(function (n) {
+        return '<button class="pm-menu-item" data-inbox-target="' + n.target + '" style="align-items:flex-start;gap:8px">' +
+          '<span class="sdot ' + n.kind + '"></span>' +
+          '<span class="col gap-xs"><span style="font-size:13px;text-align:left">' + n.title + "</span>" +
+          '<span class="muted small">' + n.ago + "</span></span></button>";
+      }).join("");
+      var pop = PM.el("div", "pm-menu pm-inbox", { "data-popover": "", role: "menu", "aria-label": "Notifications" },
+        '<div class="pm-inbox-head">Notifications — title-bar stack is the only in-app surface</div>' + items);
+      document.body.appendChild(pop);
+      var r = btn.getBoundingClientRect();
+      pop.style.top = (r.bottom + 6) + "px";
+      pop.style.left = Math.min(r.left, window.innerWidth - 280) + "px";
+      pop.style.minWidth = "280px";
+      btn.setAttribute("aria-expanded", "true");
+      pop.querySelectorAll("[data-inbox-target]").forEach(function (it) {
+        it.addEventListener("click", function () {
+          var t = it.getAttribute("data-inbox-target");
+          pop.remove(); btn.setAttribute("aria-expanded", "false");
+          if (PM._inboxRoute) { PM._inboxRoute(t); return; }
+          PM.openCategory(t.split(".")[0], t.split(".")[1]); PM.render && PM.render();
+        });
+      });
+      setTimeout(function () { document.addEventListener("click", function c() { pop.remove(); btn.setAttribute("aria-expanded", "false"); document.removeEventListener("click", c); }, { once: true }); }, 0);
+    });
+  };
+
+  /* ---------- STATE BLOCKS (loading/empty/error/managed/unavailable, packet 08) ---------- */
+  S.stateBlock = function (kind, title, msg) {
+    var icon = ({ loading: "refresh", empty: "search", error: "bad", managed: "lock", unavailable: "warn" })[kind] || "info";
+    var cls = ({ loading: "info", empty: "neutral", error: "bad", managed: "warn", unavailable: "bad" })[kind] || "neutral";
+    var ic = kind === "loading"
+      ? '<span class="state-spin">' + PM.svg("refresh", 18) + "</span>"
+      : '<span class="state-ic ' + cls + '">' + PM.svg(icon, 18) + "</span>";
+    return '<div class="state-block ' + cls + '">' + ic +
+      '<div class="col gap-xs"><strong>' + title + "</strong>" + (msg ? '<span class="muted small">' + msg + "</span>" : "") + "</div></div>";
+  };
+
+  /* ---------- RESUME RECENT (Home 4th job, packet 01) ---------- */
+  S.recentWork = function () {
+    var items = (PM_DEMO.recent || []).map(function (r) {
+      return '<button class="recent-item" data-recent data-recent-mgr="' + (r.manager || "") + '" data-recent-target="' + r.target + '">' +
+        '<span class="recent-ic">' + PM.svg("history", 15) + "</span>" +
+        '<div class="col gap-xs"><span class="recent-label">' + r.label + '</span><span class="muted small">' + r.ago + "</span></div>" +
+        '<span class="recent-open">' + PM.svg("external", 13) + "</span></button>";
+    }).join("");
+    return '<section class="recent-strip"><span class="recent-eyebrow">Resume recent</span><div class="recent-grid">' + items + "</div></section>";
+  };
+  S.wireRecentWork = function () {
+    document.querySelectorAll("[data-recent]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var mgr = this.getAttribute("data-recent-mgr");
+        var t = this.getAttribute("data-recent-target");
+        if (mgr && PM.openOwnedManager) PM.openOwnedManager(mgr);
+        else if (mgr) { PM.openManager(mgr); PM.render && PM.render(); }
+        else { PM.openCategory(t.split(".")[0], t.split(".")[1]); PM.render && PM.render(); }
+      });
+    });
+  };
+
+  /* ---------- SECRET FIELD (7 secret-value types, packet 02) ---------- */
+  S.secretField = function (s) {
+    var body;
+    if (s.mode === "secret-input") {
+      body = '<span class="field secret-field"><span class="mono secret-val" data-masked="' + s.masked + '">' + s.masked + "</span>" +
+        '<button class="btn sm ghost icon" data-secret="reveal" title="Reveal (gated)" aria-label="Reveal">' + PM.svg("eye", 14) + "</button>" +
+        '<button class="btn sm ghost icon" data-secret="copy" title="Copy (gated)" aria-label="Copy">' + PM.svg("doc", 14) + "</button>" +
+        '<button class="btn sm ghost icon" data-secret="test" title="Test" aria-label="Test">' + PM.svg("bolt", 14) + "</button></span>";
+    } else if (s.mode === "vault-ref" || s.mode === "vault-cmd") {
+      body = '<span class="chip mono">' + s.ref + '</span><button class="btn sm ghost" data-secret="vault">Open vault</button>';
+    } else if (s.mode === "cli-owned") {
+      body = '<button class="btn sm primary" data-secret="cli-launch">' + PM.svg("external", 13) + "Launch CLI login</button>";
+    } else if (s.mode === "pm-oauth") {
+      body = '<button class="btn sm primary" data-secret="pm-authorize">' + PM.svg("lock", 13) + "Authorize via PM</button>";
+    } else if (s.mode === "env") {
+      body = '<span class="chip mono">env: ' + s.var + '</span><span class="chip">read-only</span>';
+    } else { // text (non-secret)
+      body = '<span class="field"><input type="text" value="' + (s.value || "") + '" aria-label="' + s.name + '"></span>';
+    }
+    return '<div class="secret-row"><div class="col grow gap-xs">' +
+      '<div class="row center gap-sm wrap"><strong>' + s.name + '</strong><span class="chip accent">' + s.type + "</span></div>" +
+      '<span class="muted small">' + s.note + "</span></div>" +
+      '<div class="row center gap-xs secret-control">' + body + "</div></div>";
+  };
+  S.wireSecretFields = function (root) {
+    if (!root) return;
+    root.querySelectorAll("[data-secret]").forEach(function (b) {
+      if (b.dataset.wired) return; b.dataset.wired = "1";
+      b.addEventListener("click", function () {
+        var a = this.getAttribute("data-secret");
+        if (a === "reveal") {
+          var f = this.closest(".secret-field"); var v = f && f.querySelector(".secret-val");
+          if (v) { var m = v.getAttribute("data-masked"); var shown = v.dataset.shown === "1"; v.textContent = shown ? m : "sk-ant-9f2a-XXXX-XXXX (revealed)"; v.dataset.shown = shown ? "0" : "1"; PM.toast(shown ? "Masked again" : "Revealed — gated, never logged"); }
+        } else if (a === "copy") PM.toast("Copied to clipboard — gated, auto-clears");
+        else if (a === "test") PM.toast("Probe sent — receipted");
+        else if (a === "vault") PM.toast("Opened vault reference — external");
+        else if (a === "cli-launch") PM.toast("Launching CLI-owned OAuth in an isolated profile");
+        else if (a === "pm-authorize") PM.toast("PM-direct OAuth flow — receipted");
+      });
+    });
+  };
+
+  /* ---------- SEARCH KIND META (7 distinct result types, packet 01) ---------- */
+  S.searchKindMeta = function (kind) {
+    return ({
+      setting: { label: "Setting", icon: "settings", cls: "" },
+      category: { label: "Area", icon: "grid", cls: "" },
+      subcategory: { label: "Section", icon: "list", cls: "" },
+      manager: { label: "Manager", icon: "external", cls: "accent" },
+      destination: { label: "Area", icon: "grid", cls: "" },
+      action: { label: "Action", icon: "bolt", cls: "accent" },
+      status: { label: "Status", icon: "info", cls: "info" },
+      diagnostic: { label: "Diagnostic", icon: "doc", cls: "neutral" },
+      workflow: { label: "Setup", icon: "compass", cls: "info" },
+      unavailable: { label: "Unavailable", icon: "warn", cls: "bad" }
+    })[kind] || { label: kind, icon: "dot", cls: "" };
   };
 
   /* ---------- OWNED-FAMILIES STRIP (final-cumulative per-concept ownership) ---------- */

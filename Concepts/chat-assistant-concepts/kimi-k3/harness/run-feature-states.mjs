@@ -37,7 +37,9 @@ let total = 0, failed = 0;
 const failures = [];
 try {
   for (const key of keys) {
-    for (const [w, t] of pairs) {
+    for (let i = 0; i < pairs.length; i += 4) {
+      const batch = pairs.slice(i, i + 4);
+      await Promise.all(batch.map(async ([w, t]) => {
       total++;
       const ctx = { window: w, thread: t, state: key, server };
       let page = null;
@@ -54,7 +56,8 @@ try {
         failed++;
         failures.push({ key, pair: w + ':' + t, boot: e.message.slice(0, 120) });
       }
-      if (page) await page.close().catch(() => {});
+        if (page) await page.close().catch(() => {});
+      }));
     }
     console.log('key ' + key + ' done (' + total + ' runs, ' + failed + ' failures)');
   }

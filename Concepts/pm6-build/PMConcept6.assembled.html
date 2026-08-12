@@ -122,6 +122,13 @@
       --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
       --ease-smooth:cubic-bezier(.4,0,.2,1); --ease-snap:cubic-bezier(.2,0,0,1);
       --ease-default:var(--ease-smooth); --sheen-dur:.6s;
+      /* Direct-manipulation motion (u11-prism vocabulary): pickup lift, drop
+         settle, and the neighbour-reflow FLIP shared by the dashboard widget
+         board and the Home surface drag. */
+      --mo-widget-pickup-dur:120ms; --mo-widget-pickup-ease:var(--ease-out);
+      --mo-widget-drop-dur:220ms; --mo-widget-drop-ease:var(--ease-snap);
+      --mo-widget-reflow-dur:240ms; --mo-widget-reflow-ease:cubic-bezier(.45,0,.4,1);
+      --mo-pulse:1.8s;
       --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
       --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
       --activity-bar-w:72px; --files-panel-w:280px; --chat-panel-w:550px; --chat-sidebar-w:200px;
@@ -1999,9 +2006,11 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      /* Sit just after page tabs with a modest nudge — not ml:auto (rev 9.4
-         parked it in the far-right search/theme cluster). */
-      margin: 0 var(--xs, 2px) 0 24px;
+      /* Sits in the right-hand cluster, centred in the gap between the search
+         box and the theme/settings control, with equal clearance on both
+         sides. (Supersedes the rev-9.4 placement immediately after the page
+         tabs, which read as crowded against them.) */
+      margin: 0 var(--lg, 16px);
       z-index: 45;
     }
     .title-bar .page-tabs {
@@ -10940,7 +10949,12 @@
        the pane. Pin the actions span to the strip's right edge so the close
        button never leaves the pane; the overflow chip (JS) collapses extra
        tabs to keep the visible tabs underneath it. --- */
-    .editor-tabs { position: relative; flex-wrap: nowrap; min-width: 0; padding-right: 28px; }
+    /* The right-hand reserve tracks the MEASURED width of the pinned actions
+       cluster (--pm6-ed-actions-w, written by the tab fitter). A hard-coded
+       28px was correct only while that cluster held one close button; PM7's
+       Home layer adds a surface-options button to the same span, and the last
+       tab plus the "+N more" chip then slid underneath it. */
+    .editor-tabs { position: relative; flex-wrap: nowrap; min-width: 0; padding-right: var(--pm6-ed-actions-w, 28px); }
     .editor-tabs .pane-tabbar-actions {
       position: absolute;
       right: 4px;
@@ -10955,6 +10969,159 @@
       padding: 2px;
       opacity: 0.9;
     }
+
+    /* ==================================================================
+       Contact-aware active editor-tab silhouette.
+
+       The active tab and the code canvas below it are ONE continuous
+       surface: same fill, no border between them, joined by concave
+       shoulders. The rail behind them is darker. This replaces the old
+       "active tab tinted + 2px accent underline" treatment.
+
+       Geometry is driven from JS (PM6_EDTAB_SHAPE) as custom properties:
+         --ed-shape-x / --ed-shape-w   the active tab's box in the rail
+         --ed-shape-lrx / --ed-shape-rrx   shoulder horizontal radii
+         --ed-canvas-lrx / --ed-canvas-rrx canvas exposed corner radii
+       Each horizontal radius collapses to 0 as the tab approaches that
+       side of the rail, so a flush edge has no decorative notch. The
+       VERTICAL radius stays at full height throughout, so a corner
+       flattens sideways instead of shrinking into a circular dimple.
+       ================================================================== */
+    .editor-pane {
+      --ed-canvas-bg: var(--surface);
+      /* Derive the rail from the CANVAS fill, never from --bg: several themes set
+         --surface == --bg, which collapses the mix back to the canvas colour and
+         leaves no rail/canvas separation at all (retro light and dark, basic
+         light), and glass-dark inverted it so the rail came out LIGHTER than the
+         surface. Mixing toward black is monotonic, so the rail is darker by
+         construction in every theme. Dark themes take a larger factor because the
+         same proportional step is a much smaller absolute one down there. */
+      --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      /* Opaque ground that the rail, the silhouette and the canvas are all
+         composited over. Without it the glass themes break the central promise:
+         --surface is translucent there, so the silhouette (over the rail) and the
+         canvas (over the wallpaper) resolve to DIFFERENT colours and stop reading
+         as one surface. A shared opaque ground makes the fills identical by
+         construction, in all eight themes. */
+      --ed-solid-base: var(--bg);
+      --ed-corner-ry: 10px;      /* canvas exposed corner, vertical radius */
+      --ed-shoulder-ry: 8px;     /* tab shoulder cutout, vertical radius */
+      --ed-top-radius: 11px;
+      --ed-shape-x: 0px;
+      --ed-shape-w: 0px;
+      --ed-shape-lrx: 0px;
+      --ed-shape-rrx: 0px;
+      --ed-canvas-lrx: 0px;
+      --ed-canvas-rrx: 0px;
+    }
+    [data-theme$="-dark"] .editor-pane { --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
+    /* Glass reads the code surface as its near-opaque plate; adopt that as the
+       shared fill so the silhouette and the canvas stay identical AND glass keeps
+       its own material. */
+    [data-theme^="glass"] .editor-pane { --ed-canvas-bg: var(--pm6-glass-plate); }
+    .editor-tabs.ed-shape-on {
+      background: linear-gradient(var(--ed-rail-bg), var(--ed-rail-bg)), var(--ed-solid-base);
+      border-bottom: 0;
+      align-items: flex-end;
+      /* No left inset: the first tab must be able to sit FLUSH against the
+         canvas's left boundary, which is the contact case the smart-corner
+         rule exists for. A padded rail would mean the flush state is
+         unreachable and the morph never demonstrates. */
+      padding-left: 0;
+      padding-bottom: 0;
+      overflow: visible;
+    }
+    /* `!important` is load-bearing here, not laziness: glass paints the code
+       surface through `[data-theme^="glass"] #editorPane1 .editor-area`, whose id
+       specificity outranks any class selector. If the canvas keeps that rule and
+       the silhouette does not, the two composite differently and the "one
+       continuous surface" promise fails on exactly the glass themes. Glass keeps
+       its own plate colour below via --ed-canvas-bg. */
+    .editor-pane:has(.editor-tabs.ed-shape-on) .editor-area {
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base) !important;
+      border-top-left-radius: var(--ed-canvas-lrx) var(--ed-corner-ry);
+      border-top-right-radius: var(--ed-canvas-rrx) var(--ed-corner-ry);
+    }
+    /* the travelling surface itself */
+    .ed-tab-shape {
+      position: absolute;
+      left: var(--ed-shape-x);
+      width: var(--ed-shape-w);
+      top: var(--xs, 4px);
+      bottom: -1px;               /* overlap the join so no hairline shows */
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @supports (corner-shape: squircle) {
+      .ed-tab-shape { corner-shape: squircle squircle flat flat; }
+    }
+    /* concave shoulders: a quarter-ellipse of rail punched out of a block of
+       canvas fill, so the tab flares outward into the canvas rather than
+       sitting on top of it. An external join like this cannot be produced by
+       border-radius alone. */
+    .ed-tab-shape::before,
+    .ed-tab-shape::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: var(--ed-shoulder-ry);
+      pointer-events: none;
+    }
+    .ed-tab-shape::before {
+      left: calc(-1 * var(--ed-shape-lrx));
+      width: var(--ed-shape-lrx);
+      background:
+        radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
+        var(--ed-solid-base);
+    }
+    .ed-tab-shape::after {
+      right: calc(-1 * var(--ed-shape-rrx));
+      width: var(--ed-shape-rrx);
+      background:
+        radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
+        var(--ed-solid-base);
+    }
+    /* Labels ride ABOVE the silhouette; the tab element itself paints nothing.
+       Per-theme active-tab fills, glows and underlines are all cleared here --
+       the silhouette IS the active-tab treatment now, and a theme halo around
+       it would read as a floating pill rather than a joined surface. */
+    .editor-tabs.ed-shape-on .tab {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .editor-tabs.ed-shape-on .tab.active,
+    .editor-tabs.ed-shape-on .tab.tab-focused,
+    .editor-tabs.ed-shape-on .tab:hover {
+      background: transparent;
+      box-shadow: none;
+      filter: none;
+    }
+    .editor-tabs.ed-shape-on .tab:not(.active) {
+      background: color-mix(in srgb, var(--ed-canvas-bg) 26%, transparent);
+      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
+      color: var(--text-secondary);
+    }
+    .editor-tabs.ed-shape-on .tab:not(.active):hover {
+      background: color-mix(in srgb, var(--ed-canvas-bg) 42%, transparent);
+      color: var(--text-primary);
+    }
+    .editor-tabs.ed-shape-on .tab.active { color: var(--text-primary); }
+    .editor-tabs.ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+    .editor-tabs.ed-shape-on .tab.active::after,
+    .editor-tabs.ed-shape-on .tab.active::before { display: none; }
+    .editor-tabs.ed-shape-on .pm-ed-overflow,
+    .editor-tabs.ed-shape-on .pane-tabbar-actions { position: relative; z-index: 2; }
+    /* Reduced motion keeps the state change, drops the spring travel; the JS
+       reads this flag too and snaps instead of animating. */
+    @media (prefers-reduced-motion: reduce) { .ed-tab-shape { transition: none; } }
+    [data-motion="reduced"] .ed-tab-shape { transition: none; }
 
     /* --- Issue 5: context-details rendered inside an editor pane tab. The
        .cdp-* classes come from the frozen context-detail markup (part 14);
@@ -11448,16 +11615,61 @@
 .pm6-dash-card:hover .pm6-dash-iconbtn, .pm6-dash-iconbtn:focus-visible { opacity: 1; }
 .pm6-dash-iconbtn:hover { color: var(--text-primary); background: var(--accent-soft); }
 
-/* crosshatch drag handle (top-left) */
+/* Drag handle, top-left. Matches the Home surface grip so the two movable
+   things in the shell share one affordance: always visible, grab cursor,
+   touch-action:none so the grip drags instead of scrolling the board. */
 .pm6-dash-drag {
   width: 14px; height: 14px; flex: none; cursor: grab; border-radius: 3px;
   background-image:
     repeating-linear-gradient(45deg, var(--text-muted) 0 1px, transparent 1px 4px),
     repeating-linear-gradient(-45deg, var(--text-muted) 0 1px, transparent 1px 4px);
-  opacity: .35; transition: opacity var(--motion-fast) var(--ease-default);
+  opacity: .55; touch-action: none;
+  transition: opacity var(--motion-fast) var(--ease-default);
 }
-.pm6-dash-card:hover .pm6-dash-drag { opacity: .8; }
+.pm6-dash-card:hover .pm6-dash-drag { opacity: .9; }
 .pm6-dash-drag:active { cursor: grabbing; }
+.pm6-dash-drag:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+/* ---------- lifted clone + landing placeholder (u11-prism vocabulary) ----- */
+.pm6-dash-lifted {
+  position: fixed;
+  z-index: 600;
+  margin: 0;
+  pointer-events: none;
+  cursor: grabbing;
+  transform-origin: top left;
+  will-change: left, top, transform;
+  box-shadow: var(--elev-2);
+  transition: transform var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, cubic-bezier(.22,1,.36,1)),
+              box-shadow var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, cubic-bezier(.22,1,.36,1));
+}
+.pm6-dash-lifted.is-lifted {
+  transform: scale(1.03) rotate(.4deg);
+  box-shadow: 0 20px 44px color-mix(in srgb, var(--accent-primary) 20%, transparent), var(--elev-3);
+}
+.pm6-dash-card.pm6-dash-placeholder {
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--accent-primary) 6%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  box-shadow: none;
+  animation: pm6DashPhBreath var(--mo-pulse, 1.8s) ease-in-out infinite;
+}
+.pm6-dash-card.pm6-dash-placeholder > * { display: none; }
+@keyframes pm6DashPhBreath {
+  0%, 100% { background-color: color-mix(in srgb, var(--accent-primary) 5%, transparent); }
+  50% { background-color: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+}
+html.pm6-dash-dragging, html.pm6-dash-dragging * { cursor: grabbing !important; }
+html.pm6-dash-dragging { -webkit-user-select: none; user-select: none; }
+html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pm6-dash-lifted { transition: none; }
+  .pm6-dash-lifted.is-lifted { transform: none; }
+  .pm6-dash-card.pm6-dash-placeholder { animation: none; background-color: color-mix(in srgb, var(--accent-primary) 8%, transparent); }
+}
+[data-motion="reduced"] .pm6-dash-lifted { transition: none; }
+[data-motion="reduced"] .pm6-dash-lifted.is-lifted { transform: none; }
+[data-motion="reduced"] .pm6-dash-card.pm6-dash-placeholder { animation: none; }
 
 /* edge-resize grip (bottom-right) */
 .pm6-dash-resize {
@@ -18760,6 +18972,16 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
           <div class="pm6-tb-menu" id="pageTabsMoreMenu" role="menu" aria-label="More pages"></div>
         </div>
       </nav>
+      <div class="pm6-tb-search-wrap" id="tbSearchWrap" data-mode="full">
+        <input type="text" class="search-bar" id="tbSearchInput" placeholder="Search files, commands, settings...">
+        <button type="button" class="pm6-tb-search-btn" id="tbSearchBtn"
+          aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
+          <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
+        </div>
+      </div>
       <div class="notify-slot" id="notifySlot">
         <div class="rs-host">
           <div class="rs-stack empty" id="rsStack" title="Notifications" role="button" aria-label="Notifications" tabindex="0">
@@ -18780,16 +19002,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
               <div class="rs-panel-list" id="rsList"></div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="pm6-tb-search-wrap" id="tbSearchWrap" data-mode="full">
-        <input type="text" class="search-bar" id="tbSearchInput" placeholder="Search files, commands, settings...">
-        <button type="button" class="pm6-tb-search-btn" id="tbSearchBtn"
-          aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
-          <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
         </div>
       </div>
       <div class="pm6-tb-menu-wrap" id="themeMenuWrap" data-mode="full">
@@ -25175,9 +25387,22 @@ status: completed with warnings</pre>
         });
 
 
-        // Setup Drag & Drop for editor tabs
+        /* ---------- editor tab drag-reorder (delegated) ----------------------
+           Previously this was a one-shot pass over the STATIC markup: it set
+           `draggable` on the tabs that existed at parse time, so pane 1 lost
+           reordering the moment renderEditorTabs() rebuilt its strip with
+           createElement, and panels created later (Home panels 3/4) never had
+           it at all. The drop also reordered the DOM only, so the next render
+           snapped the order straight back.
+
+           Now: `draggable` is armed on pointerdown (the same trick the
+           dashboard widget grid uses), every handler is delegated on document
+           so it covers strips that do not exist yet, and the drop writes the
+           new order back to the owning model before re-rendering. */
         function getDragAfterElement(container, x) {
-            var tabs = Array.from(container.querySelectorAll('.tab:not(.dragging)'));
+            var tabs = Array.prototype.filter.call(container.querySelectorAll('.tab'), function (t) {
+                return !t.classList.contains('dragging') && t.style.display !== 'none';
+            });
             return tabs.reduce(function(closest, child) {
                 var box = child.getBoundingClientRect();
                 var offset = x - box.left - box.width / 2;
@@ -25188,46 +25413,67 @@ status: completed with warnings</pre>
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
 
-        document.querySelectorAll('.editor-tabs').forEach(function(tabsContainer) {
-            tabsContainer.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'move';
-                var dragging = document.querySelector('.tab.dragging');
-                if (!dragging) return;
-                var afterEl = getDragAfterElement(tabsContainer, e.clientX);
-                if (afterEl == null) {
-                    tabsContainer.appendChild(dragging);
-                } else {
-                    tabsContainer.insertBefore(dragging, afterEl);
-                }
-            });
+        document.addEventListener('pointerdown', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (!tab) return;
+            if (e.target.closest('.tab-close-btn, .tab-close')) return; /* closing, not dragging */
+            tab.draggable = true;
+        }, true);
 
-            tabsContainer.addEventListener('drop', function(e) {
-                e.preventDefault();
-                var dragging = document.querySelector('.tab.dragging');
-                if (!dragging) return;
-                var filename = dragging.getAttribute('data-file');
-                var pane = tabsContainer.closest('.editor-pane');
-                if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
-                    tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-                    dragging.classList.add('active');
-                    var prefix = pane.id === 'editorPane1' ? 'pane1' : 'pane2';
-                    renderFileToPane(filename, prefix, true);
-                }
-            });
+        document.addEventListener('dragstart', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (!tab) return;
+            tab.classList.add('dragging');
+            try {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', tab.getAttribute('data-file') || '');
+            } catch (err) {}
         });
 
-        // Make all editor tabs draggable
-        document.querySelectorAll('.editor-tabs .tab').forEach(function(t) {
-            t.draggable = true;
-            t.addEventListener('dragstart', function(e) {
-                t.classList.add('dragging');
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', t.getAttribute('data-file') || '');
-            });
-            t.addEventListener('dragend', function() {
-                t.classList.remove('dragging');
-            });
+        document.addEventListener('dragend', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (tab) tab.classList.remove('dragging');
+        });
+
+        document.addEventListener('dragover', function (e) {
+            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
+            if (!tabsContainer) return;
+            var dragging = document.querySelector('.editor-tabs .tab.dragging');
+            if (!dragging) return;
+            e.preventDefault();
+            try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+            var afterEl = getDragAfterElement(tabsContainer, e.clientX);
+            if (afterEl == null) {
+                tabsContainer.insertBefore(dragging, tabsContainer.querySelector('.pane-tabbar-actions'));
+            } else {
+                tabsContainer.insertBefore(dragging, afterEl);
+            }
+        });
+
+        document.addEventListener('drop', function (e) {
+            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
+            if (!tabsContainer) return;
+            var dragging = document.querySelector('.editor-tabs .tab.dragging');
+            if (!dragging) return;
+            e.preventDefault();
+            dragging.classList.remove('dragging');
+            var filename = dragging.getAttribute('data-file');
+            var pane = tabsContainer.closest('.editor-pane');
+            tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+            dragging.classList.add('active');
+            /* persist the new order into whichever model owns this strip, so a
+               later re-render does not snap it back */
+            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
+                try { window.PM6_PERSIST_TAB_ORDER(tabsContainer); } catch (err) {}
+            }
+            if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
+                try { window.PM6_FIT_EDITOR_TABS(tabsContainer); } catch (err) {}
+            }
+            if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
+                var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
+                    (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
+                if (prefix) renderFileToPane(filename, prefix, true);
+            }
         });
 
         // init generic resizers
@@ -35573,6 +35819,8 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
   function edFitOverflow() {
     var strip = edStrip();
     if (!strip) return;
+    edMeasureActions(strip);
+    edMakeTabsFocusable(strip);
     var chip = strip.querySelector('.pm-ed-overflow');
     if (chip) strip.removeChild(chip);
     chip = null;
@@ -35607,6 +35855,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       chip.textContent = '+' + edHidden.length + ' more';
     }
     if (chip && !edHidden.length) strip.removeChild(chip);
+    if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function edScheduleFit() {
     if (edFitQueued) return;
@@ -35855,6 +36104,8 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
   function ed2FitOverflow() {
     var strip = ed2Strip();
     if (!strip) return;
+    edMeasureActions(strip);
+    edMakeTabsFocusable(strip);
     var chip = strip.querySelector('.pm-ed-overflow');
     if (chip) { chip.parentNode && chip.parentNode.removeChild(chip); chip = null; }
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
@@ -35902,6 +36153,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       chip.textContent = '+' + ed2Hidden.length + ' more';
     }
     if (chip && !ed2Hidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function ed2ScheduleFit() {
     if (ed2FitQueued) return;
@@ -35975,6 +36227,356 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     edActivatePane2(tab);
   }
 
+  /* ==================================================================
+     Contact-aware active-tab silhouette controller.
+
+     One shared shape travels between tabs. Its corner geometry is derived
+     from GEOMETRIC CONTACT with the rail's edges, recomputed in the same
+     frame as the position -- never eased independently -- so a drag stays
+     one-to-one with the pointer and a flush edge never leaves a notch.
+
+       leftProgress  = clamp(leftGap  / MORPH, 0, 1)
+       rightProgress = clamp(rightGap / MORPH, 0, 1)
+       canvasLeftRx  = leftProgress  * CANVAS_MAX     (ry stays CANVAS_MAX)
+       cutoutLeftRx  = leftProgress  * SHOULDER_MAX   (ry stays SHOULDER_MAX)
+
+     Only the HORIZONTAL radius animates: the corner flattens sideways
+     instead of shrinking uniformly into a circular dimple.
+     ================================================================== */
+  var EDSHAPE = (function () {
+    var MORPH = 20, CANVAS_MAX = 10, SHOULDER_MAX = 8;
+    var STIFF = 520, DAMP = 42;            /* firm, low-bounce */
+    var shapes = typeof WeakMap === 'function' ? new WeakMap() : null;
+
+    function reduced() {
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      if (document.documentElement.getAttribute('data-reduced-motion') === '1') return true;
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+
+    function state(strip) {
+      if (!shapes) return null;
+      var s = shapes.get(strip);
+      if (!s) { s = { x: null, w: null, vx: 0, vw: 0, tx: 0, tw: 0, raf: 0, track: null, lastActive: undefined }; shapes.set(strip, s); }
+      return s;
+    }
+
+    function ensure(strip) {
+      var el = strip.querySelector(':scope > .ed-tab-shape');
+      if (!el) {
+        el = document.createElement('span');
+        el.className = 'ed-tab-shape';
+        el.setAttribute('aria-hidden', 'true');
+        strip.insertBefore(el, strip.firstChild);
+      }
+      strip.classList.add('ed-shape-on');
+      return el;
+    }
+
+    /* Target box for the active tab, in rail-local coordinates, plus the TAB
+       TRACK the contact test is measured against. The track excludes the
+       rail's leading chrome (the Home move grip) and trailing chrome (the
+       pinned actions cluster and the "+N more" chip): those are rail
+       furniture, not part of the surface the tab can travel across, and
+       measuring past them would make the flush state unreachable. */
+    function target(strip) {
+      var active = strip.querySelector('.tab.active');
+      if (!active || active.style.display === 'none') return null;
+      var sr = strip.getBoundingClientRect();
+      var ar = active.getBoundingClientRect();
+      if (!ar.width) return null;
+      var laid = Array.prototype.filter.call(strip.querySelectorAll('.tab'), function (t) {
+        return t.style.display !== 'none' && t.getBoundingClientRect().width > 0;
+      });
+      if (!laid.length) return null;
+      var trackLeft = laid[0].getBoundingClientRect().left - sr.left;
+      var trackRight = laid[laid.length - 1].getBoundingClientRect().right - sr.left;
+      return { x: ar.left - sr.left, w: ar.width, trackLeft: trackLeft, trackRight: trackRight };
+    }
+
+    /* Write position AND corner geometry together. Corner values are a pure
+       function of the position passed in, so an animated frame and a dragged
+       frame produce exactly the same shape for the same x. */
+    function paint(strip, x, w, track) {
+      var leftGap = Math.max(0, x - (track ? track.left : 0));
+      var rightGap = Math.max(0, (track ? track.right : x + w) - (x + w));
+      var lp = Math.max(0, Math.min(1, leftGap / MORPH));
+      var rp = Math.max(0, Math.min(1, rightGap / MORPH));
+      strip.style.setProperty('--ed-shape-x', x.toFixed(2) + 'px');
+      strip.style.setProperty('--ed-shape-w', w.toFixed(2) + 'px');
+      strip.style.setProperty('--ed-shape-lrx', (lp * SHOULDER_MAX).toFixed(2) + 'px');
+      strip.style.setProperty('--ed-shape-rrx', (rp * SHOULDER_MAX).toFixed(2) + 'px');
+      var pane = strip.closest('.editor-pane');
+      if (pane) {
+        pane.style.setProperty('--ed-canvas-lrx', (lp * CANVAS_MAX).toFixed(2) + 'px');
+        pane.style.setProperty('--ed-canvas-rrx', (rp * CANVAS_MAX).toFixed(2) + 'px');
+      }
+    }
+
+    function step(strip) {
+      var s = state(strip);
+      if (!s) return;
+      s.raf = 0;
+      var dt = 1 / 60;
+      var ax = (-STIFF * (s.x - s.tx) - DAMP * s.vx);
+      var aw = (-STIFF * (s.w - s.tw) - DAMP * s.vw);
+      s.vx += ax * dt; s.x += s.vx * dt;
+      s.vw += aw * dt; s.w += s.vw * dt;
+      var done = Math.abs(s.x - s.tx) < 0.3 && Math.abs(s.vx) < 2 &&
+                 Math.abs(s.w - s.tw) < 0.3 && Math.abs(s.vw) < 2;
+      if (done) { s.x = s.tx; s.w = s.tw; s.vx = 0; s.vw = 0; }
+      paint(strip, s.x, s.w, s.track);
+      if (!done) s.raf = requestAnimationFrame(function () { step(strip); });
+    }
+
+    /* animate=false snaps (drag frames, resize, theme/motion change, boot).
+       A SELECTION change always springs, whatever the caller asked for: picking a
+       tab re-renders the strip, and that re-render's own snap-sync used to land
+       first and leave the spring with nothing left to travel -- so the shape
+       teleported between tabs instead of visibly moving. Layout-driven syncs
+       (resize, fonts, theme, drag frames) still snap. */
+    function sync(strip, animate) {
+      if (!strip || !strip.isConnected) return;
+      ensure(strip);
+      var t = target(strip);
+      if (!t) return;
+      var s = state(strip);
+      var activeEl = strip.querySelector('.tab.active');
+      var activeKey = activeEl ? (activeEl.getAttribute('data-file') || (activeEl.textContent || '').trim()) : null;
+      if (s.lastActive !== undefined && s.lastActive !== activeKey) animate = true;
+      s.lastActive = activeKey;
+      var track = { left: t.trackLeft, right: t.trackRight };
+      if (!s) { paint(strip, t.x, t.w, track); return; }
+      s.tx = t.x; s.tw = t.w; s.track = track;
+      if (!animate || reduced() || s.x === null) {
+        if (s.raf) { cancelAnimationFrame(s.raf); s.raf = 0; }
+        s.x = t.x; s.w = t.w; s.vx = 0; s.vw = 0;
+        paint(strip, s.x, s.w, s.track);
+        return;
+      }
+      if (!s.raf) s.raf = requestAnimationFrame(function () { step(strip); });
+    }
+
+    function syncAll(animate) {
+      document.querySelectorAll('.editor-tabs').forEach(function (strip) { sync(strip, animate); });
+    }
+
+    /* pointer AND keyboard selection produce the same transition */
+    document.addEventListener('click', function (e) {
+      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+      if (!tab) return;
+      var strip = tab.closest('.editor-tabs');
+      setTimeout(function () { sync(strip, true); }, 0);
+    }, true);
+    document.addEventListener('keyup', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key.indexOf('Arrow') !== 0) return;
+      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+      if (!tab) return;
+      sync(tab.closest('.editor-tabs'), true);
+    }, true);
+    /* dragging is one-to-one: snap every frame, no independent easing */
+    document.addEventListener('dragover', function (e) {
+      var strip = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
+      if (strip && document.querySelector('.editor-tabs .tab.dragging')) sync(strip, false);
+    }, true);
+    window.addEventListener('resize', function () { syncAll(false); });
+    document.addEventListener('pm6:theme-changed', function () { syncAll(false); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { syncAll(false); }).catch(function () {});
+    }
+
+    return { sync: sync, syncAll: syncAll };
+  })();
+  window.PM6_EDTAB_SHAPE = EDSHAPE;
+
+  /* ---------- shared tab-strip metrics -----------------------------------
+     `.editor-tabs` reserves room on its right for the absolutely-pinned
+     `.pane-tabbar-actions` cluster. That reserve was a hard-coded 28px, which
+     stopped being true once anything else joined the cluster, so measure it. */
+  function edMeasureActions(strip) {
+    if (!strip) return;
+    var actions = strip.querySelector('.pane-tabbar-actions');
+    if (!actions) return;
+    var w = Math.ceil(actions.getBoundingClientRect().width);
+    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 10 : 28) + 'px');
+  }
+
+  /* ---------- generic per-strip overflow fitter ---------------------------
+     Panes 1 and 2 keep their own model-aware fitters (they promote a hidden
+     tab into the bar by swapping model entries). Every OTHER strip -- Home
+     panels 3 and 4, and any strip added later -- is served by this one, which
+     treats the DOM as the model. */
+  function edGenericIsManaged(strip) {
+    return !!(strip.closest('#editorPane1') || strip.closest('#editorPane2'));
+  }
+
+  function edGenericCloseMenu() {
+    var menu = document.getElementById('pm-ed-generic-overflow-menu');
+    if (menu && menu.parentNode) menu.parentNode.removeChild(menu);
+    document.querySelectorAll('.editor-tabs .pm-ed-overflow.active').forEach(function (c) { c.classList.remove('active'); });
+  }
+
+  function edGenericOpenMenu(strip, chip) {
+    if (document.getElementById('pm-ed-generic-overflow-menu')) { edGenericCloseMenu(); return; }
+    var hidden = strip._pmEdHidden || [];
+    if (!hidden.length) return;
+    var menu = document.createElement('div');
+    menu.id = 'pm-ed-generic-overflow-menu';
+    menu.className = 'pm-ed-overflow-menu';
+    hidden.forEach(function (tab) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      var label = document.createElement('span');
+      label.className = 'pm-ed-overflow-label';
+      label.textContent = (tab.getAttribute('data-file') || tab.textContent || '').split('/').pop();
+      label.title = tab.getAttribute('data-file') || '';
+      row.appendChild(label);
+      row.onclick = function (ev) {
+        if (ev && ev.stopPropagation) ev.stopPropagation();
+        edGenericCloseMenu();
+        /* promote: move the hidden tab in front of the last visible one, then
+           activate it and refit */
+        var visible = Array.prototype.filter.call(strip.querySelectorAll('.tab'), function (t) { return t.style.display !== 'none'; });
+        var anchor = visible[visible.length - 1] || strip.querySelector('.pane-tabbar-actions');
+        if (anchor) strip.insertBefore(tab, anchor);
+        strip.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+        tab.style.display = '';
+        tab.classList.add('active');
+        var pane = strip.closest('.editor-pane');
+        var prefix = pane && pane.getAttribute('data-pm-home-editor-prefix');
+        var file = tab.getAttribute('data-file');
+        if (prefix && file && typeof window.PM6_RENDER_FILE === 'function') {
+          try { window.PM6_RENDER_FILE(file, prefix); } catch (e) {}
+        }
+        edFitStrip(strip);
+      };
+      menu.appendChild(row);
+    });
+    document.body.appendChild(menu);
+    var r = chip.getBoundingClientRect();
+    menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
+    menu.style.top = (r.bottom + 4) + 'px';
+    chip.classList.add('active');
+    setTimeout(function () {
+      document.addEventListener('click', function once(ev) {
+        if (menu.contains(ev.target) || (ev.target.closest && ev.target.closest('.pm-ed-overflow'))) return;
+        document.removeEventListener('click', once, true);
+        edGenericCloseMenu();
+      }, true);
+    }, 0);
+  }
+
+  /* Editor tabs were pointer-only: rendered as bare <span> with no tabIndex, so
+     they could not be reached, let alone activated, from the keyboard. Give every
+     tab the roving-tab semantics its role implies. */
+  function edMakeTabsFocusable(strip) {
+    strip.querySelectorAll('.tab').forEach(function (tab) {
+      if (!tab.hasAttribute('role')) tab.setAttribute('role', 'tab');
+      if (!tab.hasAttribute('tabindex')) tab.setAttribute('tabindex', '0');
+      tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
+    });
+  }
+
+  function edFitStrip(strip) {
+    if (!strip) return;
+    edMeasureActions(strip);
+    edMakeTabsFocusable(strip);
+    if (edGenericIsManaged(strip)) {
+      /* keep the model-aware fitters authoritative for panes 1 and 2 */
+      if (strip.closest('#editorPane1')) edScheduleFit();
+      else ed2ScheduleFit();
+      return;
+    }
+    var chip = strip.querySelector('.pm-ed-overflow');
+    if (chip && chip.parentNode) chip.parentNode.removeChild(chip);
+    chip = null;
+    strip._pmEdHidden = [];
+    var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
+    all.forEach(function (t) { t.style.display = ''; });
+    if (!strip.clientWidth) return; /* not laid out yet — refit fires on resize */
+    var guard = all.length + 1;
+    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+      var visible = all.filter(function (t) { return t.style.display !== 'none'; });
+      if (visible.length <= 1) break;
+      var pick = null;
+      for (var i = visible.length - 1; i >= 0; i--) {
+        if (visible[i].classList.contains('active')) continue; /* active always stays */
+        pick = visible[i];
+        break;
+      }
+      if (!pick) break;
+      pick.style.display = 'none';
+      strip._pmEdHidden.unshift(pick);
+      if (!chip) {
+        chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'pm-ed-overflow';
+        chip.title = 'Collapsed editor tabs';
+        chip.onclick = function (ev) { if (ev) ev.stopPropagation(); edGenericOpenMenu(strip, chip); };
+        strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
+      }
+      chip.textContent = '+' + strip._pmEdHidden.length + ' more';
+    }
+    if (chip && !strip._pmEdHidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
+  }
+  window.PM6_FIT_EDITOR_TABS = edFitStrip;
+
+  /* Write a strip's DOM order back into the model that owns it, so a later
+     re-render does not undo a drag-reorder. Panes 3/4 keep their order in the
+     DOM itself, so only pane 1 needs a model write. */
+  function edPersistTabOrder(strip) {
+    if (!strip) return;
+    if (strip.closest('#editorPane1')) {
+      var st = edState();
+      var order = Array.prototype.map.call(strip.querySelectorAll('.tab[data-file]'), function (t) {
+        return t.getAttribute('data-file');
+      }).filter(function (p) { return st.openTabs.indexOf(p) !== -1; });
+      st.openTabs.forEach(function (p) { if (order.indexOf(p) === -1) order.push(p); });
+      st.openTabs.length = 0;
+      order.forEach(function (p) { st.openTabs.push(p); });
+      var active = strip.querySelector('.tab.active[data-file]');
+      if (active) st.activeTab = active.getAttribute('data-file');
+    }
+    edFitStrip(strip);
+  }
+  window.PM6_PERSIST_TAB_ORDER = edPersistTabOrder;
+
+  /* Enrol every strip that exists now, and any that appears later. */
+  var edStripObserved = typeof WeakSet === 'function' ? new WeakSet() : null;
+  function edEnrolStrips() {
+    document.querySelectorAll('.editor-tabs').forEach(function (strip) {
+      if (edStripObserved && edStripObserved.has(strip)) return;
+      if (edStripObserved) edStripObserved.add(strip);
+      if (typeof ResizeObserver !== 'undefined') {
+        try { new ResizeObserver(function () { edFitStrip(strip); }).observe(strip); } catch (e) {}
+      }
+      edFitStrip(strip);
+    });
+  }
+  window.PM6_ENROL_EDITOR_TABS = edEnrolStrips;
+
+  document.addEventListener('keydown', function (e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+    if (!tab) return;
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      tab.click();
+      return;
+    }
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
+    var strip = tab.closest('.editor-tabs');
+    var vis = Array.prototype.filter.call(strip.querySelectorAll('.tab'), function (t) { return t.style.display !== 'none'; });
+    var i = vis.indexOf(tab);
+    if (i === -1) return;
+    e.preventDefault();
+    var next = e.key === 'Home' ? 0
+      : e.key === 'End' ? vis.length - 1
+      : e.key === 'ArrowLeft' ? Math.max(0, i - 1)
+      : Math.min(vis.length - 1, i + 1);
+    if (vis[next]) { vis[next].focus(); vis[next].click(); }
+  }, true);
+
   function initEditorTabs() {
     edEnsureSeed();
     renderEditorTabs();
@@ -35982,7 +36584,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     var strip = edStrip();
     if (strip && typeof ResizeObserver !== 'undefined') {
       try {
-        new ResizeObserver(function () { edScheduleFit(); }).observe(strip);
+        new ResizeObserver(function () { edMeasureActions(strip); edScheduleFit(); }).observe(strip);
       } catch (e) {}
     }
     window.addEventListener('resize', edScheduleFit);
@@ -35991,12 +36593,20 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     var strip2 = ed2Strip();
     if (strip2 && typeof ResizeObserver !== 'undefined') {
       try {
-        new ResizeObserver(function () { ed2ScheduleFit(); }).observe(strip2);
+        new ResizeObserver(function () { edMeasureActions(strip2); ed2ScheduleFit(); }).observe(strip2);
       } catch (e) {}
     }
     window.addEventListener('resize', ed2ScheduleFit);
+    window.addEventListener('resize', edEnrolStrips);
+    /* strips created later (Home panels 3/4, browser tabs) enrol themselves */
+    if (typeof MutationObserver === 'function') {
+      try {
+        new MutationObserver(function () { edEnrolStrips(); }).observe(document.body, { childList: true, subtree: true });
+      } catch (e) {}
+    }
     /* initial fit once layout settles */
-    setTimeout(function () { try { ed2FitOverflow(); } catch (e) {} }, 0);
+    setTimeout(function () { try { ed2FitOverflow(); } catch (e) {} edEnrolStrips(); }, 0);
+    setTimeout(edEnrolStrips, 600);
   }
 
   /* ==========================================================
@@ -36311,53 +36921,233 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
   function clearDropMarks() {
     $$('.pm6-dash-card').forEach(function (c) { c.classList.remove('pm6-drop-before', 'pm6-drop-after'); });
   }
+  /* ==========================================================
+     Widget reorder — u11-prism vocabulary (_shared/usage-widgets.js).
+
+     Replaces the old HTML5 drag-and-drop, which only drew a
+     before/after marker on the hovered card and moved anything at
+     drop time: nothing reflowed while you dragged, so the board
+     gave no feedback about where the widget would land.
+
+     Now: the grabbed card is lifted as a fixed clone tracking the
+     pointer 1:1, its vacated cell becomes a real in-flow
+     placeholder with the same grid span, and every other card FLIPs
+     to its new position on each slot change. Nothing re-renders, so
+     chart DOM inside widget bodies survives the drag untouched.
+     ========================================================== */
+  var dashDrag = null;
+
+  function dashReduced() {
+    if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+    if (document.documentElement.getAttribute('data-reduced-motion') === '1') return true;
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function dashCapture(grid) {
+    var map = [];
+    grid.querySelectorAll('.pm6-dash-card').forEach(function (el) {
+      if (el.classList.contains('pm6-dash-placeholder')) return;
+      map.push({ el: el, rect: el.getBoundingClientRect() });
+    });
+    return map;
+  }
+
+  function dashFlip(prev) {
+    if (dashReduced()) return;
+    prev.forEach(function (entry) {
+      var el = entry.el;
+      if (!el.isConnected) return;
+      var now = el.getBoundingClientRect();
+      var dx = entry.rect.left - now.left, dy = entry.rect.top - now.top;
+      if (!dx && !dy) return;
+      el.style.transition = 'none';
+      el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      var settle = function (ev) {
+        if (ev.target !== el || ev.propertyName !== 'transform') return;
+        el.removeEventListener('transitionend', settle);
+        el.style.removeProperty('transition');
+        el.style.removeProperty('transform');
+      };
+      el.addEventListener('transitionend', settle);
+      requestAnimationFrame(function () {
+        el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
+        el.style.removeProperty('transform');
+      });
+    });
+  }
+
+  /* reading-order slot: above the vertical middle -> before; below it ->
+     after, except inside the 50-75% band where the horizontal middle
+     decides. Works across a multi-column grid, not just a vertical list. */
+  function dashCardAtPoint(x, y) {
+    var stack = document.elementsFromPoint ? document.elementsFromPoint(x, y) : [];
+    for (var i = 0; i < stack.length; i++) {
+      var el = stack[i];
+      var card = el && el.closest ? el.closest('.pm6-dash-card') : null;
+      if (card && !card.classList.contains('pm6-dash-placeholder') && !card.hasAttribute('data-pm6-lifted')) return card;
+    }
+    return null;
+  }
+
+  function dashSlotFrom(x, y) {
+    var ds = dashDrag;
+    if (!ds) return;
+    var target = dashCardAtPoint(x, y);
+    if (!target || target.parentElement !== ds.placeholder.parentElement) return;
+    var r = target.getBoundingClientRect();
+    var relY = (y - r.top) / r.height, relX = (x - r.left) / r.width;
+    var after = relY >= 0.5 && !(relY <= 0.75 && relX < 0.5);
+    if (after ? target.nextSibling === ds.placeholder : ds.placeholder.nextSibling === target) return;
+    var prev = dashCapture(ds.grid);
+    target.parentElement.insertBefore(ds.placeholder, after ? target.nextSibling : target);
+    dashFlip(prev);
+  }
+
+  function dashMoveClone() {
+    var ds = dashDrag;
+    if (!ds) return;
+    ds.clone.style.left = (ds.px - ds.ox) + 'px';
+    ds.clone.style.top = (ds.py - ds.oy) + 'px';
+  }
+
+  function dashEdgeTick() {
+    var ds = dashDrag;
+    if (!ds) return;
+    var h = window.innerHeight, zone = 56, dy = 0;
+    if (ds.py < zone) dy = -Math.ceil((zone - ds.py) / 6);
+    else if (ds.py > h - zone) dy = Math.ceil((ds.py - (h - zone)) / 6);
+    if (dy && ds.scroller) { ds.scroller.scrollBy(0, dy); dashSlotFrom(ds.px, ds.py); }
+    ds.raf = requestAnimationFrame(dashEdgeTick);
+  }
+
+  function dashFindScroller(grid) {
+    var n = grid.parentElement;
+    while (n && n !== document.documentElement) {
+      var cs = getComputedStyle(n);
+      if (/(auto|scroll|overlay)/.test(cs.overflowY) && n.scrollHeight > n.clientHeight) return n;
+      n = n.parentElement;
+    }
+    return window;
+  }
+
+  function dashStartDrag(card, e) {
+    if (dashDrag) return;
+    var grid = card.closest('.pm6-dash-grid');
+    if (!grid) return;
+    e.preventDefault();
+    var rect = card.getBoundingClientRect();
+    var clone = card.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
+    clone.setAttribute('data-pm6-lifted', '');
+    clone.setAttribute('aria-hidden', 'true');
+    clone.classList.add('pm6-dash-lifted');
+    clone.style.left = rect.left + 'px';
+    clone.style.top = rect.top + 'px';
+    clone.style.width = rect.width + 'px';
+    clone.style.height = rect.height + 'px';
+    document.body.appendChild(clone);
+    var ph = document.createElement('div');
+    ph.className = 'pm6-dash-card pm6-dash-placeholder';
+    ph.setAttribute('aria-hidden', 'true');
+    ph.style.setProperty('--dw', card.style.getPropertyValue('--dw') || 1);
+    ph.style.setProperty('--dh', card.style.getPropertyValue('--dh') || 1);
+    card.parentNode.insertBefore(ph, card);
+    card.style.display = 'none';
+    dashDrag = {
+      grid: grid, card: card, clone: clone, placeholder: ph,
+      ox: e.clientX - rect.left, oy: e.clientY - rect.top,
+      px: e.clientX, py: e.clientY,
+      order: Array.prototype.map.call(grid.querySelectorAll('.pm6-dash-card'), function (c) { return c; }),
+      scroller: dashFindScroller(grid), raf: 0
+    };
+    document.documentElement.classList.add('pm6-dash-dragging');
+    void clone.offsetWidth;
+    clone.classList.add('is-lifted');
+    window.addEventListener('pointermove', dashOnMove, true);
+    window.addEventListener('pointerup', dashOnUp, true);
+    window.addEventListener('pointercancel', dashOnCancel, true);
+    window.addEventListener('blur', dashOnCancel);
+    dashDrag.raf = requestAnimationFrame(dashEdgeTick);
+  }
+
+  function dashOnMove(e) {
+    var ds = dashDrag;
+    if (!ds) return;
+    ds.px = e.clientX; ds.py = e.clientY;
+    dashMoveClone();
+    dashSlotFrom(e.clientX, e.clientY);
+  }
+
+  function dashUnlisten() {
+    window.removeEventListener('pointermove', dashOnMove, true);
+    window.removeEventListener('pointerup', dashOnUp, true);
+    window.removeEventListener('pointercancel', dashOnCancel, true);
+    window.removeEventListener('blur', dashOnCancel);
+    if (dashDrag && dashDrag.raf) cancelAnimationFrame(dashDrag.raf);
+    document.documentElement.classList.remove('pm6-dash-dragging');
+  }
+
+  function dashFinish(commit) {
+    var ds = dashDrag;
+    if (!ds) return;
+    dashUnlisten();
+    dashDrag = null;
+    var landing = ds.placeholder.getBoundingClientRect();
+    if (commit) {
+      ds.placeholder.parentNode.insertBefore(ds.card, ds.placeholder);
+    } else {
+      /* revert to the captured order without re-rendering any body */
+      var prev = dashCapture(ds.grid);
+      ds.order.forEach(function (c) { if (c.parentNode === ds.grid || c.parentNode) c.parentNode.appendChild(c); });
+      ds.placeholder.parentNode.insertBefore(ds.card, ds.placeholder);
+      dashFlip(prev);
+    }
+    if (ds.placeholder.parentNode) ds.placeholder.parentNode.removeChild(ds.placeholder);
+    ds.card.style.removeProperty('display');
+    var done = false;
+    var drop = function () {
+      if (done) return;
+      done = true;
+      if (ds.clone.parentNode) ds.clone.parentNode.removeChild(ds.clone);
+    };
+    if (dashReduced()) { drop(); return; }
+    var cl = ds.clone;
+    cl.style.transition = 'left var(--mo-widget-drop-dur, 220ms) var(--mo-widget-drop-ease, cubic-bezier(.2,0,0,1)),' +
+      'top var(--mo-widget-drop-dur, 220ms) var(--mo-widget-drop-ease, cubic-bezier(.2,0,0,1)),' +
+      'width var(--mo-widget-drop-dur, 220ms) var(--mo-widget-drop-ease, cubic-bezier(.2,0,0,1)),' +
+      'height var(--mo-widget-drop-dur, 220ms) var(--mo-widget-drop-ease, cubic-bezier(.2,0,0,1)),' +
+      'opacity var(--mo-widget-drop-dur, 220ms) var(--mo-widget-drop-ease, cubic-bezier(.2,0,0,1))';
+    void cl.offsetWidth;
+    cl.style.left = landing.left + 'px';
+    cl.style.top = landing.top + 'px';
+    cl.style.width = landing.width + 'px';
+    cl.style.height = landing.height + 'px';
+    cl.style.opacity = '0';
+    cl.classList.remove('is-lifted');
+    cl.addEventListener('transitionend', drop);
+    setTimeout(drop, 420);
+  }
+
+  function dashOnUp() { dashFinish(true); }
+  function dashOnCancel() { dashFinish(false); }
+
   function initDnd() {
     var grid = document.getElementById('pm6DashGrid');
     if (!grid) return;
-    grid.addEventListener('mousedown', function (e) {
+    grid.addEventListener('pointerdown', function (e) {
+      if (e.button !== undefined && e.button !== 0) return;
       var h = e.target.closest ? e.target.closest('[data-pm6-dash="drag"]') : null;
       if (!h) return;
       var card = h.closest('.pm6-dash-card');
-      if (card) card.setAttribute('draggable', 'true');
+      if (card) dashStartDrag(card, e);
     });
+    /* the old HTML5 path is retired; make sure nothing re-arms it */
     grid.addEventListener('dragstart', function (e) {
-      var card = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
-      if (!card || card.getAttribute('draggable') !== 'true') return;
-      dragCard = card;
-      card.classList.add('pm6-is-dragging');
-      try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', card.getAttribute('data-widget-id') || 'widget'); } catch (x) {}
-      e.stopPropagation();
+      if (e.target.closest && e.target.closest('.pm6-dash-card')) e.preventDefault();
     });
-    grid.addEventListener('dragover', function (e) {
-      if (!dragCard) return;
-      e.preventDefault();
-      e.stopPropagation(); // keep part-24/25 pane-container DnD out of widget drags
-      var over = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
-      clearDropMarks();
-      if (over && over !== dragCard && over.parentElement === dragCard.parentElement) {
-        var r = over.getBoundingClientRect();
-        over.classList.add((e.clientX - r.left) < r.width / 2 ? 'pm6-drop-before' : 'pm6-drop-after');
-      }
-    });
-    grid.addEventListener('drop', function (e) {
-      if (!dragCard) return;
-      e.preventDefault();
-      e.stopPropagation();
-      var over = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
-      if (over && over !== dragCard && over.parentElement === dragCard.parentElement) {
-        var r = over.getBoundingClientRect();
-        var before = (e.clientX - r.left) < r.width / 2;
-        over.parentElement.insertBefore(dragCard, before ? over : over.nextSibling);
-      }
-      clearDropMarks();
-    });
-    grid.addEventListener('dragend', function () {
-      if (dragCard) {
-        dragCard.classList.remove('pm6-is-dragging');
-        dragCard.removeAttribute('draggable');
-      }
-      dragCard = null;
-      clearDropMarks();
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && dashDrag) { e.preventDefault(); dashFinish(false); }
     });
   }
 

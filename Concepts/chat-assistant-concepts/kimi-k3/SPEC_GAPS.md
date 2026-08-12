@@ -48,3 +48,18 @@ A registry of spec, command, schema, wiring, and DRY gaps discovered while build
 - Wiring the final design to command registrations, handlers, state owners, persistence owners, event receipts, editor-tab routing, search-index calls, Context Lens assembly, Goal Runtime projection, orchestrator child-run projection, UsageRecord projection (packet 09 §5).
 - DRY disclosure review for combined/routed presentations (packet 09 §6; K3-GAP-006).
 - Retiring older contracts: hover-independent Copy acceptance text, Resend, left accent bars, passive questionnaire expiration, older four-state child vocabulary, conflicting Persona-inline popup wording (packet 09 §7).
+
+---
+
+## Final cumulative packet (2026-08-08) — new gaps
+
+- **K3-GAP-025 — `cmd.chat.thread.request` / `.await` absent from canon.** The typed cross-thread request/await family (source/target, bounded task, evidence refs, scope, budget, status, result refs) has no catalog IDs. Kimi K3 prototypes them in `_shared/threadops.js`; candidate IDs registered in `candidate-command-delta.json` (provisional).
+- **K3-GAP-026 — BSD is absent from canon.** No command, no event, no owner doc for Back Seat Driver (Off/Auto/On, turn/thread scope, advice-only). Prototype: `_shared/bsd.js`. Needs an owner + `cmd.chat.bsd.set` adjudication.
+- **K3-GAP-027 — Access labels are new vs the existing Ask/Agent/Debug/Plan mode vocabulary.** The packet's access profiles (Ask for approval / Auto accept edits / Auto / Full Access) are orthogonal to conversation modes; canon has no access-profile command for chat. "Full Access" is the mandated label (never "Yolo").
+- **K3-GAP-028 — Pinned-history commands absent; `cmd.chat.pin` semantic clash.** Canon `cmd.chat.pin` pins whole THREADS; the packet needs history-SURFACE pin/unpin (`cmd.chat.history.pin/unpin` — new, not aliases).
+- **K3-GAP-029 — Browser Program terminology vs browser-session canon.** Packet 05 + reference/BROWSER_TERMINOLOGY_FINAL_CORRECTION mandate BrowserWorkspace/Browser Action/Browser Program/Expert Browser Program; Plans still carry browser-session vocabulary (`cmd.browser.*`). Kimi K3 UI uses the packet terms; Plans reconciliation is owner work (see plan-owner-delta.md).
+- **K3-GAP-030 — RuntimeResourceGovernor / ObservableWork have no canonical owner files.** Capacity forecasts, admission ceilings, and truthful operation projections assume both; they are proposal-stage only. Recorded, not invented.
+- **K3-GAP-031 — ConceptHub `tests/test_catalog.py` static card count goes 91→92.** Registering this folder's manifest (2 entries: workspace + host) changes the Hub fixture count. Hub owner bumps it; Hub files/tests were never edited.
+- **K3-GAP-032 — ConceptHub `server.py` crashes on Windows import** (module-level `os.getuid()`). Hub-owned; the sanctioned path is the launch-time shim (`os.getuid=lambda:0`) used by the Hub live test. Not patched here.
+- **K3-GAP-033 — `__k3.stateApplied` boot-order defect (FIXED in this update).** Initial `?state=` applied before `window.__k3` existed; the hooks object is now hoisted (`{stateApplied:null}`) before `mountPairing()` and merged after. Recorded for the audit trail.
+- **K3-GAP-034 — Harness relocation due to validate.py artifact bans.** `verification/` and screenshot/results tokens are banned inside the model folder, so the harness lives in `harness/` (scripts only) and all results/screenshots write to OS temp (`%TMP%/k3h-<pid>/`), never the repo.

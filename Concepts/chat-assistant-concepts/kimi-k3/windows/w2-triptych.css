@@ -202,7 +202,7 @@
 /* Artifacts tab widens the persistent rail 170 -> 300px; chat keeps >= 420px
    at the 975px breakpoint (JS only shows the tab strip on the wide layout). */
 [data-k3-window="w2"] .w2-rail.is-art { width: 300px; flex-basis: 300px; }
-[data-k3-window="w2"] .w2-rail.is-art .w2-rail-art [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+[data-k3-window="w2"] .w2-rail.is-art .w2-rail-art > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
 /* narrow: the surface lives inside the Work drawer region (JS reparents it) */
-[data-k3-window="w2"] .w2-work-body [class*="k3aw"] { min-height: 180px; }
+[data-k3-window="w2"] .w2-work-body > .k3aw-surface { min-height: 180px; }
 html[data-motion="reduced"] [data-k3-window="w2"] .w2-rail { transition: none; }

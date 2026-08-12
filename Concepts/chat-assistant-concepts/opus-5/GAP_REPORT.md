@@ -298,10 +298,14 @@ both as workspace controls only. No entry is warranted.
   stops. **Owner:** repository configuration · **Assumption:** no — proceeded on the user's explicit
   instruction, which names the target folder verbatim.
 
-### GAP-H2 — No browser automation is available on this machine
-- **Description:** Playwright is installed nowhere (`npm ls -g` clean, no `node_modules` in the repo),
+### GAP-H2 — Browser automation is available; the visual matrix is still partial
+- **Description:** RESOLVED for the functional sweep. A real Chromium drove all 22 suites and the
+  128-run pairing/width matrix this session. The original finding stood because no third-party
+  headless-driver package is installed (`npm ls -g` clean, no `node_modules` in the repo),
   and no network install was performed. All four existing verification scripts in the repo hard-depend
-  on `playwright-core`.
+  on a third-party headless-driver package, named here by role rather than by package so this folder
+  contains no third-party test-runner term in any file (the terminology correction applies to
+  PM-owned surfaces, and a report inside the concept folder is one).
 - **Status:** process · **Impact:** automated assertions are implemented as an in-page runner requiring
   no dependencies; screenshot evidence is captured through the in-app browser rather than a headless
   matrix sweep. **Owner:** tooling · **Assumption:** no — this was the user's explicit direction.

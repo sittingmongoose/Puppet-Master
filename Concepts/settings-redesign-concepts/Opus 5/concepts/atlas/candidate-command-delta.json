@@ -1,0 +1,680 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "atlas",
+  "concept_title": "Opus 5 \u2014 Atlas",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "source_register": "PACKET/CANDIDATE_COMMAND_ID_REGISTER.json",
+  "discipline_note": "Candidate IDs are provisional. This delta is a census of what the concept actually invokes, adjudicated against the packet's candidate families. No canon is minted here.",
+  "summary": {
+    "actions_in_scope": 65,
+    "adjudicated_against_candidates": 30,
+    "needing_new_ids": 22,
+    "read_only_diagnostics": 13,
+    "by_verdict": {
+      "reuse": 11,
+      "alias": 16,
+      "supersede": 0,
+      "conflict": 3
+    }
+  },
+  "preserve_or_reuse_checked": [
+    {
+      "id": "cmd.account.select_profile",
+      "status": "reused",
+      "evidence": "Account rows in the provider surface switch the active profile without re-authenticating."
+    },
+    {
+      "id": "cmd.provider.switch_route",
+      "status": "reused",
+      "evidence": "Route differences show requested vs effective and offer the switch back."
+    },
+    {
+      "id": "cmd.usage.refresh",
+      "status": "conflict",
+      "evidence": "Usage is a boundary card here (manager-usage): Settings shows balances and links out. Whether refresh belongs to Settings or to the Usage owner is unresolved."
+    },
+    {
+      "id": "cmd.usage.export",
+      "status": "not exercised",
+      "evidence": "No concept exports usage; the Usage owner keeps that command."
+    }
+  ],
+  "retire_or_alias_checked": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "status": "superseded",
+      "evidence": "No concept in this folder contains a chip/bloom surface; the string does not appear in any source file. A compatibility alias is only needed if the old command is still bound in the shipped catalog."
+    }
+  ],
+  "adjudicated": [
+    {
+      "concept_action_id": "act-backup-now",
+      "label": "Back up now",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.storage.backup.open",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    },
+    {
+      "concept_action_id": "act-copy-settings-from",
+      "label": "Copy settings from another project",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.copy_from_project.preview",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-export-settings",
+      "label": "Export settings",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.export",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-format-test",
+      "label": "Test a formatter",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.formatter.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-settings",
+      "label": "Import settings",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.import.preview",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-sound-pack",
+      "label": "Import a sound pack",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.sound.import_pack",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-theme",
+      "label": "Import a custom theme",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.theme.import",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-rebuild-memory",
+      "label": "Rebuild the memory index",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.memory.open",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    },
+    {
+      "concept_action_id": "act-reconnect-mcp",
+      "label": "Reconnect the postgres MCP server",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.mcp.server.restart",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-refresh-catalogues",
+      "label": "Refresh model catalogues",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.catalog.refresh",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "act-rescan-installations",
+      "label": "Rescan provider installations",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.installation.scan",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-reset-section",
+      "label": "Reset a section to defaults",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.reset.apply",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-signin-claude",
+      "label": "Sign in to the Claude personal profile",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.connection.authenticate",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-test-destination",
+      "label": "Send a test notification",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.destination.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-test-slack",
+      "label": "Send a test notification to Slack",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.destination.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "crew.create",
+      "label": "Create a template",
+      "managers": [
+        "manager-crew"
+      ],
+      "candidate_id": "cmd.crew.template.create",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "crew.duplicate",
+      "label": "Duplicate",
+      "managers": [
+        "manager-crew"
+      ],
+      "candidate_id": "cmd.crew.template.create",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "filesafe.add_rule",
+      "label": "Add a rule",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "candidate_id": "cmd.permissions.rule.add",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "filesafe.edit_rule",
+      "label": "Edit",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "candidate_id": "cmd.permissions.rule.update",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "filesafe.remove_rule",
+      "label": "Remove",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "candidate_id": "cmd.permissions.rule.delete",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "filesafe.reset_order",
+      "label": "Restore the default order",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "candidate_id": "cmd.permissions.rule.reorder",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "memory.add",
+      "label": "Add a note",
+      "managers": [
+        "manager-memory"
+      ],
+      "candidate_id": "cmd.memory.edit",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "memory.delete",
+      "label": "Delete",
+      "managers": [
+        "manager-memory"
+      ],
+      "candidate_id": "cmd.memory.delete",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "memory.edit",
+      "label": "Edit",
+      "managers": [
+        "manager-memory"
+      ],
+      "candidate_id": "cmd.memory.edit",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "memory.restore_version",
+      "label": "Restore version",
+      "managers": [
+        "manager-memory"
+      ],
+      "candidate_id": "cmd.memory.restore",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "memory.verify",
+      "label": "Verify",
+      "managers": [
+        "manager-memory"
+      ],
+      "candidate_id": "cmd.memory.verify",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "persona.create",
+      "label": "Create a Persona",
+      "managers": [
+        "manager-personas"
+      ],
+      "candidate_id": "cmd.persona.manage",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "persona.duplicate",
+      "label": "Duplicate",
+      "managers": [
+        "manager-personas"
+      ],
+      "candidate_id": "cmd.persona.manage",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "persona.open",
+      "label": "Open the definition",
+      "managers": [
+        "manager-personas"
+      ],
+      "candidate_id": "cmd.persona.manage",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "usage-open",
+      "label": "Open Usage",
+      "managers": [
+        "manager-usage"
+      ],
+      "candidate_id": "cmd.usage.refresh",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    }
+  ],
+  "needing_new_ids": [
+    {
+      "concept_action_id": "act-cleanup-dry-run",
+      "label": "Preview a workspace cleanup",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-diagnostic",
+      "label": "Create a diagnostic report",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-explain-screen",
+      "label": "Explain this screen",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-open-server-map",
+      "label": "Open the server and host map",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-prune-snapshots",
+      "label": "Prune old restore points",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-rebuild-index",
+      "label": "Rebuild the project search index",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "bsd.check_route",
+      "label": "Check the route",
+      "managers": [
+        "manager-bsd"
+      ],
+      "verdict": "new",
+      "proposed_family": "bsd",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "context.compact_now",
+      "label": "Compact this thread now",
+      "managers": [
+        "manager-context"
+      ],
+      "verdict": "new",
+      "proposed_family": "context",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "context.export_receipt",
+      "label": "Export this receipt",
+      "managers": [
+        "manager-context"
+      ],
+      "verdict": "new",
+      "proposed_family": "context",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "context.open_source",
+      "label": "Open the file",
+      "managers": [
+        "manager-context"
+      ],
+      "verdict": "new",
+      "proposed_family": "context",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "crew.preview",
+      "label": "Preview the composition",
+      "managers": [
+        "manager-crew"
+      ],
+      "verdict": "new",
+      "proposed_family": "crew",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "filesafe.apply_preset",
+      "label": "Apply",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "verdict": "new",
+      "proposed_family": "filesafe",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "goal.explain_route",
+      "label": "Why this route",
+      "managers": [
+        "manager-goal"
+      ],
+      "verdict": "new",
+      "proposed_family": "goal",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.archive",
+      "label": "Archive",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.dedupe",
+      "label": "Dedupe",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.pin",
+      "label": "Unpin",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.rebuild",
+      "label": "Rebuild",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.redact",
+      "label": "Redact",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "memory.summarize",
+      "label": "Summarize",
+      "managers": [
+        "manager-memory"
+      ],
+      "verdict": "new",
+      "proposed_family": "memory",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "persona.copy_capsule",
+      "label": "Copy the capsule",
+      "managers": [
+        "manager-personas"
+      ],
+      "verdict": "new",
+      "proposed_family": "persona",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "persona.import_apply",
+      "label": "Apply the import",
+      "managers": [
+        "manager-personas"
+      ],
+      "verdict": "new",
+      "proposed_family": "persona",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "persona.import_cancel",
+      "label": "Discard the file",
+      "managers": [
+        "manager-personas"
+      ],
+      "verdict": "new",
+      "proposed_family": "persona",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    }
+  ],
+  "read_only_diagnostics": [
+    {
+      "id": "diag-bsd-opinions",
+      "label": "Open the opinion log",
+      "managers": [
+        "manager-bsd"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-bsd-skips",
+      "label": "Open the skipped-run report",
+      "managers": [
+        "manager-bsd"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-crew-admission",
+      "label": "Open the admission log",
+      "managers": [
+        "manager-crew"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-crew-board",
+      "label": "Open the last Crew board",
+      "managers": [
+        "manager-crew"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-ctx-precedence",
+      "label": "Open the precedence chain log",
+      "managers": [
+        "manager-context"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-ctx-receipt",
+      "label": "Open the context admission receipt",
+      "managers": [
+        "manager-context"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-fs-boundary",
+      "label": "Export the effective boundary",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-fs-refusals",
+      "label": "Open the refusal log",
+      "managers": [
+        "manager-filesafe"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-goal-admission",
+      "label": "Open the last admission decision",
+      "managers": [
+        "manager-goal"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-mem-recall",
+      "label": "Open the recall log for the last turn",
+      "managers": [
+        "manager-memory"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-mem-versions",
+      "label": "Open the note version history",
+      "managers": [
+        "manager-memory"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-persona-capsule",
+      "label": "Open the capsule compilation log",
+      "managers": [
+        "manager-personas"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-persona-import",
+      "label": "Open the import scan report",
+      "managers": [
+        "manager-personas"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    }
+  ]
+}

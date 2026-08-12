@@ -1672,7 +1672,7 @@
     },
 
     "manager-lsp": { id: "manager-lsp", title: "Language servers", purpose: "Detected servers, coverage and health.", icon: "fileText" },
-    "manager-filesafe": { id: "manager-filesafe", title: "FileSafe paths and grants", purpose: "Where agents may read and write.", icon: "shield" },
+    "manager-filesafe": { id: "manager-filesafe", title: "Permissions and FileSafe", purpose: "What agents may read, write and run, and where.", icon: "shield" },
     "manager-dictionaries": { id: "manager-dictionaries", title: "Dictionaries", purpose: "Personal and project word lists.", icon: "book" },
     "manager-commands": { id: "manager-commands", title: "Commands and shortcuts", purpose: "Search, remap, resolve conflicts.", icon: "list" },
     "manager-usage": { id: "manager-usage", title: "Usage", purpose: "Measured balances, history and forecasts.", icon: "gauge", external: true }

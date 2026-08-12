@@ -124,6 +124,15 @@
       ancestor = ancestor.parentElement;
     }
 
+    /* Mark immediately: the target is known now, so the persistent marker
+       must not wait on scroll settle or the 600ms settle animation (that
+       chain made it lag up to ~2s). "current" is singular — retire markers
+       left by earlier jumps in this view. */
+    document.querySelectorAll("[data-spy-current]").forEach(function (prev) {
+      if (prev !== el) prev.removeAttribute("data-spy-current");
+    });
+    el.setAttribute("data-spy-current", "");
+
     if (root) {
       var margin = parseFloat(window.getComputedStyle(el).scrollMarginTop) || 0;
       var top = el.getBoundingClientRect().top - root.getBoundingClientRect().top + root.scrollTop - margin;

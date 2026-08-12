@@ -294,3 +294,130 @@
 [data-motion="reduced"] .pmx-shell-rail,
 [data-motion="reduced"] .pmx-shell-rail-toggle-icon,
 [data-motion="reduced"] .pmx-shell-rail-item { transition: none !important; }
+
+/* ---------------------------------------------------------------- title bar
+ *
+ * The application boundary. It spans the stage and is positioned absolutely rather than
+ * added as a flex child, because the stage is a ROW (rail | dashboard | artifact | chat) and
+ * making it a column to hold one strip would re-lay-out all eight window concepts for a piece
+ * of scenery. Absolute strip + matching padding-top on the stage keeps every existing
+ * geometry rule true, and `box-sizing: border-box` (reset.css) means the padding comes out of
+ * the stage's own height rather than overflowing it.
+ *
+ * It is a sibling of the chat host and therefore outside every [data-pmx-window] subtree,
+ * which is what makes the notification boundary structural — see shell.js's header. */
+
+.pmx-shell,
+.pmx-stage.pmx-shell {
+  position: relative;
+  padding-top: var(--pmx-titlebar-h, 30px);
+}
+
+.pmx-shell-titlebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--pmx-titlebar-h, 30px);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: 0 var(--sm);
+  background: var(--surface);
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+.pmx-shell-title-brand { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.pmx-shell-title-app { color: var(--text-primary); font-weight: 600; }
+.pmx-shell-title-sep { color: var(--text-muted); }
+.pmx-shell-title-project { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-shell-title-spacer { flex: 1 1 auto; min-width: 0; }
+
+/* Four short tokens at most, and only two of them are ever visible in the strip itself; the
+ * rest live in the popup. 05_...:97 rules out a repeated host banner, and a chip that grows
+ * with the host name is exactly that banner arriving one word at a time. */
+.pmx-shell-server-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 220px;
+  padding: 2px 8px;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+.pmx-shell-server-chip:hover { color: var(--text-primary); background: var(--surface-elevated); }
+.pmx-shell-server-name { color: var(--text-primary); }
+.pmx-shell-server-env { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-shell-server-work { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
+.pmx-shell-server-work-note { color: var(--text-muted); font-size: var(--fs-2xs); }
+
+.pmx-shell-notify-host { display: inline-flex; align-items: center; }
+.pmx-shell-notify-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.pmx-shell-notify-btn:hover { color: var(--text-primary); background: var(--surface-elevated); }
+
+/* The count is the whole unread affordance: a number, not a colored dot competing with the
+ * status glyph vocabulary the thread history already owns. */
+.pmx-shell-notify-count:empty { display: none; }
+.pmx-shell-notify-count {
+  min-width: 15px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-primary) 24%, transparent);
+  color: var(--text-primary);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.pmx-shell-notify-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 4px;
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  cursor: pointer;
+}
+.pmx-shell-notify-item:last-child { border-bottom: none; }
+.pmx-shell-notify-item[data-read="1"] { color: var(--text-muted); }
+.pmx-shell-notify-title { color: var(--text-primary); font-weight: 600; font-size: var(--fs-xs); }
+.pmx-shell-notify-body { font-size: var(--fs-2xs); }
+.pmx-shell-notify-action {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+/* A disabled rail item states its reason in the title and stops looking pressable. It stays
+ * in the list on purpose: hiding it would hide the shape of the product, and the study is
+ * about how Chat sits inside that shape. */
+.pmx-shell-rail-item[aria-disabled="true"] {
+  opacity: .45;
+  cursor: default;
+}
+.pmx-shell-rail-item[aria-disabled="true"]:hover {
+  background: transparent;
+  color: var(--text-muted);
+}

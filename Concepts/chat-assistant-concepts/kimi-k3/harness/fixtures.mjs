@@ -19,7 +19,7 @@ export const THREADS = ['t1', 't2', 't3', 't4', 't5', 't6', 't7', 't8'];
 export const PIN_KEYS = {
   w1: 'w1HistoryPinned', w2: null /* persistent rail */, w3: 'w3HistoryPinned',
   w4: 'w4HistoryPinned', w5: 'w5HistoryPinned', w6: 'w6HistoryPinned',
-  w7: 'w7ChatsOpen', w8: 'w8ChatsPinned'
+  w7: 'w7HistoryPinned', w8: 'w8HistoryPinned'
 };
 
 export function startServer() {

@@ -720,9 +720,22 @@
         });
 
 
-        // Setup Drag & Drop for editor tabs
+        /* ---------- editor tab drag-reorder (delegated) ----------------------
+           Previously this was a one-shot pass over the STATIC markup: it set
+           `draggable` on the tabs that existed at parse time, so pane 1 lost
+           reordering the moment renderEditorTabs() rebuilt its strip with
+           createElement, and panels created later (Home panels 3/4) never had
+           it at all. The drop also reordered the DOM only, so the next render
+           snapped the order straight back.
+
+           Now: `draggable` is armed on pointerdown (the same trick the
+           dashboard widget grid uses), every handler is delegated on document
+           so it covers strips that do not exist yet, and the drop writes the
+           new order back to the owning model before re-rendering. */
         function getDragAfterElement(container, x) {
-            var tabs = Array.from(container.querySelectorAll('.tab:not(.dragging)'));
+            var tabs = Array.prototype.filter.call(container.querySelectorAll('.tab'), function (t) {
+                return !t.classList.contains('dragging') && t.style.display !== 'none';
+            });
             return tabs.reduce(function(closest, child) {
                 var box = child.getBoundingClientRect();
                 var offset = x - box.left - box.width / 2;
@@ -733,46 +746,67 @@
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
 
-        document.querySelectorAll('.editor-tabs').forEach(function(tabsContainer) {
-            tabsContainer.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'move';
-                var dragging = document.querySelector('.tab.dragging');
-                if (!dragging) return;
-                var afterEl = getDragAfterElement(tabsContainer, e.clientX);
-                if (afterEl == null) {
-                    tabsContainer.appendChild(dragging);
-                } else {
-                    tabsContainer.insertBefore(dragging, afterEl);
-                }
-            });
+        document.addEventListener('pointerdown', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (!tab) return;
+            if (e.target.closest('.tab-close-btn, .tab-close')) return; /* closing, not dragging */
+            tab.draggable = true;
+        }, true);
 
-            tabsContainer.addEventListener('drop', function(e) {
-                e.preventDefault();
-                var dragging = document.querySelector('.tab.dragging');
-                if (!dragging) return;
-                var filename = dragging.getAttribute('data-file');
-                var pane = tabsContainer.closest('.editor-pane');
-                if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
-                    tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-                    dragging.classList.add('active');
-                    var prefix = pane.id === 'editorPane1' ? 'pane1' : 'pane2';
-                    renderFileToPane(filename, prefix, true);
-                }
-            });
+        document.addEventListener('dragstart', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (!tab) return;
+            tab.classList.add('dragging');
+            try {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', tab.getAttribute('data-file') || '');
+            } catch (err) {}
         });
 
-        // Make all editor tabs draggable
-        document.querySelectorAll('.editor-tabs .tab').forEach(function(t) {
-            t.draggable = true;
-            t.addEventListener('dragstart', function(e) {
-                t.classList.add('dragging');
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', t.getAttribute('data-file') || '');
-            });
-            t.addEventListener('dragend', function() {
-                t.classList.remove('dragging');
-            });
+        document.addEventListener('dragend', function (e) {
+            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+            if (tab) tab.classList.remove('dragging');
+        });
+
+        document.addEventListener('dragover', function (e) {
+            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
+            if (!tabsContainer) return;
+            var dragging = document.querySelector('.editor-tabs .tab.dragging');
+            if (!dragging) return;
+            e.preventDefault();
+            try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+            var afterEl = getDragAfterElement(tabsContainer, e.clientX);
+            if (afterEl == null) {
+                tabsContainer.insertBefore(dragging, tabsContainer.querySelector('.pane-tabbar-actions'));
+            } else {
+                tabsContainer.insertBefore(dragging, afterEl);
+            }
+        });
+
+        document.addEventListener('drop', function (e) {
+            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
+            if (!tabsContainer) return;
+            var dragging = document.querySelector('.editor-tabs .tab.dragging');
+            if (!dragging) return;
+            e.preventDefault();
+            dragging.classList.remove('dragging');
+            var filename = dragging.getAttribute('data-file');
+            var pane = tabsContainer.closest('.editor-pane');
+            tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+            dragging.classList.add('active');
+            /* persist the new order into whichever model owns this strip, so a
+               later re-render does not snap it back */
+            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
+                try { window.PM6_PERSIST_TAB_ORDER(tabsContainer); } catch (err) {}
+            }
+            if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
+                try { window.PM6_FIT_EDITOR_TABS(tabsContainer); } catch (err) {}
+            }
+            if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
+                var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
+                    (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
+                if (prefix) renderFileToPane(filename, prefix, true);
+            }
         });
 
         // init generic resizers

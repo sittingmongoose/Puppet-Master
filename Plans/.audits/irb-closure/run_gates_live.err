@@ -1,0 +1,52 @@
+[pm-plans-verify] start json_syntax
+[pm-plans-verify] done json_syntax status=fail elapsed_ms=71244
+[pm-plans-verify] start verify_spec_lock
+[pm-plans-verify] done verify_spec_lock status=fail elapsed_ms=0
+[pm-plans-verify] start validate_plan_graph
+[pm-plans-verify] done validate_plan_graph status=pass elapsed_ms=51888
+[pm-plans-verify] start validate_auto_decisions
+[pm-plans-verify] done validate_auto_decisions status=pass elapsed_ms=715
+[pm-plans-verify] start validate_evidence
+[pm-plans-verify] done validate_evidence status=pass elapsed_ms=53248
+[pm-plans-verify] start lint_contractrefs
+[pm-plans-verify] done lint_contractrefs status=pass elapsed_ms=159041
+[pm-plans-verify] start lint_banned_phrases
+[pm-plans-verify] done lint_banned_phrases status=pass elapsed_ms=354
+[pm-plans-verify] start lint_path_refs
+[pm-plans-verify] done lint_path_refs status=pass elapsed_ms=3353
+[pm-plans-verify] start check_project_artifact_requirements
+[pm-plans-verify] done check_project_artifact_requirements status=pass elapsed_ms=325
+[pm-plans-verify] start validate_plans_to_code_handoff_schema
+[pm-plans-verify] done validate_plans_to_code_handoff_schema status=pass elapsed_ms=287
+[pm-plans-verify] start validate_prd_planning_runtime_contracts
+[pm-plans-verify] done validate_prd_planning_runtime_contracts status=pass elapsed_ms=636
+[pm-plans-verify] start validate_case_l_non_event_materialization
+[pm-plans-verify] done validate_case_l_non_event_materialization status=pass elapsed_ms=1592
+[pm-plans-verify] start validate_implementation_readiness
+[pm-plans-verify] done validate_implementation_readiness status=fail elapsed_ms=17868
+[pm-plans-verify] start validate_plan_migration
+[pm-plans-verify] done validate_plan_migration status=pass elapsed_ms=46495
+[pm-plans-verify] start validate_runtime_artifact_schemas
+[pm-plans-verify] done validate_runtime_artifact_schemas status=pass elapsed_ms=864
+[pm-plans-verify] start validate_goal_runtime_event_fixtures
+[pm-plans-verify] done validate_goal_runtime_event_fixtures status=pass elapsed_ms=263
+[pm-plans-verify] start validate_project_output_fixtures
+[pm-plans-verify] done validate_project_output_fixtures status=pass elapsed_ms=584
+[pm-plans-verify] start validate_usage_gui_fixtures
+[pm-plans-verify] done validate_usage_gui_fixtures status=pass elapsed_ms=238
+[pm-plans-verify] start validate_usage_contract_drift
+[pm-plans-verify] done validate_usage_contract_drift status=pass elapsed_ms=21587
+[pm-plans-verify] start validate_gui_asset_policy
+[pm-plans-verify] done validate_gui_asset_policy status=pass elapsed_ms=1566
+[pm-plans-verify] start validate_web_capability_contracts
+[pm-plans-verify] done validate_web_capability_contracts status=pass elapsed_ms=47926
+[pm-plans-verify] start validate_filesafe_security_policy
+[pm-plans-verify] done validate_filesafe_security_policy status=pass elapsed_ms=306
+[pm-plans-verify] start validate_wiring_matrix
+[pm-plans-verify] done validate_wiring_matrix status=pass elapsed_ms=2091
+[pm-plans-verify] start validate_audit_closure
+[pm-plans-verify] done validate_audit_closure status=fail elapsed_ms=44715
+[pm-plans-verify] start validate_audit_status_index
+[pm-plans-verify] done validate_audit_status_index status=pass elapsed_ms=1721
+[pm-plans-verify] start check_shards
+[pm-plans-verify] done check_shards status=pass elapsed_ms=46312

@@ -1,0 +1,280 @@
+{
+  "schema_id": "pm.chat_candidate_command_delta.v1",
+  "concept_id": "opus-5",
+  "model": "Opus 5",
+  "catalog_source": "Plans/UI_Command_Catalog.md (read-only; 11,026 lines)",
+  "rule": "Do not mint a candidate id where a canonical one exists. Every row states its disposition and the catalog line that justifies it.",
+  "counts": {
+    "total": 33,
+    "reuse": 15,
+    "new": 12,
+    "alias_risk": 4,
+    "must_not_mint": 2
+  },
+  "rows": [
+    {
+      "candidate": "cmd.chat.context.compact_now",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.compact_context",
+      "evidence": "Plans/UI_Command_Catalog.md:776",
+      "note": "Result statuses already cover this surface: started | already_running | cancelled | no_op | degraded | unavailable | retry_scheduled | completed | failed.",
+      "surfaced_as": "Context ring popup, Compact now button"
+    },
+    {
+      "candidate": "cmd.chat.thread.rewind",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.rewind",
+      "evidence": "Plans/UI_Command_Catalog.md:937",
+      "note": "Payload {thread_id, target_message_id}; conversation-only scope is exactly what the concept needs.",
+      "surfaced_as": "More options, Rewind to here"
+    },
+    {
+      "candidate": "cmd.chat.restore_point.create",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.create_restore_point",
+      "evidence": "Plans/UI_Command_Catalog.md:8445",
+      "note": "Payload already carries an idempotency_key, which the offline outbox needs.",
+      "surfaced_as": "More options, Create restore point"
+    },
+    {
+      "candidate": "cmd.chat.thread.branch",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.branch_from_restore",
+      "evidence": "Plans/UI_Command_Catalog.md:8446",
+      "note": "Result set branched | refused | failed already models the refusal this concept surfaces.",
+      "surfaced_as": "More options and thread-history row menu, Branch from here"
+    },
+    {
+      "candidate": "cmd.chat.goal.start",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.goal.start",
+      "evidence": "Plans/UI_Command_Catalog.md:1082",
+      "note": "Already canonical; the concept adds no new id.",
+      "surfaced_as": "Goal surface, Start"
+    },
+    {
+      "candidate": "cmd.chat.goal.update",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.goal.update",
+      "evidence": "Plans/UI_Command_Catalog.md:1083",
+      "note": "Already canonical.",
+      "surfaced_as": "Goal surface, edit objective"
+    },
+    {
+      "candidate": "cmd.chat.goal.pause",
+      "disposition": "reuse",
+      "canonical": "cmd.orchestrator.pause",
+      "evidence": "Plans/UI_Command_Catalog.md:8013",
+      "note": "Pausing a Goal is an orchestrator operation; a chat-specific id would fork the owner.",
+      "surfaced_as": "Goal surface, Pause"
+    },
+    {
+      "candidate": "cmd.chat.goal.resume",
+      "disposition": "reuse",
+      "canonical": "cmd.orchestrator.resume",
+      "evidence": "Plans/UI_Command_Catalog.md:8014",
+      "note": "Same owner as pause.",
+      "surfaced_as": "Goal surface, Resume"
+    },
+    {
+      "candidate": "cmd.chat.goal.replan",
+      "disposition": "reuse",
+      "canonical": "cmd.runtime.replan",
+      "evidence": "Plans/UI_Command_Catalog.md:1158",
+      "note": "Replanning is a runtime decision, not a chat one.",
+      "surfaced_as": "Goal surface, Replan"
+    },
+    {
+      "candidate": "cmd.chat.goal.stop",
+      "disposition": "reuse",
+      "canonical": "cmd.runtime.abort_run",
+      "evidence": "Plans/UI_Command_Catalog.md:1160",
+      "note": "Stop keeps the record and evidence, which abort_run already specifies.",
+      "surfaced_as": "Goal surface, Stop"
+    },
+    {
+      "candidate": "approval card Deny / Allow",
+      "disposition": "must_not_mint",
+      "canonical": "cmd.runtime.approve, cmd.runtime.decline",
+      "evidence": "Plans/UI_Command_Catalog.md:1152, :1153; explicit negative constraint at :9053",
+      "note": "The catalog carries the explicit constraint: do not mint web-specific approve/decline commands; decisions stay on cmd.runtime.approve and cmd.runtime.decline.",
+      "surfaced_as": "Compact approval card actions"
+    },
+    {
+      "candidate": "cmd.chat.route.select",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.model, cmd.chat.effort, cmd.chat.mode, cmd.chat.platform, cmd.account.select_profile, cmd.provider.switch_route, cmd.model.list, cmd.model.refresh",
+      "evidence": "Plans/UI_Command_Catalog.md:7962, :8345, :8308, :8309, :8007-8008",
+      "note": "A route is not one command. The picker composes existing ids: model, effort and mode per axis, platform for the provider, select_profile for the account, switch_route for a re-route, list/refresh for the catalog.",
+      "surfaced_as": "Route selector, base popup and both submenus"
+    },
+    {
+      "candidate": "cmd.chat.context.source.add",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.context_lens.toggle_message_selection, .clear_selection, .apply_subcompact, .revert_subcompact",
+      "evidence": "Plans/UI_Command_Catalog.md:736-742",
+      "note": "Admission edits overlap the Lens family; adding a parallel add/remove pair would give one behaviour two owners.",
+      "surfaced_as": "Context ring popup, Included list Remove; Prior chats, Add passage to context"
+    },
+    {
+      "candidate": "cmd.chat.context.source.remove",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.context_lens.toggle_message_selection",
+      "evidence": "Plans/UI_Command_Catalog.md:736-742",
+      "note": "Same family as add.",
+      "surfaced_as": "Context ring popup, per-row Remove"
+    },
+    {
+      "candidate": "offline outbox commands",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.queue.remove",
+      "evidence": "Plans/UI_Command_Catalog.md:8344",
+      "note": "A queue family already exists, so any new outbox id must be cmd.chat.queue.* rather than a new root.",
+      "surfaced_as": "Composer queued chip Remove; Sync state popup"
+    },
+    {
+      "candidate": "cmd.chat.history.pin",
+      "disposition": "alias_risk",
+      "canonical": null,
+      "evidence": "Plans/UI_Command_Catalog.md:724",
+      "note": "cmd.chat.pin exists and is Pin THREAD in the list, a different action from pinning the history surface open. The new pair is named cmd.chat.history.pin / cmd.chat.history.unpin and flagged so the near-collision is visible to the catalog owner.",
+      "surfaced_as": "History pin control in all eight windows"
+    },
+    {
+      "candidate": "cmd.chat.history.unpin",
+      "disposition": "alias_risk",
+      "canonical": null,
+      "evidence": "Plans/UI_Command_Catalog.md:724",
+      "note": "See cmd.chat.history.pin.",
+      "surfaced_as": "History pin control in all eight windows"
+    },
+    {
+      "candidate": "cmd.chat.thread.create",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.new",
+      "evidence": "Plans/UI_Command_Catalog.md:720",
+      "note": "Creating a thread already has an id.",
+      "surfaced_as": "Duplicate thread, Spawn research thread"
+    },
+    {
+      "candidate": "cmd.chat.bsd.set",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cmd.bsd.* or Back Seat Driver id exists anywhere in the catalog",
+      "note": "Genuinely new. Payload {thread_id, mode: off|auto|on, scope: turn|thread}. Read-only advice; it must carry no authority to widen access.",
+      "surfaced_as": "Back Seat Driver selector, mode and scope groups"
+    },
+    {
+      "candidate": "cmd.chat.crew.start",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cmd.crew.* id exists",
+      "note": "Genuinely new. Payload {thread_id, template_id}. Writes thread-local crew state only.",
+      "surfaced_as": "Crew selector"
+    },
+    {
+      "candidate": "cmd.chat.thread.request",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cross-thread request family exists",
+      "note": "Genuinely new. Refusals are typed: refused_cycle and refused_fanout must be distinguishable from a decline.",
+      "surfaced_as": "More options, Send request to another thread"
+    },
+    {
+      "candidate": "cmd.chat.thread.await",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cross-thread request family exists",
+      "note": "Genuinely new. Returns an ObservableWork id so the wait is visible.",
+      "surfaced_as": "Awaiting request row in the work cluster"
+    },
+    {
+      "candidate": "cmd.chat.attachment.resolve",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no attachment family exists",
+      "note": "Genuinely new. Result carries class, representation and lineage; derived material always keeps lineage.original_id.",
+      "surfaced_as": "Composer attach picker"
+    },
+    {
+      "candidate": "cmd.chat.attachment.route",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no attachment family exists",
+      "note": "Genuinely new. An alternate route that changes privacy, account, cost, terms or location must raise a decision first.",
+      "surfaced_as": "Attachment decision card, Use Gemini 3 Ultra"
+    },
+    {
+      "candidate": "cmd.chat.cross_project.request",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cross-project grant family exists",
+      "note": "Genuinely new. Allow for this Goal is scoped to the Goal and must expire with it.",
+      "surfaced_as": "Cross-project grant decision card"
+    },
+    {
+      "candidate": "cmd.chat.redirect",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "cmd.chat.stop exists at :8010 but is not a redirect",
+      "note": "Genuinely new. Preserves the interrupted attempt as original_attempt so the partial output is not lost.",
+      "surfaced_as": "Composer primary button while a turn is active"
+    },
+    {
+      "candidate": "notification destinations",
+      "disposition": "must_not_mint",
+      "canonical": "cmd.notifications.destination.*, cmd.notifications.mapping.update, cmd.notifications.override.set",
+      "evidence": "Plans/UI_Command_Catalog.md:7575-7581",
+      "note": "Notifications are already owned. Chat contributes events, never routing commands.",
+      "surfaced_as": "Title-bar notification inbox"
+    },
+    {
+      "candidate": "cmd.chat.question.answer",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no question family exists",
+      "note": "Genuinely new. Answer, skip, cancel and submit are four distinct outcomes and must not collapse into one.",
+      "surfaced_as": "Question surface in all eight thread concepts"
+    },
+    {
+      "candidate": "cmd.chat.question.skip",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no question family exists",
+      "note": "Genuinely new. Skipping the last question must reach a terminal state, not silently no-op.",
+      "surfaced_as": "Question surface, Skip"
+    },
+    {
+      "candidate": "cmd.chat.question.cancel",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no question family exists",
+      "note": "Genuinely new. Cancelling still writes a durable receipt.",
+      "surfaced_as": "Question surface, Cancel"
+    },
+    {
+      "candidate": "cmd.chat.question.submit",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no question family exists",
+      "note": "Genuinely new. Returns the receipt that remains in history.",
+      "surfaced_as": "Question surface, Submit"
+    },
+    {
+      "candidate": "cmd.chat.artifact.open",
+      "disposition": "alias_risk",
+      "canonical": "cmd.orchestrator.open_preview_artifact, cmd.orchestrator.open_build_artifact, cmd.artifacts.show_in_usage, cmd.artifacts.show_in_ledger",
+      "evidence": "Plans/UI_Command_Catalog.md:456, :458, :467",
+      "note": "Artifact opens exist for other artifact kinds. The chat pair is recorded with related_existing refs so the catalog owner can decide whether to extend an existing id instead of minting a chat-specific one.",
+      "surfaced_as": "Artifact switcher in all eight windows; handoff cards"
+    },
+    {
+      "candidate": "cmd.chat.artifact.close",
+      "disposition": "alias_risk",
+      "canonical": "cmd.orchestrator.open_preview_artifact family",
+      "evidence": "Plans/UI_Command_Catalog.md:456-467",
+      "note": "See cmd.chat.artifact.open.",
+      "surfaced_as": "Artifact frame close control"
+    }
+  ]
+}

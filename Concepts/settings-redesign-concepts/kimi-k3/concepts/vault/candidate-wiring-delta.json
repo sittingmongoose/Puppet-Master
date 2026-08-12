@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "vault",
+  "model": "kimi-k3",
+  "note": "Candidate production wiring per control family. Demo implementations simulate at the state-mutation step and always receipt as simulated.",
+  "families": [
+    {
+      "family": "navigation and values",
+      "controls": ["ledger destinations", "workspace nav", "search results", "all setting rows"],
+      "trace": "Shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+    },
+    {
+      "family": "settings lifecycle",
+      "controls": ["export", "import preview/apply/cancel", "rollback", "reset preview", "copy-from-project"],
+      "trace": "UI source → cmd.settings.export / import.preview / import.apply / import.rollback / reset.preview / reset.apply / copy_from_project.* → Storage owner (settings payload store) → schema validation + managed-row permission (managed rows skip) + legacy-key migration → atomic transaction against a pre-import snapshot → ObservableWork step phases + receipt with source disclosure → workspace re-projection with new effective values → diagnostics record each stage → recovery: rollback to the pre-import snapshot; deep link to the lifecycle manager"
+    },
+    {
+      "family": "backup and restore",
+      "controls": ["Back up now", "open log", "test restore"],
+      "trace": "UI source → cmd.storage.backup.open (manager) / one-shot backup verb → Storage owner → destination space preflight → snapshot mutation → ObservableWork phases + hash receipt → receipts list re-projection → Usage: none; diagnostics log verification → recovery: test restore validates the snapshot; rollback uses the same receipts"
+    },
+    {
+      "family": "storage and retention",
+      "controls": ["timeline scrub", "retention anchor rows", "pressure threshold"],
+      "trace": "UI source → cmd.settings.value.set → Storage owner → anchor/minimum/legal-hold validation (held rows refuse shortening) → retention mutation → event + receipt → timeline re-projection → diagnostics attribution → recovery: restore the previous anchor; scrub is inspect-only and never mutates"
+    },
+    {
+      "family": "artifacts",
+      "controls": ["open/reveal/export/cleanup", "redaction policy"],
+      "trace": "UI source → cmd.artifact.manager.open → Runtime Artifacts/Outputs owner → ownership + redaction validation (provider-native artifacts refuse PM-side mutation) → operation → receipt → artifact list re-projection → diagnostics attribution → recovery: cleanup keeps evidence; exports apply redaction rules"
+    },
+    {
+      "family": "source control and forge",
+      "controls": ["worktree rows", "policy rows", "tool health", "forge connect", "workflow run/log browsing"],
+      "trace": "UI source → cmd.settings.value.set (policy) / forge connect verb → Worktrees/Git/GitHub owner → tool-health validation (unavailable tools refuse with install guidance) → policy or connection mutation → event + receipt → ledger/graph re-projection → diagnostics attribution → recovery: disconnect the forge; unmerged worktrees are never cleaned"
+    },
+    {
+      "family": "search index and cleanup",
+      "controls": ["rebuild", "clear cache", "dry-run cleanup", "run cleanup", "cleanup rollback"],
+      "trace": "UI source → index rebuild verb / cleanup verbs → Search Index / Storage owner → exclusion and worktree-safety validation (unmerged work refuses) → operation with truthful phases (scanning → indexing → verifying) → progress events + receipts → manager re-projection with disk-use figures → diagnostics log skipped files → recovery: cleanup rollback replays receipts; index rebuilds lazily after clear"
+    },
+    {
+      "family": "future server modules",
+      "controls": ["reserved insertion cards (inert by design)"],
+      "trace": "No wiring: cards are marked deferred with named canonical owners and an insertion contract (manager module, deep links, status cards, command wiring). No backend state machine is invented."
+    }
+  ]
+}

@@ -16,16 +16,35 @@
   var index = window.PMSearch.buildIndex(D);
   window.PMSpellcheck.learnNames(D.knownNames);
 
-  var store = window.PMStore.createStore({
+  var CONCEPT_ID = "atlas";
+  var K = window.PMManagerKit;
+
+  /* Only what a reviewer expects to survive a reload is persisted. A refresh in
+   * flight is not: resuming a half-finished operation would claim something
+   * happened while the page was closed. */
+  var saved = window.PMStore.restore(CONCEPT_ID, window.PMStore.PERSIST_KEYS);
+
+  var store = window.PMStore.createStore(Object.assign({
     view: "home",
     categoryId: null,
     managerId: null,
+    managerSectionId: null,
+    managerItemId: null,
     query: "",
     exposure: "standard",
     demoState: "normal",
-    dismissed: {},
+    dismissedNotices: {},
     values: {},
+    managerEdits: {},
+    route: null,
+    badRoute: null,
+    theme: "friendly-dark",
+    widthChoice: "1280",
+    railOpen: true,
+    panelOpen: false,
+    reducedMotion: false,
     openProviders: { claude: true },
+    openInstallations: {},
     accountPref: {},
     favourites: {},
     hidden: {},
@@ -34,26 +53,16 @@
     catalogueRefreshing: false,
     providerFilter: "",
     drawerOpen: false,
-    revealed: {}
-  });
+    revealed: {},
+    activeSub: null
+  }, saved));
 
   var shell, spy, mainEl;
   var outlineEl = null, docEl = null;
 
-  /* Which Opus 5 concept builds each manager in full. */
-  var MANAGER_HOME = {
-    "manager-providers": { concept: "every concept", href: null },
-    "manager-context": { concept: "Opus 5 — Atlas", href: null },
-    "manager-terminal": { concept: "Opus 5 — Atlas", href: null },
-    "manager-personas": { concept: "Opus 5 — Console", href: "opus-5-console.html" },
-    "manager-skills": { concept: "Opus 5 — Console", href: "opus-5-console.html" },
-    "manager-memory": { concept: "Opus 5 — Stack", href: "opus-5-stack.html" },
-    "manager-mcp": { concept: "Opus 5 — Stack", href: "opus-5-stack.html" },
-    "manager-crew": { concept: "Opus 5 — Ledger", href: "opus-5-ledger.html" },
-    "manager-media": { concept: "Opus 5 — Ledger", href: "opus-5-ledger.html" }
-  };
-
-  var BUILT_HERE = ["manager-providers", "manager-context", "manager-terminal"];
+  /* Assignment and cross-concept homes come from the shared kit, so a family
+   * moving between concepts cannot leave a stale pointer behind. */
+  var BUILT_HERE = K.assignedTo(CONCEPT_ID);
 
   /* Destination groups: humanised, not the internal category order. */
   var GROUPS = [
@@ -132,11 +141,25 @@
 
   /* ================================================================ HOME */
 
+  /* A link that is well-formed but names nothing here is a renamed id or a stale
+   * bookmark. Saying so — and quoting the link — is more useful than a home
+   * screen that silently pretends the click never happened. */
+  function badRouteNotice(hash) {
+    var n = el("div", "at-badroute");
+    n.setAttribute("role", "status");
+    n.innerHTML = I("alert", 14) +
+      "<span><strong>That link points at something this concept does not contain.</strong> " +
+      "<code>" + E(hash) + "</code> — the id may have been renamed, or it may live in another concept.</span>";
+    return n;
+  }
+
   function renderHome() {
     var s = store.get();
     var surface = el("div", "at-surface at-fade");
     var scroll = el("div", "at-home-scroll");
     var home = el("div", "at-home");
+
+    if (s.badRoute) home.appendChild(badRouteNotice(s.badRoute));
 
     var head = el("div", "at-home-head");
     window.PMShell.entrance(head, "at-reveal", 520);
@@ -254,7 +277,7 @@
 
   function destinationRow(cat) {
     var counts = S.countSettings(cat);
-    var noticeCount = S.noticesFor(D, store.get().demoState, store.get().dismissed).filter(function (n) {
+    var noticeCount = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices).filter(function (n) {
       return n.target && n.target.categoryId === cat.id;
     });
     var worst = noticeCount.reduce(function (acc, n) {
@@ -286,7 +309,7 @@
     var aside = el("aside", "at-aside");
     window.PMShell.entrance(aside, "at-reveal", 520);
     aside.setAttribute("aria-label", "Things that may need you");
-    var list = S.noticesFor(D, store.get().demoState, store.get().dismissed);
+    var list = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices);
     if (!list.length) {
       var calm = el("div", "at-calm");
       calm.innerHTML = "<strong>Nothing needs attention</strong>Every provider is connected, no setup is unfinished, and there are no open recommendations.";
@@ -332,9 +355,9 @@
   /* Dismissal genuinely removes the notice for the rest of the session and says
    * how many are left. Changing the demo state brings the fixture back. */
   function dismissNotice(notice) {
-    var d = store.get().dismissed;
+    var d = store.get().dismissedNotices;
     d[notice.id] = true;
-    store.set({ dismissed: d });
+    store.set({ dismissedNotices: d });
     renderHome();
     var left = S.noticesFor(D, store.get().demoState, d).length;
     announce("Dismissed. " + (left ? left + " still open." : "Nothing needs attention now."));
@@ -348,7 +371,7 @@
         realCall: "SnapshotService.prune(retentionDays: 30)",
         phases: [{ label: "Scanning" }, { label: "Removing" }],
         outcome: "ok", detail: "Would remove 14 restore points and free 6.2 GB."
-      }).then(function (r) { toastReceipt(r); });
+      }).then(function (r) { showReceipt(r); });
       return;
     }
     if (action.action === "refresh-catalogue") { refreshCatalogues(); return; }
@@ -359,7 +382,7 @@
         phases: [{ label: "Starting transport" }, { label: "Negotiating protocol" }],
         outcome: "error",
         detail: "Still refused: the database container is not running. Start it, then reconnect."
-      }).then(function (r) { toastReceipt(r); });
+      }).then(function (r) { showReceipt(r); });
       return;
     }
     if (notice.target) goTo({
@@ -369,7 +392,7 @@
     });
   }
 
-  function toastReceipt(receipt) {
+  function showReceipt(receipt) {
     announce(window.PMSim.outcomeWord(receipt.outcome) + ": " + receipt.detail);
     var host = document.querySelector(".at-receipts");
     if (host) host.insertBefore(receiptRow(receipt), host.firstChild);
@@ -965,10 +988,18 @@
     surface.appendChild(el("div", "pm-scrim"));
     swap(surface);
 
-    if (managerId === "manager-providers") buildProviderRoom(body, tools);
-    else if (managerId === "manager-context") buildContextRoom(body, tools);
-    else if (managerId === "manager-terminal") buildTerminalRoom(body, tools);
-    else buildElsewhereRoom(body, managerId);
+    if (managerId === "manager-providers") {
+      buildProviderRoom(body, tools);
+      hydrated();
+    } else if (BUILT_HERE.indexOf(managerId) < 0) {
+      /* Every page loads all four domain modules so cross-concept links resolve
+       * titles, which means a builder exists here even for families this concept
+       * was not assigned. Rendering those in full would undo the split. */
+      if (K.has(managerId)) buildElsewhereRoom(body, managerId);
+      else buildMissingRoom(body, managerId);
+    } else {
+      renderManager(K.spec(managerId, store.get()), { conceptId: CONCEPT_ID, managerId: managerId }, body, tools);
+    }
 
     var receipts = el("div", "at-receipts");
     receipts.setAttribute("aria-label", "Simulated results");
@@ -1561,292 +1592,468 @@
 
   /* ------------------------------------------------------- context room */
 
-  function buildContextRoom(body, tools) {
-    var mgr = D.managers["manager-context"];
+  /* ================================================= MANAGER SPEC RENDERER */
 
-    var inspect = el("button", "at-btn", I("eye", 13) + "<span>Inspect the last turn</span>");
-    inspect.type = "button";
-    inspect.addEventListener("click", function () {
-      document.querySelector(".at-lastturn").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    tools.appendChild(inspect);
+  /* Atlas reads a manager as a set of rooms inside a destination: each spec
+   * section becomes a bay, the outline stays put, and entering keeps the
+   * origin-anchored grow. Every assigned manager goes through this one path. */
+  function hydrated() { window.__pmHydrated = (window.__pmHydrated || 0) + 1; }
 
-    var cols = el("div", "at-columns");
+  function renderManager(spec, ctx, body, tools) {
+    hydrated();
 
-    var admitted = el("section");
-    admitted.appendChild(el("h3", "at-sub-title",
-      "Admitted last turn · " + mgr.lastTurn.admitted.length + " sources"));
-    var al = el("div", "at-list");
-    al.className = "at-list at-lastturn";
-    mgr.lastTurn.admitted.forEach(function (a) {
-      var r = el("div", "at-list-row");
-      r.innerHTML = '<span><span class="at-list-title">' + E(a.name) + "</span>" +
-        '<span class="at-list-sub">' + E(a.why) + "</span></span>" +
-        '<span class="at-list-right"><span class="at-list-sub">' + E(a.size) + "</span></span>";
-      al.appendChild(r);
-    });
-    admitted.appendChild(al);
-    cols.appendChild(admitted);
-
-    var omitted = el("section");
-    omitted.appendChild(el("h3", "at-sub-title", "Left out, and why"));
-    var ol = el("div", "at-list");
-    mgr.lastTurn.omitted.forEach(function (o) {
-      var r = el("div", "at-list-row");
-      r.innerHTML = '<span><span class="at-list-title">' + E(o.name) + "</span>" +
-        '<span class="at-list-sub">' + E(o.why) + "</span></span>" +
-        '<span class="at-list-right">' + statusChip("unavailable", "Omitted") + "</span>";
-      ol.appendChild(r);
-    });
-    omitted.appendChild(ol);
-    cols.appendChild(omitted);
-    body.appendChild(cols);
-
-    var prec = el("section", "at-sub");
-    prec.appendChild(el("h3", "at-sub-title", "Instruction precedence · highest first"));
-    var pl = el("div", "at-list");
-    mgr.lastTurn.precedence.forEach(function (p, i) {
-      var r = el("div", "at-list-row");
-      r.innerHTML = '<span><span class="at-list-title">' + (i + 1) + ". " + E(p) + "</span></span>" +
-        '<span class="at-list-right"><span class="at-list-sub">' + (i === 0 ? "wins" : "") + "</span></span>";
-      pl.appendChild(r);
-    });
-    prec.appendChild(pl);
-    body.appendChild(prec);
-
-    var src = el("section", "at-sub");
-    src.appendChild(el("h3", "at-sub-title", "Instruction sources"));
-    var sl = el("div", "at-list");
-    mgr.sources.forEach(function (s2) {
-      var r = el("div", "at-list-row");
-      var status = s2.state === "active" ? "ok" : s2.state === "ignored" ? "unavailable" : "setup";
-      var word = s2.state === "active" ? "Active" : s2.state === "ignored" ? "Ignored" : "Not in scope";
-      r.innerHTML = '<span><span class="at-list-title">' + E(s2.name) + " · " + E(s2.scope) + "</span>" +
-        '<span class="at-list-sub">' + s2.words + " words" + (s2.note ? " · " + E(s2.note) : "") + "</span></span>" +
-        '<span class="at-list-right">' + statusChip(status, word) + "</span>";
-      sl.appendChild(r);
-    });
-    src.appendChild(sl);
-    body.appendChild(src);
-
-    var personal = el("section", "at-sub");
-    personal.appendChild(el("h3", "at-sub-title", "Personal instructions · this device"));
-    personal.appendChild(el("p", "at-row-explain",
-      "Applies to your work in every project on this device. " + mgr.sources.filter(function (s2) { return s2.id === "src-personal"; })
-        .map(function (s2) { return s2.words + " words · precedence " + s2.precedence + "."; })[0]));
-    var editable = el("div", "at-editable");
-    editable.setAttribute("contenteditable", "true");
-    editable.setAttribute("role", "textbox");
-    editable.setAttribute("aria-multiline", "true");
-    editable.setAttribute("aria-label", "Personal instructions");
-    editable.setAttribute("data-setting", "ctx-global-instructions");
-    editable.textContent = "Keep answers short and lead with the decision before the reasoning. Ask before " +
-      "running any git command that is not read-only. Flag anything that looks like a conection to a paid " +
-      "tier before using it, and treat personnal data with extra care by masking it in any output by default.";
-    personal.appendChild(editable);
-    personal.appendChild(el("p", "at-list-sub",
-      "Saved locally on this device. Spelling is checked locally too — right-click an underlined word, or press Ctrl + period."));
-    if (window.PMSpellcheck) window.PMSpellcheck.attach(editable, {});
-    body.appendChild(personal);
-
-    var strat = el("section", "at-sub");
-    strat.appendChild(el("h3", "at-sub-title", "Compaction and cache"));
-    strat.appendChild(el("p", "at-list-sub", E(mgr.lastTurn.strategy)));
-    var compact = el("button", "at-btn", "<span>Compact now</span>");
-    compact.type = "button";
-    compact.style.marginTop = "8px";
-    compact.addEventListener("click", function () {
-      simple("compact-now", "Compact the thread now",
-        "ContextService.compact(threadId, strategy: 'summarise-older')",
-        "Would summarise turns 1–12 into 620 tokens and keep the prefix cache warm. A warning is shown first because this materially changes what the model can see.",
-        "ok");
-    });
-    strat.appendChild(compact);
-    body.appendChild(strat);
-  }
-
-  /* ------------------------------------------------------ terminal room */
-
-  function buildTerminalRoom(body, tools) {
-    var mgr = D.managers["manager-terminal"];
-    var selected = { id: mgr.profiles[0].id };
-
-    var add = el("button", "at-btn is-primary", I("plus", 13) + "<span>New profile</span>");
-    add.type = "button";
-    add.addEventListener("click", function () {
-      simple("new-terminal-profile", "Create a terminal profile",
-        "TerminalService.createProfile()",
-        "A real build creates a profile and opens it for editing. Nothing was created here.", "handoff");
-    });
-    tools.appendChild(add);
-
-    var cols = el("div", "at-columns");
-
-    var listSec = el("section");
-    listSec.appendChild(el("h3", "at-sub-title", "Profiles"));
-    var list = el("div", "at-list");
-    mgr.profiles.forEach(function (prof) {
-      var r = el("button", "at-list-row");
-      r.type = "button";
-      r.setAttribute("data-profile", prof.id);
-      var status = prof.state === "ok" ? "ok" : prof.state === "managed" ? "managed" : "unavailable";
-      var word = prof.state === "ok" ? "Ready" : prof.state === "managed" ? "Managed" : "Unavailable";
-      r.innerHTML = '<span><span class="at-list-title">' + E(prof.name) +
-        (prof.isDefault ? " " + chip("", "Default") : "") + "</span>" +
-        '<span class="at-list-sub">' + E(prof.shellEffective) +
-        (prof.unavailableReason ? " · " + E(prof.unavailableReason) : "") +
-        (prof.managedReason ? " · " + E(prof.managedReason) : "") + "</span></span>" +
-        '<span class="at-list-right">' + statusChip(status, word) + "</span>";
-      r.addEventListener("click", function () {
-        selected.id = prof.id;
-        paintDetail();
-        Array.prototype.forEach.call(list.children, function (c) {
-          c.style.background = c.getAttribute("data-profile") === prof.id ? "var(--pm-accent-soft)" : "";
-        });
-      });
-      list.appendChild(r);
-    });
-    list.firstChild.style.background = "var(--pm-accent-soft)";
-    listSec.appendChild(list);
-    cols.appendChild(listSec);
-
-    var detailSec = el("section");
-    detailSec.appendChild(el("h3", "at-sub-title", "Profile detail"));
-    var detail = el("div");
-    detailSec.appendChild(detail);
-    cols.appendChild(detailSec);
-    body.appendChild(cols);
-
-    function paintDetail() {
-      var prof = mgr.profiles.filter(function (p) { return p.id === selected.id; })[0];
-      detail.innerHTML = "";
-      var kv = el("dl", "at-kv");
-      kv.innerHTML =
-        "<dt>Shell</dt><dd>" + E(prof.shell) + (prof.shell !== prof.shellEffective ? " <span style='color:var(--pm-text-3)'>(" + E(prof.shellEffective) + ")</span>" : "") + "</dd>" +
-        "<dt>Font</dt><dd>" + E(prof.font) + " " + prof.size + "px · fallback " + E(prof.fontFallback) + "</dd>" +
-        "<dt>Line height</dt><dd>" + prof.lineHeight + "</dd>" +
-        "<dt>Palette</dt><dd>" + E(prof.palette) + "</dd>" +
-        "<dt>Cursor</dt><dd>" + E(prof.cursor) + "</dd>" +
-        "<dt>Selection</dt><dd>" + E(prof.selection) + "</dd>" +
-        "<dt>Opacity</dt><dd>" + prof.opacity + "%</dd>" +
-        "<dt>Starting directory</dt><dd>" + E(prof.cwd) +
-          (prof.cwd !== prof.cwdEffective ? " <span style='color:var(--pm-text-3)'>(" + E(prof.cwdEffective) + ")</span>" : "") + "</dd>" +
-        "<dt>Environment</dt><dd>" + E(prof.env) + "</dd>" +
-        "<dt>Transcript</dt><dd>" + E(prof.transcript) + "</dd>" +
-        "<dt>Copy and paste</dt><dd>" + E(prof.copyPaste) + "</dd>" +
-        "<dt>Links</dt><dd>" + E(prof.links) + "</dd>";
-      detail.appendChild(kv);
-
-      var n = el("div", "at-note");
-      n.setAttribute("data-kind", "effect");
-      n.style.marginTop = "10px";
-      n.innerHTML = I("info", 13) +
-        "<span>Inherited and auto-detected values are shown as those words with the resolved value beside them. No field is left blank to mean “inherit”.</span>";
-      detail.appendChild(n);
-
-      var pv = el("div", "at-preview");
-      pv.innerHTML =
-        '<div><span class="p">' + E(prof.cwdEffective) + '</span> <span class="c">on</span> <span class="k">main</span></div>' +
-        '<div><span class="k">$</span> npm run test</div>' +
-        '<div><span class="c">&gt; orchard-api@2.4.0 test</span></div>' +
-        '<div><span class="k">PASS</span> services/api/users.test.ts</div>' +
-        '<div><span class="e">FAIL</span> services/api/billing.test.ts</div>' +
-        '<div><span class="c">Tests: 1 failed, 42 passed, 43 total</span></div>';
-      detail.appendChild(pv);
-
-      if (prof.state === "managed") {
-        var m = el("div", "at-note");
-        m.setAttribute("data-kind", "reason");
-        m.style.marginTop = "10px";
-        m.innerHTML = I("lock", 13) + "<span>" + E(prof.managedReason) + " Editing is disabled here.</span>";
-        detail.appendChild(m);
-      }
-      if (prof.state === "unavailable") {
-        var u = el("div", "at-note");
-        u.setAttribute("data-kind", "reason");
-        u.style.marginTop = "10px";
-        u.innerHTML = I("ban", 13) + "<span>" + E(prof.unavailableReason) + "</span>";
-        detail.appendChild(u);
-      }
+    if (spec.primary) {
+      var pb = el("button", "at-btn is-primary", I("plus", 13) + "<span>" + E(spec.primary.label) + "</span>");
+      pb.type = "button";
+      pb.addEventListener("click", function () { runAction(ctx, spec.primary, { id: spec.id }); });
+      tools.appendChild(pb);
     }
-    paintDetail();
+    spec.diagnostics.forEach(function (d) {
+      var db = el("button", "at-btn", "<span>" + E(d.label) + "</span>");
+      db.type = "button";
+      db.addEventListener("click", function () { runAction(ctx, { id: d.id, label: d.label }, { id: spec.id }); });
+      tools.appendChild(db);
+    });
+
+    body.appendChild(healthBay(spec));
+
+    if (spec.owner) {
+      var own = el("div", "at-answer");
+      own.innerHTML = '<div class="at-answer-q">' + E(spec.owner.name) + " owns this</div>" +
+        '<div class="at-answer-a">' + E(spec.owner.why) + "</div>" +
+        '<div class="at-answer-n"><strong>Insertion contract</strong> — ' + E(spec.owner.insertionContract) + "</div>";
+      body.appendChild(own);
+    }
+
+    spec.sections.forEach(function (sec, i) { body.appendChild(sectionBay(sec, ctx, i + 1)); });
+
+    spec.notes.forEach(function (n) { body.appendChild(note("info", "info", n)); });
   }
 
-  /* --------------------------------------------------- elsewhere room */
+  function healthBay(spec) {
+    var h = spec.health;
+    var bay = el("section", "at-bay");
+    bay.innerHTML = '<h3 class="at-bay-title">Health ' + statusChip(h.status, h.statusWord) + "</h3>" +
+      '<p class="at-bay-line">' + E(h.headline) + "</p>" +
+      (h.detail ? '<p class="at-bay-line">' + E(h.detail) + "</p>" : "");
+    if (h.counts.length) {
+      var counts = el("div", "at-counts");
+      h.counts.forEach(function (c) {
+        counts.appendChild(el("div", "at-count",
+          '<span class="at-count-v">' + E(String(c.value)) + '</span><span class="at-count-l">' + E(c.label) + "</span>"));
+      });
+      bay.appendChild(counts);
+    }
+    return bay;
+  }
+
+  function sectionBay(section, ctx, ordinal) {
+    var bay = el("section", "at-bay");
+    bay.id = "bay-" + section.id;
+    bay.setAttribute("data-sub", section.id);
+    var head = el("div", "at-bay-head");
+    head.innerHTML = '<h3 class="at-bay-title"><span class="at-bay-ord">' + ordinal + "</span>" +
+      E(section.label) + "</h3>" +
+      (section.summary ? '<p class="at-bay-line">' + E(section.summary) + "</p>" : "");
+    bay.appendChild(head);
+
+    section.actions.forEach(function (a) {
+      var b = el("button", "at-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : ""),
+        "<span>" + E(a.label) + "</span>");
+      b.type = "button";
+      b.addEventListener("click", function () { runAction(ctx, a, { id: section.id }); });
+      head.appendChild(b);
+    });
+
+    if (section.kind === "rows") {
+      section.settings.forEach(function (sid) {
+        var found = S.findSetting(D, sid);
+        if (found) bay.appendChild(settingRow(found.setting, found.category, found.subcategory));
+      });
+      if (section.settings.length === 0) bay.appendChild(emptyBay(section));
+      return bay;
+    }
+    if (section.kind === "prose") {
+      section.items.forEach(function (it) { if (it.name) bay.appendChild(el("p", "at-prose", E(it.name))); });
+      return bay;
+    }
+    if (section.items.length === 0) { bay.appendChild(emptyBay(section)); return bay; }
+    if (section.kind === "table" || section.kind === "matrix") { bay.appendChild(bayTable(section, ctx)); return bay; }
+    section.items.forEach(function (it) { bay.appendChild(bayItem(it, ctx)); });
+    return bay;
+  }
+
+  function emptyBay(section) {
+    var e2 = K.emptyFor(section);
+    var c = el("div", "at-answer");
+    c.innerHTML = '<div class="at-answer-q">' + E(e2.headline) + "</div>" +
+      '<div class="at-answer-a">' + E(e2.detail) + "</div>";
+    return c;
+  }
+
+  function bayTable(section, ctx) {
+    var t = el("table", "at-bay-table");
+    var thead = el("thead");
+    var hr = el("tr");
+    hr.appendChild(el("th", null, "Name"));
+    section.columns.forEach(function (c) { hr.appendChild(el("th", c.align === "end" ? "is-num" : null, E(c.label))); });
+    hr.appendChild(el("th", null, "State"));
+    thead.appendChild(hr);
+    t.appendChild(thead);
+    var tb = el("tbody");
+    section.items.forEach(function (it) {
+      var tr = el("tr");
+      var td = el("td");
+      td.appendChild(el("div", "at-item-name", E(it.name)));
+      if (it.secondary) td.appendChild(el("div", "at-item-sub", E(it.secondary)));
+      tr.appendChild(td);
+      section.columns.forEach(function (c) {
+        tr.appendChild(el("td", c.align === "end" ? "is-num" : null,
+          E(String(it.fields[c.key] == null ? "—" : it.fields[c.key]))));
+      });
+      tr.appendChild(el("td", null, statusChip(it.status, it.statusWord || "")));
+      tb.appendChild(tr);
+      if (it.editable.length || it.actions.length || it.detail.length) {
+        var tr2 = el("tr", "at-item-extra");
+        var cell = el("td");
+        cell.colSpan = section.columns.length + 2;
+        cell.appendChild(itemControls(it, ctx));
+        tr2.appendChild(cell);
+        tb.appendChild(tr2);
+      }
+    });
+    t.appendChild(tb);
+    return t;
+  }
+
+  function bayItem(it, ctx) {
+    var card = el("article", "at-item");
+    card.setAttribute("data-item", it.id);
+    var head = el("div", "at-item-head");
+    head.innerHTML = '<div><div class="at-item-name">' + E(it.name) + "</div>" +
+      (it.secondary ? '<div class="at-item-sub">' + E(it.secondary) + "</div>" : "") + "</div>" +
+      "<div>" + statusChip(it.status, it.statusWord || "") + "</div>";
+    card.appendChild(head);
+
+    if (it.badges.length) {
+      var bd = el("div", "at-item-badges");
+      it.badges.forEach(function (b) {
+        var s2 = el("span", "at-badge", E(b.text));
+        s2.setAttribute("data-kind", b.kind);
+        if (b.title) s2.title = b.title;
+        bd.appendChild(s2);
+      });
+      card.appendChild(bd);
+    }
+
+    var routeLine = K.routeLine(it);
+    if (routeLine) card.appendChild(note("route", "route", routeLine));
+    var reason = K.reasonLine(it);
+    if (reason) card.appendChild(note("reason", "info", reason));
+    if (it.value != null && it.value !== "") {
+      card.appendChild(el("div", "at-item-value", "<strong>" + E(String(it.value)) + "</strong>" +
+        (it.valueSource ? " · " + E(it.valueSource) : "")));
+    }
+
+    var keys = Object.keys(it.fields);
+    if (keys.length) {
+      var fields = el("div", "at-fields");
+      keys.forEach(function (k) {
+        fields.appendChild(el("div", "at-field",
+          '<span class="at-field-k">' + E(k) + '</span><span class="at-field-v">' + E(String(it.fields[k])) + "</span>"));
+      });
+      card.appendChild(fields);
+    }
+    card.appendChild(itemControls(it, ctx));
+    return card;
+  }
+
+  function itemControls(it, ctx) {
+    var box = el("div", "at-item-controls");
+    it.editable.forEach(function (f) { box.appendChild(editableRow(ctx, it, f)); });
+    it.detail.forEach(function (d) {
+      var det = el("details", "at-details");
+      det.appendChild(el("summary", null, E(d.label)));
+      d.rows.forEach(function (r2) {
+        det.appendChild(el("div", "at-field",
+          '<span class="at-field-k">' + E(r2.label) + '</span><span class="at-field-v">' + E(String(r2.value)) + "</span>"));
+        if (r2.hint) det.appendChild(el("div", "at-bay-line", E(r2.hint)));
+      });
+      box.appendChild(det);
+    });
+    if (it.actions.length) {
+      var acts = el("div", "at-item-actions");
+      it.actions.forEach(function (a) {
+        var b = el("button", "at-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : ""),
+          "<span>" + E(a.label) + "</span>");
+        b.type = "button";
+        b.addEventListener("click", function () { runAction(ctx, a, { id: it.id }); });
+        acts.appendChild(b);
+      });
+      box.appendChild(acts);
+    }
+    return box;
+  }
+
+  function editableRow(ctx, item, field) {
+    var wrap = el("div", "at-edit");
+    var id = "edit-" + ctx.managerId + "-" + item.id + "-" + field.key;
+    var label = el("label", "at-edit-label", E(field.label));
+    label.setAttribute("for", id);
+    wrap.appendChild(label);
+
+    var edits = store.get().managerEdits;
+    var current = edits[id] !== undefined ? edits[id] : field.value;
+
+    function commit(v) {
+      var next = Object.assign({}, store.get().managerEdits);
+      next[id] = v;
+      store.set({ managerEdits: next });
+      announce(field.label + " set to " + v + ".");
+      renderRoom(ctx.managerId);
+    }
+
+    if (field.secretKind === "cliOwned") {
+      wrap.appendChild(el("div", "at-bay-line",
+        "This credential belongs to the tool's own login. " + E(String(current))));
+      var launch = el("button", "at-btn", "<span>Launch the CLI's own login</span>");
+      launch.type = "button";
+      launch.addEventListener("click", function () {
+        runAction(ctx, { id: "provider.auth.start_setup", label: "Launch the CLI's own login" }, { id: item.id });
+      });
+      wrap.appendChild(launch);
+      return wrap;
+    }
+
+    if (field.kind === "secret") {
+      var revealed = store.get().revealed[id] === true;
+      var shown = revealed ? String(current || "") : maskSecret(String(current || ""));
+      var box = el("div", "at-secret");
+      box.appendChild(el("span", "at-field-v", E(shown || "Not set")));
+      if (field.secretKind === "pmSecret") {
+        var eye = el("button", "at-btn", I(revealed ? "eyeOff" : "eye", 13) +
+          "<span>" + (revealed ? "Hide" : "Reveal") + "</span>");
+        eye.type = "button";
+        eye.addEventListener("click", function () {
+          var r2 = Object.assign({}, store.get().revealed);
+          r2[id] = revealed ? false : true;
+          store.set({ revealed: r2 });
+          renderRoom(ctx.managerId);
+        });
+        box.appendChild(eye);
+      }
+      wrap.appendChild(box);
+      if (field.help) wrap.appendChild(el("div", "at-bay-line", E(field.help)));
+      return wrap;
+    }
+
+    var control;
+    if (field.kind === "toggle") {
+      control = el("button", "at-toggle");
+      control.type = "button";
+      control.id = id;
+      control.setAttribute("aria-pressed", String(current === true));
+      control.textContent = current ? "On" : "Off";
+      control.addEventListener("click", function () { commit(current === true ? false : true); });
+    } else if (field.kind === "select") {
+      control = el("select", "at-select");
+      control.id = id;
+      (field.options.length ? field.options : [String(current)]).forEach(function (o) {
+        var op = document.createElement("option");
+        op.value = String(o); op.textContent = String(o);
+        control.appendChild(op);
+      });
+      control.value = String(current);
+      control.addEventListener("change", function () { commit(control.value); });
+    } else if (field.kind === "chips" || field.kind === "order") {
+      control = el("div", "at-chips");
+      var listv = Array.isArray(current) ? current.slice() : [];
+      listv.forEach(function (c, i) {
+        var chipEl = el("span", "at-chip", E(String(c)));
+        if (field.kind === "order") {
+          var up = el("button", "at-chip-btn", I("chevronUp", 10));
+          up.type = "button"; up.title = "Move up";
+          up.addEventListener("click", function () {
+            if (i === 0) return;
+            var n = listv.slice(); var t = n[i - 1]; n[i - 1] = n[i]; n[i] = t; commit(n);
+          });
+          var down = el("button", "at-chip-btn", I("chevronDown", 10));
+          down.type = "button"; down.title = "Move down";
+          down.addEventListener("click", function () {
+            if (i === listv.length - 1) return;
+            var n = listv.slice(); var t = n[i + 1]; n[i + 1] = n[i]; n[i] = t; commit(n);
+          });
+          chipEl.appendChild(up); chipEl.appendChild(down);
+        } else {
+          var rm = el("button", "at-chip-btn", I("minus", 10));
+          rm.type = "button"; rm.title = "Remove " + c;
+          rm.addEventListener("click", function () { var n = listv.slice(); n.splice(i, 1); commit(n); });
+          chipEl.appendChild(rm);
+        }
+        control.appendChild(chipEl);
+      });
+      if (field.kind === "chips") {
+        var add = el("button", "at-chip is-add", I("plus", 10) + " Add");
+        add.type = "button";
+        add.addEventListener("click", function () {
+          var v = window.prompt("Add a value for " + field.label);
+          if (v) commit(listv.concat([v]));
+        });
+        control.appendChild(add);
+      }
+    } else {
+      control = el("input", "at-input");
+      control.id = id;
+      control.type = field.kind === "number" ? "number" : "text";
+      control.value = current == null ? "" : String(current);
+      control.addEventListener("change", function () {
+        commit(field.kind === "number" ? Number(control.value) : control.value);
+      });
+    }
+    wrap.appendChild(control);
+    if (field.help) wrap.appendChild(el("div", "at-bay-line", E(field.help)));
+    return wrap;
+  }
+
+  function maskSecret(v) {
+    if (!v) return "";
+    if (v.length <= 6) return "\u2022\u2022\u2022\u2022\u2022\u2022";
+    return v.slice(0, 3) + "\u2022\u2022\u2022\u2022\u2022\u2022" + v.slice(-3);
+  }
+
+  function runAction(ctx, action, payload) {
+    return K.act(ctx, action, payload).then(function (r) { if (r) showReceiptDialog(r); return r; });
+  }
 
   function buildElsewhereRoom(body, managerId) {
     var mgr = D.managers[managerId] || {};
-    var home = MANAGER_HOME[managerId];
+    var home = K.homeOf(managerId);
     var card = el("div", "at-answer");
-    card.style.maxWidth = "620px";
-
-    if (managerId === "manager-usage") {
-      card.innerHTML =
-        '<div class="at-answer-q">Owned by Usage</div>' +
-        '<div class="at-answer-a">Settings does not calculate balances.</div>' +
-        '<div class="at-answer-note">' + E(D.usage.note) + "</div>";
-      body.appendChild(card);
-      var snap = el("div", "at-list");
-      snap.style.marginTop = "16px";
-      D.usage.snapshots.forEach(function (s2) {
-        var r = el("div", "at-list-row");
-        r.innerHTML = '<span><span class="at-list-title">' + E(s2.providerId) + " · " + E(s2.account) + "</span>" +
-          '<span class="at-list-sub">Remaining ' + E(s2.includedRemaining) + " · resets " + E(s2.resets) +
-          " · " + E(s2.freshness) + " · " + E(s2.runOut) + "</span></span>" +
-          '<span class="at-list-right">' + chip(s2.pressure === "exhausted" ? "attention" : s2.pressure === "high" ? "setup" : "", "Pressure: " + s2.pressure) + "</span>";
-        snap.appendChild(r);
-      });
-      body.appendChild(snap);
-      var link = el("button", "at-btn is-primary", "<span>Open Usage</span>" + I("external", 13));
-      link.type = "button";
-      link.style.marginTop = "12px";
-      link.addEventListener("click", function () {
-        simple("open-usage", "Open Usage", "Navigation.open('usage')",
-          "A real build switches to the Usage surface, which owns measurement, history and forecasting.", "handoff");
-      });
-      body.appendChild(link);
-      return;
-    }
-
-    card.innerHTML =
-      '<div class="at-answer-q">Built in another Opus 5 concept</div>' +
-      '<div class="at-answer-a">' + E(mgr.title || "This manager") + "</div>" +
-      '<div class="at-answer-note">' + E(mgr.purpose || "") + "<br><br>" +
-      "Each of the four Opus 5 concepts builds the provider manager plus two others in full, so the bakeoff covers eight dedicated managers rather than repeating the same two. " +
-      (home && home.href
-        ? "This one is built in <strong>" + E(home.concept) + "</strong>."
-        : "This manager is not built out in the Opus 5 set.") + "</div>";
+    card.innerHTML = '<div class="at-answer-q">Built in ' + E(home.title) + "</div>" +
+      '<div class="at-answer-a">' + E(mgr.purpose || "") + "</div>" +
+      '<div class="at-answer-n">The four concepts split the manager families between them, so each family is shown once at full depth rather than four times at a quarter depth.</div>';
     body.appendChild(card);
-
-    if (home && home.href) {
-      var go = el("a", "at-btn is-primary");
-      go.href = home.href;
-      go.innerHTML = "<span>Open " + E(home.concept) + "</span>" + I("arrowUpRight", 13);
-      go.style.marginTop = "12px";
-      go.style.display = "inline-flex";
-      go.style.textDecoration = "none";
-      body.appendChild(go);
+    if (home.href) {
+      var a = el("a", "at-btn is-primary");
+      a.href = home.href;
+      a.style.cssText = "margin-top:12px;display:inline-flex;text-decoration:none";
+      a.innerHTML = "<span>Open " + E(home.title) + "</span>" + I("arrowUpRight", 12);
+      body.appendChild(a);
     }
   }
 
-  /* ========================================================== NAVIGATION */
+  function buildMissingRoom(body, managerId) {
+    var card = el("div", "at-answer");
+    card.innerHTML = '<div class="at-answer-q">That link points at something this concept does not contain</div>' +
+      '<div class="at-answer-a">No manager with the id ' + E(managerId) + " exists in this fixture.</div>";
+    body.appendChild(card);
+    var home = el("button", "at-btn is-primary", "<span>Go to Settings home</span>");
+    home.type = "button";
+    home.addEventListener("click", function () { goTo({ categoryId: null }); });
+    body.appendChild(home);
+  }
+
+  /* ------------------------------------------------------------- routing */
+
+  /* The route is derived from the store, never stored twice. Every navigation
+   * the user makes pushes a history entry; only a correction replaces one. */
+  function currentRoute() {
+    var s = store.get();
+    var demo = s.demoState === "normal" ? null : s.demoState;
+    if (s.view === "room" && s.managerId) {
+      return { kind: "manager", managerId: s.managerId, sectionId: s.managerSectionId,
+        itemId: s.managerItemId, demo: demo };
+    }
+    if (s.query && s.query.trim()) return { kind: "search", query: s.query.trim(), demo: demo };
+    if (s.view === "workspace" && s.categoryId) {
+      return { kind: "category", categoryId: s.categoryId, subcategoryId: s.activeSub || null,
+        settingId: null, demo: demo };
+    }
+    return { kind: "home", demo: demo };
+  }
+
+  function writeRoute(replace) {
+    var r = currentRoute();
+    store.set({ route: r });
+    window.PMRoute.write(r, replace === true);
+  }
+
+  /* A malformed hash already resolved to home in the router. Anything that
+   * arrives here and still does not resolve is a well-formed link to something
+   * this concept does not contain, which deserves saying out loud. */
+  function routeExists(route) {
+    if (route.kind === "manager") return K.has(route.managerId);
+    if (route.kind === "category") {
+      var cat = S.findCategory(D, route.categoryId);
+      if (!cat) return false;
+      if (route.subcategoryId) {
+        var hit = cat.subcategories.filter(function (x) { return x.id === route.subcategoryId; })[0];
+        if (!hit) return false;
+        if (route.settingId && !S.findSetting(D, route.settingId)) return false;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function applyRoute(route) {
+    if (route.demo) {
+      store.set({ demoState: route.demo, catalogueRefreshing: route.demo === "loading" });
+      if (shell) shell.setDemoState(route.demo);
+    }
+    if (routeExists(route) === false) {
+      store.set({ view: "home", categoryId: null, managerId: null,
+        managerSectionId: null, managerItemId: null, badRoute: window.PMRoute.format(route) });
+      renderHome();
+      return;
+    }
+    store.set({ badRoute: null });
+
+    if (route.kind === "manager") {
+      store.set({ view: "room", managerId: route.managerId,
+        managerSectionId: route.sectionId, managerItemId: route.itemId,
+        categoryId: store.get().categoryId || "agents" });
+      renderRoom(route.managerId);
+      return;
+    }
+    if (route.kind === "search") {
+      store.set({ view: "home", query: route.query, categoryId: null, managerId: null,
+        managerSectionId: null, managerItemId: null });
+      renderHome();
+      return;
+    }
+    if (route.kind === "category") {
+      store.set({ view: "workspace", categoryId: route.categoryId, managerId: null,
+        managerSectionId: null, managerItemId: null, activeSub: route.subcategoryId || null });
+      renderWorkspace({ subcategoryId: route.subcategoryId, targetId: route.settingId });
+      return;
+    }
+    store.set({ view: "home", categoryId: null, managerId: null,
+      managerSectionId: null, managerItemId: null });
+    renderHome();
+  }
 
   function goTo(target) {
     closePopover();
     closeDrawer();
     if (target.managerId && (target.kind === "manager" || target.kind === "provider" || target.kind === "model")) {
-      store.set({ categoryId: target.categoryId || "agents", view: "room", managerId: target.managerId });
+      store.set({ categoryId: target.categoryId || "agents", view: "room", managerId: target.managerId,
+        managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
       renderRoom(target.managerId);
       announce("Opened " + (D.managers[target.managerId] || {}).title + ".");
       return;
     }
     if (!target.categoryId) {
-      store.set({ view: "home", categoryId: null, managerId: null });
+      store.set({ view: "home", categoryId: null, managerId: null,
+        managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
       renderHome();
       return;
     }
-    var changing = store.get().categoryId !== target.categoryId || store.get().view !== "workspace";
-    store.set({ view: "workspace", categoryId: target.categoryId, managerId: null });
+    store.set({ view: "workspace", categoryId: target.categoryId, managerId: null,
+      managerSectionId: null, managerItemId: null, activeSub: target.subcategoryId || null, badRoute: null });
+    writeRoute();
     renderWorkspace({ subcategoryId: target.subcategoryId, targetId: target.targetId });
     var cat = S.findCategory(D, target.categoryId);
     announce("Opened " + cat.title + (target.subcategoryId ? ", " + target.subcategoryId : "") + ".");
@@ -1859,29 +2066,24 @@
 
   /* =============================================================== MOUNT */
 
-  var demoSelect = document.createElement("select");
-  demoSelect.setAttribute("aria-label", "Demo state");
-  D.demoStates.forEach(function (d) {
-    var o = document.createElement("option");
-    o.value = d.id; o.textContent = d.label;
-    demoSelect.appendChild(o);
-  });
-  var demoWrap = document.createElement("span");
-  demoWrap.style.display = "inline-flex";
-  demoWrap.style.alignItems = "center";
-  demoWrap.style.gap = "6px";
-  var demoLabel = document.createElement("span");
-  demoLabel.className = "pm-review-label";
-  demoLabel.textContent = "Demo state";
-  demoWrap.appendChild(demoLabel);
-  demoWrap.appendChild(demoSelect);
-
+  /* The shell owns the Demo state select and the Reset button, so the concept
+   * passes its state in and reacts rather than building a second control. */
   shell = window.PMShell.mount({
     rootId: "pm-root",
     concept: "Atlas · Settings as a place",
-    conceptId: "atlas",
-    theme: "friendly-dark",
-    extraControls: demoWrap,
+    conceptId: CONCEPT_ID,
+    theme: store.get().theme || "friendly-dark",
+    demoState: store.get().demoState,
+    onDemoState: function (id) {
+      store.set({ demoState: id, catalogueRefreshing: id === "loading" });
+      writeRoute();
+      var s = store.get();
+      if (s.view === "home") renderHome();
+      else if (s.view === "room") renderRoom(s.managerId);
+      else renderWorkspace({});
+      announce("Demo state: " + id + ".");
+    },
+    onReceiptAction: function (r) { showReceiptDialog(r); },
     onLayout: function () { if (spy) spy.measure(); },
     onWidthMode: function (mode) {
       if (mode !== "squeezed") closeDrawer();
@@ -1890,14 +2092,11 @@
   });
   mainEl = shell.main;
 
-  demoSelect.addEventListener("change", function () {
-    store.set({ demoState: demoSelect.value, catalogueRefreshing: demoSelect.value === "loading" });
-    var s = store.get();
-    if (s.view === "home") renderHome();
-    else if (s.view === "room") renderRoom(s.managerId);
-    else renderWorkspace({});
-    announce("Demo state: " + demoSelect.options[demoSelect.selectedIndex].text);
-  });
+  window.PMStore.persist(CONCEPT_ID, store, window.PMStore.PERSIST_KEYS);
+
+  /* Back and forward are native hashchange events, so the browser's own history
+   * is the single source of truth for where the user has been. */
+  window.PMRoute.onChange(function (route) { applyRoute(route); });
 
   window.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -1910,5 +2109,14 @@
     }
   });
 
-  renderHome();
+  /* The hash wins on load. With no hash, a route saved from a previous session
+   * is restored with replace, so it does not become a phantom back step. */
+  if ((window.location.hash || "") !== "") {
+    applyRoute(window.PMRoute.parse());
+  } else if (store.get().route) {
+    applyRoute(store.get().route);
+    writeRoute(true);
+  } else {
+    renderHome();
+  }
 })();

@@ -187,11 +187,11 @@
   background: var(--surface); z-index: 2;
 }
 [data-k3-window="w4"] .w4-art-gutter[hidden] { display: none; }
-[data-k3-window="w4"] .w4-art-gutter [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+[data-k3-window="w4"] .w4-art-gutter > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
 /* transcript keeps clear of the open artifact gutter */
 [data-k3-window="w4"] .w4-transcript-area:has(.w4-art-gutter:not([hidden])) .w4-thread { margin-left: 260px; }
 /* narrow: the surface joins the chips row above the composer (cap 240px) */
-[data-k3-window="w4"] .w4-chips > [class*="k3aw"] {
+[data-k3-window="w4"] .w4-chips > .k3aw-surface {
   max-height: 240px; overflow: auto; width: 100%;
 }
 html[data-motion="reduced"] [data-k3-window="w4"] .w4-art-gutter { transition: none; }

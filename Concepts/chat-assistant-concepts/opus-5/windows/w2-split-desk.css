@@ -307,8 +307,79 @@
   gap: var(--md);
 }
 [data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hmarks,
-[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-htime { display: flex; }
+/* One rule. There were two with the identical selector and contradictory values (`flex` then
+ * `inline`); the second always won, so the first was dead weight that implied a flex context the
+ * element never had. */
 [data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-htime { display: inline; }
 [data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hmore {
   width: 26px; height: 26px; margin: var(--sm) var(--sm) 0 0; align-self: flex-start;
 }
+
+/* ---------------------------------------------------------------- artifact column
+ *
+ * The left grid column. This concept can afford it because its history is a horizontal chip strip
+ * that costs HEIGHT, not width — so the artifact gets the column outright and the two never
+ * compete at any width, which is the coexistence rule for w2.
+ *
+ * Switcher: desk tabs across the artifact head, matching the concept's existing tab vocabulary. */
+[data-pmx-window="w2"] .w2-artifact-host {
+  grid-area: artifact;
+  display: none;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-right: var(--border-width, 1px) solid var(--border);
+  background: var(--surface);
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-artifact="1"] .w2-artifact-host { display: flex; }
+[data-pmx-window="w2"] .w2-artifact-body { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+[data-pmx-window="w2"] .w2-artifact-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 4px 6px;
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  overflow-x: auto;
+}
+[data-pmx-window="w2"] .w2-artifact-tab {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  border: none;
+  border-radius: var(--radius-sm, 4px) var(--radius-sm, 4px) 0 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  white-space: nowrap;
+  cursor: pointer;
+}
+[data-pmx-window="w2"] .w2-artifact-tab[aria-pressed="true"] {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Narrow fallback: the artifact becomes a full-height left column and the work rail becomes the
+ * bottom sheet, so two side surfaces never share a 520px chat. */
+@container pmx-chat (max-width: 749px) {
+  [data-pmx-window="w2"] .w2-shell[data-w2-artifact="1"] .w2-artifact-host {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 6;
+    width: min(340px, 92%);
+  }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: two-row strip
+ *
+ * The differentiator. This concept's compact form costs HEIGHT, never width: the chip strip wraps
+ * to two rows and each chip gains a status glyph. That is the whole thesis of the Split Desk — the
+ * navigation lives above the conversation, so the way to show more of it is to grow downward. */
+[data-pmx-window="w2"] .w2-strip[data-density="compact"] {
+  flex-wrap: wrap;
+  max-height: 4.6em;
+  overflow-y: auto;
+}
+[data-pmx-window="w2"] .w2-strip[data-density="compact"] .pmx-chrome-hrow {
+  flex: 0 0 auto;
+}
+[data-pmx-window="w2"] .w2-strip[data-density="compact"] .pmx-chrome-htime,
+[data-pmx-window="w2"] .w2-strip[data-density="compact"] .pmx-chrome-hmarks { display: none; }

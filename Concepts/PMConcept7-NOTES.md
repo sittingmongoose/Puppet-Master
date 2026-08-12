@@ -4,23 +4,136 @@
 
 `Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-05
+## Current Home Workspace implementation — 2026-08-12 (rev 13, Direct-Manipulation repair)
 
 The active lineage is the assertion-guarded `T20_home_workspace` transform in
 `Concepts/pm7-tools/build_pm7.py`, sourced from
-`Concepts/pm7-tools/home_workspace_source.py`. The raw base sha256 is
-`da9c17b4b6744c17492dfd40fbe415bcfcbaed8f856043d133f427938405e87a`; the
-normalized `BASE_SHA` is
-`27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2`.
-The generated artifact currently measures 3,424,764 bytes and has sha256
-`91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db`.
+`Concepts/pm7-tools/home_workspace_source.py`, over a base re-pinned from the
+`Concepts/pm6-build` parts pipeline. `BASE_SHA` (and the raw base sha — they are
+the same bytes now) is `77192126a80137da29a97d902a87613857eb593c2d3180fe300ebbd554546ddc`.
+`Concepts/PMConcept6.html` carries the same sha `45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401`.
+The generated artifact measures 3,502,307 bytes with sha256
+`bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2`.
 The checked-in build report sha256 is
-`41e221448fc9474723f41b14319f30e2fde2856fccb8ee5e39f184cc30000672`.
+`51cffff8ea9c4b5c138d7e7845226df83bc22ed1b7a440f9d67498d8716218e7`.
 T20 owns the four-panel Home model, six hosts, Pointer Events move/resize
 transactions, terminal workgroup identity, project/workspace persistence,
 safe recovery, inline-SVG controls, and the web/native floating boundary.
 This entry is the current implementation record; the rev 12 and earlier ship
 entries below are historical lineage.
+
+**Rev 13 (Jared, 2026-08-12): the Home layer was fighting the shell it sits on.**
+Ten reported defects — and the PM6 features behind nine of them were never
+missing. The editor tab overflow fitter, tab drag-reorder, the terminal collapse
+button and handler, the resizer controller, chat panel CSS and the dashboard
+widget engine are all still byte-identical in PM7. **What broke them was the
+projection layer on top.** Four mechanisms, worth keeping because they are the
+failure modes of any "model-first layer over an existing shell":
+
+1. **It reparented the shell, then overrode its layout wholesale.**
+   `mountWorkspace()` moves `#editorPane1/2`, `#dashboardView`, `#bottomPanel` and
+   `#chatPanel` into a new host grid, and `.pm-home-surface` then forced
+   `flex` / `width` / `height` / `min-*` / `overflow` with `!important` on every one
+   of them. That single rule caused four separate reports: chat lost its
+   `width: 550px; flex: none`, the dashboard's `@container` scroller lost its
+   context, and `overflow: hidden` clipped ~3.5px off every 9px resizer grab strip
+   plus its entire grab-glow. Sizing is host-scoped now and the blanket wall is gone.
+2. **Flex properties on grid items.** `home_main` was `display: grid` while the
+   surfaces sized with `flex: 1 1 var(--pm-home-basis)`. Flex is ignored on grid
+   items, so **every resize on the homescreen committed a new basis, bumped the
+   layout revision and persisted — while moving zero pixels.** `home_main` is a flex
+   row now. And the main-axis size is written INLINE with `important`, because a
+   stylesheet rule cannot win here: PM6 blocks that load after `pm6-css-dashboard`
+   set `.editor-pane { flex: 1 }`, which flattens the basis to `1 1 0%`. Caught by
+   reading computed `flex`, not by reading the model.
+3. **It mounted its own controls where the host chrome already was.** The grip was a
+   26x7 unlabeled pill at top-CENTRE, appended last, at `z-index: 18` — under chat's
+   own `z-index: 25` header. That is the whole of "you can't grab the move button".
+   Grips are now the first item of each surface's own head row (top-left, 18x18,
+   inline-SVG, grab cursor), and a `MutationObserver` re-seats them, because the chat
+   engine rebuilds `#chatPanel` with `innerHTML` and the tab renderers rebuild
+   `.editor-tabs` — both destroy anything mounted inside them.
+4. **It hijacked shell clicks in the capture phase.** `stopImmediatePropagation()` on
+   `#collapseBottom` killed PM6's working handler (so the `.collapsed` class never
+   applied) and wrote `aria-expanded` from the PRE-mutation value. The chat toggle had
+   the same shape; it reconciles on the bubble phase AFTER PM6's own handler now, so
+   the model follows the DOM instead of fighting it.
+
+Also in this rev: the centre-screen drop-target rail is deleted. It was
+`inset: 10px; place-content: center; z-index: 50`, so its six buttons sat over the
+middle of the canvas and `dropHostAt` checked them FIRST — that is the "it pops up a
+window and you select where it goes" report, and it is also why positional drops were
+impossible. Movement is u11-prism's vocabulary now: a lifted clone tracking the pointer
+1:1, a real in-flow placeholder carrying the surface's footprint, and neighbours
+FLIPing from their pre-move rects. **Pointer capture loss is no longer a cancellation
+vector** — live reflow re-parents nodes, which drops capture, so the old
+`lostpointercapture -> finishDrag(false)` binding would have cancelled every drag on its
+first frame. Keyboard movement (Enter to pick up, arrows to move, F to float, Enter to
+drop, Escape to cancel, announced through a polite live region) is net-new and
+load-bearing, because the per-surface Move/Dock menu rows are retired.
+
+Editor tabs: the `+N more` fitter was hard-coded to `#editorPane1`/`#editorPane2`, so
+panels 3/4 never had one, and the strip's right reserve was a hard-coded 28px that the
+injected 22px options button overflowed — the chip slid underneath it. The reserve is
+measured now and a generic per-strip fitter covers every strip. Tab drag-reorder was a
+**one-shot pass over static markup** (a pre-existing PM6 bug PM7 inherited):
+`renderEditorTabs()` rebuilds pane 1's tabs with `createElement` and never re-armed
+`draggable`, and the drop reordered the DOM only, so the next render snapped it back. It
+is delegated now and writes the order back to the model. `Open in Panel` never opened
+anything: panels 3/4 got a debug string written into `.editor-code`, and panels 1/2
+called `switchEditorPane*Tab`, which only activates an ALREADY-open tab. It routes
+through the canonical open path now.
+
+New: the contact-aware active-tab silhouette (F3-505). The active tab and the code canvas
+are one surface — same fill, no bottom border, concave shoulders — and the corner geometry
+is a pure function of contact, recomputed in the same frame as the position. Only the
+horizontal radius animates, so a corner flattens sideways instead of shrinking into a
+dimple. The contact reference is the **tab track** (first/last laid-out tab), not the rail
+box: the rail's leading grip and trailing actions cluster are chrome the tab cannot travel
+across, so measured against the rail box the flush state is unreachable and the morph
+never demonstrates.
+
+Two packet lines could not be settled by assertions and needed real measurement,
+and both paid for themselves:
+
+- **Frame-stepping caught a teleport.** Recording every rAF tick of a
+  click-to-select showed `firstStep == totalTravel` in all four sampled themes:
+  the silhouette was jumping the whole distance in one frame. Selecting a tab
+  re-renders the strip, and that re-render's own snap-sync landed BEFORE the
+  animated one, leaving the spring with nothing left to travel. A selection
+  change now always springs; layout-driven syncs (resize, fonts, theme, drag
+  frames) still snap. With that fixed: 54-75 frames of travel, worst
+  corner-vs-position drift 0.0003px, zero one-frame pops, zero degenerate frames.
+- **Pixel-sampling needed three discriminators before it meant anything.** The
+  naive "any pixel darker than the rail" test failed on 15 of 24 crops, and every
+  one was the measurement, not the UI: tab labels sit flush to the join (the
+  strip is bottom-aligned) so glyph ink is inside the band; an ordinary step or
+  a shoulder's arc is darker than one side and equal to the other, which is
+  correct and not a seam; and retro ships a periodic phosphor grid in BOTH axes
+  that repeats every 3 CSS px whether or not there is a join. The test that
+  actually means something is: a local minimum (darker than both flanks) that is
+  thin (recovers within ~2 CSS px) and unique (a join seam happens once; texture
+  repeats). Under that definition all 24 crops -- 8 themes x flush-left,
+  interior, flush-right, at 4x device scale -- are clean.
+
+**The lesson worth more than any of the fixes: this harness asserted commands, not
+pixels.** `shared_resizers_...` asserted one `resize_surface` command per drag;
+`file_manager_open_in_panel_...` asserted a global `window.PM_HOME_LAST_OPEN_FILE`. Both
+passed green the entire time resize moved nothing and Open in Panel opened nothing. Every
+fixture covering a visible outcome now asserts that outcome — rendered geometry, a rendered
+buffer, a transform-free layout position changing mid-drag. **A green harness that cannot
+see the screen is worse than no harness, because it converts a regression into a receipt.**
+
+Verification: 58/58 functional checks against the built artifact (all geometry- or
+content-based: live neighbour reflow, resize deltas, collapse round-trip, all four
+open-in-panel targets, keyboard move across hosts, tab reorder surviving a re-render,
+overflow chips in panels 1 and 3, silhouette flush/independent-corner states, widget drag
+and grid-snap resize), 4/4 static build gates, PM6 assemble g2 + g3 9/9.
+
+Carry-over: `Concepts/pm6-build/checks/check_js.py` pinned `NODE` to the macOS path
+`/usr/local/bin/node`, which failed the JS gate on this machine (and was patched in a
+staged copy during rev 8 on Windows for the same reason). It resolves `PM6_NODE` then
+`shutil.which("node")` now, falling back to the old literal, so macOS is unaffected.
 
 - Shipped: 2026-08-04 (rev 12, Frost completion). Size 3,325,596 bytes (file sha256 `37daeedf43b2402773128713e120e819e577269c70c63a1a63ece89f7b4c132e`; build-report text sha256 `bf5919b91c9d87ca88b9c2f497c6e936abe8db74ea8aed95aebb23f471393458`). Base pin `27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2`. Build report: scratch outdir (see rev 11/12 entry).
 - Prior ship: 2026-08-04 (rev 10, Frost correction). Size 3,322,368 bytes (file sha256 `c9cb48d208a0d567bc38ee021d6cb94f2fdf9d7d5481326a659924884786be90`; build-report text sha256 `32c496d80e926a1bbbdc81a17c184453437375333233db51336bf903d1a28607`). Base pin `a48440f0cd5888735cf39711aaf1dcbc465530199b46e7a02a4e7ee94522d00d`. Build report: scratch outdir (see rev 10 entry).

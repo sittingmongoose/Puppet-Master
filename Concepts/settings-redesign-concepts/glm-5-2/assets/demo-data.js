@@ -993,6 +993,89 @@
   /* fixture 14: usage unavailable but provider ready */
   D.usageUnavailable = { provider:"OpenAI — Personal", note:"Usage details unavailable right now; provider is ready and routing." };
 
+  /* ===== POLISH PASS DATA (packet-complete) ===== */
+  /* Home 4th job: resume recent Settings work */
+  D.recent = [
+    { id:"r1", label:"Provider / Account / Model", target:"agents.providers", manager:"pam", ago:"2 min ago" },
+    { id:"r2", label:"Permissions rules", target:"permissions.rules", manager:"permissions", ago:"12 min ago" },
+    { id:"r3", label:"Notifications & Sounds", target:"general.notifications", manager:"notifications", ago:"yesterday" }
+  ];
+
+  /* title-bar notification sprout inbox items */
+  D.inbox = [
+    { id:"i1", title:"Backup completed (daily 02:00)", kind:"ok", ago:"3h ago", target:"system.backup" },
+    { id:"i2", title:"Claude API key probe failing", kind:"bad", ago:"12m ago", target:"agents.accounts" },
+    { id:"i3", title:"Prettier / TS LSP formatting conflict", kind:"warn", ago:"just now", target:"code.formatters" }
+  ];
+
+  /* search result types — the 7 packet kinds beyond setting/manager/destination.
+     Each entry routes to a canonical owner. visibly distinct from scalar settings. */
+  D.searchExtra = [
+    { kind:"action", label:"Back Up Now", expl:"One-shot action — creates a restore point.", route:{ manager:"backup" }, kw:"backup now export save snapshot" },
+    { kind:"action", label:"Reconnect Claude API key", expl:"One-shot action — re-run the auth probe.", route:{ manager:"pam" }, kw:"reconnect retry auth claude api" },
+    { kind:"status", label:"Last backup", expl:"Read-only status — today 02:00.", route:{ manager:"backup" }, kw:"last backup status when" },
+    { kind:"status", label:"Overall health", expl:"Read-only status — degraded, 1 provider needs attention.", route:{ cat:"system", sub:"health" }, kw:"health status degraded" },
+    { kind:"diagnostic", label:"Open backup log", expl:"Diagnostic — receipted operation history.", route:{ manager:"backup" }, kw:"log receipt diagnostic history" },
+    { kind:"diagnostic", label:"MCP server logs", expl:"Diagnostic — reconnect failure detail.", route:{ manager:"mcp" }, kw:"mcp logs reconnect failed" },
+    { kind:"workflow", label:"Set up free model", expl:"Setup workflow — account, credential, scopes, verify, return.", route:{ manager:"pam" }, kw:"free model setup install deepseek" },
+    { kind:"workflow", label:"Import settings", expl:"Setup workflow — preview conflicts, apply, rollback.", route:{ manager:"settingsLifecycle" }, kw:"import settings merge replace conflict" },
+    { kind:"unavailable", label:"Container driver", expl:"Unavailable capability — no supported driver on this platform.", route:{ cat:"permissions", sub:"sandbox" }, kw:"container docker driver sandbox" },
+    { kind:"unavailable", label:"Simulator / emulator", expl:"Unavailable capability — install a toolchain to enable.", route:{ manager:"testing" }, kw:"simulator emulator device unavailable" }
+  ];
+
+  /* Secret value types (packet 02) — credentials are NOT ordinary text fields. */
+  D.secrets = [
+    { id:"sec-pm", type:"PM-owned secret", name:"Anthropic API key", mode:"secret-input", masked:"sk-ant-••••••9f2a", note:"PM-owned; reveal/copy/persist gated; never logged." },
+    { id:"sec-vault", type:"Vault reference", name:"GitHub token", mode:"vault-ref", ref:"vault://secrets/github-pat", note:"Stored in the secure vault; UI holds a reference, not the value." },
+    { id:"sec-cli", type:"CLI-owned authentication", name:"Claude CLI login", mode:"cli-owned", note:"PM launches the CLI's own OAuth inside an isolated profile. PM never presents PM-direct OAuth for Claude." },
+    { id:"sec-pmoauth", type:"PM-direct OAuth", name:"OpenAI connection", mode:"pm-oauth", note:"PM-direct OAuth (allowed: OpenAI/Codex, GitHub, Copilot)." },
+    { id:"sec-env", type:"Environment-backed secret", name:"Solver token", mode:"env", var:"PM_SOLVER_TOKEN", note:"Read from the process environment; never written by PM." },
+    { id:"sec-cmd", type:"Command-helper / vault-backed", name:"Signing key", mode:"vault-cmd", ref:"op://Private/signing-key", note:"Resolved at use via a vault helper; not held in memory." },
+    { id:"sec-text", type:"Non-secret text", name:"Display name", mode:"text", value:"Jared", note:"Ordinary non-secret text." }
+  ];
+
+  /* Import / Copy-Settings-From flow data (packet 01 + 09) */
+  D.importConflicts = [
+    { setting:"appearance.theme", current:"Friendly · Dark", incoming:"Glass · Light", resolution:"keep-current" },
+    { setting:"planning.goal-concurrency", current:"8 agents", incoming:"4 agents", resolution:"take-incoming" },
+    { setting:"permissions.approval-mode", current:"Full Access", incoming:"Confirm Edits", resolution:"conflict" },
+    { setting:"context.retention", current:"90 days", incoming:"90 days", resolution:"same" }
+  ];
+  D.copyFromSources = [
+    { id:"p1", name:"Puppet-Master (main)", categories:10, note:"Transactional one-time copy; destination becomes independent immediately after." },
+    { id:"p2", name:"Puppet-Master (archive)", categories:10, note:"About ten broad categories; preview, restore point, atomic apply, receipt." }
+  ];
+
+  /* general fixtures (packet 08) surfaced as deterministic demo rows */
+  D.generalFixtures = [
+    { id:"gf-default", label:"Theme family", state:"default", expl:"Default — Friendly.", value:"Friendly" },
+    { id:"gf-custom", label:"UI scale", state:"custom", expl:"Custom — you set 110%.", value:"110%" },
+    { id:"gf-inherited", label:"Log retention", state:"inherited", expl:"Inherited from System.", value:"14 days" },
+    { id:"gf-managed", label:"Telemetry", state:"managed", expl:"Managed by administrator.", value:"Off", managed:true },
+    { id:"gf-unavailable", label:"Container driver", state:"unavailable", expl:"Unavailable on this platform.", value:"—", unavailable:true, reason:"No supported container driver detected." },
+    { id:"gf-validation", label:"Custom theme draft", state:"custom", expl:"Validation error — bad color token.", value:"#zzz", error:"Invalid color token 'zzz' at line 4." },
+    { id:"gf-restart", label:"Font family", state:"custom", expl:"Restart required to fully apply.", value:"Cal Sans", restart:true },
+    { id:"gf-reconnect", label:"Postgres MCP", state:"effective", expl:"Reconnect required — probe failed.", value:"reconnect", reconnect:true },
+    { id:"gf-elsewhere", label:"Approval mode", state:"effective", expl:"Setting changed elsewhere (another window).", value:"Confirm Edits", elsewhere:true },
+    { id:"gf-long", label:"Configure the maximum sustainable concurrent Goal worker fan-out across provider routes before the rate window resets", state:"custom", expl:"Long explanation: this ceiling caps how many worker agents a Goal may admit simultaneously; the orchestrator still admits only what current provider capacity and your spend guard allow, and reserves budget for final synthesis and verification. Effective capacity is reported live by Usage, not stored here.", value:"8 agents" }
+  ];
+
+  /* surface the general-fixture states as real setting rows under System → Setting states */
+  (function () {
+    var cat = D.catById["system"]; if (!cat) return;
+    var sub = { id: "states", title: "Setting states", cat: "system" };
+    cat.sub.push(sub); D.subById["system.states"] = sub;
+    D.settingsBySub["system.states"] = D.generalFixtures.map(function (f) {
+      return {
+        id: "gf-" + f.id, label: f.label, expl: f.expl, type: "readonly", value: f.value,
+        state: f.state, source: f.state.charAt(0).toUpperCase() + f.state.slice(1), exposure: "standard",
+        error: f.error, restart: f.restart, reconnect: f.reconnect, elsewhere: f.elsewhere,
+        managed: f.managed, unavailable: f.unavailable, reason: f.reason
+      };
+    });
+  })();
+})();
+
   /* ----- EXTENDED PRIMARY DESTINATIONS (cover all families; curated areas) ----- */
   var extraDest = [
     { id:"general", title:"General & Desktop", purpose:"Startup, desktop, tray, notifications, sounds, teacher, and updates.",

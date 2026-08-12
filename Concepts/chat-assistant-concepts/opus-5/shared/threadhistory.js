@@ -35,34 +35,37 @@
    * thread into the render path — the exact cost CHAT-017 exists to forbid — and it is invisible in
    * a small fixture and fatal in a real corpus.
    *
-   * `shellOf` is therefore the ONLY projection the row renderer is allowed to read, and it copies
-   * seven scalar fields by name. Anything a row wants that is not here is a request to widen this
-   * function deliberately, which is reviewable, rather than an accidental deep read. The interaction
-   * suite asserts the render path never touches a `messages` array. */
+   * `shellOf` is the SUBSCRIPTION UNIT and it is exactly seven fields: nothing derived, nothing
+   * optional, no second read of the source record anywhere in the row path. That literalness is the
+   * point — it is what a real client fetches for forty rows at once, and the interaction suite
+   * asserts the key set field-for-field, so widening it is a reviewable change to a subscription
+   * rather than an incidental extra property that nobody notices until the corpus is large.
+   *
+   * WHAT THIS COSTS, ON PURPOSE
+   * --------------------------
+   * The row previously also printed Goal, Draft and Long-history marks, which needed `activeGoal`,
+   * `draftState` and `hiddenCount` off the full record. They are gone. A forty-row index is an
+   * index: identity, recency, pin, archive, and one status symbol. Per-thread richness belongs to
+   * the thread you opened, not to every row you did not. Status therefore derives from
+   * `threadState` alone (see statusOf) and recency from `updatedAt`.
+   *
+   * `deleted` is read once here, at PROJECTION time, so no downstream renderer has to remember to
+   * check a tombstone — the row path never sees a deleted thread at all. */
   var SHELL_FIELDS = ['id', 'title', 'project', 'threadState', 'updatedAt', 'pinned', 'archived'];
 
   function shellOf(t) {
     if (!t) return null;
     var out = {};
     for (var i = 0; i < SHELL_FIELDS.length; i++) out[SHELL_FIELDS[i]] = t[SHELL_FIELDS[i]];
-    /* Derived scalars the row prints. `lastActivityAt` comes from data.js normalization, not from
-     * re-reading the message array here; `hiddenCount` is a number the corpus already computed. */
-    out.lastActivityAt = t.lastActivityAt || t.updatedAt;
-    out.hiddenCount = t.hiddenCount || 0;
-    out.hasGoal = t.activeGoal ? true : false;
-    out.draftState = t.draftState || null;
-    out.deleted = t.deleted ? true : false;
-    /* statusOf() distinguishes "finished" from "idle" through this flag; omitting it from the shell
-     * would silently collapse the finished state into idle in every history column. */
-    out.completed = t.completed ? true : false;
     return out;
   }
 
   function shellsOf(threads) {
     var out = [];
     for (var i = 0; i < (threads || []).length; i++) {
-      var s = shellOf(threads[i]);
-      if (s && !s.deleted) out.push(s);
+      var t = threads[i];
+      if (!t || t.deleted) continue;
+      out.push(shellOf(t));
     }
     return out;
   }
@@ -87,9 +90,10 @@
       case 'finished':          return 'finished';
       default: break;
     }
-    /* The extension layer marks threads whose last run completed. Plain 'idle' means
-     * "nothing is running", which is NOT the same claim as "finished". */
-    if (t.completed) return 'finished';
+    /* No `completed` fallback: it is not one of the seven shell fields, and a row must not
+     * reach past its shell to find one. A thread whose run finished carries threadState
+     * 'finished' above; plain 'idle' means "nothing is running", which is a weaker and
+     * honest claim for a row that has no other evidence. */
     return 'idle';
   }
 
@@ -148,6 +152,23 @@
     /* Only the bob moves the whole glyph — it is a nudge of the entire mark, which
      * is the point. Spin and pulse are aimed at individual shapes from CSS. */
     if (def.bob) glyph.classList.add('pmx-bob');
+
+    /* The `working` glyph is the one indefinite animation in this module, and an indefinite
+     * animation is only legal while a real operation runs. Binding the element to the run's
+     * ObservableWork id makes that checkable: the motion suite finds every infinitely animated
+     * element and requires a RUNNING op behind it. A spinner with no op is a claim that something
+     * is happening with nothing to back it. */
+    if (key === 'working') {
+      var obs = global.PMXObservable;
+      var opId = 'run-' + t.id;
+      if (obs && obs.isRunning && obs.isRunning(opId)) {
+        wrap.setAttribute('data-pmx-op', opId);
+      } else {
+        /* The corpus says this thread is running but no live op exists — a fixture state, not work
+         * in flight. It keeps the glyph and loses the animation, which is the honest rendering. */
+        wrap.setAttribute('data-pmx-static', '1');
+      }
+    }
     wrap.appendChild(glyph);
     return wrap;
   };
@@ -161,13 +182,18 @@
 
     u.empty(this.list);
 
-    /* Project to shells FIRST, then sort and render. Everything below this line sees seven scalar
-     * fields and cannot reach a message array even by accident. */
+    /* Tombstones are dropped at projection time; ordering then happens entirely on the projected
+     * shells, so nothing in this render path reads a field outside the seven.
+     *
+     * Recency is `updatedAt` because that is the field the shell carries. The older fixture note
+     * (GAP-D2) preferred `lastActivityAt`, derived from the last message at normalization time, on
+     * the grounds that the supplied `updatedAt` values are less precise — but reaching for it here
+     * would be a per-render read outside the subscription, which is exactly the weight this
+     * projection exists to remove. If the index order ever needs the better key, the fix belongs in
+     * normalization (make `updatedAt` trustworthy for every thread), not in this loop. */
     var threads = shellsOf(data.threads).sort(function (a, b) {
       if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-      /* Recency comes from the last message, not thread.updatedAt, which is unreliable on
-       * 11 of the 15 supplied threads. Recorded as GAP-D2. */
-      return new Date(b.lastActivityAt) - new Date(a.lastActivityAt);
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
     });
 
     threads.forEach(function (t) {
@@ -190,7 +216,7 @@
       var body = u.el('div', { class: 'pmx-chrome-hrow-body' });
       var top = u.el('div', { class: 'pmx-chrome-hrow-top' }, [
         u.el('span', { class: 'pmx-chrome-htitle', text: t.title }),
-        u.el('span', { class: 'pmx-chrome-htime', text: F().relative(t.lastActivityAt) })
+        u.el('span', { class: 'pmx-chrome-htime', text: F().relative(t.updatedAt) })
       ]);
       if (t.pinned) top.insertBefore(self.ctx.services.icons.get('pin', 11), top.firstChild);
       body.appendChild(top);
@@ -198,10 +224,10 @@
       /* The state WORD is gone — that is now the symbol. What remains is metadata the
        * symbol does not express, and 'Question' is dropped because it duplicates the
        * attention status exactly. */
+      /* Only marks derivable from the seven shell fields survive. Goal, Draft and Long-history
+       * needed a second read of the full record per row, which is the subscription weight this
+       * projection exists to remove; that detail is available in the thread itself. */
       var marks = u.el('div', { class: 'pmx-chrome-hmarks' });
-      if (t.hasGoal) marks.appendChild(u.el('span', { class: 'pmx-chrome-hmark', text: 'Goal' }));
-      if (t.draftState) marks.appendChild(u.el('span', { class: 'pmx-chrome-hmark', text: 'Draft' }));
-      if (t.hiddenCount > 0) marks.appendChild(u.el('span', { class: 'pmx-chrome-hmark', text: 'Long history' }));
       if (t.archived) marks.appendChild(u.el('span', { class: 'pmx-chrome-hmark', text: 'Archived' }));
       if (marks.childNodes.length) body.appendChild(marks);
 
@@ -601,6 +627,58 @@
     return btn;
   }
 
+  /* applyTo(hostEl, resolved) -> resolved
+   *
+   * Every window stamped the same six attributes by hand after calling resolve(), and every window
+   * got a slightly different subset right: some forgot `data-pmx-density`, some never called the
+   * module's own setDocked() equivalent, and one wrote `data-pinned` on the wrong element. The
+   * attributes ARE the contract between the shared history renderer and a window's CSS, so they
+   * belong to the module that defines them.
+   *
+   * `hostEl` is the region the window handed to compose.js. The mounted history root is found
+   * inside it rather than passed in, because a window does not own the module's instance.
+   *
+   * Returns the resolved object so a caller can write `var r = TH.applyTo(host, TH.resolve(...))`
+   * and keep one statement. */
+  function applyTo(hostEl, resolved) {
+    if (!hostEl || !resolved) return resolved;
+    var pinnedFull = resolved.effective === 'pinned-full';
+    var pinnedCompact = resolved.effective === 'pinned-compact';
+    var pinActive = pinnedFull || pinnedCompact;
+
+    hostEl.setAttribute('data-pinned', pinActive ? '1' : '0');
+    hostEl.setAttribute('data-density', pinnedCompact ? 'compact' : 'full');
+    hostEl.setAttribute('data-pmx-history', resolved.effective);
+
+    var root = hostEl.classList && hostEl.classList.contains('pmx-chrome-history')
+      ? hostEl
+      : (hostEl.querySelector ? hostEl.querySelector('.pmx-chrome-history') : null);
+    if (root) {
+      root.setAttribute('data-pmx-docked', pinActive ? '1' : '0');
+      root.setAttribute('data-pmx-density', pinnedCompact ? 'compact' : 'full');
+    }
+    return resolved;
+  }
+
+  /* reasonNode(hostEl, resolved) -> Element|null
+   *
+   * A suspended pin has to SAY it is suspended, in place. A pressed pin control beside an absent
+   * column is the single most confusing state this four-state model can produce, and the reason
+   * string already exists on the resolution — it just never reached the screen in six of the eight
+   * windows. The node is created once and reused, so calling this on every resolve is cheap. */
+  function reasonNode(hostEl, resolved) {
+    if (!hostEl) return null;
+    var node = hostEl.querySelector ? hostEl.querySelector('.pmx-chrome-hreason') : null;
+    if (!node) {
+      node = U().el('div', { class: 'pmx-chrome-hreason' });
+      hostEl.insertBefore(node, hostEl.firstChild);
+    }
+    var text = resolved && resolved.reason ? resolved.reason : '';
+    node.textContent = text;
+    node.setAttribute('data-show', text ? '1' : '0');
+    return node;
+  }
+
   /* Accepts either a resolve() result or the legacy boolean, so migrated and unmigrated
    * windows can both call it during the transition. */
   function syncPinButton(btn, resolved) {
@@ -643,6 +721,9 @@
     /* Per-window floors live here so the eight-row matrix is auditable in one place. */
     registerFloors: registerFloors,
     floorsFor: floorsFor,
+    /* The attribute contract between the shared renderer and each window's CSS. */
+    applyTo: applyTo,
+    reasonNode: reasonNode,
     /* The only projection a row renderer may read — see the SHELL_FIELDS comment. */
     shellOf: shellOf,
     shellsOf: shellsOf,
@@ -653,7 +734,6 @@
     /* Shared affordance. */
     togglePin: togglePin,
     pinButton: pinButton,
-    syncPinButton: syncPinButton,
-
+    syncPinButton: syncPinButton
   };
 })(window);

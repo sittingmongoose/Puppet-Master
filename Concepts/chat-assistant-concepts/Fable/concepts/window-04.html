@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>Window 04 · Depth Field — Fable</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/base.css">
+  <link rel="stylesheet" href="../shared/workspace.css">
+</head>
+<body>
+  <div id="fwRoot" data-concept-model="Fable"></div>
+  <script src="concept-hub-bridge.js"></script>
+  <script>
+    window.FW_PRESET = { window: "window-04", thread: "thread-c04", locked: "window" };
+  </script>
+  <script type="module">
+    import { bootWorkspace } from "../shared/workspace.js";
+    bootWorkspace(document.getElementById("fwRoot"));
+  </script>
+</body>
+</html>

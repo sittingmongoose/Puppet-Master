@@ -1,0 +1,179 @@
+/* Window 01 "Proscenium" — center stage, sliding wings, one continuous floor.
+   All structural motion happens on the horizontal axis with a settle easing. */
+
+.fw1-root {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  position: relative;
+  background: var(--bg-app);
+  overflow: hidden;
+}
+
+/* Continuous floor line — structural motif, spans wings and stage alike */
+.fw1-floor {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--edge-strong);
+  pointer-events: none;
+}
+
+/* ---------- wings ---------- */
+.fw1-wing {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--edge-faint);
+  overflow: hidden;
+  transition: width var(--dur-slow) var(--ease-settle);
+}
+.fw1-history { width: 0; border-right-color: transparent; }
+.fw1-history[data-state="peek"],
+.fw1-history[data-state="pinned-full"] { width: 248px; border-right-color: var(--edge-faint); }
+.fw1-history[data-state="pinned-compact"] { width: 64px; border-right-color: var(--edge-faint); }
+.fw1-history[data-state="peek"] {
+  position: absolute;
+  left: 0; top: 0; bottom: 2px;
+  z-index: 40;
+  box-shadow: var(--shadow-2);
+  border-right: 1px solid var(--edge-strong);
+}
+
+.fw1-artifact { width: 0; border-right-color: transparent; }
+.fw1-artifact[data-open="true"] {
+  width: clamp(280px, 30vw, 430px);
+  border-right-color: var(--edge-faint);
+}
+
+.fw1-wing-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--edge-faint);
+  flex: none;
+  min-width: 0;
+}
+.fw1-wing-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 620;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw1-rows { flex: 1; min-height: 0; padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+.fw1-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  min-width: 0;
+  color: var(--text-secondary);
+}
+.fw1-row:hover { background: var(--bg-hover); }
+.fw1-row[data-active="true"] { background: var(--bg-active); color: var(--text-primary); }
+.fw1-row-glyph { flex: none; color: var(--text-faint); display: inline-flex; }
+.fw1-row[data-active="true"] .fw1-row-glyph { color: var(--accent); }
+.fw1-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.fw1-row-title {
+  font-size: 12.5px;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw1-row-sub { font-size: 10.5px; color: var(--text-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw1-row-side { flex: none; display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-faint); }
+.fw1-row-mini { font-size: 10px; color: var(--text-faint); }
+.fw1-history[data-state="pinned-compact"] .fw1-row { flex-direction: column; gap: 2px; padding: 8px 4px; }
+.fw1-empty { padding: 14px; font-size: 12px; color: var(--text-faint); }
+.fw1-archive-toggle {
+  display: flex; align-items: center; gap: 6px;
+  margin: 6px;
+  padding: 6px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.fw1-archive-toggle:hover { background: var(--bg-hover); color: var(--text-secondary); }
+
+/* ---------- artifact wing internals ---------- */
+.fw1-art-head { background: var(--bg-surface); }
+.fw1-art-arch { color: var(--accent); display: inline-flex; }
+.fw1-art-status {
+  font-size: 10px;
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+  border: 1px solid var(--edge);
+  color: var(--text-faint);
+}
+.fw1-art-status[data-status="updated"] { color: var(--accent); border-color: var(--accent); }
+.fw1-art-status[data-status="error"] { color: var(--danger); border-color: var(--danger); }
+.fw1-art-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fw1-art-switch {
+  display: flex;
+  gap: 4px;
+  padding: 7px 8px;
+  border-top: 1px solid var(--edge-faint);
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: none;
+}
+.fw1-art-switch::-webkit-scrollbar { display: none; }
+.fw1-art-tab {
+  flex: none;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--edge);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.fw1-art-tab:hover { background: var(--bg-hover); }
+.fw1-art-tab[data-active="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+
+/* ---------- stage ---------- */
+.fw1-stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-app);
+}
+.fw1-lintel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--edge-faint);
+  min-width: 0;
+  flex: none;
+}
+.fw1-lintel-left, .fw1-lintel-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.fw1-lintel-right { flex: none; }
+.fw1-lintel-right .pmc-search { width: 190px; }
+
+.fw1-thread-slot {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--fw-chat-width, 750px);
+  display: flex;
+  flex-direction: column;
+  transition: max-width var(--dur-base) var(--ease-settle);
+}
+
+/* (Shared .fwc-* header chrome lives in shared/components.css) */

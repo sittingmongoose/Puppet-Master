@@ -141,6 +141,10 @@
   }
 
   function applyRoute(ctx, tid, routeKey, opts) {
+    // Goal route-frozen rule: while a Goal runs, retargeting needs an explicit
+    // Update-Goal — guardRouteChange shows the notice and returns true (abort).
+    if (window.K3Work && typeof window.K3Work.guardRouteChange === 'function' &&
+        window.K3Work.guardRouteChange(ctx, tid)) return false;
     opts = opts || {};
     ctx.data.setThreadLocal(tid, {
       route: routeKey,
@@ -150,6 +154,7 @@
     pushRecent(ctx.store, routeKey);
     ctx.emit('data', { type: 'route-changed', threadId: tid, routeKey: routeKey });
     K3Route.reevaluateAttachments(ctx, tid);
+    return true;
   }
 
   function findCardRecord(ctx, tid, cardId) {
@@ -568,8 +573,7 @@
       var draft = typeof ctx.data.getDraft === 'function' ? ctx.data.getDraft(t) : null;
       var consequences = detectConsequences(from, to, draft && draft.attachments);
       if (!consequences.length) {
-        applyRoute(ctx, t, routeKey, opts);
-        return true;
+        return applyRoute(ctx, t, routeKey, opts) !== false;
       }
       cardSeq += 1;
       var cardId = 'rw-' + t + '-' + cardSeq;
@@ -613,7 +617,9 @@
       } else if (!p || !p.routeKey) {
         return false;
       } else if (choice === 'continue') {
-        if (p) applyRoute(ctx, tid, p.routeKey, { effort: p.effort, speed: p.speed });
+        // a Goal-frozen abort (applyRoute === false) leaves the card OPEN —
+        // the frozen-goal notice explains why nothing was applied.
+        if (p && applyRoute(ctx, tid, p.routeKey, { effort: p.effort, speed: p.speed }) === false) return false;
         card.status = 'resolved-continue';
       } else if (choice === 'branch') {
         var branch = null;

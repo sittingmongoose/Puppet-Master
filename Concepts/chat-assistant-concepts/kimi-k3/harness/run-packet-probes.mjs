@@ -1,6 +1,6 @@
 /* Packet behavioral gate: every packet probe × 2 themes × 2 widths on the
    canonical pairings. Usage: node harness/run-packet-probes.mjs [--driver=cdp] [--only=name] */
-import { startServer, launchDriver, openHost, writeResults, PIN_KEYS } from './fixtures.mjs';
+import { startServer, launchDriver, openHost, waitBoot, hostParams, uniqueSess, writeResults, PIN_KEYS } from './fixtures.mjs';
 import { PACKET } from './probes.mjs';
 
 const driverName = (process.argv.find((a) => a.startsWith('--driver=')) || '--driver=cdp').split('=')[1];
@@ -26,7 +26,11 @@ try {
           for (const [name, fn] of PACKET) {
             if (only && name !== only) continue;
             total++;
+            // isolation: probes mutate fixture state, so each runs on a fresh
+            // session (same tab, new sess -> clean store + data re-init).
             try {
+              await page.goto(server.url + 'host.html?' + hostParams({ window: w, thread: t, theme, width, sess: uniqueSess() }));
+              await waitBoot(page);
               const r = await fn(page, ctx, PIN_KEYS[w]);
               if (!r.pass) {
                 failed++;

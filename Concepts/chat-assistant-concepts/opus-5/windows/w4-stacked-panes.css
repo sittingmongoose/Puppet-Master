@@ -289,3 +289,55 @@
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------- artifact pane
+ *
+ * The fourth pane. It obeys the same role machinery as the other three, so it needs no geometry of
+ * its own — only the segmented sub-header and the empty state. */
+[data-pmx-window="w4"] .w4-artifact-seg {
+  display: flex;
+  gap: 2px;
+  padding: 4px 0 8px;
+  overflow-x: auto;
+}
+[data-pmx-window="w4"] .w4-artifact-seg-btn {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  white-space: nowrap;
+  cursor: pointer;
+}
+[data-pmx-window="w4"] .w4-artifact-seg-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+/* A pane with nothing produced yet stays a slim header rather than an empty expanse. */
+[data-pmx-window="w4"] .w4-pane[data-pane="artifact"][data-has-content="0"] .w4-pane-body { display: none; }
+
+/* ---------------------------------------------------------------- history pane: growth at EVERY width
+ *
+ * The verified defect: `data-role="secondary"` only grew inside `min-width: 980px`, so a pinned
+ * History pane at a narrow chat stayed header-height — the pin was pressed and nothing expanded,
+ * which is a lie about state. Growth is a property of the ROLE, not of the viewport. */
+[data-pmx-window="w4"] .w4-pane[data-role="secondary"] {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+[data-pmx-window="w4"] .w4-pane[data-role="secondary"] .w4-pane-body { display: block; }
+
+/* ---------------------------------------------------------------- pinned-compact: vertical strip
+ *
+ * The compact form is the `writing-mode: vertical-rl` strip this concept already defined for its
+ * collapsed panes. Reusing it is the point: the pane stays a pane, and "compact" means it turns on
+ * its side rather than becoming a different kind of object. */
+[data-pmx-window="w4"] .w4-pane[data-pane="history"][data-density="compact"] .w4-history-host {
+  writing-mode: vertical-rl;
+  max-height: 100%;
+}
+[data-pmx-window="w4"] .w4-pane[data-pane="history"][data-density="compact"] .pmx-chrome-hrow-body,
+[data-pmx-window="w4"] .w4-pane[data-pane="history"][data-density="compact"] .pmx-chrome-hmore { display: none; }

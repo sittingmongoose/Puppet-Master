@@ -337,3 +337,94 @@
  */
 [data-pmx-window="w8"] .pmx-chrome-sel { display: none; }
 [data-pmx-window="w8"] .pmx-chrome-sel-more { display: inline-flex; }
+
+/* ---------------------------------------------------------------- artifact capsule
+ *
+ * A floating capsule in the same frameless material, edge to edge in height, with no header bar.
+ * Both side surfaces are capsules in this concept, so the artifact capsule sits LEFT of the history
+ * capsule stack and neither becomes chrome. */
+/* The capsule stops ABOVE the composer capsule. Spanning the full height covered the field the
+ * user types into — a floating surface may overlay the transcript (that is this concept's whole
+ * idea) but never the composer, which is the one control that must always be reachable. */
+[data-pmx-window="w8"] .w8-artifact-host {
+  display: none;
+  position: absolute;
+  top: var(--sm);
+  bottom: var(--w8-artifact-bottom, 140px);
+  left: var(--sm);
+  z-index: 6;
+  width: clamp(240px, 30%, 380px);
+  border-radius: var(--radius-lg, 12px);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-3);
+  overflow: hidden;
+}
+[data-pmx-window="w8"] .w8-shell[data-w8-artifact="1"] .w8-artifact-host { display: flex; flex-direction: column; }
+[data-pmx-window="w8"] .w8-artifact-body { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+
+/* A small capsule strip above the artifact is the switcher — same material, same radius, so it
+ * reads as part of the same floating object rather than a header bar. */
+[data-pmx-window="w8"] .w8-artifact-strip {
+  display: flex;
+  gap: 3px;
+  padding: 6px;
+  overflow-x: auto;
+}
+[data-pmx-window="w8"] .w8-artifact-cap {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: none;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  white-space: nowrap;
+  cursor: pointer;
+}
+[data-pmx-window="w8"] .w8-artifact-cap[aria-pressed="true"] { color: var(--text-primary); font-weight: 600; }
+
+/* Narrow fallback: full-surface, like .w8-full. */
+@container pmx-chat (max-width: 749px) {
+  [data-pmx-window="w8"] .w8-shell[data-w8-artifact="1"] .w8-artifact-host {
+    right: var(--sm);
+    width: auto;
+  }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: capsule stack
+ *
+ * A vertical stack of small floating capsules, one per recent thread. Nothing docks and nothing
+ * gains a frame — the compact form of a frameless concept has to stay frameless. */
+[data-pmx-window="w8"] .w8-pinrail[data-density="compact"] {
+  width: 44px;
+  min-width: 44px;
+  gap: 4px;
+}
+[data-pmx-window="w8"] .w8-pinrail[data-density="compact"] .pmx-chrome-hrow {
+  border-radius: 999px;
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+}
+[data-pmx-window="w8"] .w8-pinrail[data-density="compact"] .pmx-chrome-hrow-body,
+[data-pmx-window="w8"] .w8-pinrail[data-density="compact"] .pmx-chrome-hmore { display: none; }
+[data-pmx-window="w8"] .w8-pinrail[data-density="compact"] .pmx-chrome-hrow-main {
+  justify-content: center;
+  padding: 6px 0;
+}
+
+/* ---------------------------------------------------------------- header capsule recovery
+ *
+ * The verified defect: `.w8-shell:hover .w8-cap-head[data-hidden="1"]:hover` is unreachable once the
+ * capsule has translated -140% out of the surface — you cannot hover something that is not there.
+ * A real 12px hit target pinned to the top edge is the only honest recovery affordance. */
+[data-pmx-window="w8"] .w8-cap-recover {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 12px;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+[data-pmx-window="w8"] .w8-shell:not(:has(.w8-cap-head[data-hidden="1"])) .w8-cap-recover { display: none; }

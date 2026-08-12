@@ -4,3 +4,9 @@ advisors:
     enabled: false
   - name: Advisor 2
     model: openai-codex/gpt-5.6-sol:xhigh
+    enabled: false
+  - name: Advisor 3
+    model: google-antigravity/claude-opus-4-6:high
+    enabled: false
+  - name: Advisor 4
+    model: cursor/default

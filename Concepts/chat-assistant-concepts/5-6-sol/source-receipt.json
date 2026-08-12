@@ -1,0 +1,37 @@
+{
+  "schema_id": "pm.chat.5_6_sol.source_receipt.v1",
+  "model": "5.6 Sol",
+  "packet": "PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10.zip",
+  "packet_sha256": "a391ed571c9a2f27adb14c923c7a914f685a6486d4944a000e1ec5d6bd6083fc",
+  "packet_manifest_schema": "pm.chat.5_6_sol.packet_manifest.v1",
+  "repository_head_at_start": "43b5b635c4ae285544745762b79218b07786263c",
+  "source_precedence": [
+    "current_user_instructions",
+    "packet_creative_brief_and_fixed_behavior",
+    "packet_machine_registers",
+    "current_live_plans",
+    "pmconcept7_functional_evidence",
+    "original_packet_source_history",
+    "neutral_external_functional_research"
+  ],
+  "read_only_evidence_lanes": [
+    "canon_inventory",
+    "video_inventory",
+    "command_wiring_inventory",
+    "test_inventory"
+  ],
+  "persistent_write_root": "Concepts/chat-assistant-concepts/5-6-sol",
+  "forbidden_writes": [
+    "PMConcept7",
+    "Plans",
+    "Commands",
+    "Wiring",
+    "DRY owners",
+    "Settings",
+    "Usage",
+    "runtime code",
+    "ConceptHub",
+    "other Assistant Chat concept folders"
+  ],
+  "prototype_boundary": "Functional comparison concepts and provisional impact evidence only; no production authority or canonical mutation."
+}

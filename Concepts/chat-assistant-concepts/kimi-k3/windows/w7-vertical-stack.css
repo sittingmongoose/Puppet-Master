@@ -163,6 +163,7 @@
   flex: 0 0 auto; display: flex; flex-direction: column;
   border-top: var(--border-width, 1px) solid var(--border-light);
   max-height: min(40vh, 320px);
+  overflow: hidden; /* the band cap governs; the body can never bleed past it */
 }
 [data-k3-window="w7"] .w7-band-artbay[hidden] { display: none; }
 [data-k3-window="w7"] .w7-artbay-head {
@@ -184,9 +185,17 @@
 [data-k3-window="w7"] .w7-artbay-acc { flex: 0 1 auto; min-height: 0; }
 [data-k3-window="w7"] .w7-artbay-body {
   display: flex; flex-direction: column; min-height: 0;
-  max-height: calc(min(40vh, 320px) - 28px); overflow: auto;
+  max-height: calc(min(40vh, 320px) - 34px); /* hard layout cap: the rect must fit the band */
+  overflow: auto;
 }
-[data-k3-window="w7"] .w7-artbay-body [class*="k3aw"] { flex: 1 1 auto; min-height: 120px; }
+[data-k3-window="w7"] .w7-artbay-body > .k3aw-surface { flex: 1 1 auto; min-height: 120px; }
 /* transcript floor: the thread slot never drops below 180px while the bay is open */
 [data-k3-window="w7"] .w7-thread { min-height: 180px; }
 html[data-motion="reduced"] [data-k3-window="w7"] .w7-artbay-acc { transition: none; }
+
+/* cap the accordion region so the body layout box can never exceed the band */
+[data-k3-window="w7"] .w7-band-artbay .w7-artbay-acc {
+  max-height: calc(min(40vh, 320px) - 34px);
+  min-height: 0;
+}
+[data-k3-window="w7"] .w7-band-artbay .w7-artbay-acc .k3-acc-in { min-height: 0; }

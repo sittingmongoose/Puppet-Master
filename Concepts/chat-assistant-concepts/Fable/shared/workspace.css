@@ -1,0 +1,176 @@
+/* Fable — comparison workspace chrome (the prototype gallery around the PM shell).
+   The gallery console is host chrome, visually quiet, never part of the concept. */
+
+.fw-root {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  background: var(--bg-app);
+}
+
+/* ---------- gallery console ---------- */
+.fw-console {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--edge);
+  background: var(--bg-panel);
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+.fw-console-group { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.fw-console-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
+.fw-console select {
+  background: var(--bg-inset);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 12px;
+  padding: 4px 6px;
+  max-width: 165px;
+}
+.fw-width-slider { display: flex; align-items: center; gap: 7px; }
+.fw-width-slider input[type="range"] { width: 130px; accent-color: var(--accent); }
+.fw-width-value { font-variant-numeric: tabular-nums; color: var(--text-primary); min-width: 52px; }
+.fw-preset {
+  font-size: 10.5px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  color: var(--text-secondary);
+}
+.fw-preset:hover { background: var(--bg-hover); }
+.fw-preset[data-active="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.fw-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.fw-toggle[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.fw-spacer { flex: 1; }
+.fw-model-badge {
+  font-weight: 650;
+  color: var(--text-primary);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  background: var(--bg-raised);
+}
+
+/* ---------- trigger drawer ---------- */
+.fw-trigger-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--edge-strong);
+  box-shadow: var(--shadow-3);
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--dur-base) var(--ease-settle);
+}
+.fw-trigger-drawer[data-open="true"] { transform: translateX(0); }
+.fw-trigger-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--edge-faint);
+  font-size: 12.5px; font-weight: 600;
+  color: var(--text-primary);
+}
+.fw-trigger-head button { margin-left: auto; color: var(--text-faint); }
+.fw-showcase-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 10px 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+}
+.fw-showcase-btn:hover { background: var(--bg-hover); }
+.fw-showcase-btn span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw-trigger-list { flex: 1; min-height: 0; padding: 8px; display: flex; flex-direction: column; gap: 2px; }
+.fw-trigger-family {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--text-faint); padding: 9px 6px 3px;
+}
+.fw-trigger-btn {
+  text-align: left;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.fw-trigger-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+/* ---------- chat width application ----------
+   The chat surface width is driven by --fw-chat-width (host slider or Hub). */
+.fw-stage { position: relative; min-height: 0; min-width: 0; display: flex; }
+.fw-stage .pm-shell { flex: 1; min-width: 0; }
+
+/* ---------- pop-out ---------- */
+.fw-popout-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 14, 0.42);
+  z-index: 500;
+}
+[data-theme$="-light"] .fw-popout-scrim { background: rgba(40, 48, 60, 0.28); }
+.fw-popout-frame {
+  position: absolute;
+  inset: 4% 6%;
+  z-index: 510;
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3);
+  background: var(--bg-app);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fw-popout-in var(--dur-base) var(--ease-settle);
+}
+@keyframes fw-popout-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.fw-popout-titlebar {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--edge-faint);
+  background: var(--bg-shell);
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex: none;
+}
+.fw-popout-titlebar .fw-popout-title { font-weight: 600; color: var(--text-primary); }
+.fw-popout-titlebar button { margin-left: auto; }
+.fw-popout-host { flex: 1; min-height: 0; display: flex; }
+
+/* Ghost that remains in the docked slot while popped out */
+.fw-dock-ghost {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--text-faint);
+  font-size: 12.5px;
+  border: 1px dashed var(--edge);
+  border-radius: var(--radius-lg);
+  margin: 18px;
+  min-width: 0;
+}
+.fw-dock-ghost button { color: var(--accent); }

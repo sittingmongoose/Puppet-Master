@@ -444,3 +444,70 @@
 }
 
 [data-motion="reduced"][data-pmx-window="w3"] .w3-pinrail { transition: none !important; }
+
+/* ---------------------------------------------------------------- artifact column
+ *
+ * OUTSIDE .w3-main, so the reading measure stays centred in whatever remains. That is the one
+ * inviolable rule of this concept: --w3-measure is the product, and an artifact that pushed the
+ * measure off-centre would break it while appearing to work.
+ *
+ * Coexistence: pinned history owns the left gutter, the artifact owns this outer column. */
+[data-pmx-window="w3"] .w3-artifact-host {
+  display: none;
+  flex-direction: row;
+  flex: 0 0 clamp(260px, 32%, 420px);
+  min-width: 0;
+  min-height: 0;
+  border-right: var(--border-width, 1px) solid var(--border);
+  background: var(--surface);
+}
+[data-pmx-window="w3"] .w3-shell[data-w3-artifact="1"] .w3-artifact-host { display: flex; }
+[data-pmx-window="w3"] .w3-artifact-body { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+
+/* The switcher is a vertical marker list in the artifact's own gutter — the same jump-marker idiom
+ * the transcript gutter already uses, so the concept keeps one navigation language. */
+[data-pmx-window="w3"] .w3-artifact-markers {
+  flex: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  border-right: var(--border-width, 1px) solid var(--border);
+}
+[data-pmx-window="w3"] .w3-artifact-marker {
+  width: 10px; height: 10px;
+  padding: 0;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+[data-pmx-window="w3"] .w3-artifact-marker[aria-pressed="true"] {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Narrow fallback: the artifact replaces the left gutter entirely and the measure shrinks to its
+ * 56ch floor rather than the artifact overlaying the text. */
+@container pmx-chat (max-width: 749px) {
+  [data-pmx-window="w3"] .w3-shell[data-w3-artifact="1"] .w3-gutter-left { display: none; }
+  [data-pmx-window="w3"] .w3-shell[data-w3-artifact="1"] { --w3-measure: 56ch; }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: marker rail
+ *
+ * The 40px left gutter becomes a marker rail: one status dot per thread, aligned to the existing
+ * jump-marker column. No titles — this concept's compact form is deliberately the same shape as
+ * its scroll markers, so the gutter never changes width and the measure never moves. */
+[data-pmx-window="w3"] .w3-pinrail[data-density="compact"] {
+  width: 40px;
+  min-width: 40px;
+}
+[data-pmx-window="w3"] .w3-pinrail[data-density="compact"] .pmx-chrome-hrow-body,
+[data-pmx-window="w3"] .w3-pinrail[data-density="compact"] .pmx-chrome-hmore,
+[data-pmx-window="w3"] .w3-pinrail[data-density="compact"] .pmx-chrome-hreason { display: none; }
+[data-pmx-window="w3"] .w3-pinrail[data-density="compact"] .pmx-chrome-hrow-main {
+  justify-content: center;
+  padding: 5px 0;
+}

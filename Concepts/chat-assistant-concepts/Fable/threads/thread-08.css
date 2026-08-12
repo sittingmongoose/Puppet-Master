@@ -1,0 +1,340 @@
+/* Thread 08 "Choreograph" — arc entrances with settle, orbiting satellite on
+   the active turn, dealt-hand questionnaire with fan review. */
+
+.ft8-root { background: var(--bg-app); }
+.ft8-scroll { padding: 18px 0 10px; }
+.ft8-stagefloor {
+  padding: 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- figures ---------- */
+.ft8-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 82%;
+  animation: ft8-arc var(--dur-slow) var(--ease-overshoot) both;
+  animation-delay: var(--ft8-delay, 0ms);
+}
+.ft8-figure[data-role="user"] { align-self: flex-end; align-items: flex-end; }
+.ft8-figure[data-role="assistant"] { align-self: flex-start; }
+@keyframes ft8-arc {
+  0%   { transform: translate(0, 14px) rotate(0.4deg) scale(0.97); opacity: 0; }
+  60%  { transform: translate(0, -2px) rotate(-0.15deg) scale(1.005); opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+.ft8-flags { display: flex; gap: 6px; }
+.ft8-card {
+  border: 1px solid var(--edge-faint);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  padding: 11px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  box-shadow: var(--shadow-1);
+  min-width: 0;
+}
+.ft8-figure[data-role="user"] .ft8-card {
+  background: var(--user-ground);
+  border-color: transparent;
+}
+.ft8-prose { font-family: var(--font-prose); font-size: 13.5px; line-height: 1.6; color: var(--text-primary); }
+.ft8-figure[data-role="user"] .ft8-prose { color: var(--user-ink); }
+.ft8-prose p { margin: 0 0 7px; }
+.ft8-prose p:last-child { margin: 0; }
+.ft8-prose code { font-family: var(--font-mono); font-size: 12px; background: var(--bg-inset); border-radius: var(--radius-xs); padding: 1px 5px; }
+.ft8-fold { align-self: flex-start; font-size: 11px; color: var(--accent); }
+.ft8-fold:hover { text-decoration: underline; }
+
+.ft8-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  padding: 0 6px;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+  flex-wrap: wrap;
+}
+.ft8-figure:hover .ft8-actions, .ft8-actions:focus-within { opacity: 1; }
+.ft8-actions button { font-size: 10.5px; color: var(--text-secondary); }
+.ft8-actions button:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft8-meta { white-space: nowrap; }
+.ft8-ops { margin-left: auto; }
+
+/* ---------- satellite ---------- */
+.ft8-satellite {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  flex: none;
+}
+.ft8-satellite-docked { width: 8px; height: 8px; }
+.ft8-docked {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  font-size: 11px;
+  color: var(--text-secondary);
+  border-top: 1px dashed var(--edge);
+  padding-top: 6px;
+  width: 100%;
+  text-align: left;
+}
+.ft8-docked:hover { color: var(--text-primary); }
+.ft8-dock-sheet { display: flex; flex-direction: column; gap: 3px; padding: 4px 0 0; }
+.ft8-dock-line { display: flex; align-items: baseline; gap: 9px; font-size: 11.5px; color: var(--text-primary); }
+.ft8-dock-kind { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); min-width: 56px; flex: none; }
+.ft8-dock-side { margin-left: auto; font-size: 10.5px; color: var(--text-secondary); flex: none; }
+.ft8-dock-thought { margin: 2px 0; font-size: 11.5px; font-style: italic; color: var(--text-secondary); }
+
+/* active turn with orbit */
+.ft8-active { display: flex; flex-direction: column; gap: 9px; }
+.ft8-orbit-frame {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  padding: 9px 15px;
+  box-shadow: var(--shadow-1);
+}
+.ft8-orbit-frame[data-redirected="true"] { border-color: var(--info); }
+.ft8-orbit-path {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border: 1px dashed var(--edge-strong);
+  border-radius: 50%;
+  flex: none;
+  animation: ft8-orbit 3.2s linear infinite;
+}
+.ft8-orbit-path .ft8-satellite {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+}
+@keyframes ft8-orbit { to { transform: rotate(360deg); } }
+[data-reduced-motion="1"] .ft8-orbit-path, [data-motion="reduced"] .ft8-orbit-path {
+  animation: none;
+  border-style: solid;
+  border-color: var(--accent);
+}
+.ft8-orbit-summary { font-size: 12.5px; color: var(--text-primary); }
+.ft8-orbit-time { font-size: 10.5px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+
+/* troupe */
+.ft8-troupe {
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+.ft8-troupe-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.ft8-troupe-head:hover { color: var(--text-primary); }
+.ft8-troupe-head span { flex: 1; text-align: left; }
+.ft8-troupe-body {
+  border-top: 1px solid var(--edge-faint);
+  padding: 10px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ft8-troupe-goal { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.ft8-goal-badge {
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-pill);
+  padding: 1px 9px;
+  color: var(--text-secondary);
+}
+.ft8-troupe-goal[data-status="running"] .ft8-goal-badge { color: var(--accent); border-color: var(--accent); }
+.ft8-troupe-goal[data-status="blocked"] .ft8-goal-badge { color: var(--danger); border-color: var(--danger); }
+.ft8-troupe-goal[data-status="paused"] .ft8-goal-badge { color: var(--warn); border-color: var(--warn); }
+.ft8-goal-name { font-size: 12.5px; font-weight: 640; color: var(--text-primary); }
+.ft8-goal-ctrl { margin-left: auto; display: flex; gap: 9px; }
+.ft8-goal-ctrl button { font-size: 10.5px; color: var(--text-secondary); }
+.ft8-goal-ctrl button:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft8-goal-ctrl button:disabled { color: var(--text-faint); }
+.ft8-troupe-blocked { font-size: 11.5px; color: var(--danger); }
+.ft8-dancers { display: flex; gap: 14px; flex-wrap: wrap; }
+.ft8-dancer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 84px;
+  max-width: 130px;
+}
+.ft8-dancer-disc {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--edge-strong);
+  background: var(--bg-panel);
+}
+.ft8-dancer[data-status="working"] .ft8-dancer-disc { border-color: var(--accent); background: var(--accent-soft); }
+.ft8-dancer[data-status="complete"] .ft8-dancer-disc { border-color: var(--ok); background: var(--ok-soft); }
+.ft8-dancer[data-status="blocked"] .ft8-dancer-disc { border-color: var(--danger); background: var(--danger-soft); }
+.ft8-dancer-name { font-size: 11px; font-weight: 630; color: var(--text-primary); }
+.ft8-dancer-act {
+  font-size: 9.5px;
+  color: var(--text-faint);
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.ft8-steps { display: flex; gap: 4px; flex-wrap: wrap; }
+.ft8-step {
+  width: 26px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--edge);
+}
+.ft8-step[data-state="complete"] { background: var(--ok); }
+.ft8-step[data-state="running"] { background: var(--accent); }
+.ft8-step[data-state="verifying"] { background: var(--info); }
+.ft8-step[data-state="blocked"], .ft8-step[data-state="failed"] { background: var(--danger); }
+.ft8-troupe-diff { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text-secondary); }
+.ft8-troupe-diff:hover { color: var(--accent); }
+
+/* ---------- dealt hand ---------- */
+.ft8-hand { display: flex; flex-direction: column; gap: 8px; }
+.ft8-deal-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+  font-size: 12px;
+  color: var(--text-secondary);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  background: var(--bg-raised);
+}
+.ft8-hand-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ft8-hand-title { font-size: 12.5px; font-weight: 650; color: var(--text-primary); }
+.ft8-stack-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 3px 11px;
+  background: var(--bg-surface);
+}
+.ft8-stack-chip:hover { color: var(--text-primary); background: var(--bg-hover); }
+.ft8-deal-card {
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-2);
+  padding: 13px 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 190px;
+  transform-origin: bottom center;
+  animation: ft8-deal var(--dur-slow) var(--ease-overshoot);
+}
+@keyframes ft8-deal {
+  from { transform: translateY(26px) rotate(1.6deg) scale(0.94); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.ft8-deal-count { font-size: 10.5px; color: var(--text-faint); }
+.ft8-deal-prompt { margin: 0 0 4px; font-size: 13.5px; line-height: 1.55; color: var(--text-primary); max-width: 62ch; }
+.ft8-deal-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 11px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  text-align: left;
+  transition: transform var(--dur-fast) var(--ease-overshoot), border-color var(--dur-fast) var(--ease-out);
+}
+.ft8-deal-opt:hover { border-color: var(--edge-strong); transform: translateX(3px); }
+.ft8-deal-opt[data-selected="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.ft8-deal-spot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--edge-strong);
+  flex: none;
+}
+.ft8-deal-opt[data-selected="true"] .ft8-deal-spot { border-color: var(--accent); background: var(--accent); }
+.ft8-deal-freeform {
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  font-size: 13px;
+  padding: 9px 11px;
+  min-height: 72px;
+  resize: vertical;
+  outline: none;
+}
+.ft8-deal-skipped { display: flex; gap: 10px; font-size: 11.5px; color: var(--warn); }
+.ft8-deal-skipped button { color: var(--accent); font-size: 11.5px; }
+.ft8-hand-nav { display: flex; align-items: center; gap: 12px; padding-top: 8px; margin-top: auto; }
+.ft8-navbtn { font-size: 11.5px; color: var(--text-secondary); }
+.ft8-navbtn:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft8-navbtn:disabled { color: var(--text-faint); }
+.ft8-navcancel { color: var(--danger); }
+.ft8-hand-nav .pm-btn { margin-left: auto; }
+.ft8-hand-error { font-size: 11.5px; color: var(--danger); }
+.ft8-fan { display: flex; flex-direction: column; gap: 5px; }
+.ft8-fan-card {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  text-align: left;
+  min-width: 0;
+  animation: ft8-fanout var(--dur-base) var(--ease-settle) both;
+  animation-delay: calc(var(--fan-i, 0) * 40ms);
+}
+@keyframes ft8-fanout {
+  from { transform: translateY(10px) rotate(0.8deg); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.ft8-fan-card:hover { border-color: var(--edge-strong); }
+.ft8-fan-num { font-size: 10.5px; color: var(--text-faint); font-variant-numeric: tabular-nums; flex: none; }
+.ft8-fan-q { flex: 1; min-width: 0; font-size: 12px; color: var(--text-secondary); }
+.ft8-fan-a { flex: none; max-width: 36%; font-size: 12px; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ft8-fan-card[data-state="skipped"] .ft8-fan-a { color: var(--warn); }
+.ft8-fan-card[data-state="open"] .ft8-fan-a { color: var(--text-faint); }
+
+.ft8-composer-region { border-top: 1px solid var(--edge-faint); }
+
+[data-reduced-motion="1"] .ft8-figure, [data-reduced-motion="1"] .ft8-deal-card, [data-reduced-motion="1"] .ft8-fan-card,
+[data-motion="reduced"] .ft8-figure, [data-motion="reduced"] .ft8-deal-card, [data-motion="reduced"] .ft8-fan-card { animation: none; }

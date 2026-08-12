@@ -246,8 +246,8 @@
   background: var(--surface);
 }
 [data-k3-window="w3"] .w3-art-col[hidden] { display: none; }
-[data-k3-window="w3"] .w3-art-col [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
-[data-k3-window="w3"] .w3-pane-body > [class*="k3aw"] { min-height: 160px; }
+[data-k3-window="w3"] .w3-art-col > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
+[data-k3-window="w3"] .w3-pane-body > .k3aw-surface { min-height: 160px; }
 [data-k3-window="w3"] .w3-bsd-host {
   flex: 0 0 auto;
   border-top: var(--border-width, 1px) solid var(--border-light);

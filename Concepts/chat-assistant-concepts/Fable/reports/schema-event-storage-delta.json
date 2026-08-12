@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.chat.fable.schema_event_storage_delta.v1",
+  "model": "Fable",
+  "note": "State shapes the prototype persists or projects, mapped to 08's delta areas. ACD-434 field names are reused verbatim where the concept touches them; unknown values stay unknown (never fabricated).",
+  "deltas": [
+    { "area": "message timestamps", "shape": "sentAt (UTC ISO) stored; locale rendering via Intl; Started/Completed/first-visible derivable per turn", "storage": "fixture + runtime appends" },
+    { "area": "worked vs elapsed", "shape": "runtime.workedSeconds, runtime.totalElapsedSeconds; workedLabel renders Working for/Worked for; waits excluded from worked per canon", "storage": "per message + live turn.workedSeconds" },
+    { "area": "requested/effective route", "shape": "local.route (effective) + local.requestedRoute {provider, account, model, reason}", "storage": "thread-local, persisted" },
+    { "area": "edit/supersession lineage", "shape": "Edit loads canonical body into draft; original message remains; receipt records supersession intent", "storage": "receipts" },
+    { "area": "long-message/work-group expansion", "shape": "view.expandedMessages{}, view.expandedGroups{} — UI-local view state per 08's escape valve, persisted for mount continuity", "storage": "localStorage under pm-fable-chat-v1" },
+    { "area": "search state", "shape": "search {query, scope, activeResult {threadId, messageId, at}}; jumps widen initialVisibleMessageCount", "storage": "session state; scope persists across mounts" },
+    { "area": "lens receipts", "shape": "lens.selections {msgId: mute|focus|subcompact-pending|subcompact}; receipts [{at, op, count, note}]", "storage": "persisted per thread" },
+    { "area": "goal view + revision", "shape": "activeGoal {status, blocked{cause,scope,attempted,whyStopped,nextSafeAction}, pendingEdit{objective,impact}, completionReceipt}", "storage": "fixture + runtime; projected only" },
+    { "area": "questionnaire queue", "shape": "questionnaires [{id,title,status(preparing|incomplete|queued|submitting|submitted|cancelled),currentQuestionIndex,questions[{id,prompt,kind,required,options,selected}],skipped{},freeform{},resolvedAt}]", "storage": "persisted; survives thread switch + reload" },
+    { "area": "draft revisions", "shape": "draftState {currentText, attachments[], revisionHistory[{savedAt,text}] (bounded 12, deduplicated)}", "storage": "persisted per thread" },
+    { "area": "child aggregate activity", "shape": "subagentGroups [{label,state,counts{working,complete,blocked,waiting},agents[{name,task,currentActivity,status,workedSeconds,route}]}]", "storage": "fixture + triggers" },
+    { "area": "crew waves", "shape": "crew {wave, waves, concurrent, queued} + forecast {usedPercent, windowResetMinutes, sustainable, waves, note}", "storage": "projection of Orchestrator/Usage data" },
+    { "area": "artifact identity", "shape": "artifacts [{id,title,kind,projectPath,openTarget}]; selection {openId,status,byThread{}}", "storage": "selection persisted; bodies Project-backed" },
+    { "area": "outbox/replay", "shape": "sync.outbox [{id,threadId,text,idempotencyKey,queuedAt,state}]; sync.replayLog [keys]; lastReplayAt", "storage": "persisted; replay exactly-once proven" },
+    { "area": "BSD", "shape": "local.bsd (off|auto|on), local.bsdScope (This turn|Current thread), local.bsdState (idle|evaluating|silent result|advice|duplicate-suppressed|timeout|unavailable|quota-limited)", "storage": "thread-local, persisted" },
+    { "area": "attachment lineage", "shape": "attachment {id,name,size,cls(Native|PM transformed|Alternate model|Unsupported),detail}", "storage": "draft attachments" },
+    { "area": "cross-project grant", "shape": "approval card with scope (Once|Thread|Goal/PlanningRun|persistent pair) + receipt; one-time never persists", "storage": "receipts" },
+    { "area": "resource conflict refs", "shape": "warnings {kind: resource, title, body, actions}; ops summary strings (ports, worktrees, tests, debug, backups, snapshots)", "storage": "fixture OPERATIONAL" },
+    { "area": "notification/approval receipts", "shape": "receipts [{at, kind, title, detail}] — bounded 40 persisted; title-bar count stays canonical", "storage": "persisted" },
+    { "area": "idempotency", "shape": "outbox idempotencyKey per queued command; cross-thread request idempotencyKey; replayLog is the applied set", "storage": "persisted" },
+    { "area": "ACD-434 verbatim fields", "shape": "context_estimate is the only 434 field the ring consumes; usage_event_ref/attempt_id/tool_call_id are represented in fixture activity records as stage identity only — no chat-local cost math", "storage": "projection" }
+  ]
+}

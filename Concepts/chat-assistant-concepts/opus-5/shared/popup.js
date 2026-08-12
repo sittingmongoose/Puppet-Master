@@ -451,7 +451,13 @@
     var scopeHost = stageSrc || scopeSrc;
     if (scopeHost) {
       if (scopeHost.getAttribute('data-pmx-thread')) el.setAttribute('data-pmx-thread', scopeHost.getAttribute('data-pmx-thread'));
-      if (scopeHost.getAttribute('data-pmx-window')) el.setAttribute('data-pmx-window', scopeHost.getAttribute('data-pmx-window'));
+      /* The window id lives on the chat host, not the stage, so it is looked up separately:
+       * copying only what the stage carries would leave a portalled popup unscoped and its
+       * window-specific rules dead. */
+      var winHost = scopeSrc && scopeSrc.getAttribute('data-pmx-window')
+        ? scopeSrc
+        : (spec.anchorEl.closest ? spec.anchorEl.closest('[data-pmx-window]') : null);
+      if (winHost && winHost.getAttribute('data-pmx-window')) el.setAttribute('data-pmx-window', winHost.getAttribute('data-pmx-window'));
       if (scopeHost.getAttribute('data-theme')) el.setAttribute('data-theme', scopeHost.getAttribute('data-theme'));
       if (scopeHost.getAttribute('data-motion')) el.setAttribute('data-motion', scopeHost.getAttribute('data-motion'));
     }

@@ -257,7 +257,7 @@ T6.prototype._renderQuestionBody = function () {
       });
     } else {
       var ta = u.el('textarea', { class: 't6-question-free pmx-scroll' });
-      ta.setAttribute('spellcheck', 'true'); ta.value = question.draft || '';
+      ta.setAttribute('spellcheck', 'false'); ta.value = question.draft || '';
       u.on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
       card.appendChild(ta);
     }

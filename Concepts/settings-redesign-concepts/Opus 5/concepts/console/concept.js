@@ -19,16 +19,34 @@
   var index = window.PMSearch.buildIndex(D);
   window.PMSpellcheck.learnNames(D.knownNames);
 
-  var store = window.PMStore.createStore({
+  var CONCEPT_ID = "console";
+  var K = window.PMManagerKit;
+
+  /* Only what a reviewer expects to survive a reload is persisted; an in-flight
+   * refresh or a running cooldown deliberately is not. */
+  var saved = window.PMStore.restore(CONCEPT_ID, window.PMStore.PERSIST_KEYS);
+
+  var store = window.PMStore.createStore(Object.assign({
     view: "home",
     categoryId: null,
     modeId: null,
+    managerSectionId: null,
+    managerItemId: null,
     query: "",
     exposure: "standard",
     demoState: "normal",
-    dismissed: {},
+    dismissedNotices: {},
     values: {},
+    managerEdits: {},
+    route: null,
+    badRoute: null,
+    theme: "friendly-light",
+    widthChoice: "1280",
+    railOpen: true,
+    panelOpen: false,
+    reducedMotion: false,
     openProviders: { claude: true },
+    openInstallations: {},
     accountPref: {},
     favourites: {},
     hidden: {},
@@ -37,22 +55,14 @@
     catalogueRefreshing: false,
     personaId: "p-collaborator",
     personaScope: "This thread",
-    skillTab: "skills"
-  });
+    skillTab: "skills",
+    activeSub: null
+  }, saved));
 
   var shell, spy, mainEl, docEl, indexEl, markerEl;
 
-  var MODE_HOME = {
-    "manager-providers": null,
-    "manager-personas": null,
-    "manager-skills": null,
-    "manager-context": { concept: "Opus 5 — Atlas", href: "opus-5-atlas.html" },
-    "manager-terminal": { concept: "Opus 5 — Atlas", href: "opus-5-atlas.html" },
-    "manager-memory": { concept: "Opus 5 — Stack", href: "opus-5-stack.html" },
-    "manager-mcp": { concept: "Opus 5 — Stack", href: "opus-5-stack.html" },
-    "manager-crew": { concept: "Opus 5 — Ledger", href: "opus-5-ledger.html" },
-    "manager-media": { concept: "Opus 5 — Ledger", href: "opus-5-ledger.html" }
-  };
+  /* Assignment and cross-concept homes come from the shared kit. */
+  var BUILT_HERE = K.assignedTo(CONCEPT_ID);
 
   var LEVEL_VISIBLE = {
     standard: ["standard", "managed", "unavailable"],
@@ -146,10 +156,25 @@
 
   /* =============================================================== HOME */
 
+  /* A well-formed link that names nothing here is a renamed id or a stale
+   * bookmark. Quoting it is more useful than a home screen that pretends the
+   * click never happened. */
+  function badRouteNotice(hash) {
+    var n = el("div", "co-badroute");
+    n.setAttribute("role", "status");
+    n.innerHTML = I("alert", 14) +
+      "<span><strong>That link points at something this concept does not contain.</strong> " +
+      "<code>" + E(hash) + "</code> — the id may have been renamed, or it may live in another concept.</span>";
+    return n;
+  }
+
   function renderHome() {
     var surface = el("div", "co-surface");
     var home = el("div", "co-home");
     var col = el("div", "co-column");
+
+    var bad = store.get().badRoute;
+    if (bad) col.appendChild(badRouteNotice(bad));
 
     var hero = el("div", "co-hero");
     hero.innerHTML =
@@ -219,7 +244,7 @@
 
   function entryRow(cat, n) {
     var counts = S.countSettings(cat);
-    var mine = S.noticesFor(D, store.get().demoState, store.get().dismissed).filter(function (x) {
+    var mine = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices).filter(function (x) {
       return x.target && x.target.categoryId === cat.id;
     });
     var worst = mine.reduce(function (a, x) {
@@ -465,7 +490,7 @@
 
   function noticesBlock() {
     var wrap = el("div", "co-notices");
-    var list = S.noticesFor(D, store.get().demoState, store.get().dismissed);
+    var list = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices);
     if (!list.length) {
       var calm = el("div", "co-calm");
       calm.innerHTML = "<strong>Nothing needs attention.</strong>Every provider is connected, no setup is unfinished, and there are no open recommendations.";
@@ -504,9 +529,9 @@
   /* Dismissal genuinely removes the notice for the rest of the session and says
    * how many are left. Changing the demo state brings the fixture back. */
   function dismissNotice(notice) {
-    var d = store.get().dismissed;
+    var d = store.get().dismissedNotices;
     d[notice.id] = true;
-    store.set({ dismissed: d });
+    store.set({ dismissedNotices: d });
     renderHome();
     var left = S.noticesFor(D, store.get().demoState, d).length;
     announce("Dismissed. " + (left ? left + " still open." : "Nothing needs attention now."));
@@ -941,10 +966,18 @@
     surface.appendChild(mode);
     swap(surface);
 
-    if (modeId === "manager-providers") providerMode(body, tools);
-    else if (modeId === "manager-personas") personaMode(body, tools);
-    else if (modeId === "manager-skills") skillsMode(body, tools);
-    else elsewhereMode(body, modeId);
+    if (modeId === "manager-providers") {
+      providerMode(body, tools);
+      hydrated();
+    } else if (BUILT_HERE.indexOf(modeId) < 0) {
+      /* All four domain modules load on every page so cross-concept links can
+       * resolve titles; rendering an unassigned family in full would undo the
+       * split the four concepts exist to demonstrate. */
+      if (K.has(modeId)) elsewhereMode(body, modeId);
+      else missingMode(body, modeId);
+    } else {
+      renderManager(K.spec(modeId, store.get()), { conceptId: CONCEPT_ID, managerId: modeId }, body, tools);
+    }
 
     var receipts = el("div", "co-receipts");
     receipts.setAttribute("aria-label", "Simulated results");
@@ -1322,264 +1355,456 @@
     });
   }
 
-  /* ------------------------------------------------------------ personas */
+  /* ================================================= MANAGER SPEC RENDERER */
 
-  function personaMode(body, tools) {
-    var mgr = D.managers["manager-personas"];
-    var split = el("div", "co-split");
+  /* Console reads a manager as a set of numbered movements, the same way it
+   * reads a category: the right-margin index travels with them. Every assigned
+   * manager goes through this one path. */
+  function hydrated() { window.__pmHydrated = (window.__pmHydrated || 0) + 1; }
 
-    var left = el("div");
-    left.appendChild(el("div", "co-block-title", "Personas"));
-    var picker = el("div", "co-picker");
-    mgr.personas.forEach(function (p) {
-      var b = el("button", "co-picker-item");
-      b.type = "button";
-      b.setAttribute("data-persona", p.id);
-      b.setAttribute("aria-current", String(p.id === store.get().personaId));
-      b.innerHTML = '<span style="min-width:0"><span class="co-picker-name">' + E(p.name) + "</span>" +
-        '<span class="co-picker-sub">' + E(p.purpose) + "</span></span>" +
-        "<span>" + (p.childOnly ? chip("managed", "Child only") : p.state === "draft" ? chip("setup", "Draft") : "") + "</span>";
-      b.addEventListener("click", function () {
-        store.set({ personaId: p.id });
-        picker.querySelectorAll(".co-picker-item").forEach(function (x) {
-          x.setAttribute("aria-current", String(x.getAttribute("data-persona") === p.id));
-        });
-        paint();
-      });
-      picker.appendChild(b);
-    });
-    left.appendChild(picker);
-    split.appendChild(left);
+  function renderManager(spec, ctx, body, tools) {
+    hydrated();
 
-    var right = el("div", "co-detail");
-    split.appendChild(right);
-    body.appendChild(split);
-
-    function paint() {
-      var p = mgr.personas.filter(function (x) { return x.id === store.get().personaId; })[0];
-      right.innerHTML = "";
-      var t = el("div", "co-detail-title");
-      t.innerHTML = E(p.name) + (p.childOnly ? chip("managed", "Child only") : "") +
-        (p.state === "draft" ? chip("setup", "Draft") : "");
-      right.appendChild(t);
-      right.appendChild(el("div", "co-detail-sub", E(p.purpose)));
-
-      /* Three distinct things the packet insists are not the same. */
-      var three = el("div", "co-block");
-      three.appendChild(el("div", "co-block-title", "What a Persona actually is"));
-      var kv = el("dl", "co-kv");
-      kv.innerHTML =
-        "<dt>Durable definition</dt><dd>" + p.definitionWords + " words, kept here. It is never sent whole.</dd>" +
-        "<dt>Behaviour capsule</dt><dd>" + p.capsuleTokens + " tokens. This is what a turn actually receives.</dd>" +
-        "<dt>Runtime metadata</dt><dd>Eligibility, scope and preferred tools (" + p.preferredTools + " preferred, not preloaded).</dd>" +
-        "<dt>Eligible skills</dt><dd>" + (p.eligibleSkills.length ? p.eligibleSkills.map(E).join(", ") + " — preferred, not automatically loaded" : "None") + "</dd>";
-      three.appendChild(kv);
-      var bar = el("div");
-      bar.innerHTML = '<div class="co-a-n" style="margin-top:10px">Definition vs capsule footprint</div>';
-      var track = el("div", "co-bar");
-      var fill = el("div", "co-bar-fill");
-      fill.style.width = Math.round((p.capsuleTokens / (p.definitionWords * 1.3)) * 100) + "%";
-      track.appendChild(fill);
-      bar.appendChild(track);
-      three.appendChild(bar);
-      right.appendChild(three);
-
-      var scope = el("div", "co-block");
-      scope.appendChild(el("div", "co-block-title", "Apply to"));
-      var scopes = el("div", "co-scopes");
-      mgr.scopes.forEach(function (sc) {
-        var b = el("button", "co-scope", E(sc));
-        b.type = "button";
-        var disabled = (sc === "Child only") !== !!p.childOnly;
-        // A child-only Persona can only be applied as child-only, and an
-        // ordinary Persona can never be applied as child-only.
-        if (disabled) { b.disabled = true; b.title = p.childOnly
-          ? "This Persona is child-only, so it cannot become a Chat default."
-          : "Only a child-only Persona can take this scope."; }
-        b.setAttribute("aria-pressed", String(store.get().personaScope === sc && !disabled));
-        b.addEventListener("click", function () {
-          store.set({ personaScope: sc });
-          paint();
-          announce(p.name + " would apply to: " + sc + ". Choosing it in one thread never changes another.");
-        });
-        scopes.appendChild(b);
-      });
-      scope.appendChild(scopes);
-      scope.appendChild(el("div", "co-a-n",
-        "Chat selection defaults to the current thread. Project and global defaults apply to future threads only."));
-      right.appendChild(scope);
-
-      var ceiling = el("div", "co-block");
-      ceiling.appendChild(el("div", "co-block-title", "What it cannot do"));
-      ceiling.appendChild(el("div", "co-acct-line", E(mgr.ceilingNote)));
-      var cannot = el("div", "co-scopes");
-      ["Widen access mode", "Grant permissions", "Change FileSafe", "Reach the network", "Choose billing", "Raise a parent's ceiling"].forEach(function (x) {
-        var s2 = el("span", "co-scope");
-        s2.style.opacity = ".7";
-        s2.innerHTML = I("ban", 12) + " " + E(x);
-        cannot.appendChild(s2);
-      });
-      ceiling.appendChild(cannot);
-      right.appendChild(ceiling);
-
-      var acts = el("div", "co-answer-actions");
-      var use = el("button", "co-btn is-primary", "<span>Use for " + E(store.get().personaScope.toLowerCase()) + "</span>");
-      use.type = "button";
-      use.disabled = p.state === "draft";
-      use.addEventListener("click", function () {
-        sim("persona-" + p.id, "Apply Persona " + p.name,
-          "PersonaService.apply('" + p.id + "', scope: '" + store.get().personaScope + "')",
-          "Applied to " + store.get().personaScope.toLowerCase() + ". Other threads are unaffected.", "ok");
-      });
-      acts.appendChild(use);
-      if (p.state === "draft") {
-        acts.appendChild(el("span", "co-a-n", "A draft Persona is not offered anywhere until it has been reviewed."));
-      }
-      var src = el("button", "co-btn", "<span>View the definition</span>");
-      src.type = "button";
-      src.addEventListener("click", function () {
-        sim("persona-src-" + p.id, "Open the Persona definition", "PersonaService.openSource('" + p.id + "')",
-          "A real build opens the " + p.definitionWords + "-word source. Only the " + p.capsuleTokens + "-token capsule ever reaches a model.", "handoff");
-      });
-      acts.appendChild(src);
-      right.appendChild(acts);
+    if (spec.primary) {
+      var pb = el("button", "co-btn is-primary", "<span>" + E(spec.primary.label) + "</span>");
+      pb.type = "button";
+      pb.addEventListener("click", function () { runAction(ctx, spec.primary, { id: spec.id }); });
+      tools.appendChild(pb);
     }
-    paint();
+    spec.diagnostics.forEach(function (d) {
+      var db = el("button", "co-btn", "<span>" + E(d.label) + "</span>");
+      db.type = "button";
+      db.addEventListener("click", function () { runAction(ctx, { id: d.id, label: d.label }, { id: spec.id }); });
+      tools.appendChild(db);
+    });
+
+    var health = el("div", "co-block");
+    health.innerHTML = '<div class="co-block-title">Health ' + statusChip(spec.health.status, spec.health.statusWord) + "</div>" +
+      '<p class="co-block-line">' + E(spec.health.headline) + "</p>" +
+      (spec.health.detail ? '<p class="co-block-line">' + E(spec.health.detail) + "</p>" : "");
+    if (spec.health.counts.length) {
+      var counts = el("div", "co-counts");
+      spec.health.counts.forEach(function (c) {
+        counts.appendChild(el("div", "co-count",
+          '<span class="co-count-v">' + E(String(c.value)) + '</span><span class="co-count-l">' + E(c.label) + "</span>"));
+      });
+      health.appendChild(counts);
+    }
+    body.appendChild(health);
+
+    if (spec.owner) {
+      var own = el("div", "co-block");
+      own.innerHTML = '<div class="co-block-title">' + E(spec.owner.name) + " owns this</div>" +
+        '<p class="co-block-line">' + E(spec.owner.why) + "</p>" +
+        '<p class="co-block-line"><strong>Insertion contract</strong> \u2014 ' + E(spec.owner.insertionContract) + "</p>";
+      body.appendChild(own);
+    }
+
+    spec.sections.forEach(function (sec, i) { body.appendChild(movement(sec, ctx, i + 1)); });
+    spec.notes.forEach(function (n) { body.appendChild(el("p", "co-block-line", E(n))); });
   }
 
-  /* ------------------------------------------------- skills / plugins / tools */
+  function movement(section, ctx, ordinal) {
+    var mv = el("section", "co-movement");
+    mv.id = "mv-" + section.id;
+    mv.setAttribute("data-sub", section.id);
+    var head = el("div", "co-movement-head");
+    head.innerHTML = '<span class="co-movement-ord">' + (ordinal < 10 ? "0" + ordinal : ordinal) + "</span>" +
+      '<h3 class="co-movement-title">' + E(section.label) + "</h3>" +
+      (section.summary ? '<p class="co-block-line">' + E(section.summary) + "</p>" : "");
+    mv.appendChild(head);
 
-  function skillsMode(body, tools) {
-    var mgr = D.managers["manager-skills"];
-
-    var tabs = el("div", "co-scopes");
-    tabs.style.marginBottom = "16px";
-    [["skills", "Skills"], ["plugins", "Plugins"], ["tools", "Tools"]].forEach(function (t) {
-      var b = el("button", "co-scope", t[1]);
+    section.actions.forEach(function (a) {
+      var b = el("button", "co-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : ""),
+        "<span>" + E(a.label) + "</span>");
       b.type = "button";
-      b.setAttribute("aria-pressed", String(store.get().skillTab === t[0]));
-      b.addEventListener("click", function () { store.set({ skillTab: t[0] }); paint(); });
-      tabs.appendChild(b);
+      b.addEventListener("click", function () { runAction(ctx, a, { id: section.id }); });
+      head.appendChild(b);
     });
-    body.appendChild(tabs);
 
-    var host = el("div");
-    body.appendChild(host);
-
-    function paint() {
-      tabs.querySelectorAll(".co-scope").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b.textContent.toLowerCase() === store.get().skillTab));
+    if (section.kind === "rows") {
+      section.settings.forEach(function (sid) {
+        var found = S.findSetting(D, sid);
+        if (found) mv.appendChild(row(found.setting, found.category, found.subcategory));
       });
-      host.innerHTML = "";
-      var tab = store.get().skillTab;
-
-      if (tab === "tools") {
-        var intro = el("div", "co-block");
-        intro.appendChild(el("div", "co-block-title", "Installed is not the same as exposed"));
-        intro.appendChild(el("div", "co-acct-line",
-          "Progressive disclosure narrows 64 installed tools to the handful a turn actually needs. Sending all of them would add roughly 28,000 tokens to every request."));
-        var flow = el("div", "co-tool-flow");
-        flow.style.marginTop = "14px";
-        mgr.toolStates.forEach(function (s2) {
-          var d = el("div", "co-tool-step");
-          d.innerHTML = '<div class="co-tool-n">' + s2.count + '</div><div class="co-tool-l">' + E(s2.label) + "</div>" +
-            '<div class="co-tool-note">' + E(s2.note) + "</div>";
-          flow.appendChild(d);
-        });
-        intro.appendChild(flow);
-        host.appendChild(intro);
-        return;
-      }
-
-      var items = tab === "skills" ? mgr.skills : mgr.plugins;
-      var list = el("div", "co-picker");
-      items.forEach(function (it) {
-        var row2 = el("div", "co-picker-item");
-        var status = tab === "skills"
-          ? (it.state === "enabled" ? ["ok", "Enabled"] : it.state === "needsTrust" ? ["attention", "Needs trust"] : ["unavailable", "Disabled"])
-          : (it.state === "loaded" ? ["ok", "Loaded"] : ["attention", "Failed"]);
-        row2.innerHTML = '<span style="min-width:0"><span class="co-picker-name">' + E(it.name) + " " +
-          '<span class="co-picker-sub">' + E(it.version) + "</span></span>" +
-          '<span class="co-picker-sub">' +
-            (tab === "skills"
-              ? E(it.source) + (it.verified ? " · verified publisher" : " · unverified publisher") + " · " + E(it.scope) +
-                " · requests " + it.permissions.map(E).join(", ") + (it.trustNote ? " · " + E(it.trustNote) : "")
-              : E(it.channel) + " channel · " + (it.compatible ? "compatible" : "incompatible") +
-                (it.failure ? " · " + E(it.failure) : "") + " · requests " + it.permissions.map(E).join(", ")) +
-            (it.updates ? " · " + E(it.updates) : "") +
-          "</span></span>" +
-          "<span>" + statusChip(status[0], status[1]) + "</span>";
-        var act = el("button", "co-btn is-quiet", I("more", 14));
-        act.type = "button";
-        act.setAttribute("aria-label", "Actions for " + it.name);
-        act.addEventListener("click", function () {
-          openPop(act, function (pp, close) {
-            pp.appendChild(popHead(it.name));
-            if (it.updates) pp.appendChild(popItem("Update to " + it.updates.replace(" available", ""), function () {
-              close(); sim("upd-" + it.id, "Update " + it.name, "SkillService.update('" + it.id + "')",
-                "A real build downloads and verifies the update. A permission change always stops for review first.", "handoff");
-            }));
-            pp.appendChild(popItem("Inspect source and permissions", function () {
-              close(); sim("insp-" + it.id, "Inspect " + it.name, "SkillService.inspect('" + it.id + "')",
-                "Requests: " + it.permissions.join(", ") + ".", "ok");
-            }));
-            if (it.state === "needsTrust") pp.appendChild(popItem("Trust this publisher", function () {
-              close(); sim("trust-" + it.id, "Trust " + it.name, "SkillService.trust('" + it.id + "')",
-                "Trusting an unverified publisher lets it run with the tools it requests. A real build records who trusted it and when.", "handoff");
-            }));
-            pp.appendChild(popItem(it.state === "disabled" ? "Enable" : "Disable", function () {
-              close(); sim("tog-" + it.id, (it.state === "disabled" ? "Enable " : "Disable ") + it.name,
-                "SkillService.setEnabled('" + it.id + "', " + (it.state === "disabled") + ")",
-                "Scope stays " + (it.scope || "this project") + ".", "ok");
-            }));
-          });
-        });
-        row2.querySelector("span:last-child").appendChild(act);
-        list.appendChild(row2);
-      });
-      host.appendChild(list);
+      if (section.settings.length === 0) mv.appendChild(emptyMovement(section));
+      return mv;
     }
-    paint();
+    if (section.kind === "prose") {
+      section.items.forEach(function (it) { if (it.name) mv.appendChild(el("p", "co-prose", E(it.name))); });
+      return mv;
+    }
+    if (section.items.length === 0) { mv.appendChild(emptyMovement(section)); return mv; }
+    if (section.kind === "table" || section.kind === "matrix") { mv.appendChild(movementTable(section, ctx)); return mv; }
+    section.items.forEach(function (it) { mv.appendChild(movementItem(it, ctx)); });
+    return mv;
+  }
+
+  function emptyMovement(section) {
+    var e2 = K.emptyFor(section);
+    var b = el("div", "co-block");
+    b.innerHTML = '<div class="co-block-title">' + E(e2.headline) + "</div>" +
+      '<p class="co-block-line">' + E(e2.detail) + "</p>";
+    return b;
+  }
+
+  function movementTable(section, ctx) {
+    var t = el("table", "co-spec-table");
+    var thead = el("thead");
+    var hr = el("tr");
+    hr.appendChild(el("th", null, "Name"));
+    section.columns.forEach(function (c) { hr.appendChild(el("th", c.align === "end" ? "is-num" : null, E(c.label))); });
+    hr.appendChild(el("th", null, "State"));
+    thead.appendChild(hr);
+    t.appendChild(thead);
+    var tb = el("tbody");
+    section.items.forEach(function (it) {
+      var tr = el("tr");
+      var td = el("td");
+      td.appendChild(el("div", "co-item-name", E(it.name)));
+      if (it.secondary) td.appendChild(el("div", "co-item-sub", E(it.secondary)));
+      tr.appendChild(td);
+      section.columns.forEach(function (c) {
+        tr.appendChild(el("td", c.align === "end" ? "is-num" : null,
+          E(String(it.fields[c.key] == null ? "\u2014" : it.fields[c.key]))));
+      });
+      tr.appendChild(el("td", null, statusChip(it.status, it.statusWord || "")));
+      tb.appendChild(tr);
+      if (it.editable.length || it.actions.length || it.detail.length) {
+        var tr2 = el("tr", "co-item-extra");
+        var cell = el("td");
+        cell.colSpan = section.columns.length + 2;
+        cell.appendChild(itemControls(it, ctx));
+        tr2.appendChild(cell);
+        tb.appendChild(tr2);
+      }
+    });
+    t.appendChild(tb);
+    return t;
+  }
+
+  function movementItem(it, ctx) {
+    var card = el("article", "co-item");
+    card.setAttribute("data-item", it.id);
+    var head = el("div", "co-item-head");
+    head.innerHTML = '<div><div class="co-item-name">' + E(it.name) + "</div>" +
+      (it.secondary ? '<div class="co-item-sub">' + E(it.secondary) + "</div>" : "") + "</div>" +
+      "<div>" + statusChip(it.status, it.statusWord || "") + "</div>";
+    card.appendChild(head);
+
+    if (it.badges.length) {
+      var bd = el("div", "co-item-badges");
+      it.badges.forEach(function (b) {
+        var s2 = el("span", "co-badge", E(b.text));
+        s2.setAttribute("data-kind", b.kind);
+        if (b.title) s2.title = b.title;
+        bd.appendChild(s2);
+      });
+      card.appendChild(bd);
+    }
+
+    var routeLine = K.routeLine(it);
+    if (routeLine) card.appendChild(el("div", "co-block-line", E(routeLine)));
+    var reason = K.reasonLine(it);
+    if (reason) card.appendChild(el("div", "co-block-line", E(reason)));
+    if (it.value != null && it.value !== "") {
+      card.appendChild(el("div", "co-item-value", "<strong>" + E(String(it.value)) + "</strong>" +
+        (it.valueSource ? " \u00b7 " + E(it.valueSource) : "")));
+    }
+
+    var keys = Object.keys(it.fields);
+    if (keys.length) {
+      var fields = el("div", "co-fields");
+      keys.forEach(function (k) {
+        fields.appendChild(el("div", "co-field",
+          '<span class="co-field-k">' + E(k) + '</span><span class="co-field-v">' + E(String(it.fields[k])) + "</span>"));
+      });
+      card.appendChild(fields);
+    }
+    card.appendChild(itemControls(it, ctx));
+    return card;
+  }
+
+  function itemControls(it, ctx) {
+    var box = el("div", "co-item-controls");
+    it.editable.forEach(function (f) { box.appendChild(editableRow(ctx, it, f)); });
+    it.detail.forEach(function (d) {
+      var det = el("details", "co-details");
+      det.appendChild(el("summary", null, E(d.label)));
+      d.rows.forEach(function (r2) {
+        det.appendChild(el("div", "co-field",
+          '<span class="co-field-k">' + E(r2.label) + '</span><span class="co-field-v">' + E(String(r2.value)) + "</span>"));
+        if (r2.hint) det.appendChild(el("div", "co-block-line", E(r2.hint)));
+      });
+      box.appendChild(det);
+    });
+    if (it.actions.length) {
+      var acts = el("div", "co-item-actions");
+      it.actions.forEach(function (a) {
+        var b = el("button", "co-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : ""),
+          "<span>" + E(a.label) + "</span>");
+        b.type = "button";
+        b.addEventListener("click", function () { runAction(ctx, a, { id: it.id }); });
+        acts.appendChild(b);
+      });
+      box.appendChild(acts);
+    }
+    return box;
+  }
+
+  function editableRow(ctx, item, field) {
+    var wrap = el("div", "co-edit");
+    var id = "edit-" + ctx.managerId + "-" + item.id + "-" + field.key;
+    var label = el("label", "co-edit-label", E(field.label));
+    label.setAttribute("for", id);
+    wrap.appendChild(label);
+
+    var edits = store.get().managerEdits;
+    var current = edits[id] !== undefined ? edits[id] : field.value;
+
+    function commit(v) {
+      var next = Object.assign({}, store.get().managerEdits);
+      next[id] = v;
+      store.set({ managerEdits: next });
+      announce(field.label + " set to " + v + ".");
+      renderMode(ctx.managerId);
+    }
+
+    if (field.secretKind === "cliOwned") {
+      wrap.appendChild(el("div", "co-block-line",
+        "This credential belongs to the tool's own login. " + E(String(current))));
+      var launch = el("button", "co-btn", "<span>Launch the CLI's own login</span>");
+      launch.type = "button";
+      launch.addEventListener("click", function () {
+        runAction(ctx, { id: "provider.auth.start_setup", label: "Launch the CLI's own login" }, { id: item.id });
+      });
+      wrap.appendChild(launch);
+      return wrap;
+    }
+
+    if (field.kind === "secret") {
+      var revealed = store.get().revealed[id] === true;
+      var shown = revealed ? String(current || "") : maskSecret(String(current || ""));
+      var box = el("div", "co-secret");
+      box.appendChild(el("span", "co-field-v", E(shown || "Not set")));
+      if (field.secretKind === "pmSecret") {
+        var eye = el("button", "co-btn", "<span>" + (revealed ? "Hide" : "Reveal") + "</span>");
+        eye.type = "button";
+        eye.addEventListener("click", function () {
+          var r2 = Object.assign({}, store.get().revealed);
+          r2[id] = revealed ? false : true;
+          store.set({ revealed: r2 });
+          renderMode(ctx.managerId);
+        });
+        box.appendChild(eye);
+      }
+      wrap.appendChild(box);
+      if (field.help) wrap.appendChild(el("div", "co-block-line", E(field.help)));
+      return wrap;
+    }
+
+    var control;
+    if (field.kind === "toggle") {
+      control = el("button", "co-toggle");
+      control.type = "button";
+      control.id = id;
+      control.setAttribute("aria-pressed", String(current === true));
+      control.textContent = current ? "On" : "Off";
+      control.addEventListener("click", function () { commit(current === true ? false : true); });
+    } else if (field.kind === "select") {
+      control = el("select", "co-select");
+      control.id = id;
+      (field.options.length ? field.options : [String(current)]).forEach(function (o) {
+        var op = document.createElement("option");
+        op.value = String(o); op.textContent = String(o);
+        control.appendChild(op);
+      });
+      control.value = String(current);
+      control.addEventListener("change", function () { commit(control.value); });
+    } else if (field.kind === "chips" || field.kind === "order") {
+      control = el("div", "co-chips");
+      var listv = Array.isArray(current) ? current.slice() : [];
+      listv.forEach(function (c, i) {
+        var chipEl = el("span", "co-chip", E(String(c)));
+        if (field.kind === "order") {
+          var up = el("button", "co-chip-btn", I("chevronUp", 10));
+          up.type = "button"; up.title = "Move up";
+          up.addEventListener("click", function () {
+            if (i === 0) return;
+            var n = listv.slice(); var t = n[i - 1]; n[i - 1] = n[i]; n[i] = t; commit(n);
+          });
+          var down = el("button", "co-chip-btn", I("chevronDown", 10));
+          down.type = "button"; down.title = "Move down";
+          down.addEventListener("click", function () {
+            if (i === listv.length - 1) return;
+            var n = listv.slice(); var t = n[i + 1]; n[i + 1] = n[i]; n[i] = t; commit(n);
+          });
+          chipEl.appendChild(up); chipEl.appendChild(down);
+        } else {
+          var rm = el("button", "co-chip-btn", I("minus", 10));
+          rm.type = "button"; rm.title = "Remove " + c;
+          rm.addEventListener("click", function () { var n = listv.slice(); n.splice(i, 1); commit(n); });
+          chipEl.appendChild(rm);
+        }
+        control.appendChild(chipEl);
+      });
+      if (field.kind === "chips") {
+        var add = el("button", "co-chip is-add", I("plus", 10) + " Add");
+        add.type = "button";
+        add.addEventListener("click", function () {
+          var v = window.prompt("Add a value for " + field.label);
+          if (v) commit(listv.concat([v]));
+        });
+        control.appendChild(add);
+      }
+    } else {
+      control = el("input", "co-input");
+      control.id = id;
+      control.type = field.kind === "number" ? "number" : "text";
+      control.value = current == null ? "" : String(current);
+      control.addEventListener("change", function () {
+        commit(field.kind === "number" ? Number(control.value) : control.value);
+      });
+    }
+    wrap.appendChild(control);
+    if (field.help) wrap.appendChild(el("div", "co-block-line", E(field.help)));
+    return wrap;
+  }
+
+  function maskSecret(v) {
+    if (!v) return "";
+    if (v.length <= 6) return "\u2022\u2022\u2022\u2022\u2022\u2022";
+    return v.slice(0, 3) + "\u2022\u2022\u2022\u2022\u2022\u2022" + v.slice(-3);
+  }
+
+  function runAction(ctx, action, payload) {
+    return K.act(ctx, action, payload).then(function (r) { if (r) showReceipt(r); return r; });
   }
 
   function elsewhereMode(body, modeId) {
     var mgr = D.managers[modeId] || {};
-    var home = MODE_HOME[modeId];
+    var home = K.homeOf(modeId);
     var block = el("div", "co-block");
     block.style.maxWidth = "640px";
-    block.appendChild(el("div", "co-block-title", "Built in another Opus 5 concept"));
-    block.appendChild(el("div", "co-detail-title", E(mgr.title || "Manager")));
-    block.appendChild(el("div", "co-acct-line", E(mgr.purpose || "")));
-    block.appendChild(el("div", "co-acct-line",
-      "Each Opus 5 concept builds the provider manager plus two others in full, so the four together cover eight dedicated managers instead of repeating the same two."));
+    block.appendChild(el("div", "co-block-title", "Built in " + home.title));
+    block.appendChild(el("p", "co-block-line", E(mgr.purpose || "")));
+    block.appendChild(el("p", "co-block-line",
+      "The four concepts split the manager families between them, so each family is shown once at full depth rather than four times at a quarter depth."));
     body.appendChild(block);
-    if (home && home.href) {
+    if (home.href) {
       var a = el("a", "co-btn is-primary");
       a.href = home.href;
-      a.style.marginTop = "14px";
-      a.style.display = "inline-flex";
-      a.style.textDecoration = "none";
-      a.innerHTML = "<span>Open " + E(home.concept) + "</span>" + I("arrowUpRight", 13);
+      a.style.cssText = "margin-top:12px;display:inline-flex;text-decoration:none";
+      a.innerHTML = "<span>Open " + E(home.title) + "</span>" + I("arrowUpRight", 12);
       body.appendChild(a);
     }
   }
 
-  /* ========================================================== NAVIGATION */
+  function missingMode(body, modeId) {
+    var block = el("div", "co-block");
+    block.style.maxWidth = "640px";
+    block.appendChild(el("div", "co-block-title", "That link points at something this concept does not contain"));
+    block.appendChild(el("p", "co-block-line", "No manager with the id " + E(modeId) + " exists in this fixture."));
+    body.appendChild(block);
+    var home = el("button", "co-btn is-primary", "<span>Go to Settings home</span>");
+    home.type = "button";
+    home.addEventListener("click", function () { goTo({ categoryId: null }); });
+    body.appendChild(home);
+  }
+
+  /* ------------------------------------------------------------- routing */
+
+  function currentRoute() {
+    var s = store.get();
+    var demo = s.demoState === "normal" ? null : s.demoState;
+    if (s.view === "mode" && s.modeId) {
+      return { kind: "manager", managerId: s.modeId, sectionId: s.managerSectionId,
+        itemId: s.managerItemId, demo: demo };
+    }
+    if (s.query && s.query.trim()) return { kind: "search", query: s.query.trim(), demo: demo };
+    if (s.view === "workspace" && s.categoryId) {
+      return { kind: "category", categoryId: s.categoryId, subcategoryId: s.activeSub || null,
+        settingId: null, demo: demo };
+    }
+    return { kind: "home", demo: demo };
+  }
+
+  function writeRoute(replace) {
+    var r = currentRoute();
+    store.set({ route: r });
+    window.PMRoute.write(r, replace === true);
+  }
+
+  function routeExists(route) {
+    if (route.kind === "manager") return K.has(route.managerId);
+    if (route.kind === "category") {
+      var cat = S.findCategory(D, route.categoryId);
+      if (!cat) return false;
+      if (route.subcategoryId) {
+        var hit = cat.subcategories.filter(function (x) { return x.id === route.subcategoryId; })[0];
+        if (!hit) return false;
+        if (route.settingId && !S.findSetting(D, route.settingId)) return false;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function applyRoute(route) {
+    if (route.demo) {
+      store.set({ demoState: route.demo, catalogueRefreshing: route.demo === "loading" });
+      if (shell) shell.setDemoState(route.demo);
+    }
+    if (routeExists(route) === false) {
+      store.set({ view: "home", categoryId: null, modeId: null, query: "",
+        managerSectionId: null, managerItemId: null, badRoute: window.PMRoute.format(route) });
+      renderHome();
+      return;
+    }
+    store.set({ badRoute: null });
+
+    if (route.kind === "manager") {
+      store.set({ view: "mode", modeId: route.managerId, categoryId: store.get().categoryId || "agents",
+        managerSectionId: route.sectionId, managerItemId: route.itemId, query: "" });
+      renderMode(route.managerId);
+      return;
+    }
+    if (route.kind === "search") {
+      store.set({ view: "home", query: route.query, modeId: null });
+      renderHome();
+      return;
+    }
+    if (route.kind === "category") {
+      store.set({ view: "workspace", categoryId: route.categoryId, modeId: null, query: "",
+        managerSectionId: null, managerItemId: null, activeSub: route.subcategoryId || null });
+      renderWorkspace({ subcategoryId: route.subcategoryId, targetId: route.settingId });
+      return;
+    }
+    store.set({ view: "home", categoryId: null, modeId: null, query: "",
+      managerSectionId: null, managerItemId: null });
+    renderHome();
+  }
 
   function goTo(t) {
     closePop();
     if (t.managerId && (t.kind === "manager" || t.kind === "provider" || t.kind === "model")) {
-      store.set({ view: "mode", modeId: t.managerId, categoryId: t.categoryId || "agents" });
+      store.set({ view: "mode", modeId: t.managerId, categoryId: t.categoryId || "agents",
+        managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
       renderMode(t.managerId);
       announce("Opened " + (D.managers[t.managerId] || {}).title + ".");
       return;
     }
     if (!t.categoryId) {
-      store.set({ view: "home", categoryId: null, modeId: null, query: "" });
+      store.set({ view: "home", categoryId: null, modeId: null, query: "",
+        managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
       renderHome();
       return;
     }
-    store.set({ view: "workspace", categoryId: t.categoryId, modeId: null });
+    store.set({ view: "workspace", categoryId: t.categoryId, modeId: null,
+      managerSectionId: null, managerItemId: null, activeSub: t.subcategoryId || null, badRoute: null });
+    writeRoute();
     renderWorkspace({ subcategoryId: t.subcategoryId, targetId: t.targetId });
     announce("Opened " + S.findCategory(D, t.categoryId).title + ".");
   }
@@ -1588,38 +1813,33 @@
 
   /* =============================================================== MOUNT */
 
-  var demo = document.createElement("select");
-  demo.setAttribute("aria-label", "Demo state");
-  D.demoStates.forEach(function (d) {
-    var o = document.createElement("option");
-    o.value = d.id; o.textContent = d.label;
-    demo.appendChild(o);
-  });
-  var demoWrap = document.createElement("span");
-  demoWrap.style.cssText = "display:inline-flex;align-items:center;gap:6px";
-  var dl = document.createElement("span");
-  dl.className = "pm-review-label"; dl.textContent = "Demo state";
-  demoWrap.appendChild(dl); demoWrap.appendChild(demo);
-
+  /* The shell owns the Demo state select and the Reset button, so the concept
+   * passes its state in and reacts rather than building a second control. */
   shell = window.PMShell.mount({
     rootId: "pm-root",
-    concept: "Console · Settings as a question",
-    conceptId: "console",
-    theme: "glass-dark",
-    extraControls: demoWrap,
+    concept: "Console \u00b7 Settings as a question",
+    conceptId: CONCEPT_ID,
+    theme: store.get().theme || "glass-dark",
+    demoState: store.get().demoState,
+    onDemoState: function (id) {
+      store.set({ demoState: id, catalogueRefreshing: id === "loading" });
+      writeRoute();
+      var s2 = store.get();
+      if (s2.view === "home") renderHome();
+      else if (s2.view === "mode") renderMode(s2.modeId);
+      else renderWorkspace({});
+      announce("Demo state: " + id + ".");
+    },
+    onReceiptAction: function (r) { showReceipt(r); },
     onLayout: function () { if (spy) { spy.measure(); } },
     onWidthMode: function () { if (spy) spy.measure(); }
   });
   mainEl = shell.main;
 
-  demo.addEventListener("change", function () {
-    store.set({ demoState: demo.value, catalogueRefreshing: demo.value === "loading" });
-    var s2 = store.get();
-    if (s2.view === "home") renderHome();
-    else if (s2.view === "mode") renderMode(s2.modeId);
-    else renderWorkspace({});
-    announce("Demo state: " + demo.options[demo.selectedIndex].text);
-  });
+  window.PMStore.persist(CONCEPT_ID, store, window.PMStore.PERSIST_KEYS);
+
+  /* Back and forward are native hashchange events. */
+  window.PMRoute.onChange(function (route) { applyRoute(route); });
 
   window.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -1629,5 +1849,14 @@
     }
   });
 
-  renderHome();
+  /* The hash wins on load. With no hash, a saved route is restored with replace
+   * so it does not become a phantom back step. */
+  if ((window.location.hash || "") !== "") {
+    applyRoute(window.PMRoute.parse());
+  } else if (store.get().route) {
+    applyRoute(store.get().route);
+    writeRoute(true);
+  } else {
+    renderHome();
+  }
 })();

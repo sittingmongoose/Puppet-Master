@@ -1,0 +1,203 @@
+/* Window 08 "Periscope" — lens dock with adaptive surfaces: overlays at narrow
+   widths, docked geometry when the workspace crystallizes wide. */
+
+.fw8-root {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  position: relative;
+  background: var(--bg-app);
+  overflow: hidden;
+}
+
+/* ---------- lens dock ---------- */
+.fw8-dock {
+  flex: none;
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  padding-top: 16px;
+  background: var(--bg-shell);
+  border-right: 1px solid var(--edge-faint);
+  z-index: 20;
+}
+.fw8-lens {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--edge-strong);
+  background: var(--bg-panel);
+  color: var(--text-faint);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-overshoot);
+}
+.fw8-lens:hover { color: var(--text-secondary); transform: scale(1.06); }
+.fw8-lens[data-raised="true"] { border-color: var(--accent); color: var(--accent); }
+.fw8-lens-stem {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.fw8-lens[data-raised="true"] .fw8-lens-stem { opacity: 1; }
+
+/* ---------- surfaces ---------- */
+.fw8-surface {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-panel);
+  overflow: hidden;
+}
+
+/* docked form: real side geometry */
+.fw8-root[data-form="docked"] .fw8-surface {
+  flex: none;
+  width: 0;
+  border-right: 1px solid var(--edge);
+  transition: width var(--dur-slow) var(--ease-settle);
+}
+.fw8-root[data-form="docked"][data-history="pinned-full"] .fw8-history,
+.fw8-root[data-form="docked"][data-history="peek"] .fw8-history { width: 238px; }
+.fw8-root[data-form="docked"][data-history="pinned-compact"] .fw8-history { width: 56px; }
+.fw8-root[data-form="docked"][data-artifact="true"] .fw8-artifact { width: clamp(290px, 30vw, 430px); }
+
+/* overlay form: lens morphs */
+.fw8-root[data-form="overlay"] .fw8-surface {
+  position: absolute;
+  left: 60px;
+  top: 12px;
+  bottom: 12px;
+  width: 0;
+  z-index: 40;
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3);
+  transform-origin: left top;
+}
+.fw8-root[data-form="overlay"][data-history="peek"] .fw8-history,
+.fw8-root[data-form="overlay"][data-history="pinned-full"] .fw8-history,
+.fw8-root[data-form="overlay"][data-history="pinned-compact"] .fw8-history {
+  width: min(258px, calc(100% - 76px));
+  animation: fw8-raise var(--dur-base) var(--ease-overshoot);
+}
+.fw8-root[data-form="overlay"][data-artifact="true"] .fw8-artifact {
+  width: min(340px, calc(100% - 76px));
+  top: 52px;
+  animation: fw8-raise var(--dur-base) var(--ease-overshoot);
+}
+@keyframes fw8-raise {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+.fw8-surface-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--edge-faint);
+  min-width: 0;
+  flex: none;
+}
+.fw8-surface-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 630;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw8-surface-status {
+  font-size: 10px;
+  color: var(--text-faint);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+}
+.fw8-surface-status[data-status="updated"] { color: var(--accent); border-color: var(--accent); }
+.fw8-surface-status[data-status="error"] { color: var(--danger); border-color: var(--danger); }
+.fw8-surface-rows { flex: 1; min-height: 0; padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+.fw8-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-md);
+  text-align: left;
+  min-width: 0;
+}
+.fw8-row:hover { background: var(--bg-hover); }
+.fw8-row[data-active="true"] { background: var(--bg-active); }
+.fw8-row-glyph { flex: none; color: var(--text-faint); display: grid; place-items: center; }
+.fw8-row[data-active="true"] .fw8-row-glyph { color: var(--accent); }
+.fw8-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.fw8-row-title { font-size: 12.5px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw8-row-meta { font-size: 10px; color: var(--text-faint); }
+.fw8-surface-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fw8-surface-foot {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--edge-faint);
+  flex: none;
+}
+.fw8-foot-lens {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--edge);
+  color: var(--text-faint);
+}
+.fw8-foot-lens:hover { color: var(--text-secondary); border-color: var(--edge-strong); }
+.fw8-foot-lens[data-active="true"] { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- main ---------- */
+.fw8-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fw8-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--edge-faint);
+  min-width: 0;
+}
+.fw8-head-left, .fw8-head-right { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.fw8-head-right { flex: none; }
+.fw8-head-right .pmc-search { width: 180px; }
+.fw8-thread-slot {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--fw-chat-width, 750px);
+  display: flex;
+  flex-direction: column;
+  transition: max-width var(--dur-base) var(--ease-settle);
+}
+
+@media (max-width: 900px) { .fw8-head-right .pmc-search { width: 110px; } }
+
+[data-reduced-motion="1"] .fw8-root [class*="fw8-"],
+[data-motion="reduced"] .fw8-root [class*="fw8-"] { animation: none !important; }

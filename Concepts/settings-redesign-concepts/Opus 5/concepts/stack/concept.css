@@ -507,7 +507,7 @@
   justify-self: start; background: var(--pm-surface-2); color: var(--pm-text-1); font: inherit; font-size: 12px;
   border: var(--pm-border-w) solid var(--pm-border-2); border-radius: 999px; padding: 3px 12px; cursor: pointer;
 }
-.st-toggle[aria-checked="true"] { background: var(--pm-accent-soft); border-color: var(--pm-border-strong); }
+.st-toggle[aria-pressed="true"] { background: var(--pm-accent-soft); border-color: var(--pm-border-strong); }
 
 .st-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .st-chip {

@@ -292,6 +292,8 @@
       }
 
       render();
+      // populate BEFORE opening: positionPopup measures the node at open time.
+      const pop = ctx.ui.popover(anchorEl, panel, { className: 'k3l-receipt-pop' });
       return pop;
     },
 

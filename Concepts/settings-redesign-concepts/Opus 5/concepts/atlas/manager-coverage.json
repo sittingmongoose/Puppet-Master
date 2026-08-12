@@ -1,0 +1,254 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage_result.v1",
+  "concept_id": "atlas",
+  "concept_title": "Opus 5 \u2014 Atlas",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "matrix_source": "PACKET/MANAGER_COVERAGE_MATRIX.json",
+  "assignment_group": "concept_1",
+  "summary": {
+    "families_required": 12,
+    "demonstrated": 8,
+    "shared_grammar": 4,
+    "deferred_named_owner": 0,
+    "missing": 0
+  },
+  "families": [
+    {
+      "family": "Settings Home",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Concept home screen \u2014 shared/pm-sections.js + concept home renderer"
+    },
+    {
+      "family": "Settings Search",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "shared/pm-search.js fuzzy index (416 records, 5 result kinds) surfaced by each concept"
+    },
+    {
+      "family": "Settings Workspace",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Category workspace: shared/pm-sections.js scrollspy + per-concept doc column"
+    },
+    {
+      "family": "Provider/Account/Model/Installation",
+      "group": "core",
+      "manager_id": "manager-providers",
+      "classification": "demonstrated",
+      "evidence": "Bespoke provider/account/model/installation surface in concepts/atlas/concept.js \u2014 the one manager every concept builds in its own idiom"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Ordinary setting rows from window.PMData through each concept's row renderer"
+    },
+    {
+      "family": "Context & Instructions",
+      "group": "concept_1",
+      "manager_id": "manager-context",
+      "classification": "demonstrated",
+      "evidence": "7 sections, 30 items, 8 ordinary setting rows; route #/m/manager-context"
+    },
+    {
+      "family": "Memory",
+      "group": "concept_1",
+      "manager_id": "manager-memory",
+      "classification": "demonstrated",
+      "evidence": "6 sections, 17 items, 4 ordinary setting rows; route #/m/manager-memory"
+    },
+    {
+      "family": "Personas",
+      "group": "concept_1",
+      "manager_id": "manager-personas",
+      "classification": "demonstrated",
+      "evidence": "7 sections, 30 items, 3 ordinary setting rows; route #/m/manager-personas"
+    },
+    {
+      "family": "Goal & Automation",
+      "group": "concept_1",
+      "manager_id": "manager-goal",
+      "classification": "demonstrated",
+      "evidence": "6 sections, 17 items, 5 ordinary setting rows; route #/m/manager-goal"
+    },
+    {
+      "family": "Crew",
+      "group": "concept_1",
+      "manager_id": "manager-crew",
+      "classification": "demonstrated",
+      "evidence": "6 sections, 26 items, 3 ordinary setting rows; route #/m/manager-crew"
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "group": "concept_1",
+      "manager_id": "manager-filesafe",
+      "classification": "demonstrated",
+      "evidence": "11 sections, 34 items, 8 ordinary setting rows; route #/m/manager-filesafe"
+    },
+    {
+      "family": "Back Seat Driver",
+      "group": "concept_1",
+      "manager_id": "manager-bsd",
+      "classification": "demonstrated",
+      "evidence": "6 sections, 19 items, 4 ordinary setting rows; route #/m/manager-bsd"
+    }
+  ],
+  "managers_rendered_here": [
+    {
+      "manager_id": "manager-providers",
+      "title": "Providers, accounts and models",
+      "sections": null,
+      "items": null,
+      "setting_rows": null,
+      "section_kinds": [
+        "bespoke"
+      ],
+      "route": "#/m/manager-providers"
+    },
+    {
+      "manager_id": "manager-context",
+      "title": "Context & instructions",
+      "sections": 7,
+      "items": 30,
+      "setting_rows": 8,
+      "section_kinds": [
+        "table",
+        "list",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-context"
+    },
+    {
+      "manager_id": "manager-memory",
+      "title": "Assistant memory",
+      "sections": 6,
+      "items": 17,
+      "setting_rows": 4,
+      "section_kinds": [
+        "list",
+        "table",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-memory"
+    },
+    {
+      "manager_id": "manager-personas",
+      "title": "Personas",
+      "sections": 7,
+      "items": 30,
+      "setting_rows": 3,
+      "section_kinds": [
+        "cards",
+        "list",
+        "table",
+        "matrix",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-personas"
+    },
+    {
+      "manager_id": "manager-goal",
+      "title": "Goal defaults, routes and ceilings",
+      "sections": 6,
+      "items": 17,
+      "setting_rows": 5,
+      "section_kinds": [
+        "list",
+        "table",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-goal"
+    },
+    {
+      "manager_id": "manager-crew",
+      "title": "Crew templates",
+      "sections": 6,
+      "items": 26,
+      "setting_rows": 3,
+      "section_kinds": [
+        "list",
+        "table",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-crew"
+    },
+    {
+      "manager_id": "manager-filesafe",
+      "title": "Permissions and FileSafe",
+      "sections": 11,
+      "items": 34,
+      "setting_rows": 8,
+      "section_kinds": [
+        "prose",
+        "list",
+        "table",
+        "matrix",
+        "rows"
+      ],
+      "route": "#/m/manager-filesafe"
+    },
+    {
+      "manager_id": "manager-bsd",
+      "title": "Back Seat Driver",
+      "sections": 6,
+      "items": 19,
+      "setting_rows": 4,
+      "section_kinds": [
+        "list",
+        "table",
+        "rows"
+      ],
+      "route": "#/m/manager-bsd"
+    },
+    {
+      "manager_id": "manager-usage",
+      "title": "Usage",
+      "sections": 2,
+      "items": 6,
+      "setting_rows": 0,
+      "section_kinds": [
+        "list",
+        "prose"
+      ],
+      "route": "#/m/manager-usage"
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "family": "Project Sync / Project Move",
+      "canonical_owner": "Project Sync owner (SERVER_BACKBONE_SETTINGS_RETURN.md)",
+      "insertion_contract": "A manager module registered through PMManagerKit.register(id, builder) returning the same ManagerSpec shape; Settings hosts it at #/m/manager-project-sync and links it from Server & hosts. Settings never implements the sync state machine.",
+      "why_deferred": "PACKET/07 forbids concept agents from modelling Project Sync state machines."
+    },
+    {
+      "family": "Browser Runtime / Browser Program / Expert Browser",
+      "canonical_owner": "PM-native Browser owner (PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md)",
+      "insertion_contract": "Registers as manager-browser with sections for workspaces, programs and the human-only AuthBrowser session; Settings shows profile and permission rows only, never DOM or capture surfaces.",
+      "why_deferred": "PACKET/07 marks the AuthBrowser session human-only and inspection-free; a Settings concept cannot demonstrate it honestly."
+    },
+    {
+      "family": "RuntimeResourceGovernor policy editor",
+      "canonical_owner": "Performance owner (PERFORMANCE_SETTINGS_RETURN.md)",
+      "insertion_contract": "One policy manager registered as manager-performance; Settings surfaces the single governor policy and its observed phases, and must not add a second concurrency control anywhere else.",
+      "why_deferred": "PACKET/SOURCE_AND_PRECEDENCE_MAP requires exactly one governor policy owner; four concepts inventing editors would create four."
+    },
+    {
+      "family": "Release / update supply chain",
+      "canonical_owner": "Release/updates owner (Release_Supply_Chain.md, BinaryLocator_Spec.md)",
+      "insertion_contract": "Provider installation rows already carry updateAttempt evidence; the release owner registers manager-updates and Settings links installation rows to it rather than duplicating rollback policy.",
+      "why_deferred": "Update/repair/rollback policy is highest-precedence canon in PROVIDER_CLI_FINAL_ADJUDICATION.md."
+    }
+  ],
+  "rule_check": "missing is a failure; this concept reports 0 missing"
+}

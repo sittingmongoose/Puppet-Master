@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.chat.5_6_sol.browser_acceptance_summary.v2",
+  "model_label": "5.6 Sol",
+  "generated_at": "2026-08-12T07:44:22Z",
+  "status": "pass_with_recorded_residuals",
+  "prototype_gate": "pass",
+  "production_readiness_claimed": false,
+  "winner_recommendation": null,
+  "engines": [
+    {
+      "browser": "Firefox 153.0.3",
+      "engine": "Gecko",
+      "automation": "geckodriver 0.37.0",
+      "transport": "loopback HTTP",
+      "receipt": "evidence/browser-acceptance-firefox.json",
+      "screenshot_root": "evidence/frames",
+      "checks_passed": 23,
+      "checks_failed": 0,
+      "console_errors": 0,
+      "runtime_exceptions": 0
+    },
+    {
+      "browser": "Chromium 151.0.7922.34",
+      "engine": "Blink",
+      "automation": "Chrome DevTools Protocol 1.3",
+      "transport": "file URL with the same four checked-in JSON fixtures loaded through the file-only local XHR branch",
+      "receipt": "evidence/browser-acceptance-chromium.json",
+      "screenshot_root": "evidence/chromium-frames",
+      "checks_passed": 23,
+      "checks_failed": 0,
+      "console_errors": 0,
+      "runtime_exceptions": 0
+    }
+  ],
+  "aggregate": {
+    "checks_passed": 46,
+    "checks_failed": 0,
+    "console_errors": 0,
+    "runtime_exceptions": 0
+  },
+  "shared_coverage_per_engine": {
+    "entry_pages": 17,
+    "same_model_pairings": 64,
+    "questionnaire_grammars": 8,
+    "legibility_cells": 64,
+    "theme_width_cells": 32,
+    "baseline_configuration_cells": 512,
+    "feature_state_cells": 896,
+    "continuous_resize_samples": 53,
+    "history_artifact_cells": 160,
+    "authored_motion_families": 34,
+    "deterministic_triggers": 64,
+    "focused_frames": 23,
+    "total_frames": 55
+  },
+  "legibility_gate": {
+    "status": "pass",
+    "body_copy_floor_px": 16,
+    "metadata_and_action_floor_px": 11,
+    "dense_work_row_floor_px": 12,
+    "minimum_metadata_contrast": "6:1 on base and raised surfaces",
+    "dense_header_collisions": 0
+  },
+  "motion_gate": {
+    "status": "pass",
+    "window_families": 8,
+    "thread_message_families": 8,
+    "thread_question_families": 8,
+    "thread_work_families": 8,
+    "popup_families": 1,
+    "continuous_progress_families": 1,
+    "total": 34,
+    "reduced_motion_counterparts": 34
+  },
+  "visual_evidence": {
+    "canonical_engine": "Firefox/Gecko",
+    "canonical_frame_root": "evidence/frames",
+    "chromium_frame_root": "evidence/chromium-frames",
+    "frames_per_engine": 55,
+    "directly_inspected_canonical_frames": 55,
+    "inspection_receipt": "evidence/direct-visual-inspection.json",
+    "large_matrix_boundary": "The 512 baseline and 896 feature-state cells are automated geometry/state checks, not individually human-reviewed images."
+  },
+  "transport_note": "Chromium loopback HTTP is not claimed. On this host its renderer fails before requesting even a trivial loopback page. The full Blink lane therefore uses a file URL and a narrowly scoped local XHR loader for the same checked-in fixtures, while Firefox retains the normal HTTP lane.",
+  "residuals": [
+    "No native Slint 1.17.1 component was created or compiled because runtime edits were out of scope.",
+    "Detached-window DPI, platform font metrics, IME, assistive technology, and live-service latency remain production validation work."
+  ]
+}

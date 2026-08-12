@@ -125,11 +125,44 @@
       stepIndex: 0,
       stepStartedAt: Date.now(),
       startedAt: Date.now(),
-      stopped: false
+      stopped: false,
+      /* A live run IS observable work, so it registers with ObservableWork rather than being a
+       * private timer nobody else can see. This is what makes an indefinite status animation
+       * legal: the spinner on a working thread carries `data-pmx-op` set to this id, and the
+       * motion contract can prove a real operation backs it. Without the op the same spinner is
+       * an unfalsifiable claim that something is happening. */
+      opId: 'run-' + threadId
     };
+    startRunOp(threadId, steps);
     ensureTimer();
     if (store) store.touchView('messages');
     return userMsg;
+  }
+
+  /* One op per live run. `determinate` because a scripted reply knows its own step count, which
+   * lets a renderer show real progress instead of an indefinite pulse wherever it has room. */
+  function startRunOp(threadId, steps) {
+    var obs = global.PMXObservable;
+    if (!obs || !obs.start) return null;
+    return obs.start({
+      id: 'run-' + threadId,
+      kind: 'run',
+      label: steps && steps.length ? steps[0] : 'Working',
+      determinate: !!(steps && steps.length),
+      total: steps ? steps.length : 0
+    });
+  }
+
+  function stepRunOp(threadId, index, label) {
+    var obs = global.PMXObservable;
+    if (obs && obs.step) obs.step('run-' + threadId, index, label);
+  }
+
+  function endRunOp(threadId, receipt, failed) {
+    var obs = global.PMXObservable;
+    if (!obs) return;
+    if (failed) { if (obs.cancel) obs.cancel('run-' + threadId); return; }
+    if (obs.finish) obs.finish('run-' + threadId, receipt || null);
   }
 
   function advance(threadId) {
@@ -175,6 +208,10 @@
     }
     if (t) t.scriptedReplyCursor = (t.scriptedReplyCursor || 0) + 1;
 
+    /* The op finishes with a receipt, so the worked duration survives the run that produced it —
+     * a completed operation with no receipt leaves nothing durable behind. */
+    endRunOp(threadId, { workedSeconds: worked, line: 'Worked for ' + worked + 's' }, false);
+
     runs[threadId] = null;
     delete runs[threadId];
     if (store) store.touchView('messages');
@@ -185,6 +222,9 @@
   function stop(threadId) {
     var run = runs[threadId];
     if (!run) return false;
+    /* Cancelled, not completed: the user stopped it, and a receipt that said "complete" would be
+     * the same lie the old artifact trigger told. */
+    endRunOp(threadId, null, true);
     var d = data();
     var t = d && d.threadById(threadId);
     var reply = null;

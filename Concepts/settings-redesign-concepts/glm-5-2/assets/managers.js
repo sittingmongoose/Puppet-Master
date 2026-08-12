@@ -184,7 +184,7 @@
       addLabel: "Add connection", health: health,
       summary: "Providers, accounts, connections, models, and agent role assignments.",
       toolbar: [{id:"refresh",label:"Refresh all",icon:"refresh"}]
-    }, catalog + rows + roles + M.installations());
+    }, catalog + rows + roles + M.installations() + M.secretsSection());
   };
 
   /* ---------- MEMORY (deep-dive 01) ---------- */
@@ -811,6 +811,65 @@
     ].join("");
   };
 
+  /* ---------- SECRETS SECTION (7 secret-value types, packet 02) ---------- */
+  M.secretsSection = function () {
+    var rows = (PM_DEMO.secrets || []).map(function (s) { return PM.shared.secretField(s); }).join("");
+    return [
+      '<section class="provider" style="margin-top:var(--gap)">',
+        '<div class="provider-head"><div class="col gap-xs">',
+          '<div class="row center gap-sm"><h3>Secret values</h3>',
+          '<span class="chip info">7 types — credentials are not ordinary text fields</span></div>',
+          '<span class="muted small">Reveal/copy/persist/test semantics differ by type. Raw tokens are never shown in ordinary UI.</span>',
+        '</div></div>',
+        '<div class="mgr-secrets-body">' + rows + "</div>",
+        '<div class="mgr-note info small">CLI-owned OAuth (Claude/Antigravity) launches the native flow in an isolated profile; PM never presents PM-direct OAuth for those. PM-direct OAuth is used only for OpenAI/Codex, GitHub, Copilot.</div>',
+      "</section>"
+    ].join("");
+  };
+
+  /* ---------- IMPORT PREVIEW / APPLY / ROLLBACK modal (packet 01 + 09) ---------- */
+  M.importModal = function (anchor, opts) {
+    opts = opts || {};
+    var old = document.querySelector("[data-popover].import-modal"); if (old) old.remove();
+    var conflicts = PM_DEMO.importConflicts || [];
+    var rows = conflicts.map(function (c) {
+      var resChip = c.resolution === "conflict" ? '<span class="chip bad">Conflict — choose</span>'
+        : c.resolution === "same" ? '<span class="chip ok">No change</span>'
+        : c.resolution === "take-incoming" ? '<span class="chip info">Take incoming</span>'
+        : '<span class="chip warn">Keep current</span>';
+      return '<div class="imp-row"><div class="col gap-xs"><strong>' + c.setting + '</strong>' +
+        '<span class="muted small">current: ' + c.current + ' · incoming: ' + c.incoming + '</span></div>' + resChip + "</div>";
+    }).join("");
+    var sources = (PM_DEMO.copyFromSources || []).map(function (s) {
+      return '<div class="imp-src"><div class="col gap-xs"><strong>' + s.name + '</strong><span class="muted small">' + s.note + '</span></div><span class="chip">' + s.categories + " categories</span></div>";
+    }).join("");
+    var title = opts.copyFrom ? "Copy Settings From (one-time transactional)" : "Import settings — preview";
+    var modal = PM.el("div", "import-modal", { "data-popover": "", role: "dialog", "aria-label": title },
+      '<div class="setup-modal-head"><strong>' + title + '</strong><button class="btn sm ghost icon" data-imp-close>' + PM.svg("close", 14) + "</button></div>" +
+      '<div class="mgr-note info small">Restore point created automatically. Atomic apply. Rollback to snapshot if verification fails. Receipt + source disclosed.</div>" +
+      (opts.copyFrom ? '<div class="imp-section-label">Sources</div><div class="imp-src-list">' + sources + "</div>" : "") +
+      '<div class="imp-section-label">Conflicts (' + conflicts.length + ')</div><div class="imp-list">' + rows + "</div>" +
+      '<div class="setup-modal-foot">' +
+        '<button class="btn sm ghost" data-imp-close>Cancel</button>' +
+        '<button class="btn sm ghost" data-imp-rollback>Rollback</button>' +
+        '<button class="btn sm primary" data-imp-apply>Apply atomically</button>' +
+      "</div>"
+    );
+    document.body.appendChild(modal);
+    var close = function () { modal.remove(); };
+    modal.querySelector("[data-imp-close]").addEventListener("click", close);
+    modal.querySelector("[data-imp-rollback]").addEventListener("click", function () {
+      modal.querySelector(".imp-list").insertAdjacentHTML("beforebegin",
+        '<div class="state-block bad"><span class="state-ic bad">' + PM.svg("warn", 18) + "</span><div class=\"col\"><strong>Rolled back to restore point</strong><span class=\"muted small\">Snapshot restored; receipt kept.</span></div></div>");
+      PM.toast("Rolled back to pre-import snapshot · receipt kept");
+    });
+    modal.querySelector("[data-imp-apply]").addEventListener("click", function () {
+      modal.querySelector(".setup-modal-foot").insertAdjacentHTML("beforebegin",
+        '<div class="state-block info" style="border-style:solid"><span class="state-ic info">' + PM.svg("ok", 18) + "</span><div class=\"col\"><strong>Applied · destination independent</strong><span class=\"muted small\">Atomic apply verified; receipt + source disclosed; dependent routes refreshed.</span></div></div>");
+      PM.toast("Settings applied · receipt kept");
+    });
+  };
+
   /* ---------- ROUTER ---------- */
   M.render = function (managerId) {
     var fn = M[managerId];
@@ -825,10 +884,20 @@
     root.querySelectorAll('[data-manager-search]').forEach(function (inp) {
       inp.addEventListener("input", function () {
         var q = this.value.toLowerCase();
+        var visible = 0;
         root.querySelectorAll("[data-conn],[data-model],[data-gist],[data-mcp],[data-skill],[data-persona],[data-lsp],[data-term],[data-media],[data-crew],[data-res]").forEach(function (row) {
           var txt = row.textContent.toLowerCase();
-          row.style.display = (!q || txt.indexOf(q) > -1) ? "" : "none";
+          var show = (!q || txt.indexOf(q) > -1);
+          row.style.display = show ? "" : "none";
+          if (show) visible++;
         });
+        // empty state (packet 08)
+        var body = root.querySelector(".mgr-body");
+        var empty = body && body.querySelector("[data-empty-state]");
+        if (q && visible === 0) {
+          var html = PM.shared.stateBlock("empty", "No results", 'No resources match "' + q.trim() + '". Try a different term or clear the filter.');
+          if (empty) { empty.innerHTML = html; } else if (body) { body.insertAdjacentHTML("beforeend", '<div data-empty-state>' + html + '</div>'); }
+        } else if (empty) { empty.remove(); }
       });
     });
     // refresh preserves last-known-good rows during loading (packet: smoke #4)
@@ -993,8 +1062,14 @@
           var enabling = this.textContent.indexOf("Enable") > -1;
           this.textContent = enabling ? "Enabled" : "Enable";
           PM.toast(enabling ? "Enabled" : "Disabled");
-        } else if (act === "preview") { PM.toast("Preview — local only"); }
-        else if (act === "test") { PM.toast("Test send — masked, rate-limited, receipted"); }
+        } else if (act === "preview") {
+          var host = root.closest("[data-manager-id]");
+          var mid = host && host.getAttribute("data-manager-id");
+          if (mid === "settingsLifecycle") { M.importModal(this); }
+          else if (mid === "sounds") { playBeep(); PM.toast("Preview — local only"); }
+          else { PM.toast("Preview — local only"); }
+        }
+        else if (act === "test") { PM.toast("Test send — masked, rate-limited, receipted · " + new Date().toLocaleTimeString()); }
         else if (act === "run") { PM.toast("Started — ObservableWork phase shown"); }
         else if (act === "apply") { PM.toast("Applied · receipt kept · dependent routes refreshed"); }
         else if (act === "export") { PM.toast("Exported · source disclosed"); }
@@ -1027,6 +1102,24 @@
       modal.remove();
       PM.toast("Setup complete · returned to model row");
     });
+  }
+
+  /* ---------- local-only sound preview (WebAudio beep; no external asset) ---------- */
+  function playBeep() {
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { PM.toast("Audio preview unavailable here"); return; }
+      var ctx = new AC();
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine"; osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(); osc.stop(ctx.currentTime + 0.24);
+      setTimeout(function () { try { ctx.close(); } catch (e) {} }, 320);
+    } catch (e) { PM.toast("Audio preview unavailable here"); }
   }
 
   /* ---------- TOAST + MENU (shared overlays) ---------- */

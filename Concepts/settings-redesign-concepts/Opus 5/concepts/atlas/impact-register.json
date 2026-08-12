@@ -1,0 +1,470 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "atlas",
+  "model": "Opus 5",
+  "concept_title": "Opus 5 \u2014 Atlas",
+  "thesis": "Settings is a place",
+  "generated": "2026-08-12",
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "impact": "The chip/bloom, no-sidebar Settings contract is superseded: all four concepts have a persistent left navigation, a Settings Home, a Settings Workspace and manager surfaces reachable by deep link.",
+      "kind": "supersede"
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "274 settings across 11 categories and 56 subcategories carry state.source, state.scope, isDefault, restart, exposure and (where relevant) an effect note. Inventory values that cannot express requested-vs-effective are invalid.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Models System",
+      "impact": "Models carry capability evidence with freshness, observed availability, alias, priority and visibility. Fast/effort modes are never inferred from a model name.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Multi-Account",
+      "impact": "A provider family holds several accounts and API connections at once, each with its own billing, health and sign-in identity; account selection never re-authenticates.",
+      "kind": "extend"
+    },
+    {
+      "owner": "CLI Bridged Providers",
+      "impact": "Installations are detected, not bundled. A CLI-owned credential is never shown as a PM secret and never gets a PM sign-in control; PM offers to launch the tool's own login.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Provider OpenCode",
+      "impact": "OpenCode appears as a server-connection family with its own installation record and community-hosted note.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Media",
+      "impact": "Media generation routes are settings with an unavailable state and a reason, not a hidden capability.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Prompt Pipeline",
+      "impact": "The model receives a compact effective projection; the context manager shows admission receipts and the precedence chain.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Assistant Memory",
+      "impact": "Notes carry provenance, verification state, half-life and recall; deletion and redaction are separate operations with receipts.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Personas",
+      "impact": "Personas carry scope, route and a copyable capsule; import is preview-then-apply.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Goal Runtime",
+      "impact": "Goal state, spend guards and time guards are settings with explicit effect notes.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Orchestrator/Subagents",
+      "impact": "Crew templates carry members and sustainable concurrency; concurrency is one governed number, not a per-screen control.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Planning Wizard",
+      "impact": "PRD and planning conversations pin a high-quality route by design; the route is never downgraded to save usage.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "PRD Builder",
+      "impact": "Same route policy as the Planning Wizard; both appear as ordinary settings rows with a cost effect note.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Permissions",
+      "impact": "Ordered rules with pattern, verdict, scope and a test action; approvals and sandboxing are separate subcategories.",
+      "kind": "extend"
+    },
+    {
+      "owner": "FileSafe",
+      "impact": "Writable paths, protected version-control internals, presets and grant expiry; 11 sections in the manager.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Commands",
+      "impact": "Custom commands carry a dry run; shortcut binding reports conflicts.",
+      "kind": "extend"
+    },
+    {
+      "owner": "UI Command Catalog",
+      "impact": "220 distinct action ids were exercised across the four concepts; 73 map onto the packet's candidate families, the rest need adjudication before minting.",
+      "kind": "conflict"
+    },
+    {
+      "owner": "MCP",
+      "impact": "Servers carry transport, protocol requested vs negotiated, approval mode and exposure counts.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Skills",
+      "impact": "Skills are installed; plugins are loaded; tools are exposed. Three lifecycles, not one list.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Plugins",
+      "impact": "As above; plugin inspect/reload/remove are distinct operations.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Tools",
+      "impact": "Tool inventory reports what is installed, enabled, available, selected for a turn and actually invoked.",
+      "kind": "extend"
+    },
+    {
+      "owner": "LSP",
+      "impact": "Detected servers with coverage and health; restart is an explicit operation with a receipt.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Formatters",
+      "impact": "Formatter chain with a test action and a per-language override.",
+      "kind": "extend"
+    },
+    {
+      "owner": "File Manager",
+      "impact": "Editor and file-manager settings carry compare, reload and save-journal operations.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Testing",
+      "impact": "Test runs expose the last run log as a diagnostic, not as a status colour.",
+      "kind": "reuse"
+    },
+    {
+      "owner": "Worktrees/Git/GitHub",
+      "impact": "Worktrees, merge tests, Actions runs, job logs and secrets are separate managers with their own health.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Containers/Registries",
+      "impact": "Runtime detection plus registry credentials; switching runtime is a primary action with a receipt.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Storage",
+      "impact": "Volumes, retention, compaction and migration; a storage surface is only useful if it does not measure media spend.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Runtime Artifacts/Outputs",
+      "impact": "Artifacts carry size, age, reveal and export; deletion previews before it deletes.",
+      "kind": "extend"
+    },
+    {
+      "owner": "Release/updates owner",
+      "impact": "Update attempts carry outcome, rollback state and the frozen generation still in use by an open thread.",
+      "kind": "conflict"
+    },
+    {
+      "owner": "Binary Locator and installation lifecycle",
+      "impact": "7 installation records with paths, versions, owners and update attempts; adoption of an existing installation is an explicit operation.",
+      "kind": "extend"
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "impact": "Row grammar requires eight fields",
+      "detail": "label, explanation, kind, current value, default, source, scope and restart. A row without a source cannot answer 'why is it this way'.",
+      "count": 274
+    },
+    {
+      "impact": "Requested vs effective is a first-class pair",
+      "detail": "PMData.routeDifferences carries requested, effective, reason and scope; an inventory that stores one value cannot express a policy override.",
+      "count": 3
+    },
+    {
+      "impact": "Exposure is carried per row",
+      "detail": "standard / advanced / expert / managed / diagnostic / unavailable \u2014 search can find a risky unavailable item without rendering it as an equally inviting default control."
+    },
+    {
+      "impact": "Effect notes are typed",
+      "detail": "safety, cost and performance effects are separate kinds so a concept can weight them differently without inventing new prose."
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "impact": "state.source enumeration",
+      "values": [
+        "default",
+        "recommended",
+        "inherited",
+        "auto",
+        "notConfigured",
+        "managed",
+        "custom",
+        "unavailable"
+      ]
+    },
+    {
+      "impact": "unavailable requires a reason",
+      "detail": "An unavailable row without unavailableReason is invalid; the concepts render the reason, never a bare disabled control."
+    },
+    {
+      "impact": "manager rows are pointers",
+      "detail": "kind:'manager' rows carry managerId and resolve through PMManagerKit; an unresolvable pointer is a validation failure, not a dead link."
+    },
+    {
+      "impact": "restart is a value, not a badge",
+      "detail": "restart: none | restart | reconnect drives the row's own disclosure."
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "impact": "Actions in this concept's scope",
+      "count": 65
+    },
+    {
+      "impact": "Adjudicated against candidate families",
+      "count": 30
+    },
+    {
+      "impact": "Needing new IDs",
+      "count": 22
+    },
+    {
+      "impact": "Read-only diagnostics that must not mint commands",
+      "count": 13
+    },
+    {
+      "impact": "cmd.settings.bloom.open",
+      "verdict": "supersede",
+      "detail": "No chip/bloom surface exists in this build; alias only if the shipped catalog still binds it."
+    },
+    {
+      "impact": "cmd.usage.refresh",
+      "verdict": "conflict",
+      "detail": "Usage is a boundary card in Settings; ownership of refresh is unresolved between Settings and the Usage owner."
+    },
+    {
+      "detail": "Full census in candidate-command-delta.json"
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "impact": "Deep-link grammar with exact arities",
+      "detail": "shared/pm-route.js; 34 parser cases exercised including malformed arity, broken percent escapes, demo-state tails and format/parse round-trips."
+    },
+    {
+      "impact": "Unknown target is an inline notice",
+      "detail": "A well-formed route naming nothing renders home plus a notice quoting the link."
+    },
+    {
+      "impact": "Receipts bridge to one notification surface",
+      "detail": "The shell owns the title-bar inbox; concepts never post to it directly."
+    },
+    {
+      "impact": "Demo state travels in the link",
+      "detail": "?demo=<id> so a reviewer can hand over an exact screen."
+    },
+    {
+      "detail": "Full grammar in candidate-wiring-delta.json"
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "impact": "One ManagerSpec renderer per concept",
+      "detail": "8 managers render through a single path in this concept."
+    },
+    {
+      "impact": "Status vocabulary owned by shared/pm-semantics.js",
+      "detail": "Icon plus word everywhere; colour is never the only carrier."
+    },
+    {
+      "impact": "Provider surface stays bespoke",
+      "detail": "The one manager the four designs are meant to disagree about."
+    },
+    {
+      "detail": "Full role map in candidate-dry-delta.json"
+    }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "impact": "Receipts are events with outcomes",
+      "values": [
+        "ok",
+        "degraded",
+        "partial",
+        "error",
+        "unavailable",
+        "handoff",
+        "simulated"
+      ]
+    },
+    {
+      "impact": "Update attempts are stored, not derived",
+      "detail": "An installation carries its update attempts with outcome and rollback state; a thread can still be using a frozen generation after a failed update."
+    },
+    {
+      "impact": "Notice dismissal is persisted per concept",
+      "detail": "dismissedNotices is a persisted key; a dismissed notice must not return on reload."
+    },
+    {
+      "impact": "Local persistence is namespaced",
+      "detail": "localStorage keys are namespaced by concept id so four concepts can be reviewed in one browser profile without colliding."
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "supersedes": "Settings chip/bloom/no-sidebar contract",
+      "with": "Persistent navigation plus Settings Home, Workspace and manager surfaces",
+      "evidence": "No occurrence of 'bloom' in any file in this folder."
+    },
+    {
+      "supersedes": "Stale right-panel language",
+      "with": "The shell's panel is a review surface, not a settings detail pane."
+    },
+    {
+      "supersedes": "regular/yolo mode coupling",
+      "with": "Access modes are ordinary settings values with typed safety effects",
+      "evidence": "No occurrence of 'yolo' in any file in this folder."
+    },
+    {
+      "supersedes": "Invalid inventory values",
+      "with": "Typed state.source plus a required reason for unavailable rows."
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "impact": "No layout measurement in the model",
+      "detail": "shared/pm-store.js holds semantic state only; the DOM is measured at explicit checkpoints in shared/pm-sections.js, which is where a Slint ScrollView.viewport-y callback would sit."
+    },
+    {
+      "impact": "Model-backed categories and lists",
+      "detail": "Every surface renders from arrays and records, so long lists can be virtualised or segmented in Slint without changing the model."
+    },
+    {
+      "impact": "Predictable focus order",
+      "detail": "Focus follows document order; no concept moves focus during an animation."
+    },
+    {
+      "impact": "Motion is directed, not constant",
+      "detail": "Entrance animations use animation-fill-mode: both; if the entrance never plays the content is simply visible \u2014 a property Slint's animation model requires."
+    },
+    {
+      "impact": "Reduced motion holds a static ring",
+      "detail": "data-reduced-motion=1 removes transitions without losing state."
+    }
+  ],
+  "test_fixtures": [
+    {
+      "fixture": "Providers",
+      "count": 8,
+      "states": [
+        "ready",
+        "needs setup",
+        "cooling down",
+        "no longer free",
+        "no longer available",
+        "unverified",
+        "authenticated but unusable"
+      ]
+    },
+    {
+      "fixture": "Installations",
+      "count": 7,
+      "states": [
+        "detected",
+        "adopted",
+        "update failed and rolled back",
+        "frozen generation still in use"
+      ]
+    },
+    {
+      "fixture": "Managers",
+      "count": 38,
+      "note": "38 manager records; 37 registered builders plus the bespoke provider surface"
+    },
+    {
+      "fixture": "Settings",
+      "count": 274
+    },
+    {
+      "fixture": "Notices",
+      "count": 13
+    },
+    {
+      "fixture": "Search index",
+      "count": 416,
+      "kinds": [
+        "category",
+        "subcategory",
+        "setting",
+        "manager",
+        "action",
+        "status",
+        "diagnostic",
+        "provider",
+        "model"
+      ]
+    },
+    {
+      "fixture": "Demo states",
+      "values": [
+        "normal",
+        "attention",
+        "loading",
+        "calm"
+      ],
+      "note": "Deterministic triggers for every required state; the demo state is part of the deep link."
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "family": "Project Sync / Project Move",
+      "canonical_owner": "Project Sync owner (SERVER_BACKBONE_SETTINGS_RETURN.md)",
+      "insertion_contract": "A manager module registered through PMManagerKit.register(id, builder) returning the same ManagerSpec shape; Settings hosts it at #/m/manager-project-sync and links it from Server & hosts. Settings never implements the sync state machine.",
+      "why_deferred": "PACKET/07 forbids concept agents from modelling Project Sync state machines."
+    },
+    {
+      "family": "Browser Runtime / Browser Program / Expert Browser",
+      "canonical_owner": "PM-native Browser owner (PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md)",
+      "insertion_contract": "Registers as manager-browser with sections for workspaces, programs and the human-only AuthBrowser session; Settings shows profile and permission rows only, never DOM or capture surfaces.",
+      "why_deferred": "PACKET/07 marks the AuthBrowser session human-only and inspection-free; a Settings concept cannot demonstrate it honestly."
+    },
+    {
+      "family": "RuntimeResourceGovernor policy editor",
+      "canonical_owner": "Performance owner (PERFORMANCE_SETTINGS_RETURN.md)",
+      "insertion_contract": "One policy manager registered as manager-performance; Settings surfaces the single governor policy and its observed phases, and must not add a second concurrency control anywhere else.",
+      "why_deferred": "PACKET/SOURCE_AND_PRECEDENCE_MAP requires exactly one governor policy owner; four concepts inventing editors would create four."
+    },
+    {
+      "family": "Release / update supply chain",
+      "canonical_owner": "Release/updates owner (Release_Supply_Chain.md, BinaryLocator_Spec.md)",
+      "insertion_contract": "Provider installation rows already carry updateAttempt evidence; the release owner registers manager-updates and Settings links installation rows to it rather than duplicating rollback policy.",
+      "why_deferred": "Update/repair/rollback policy is highest-precedence canon in PROVIDER_CLI_FINAL_ADJUDICATION.md."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question": "Does cmd.usage.refresh belong to Settings or to the Usage owner?",
+      "why_it_matters": "Settings shows balances on a boundary card; if Settings can refresh them it becomes a second Usage client.",
+      "blocking": false
+    },
+    {
+      "question": "Is an installation shared by two provider families one record or two?",
+      "why_it_matters": "PACKET/reference handoff lists it as an open decision; the fixture models it as one record with two family references.",
+      "blocking": false
+    },
+    {
+      "question": "What is the retention period for update logs and failed staged installations?",
+      "why_it_matters": "Storage retention rows cannot be authored without it; the fixture uses 30 days as a placeholder value the owner must confirm.",
+      "blocking": false
+    },
+    {
+      "question": "Which installation-owner adapters are MVP versus later?",
+      "why_it_matters": "Determines whether Settings shows a repair path or only a re-install path for a given family.",
+      "blocking": false
+    },
+    {
+      "question": "Is automatic update opt-in, opt-out or provider-specific by default?",
+      "why_it_matters": "The concepts render it as an explicit per-installation choice with no global default, which is safe but may not be the intended shipping behaviour.",
+      "blocking": false
+    }
+  ]
+}

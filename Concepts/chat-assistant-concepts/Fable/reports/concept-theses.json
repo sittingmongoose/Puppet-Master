@@ -1,0 +1,201 @@
+{
+  "schema_id": "pm.chat.fable.concept_theses.v1",
+  "model": "Fable",
+  "note": "Nine-attribute theses for all sixteen concepts. Design, motion, history, artifact, narrow, question, and activity attributes for each concept also appear in concept-manifest.json; this register adds the conversation-reading and secondary-detail strategies and the thread-side history/artifact relationships.",
+  "window_concepts": {
+    "window-01": {
+      "name": "Proscenium",
+      "design_thesis": "Chat is a center stage; history and artifacts are wings on one continuous floor plane.",
+      "conversation_reading_strategy": "The stage centers the mounted thread concept at the chosen chat width; wings never overlap the reading column.",
+      "secondary_detail_strategy": "Everything secondary lives in the wings or the lintel (search, artifacts menu, kebab); the stage itself carries no chrome.",
+      "narrow_width_strategy": "Wings compress to the compact cast list before the stage narrows; declared 520 px floor.",
+      "motion_thesis": "Single-axis slides with settle; the floor line is a fixed landmark.",
+      "question_strategy": "Delegated to the mounted thread concept; the stage guarantees it uninterrupted width.",
+      "activity_strategy": "Delegated to the thread concept; wings stay still while work runs so motion reads against a calm frame.",
+      "history_strategy": "Left wing with four real geometries (closed, peek overlay, pinned compact cast list, pinned full) plus archive view.",
+      "artifact_relationship": "Set-piece wing left of the stage: arch header, status chip, tab switcher, editor handoff, error/retry."
+    },
+    "window-02": {
+      "name": "Bindery",
+      "design_thesis": "A bound working document: recto chat page, verso artifact page, spine of thumb-tabs, fixed gutter.",
+      "conversation_reading_strategy": "The recto page keeps a book-like reading measure under a running head with folio flags.",
+      "secondary_detail_strategy": "Secondary state lives on the spine (thread dots), the running head margins, and the verso folio labels.",
+      "narrow_width_strategy": "Contents leaf yields first, verso clamps second, recto measure holds.",
+      "motion_thesis": "Fold-and-settle; leaves lay flat from slight compression; the gutter never moves.",
+      "question_strategy": "Thread-owned; the page guarantees stable footprint room above the composer.",
+      "activity_strategy": "Thread-owned; the gutter separates work on the verso side from prose on the recto side when an artifact diff is open.",
+      "history_strategy": "Spine thumb-tabs (always-on wayfinding) + contents leaf with dot leaders for peek/pinned-full; compact keeps only the spine.",
+      "artifact_relationship": "The facing verso page with plate-numbered switching — the strongest 'document beside conversation' reading of the eight."
+    },
+    "window-03": {
+      "name": "Instrument Deck",
+      "design_thesis": "Labeled instrument cells above a calm bay; state is read on the deck, conversation in the bay.",
+      "conversation_reading_strategy": "The bay holds only the transcript column; every selector moved to the deck so the reading column has zero chrome.",
+      "secondary_detail_strategy": "Instruments: route/mode/access/BSD cell, artifact counter cell, tools cell; each labeled in small caps.",
+      "narrow_width_strategy": "Cell labels drop, the film-strip steps to compact, the bay floor holds.",
+      "motion_thesis": "Stepped, mechanical, split-flap value changes; no drift.",
+      "question_strategy": "Thread-owned inside the bay.",
+      "activity_strategy": "Thread-owned; the deck's artifact counter and status lamps carry the only window-level activity signals.",
+      "history_strategy": "Vertical film-strip with sprocket margins; frames show title/state/age; compact = glyph frames; peek overlays the bay.",
+      "artifact_relationship": "Auxiliary monitor with bezel, AUX badge, status lamp, numbered channels — an operator's aux display left of Chat."
+    },
+    "window-04": {
+      "name": "Depth Field",
+      "design_thesis": "A shallow depth field: front chat plane, rear planes for history and artifacts, edges visible in a rim stack.",
+      "conversation_reading_strategy": "The front plane casts a soft shadow over the rears, keeping the transcript unambiguously primary.",
+      "secondary_detail_strategy": "The rim stack itself is the secondary-state display: raised edges show what exists and what is forward.",
+      "narrow_width_strategy": "Planes recede to the rim; the front plane keeps the floor.",
+      "motion_thesis": "Advance/recede along an implied z-axis via precomputed scale and shadow; surfaces always come from and return to the rim.",
+      "question_strategy": "Thread-owned on the front plane.",
+      "activity_strategy": "Thread-owned; plane depth never animates during turns so work motion stays on the front plane.",
+      "history_strategy": "Card plane: floating peek, docked full, glyph compact; every card is a thread shell with elevation hover.",
+      "artifact_relationship": "The artifact plane advances from the rim, docks left of chat, and carries a stack switcher at its foot; Glass themes give planes their sheens."
+    },
+    "window-05": {
+      "name": "Workbench",
+      "design_thesis": "A co-equal artifact bench with tab rail and status shelf; chat defends a reading floor; history is a tool drawer.",
+      "conversation_reading_strategy": "Chat is one of two work areas; its floor rule guarantees the conversation never becomes a sidebar.",
+      "secondary_detail_strategy": "The bench shelf carries path/status/handoff; the drawer handle and 2px rails signal sturdiness without color.",
+      "narrow_width_strategy": "Drawer compacts first, bench clamps second, chat floor holds third.",
+      "motion_thesis": "Short quick snaps with square timing — a drawer thunks, a tab seats.",
+      "question_strategy": "Thread-owned in the chat area.",
+      "activity_strategy": "Thread-owned; the bench shows artifact-side consequences (updated stamp) while chat shows the work.",
+      "history_strategy": "Tool drawer: peek slides over the bench, pinned full is a fixed slat, compact is a glyph rail.",
+      "artifact_relationship": "The bench IS the thesis: tabs, work surface, shelf — the strongest 'artifacts as co-equal work' reading."
+    },
+    "window-06": {
+      "name": "Reading Room",
+      "design_thesis": "Typographic calm; hairline chrome; margin-note history; reference-desk artifacts.",
+      "conversation_reading_strategy": "Everything defers to the measure: the runner header is capped to the chat width and search dissolves into the margin until focused.",
+      "secondary_detail_strategy": "Secondary state is typographic: italic notes, small-caps eyebrows, underlined shelf cards.",
+      "narrow_width_strategy": "Margins fold away; the room keeps its measure; nothing overlays the text.",
+      "motion_thesis": "Ink settling — tiny rise and opacity bloom; nothing slides.",
+      "question_strategy": "Thread-owned; Longhand's interview reads most at home here, but every thread concept keeps the room's quiet.",
+      "activity_strategy": "Thread-owned; the room never adds its own activity chrome.",
+      "history_strategy": "A margin-note column: italic two-line annotations with age; compact = margin marks (·, ?, ◆ as text glyphs); peek floats one note card.",
+      "artifact_relationship": "A reference desk: eyebrow label, inset paper surface, underlined shelf of related references — consulted, not operated."
+    },
+    "window-07": {
+      "name": "Mosaic",
+      "design_thesis": "A board of dockable tiles with visible handles and a shared gap rhythm; closing files a tile into the tray.",
+      "conversation_reading_strategy": "The chat tile is first among equals: it always keeps its floor and its header carries the thread identity.",
+      "secondary_detail_strategy": "Tile heads and tray chips carry all secondary state; the board's gaps are the hierarchy.",
+      "narrow_width_strategy": "History tile compacts, artifact tile clamps, tray absorbs the rest.",
+      "motion_thesis": "Reflow choreography along flex tracks; the tray chip is the tile's continuation.",
+      "question_strategy": "Thread-owned inside the chat tile.",
+      "activity_strategy": "Thread-owned; tile filing gives completion its condensation gesture at the window level.",
+      "history_strategy": "The thread tile: dock (pinned full), narrow (compact), lift (peek), file (closed → tray chip with reopen).",
+      "artifact_relationship": "The artifact tile with footer chip switching; filing it to the tray keeps a labeled, countable handle visible."
+    },
+    "window-08": {
+      "name": "Periscope",
+      "design_thesis": "Overlay-first adaptive shell: lens dock raises overlays at narrow widths; surfaces crystallize into docked geometry when wide.",
+      "conversation_reading_strategy": "At narrow widths the transcript owns the full workspace; surfaces borrow space as overlays instead of squeezing it.",
+      "secondary_detail_strategy": "The lens dock is the secondary-state display: raised lenses, stems to docked surfaces.",
+      "narrow_width_strategy": "The thesis itself: narrow is the native form; the crystallization threshold (980 px observed) is a property switch, not a breakpoint jump in content.",
+      "motion_thesis": "Lens morphs — scale from the control's origin, collapse back into it.",
+      "question_strategy": "Thread-owned; overlays auto-avoid the composer region.",
+      "activity_strategy": "Thread-owned; lens raise states mirror open work surfaces.",
+      "history_strategy": "One surface, two forms: overlay panel or docked column, same rows, same state machine; compact narrows the docked form.",
+      "artifact_relationship": "The artifact lens raises a surface with circular per-artifact foot lenses; docked form sits left of Chat per canon."
+    }
+  },
+  "thread_concepts": {
+    "thread-c01": {
+      "name": "Screenplay",
+      "design_thesis": "A bubble-less typographic script with margin speakers and stage-direction system work.",
+      "conversation_reading_strategy": "One prose column at 68ch; margin folds above prose under 620 px container width.",
+      "secondary_detail_strategy": "Hover-revealed times and text-only action rows; flags (lens, redirect, stopped) as quiet outline chips.",
+      "narrow_width_strategy": "Margin folds; directions and scenes keep full width; the form scene keeps its footprint.",
+      "motion_thesis": "Rise-and-settle entries; in-place text replacement for directions; reduced motion = instant final states.",
+      "question_strategy": "Inline form scene: lettered options, dots, stable footprint, skip reversal, required-answer error, cancel record.",
+      "activity_strategy": "Live bracketed direction + ruled scene blocks (Goal/Tasks/Agents/Diffs) with independent collapse; history condenses to reopenable directions.",
+      "history_strategy": "Virtualized older messages behind a 'Load earlier' seam that names the unloaded count; search reveals hidden regions and preserves the anchor.",
+      "artifact_relationship": "Diff scene lines and artifact mentions open the window's left workspace; the script never embeds a viewer."
+    },
+    "thread-c02": {
+      "name": "Courier",
+      "design_thesis": "Deliveries with spatial lineage; one evolving locus pill for live work.",
+      "conversation_reading_strategy": "Asymmetric bubbles capped at 78% width; hover stamps; sibling action rows.",
+      "narrow_width_strategy": "Bubbles widen toward full measure; the manifest and question card span the column.",
+      "secondary_detail_strategy": "The dockband (locus pill + manifest) holds all secondary state below the transcript, above the composer.",
+      "motion_thesis": "FLIP travel from composer to slot; pill transforms in place; morph card from pill silhouette.",
+      "question_strategy": "Pill → card → pill morph with a segment trail, skip reversal, and required-answer error in the card.",
+      "activity_strategy": "Locus pill (summary + timer) and the delivery manifest (goal/tasks/agents/diffs as one expandable strip); completed work is the reply's tools seam.",
+      "history_strategy": "Sealed earlier deliveries with count; search unseals the needed slice exactly.",
+      "artifact_relationship": "Manifest diff rows and seam entries hand off to the left workspace."
+    },
+    "thread-c03": {
+      "name": "Ledgerline",
+      "design_thesis": "A ruled ledger with a structural time gutter; work posts and reconciles.",
+      "conversation_reading_strategy": "Full-width entries, 70ch prose measure, gutter timestamps keep the column clean.",
+      "secondary_detail_strategy": "Everything secondary is a typed posting line — no cards, no chips beyond flags.",
+      "narrow_width_strategy": "The gutter narrows but survives; postings wrap their values under the label.",
+      "motion_thesis": "Unfurl from the rule; caret blink on the active line; reconciliation closes with one movement.",
+      "question_strategy": "Form ledger: numbered lines, right answer column, active line opens in place, post-answers gate.",
+      "activity_strategy": "Open postings section for turn/goal/tasks/agents/edits; double-rule reconciliation lines reopen into postings.",
+      "history_strategy": "Prior pages metaphor for unloaded history; exact jumps turn back only as far as needed.",
+      "artifact_relationship": "Edit postings open the diff artifact in the window's workspace."
+    },
+    "thread-c04": {
+      "name": "Dossier",
+      "design_thesis": "Folder-card messages, one tabbed case file, paged forms with a review page.",
+      "conversation_reading_strategy": "Self-contained paper cards with corner role tabs; user cards mirror right.",
+      "secondary_detail_strategy": "The case file's tabs are the secondary-state system; nothing else accumulates.",
+      "narrow_width_strategy": "Cards span the column; the case file tabs scroll horizontally inside their strip.",
+      "motion_thesis": "Filing slides on the stack axis; tab content switches in a fixed frame; submission stamps shut.",
+      "question_strategy": "Page tabs + Review page with per-question answer summary before submit; strongest review-and-reverse of the eight.",
+      "activity_strategy": "The case file: Goal / Tasks / Agents / Changes tabs, full controls each, stable footprint; filed records reopen inside message cards.",
+      "history_strategy": "Cabinet metaphor for unloaded documents; pulls only what search or the seam requests.",
+      "artifact_relationship": "The Changes tab and filed diffs open the left workspace."
+    },
+    "thread-c05": {
+      "name": "Longhand",
+      "design_thesis": "One continuous manuscript; typographic rules for system events; an interview for questions.",
+      "conversation_reading_strategy": "A 66ch centered column; your words in italic accent ink; asterisms separate exchanges.",
+      "secondary_detail_strategy": "Secondary state is written into the record as prose and rules; superscript task states.",
+      "narrow_width_strategy": "The measure narrows gracefully; rules and the interview keep the column.",
+      "motion_thesis": "Page-growth only; the live rule breathes; nothing slides.",
+      "question_strategy": "Inline interview: italic prompts, em-dash answers, ruled freeform, pass over / reconsider / abandon / set-the-answers.",
+      "activity_strategy": "A live running rule plus work paragraphs (goal sentence with controls, task list with superscripts, hands, edits as prose).",
+      "history_strategy": "Previous leaves for unloaded passages; jumps write the needed leaves back in.",
+      "artifact_relationship": "Edit paragraphs are links to the left workspace; the manuscript never embeds panels."
+    },
+    "thread-c06": {
+      "name": "Counterweight",
+      "design_thesis": "Asymmetric voices with footnote metadata and a counterweight work column.",
+      "conversation_reading_strategy": "Editorial full-measure assistant column with footnote references; compact right counters for you.",
+      "secondary_detail_strategy": "Numbered footnotes carry all metadata; the pan carries all work state.",
+      "narrow_width_strategy": "Counters and pan widen to 78%; the beam keeps its alternation.",
+      "motion_thesis": "Weights drop and the beam levels; completion empties the pan.",
+      "question_strategy": "The ballot: roman numerals, abstain/withdraw/cast vocabulary, full-measure rows.",
+      "activity_strategy": "The pan: goal weight with controls, task bars, agent lines, diff weights — a literal counterweight to the prose.",
+      "history_strategy": "Raising earlier exchanges above the beam; anchors preserved.",
+      "artifact_relationship": "Diff weights open the left workspace."
+    },
+    "thread-c07": {
+      "name": "Teletype",
+      "design_thesis": "A monospaced wire feed with one rewriting status line and boxed forms.",
+      "conversation_reading_strategy": "Dashed transmission headers and a 76ch mono measure; fast scanning.",
+      "secondary_detail_strategy": "The single status band compresses all work state; wire summaries number their lines.",
+      "narrow_width_strategy": "The grid holds; the status line ellipsizes; the form keeps its frame.",
+      "motion_thesis": "Stepped carriage feeds, hard-cut status swaps, cursor block only while receiving.",
+      "question_strategy": "Boxed form with numbered key hints, checkbox marks, bracket-key nav, FORM INCOMING / TRANSMITTING lifecycle.",
+      "activity_strategy": "One status line (GOAL/TASKS/HANDS/EDITS) that opens into a typed panel; rollups replay completed work line by line.",
+      "history_strategy": "The spool: rewind loads earlier transmissions; search jumps reveal exact lines.",
+      "artifact_relationship": "Edit panel lines open the left workspace."
+    },
+    "thread-c08": {
+      "name": "Choreograph",
+      "design_thesis": "Authored entrances and an orbiting satellite that docks into finished work.",
+      "conversation_reading_strategy": "Soft cards, staggered arcs on entry, calm at rest for long reading.",
+      "secondary_detail_strategy": "The troupe block and stack chip hold secondary state; docked satellites mark recorded work.",
+      "narrow_width_strategy": "Cards widen; the troupe wraps its dancers; the dealt card spans the column.",
+      "motion_thesis": "Arc + anticipation + settle; orbit only during true activity; reduced motion swaps orbit for a solid ring.",
+      "question_strategy": "The dealt hand: cards deal in, answered cards tuck into the stack chip, fan-out review before submit.",
+      "activity_strategy": "Orbit frame (live summary + timer), troupe (dancer discs, step bars, goal badge), dock-on-complete into the message.",
+      "history_strategy": "Scenes in the wings; recalled on demand; anchors preserved.",
+      "artifact_relationship": "Troupe diff lines open the left workspace."
+    }
+  }
+}

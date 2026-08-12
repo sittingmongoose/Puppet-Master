@@ -729,26 +729,48 @@
 
   /* ---------- CONTAINERS ---------- */
   function renderContainers(route) {
+    var podmanInstalled = PMStore.get("podmanInstalled", false);
     var body = VD.containers.map(function (c, i) {
-      var h = V.HEALTH[c.health] || { label: c.health, dot: "unknown" };
-      return '<details class="pm-accordion"' + (i === 0 ? " open" : "") + '><summary>' + esc(c.name) + " — " + esc(c.version) + "</summary>" +
+      var entry = c;
+      if (c.name === "Podman" && podmanInstalled) {
+        entry = { name: c.name, health: "ready", version: "Podman 5.2.2", host: "This PC · Windows native",
+          detail: [["State", "Ready — installed via the official Podman source (simulated)"], ["Machine/socket", "npipe:////./pipe/podman-machine-default"], ["Registries", "docker.io (anonymous)"]] };
+      }
+      var h = V.HEALTH[entry.health] || { label: entry.health, dot: "unknown" };
+      var action = (entry.name === "Podman" && !podmanInstalled)
+        ? '<div style="margin-block-start:10px"><button type="button" class="pm-btn" data-variant="primary" data-ctr-install="Podman">Install from the official Podman source</button>' +
+          '<span class="vlt-sub" style="margin-inline-start:10px">Consent first; PM manages the lifecycle after install.</span></div>'
+        : "";
+      return '<details class="pm-accordion"' + (i === 0 ? " open" : "") + '><summary>' + esc(entry.name) + " — " + esc(entry.version) + "</summary>" +
         '<div class="pm-accordion-body">' +
-        V.healthDot(h.dot, c.health === "ready" ? "Ready" : c.health === "degraded" ? "Degraded" : "Not installed") +
-        '<dl class="pm-kv" style="margin-block-start:8px">' + c.detail.map(function (d) { return "<dt>" + esc(d[0]) + "</dt><dd>" + esc(d[1]) + "</dd>"; }).join("") + "</dl></div></details>";
+        V.healthDot(h.dot, entry.health === "ready" ? "Ready" : entry.health === "degraded" ? "Degraded" : "Not installed") +
+        '<dl class="pm-kv" style="margin-block-start:8px">' + entry.detail.map(function (d) { return "<dt>" + esc(d[0]) + "</dt><dd>" + esc(d[1]) + "</dd>"; }).join("") + "</dl>" + action + "</div></details>";
     }).join("");
     mgrShell({
       id: "containers", title: "Containers and Registries",
       lede: "Docker, Podman, and Kubernetes as human top-level resources; detail expands in place. Typed unavailable states, shared tool lifecycle.",
       tabs: [["overview", "Overview"]], tab: "overview", body: body
     });
+    root.querySelectorAll("[data-ctr-install]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        PMStore.set("podmanInstalled", true);
+        PMStore.receipt("Podman 5.2.2 install simulated — the real install runs the official Podman installer with your consent", "ok");
+      });
+    });
   }
 
   /* ---------- WEB / SEARCH / FETCH ---------- */
   function renderWeb(route) {
-    var rows = VD.webProviders.map(function (w) {
-      return '<div class="vlt-receipt"><div><div class="vlt-receipt-t">' + esc(w.name) + ' <span class="pm-badge" data-kind="scope">Priority ' + w.priority + "</span></div>" +
+    var order = PMStore.get("webOrder", null) || VD.webProviders.map(function (w) { return w.name; });
+    var sorted = VD.webProviders.slice().sort(function (a, b) { return order.indexOf(a.name) - order.indexOf(b.name); });
+    var rows = sorted.map(function (w, idx) {
+      var prio = idx + 1;
+      return '<div class="vlt-receipt"><div><div class="vlt-receipt-t">' + esc(w.name) + ' <span class="pm-badge" data-kind="scope">Priority ' + prio + "</span></div>" +
         '<div class="vlt-receipt-s">' + esc(w.limits) + " · " + esc(w.credits) + "</div></div>" +
-        '<span class="pm-badge" data-kind="state" data-icon data-state="' + (w.readiness === "Ready" ? "default" : "effective-differs") + '">' + esc(w.readiness) + "</span></div>";
+        '<span style="display:inline-flex;gap:6px;align-items:center">' +
+        '<span class="pm-badge" data-kind="state" data-icon data-state="' + (w.readiness === "Ready" ? "default" : "effective-differs") + '">' + esc(w.readiness) + "</span>" +
+        (idx > 0 ? '<button type="button" class="pm-btn" data-variant="quiet" data-web-up="' + esc(w.name) + '">Move up</button>' : "") +
+        '<button type="button" class="pm-btn" data-variant="quiet" data-web-test="' + esc(w.name) + '"' + (w.readiness === "Ready" ? "" : " disabled") + ">Test fetch</button></span></div>";
     }).join("");
     var body = '<div class="vlt-card"><div class="vlt-card-h"><h4>Providers and limits</h4></div>' + rows + "</div>" +
       '<div class="vlt-card"><div class="vlt-card-h"><h4>Policy</h4></div><dl class="pm-kv">' +
@@ -757,6 +779,20 @@
       id: "web", title: "Web, Search, and Fetch",
       lede: "Provider priority, limits, credit guards, caches, sessions, proxies, certificates, air-gap behavior, and privacy.",
       tabs: [["overview", "Overview"]], tab: "overview", body: body
+    });
+    root.querySelectorAll("[data-web-up]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var cur = PMStore.get("webOrder", null) || VD.webProviders.map(function (w) { return w.name; });
+        var i = cur.indexOf(btn.getAttribute("data-web-up"));
+        if (i > 0) { var t = cur[i - 1]; cur[i - 1] = cur[i]; cur[i] = t; }
+        PMStore.set("webOrder", cur);
+        PMStore.receipt(btn.getAttribute("data-web-up") + " moved to Priority " + i + " — routing order updated for this demo", "ok");
+      });
+    });
+    root.querySelectorAll("[data-web-test]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        PMStore.receipt("Fetch test via " + btn.getAttribute("data-web-test") + " simulated — answered from cache; no credits spent", "info");
+      });
     });
   }
 

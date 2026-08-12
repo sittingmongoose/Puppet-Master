@@ -19,25 +19,29 @@ try {
   for (const theme of THEMES) {
     for (const width of WIDTHS) {
       for (const rail of [true, false]) {
-        for (const [w, t] of PAIRINGS) {
-          total++;
-          const ctx = { window: w, thread: t, width, theme, rail, server };
-          let page = null;
-          try {
-            page = await openHost(driver, ctx);
-            for (const [name, fn] of [['overflow', noHorizontalOverflow], ['errors', noConsoleErrors], ['emoji', noEmoji], ['xleak', scrollbarNoLeak], ['clip', noTextClipping]]) {
-              const r = await fn(page, ctx);
-              if (!r.pass) {
-                failed++;
-                failures.push({ theme, width, rail, pair: w + ':' + t, probe: name, detail: r.detail.slice(0, 140) });
+        // 4 pages at a time (one browser, many targets)
+        for (let i = 0; i < PAIRINGS.length; i += 4) {
+          const batch = PAIRINGS.slice(i, i + 4);
+          await Promise.all(batch.map(async ([w, t]) => {
+            total++;
+            const ctx = { window: w, thread: t, width, theme, rail, server };
+            let page = null;
+            try {
+              page = await openHost(driver, ctx);
+              for (const [name, fn] of [['overflow', noHorizontalOverflow], ['errors', noConsoleErrors], ['emoji', noEmoji], ['xleak', scrollbarNoLeak], ['clip', noTextClipping]]) {
+                const r = await fn(page, ctx);
+                if (!r.pass) {
+                  failed++;
+                  failures.push({ theme, width, rail, pair: w + ':' + t, probe: name, detail: r.detail.slice(0, 140) });
+                }
               }
+            } catch (e) {
+              failed++;
+              failures.push({ theme, width, rail, pair: w + ':' + t, probe: 'boot', detail: e.message.slice(0, 140) });
             }
-          } catch (e) {
-            failed++;
-            failures.push({ theme, width, rail, pair: w + ':' + t, probe: 'boot', detail: e.message.slice(0, 140) });
-          }
-          if (page) await page.close().catch(() => {});
-          if (total % 200 === 0) console.log('…' + total + ' configs, ' + failed + ' failures');
+            if (page) await page.close().catch(() => {});
+          }));
+          if (total % 200 === 0 || i + 4 >= PAIRINGS.length) console.log('…' + total + ' configs, ' + failed + ' failures');
         }
       }
     }

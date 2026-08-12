@@ -1060,6 +1060,7 @@
     worktrees: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.worktrees); },
     portLeases: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.portLeases); },
     crewTemplates: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.crewTemplates); },
+    domainNotes: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.domainNotes); },
     connectionInfo: function () {
       var p = (DATA && DATA.catalogs && DATA.catalogs.syncProfile) || {};
       var tid = storeGet('activeThreadId', null);

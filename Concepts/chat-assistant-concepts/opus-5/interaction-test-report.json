@@ -1,0 +1,829 @@
+{
+  "schema": "pm.chat_interaction_test_report.v1",
+  "concept_id": "opus-5",
+  "model": "Opus 5",
+  "generated_at": "2026-08-12T12:56:27.439Z",
+  "harness": {
+    "assert": "tests/assert.js",
+    "suites": "tests/suites.js",
+    "runner": "tests/runner.html"
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 1000
+  },
+  "minimum_viewport": {
+    "width": 1900,
+    "height": 900,
+    "why": "eight popup-anchor assertions fail below it because the popup service correctly refuses an off-viewport anchor; the runner refuses to run rather than reporting a false failure"
+  },
+  "suite_run": {
+    "suites": 22,
+    "assertions_total": 237,
+    "assertions_passed": 237,
+    "assertions_failed": 0,
+    "console_errors": 0,
+    "console_warnings": 0,
+    "elapsed_ms": 2195,
+    "failures": []
+  },
+  "matrix_run": {
+    "description": "mount suite across all 64 pairings at 520 and 750 chat width",
+    "pairing_width_runs": 128,
+    "assertions_total": 512,
+    "assertions_failed": 0,
+    "console_errors": 0,
+    "console_warnings": 0,
+    "per_pairing": [
+      {
+        "pairing": "w1+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w1+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w2+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w3+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w4+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w5+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w6+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w7+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t1",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t1",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t2",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t2",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t3",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t3",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t4",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t4",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t5",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t5",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t6",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t6",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t7",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t7",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t8",
+        "width": 520,
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "pairing": "w8+t8",
+        "width": 750,
+        "total": 4,
+        "failed": 0
+      }
+    ]
+  },
+  "host_pages": {
+    "gallery": {
+      "cards": 16,
+      "label": "Opus 5",
+      "model": "Opus 5"
+    },
+    "contact": {
+      "stages": 8,
+      "distinctThemes": 8,
+      "themes": [
+        "friendly-dark",
+        "friendly-light",
+        "retro-dark",
+        "retro-light",
+        "basic-light",
+        "basic-dark",
+        "glass-dark",
+        "glass-light"
+      ]
+    }
+  }
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opus 5 — Interaction test runner</title>
+
+<link rel="stylesheet" href="../shared/reset.css?v=1786620000">
+<link rel="stylesheet" href="../shared/tokens.css?v=1786620000">
+<link rel="stylesheet" href="../shared/materials.css?v=1786620000">
+<link rel="stylesheet" href="../shared/reveal.css?v=1786620000">
+<link rel="stylesheet" href="../shared/scrollbars.css?v=1786620000">
+<link rel="stylesheet" href="../shared/motion.css?v=1786620000">
+<link rel="stylesheet" href="../shared/popup.css?v=1786620000">
+<link rel="stylesheet" href="../shared/artifact.css?v=1786620000">
+<link rel="stylesheet" href="../shared/msg.css?v=1786620000">
+<link rel="stylesheet" href="../shared/shell.css?v=1786620000">
+<link rel="stylesheet" href="../shared/chrome.css?v=1786620000">
+<link rel="stylesheet" href="../shared/workspace.css?v=1786620000">
+
+<link rel="stylesheet" href="../windows/w1-ledger.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w2-split-desk.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w3-focus-column.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w4-stacked-panes.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w5-command-bar.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w6-docked-sheets.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w7-two-rail.css?v=1786620000">
+<link rel="stylesheet" href="../windows/w8-frameless.css?v=1786620000">
+
+<link rel="stylesheet" href="../threads/t1-speaker-turns.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t2-two-tone-slabs.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t3-timeline-spine.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t4-digest.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t5-paired-columns.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t6-work-interleave.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t7-cards-with-air.css?v=1786620000">
+<link rel="stylesheet" href="../threads/t8-reading-mode.css?v=1786620000">
+
+<style>
+  /* The runner's own chrome. Deliberately plain: it is instrumentation, not a concept, and it must
+   * not introduce a style that could be mistaken for one of the eight. */
+  .tr-bar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 12px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    font-family: var(--body-font); font-size: 13px; color: var(--text-primary);
+  }
+  .tr-bar button {
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface-elevated); color: var(--text-primary); cursor: pointer;
+  }
+  .tr-summary { margin-left: auto; font-variant-numeric: tabular-nums; }
+  .tr-summary[data-state="pass"] { color: var(--accent-lime, #35a35a); }
+  .tr-summary[data-state="fail"] { color: var(--accent-error, #c0392b); }
+  .tr-body { padding: 12px; font-family: var(--mono-font); font-size: 12px; }
+  .tr-row { display: flex; gap: 10px; padding: 2px 0; }
+  .tr-row[data-ok="0"] { color: var(--accent-error, #c0392b); }
+  .tr-name { flex: 0 0 160px; }
+  .tr-note { color: var(--text-muted); }
+  .tr-refused { padding: 12px; color: var(--accent-error, #c0392b); max-width: 70ch; line-height: 1.5; }
+  /* The mount host is real: suites measure computed geometry, so the compositions must actually
+   * render at full size rather than in a thumbnail. */
+  .tr-host { min-height: 900px; }
+</style>
+</head>
+<!-- data-concept-model is what ConceptHub's validator greps for. This page is controlMode
+     "internal", so it needs the label but not the postMessage bridge. -->
+<body data-pmx-mode="stage" data-concept-model="Opus 5">
+
+<div class="tr-bar">
+  <strong>Opus 5 · interaction suites</strong>
+  <button id="tr-run" type="button">Run all suites</button>
+  <button id="tr-matrix" type="button">Run matrix</button>
+  <span class="tr-summary" id="tr-summary">not run</span>
+</div>
+<div class="tr-body" id="tr-out"></div>
+<div class="tr-host" id="tr-host"></div>
+
+<script src="../demo/demoData.bundle.js?v=1786620000"></script>
+<script src="../demo/demoDataExtension.js?v=1786620000"></script>
+
+<script src="../shared/util.js?v=1786620000"></script>
+<script src="../shared/icons.js?v=1786620000"></script>
+<script src="../shared/store.js?v=1786620000"></script>
+<script src="../shared/registry.js?v=1786620000"></script>
+<script src="../shared/data.js?v=1786620000"></script>
+<script src="../shared/motion.js?v=1786620000"></script>
+<script src="../shared/hoverglow.js?v=1786620000"></script>
+<script src="../shared/reveal.js?v=1786620000"></script>
+<script src="../shared/popup.js?v=1786620000"></script>
+<script src="../shared/scroll.js?v=1786620000"></script>
+<script src="../shared/listwindow.js?v=1786620000"></script>
+
+<script src="../shared/observable.js?v=1786620000"></script>
+<script src="../shared/route.js?v=1786620000"></script>
+<script src="../shared/access.js?v=1786620000"></script>
+<script src="../shared/bsd.js?v=1786620000"></script>
+<script src="../shared/approvals.js?v=1786620000"></script>
+<script src="../shared/contextadmit.js?v=1786620000"></script>
+<script src="../shared/threadops.js?v=1786620000"></script>
+<script src="../shared/opsawareness.js?v=1786620000"></script>
+<script src="../shared/attach.js?v=1786620000"></script>
+<script src="../shared/sync.js?v=1786620000"></script>
+<script src="../shared/spell.js?v=1786620000"></script>
+<script src="../shared/notify.js?v=1786620000"></script>
+<script src="../shared/toast.js?v=1786620000"></script>
+<script src="../shared/editorhost.js?v=1786620000"></script>
+<script src="../shared/artifacts.js?v=1786620000"></script>
+<script src="../shared/artifactpanel.js?v=1786620000"></script>
+<script src="../shared/demo.js?v=1786620000"></script>
+<script src="../shared/drafts.js?v=1786620000"></script>
+<script src="../shared/questionnaire.js?v=1786620000"></script>
+<script src="../shared/lens.js?v=1786620000"></script>
+<script src="../shared/search.js?v=1786620000"></script>
+<script src="../shared/surfaces.js?v=1786620000"></script>
+<script src="../shared/runtime.js?v=1786620000"></script>
+
+<script src="../shared/hoverrow.js?v=1786620000"></script>
+<script src="../shared/moreinfo.js?v=1786620000"></script>
+<script src="../shared/composer.js?v=1786620000"></script>
+<script src="../shared/selectors.js?v=1786620000"></script>
+<script src="../shared/headertools.js?v=1786620000"></script>
+<script src="../shared/threadhistory.js?v=1786620000"></script>
+<script src="../shared/shell.js?v=1786620000"></script>
+<script src="../shared/compose.js?v=1786620000"></script>
+
+<script src="../windows/w1-ledger.js?v=1786620000"></script>
+<script src="../windows/w2-split-desk.js?v=1786620000"></script>
+<script src="../windows/w3-focus-column.js?v=1786620000"></script>
+<script src="../windows/w4-stacked-panes.js?v=1786620000"></script>
+<script src="../windows/w5-command-bar.js?v=1786620000"></script>
+<script src="../windows/w6-docked-sheets.js?v=1786620000"></script>
+<script src="../windows/w7-two-rail.js?v=1786620000"></script>
+<script src="../windows/w8-frameless.js?v=1786620000"></script>
+
+<script src="../threads/t1-speaker-turns.js?v=1786620000"></script>
+<script src="../threads/t2-two-tone-slabs.js?v=1786620000"></script>
+<script src="../threads/t3-timeline-spine.js?v=1786620000"></script>
+<script src="../threads/t4-digest.js?v=1786620000"></script>
+<script src="../threads/t5-paired-columns.js?v=1786620000"></script>
+<script src="../threads/t6-work-interleave.js?v=1786620000"></script>
+<script src="../threads/t7-cards-with-air.js?v=1786620000"></script>
+<script src="../threads/t8-reading-mode.js?v=1786620000"></script>
+
+<!-- The console shim is installed at load, so its counts cover boot as well as the run. -->
+<script src="assert.js?v=1786620000"></script>
+
+<script src="../shared/workspace.js?v=1786620000"></script>
+<script src="suites.js?v=1786620000"></script>
+
+<script>
+(function () {
+  'use strict';
+  var out = document.getElementById('tr-out');
+  var summary = document.getElementById('tr-summary');
+
+  function line(name, ok, note) {
+    var row = document.createElement('div');
+    row.className = 'tr-row';
+    row.setAttribute('data-ok', ok ? '1' : '0');
+    var n = document.createElement('span'); n.className = 'tr-name'; n.textContent = name;
+    var v = document.createElement('span'); v.textContent = ok ? 'pass' : 'FAIL';
+    row.appendChild(n); row.appendChild(v);
+    if (note) { var m = document.createElement('span'); m.className = 'tr-note'; m.textContent = note; row.appendChild(m); }
+    out.appendChild(row);
+  }
+
+  function render(res) {
+    out.innerHTML = '';
+    if (res.refused) {
+      var r = document.createElement('div');
+      r.className = 'tr-refused';
+      r.textContent = res.reason;
+      out.appendChild(r);
+      summary.textContent = 'refused';
+      summary.setAttribute('data-state', 'fail');
+      return;
+    }
+    /* Per-suite rows, derived from the failure list so a suite with no failures reads as one pass
+     * line rather than fifty. */
+    var bySuite = {};
+    window.PMXSuites.list().forEach(function (n) { bySuite[n] = { failed: 0, notes: [] }; });
+    (res.failures || []).forEach(function (f) {
+      if (!bySuite[f.suite]) bySuite[f.suite] = { failed: 0, notes: [] };
+      bySuite[f.suite].failed++;
+      if (bySuite[f.suite].notes.length < 2) {
+        bySuite[f.suite].notes.push(f.msg + (f.actual !== undefined ? ' (got ' + f.actual + ')' : ''));
+      }
+    });
+    Object.keys(bySuite).forEach(function (n) {
+      line(n, bySuite[n].failed === 0, bySuite[n].notes.join(' | '));
+    });
+    summary.textContent = res.passed + '/' + res.total + ' pass · ' + res.failed + ' failed · ' +
+      res.errors + ' console errors · ' + res.warnings + ' warnings · ' + res.elapsedMs + 'ms';
+    summary.setAttribute('data-state', (res.failed === 0 && res.errors === 0 && res.warnings === 0) ? 'pass' : 'fail');
+
+    /* One object a driver can read without parsing the page. */
+    window.__pmxTestExit = {
+      total: res.total, passed: res.passed, failed: res.failed,
+      errors: res.errors, warnings: res.warnings, elapsedMs: res.elapsedMs,
+      viewport: res.viewport, failures: res.failures,
+      consoleMessages: res.consoleMessages
+    };
+  }
+
+  function boot() {
+    /* The compositions mount into a real, full-size host: every geometry assertion reads computed
+     * layout, so a scaled-down preview would measure the wrong thing. */
+    return window.PMXWorkspace.boot();
+  }
+
+  document.getElementById('tr-run').addEventListener('click', function () {
+    summary.textContent = 'running…';
+    window.PMXSuites.runAll({ force: location.search.indexOf('force=1') >= 0 }).then(render);
+  });
+
+  document.getElementById('tr-matrix').addEventListener('click', function () {
+    summary.textContent = 'running matrix…';
+    window.PMXSuites.runMatrix({}).then(function (m) {
+      out.innerHTML = '';
+      line('matrix', m.failed === 0, m.pairings.length + ' pairing/width runs · ' + m.total +
+        ' assertions · ' + m.failed + ' failed · ' + m.errors + ' console errors · ' + m.warnings + ' warnings');
+      summary.textContent = m.total + ' assertions · ' + m.failed + ' failed';
+      summary.setAttribute('data-state', m.failed === 0 ? 'pass' : 'fail');
+      window.__pmxMatrixExit = m;
+    });
+  });
+
+  boot().then(function () {
+    summary.textContent = 'ready · ' + window.PMXSuites.list().length + ' suites';
+    /* Auto-run when a driver asks for it, so a headless run needs no synthetic click. */
+    if (location.search.indexOf('run=1') >= 0) {
+      window.PMXSuites.runAll({ force: location.search.indexOf('force=1') >= 0 }).then(render);
+    }
+  }).catch(function (e) {
+    summary.textContent = 'boot failed';
+    summary.setAttribute('data-state', 'fail');
+    var d = document.createElement('div');
+    d.className = 'tr-refused';
+    d.textContent = 'The workspace could not start: ' + (e && e.message ? e.message : String(e));
+    out.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
