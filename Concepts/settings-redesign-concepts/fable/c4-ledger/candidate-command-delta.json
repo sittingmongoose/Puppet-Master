@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "c4-ledger",
+  "model": "fable",
+  "note": "Provisional candidates only; canon is never minted here. The implementation audit must census the existing catalog and adjudicate exact IDs.",
+  "census": {
+    "canon_estimate": "~732 command ids across 56 families at the 2026-08-08 packet window",
+    "retire_or_alias": [
+      { "id": "cmd.settings.bloom.open", "action": "retire", "reason": "Old chip/bloom architecture is superseded by destination + record navigation; keep a compatibility alias only if telemetry shows live callers." }
+    ],
+    "supersede_into_family": [
+      { "id": "cmd.settings.open_notifications", "into": "cmd.settings.manager.open", "payload": "{ manager: 'manager.notifications' }", "note": "Standalone per-manager openers collapse into one navigation family. In c4 this id resolves to a cross-concept receipt (c2 owns the surface)." },
+      { "id": "cmd.settings.open_storage_retention", "into": "cmd.settings.manager.open", "payload": "{ manager: 'manager.storage' }", "note": "This concept's OWN navigation overlap: c4 renders Storage & Retention natively, and the deep link #/manager/manager.storage is the canonical route — the bespoke opener supersedes into the family." }
+    ],
+    "merge_flag": [
+      { "ids": ["cmd.settings.category.reset", "cmd.settings.reset.apply{scope:'category'}"], "note": "Same operation; keep cmd.settings.reset.apply with a scope payload (category|all) and retire the category-specific id." }
+    ],
+    "reuse_flag": [
+      { "id": "cmd.theme.*", "note": "Theme apply/preview commands already exist; the settings surface must reuse them, not mint settings-local theme commands." },
+      { "id": "cmd.github.actions.settings.open", "note": "Reuse for opening the Actions manager destination; operational panel commands stay in their own family." }
+    ],
+    "preserve": [
+      "cmd.account.select_profile",
+      "cmd.provider.switch_route",
+      "cmd.usage.refresh",
+      "cmd.usage.export",
+      "cmd.provider.installation.scan",
+      "cmd.provider.installation.select",
+      "cmd.provider.installation.update",
+      "cmd.provider.installation.repair",
+      "cmd.provider.installation.rollback",
+      "cmd.provider.installation.verify",
+      "cmd.provider.catalog.refresh"
+    ]
+  },
+  "families_exercised": {
+    "navigation": [
+      "cmd.settings.open", "cmd.settings.navigate", "cmd.settings.search.focus",
+      "cmd.settings.search.select_result", "cmd.settings.category.select",
+      "cmd.settings.subcategory.select", "cmd.settings.setting.focus", "cmd.settings.manager.open"
+    ],
+    "values": ["cmd.settings.value.set", "cmd.settings.default.restore", "cmd.settings.scope.inspect"],
+    "lifecycle": [
+      "cmd.settings.export", "cmd.settings.import.preview", "cmd.settings.import.apply",
+      "cmd.settings.import.rollback", "cmd.settings.reset.preview", "cmd.settings.reset.apply"
+    ],
+    "providers": [
+      "cmd.provider.installation.select", "cmd.provider.installation.update",
+      "cmd.provider.installation.repair", "cmd.provider.catalog.refresh",
+      "cmd.model.favorite.set", "cmd.model.priority.set", "cmd.model.visibility.set"
+    ],
+    "resources": [
+      "cmd.storage.backup.open", "cmd.artifact.manager.open"
+    ]
+  },
+  "packet_candidates_reused_not_duplicated": [
+    "cmd.settings.import.preview", "cmd.settings.import.apply", "cmd.settings.import.rollback",
+    "cmd.settings.export", "cmd.settings.reset.preview", "cmd.settings.reset.apply",
+    "cmd.storage.backup.open", "cmd.artifact.manager.open"
+  ],
+  "new_candidates": [
+    { "id": "cmd.storage.retention.set", "kind": "setting-mutation", "distinguishes": "Persistent retention policy change per data class; distinct from the one-shot compaction/cleanup actions and from status projections." },
+    { "id": "cmd.backup.create", "kind": "one-shot-action", "distinguishes": "The 'Back Up Now' action with kind payload (settings|project); leaves a restore point + receipt. Distinct from cmd.settings.export (portable file) and from the schedule setting." },
+    { "id": "cmd.backup.restore", "kind": "one-shot-action", "distinguishes": "Restore from a named restore point: preview, fresh pre-restore point, atomic apply, receipt." },
+    { "id": "cmd.backup.test", "kind": "one-shot-action", "distinguishes": "Scratch-dataset restore with hash verification; never touches live data — a different permission class than restore." },
+    { "id": "cmd.artifact.export", "kind": "one-shot-action", "distinguishes": "Exports an artifact out of the vault with redaction rules applied on the way out." },
+    { "id": "cmd.artifact.redact", "kind": "one-shot-action", "distinguishes": "Applies staged redaction rules; original stays sealed. Distinct from export." },
+    { "id": "cmd.artifact.clean", "kind": "one-shot-action", "distinguishes": "Deletes a retention-expired artifact after confirmation; receipt survives the artifact." },
+    { "id": "cmd.worktree.prune", "kind": "one-shot-action", "distinguishes": "Removes a checkout, never a branch; hard-fails on leased worktrees (lease is validated in the command, not the UI)." },
+    { "id": "cmd.actions.workflow.pin", "kind": "setting-mutation", "distinguishes": "Pinning is settings-owned readiness curation; run operations stay in the panel's own family." },
+    { "id": "cmd.actions.workflow.refresh", "kind": "one-shot-action", "distinguishes": "Re-fetches readiness + latest runs; honestly unavailable offline (typed error, not a silent no-op)." },
+    { "id": "cmd.containers.registry.add", "kind": "one-shot-action", "distinguishes": "Add-registry flow with certificate-chain validation; cert warnings pause with trust guidance instead of failing." },
+    { "id": "cmd.web.provider.priority.set", "kind": "setting-mutation", "distinguishes": "Reorders provider fallback per kind (search/crawl/fetch); distinct from enabling/setup." },
+    { "id": "cmd.search_index.rebuild", "kind": "one-shot-action", "distinguishes": "Phased operation (scanning/indexing/ready) with failure records; distinct from the enable setting and the clear-cache action." },
+    { "id": "cmd.cleanup.dry_run", "kind": "one-shot-action", "distinguishes": "Report-only by contract: typed result (wouldFree, skipped-with-reasons, receipt); can never delete." },
+    { "id": "cmd.cleanup.apply", "kind": "one-shot-action", "distinguishes": "The destructive half; requires a current dry-run reference and explicit confirmation; leases and legal holds are command-level exclusions." }
+  ]
+}

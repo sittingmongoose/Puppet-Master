@@ -14,7 +14,8 @@
     { kind: 'persona', key: 'personaId', icon: 'user', label: 'Persona' },
     { kind: 'model', key: 'modelId', icon: 'spark', label: 'Model', nestEffort: true },
     { kind: 'mode', key: 'modeId', icon: 'layers', label: 'Mode' },
-    { kind: 'worktree', key: 'worktreeId', icon: 'branch', label: 'Worktree' }
+    { kind: 'worktree', key: 'worktreeId', icon: 'branch', label: 'Worktree' },
+    { kind: 'bsd', key: null, icon: 'bsd', label: 'BSD' }
   ];
 
 
@@ -155,14 +156,26 @@
     }
 
     function iconRailHtml() {
-      var session = (store && store.session) || {};
+      var session =
+        kit.liveSelectorSession && typeof kit.liveSelectorSession === 'function'
+          ? kit.liveSelectorSession(store)
+          : (store && store.session) || {};
       var items = RAIL_KINDS.map(function (spec) {
+        if (spec.kind === 'bsd') {
+          return (
+            '<div class="w8-rail-item w8-rail-bsd" data-rail-kind="bsd">' +
+            kit.bsdSlotHtml('rail') +
+            '</div>'
+          );
+        }
         var menu = '';
         if (window.PMChatPopups && typeof window.PMChatPopups.buildMenuHtml === 'function') {
           menu = window.PMChatPopups.buildMenuHtml(spec.kind, session[spec.key], {
-            nestEffort: !!spec.nestEffort,
+            nestEffort: Boolean(spec.nestEffort),
             effortValue: session.effortId,
-            searchable: spec.kind === 'persona' || spec.kind === 'model'
+            speedValue: session.speedMode || 'normal',
+            searchable: spec.kind === 'persona' || spec.kind === 'model',
+            session: session
           });
         }
         return (
@@ -232,6 +245,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       syncTier();
       if (kit.isHistoryPinned(store)) chatsOpen = true;
       var histMode =

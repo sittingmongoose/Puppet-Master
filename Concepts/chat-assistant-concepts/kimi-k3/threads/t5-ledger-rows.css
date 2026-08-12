@@ -151,3 +151,139 @@
   background: var(--accent-soft);
   border-radius: 0;
 }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t5 identity: packet records
+   are ledger rows — hairline rules, dotted leaders, mono meta with tabular
+   figures; in chip mode the packet rows read as totals rows under the work
+   chip's double rule.
+   ========================================================================== */
+
+/* the packet wrapper is a direct child of the message grid: keep it in the
+   content column (auto-placement would drop it into the role-tag gutter) */
+[data-k3-thread="t5"] .k3t-packet { grid-column: 2; margin-top: 4px; gap: 0; }
+
+/* every packet card (routewarn / attach / bsdadvice / receipt / threadreq /
+   restorepoint / branch) becomes a ruled ledger row — in the inline stack
+   and as an expanded chip row alike */
+[data-k3-thread="t5"] .k3t-packet .k3t-card,
+[data-k3-thread="t5"] .k3t-packet-chiprows .k3t-card {
+  margin-top: 0;
+  padding: 6px 0;
+  background: transparent;
+  border: 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 0;
+  box-shadow: none;
+}
+/* restore points and branches are account boundaries: double-ruled */
+[data-k3-thread="t5"] .k3t-packet .k3t-restorepoint,
+[data-k3-thread="t5"] .k3t-packet .k3t-branch,
+[data-k3-thread="t5"] .k3t-packet-chiprows .k3t-restorepoint,
+[data-k3-thread="t5"] .k3t-packet-chiprows .k3t-branch {
+  border-top: var(--border-width, 2px) double var(--border);
+}
+
+/* line records (BSD result, redirect, marker) rule like ledger rows too;
+   redirect states ride weight / tint */
+[data-k3-thread="t5"] .k3t-bsdresult,
+[data-k3-thread="t5"] .k3t-redirect,
+[data-k3-thread="t5"] .k3t-marker {
+  margin-top: 0;
+  padding: 4px 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t5"] .k3t-redirect-interrupted,
+[data-k3-thread="t5"] .k3t-redirect-resumed { opacity: .7; }
+[data-k3-thread="t5"] .k3t-redirect-redirected { font-weight: 700; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq heads set in compact
+   mono, matching the work-chip header */
+[data-k3-thread="t5"] .k3t-routewarn .k3t-rowhead,
+[data-k3-thread="t5"] .k3t-attach .k3t-rowhead,
+[data-k3-thread="t5"] .k3t-bsdadvice .k3t-rowhead,
+[data-k3-thread="t5"] .k3t-receipt .k3t-rowhead,
+[data-k3-thread="t5"] .k3t-threadreq .k3t-rowhead {
+  font-family: var(--mono-font, monospace);
+  font-size: var(--fs-xs, 11px);
+}
+
+/* mono meta across the packet family */
+[data-k3-thread="t5"] .k3t-routewarn-routes,
+[data-k3-thread="t5"] .k3t-threadreq-meta,
+[data-k3-thread="t5"] .k3t-lineage,
+[data-k3-thread="t5"] .k3t-bsdresult,
+[data-k3-thread="t5"] .k3t-redirect,
+[data-k3-thread="t5"] .k3t-marker,
+[data-k3-thread="t5"] .k3t-server-note,
+[data-k3-thread="t5"] .k3t-queued {
+  font-family: var(--mono-font, monospace);
+}
+[data-k3-thread="t5"] .k3t-receipt-rows .k3-kv-v {
+  font-family: var(--mono-font, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+/* dotted leaders on receipt rows (label ....... value); the dots are
+   decorative overflow and must clip, never widen the row */
+[data-k3-thread="t5"] .k3t-receipt-rows .k3-kv { gap: 8px; }
+[data-k3-thread="t5"] .k3t-receipt-rows .k3-kv-k {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+[data-k3-thread="t5"] .k3t-receipt-rows .k3-kv-k::after {
+  content: " ........................................................................";
+  margin-left: 4px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  opacity: .4;
+}
+
+/* queued badge: a square ledger stamp in the content column */
+[data-k3-thread="t5"] .k3t-queued {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 4px;
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-xs, 2px);
+}
+
+/* rewound region: a full-bleed dashed ledger row aligned to the content
+   column (64px gutter + 12px column gap) */
+[data-k3-thread="t5"] .k3t-rewound {
+  margin: 0;
+  padding: 6px 14px 6px 76px;
+  border: 0;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+  border-bottom: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: 0;
+  font-family: var(--mono-font, monospace);
+}
+
+/* server note: a mono footnote row in the work zone */
+[data-k3-thread="t5"] .k3t-server-note { padding-top: 4px; }
+
+/* chip-mode packet rows read as totals rows under the work chip's double
+   rule; an opened row expands to the ruled ledger card above */
+[data-k3-thread="t5"] .k3t-packet-chiprows {
+  margin-top: 6px;
+  padding-top: 2px;
+  border-top: var(--border-width, 2px) double var(--border);
+}
+[data-k3-thread="t5"] .k3t-packet-row {
+  padding: 4px 6px;
+  border-radius: 0;
+  font-family: var(--mono-font, monospace);
+}
+
+/* artifact shortcut + overflow: ruled rows, square corners */
+[data-k3-thread="t5"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t5"] .k3t-shortcut-wrap .k3t-shortcut {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: var(--radius-xs, 2px);
+}
+[data-k3-thread="t5"] .k3t-shortcut-more { border-radius: var(--radius-xs, 2px); }

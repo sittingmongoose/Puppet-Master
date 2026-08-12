@@ -2,620 +2,103 @@
   "schema_id": "pm.settings_concept_impact_register.v1",
   "model": "fable",
   "topic": "settings-redesign",
+  "pass": "final-cumulative-2026-08-08",
+  "note": "Roll-up index. Full per-concept registers live in the four subdirectories; this file only summarizes and records cross-concept (shared-layer) impacts. Candidate IDs everywhere are provisional; canon is never minted in concept work.",
   "concepts": [
     {
       "concept_id": "c1-atlas",
       "title": "fable · Atlas",
-      "design_contract_summary": "Settings as a well-edited reference manual: numbered sections, running header, status typeset as marginalia in a margin column, inline editing in the document, and managers relegated to appendices (Providers, Memory, MCP) cross-referenced from the taxonomy.",
-      "impacts": [
-        {
-          "impact_id": "c1-impact-001",
-          "area": "settings_inventory",
-          "requirement": "Packet section 01 mandates an 11-domain humanized taxonomy; canon (Plans/settings_inventory.json, pm.settings_inventory.v1, 825 settings, and PM7 PM_SETTINGS_DATA) is 12 categories x 3 subgroups keyed by dotted cat.sub.slug ids.",
-          "selected_concept_behavior": "Atlas presents the 11 domains as numbered Parts with 3-5 subcategories each; canonical dotted ids are preserved and regrouped for display only (no id changes). Examples of display moves: general.visual.* into domain 2 Appearance & Layout; ai.models.* and ai.accounts.* into domain 3 Agents, Models & Accounts; safety.* into domain 4 Permissions & Safety; memory.* into domain 6 Context, Memory & History; branching.* into domain 8 Git, Worktrees & Crew; web.* and system.mcp.* into domain 9 Connections, Tools & Web.",
-          "probable_owner_docs": [
-            "Plans/settings_inventory.json",
-            "Plans/FinalGUISpec.md"
-          ],
-          "supersedes_or_conflicts_with": [
-            "12x3 canon taxonomy as the display taxonomy"
-          ],
-          "settings_ids": [
-            "general.visual.theme",
-            "general.visual.interface-density",
-            "general.interaction.panel-dock",
-            "ai.models.default-model",
-            "ai.accounts.default-account",
-            "safety.protection.security-filter",
-            "memory.limits.max-context-ktokens",
-            "branching.worktrees.enable-git",
-            "web.providers.web-search-enable",
-            "system.mcp.lazy-exposure"
-          ],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [
-            "Canon needs a display-taxonomy layer (domain/subcategory grouping) distinct from the id taxonomy, or a migration of ids."
-          ],
-          "demo_fixture_impacts": [
-            "_shared/pm-demo-data.js taxonomy[] carries the 11-domain regrouping; settings map keeps canonical ids (110 src:inventory rows)."
-          ],
-          "test_impacts": [
-            "Deep links and search must resolve through the display taxonomy, not the id prefix."
-          ],
-          "slint_notes": [],
-          "uncertainty": "medium",
-          "notes": [
-            "Regrouping is shared by all four concepts via _shared/pm-demo-data.js; recorded here because Atlas is the taxonomy-first concept."
-          ]
-        },
-        {
-          "impact_id": "c1-impact-002",
-          "area": "commands",
-          "requirement": "Workspace navigation and appendix managers imply invocable actions (open a domain, jump to a subcategory, open an appendix manager, reveal a setting from search).",
-          "selected_concept_behavior": "Atlas implements directory-row activation, TOC-tree subcategory jumps via the shared scrollspy, inline See-Appendix cross-references, and search-result deep links that auto-expand advanced/diagnostic disclosures.",
-          "probable_owner_docs": [
-            "Plans (command canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [
-            "settings: open workspace at domain",
-            "settings: jump to subcategory",
-            "settings: reveal setting (deep link, expands owning disclosure)",
-            "settings: open manager appendix (providers | memory | mcp)",
-            "memory: pin gist",
-            "memory: mark gist verified"
-          ],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [],
-          "uncertainty": "low",
-          "notes": [
-            "No command ids minted, per bakeoff rule."
-          ]
-        },
-        {
-          "impact_id": "c1-impact-003",
-          "area": "slint",
-          "requirement": "Atlas's editorial devices must be portable to Slint 1.17.1.",
-          "selected_concept_behavior": "Sticky running header inside the scroller; CSS-grid marginalia column; 40ms reading-order stagger capped at 8; smooth scroll + cached-offset scrollspy; narrow Contents drawer overlay; :empty::before prose placeholders.",
-          "probable_owner_docs": [
-            "Plans/FinalGUISpec.md"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [
-            "position:sticky running header becomes a fixed header row above a Flickable bound to viewport offset.",
-            "Marginalia grid becomes GridLayout row templates with a fixed margin column.",
-            "Stagger becomes per-row sequenced opacity animations keyed by index; reduced motion is a single fade.",
-            "Scrollspy is already the documented viewport-offset to section-model mapping (cached offsets, no DOM geometry).",
-            "Narrow Contents drawer becomes a conditional layout swap plus popup layer on a width property.",
-            ":empty::before placeholder becomes the TextEdit placeholder property.",
-            "Atlas adds no backdrop-filter; glass flavor uses opaque elevated surfaces, keeping the shell's single allowed blur layer."
-          ],
-          "uncertainty": "low",
-          "notes": []
-        },
-        {
-          "impact_id": "c1-impact-004",
-          "area": "schema_storage_events",
-          "requirement": "Staged state transitions (reconnect, refresh, invocation test) need a shared trigger/event surface covering every manager domain, not just providers.",
-          "selected_concept_behavior": "MCP server reconnect (Appendix C staged reconnect preserving the tool list) had to be staged locally in c1-atlas.js because PMState.trigger only targets providers; recorded as a shared-API gap.",
-          "probable_owner_docs": [
-            "Plans (events/wiring canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [
-            "mcp: reconnect server (staged, preserves discovered tool list)"
-          ],
-          "wiring_routes": [
-            "MCP reconnect route emitting staged health transitions analogous to provider reconnect"
-          ],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [
-            "Trigger/event vocabulary needs an MCP scope (and plausibly LSP/media scopes) alongside provider-refresh/catalog-refresh/reconnect/invoke-test."
-          ],
-          "demo_fixture_impacts": [],
-          "test_impacts": [
-            "Reconnect-preserves-tool-list is a testable invariant once the shared trigger exists."
-          ],
-          "slint_notes": [],
-          "uncertainty": "low",
-          "notes": []
-        }
-      ]
+      "design_contract_summary": "Settings as a reference manual: numbered sections, marginalia column, managers as appendices. Native families: Context & Instructions, Memory, Personas, Goal & Automation, Crew, Permissions & FileSafe, Back Seat Driver, plus the core group.",
+      "registers": {
+        "impact_register": "c1-atlas/impact-register.json",
+        "manager_coverage": "c1-atlas/manager-coverage.json",
+        "candidate_command_delta": "c1-atlas/candidate-command-delta.json",
+        "candidate_wiring_delta": "c1-atlas/candidate-wiring-delta.json",
+        "candidate_dry_delta": "c1-atlas/candidate-dry-delta.json",
+        "plan_owner_delta": "c1-atlas/plan-owner-delta.md"
+      }
     },
     {
       "concept_id": "c2-mission-control",
       "title": "fable · Mission Control",
-      "design_contract_summary": "Settings as an operational console: a persistent global health strip above every surface, a strictly ranked triage stack on Home, a right-edge proportional minimap as primary workspace navigation, and managers (Providers, Crew, Media) as the primary surfaces with plain settings in Configure drawers.",
-      "impacts": [
-        {
-          "impact_id": "c2-impact-001",
-          "area": "schema_storage_events",
-          "requirement": "A live health strip and heat-marked minimap need derived, subscribable aggregates: provider readiness, worst usage pressure, notice counts, and per-row semantic states.",
-          "selected_concept_behavior": "The health strip chips are live navigation targets recomputed from store data on provider/catalog/scenario events; minimap heat comes from row semantics via PMState.resolveRowState, never DOM inspection. Store events currently rebuild the open console inspector, which closes an open effort/speed menu (state preserved, focus not) — real event granularity would need row-level patches.",
-          "probable_owner_docs": [
-            "Plans (events/schema canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [
-            "Derived health aggregates (readiness, pressure, notice counts) published as subscribable state"
-          ],
-          "dry_component_candidates": [
-            "Global health strip",
-            "Heat-marked proportional minimap driven by the scrollspy section registry"
-          ],
-          "schema_or_event_impacts": [
-            "Event granularity finer than whole-store rebuilds (row/inspector-level patches) to preserve open menus and focus."
-          ],
-          "demo_fixture_impacts": [],
-          "test_impacts": [
-            "Open-menu-survives-refresh becomes a testable requirement under finer events."
-          ],
-          "slint_notes": [
-            "Minimap maps to a model-driven Rectangle column with y/height bindings against Flickable.viewport-y; drag writes viewport-y directly."
-          ],
-          "uncertainty": "medium",
-          "notes": []
-        },
-        {
-          "impact_id": "c2-impact-002",
-          "area": "commands",
-          "requirement": "The command palette and console actions are natural command surfaces.",
-          "selected_concept_behavior": "Ctrl/Cmd-K palette lists settings, actions, and managers with owner-category breadcrumbs and exposure labels; console toolbars expose Connect, Refresh catalog, Run invocation test, Reconnect; Crew exposes use-in-this-thread; Media exposes run-test-generation.",
-          "probable_owner_docs": [
-            "Plans (command canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [
-            "settings: open command palette",
-            "providers: connect (cli | pm-direct oauth | api key | server)",
-            "providers: refresh catalog (preserve last known good)",
-            "providers: run invocation test",
-            "providers: reconnect",
-            "crew: use template in this thread",
-            "media: run test generation"
-          ],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [],
-          "uncertainty": "low",
-          "notes": [
-            "No command ids minted, per bakeoff rule."
-          ]
-        },
-        {
-          "impact_id": "c2-impact-003",
-          "area": "source_conflict",
-          "requirement": "Access-mode naming rule: modes are Full Access / Auto / Auto accept edits / Ask for approval; the string 'Yolo' must never appear in UI copy.",
-          "selected_concept_behavior": "Plans/settings_inventory.json carries five 'YOLO' occurrences in access-mode copy; one sentence ('YOLO mode cannot skip this.') propagated into _shared/pm-demo-data.js during extraction. Fixed in the demo data during the folder verification pass ('No access mode can skip this.'); c2 additionally keeps a render-time sanitizer as defense-in-depth. The canonical inventory still carries the stale copy - recorded, not applied.",
-          "probable_owner_docs": [
-            "Plans/settings_inventory.json"
-          ],
-          "supersedes_or_conflicts_with": [
-            "Inventory description copy for the always-ask-publish setting"
-          ],
-          "settings_ids": [
-            "safety.approvals.external-publish-ask"
-          ],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [
-            "_shared/pm-demo-data.js needs the sentence removed; render-time sanitizer in c2 is a stopgap."
-          ],
-          "test_impacts": [
-            "Source grep for 'Yolo'/'YOLO' should be part of the folder test pass."
-          ],
-          "slint_notes": [],
-          "uncertainty": "low",
-          "notes": [
-            "The demo-data key carrying the sentence is the publish-approval row; exact canonical id in the inventory should be confirmed by the fix task."
-          ]
-        },
-        {
-          "impact_id": "c2-impact-004",
-          "area": "slint",
-          "requirement": "Console instrumentation must be portable to Slint 1.17.1.",
-          "selected_concept_behavior": "Minimap geometry from the scrollspy registry, region-scoped refresh shimmer, palette and bottom-sheet overlays, scrollIntoView row centering, color-mix glass tints, and a web-only content-blocker fallback loader.",
-          "probable_owner_docs": [
-            "Plans/FinalGUISpec.md"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [
-            "Shimmer becomes a static 'Refreshing — showing last known good' badge (already the reduced-motion end state) or a Timer-driven opacity pulse.",
-            "Palette/bottom-sheet become PopupWindow overlay layers with explicit focus scopes.",
-            "scrollIntoView(block:center) becomes row offset from the cached section model + animated viewport-y.",
-            "color-mix() tints become precomputed rgba brush tokens per theme.",
-            "The inline content-blocker fallback loader (XHR + eval) is web-only defensive code; not ported."
-          ],
-          "uncertainty": "low",
-          "notes": []
-        }
-      ]
+      "design_contract_summary": "Settings as an operational console: health strip, triage stack, command palette, minimap. Native families: Notifications & Sounds, Sound Library/uploads/packs, Appearance with custom TOML themes, Spellcheck & Dictionaries, Desktop/Tray/Window, Teacher/Help, plus Media beyond assignment and the core group.",
+      "registers": {
+        "impact_register": "c2-mission-control/impact-register.json",
+        "manager_coverage": "c2-mission-control/manager-coverage.json",
+        "candidate_command_delta": "c2-mission-control/candidate-command-delta.json",
+        "candidate_wiring_delta": "c2-mission-control/candidate-wiring-delta.json",
+        "candidate_dry_delta": "c2-mission-control/candidate-dry-delta.json",
+        "plan_owner_delta": "c2-mission-control/plan-owner-delta.md"
+      }
     },
     {
       "concept_id": "c3-focus-stack",
       "title": "fable · Focus Stack",
-      "design_contract_summary": "Settings as layered attention: one live surface at a time on a visible, poppable layer spine; disclosure is navigation (every advanced view, confirmation, and setup flow is a pushed sheet); near-empty Home; Personas and Terminal managers explore depth as meaning. Lowest density of the four.",
-      "impacts": [
-        {
-          "impact_id": "c3-impact-001",
-          "area": "wiring",
-          "requirement": "Disclosure-as-navigation requires a first-class navigation stack: push/pop routes for advanced half-sheets, expert confirm sheets, details, capability evidence, requested-vs-effective explanations, and free-route setup, with search deep links auto-pushing the owning sheet.",
-          "selected_concept_behavior": "The layer spine models Home > Category > Manager/Sheet with a depth counter; PMSpy.reveal targets hidden exposures by pushing the Advanced/Diagnostics half-sheet before focusing the row (verified on ai.usage.monthly-spend-limit); every expert change pushes its own Confirm sheet.",
-          "probable_owner_docs": [
-            "Plans (wiring/routes canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [
-            "ai.usage.monthly-spend-limit",
-            "safety.protection.allow-destructive"
-          ],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [
-            "settings: push advanced sheet for subcategory",
-            "settings: pop to home",
-            "settings: resume at last subcategory"
-          ],
-          "wiring_routes": [
-            "Navigation back-stack with typed sheet kinds (category, manager, advanced, confirm, details, setup)"
-          ],
-          "dry_component_candidates": [
-            "Layer spine",
-            "Sheet container with half/full variants"
-          ],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [
-            "Deep links to advanced/diagnostic exposures must verify the sheet auto-push path."
-          ],
-          "slint_notes": [],
-          "uncertainty": "medium",
-          "notes": []
-        },
-        {
-          "impact_id": "c3-impact-002",
-          "area": "source_conflict",
-          "requirement": "Packet rule: no clipped text.",
-          "selected_concept_behavior": "c3 clamps long row descriptions at two lines (-webkit-line-clamp) with the full text one tap away in the details sheet — a deliberate editorial choice, but a strict reading of the rule may object.",
-          "probable_owner_docs": [
-            "Bakeoff packet CONCEPT_RULES"
-          ],
-          "supersedes_or_conflicts_with": [
-            "Strict no-clipped-text reading"
-          ],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [
-            "Clip checks should distinguish accidental clipping from designed max-lines elision with a full-text affordance."
-          ],
-          "slint_notes": [
-            "-webkit-line-clamp maps to max-lines text elision."
-          ],
-          "uncertainty": "medium",
-          "notes": []
-        },
-        {
-          "impact_id": "c3-impact-003",
-          "area": "source_conflict",
-          "requirement": "Glass themes allow at most one backdrop-filter layer anywhere on the page.",
-          "selected_concept_behavior": "The shared shell title bar (pm-shell.css) carries the one allowed blur; c3's topmost sheet also carries blur in glass themes, so the page totals two blur layers. c3 enforces topmost-only within its own layers; if the one-layer rule is absolute, the shell or the sheet must yield.",
-          "probable_owner_docs": [
-            "Plans/FinalGUISpec.md Theme System Addendum",
-            "fable CONTRACT.md"
-          ],
-          "supersedes_or_conflicts_with": [
-            "Single-blur-layer rule as page-global"
-          ],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [
-            "Glass-theme pass should count blur layers page-globally, not per-component."
-          ],
-          "slint_notes": [
-            "Slint fallback is pre-composited translucency for the topmost sheet; lower layers are already opaque dimmed rectangles."
-          ],
-          "uncertainty": "low",
-          "notes": []
-        },
-        {
-          "impact_id": "c3-impact-004",
-          "area": "slint",
-          "requirement": "Spatial-continuity motion and stacked-surface input isolation must be portable.",
-          "selected_concept_behavior": "Origin-anchored slide+scale push/pop, vertical-rl spine labels, element.inert on non-top layers, scrollend settle detection, terminal live preview via styled spans, first-class reduced-motion mode with identical end states.",
-          "probable_owner_docs": [
-            "Plans/FinalGUISpec.md"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [
-            "Push/pop transitions become x/scale/opacity property animations; reduced motion collapses to instant swaps via the global switch.",
-            "writing-mode: vertical-rl becomes rotated Text elements inside TouchAreas.",
-            "element.inert becomes input disabled on lower layers in the component tree.",
-            "scrollend/idle settle becomes Flickable animated viewport-y with an explicit settle callback.",
-            "Terminal preview becomes a fixed sample buffer rendered by the real terminal component."
-          ],
-          "uncertainty": "low",
-          "notes": []
-        }
-      ]
+      "design_contract_summary": "Settings as layered attention: one live surface, visible layer spine, disclosure is navigation. Native families: File Manager/Editor, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills, Plugins, Tools, Testing & Debug, plus the core group.",
+      "registers": {
+        "impact_register": "c3-focus-stack/impact-register.json",
+        "manager_coverage": "c3-focus-stack/manager-coverage.json",
+        "candidate_command_delta": "c3-focus-stack/candidate-command-delta.json",
+        "candidate_wiring_delta": "c3-focus-stack/candidate-wiring-delta.json",
+        "candidate_dry_delta": "c3-focus-stack/candidate-dry-delta.json",
+        "plan_owner_delta": "c3-focus-stack/plan-owner-delta.md"
+      }
     },
     {
       "concept_id": "c4-ledger",
       "title": "fable · Ledger",
-      "design_contract_summary": "Settings as an object browser: every setting and manager object is a read-only record; all editing happens in a persistent inspector with provenance chain, requested-vs-effective diffs, and capability evidence; the navigator is a persistent query bar with state chips; zero animation by design. Highest density of the four.",
-      "impacts": [
-        {
-          "impact_id": "c4-impact-001",
-          "area": "schema_storage_events",
-          "requirement": "The packet's per-setting state model exceeds canon: canon has tier simple|advanced and status{state,note}; the packet needs value source, exposure level, effective-vs-requested, scope notes, managed/unavailable reasons, risk notes, and cost/privacy/restart flags.",
-          "selected_concept_behavior": "The shared dataset (rendered most completely by Ledger's inspector) adds valueSource (default|custom|inherited|auto|managed|recommended|not-configured), exposure (standard|advanced|expert|managed|diagnostic|unavailable; 86/37/2/3/3/2 across 133 rows), effective vs value, scope + scopeNote, managedReason/unavailableReason/riskNote, and flags. 23 packet-required rows carry src:packet-2026-08-05 because no inventory id exists (spellcheck block, thread overrides, access-mode radio, cross-project policies, concurrency pair).",
-          "probable_owner_docs": [
-            "Plans/settings_inventory.json",
-            "Plans (schema canon)"
-          ],
-          "supersedes_or_conflicts_with": [
-            "tier: simple|advanced two-level model",
-            "status{state,note} as the only state field"
-          ],
-          "settings_ids": [
-            "safety.rules.access-mode",
-            "ai.models.thread-model-override",
-            "ai.accounts.thread-account-override",
-            "safety.crossproject.read-access",
-            "safety.crossproject.write-access",
-            "planning.goal.concurrency-ceiling",
-            "planning.goal.sustainable-now",
-            "general.spellcheck.check",
-            "code.terminal.shell",
-            "general.visual.glass-transparency"
-          ],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [
-            "New per-setting fields: valueSource, exposure, effective, scopeNote, managedReason, unavailableReason, riskNote, flags{restart,reconnect,cost,privacy,safety,perf}.",
-            "Capability evidence records {cap, state x7, source, at} on models.",
-            "23 new settings need minted canonical ids before promotion."
-          ],
-          "demo_fixture_impacts": [
-            "_shared/pm-demo-data.js is the reference fixture: 110 rows src:inventory, 23 rows src:packet-2026-08-05."
-          ],
-          "test_impacts": [
-            "Nine value-state rendering and requested-vs-effective diffs become testable invariants via PMState.resolveRowState."
-          ],
-          "slint_notes": [],
-          "uncertainty": "medium",
-          "notes": []
-        },
-        {
-          "impact_id": "c4-impact-002",
-          "area": "commands",
-          "requirement": "The query engine and inspector imply invocable filters and record actions.",
-          "selected_concept_behavior": "Persistent query bar plus four state chips (Managed / Differs from default / Unavailable / Attention) filter navigator and document; the inspector exposes reset-to-default, expert unlock+confirm, and record actions; a Matches-elsewhere panel deep-links across views.",
-          "probable_owner_docs": [
-            "Plans (command canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [
-            "settings: filter by state (managed | differs | unavailable | attention)",
-            "settings: reset setting to default",
-            "settings: unlock expert record (confirm gated)",
-            "tools: toggle plugin enabled",
-            "context: show admitted and omitted for last turn"
-          ],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [
-            "State-chip filtering needs queryable state facets on manager objects too; c4 only approximates these via data-states attributes today."
-          ],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [],
-          "uncertainty": "low",
-          "notes": [
-            "No command ids minted, per bakeoff rule."
-          ]
-        },
-        {
-          "impact_id": "c4-impact-003",
-          "area": "source_conflict",
-          "requirement": "Packet forbids a universal budget / when-usage-runs-out setting; exhaustion behavior must be provider-specific whatNext options.",
-          "selected_concept_behavior": "The inventory's ai.usage.monthly-spend-limit is kept as an advanced spend guard (and is the standard search deep-link test target across concepts) while exhaustion behavior lives per-provider in the manager. Whether the global limit survives, becomes derived, or is retired is a canon decision.",
-          "probable_owner_docs": [
-            "Plans/settings_inventory.json",
-            "Bakeoff packet section 03"
-          ],
-          "supersedes_or_conflicts_with": [
-            "ai.usage.monthly-spend-limit as a universal exhaustion control"
-          ],
-          "settings_ids": [
-            "ai.usage.monthly-spend-limit"
-          ],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [],
-          "uncertainty": "medium",
-          "notes": [
-            "A spend cap is arguably distinct from a when-budget-runs-out behavior control; graded medium pending a canon reading."
-          ]
-        },
-        {
-          "impact_id": "c4-impact-004",
-          "area": "dry",
-          "requirement": "The record/inspector grammar repeats across the provider manager, Context & Instructions, and Skills/Plugins/Tools, and should be one component family if promoted.",
-          "selected_concept_behavior": "One grammar renders all record classes: record row (read-only, state chips), inspector (control + provenance chain default>global>project>thread + diffs + evidence + reset + caution gating), funnel table (installed>project-enabled>available>selected>invoked), and the sortable lazy-paged home table.",
-          "probable_owner_docs": [
-            "Plans (DRY component canon)"
-          ],
-          "supersedes_or_conflicts_with": [],
-          "settings_ids": [],
-          "command_ids_existing": [],
-          "command_candidates_not_minted": [],
-          "wiring_routes": [],
-          "dry_component_candidates": [
-            "Record row + persistent inspector pair",
-            "Provenance chain display (default > global > project > thread)",
-            "Capability evidence table",
-            "Exposure funnel table",
-            "Sortable filtered lazy-paged settings table"
-          ],
-          "schema_or_event_impacts": [],
-          "demo_fixture_impacts": [],
-          "test_impacts": [],
-          "slint_notes": [
-            "Three-region grid becomes a HorizontalLayout of panels with conditional popup layers at narrow widths.",
-            "Sticky table headers render outside the ListView viewport.",
-            "withInstantMotion is a web-only trick; Slint sets viewport-y directly.",
-            "Zero-animation design makes c4 the lowest-risk Slint port and the motionless proof of the system."
-          ],
-          "uncertainty": "low",
-          "notes": []
-        }
-      ]
+      "design_contract_summary": "Settings as an object browser: records plus a persistent right inspector, zero motion. Native families: Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control/Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Search Index, Workspace Cleanup, Future Server Module Shell, plus the core group.",
+      "registers": {
+        "impact_register": "c4-ledger/impact-register.json",
+        "manager_coverage": "c4-ledger/manager-coverage.json",
+        "candidate_command_delta": "c4-ledger/candidate-command-delta.json",
+        "candidate_wiring_delta": "c4-ledger/candidate-wiring-delta.json",
+        "candidate_dry_delta": "c4-ledger/candidate-dry-delta.json",
+        "plan_owner_delta": "c4-ledger/plan-owner-delta.md"
+      }
     }
   ],
   "cross_concept_findings": [
     {
-      "finding": "Single shared semantics layer, per-concept presentation",
-      "detail": "PMState.resolveRowState (nine value states), PMState.resolveNotice (notice anatomy), and the provider 15-state matrix are resolved once in _shared/pm-state.js and rendered four different ways. If any concept is promoted, these resolvers are the DRY seeds: setting row resolver, notice anatomy, provider state matrix, scrollspy section-registry store, spellcheck service, States/scenario drawer.",
-      "areas": [
-        "dry",
-        "schema_storage_events"
-      ]
-    },
-    {
-      "finding": "Scrollspy as the portable navigation contract",
-      "detail": "All four concepts drive navigation (tree ink dot, minimap, outline chip, navigator marker) from PMSpy's cached-offset section registry with deadband hysteresis and programmatic-scroll suppression — never ad-hoc DOM geometry. This is directly the Slint Flickable viewport-offset mapping.",
-      "areas": [
-        "dry",
-        "slint"
-      ]
-    },
-    {
-      "finding": "Shared demo-data defect: banned 'YOLO' sentence",
-      "detail": "Resolved during folder verification: the banned sentence inherited from inventory copy was corrected in _shared/pm-demo-data.js ('No access mode can skip this.'). The upstream conflict lives in Plans/settings_inventory.json (five 'YOLO' occurrences) - recorded, not applied.",
-      "areas": [
-        "source_conflict",
-        "demo_fixtures"
-      ]
-    },
-    {
-      "finding": "Taxonomy and schema deltas are shared, not per-concept",
-      "detail": "The 11-domain regrouping of canonical dotted ids, the six exposure levels replacing tier simple|advanced, valueSource/effective fields, and the 23 packet-sourced settings without inventory ids all live in _shared/pm-demo-data.js and affect every concept identically.",
-      "areas": [
-        "settings_inventory",
-        "schema_storage_events"
-      ]
-    },
-    {
-      "finding": "PMState.trigger scope gap",
-      "detail": "Transient staged transitions cover providers only (provider-refresh, catalog-refresh, reconnect, invoke-test); MCP reconnect required a local staging fallback in c1. Canon event vocabulary should scope triggers per manager domain.",
-      "areas": [
-        "schema_storage_events",
-        "wiring"
-      ]
-    },
-    {
-      "finding": "LSP is the one unclaimed group-B manager",
-      "detail": "Manager coverage: Memory + MCP (c1), Crew + Media (c2), Personas + Terminal (c3), Context & Instructions + Skills/Plugins/Tools (c4). LSP exists in shared demo data but no concept builds its surface.",
-      "areas": [
-        "plans"
-      ]
-    },
-    {
-      "finding": "Simulation boundary is uniform",
-      "detail": "No real OAuth/CLI sign-ins, installs, purchases, provider calls, or credential storage anywhere; every unrunnable action returns a labeled PMState.receipt; persistence is confined to the pm.settingsConcepts.fable.* localStorage namespace.",
-      "areas": [
-        "demo_fixtures"
-      ]
-    },
-    {
-      "finding": "Commands & shortcuts manager added during the compliance pass",
-      "detail": "Packet 04 requires commands search/shortcuts/conflicts/remapping/reset/custom lifecycle. Built ledger-native in c4 (filterable table, conflict + resolution note, inspector-side Remap/Reset receipts, custom-command lifecycle) and registered in the shared manager index so search reaches it from every concept; c1/c2/c3 route its deep links to honest cross-concept receipts. Canon impact: a commands manager surface plus keybinding storage (user overrides vs defaults) would need owner docs in Plans/UI_Command_Catalog.md and settings inventory placement under extensions.",
-      "probable_owner_docs": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/FinalGUISpec.md"
-      ],
+      "finding": "Shared provider semantics module prevents behavioral drift",
+      "detail": "All four concepts resolve installation, update-lifecycle, free-route, auth-boundary, and requested/effective semantics through _shared/pm-provider.js, which exports no HTML or CSS. The ten update states, six free-route states, and the seven-condition verify checklist exist in exactly one place. Candidate DRY families InstallationCard/CapabilityEvidence/RequestedEffectiveInspector should be specified as semantics + per-surface composition, not shared markup.",
+      "areas": ["dry", "commands"],
+      "probable_owner_docs": ["Models_System.md", "Multi-Account.md", "CLI_Bridged_Providers.md", "BinaryLocator_Spec.md"],
       "uncertainty": "low"
     },
     {
-      "finding": "Six additional packet-derived settings minted during the compliance pass",
-      "detail": "planning.goal.reserve-policy, branching.worktrees.provisioning, branching.worktrees.port-collision, memory.assembly.parent-handoff, memory.assembly.warn-route-change, general.writing.grammar-assist (separate off-by-default provider-disclosed grammar/style boundary). All src packet-2026-08-05; need minted canonical inventory ids before promotion (total minted now 29).",
-      "probable_owner_docs": [
-        "Plans/settings_inventory.json (via owner pipeline)",
-        "Plans/FinalGUISpec.md"
-      ],
+      "finding": "Deterministic deep-link contract is a production candidate",
+      "detail": "The hash route grammar (#/dest|manager|setting|search + scenario/fixture/trigger/focus/instant/pin params) gave every required state a stable, automatable address and real Back/forward history. A production equivalent belongs in the navigation family of the command catalog (cmd.settings.navigate payload shape), and the test matrix should key on it.",
+      "areas": ["commands", "wiring", "tests"],
+      "probable_owner_docs": ["UI_Command_Catalog.md", "FinalGUISpec.md"],
       "uncertainty": "low"
     },
     {
-      "finding": "Language servers manager built; MCP manager completed (recorded-item resolution round)",
-      "detail": "The formerly unclaimed LSP manager is now built as c1 Appendix D covering the full packet 04 list (states, coverage, executable/version, scope, startup, capabilities, conflicts, formatting/diagnostics ownership, restart/install/logs); other concepts route deep links to cross-concept receipts. MCP gained discovered resources/templates, extensions, discovery-cache freshness, provider/CLI projection notes, and an add-a-server receipt flow. c3 description clamps and c4 value-chip ellipses were removed so no required text truncates. Canon impact: LSP manager surface and MCP resource/extension/cache modeling need owner-doc coverage in Plans/LSPSupport.md and Plans/MCP_Integration.md before promotion.",
-      "probable_owner_docs": [
-        "Plans/LSPSupport.md",
-        "Plans/MCP_Integration.md"
-      ],
+      "finding": "Title-bar notification stack lives in the shared shell",
+      "detail": "Destination test-sends land in the shared title-bar stack + sprout inbox (F3-460/461 canon), proving notification wiring without any concept growing a second notification surface. No corner stacks, status-bar bells, or notification panels exist anywhere in the folder.",
+      "areas": ["wiring", "supersession"],
+      "probable_owner_docs": ["FinalGUISpec.md"],
+      "uncertainty": "low"
+    },
+    {
+      "finding": "Scenario x fixture-overlay x route are orthogonal axes",
+      "detail": "Eight whole-dataset scenarios, twelve additive fixture overlays (re-applied after every scenario rebuild), and the route contract compose deterministically. This kept the probe matrix O(states) instead of O(states x surfaces) and is a candidate pattern for the production test fixtures.",
+      "areas": ["tests", "schema_storage_events"],
+      "probable_owner_docs": ["Automated_Testing_System.md"],
+      "uncertainty": "low"
+    },
+    {
+      "finding": "Settings inventory census discrepancy",
+      "detail": "Inventory counts disagree across artifacts (817 in the PM7 build assertion, 818/819 in sidecar/embedded payloads, 824 in the PlanUnit text, 826 in Plans/settings_inventory.json). The packet-required rows added here (sounds, desktop, BSD, storage, backup, lifecycle, formatters, web limits, MCP transport) exist in no canon count. Flagged in each per-concept register.",
+      "areas": ["settings_inventory"],
+      "probable_owner_docs": ["FinalGUISpec.md", "Plans/settings_inventory.json"],
+      "uncertainty": "medium"
+    },
+    {
+      "finding": "Shared trigger registry needs owner-scoped refs in production",
+      "detail": "Demo triggers use loosely-scoped refs (provider id, installation path, destination id). The MCP-vs-provider reconnect ambiguity found during the build was resolved by id-precedence in the shared layer; production commands must carry typed, owner-scoped payloads instead.",
+      "areas": ["commands", "wiring"],
+      "probable_owner_docs": ["UI_Command_Catalog.md", "MCP_Integration.md"],
       "uncertainty": "low"
     }
   ],

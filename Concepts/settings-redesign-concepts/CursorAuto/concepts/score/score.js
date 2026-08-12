@@ -2,7 +2,7 @@
    Concept 02 — Score · cue / plates / rehearsal-mark IA
    Hero cue search → cue notices → movement plates.
    Workspace: single-column score + top rehearsal-mark rail + light side index.
-   Managers: Ensemble Providers, Personas cast, MCP instruments. Cueing motion.
+   Managers: Notifications & Sounds, Sound Library/Packs, Appearance, Spellcheck, Desktop, Teacher (+ Providers). Cueing motion.
    ========================================================================== */
 (function () {
   "use strict";
@@ -11,32 +11,35 @@
   var V = window.CAViews;
   var esc = V.esc;
 
-  PMStore.seed({
-    overrides: {},
-    dismissedNotices: [],
-    calmDemo: false,
-    providers: V.clone(DEMO.providers),
-    personas: V.clone(DEMO.personas),
-    mcp: V.clone(DEMO.mcp),
-    spell: {
+  var _seed = (window.CAManagers && CAManagers.defaultSeed)
+    ? CAManagers.defaultSeed(DEMO)
+    : { providers: V.clone(DEMO.providers) };
+  _seed.overrides = _seed.overrides || {};
+  _seed.dismissedNotices = _seed.dismissedNotices || [];
+  _seed.calmDemo = false;
+  if (!_seed.spell && DEMO.spellcheck) {
+    _seed.spell = {
       ignored: [],
-      personal: DEMO.spellcheck.personalDictionary.slice(),
-      project: DEMO.spellcheck.projectDictionary.slice()
-    }
-  });
+      personal: (DEMO.spellcheck.personalDictionary || []).slice(),
+      project: (DEMO.spellcheck.projectDictionary || []).slice()
+    };
+  }
+  PMStore.seed(_seed);
   PMStore.init("score");
 
   var INDEX = PMSearch.buildIndex(DEMO);
   var root = document.getElementById("sc-root");
 
   var view = { name: "home" };
+  var _motionKind = "home";
+  var _prevCat = null;
   var spy = null;
   var openAdv = {};
   var resetArmed = null;
   var activeSub = null;
 
-  var MANAGERS = { providers: true, personas: true, mcp: true };
-  var MANAGER_CATEGORY = { terminal: "code", crew: "collaboration", media: "media", lsp: "code", skills: "tools", tools: "tools", commands: "tools", personas: "providers", context: "context", memory: "context", mcp: "tools", spellcheck: "appearance" };
+  var MANAGERS = { providers: true, notifications: true, soundLibrary: true, appearanceMgr: true, spellcheck: true, desktop: true, teacher: true };
+  var MANAGER_CATEGORY = { appearanceMgr: "appearance", artifacts: "system", backup: "system", bsd: "permissions", cleanup: "system", commands: "tools", containers: "system", context: "context", crew: "collaboration", desktop: "general", fileManager: "code", formatters: "code", githubActions: "collaboration", goal: "planning", history: "context", lsp: "code", mcp: "tools", media: "media", memory: "context", notifications: "general", permissions: "permissions", personas: "providers", plugins: "tools", providers: "providers", searchIndex: "system", serverShell: "system", settingsLifecycle: "system", skills: "tools", soundLibrary: "appearance", spellcheck: "appearance", storage: "system", teacher: "general", terminal: "code", testing: "planning", tools: "tools", web: "tools", worktrees: "collaboration" };
 
   function catById(id) {
     for (var i = 0; i < DEMO.categories.length; i++) if (DEMO.categories[i].id === id) return DEMO.categories[i];
@@ -47,12 +50,26 @@
   /* navigation                                                          */
   /* ------------------------------------------------------------------ */
 
+  function captureNavOrigin(el, label) {
+    if (window.CAMotion && CAMotion.captureOrigin) CAMotion.captureOrigin(el, label || "nav");
+  }
+
+  function resolveManagerId(id) {
+    if (!id) return id;
+    if (MANAGERS[id]) return id;
+    /* Accept CAManagers canonical ids (contextSources, crews, …) */
+    var aliases = { contextSources: "context", crews: "crew", permissionsRules: "permissions", appearanceThemes: "appearanceMgr", spell: "spellcheck" };
+    var mapped = aliases[id];
+    if (mapped && MANAGERS[mapped]) return mapped;
+    return id;
+  }
+
   function navigate(target) {
     var t = target || {};
     if (t.manager === "usage") {
       view = { name: "manager", id: "providers", pid: null, tab: "usage" };
-    } else if (t.manager && MANAGERS[t.manager]) {
-      view = { name: "manager", id: t.manager, focusSetting: t.setting || null };
+    } else if (t.manager && MANAGERS[resolveManagerId(t.manager)]) {
+      view = { name: "manager", id: resolveManagerId(t.manager), focusSetting: t.setting || null };
     } else if (t.manager && MANAGER_CATEGORY[t.manager]) {
       view = { name: "workspace", cat: MANAGER_CATEGORY[t.manager], focusSub: t.sub || null, focusSetting: t.setting || null };
     } else if (t.category) {
@@ -68,6 +85,8 @@
   }
 
   function onSearchPick(result) {
+    _motionKind = "search";
+    if (window.CAMotion) CAMotion.captureOrigin(document.activeElement, "search");
     if (result.kind === "action") {
       if (/reset demo/i.test(result.title)) { PMStore.resetDemo(); PMStore.receipt("Demo data reset to its seeded state", "ok"); }
       else if (/settings home/i.test(result.title)) { view = { name: "home" }; render(); }
@@ -94,12 +113,18 @@
   }
 
   function indexHtml() {
-    return DEMO.categories.map(function (c, i) {
-      return '<button type="button" class="sc-plate" data-cat="' + esc(c.id) + '">' +
+    var cats = DEMO.categories.slice().sort(function (a, b) {
+      var af = a.manager && MANAGERS[a.manager] ? 0 : 1;
+      var bf = b.manager && MANAGERS[b.manager] ? 0 : 1;
+      return af - bf;
+    });
+    return cats.map(function (c, i) {
+      var featured = c.manager && MANAGERS[c.manager];
+      return '<button type="button" class="sc-plate' + (featured ? " is-featured" : "") + '" data-cat="' + esc(c.id) + '">' +
         '<span class="sc-plate-num">Mvt ' + String(i + 1).padStart(2, "0") + "</span>" +
         '<span class="sc-plate-title">' + esc(c.title) + "</span>" +
         '<span class="sc-plate-purpose">' + esc(c.purpose) + "</span>" +
-        '<span class="sc-plate-status">' + esc(c.statusSummary) + "</span></button>";
+        '<span class="sc-plate-status">' + esc(c.statusSummary) + (featured ? " · cue plate" : "") + "</span></button>";
     }).join("");
   }
 
@@ -109,11 +134,11 @@
     }).join("");
     return '<div class="sc-home"><div class="sc-home-inner">' +
       '<header class="sc-cue-hero">' +
-      '<div class="sc-eyebrow">Concept 02 · Score · cue sheet <span class="sc-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
+      '<div class="sc-eyebrow">Concept 02 · Score · cueing · Notifications/Sounds/Appearance/Spellcheck/Desktop/Teacher<span class="sc-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
       "<h1>Cue the next setting</h1>" +
       '<div class="sc-cue-meta">Hero search · cue notices · movement plates · rehearsal marks</div>' +
       '<div class="sc-searchband">' + V.icon("search") +
-      '<input id="sc-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search the score — a setting, manager, or action"></div>' +
+      '<input id="sc-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search — settings, managers, actions"></div>' +
       '<div class="sc-hits" id="sc-hits" role="listbox" hidden></div>' +
       "</header>" +
       '<h2 class="sc-h2">Cue notices<span class="sub">One clear action each</span></h2><hr class="sc-rule">' + decisionsHtml() +
@@ -138,6 +163,8 @@
     });
     root.querySelectorAll("[data-cat]").forEach(function (b) {
       b.addEventListener("click", function () {
+        captureNavOrigin(b, b.className.indexOf("hb-berth") !== -1 ? "berth" : b.className.indexOf("sc-plate") !== -1 ? "plate" : b.className.indexOf("sw-jack") !== -1 ? "jack" : "category");
+        _motionKind = "workspace";
         view = { name: "workspace", cat: b.getAttribute("data-cat"), focusSub: null, focusSetting: null };
         render();
       });
@@ -238,6 +265,8 @@
     var toc = document.getElementById("sc-toc");
 
     document.getElementById("sc-toc-cat").addEventListener("change", function (ev) {
+      captureNavOrigin(ev.target, "movement");
+      _motionKind = "category";
       view = { name: "workspace", cat: ev.target.value, focusSub: null, focusSetting: null };
       render();
     });
@@ -330,7 +359,7 @@
       if (row) {
         var adv = row.closest(".sc-adv");
         if (adv && !adv.open) { adv.open = true; openAdv[adv.getAttribute("data-adv")] = true; }
-        PMSpy.jumpTo(row, { root: page });
+        row.classList.add("ca-motion-focus"); PMSpy.jumpTo(row, { root: page });
       }
       view.focusSetting = null;
     } else if (view.focusSub) {
@@ -375,7 +404,7 @@
       stampHtml(p) + accounts +
       (p.accountSwitchNote ? '<p class="sc-mgr-note" style="margin-block:8px">' + esc(p.accountSwitchNote) + "</p>" : "") +
       (p.groupingNote ? '<p class="sc-mgr-note" style="margin-block:8px">' + esc(p.groupingNote) + "</p>" : "") +
-      "<h4 style='font-size:13px;margin:14px 0 4px'>Models</h4>" + V.catalogHtml(p) + models +
+      "<h4 style='font-size:13px;margin:14px 0 4px'>Models</h4>" + V.catalogHtml(p) + (V.installationsHtml ? V.installationsHtml(p) : "") + models +
       "<h4 style='font-size:13px;margin:16px 0 4px'>Usage snapshot</h4>" + V.usageHtml(p) +
       "<h4 style='font-size:13px;margin:16px 0 4px'>Routing</h4>" + V.routingHtml(p) +
       '<details class="ca-disclose"><summary>Diagnostics details</summary><div class="ca-disclose-body">' + V.diagnosticsHtml(p) + "</div></details>" +
@@ -437,93 +466,20 @@
       (p.childOnly ? '<p class="sc-mgr-note">Child-only personas run under a parent agent and never appear as ordinary Chat defaults.</p>' : "") +
       "</div>";
   }
-
-  function renderPersonas() {
-    var personas = PMStore.get("personas", []);
-    root.innerHTML = '<div class="sc-mgr sc-wrap"><div class="sc-score-col">' +
-      '<div class="sc-band"><div class="sc-eyebrow">Cast · Personas <span class="sc-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
-      "<h1>Personas</h1>" + '<p class="purpose">Behavior definitions with explicit scopes — not accounts, models, or permission grants.</p>' +
-      '<div class="tools"><button type="button" class="ca-btn" data-variant="quiet" id="sc-back">Cue sheet</button></div></div>' +
-      '<p class="sc-mgr-note" style="margin-block-end:14px">A persona is a durable definition plus a compact model-facing capsule; the full source is not injected every turn. Personas cannot widen Plan or Review mode, permissions, FileSafe, network, project, or parent-agent ceilings.</p>' +
-      personas.map(personaHtml).join("") +
-      "</div></div>";
-    document.getElementById("sc-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    root.querySelectorAll("[data-persona-scope]").forEach(function (sel) {
-      sel.addEventListener("change", function () {
-        var id = sel.getAttribute("data-persona-scope");
-        var personas = PMStore.get("personas", []).slice();
-        personas.forEach(function (p) { if (p.id === id) p.scopeChoice = sel.value; });
-        PMStore.set("personas", personas);
-        var label = SCOPE_OPTIONS.filter(function (s) { return s[0] === sel.value; })[0][1];
-        PMStore.receipt("Persona scope set to “" + label + "” — applies to future work unless it is this turn or thread", "ok");
-      });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* SKILLS / PLUGINS / TOOLS / COMMANDS MANAGER                         */
   /* ------------------------------------------------------------------ */
-
-  function mcpCardHtml(s) {
-    var h = V.HEALTH[s.health] || { label: s.health, dot: "unknown" };
-    var tools = s.tools.map(function (t) {
-      return '<span class="ca-badge" data-kind="scope">' + esc(t.name) + " · " + (t.exposure === "eager" ? "eager" : "lazy") + (t.invoked ? " · invoked" : "") + "</span>";
-    }).join("");
-    var body = s.health === "connecting"
-      ? '<div class="ca-skeleton" style="block-size:12px;inline-size:70%"></div><div class="ca-skeleton" style="block-size:12px;inline-size:45%"></div>'
-      : '<div class="sc-related">' + tools + "</div>" +
-        (s.lastError ? '<div class="ca-row-reason">' + esc(s.lastError) + "</div>" : "") +
-        '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
-        '<span class="ca-select"><select data-mcp-policy="' + esc(s.id) + '" aria-label="Approval policy">' +
-        ["Ask each time", "Remember for this session", "Remember for this Goal", "Always for this server"].map(function (pol) {
-          return '<option value="' + esc(pol) + '"' + (pol === s.approvalPolicy ? " selected" : "") + ">" + esc(pol) + "</option>";
-        }).join("") + "</select></span>" +
-        '<button type="button" class="ca-btn" data-variant="quiet" data-mcp-rec="' + esc(s.id) + '">Reconnect</button>' +
-        "</div>" +
-        '<details class="ca-accordion"><summary>Logs</summary><div class="ca-accordion-body"><div class="ca-logs">' +
-        s.logs.map(function (l) { return '<div class="ca-log-line">' + esc(l) + "</div>"; }).join("") + "</div></div></details>";
-    return '<div class="sc-card"><div class="head"><h3>' + esc(s.name) + "</h3>" + V.healthDot(h.dot, h.label) +
-      '<span class="ca-badge" data-kind="scope">' + esc(s.transport) + "</span>" +
-      '<span class="ca-badge" data-kind="scope">Protocol: requested ' + esc(s.protocol.requested) + " · negotiated " + esc(s.protocol.negotiated) + "</span>" +
-      '<span class="ca-badge" data-kind="scope">' + (s.scope === "project" ? "This project" : "Global") + "</span></div>" + body + "</div>";
-  }
-
-  function renderMcp() {
-    var servers = PMStore.get("mcp", []);
-    root.innerHTML = '<div class="sc-mgr">' +
-      '<div class="sc-band">' +
-      '<button type="button" class="ca-btn" data-variant="quiet" id="sc-back"><svg viewBox="0 0 24 24" aria-hidden="true" style="inline-size:12px;block-size:12px"><path d="m15 5-7 7 7 7"/></svg> All settings</button>' +
-      "<h1>MCP servers</h1>" + '<span class="sc-purpose">External tool servers, their health, and what they expose</span><span class="spacer"></span>' +
-      '<button type="button" class="ca-btn" data-variant="quiet" id="sc-mcp-add">Add a server</button>' +
-      "</div>" +
-      '<div class="sc-page" style="padding:18px 26px 80px;overflow:auto">' +
-      '<p class="sc-note">Tools load lazily: a server’s full schema is exposed to agents only when relevant. Provider or CLI projections of these servers are informational — this manager is the canonical state.</p>' +
-      '<div style="display:grid;gap:12px">' + servers.map(mcpCardHtml).join("") + "</div>" +
-      "</div></div>";
-    document.getElementById("sc-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    document.getElementById("sc-mcp-add").addEventListener("click", function () {
-      PMStore.receipt("Add-server simulated — no server was installed or contacted", "info");
-    });
-    root.querySelectorAll("[data-mcp-rec]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        PMStore.receipt("Reconnect simulated — the server was not actually restarted", "info");
-      });
-    });
-    root.querySelectorAll("[data-mcp-policy]").forEach(function (sel) {
-      sel.addEventListener("change", function () {
-        var servers = PMStore.get("mcp", []).slice();
-        servers.forEach(function (s) { if (s.id === sel.getAttribute("data-mcp-policy")) s.approvalPolicy = sel.value; });
-        PMStore.set("mcp", servers);
-        PMStore.receipt("Approval policy updated (simulated)", "ok");
-      });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* render loop                                                         */
   /* ------------------------------------------------------------------ */
 
   function render() {
+    var __kind = _motionKind || (view.name === "manager" ? "manager" : view.name === "workspace" ? "workspace" : "home");
+    if (view.name === "workspace") {
+      if (_prevCat && _prevCat !== view.cat && __kind !== "search") __kind = "category";
+      _prevCat = view.cat;
+    }
+
     if (spy) { spy.detach(); spy = null; }
     var focusingSetting = view.focusSetting;
     var focusingSub = view.focusSub;
@@ -531,13 +487,34 @@
     var st = scroller ? scroller.scrollTop : 0;
     if (view.name === "workspace") renderWorkspace();
     else if (view.name === "manager") {
-      if (view.id === "personas") renderPersonas();
-      else if (view.id === "mcp") renderMcp();
-      else renderProviders();
+      if (view.id === "providers") renderProviders();
+      else if (window.CAManagers && CAManagers.handles(view.id)) {
+        CAManagers.mount({
+          root: root,
+          managerId: view.id,
+          chrome: { wrapClass: "sc-mgr", barClass: "sc-ws-bar", detailClass: "sc-mgr-detail", backId: "sc-back" },
+          onBack: function () { view = { name: "home" }; render(); },
+          rerender: function () { render(); }
+        });
+      } else {
+        /* shared_grammar fallback — open Providers or Home with receipt */
+        PMStore.receipt("Manager “" + view.id + "” is available via shared grammar; opening Home", "info");
+        view = { name: "home" };
+        renderHome();
+      }
     } else renderHome();
     var after = root.querySelector(".sc-score-col") || root.querySelector(".sc-page") || root.querySelector(".sc-mgr");
     if (after && !focusingSetting && !focusingSub) after.scrollTop = st;
-  }
+  
+    if (window.CAMotion) {
+      var focusEl = null;
+      if (__kind === "search") {
+        focusEl = root.querySelector(".ca-row.ca-motion-focus") || root.querySelector("[data-focus-land]") || root.querySelector(".ca-row");
+      }
+      CAMotion.afterRender(root, __kind === "category" ? "category" : (__kind === "search" ? "search" : view.name), { focusEl: focusEl });
+      _motionKind = view.name; /* reset default */
+    }
+}
 
   PMStore.on("change", function () { render(); });
   PMStore.on("reset", function () { openAdv = {}; });

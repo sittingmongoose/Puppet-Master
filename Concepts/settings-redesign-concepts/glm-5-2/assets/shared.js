@@ -410,4 +410,85 @@
     }
     refreshSwatches();
   };
+
+  /* ---------- OWNED-FAMILIES STRIP (final-cumulative per-concept ownership) ---------- */
+  /* Renders destination-control cards (NOT filter pills) for the families a concept
+     deeply demonstrates. Inserted into each concept's Home so ownership is explicit. */
+  var OWNED_PURPOSE = {
+    pam:"Providers, accounts, connections, models, installations, roles.",
+    context:"Durable breadth, narrow turn context, AGENTS.md chain.",
+    memory:"Evidence-backed Gists; half-life fades, never deletes.",
+    personas:"Behavior, not authority; scope explicit; import-trust scan.",
+    goal:"Defaults + ceilings; requested/effective worker routes.",
+    crew:"Orchestrator-owned templates; requested vs effective members.",
+    permissions:"Ordered rules, per-tool overrides, FileSafe floor.",
+    bsd:"Read-only observation; auto on risk/phase triggers.",
+    notifications:"Delivery, routing, sounds; title-bar stack only.",
+    sounds:"Uploaded sounds + PeonPing/OpenPeon packs; license checks.",
+    appearance:"Families, custom TOML, fonts, UI scale, live reload.",
+    spellcheck:"Dictionary sources; personal/project; no autocorrect.",
+    desktop:"Tray, window restore, crash recovery, limits.",
+    teacher:"Guided explanation + safe transitions.",
+    filemanager:"Tree, tabs, large-file, changed-on-disk, recovery.",
+    terminal:"Profiles, ANSI, opacity, cursor, CWD/env, retention.",
+    lsp:"Registry, startup, conflicts, formatting ownership.",
+    formatters:"Detected/custom, single ownership per language.",
+    commands:"Custom lifecycle, shortcuts, conflicts, dry-run.",
+    mcp:"Transport, tools, approval, scope, diagnostics.",
+    skills:"Skills, plugins, tools, commands — four distinct kinds.",
+    testing:"Per-capability Auto/On/Off; DAP, capture, artifacts.",
+    storage:"Mode, retention, holds, compaction, quarantine.",
+    backup:"Action vs setting vs status vs manager vs log.",
+    settingsLifecycle:"Export/import/conflict/rollback/receipt/reset.",
+    history:"Filters, archive, PM-owned vs provider identity.",
+    artifacts:"Type/version/retention/receipts/redaction/cleanup.",
+    sourcecontrol:"Changes/history/graph/worktrees; forge; leases.",
+    github:"Pinned workflows, branch readiness, run/job/log.",
+    containers:"Docker/Podman/K8s; registries; capability probes.",
+    webfetch:"Priority, limits, credit guards, caches, privacy.",
+    searchindex:"Enable, rebuild, exclusions, disk, failures.",
+    cleanup:"Dry-run first; worktree safety; receipts.",
+    server:"Deferred-owner insertion shell — no state machine.",
+    media:"Image, audio, video routes (extra — shared grammar)."
+  };
+  S.ownedStrip = function (conceptKey) {
+    var c = PM_DEMO.concepts[conceptKey]; if (!c) return "";
+    var cards = c.families.map(function (fam) {
+      var m = PM.managers[fam]; if (!m) return "";
+      return [
+        '<a class="owned-card" data-owned-manager="' + fam + '" role="button" tabindex="0" aria-label="Open ' + m.title + ' manager">',
+          '<span class="owned-icon">' + PM.svg(m.icon, 18) + '</span>',
+          '<div class="col grow gap-xs">',
+            '<strong>' + m.title + '</strong>',
+            '<span class="muted small">' + (OWNED_PURPOSE[fam] || "") + '</span>',
+          '</div>',
+          '<span class="owned-open">' + PM.svg("external", 13) + '</span>',
+        '</a>'
+      ].join("");
+    }).join("");
+    return [
+      '<section class="owned-strip card">',
+        '<div class="row between wrap gap-sm">',
+          '<div class="col gap-xs">',
+            '<span class="owned-eyebrow">Deep demos — this concept owns</span>',
+            '<strong>' + c.name + ' proves these families</strong>',
+          '</div>',
+          '<span class="chip accent">' + c.families.length + ' families</span>',
+        '</div>',
+        '<div class="owned-grid">' + cards + '</div>',
+      '</section>'
+    ].join("");
+  };
+  S.wireOwnedStrip = function (root) {
+    if (!root) return;
+    root.querySelectorAll("[data-owned-manager]").forEach(function (a) {
+      a.addEventListener("click", function () {
+        PM.openManager(this.getAttribute("data-owned-manager"));
+        PM.render && PM.render();
+      });
+      a.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.click(); }
+      });
+    });
+  };
 })();

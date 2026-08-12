@@ -320,11 +320,86 @@
       var mt = el('span', 'k3t-meta-text', metaLineFor(m, active));
       if (active) mt.setAttribute('data-k3t-working-meta', '1');
       meta.appendChild(mt);
-      var infoBtn = ghostBtn('info', 'More Info', function () { openInfo(infoBtn, m); });
+      var infoBtn = ghostBtn('info', 'More Info', function () { openMoreMenu(infoBtn, m); });
       infoBtn.setAttribute('data-testid', 'k3t-more-info');
       meta.appendChild(infoBtn);
       hover.appendChild(meta);
       return hover;
+    }
+
+    // Packet hover menu: copy/info plus branch/restore/rewind thread ops.
+    function openMoreMenu(anchor, m) {
+      function copyLink() {
+        var link = tid + '#' + m.id;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link);
+        }
+      }
+      function okRoutes() {
+        var out = [];
+        (data.providerCatalog() || []).forEach(function (p) {
+          (p.accounts || []).forEach(function (a) {
+            (p.models || []).forEach(function (mm) {
+              var r = data.routeByKey(p.id + '/' + a.id + '/' + mm.id);
+              if (r && r.status === 'ok') out.push(r);
+            });
+          });
+        });
+        return out.slice(0, 4);
+      }
+      var personas = (window.K3WindowKit && window.K3WindowKit.PERSONAS) || [];
+      var items = [
+        { label: 'Copy', icon: 'copy', action: function () { doCopy(displayBody(m), anchor); } },
+        {
+          label: 'More Info', icon: 'info',
+          action: function () { setTimeout(function () { openInfo(anchor, m); }, 0); }
+        },
+        { type: 'separator' },
+        {
+          label: 'Branch from here', icon: 'branch',
+          action: function () { if (window.K3ThreadOps) window.K3ThreadOps.branchFrom(tid, m.id, {}); }
+        },
+        {
+          label: 'Branch with another model…', icon: 'model',
+          submenu: okRoutes().map(function (r) {
+            return {
+              label: r.providerName + ' · ' + r.modelShort,
+              action: function () { if (window.K3ThreadOps) window.K3ThreadOps.branchFrom(tid, m.id, { model: r.key }); }
+            };
+          })
+        },
+        {
+          label: 'Branch with another Persona…', icon: 'persona',
+          submenu: personas.map(function (p) {
+            return {
+              label: p,
+              action: function () { if (window.K3ThreadOps) window.K3ThreadOps.branchFrom(tid, m.id, { persona: p }); }
+            };
+          })
+        },
+        {
+          label: 'Create restore point', icon: 'restore',
+          action: function () {
+            if (window.K3ThreadOps) window.K3ThreadOps.createRestorePoint(tid, 'Before ' + firstWords(displayBody(m), 5));
+          }
+        },
+        {
+          label: 'Rewind to here', icon: 'rewind', danger: true,
+          action: function () {
+            ui().confirm({
+              title: 'Rewind to here?',
+              body: 'Later messages collapse into a restorable region. Nothing is deleted — a restore point is created first.',
+              confirmLabel: 'Rewind to here',
+              danger: true
+            }).then(function (ok) {
+              if (ok && window.K3ThreadOps) window.K3ThreadOps.rewindTo(tid, m.id);
+            });
+          }
+        },
+        { type: 'separator' },
+        { label: 'Copy link', icon: 'export', action: copyLink }
+      ];
+      ui().menu(anchor, items, { width: 240 });
     }
 
     function doCopy(text, btn) {
@@ -565,22 +640,385 @@
       card.appendChild(a.acc);
       return card;
     }
+    // ---------- packet card family (final cumulative update) ----------
+    // One shared k3t-card family; per-thread CSS differentiates (t1..t8).
+    // Every kind renders in BOTH workMode 'inline' (full card) and 'chip'
+    // (compact row that expands to the full card in place).
+    var BSD_RESULT_LABELS = {
+      silent: 'BSD checked — no advice',
+      duplicate: 'BSD suppressed a duplicate',
+      timeout: 'BSD timed out — the turn was unaffected',
+      unavailable: 'BSD unavailable — the turn was unaffected',
+      quota: 'BSD quota limited'
+    };
+
+    var PACKET_FIELDS = ['approvalCard', 'routeWarningCard', 'attachmentCard', 'bsdAdviceCard',
+      'bsdResult', 'receiptCard', 'threadRequestCard', 'restorePointCard', 'branchCard',
+      'redirectMarker', 'crossProjectCard', 'rewoundMarker', 'marker'];
+    function packetKinds(m) {
+      var kinds = [];
+      PACKET_FIELDS.forEach(function (k) { if (m[k]) kinds.push(k); });
+      return kinds;
+    }
+
+    function routeWarningEl(rec) {
+      var card = el('div', 'k3t-card k3t-routewarn');
+      card.setAttribute('data-testid', 'k3t-routewarn');
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan('warning', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title', rec.headline || 'Route warning'));
+      card.appendChild(head);
+      if (rec.fromLabel || rec.toLabel) {
+        card.appendChild(el('div', 'k3t-routewarn-routes',
+          (rec.fromLabel || '?') + '  →  ' + (rec.toLabel || '?')));
+      }
+      if (rec.status && rec.status !== 'open') {
+        card.appendChild(el('div', 'k3t-footnote', 'Resolved: ' + rec.status + '.'));
+        return card;
+      }
+      // first view = single most important consequence
+      card.appendChild(el('div', 'k3t-routewarn-primary', rec.primary || ''));
+      var row = el('div', 'k3t-card-actions');
+      [['continue', 'Continue here'], ['branch', 'Branch with new model'],
+       ['new', 'Start new chat'], ['cancel', 'Cancel']].forEach(function (c) {
+        var b = el('button', 'k3-btn ' + (c[0] === 'cancel' ? 'k3-btn-ghost ' : '') + 'k3w-kit-mini', c[1]);
+        b.type = 'button';
+        b.setAttribute('data-testid', 'k3t-routewarn-' + c[0]);
+        b.addEventListener('click', function () {
+          if (window.K3Route) window.K3Route.resolveWarning(ctx, tid, rec.id, c[0]);
+        });
+        row.appendChild(b);
+      });
+      var det = el('button', 'k3-btn k3-btn-ghost k3w-kit-mini', 'Details');
+      det.type = 'button';
+      det.addEventListener('click', function () {
+        var box = el('div', 'k3t-routewarn-details');
+        (rec.consequences || []).forEach(function (c) {
+          var r = el('div', 'k3-kv');
+          r.appendChild(el('span', 'k3-kv-k', titleCase(c.kind || 'note')));
+          r.appendChild(el('span', 'k3-kv-v', c.text || ''));
+          box.appendChild(r);
+        });
+        ui().popover(det, box, { className: 'k3t-details-pop k3-scroll' });
+      });
+      row.appendChild(det);
+      card.appendChild(row);
+      return card;
+    }
+
+    function attachmentCardEl(rec) {
+      var card = el('div', 'k3t-card k3t-attach');
+      card.setAttribute('data-testid', 'k3t-attach');
+      var head = el('div', 'k3t-rowhead');
+      var kindIcon = 'paperclip-' + (rec.file && rec.file.kind === 'video' ? 'mov' :
+        rec.file && rec.file.kind === 'archive' ? 'zip' :
+        rec.file && rec.file.kind === 'document' ? 'pdf' :
+        rec.file && rec.file.kind === 'spreadsheet' ? 'xlsx' :
+        rec.file && rec.file.kind === 'image' ? 'png' : 'bin');
+      if (!window.K3Icons.has(kindIcon)) kindIcon = 'attach';
+      head.appendChild(iconSpan(kindIcon, 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title',
+        (rec.file ? rec.file.name : 'Attachment') + (rec.file && rec.file.size ? ' · ' + rec.file.size : '')));
+      card.appendChild(head);
+      if (rec.state === 'consent') {
+        card.appendChild(el('div', 'k3t-attach-reason', rec.reason || 'This model cannot read this file.'));
+        card.appendChild(el('div', 'k3t-footnote',
+          'Routing to another provider changes privacy, account, cost, terms, or location — confirmation required.'));
+        var row = el('div', 'k3t-card-actions');
+        [['cancel', 'Cancel'], ['extract', 'Extract in PM'], ['alternate', rec.alternateLabel || 'Use another model']].forEach(function (c) {
+          var b = el('button', 'k3-btn ' + (c[0] === 'cancel' ? 'k3-btn-ghost ' : '') + 'k3w-kit-mini', c[1]);
+          b.type = 'button';
+          b.setAttribute('data-testid', 'k3t-attach-' + c[0]);
+          b.addEventListener('click', function () {
+            if (window.K3Attachments) window.K3Attachments.resolveChoice(ctx, tid, rec.id, c[0]);
+          });
+          row.appendChild(b);
+        });
+        card.appendChild(row);
+      } else if (rec.state === 'resolved-transform' || rec.state === 'resolved-alternate') {
+        card.appendChild(el('div', 'k3t-attach-reason',
+          rec.state === 'resolved-alternate' ? 'Read by the alternate model.' : 'Transformed in PM.'));
+        var list = el('div', 'k3t-attach-derived');
+        (rec.derived || []).forEach(function (d) {
+          list.appendChild(el('span', 'k3-chip k3t-attach-chip', d.label || d.kind));
+        });
+        card.appendChild(list);
+        if (rec.lineage && rec.lineage.length) {
+          card.appendChild(el('div', 'k3t-footnote', 'Derived from ' + rec.lineage.join(', ') + ' — lineage preserved.'));
+        }
+      } else if (rec.state === 'resolved-native') {
+        card.appendChild(el('div', 'k3t-attach-reason', 'Read natively by this model.'));
+      } else if (rec.state === 'unsupported') {
+        card.appendChild(el('div', 'k3t-attach-reason', rec.reason || 'Unsupported on this route.'));
+      } else if (rec.state === 'cancelled' || rec.state === 'removed') {
+        card.appendChild(el('div', 'k3t-footnote', 'Attachment ' + rec.state + '.'));
+      }
+      return card;
+    }
+
+    function bsdAdviceEl(rec) {
+      var card = el('div', 'k3t-card k3t-bsdadvice');
+      card.setAttribute('data-testid', 'k3t-bsdadvice');
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan('bsd', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title', 'BSD advice'));
+      card.appendChild(head);
+      card.appendChild(el('div', 'k3t-bsdadvice-summary', rec.summary || ''));
+      if (rec.detail) {
+        var btn = ghostBtn('info', 'Details', function () {
+          ui().popover(btn, el('div', 'k3t-bsdadvice-detail', rec.detail), { className: 'k3t-details-pop' });
+        });
+        card.appendChild(btn);
+      }
+      card.appendChild(el('div', 'k3t-footnote', 'BSD can only advise — it cannot run tools or widen access.'));
+      return card;
+    }
+
+    function receiptEl(rec) {
+      var card = el('div', 'k3t-card k3t-receipt');
+      card.setAttribute('data-testid', 'k3t-receipt');
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan('receipt', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title', rec.title || 'Receipt'));
+      card.appendChild(head);
+      if (rec.summary) card.appendChild(el('div', 'k3t-receipt-summary', rec.summary));
+      var lines = rec.lines || (rec.kv || []);
+      if (lines.length) {
+        var rows = el('div', 'k3t-receipt-rows');
+        lines.forEach(function (l) {
+          var r = el('div', 'k3-kv');
+          r.appendChild(el('span', 'k3-kv-k', l.label != null ? l.label : l[0]));
+          r.appendChild(el('span', 'k3-kv-v', l.value != null ? l.value : l[1]));
+          rows.appendChild(r);
+        });
+        card.appendChild(rows);
+      }
+      return card;
+    }
+
+    function threadRequestEl(rec) {
+      var card = el('div', 'k3t-card k3t-threadreq');
+      card.setAttribute('data-testid', 'k3t-threadreq');
+      // runtime cards carry the full record inline; fixture cards reference
+      // the thread's threadRequests list by id.
+      var req = rec.boundedTask != null ? rec : null;
+      if (!req) {
+        var want = rec.requestId || rec.id;
+        (data.threadRequests(tid) || []).forEach(function (r) { if (r.id === want) req = r; });
+      }
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan('branch', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title',
+        'Thread request → ' + (req ? req.targetThread : '?')));
+      card.appendChild(head);
+      if (!req) {
+        card.appendChild(el('div', 'k3t-footnote', 'Request record missing.'));
+        return card;
+      }
+      card.appendChild(el('div', 'k3t-threadreq-task', req.boundedTask || ''));
+      var meta = el('div', 'k3t-threadreq-meta');
+      if (req.scope) meta.appendChild(el('span', 'k3-chip', req.scope));
+      if (req.budget) meta.appendChild(el('span', 'k3-chip', req.budget));
+      meta.appendChild(statusChip(req.status || 'pending'));
+      card.appendChild(meta);
+      if ((req.evidenceRefs || []).length) {
+        card.appendChild(el('div', 'k3t-footnote',
+          'Evidence refs: ' + req.evidenceRefs.join(', ') + ' — no hidden shared context.'));
+      }
+      if (req.status === 'answered' && (req.resultRefs || []).length) {
+        card.appendChild(el('div', 'k3t-footnote', 'Result refs: ' + req.resultRefs.join(', ')));
+      } else if ((req.status || 'pending') === 'pending') {
+        var row = el('div', 'k3t-card-actions');
+        var awaitBtn = el('button', 'k3-btn k3w-kit-mini', 'Await response');
+        awaitBtn.type = 'button';
+        awaitBtn.setAttribute('data-testid', 'k3t-threadreq-await');
+        awaitBtn.addEventListener('click', function () {
+          if (window.K3ThreadOps) window.K3ThreadOps.awaitRequest(req.id);
+        });
+        row.appendChild(awaitBtn);
+        card.appendChild(row);
+      }
+      return card;
+    }
+
+    function restorePointEl(rec) {
+      var card = el('div', 'k3t-card k3t-restorepoint');
+      card.setAttribute('data-testid', 'k3t-restorepoint');
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan('restore', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title', 'Restore point — ' + (rec.label || '')));
+      card.appendChild(head);
+      var bits = [];
+      if (rec.messageCount != null) bits.push(rec.messageCount + ' messages');
+      if (rec.atMessageId) bits.push('at ' + rec.atMessageId);
+      if (rec.at) bits.push(fmtClock(rec.at));
+      bits.push('Immutable record');
+      card.appendChild(el('div', 'k3t-footnote', bits.join(' · ') + '.'));
+      return card;
+    }
+
+    var BRANCH_KIND_LABEL = {
+      'branch': 'Branch: ',
+      'branch-model': 'Branch (another model): ',
+      'branch-persona': 'Branch (another Persona): ',
+      'spawn': 'Spawned thread: '
+    };
+    function branchEl(rec) {
+      var card = el('div', 'k3t-card k3t-branch');
+      card.setAttribute('data-testid', 'k3t-branch');
+      var head = el('div', 'k3t-rowhead');
+      head.appendChild(iconSpan(rec.kind === 'spawn' ? 'subagent' : 'branch', 'k3t-ic'));
+      head.appendChild(el('span', 'k3t-rowhead-title',
+        (BRANCH_KIND_LABEL[rec.kind] || 'Branch: ') + (rec.title || '')));
+      card.appendChild(head);
+      var meta = el('div', 'k3t-threadreq-meta');
+      meta.appendChild(el('span', 'k3-chip k3t-lineage',
+        'from ' + (rec.sourceTitle || rec.sourceThreadId || rec.sourceThread || '')));
+      card.appendChild(meta);
+      if (rec.lineageNote) card.appendChild(el('div', 'k3t-footnote', rec.lineageNote));
+      return card;
+    }
+
+    function redirectEl(rec) {
+      var labels = {
+        interrupted: 'Interrupted — redirected by you',
+        redirected: 'Redirected the active turn',
+        resumed: 'Resumed with the redirected instruction'
+      };
+      var card = el('div', 'k3t-redirect k3t-redirect-' + (rec.state || 'resumed'));
+      card.setAttribute('data-testid', 'k3t-redirect');
+      card.appendChild(iconSpan('redirect', 'k3t-redirect-ic'));
+      card.appendChild(el('span', 'k3t-redirect-label', rec.note || labels[rec.state] || 'Redirected'));
+      return card;
+    }
+
+    function rewoundEl(rec) {
+      var card = el('div', 'k3t-marker k3t-rewound-note');
+      card.setAttribute('data-testid', 'k3t-rewound-note');
+      card.appendChild(iconSpan('rewind', 'k3t-marker-ic'));
+      card.appendChild(el('span', null, 'Rewound ' + (rec.count || 0) + ' messages into a collapsed region.'));
+      var btn = ghostBtn('restore', 'Restore', function () {
+        if (window.K3ThreadOps) window.K3ThreadOps.restoreFrom(tid, rec.restorePointId || null);
+      });
+      card.appendChild(btn);
+      return card;
+    }
+
+    function markerEl(rec) {
+      var card = el('div', 'k3t-marker');
+      card.setAttribute('data-testid', 'k3t-marker-' + (rec.kind || 'note'));
+      if (rec.kind === 'artifact-left') {
+        card.appendChild(iconSpan('artifact', 'k3t-marker-ic'));
+        card.appendChild(el('span', null, 'Opened ' + (rec.title || rec.artifactId || 'artifact') + ' in the artifact workspace'));
+      } else {
+        card.appendChild(el('span', null, rec.text || 'Note'));
+      }
+      return card;
+    }
+
+    // Full card for one kind; cross-module refs are lazy (controllers load
+    // before kits, but cards may render in any order during replay).
+    function packetCardEl(kind, m) {
+      var rec = m[kind];
+      switch (kind) {
+        case 'approvalCard':
+          return window.K3Access ? window.K3Access.approvalCard(ctx, rec) : null;
+        case 'crossProjectCard':
+          return window.K3Access ? window.K3Access.crossProjectCard(ctx, rec) : null;
+        case 'routeWarningCard': return routeWarningEl(rec);
+        case 'attachmentCard': return attachmentCardEl(rec);
+        case 'bsdAdviceCard': return bsdAdviceEl(rec);
+        case 'bsdResult': {
+          var line = el('div', 'k3t-bsdresult');
+          line.setAttribute('data-testid', 'k3t-bsdresult');
+          line.appendChild(iconSpan('bsd', 'k3t-marker-ic'));
+          line.appendChild(el('span', null, BSD_RESULT_LABELS[rec.kind] || rec.summary || 'BSD result'));
+          return line;
+        }
+        case 'receiptCard': return receiptEl(rec);
+        case 'threadRequestCard': return threadRequestEl(rec);
+        case 'restorePointCard': return restorePointEl(rec);
+        case 'branchCard': return branchEl(rec);
+        case 'redirectMarker': return redirectEl(rec);
+        case 'rewoundMarker': return rewoundEl(rec);
+        case 'marker': return markerEl(rec);
+      }
+      return null;
+    }
+
+    // Compact one-line summary per kind (chip mode rows).
+    function packetSummary(kind, m) {
+      var rec = m[kind];
+      switch (kind) {
+        case 'approvalCard': return 'Approval: ' + (rec.title || 'request') + (rec.decision ? ' — ' + rec.decision : ' — pending');
+        case 'routeWarningCard': return 'Route warning: ' + (rec.headline || '') + (rec.status && rec.status !== 'open' ? ' — ' + rec.status : '');
+        case 'attachmentCard': return 'Attachment: ' + (rec.file ? rec.file.name : '') + ' — ' + humanStatus(rec.state || 'pending');
+        case 'bsdAdviceCard': return 'BSD advice available';
+        case 'bsdResult': return BSD_RESULT_LABELS[rec.kind] || 'BSD result';
+        case 'receiptCard': return rec.title || 'Receipt';
+        case 'threadRequestCard': return 'Thread request — ' + (rec.status || 'pending');
+        case 'restorePointCard': return 'Restore point — ' + (rec.label || '');
+        case 'branchCard': return (BRANCH_KIND_LABEL[rec.kind] || 'Branch: ') + (rec.title || '');
+        case 'redirectMarker': return 'Turn ' + (rec.state || 'redirected');
+        case 'crossProjectCard': return 'Cross-project grant' + (rec.state && rec.state !== 'open' ? ' — ' + rec.state : '');
+        case 'rewoundMarker': return 'Rewound ' + (rec.count || 0) + ' messages';
+        case 'marker': return rec.kind === 'artifact-left' ? 'Artifact opened left' : 'Note';
+      }
+      return kind;
+    }
+
+    function packetCards(m) {
+      var kinds = packetKinds(m);
+      if (!kinds.length) return null;
+      var wrap = el('div', 'k3t-packet');
+      kinds.forEach(function (k) {
+        var node = packetCardEl(k, m);
+        if (node) wrap.appendChild(node);
+      });
+      return wrap.childNodes.length ? wrap : null;
+    }
+
+    // Chip-mode variant: compact rows; a row expands to the full card in place.
+    function packetChipRows(m) {
+      var kinds = packetKinds(m);
+      if (!kinds.length) return null;
+      var wrap = el('div', 'k3t-packet-chiprows');
+      kinds.forEach(function (k) {
+        var row = el('button', 'k3t-packet-row');
+        row.type = 'button';
+        row.setAttribute('data-testid', 'k3t-packet-row');
+        row.appendChild(el('span', 'k3t-packet-row-label', packetSummary(k, m)));
+        var full = null;
+        row.addEventListener('click', function () {
+          if (full && full.parentNode) { full.remove(); full = null; row.classList.remove('is-open'); return; }
+          full = packetCardEl(k, m);
+          if (full) { row.classList.add('is-open'); row.parentNode.insertBefore(full, row.nextSibling); }
+        });
+        wrap.appendChild(row);
+      });
+      return wrap;
+    }
+
     function workChip(m) {
       var ag = m.activityGroup;
       var ts = Array.isArray(m.thoughtSegments) ? m.thoughtSegments : [];
       var cq = m.completedQuestionnaire;
-      if (!ag && !ts.length && !cq) return null;
+      var pk = packetKinds(m);
+      if (!ag && !ts.length && !cq && !pk.length) return null;
       var worked = ag ? num(ag.workedSeconds, 0) : (m.runtime ? num(m.runtime.workedSeconds, 0) : 0);
       var parts = ['Worked for ' + fmtDur(worked)];
       if (ag) parts.push(plural((ag.stages || []).length, 'stage'));
       if (ts.length) parts.push(plural(ts.length, 'thought'));
       if (cq) parts.push('1 questionnaire');
+      if (pk.length) parts.push(plural(pk.length, 'record'));
       var card = el('div', 'k3t-card k3t-work-chip');
       card.setAttribute('data-testid', 'k3t-work-chip');
       var a = accordion({ icon: 'activity', title: parts.join(' · '), open: false });
       if (ag) a.accIn.appendChild(activityCard(ag));
       ts.forEach(function (seg) { a.accIn.appendChild(thoughtCard(seg)); });
       if (cq) a.accIn.appendChild(qhistoryCard(cq));
+      var rows = pk.length ? packetChipRows(m) : null;
+      if (rows) a.accIn.appendChild(rows);
       card.appendChild(a.head);
       card.appendChild(a.acc);
       return card;
@@ -649,6 +1087,16 @@
           article.appendChild(thoughtCard(seg));
         });
         if (m.completedQuestionnaire) article.appendChild(qhistoryCard(m.completedQuestionnaire));
+        var pk = packetCards(m);
+        if (pk) article.appendChild(pk);
+      }
+
+      if (m.queued) {
+        var qbadge = el('span', 'k3t-queued');
+        qbadge.setAttribute('data-testid', 'k3t-queued');
+        qbadge.appendChild(iconSpan('wifi-off', 'k3t-queued-ic'));
+        qbadge.appendChild(el('span', null, 'Queued to send'));
+        article.appendChild(qbadge);
       }
 
       article.appendChild(buildHover(article, m, ci));
@@ -703,6 +1151,7 @@
       }
 
       var curChapter = -1;
+      var rewindRegion = null, rewindCount = 0, rewindBy = null;
       for (var j = renderFrom; j < ms.length; j++) {
         var m = ms[j];
         var container = list;
@@ -741,6 +1190,31 @@
           }
           continue;
         }
+        // Non-destructive rewind: folded messages render as one collapsed
+        // region with a restore link (never deleted).
+        if (m.rewound) {
+          if (!rewindRegion) {
+            rewindRegion = el('div', 'k3t-rewound');
+            rewindRegion.setAttribute('data-testid', 'k3t-rewound');
+            rewindCount = 0;
+            rewindBy = null;
+            container.appendChild(rewindRegion);
+          }
+          rewindCount += 1;
+          rewindBy = m.rewoundBy || rewindBy;
+          rewindRegion.innerHTML = '';
+          rewindRegion.appendChild(iconSpan('rewind', 'k3t-marker-ic'));
+          rewindRegion.appendChild(el('span', null,
+            'Rewound region — ' + rewindCount + (rewindCount === 1 ? ' message' : ' messages') + ' collapsed.'));
+          (function (rid) {
+            var rbtn = ghostBtn('restore', 'Restore', function () {
+              if (window.K3ThreadOps) window.K3ThreadOps.restoreFrom(tid, rid);
+            });
+            rewindRegion.appendChild(rbtn);
+          })(rewindBy);
+          continue;
+        }
+        rewindRegion = null;
         container.appendChild(buildArticle(m, j, sel));
       }
       if (!ms.length) list.appendChild(el('div', 'k3t-empty', 'No messages yet.'));
@@ -847,18 +1321,22 @@
       return card;
     }
     function shortcutCard(item, kind) {
+      var wrap = el('span', 'k3t-shortcut-wrap');
       var btn = el('button', 'k3t-shortcut');
       btn.type = 'button';
       btn.setAttribute('data-testid', kind === 'browser' ? 'k3t-browser' : 'k3t-artifact');
       btn.appendChild(iconSpan(kind === 'browser' ? 'browser' : 'artifact', 'k3t-shortcut-ic'));
       var txt = el('span', 'k3t-shortcut-txt');
       txt.appendChild(el('span', 'k3t-shortcut-title', item.title || item.id));
+      // PM-native browser terminology: Browser Program, never session-model copy.
       var meta = kind === 'browser'
-        ? 'browser' + (item.currentPage ? ' · ' + item.currentPage : '')
+        ? 'Browser Program' + (item.currentPage ? ' · ' + item.currentPage : '')
         : (item.kind || 'artifact') + (item.projectPath ? ' · ' + item.projectPath : '');
       txt.appendChild(el('span', 'k3t-shortcut-meta', meta));
       btn.appendChild(txt);
-      btn.addEventListener('click', function () {
+      wrap.appendChild(btn);
+
+      function openInEditorTab() {
         var tabs = store.get('openTabs', []);
         if (!Array.isArray(tabs)) tabs = [];
         var exists = tabs.some(function (t) { return t && t.id === item.id; });
@@ -870,8 +1348,41 @@
             projectPath: item.projectPath || item.currentPage || ''
           }]));
         }
+      }
+
+      btn.addEventListener('click', function () {
+        // Artifacts open in the left artifact workspace (outside the
+        // transcript); the editor-tab handoff remains via the overflow menu.
+        if (kind === 'artifact' && window.K3ArtifactWS) {
+          window.K3ArtifactWS.open(ctx, tid, item.id);
+          return;
+        }
+        openInEditorTab();
       });
-      return btn;
+
+      if (kind === 'artifact') {
+        var overflow = el('button', 'k3-icon-btn k3t-shortcut-more');
+        overflow.type = 'button';
+        overflow.setAttribute('aria-label', 'More actions for ' + (item.title || item.id));
+        overflow.setAttribute('data-testid', 'k3t-artifact-more');
+        overflow.appendChild(icon('more'));
+        overflow.addEventListener('click', function (e) {
+          e.stopPropagation();
+          ui().menu(overflow, [
+            { label: 'Open in editor tab', icon: 'export', action: openInEditorTab },
+            {
+              label: 'Copy link', icon: 'copy',
+              action: function () {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                  navigator.clipboard.writeText(tid + '#' + item.id);
+                }
+              }
+            }
+          ], { width: 200 });
+        });
+        wrap.appendChild(overflow);
+      }
+      return wrap;
     }
     function linksWrap(t) {
       var arts = t.artifacts || [];
@@ -913,12 +1424,20 @@
       if (opts.workMode === 'chip') {
         var chip = endzoneChip(t);
         if (chip) endzone.appendChild(chip);
-        return;
+      } else {
+        (t.subagentGroups || []).forEach(function (g) { endzone.appendChild(subagentsCard(g)); });
+        (t.diffGroups || []).forEach(function (g) { endzone.appendChild(diffCard(g)); });
+        var lw = linksWrap(t);
+        if (lw) endzone.appendChild(lw);
       }
-      (t.subagentGroups || []).forEach(function (g) { endzone.appendChild(subagentsCard(g)); });
-      (t.diffGroups || []).forEach(function (g) { endzone.appendChild(diffCard(g)); });
-      var lw = linksWrap(t);
-      if (lw) endzone.appendChild(lw);
+      // Server-first: a host-owned Goal can continue while the client is away.
+      if (store.get('sync.serverContinuing', false) === true) {
+        var note = el('div', 'k3t-server-note');
+        note.setAttribute('data-testid', 'k3t-server-continuing');
+        note.appendChild(iconSpan('wifi', 'k3t-marker-ic'));
+        note.appendChild(el('span', null, 'Server is continuing this work'));
+        endzone.appendChild(note);
+      }
     }
 
     // ---------- live working region ----------
@@ -1322,6 +1841,19 @@
           break;
         case 'lens-changed':
           if (mine) scheduleRebuild(true);
+          break;
+        case 'outbox-changed':
+        case 'thread-op':
+        case 'approval-decided':
+        case 'route-warning':
+        case 'attachment-resolved':
+        case 'bsd-changed':
+        case 'bsd-advice':
+        case 'compact-now-done':
+          if (mine) scheduleRebuild(true);
+          break;
+        case 'sync-changed':
+          buildEndzone();
           break;
         case 'threads-changed':
           if (tid && !data.thread(tid)) {

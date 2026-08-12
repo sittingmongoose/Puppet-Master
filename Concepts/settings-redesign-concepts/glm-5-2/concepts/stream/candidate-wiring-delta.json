@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.settings_concept_wiring_delta.v1",
+  "concept": "concept-04-stream",
+  "model": "GLM-5.2",
+  "wiring_rule_reference": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md: ui_source -> command -> canonical_owner -> validation_permission -> state/op -> event/receipt/ObservableWork -> ui_projection -> usage/diagnostic -> recovery/deep_link",
+  "note": "Provisional candidate wiring traces only. No concept-only local state may masquerade as production wiring. Each trace names the canonical owner, command, validation, op, event/receipt, projection, attribution, and recovery.",
+  "traces": [
+    {
+      "flow": "Back Up Now (action)",
+      "distinguishes": "one-shot action vs scheduled-backup SETTING vs last-backup STATUS vs manager vs log; must NOT mutate the schedule setting",
+      "command_id": "cmd.storage.backup_now",
+      "steps": {
+        "1_ui_source": "Backup & Restore landmark -> Back Up Now button (domain_action), distinct from the schedule toggle (setting) and last-backup badge (status)",
+        "2_command": "cmd.storage.backup_now { scope: 'settings'|'project'|'server', restore_point: true }",
+        "3_canonical_owner": "Plans/storage-plan.md (backup/restore/compaction owner); Settings Lifecycle owner is NOT involved",
+        "4_validation_permission": "permission gate backup.write; validate scope is one of settings/project/server; reject if legal_hold_conflict for destructive scopes; ResourceGovernor admission",
+        "5_state_op": "acquire aggregate canonical-store lock (storage-plan.md:1487); create restore-point; run backup op; release lock. Schedule setting is read-only here and NOT mutated.",
+        "6_event_receipt_observable": "emit backup.performed receipt { backup_ref, restore_point_ref, scope, byte_size }; ObservableOperation shows truthful phases (snapshot/transfer/verify) including lock-wait, never fake liveness",
+        "7_ui_projection": "last-backup status badge updates with timestamp + backup_ref; Backup & Restore manager last-run card refreshes; schedule toggle unchanged; ReceiptLink attached to the action",
+        "8_usage_diagnostic": "backup op attributed to backup.write usage/diagnostic bucket; backup_ref + restore_point_ref joinable to storage receipts",
+        "9_recovery_deeplink": "deep link Open receipt -> ReceiptLink; Open backup manager -> cmd.storage.backup.open; rollback via restore_point_ref if scope was settings"
+      },
+      "must_not": "Must not mutate the backup schedule setting; must not show fake progress while waiting on the canonical-store lock; must not skip restore-point for settings scope"
+    },
+    {
+      "flow": "Import preview -> apply -> rollback (restore point + atomic + receipt)",
+      "distinguishes": "preview (read) vs apply (atomic mutate, restore-point first) vs rollback (revert to snapshot); legacy-key migration + validation gates",
+      "command_ids": ["cmd.settings.import.preview", "cmd.settings.import.apply", "cmd.settings.import.rollback"],
+      "steps": {
+        "1_ui_source": "Settings Lifecycle landmark -> Import button -> conflict preview panel -> Apply button -> (on failure/regret) Rollback button",
+        "2_command": "preview: cmd.settings.import.preview { bundle_ref, mode: 'merge'|'replace' }; apply: cmd.settings.import.apply { bundle_ref, mode, preview_token, restore_point_ref }; rollback: cmd.settings.import.rollback { restore_point_ref }",
+        "3_canonical_owner": "Plans/Commands_System.md (settings lifecycle) + Plans/settings_inventory.json (legacy-key migration map) + Plans/storage-plan.md (restore-point storage)",
+        "4_validation_permission": "preview: settings.read; apply: settings.write + restore_point must exist + validation must pass + legacy-key migration must resolve; rollback: settings.write + restore_point not expired",
+        "5_state_op": "apply: atomic under canonical-store lock -> restore-point created BEFORE any mutation -> legacy-key migration -> validate -> apply all-or-nothing -> commit; rollback: atomic restore from restore-point snapshot",
+        "6_event_receipt_observable": "preview: no event (read). apply: emit settings.imported { restore_point_ref, applied_count, conflict_resolutions, source disclosure }. rollback: emit settings.rolled_back { restore_point_ref }. ObservableOperation shows phase for apply (migrate/validate/write/commit).",
+        "7_ui_projection": "preview panel shows 3-way conflicts with resolution hints; after apply, ValueSourceBadge refreshes on affected rows; after rollback, rows return to restore-point values; ReceiptLink on apply + rollback",
+        "8_usage_diagnostic": "import apply + rollback attributed to settings.write diagnostic bucket; restore_point_ref + bundle_ref joinable",
+        "9_recovery_deeplink": "rollback deep link from the apply receipt; Open restore point -> ReceiptLink; SettingsDestination deep link to first conflicted setting"
+      },
+      "must_not": "Apply must not run without a restore-point; rollback must not be silently disabled; apply must be atomic (no partial state on mid-apply failure)"
+    },
+    {
+      "flow": "Copy Settings From (transactional one-time)",
+      "distinguishes": "ONE-TIME transactional copy across ~10 categories; destination INDEPENDENT after; NOT universal inheritance; no ongoing link created",
+      "command_ids": ["cmd.settings.copy_from_project.preview", "cmd.settings.copy_from_project.apply"],
+      "steps": {
+        "1_ui_source": "Settings Lifecycle landmark -> Copy Settings From -> source project picker -> category multi-select (~10) -> diff preview -> Copy button",
+        "2_command": "preview: cmd.settings.copy_from_project.preview { source_project_id, categories: [...] }; apply: cmd.settings.copy_from_project.apply { source_project_id, categories, preview_token, restore_point_ref }",
+        "3_canonical_owner": "Plans/Commands_System.md (settings lifecycle transactional copy) + Plans/settings_inventory.json (category enumeration source)",
+        "4_validation_permission": "preview: settings.read + project.read; apply: settings.write + restore_point exists + categories valid + source project readable",
+        "5_state_op": "apply: atomic under canonical-store lock -> restore-point created -> copy selected categories atomically -> commit. NO inheritance/parent-child link is written; destination rows are plain owned values after.",
+        "6_event_receipt_observable": "apply: emit settings.copied_from_project { source_project_id, categories, restore_point_ref, source disclosure }. ObservableOperation shows per-category copy phase.",
+        "7_ui_projection": "diff preview shows source_value vs target_value per setting; after apply, affected rows refresh with ValueSourceBadge=custom (NOT inherited); ReceiptLink on apply. Subsequent source-project changes do NOT propagate (verifiable in fixture).",
+        "8_usage_diagnostic": "copy attributed to settings.write diagnostic bucket; source_project_id + categories joinable",
+        "9_recovery_deeplink": "rollback deep link from copy receipt (cmd.settings.import.rollback to restore_point_ref); SettingsDestination to first copied category"
+      },
+      "must_not": "Must not create a parent-child inheritance relationship; must not propagate future source changes; ValueSourceBadge must read 'custom' not 'inherited' after copy"
+    },
+    {
+      "flow": "Storage compact (non-destructive + receipt)",
+      "distinguishes": "non-destructive compaction (append-only successor records, never rewrite closed seglog) vs deletion; BLOCKED while legal hold active; receipts for preserved set",
+      "command_id": "cmd.storage.compact",
+      "steps": {
+        "1_ui_source": "Storage & Retention landmark -> Compact action (domain_action), with dry-run option; distinct from Delete Project (irreversible) and Quarantine inspect",
+        "2_command": "cmd.storage.compact { scope: 'canonical', dry_run: bool }",
+        "3_canonical_owner": "Plans/storage-plan.md (retention/compaction/quarantine owner, #Case-L-3)",
+        "4_validation_permission": "permission storage.compact; REJECT with legal_hold_active if any managed hold covers the scope; ResourceGovernor admission; lock acquire",
+        "5_state_op": "acquire aggregate canonical-store lock; compaction rebuilds redb projections/lookup/JSONL mirror/Tantivy index from append-only successor records; canonical EventRecord values retained/migrated, NEVER rewritten in place (storage-plan.md:479); closed seglog segments untouched",
+        "6_event_receipt_observable": "emit storage.compacted receipt { preserved_set, compaction_receipt_ref, reclaimed_bytes }; ObservableOperation shows phase (scan/rebuild/verify) with lock-wait",
+        "7_ui_projection": "StorageHealth refreshes (pressure/hold/quarantine badges); reclaimed bytes shown; ReceiptLink attached; last-compaction timestamp updates",
+        "8_usage_diagnostic": "compaction attributed to storage.compact diagnostic bucket; preserved_set + receipt_ref joinable",
+        "9_recovery_deeplink": "Open receipt -> ReceiptLink; Inspect holds -> cmd.storage.hold.manage (action='inspect'); Open Storage & Retention landmark"
+      },
+      "must_not": "Must not compact while a legal hold is active; must not rewrite closed seglog segments in place; must not delete durable canonical receipts or canonical state transitions"
+    },
+    {
+      "flow": "Container start",
+      "distinguishes": "start container (reuse catalog.docker_container_start) vs switch engine (catalog.docker_context_select) vs host instance start; engine health gate",
+      "command_id": "catalog.docker_container_start (reuse_existing)",
+      "steps": {
+        "1_ui_source": "Containers & Registries landmark -> container row -> Start button; disabled with reason when engine unhealthy (Podman stopped)",
+        "2_command": "catalog.docker_container_start { container_id | engine, target? }",
+        "3_canonical_owner": "Plans/Containers_Registry_and_Unraid.md (containers owner); engine health owned by shared tool lifecycle (Plans/BinaryLocator_Spec.md)",
+        "4_validation_permission": "permission container.start; validate engine health (Podman/Docker/kubectl reachable); validate auth/registry creds if pulling; ResourceGovernor admission",
+        "5_state_op": "engine health probe -> container start op via engine CLI/socket; coalesce duplicate starts",
+        "6_event_receipt_observable": "emit container.started receipt { container_id, engine, receipt_ref }; ObservableOperation shows start phase; on engine-unhealthy, show reason + SetupFlowLauncher CTA",
+        "7_ui_projection": "container row status -> running; engine health badge refreshes; ReceiptLink on success; switch-engine offered on failure",
+        "8_usage_diagnostic": "container start attributed to container.start diagnostic bucket; engine + container_id joinable",
+        "9_recovery_deeplink": "Open logs -> catalog.docker_container_view_logs; Open docker manager -> catalog.docker_hosts_open; SetupFlowLauncher for engine setup"
+      },
+      "must_not": "Must not bypass the engine health gate; reuses existing catalog id (no new command); must not silently fail on stopped Podman (must show reason + recovery)"
+    },
+    {
+      "flow": "Search index rebuild (phase/progress)",
+      "distinguishes": "long non-blocking phased rebuild vs enable/disable (setting) vs clear cache; CancellationToken honored on disable; failures surfaced not hidden",
+      "command_id": "catalog.search_rebuild_index (reuse_existing)",
+      "steps": {
+        "1_ui_source": "Project Search Index landmark -> Rebuild button; distinct from enable toggle (web.index.enable) and clear cache (web.index.evict-cache)",
+        "2_command": "catalog.search_rebuild_index { project_id, force: bool }",
+        "3_canonical_owner": "Plans/FinalGUISpec.md (search-owner index control surface, FinalGUISpec.md:963)",
+        "4_validation_permission": "permission search.index.rebuild; validate index enabled (web.index.enable); honor exclusions + file-size + symlink policy; ResourceGovernor admission",
+        "5_state_op": "non-blocking phased builder; on disable mid-build, cancel via CancellationToken, remove partial generation state, on re-enable start fresh (FinalGUISpec.md:963); failures (oversize/symlink-loop/permission) collected per-file",
+        "6_event_receipt_observable": "emit search_index.rebuilt receipt { phases, failure_count, index_state }; ObservableOperation shows phase + per-file progress; failures list openable; NOT fake liveness",
+        "7_ui_projection": "index status badge: indexing/stale/ready/fallback; failure count surfaced; progress truthful; on completion, index_state reflects degraded-but-usable if failures > 0",
+        "8_usage_diagnostic": "rebuild attributed to search.index.rebuild diagnostic bucket; failure_count + project_id joinable",
+        "9_recovery_deeplink": "Open failures -> ResourceDetail with per-file failure list; Clear cache -> catalog.search_evict_remote_cache; SettingsDestination to exclusions"
+      },
+      "must_not": "Must not block the whole Settings workspace; must not hide failures; must honor CancellationToken on disable; must not show fake progress"
+    },
+    {
+      "flow": "Cleanup dry-run -> clean (worktree safety + receipt)",
+      "distinguishes": "dry-run (no mutation, worktree safety + evidence floor) vs destructive clean; receipts retained; distinct from runtime artifact cleanup and storage compaction",
+      "command_ids": ["cmd.cleanup.dry_run", "cmd.cleanup.clean"],
+      "steps": {
+        "1_ui_source": "Workspace Cleanup landmark -> Clean Workspace -> dry-run report -> approve -> Clean; distinct from branching.worktrees.clean-workspace-now (which becomes dry-run-first)",
+        "2_command": "dry_run: cmd.cleanup.dry_run { scope: 'worktree'|'workspace', include_ignored }; clean: cmd.cleanup.clean { dry_run_token, scope, evidence_retention_floor_days }",
+        "3_canonical_owner": "Plans/WorktreeGitImprovement.md (worktree cleanup) + Plans/storage-plan.md (bounded collections + evidence retention)",
+        "4_validation_permission": "dry_run: cleanup.read; clean: cleanup.write + dry_run_token valid + not expired; worktree-in-use check; evidence_retention_floor enforced (branching.worktrees.evidence-retention-days)",
+        "5_state_op": "dry_run: read-only scan -> classify removable vs protected (worktree in use) vs evidence-retained (above floor). clean: under canonical-store lock -> remove removable set -> preserve evidence-retained set -> commit. NO removal below evidence floor.",
+        "6_event_receipt_observable": "dry_run: no event (read). clean: emit cleanup.performed receipt { dry_run_ref, removed_count, evidence_retained_count, evidence_retention_floor, receipt_ref }; ObservableOperation shows phase (scan/remove/verify)",
+        "7_ui_projection": "dry-run report lists removable/protected/retained with reason_per_item; after clean, StorageHealth/disk projection refreshes; ReceiptLink on clean",
+        "8_usage_diagnostic": "cleanup attributed to cleanup.write diagnostic bucket; dry_run_ref + receipt_ref + evidence_retention_floor joinable",
+        "9_recovery_deeplink": "Open receipt -> ReceiptLink; restore from backup if a needed artifact was removed; SettingsDestination to evidence-retention setting"
+      },
+      "must_not": "Must not destroy evidence below the evidence-retention floor; must not skip dry-run for destructive cleanup; must not co-mingle with runtime artifact cleanup or storage compaction"
+    }
+  ],
+  "coverage_assertion": "All 7 required flows traced end-to-end through the 9-step rule. No concept-only local state. Action/setting/status/manager distinctions preserved per flow. Reuse of existing catalog ids flagged; new candidate ids marked provisional.",
+  "shared_invariants": [
+    "Every irreversible/compaction/cleanup/import/container/backup action carries a ReceiptLink.",
+    "Every long op projects through ObservableOperation with truthful phases (no fake liveness); lock-wait is a visible phase.",
+    "Permission gates precede state mutation; ResourceGovernor admission precedes heavy ops.",
+    "Usage/diagnostic attribution is joinable via canonical refs (restore_point_ref, receipt_ref, backup_ref, artifact_id).",
+    "Deep links land on a river landmark and scroll (SettingsDestination), never a detached panel."
+  ]
+}

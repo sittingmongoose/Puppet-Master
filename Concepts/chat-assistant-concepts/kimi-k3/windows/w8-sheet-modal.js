@@ -2,13 +2,22 @@
    Kimi K3 — W8 Sheet Modal (chat-window concept).
 
    Compact header, then the transcript, then the composer. Chat history,
-   the work surfaces (Goal / Todo / work chips), and search each open as a
-   BOTTOM SHEET — an absolute bottom overlay (max-height 60%) that slides
-   up over a scrim, closes on Esc or scrim click, and shows only one sheet
-   at a time (mutual exclusion). The Chats sheet carries a pin toggle in its
-   header: when pinned, Esc and scrim-click do not close it (pin persists per
-   thread in surfaceView.<tid>.w8HistoryPinned). The sheet triggers are a
-   slim action row under the header.
+   the work surfaces (Goal / Todo / work chips / Ops / Capacity / Crew +
+   the BSD rail-variant detail mirror), and search each open as a BOTTOM
+   SHEET — an absolute bottom overlay (max-height 60%) that slides up over
+   a scrim, closes on Esc or scrim click, and shows only one sheet at a
+   time (mutual exclusion). The Chats sheet carries a pin toggle in its
+   header: when pinned, Esc and scrim-click do not close it (pin persists
+   per thread in surfaceView.<tid>.w8HistoryPinned). The sheet triggers are
+   a slim action row under the header (with count badges).
+
+   The artifact workspace opens as a LEFT SIDE SHEET (slide-in from the
+   left, min(340px,85%), transient with scrim + Esc, exclusive with the
+   other sheets) hosting the ONE shared K3ArtifactWS surface. A Dock
+   toggle in its header reparents the sheet in-flow above the composer as
+   a 26vh strip — the pinned-Chats mechanics — persisted in
+   artifactWs.<tid>.docked; a docked artifact may stack with a pinned
+   Chats dock.
 
    Provides exactly one [data-k3-slot="thread"] and one
    [data-k3-slot="composer"]; the host fills them (THE ONE HARD RULE).
@@ -34,6 +43,7 @@
   var TRIGGERS = [
     { id: 'chats', iconName: 'history', label: 'Chats' },
     { id: 'work', iconName: 'activity', label: 'Work' },
+    { id: 'artifacts', iconName: 'artifact', label: 'Artifacts' },
     { id: 'search', iconName: 'search', label: 'Search' }
   ];
 
@@ -57,9 +67,11 @@
       var workNodes = [];        // goal / todo / chips elements
       var workSummarySpan = null;
 
-      var openSheet = null;       // 'chats' | 'work' | 'search' | null
+      var openSheet = null;       // 'chats' | 'work' | 'artifacts' | 'search' | null
       var sheetHideTimer = null;
       var onKeyCapture = null;
+      var artDockBtn = null;      // Dock toggle on the Artifacts sheet header
+      var artSurface = null;      // lazy: THE shared K3ArtifactWS node
 
       /* ---- skeleton ------------------------------------------------------ */
       var root = el('section', 'w8-root');
@@ -104,6 +116,31 @@
       threadSlot.setAttribute('data-k3-slot', 'thread');
       main.appendChild(threadSlot);
 
+      // docked artifact strip (26vh, in-flow above the composer — mirrors the
+      // pinned-Chats mechanics; may stack with a pinned Chats sheet)
+      var artDock = el('div', 'w8-art-dock');
+      artDock.setAttribute('data-testid', 'w8-art-dock');
+      var artDockHead = el('div', 'w8-art-dock-head');
+      artDockHead.appendChild(el('span', 'w8-art-dock-title', 'Artifact'));
+      var artUndock = el('button', 'k3-icon-btn w8-art-undock');
+      artUndock.type = 'button';
+      artUndock.setAttribute('aria-label', 'Undock artifact to a sheet');
+      artUndock.title = 'Undock to sheet';
+      artUndock.setAttribute('data-testid', 'w8-art-undock');
+      artUndock.appendChild(icon('popout'));
+      artDockHead.appendChild(artUndock);
+      var artDockClose = el('button', 'k3-icon-btn w8-art-dock-close');
+      artDockClose.type = 'button';
+      artDockClose.setAttribute('aria-label', 'Close artifact');
+      artDockClose.title = 'Close artifact';
+      artDockClose.appendChild(icon('close'));
+      artDockHead.appendChild(artDockClose);
+      var artDockBody = el('div', 'w8-art-dock-body');
+      artDock.appendChild(artDockHead);
+      artDock.appendChild(artDockBody);
+      artDock.hidden = true;
+      main.appendChild(artDock);
+
       var composerSlot = el('div', 'w8-composer');
       composerSlot.setAttribute('data-k3-slot', 'composer');
       main.appendChild(composerSlot);
@@ -136,9 +173,29 @@
           chatsPin.addEventListener('click', function (e) {
             e.stopPropagation();
             if (!currentTid) currentTid = store.get('activeThreadId', null);
+            if (!currentTid) return; // never write surfaceView.null.*
             store.set('surfaceView.' + currentTid + '.w8HistoryPinned', !historyPinned());
           });
           titleGroup.appendChild(chatsPin);
+        }
+        // Artifacts sheet gains a Dock toggle: reparents the shared surface
+        // in-flow above the composer (26vh strip), persisted artifactWs.docked.
+        if (t.id === 'artifacts') {
+          artDockBtn = el('button', 'k3-icon-btn w8-sheet-pin');
+          artDockBtn.type = 'button';
+          artDockBtn.setAttribute('aria-pressed', 'false');
+          artDockBtn.setAttribute('aria-label', 'Dock artifact above the composer');
+          artDockBtn.title = 'Dock above composer';
+          artDockBtn.setAttribute('data-testid', 'w8-art-dock-toggle');
+          artDockBtn.appendChild(icon('dock'));
+          artDockBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (!currentTid) currentTid = store.get('activeThreadId', null);
+            if (!currentTid) return;
+            var ws = store.get('artifactWs.' + currentTid, null) || {};
+            store.set('artifactWs.' + currentTid + '.docked', !ws.docked);
+          });
+          titleGroup.appendChild(artDockBtn);
         }
         head.appendChild(titleGroup);
         var closeBtn = el('button', 'k3-icon-btn w8-sheet-close');
@@ -160,9 +217,16 @@
       /* ---- presence / summary -------------------------------------------- */
       function presence(tid) {
         var t = tid ? data.thread(tid) : null;
-        var p = { goal: false, todo: false, chips: false, todoDone: 0, todoTotal: 0, agents: 0, files: 0 };
+        var p = { goal: false, todo: false, chips: false, capacity: false, crew: false, ops: 0, todoDone: 0, todoTotal: 0, agents: 0, files: 0 };
         if (!t) return p;
         if (t.activeGoal && !store.get('goalView.' + tid + '.cleared', false)) p.goal = true;
+        if (t.capacityForecast) p.capacity = true;
+        if (t.crew) p.crew = true;
+        // ops conflicts are global (port leases) minus this thread's resolutions
+        if (window.K3Work && window.K3Work.opsSummary) {
+          var sum = window.K3Work.opsSummary(tid);
+          p.ops = sum ? arr(sum.conflicts).filter(function (c) { return c.state !== 'resolved'; }).length : 0;
+        }
         var items = t.todo && arr(t.todo.items);
         if (items && items.length) {
           p.todo = true;
@@ -184,6 +248,9 @@
         if (p.todo) parts.push('Todo ' + p.todoDone + '/' + p.todoTotal);
         if (p.agents) parts.push(p.agents + (p.agents === 1 ? ' agent' : ' agents'));
         if (p.files) parts.push(p.files + (p.files === 1 ? ' file changed' : ' files changed'));
+        if (p.ops) parts.push(p.ops + (p.ops === 1 ? ' conflict' : ' conflicts'));
+        if (p.capacity) parts.push('Capacity forecast');
+        if (p.crew) parts.push('Crew');
         return parts.join(' · ');
       }
 
@@ -200,14 +267,57 @@
         unmountWork();
         var p = presence(currentTid);
         var wb = sheets.work.body;
-        if (!p.goal && !p.todo && !p.chips) {
+        // BSD rail-variant detail mirror always heads the Work sheet
+        if (window.K3BSD && window.K3BSD.detailHost) {
+          var bd = window.K3BSD.detailHost(ctx, currentTid);
+          if (bd) { workNodes.push(bd); wb.appendChild(bd); }
+        }
+        var anyWork = p.goal || p.todo || p.chips || p.capacity || p.crew || p.ops > 0;
+        if (!anyWork) {
           wb.appendChild(el('div', 'w8-empty', 'No goal, task, or work data on this thread.'));
           return;
         }
+        // ops conflicts lead the sheet (operational warnings first)
+        if (p.ops) { var o = kit.opsSurface(ctx, currentTid); if (o) { workNodes.push(o); wb.appendChild(o); } }
         if (p.goal) { var g = kit.goalSurface(ctx, currentTid); if (g) { workNodes.push(g); wb.appendChild(g); } }
         if (p.todo) { var td = kit.todoSurface(ctx, currentTid); if (td) { workNodes.push(td); wb.appendChild(td); } }
         if (p.chips) { var c = kit.workChips(ctx, currentTid); if (c) { workNodes.push(c); wb.appendChild(c); } }
+        if (p.capacity) { var cp = kit.capacitySurface(ctx, currentTid); if (cp) { workNodes.push(cp); wb.appendChild(cp); } }
+        if (p.crew) { var cr = kit.crewSurface(ctx, currentTid); if (cr) { workNodes.push(cr); wb.appendChild(cr); } }
       }
+
+      /* ---- artifacts sheet / dock ---------------------------------------- */
+      function artWs() {
+        return currentTid ? (store.get('artifactWs.' + currentTid, null) || { open: false, docked: false }) : { open: false, docked: false };
+      }
+      // The ONE shared surface rides either the transient sheet (default) or
+      // the docked strip above the composer — reparented, never cloned.
+      function placeArtifact() {
+        if (!artSurface && window.K3ArtifactWS) artSurface = window.K3ArtifactWS.surface(ctx);
+        if (!artSurface) return;
+        var ws = artWs();
+        var docked = ws.docked === true;
+        artDock.hidden = !(ws.open && docked);
+        if (artDockBtn) {
+          artDockBtn.setAttribute('aria-pressed', docked ? 'true' : 'false');
+          artDockBtn.classList.toggle('is-pinned', docked);
+        }
+        if (ws.open && docked) {
+          if (artSurface.parentNode !== artDockBody) artDockBody.appendChild(artSurface);
+          if (openSheet === 'artifacts') { openSheet = null; applyOpen(); }
+        } else if (ws.open && openSheet === 'artifacts') {
+          var body = sheets.artifacts.body;
+          if (artSurface.parentNode !== body) body.appendChild(artSurface);
+        }
+      }
+      artUndock.addEventListener('click', function () {
+        if (!currentTid) return;
+        store.set('artifactWs.' + currentTid + '.docked', false);
+        openSheetId('artifacts');
+      });
+      artDockClose.addEventListener('click', function () {
+        if (currentTid && window.K3ArtifactWS) window.K3ArtifactWS.close(ctx, currentTid);
+      });
 
       /* ---- search sheet contents ----------------------------------------- */
       function ensureSearch() {
@@ -227,7 +337,8 @@
       function paintBadges() {
         var p = presence(currentTid);
         // work badge = count of present work kinds
-        var workKinds = (p.goal ? 1 : 0) + (p.todo ? 1 : 0) + (p.chips ? 1 : 0);
+        var workKinds = (p.goal ? 1 : 0) + (p.todo ? 1 : 0) + (p.chips ? 1 : 0) +
+                        (p.ops > 0 ? 1 : 0) + (p.capacity ? 1 : 0) + (p.crew ? 1 : 0);
         setBadge('work', workKinds ? String(workKinds) : '');
         // chats badge = pending questionnaire indicator dot text (none numeric)
         var t = currentTid ? data.thread(currentTid) : null;
@@ -237,8 +348,13 @@
         }
         setBadge('chats', pending ? String(pending) : '');
         setBadge('search', '');
+        // artifacts badge: count while the workspace is open on this thread
+        var ws = artWs();
+        var artCount = 0;
+        if (t && ws.open) artCount = arr(t.artifacts).length;
+        setBadge('artifacts', artCount ? String(artCount) : '');
         // work summary line in the action row
-        var anyWork = p.goal || p.todo || p.chips;
+        var anyWork = p.goal || p.todo || p.chips || p.capacity || p.crew || p.ops > 0;
         workSummarySpan.textContent = anyWork ? workSummary(p, currentTid) : '';
         workSummarySpan.hidden = !anyWork;
       }
@@ -301,6 +417,13 @@
         if (id === 'chats') ensureHistory();
         if (id === 'search') ensureSearch();
         if (id === 'work') buildWork();
+        if (id === 'artifacts') {
+          if (!artSurface && window.K3ArtifactWS) artSurface = window.K3ArtifactWS.surface(ctx);
+          if (artSurface) {
+            var ab = sheets.artifacts.body;
+            if (artSurface.parentNode !== ab) ab.appendChild(artSurface);
+          }
+        }
         applyOpen();
       }
       function closeSheets() {
@@ -396,7 +519,6 @@
           closeSheets();
         }
       };
-      actions.addEventListener('click', function () {}); // no-op; buttons handle their own clicks
       scrim.addEventListener('click', function () {
         // a pinned Chats sheet ignores scrim clicks
         if (openSheet === 'chats' && historyPinned()) return;
@@ -424,10 +546,21 @@
         else paintPin();
       }));
       disposers.push(store.subscribe('goalView', function () { buildWork(); paintBadges(); }));
+      disposers.push(store.subscribe('artifactWs', function () { placeArtifact(); paintBadges(); }));
       function onData(evt) {
         if (!evt) return;
+        if (evt.type === 'artifact-ws-changed') {
+          var ws = artWs();
+          placeArtifact();
+          paintBadges();
+          if (ws.open && !ws.docked && openSheet !== 'artifacts') openSheetId('artifacts');
+          else if (!ws.open && openSheet === 'artifacts') closeSheets();
+          return;
+        }
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') {
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') {
           buildWork();
           paintBadges();
         }
@@ -440,6 +573,7 @@
       scrim.style.display = 'none';
       Object.keys(sheets).forEach(function (id) { sheets[id].sheet.style.display = 'none'; });
       rebuild();
+      placeArtifact();
 
       function unmount() {
         if (unmounted) return;

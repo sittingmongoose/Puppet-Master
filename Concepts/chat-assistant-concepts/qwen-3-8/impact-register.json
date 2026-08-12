@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.chat_concept_impact_register.v1",
+  "concept_id": "chat-assistant/qwen-3-8",
+  "model": "Qwen 3.8",
+  "plan_owner_impacts": [
+    { "owner": "assistant-chat-design", "impact": "All new surfaces: BSD selector chip + popup, provider icon rail, selectable account rows, sync strip, title-bar inbox, grant/capacity/ops/attachment/resolution cards, receipts row, offline composer states." },
+    { "owner": "FinalGUISpec", "impact": "Theme-token-only treatments for BSD states (.pmq-bsd-off/auto/active/on), port/worktree state chips, capacity forecast chip; no browser-only filters." },
+    { "owner": "Models System", "impact": "Provider rail + setup states (install-required / update-available) and disabled-model reason rows in the picker; Chat deep-links to Settings, never manages providers itself." },
+    { "owner": "Multi-Account", "impact": "Account identity in picker (selectable account rows, connection kind labels, Account · label · connection footer line) and same-model-two-account distinct routes." },
+    { "owner": "Prompt Pipeline", "impact": "Context Lens receipt (Included/Left out with provenance, sizes, removable excerpts) is a projection; admission data stays pipeline-owned." },
+    { "owner": "Assistant Memory", "impact": "Below-threshold memories appear only as a Left-out reason in the admission receipt." },
+    { "owner": "Personas", "impact": "Persona capsule listed as an Included admission source; no persona logic re-owned." },
+    { "owner": "Goal Runtime", "impact": "cmd.chat.goal.* are projections of canonical Goal Runtime events (GRS lineage); Chat never owns scheduler truth. start/pause/resume/stop/update/replan wired; clear stays a local presentation mutation." },
+    { "owner": "Orchestrator/Subagents", "impact": "Subagent records gain explicit route + queued/blocked/stopped/completed statuses; capacity forecast card (Requested 6 / Recommended 2 / 3 waves) defers execution authority to Orchestrator." },
+    { "owner": "Planning Wizard", "impact": "No direct impact; capacity forecast wording only." },
+    { "owner": "PRD Builder", "impact": "No direct impact." },
+    { "owner": "Permissions", "impact": "Cross-project grant card with read/write distinction and one-time scopes (Allow once / Allow for this Goal / Open Settings / Cancel); choice never persists silently." },
+    { "owner": "FileSafe", "impact": "Receipt note keeps FileSafe rulebook hidden; attachment alternate-route consent respects FileSafe boundaries." },
+    { "owner": "Tools/MCP/Skills/Plugins", "impact": "Selected tools listed in admission Included; 17 unused tool schemas listed in Left out." },
+    { "owner": "Media", "impact": "Unsupported video attachment flow (Cancel / Extract in PM / Use Gemini) with consent-before-route ordering." },
+    { "owner": "Usage", "impact": "BSD attribution states, cache-loss route warning, attachment transform metering placeholders; Usage page stays owned by the parallel Usage redesign." },
+    { "owner": "Worktrees/Git", "impact": "Worktree state chips (isolated / waiting-writer / conflict / patch-preserved / cleanup-pending) and port-collision cards are projections; worktree truth stays owned by Worktrees." },
+    { "owner": "Testing/Browser/Artifacts", "impact": "Browser Program terminology sweep (browser capture -> Browser Program capture); artifact workspace commands renamed to cmd.chat.artifact.*." },
+    { "owner": "Server/Project Sync integration", "impact": "Offline/outbox/reconnect/replay/snapshot states: durable client IDs as idempotency keys, replay exactly once, snapshot catch-up never rewrites canonical messages." },
+    { "owner": "Notifications", "impact": "Title-bar inbox boundary replaces transient toasts for important events; bell + unread count, mark-read, Open thread deep links. No bottom-right stack, no Activity Bar icon." },
+    { "owner": "Settings inventory", "impact": "Provider setup states deep-link to Settings (settings:provider); Chat never becomes Provider Manager." }
+  ],
+  "command_id_impacts": [
+    "Full cutover table in candidate-command-delta.json: 44 cmd.chat.* IDs adopted, old cmd.questionnaire.* / cmd.goal.* / cmd.context_lens.* / cmd.context.* / cmd.approval.* / cmd.warning.* (generic) / cmd.artifact.open_workspace / cmd.chat.turn.redirect / cmd.chat.create_restore_point / cmd.chat.rewind producers all removed.",
+    "cmd.browser.open renamed to cmd.browser_program.open with payload kind 'Browser Program capture'.",
+    "warning.resolve restricted to kinds capacity/collision/privacy/context/cache; route resolutions ride cmd.chat.route.select; cross-project rides cmd.chat.cross_project.request; attachment consent rides cmd.chat.attachment.resolve/.route.",
+    "cmd.chat.goal.clear intentionally NOT cataloged: clearing a goal is a local presentation mutation; stopping remains cmd.chat.goal.stop.",
+    "Subcompact lens apply emits cmd.chat.context.lens_toggle per affected message (aggregate command not invented)."
+  ],
+  "wiring_impacts": [
+    "See candidate-wiring-delta.json for per-family traces: control -> command -> owning service -> validation -> durable state -> event/receipt -> projection -> Usage/diagnostics -> retry/recovery.",
+    "Offline rows carry stable-ID + idempotency contract (outbox entry id is the idempotency key; sentOnce flag skips replays).",
+    "History pin emitters added to setPin/togglePin (cmd.chat.history.pin/unpin) — previously store-level with no command."
+  ],
+  "dry_component_impacts": [
+    "See candidate-dry-delta.json: shared vs concept-distinct mapping for the packet DRY roles (ThreadShell, PinnedHistorySurface, ArtifactWorkspace, ModelRoutePicker, AccessPicker, BSDPicker, ContextRing/Lens, CompactWorkCluster, QuestionFlow, ApprovalCard, RouteImpactCard, AttachmentResolutionCard, OfflineOutboxState, ObservableOperation, ReceiptLink)."
+  ],
+  "schema_event_storage_impacts": [
+    "state.connection { status, outbox[], replay, serverWork, snapshot } persisted and restored (outbox survives reload).",
+    "state.notifications { inbox[], unread } persisted; inbox capped at 30 entries.",
+    "Per-thread: bsd { mode, scope, state, turnArmed }, bsdAdvice, operational { ports, worktrees, sessions }, admission, attachRoutes extended with lineage + job.",
+    "recentModels entries migrated to { model, accountId } with string-entry migration on load.",
+    "extraThreads now persisted and re-hydrated into state.threads on startup and restoreState (branch/spawn definitions survive reload)."
+  ],
+  "usage_impacts": [
+    "BSD attribution states (silent/advice/timeout/unavailable/quota) are usage-visible; BSD never blocks the primary turn.",
+    "Cache-loss warning on model switch records the replay separately (warning text, not yet metered).",
+    "Attachment transform metering placeholder via attachStartJob output labels."
+  ],
+  "provider_runtime_impacts": [
+    "Catalog gains setupState per provider group (install-required, update-available) and Google group (Gemini 3 Pro/Flash, all disabled until install).",
+    "GPT-5.6 Mini disabled:true + disabledReason (both required by modelRow).",
+    "Accounts carry connection kind derivation (API key / OAuth (CLI-owned) / Workspace)."
+  ],
+  "server_sync_impacts": [
+    "Outbox entry shape { id, draft { threadKey, text, attachments }, at, sentOnce } — durable client ID doubles as idempotency key.",
+    "Replay appends queued user messages in original order, exactly once; reconnect transitions offline -> reconnecting -> replaying -> live with cmd.chat.outbox.flush { count }.",
+    "Snapshot catch-up applies a compressed summary without rewriting canonical messages (connSnapshot auto-returns to live)."
+  ],
+  "slint_port_impacts": [
+    "All new chrome uses theme tokens + box-shadow glows only; no backdrop-filter, no browser-only filters.",
+    "BSD glow animation is bounded (2 alternations) and snaps under [data-motion=reduced].",
+    "New surfaces scroll in bounded regions (.pmq-ctx-lens body, outbox/inbox popups)."
+  ],
+  "test_fixtures": [
+    "thread-18 'Offline catch-up and reconnect' (13 messages, state 'waiting for reconnect', read/search/web activity stages).",
+    "thread-17 upgrades: 5 subagents on 3 routes with queued/blocked/stopped/completed statuses; port 3000 -> 3001 with owner 'checkout redesign in another worktree'; worktrees waiting-writer + isolated; sessions browser/debug/backup/snapshot; capacity forecast warning; cross-project grant warning; unsupported video attachment; admission receipt (8 included / 4 omitted); bsdAdvice + 2 bsdEvents; goal lifecycle seeded.",
+    "Catalog: OpenAI/update-available, Google/install-required, GPT-5.6 Mini disabled.",
+    "Trigger registry: 84 triggers (63 prior + 21 new v3 scenario triggers); both drawers expose the full registry."
+  ],
+  "unresolved_questions": [
+    "Canonical adjudication of the 44 candidate cmd.chat.* IDs remains with Commands_System/UI_Command_Catalog (PROC-005: candidates are provisional).",
+    "BSD timeout/quota retry policy is presentation-only in this concept; production ownership TBD.",
+    "Attachment transform cost metering is a placeholder label; Usage owns real metering."
+  ]
+}

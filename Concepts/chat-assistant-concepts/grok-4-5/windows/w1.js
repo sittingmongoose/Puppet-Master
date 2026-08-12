@@ -60,7 +60,7 @@
     var lastDay = null;
     var sections = [];
     var nodes = [];
-    var slim = !!opts.slim;
+    var slim = Boolean(opts.slim);
 
     function flushSection() {
       if (!nodes.length && lastDay === null) return;
@@ -164,6 +164,7 @@
       '<button type="button" class="w1-chrome-iconbtn" data-action="toggle-rail" title="Toggle ledger" aria-label="Toggle ledger">' +
       kit.icon('chat', 'pm-btn-icon') +
       '</button>' +
+      kit.bsdSlotHtml('mono') +
       '<div class="w1-chrome-titles">' +
       '<span class="w1-chrome-brand">Ledger Spine</span>' +
       '<span class="w1-chrome-thread" data-thread-title title="' +
@@ -267,6 +268,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       var tier = kit.syncChatTier(root, env);
       var min = tier === 'min';
       if (!min) overlayOpen = false;

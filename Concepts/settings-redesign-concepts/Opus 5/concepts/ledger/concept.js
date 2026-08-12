@@ -19,36 +19,52 @@
   var index = window.PMSearch.buildIndex(D);
   window.PMSpellcheck.learnNames(D.knownNames);
 
-  var store = window.PMStore.createStore({
+  var CONCEPT_ID = "ledger";
+  var K = window.PMManagerKit;
+
+  /* Persisted state is only what a reviewer expects to survive a reload. An
+   * in-flight refresh or an open drawer is not restored: claiming a half-run
+   * operation resumed would be a lie about what happened while the page slept. */
+  var saved = window.PMStore.restore(CONCEPT_ID, window.PMStore.PERSIST_KEYS);
+
+  var store = window.PMStore.createStore(Object.assign({
     view: "home",
     categoryId: null,
     managerId: null,
+    managerSectionId: null,
+    managerItemId: null,
     query: "",
     tokens: [],
     sort: { key: "order", dir: 1 },
     exposure: "standard",
     demoState: "normal",
-    dismissed: {},
+    dismissedNotices: {},
     values: {},
+    managerEdits: {},
+    route: null,
+    badRoute: null,
+    theme: "friendly-light",
+    widthChoice: "1280",
+    railOpen: true,
+    panelOpen: false,
+    reducedMotion: false,
     revealed: {},
     favourites: {}, hidden: {}, aliases: {}, accountPref: {},
     openProviders: { claude: true },
+    openInstallations: {},
     catalogueRefreshing: false,
     crewId: "crew-squad",
     mediaId: "media-nano",
-    drawerOpen: false
-  });
+    drawerOpen: false,
+    importSnapshot: null,
+    importApplied: false
+  }, saved));
 
   var shell, spy, mainEl, docEl, mapEl, lozengeEl, tocEl;
 
-  var ELSEWHERE = {
-    "manager-context": ["Opus 5 — Atlas", "opus-5-atlas.html"],
-    "manager-terminal": ["Opus 5 — Atlas", "opus-5-atlas.html"],
-    "manager-personas": ["Opus 5 — Console", "opus-5-console.html"],
-    "manager-skills": ["Opus 5 — Console", "opus-5-console.html"],
-    "manager-memory": ["Opus 5 — Stack", "opus-5-stack.html"],
-    "manager-mcp": ["Opus 5 — Stack", "opus-5-stack.html"]
-  };
+  /* Assignment and cross-concept homes both come from the shared kit, so a
+   * family moving between concepts cannot leave a stale pointer behind. */
+  var BUILT_HERE = K.assignedTo(CONCEPT_ID);
 
   var LEVEL_VISIBLE = {
     standard: ["standard", "managed", "unavailable"],
@@ -292,7 +308,7 @@
     home.appendChild(head);
     home.appendChild(suggestRow());
 
-    var list = S.noticesFor(D, store.get().demoState, store.get().dismissed);
+    var list = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices);
     if (!list.length) {
       var calm = el("div", "lg-calm");
       calm.innerHTML = "<strong>Nothing needs attention</strong>Every provider is connected, no setup is unfinished, and there are no open recommendations. The ledger below is still the whole story.";
@@ -343,9 +359,9 @@
   /* Dismissal genuinely removes the notice for the rest of the session and says
    * how many are left. Changing the demo state brings the fixture back. */
   function dismissNotice(notice) {
-    var d = store.get().dismissed;
+    var d = store.get().dismissedNotices;
     d[notice.id] = true;
-    store.set({ dismissed: d });
+    store.set({ dismissedNotices: d });
     render();
     var left = S.noticesFor(D, store.get().demoState, d).length;
     announce("Dismissed. " + (left ? left + " still open." : "Nothing needs attention now."));
@@ -385,7 +401,7 @@
         if (st.source === "unavailable") attention++;
       });
     });
-    var notices = S.noticesFor(D, store.get().demoState, store.get().dismissed).filter(function (n) {
+    var notices = S.noticesFor(D, store.get().demoState, store.get().dismissedNotices).filter(function (n) {
       return n.target && n.target.categoryId === cat.id;
     });
     var worst = notices.reduce(function (a, n) {
@@ -901,10 +917,18 @@
     var body = el("div", "lg-mgr-body");
     wrap.appendChild(body);
 
-    if (managerId === "manager-providers") providerManager(body, tools);
-    else if (managerId === "manager-crew") crewManager(body, tools);
-    else if (managerId === "manager-media") mediaManager(body, tools);
-    else elsewhereManager(body, managerId);
+    if (managerId === "manager-providers") {
+      providerManager(body, tools);
+      hydrated();
+    } else if (BUILT_HERE.indexOf(managerId) < 0) {
+      /* Every page loads all four domain modules so cross-concept links resolve
+       * titles, which means a builder exists here even for families this
+       * concept was not assigned. Rendering those in full would undo the split. */
+      if (K.has(managerId)) elsewhereCard(body, managerId);
+      else badManagerCard(body, managerId);
+    } else {
+      renderManager(K.spec(managerId, store.get()), { conceptId: CONCEPT_ID, managerId: managerId }, body, tools);
+    }
 
     var receipts = el("div", "lg-receipts");
     receipts.setAttribute("aria-label", "Simulated results");
@@ -1219,188 +1243,382 @@
 
   /* --------------------------------------------------------------- crew */
 
-  function crewManager(body, tools) {
-    var mgr = D.managers["manager-crew"];
-    body.appendChild(el("div", "lg-card-line", I("info", 11) + " " + E(mgr.capacityNote)));
+  /* ================================================= MANAGER SPEC RENDERER */
 
-    var host = el("div");
-    body.appendChild(host);
+  /* Ledger reads a manager the way it reads everything else: as a record.
+   * Structure stays still — the blocks do not move — and only values animate.
+   * Every assigned manager goes through this one path. */
+  function hydrated() { window.__pmHydrated = (window.__pmHydrated || 0) + 1; }
 
-    function paint() {
-      host.innerHTML = "";
-      mgr.templates.forEach(function (t) {
-        var card = el("div", "lg-card");
-        var status = t.state === "ok" ? ["ok", "Ready"] :
-          t.state === "overCapacity" ? ["setup", "Over capacity"] : ["attention", "Blocked"];
-        card.innerHTML = '<div class="lg-card-title">' + E(t.name) + statusChip(status[0], status[1]) + "</div>" +
-          '<div class="lg-card-line">' + E(t.purpose) + "</div>" +
-          (t.blockedReason ? '<div class="lg-card-line" style="color:var(--pm-attention)">' + E(t.blockedReason) + "</div>" : "");
+  function renderManager(spec, ctx, body, tools) {
+    hydrated();
 
-        /* Requested versus effective is the headline reading, not a footnote. */
-        var vs = el("div", "lg-vs");
-        vs.innerHTML = '<div><div class="lg-vs-l">Requested</div><div class="lg-vs-v">' + t.requested + " members</div></div>" +
-          '<div class="lg-vs-arrow">' + I("arrowRight", 14) + "</div>" +
-          '<div><div class="lg-vs-l">Effective now</div><div class="lg-vs-v">' + t.effective +
-            (t.waves > 1 ? " + " + (t.requested - t.effective) + " queued" : "") + "</div></div>" +
-          '<div class="lg-vs-note">' + (t.capacityNote ? E(t.capacityNote) : t.state === "blocked"
-            ? "Nothing can start until the blocker is cleared."
-            : "Requested and effective agree at the moment.") +
-            " Waves: " + t.waves + " · min " + t.min + " / max " + t.max + "</div>";
-        card.appendChild(vs);
-
-        var members = el("div", "lg-members");
-        t.members.forEach(function (m, i) {
-          var queued = i >= t.effective;
-          var row = el("div", "lg-member");
-          row.setAttribute("data-queued", String(queued));
-          row.innerHTML = '<span class="lg-member-n">' + (i + 1) + "</span>" +
-            '<span><span class="lg-member-role">' + E(m.role) + "</span>" +
-              '<span class="lg-member-sub">Persona: ' + E(m.persona) + "</span></span>" +
-            '<span class="lg-member-sub">' + m.routes.map(E).join(" · ") + "</span>" +
-            "<span>" + chip(m.policy === "strict" ? "managed" : "", m.policy === "strict" ? "Strict route" : "Adaptive") +
-              (queued ? " " + chip("setup", "Queued") : "") + "</span>";
-          members.appendChild(row);
-        });
-        card.appendChild(members);
-
-        var kv = el("dl", "lg-kv");
-        kv.innerHTML =
-          "<dt>Guards</dt><dd>" + E(t.guards.time) + " · " + E(t.guards.spend) + " · " + E(t.guards.reserve) + "</dd>" +
-          "<dt>Isolation</dt><dd>" + E(t.isolation) + " · ports: " + E(t.ports) + "</dd>" +
-          "<dt>Board</dt><dd>" + E(t.board) + "</dd>" +
-          "<dt>Consensus</dt><dd>" + E(t.consensus) + "</dd>" +
-          "<dt>Child spawning</dt><dd>depth " + t.childDepth + "</dd>" +
-          "<dt>On failure</dt><dd>" + E(t.onFailure) + "</dd>" +
-          "<dt>Scope</dt><dd>This thread or Goal only — choosing a Crew here never changes another thread.</dd>";
-        card.appendChild(kv);
-
-        var acts = el("div", "lg-card-actions");
-        var use = el("button", "lg-btn is-primary", "<span>Use for this Goal</span>");
-        use.type = "button";
-        use.disabled = t.state === "blocked";
-        use.addEventListener("click", function () {
-          sim("crew-" + t.id, "Use Crew " + t.name, "CrewService.select('" + t.id + "', scope: 'goal')",
-            "Selected for this Goal only. Orchestrator would start " + t.effective + " now and queue " +
-            Math.max(0, t.requested - t.effective) + " for a later wave.", "ok");
-        });
-        acts.appendChild(use);
-        var edit = el("button", "lg-btn", "<span>Edit composition</span>");
-        edit.type = "button";
-        edit.addEventListener("click", function () {
-          sim("crew-edit-" + t.id, "Edit " + t.name, "CrewService.openEditor('" + t.id + "')",
-            "A real build opens the composition editor. Nothing was changed here.", "handoff");
-        });
-        acts.appendChild(edit);
-        card.appendChild(acts);
-        host.appendChild(card);
-      });
+    if (spec.primary) {
+      var pb = el("button", "lg-btn is-primary", I("plus", 12) + "<span>" + E(spec.primary.label) + "</span>");
+      pb.type = "button";
+      pb.addEventListener("click", function () { runAction(ctx, spec.primary, { id: spec.id }); });
+      tools.insertBefore(pb, tools.firstChild);
     }
-    paint();
-  }
+    spec.diagnostics.forEach(function (d) {
+      var db = el("button", "lg-btn is-quiet", "<span>" + E(d.label) + "</span>");
+      db.type = "button";
+      db.addEventListener("click", function () { runAction(ctx, { id: d.id, label: d.label }, { id: spec.id }); });
+      tools.insertBefore(db, tools.firstChild);
+    });
 
-  /* -------------------------------------------------------------- media */
+    body.appendChild(healthBlock(spec));
 
-  function mediaManager(body, tools) {
-    var mgr = D.managers["manager-media"];
-    mgr.providers.forEach(function (p) {
-      var card = el("div", "lg-card");
-      var status = p.state === "connected" ? ["ok", p.statusWord] : ["setup", p.statusWord];
-      card.innerHTML = '<div class="lg-card-title">' + E(p.name) + statusChip(status[0], status[1]) + "</div>" +
-        '<div class="lg-card-line">' + E(p.connection) + " · " + E(p.identity) + "</div>" +
-        (p.note ? '<div class="lg-card-line">' + I("info", 11) + " " + E(p.note) + "</div>" : "") +
-        (p.setupNote ? '<div class="lg-card-line" style="color:var(--pm-setup)">' + E(p.setupNote) + "</div>" : "");
+    if (spec.owner) {
+      var own = el("section", "lg-block");
+      own.innerHTML = '<h3 class="lg-block-title">' + E(spec.owner.name) + " owns this</h3>" +
+        '<p class="lg-card-line">' + E(spec.owner.why) + "</p>" +
+        '<p class="lg-card-line"><strong>Insertion contract</strong> — ' + E(spec.owner.insertionContract) + "</p>";
+      body.appendChild(own);
+    }
 
-      var grid = el("div", "lg-modal-grid");
-      [["Image", p.modalities.image], ["Audio", p.modalities.audio], ["Video", p.modalities.video]].forEach(function (m) {
-        var word = m[1] === "native" ? "Native" : m[1] === "transformed" ? "Through transformation" : "Not supported";
-        var d = el("div", "lg-modal");
-        d.innerHTML = '<div class="lg-modal-l">' + E(m[0]) + '</div><div class="lg-modal-v">' + E(word) + "</div>";
-        grid.appendChild(d);
-      });
-      card.appendChild(grid);
+    spec.sections.forEach(function (sec, i) {
+      body.appendChild(sectionBlock(spec, sec, ctx, i + 1));
+    });
 
-      var kv = el("dl", "lg-kv");
-      kv.innerHTML =
-        "<dt>Purpose</dt><dd>" + p.purposes.map(E).join(", ") + "</dd>" +
-        "<dt>Output</dt><dd>" + E(p.output) + "</dd>" +
-        "<dt>Safety</dt><dd>" + E(p.safety) + "</dd>" +
-        "<dt>Cost route</dt><dd>" + E(p.cost) + "</dd>" +
-        "<dt>Fallback</dt><dd>" + E(p.fallback) + "</dd>" +
-        "<dt>History</dt><dd>" + p.history + " generations · last " + E(p.lastUse) + "</dd>";
-      card.appendChild(kv);
-
-      var acts = el("div", "lg-card-actions");
-      if (p.state === "setup") {
-        var connect = el("button", "lg-btn is-primary", "<span>Add a key</span>");
-        connect.type = "button";
-        connect.addEventListener("click", function () {
-          sim("media-connect-" + p.id, "Connect " + p.name, "MediaService.beginConnection('" + p.id + "')",
-            "A real build opens the credential flow. Puppet Master never shows the raw key afterwards.", "handoff");
-        });
-        acts.appendChild(connect);
-      } else {
-        var test = el("button", "lg-btn", "<span>Test a generation</span>");
-        test.type = "button";
-        test.addEventListener("click", function () {
-          sim("media-test-" + p.id, "Test generation · " + p.name, "MediaService.probe('" + p.id + "')",
-            "A real build renders a small test asset, writes it to " + p.output + " and records it in history.", "handoff",
-            [{ label: "Submitting" }, { label: "Rendering" }]);
-        });
-        acts.appendChild(test);
-        var hist = el("button", "lg-btn is-quiet", "<span>Generation history</span>");
-        hist.type = "button";
-        hist.addEventListener("click", function () {
-          sim("media-hist-" + p.id, "Open history · " + p.name, "MediaService.history('" + p.id + "')",
-            p.history + " generations recorded with prompt, route, cost and result.", "handoff");
-        });
-        acts.appendChild(hist);
-      }
-      var route = el("button", "lg-btn is-quiet", "<span>Assign purpose</span>");
-      route.type = "button";
-      route.addEventListener("click", function () {
-        openPop(route, function (pp, close) {
-          pp.appendChild(popHead("Route this provider to"));
-          ["Image generation", "Image editing", "Image analysis", "Speech output", "Fallback only", "Not used"].forEach(function (o) {
-            pp.appendChild(popItem(o, function () {
-              close();
-              sim("media-route-" + p.id, "Assign " + p.name + " to " + o,
-                "MediaService.setPurpose('" + p.id + "','" + o + "')",
-                "Future media work of this kind would use " + p.name + ". Work already running is unaffected.", "ok");
-            }, { strong: p.purposes.indexOf(o) >= 0 }));
-          });
-        });
-      });
-      acts.appendChild(route);
-      card.appendChild(acts);
-      body.appendChild(card);
+    spec.notes.forEach(function (n) {
+      body.appendChild(el("p", "lg-card-line", I("info", 11) + " " + E(n)));
     });
   }
 
-  function elsewhereManager(body, managerId) {
-    var mgr = D.managers[managerId] || {};
-    var where = ELSEWHERE[managerId];
-    var c = el("div", "lg-card");
-    c.innerHTML = '<div class="lg-card-title">' + E(mgr.title || "Manager") + "</div>" +
-      '<div class="lg-card-line">' + E(mgr.purpose || "") + "</div>" +
-      '<div class="lg-card-line">Each Opus 5 concept builds the provider manager plus two others in full, so the four together cover eight dedicated managers rather than repeating the same two.</div>';
-    body.appendChild(c);
-    if (managerId === "manager-usage") {
-      c.innerHTML += '<div class="lg-card-line">' + E(D.usage.note) + "</div>";
-      D.usage.snapshots.forEach(function (s2) {
-        body.appendChild(el("div", "lg-card",
-          '<div class="lg-card-title">' + E(s2.providerId) + " · " + E(s2.account) + "</div>" +
-          '<div class="lg-card-line">Remaining ' + E(s2.includedRemaining) + " · resets " + E(s2.resets) +
-          " · " + E(s2.freshness) + " · " + E(s2.runOut) + "</div>"));
+  function healthBlock(spec) {
+    var h = spec.health;
+    var sec = el("section", "lg-block");
+    sec.innerHTML = '<h3 class="lg-block-title">Health ' + statusChip(h.status, h.statusWord) + "</h3>" +
+      '<p class="lg-card-line">' + E(h.headline) + "</p>" +
+      (h.detail ? '<p class="lg-card-line">' + E(h.detail) + "</p>" : "");
+    if (h.counts.length) {
+      var t = el("table", "lg-table");
+      var tb = el("tbody");
+      h.counts.forEach(function (c) {
+        var tr = el("tr");
+        tr.appendChild(el("th", null, E(c.label)));
+        tr.appendChild(el("td", "is-num", E(String(c.value))));
+        tb.appendChild(tr);
       });
-      return;
+      t.appendChild(tb);
+      sec.appendChild(t);
     }
-    if (where) {
+    return sec;
+  }
+
+  function sectionBlock(spec, section, ctx, ordinal) {
+    var sec = el("section", "lg-block");
+    sec.id = "mgr-sec-" + section.id;
+    sec.setAttribute("data-sub", section.id);
+    var head = el("div", "lg-block-head");
+    head.innerHTML = '<h3 class="lg-block-title"><span class="lg-block-ord">' + ordinal + "</span>" +
+      E(section.label) + "</h3>" +
+      (section.summary ? '<p class="lg-card-line">' + E(section.summary) + "</p>" : "");
+    sec.appendChild(head);
+
+    section.actions.forEach(function (a) {
+      var b = el("button", "lg-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : " is-quiet"),
+        "<span>" + E(a.label) + "</span>");
+      b.type = "button";
+      b.addEventListener("click", function () { runAction(ctx, a, { id: section.id }); });
+      head.appendChild(b);
+    });
+
+    if (section.kind === "rows") {
+      var cat = S.findCategory(D, store.get().categoryId);
+      section.settings.forEach(function (sid) {
+        var found = S.findSetting(D, sid);
+        if (found) sec.appendChild(record(found.setting, found.category, found.subcategory));
+      });
+      if (section.settings.length === 0) sec.appendChild(emptyBlock(section));
+      return sec;
+    }
+    if (section.kind === "prose") {
+      section.items.forEach(function (it) {
+        if (it.name) sec.appendChild(el("p", "lg-prose", E(it.name)));
+      });
+      return sec;
+    }
+    if (section.items.length === 0) { sec.appendChild(emptyBlock(section)); return sec; }
+    if (section.kind === "table" || section.kind === "matrix") { sec.appendChild(specTable(section, ctx)); return sec; }
+    section.items.forEach(function (it) { sec.appendChild(itemRecord(it, ctx)); });
+    return sec;
+  }
+
+  function emptyBlock(section) {
+    var e2 = K.emptyFor(section);
+    var c = el("div", "lg-card");
+    c.innerHTML = '<div class="lg-card-title">' + E(e2.headline) + "</div>" +
+      '<div class="lg-card-line">' + E(e2.detail) + "</div>";
+    return c;
+  }
+
+  function specTable(section, ctx) {
+    var t = el("table", "lg-table");
+    var thead = el("thead");
+    var hr = el("tr");
+    hr.appendChild(el("th", null, "Name"));
+    section.columns.forEach(function (c) { hr.appendChild(el("th", c.align === "end" ? "is-num" : null, E(c.label))); });
+    hr.appendChild(el("th", null, "State"));
+    thead.appendChild(hr);
+    t.appendChild(thead);
+    var tb = el("tbody");
+    section.items.forEach(function (it) {
+      var tr = el("tr");
+      var td = el("td");
+      td.appendChild(el("div", "lg-rec-name", E(it.name)));
+      if (it.secondary) td.appendChild(el("div", "lg-rec-sub", E(it.secondary)));
+      tr.appendChild(td);
+      section.columns.forEach(function (c) {
+        tr.appendChild(el("td", c.align === "end" ? "is-num" : null,
+          E(String(it.fields[c.key] == null ? "—" : it.fields[c.key]))));
+      });
+      tr.appendChild(el("td", null, statusChip(it.status, it.statusWord || "")));
+      tb.appendChild(tr);
+      if (it.editable.length || it.actions.length || it.detail.length) {
+        var tr2 = el("tr", "lg-rec-extra");
+        var cell = el("td");
+        cell.colSpan = section.columns.length + 2;
+        cell.appendChild(itemControls(it, ctx));
+        tr2.appendChild(cell);
+        tb.appendChild(tr2);
+      }
+    });
+    t.appendChild(tb);
+    return t;
+  }
+
+  function itemRecord(it, ctx) {
+    var r = el("div", "lg-record");
+    r.setAttribute("data-item", it.id);
+    var head = el("div", "lg-rec-head");
+    head.innerHTML = '<div><div class="lg-rec-name">' + E(it.name) + "</div>" +
+      (it.secondary ? '<div class="lg-rec-sub">' + E(it.secondary) + "</div>" : "") + "</div>" +
+      "<div>" + statusChip(it.status, it.statusWord || "") + "</div>";
+    r.appendChild(head);
+
+    if (it.badges.length) {
+      var bd = el("div", "lg-rec-badges");
+      it.badges.forEach(function (b) {
+        var s2 = el("span", "lg-badge", E(b.text));
+        s2.setAttribute("data-kind", b.kind);
+        if (b.title) s2.title = b.title;
+        bd.appendChild(s2);
+      });
+      r.appendChild(bd);
+    }
+
+    var routeLine = K.routeLine(it);
+    if (routeLine) r.appendChild(el("div", "lg-card-line", E(routeLine)));
+    var reason = K.reasonLine(it);
+    if (reason) r.appendChild(el("div", "lg-card-line", E(reason)));
+    if (it.value != null && it.value !== "") {
+      r.appendChild(el("div", "lg-card-line", "<strong>" + E(String(it.value)) + "</strong>" +
+        (it.valueSource ? " · " + E(it.valueSource) : "")));
+    }
+
+    var keys = Object.keys(it.fields);
+    if (keys.length) {
+      var t = el("table", "lg-table lg-fields");
+      var tb = el("tbody");
+      keys.forEach(function (k) {
+        var tr = el("tr");
+        tr.appendChild(el("th", null, E(k)));
+        tr.appendChild(el("td", null, E(String(it.fields[k]))));
+        tb.appendChild(tr);
+      });
+      t.appendChild(tb);
+      r.appendChild(t);
+    }
+    r.appendChild(itemControls(it, ctx));
+    return r;
+  }
+
+  function itemControls(it, ctx) {
+    var box = el("div", "lg-rec-controls");
+    it.editable.forEach(function (f) { box.appendChild(editableRow(ctx, it, f)); });
+    it.detail.forEach(function (d) {
+      var det = el("details", "lg-details");
+      var sum = el("summary", null, E(d.label));
+      det.appendChild(sum);
+      d.rows.forEach(function (row2) {
+        det.appendChild(el("div", "lg-field",
+          '<span class="lg-field-k">' + E(row2.label) + '</span><span class="lg-field-v">' + E(String(row2.value)) + "</span>"));
+        if (row2.hint) det.appendChild(el("div", "lg-card-line", E(row2.hint)));
+      });
+      box.appendChild(det);
+    });
+    if (it.actions.length) {
+      var acts = el("div", "lg-rec-actions");
+      it.actions.forEach(function (a) {
+        var b = el("button", "lg-btn" + (a.kind === "primary" ? " is-primary" : a.kind === "risky" ? " is-risky" : " is-quiet"),
+          "<span>" + E(a.label) + "</span>");
+        b.type = "button";
+        b.addEventListener("click", function () { runAction(ctx, a, { id: it.id }); });
+        acts.appendChild(b);
+      });
+      box.appendChild(acts);
+    }
+    return box;
+  }
+
+  function editableRow(ctx, item, field) {
+    var wrap = el("div", "lg-edit");
+    var id = "edit-" + ctx.managerId + "-" + item.id + "-" + field.key;
+    var label = el("label", "lg-edit-label", E(field.label));
+    label.setAttribute("for", id);
+    wrap.appendChild(label);
+
+    var edits = store.get().managerEdits;
+    var current = edits[id] !== undefined ? edits[id] : field.value;
+
+    function commit(v) {
+      var next = Object.assign({}, store.get().managerEdits);
+      next[id] = v;
+      store.set({ managerEdits: next });
+      announce(field.label + " set to " + v + ".");
+      render();
+    }
+
+    if (field.secretKind === "cliOwned") {
+      wrap.appendChild(el("div", "lg-card-line",
+        "This credential belongs to the tool's own login. " + E(String(current))));
+      var launch = el("button", "lg-btn is-quiet", "<span>Launch the CLI's own login</span>");
+      launch.type = "button";
+      launch.addEventListener("click", function () {
+        runAction(ctx, { id: "provider.auth.start_setup", label: "Launch the CLI's own login" }, { id: item.id });
+      });
+      wrap.appendChild(launch);
+      return wrap;
+    }
+
+    if (field.kind === "secret") {
+      var revealed = store.get().revealed[id] === true;
+      var shown = revealed ? String(current || "") : maskSecret(String(current || ""));
+      var box = el("div", "lg-secret");
+      box.appendChild(el("span", "lg-field-v", E(shown || "Not set")));
+      if (field.secretKind === "pmSecret") {
+        var eye = el("button", "lg-btn is-quiet", I(revealed ? "eyeOff" : "eye", 12) +
+          "<span>" + (revealed ? "Hide" : "Reveal") + "</span>");
+        eye.type = "button";
+        eye.addEventListener("click", function () {
+          var r2 = Object.assign({}, store.get().revealed);
+          r2[id] = revealed ? false : true;
+          store.set({ revealed: r2 });
+          render();
+        });
+        box.appendChild(eye);
+      }
+      wrap.appendChild(box);
+      if (field.help) wrap.appendChild(el("div", "lg-card-line", E(field.help)));
+      return wrap;
+    }
+
+    var control;
+    if (field.kind === "toggle") {
+      control = el("button", "lg-toggle");
+      control.type = "button";
+      control.id = id;
+      control.setAttribute("role", "switch");
+      control.setAttribute("aria-checked", String(current === true));
+      control.textContent = current ? "On" : "Off";
+      control.addEventListener("click", function () { commit(current === true ? false : true); });
+    } else if (field.kind === "select") {
+      control = el("select", "lg-select");
+      control.id = id;
+      (field.options.length ? field.options : [String(current)]).forEach(function (o) {
+        var op = document.createElement("option");
+        op.value = String(o); op.textContent = String(o);
+        control.appendChild(op);
+      });
+      control.value = String(current);
+      control.addEventListener("change", function () { commit(control.value); });
+    } else if (field.kind === "chips" || field.kind === "order") {
+      control = el("div", "lg-chips");
+      var listv = Array.isArray(current) ? current.slice() : [];
+      listv.forEach(function (c, i) {
+        var chipEl = el("span", "lg-chip", E(String(c)));
+        if (field.kind === "order") {
+          var up = el("button", "lg-chip-btn", I("chevronUp", 10));
+          up.type = "button"; up.title = "Move up";
+          up.addEventListener("click", function () {
+            if (i === 0) return;
+            var n = listv.slice(); var t = n[i - 1]; n[i - 1] = n[i]; n[i] = t; commit(n);
+          });
+          var down = el("button", "lg-chip-btn", I("chevronDown", 10));
+          down.type = "button"; down.title = "Move down";
+          down.addEventListener("click", function () {
+            if (i === listv.length - 1) return;
+            var n = listv.slice(); var t = n[i + 1]; n[i + 1] = n[i]; n[i] = t; commit(n);
+          });
+          chipEl.appendChild(up); chipEl.appendChild(down);
+        } else {
+          var rm = el("button", "lg-chip-btn", I("minus", 10));
+          rm.type = "button"; rm.title = "Remove " + c;
+          rm.addEventListener("click", function () { var n = listv.slice(); n.splice(i, 1); commit(n); });
+          chipEl.appendChild(rm);
+        }
+        control.appendChild(chipEl);
+      });
+      if (field.kind === "chips") {
+        var add = el("button", "lg-chip is-add", I("plus", 10) + " Add");
+        add.type = "button";
+        add.addEventListener("click", function () {
+          var v = window.prompt("Add a value for " + field.label);
+          if (v) commit(listv.concat([v]));
+        });
+        control.appendChild(add);
+      }
+    } else {
+      control = el("input", "lg-input");
+      control.id = id;
+      control.type = field.kind === "number" ? "number" : "text";
+      control.value = current == null ? "" : String(current);
+      control.addEventListener("change", function () {
+        commit(field.kind === "number" ? Number(control.value) : control.value);
+      });
+    }
+    wrap.appendChild(control);
+    if (field.help) wrap.appendChild(el("div", "lg-card-line", E(field.help)));
+    return wrap;
+  }
+
+  function maskSecret(v) {
+    if (!v) return "";
+    if (v.length <= 6) return "\u2022\u2022\u2022\u2022\u2022\u2022";
+    return v.slice(0, 3) + "\u2022\u2022\u2022\u2022\u2022\u2022" + v.slice(-3);
+  }
+
+  function elsewhereCard(body, managerId) {
+    var mgr = D.managers[managerId] || {};
+    var home = K.homeOf(managerId);
+    var c = el("div", "lg-card");
+    c.innerHTML = '<div class="lg-card-title">Built in ' + E(home.title) + "</div>" +
+      '<div class="lg-card-line">' + E(mgr.purpose || "") + "</div>" +
+      '<div class="lg-card-line">The four concepts split the manager families between them, so each family is shown once at full depth.</div>';
+    body.appendChild(c);
+    if (home.href) {
       var a = el("a", "lg-btn is-primary");
-      a.href = where[1];
+      a.href = home.href;
       a.style.cssText = "margin-top:12px;display:inline-flex;text-decoration:none";
-      a.innerHTML = "<span>Open " + E(where[0]) + "</span>" + I("arrowUpRight", 12);
+      a.innerHTML = "<span>Open " + E(home.title) + "</span>" + I("arrowUpRight", 12);
       body.appendChild(a);
     }
+  }
+
+  function badManagerCard(body, managerId) {
+    var c = el("div", "lg-card");
+    c.innerHTML = '<div class="lg-card-title">That link points at something this concept does not contain</div>' +
+      '<div class="lg-card-line">No manager with the id ' + E(managerId) + " exists in this fixture.</div>";
+    body.appendChild(c);
+    var home = el("button", "lg-btn is-primary", "<span>Go to Settings home</span>");
+    home.type = "button";
+    home.addEventListener("click", function () { goTo({ categoryId: null }); });
+    body.appendChild(home);
+  }
+
+  function runAction(ctx, action, payload) {
+    return K.act(ctx, action, payload).then(function (r) { if (r) showReceipt(r); return r; });
   }
 
   /* ========================================================== NAVIGATION */

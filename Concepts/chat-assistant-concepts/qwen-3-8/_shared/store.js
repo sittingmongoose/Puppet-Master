@@ -60,7 +60,11 @@ window.PMChatStore = (() => {
       spellIgnoredDraft: [],
       crew: null,
       extraArtifacts: [],
-      attachRoutes: {}
+      attachRoutes: {},
+      bsd: { mode: "auto", scope: "thread", state: "idle", turnArmed: false },
+      bsdAdvice: null,
+      operational: { ports: [], worktrees: [], sessions: [] },
+      admission: null
     };
   }
 
@@ -82,12 +86,16 @@ window.PMChatStore = (() => {
         favorites: ["Qwen 3.8"],
         recentModels: [],
         spellPersonal: [],
-        spellProject: []
+        spellProject: [],
+        account: null,
+        bsd: { mode: "auto", scope: "thread" }
       },
       threads: {},
       extraThreads: [],
       running: null,
-      ui: { pinnedByWin: {}, pinModeByWin: {}, artwsByWin: {} }
+      ui: { pinnedByWin: {}, pinModeByWin: {}, artwsByWin: {} },
+      connection: { status: "live", outbox: [], replay: null, serverWork: null, snapshot: null },
+      notifications: { inbox: [], unread: 0 }
     };
 
     data.threads.forEach(t => { state.threads[t.id] = blankThreadState(t); });
@@ -104,26 +112,47 @@ window.PMChatStore = (() => {
          "draft", "questIndex", "questSkipped", "questCancelled", "questSubmitted", "sentMessages", "replyCursor",
          "settings", "todos", "subagentExtra", "subagentStatus", "goalPhaseIdx", "activityLive", "diffExtra",
          "artState", "approvals", "warnings", "threadRequests", "restorePoints", "rewindAnchor", "redirectNote",
-         "compactEvents", "spellDisabled", "spellIgnoredDraft", "crew", "extraArtifacts", "attachRoutes"
+         "compactEvents", "spellDisabled", "spellIgnoredDraft", "crew", "extraArtifacts", "attachRoutes",
+         "bsd", "bsdAdvice", "operational", "admission"
         ].forEach(f => { if (sv[f] !== undefined) st[f] = sv[f]; });
         if (sv.lens) st.lens = Object.assign(st.lens, sv.lens);
       });
-      if (snapshot.session) state.session = Object.assign(state.session, snapshot.session);
+      if (snapshot.session) {
+        state.session = Object.assign(state.session, snapshot.session);
+        state.session.recentModels = (state.session.recentModels || []).map(e => (typeof e === "string" ? { model: e, accountId: null } : e));
+      }
       if (snapshot.ui) {
         state.ui.pinnedByWin = Object.assign({}, snapshot.ui.pinnedByWin || {});
         state.ui.pinModeByWin = Object.assign({}, snapshot.ui.pinModeByWin || {});
         state.ui.artwsByWin = Object.assign({}, snapshot.ui.artwsByWin || {});
       }
       if (snapshot.extraThreads) state.extraThreads = snapshot.extraThreads;
+      state.extraThreads.forEach(t => {
+        if (!state.threads[t.id]) state.threads[t.id] = blankThreadState(t);
+        const sv = snapshot.threads && snapshot.threads[t.id];
+        if (sv) {
+          const st = state.threads[t.id];
+          ["draft", "sentMessages", "replyCursor", "settings", "questIndex", "questSkipped",
+           "questCancelled", "questSubmitted", "attachRoutes", "bsd", "bsdAdvice", "operational", "admission"
+          ].forEach(f => { if (sv[f] !== undefined) st[f] = sv[f]; });
+        }
+      });
+      if (snapshot.connection) state.connection = Object.assign(state.connection, snapshot.connection);
+      if (snapshot.notifications) state.notifications = Object.assign(state.notifications, snapshot.notifications);
     }
 
     data.threads.forEach(t => {
       const st = state.threads[t.id];
-      if (t.seedApprovals) st.approvals = t.seedApprovals.map(x => Object.assign({}, x));
-      if (t.seedWarnings) st.warnings = t.seedWarnings.map(x => Object.assign({}, x));
-      if (t.seedRequests) st.threadRequests = t.seedRequests.map(x => Object.assign({}, x));
-      if (t.crew) st.crew = Object.assign({}, t.crew);
-      if (t.seedActivityLive) st.activityLive = Object.assign({}, t.seedActivityLive);
+      const sv = snapshot && snapshot.threads && snapshot.threads[t.id];
+      if (t.seedApprovals && (!sv || sv.approvals === undefined)) st.approvals = t.seedApprovals.map(x => Object.assign({}, x));
+      if (t.seedWarnings && (!sv || sv.warnings === undefined)) st.warnings = t.seedWarnings.map(x => Object.assign({}, x));
+      if (t.seedRequests && (!sv || sv.threadRequests === undefined)) st.threadRequests = t.seedRequests.map(x => Object.assign({}, x));
+      if (t.crew && (!sv || sv.crew === undefined)) st.crew = JSON.parse(JSON.stringify(t.crew));
+      if (t.seedActivityLive && (!sv || sv.activityLive === undefined)) st.activityLive = Object.assign({}, t.seedActivityLive);
+      if (t.bsdAdvice && (!sv || sv.bsdAdvice === undefined)) st.bsdAdvice = JSON.parse(JSON.stringify(t.bsdAdvice));
+      if (t.admission && (!sv || sv.admission === undefined)) st.admission = JSON.parse(JSON.stringify(t.admission));
+      if (t.operational && (!sv || sv.operational === undefined)) st.operational = JSON.parse(JSON.stringify(t.operational));
+      if (t.seedAttachRoutes && (!sv || sv.attachRoutes === undefined)) st.attachRoutes = JSON.parse(JSON.stringify(t.seedAttachRoutes));
     });
 
     data.threads.forEach(t => {
@@ -148,8 +177,8 @@ window.PMChatStore = (() => {
       clearTimeout(persistTimer);
       persistTimer = setTimeout(() => {
         try {
-          const { v, session, threads, ui } = state;
-          const out = { v, session, threads: {}, ui };
+          const { v, session, threads, ui, extraThreads, connection, notifications } = state;
+          const out = { v, session, threads: {}, ui, extraThreads, connection, notifications };
           Object.keys(threads).forEach(k => {
             const t = threads[k];
             out.threads[k] = Object.assign({}, t, { scrollAnchorId: null, typingSince: null });
@@ -254,6 +283,15 @@ window.PMChatStore = (() => {
       const st = state.threads[key];
       const body = String(text == null ? "" : text);
       if (!body.trim() && !st.draft.attachments.length) return false;
+      if (state.connection.status === "offline" || state.connection.status === "cached") {
+        connQueue({ threadKey: key, text: body, attachments: st.draft.attachments.slice() });
+        mutate(() => {
+          st.draft.text = "";
+          st.draft.attachments = [];
+          st.typingSince = null;
+        });
+        return true;
+      }
         const rt = lastUserContext(key);
         const eff = effectiveSettings(key);
         const worked = st.typingSince ? Math.max(1, Math.round((Date.now() - st.typingSince) / 1000)) : Math.round(Math.random() * 20 + 6);
@@ -339,6 +377,7 @@ window.PMChatStore = (() => {
         st.replyCursor = st.replyCursor + 1;
         state.running = null;
         st.stickToBottom = true;
+        bsdRevertTurnScope(key);
       });
       clearRunTimers();
     }
@@ -369,6 +408,7 @@ window.PMChatStore = (() => {
       mutate(() => {
         st.sentMessages = st.sentMessages.concat([msg]);
         state.running = null;
+        bsdRevertTurnScope(run.threadKey);
       });
     }
 
@@ -386,6 +426,7 @@ window.PMChatStore = (() => {
         state.ui.pinnedByWin = state.ui.pinnedByWin || {};
         state.ui.pinnedByWin[winId] = !state.ui.pinnedByWin[winId];
       });
+      cmd(state.ui.pinnedByWin[winId] ? "cmd.chat.history.pin" : "cmd.chat.history.unpin", { window_id: winId });
     }
 
     function isPinned(winId) {
@@ -490,6 +531,7 @@ window.PMChatStore = (() => {
         if (q.kind === "freeform") ans.draft = value;
         else ans.selected = value;
       });
+      cmd("cmd.chat.question.answer", { questionnaire_id: quest.id, question_id: q.id, value: value });
     }
 
     function questValid(quest) {
@@ -511,14 +553,14 @@ window.PMChatStore = (() => {
     function questSkip(quest) {
       const key = activeKey();
       const idx = questIndex(quest, key);
+      const qid = quest.questions[idx] ? quest.questions[idx].id : null;
       mutate(() => {
         const st = state.threads[key];
         (st.questSkipped[quest.id] = st.questSkipped[quest.id] || []);
-        const qid = quest.questions[idx].id;
         if (!st.questSkipped[quest.id].includes(qid)) st.questSkipped[quest.id].push(qid);
         if (idx < quest.questions.length - 1) st.questIndex[quest.id] = idx + 1;
       });
-      cmd("cmd.questionnaire.skip", { questionnaire_id: quest.id });
+      cmd("cmd.chat.question.skip", { questionnaire_id: quest.id, question_id: qid });
     }
 
     function questSubmit(quest) {
@@ -527,7 +569,7 @@ window.PMChatStore = (() => {
         const st = state.threads[activeKey()];
         st.questSubmitted = st.questSubmitted.concat([quest.id]);
       });
-      cmd("cmd.questionnaire.submit", { questionnaire_id: quest.id });
+      cmd("cmd.chat.question.submit", { questionnaire_id: quest.id, answers: JSON.parse(JSON.stringify((state.threads[activeKey()].questAnswers || {})[quest.id] || {})) });
     }
 
     function questCancel(quest) {
@@ -535,14 +577,14 @@ window.PMChatStore = (() => {
         const st = state.threads[activeKey()];
         st.questCancelled = st.questCancelled.concat([quest.id]);
       });
-      cmd("cmd.questionnaire.cancel", { questionnaire_id: quest.id });
+      cmd("cmd.chat.question.cancel", { questionnaire_id: quest.id });
     }
 
     function lensToggle(msgId) {
       const st = state.threads[activeKey()];
       const lens = st.lens;
       if (lens.mode === "off") return;
-      cmd("cmd.context_lens.toggle", { mode: lens.mode, message_id: msgId });
+      cmd("cmd.chat.context.lens_toggle", { thread_id: activeKey(), mode: lens.mode, message_id: msgId });
       mutate(() => {
         if (lens.mode === "subcompact") {
           const i = lens.selected.indexOf(msgId);
@@ -572,7 +614,7 @@ window.PMChatStore = (() => {
         st.lens.selected = [];
         if (mode === "off") st.lens.applied = { mute: [], focus: [], subcompact: [] };
       });
-      cmd("cmd.context_lens.set_mode", { mode: mode });
+      cmd("cmd.chat.context.lens_set_mode", { thread_id: activeKey(), mode: mode });
     }
 
     function lensApplySubcompact() {
@@ -588,7 +630,7 @@ window.PMChatStore = (() => {
         });
         st.lens.selected = [];
       });
-      cmd("cmd.context_lens.apply", { count: st.lens.applied.subcompact.length });
+      st.lens.applied.subcompact.forEach(id => cmd("cmd.chat.context.lens_toggle", { thread_id: activeKey(), mode: "subcompact", message_id: id }));
     }
 
     function lensClearMessage(msgId) {
@@ -650,16 +692,18 @@ window.PMChatStore = (() => {
       const st = state.threads[key];
       if (!t.activeGoal) return;
       mutate(() => {
-        if (action === "pause") st.goalStatus = "paused";
+        if (action === "start") st.goalStatus = "running";
+        else if (action === "pause") st.goalStatus = "paused";
         else if (action === "resume") st.goalStatus = "running";
         else if (action === "stop") st.goalStatus = "stopped";
         else if (action === "clear") { st.goalCleared = true; }
         else if (action === "expand") st.goalExpanded = true;
         else if (action === "collapse") st.goalExpanded = false;
       });
-      if (action === "pause" || action === "resume" || action === "stop" || action === "clear") {
-        cmd("cmd.goal." + action, { thread_id: key, goal_id: t.activeGoal.id });
+      if (action === "start" || action === "pause" || action === "resume" || action === "stop") {
+        cmd("cmd.chat.goal." + action, { thread_id: key, goal_id: t.activeGoal.id });
       }
+      // "clear" / "expand" / "collapse" are local presentation mutations; no command.
     }
 
     function goalSaveObjective(key, text) {
@@ -670,12 +714,13 @@ window.PMChatStore = (() => {
         st.replanCount = st.replanCount + 1;
         st.goalExpanded = true;
       });
-      cmd("cmd.goal.edit", { thread_id: key, goal_id: t && t.activeGoal ? t.activeGoal.id : null });
+      cmd("cmd.chat.goal.update", { thread_id: key, goal_id: t && t.activeGoal ? t.activeGoal.id : null, objective: text });
+      cmd("cmd.chat.goal.replan", { thread_id: key, goal_id: t && t.activeGoal ? t.activeGoal.id : null, replan_count: st.replanCount });
     }
 
     function serializeState() {
-      const { v, session, threads, ui } = state;
-      const out = { v, session, threads: {}, ui: ui || { pinnedByWin: {} } };
+      const { v, session, threads, ui, extraThreads, connection, notifications } = state;
+      const out = { v, session, threads: {}, ui: ui || { pinnedByWin: {} }, extraThreads, connection, notifications };
       Object.keys(threads).forEach(k => {
         out.threads[k] = Object.assign({}, threads[k], { typingSince: null });
       });
@@ -686,11 +731,20 @@ window.PMChatStore = (() => {
       try {
         const parsed = typeof snap === "string" ? JSON.parse(snap) : snap;
         if (!parsed || !parsed.threads) return;
+        if (parsed.extraThreads) state.extraThreads = parsed.extraThreads;
+        (state.extraThreads || []).forEach(t => {
+          if (!state.threads[t.id]) state.threads[t.id] = blankThreadState(t);
+        });
         Object.keys(parsed.threads).forEach(k => {
           if (state.threads[k]) state.threads[k] = Object.assign(state.threads[k], parsed.threads[k]);
         });
-        if (parsed.session) state.session = Object.assign(state.session, parsed.session);
+        if (parsed.session) {
+          state.session = Object.assign(state.session, parsed.session);
+          state.session.recentModels = (state.session.recentModels || []).map(e => (typeof e === "string" ? { model: e, accountId: null } : e));
+        }
         if (parsed.ui) state.ui = Object.assign(state.ui || {}, parsed.ui);
+        if (parsed.connection) state.connection = Object.assign(state.connection, parsed.connection);
+        if (parsed.notifications) state.notifications = Object.assign(state.notifications, parsed.notifications);
         emit();
       } catch (e) {}
     }
@@ -700,7 +754,7 @@ window.PMChatStore = (() => {
     }
 
     // ---- v2 extension: pin governor + artifact workspace ----
-    function setPin(winId, on) { mutate(() => { state.ui.pinnedByWin[winId] = !!on; }); }
+    function setPin(winId, on) { mutate(() => { state.ui.pinnedByWin[winId] = !!on; }); cmd(on ? "cmd.chat.history.pin" : "cmd.chat.history.unpin", { window_id: winId }); }
     function pinMode(winId) { return state.ui.pinModeByWin[winId] === "compact" ? "compact" : "full"; }
     function setPinMode(winId, mode) {
       if (state.ui.pinModeByWin[winId] === mode) return;
@@ -713,10 +767,10 @@ window.PMChatStore = (() => {
     }
     function artOpen(winId, artId) {
       mutate(() => { const a = artWs(winId); a.open = true; if (artId) a.activeId = artId; });
-      cmd("cmd.artifact.open_workspace", { artifact_id: artId || null });
+      cmd("cmd.chat.artifact.open", { window_id: winId, artifact_id: artId || null });
     }
-    function artClose(winId) { mutate(() => { artWs(winId).open = false; }); }
-    function artSwitch(winId, artId) { mutate(() => { const a = artWs(winId); a.activeId = artId; a.open = true; }); }
+    function artClose(winId) { mutate(() => { artWs(winId).open = false; }); cmd("cmd.chat.artifact.close", { window_id: winId, artifact_id: null }); }
+    function artSwitch(winId, artId) { mutate(() => { const a = artWs(winId); a.activeId = artId; a.open = true; }); cmd("cmd.chat.artifact.switch", { window_id: winId, artifact_id: artId }); }
     function artEntry(key, artId) {
       const st = state.threads[key];
       if (!st.artState[artId]) st.artState[artId] = { status: "ready", version: 1 };
@@ -735,6 +789,10 @@ window.PMChatStore = (() => {
           if (st && st.artState[artId] && st.artState[artId].status === "loading") artSetStatus(key, artId, "ready", false);
         }, 1400);
       }
+    }
+    function artRetry(key, artId, winId) {
+      artSetStatus(key, artId, "loading", false);
+      cmd("cmd.chat.artifact.retry", { window_id: winId || null, artifact_id: artId });
     }
     function threadArtifacts(key) {
       const t = demoThread(key);
@@ -797,16 +855,21 @@ window.PMChatStore = (() => {
       const patch = { provider: sel.provider, model: sel.model };
       if (sel.effort) patch.effort = sel.effort;
       if (sel.speed) patch.speed = sel.speed;
+      if (sel.accountId !== undefined) patch.account = sel.accountId || null;
       setThreadSettings(key, patch, scope);
       mutate(() => {
-        const r = state.session.recentModels;
-        const i = r.indexOf(sel.model);
-        if (i >= 0) r.splice(i, 1);
-        r.unshift(sel.model);
-        state.session.recentModels = r.slice(0, 4);
+        const same = (a, b) => a.model === b.model && (a.accountId || null) === (b.accountId || null);
+        const entry = { model: sel.model, accountId: sel.accountId || null };
+        const rest = state.session.recentModels
+          .map(e => (typeof e === "string" ? { model: e, accountId: null } : e))
+          .filter(e => !same(e, entry));
+        state.session.recentModels = [entry].concat(rest).slice(0, 4);
       });
       reevalAttachments(key);
+      cmd("cmd.chat.route.select", { thread_id: key, provider: sel.provider, model: sel.model, account_id: sel.accountId || null, effort: sel.effort || null, speed: sel.speed || null });
     }
+
+    function crewStart(key, crewId) { cmd("cmd.chat.crew.start", { thread_id: key, crew_id: crewId || null }); }
     function reevalAttachments(key) {
       const st = state.threads[key];
       if (!st) return;
@@ -838,7 +901,11 @@ window.PMChatStore = (() => {
     function attachSetRoute(key, attachId, route, consented) {
       mutate(() => {
         const st = state.threads[key];
-        st.attachRoutes[attachId] = { route: route, consented: !!consented, reeval: false };
+        const prev = st.attachRoutes[attachId] || {};
+        st.attachRoutes[attachId] = {
+          route: route, consented: !!consented, reeval: false,
+          lineage: prev.lineage || attachId, job: prev.job || null
+        };
       });
     }
     function noSafeRoute(key, attach) {
@@ -858,26 +925,36 @@ window.PMChatStore = (() => {
         const a = state.threads[key].approvals.find(x => x.id === id);
         if (a) a.resolved = action;
       });
-      cmd("cmd.approval." + action, { approval_id: id });
+      cmd("cmd.chat.approval." + String(action).replace(/-/g, "_"), { thread_id: key, approval_id: id });
     }
+    function approvalDetails(key, id) { cmd("cmd.chat.approval.details", { thread_id: key, approval_id: id }); }
     function warningInject(key, w) {
       const id = "wr-" + (seq++);
       mutate(() => { state.threads[key].warnings.push(Object.assign({ id: id, resolved: null }, w)); });
       return id;
     }
+    const WARNING_RESOLVE_KINDS = ["capacity", "collision", "privacy", "context", "cache"];
     function warningResolve(key, id, action) {
       mutate(() => {
         const w = state.threads[key].warnings.find(x => x.id === id);
         if (w) w.resolved = action;
       });
-      cmd("cmd.warning." + action, { warning_id: id });
+      const w = state.threads[key].warnings.find(x => x.id === id);
+      if (w && w.kind === "cross-project") {
+        cmd("cmd.chat.cross_project.request", { thread_id: key, project_read: w.projectRead || null, project_write: w.projectWrite || null, scope: action });
+        return;
+      }
+      // route warnings resolve via cmd.chat.route.select (replaces cmd.warning.switched);
+      // attachment consent resolves via cmd.chat.attachment.resolve/.route — no generic command.
+      if (!w || WARNING_RESOLVE_KINDS.indexOf(w.kind) < 0) return;
+      cmd("cmd.chat.warning.resolve", { thread_id: key, warning_id: id, kind: w.kind, choice: action });
     }
 
     // ---- v2 extension: restore points, rewind, branch, inter-thread ----
     function restorePointCreate(key, msgId) {
       const id = "rp-" + (seq++);
       mutate(() => { state.threads[key].restorePoints.push({ id: id, msgId: msgId, at: new Date().toISOString() }); });
-      cmd("cmd.chat.create_restore_point", { thread_id: key, message_id: msgId });
+      cmd("cmd.chat.restore_point.create", { thread_id: key, message_id: msgId });
       return id;
     }
     function rewindTo(key, rpId) {
@@ -887,7 +964,7 @@ window.PMChatStore = (() => {
         st.rewindAnchor = rp ? rp.msgId : null;
         st.stickToBottom = false;
       });
-      cmd("cmd.chat.rewind", { thread_id: key, restore_point: rpId });
+      cmd("cmd.chat.thread.rewind", { thread_id: key, restore_point: rpId });
     }
     function rewindClear(key) { mutate(() => { state.threads[key].rewindAnchor = null; }); }
     function branchFrom(key, msgId, opts) {
@@ -911,7 +988,7 @@ window.PMChatStore = (() => {
         if (opts && opts.switchTo) state.session.activeThreadKey = id;
       });
       buildIndex();
-      cmd("cmd.chat.thread.branch", { source_thread: key, new_thread: id });
+      cmd("cmd.chat.thread.branch", { thread_id: key, source_thread: key, new_thread: id, message_id: msgId || null, model: (opts && opts.model) || null });
       return id;
     }
     function threadRequestSend(targetKey, text) {
@@ -920,7 +997,7 @@ window.PMChatStore = (() => {
       mutate(() => {
         state.threads[key].threadRequests.push({ id: id, target: targetKey, text: text, status: "sent", response: null, at: new Date().toISOString() });
       });
-      cmd("cmd.chat.thread.request_send", { target_thread: targetKey });
+      cmd("cmd.chat.thread.request", { thread_id: key, target_thread: targetKey, request_id: id, text: text });
       return id;
     }
     function threadRequestReceive(key, reqId, responseText) {
@@ -928,7 +1005,7 @@ window.PMChatStore = (() => {
         const r = state.threads[key].threadRequests.find(x => x.id === reqId);
         if (r) { r.status = "answered"; r.response = responseText; }
       });
-      cmd("cmd.chat.thread.request_receive", { request_id: reqId });
+      cmd("cmd.chat.thread.await", { request_id: reqId });
     }
     function spawnRelated(key, title, intro) {
       const src = demoThread(key);
@@ -949,7 +1026,7 @@ window.PMChatStore = (() => {
         state.threads[key].threadRequests.push({ id: "sp-" + (seq++), target: id, text: title || "related research", status: "spawned", response: null, at: new Date().toISOString() });
       });
       buildIndex();
-      cmd("cmd.chat.thread.spawn_related", { new_thread: id });
+      cmd("cmd.chat.thread.spawn", { thread_id: key, new_thread: id, parent: key });
       return id;
     }
     function redirectTurn(key, text) {
@@ -961,7 +1038,7 @@ window.PMChatStore = (() => {
           state.running.steps = state.running.steps.concat(["Redirecting toward: " + text.slice(0, 48)]);
         }
       });
-      cmd("cmd.chat.turn.redirect", { thread_id: key });
+      cmd("cmd.chat.redirect", { thread_id: key, text: text });
     }
 
     // ---- v2 extension: todos / subagents / goal phases / live activity / diffs ----
@@ -1076,16 +1153,23 @@ window.PMChatStore = (() => {
       mutate(() => {
         state.threads[key].compactEvents.push({ at: new Date().toISOString(), summary: "Model-facing context compacted; canonical transcript unchanged." });
       });
-      cmd("cmd.context.compact_now", { thread_id: key });
+      cmd("cmd.chat.context.compact_now", { thread_id: key, summary: "Model-facing context compacted; canonical transcript unchanged." });
     }
     function crewSet(key, crew) { mutate(() => { state.threads[key].crew = crew; }); }
     function crewOf(key) { return state.threads[key].crew; }
-    function crossProjectWarn(key, targetProject, text) {
+    function crossProjectWarn(key, targetProject, text, opts) {
+      opts = opts || {};
       return warningInject(key, {
-        tier: "modal", kind: "cross-project", text: text || "This request reads another project (" + targetProject + ").",
-        detail: "Cross-project work is off by default. Choose a scope: allow once, allow for this thread, or review Settings. This choice never persists silently.",
-        choices: ["Allow once", "This thread", "Open Settings", "Cancel"]
+        tier: "modal", kind: "cross-project",
+        text: text || "This task will read " + (opts.projectRead || "another project") + " and modify " + (opts.projectWrite || targetProject) + ".",
+        detail: "Cross-project work is off by default. Choose a scope: allow once, allow for this Goal, or review Settings. This choice never persists silently.",
+        projectRead: opts.projectRead || null, projectWrite: opts.projectWrite || targetProject || null,
+        choices: ["Cancel", "Allow once", "Allow for this Goal", "Open Settings"]
       });
+    }
+    function accessSet(key, access) {
+      setThreadSettings(key, { access: access });
+      cmd("cmd.chat.access.set", { thread_id: key, access: access });
     }
 
     // ---- v2 extension: spellcheck ----
@@ -1102,6 +1186,303 @@ window.PMChatStore = (() => {
       });
     }
     function spellSetDisabled(key, on) { mutate(() => { state.threads[key].spellDisabled = !!on; }); }
+
+    // ---- v3 extension: BSD (Back Seat Driver) advisor ----
+    function bsdEffective(key) {
+      const st = state.threads[key || activeKey()];
+      const base = Object.assign({ mode: "auto", scope: "thread" }, state.session.bsd || {});
+      if (st && st.bsd) {
+        if (st.bsd.mode) base.mode = st.bsd.mode;
+        if (st.bsd.scope) base.scope = st.bsd.scope;
+        base.state = st.bsd.state || "idle";
+        base.turnArmed = !!st.bsd.turnArmed;
+      }
+      return base;
+    }
+    function bsdSet(mode, scope) {
+      const key = activeKey();
+      mutate(() => {
+        const st = state.threads[key];
+        st.bsd = Object.assign({}, st.bsd, { mode: mode || st.bsd.mode, scope: scope || st.bsd.scope, state: "idle" });
+        if (scope === "turn") st.bsd.turnArmed = true;
+      });
+      cmd("cmd.chat.bsd.set", { thread_id: key, mode: mode || null, scope: scope || null });
+    }
+    function bsdEvalStart(key) {
+      key = key || activeKey();
+      mutate(() => { state.threads[key].bsd.state = "evaluating"; });
+    }
+    function bsdResolve(resolvedState, adviceText) {
+      const key = activeKey();
+      mutate(() => {
+        const st = state.threads[key];
+        st.bsd.state = resolvedState;
+        if (resolvedState === "advice" && adviceText != null) {
+          st.bsdAdvice = { id: "bsd-adv-" + (seq++), text: adviceText, at: new Date().toISOString() };
+        }
+      });
+    }
+    function bsdAdviceDismiss(key) {
+      mutate(() => { state.threads[key || activeKey()].bsdAdvice = null; });
+    }
+    function bsdRevertTurnScope(key) {
+      const st = state.threads[key];
+      if (st && st.bsd && st.bsd.scope === "turn" && st.bsd.turnArmed) {
+        st.bsd.scope = "thread";
+        st.bsd.turnArmed = false;
+      }
+    }
+
+    // ---- v3 extension: account / connection identity ----
+    function catalogAccount(accountId) {
+      for (const p of catalog()) {
+        const a = (p.accounts || []).find(x => x.id === accountId);
+        if (a) return { provider: p.provider, account: a };
+      }
+      return null;
+    }
+    function connectionKindOf(account) {
+      if (!account) return "API key";
+      if (account.connection) return account.connection;
+      const lbl = (account.label || "").toLowerCase();
+      if (lbl.indexOf("oauth") >= 0 || lbl.indexOf("cli") >= 0) return "OAuth (CLI-owned)";
+      if (lbl.indexOf("workspace") >= 0 || lbl.indexOf("plan") >= 0 || lbl.indexOf("team") >= 0) return "Workspace";
+      return "API key";
+    }
+    function effectiveAccount(key) {
+      const st = state.threads[key || activeKey()];
+      const accountId = (st && st.settings && st.settings.account) || state.session.account || null;
+      const eff = effectiveSettings(key);
+      if (!accountId) {
+        return { provider: eff.provider, accountId: null, accountLabel: "Provider default", connection: "API key" };
+      }
+      const found = catalogAccount(accountId);
+      return {
+        provider: found ? found.provider : eff.provider,
+        accountId: accountId,
+        accountLabel: found ? found.account.label : accountId,
+        connection: found ? connectionKindOf(found.account) : "API key"
+      };
+    }
+    function setAccount(accountId, scope) {
+      const key = activeKey();
+      mutate(() => {
+        if (scope === "session") state.session.account = accountId || null;
+        else {
+          const st = state.threads[key];
+          st.settings = Object.assign(st.settings || {}, { account: accountId || null });
+        }
+      });
+      cmd("cmd.chat.route.select", { kind: "account", thread_id: key, account_id: accountId || null });
+    }
+
+    // ---- v3 extension: offline / outbox / reconnect / replay / snapshot ----
+    function connSetStatus(status) {
+      mutate(() => { state.connection.status = status; });
+    }
+    function connQueue(msgDraft) {
+      const key = activeKey();
+      const draft = Object.assign({ threadKey: key, text: "", attachments: [] }, msgDraft || {});
+      draft.attachments = (draft.attachments || []).slice();
+      const entry = { id: "obx-" + (seq++), draft: draft, at: new Date().toISOString(), sentOnce: false };
+      mutate(() => { state.connection.outbox.push(entry); });
+      cmd("cmd.chat.outbox.queue", { entry_id: entry.id });
+      return entry.id;
+    }
+    function connReconnect() {
+      if (state.connection.status === "live") return;
+      mutate(() => { state.connection.status = "reconnecting"; });
+      const outbox = state.connection.outbox;
+      mutate(() => {
+        state.connection.status = "replaying";
+        outbox.forEach(entry => {
+          if (entry.sentOnce) return; // replay exactly once; durable client id is the idempotency key
+          entry.sentOnce = true;
+          const dk = entry.draft.threadKey || activeKey();
+          const st = state.threads[dk];
+          if (!st) return;
+          const rt = lastUserContext(dk);
+          st.sentMessages = st.sentMessages.concat([{
+            id: entry.id + "-u",
+            role: "user",
+            body: entry.draft.text || "",
+            sentAt: entry.at,
+            queuedReplay: true,
+            runtime: {
+              provider: state.session.provider, model: state.session.model, persona: state.session.persona,
+              mode: state.session.mode, effort: state.session.effort,
+              workedSeconds: 0, totalElapsedSeconds: 0,
+              tokenCount: Math.max(40, Math.round((entry.draft.text || "").length / 3.6)),
+              contextUsed: Math.min(rt.contextLimit, rt.contextUsed + 400),
+              contextLimit: rt.contextLimit, estimatedCost: 0.01
+            },
+            eligibleForEdit: false, collapsedByDefault: false
+          }]);
+          st.stickToBottom = true;
+        });
+      });
+      const flushed = state.connection.outbox.filter(e => e.sentOnce).length;
+      mutate(() => {
+        state.connection.outbox = [];
+        state.connection.status = "live";
+        state.connection.replay = { at: new Date().toISOString(), count: flushed };
+      });
+      cmd("cmd.chat.outbox.flush", { count: flushed });
+    }
+    function connServerWork(goalKey) {
+      mutate(() => {
+        state.connection.serverWork = { threadKey: goalKey || activeKey(), label: "Goal continuing on Home Server", at: new Date().toISOString() };
+      });
+    }
+    function connSnapshot(note) {
+      mutate(() => {
+        state.connection.status = "snapshot";
+        state.connection.snapshot = { at: new Date().toISOString(), note: note || "Snapshot catch-up: history synced from Home Server." };
+      });
+      setTimeout(() => { if (state.connection.status === "snapshot") connSetStatus("live"); }, 2600);
+    }
+
+    // ---- v3 extension: notification inbox ----
+    function notifyPush(n) {
+      const entry = Object.assign({ id: "ntf-" + (seq++), title: "", body: "", kind: "completion", at: new Date().toISOString(), threadKey: null, read: false }, n || {});
+      mutate(() => {
+        state.notifications.inbox.unshift(entry);
+        state.notifications.inbox = state.notifications.inbox.slice(0, 30);
+        state.notifications.unread = state.notifications.inbox.filter(x => !x.read).length;
+      });
+      return entry.id;
+    }
+    function notifyRead(id) {
+      mutate(() => {
+        const n = state.notifications.inbox.find(x => x.id === id);
+        if (n) n.read = true;
+        state.notifications.unread = state.notifications.inbox.filter(x => !x.read).length;
+      });
+    }
+    function notifyReadAll() {
+      mutate(() => {
+        state.notifications.inbox.forEach(x => { x.read = true; });
+        state.notifications.unread = 0;
+      });
+    }
+
+    // ---- v3 extension: admission receipt (Context Lens detail) ----
+    function defaultAdmission() {
+      return {
+        included: [
+          { label: "Current objective", kind: "goal", size: "0.4k", provenance: "thread", removable: false },
+          { label: "Recent messages", kind: "history", size: "18.2k", provenance: "thread", removable: false },
+          { label: "Scoped project instructions", kind: "instructions", size: "2.1k", provenance: "project", removable: false },
+          { label: "Persona capsule", kind: "persona", size: "0.8k", provenance: "session", removable: false },
+          { label: "Selected tools", kind: "tools", size: "3.4k", provenance: "session", removable: false }
+        ],
+        omitted: [
+          { label: "Older messages", reason: "summary-represented" },
+          { label: "Unused tool schemas", reason: "not selected for this thread" },
+          { label: "Below-threshold memories", reason: "relevance below threshold" }
+        ],
+        cache: { state: "warm", note: "Provider cache warm; replay not required." },
+        pressure: 0.34
+      };
+    }
+    function admissionOf(key) {
+      const t = demoThread(key || activeKey());
+      const st = state.threads[key || activeKey()];
+      if (st && st.admission) return st.admission;
+      if (t && t.admission) return t.admission;
+      return defaultAdmission();
+    }
+    function admissionSet(key, admission) {
+      mutate(() => { state.threads[key || activeKey()].admission = admission; });
+    }
+    function contextSourceAdd(key, threadSource, msgId) {
+      key = key || activeKey();
+      mutate(() => {
+        const st = state.threads[key];
+        st.admission = JSON.parse(JSON.stringify(admissionOf(key)));
+        st.admission.included.push({ label: "Passage from " + threadSource, kind: "excerpt", size: "1.2k", provenance: threadSource, removable: true, msgId: msgId || null });
+      });
+      cmd("cmd.chat.context.source.add", { thread_id: key, thread_source: threadSource, message_id: msgId || null });
+    }
+    function admissionRemove(key, idx) {
+      key = key || activeKey();
+      const adm = admissionOf(key);
+      const item = adm.included[idx];
+      if (!item || !item.removable) return;
+      mutate(() => {
+        const cur = admissionOf(key);
+        const copy = JSON.parse(JSON.stringify(cur));
+        copy.included[idx].removed = true;
+        state.threads[key].admission = copy;
+      });
+      cmd("cmd.chat.context.source.remove", { thread_id: key, label: item.label });
+    }
+
+    // ---- v3 extension: operational awareness (ports / worktrees / sessions) ----
+    function operationalOf(key) { return state.threads[key || activeKey()].operational; }
+    function opsAddPort(key, portEntry) {
+      mutate(() => {
+        const ops = state.threads[key || activeKey()].operational;
+        if (!ops.ports.some(p => p.port === portEntry.port)) ops.ports.push(Object.assign({ state: "conflict" }, portEntry));
+      });
+    }
+    function portResolve(key, port, use) {
+      mutate(() => {
+        const p = state.threads[key || activeKey()].operational.ports.find(x => x.port === port);
+        if (p) { p.state = "resolved"; p.resolvedTo = use || p.suggestion; }
+      });
+      cmd("cmd.chat.warning.resolve", { thread_id: key || activeKey(), warning_id: "port-" + port, kind: "collision", choice: "Use " + (use || "") });
+    }
+    function opsAddWorktree(key, wt) {
+      mutate(() => {
+        const ops = state.threads[key || activeKey()].operational;
+        if (!ops.worktrees.some(w => w.name === wt.name)) ops.worktrees.push(Object.assign({ state: "isolated" }, wt));
+      });
+    }
+    function worktreeSetState(key, name, val) {
+      mutate(() => {
+        const w = state.threads[key || activeKey()].operational.worktrees.find(x => x.name === name);
+        if (w) w.state = val;
+      });
+    }
+    function opsAddSession(key, sess) {
+      mutate(() => {
+        const ops = state.threads[key || activeKey()].operational;
+        if (!ops.sessions.some(s => s.label === sess.label)) ops.sessions.push(sess);
+      });
+    }
+
+    // ---- v3 extension: attachment resolution lifecycle ----
+    function attachResolve(attachmentId, route) {
+      const key = activeKey();
+      mutate(() => {
+        const st = state.threads[key];
+        const prev = st.attachRoutes[attachmentId] || {};
+        st.attachRoutes[attachmentId] = Object.assign({}, prev, {
+          route: route, consented: !!prev.consented, reeval: false,
+          lineage: prev.lineage || attachmentId, job: prev.job || null
+        });
+      });
+      cmd("cmd.chat.attachment.resolve", { attachment_id: attachmentId, route: route });
+    }
+    function attachConsentAlternate(attachmentId, target) {
+      cmd("cmd.chat.attachment.route", { attachment_id: attachmentId, target: target });
+    }
+    function attachStartJob(key, attachmentId, outputLabel) {
+      mutate(() => {
+        const st = state.threads[key];
+        const r = st.attachRoutes[attachmentId];
+        if (r) r.job = { state: "running", output: null };
+      });
+      setTimeout(() => {
+        const st = state.threads[key];
+        if (!st) return;
+        const r = st.attachRoutes[attachmentId];
+        if (r && r.job && r.job.state === "running") {
+          mutate(() => { r.job = { state: "done", output: outputLabel || "Transcript extracted by PM" }; });
+        }
+      }, 1200);
+    }
 
     const store = {
       data, state,
@@ -1120,17 +1501,24 @@ window.PMChatStore = (() => {
       goalEffectiveStatus, goalAct, goalSaveObjective,
       serializeState, restoreState, resetForRestart, persist,
       setPin, pinMode, setPinMode,
-      artWs, artOpen, artClose, artSwitch, artStatusOf, artSetStatus, artEntry, threadArtifacts,
+      artWs, artOpen, artClose, artSwitch, artStatusOf, artSetStatus, artEntry, artRetry, threadArtifacts,
       ACCESS_PROFILES, effectiveSettings, setThreadSettings, accessNote, favoriteToggle,
       catalog, catalogModel, modelConsequence, applyModelChange, attachRouteFor, attachSetRoute, noSafeRoute,
-      approvalInject, approvalResolve, warningInject, warningResolve,
+      approvalInject, approvalResolve, approvalDetails, warningInject, warningResolve,
       restorePointCreate, rewindTo, rewindClear, branchFrom,
       threadRequestSend, threadRequestReceive, spawnRelated, redirectTurn,
       todoList, todoAdd, todoSetState, subagentGroups, subagentSpawn, subagentSetStatus,
       goalPhases, goalPhaseIdx, goalAdvance, activityLive, activityAdvance, activitySetStatus,
       diffGroups, diffCreate, diffUpdate,
-      compactNow, crewSet, crewOf, crossProjectWarn,
-      spellAdd, spellIgnoreDraft, spellSetDisabled
+      compactNow, crewSet, crewOf, crewStart, crossProjectWarn, accessSet,
+      spellAdd, spellIgnoreDraft, spellSetDisabled,
+      bsdEffective, bsdSet, bsdEvalStart, bsdResolve, bsdAdviceDismiss,
+      catalogAccount, connectionKindOf, effectiveAccount, setAccount,
+      connSetStatus, connQueue, connReconnect, connServerWork, connSnapshot,
+      notifyPush, notifyRead, notifyReadAll,
+      admissionOf, admissionSet, admissionRemove, defaultAdmission, contextSourceAdd,
+      operationalOf, opsAddPort, portResolve, opsAddWorktree, worktreeSetState, opsAddSession,
+      attachResolve, attachConsentAlternate, attachStartJob
     };
     return store;
   }

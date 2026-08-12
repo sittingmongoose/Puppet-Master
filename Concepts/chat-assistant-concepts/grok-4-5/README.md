@@ -18,4 +18,4 @@ All work stays under this folder. Do not edit `Plans/**`, PMConcept7, catalogs, 
 
 ## Verification
 
-Matrix runs, known limitations, and generated reports live in [`verification/`](./verification/). Build findings accumulate in [`FINDINGS.md`](./FINDINGS.md).
+Ephemeral probes live under `%TEMP%/pm-grok45-probes/` (not shipped). Durable reports: seven packet files at this folder root + [`FINDINGS.md`](./FINDINGS.md). Cache bust: `?v=37`.

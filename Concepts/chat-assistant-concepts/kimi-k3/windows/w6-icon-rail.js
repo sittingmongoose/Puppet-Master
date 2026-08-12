@@ -1,14 +1,24 @@
 /* ============================================================================
    Kimi K3 — W6 Icon Rail (chat-window concept).
 
-   A 48px-wide LEFT mini-rail of icon buttons (Chats / Goal / Todo / Agents).
-   Selecting an icon switches a ~200px side panel: Chats shows the kit
-   historyPanel; Goal / Todo / Agents show the matching kit surface for the
-   active thread. A pin toggle on the side header keeps the Chats panel
-   visible even when another icon is selected (the surface stacks beneath
-   the history). The thread slot takes the remaining width. Active icon =
-   accent-soft + weight, never a left-side border. The active panel persists
-   per thread in surfaceView.<tid>.w6Panel; the Chats pin persists in
+   A 48px-wide LEFT mini-rail of icon buttons (Chats / Goal / Todo / Agents /
+   Ops / Capacity / Crew / Artifacts). Selecting an icon switches a ~200px
+   side panel: Chats shows the kit historyPanel; Goal / Todo / Agents /
+   Ops / Capacity / Crew show the matching kit surface for the active thread.
+   A pin toggle on the side header keeps the Chats panel visible even when
+   another icon is selected (the surface stacks beneath the history). A BSD
+   detail mirror (rail variant) lives in the side-panel footer, following the
+   active thread.
+
+   Artifacts adapter: at >=720px the side panel widens 200 -> 320px and hosts
+   the ONE shared K3ArtifactWS surface (reparented, never cloned); at <720px
+   the panel shows a compact artifact list/status sliver and tapping an item
+   opens a deliberate focused overlay viewer (min(480px,90%), scrim, Esc —
+   user-initiated only, never auto-opened, never steals focus).
+
+   The thread slot takes the remaining width. Active icon = accent-soft +
+   weight, never a left-side border. The active panel persists per thread in
+   surfaceView.<tid>.w6Panel; the Chats pin persists in
    surfaceView.<tid>.w6HistoryPinned.
 
    Provides exactly one [data-k3-slot="thread"] and one
@@ -27,12 +37,18 @@
   function arr(v) { return Array.isArray(v) ? v : []; }
 
   // rail buttons. kind -> { label, icon, panel }. 'chats' shows the kit
-  // historyPanel; the rest surface a kit work-surface for the active thread.
+  // historyPanel; 'artifacts' hosts the shared artifact workspace adapter;
+  // the rest surface a kit work-surface for the active thread. Ops leads the
+  // packet surface group (operational conflicts first).
   var RAIL_DEFS = [
-    { kind: 'chats',  label: 'Chats',  icon: 'history',  panel: 'history' },
-    { kind: 'goal',   label: 'Goal',   icon: 'goal',     panel: 'surface' },
-    { kind: 'todo',   label: 'Todo',   icon: 'todo',     panel: 'surface' },
-    { kind: 'agents', label: 'Agents', icon: 'subagent', panel: 'surface' }
+    { kind: 'chats',     label: 'Chats',     icon: 'history',  panel: 'history' },
+    { kind: 'goal',      label: 'Goal',      icon: 'goal',     panel: 'surface' },
+    { kind: 'todo',      label: 'Todo',      icon: 'todo',     panel: 'surface' },
+    { kind: 'agents',    label: 'Agents',    icon: 'subagent', panel: 'surface' },
+    { kind: 'ops',       label: 'Ops',       icon: 'port',     panel: 'surface' },
+    { kind: 'capacity',  label: 'Capacity',  icon: 'capacity', panel: 'surface' },
+    { kind: 'crew',      label: 'Crew',      icon: 'crew',     panel: 'surface' },
+    { kind: 'artifacts', label: 'Artifacts', icon: 'artifact', panel: 'artifacts' }
   ];
 
   window.K3.registerWindow('w6', {
@@ -49,6 +65,7 @@
       var currentTid = null;
       var surfaceNode = null;     // live kit work-surface shown in the side panel
       var mountedKind = null;     // kind of the surfaceNode currently mounted
+      var artPanelNode = null;    // artifacts panel node (narrow list OR shared surface)
       var unmounted = false;
 
       // Narrow-width breakpoint: below this the 200px side panel would crush
@@ -105,6 +122,14 @@
       var sideBody = el('div', 'w6-side-body k3-scroll');
       side.appendChild(sideHead);
       side.appendChild(sideBody);
+      // BSD rail variant: the selector-row button carries the state ring; the
+      // live detail mirror follows the active thread in the panel footer.
+      var bsdDetail = window.K3BSD ? window.K3BSD.detailHost(ctx, null) : null;
+      if (bsdDetail) {
+        var bsdWrap = el('div', 'w6-side-bsd');
+        bsdWrap.appendChild(bsdDetail);
+        side.appendChild(bsdWrap);
+      }
       body.appendChild(side);
 
       // the historyPanel is persistent (its own listeners); it lives in the
@@ -175,6 +200,9 @@
         if (kind === 'goal') return kit.goalSurface(ctx, tid);
         if (kind === 'todo') return kit.todoSurface(ctx, tid);
         if (kind === 'agents') return kit.workChips(ctx, tid); // agents live in work chips
+        if (kind === 'ops') return kit.opsSurface(ctx, tid);
+        if (kind === 'capacity') return kit.capacitySurface(ctx, tid);
+        if (kind === 'crew') return kit.crewSurface(ctx, tid);
         return null;
       }
 
@@ -184,7 +212,122 @@
         }
         surfaceNode = null;
         mountedKind = null;
+        // NEVER destroy the shared artifact surface: park it (detach intact)
+        // before clearing the host. The narrow artifact list is disposable.
+        if (window.K3ArtifactWS) {
+          var shared = surfaceHost.querySelector('.k3aw-surface');
+          if (shared) surfaceHost.removeChild(shared);
+        }
         surfaceHost.innerHTML = '';
+        artPanelNode = null;
+      }
+
+      /* ---- artifact workspace adapter ------------------------------------ */
+      // The ONE shared K3ArtifactWS surface is reparented between the side
+      // panel (wide), the focused overlay (narrow, user-initiated), and a
+      // detached parked state — never cloned.
+      var overlayEl = null; // active overlay scrim node (narrow viewer)
+
+      function artKindIcon(kind) {
+        if (kind === 'diff') return 'diff';
+        if (kind === 'code' || kind === 'file') return 'source';
+        if (kind === 'report' || kind === 'document') return 'draft';
+        return 'artifact'; // image + fallback (mirrors artifact-ws)
+      }
+
+      function artifactsOf(tid) {
+        var t = tid ? data.thread(tid) : null;
+        return (t && Array.isArray(t.artifacts)) ? t.artifacts : [];
+      }
+
+      // narrow (<720px): compact artifact list/status in the 150px sliver;
+      // tapping an item opens the deliberate focused overlay viewer.
+      function buildArtifactList() {
+        var list = el('div', 'w6-art-list');
+        list.setAttribute('data-testid', 'w6-art-list');
+        var artifacts = artifactsOf(currentTid);
+        if (!artifacts.length) {
+          list.appendChild(el('div', 'w6-side-empty', 'No artifacts on this thread yet.'));
+          return list;
+        }
+        var ws = store.get('artifactWs.' + currentTid, null) || {};
+        artifacts.forEach(function (a) {
+          var btn = el('button', 'w6-art-item');
+          btn.type = 'button';
+          btn.setAttribute('data-testid', 'w6-art-item-' + a.id);
+          if (ws.open && ws.activeId === a.id) btn.classList.add('is-active');
+          btn.title = (a.title || a.id) + ' — open viewer';
+          var ic = el('span', 'w6-art-item-ic');
+          ic.appendChild(icon(artKindIcon(a.kind)));
+          btn.appendChild(ic);
+          btn.appendChild(el('span', 'w6-art-item-title', a.title || a.id));
+          var dot = el('span', 'k3aw-dot is-' + (a.status || 'ready'));
+          dot.setAttribute('aria-hidden', 'true');
+          btn.appendChild(dot);
+          btn.addEventListener('click', function () { openArtifactOverlay(a.id); });
+          list.appendChild(btn);
+        });
+        return list;
+      }
+
+      function closeArtifactOverlay() {
+        if (!overlayEl) return;
+        var ov = overlayEl;
+        overlayEl = null;
+        document.removeEventListener('keydown', onOverlayKey, true);
+        ov.remove(); // the shared surface detaches with it, still module-owned
+        // wide again or panel still on artifacts: restore panel content so the
+        // surface returns to the side panel (reparented back).
+        renderPanel();
+      }
+
+      function onOverlayKey(e) {
+        if (e.key !== 'Escape') return;
+        e.preventDefault();
+        e.stopPropagation();
+        closeArtifactOverlay();
+      }
+
+      // Deliberate, user-initiated viewer: scrim + Esc + explicit close; it
+      // never auto-opens and never moves focus (the composer keeps it).
+      function openArtifactOverlay(artifactId) {
+        if (!window.K3ArtifactWS || !currentTid) return;
+        if (overlayEl) closeArtifactOverlay();
+        if (!window.K3ArtifactWS.open(ctx, currentTid, artifactId)) return;
+
+        var scrim = el('div', 'w6-art-scrim');
+        scrim.setAttribute('data-testid', 'w6-art-overlay');
+        var dialog = el('div', 'w6-art-dialog k3-anim-pop');
+        dialog.setAttribute('role', 'dialog');
+        dialog.setAttribute('aria-label', 'Artifact viewer');
+        var head = el('div', 'w6-art-dialog-head');
+        head.appendChild(el('span', 'w6-art-dialog-title', 'Artifact viewer'));
+        var closeBtn = el('button', 'k3-icon-btn w6-art-close');
+        closeBtn.type = 'button';
+        closeBtn.setAttribute('aria-label', 'Close artifact viewer');
+        closeBtn.title = 'Close (Esc)';
+        closeBtn.setAttribute('data-testid', 'w6-art-overlay-close');
+        closeBtn.appendChild(icon('close'));
+        closeBtn.addEventListener('click', closeArtifactOverlay);
+        head.appendChild(closeBtn);
+        var bodyWrap = el('div', 'w6-art-dialog-body');
+        bodyWrap.appendChild(window.K3ArtifactWS.surface(ctx)); // reparent
+        dialog.appendChild(head);
+        dialog.appendChild(bodyWrap);
+        scrim.appendChild(dialog);
+        scrim.addEventListener('mousedown', function (e) {
+          if (e.target === scrim) closeArtifactOverlay();
+        });
+        root.appendChild(scrim);
+        overlayEl = scrim;
+        document.addEventListener('keydown', onOverlayKey, true);
+        // no focus() call: opening the viewer must not steal focus.
+      }
+
+      function buildArtifactsPanel() {
+        if (!window.K3ArtifactWS) return null;
+        if (narrow) return buildArtifactList();
+        return window.K3ArtifactWS.surface(ctx); // the shared surface element
       }
 
       function historyPinned() {
@@ -192,6 +335,7 @@
       }
       chatsPin.addEventListener('click', function () {
         if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return; // never write surfaceView.null.*
         var next = !historyPinned();
         store.set('surfaceView.' + currentTid + '.w6HistoryPinned', next);
         // pinning history also reveals + selects the chats panel so the pin is
@@ -227,22 +371,37 @@
         chatsPin.appendChild(icon(pinned ? 'pin-off' : 'pin'));
 
         var isHistory = kind === 'chats';
+        var isArt = kind === 'artifacts';
         surfaceHost.hidden = isHistory;
 
         // lazily (re)build the surface only when the active kind changes
         if (!isHistory) {
           if (kind !== mountedKind) {
             unmountSurface();
-            surfaceNode = buildSurface(kind, currentTid);
-            if (surfaceNode) {
-              mountedKind = kind;
-              surfaceHost.appendChild(surfaceNode);
-              surfaceHost.hidden = false;
+            if (isArt) {
+              // artifacts panel: narrow = compact list (disposable), wide =
+              // the shared surface node (reparented in, never unmounted)
+              artPanelNode = buildArtifactsPanel();
+              if (artPanelNode) {
+                surfaceHost.appendChild(artPanelNode);
+                surfaceHost.hidden = false;
+                mountedKind = kind;
+              } else {
+                surfaceHost.hidden = false;
+                surfaceHost.appendChild(el('div', 'w6-side-empty', 'No artifacts on this thread yet.'));
+              }
             } else {
-              // no data for this surface: show a quiet note
-              surfaceHost.hidden = false;
-              surfaceHost.appendChild(el('div', 'w6-side-empty',
-                'No ' + headLabel.toLowerCase() + ' on this thread yet.'));
+              surfaceNode = buildSurface(kind, currentTid);
+              if (surfaceNode) {
+                mountedKind = kind;
+                surfaceHost.appendChild(surfaceNode);
+                surfaceHost.hidden = false;
+              } else {
+                // no data for this surface: show a quiet note
+                surfaceHost.hidden = false;
+                surfaceHost.appendChild(el('div', 'w6-side-empty',
+                  'No ' + headLabel.toLowerCase() + ' on this thread yet.'));
+              }
             }
           }
         } else {
@@ -290,17 +449,34 @@
       disposers.push(store.subscribe('goalView', refresh));
       function onData(evt) {
         if (!evt) return;
+        if (evt.type === 'artifact-ws-changed') {
+          // artifact open/switch/close: repaint the panel (list status or
+          // shared surface) without touching other surfaces.
+          if (activePanel() === 'artifacts') { mountedKind = null; renderPanel(); }
+          return;
+        }
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });
+      disposers.push(store.subscribe('artifactWs', function () {
+        if (unmounted || activePanel() !== 'artifacts') return;
+        mountedKind = null;
+        renderPanel();
+      }));
       // width changes flip the narrow breakpoint -> re-apply layout classes
       function onEnv() {
         var nowNarrow = (ctx.env && ctx.env.width != null) ? ctx.env.width < NARROW : false;
         if (nowNarrow === narrow) return;
         narrow = nowNarrow;
+        // the artifacts panel shape differs across the breakpoint (list vs
+        // shared surface) — force its rebuild when it is the active panel.
+        if (activePanel() === 'artifacts') mountedKind = null;
         paintLayout();
+        renderPanel();
       }
       ctx.on('env', onEnv);
       disposers.push(function () { ctx.off('env', onEnv); });
@@ -311,7 +487,9 @@
       function unmount() {
         if (unmounted) return;
         unmounted = true;
+        closeArtifactOverlay();
         unmountSurface();
+        try { if (bsdDetail && bsdDetail.unmount) bsdDetail.unmount(); } catch (e) { /* ignore */ }
         disposers.forEach(function (fn) { try { fn(); } catch (e) { /* ignore */ } });
         disposers = [];
         try { if (headerEl.unmount) headerEl.unmount(); } catch (e) { /* ignore */ }

@@ -1,0 +1,255 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept": "concept-01-control-room",
+  "model": "GLM-5.2",
+  "rule": "missing is a failure; deferred requires a named canonical owner and insertion contract. This concept DEEP-OWNS the C1 bucket and demonstrates the CORE surface; all sibling-owned families are reachable via shared grammar (lighter).",
+  "families": [
+    {
+      "family": "Settings Home",
+      "group": "core",
+      "classification": "demonstrated",
+      "note": "Search-centric mission-control Home: dominant omni-search bar is the primary verb; large editorial destination panels with title + purpose + live status; notices carry one clear action. Owned end-to-end."
+    },
+    {
+      "family": "Settings Search",
+      "group": "core",
+      "classification": "demonstrated",
+      "note": "Live fuzzy discovery across settings/categories/managers/destinations with deep-link jump to the owning category + setting; results restructure Home; no-results and typo-suggestion fixtures."
+    },
+    {
+      "family": "Settings Workspace",
+      "group": "core",
+      "classification": "demonstrated",
+      "note": "Book-TOC: left vertical category index + continuous document; portable scrollspy without oscillation; exposure control; prose fields. Owned end-to-end."
+    },
+    {
+      "family": "Provider/Account/Model/Installation",
+      "group": "core",
+      "classification": "demonstrated",
+      "note": "Full object model with all 17 provider fixtures; CLI-owned vs PM-direct OAuth boundary; requested/effective routes; Free Models wrapper; catalog freshness/last-known-good. Owned end-to-end."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "group": "core",
+      "classification": "demonstrated",
+      "note": "Setting rows exercising all 9 value states (Default/Recommended/Inherited/Auto/Not-configured/Managed/Custom/Unavailable/Effective-differs), exposure levels, secret-value taxonomy, action-vs-value separation."
+    },
+    {
+      "family": "Context & Instructions",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Shows effective instruction sources, AGENTS.md precedence chain, source hashes + lightness warnings, included/omitted blocks, persona footprint, selected vs installed tools, compaction strategy, cache compatibility, retrieval caps, context admission receipt. Registry not injected just because Settings exposes it."
+    },
+    {
+      "family": "Memory",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Evidence-backed degrading Assistant Gists: half-life (fade not delete), verified/unverified provenance, pin, version history + restore, capsule preview/token estimate, rebuild/dedupe/summarize/archive/redact, half-life + active-context status. Automated systems use explicit retrieval, not hidden Gists."
+    },
+    {
+      "family": "Personas",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Behavior-not-authority: mission/use boundary, model-facing capsule preview, source/version/provenance, eligible skills, requested capabilities, import diff with trust/secret/prompt-injection scan, child-only flag. Corrects stale regular/yolo coupling."
+    },
+    {
+      "family": "Goal & Automation",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Defaults+ceilings only (Goal defaults, pause/resume/checkpoint, verification strength, sustainable fan-out, capacity reserve, worker/reviewer route classes, worktree/testing defaults). Runtime admits actual work; requested/effective worker+reviewer routes projected."
+    },
+    {
+      "family": "Crew",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Orchestrator-owned templates with requested vs effective members + concurrency and waves; purpose, member roles, persona/capability requirements, allowed provider/account/model candidates, min/max members, adaptive sizing, usage/cost/time reserve, write/worktree policy, board topology, diversity/corroboration, reducer/synthesis, failure/stop behavior."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Ordered last-match-wins rules, per-tool overrides, per-Persona profiles, FileSafe non-bypassable floor, doom-loop threshold/action, ELI5 + Expert views, presets, read-only/full matrices, external-directory allowlist, requested/effective/origin across Global/Project/Package/Seam/Lane scope."
+    },
+    {
+      "family": "Back Seat Driver",
+      "group": "concept_1",
+      "classification": "demonstrated",
+      "note": "Off/Auto(default)/On; Auto runs only when risk/phase triggers justify; On may inspect all turns. Read-only by default, bounded deltas, cannot widen authority, cannot block primary work on its own failure. Chat may override BSD for one turn or current thread. Advanced: route, risk/phase triggers, usage guard, latency budget, privacy boundary, tool access, health."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Reachable via nav/search and rendered through the shared SettingRow + manager grammar; full deep-dive owned by concept 02."
+    },
+    {
+      "family": "Sound Library/Uploads/Packs",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 02."
+    },
+    {
+      "family": "Appearance",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Theme picker surfaced on Home config strip (all 8 themes + reduced motion); full Appearance manager deep-dive owned by concept 02."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Spellcheck simulated in prose fields (subtle underline, no autocorrect); full manager deep-dive owned by concept 02."
+    },
+    {
+      "family": "Desktop/Tray/Window",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 02."
+    },
+    {
+      "family": "Teacher/Help",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "note": "Help affordances (hover/focus/details) follow the shared help contract; full manager deep-dive owned by concept 02."
+    },
+    {
+      "family": "File Manager/Editor",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 03."
+    },
+    {
+      "family": "Terminal",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "LSP",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Formatters",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 03."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 03."
+    },
+    {
+      "family": "MCP",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar (manager promo + shared shell); deep-dive owned by concept 03."
+    },
+    {
+      "family": "Skills",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 02/03."
+    },
+    {
+      "family": "Plugins",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 02/03."
+    },
+    {
+      "family": "Tools",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 02/03."
+    },
+    {
+      "family": "Testing & Debug",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 03."
+    },
+    {
+      "family": "Storage & Retention",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Backup & Restore",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Export/import/preview/apply/rollback/reset fixtures exercised lightly here via shared grammar; full deep-dive owned by concept 04."
+    },
+    {
+      "family": "History & Sessions",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Runtime Artifacts",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Source Control/Worktrees",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "GitHub Actions",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Containers & Registries",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Web/Search/Fetch",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Project Search Index",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "group": "concept_4",
+      "classification": "shared_grammar",
+      "note": "Reachable via shared grammar; deep-dive owned by concept 04."
+    },
+    {
+      "family": "Future Server Module Shell",
+      "group": "concept_4",
+      "classification": "deferred_named_owner",
+      "named_owner": "Plans/storage-plan.md / Plans/Runtime_Artifacts_Panel.md (Project Home Server + physical Project Vault backbone)",
+      "insertion_contract": "Rendered in this concept as a shared-grammar destination panel whose open affordance routes to the Server module shell once the server-first backbone ships. Until then it shows an honest unavailable state with a deep-link to the named owner doc. Never a fake no-op. Insertion binds to the server-first backbone (one Project Home Server, physical Project Vault, explicit Execution Hosts/Environments)."
+    }
+  ],
+  "coverage_summary": {
+    "demonstrated": 12,
+    "shared_grammar": 27,
+    "deferred_named_owner": 1,
+    "missing": 0
+  }
+}

@@ -69,6 +69,61 @@
     notify();
   }
 
+  /* ---- context admission receipt body -------------------------------------------------
+   * The Context ring's `More details` needs a catalogue record to open (D7). A receipt copied
+   * once and frozen would be a stale claim about live context, which the packet rules out by
+   * making Context Lens render the admission receipt rather than a generic dump, so these
+   * sections are re-projected from PMXContextAdmit on every lookup. The fallback figures are
+   * the fixture's own for thread-01 — 7,620 of 128,000 with a warm cache, read off the last
+   * message runtime — so the record is real before any service is bound. */
+  var FIXTURE_INCLUDED = [
+    'Current objective', 'Recent messages', 'Scoped project instructions', 'Persona capsule',
+    'Selected tools', '2 prior-thread excerpts', '1 attachment representation'
+  ];
+  var FIXTURE_OMITTED = [
+    'Older messages represented by summary', '17 unused tool schemas', 'Unrelated logs',
+    'Memories below relevance threshold'
+  ];
+
+  /* These two sections never vary with the live receipt. They state what the receipt is, and
+   * they are the visible half of the boundary the packet draws around this surface: no raw
+   * secrets, no FileSafe policy body, no system prompt, no internal registry dump. */
+  var RECEIPT_POLICY = [
+    { heading: 'Provenance and removal',
+      body: 'Every admitted row carries its provenance, and an admitted historical excerpt can be removed from this receipt without deleting it from the thread.' },
+    { heading: 'What this receipt never shows',
+      body: 'Raw secrets, the full FileSafe policy, full system prompts and internal registry dumps are outside the receipt by construction. This is an admission record, not a token dump.' }
+  ];
+
+  function num(n) { return Number(n || 0).toLocaleString(); }
+  function sentences(list, empty) { return list.length ? list.join('. ') + '.' : empty; }
+
+  /* Guarded peer lookup. The Phase B services are written concurrently and load order is not
+   * guaranteed, so an absent or throwing PMXContextAdmit degrades to the fixture body instead
+   * of taking the artifact workspace down with it. */
+  function liveReceipt() {
+    var CA = global.PMXContextAdmit;
+    if (!CA || typeof CA.receipt !== 'function' || !_store) return null;
+    try { return CA.receipt(_store.get('session.activeThreadId')); } catch (e) { return null; }
+  }
+
+  function contextSections(receipt) {
+    var pressure = '7,620 of 128,000 tokens admitted for this turn. The prompt cache is warm.';
+    var inc = FIXTURE_INCLUDED, omit = FIXTURE_OMITTED;
+    if (receipt) {
+      var p = receipt.pressure || {};
+      pressure = num(p.used) + ' of ' + num(p.limit) + ' tokens admitted for this turn. The prompt cache is '
+        + ((receipt.cache && receipt.cache.state) || 'warm') + '.';
+      inc = (receipt.included || []).map(function (r) { return r.label; });
+      omit = (receipt.omitted || []).map(function (r) { return r.label + ' — ' + r.reason; });
+    }
+    return [
+      { heading: 'Pressure', body: pressure },
+      { heading: 'Included', body: sentences(inc, 'Nothing is admitted for this turn yet.') },
+      { heading: 'Left out', body: sentences(omit, 'Nothing was left out of this turn.') }
+    ].concat(RECEIPT_POLICY);
+  }
+
   /* ---- the catalogue -----------------------------------------------------------------
    * Metadata for the supplied records comes from the demo data; bodies live here because a
    * body is a rendering fixture, not part of the supplied dataset (demoData.json is frozen and
@@ -141,6 +196,84 @@
         { heading: 'Access profiles', body: 'Ask for approval, Auto accept edits, Auto, and Full Access. Conversation mode and access profile stay separate axes; a permissive profile narrowed by the mode reports the effective limit rather than the request.' },
         { heading: 'Portability', body: 'Every surface stays inside the Slint 1.17.1 envelope: measured height transitions with a fallback, no backdrop-filter carrying information, no property-animation as the only signal.' }
       ]
+    },
+    {
+      id: 'artifact-test',
+      title: 'Interaction verification report',
+      kind: 'test_report',
+      subtitle: '18 checks · 1 skipped',
+      projectPath: 'artifacts/interaction-verification.json',
+      /* The final-verification state the packet requires to be visible: a result, the thing that
+       * was verified, and both clocks. Elapsed is wall time and worked is attributed time; they
+       * differ because the run waited on an approval, and reporting only one of them would
+       * overstate or understate the cost of the turn. */
+      verification: {
+        result: 'passed',
+        note: 'Updated provider settings screen renders correctly',
+        elapsedSeconds: 5640,
+        workedSeconds: 4210
+      },
+      rows: [
+        { name: 'Pinned history clears the transcript at 520', result: 'pass' },
+        { name: 'Full pin demotes to compact under the floor', result: 'pass' },
+        { name: 'Artifact opens left of the composer rectangle', result: 'pass' },
+        { name: 'Composer draft survives a question flow', result: 'pass' },
+        { name: 'History and artifact coexist at 1200', result: 'pass' },
+        { name: 'Pop-out preserves pin density', result: 'skipped', note: 'covered by the width sweep' }
+      ]
+    },
+    {
+      /* D7. `More details` in the Context ring opened `context-detail`, an id no catalogue held,
+       * so the call fell through to a legacy editor tab instead of the left artifact workspace.
+       * This is that record under an id the catalogue actually carries. Its sections are rebuilt
+       * per lookup by contextSections(); the literal here is only the pre-bind body. */
+      id: 'artifact-context',
+      title: 'Context admission receipt',
+      kind: 'document',
+      subtitle: 'Admission record · not a token dump',
+      projectPath: 'context: Tastebook — planning chat',
+      sections: contextSections(null)
+    },
+    {
+      /* Crew synthesis. The packet's artifact taxonomy has four categories, so a Crew report is
+       * catalogued as a document; the panel dispatches on the `crew` payload rather than on the
+       * category, because a heading-and-paragraph renderer cannot show members, routes, waves,
+       * a shared board and a parent reducer.
+       *
+       * The content is the fixture's own `sg-tastebook` review group re-expressed as a Crew —
+       * same three members, same tasks, same states — with routes drawn from the two-accounts
+       * catalogue so the "one model, two accounts, two routes" rule is visible here too. This
+       * is the FALLBACK body: the panel prefers PMXCrew.of(threadId) whenever a Crew is actually
+       * running in the thread. Ids follow the conventions PMXCrew owns. */
+      id: 'artifact-crew',
+      title: 'Interface review crew — synthesis',
+      kind: 'document',
+      subtitle: 'Crew · 3 members · 2 waves',
+      projectPath: 'crew: Tastebook — planning chat',
+      crew: {
+        id: 'crew-thread-01-crew-interface-review',
+        templateId: 'crew-interface-review',
+        name: 'Interface review crew',
+        members: [
+          { id: 'm-flow-reviewer', name: 'Flow reviewer', role: 'Check first-session sequence',
+            route: 'Anthropic — Work · Opus 5', state: 'waiting for parent', resultRef: null },
+          { id: 'm-import-reviewer', name: 'Import reviewer', role: 'Check import recovery states',
+            route: 'OpenAI — Team · GPT-5.6 Pro', state: 'complete', resultRef: 'diff-tastebook' },
+          { id: 'm-content-reviewer', name: 'Content reviewer', role: 'Check user-facing language',
+            route: 'Anthropic — Personal · Sonnet 5', state: 'complete', resultRef: 'artifact-tastebook-flow' }
+        ],
+        waves: [['m-flow-reviewer', 'm-import-reviewer'], ['m-content-reviewer']],
+        board: [
+          { at: '2026-07-29T14:41:00Z', memberId: 'm-import-reviewer',
+            text: 'Blocked-import recovery has three states, not two. The retry path needs its own copy.' },
+          { at: '2026-07-29T14:52:00Z', memberId: 'm-content-reviewer',
+            text: 'The skip path currently reads as a failure. Reworded against the onboarding plan.' },
+          { at: '2026-07-29T14:58:00Z', memberId: 'm-flow-reviewer',
+            text: 'Holding the sequence review until the import question is answered.' }
+        ],
+        reducer: { state: 'waiting', synthesisRef: 'artifact-tastebook-flow' },
+        reason: '2 concurrent across 2 waves · provider allowance and verification reserve'
+      }
     }
   ];
 
@@ -204,6 +337,53 @@
     }, LOAD_MS);
     return true;
   }
+  /* forceReady(id) -> boolean
+   *
+   * Collapses the simulated load latency and lands `ready` in the SAME tick, cancelling the pending
+   * timer so it cannot fire afterwards and re-enter `loading`.
+   *
+   * This exists because the demo director's `artifact.ready` trigger used to schedule an empty 0 ms
+   * callback and then leave the artifact in `loading` for the full LOAD_MS: the trigger claimed to
+   * produce a ready artifact and did not. A director step that names a state must ARRIVE at that
+   * state, both for the reviewer clicking it and for the probe asserting it, so the honest fix is a
+   * real synchronous transition rather than a shorter timeout.
+   *
+   * It deliberately ignores `failsFirstLoad`: a caller asking for ready is asking for ready, and the
+   * error path has its own director trigger. */
+  function forceReady(id) {
+    var def = catalogFor(id);
+    if (!def) return false;
+    clearTimer(id);
+    put(id, { state: 'ready', error: null, loadedAt: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z') });
+    return true;
+  }
+
+  /* frame(windowId) -> { switcher }
+   *
+   * The one thing the artifact panel must know about its host without knowing its layout. Each
+   * window places the workspace differently and therefore needs a different SWITCHER idiom — the
+   * ledger has a row list, the split desk has desk tabs, the focus column has a marker gutter, the
+   * command-bar concept has no artifact header at all and fuses its controls into the bottom band.
+   * Returning the idiom by name keeps placement with the window and body rendering with the panel,
+   * which is what lets one body renderer serve eight frames.
+   *
+   * An unknown id falls back to `rows`: a list of artifact titles is the only switcher that works
+   * in any container, so an unmapped window degrades to something usable rather than to nothing. */
+  var FRAMES = {
+    w1: { switcher: 'rows' },        /* ledger row list at the artifact head */
+    w2: { switcher: 'tabs' },        /* desk tabs across the head */
+    w3: { switcher: 'markers' },     /* vertical marker list in the artifact's own left gutter */
+    w4: { switcher: 'segments' },    /* pane sub-header segmented control */
+    w5: { switcher: 'band' },        /* the bottom command band owns the switcher; no artifact header */
+    w6: { switcher: 'sheettabs' },   /* the sheet tab row */
+    w7: { switcher: 'railpopup' },   /* a rail icon opens a long-list popup */
+    w8: { switcher: 'capsules' }     /* a small capsule strip above the artifact */
+  };
+
+  function frame(windowId) {
+    return FRAMES[windowId] || { switcher: 'rows' };
+  }
+
 
   function retry(id) {
     var rec = slice().byId[id];
@@ -291,6 +471,8 @@
     list: list,
     get: catalogFor,
     open: open,
+    forceReady: forceReady,
+    frame: frame,
     switchTo: switchTo,
     retry: retry,
     update: update,

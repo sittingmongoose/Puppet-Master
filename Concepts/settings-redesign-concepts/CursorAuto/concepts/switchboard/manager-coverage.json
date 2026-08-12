@@ -1,0 +1,242 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "concept_id": "concept-03-switchboard",
+  "model": "CursorAuto",
+  "packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "source_matrix": "MANAGER_COVERAGE_MATRIX.json (pm.settings_bakeoff_manager_coverage.v1)",
+  "groups": [
+    {
+      "id": "core",
+      "required_in": "all",
+      "managers": [
+        {
+          "name": "Settings Home",
+          "classification": "demonstrated",
+          "note": "Home destinations with search, notices, and metaphor cards; Media is not a primary Home destination."
+        },
+        {
+          "name": "Settings Search",
+          "classification": "demonstrated",
+          "note": "Typed search index with deep-link navigation into workspace rows or managers."
+        },
+        {
+          "name": "Settings Workspace",
+          "classification": "demonstrated",
+          "note": "Category/subcategory document with scrollspy, advanced disclosures, and reset."
+        },
+        {
+          "name": "Provider/Account/Model/Installation",
+          "classification": "demonstrated",
+          "note": "Multi-family Providers with installations lifecycle, auth routes, usage, catalog LKG, account priority."
+        },
+        {
+          "name": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "note": "Shared ca-row controls: select/toggle/number/text/action with override + receipt simulation."
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "required_in": "concept_1",
+      "managers": [
+        {
+          "name": "Context & Instructions",
+          "classification": "shared_grammar",
+          "note": "Context budget meter, instruction-chain panel, admit/pin/omit provenance actions \u2014 not rows alone."
+        },
+        {
+          "name": "Memory",
+          "classification": "shared_grammar",
+          "note": "Memory manager with filters, pin/forget, and scope badges (deep Harbor surface)."
+        },
+        {
+          "name": "Personas",
+          "classification": "shared_grammar",
+          "note": "Persona cards with activate/edit receipts."
+        },
+        {
+          "name": "Goal & Automation",
+          "classification": "shared_grammar",
+          "note": "Goal ceilings, soft-stop, reserve-for-synthesis toggles."
+        },
+        {
+          "name": "Crew",
+          "classification": "shared_grammar",
+          "note": "Crew roster with seat/policy actions."
+        },
+        {
+          "name": "Permissions & FileSafe",
+          "classification": "shared_grammar",
+          "note": "Rules list with last-match-wins and conflict badges."
+        },
+        {
+          "name": "Back Seat Driver",
+          "classification": "shared_grammar",
+          "note": "BSD admit/deny + last-turn admission toggle."
+        }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "required_in": "concept_2",
+      "managers": [
+        {
+          "name": "Notifications & Sounds",
+          "classification": "shared_grammar",
+          "note": "Channel enable + test-send with blocked-when-disabled."
+        },
+        {
+          "name": "Sound Library/Uploads/Packs",
+          "classification": "shared_grammar",
+          "note": "Events, packs, volume, preview/test waveform cues; blocked pack import states."
+        },
+        {
+          "name": "Appearance",
+          "classification": "shared_grammar",
+          "note": "Theme cards with hover preview crossfade, apply, export, schema-invalid diagnosis."
+        },
+        {
+          "name": "Spellcheck & Dictionaries",
+          "classification": "shared_grammar",
+          "note": "Personal/project dictionaries + never-auto-replace mode."
+        },
+        {
+          "name": "Desktop/Tray/Window",
+          "classification": "shared_grammar",
+          "note": "Tray/window/login toggles with Not configured tray probe and native shell receipts."
+        },
+        {
+          "name": "Teacher/Help",
+          "classification": "shared_grammar",
+          "note": "Tips, tours, and help topics with open/dismiss/start receipts."
+        }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "required_in": "concept_3",
+      "managers": [
+        {
+          "name": "File Manager/Editor",
+          "classification": "demonstrated",
+          "note": "Tree, large-file threshold, recovery test, associations, and diff/reveal policy."
+        },
+        {
+          "name": "Terminal",
+          "classification": "demonstrated",
+          "note": "Profiles with connect/restart/logs receipts."
+        },
+        {
+          "name": "LSP",
+          "classification": "demonstrated",
+          "note": "Discovered language servers with refresh/inspect/restart/remove."
+        },
+        {
+          "name": "Formatters",
+          "classification": "demonstrated",
+          "note": "Detected formatters resource grid with discovery refresh."
+        },
+        {
+          "name": "Commands & Shortcuts",
+          "classification": "demonstrated",
+          "note": "Command inventory with conflict resolve, rebind, history, and bloom retire/alias marker."
+        },
+        {
+          "name": "MCP",
+          "classification": "demonstrated",
+          "note": "Server cards with approval policy + reconnect simulation."
+        },
+        {
+          "name": "Skills",
+          "classification": "demonstrated",
+          "note": "Skills resource grid with permissions note + lifecycle actions."
+        },
+        {
+          "name": "Plugins",
+          "classification": "demonstrated",
+          "note": "Plugins resource grid with failed-visible state."
+        },
+        {
+          "name": "Tools",
+          "classification": "demonstrated",
+          "note": "Installed tools with approval policy note + lifecycle actions."
+        },
+        {
+          "name": "Testing & Debug",
+          "classification": "demonstrated",
+          "note": "Test/debug targets with run receipts."
+        }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "required_in": "concept_4",
+      "managers": [
+        {
+          "name": "Storage & Retention",
+          "classification": "shared_grammar",
+          "note": "Storage health + phased import/apply/rollback receipts."
+        },
+        {
+          "name": "Backup & Restore",
+          "classification": "shared_grammar",
+          "note": "Backup runs with verify badges + restore preview receipts."
+        },
+        {
+          "name": "Settings Lifecycle",
+          "classification": "shared_grammar",
+          "note": "Import conflict/legacy remap fixture with preview/apply/rollback phases."
+        },
+        {
+          "name": "History & Sessions",
+          "classification": "shared_grammar",
+          "note": "Session/history list with export/remove + staggered cards."
+        },
+        {
+          "name": "Runtime Artifacts",
+          "classification": "shared_grammar",
+          "note": "Artifact list with open/reveal/redact receipts."
+        },
+        {
+          "name": "Source Control/Worktrees",
+          "classification": "shared_grammar",
+          "note": "Worktrees + tool probe cards."
+        },
+        {
+          "name": "GitHub Actions",
+          "classification": "shared_grammar",
+          "note": "Workflow rows with open/reveal actions."
+        },
+        {
+          "name": "Containers & Registries",
+          "classification": "shared_grammar",
+          "note": "Container/registry cards with connect receipts."
+        },
+        {
+          "name": "Web/Search/Fetch",
+          "classification": "shared_grammar",
+          "note": "Fetch/search/extract cards with allowlist, provider-not-configured, limits, and guards."
+        },
+        {
+          "name": "Project Search Index",
+          "classification": "shared_grammar",
+          "note": "Observable rebuild phases with last-known-good serving during rebuild."
+        },
+        {
+          "name": "Workspace Cleanup",
+          "classification": "shared_grammar",
+          "note": "Dry-run cleanup with protected candidates, include/exclude, apply/undo phases."
+        },
+        {
+          "name": "Future Server Module Shell",
+          "classification": "deferred_named_owner",
+          "note": "Deferred named-owner insertion cards only \u2014 no fake bootstrap state machine.",
+          "owner": "Server Claim/Bootstrap / Project Sync (named deferred owner)"
+        }
+      ]
+    }
+  ],
+  "missing_count": 0,
+  "rule": "missing is a failure; deferred requires a named canonical owner and insertion contract"
+}

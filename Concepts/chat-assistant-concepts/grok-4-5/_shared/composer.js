@@ -1,4 +1,4 @@
-/* Shared Send/Stop + scripted fake-send sequencer. */
+/* Shared Send/Stop + scripted fake-send sequencer + composer harness states. */
 (function () {
   'use strict';
 
@@ -6,16 +6,42 @@
   var timersByThread = Object.create(null);
   var bindings = [];
 
+  var HARNESS_STATES = [
+    'ordinary',
+    'multiline',
+    'attachments',
+    'question-xor',
+    'redirect-active',
+    'offline-queued',
+    'provider-setup-required',
+    'cross-project-grant',
+    'spellcheck-suggestions',
+    'send-disabled'
+  ];
+
   function isRunning(store, threadId) {
     var run = store && store.demo && store.demo.runningByThread
       ? store.demo.runningByThread[threadId]
       : null;
-    return !!(run && !run.stopped);
+    if (!run || run.stopped) return false;
+    if (run.status === 'redirected' || run.status === 'interrupted') return true;
+    return true;
   }
 
   function draftText(store, threadId) {
     var t = store && store.threads && store.threads[threadId];
     return t && t.draft && t.draft.text != null ? String(t.draft.text) : '';
+  }
+
+  function activeLocal(store, threadId) {
+    if (store && typeof store.getThreadLocal === 'function' && threadId) {
+      return store.getThreadLocal(threadId);
+    }
+    if (store && typeof store.getActiveLocal === 'function') {
+      return store.getActiveLocal();
+    }
+    var t = store && store.threads && store.threads[threadId];
+    return (t && t.localState) || null;
   }
 
   function clearTimers(threadId) {
@@ -50,6 +76,200 @@
       return 'stop';
     }
     return 'send';
+  }
+
+  /**
+   * Derive composer harness/presentation state for demo + chrome.
+   */
+  function composerState(store, threadId) {
+    var session = store && store.session;
+    var run =
+      store && store.demo && store.demo.runningByThread
+        ? store.demo.runningByThread[threadId]
+        : null;
+    var thread = store && store.threads && store.threads[threadId];
+    var local = activeLocal(store, threadId);
+    var q =
+      store && typeof store.getActiveQuestionnaire === 'function'
+        ? store.getActiveQuestionnaire(threadId)
+        : null;
+
+    if (q) return { id: 'question-xor', reason: 'Questionnaire active · composer hidden' };
+    if (session && session.composerState && HARNESS_STATES.indexOf(session.composerState) >= 0) {
+      return {
+        id: session.composerState,
+        reason: session.composerStateReason || session.sendDisabledReason || ''
+      };
+    }
+    if (session && session.providerSetupRequired) {
+      return {
+        id: 'provider-setup-required',
+        reason:
+          session.providerSetupRequired.reason ||
+          session.providerSetupRequired.message ||
+          'Provider setup required'
+      };
+    }
+    if (session && session.crossProjectGrant) {
+      return {
+        id: 'cross-project-grant',
+        reason: session.crossProjectGrant.text || 'Cross-project grant required'
+      };
+    }
+    if (run && (run.status === 'redirected' || run.status === 'interrupted' || run.redirectText)) {
+      return {
+        id: 'redirect-active',
+        reason: run.badge || 'Interrupted → Redirected',
+        badge: run.badge || 'Interrupted → Redirected'
+      };
+    }
+    if (session && session.sync && session.sync.state === 'offline') {
+      var hasQueued =
+        Array.isArray(session.outbox) &&
+        session.outbox.some(function (row) {
+          return row && row.status === 'queued';
+        });
+      return {
+        id: 'offline-queued',
+        reason: hasQueued ? 'Queued to send' : 'Offline · messages queue to outbox'
+      };
+    }
+    if (session && session.sendDisabledReason) {
+      return { id: 'send-disabled', reason: String(session.sendDisabledReason) };
+    }
+    var atts = thread && thread.draft && thread.draft.attachments;
+    if (atts && atts.length) return { id: 'attachments', reason: '' };
+    var text = draftText(store, threadId);
+    if (text.indexOf('\n') >= 0) return { id: 'multiline', reason: '' };
+    if (local && local.spellcheckEnabled !== false && session && session.spellcheckSuggestions) {
+      return { id: 'spellcheck-suggestions', reason: '' };
+    }
+    return { id: 'ordinary', reason: '' };
+  }
+
+  function applyComposerState(rootOrComposer, store, threadId) {
+    var el =
+      rootOrComposer && rootOrComposer.getAttribute
+        ? rootOrComposer
+        : null;
+    if (!el) return null;
+    var target = el.matches && el.matches('[data-composer]') ? el : el.querySelector && el.querySelector('[data-composer]');
+    if (!target) target = el;
+    var st = composerState(store, threadId);
+    target.setAttribute('data-composer-state', st.id);
+    if (st.reason) target.setAttribute('data-composer-reason', st.reason);
+    else target.removeAttribute('data-composer-reason');
+    target.classList.toggle('is-redirect-active', st.id === 'redirect-active');
+    target.classList.toggle('is-offline-queued', st.id === 'offline-queued');
+    target.classList.toggle('is-provider-setup', st.id === 'provider-setup-required');
+    target.classList.toggle('is-cross-project', st.id === 'cross-project-grant');
+    target.classList.toggle('is-send-disabled', st.id === 'send-disabled');
+
+    var badgeHost = target.querySelector('[data-redirect-badge]') || null;
+    if (st.id === 'redirect-active') {
+      if (!badgeHost) {
+        badgeHost = document.createElement('div');
+        badgeHost.className = 'pm-redirect-badge';
+        badgeHost.setAttribute('data-redirect-badge', '1');
+        target.insertBefore(badgeHost, target.firstChild);
+      }
+      badgeHost.textContent = st.badge || st.reason || 'Interrupted → Redirected';
+      badgeHost.hidden = false;
+    } else if (badgeHost) {
+      badgeHost.hidden = true;
+    }
+
+    var reasonHost = target.querySelector('[data-composer-state-reason]');
+    if (st.reason && st.id !== 'redirect-active') {
+      if (!reasonHost) {
+        reasonHost = document.createElement('div');
+        reasonHost.className = 'pm-composer-state-reason';
+        reasonHost.setAttribute('data-composer-state-reason', '1');
+        target.appendChild(reasonHost);
+      }
+      reasonHost.textContent = st.reason;
+      reasonHost.hidden = false;
+    } else if (reasonHost) {
+      reasonHost.hidden = true;
+    }
+
+    var input = target.querySelector('[data-composer-input]');
+    if (input) {
+      var local = activeLocal(store, threadId);
+      var enabled = !(local && local.spellcheckEnabled === false);
+      input.setAttribute('spellcheck', enabled ? 'true' : 'false');
+    }
+
+    var btn = target.querySelector('[data-composer-button]');
+    if (btn && (st.id === 'send-disabled' || st.id === 'provider-setup-required')) {
+      btn.setAttribute('disabled', 'disabled');
+      btn.setAttribute('aria-disabled', 'true');
+      btn.title = st.reason || 'Send disabled';
+      btn.setAttribute(
+        'aria-description',
+        st.id === 'provider-setup-required'
+          ? 'Provider setup required · choose another model or repair in Settings'
+          : st.reason || 'Send disabled'
+      );
+    } else if (btn) {
+      btn.removeAttribute('disabled');
+      btn.removeAttribute('aria-disabled');
+      btn.removeAttribute('aria-description');
+    }
+
+    var actionHost = target.querySelector('[data-provider-setup-actions]');
+    if (st.id === 'provider-setup-required') {
+      if (!actionHost) {
+        actionHost = document.createElement('div');
+        actionHost.className = 'pm-provider-setup-actions';
+        actionHost.setAttribute('data-provider-setup-actions', '1');
+        actionHost.innerHTML =
+          '<button type="button" class="pm-btn" data-provider-setup-choose>Choose another model</button>' +
+          '<button type="button" class="pm-btn pm-btn-ghost" data-provider-setup-settings>Settings ownership</button>';
+        target.appendChild(actionHost);
+        actionHost.addEventListener('click', function (ev) {
+          var choose = ev.target.closest('[data-provider-setup-choose]');
+          var settings = ev.target.closest('[data-provider-setup-settings]');
+          var sess = store && store.session;
+          if (choose && sess) {
+            sess.providerSetupRequired = null;
+            if (sess.composerState === 'provider-setup-required') {
+              sess.composerState = 'ordinary';
+              sess.composerStateReason = '';
+            }
+            if (
+              sess.sendDisabledReason &&
+              String(sess.sendDisabledReason).indexOf('Provider setup') >= 0
+            ) {
+              sess.sendDisabledReason = '';
+            }
+            if (store._emit) store._emit();
+            var modelTrigger =
+              document.querySelector('.pm-chat-selector[data-selector="model"] .pm6-tb-menu-trigger') ||
+              document.querySelector('[data-selector="model"] .pm6-tb-menu-trigger');
+            if (modelTrigger && typeof modelTrigger.click === 'function') {
+              window.setTimeout(function () {
+                modelTrigger.click();
+              }, 30);
+            }
+            return;
+          }
+          if (settings) {
+            var msg =
+              'Provider & account managers · owned by Settings · deep-link not wired in this concept';
+            if (window.PMChatMotion && typeof window.PMChatMotion.toast === 'function') {
+              window.PMChatMotion.toast(msg, 2400);
+            } else if (window.PMChatHost && typeof window.PMChatHost.toast === 'function') {
+              window.PMChatHost.toast(msg);
+            }
+          }
+        });
+      }
+      actionHost.hidden = false;
+    } else if (actionHost) {
+      actionHost.hidden = true;
+    }
+    return st;
   }
 
   /**
@@ -119,94 +339,113 @@
         ? run.stopResultBody
         : run.reply && run.reply.stopResultBody != null
           ? run.reply.stopResultBody
-          : 'Stopped before completion.';
-    var msg = store.appendStoppedResult(threadId, stopBody);
+          : 'Stopped.';
+    if (typeof store.appendStoppedResult === 'function') {
+      store.appendStoppedResult(threadId, stopBody);
+    }
     store.setRunning(threadId, null);
-    return msg;
+    return stopBody;
   }
 
   function finishReply(store, threadId, reply) {
     clearTimers(threadId);
-    if (!isRunning(store, threadId)) return;
-    store.appendAssistantFromReply(threadId, reply);
-    store.advanceScriptedCursor(threadId);
+    if (typeof store.appendAssistantFromReply === 'function') {
+      store.appendAssistantFromReply(threadId, reply);
+    }
+    store.setRunning(threadId, null);
   }
 
   function startScriptedRun(store, threadId, reply) {
     clearTimers(threadId);
-    var sequence = Array.isArray(reply.workingSummarySequence)
-      ? reply.workingSummarySequence.slice()
-      : ['Working'];
-    var durations = Array.isArray(reply.stepDurationsMs) ? reply.stepDurationsMs.slice() : [];
-    var step = 0;
+    var steps = (reply && reply.activity) || [];
+    var i = 0;
+    store.setRunning(threadId, {
+      status: 'running',
+      reply: reply,
+      partialBody: '',
+      stopped: false
+    });
 
     function putRunning(summary) {
+      var cur = store.demo.runningByThread[threadId] || {};
       store.setRunning(threadId, {
-        active: true,
-        stopped: false,
-        step: step,
-        summary: summary,
-        workingSummary: summary,
-        stopResultBody: reply.stopResultBody || 'Stopped before completion.',
-        replyId: reply.id || null,
+        status: 'running',
         reply: reply,
-        timeoutIds: (timersByThread[threadId] || []).slice()
+        partialBody: cur.partialBody || '',
+        activitySummary: summary,
+        stopped: false
       });
-      mirrorTimeouts(store, threadId);
     }
-
-    putRunning(sequence[0] || 'Working');
 
     function advance() {
       if (!isRunning(store, threadId)) return;
-      step += 1;
-      if (step >= sequence.length) {
+      if (i >= steps.length) {
         finishReply(store, threadId, reply);
         return;
       }
-      putRunning(sequence[step] || sequence[sequence.length - 1]);
-      var wait = durations[step] != null ? durations[step] : durations[durations.length - 1] || 650;
-      schedule(store, threadId, wait, advance);
+      var step = steps[i++];
+      putRunning(step && (step.summary || step.label || step.kind) || 'Working');
+      schedule(store, threadId, (step && step.ms) || 420, advance);
     }
 
-    var firstWait = durations[0] != null ? durations[0] : 650;
-    schedule(store, threadId, firstWait, advance);
+    if (!steps.length) {
+      schedule(store, threadId, 360, function () {
+        finishReply(store, threadId, reply);
+      });
+      return;
+    }
+    advance();
   }
 
   function send(store, threadId) {
-    var text = String(draftText(store, threadId) || '');
-    var trimmed = text.trim();
-    var running = isRunning(store, threadId);
-    var thread = store.threads && store.threads[threadId];
-    var editingId =
-      thread && thread.draft && thread.draft.editingMessageId
-        ? thread.draft.editingMessageId
-        : null;
+    var st = composerState(store, threadId);
+    if (st.id === 'send-disabled' || st.id === 'provider-setup-required') {
+      return null;
+    }
+    if (st.id === 'question-xor') return null;
+
+    var text = draftText(store, threadId);
+    var trimmed = String(text || '').trim();
+    var thread = store.threads[threadId];
+    var editingId = thread && thread.draft && thread.draft.editingMessageId;
 
     if (editingId && trimmed && typeof store.applyEditedMessageRewind === 'function') {
-      store.pushDraftRevision(threadId);
-      var edited = store.applyEditedMessageRewind(threadId, editingId, text);
-      var reply = store.getNextScriptedReply(threadId);
-      if (reply) startScriptedRun(store, threadId, reply);
-      else store.setRunning(threadId, null);
-      return edited;
+      store.applyEditedMessageRewind(threadId, editingId, text);
+      return { edited: true };
     }
 
-    if (running) {
-      /* Typing while running → button is Send; append without stopping. */
-      if (!trimmed) return null;
-      store.pushDraftRevision(threadId);
-      var queued = store.appendUserMessage(threadId, text);
-      store.clearDraft(threadId);
-      return queued;
+    if (isRunning(store, threadId) && trimmed) {
+      /* Typing while running → button is Send; append without stopping.
+         Active-turn redirect path when an attempt is live. */
+      if (typeof store.redirectActiveTurn === 'function') {
+        var redirected = store.redirectActiveTurn(threadId, trimmed);
+        schedule(store, threadId, 500, function () {
+          if (typeof store.markRedirectResumed === 'function') {
+            store.markRedirectResumed(threadId);
+          }
+          var reply = store.getNextScriptedReply && store.getNextScriptedReply(threadId);
+          if (reply) startScriptedRun(store, threadId, reply);
+          else store.setRunning(threadId, null);
+        });
+        return redirected;
+      }
     }
 
     if (!trimmed) return null;
 
-    store.pushDraftRevision(threadId);
-    var userMsg = store.appendUserMessage(threadId, text);
-    store.clearDraft(threadId);
+    if (st.id === 'offline-queued' && typeof store.enqueueOutbox === 'function') {
+      store.enqueueOutbox({
+        id: 'ob-send-' + Date.now().toString(36),
+        kind: 'send',
+        payload: { threadId: threadId, text: trimmed },
+        status: 'queued'
+      });
+      store.setDraft(threadId, { text: '' });
+      return { queued: true };
+    }
 
+    var userMsg = store.appendUserMessage(threadId, trimmed);
+    store.setDraft(threadId, { text: '' });
     var replyNew = store.getNextScriptedReply(threadId);
     if (!replyNew) {
       store.setRunning(threadId, null);
@@ -221,7 +460,8 @@
     var els = getComposerEls() || {};
     return {
       input: els.input || els.textarea || els.composerInput || null,
-      button: els.button || els.sendButton || els.composerButton || null
+      button: els.button || els.sendButton || els.composerButton || null,
+      root: els.root || els.composer || null
     };
   }
 
@@ -248,6 +488,8 @@
       var tid = activeThreadId();
       if (!tid) return;
       applyButtonMode(els.button, buttonMode(store, tid));
+      var host = els.root || (els.input && els.input.closest && els.input.closest('[data-composer]'));
+      if (host) applyComposerState(host, store, tid);
     }
 
     function refreshUi() {
@@ -277,6 +519,8 @@
           ev.preventDefault();
           var tid = activeThreadId();
           if (!tid) return;
+          var st = composerState(store, tid);
+          if (st.id === 'send-disabled' || st.id === 'provider-setup-required') return;
           if (buttonMode(store, tid) === 'stop') stop(store, tid);
           else send(store, tid);
         });
@@ -286,6 +530,8 @@
         els.button.addEventListener('click', function () {
           var tid = activeThreadId();
           if (!tid) return;
+          var st = composerState(store, tid);
+          if (st.id === 'send-disabled' || st.id === 'provider-setup-required') return;
           if (buttonMode(store, tid) === 'stop') stop(store, tid);
           else send(store, tid);
         });
@@ -310,6 +556,9 @@
     bind: bind,
     buttonMode: buttonMode,
     applyButtonMode: applyButtonMode,
+    composerState: composerState,
+    applyComposerState: applyComposerState,
+    HARNESS_STATES: HARNESS_STATES,
     send: send,
     stop: stop,
     onInput: onInput

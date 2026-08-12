@@ -84,6 +84,58 @@
     };
   }
 
+
+  function defaultThreadLocalState(src) {
+    var s = src && typeof src === 'object' ? src : {};
+    var bsdSrc = s.bsd && typeof s.bsd === 'object' ? s.bsd : {};
+    return {
+      providerId: s.providerId != null ? String(s.providerId) : 'xai',
+      accountId: s.accountId != null ? String(s.accountId) : 'work',
+      connectionId: s.connectionId != null ? String(s.connectionId) : 'cli:work',
+      modelId: s.modelId != null ? String(s.modelId) : 'grok-4-5',
+      personaId: s.personaId != null ? String(s.personaId) : 'interface-engineer',
+      effortId: s.effortId != null ? String(s.effortId) : 'high',
+      speedMode: s.speedMode === 'fast' ? 'fast' : 'normal',
+      modeId: s.modeId != null ? String(s.modeId) : 'agent',
+      accessProfile:
+        s.accessProfile === 'auto-edits' ||
+        s.accessProfile === 'auto' ||
+        s.accessProfile === 'full'
+          ? s.accessProfile
+          : 'ask',
+      bsd: {
+        mode: bsdSrc.mode === 'off' || bsdSrc.mode === 'on' ? bsdSrc.mode : 'auto',
+        scope: bsdSrc.scope === 'turn' ? 'turn' : 'thread',
+        visual: bsdSrc.visual != null ? String(bsdSrc.visual) : 'auto-idle',
+        adviceId: bsdSrc.adviceId != null ? bsdSrc.adviceId : null
+      },
+      crewId: s.crewId != null ? String(s.crewId) : '',
+      worktreeId: s.worktreeId != null ? s.worktreeId : null,
+      spellcheckEnabled: s.spellcheckEnabled == null ? true : Boolean(s.spellcheckEnabled),
+      frozen: Boolean(s.frozen)
+    };
+  }
+
+  function sessionDefaultsAsLocal(sessionLike) {
+    var s = sessionLike || {};
+    return defaultThreadLocalState({
+      providerId: s.providerId,
+      accountId: s.accountId,
+      connectionId: s.connectionId || 'cli:work',
+      modelId: s.modelId,
+      personaId: s.personaId,
+      effortId: s.effortId,
+      speedMode: s.speedMode,
+      modeId: s.modeId,
+      accessProfile: s.accessProfile,
+      crewId: s.crewId,
+      worktreeId: s.worktreeId,
+      spellcheckEnabled: s.spellcheckEnabled,
+      frozen: false,
+      bsd: { mode: 'auto', scope: 'thread', visual: 'auto-idle', adviceId: null }
+    });
+  }
+
   function defaultThreadUi(goal) {
     return {
       scrollAnchor: null,
@@ -110,6 +162,35 @@
     return out;
   }
 
+  function normalizeGoalCapabilities(goal) {
+    if (!goal) return null;
+    var status = String(goal.status || '');
+    if (status === 'running' || status === 'updated_replan' || status === 'replanning') {
+      goal.canPause = true;
+      goal.canResume = false;
+      goal.canStop = true;
+      goal.canClear = true;
+      goal.canReplan = true;
+      if (goal.canEdit !== false) goal.canEdit = true;
+    } else if (status === 'paused' || status === 'blocked') {
+      goal.canPause = false;
+      goal.canResume = true;
+      goal.canStop = true;
+      goal.canClear = true;
+      goal.canReplan = true;
+      if (goal.canEdit !== false) goal.canEdit = true;
+    } else if (status === 'stopped' || status === 'completed') {
+      goal.canPause = false;
+      goal.canResume = false;
+      goal.canStop = false;
+      goal.canClear = true;
+      goal.canReplan = false;
+    } else if (goal.canReplan == null) {
+      goal.canReplan = true;
+    }
+    return goal;
+  }
+
   function hydrateThread(src) {
     var messages = clone(src.messages || []);
     var goal = src.activeGoal
@@ -117,6 +198,7 @@
       : src.goal
         ? clone(src.goal)
         : null;
+    goal = normalizeGoalCapabilities(goal);
     var todos = null;
     if (src.todo) todos = clone(src.todo);
     else if (src.todos) todos = clone(src.todos);
@@ -155,7 +237,9 @@
       initialVisibleMessageCount:
         src.initialVisibleMessageCount != null
           ? src.initialVisibleMessageCount | 0
-          : messages.length
+          : messages.length,
+      localState: defaultThreadLocalState(src.localState),
+      restorePoints: clone(src.restorePoints || [])
     };
   }
 
@@ -245,6 +329,7 @@
       accessProfile: 'ask',
       providerId: 'xai',
       accountId: 'work',
+      connectionId: 'cli:work',
       crewId: '',
       crewDefaultPrompted: false,
       crewConfirmOpen: false,
@@ -267,8 +352,32 @@
       approval: null,
       warning: null,
       compactNow: { status: 'idle', progress: 0 },
-      spellcheckEnabled: true
+      spellcheckEnabled: true,
+      accessLimitedBy: null,
+      connectionId: 'cli:work',
+      sync: {
+        state: 'live',
+        routeLabel: 'Home Server · This Windows computer',
+        cursor: 0
+      },
+      outbox: [],
+      notifications: []
     };
+
+    function srcHasLocal(list, key) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] && list[i].id === key && list[i].localState) return true;
+      }
+      return false;
+    }
+    threadKeys.forEach(function (key) {
+      var t = threads[key];
+      if (!t) return;
+      if (!srcHasLocal(threadList, key)) {
+        t.localState = sessionDefaultsAsLocal(session);
+      }
+    });
+
 
     var search = {
       query: '',
@@ -377,20 +486,32 @@
 
     function appendUserMessage(threadId, text) {
       var t = requireThread(threadId);
+      ensureLocal(threadId);
       var body = text == null ? '' : String(text);
+      var offline = session.sync && session.sync.state === 'offline';
       var msg = {
         id: nextMessageId(t),
         role: 'user',
         body: body,
         sentAt: nowIso(),
-        runtime: null,
+        runtime: offline ? { delivery: 'queued' } : null,
         eligibleForEdit: true,
         collapsedByDefault: body.length > 900
       };
       t.messages.push(msg);
       t.updatedAt = msg.sentAt;
       t.draft = emptyDraft();
-      emit();
+      if (offline) {
+        enqueueOutbox({
+          id: 'ob-send-' + msg.id,
+          kind: 'send',
+          payload: { threadId: threadId, messageId: msg.id, text: body },
+          status: 'queued',
+          createdAt: msg.sentAt
+        });
+      } else {
+        emit();
+      }
       return msg;
     }
 
@@ -624,11 +745,18 @@
       emit();
     }
 
-    function goalAction(threadId, action) {
+    function applyGoalCapabilities(threadId) {
+      var t = threads[threadId];
+      if (!t || !t.goal) return null;
+      return normalizeGoalCapabilities(t.goal);
+    }
+
+    function goalAction(threadId, action, payload) {
       var t = requireThread(threadId);
       var act = String(action || '');
       var g = t.goal;
       var threadUi = ensureUi(threadId);
+      payload = payload || {};
 
       if (act === 'toggleExpand') {
         if (g) g.expanded = !g.expanded;
@@ -640,25 +768,17 @@
 
       if (act === 'pause') {
         g.status = 'paused';
-        g.canPause = false;
-        g.canResume = true;
-        g.canStop = true;
-        g.canClear = true;
       } else if (act === 'resume') {
         g.status = 'running';
-        g.canPause = true;
-        g.canResume = false;
-        g.canStop = true;
-        g.canClear = true;
       } else if (act === 'stop') {
         g.status = 'stopped';
-        g.canPause = false;
-        g.canResume = false;
-        g.canStop = false;
-        g.canClear = true;
+      } else if (act === 'complete') {
+        g.status = 'completed';
       } else if (act === 'clear') {
         t.goal = null;
         threadUi.goalExpanded = false;
+        emit();
+        return;
       } else if (act === 'edit') {
         g.expanded = true;
         threadUi.goalExpanded = true;
@@ -668,21 +788,27 @@
       } else if (act === 'edit-cancel') {
         g.editing = false;
       } else if (act === 'edit-save') {
-        /* Objective text applied by UI before calling; keep flag clear. */
+        if (payload.objective != null) {
+          g.objective = String(payload.objective);
+        }
+        if (payload.title != null) {
+          g.title = String(payload.title);
+        } else if (payload.objective != null) {
+          var trimmedObj = String(payload.objective || '').trim().slice(0, 80);
+          if (trimmedObj) g.title = trimmedObj;
+        }
         g.editing = false;
         g.expanded = true;
         threadUi.goalExpanded = true;
       } else if (act === 'replan') {
-        g.status = 'replanning';
+        g.status = 'running';
+        g.phase = 'Replan';
         g.replanNote =
-          'Replan is provisional in this concept (GAP-009) — no planner run; edit the goal or tasks yourself.';
+          'Replan drafted in Chat · edit the objective or tasks to continue. Final planner command IDs remain catalog-owned (GAP-020).';
         g.expanded = true;
         threadUi.goalExpanded = true;
-        g.canPause = false;
-        g.canResume = true;
-        g.canStop = true;
-        g.canClear = true;
       }
+      if (t.goal) normalizeGoalCapabilities(t.goal);
       emit();
     }
 
@@ -837,31 +963,88 @@
       emit();
     }
 
+    var THREAD_LOCAL_SELECTOR_KEYS = {
+      personaId: true,
+      modelId: true,
+      modeId: true,
+      effortId: true,
+      speedMode: true,
+      accessProfile: true,
+      providerId: true,
+      accountId: true,
+      connectionId: true,
+      crewId: true,
+      worktreeId: true,
+      spellcheckEnabled: true,
+    };
+
+    function ensureLocal(threadId) {
+      var t = requireThread(threadId);
+      if (!t.localState) t.localState = sessionDefaultsAsLocal(session);
+      if (!t.restorePoints) t.restorePoints = [];
+      return t.localState;
+    }
+
+    function getThreadLocal(threadId) {
+      return clone(ensureLocal(threadId));
+    }
+
+    function getActiveLocal() {
+      var key = session.activeThreadKey;
+      if (!key || !threads[key]) return sessionDefaultsAsLocal(session);
+      return ensureLocal(key);
+    }
+
+    function setThreadLocal(threadId, patch) {
+      var local = ensureLocal(threadId);
+      var p = patch && typeof patch === 'object' ? patch : {};
+      Object.keys(p).forEach(function (k) {
+        if (k === 'bsd' && p.bsd && typeof p.bsd === 'object') {
+          local.bsd = Object.assign({}, local.bsd, clone(p.bsd));
+          return;
+        }
+        if (k === 'frozen') {
+          local.frozen = Boolean(p.frozen);
+          return;
+        }
+        if (k in local || THREAD_LOCAL_SELECTOR_KEYS[k]) {
+          local[k] = p[k];
+        }
+      });
+      emit();
+      return clone(local);
+    }
+
+    function applyProjectDefaultsToThread(threadId, force) {
+      var t = requireThread(threadId);
+      var local = ensureLocal(threadId);
+      if (local.frozen && !force) return clone(local);
+      var next = sessionDefaultsAsLocal(session);
+      next.frozen = local.frozen;
+      next.bsd = clone(local.bsd);
+      t.localState = next;
+      emit();
+      return clone(next);
+    }
+
     function setSelector(key, value) {
-      var allowed = {
-        personaId: true,
-        modelId: true,
-        modeId: true,
-        effortId: true,
-        speedMode: true,
-        accessProfile: true,
-        providerId: true,
-        accountId: true,
-        crewId: true,
-        worktreeId: true,
+      var sessionOnly = {
         keepThoughtExpandedWhileActive: true,
         activeThreadKey: true,
         historyPinned: true,
         historyMode: true,
-        spellcheckEnabled: true
+        favoritesModelIds: true,
+        defaultModelId: true,
+        threadModelOverride: true,
+        accessLimitedBy: true
       };
-      if (!allowed[key]) return;
+      if (!THREAD_LOCAL_SELECTOR_KEYS[key] && !sessionOnly[key]) return;
       if (key === 'activeThreadKey') {
         selectThread(value);
         return;
       }
       if (key === 'historyPinned') {
-        session.historyPinned = !!value;
+        session.historyPinned = Boolean(value);
         session.historyMode = value ? 'pinned_full' : 'closed';
         emit();
         return;
@@ -870,8 +1053,289 @@
         setHistoryMode(value);
         return;
       }
+      if (THREAD_LOCAL_SELECTOR_KEYS[key]) {
+        var tid = session.activeThreadKey;
+        if (tid && threads[tid]) {
+          ensureLocal(tid)[key] = value;
+          if (!ensureLocal(tid).frozen) session[key] = value;
+        } else {
+          session[key] = value;
+        }
+        if (key === 'modelId') {
+          if (!session.defaultModelId) session.defaultModelId = 'grok-4-5';
+          if (value && value !== session.defaultModelId) session.threadModelOverride = value;
+          else session.threadModelOverride = null;
+        }
+        emit();
+        return;
+      }
       session[key] = value;
       emit();
+    }
+
+
+    function setBsd(threadId, opts) {
+      var local = ensureLocal(threadId);
+      var o = opts || {};
+      if (o.mode === 'off' || o.mode === 'auto' || o.mode === 'on') local.bsd.mode = o.mode;
+      if (o.scope === 'turn' || o.scope === 'thread') local.bsd.scope = o.scope;
+      if (local.bsd.mode === 'off') local.bsd.visual = 'off';
+      else if (local.bsd.mode === 'on') local.bsd.visual = 'on';
+      else if (local.bsd.visual === 'off' || local.bsd.visual === 'on') local.bsd.visual = 'auto-idle';
+      emit();
+      return clone(local.bsd);
+    }
+
+    function setBsdVisual(threadId, visual) {
+      var local = ensureLocal(threadId);
+      local.bsd.visual = String(visual || 'off');
+      emit();
+      return local.bsd.visual;
+    }
+
+    function createRestorePoint(threadId, messageId, label) {
+      var t = requireThread(threadId);
+      ensureLocal(threadId);
+      var msgId = String(messageId || '');
+      var found = null;
+      for (var i = 0; i < t.messages.length; i++) {
+        if (t.messages[i].id === msgId) {
+          found = t.messages[i];
+          break;
+        }
+      }
+      if (!found) throw new Error('Unknown message: ' + msgId);
+      var id = 'rp-' + Date.now().toString(36) + '-' + String(t.restorePoints.length + 1);
+      var rp = {
+        id: id,
+        threadId: threadId,
+        messageId: msgId,
+        label: label != null && String(label).trim() ? String(label).trim() : 'Restore point',
+        createdAt: nowIso(),
+        messageIndex: t.messages.indexOf(found)
+      };
+      t.restorePoints.push(rp);
+      emit();
+      return id;
+    }
+
+    function rewindTo(threadId, messageIdOrRestorePointId) {
+      var t = requireThread(threadId);
+      ensureLocal(threadId);
+      var target = String(messageIdOrRestorePointId || '');
+      var via = 'message';
+      for (var r = 0; r < (t.restorePoints || []).length; r++) {
+        if (t.restorePoints[r].id === target) {
+          target = t.restorePoints[r].messageId;
+          via = 'restore-point';
+          break;
+        }
+      }
+      var idx = -1;
+      for (var i = 0; i < t.messages.length; i++) {
+        if (t.messages[i].id === target) {
+          idx = i;
+          break;
+        }
+      }
+      if (idx < 0) throw new Error('Unknown rewind target: ' + messageIdOrRestorePointId);
+      var removed = t.messages.slice(idx + 1);
+      t.messages = t.messages.slice(0, idx + 1);
+      demo.runningByThread[threadId] = null;
+      t.updatedAt = nowIso();
+      emit();
+      return { messageId: target, via: via, removedCount: removed.length };
+    }
+
+    function redirectActiveTurn(threadId, text) {
+      var t = requireThread(threadId);
+      ensureLocal(threadId);
+      var running = demo.runningByThread[threadId];
+      var partial = '';
+      var attemptId = 'attempt-' + Date.now().toString(36);
+      if (running && running.partialBody) partial = String(running.partialBody);
+      else if (running && running.body) partial = String(running.body);
+      var original = {
+        id: attemptId,
+        status: 'interrupted',
+        partialBody: partial,
+        interruptedAt: nowIso()
+      };
+      var redirectText = text == null ? '' : String(text);
+      var redirectMsg = {
+        id: nextMessageId(t),
+        role: 'user',
+        body: redirectText,
+        sentAt: nowIso(),
+        runtime: { kind: 'redirect', attemptId: attemptId },
+        eligibleForEdit: true,
+        collapsedByDefault: false
+      };
+      t.messages.push(redirectMsg);
+      demo.runningByThread[threadId] = {
+        status: 'redirected',
+        attemptId: attemptId,
+        original: original,
+        redirectText: redirectText,
+        partialBody: partial,
+        badge: 'Interrupted → Redirected',
+        resumed: false
+      };
+      t.draft = emptyDraft();
+      t.updatedAt = nowIso();
+      if (session.sync && session.sync.state === 'offline') {
+        enqueueOutbox({
+          id: 'ob-redirect-' + attemptId,
+          kind: 'redirect',
+          payload: { threadId: threadId, text: redirectText, attemptId: attemptId },
+          status: 'queued',
+          createdAt: nowIso()
+        });
+      }
+      emit();
+      return { attemptId: attemptId, messageId: redirectMsg.id, partialBody: partial };
+    }
+
+    function markRedirectResumed(threadId) {
+      var running = demo.runningByThread[threadId];
+      if (!running || !running.attemptId) return null;
+      running.status = 'resumed';
+      running.resumed = true;
+      running.badge = 'Interrupted → Redirected → Resumed';
+      emit();
+      return clone(running);
+    }
+
+    function enqueueOutbox(item) {
+      if (!session.outbox) session.outbox = [];
+      var row = {
+        id: item && item.id ? String(item.id) : 'ob-' + Date.now().toString(36),
+        kind: item && item.kind ? item.kind : 'send',
+        payload: item && 'payload' in item ? clone(item.payload) : null,
+        status: item && item.status ? item.status : 'queued',
+        createdAt: (item && item.createdAt) || nowIso()
+      };
+      for (var i = 0; i < session.outbox.length; i++) {
+        if (session.outbox[i].id === row.id) {
+          return clone(session.outbox[i]);
+        }
+      }
+      session.outbox.push(row);
+      emit();
+      return clone(row);
+    }
+
+    function replayOutbox() {
+      if (!session.outbox) session.outbox = [];
+      var replayed = [];
+      session.outbox.forEach(function (row) {
+        if (!row || row.status !== 'queued') return;
+        row.status = 'sending';
+        row.status = 'acked';
+        row.ackedAt = nowIso();
+        replayed.push(row.id);
+      });
+      if (session.sync && (session.sync.state === 'reconnecting' || session.sync.state === 'replay' || session.sync.state === 'offline')) {
+        session.sync.state = 'live';
+      }
+      emit();
+      return replayed;
+    }
+
+    function setSyncState(state) {
+      if (!session.sync) {
+        session.sync = {
+          state: 'live',
+          routeLabel: 'Home Server · This Windows computer',
+          cursor: 0
+        };
+      }
+      var allowed = {
+        live: 1,
+        cached: 1,
+        synchronizing: 1,
+        offline: 1,
+        reconnecting: 1,
+        replay: 1,
+        snapshot: 1,
+        'server-work-continuing': 1
+      };
+      if (!allowed[state]) return session.sync.state;
+      session.sync.state = state;
+      emit();
+      return session.sync.state;
+    }
+
+    function pushNotification(n) {
+      if (!session.notifications) session.notifications = [];
+      var row = {
+        id: n && n.id ? String(n.id) : 'ntf-' + Date.now().toString(36),
+        title: n && n.title != null ? String(n.title) : 'Notification',
+        body: n && n.body != null ? String(n.body) : '',
+        tone: n && n.tone ? n.tone : 'info',
+        read: Boolean(n && n.read),
+        createdAt: (n && n.createdAt) || nowIso()
+      };
+      session.notifications.unshift(row);
+      emit();
+      return clone(row);
+    }
+
+    function markNotificationRead(id) {
+      if (!session.notifications) return false;
+      var found = false;
+      session.notifications.forEach(function (n) {
+        if (n && n.id === id) {
+          n.read = true;
+          found = true;
+        }
+      });
+      if (found) emit();
+      return found;
+    }
+
+    function resolveAttachment(fileMeta) {
+      var meta = fileMeta && typeof fileMeta === 'object' ? fileMeta : { name: String(fileMeta || 'file') };
+      var name = String(meta.name || meta.filename || 'file');
+      var mime = String(meta.mime || meta.type || '').toLowerCase();
+      var ext = (name.split('.').pop() || '').toLowerCase();
+      var result;
+      if (/^(png|jpe?g|gif|webp|txt|md|json|csv)$/.test(ext) || mime.indexOf('image/') === 0 || mime.indexOf('text/') === 0) {
+        result = {
+          class: 'native',
+          lineage: ['uploaded', 'native-accepted'],
+          choices: [{ id: 'use-native', label: 'Use as-is' }, { id: 'cancel', label: 'Cancel' }]
+        };
+      } else if (/^(mp4|mov|webm|avi)$/.test(ext) || mime.indexOf('video/') === 0) {
+        result = {
+          class: 'pm-transformed',
+          lineage: ['uploaded', 'video-detected', 'pm-extract-available'],
+          choices: [
+            { id: 'cancel', label: 'Cancel' },
+            { id: 'extract-pm', label: 'Extract in PM' },
+            { id: 'use-gemini', label: 'Use Gemini for video' }
+          ]
+        };
+      } else if (/^(pdf|docx?)$/.test(ext)) {
+        result = {
+          class: 'alternate',
+          lineage: ['uploaded', 'provider-native-limited', 'alternate-model'],
+          choices: [
+            { id: 'cancel', label: 'Cancel' },
+            { id: 'use-gemini', label: 'Use Gemini for documents' },
+            { id: 'extract-pm', label: 'Extract in PM' }
+          ]
+        };
+      } else {
+        result = {
+          class: 'unsupported',
+          lineage: ['uploaded', 'unsupported'],
+          choices: [{ id: 'cancel', label: 'Cancel' }]
+        };
+      }
+      result.file = clone(meta);
+      result.file.name = name;
+      return result;
     }
 
     function setHistoryMode(mode) {
@@ -921,9 +1385,26 @@
       return true;
     }
 
-    function branchThread(threadId) {
+    function branchThread(threadId, opts) {
       var t = requireThread(threadId);
+      var o = opts || {};
       var nid = 'thread-branch-' + Date.now().toString(36);
+      var local = defaultThreadLocalState(t.localState || sessionDefaultsAsLocal(session));
+      local.frozen = false;
+      if (o.modelId) local.modelId = String(o.modelId);
+      if (o.personaId) local.personaId = String(o.personaId);
+      var msgs = clone(t.messages || []);
+      if (o.fromMessageId) {
+        var fromId = String(o.fromMessageId);
+        var cut = -1;
+        for (var mi = 0; mi < msgs.length; mi++) {
+          if (msgs[mi] && String(msgs[mi].id) === fromId) {
+            cut = mi;
+            break;
+          }
+        }
+        if (cut >= 0) msgs = msgs.slice(0, cut + 1);
+      }
       threads[nid] = {
         id: nid,
         title: (t.title || 'Chat') + ' (branch)',
@@ -933,7 +1414,7 @@
         tags: clone(t.tags || []),
         project: t.project,
         updatedAt: nowIso(),
-        messages: clone(t.messages || []),
+        messages: msgs,
         draft: emptyDraft(),
         draftRevisions: [],
         lens: defaultLens(),
@@ -947,9 +1428,13 @@
         browserSessions: clone(t.browserSessions || []),
         scriptedReplyIds: clone(t.scriptedReplyIds || []),
         scriptedReplyCursor: t.scriptedReplyCursor | 0,
-        initialVisibleMessageCount: (t.messages || []).length
+        initialVisibleMessageCount: msgs.length,
+        localState: local,
+        restorePoints: clone(t.restorePoints || [])
       };
       ui.perThread[nid] = defaultThreadUi(threads[nid].goal);
+      demo.replyCursorByThread[nid] = threads[nid].scriptedReplyCursor | 0;
+      demo.runningByThread[nid] = null;
       session.activeThreadKey = nid;
       emit();
       return nid;
@@ -994,6 +1479,7 @@
           state: t.state,
           tags: clone(t.tags),
           project: t.project,
+          updatedAt: t.updatedAt,
           messages: clone(t.messages),
           draft: clone(t.draft),
           draftRevisions: clone(t.draftRevisions),
@@ -1008,7 +1494,9 @@
           browserSessions: clone(t.browserSessions),
           scriptedReplyIds: clone(t.scriptedReplyIds),
           scriptedReplyCursor: t.scriptedReplyCursor,
-          initialVisibleMessageCount: t.initialVisibleMessageCount
+          initialVisibleMessageCount: t.initialVisibleMessageCount,
+          localState: clone(t.localState || sessionDefaultsAsLocal(session)),
+          restorePoints: clone(t.restorePoints || [])
         };
       });
       return {
@@ -1056,8 +1544,8 @@
             threads[key] = {
               id: src.id || key,
               title: src.title || key,
-              pinned: !!src.pinned,
-              archived: !!src.archived,
+              pinned: Boolean(src.pinned),
+              archived: Boolean(src.archived),
               state: src.state != null ? src.state : null,
               tags: clone(src.tags || []),
               project: src.project != null ? clone(src.project) : null,
@@ -1076,7 +1564,9 @@
               browserSessions: clone(src.browserSessions || []),
               scriptedReplyIds: clone(src.scriptedReplyIds || []),
               scriptedReplyCursor: src.scriptedReplyCursor | 0,
-              initialVisibleMessageCount: src.initialVisibleMessageCount | 0
+              initialVisibleMessageCount: src.initialVisibleMessageCount | 0,
+              localState: defaultThreadLocalState(src.localState || sessionDefaultsAsLocal(session)),
+              restorePoints: clone(src.restorePoints || [])
             };
             if (!ui.perThread[key]) ui.perThread[key] = defaultThreadUi(threads[key].goal);
             if (!(key in demo.replyCursorByThread)) {
@@ -1093,6 +1583,7 @@
             'state',
             'tags',
             'project',
+            'updatedAt',
             'messages',
             'draft',
             'draftRevisions',
@@ -1107,9 +1598,13 @@
             'browserSessions',
             'scriptedReplyIds',
             'scriptedReplyCursor',
-            'initialVisibleMessageCount'
+            'initialVisibleMessageCount',
+            'localState',
+            'restorePoints'
           ].forEach(function (field) {
-            if (field in src) t[field] = clone(src[field]);
+            if (!(field in src)) return;
+            if (field === 'localState') t.localState = defaultThreadLocalState(src.localState);
+            else t[field] = clone(src[field]);
           });
         });
       }
@@ -1149,6 +1644,8 @@
       applyLensSubcompact: applyLensSubcompact,
       turnOffLens: turnOffLens,
       goalAction: goalAction,
+      applyGoalCapabilities: applyGoalCapabilities,
+      normalizeGoalCapabilities: normalizeGoalCapabilities,
       getActiveQuestionnaire: getActiveQuestionnaire,
       answerQuestion: answerQuestion,
       skipQuestion: skipQuestion,
@@ -1159,6 +1656,22 @@
       setScrollAnchor: setScrollAnchor,
       setSelector: setSelector,
       setHistoryMode: setHistoryMode,
+      setThreadLocal: setThreadLocal,
+      getThreadLocal: getThreadLocal,
+      getActiveLocal: getActiveLocal,
+      applyProjectDefaultsToThread: applyProjectDefaultsToThread,
+      setBsd: setBsd,
+      setBsdVisual: setBsdVisual,
+      createRestorePoint: createRestorePoint,
+      rewindTo: rewindTo,
+      redirectActiveTurn: redirectActiveTurn,
+      markRedirectResumed: markRedirectResumed,
+      enqueueOutbox: enqueueOutbox,
+      replayOutbox: replayOutbox,
+      setSyncState: setSyncState,
+      pushNotification: pushNotification,
+      markNotificationRead: markNotificationRead,
+      resolveAttachment: resolveAttachment,
       _emit: emit,
       notify: emit,
       pinThread: pinThread,
@@ -1195,6 +1708,7 @@
 
   window.PMChatStore = {
     create: create,
-    formatStatus: formatStatus
+    formatStatus: formatStatus,
+    normalizeGoalCapabilities: normalizeGoalCapabilities
   };
 })();

@@ -74,3 +74,84 @@
   flex: 0 0 auto;
   padding: 4px 10px;
 }
+
+/* ============================================================================
+   Step 3 additions — context admission receipt popover (.k3l-receipt).
+   Lives inside a .k3-pop.k3-popover portal (popups.css owns chrome/motion);
+   these rules cover only the receipt content. Token-driven; no side borders.
+   ========================================================================== */
+
+.k3l-receipt-pop { width: 340px; }
+
+.k3l-receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: min(420px, 70vh);
+  overflow-y: auto;
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  color: var(--text-primary);
+}
+
+.k3l-receipt-head {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-bottom: 2px;
+}
+
+.k3l-receipt-section {
+  padding-top: 6px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--text-muted);
+}
+
+.k3l-receipt-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: var(--radius-md, 10px);
+}
+.k3l-receipt-row:hover { background: var(--accent-soft); }
+
+.k3l-receipt-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.k3l-receipt-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+}
+.k3l-receipt-meta {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  overflow-wrap: break-word;
+}
+.k3l-receipt-snippet {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  overflow-wrap: break-word;
+}
+
+.k3l-receipt-remove {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  font-size: var(--fs-xs, 11px);
+}
+
+.k3l-receipt-foot {
+  padding-top: 8px;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light, var(--border));
+}

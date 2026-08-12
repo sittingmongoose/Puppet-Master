@@ -1,0 +1,280 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-02-deck",
+  "model": "Qwen 5.8",
+  "source_register": "CANDIDATE_COMMAND_ID_REGISTER.json (packet 2026-08-08)",
+  "census_source": "Plans/UI_Command_Catalog.md (read-only, grepped 2026-08-11)",
+  "note": "Provisional. No canon IDs are minted here; reuse/retire/supersession/conflict census flags carry exact-token evidence from the catalog.",
+  "entries": [
+    {
+      "candidate_id": "cmd.settings.open",
+      "census": "candidate",
+      "note": "No exact canon match found in Plans/UI_Command_Catalog.md (grep 2026-08-11). Navigation wrapper shape per cmd.settings.open_storage_retention precedent.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.navigate",
+      "census": "candidate",
+      "note": "Covers Home\u2192workspace, category change, subcategory jump. No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.search.focus",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.search.select_result",
+      "census": "candidate",
+      "note": "Routes to canonical owner by result type. No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.category.select",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.subcategory.select",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.setting.focus",
+      "census": "candidate",
+      "note": "Deep-link focus wash. No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.manager.open",
+      "census": "candidate",
+      "note": "Manager deep links. No canon match found.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.bloom.open",
+      "census": "retire",
+      "note": "Canon exists (Plans/UI_Command_Catalog.md:8356) for the old chip/bloom architecture. Retire or alias to cmd.settings.open once destination IA lands; compatibility alias only if needed. Supersession recorded in impact register.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.value.set",
+      "census": "candidate",
+      "note": "Registry-owned non-command setting mutations (F3-438/F3-439/F3-441, catalog :8352) remain the default; this candidate exists only for command-shaped bulk actions behind F3-434 two-step confirmation.",
+      "family": "values"
+    },
+    {
+      "candidate_id": "cmd.settings.default.restore",
+      "census": "candidate",
+      "note": "Per-row reset. No canon match found.",
+      "family": "values"
+    },
+    {
+      "candidate_id": "cmd.settings.scope.inspect",
+      "census": "candidate",
+      "note": "Details disclosure of scope/source/effective. No canon match found.",
+      "family": "values"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.scan",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.select",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.install",
+      "census": "candidate",
+      "note": "Explicit user-triggered, official source, exact Host/Environment. No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.update",
+      "census": "candidate",
+      "note": "Phases Updating\u2192Verifying\u2192Ready. No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.repair",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.rollback",
+      "census": "candidate",
+      "note": "Catalog :8431 \u2014 no standalone rollback-now canon ID; rollback stays a verified update-lifecycle outcome, candidate kept for explicit user-triggered path.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.verify",
+      "census": "candidate",
+      "note": "Catalog :8431 \u2014 no generic verify canon ID; verification remains part of update lifecycle result payload.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.connection.add",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.connection.authenticate",
+      "census": "candidate",
+      "note": "CLI-owned flows launch native login; PM-direct OAuth only where supported. No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.connection.reconnect",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.catalog.refresh",
+      "census": "candidate",
+      "note": "No canon match found in grep; last-known-good fallback semantics from packet 03.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.model.favorite.set",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.model.alias.set",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.model.priority.set",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.model.visibility.set",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.account.select_profile",
+      "census": "reuse",
+      "note": "Canon at Plans/UI_Command_Catalog.md:8308 (adopted verbatim from Plans/Multi-Account.md:5088). Concept reuses; does not mint.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.switch_route",
+      "census": "reuse",
+      "note": "Canon at :8309 (FinalGUISpec CTA rate_limit row). Concept reuses; does not mint.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.test",
+      "census": "reuse",
+      "note": "Canon preserved (Plans/UI_Command_Catalog.md ~:7574 preserved_exact_tokens). Test-send explicit/masked/rate-limited. Concept reuses.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.settings.open_notifications",
+      "census": "reuse",
+      "note": "Canon at :7538/:7574. Concept reuses as the canonical location General \u2192 Notifications & Sounds.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.upload",
+      "census": "conflict",
+      "note": "Collides with canon cmd.sound.upload (preserved_exact_tokens ~:7585). Use canon; do not mint.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.import_pack",
+      "census": "conflict",
+      "note": "Collides with canon cmd.sound.pack.import. Use canon.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.preview",
+      "census": "conflict",
+      "note": "Collides with canon cmd.sound.preview; negative constraint: local preview never routes through external delivery. Use canon.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.delete",
+      "census": "conflict",
+      "note": "Collides with canon cmd.sound.asset.delete (+cmd.sound.asset.restore). Use canon.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.export",
+      "census": "conflict",
+      "note": "Collides with canon cmd.sound.asset.export. Use canon.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.create",
+      "census": "reuse",
+      "note": "Canon preserved (~:7574). Concept reuses.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.update",
+      "census": "reuse",
+      "note": "Canon preserved. Concept reuses.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.delete",
+      "census": "reuse",
+      "note": "Canon preserved. Concept reuses.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.toggle",
+      "census": "reuse",
+      "note": "Canon preserved. Concept reuses.",
+      "family": "notifications"
+    },
+    {
+      "candidate_id": "cmd.theme.create",
+      "census": "candidate",
+      "note": "No canon match found; canon cmd.theme.* covers set_mode/set_accent/set_density/preview/reset (:7983-7987).",
+      "family": "appearance"
+    },
+    {
+      "candidate_id": "cmd.theme.import",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "appearance"
+    },
+    {
+      "candidate_id": "cmd.theme.export",
+      "census": "candidate",
+      "note": "No canon match found.",
+      "family": "appearance"
+    },
+    {
+      "candidate_id": "cmd.theme.preview",
+      "census": "reuse",
+      "note": "Canon at :7986 (preview_id + ttl). Concept hover-preview maps to this; does not mint.",
+      "family": "appearance"
+    },
+    {
+      "candidate_id": "cmd.theme.apply",
+      "census": "supersession",
+      "note": "Canon cmd.theme.set_mode (:7983) owns apply with expected_theme_revision + settings.theme.updated event. Apply maps there.",
+      "family": "appearance"
+    }
+  ]
+}

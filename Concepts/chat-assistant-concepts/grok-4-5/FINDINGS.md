@@ -2,13 +2,93 @@
 
 Authority: handoff testing contract + live measurements. Design law: **peer level, original look**.
 
-Spec gaps: [`SPEC_GAPS.md`](./SPEC_GAPS.md) · Verification: [`verification/`](./verification/) · Cache: `?v=36`
+Spec gaps: [`SPEC_GAPS.md`](./SPEC_GAPS.md) · Probes: `%TEMP%/pm-grok45-probes/` (not shipped) · Reports: seven packet JSON/MD at concept root · Cache: `?v=39`
 
-## Motion + Provider/Crew depth (2026-08-05)
+## Step 8 — Fixtures, triggers, probes, ConceptHub, reports (2026-08-11)
 
-Closed the two polish residuals inside the chat concept (not Settings rebuild, not video frame-matching). Finish-ups that were still open are now wired.
+Cumulative packet finish for Grok 4.5. Shared demo/harness/motion were coordinated with Step2ChromeBsd + Step3to7Features; Step8 finalized DEMO_*, fixture enrichment, motion offline/restore fallbacks, temp probes, and the seven packet reports.
 
 ### Shipped
+
+| Area | Change |
+|------|--------|
+| Demo fixtures | `demo-extend.js` ensures ≥18 history rows (thread-16..18), BSD Auto sample, restore point, offline queued beat, Browser Program activity, notification samples; `DEMO_SCENARIO_MANIFEST.json` + `DEMO_TRIGGER_CONTRACT.json` expanded |
+| Harness | Step8 system triggers present (`system.bsd.*`, `system.sync.*`, restore/rewind, notification, Browser Program, provider setup, access limited) — additive cases from Step3 retained |
+| Motion | BSD glow only `.is-auto-active` (Step2); Step8 added offline/reconnect chip transitions, restore/rewind flash, reduced-motion opacity fallbacks |
+| Probes | `%TEMP%\pm-grok45-probes\` only — **no** shipped `verification/` |
+| Reports | Seven packet files at concept root + refreshed `IMPACT_REGISTER.json` |
+| Cache | Host scripts bumped `?v=39` (deep polish + verify reopen) |
+
+### Tests
+
+| Suite | Result |
+|-------|--------|
+| residual-fixes-probe.mjs | **13/13** (branch/lens/fan-out/video+pdf CTAs/bulk persona/cache v39/lens shadow) |
+| store-api-probe.mjs | **12/12** |
+| offline-idempotency-probe.mjs | **pass** (second replay empty) |
+| terminology-grep-probe.mjs | **pass** (no Playwright UI hits) |
+| matrix-smoke-probe.mjs | **64/64** theme×width×rm on w6×t1; BSD slots **8/8**; Q structure **8/8** |
+| live-spotcheck-probe.mjs | **12/12** pin+artifact, BSD×3, offline, redirect, attachment CTAs, title-bar notifications |
+| polish-visual-probe.mjs | **8/8** quieter paradigm/lens, theme first-click, bulk persona PlanningRun section |
+| demo-trigger coverage | **94/94** contract triggers covered |
+| ConceptHub validate | **passed** (no `verification/` dir) |
+
+### Command census (locked)
+
+- `cmd.chat.history.pin` → reuse `cmd.chat.pin` (**alias/conflict**)
+- `cmd.chat.restore_point.create` → reuse `cmd.chat.create_restore_point` (**alias/conflict**)
+- `cmd.chat.thread.rewind` → reuse `cmd.chat.rewind` (**alias/conflict**)
+- `cmd.chat.context.compact_now` → reuse `cmd.chat.compact_context` (**alias/conflict**)
+
+### Residual verify reopen (2026-08-11)
+
+Functional residuals fixed in-concept (LF):
+
+| Fix | File |
+|-----|------|
+| `branchThread` honors `fromMessageId` + `initialVisibleMessageCount` | `_shared/store.js` |
+| Empty `admittedSources` no longer reseeds | `_shared/context-lens.js` |
+| Product UI fan-out max-3 caps removed (harness `FAN_OUT_MAX` kept) | `threads/_thread-kit.js`, `_shared/demo-harness.js` |
+| Video CTA **Use Gemini for video** | `_shared/store.js`, `_shared/demo-harness.js` |
+| Bulk persona confirm menuitem wired | `_shared/popups.js` |
+
+### Deep polish + verify reopen (2026-08-11)
+
+| Polish | File |
+|--------|------|
+| Quieter paradigm watermark (weight 600, tracking ↓, muted mix) | `threads/t1.css`–`t8.css` |
+| Quieter Context Lens bar (no elev shadow, smaller eye, softer title; glass-dark bar toned) | `_shared/chat-chrome.css`, `_shared/chat-tokens.css` |
+| Theme sprout first-click: close menus before apply | `_shared/shell.js` |
+| Bulk persona PlanningRun section + short menuitem; confirm keeps full copy | `_shared/popups.js`, `_shared/chat-chrome.css` |
+| PDF alternate CTA **Use Gemini for documents** | `_shared/store.js` |
+
+Probe results under `%TEMP%\pm-grok45-probes\`: `residual-fixes-result.json`, `matrix-smoke-result.json`, `live-spotcheck-result.json`, `polish-visual-result.json`.
+
+### ## Honesty items + deeper miss (2026-08-11)
+
+| Area | Change |
+|------|--------|
+| Goal | Demo-complete pause/resume/stop/clear/edit/replan/complete via store `normalizeGoalCapabilities`; replan note cites GAP-020; no invented catalog IDs |
+| Provider/crew | Nested model recover button fixed; atomic `connectionId` on route bind; honest Settings-owned stub CTAs; crew confirm is session-scoped (not “default manager”); More→Crew routes through confirm |
+| Composer | Provider-setup disables send with Choose-another-model + Settings-ownership actions |
+| Persona | Bulk-apply default label aligned to `Researcher` |
+| w×t | No winner declared |
+
+Cache bust: `?v=40`.
+
+Remaining defects / honesty
+
+- Goal strip demo-complete locally; catalog IDs remain GAP-020.
+- Full provider/crew **managers** remain Settings redesign / Plans ownership — chat ships enriched route chrome only; stub CTAs state Settings ownership honestly (deep-link not wired).
+- No winner recommendation across w×t identities.
+
+### Impact summary
+
+Chat concept now demonstrates packet-required BSD, offline/outbox idempotency, restore/rewind, title-bar notifications, Browser Program terminology, provider-setup and access-limited composer/access states, with durable reports, live matrix/spot-check closeout, residual fixes, and **zero** shipped `verification/` folder (probes live only under `%TEMP%\pm-grok45-probes\`).
+
+---
+
+## Motion + Provider/Crew depth (2026-08-05) — historical
 
 | Area | Change |
 |------|--------|
@@ -18,7 +98,7 @@ Closed the two polish residuals inside the chat concept (not Settings rebuild, n
 | Crew | Human labels; mismatch reason; wave seed/clear; **Use default Crew?** confirm with Use / Not now (cancel toasts) |
 | Copy | CSS comments say Slint-portable (not “video-level”) |
 
-### Tests (`?v=36`)
+### Tests (`?v=36`, historical)
 
 | Suite | Result |
 |-------|--------|
@@ -27,15 +107,15 @@ Closed the two polish residuals inside the chat concept (not Settings rebuild, n
 | `npm run geometry` | **256/256** |
 | `SHOT=1 npm run matrix` | **64/64** |
 
-### Residuals (honest)
+### Residuals as of that pass (superseded by Step 8)
 
-- ConceptHub still flags in-folder `verification/` (keep by design)
-- Full provider/crew **managers** remain Settings redesign / Plans ownership — chat is finished route chrome only
-- Motion is production Slint-portable craft, not reference-video frame tables (none exist in-folder)
+- In-folder `verification/` existed then and was flagged by ConceptHub; **removed before Step 8 ship** — current probes are `%TEMP%\pm-grok45-probes\` only.
+- Full provider/crew managers remain Settings / Plans ownership (unchanged).
+- Motion is production Slint-portable craft, not reference-video frame tables.
 
 ---
 
-## Ship-finished polish (2026-08-05)
+## Ship-finished polish (2026-08-05) — historical
 
 Elevated the V2 packet from functional prototype to ship-finished polish in-folder only (w1–w8 × t1–t8 preserved).
 
@@ -43,14 +123,14 @@ Elevated the V2 packet from functional prototype to ship-finished polish in-fold
 
 | Area | Change |
 |------|--------|
-| Demo truth | Store hydrate accepts `goal`/`activeGoal`, `todo`/`todos`, `state`/`threadState`; V2 beats always append (`t01-v2-*`); 15 credible history rows |
+| Demo truth | Store hydrate accepts `goal`/`activeGoal`, `todo`/`todos`, `state`/`threadState`; V2 beats always append (`t01-v2-*`); 18 credible history rows |
 | Questions | Full per-concept layouts (folio/beat/shelf/yield/condenser/margin/focus/breath); prepare→select→submit morph; no lavender Q / no t2 left accent |
 | Chrome | Favorites-first provider menu + persist; Crew card; Lens Included/Left out in bar; Compact Now breakdown; harness human labels |
 | Surfaces | Artifact enter motion; CW detail expand; goal strip depth; approval settle; reduced-motion safe |
 | ConceptHub | `data-concept-model="Grok 4.5"`; `pm-concept-ready` / `pm-concept-state`; `openPath` = `host.html` (file-only) |
 | Bugfix | `injectLensUi` referenced unbound `store` → console errors + broken Compact Now / warnings paint |
 
-### Tests (`?v=34`)
+### Tests (`?v=34`, historical)
 
 | Suite | Result |
 |-------|--------|
@@ -60,16 +140,16 @@ Elevated the V2 packet from functional prototype to ship-finished polish in-fold
 | `npm run geometry` | **256/256** |
 | `SHOT=1 npm run matrix` | **64/64** |
 
-Visual evidence: `verification/screenshots/matrix/` (theme × width × rail).
+Visual evidence at the time lived under in-folder `verification/screenshots/matrix/` (theme × width × rail). **That directory is no longer shipped**; current probe home is `%TEMP%\pm-grok45-probes\`.
 
-### Residuals (honest)
+### Residuals as of that pass (superseded by Step 8)
 
-- ConceptHub still flags in-folder `verification/` (keep per owner; recorded in IMPACT)
-- Motion / Provider-Crew polish residuals closed in `?v=35` depth pass
+- ConceptHub flagged in-folder `verification/` then; directory later removed for ConceptHub compliance.
+- Motion / Provider-Crew polish residuals closed in `?v=35` depth pass.
 
 ---
 
-## V2 repair/expansion pass (2026-08-05)
+## V2 repair/expansion pass (2026-08-05) — historical
 
 Implemented Assistant Chat Update Packet v2 delta in-place (w1–w8 × t1–t8 preserved).
 
@@ -97,13 +177,14 @@ Implemented Assistant Chat Update Packet v2 delta in-place (w1–w8 × t1–t8 p
 - Decorative spellcheck chip; ignore actions that did nothing
 - favicon 404 noise in probe console gate
 
-### Tests
+### Tests (historical)
 
-- `npm run v2` → **29/29** (`verification/v2-delta-probe-results.json`) — includes pin scroll/compact/unpin, Q struct/submit, artifact loading/error, CW expand, crew, cross-project, Compact Now
+- `npm run v2` → **29/29** (results then stored under in-folder `verification/v2-delta-probe-results.json`; directory since removed)
 - `npm run motion` → **2/2**
 - `npm run smoke` → **64/64**
 - `npm run geometry` → **256/256** (re-run 2026-08-05 against `?v=33` host)
-### Residuals / honest limits
+
+### Residuals / honest limits (then)
 
 - Compact-work chip presence can lag if Goal surfaces only as strip without band (probe records expand soft when no chip)
 - Full W×T matrix capture for every new surface not re-shot in this pass
@@ -113,8 +194,9 @@ Implemented Assistant Chat Update Packet v2 delta in-place (w1–w8 × t1–t8 p
 
 See [`IMPACT_REGISTER.json`](./IMPACT_REGISTER.json) for per-concept solutions and owner-contract conflicts.
 
+---
 
-## Alive polish gap fill (2026-08-01) — honest status
+## Alive polish gap fill (2026-08-01) — historical honest status
 
 Exhaustive live QA + gap fill after the prior Alive pass oversold “video-level everywhere.” Cache **`?v=30`**.
 
@@ -133,13 +215,13 @@ Exhaustive live QA + gap fill after the prior Alive pass oversold “video-level
 | Motion | Attach chip exit; More Info / Drafts `leaveThenHide`; work-surface chevrons + open stagger; long-msg `is-expanding`; t4 Yield exit; t7 slide-dir cleanup |
 | P1 | Folio stacking isolation; Q dock vs reading space; lingering row ⋯ hide; theme click broadened; Jump/strip flow |
 
-### Still imperfect / known residuals
+### Still imperfect / known residuals (then)
 
 - Theme apply can still feel flaky if a sprout menu swallows the first click (retry closes menu then applies).
 - Geometry/smoke must be re-run after this pass — do not trust `?v=29` scores for `?v=30`.
 - Not claiming video-parity motion on every surface; Q carousel/settle and shared exits are wired, not frame-matched to reference video.
 
-### Gates (`?v=30`)
+### Gates (`?v=30`, historical)
 
 | Suite | Result |
 |-------|--------|
@@ -151,11 +233,11 @@ Exhaustive live QA + gap fill after the prior Alive pass oversold “video-level
 
 Live probes: history meta-row 15/15 (0 side-column More); goal edit full-width (703/703); Edit hit-test reaches strip; `w=1`→`w1`; Q dock XOR (no composer) + `is-q-active`.
 
-Follow-up after [Exhaustive live control QA](cb34e352-775f-4837-a2d3-b6b394ae1957): that pass hit `?v=29` and briefly a wrong `:8765` host. Re-check on Grok `?v=30`: Lens selects work when scrolled into view; L19 is column meta-below-title; hover actions pe:auto. Remaining fixes landed: w6 compact keeps Lens/More/Ring (only search/selectors hide); goal strip uses row+full-width edit panel; Tastebook copy no longer implies composer is live during Q.
+Follow-up after Exhaustive live control QA: that pass hit `?v=29` and briefly a wrong `:8765` host. Re-check on Grok `?v=30`: Lens selects work when scrolled into view; L19 is column meta-below-title; hover actions pe:auto. Remaining fixes landed: w6 compact keeps Lens/More/Ring (only search/selectors hide); goal strip uses row+full-width edit panel; Tastebook copy no longer implies composer is live during Q.
 
-## Live visual pass (`:8775` / `?v=30`) — 2026-08-01
+## Live visual pass (`:8775` / `?v=30`) — 2026-08-01 — historical
 
-Evidence: `verification/screenshots/live-visual-v30/*.png`, `verification/live-visual-v30-results.json`, plus browser CDP on the same host.
+Evidence at the time: in-folder `verification/screenshots/live-visual-v30/*.png`, `verification/live-visual-v30-results.json`, plus browser CDP on the same host. **Those in-folder paths are no longer shipped.**
 
 ### Matrix coverage
 
@@ -187,10 +269,10 @@ Evidence: `verification/screenshots/live-visual-v30/*.png`, `verification/live-v
 
 ### Soft residuals (honest)
 
-- **Paradigm chrome** (`.t1-chrome-paradigm` “PROSE COLUMN”) is intentional 10px muted uppercase — reads watermark-loud in screenshots; not a debug overlay.
-- **Lens chrome** (“Lens Selected” / large eye) is louder than the quiet paradigm label; polish candidate, not broken.
+- **Paradigm chrome** quieted in deep polish (`?v=39`: weight 600 + muted mix) — still intentional identity label, not a debug overlay.
+- **Lens chrome** quieted in deep polish (`?v=39`: no elev shadow, smaller eye, softer title) — still present during selection.
 - **Pocket/history open** can dominate the stage (w4 default pocket; matrix leaves history open for L19 shots) — prose is underneath, not missing.
-- Theme apply can still need a second click if a sprout is open (unchanged).
+- Theme apply first-click hardened in deep polish (`shell.js` closes sprouts before apply); residual flakiness only if a non-PMMenu overlay intercepts.
 
 ### Fix — w2 stuck drawer scrim wash (`?v=31`)
 
@@ -200,4 +282,4 @@ Evidence: `verification/screenshots/live-visual-v30/*.png`, `verification/live-v
 
 ## Missing affordances inventory
 
-See prior sections / [`verification/affordance-inventory.md`](./verification/affordance-inventory.md). Concept-owned chrome remains the peer contract; Usage Detail (GAP-006) stays out of scope.
+Historical inventory once lived at in-folder `verification/affordance-inventory.md` (removed with the `verification/` directory). Concept-owned chrome remains the peer contract; Usage Detail (GAP-006) stays out of scope.

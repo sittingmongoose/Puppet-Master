@@ -228,7 +228,8 @@
                 '<button class="btn sm" data-go-workspace>Browse all areas</button>',
                 PM.shared.themePicker(),
               '</div>',
-              '<div class="cr-dests-label">Primary areas</div>',
+              PM.shared.ownedStrip("c1"),
+              '<div class="cr-dests-label">All areas</div>',
               '<div class="cr-notices">' + notices.join("") + '</div>',
               '<div class="cr-dests">' + dests + '</div>',
             '</div>',
@@ -292,6 +293,7 @@
           PM.openCategory("general"); render();
         });
         PM.shared.wireThemePicker();
+        PM.shared.wireOwnedStrip(stage);
         PM.shared.wireShell();
       }
 

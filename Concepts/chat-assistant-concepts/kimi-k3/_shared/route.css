@@ -1,0 +1,335 @@
+/* ============================================================================
+   Kimi K3 — route picker styles (window.K3Route). Token-driven only: rides
+   the shared surfaces/borders/radii/accents so all 8 themes render complete.
+   The panel lives inside a .k3-pop.k3-popover portal (popups.css owns the
+   sprout motion and chrome); these rules cover only picker content.
+   Reduced motion collapses transitions via the global data-motion contract.
+   ========================================================================== */
+
+/* popover variant: the picker needs rail + list room */
+.k3r-pop {
+  width: min(460px, calc(100vw - 16px));
+  max-width: min(460px, calc(100vw - 16px));
+  padding: 8px;
+}
+
+.k3r-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* ---- search -------------------------------------------------------------- */
+.k3r-search { display: flex; }
+.k3r-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: var(--border-width-inner, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+  outline: none;
+}
+.k3r-search-input:focus { border-color: var(--accent-primary); }
+
+/* ---- body: rail + main ---------------------------------------------------- */
+.k3r-body {
+  display: flex;
+  gap: 8px;
+  min-height: 120px;
+}
+
+.k3r-rail {
+  flex: 0 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.k3r-rail-btn {
+  width: 36px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-width-inner, 1px) solid transparent;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3r-rail-btn svg { width: 18px; height: 18px; }
+.k3r-rail-btn:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3r-rail-btn.is-selected {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+.k3r-rail-all {
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+}
+
+.k3r-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.k3r-section {
+  padding: 6px 8px 2px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.k3r-empty {
+  padding: 14px 10px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm, 13px);
+  text-align: center;
+}
+
+/* ---- one route row --------------------------------------------------------- */
+.k3r-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  text-align: left;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3r-row:hover { background: var(--accent-soft); }
+.k3r-row.is-active { background: var(--accent-soft); }
+.k3r-row.is-dim { opacity: 0.55; }
+
+.k3r-star {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.k3r-star svg { width: 14px; height: 14px; }
+.k3r-star:hover { color: var(--accent-primary); }
+.k3r-star.is-fav { color: var(--accent-primary); }
+
+.k3r-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.k3r-row-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3r-row-sub,
+.k3r-row-reason {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3r-row-reason { color: var(--accent-error, var(--text-muted)); }
+
+/* compact capability glyphs: 12px marks, never a badge wall */
+.k3r-caps {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+}
+.k3r-cap { display: inline-flex; }
+.k3r-cap svg { width: 12px; height: 12px; }
+.k3r-cap-ctx {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- detail (persistent step stack) ---------------------------------------- */
+.k3r-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0 6px;
+}
+.k3r-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+}
+.k3r-back:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3r-back svg { width: 16px; height: 16px; }
+.k3r-detail-ic { display: inline-flex; color: var(--text-secondary); }
+.k3r-detail-ic svg { width: 18px; height: 18px; }
+.k3r-detail-title {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.k3r-step { padding: 4px 0; }
+.k3r-step-label {
+  padding: 0 2px 4px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.k3r-options { display: flex; gap: 6px; flex-wrap: wrap; }
+.k3r-option {
+  padding: 4px 12px;
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-width-inner, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3r-option:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3r-option.is-selected {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.k3r-explainer {
+  padding: 6px 2px;
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-muted);
+}
+
+.k3r-reqline {
+  padding: 4px 2px;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.k3r-apply {
+  align-self: flex-end;
+  margin-top: 6px;
+  padding: 6px 16px;
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: var(--border-width-inner, 1px) solid var(--accent-primary);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3r-apply:hover { background: var(--accent-glow); }
+
+/* ---- setup states ------------------------------------------------------------ */
+.k3r-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 2px;
+}
+.k3r-setup-line {
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-primary);
+}
+.k3r-setup-note {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+}
+
+/* ---- footer ------------------------------------------------------------------- */
+.k3r-footer {
+  border-top: var(--border-width-inner, 1px) solid var(--border-light);
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.k3r-active-line {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3r-footer-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.k3r-footer-btn {
+  padding: 4px 10px;
+  font: inherit;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-width-inner, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3r-footer-btn:hover:not(:disabled) { color: var(--accent-primary); background: var(--accent-soft); }
+.k3r-footer-btn:disabled { opacity: 0.45; cursor: default; }
+
+/* ---- scope chip on the selector-row button ------------------------------------- */
+.k3r-scope,
+.k3a-scope {
+  margin-left: 2px;
+  padding: 1px 6px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill, 999px);
+  white-space: nowrap;
+}
+
+/* reduced motion: identical final state, no transitions */
+html[data-motion="reduced"] .k3r-rail-btn,
+html[data-motion="reduced"] .k3r-row,
+html[data-motion="reduced"] .k3r-option,
+html[data-motion="reduced"] .k3r-apply,
+html[data-motion="reduced"] .k3r-footer-btn {
+  transition: none;
+}

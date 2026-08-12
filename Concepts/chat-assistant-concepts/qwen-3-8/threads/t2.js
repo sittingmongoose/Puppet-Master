@@ -185,7 +185,18 @@
       b.diffCards(key).forEach(c => cards.push(c));
     } else if (domain === "alerts") {
       b.approvalCards(key).forEach(c => cards.push(c));
+      const grant = b.grantCard(key);
+      if (grant) cards.push(grant);
+      b.capacityCards(key).forEach(c => cards.push(c));
       b.warningCards(key).forEach(c => cards.push(c));
+    } else if (domain === "ops") {
+      b.opsCards(key).forEach(c => cards.push(c));
+    } else if (domain === "bsd") {
+      b.bsdCards(key).forEach(c => cards.push(c));
+    } else if (domain === "attach") {
+      b.attachmentResolutionCards(key).forEach(c => cards.push(c));
+    } else if (domain === "artifacts") {
+      b.artifactCards(key).forEach(c => cards.push(c));
     }
     return cards;
   }
@@ -222,6 +233,10 @@
     if (d.agents > 0) chipDefs.push({ domain: "agents", ico: "agents", label: "Agents", val: String(d.agents), cell: "agents" });
     if (hasDiff) chipDefs.push({ domain: "diff", ico: "diff", label: "Diff", val: "+" + d.diffAdds + " −" + d.diffDels, cell: "diff" });
     if (alerts > 0) chipDefs.push({ domain: "alerts", ico: "warn", label: "Alerts", val: String(alerts), cell: "alerts" });
+    if (d.ops > 0) chipDefs.push({ domain: "ops", ico: "branch", label: "Ops", val: String(d.ops), cell: "ops" });
+    if (d.bsd > 0) chipDefs.push({ domain: "bsd", ico: "sparkle", label: "BSD", val: String(d.bsd), cell: "bsd" });
+    if (d.attach > 0) chipDefs.push({ domain: "attach", ico: "attach", label: "Attach", val: String(d.attach), cell: "attach" });
+    chipDefs.push({ domain: "artifacts", ico: "layers", label: "Artifacts", val: String(wapi.store.threadArtifacts(key).length), cell: "artifacts" });
     if (!chipDefs.length) return;
 
     const row = document.createElement("div");

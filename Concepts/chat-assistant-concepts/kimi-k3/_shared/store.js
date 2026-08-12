@@ -9,8 +9,8 @@
    - view: ephemeral (hover, focus, open popups, in-flight animation).
 
    Persistence: semantic slice is debounce-written to localStorage under
-   'k3.sem.<sess>'. Drafts additionally under 'k3.drafts.<sess>'. All storage
-   access is guarded (file:// / privacy modes may throw).
+   'k3.sem.<sess>' (drafts included — there is no separate 'k3.drafts' key).
+   All storage access is guarded (file:// / privacy modes may throw).
    ========================================================================== */
 (function () {
   'use strict';
@@ -32,7 +32,22 @@
       selectors: { persona: null, model: null, mode: null, effort: null, worktree: null },
       history: { query: '', showArchived: false },
       thoughtPref: { keepActiveExpanded: false },
-      openTabs: []              // fake editor tabs from artifact/browser handoffs
+      openTabs: [],             // fake editor tabs from artifact/browser handoffs
+
+      // --- final cumulative packet (2026-08-08) -----------------------------
+      routeDefaults: { providerId: null, accountId: null, connectionId: null, modelId: null, effort: null, speed: null }, // project default; FUTURE threads only
+      threadLocal: {},          // threadId -> {route, access, bsd, persona, mode, effort, speed, worktree, crew} (nulls = inherit)
+      routeFavorites: [],       // routeKey strings `${providerId}/${accountId}/${modelId}`
+      routeRecents: [],         // routeKey, most-recent-first, cap 8
+      bsdState: {},             // threadId -> {mode:'off'|'auto'|'on', scope:'turn'|'thread', autoActive:false, lastResult:null|{kind, summary, at}}
+      outbox: {},               // threadId -> [{opId, text, attachments, routeSnapshot, queuedAt, status:'queued'|'sent'}]
+      appliedOps: {},           // opId -> true (idempotent replay fence)
+      sync: { state: 'live', domainNotes: [], serverContinuing: false },
+      artifactWs: {},           // threadId -> {open:false, activeId:null, order:[], docked:false}
+      approvals: {},            // approvalId -> {decision:null|'deny'|'once'|'session', at}
+      notifications: [],        // [{id, kind, title, body, at, read:false}]
+      spell: { personal: [], project: [], ignoredDraft: {}, threadDisabled: {}, grammar: false },
+      settingsReturn: null      // provider-setup return context {threadId, routeKey}
     };
   }
 

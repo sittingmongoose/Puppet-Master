@@ -261,6 +261,39 @@
 .u11w-cmp { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; font-size: 8.5px; color: var(--text-muted); white-space: nowrap; }
 .u11w-cmp svg { width: 10px; height: 10px; flex: none; }
 
+/* ---------- operations (maintenance & operations, packet §04) ---------- */
+.u11w-opcard { padding: 6px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.u11w-opcard:last-of-type { border-bottom: none; }
+.u11w-ophead { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.u11w-ophead svg { width: 12px; height: 12px; flex: none; color: var(--text-muted); }
+.u11w-optt { flex: 1 1 auto; min-width: 0; font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11w-opcopy { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.4; margin-top: 2px; }
+.u11w-ophases { display: flex; flex-wrap: wrap; gap: 3px 8px; margin-top: 4px; }
+.u11w-ophase { display: inline-flex; align-items: baseline; gap: 4px; font-family: var(--mono-font);
+  font-size: 8px; color: var(--text-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.u11w-ophase b { font-family: var(--body-font); font-size: var(--fs-2xs); font-weight: 600; color: var(--text-secondary); }
+.u11w-opline { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 3px; }
+.u11w-opdetail { font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.4; margin-top: 2px; }
+
+/* ---------- account row meta (priority / last used / actions) ---------- */
+.u11w-acctmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 4px;
+  font-size: var(--fs-2xs); color: var(--text-muted); }
+.u11w-acctprio { font-family: var(--mono-font); font-size: 8px; color: var(--text-secondary); white-space: nowrap; }
+.u11w-acctlast { white-space: nowrap; }
+.u11w-acctacts { display: inline-flex; gap: 4px; margin-left: auto; }
+
+/* ---------- plans estimate + free cooldown ---------- */
+.u11w-planmeter.estimate { display: flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); color: var(--tone-info-text); }
+.u11w-planmeter.estimate svg { width: 11px; height: 11px; flex: none; }
+.u11w-freedetail.warn { color: var(--tone-warn-text); font-weight: 600; }
+
+/* ---------- popup stacking (packet §05: no dead controls) ----------
+   The Settings/Export sprouts anchor under the head buttons and can overlap
+   the data-quality banner strip; keep them above every page-level surface.
+   U11-local override — shared sprout chrome stays untouched. */
+#u11SheetSprout, #u11ExportSprout { z-index: 540; }
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .u11w-colbar i, .u11w-minibtn, .u11w-planrow, .u11w-turncard { transition: none !important; animation: none !important; }

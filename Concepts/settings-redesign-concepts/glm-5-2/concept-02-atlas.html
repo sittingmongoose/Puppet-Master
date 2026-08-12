@@ -224,6 +224,7 @@
                 '<div style="margin-top:12px">' + PM.shared.themePicker() + '</div>',
               '</aside>',
             '</div>',
+            PM.shared.ownedStrip("c2"),
           '</div>'
         ].join("");
         wireHome();
@@ -260,6 +261,7 @@
           });
         });
         PM.shared.wireThemePicker();
+        PM.shared.wireOwnedStrip(stage);
         PM.shared.wireShell();
       }
 

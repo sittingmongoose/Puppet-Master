@@ -62,7 +62,40 @@
     history: '<path d="M2.8 8a5.2 5.2 0 1 0 1.6-3.8"/><path d="M2.4 2.8v2.8h2.8"/><path d="M8 5.4V8l2 1.4"/>',
     pin: '<path d="M6 2.4h4l-.6 3.4 2.2 2.2H4.4l2.2-2.2z"/><path d="M8 8v5.6"/>',
     filter: '<path d="M2.6 3.4h10.8l-4.2 5v4.2l-2.4 1.2V8.4z"/>',
-    dot: '<circle cx="8" cy="8" r="3"/>'
+    dot: '<circle cx="8" cy="8" r="3"/>',
+
+    /* Added for the manager families: every manager names a real glyph, so none
+     * of them falls back to a generic dot. */
+    bell: '<path d="M4.2 6.6a3.8 3.8 0 0 1 7.6 0c0 3 .9 4.2 1.4 4.8H2.8c.5-.6 1.4-1.8 1.4-4.8Z"/><path d="M6.6 13.2a1.6 1.6 0 0 0 2.8 0"/>',
+    bellOff: '<path d="M5.2 4.6a3.8 3.8 0 0 1 6.6 2c0 3 .9 4.2 1.4 4.8H6.4"/><path d="M3.6 11.4c.5-.6 1.4-1.8 1.4-4.8v-.3"/><path d="M6.6 13.2a1.6 1.6 0 0 0 2.8 0"/><path d="m2.4 2.4 11.2 11.2"/>',
+    volume: '<path d="M3.2 6.2h2.2L8.4 3.6v8.8L5.4 9.8H3.2z"/><path d="M10.6 6a2.8 2.8 0 0 1 0 4"/><path d="M12.4 4.2a5.2 5.2 0 0 1 0 7.6"/>',
+    waveform: '<path d="M2.4 8h1.6"/><path d="M5.4 4.8v6.4"/><path d="M8 2.8v10.4"/><path d="M10.6 5.6v4.8"/><path d="M13.2 7.2v1.6"/>',
+    palette: '<path d="M8 2.2a5.8 5.8 0 0 0 0 11.6c1 0 1.4-.7 1.1-1.4-.4-.9.2-1.7 1.2-1.7h1a2.5 2.5 0 0 0 2.5-2.6C13.8 4.7 11.2 2.2 8 2.2Z"/><circle cx="5.6" cy="7" r=".9"/><circle cx="8.4" cy="5.2" r=".9"/><circle cx="10.9" cy="6.9" r=".9"/>',
+    type: '<path d="M3.4 4.4V3.2h9.2v1.2"/><path d="M8 3.2v9.6"/><path d="M6.2 12.8h3.6"/>',
+    spellcheck: '<path d="m2.4 10.6 2.8-7 2.8 7"/><path d="M3.4 8.4h3.6"/><path d="m9.4 10.4 1.8 1.9 3.2-4"/>',
+    window: '<rect x="2.2" y="3" width="11.6" height="10" rx="1.3"/><path d="M2.2 6h11.6"/><path d="M4.4 4.5h.01"/><path d="M6.2 4.5h.01"/>',
+    tray: '<path d="M2.4 9.4h3l.9 1.6h3.4l.9-1.6h3"/><path d="M4.1 3.4h7.8l1.7 6v2.4a1.2 1.2 0 0 1-1.2 1.2H3.6a1.2 1.2 0 0 1-1.2-1.2V9.4z"/>',
+    graduation: '<path d="M8 2.4 14.4 5.6 8 8.8 1.6 5.6z"/><path d="M4.4 7.2v3.4c0 1.2 1.6 2.2 3.6 2.2s3.6-1 3.6-2.2V7.2"/><path d="M14.4 5.6v3.6"/>',
+    git: '<circle cx="4.6" cy="4.6" r="1.8"/><circle cx="4.6" cy="11.4" r="1.8"/><circle cx="11.4" cy="8" r="1.8"/><path d="M4.6 6.4v3.2"/><path d="M6.2 5.4a3.6 3.6 0 0 0 3.5 2.2"/>',
+    branch: '<circle cx="4.6" cy="3.8" r="1.6"/><circle cx="4.6" cy="12.2" r="1.6"/><circle cx="11.4" cy="6.2" r="1.6"/><path d="M4.6 5.4v5.2"/><path d="M11.4 7.8c0 2-1.6 2.9-3.4 3.1"/>',
+    container: '<path d="M8 2.2 13.6 5v6L8 13.8 2.4 11V5z"/><path d="M2.4 5 8 7.8 13.6 5"/><path d="M8 7.8v6"/>',
+    globe: '<circle cx="8" cy="8" r="5.8"/><path d="M2.4 8h11.2"/><path d="M8 2.2c1.7 1.7 2.6 3.7 2.6 5.8S9.7 12.1 8 13.8C6.3 12.1 5.4 10.1 5.4 8s.9-4.1 2.6-5.8Z"/>',
+    database: '<ellipse cx="8" cy="4" rx="5" ry="1.9"/><path d="M3 4v8c0 1 2.2 1.9 5 1.9s5-.9 5-1.9V4"/><path d="M3 8c0 1 2.2 1.9 5 1.9s5-.9 5-1.9"/>',
+    archive: '<rect x="2.2" y="2.8" width="11.6" height="3" rx=".8"/><path d="M3.4 5.8v6.2a1.2 1.2 0 0 0 1.2 1.2h6.8a1.2 1.2 0 0 0 1.2-1.2V5.8"/><path d="M6.4 8.6h3.2"/>',
+    beaker: '<path d="M6.2 2.2v4L2.8 11.6a1.2 1.2 0 0 0 1 1.9h8.4a1.2 1.2 0 0 0 1-1.9L9.8 6.2v-4"/><path d="M5.4 2.2h5.2"/><path d="M4.6 9.6h6.8"/>',
+    bug: '<path d="M5.4 5.6a2.6 2.6 0 0 1 5.2 0v3.2a2.6 2.6 0 0 1-5.2 0z"/><path d="M6.2 4.2 5 3"/><path d="m9.8 4.2 1.2-1.2"/><path d="M5.4 7.2H2.8"/><path d="M10.6 7.2h2.6"/><path d="m5.6 10.4-1.8 1.6"/><path d="m10.4 10.4 1.8 1.6"/>',
+    wrench: '<path d="M10.2 2.4a3.6 3.6 0 0 0-3.4 5.9L2.6 12.5l1.3 1.3 4.2-4.2a3.6 3.6 0 0 0 4.8-4.4L11 6.9 9.4 5.3z"/>',
+    keyboard: '<rect x="1.8" y="4" width="12.4" height="8" rx="1.3"/><path d="M4.2 6.4h.01"/><path d="M6.6 6.4h.01"/><path d="M9 6.4h.01"/><path d="M11.4 6.4h.01"/><path d="M4.2 9.6h7.6"/>',
+    code: '<path d="m5.4 5.4-3 2.6 3 2.6"/><path d="m10.6 5.4 3 2.6-3 2.6"/><path d="m9.2 3.4-2.4 9.2"/>',
+    trash: '<path d="M2.8 4.4h10.4"/><path d="M6.2 4.4V3.2a.9.9 0 0 1 .9-.9h1.8a.9.9 0 0 1 .9.9v1.2"/><path d="M4.2 4.4l.7 8.1a1 1 0 0 0 1 .9h4.2a1 1 0 0 0 1-.9l.7-8.1"/><path d="M6.8 7v3.6"/><path d="M9.2 7v3.6"/>',
+    hardDrive: '<rect x="1.8" y="8.4" width="12.4" height="4.4" rx="1.2"/><path d="m3.6 8.4 1.7-4.4a1 1 0 0 1 .9-.6h3.6a1 1 0 0 1 .9.6l1.7 4.4"/><path d="M4.4 10.6h.01"/><path d="M6.6 10.6h.01"/>',
+    upload: '<path d="M8 13.4V6.2"/><path d="m5 9.2 3-3 3 3"/><path d="M2.8 3.8v-.6a.8.8 0 0 1 .8-.8h8.8a.8.8 0 0 1 .8.8v.6"/><path d="M2.8 12.6v.6a.8.8 0 0 0 .8.8h8.8a.8.8 0 0 0 .8-.8v-.6"/>',
+    play: '<path d="M4.8 3.2 12.4 8l-7.6 4.8z"/>',
+    pause: '<path d="M5.6 3.4v9.2"/><path d="M10.4 3.4v9.2"/>',
+    route: '<circle cx="4" cy="4.2" r="1.8"/><circle cx="12" cy="11.8" r="1.8"/><path d="M4 6v2.4a2.4 2.4 0 0 0 2.4 2.4H10"/><path d="M8.4 9.2 10 10.8 8.4 12.4"/>',
+    scale: '<path d="M8 2.6v10.8"/><path d="M4.4 4h7.2"/><path d="M4.4 4 2.4 8.4h4z"/><path d="M11.6 4l-2 4.4h4z"/><path d="M5.6 13.4h4.8"/>',
+    shieldAlert: '<path d="M8 1.8 3.2 3.9v3.7c0 2.8 2 5.4 4.8 6.6 2.8-1.2 4.8-3.8 4.8-6.6V3.9z"/><path d="M8 5.6v3"/><path d="M8 10.4h.01"/>',
+    sparkle: '<path d="M6 2.4 7 5.4l3 1-3 1-1 3-1-3-3-1 3-1z"/><path d="m11.6 8.6.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>'
   };
 
   function icon(name, size) {

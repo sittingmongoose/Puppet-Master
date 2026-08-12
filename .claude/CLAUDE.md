@@ -1,7 +1,7 @@
 # CLAUDE.md — Puppet Master (PLANNING PHASE)
 
 ## Scope (STRICT)
-- Allowed edits: `Plans/**`
+- Allowed edits: `Plans/**`, `Concepts/**`, `Concepts/chat-assistant-concepts/**`, `Concepts/settings-redesign-concepts/Opus 5/**`
 - Allowed when explicitly requested: `AGENTS.md`, `.cursorrules`, `.claude/**`, `.cursor/**`
 - Disallowed: application code (e.g. `puppet-master-rs/**`), installers, runtime configs
 

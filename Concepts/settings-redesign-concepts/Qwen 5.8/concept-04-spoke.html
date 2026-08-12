@@ -1,769 +1,1216 @@
 <!doctype html>
-<html lang="en" data-theme="glass-dark" data-reduced-motion="0">
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-04-spoke">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spoke — Settings by Intent — Qwen 5.8</title>
 <link rel="stylesheet" href="_shared/pm-shell.css">
 <style>
-.sp-home, .sp-work { flex: 1; min-height: 0; overflow-y: auto; }
-.sp-orbit { animation: spOrbit .4s cubic-bezier(.2,.8,.2,1) both; }
-@keyframes spOrbit { from { opacity: 0; transform: scale(.985) translateY(8px); } to { opacity: 1; transform: none; } }
-.sp-slide-r { animation: spSlideR .32s cubic-bezier(.2,.8,.2,1) both; }
-@keyframes spSlideR { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+/* ---------- Spoke: orbital depth ---------- */
+.sp-home, .sp-work { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.sp-rise { animation: spRise .42s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes spRise { from { opacity: 0; transform: translateY(16px) scale(.986); } to { opacity: 1; transform: none; } }
+.sp-rise-late { animation: spRise .42s cubic-bezier(.2,.8,.2,1) both; animation-delay: .07s; }
+.sp-wing { animation: spRise .4s cubic-bezier(.2,.8,.2,1) both; }
+.sp-wing:nth-child(2) { animation-delay: .05s; }
+.sp-wing:nth-child(3) { animation-delay: .1s; }
+.sp-wing:nth-child(4) { animation-delay: .15s; }
+[data-reduced-motion="1"] .sp-rise, [data-reduced-motion="1"] .sp-rise-late, [data-reduced-motion="1"] .sp-wing,
+[data-reduced-motion="1"] .sp-detail-doc, [data-reduced-motion="1"] .sp-launcher-pop, [data-reduced-motion="1"] .sp-master {
+  animation: none;
+}
 
-.sp-wrap { max-width: 1160px; margin: 0 auto; padding: 26px 28px 80px; width: 100%; }
+/* ---------- Home ---------- */
+.sp-home-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+.sp-wrap { max-width: 1180px; margin: 0 auto; padding: 28px 28px 90px; width: 100%; box-sizing: border-box; }
 .sp-hub { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 26px; }
-.sp-hub-ring { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--surface); box-shadow: var(--shadow); margin-bottom: 12px; }
+.sp-hub-ring { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--surface); box-shadow: var(--shadow); margin-bottom: 12px; }
 .sp-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
 .sp-hub h1 { margin: 4px 0 6px; font-size: 27px; color: var(--text-1); font-weight: 750; letter-spacing: -.01em; }
-.sp-hub p { margin: 0 0 16px; color: var(--text-2); font-size: 13px; max-width: 560px; }
-.sp-launcher { position: relative; width: min(620px, 100%); }
+.sp-hub p { margin: 0; color: var(--text-2); font-size: 13px; max-width: 600px; }
+
+.sp-launcher { position: relative; width: min(640px, 100%); margin-top: 18px; }
 .sp-launcher-field { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 12px 18px; box-shadow: var(--shadow); }
 .sp-launcher-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow); }
 .sp-launcher-field input { flex: 1; background: none; border: none; outline: none; color: var(--text-1); font-size: 14.5px; min-width: 0; }
-.sp-launcher-field .pm-ico { color: var(--accent); }
+.sp-launcher-field .pm-ico { color: var(--accent); flex: none; }
+.sp-launcher-hint { color: var(--text-3); font-size: 11px; margin-top: 7px; }
 .sp-launcher-drop { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 60; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-l); box-shadow: var(--shadow); max-height: 360px; overflow-y: auto; padding: 8px; text-align: left; }
 .sp-launcher-drop[hidden] { display: none; }
-.sp-ld-group { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 7px 10px 3px; }
 .sp-ld-item { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: none; background: none; padding: 8px 10px; border-radius: var(--radius-m); cursor: pointer; color: var(--text-1); }
 .sp-ld-item:hover, .sp-ld-item.active { background: var(--accent-soft); }
-.sp-ld-item .path { color: var(--text-3); font-size: 11px; }
+.sp-ld-item .t { font-weight: 650; font-size: 13px; }
+.sp-ld-item .path { color: var(--text-3); font-size: 11px; flex: 1; min-width: 0; }
+.pm-search-type { flex: none; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--border-strong); color: var(--text-2); border-radius: 999px; padding: 2px 8px; }
+.pm-search-type[data-rt="action"] { color: var(--accent); border-color: var(--accent); }
+.pm-search-type[data-rt="status"] { color: var(--info); border-color: var(--info); }
+.pm-search-type[data-rt="diagnostic"] { color: var(--warn); border-color: var(--warn); }
+.pm-search-type[data-rt="setup"] { color: var(--ok); border-color: var(--ok); }
+.pm-search-type[data-rt="unavailable"] { color: var(--err); border-color: var(--err); }
+.pm-search-type[data-rt="manager"] { color: var(--managed); border-color: var(--managed); }
+.sp-ld-empty { color: var(--text-3); font-size: 12px; padding: 10px; }
 
-.sp-wings { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 16px; }
+.sp-wings { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 16px; margin-top: 30px; }
 .sp-wing { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 16px; box-shadow: var(--shadow); }
 .sp-wing-cap { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; color: var(--text-1); font-weight: 700; font-size: 14px; }
 .sp-wing-cap .pm-ico { color: var(--accent); }
 .sp-wing-cap .why { display: block; font-weight: 400; font-size: 11.5px; color: var(--text-3); }
-.sp-spoke { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius-m); padding: 10px; cursor: pointer; }
-.sp-spoke { transition: background-color .16s, border-color .16s; }
+.sp-spoke { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius-m); padding: 10px; cursor: pointer; transition: background-color .16s, border-color .16s; }
 .sp-spoke:hover { background: var(--surface-2); border-color: var(--border); }
-.sp-spoke-ico { transition: color .16s, border-color .16s; }
-.sp-spoke-ico { width: 30px; height: 30px; flex: none; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--text-2); background: var(--surface-3); }
+.sp-spoke-ico { width: 30px; height: 30px; flex: none; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: var(--text-2); background: var(--surface-3); transition: color .16s, border-color .16s; }
 .sp-spoke:hover .sp-spoke-ico { color: var(--accent); border-color: var(--accent); }
-.sp-spoke .t { color: var(--text-1); font-weight: 650; font-size: 13px; }
-.sp-spoke .p { color: var(--text-3); font-size: 11.5px; }
-.sp-spoke .pm-ico.chev { margin-left: auto; color: var(--text-3); flex: none; }
-.sp-az { margin-top: 18px; text-align: center; }
-.sp-az-list { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-.sp-az-list button { border: 1px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 12px; }
-.sp-az-list button:hover { color: var(--accent); border-color: var(--accent); }
+.sp-spoke .body { flex: 1; min-width: 0; }
+.sp-spoke .t { color: var(--text-1); font-weight: 650; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sp-spoke .p { color: var(--text-3); font-size: 11.5px; margin-top: 2px; }
+.sp-spoke .open { color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; flex: none; }
+.sp-health-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.sp-health-dot.ok { background: var(--ok); } .sp-health-dot.warn { background: var(--warn); }
+.sp-health-dot.attention { background: var(--err); } .sp-health-dot.info { background: var(--info); }
 
-.sp-board { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+.sp-az { margin-top: 22px; }
+.sp-az-toggle { border: 1px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 999px; padding: 7px 16px; cursor: pointer; font-size: 12px; display: block; margin: 0 auto; }
+.sp-az-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.sp-az-list { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 5px; }
+.sp-az-list[hidden] { display: none; }
+.sp-az-item { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-1); border-radius: var(--radius-m); padding: 7px 10px; cursor: pointer; font-size: 12px; text-align: left; }
+.sp-az-item:hover { border-color: var(--accent); }
+.sp-az-item .where { color: var(--text-3); font-size: 10.5px; display: block; }
+
+.sp-notices { margin-top: 30px; display: grid; gap: 14px; }
+.sp-notice-group-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 8px; }
+.sp-notice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
 .sp-notice { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 12px 14px; box-shadow: var(--shadow); }
 .sp-notice .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
 .sp-notice h4 { margin: 0 0 3px; font-size: 13px; color: var(--text-1); font-weight: 650; }
 .sp-notice p { margin: 0 0 9px; font-size: 12px; color: var(--text-2); }
 .sp-notice-actions { display: flex; gap: 7px; flex-wrap: wrap; }
 
-.sp-bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--bg-shell); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-[data-chrome-blur="on"] .sp-bar { backdrop-filter: var(--chrome-blur); }
+.sp-recents { margin-top: 28px; }
+.sp-recents-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 8px; }
+.sp-recent { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-m); padding: 8px 12px; cursor: pointer; color: var(--text-1); font-size: 12.5px; margin-bottom: 6px; }
+.sp-recent:hover { border-color: var(--accent); }
+.sp-recent .where { color: var(--text-3); font-size: 11px; flex: 1; }
+.sp-recent .when { color: var(--text-3); font-size: 11px; }
+
+/* ---------- Workspace ---------- */
+.sp-bar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--bg-shell); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .sp-bar .title { font-weight: 700; color: var(--text-1); font-size: 14px; white-space: nowrap; }
 .sp-bar .pm-spacer { flex: 1; }
-.sp-bar .sp-search-mini { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 12px; flex: 0 1 250px; min-width: 150px; }
-.sp-bar .sp-search-mini input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12px; }
-.sp-disc-seg { flex: none; }
+.sp-master-toggle { display: none; }
+.pm-app[data-wtier="narrow"] .sp-master-toggle, .pm-app[data-wtier="squeezed"] .sp-master-toggle { display: inline-flex; }
 
-.sp-body { display: grid; grid-template-columns: minmax(0, 1fr) 208px; gap: 0; align-items: start; }
-.pm-app[data-wtier="squeezed"] .sp-body { grid-template-columns: 1fr; }
-.sp-doc { padding: 22px 26px 90px; max-width: 820px; min-width: 0; }
-.sp-sub { margin-bottom: 34px; scroll-margin-top: 64px; }
+.sp-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 236px minmax(0, 1fr) 46px; grid-template-rows: minmax(0, 1fr); }
+.pm-app[data-wtier="narrow"] .sp-body { grid-template-columns: minmax(0, 1fr) 46px; }
+.pm-app[data-wtier="squeezed"] .sp-body { grid-template-columns: minmax(0, 1fr); }
+
+.sp-master { border-right: 1px solid var(--border); overflow-y: auto; min-height: 0; padding: 12px 10px 40px; background: var(--bg); }
+.pm-app[data-wtier="narrow"] .sp-master, .pm-app[data-wtier="squeezed"] .sp-master {
+  position: absolute; z-index: 55; top: 0; bottom: 0; left: 0; width: 260px; max-width: 86vw;
+  box-shadow: var(--shadow); transform: translateX(-104%); transition: transform .22s ease; pointer-events: none;
+}
+.pm-app[data-wtier="narrow"] .sp-master.drawer-open, .pm-app[data-wtier="squeezed"] .sp-master.drawer-open {
+  transform: none; pointer-events: auto;
+}
+[data-reduced-motion="1"] .sp-master { transition: none; }
+.sp-work { position: relative; }
+.sp-master-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 8px 10px 4px; }
+.sp-master-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: 1px solid transparent; background: none; color: var(--text-2); border-radius: var(--radius-m); padding: 8px 10px; cursor: pointer; font-size: 12.5px; }
+.sp-master-item:hover { background: var(--surface-2); color: var(--text-1); }
+.sp-master-item.active { background: var(--accent-soft); border-color: var(--accent); color: var(--text-1); font-weight: 650; }
+.sp-master-sub { display: block; width: calc(100% - 18px); margin-left: 18px; text-align: left; border: none; background: none; color: var(--text-3); padding: 5px 10px; cursor: pointer; font-size: 11.5px; border-radius: var(--radius-s); }
+.sp-master-sub:hover { color: var(--text-1); background: var(--surface-2); }
+.sp-master-sub.active { color: var(--accent); font-weight: 700; }
+
+.sp-detail { min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.sp-detail-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 22px 26px 90px; }
+.sp-detail-doc { max-width: 860px; }
+.sp-doc-head { margin-bottom: 18px; }
+.sp-doc-head h1 { margin: 0 0 4px; font-size: 21px; color: var(--text-1); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sp-doc-head p { margin: 0; color: var(--text-2); font-size: 12.5px; }
+.sp-sub { margin-bottom: 34px; scroll-margin-top: 12px; }
 .sp-sub h2 { font-size: 16.5px; color: var(--text-1); margin: 0 0 3px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .sp-sub .lead { color: var(--text-3); font-size: 12px; margin: 0 0 12px; }
 
-.sp-rail { position: sticky; top: 56px; padding: 18px 14px; display: flex; flex-direction: column; gap: 4px; }
-.pm-app[data-wtier="squeezed"] .sp-rail { position: static; flex-direction: row; flex-wrap: wrap; padding: 8px 14px; }
-.sp-tick { display: flex; align-items: center; gap: 8px; border: none; background: none; color: var(--text-3); font-size: 11.5px; padding: 5px 8px; cursor: pointer; border-radius: 999px; text-align: left; transition: background-color .18s, color .18s; }
-.sp-tick .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); flex: none; transition: background-color .18s; }
-.sp-tick:hover { color: var(--text-1); }
-.sp-tick.active { color: var(--accent); background: var(--accent-soft); font-weight: 700; }
-.sp-tick.active .dot { background: var(--accent); }
+.sp-rail { border-left: 1px solid var(--border); padding: 20px 6px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.pm-app[data-wtier="squeezed"] .sp-rail { display: none; }
+.sp-tick { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+.sp-tick .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); transition: background-color .18s, transform .18s; }
+.sp-tick:hover { border-color: var(--accent); }
+.sp-tick.active { border-color: var(--accent); background: var(--accent-soft); }
+.sp-tick.active .dot { background: var(--accent); transform: scale(1.25); }
+[data-reduced-motion="1"] .sp-tick .dot { transition: none; }
 
-.sp-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 11px 14px; margin-bottom: 8px; box-shadow: var(--shadow); }
-.sp-row-top { display: flex; align-items: flex-start; gap: 12px; }
-.sp-row-top > div:first-child { flex: 1; min-width: 0; }
-.sp-row-label { color: var(--text-1); font-weight: 650; font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.sp-row-desc { color: var(--text-3); font-size: 11.5px; margin-top: 2px; }
-.sp-row-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.sp-row-ctl { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
-.pm-app[data-wtier="squeezed"] .sp-row-ctl { align-items: flex-start; }
-.sp-row-ctl .line { display: flex; align-items: center; gap: 7px; }
-.sp-row-detail { display: none; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-2); }
-.sp-row.open .sp-row-detail { display: block; animation: pmReveal .22s ease both; }
-.sp-row[data-hidden="true"] { display: none; }
+/* Demonstrated manager material */
+.sp-mgr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); box-shadow: var(--shadow); margin-bottom: 14px; }
+.sp-mgr .pm-mgr-head { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.sp-mgr .pm-mgr-body { padding: 14px 16px; }
+.sp-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.sp-stat-card { border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 12px 14px; }
+.sp-stat-card .k { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+.sp-stat-card .v { font-size: 14px; color: var(--text-1); font-weight: 650; margin-top: 3px; }
+.sp-stat-card .n { font-size: 11.5px; color: var(--text-2); margin-top: 3px; }
+.sp-run-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 10px 13px; margin-bottom: 8px; }
+.sp-run-row .kind { font-weight: 650; color: var(--text-1); font-size: 13px; min-width: 190px; }
+.sp-run-row .meta { color: var(--text-3); font-size: 11.5px; flex: 1; min-width: 180px; }
+.sp-run-row .ctl { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+.sp-kind-chip { font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; border: 1px solid var(--border-strong); color: var(--text-3); }
+.sp-kind-chip.act { color: var(--accent); border-color: var(--accent); }
+.sp-kind-chip.sched { color: var(--info); border-color: var(--info); }
+.sp-kind-chip.stat { color: var(--text-3); }
+.sp-hist-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+.sp-table-row { display: grid; grid-template-columns: minmax(140px, 1.2fr) minmax(120px, 1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 9px 13px; margin-bottom: 7px; }
+.sp-table-row .main { min-width: 0; }
+.sp-table-row .main b { color: var(--text-1); font-size: 12.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.sp-table-row .main .sub { color: var(--text-3); font-size: 11px; }
+.sp-table-row .mid { color: var(--text-2); font-size: 11.5px; min-width: 0; }
+.sp-table-row .ctl { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pm-app[data-wtier="squeezed"] .sp-table-row { grid-template-columns: 1fr; }
+.pm-app[data-wtier="squeezed"] .sp-table-row .ctl { justify-content: flex-start; }
+.sp-expand { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-3); margin-bottom: 8px; }
+.sp-expand-head { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; padding: 10px 13px; cursor: pointer; color: var(--text-1); font-size: 13px; font-weight: 650; flex-wrap: wrap; }
+.sp-expand-head .pm-ico { color: var(--text-3); }
+.sp-expand-body { padding: 4px 13px 12px; display: none; }
+.sp-expand.open .sp-expand-body { display: block; }
+.sp-expand-body li { color: var(--text-2); font-size: 12px; margin: 3px 0; }
+.sp-longlabel { display: flex; align-items: flex-start; gap: 12px; border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 11px 14px; margin-bottom: 8px; }
+.sp-longlabel .lbl { flex: 1; min-width: 0; color: var(--text-1); font-size: 13px; font-weight: 600; }
+.sp-longlabel .d { color: var(--text-3); font-size: 11.5px; font-weight: 400; margin-top: 2px; }
+.sp-progress { height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); max-width: 260px; }
+.sp-progress > i { display: block; height: 100%; border-radius: 999px; background: var(--accent); transition: width .3s ease; }
+[data-reduced-motion="1"] .sp-progress > i { transition: none; }
 
-.sp-split { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 16px; align-items: start; }
-.pm-app[data-wtier="squeezed"] .sp-split { grid-template-columns: 1fr; }
-.sp-inv { display: flex; flex-direction: column; gap: 6px; }
-.sp-inv-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 10px 0 2px; }
-.sp-inv-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-m); padding: 9px 11px; cursor: pointer; color: var(--text-1); font-size: 12.5px; }
-.sp-inv-item:hover { border-color: var(--border-strong); background: var(--surface-2); }
-.sp-inv-item.sel { border-color: var(--accent); background: var(--accent-soft); }
-.sp-inv-item .sub { display: block; color: var(--text-3); font-size: 11px; }
-.sp-inspector { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); box-shadow: var(--shadow); padding: 18px; min-height: 300px; }
-.sp-inspector h3 { margin: 0 0 4px; font-size: 16px; color: var(--text-1); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-.sp-inspector .sub { color: var(--text-2); font-size: 12.5px; }
-.sp-kv { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 5px 14px; font-size: 12.5px; margin: 12px 0; }
-.sp-kv dt { color: var(--text-3); }
-.sp-kv dd { margin: 0; color: var(--text-1); }
-.sp-ins-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
-.sp-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
-.sp-model-mini { display: flex; align-items: center; gap: 9px; border: 1px solid var(--border); border-radius: var(--radius-m); padding: 8px 11px; margin-bottom: 6px; flex-wrap: wrap; background: var(--surface-3); }
-.sp-model-mini .name { font-weight: 650; color: var(--text-1); }
-.sp-model-mini .meta { color: var(--text-3); font-size: 11px; }
-.sp-fav { background: none; border: none; color: var(--text-3); cursor: pointer; padding: 2px; display: inline-flex; }
-.sp-fav.on { color: var(--warn); }
-.sp-role { display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1fr); gap: 8px; font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
-.pm-app[data-wtier="squeezed"] .sp-role { grid-template-columns: 1fr; }
-.sp-role .req { color: var(--text-3); }
-.sp-role .eff { color: var(--text-1); font-weight: 650; }
-.sp-media-hist { font-size: 12px; color: var(--text-2); padding: 5px 0; border-bottom: 1px solid var(--border); }
+/* Manager-level master-detail split: resource list left, inspector right */
+.sp-mgr-split { display: grid; grid-template-columns: minmax(200px, 320px) minmax(0, 1fr); gap: 14px; align-items: start; }
+.pm-app[data-wtier="squeezed"] .sp-mgr-split { grid-template-columns: 1fr; }
+.sp-mgr-split .sp-md-master { display: flex; flex-direction: column; gap: 6px; }
+.sp-md-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 9px 11px; cursor: pointer; color: var(--text-1); font-size: 12.5px; transition: border-color .16s, background-color .16s; }
+.sp-md-item:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.sp-md-item.sel { border-color: var(--accent); background: var(--accent-soft); }
+.sp-md-item .sub { display: block; color: var(--text-3); font-size: 11px; margin-top: 1px; }
+[data-reduced-motion="1"] .sp-md-item { transition: none; }
+.sp-md-detail { background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 14px 16px; min-height: 120px; }
+.sp-md-detail h4 { margin: 0 0 8px; font-size: 14px; color: var(--text-1); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sp-group-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 16px 0 8px; }
+.pm-provider-card, .pm-install { margin-bottom: 12px; }
 </style>
 </head>
-<body data-concept-model="Qwen 5.8" data-concept="spoke">
-<div id="app"></div>
-<script src="_shared/concept-hub-bridge.js"></script>
+<body>
+<div id="app" data-concept-model="Qwen 5.8"></div>
 <script src="_shared/pm-icons.js"></script>
 <script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-data-extra.js"></script>
 <script src="_shared/pm-state.js"></script>
 <script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-managers.js"></script>
 <script src="_shared/pm-shell.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
 <script>
 (function () {
   "use strict";
-  var MODEL = "Qwen 5.8";
-  var shell = window.PMShell.mount({ conceptName: "Spoke concept", model: MODEL });
+  var D = window.PMDemoData;
+  var M = window.PMManagers;
+  var esc = M.esc;
+  var ico = function (n, s) { return window.PMIcons.get(n, s || 14); };
+
+  PMState.init("concept-04-spoke");
+  PMManagers.setPrefix("sp-");
+  var shell = window.PMShell.mount({ conceptName: "Spoke", model: "Qwen 5.8" });
   var content = shell.content;
-  var INDEX = window.PMCore.buildSearchIndex();
-  var IMPLEMENTED = { providers: true, personas: true, media: true };
-  var MANAGER_HOME = { memory: "Atlas", mcp: "Atlas", crew: "Deck", terminal: "Deck", "context-sources": "Ledger", skills: "Ledger", lsp: "Deck" };
-  var WINGS = [
-    { id: "connect", icon: "plug", title: "Connect & provide", why: "Routes, models, and extensions that do the work.", dests: ["models", "extensions", "media"] },
-    { id: "shape", icon: "wand", title: "Shape assistance", why: "How Puppet Master looks, feels, and remembers.", dests: ["general", "appearance", "context"] },
-    { id: "guard", icon: "shield", title: "Guard & permit", why: "What is allowed, protected, and diagnosable.", dests: ["safety", "system"] },
-    { id: "automate", icon: "target", title: "Plan & automate", why: "Goals, Crews, code, and verification policy.", dests: ["planning", "code"] }
-  ];
+  var searchIndex = window.PMCore.buildSearchIndex();
   var spy = null;
-  var selected = {};
+  var currentView = { name: "home" };
 
-  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var WINGS = [
+    { icon: "target", title: "Shape how it behaves", why: "Defaults, behavior, safety, and what enters each request.", dests: ["general", "behavior", "permissions", "context"] },
+    { icon: "robot", title: "Connect providers & models", why: "Providers, accounts, models, and the extensions they power.", dests: ["models", "extensions"] },
+    { icon: "sun", title: "Look & feel", why: "Theme, motion, and where work reaches you.", dests: ["appearance", "notifications"] },
+    { icon: "activity", title: "Keep the system healthy", why: "Storage, backups, history, and the machines underneath.", dests: ["system"] }
+  ];
 
-  function route() {
-    var v = window.PMState.state.view;
-    if (spy) { spy.destroy(); spy = null; }
-    if (v.name === "home") renderHome(); else renderWork(v);
+  function destById(id) { for (var i = 0; i < D.destinations.length; i++) if (D.destinations[i].id === id) return D.destinations[i]; return null; }
+  function healthDot(kind) { return '<span class="sp-health-dot ' + esc(kind || "ok") + '"></span>'; }
+
+  // ---------- Launcher search (works over any view) ----------
+  function resultItemHtml(e, idx) {
+    return '<button class="sp-ld-item' + (idx === 0 ? " active" : "") + '" data-ld-idx="' + idx + '">' +
+      '<span class="t">' + esc(e.title) + '</span>' +
+      '<span class="path">' + esc(e.path.join(" › ")) + (e.unavailableReason ? " — " + esc(e.unavailableReason) : "") + '</span>' +
+      '<span class="pm-search-type" data-rt="' + esc(e.resultType) + '">' + esc(e.resultType) + "</span>" +
+    "</button>";
+  }
+  function runSearch(input, drop) {
+    var q = input.value.trim();
+    if (!q) { drop.hidden = true; drop.innerHTML = ""; drop._results = []; return; }
+    var results = window.PMCore.search(q, searchIndex);
+    drop._results = results;
+    drop.innerHTML = results.length
+      ? results.map(function (e, i) { return resultItemHtml(e, i); }).join("")
+      : '<div class="sp-ld-empty">Nothing matched. Try a broader term — spelling mistakes are tolerated.</div>';
+    drop.hidden = false;
+  }
+  function activateResult(e) {
+    if (!e) return;
+    var view = { name: "workspace", category: e.target.category };
+    if (e.target.subcategory) view.subcategory = e.target.subcategory;
+    if (e.target.manager) view.manager = e.target.manager;
+    if (e.target.provider) view.provider = e.target.provider;
+    if (e.target.setting) view.setting = e.target.setting;
+    window.PMState.navigate(view);
+  }
+  function wireLauncher(input, drop, onActivate) {
+    input.addEventListener("input", function () { runSearch(input, drop); });
+    input.addEventListener("focus", function () { if (input.value.trim()) runSearch(input, drop); });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        var results = drop._results || [];
+        var active = drop.querySelector(".sp-ld-item.active") || drop.querySelector(".sp-ld-item");
+        var idx = active ? parseInt(active.getAttribute("data-ld-idx"), 10) : 0;
+        if (results[idx]) { activateResult(results[idx]); input.value = ""; drop.hidden = true; if (onActivate) onActivate(); }
+      } else if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
+        ev.preventDefault();
+        var items = Array.prototype.slice.call(drop.querySelectorAll(".sp-ld-item"));
+        if (!items.length) return;
+        var cur = items.findIndex(function (x) { return x.classList.contains("active"); });
+        var next = ev.key === "ArrowDown" ? (cur + 1) % items.length : (cur - 1 + items.length) % items.length;
+        items.forEach(function (x, i) { x.classList.toggle("active", i === next); });
+      } else if (ev.key === "Escape") { drop.hidden = true; }
+    });
+    drop.addEventListener("click", function (ev) {
+      var item = ev.target.closest ? ev.target.closest(".sp-ld-item") : null;
+      if (!item) return;
+      var results = drop._results || [];
+      activateResult(results[parseInt(item.getAttribute("data-ld-idx"), 10)]);
+      input.value = ""; drop.hidden = true;
+      if (onActivate) onActivate();
+    });
+  }
+  function openLauncherOverlay() {
+    var ov = document.createElement("div");
+    ov.className = "pm-dialog-overlay";
+    ov.innerHTML = '<div class="pm-dialog pm-dialog-wide" role="dialog" aria-modal="true" aria-label="Search settings">' +
+      '<div class="pm-dialog-title">Search settings</div>' +
+      '<div class="pm-dialog-body">' +
+        '<div class="sp-launcher"><div class="sp-launcher-field">' + ico("search", 15) + '<input type="text" placeholder="Search every setting, manager, and provider…" aria-label="Search settings"></div>' +
+        '<div class="sp-launcher-drop" hidden></div></div>' +
+      "</div>" +
+      '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-sm">Close</button></div>' +
+    "</div>";
+    document.body.appendChild(ov);
+    var input = ov.querySelector("input");
+    wireLauncher(input, ov.querySelector(".sp-launcher-drop"), function () { ov.remove(); });
+    input.focus();
+    ov.querySelector(".pm-dialog-actions button").addEventListener("click", function () { ov.remove(); });
+    ov.addEventListener("click", function (e) { if (e.target === ov) ov.remove(); });
+    ov.addEventListener("keydown", function (e) { if (e.key === "Escape") ov.remove(); });
+  }
+
+  // ---------- Notices ----------
+  function noticeCard(n) {
+    var chipKind = n.group === "attention" ? "danger" : n.group === "continue" ? "info" : "ok";
+    return '<div class="sp-notice" data-notice-card="' + esc(n.id) + '">' +
+      '<div class="sp-top"><span class="pm-badge pm-badge-' + chipKind + '">' + esc(n.status) + "</span>" +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="notice.dismiss" data-notice="' + esc(n.id) + '" aria-label="Dismiss notice">Dismiss</button></div>' +
+      "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
+      '<div class="sp-notice-actions">' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-sp-notice="' + esc(n.id) + '" data-sp-notice-role="primary">' + esc(n.action) + "</button>" +
+        (n.secondary ? '<button class="pm-btn pm-btn-sm" data-sp-notice="' + esc(n.id) + '" data-sp-notice-role="secondary">' + esc(n.secondary) + "</button>" : "") +
+      "</div>" +
+    "</div>";
+  }
+  function noticesHtml() {
+    var dismissed = PMState.state.collections.dismissedNotices;
+    var live = PMState.state.notices.filter(function (n) { return dismissed.indexOf(n.id) < 0; });
+    var groups = [
+      ["attention", "Needs attention"], ["continue", "Continue setup"], ["recommended", "Recommended"]
+    ];
+    var out = "";
+    groups.forEach(function (g) {
+      var rows = live.filter(function (n) { return n.group === g[0]; });
+      if (!rows.length) return;
+      out += '<section><div class="sp-notice-group-cap">' + esc(g[1]) + "</div>" +
+        '<div class="sp-notice-grid">' + rows.map(noticeCard).join("") + "</div></section>";
+    });
+    if (!out) out = '<section><div class="sp-notice-group-cap">Notices</div><div class="pm-empty">All clear — nothing needs you right now.</div></section>';
+    return '<div class="sp-notices sp-rise-late">' + out + "</div>";
+  }
+
+  // ---------- Home ----------
+  function azIndex() {
+    var entries = [];
+    D.destinations.forEach(function (d) {
+      d.subcategories.forEach(function (sub) {
+        entries.push({ label: sub.title, where: d.title, target: { name: "workspace", category: d.id, subcategory: sub.id } });
+        sub.settings.forEach(function (s) {
+          entries.push({ label: s.label, where: d.title + " › " + sub.title, target: { name: "workspace", category: d.id, subcategory: sub.id, setting: s.id } });
+        });
+      });
+    });
+    entries.sort(function (a, b) { return a.label.localeCompare(b.label); });
+    return entries;
   }
 
   function renderHome() {
-    var st = window.PMState.state;
-    var html = '<div class="sp-home sp-orbit" id="sp-home"><div class="sp-wrap">' +
-      '<div class="sp-hub"><div class="sp-hub-ring">' + window.PMIcons.get("compass", 24) + "</div>" +
-      '<div class="sp-kicker">Settings · Spoke · ' + MODEL + '</div><h1>The hub knows the way</h1>' +
-      "<p>Settings grouped by what you are trying to do. Search reaches everything directly; every destination stays reachable through its wing or the A–Z index.</p>" +
-      '<div class="sp-launcher"><label class="sp-launcher-field">' + window.PMIcons.get("search", 17) +
-      '<input id="sp-q" placeholder="Search any setting, manager, provider, or model…" autocomplete="off" aria-label="Search settings"></label>' +
-      '<div class="sp-launcher-drop" id="sp-drop" hidden></div></div></div>' +
-      '<div class="sp-wings">' +
-      WINGS.map(function (w) {
-        return '<div class="sp-wing"><div class="sp-wing-cap">' + window.PMIcons.get(w.icon, 16) + "<span>" + esc(w.title) + '<span class="why">' + esc(w.why) + "</span></span></div>" +
-          w.dests.map(function (id) {
-            var d = dest(id);
-            var chip = d.status.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(d.status.summary) + "</span>"
-              : d.status.kind === "setup" ? '<span class="pm-badge pm-badge-info">' + esc(d.status.summary) + "</span>"
-              : '<span class="pm-badge pm-badge-ok">' + esc(d.status.summary) + "</span>";
-            return '<button class="sp-spoke" data-dest="' + d.id + '"><span class="sp-spoke-ico">' + window.PMIcons.get(d.icon, 14) + "</span>" +
-              '<span style="flex:1;min-width:0"><span class="t">' + esc(d.title) + '</span><br><span class="p">' + esc(d.purpose) + "</span></span>" +
-              chip + '<span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 15) + "</span></button>";
-          }).join("") +
-        "</div>";
-      }).join("") +
-      "</div>" +
-      '<div class="sp-az"><button class="pm-btn pm-btn-quiet pm-btn-sm" id="sp-az-toggle">' + window.PMIcons.get("list", 13) + " All destinations A–Z</button>" +
-      '<div class="sp-az-list" id="sp-az" hidden>' +
-      window.PMDemoData.destinations.slice().sort(function (a, b) { return a.title.localeCompare(b.title); }).map(function (d) {
-        return '<button data-dest="' + d.id + '">' + esc(d.title) + "</button>";
-      }).join("") + "</div></div>" +
-      '<div class="sp-board">' +
-      (st.notices.length ? st.notices.map(function (n) {
-        var chip = n.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(n.status) + "</span>"
-          : n.kind === "continue" ? '<span class="pm-badge pm-badge-info">' + esc(n.status) + "</span>"
-          : '<span class="pm-badge pm-badge-ok">' + esc(n.status) + "</span>";
-        return '<div class="sp-notice" data-notice="' + n.id + '"><div class="top">' + chip + "</div>" +
-          "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
-          '<div class="sp-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-na>' + esc(n.action) + "</button>" +
-          (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-ns>' + esc(n.secondary) + "</button>" : "") +
-          "</div></div>";
-      }).join("") : '<div class="sp-note-card" style="grid-column:1/-1">' + window.PMIcons.get("checkCircle", 13) + " Calm state — the board is empty. Nothing needs attention.</div>") +
-      "</div>" +
-    "</div></div>";
-    content.innerHTML = html;
-    bindHome();
-  }
-
-  function bindHome() {
-    var q = document.getElementById("sp-q");
-    var drop = document.getElementById("sp-drop");
-    var hits = [];
-    var active = -1;
-    function run() {
-      var v = q.value.trim();
-      active = -1;
-      if (!v) { drop.hidden = true; return; }
-      hits = window.PMCore.search(v, INDEX);
-      if (!hits.length) { drop.innerHTML = '<div class="sp-ld-group">No matches</div><div class="sp-note-card" style="margin:6px">Try “half-life”, “allowlist”, “Fast”, or a provider name.</div>'; drop.hidden = false; return; }
-      var groups = {};
-      hits.forEach(function (h) {
-        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : (h.kind === "provider" || h.kind === "model") ? "Providers & models" : h.kind === "persona" ? "Personas" : "Destinations";
-        (groups[g] = groups[g] || []).push(h);
-      });
-      var html = "";
-      Object.keys(groups).forEach(function (g) {
-        html += '<div class="sp-ld-group">' + g + "</div>";
-        groups[g].forEach(function (h) {
-          html += '<button class="sp-ld-item" data-hit><span style="flex:1;min-width:0">' + esc(h.title) + '<br><span class="path">' + esc(h.path.join(" › ")) + "</span></span>" + window.PMIcons.get("arrowRight", 13) + "</button>";
-        });
-      });
-      drop.innerHTML = html;
-      drop.hidden = false;
-      drop.querySelectorAll("[data-hit]").forEach(function (el, i) {
-        el.addEventListener("mousedown", function (ev) { ev.preventDefault(); go(i); });
-      });
-    }
-    function go(i) {
-      drop.hidden = true;
-      var t = Object.assign({}, hits[i].target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
-    }
-    q.addEventListener("input", run);
-    q.addEventListener("focus", run);
-    q.addEventListener("blur", function () { setTimeout(function () { drop.hidden = true; }, 150); });
-    q.addEventListener("keydown", function (e) {
-      var items = drop.querySelectorAll("[data-hit]");
-      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); mark(items); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); mark(items); }
-      else if (e.key === "Enter" && hits.length) { e.preventDefault(); go(Math.max(active, 0)); }
-      else if (e.key === "Escape") drop.hidden = true;
-    });
-    function mark(items) { items.forEach(function (b, i) { b.classList.toggle("active", i === active); }); }
-
-    content.querySelectorAll("[data-dest]").forEach(function (b) {
-      b.addEventListener("click", function () { window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") }); });
-    });
-    document.getElementById("sp-az-toggle").addEventListener("click", function () {
-      var az = document.getElementById("sp-az");
-      az.hidden = !az.hidden;
-    });
-    content.querySelectorAll("[data-notice]").forEach(function (card) {
-      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
-      if (!n) return;
-      var na = card.querySelector("[data-na]");
-      var ns = card.querySelector("[data-ns]");
-      if (na) na.addEventListener("click", function () { noticeGo(n); });
-      if (ns) ns.addEventListener("click", function () { noticeGo(n, true); });
-    });
-  }
-
-  function noticeGo(n, secondary) {
-    if (secondary && n.id === "anthropic-usage") { window.PMState.receipt("Deep link to Usage", "Usage owns measured balances. Simulated navigation.", "info"); return; }
-    if (secondary && n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
-    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
-    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "anthropic" }); return; }
-    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", subcategory: "mcp" }); return; }
-    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", manager: "media" }); return; }
-    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", manager: "personas" }); return; }
-    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
-    window.PMState.receipt(n.action, "Simulated notice action.", "sim");
-  }
-
-  function settingRow(s) {
-    var meta = window.PMCore.settingMeta(s);
-    var ctl = "";
-    if (s.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + "></button>";
-    else if (s.type === "select") ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" + (s.options || []).map(function (o) { return "<option" + (o === s.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
-    else if (s.type === "segment") ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '">' + esc(o) + "</button>"; }).join("") + "</span>";
-    else if (s.type === "text") ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '"' + (meta.disabled ? " disabled" : "") + ">";
-    else if (s.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-ctl>' + esc(s.actionLabel || "Open") + "</button>";
-    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
-    var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
-    return '<div class="sp-row" data-setting-id="' + s.id + '" data-hidden="' + hidden + '">' +
-      '<div class="sp-row-top"><div><div class="sp-row-label">' + esc(s.label) + "</div>" +
-      '<div class="sp-row-desc">' + esc(s.desc) + "</div>" +
-      '<div class="sp-row-badges">' + badges + "</div></div>" +
-      '<div class="sp-row-ctl"><div class="line">' + ctl +
-      (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset>Reset</button>' : "") +
-      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-details aria-expanded="false">Why</button>' +
-      "</div><span class=\"pm-note\">" + esc(meta.sourceLabel) + " · " + esc(s.scope) + "</span></div></div>" +
-      '<div class="sp-row-detail">Source: ' + esc(meta.sourceLabel) + " · exposure " + esc(s.tier) +
-      (s.requested ? " · requested " + esc(s.requested) : "") + (s.effective ? " · effective " + esc(s.effective) : "") +
-      (s.reason ? " · " + esc(s.reason) : "") + (s.inheritedFrom ? " · inherited from " + esc(s.inheritedFrom) : "") +
-      (s.managedBy ? " · managed by " + esc(s.managedBy) : "") + "</div>" +
-    "</div>";
-  }
-
-  function managerNote(sub) {
-    var where = MANAGER_HOME[sub.manager] || "another concept";
-    return '<div class="sp-note-card">' + window.PMIcons.get("info", 13) + " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> split view is demonstrated in the " + where + " concept of this set. Spoke keeps it reachable here with its surrounding settings.</div>";
-  }
-
-  function providersSplit(v) {
-    var st = window.PMState.state;
-    if (!selected.providers) selected.providers = (v && v.provider) || "anthropic";
-    var items = [];
-    items.push({ cap: "Catalogs" });
-    st.catalogs.forEach(function (c) { items.push({ kind: "catalog", id: c.id, label: c.name, sub: c.state === "refreshing" ? "Refreshing — last-known-good active" : "Checked " + c.lastChecked }); });
-    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
-    groups.forEach(function (g) {
-      var ps = st.providers.filter(function (p) { return p.group === g; });
-      if (!ps.length) return;
-      items.push({ cap: g });
-      ps.forEach(function (p) { items.push({ kind: "provider", id: p.id, label: p.name, sub: p.stateLabel }); });
-    });
-    items.push({ cap: "Assignments" });
-    items.push({ kind: "roles", id: "roles", label: "Agent role assignments", sub: "Requested vs effective" });
-    var list = items.map(function (it) {
-      if (it.cap) return '<div class="sp-inv-cap">' + esc(it.cap) + "</div>";
-      var sel = selected.providers === it.id;
-      return '<button class="sp-inv-item' + (sel ? " sel" : "") + '" data-inv="' + it.id + '"><span style="flex:1;min-width:0">' + esc(it.label) + '<span class="sub">' + esc(it.sub) + "</span></span>" + window.PMIcons.get("chevronRight", 13) + "</button>";
+    var wings = WINGS.map(function (w) {
+      var spokes = w.dests.map(function (id) {
+        var d = destById(id);
+        if (!d) return "";
+        return '<button class="sp-spoke" data-sp-open="' + esc(d.id) + '">' +
+          '<span class="sp-spoke-ico">' + ico(d.icon, 15) + "</span>" +
+          '<span class="body"><span class="t">' + healthDot(d.status.kind) + esc(d.title) + "</span>" +
+          '<span class="p">' + esc(d.status.summary) + " · " + esc(d.purpose) + "</span></span>" +
+          '<span class="open">Open</span>' +
+        "</button>";
+      }).join("");
+      return '<section class="sp-wing"><div class="sp-wing-cap">' + ico(w.icon, 16) +
+        '<span>' + esc(w.title) + '<span class="why">' + esc(w.why) + "</span></span></div>" + spokes + "</section>";
     }).join("");
-    return '<div class="sp-split"><div class="sp-inv">' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + providerInspector() + "</div></div>";
-  }
 
-  function providerInspector() {
-    var st = window.PMState.state;
-    var sel = selected.providers;
-    var cat = st.catalogs.filter(function (c) { return c.id === sel; })[0];
-    if (cat) {
-      return "<h3>" + window.PMIcons.get("refresh", 16) + " " + esc(cat.name) + (cat.state === "refreshing" ? ' <span class="pm-badge pm-badge-info">Refreshing — last-known-good active</span>' : ' <span class="pm-badge pm-badge-ok">Current</span>') + "</h3>" +
-        '<div class="sub">Continuously maintained catalog input. A fresh catalog does not prove account entitlement.</div>' +
-        '<dl class="sp-kv"><dt>Last checked</dt><dd>' + esc(cat.lastChecked) + "</dd><dt>Last activated</dt><dd>" + esc(cat.lastActivated) + "</dd><dt>Source version</dt><dd>" + esc(cat.version) + "</dd><dt>Last known good</dt><dd>" + (cat.lastKnownGood ? "Held — bad updates are quarantined" : "No") + "</dd>" +
-        (cat.materialChanges.length ? "<dt>Material changes</dt><dd>" + cat.materialChanges.map(esc).join("; ") + "</dd>" : "") +
-        '</dl><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-catalog-refresh="' + cat.id + '"' + (cat.state === "refreshing" ? " disabled" : "") + ">" + (cat.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div>";
-    }
-    if (sel === "roles") {
-      return "<h3>" + window.PMIcons.get("robot", 16) + " Agent role assignments</h3>" +
-        '<div class="sub">Roles never force every assignment into provider cards. Requested and effective stay distinct.</div>' +
-        '<div style="margin-top:10px">' + st.roles.map(function (r) {
-          return '<div class="sp-role"><span>' + esc(r.label) + '</span><span class="req">Requested: ' + esc(r.requested) + '</span><span class="eff">Effective: ' + esc(r.effective) +
-            (r.differs ? ' <span class="pm-badge pm-badge-diff">Differs</span>' : "") + (r.note ? '<div class="pm-note">' + esc(r.note) + "</div>" : "") + "</span></div>";
-        }).join("") + "</div>";
-    }
-    var p = window.PMState.providerById(sel);
-    if (!p) return '<div class="sp-note-card">Select an item from the inventory.</div>';
-    var html = "<h3>" + esc(p.name) + " " +
-      (p.state === "ready" ? '<span class="pm-badge pm-badge-ok">Connected</span>'
-        : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">Decision needed</span>'
-        : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">Invocation failed</span>'
-        : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Setup required</span>'
-        : p.state === "signed-out" ? '<span class="pm-badge pm-badge-warn">Signed out</span>'
-        : '<span class="pm-badge">Not installed</span>') + "</h3>" +
-      '<div class="sub">' + esc(p.stateLabel) + " · " + esc(p.group) + "</div>";
-    if (p.state === "not-installed") {
-      return html + '<div class="sp-note-card" style="margin-top:12px">' + esc(p.install.note) + '</div><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button><button class="pm-btn pm-btn-sm" data-pa="diagnostics">About CLI-owned login</button></div>';
-    }
-    if (p.setup) {
-      return html + '<div class="sp-note-card" style="margin-top:12px">' + esc(p.setup.note) + " Steps: " + p.setup.steps.map(esc).join(" → ") + '</div><div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div>';
-    }
-    if (p.state === "signed-out") {
-      html += '<div class="sp-note-card" style="margin-top:12px">' + esc(p.login.note) + '</div>' +
-        '<div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div>';
-    }
-    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
-      var bits = [];
-      if (a.usage) {
-        if (a.usage.included === "exhausted") bits.push('<span class="pm-badge pm-badge-danger">Included usage exhausted</span>');
-        else if (a.usage.included) bits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
-        if (a.usage.remaining && a.usage.included !== "exhausted") bits.push('<span class="pm-note">remaining ' + esc(a.usage.remaining) + "</span>");
-        if (a.usage.extra) bits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
-        if (a.usage.reset) bits.push('<span class="pm-note">reset ' + esc(a.usage.reset) + "</span>");
-        if (a.usage.pressure) bits.push('<span class="pm-note">pressure ' + esc(a.usage.pressure) + "</span>");
-      }
-      return '<div data-account="' + a.id + '" style="border:1px solid var(--border);border-radius:var(--radius-m);padding:11px 13px;margin-top:10px;background:var(--surface-3)' + (a.enabled === false ? ";opacity:.66" : "") + '">' +
-        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="color:var(--text-1)">' + esc(a.label) + "</b>" +
-        (a.nickname ? '<span class="pm-badge">' + esc(a.nickname) + "</span>" : "") +
-        (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") +
-        (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky sessions</span>' : "") +
-        (a.enabled === false ? '<span class="pm-badge pm-badge-warn">Disabled</span>' : "") +
-        (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">Authenticated — not verified ready</span>' : "") +
-        '<span class="pm-note" style="margin-left:auto">priority ' + (a.priority || 1) +
-        ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 10) + "</button>" +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 10) + "</button></span></div>" +
-        '<dl class="sp-kv"><dt>Auth owner</dt><dd>' + esc(a.authOwner) + " — " + esc(a.authKind) + "</dd><dt>Transport</dt><dd>" + esc(a.transport) + "</dd>" +
-        (a.isolation ? "<dt>Isolation</dt><dd>" + esc(a.isolation) + "</dd>" : "") +
-        (a.identity ? "<dt>Identity</dt><dd>" + esc(a.identity) + "</dd>" : "") +
-        (a.health ? "<dt>Health</dt><dd>catalog " + esc(a.health.catalog) + " · generation " + esc(a.health.generation) + "</dd>" : "") + "</dl>" +
-        '<div class="sp-ins-actions" style="margin-top:0">' + bits.join("") + "</div>" +
-        (a.probe ? '<div class="pm-note" style="color:var(--err);margin-top:6px">' + esc(a.probe.detail) + " (" + esc(a.probe.at) + ")</div>" : "") +
-        '<div class="sp-ins-actions">' +
-        (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-use-account="' + a.id + '">Use for future requests</button>' : "") +
-        (a.preferred ? '<span class="pm-note">Future requests use this account; running work is never retargeted.</span>' : "") +
-        '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="probe">Readiness probe</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
-        ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
-        "</div>" +
-        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ? '<div class="sp-ins-actions"><span class="pm-note">What happens next:</span><select class="pm-select" data-continuation>' + a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
+    var az = azIndex().map(function (e, i) {
+      return '<button class="sp-az-item" data-az="' + i + '"><span><span>' + esc(e.label) + '</span><span class="where">' + esc(e.where) + "</span></span></button>";
+    }).join("");
+
+    var recents = PMState.state.recents.map(function (r) {
+      return '<button class="sp-recent" data-sp-recent="' + esc(r.id) + '">' + ico("clock", 13) +
+        "<b>" + esc(r.label) + '</b><span class="where">' + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span></button>";
+    }).join("");
+
+    var catalogs = PMState.state.catalogs.map(function (c) {
+      return '<div class="sp-run-row" data-catalog-row="' + esc(c.id) + '">' +
+        '<span class="kind">' + esc(c.name) + (c.state === "refreshing" ? '<span class="pm-spinner" data-spinner="1"></span>' : M.badge(c.lastKnownGood ? "Last-known-good kept" : "Live", c.lastKnownGood ? "info" : "ok")) + "</span>" +
+        '<span class="meta">Last checked: ' + esc(c.lastChecked) + " · " + esc(c.version) + "</span>" +
+        '<span class="ctl"><button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (PMState.state.ui.refreshingCatalog ? " disabled" : "") + ">Refresh</button></span>" +
       "</div>";
     }).join("");
-    if (p.models.length) {
-      html += '<div class="sp-inv-cap" style="margin-top:14px">Models — priority order</div>' +
-        p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
-          var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">Available</span>'
-            : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">Unverified</span>'
-            : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Needs setup</span>'
-            : '<span class="pm-badge pm-badge-danger">Unavailable</span>';
-          return '<div class="sp-model-mini" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
-            '<button class="sp-fav' + (m.favorite ? " on" : "") + '" data-fav aria-pressed="' + m.favorite + '" aria-label="Favorite">' + window.PMIcons.get("star", 14) + "</button>" +
-            '<span class="name">' + esc(m.name) + "</span>" + (m.alias ? '<span class="meta">alias ' + esc(m.alias) + "</span>" : "") +
-            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") + stateChip +
-            '<span class="meta">' + esc(m.context) + " ctx" + (m.effort.length ? " · effort" : "") + (m.fast ? " · Normal/Fast" : "") + (m.free ? " · " + esc(m.free) : "") + " · " + esc(m.evidence) + "</span>" +
-            '<span style="margin-left:auto;display:flex;gap:4px;align-items:center">' +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
-            '<span class="pm-note">#' + m.priority + "</span>" +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
-            '<button class="pm-btn pm-btn-sm" data-alias>Alias</button>' +
-            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show" : "Hide") + "</button>" +
-            (m.effort.length ? '<span class="pm-seg">' + m.effort.slice(0, 3).map(function (e, i) { return '<button data-effort="' + e + '" class="' + (i === 1 ? "active" : "") + '" style="padding:2px 7px;font-size:11px">' + e.slice(0, 3) + "</button>"; }).join("") + "</span>" : "") +
-            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal" style="padding:2px 7px;font-size:11px">N</button><button data-speed="Fast" style="padding:2px 7px;font-size:11px">F</button></span>' : "") +
-            "</span>" +
-            (m.reason ? '<div class="pm-note" style="width:100%;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
-          "</div>";
-        }).join("");
-    }
-    return html;
-  }
 
-  function personasSplit(v) {
-    var st = window.PMState.state;
-    if (!selected.personas) selected.personas = (v && v.persona) || "p-assistant";
-    var list = '<div class="sp-inv-cap">Core roles</div>' +
-      st.personas.filter(function (p) { return p.core; }).map(function (p) {
-        return '<button class="sp-inv-item' + (selected.personas === p.id ? " sel" : "") + '" data-inv="' + p.id + '"><span style="flex:1;min-width:0">' + esc(p.name) + '<span class="sub">' + esc(p.description) + '</span></span></button>';
-      }).join("") +
-      '<div class="sp-inv-cap">Custom</div>' +
-      st.personas.filter(function (p) { return !p.core; }).map(function (p) {
-        return '<button class="sp-inv-item' + (selected.personas === p.id ? " sel" : "") + '" data-inv="' + p.id + '"><span style="flex:1;min-width:0">' + esc(p.name) + '<span class="sub">' + esc(p.eligible) + '</span></span></button>';
-      }).join("");
-    return '<div class="sp-split"><div class="sp-inv">' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + personaInspector() + "</div></div>";
-  }
-
-  function personaInspector() {
-    var st = window.PMState.state;
-    var p = st.personas.filter(function (x) { return x.id === selected.personas; })[0];
-    if (!p) return '<div class="sp-note-card">Select a Persona.</div>';
-    var scopes = ["This turn", "This thread", "This Goal or PlanningRun", "Project default for new work", "Global default for new work", "Child only"];
-    return "<h3>" + window.PMIcons.get("persona", 16) + " " + esc(p.name) + (p.core ? ' <span class="pm-badge">Core role</span>' : ' <span class="pm-badge pm-badge-info">Custom</span>') +
-      (p.childOnly ? ' <span class="pm-badge pm-badge-warn">Child-only</span>' : "") + "</h3>" +
-      '<div class="sub">' + esc(p.description) + "</div>" +
-      '<dl class="sp-kv">' +
-      "<dt>Durable definition</dt><dd>Behavior, not an account, model, or permission grant</dd>" +
-      "<dt>Runtime metadata</dt><dd>" + esc(p.eligible) + "</dd>" +
-      "<dt>Model-facing capsule</dt><dd>" + esc(p.capsule) + " — the full source is never injected each turn</dd>" +
-      "<dt>Skills & tools</dt><dd>Eligible and preferred, not automatically loaded in full</dd>" +
-      "</dl>" +
-      (p.childOnly ? '<div class="sp-note-card">Child-only Personas cannot be chosen as ordinary Chat defaults.</div>' : "") +
-      '<div class="sp-ins-actions"><span class="pm-note">Apply scope:</span><select class="pm-select" data-persona-scope>' +
-      scopes.map(function (s) { return "<option" + (p.childOnly && s !== "Child only" ? " disabled" : "") + ">" + esc(s) + "</option>"; }).join("") +
-      '</select><button class="pm-btn pm-btn-primary pm-btn-sm" data-persona-apply>Apply</button></div>' +
-      '<div class="pm-note" style="margin-top:10px">A Persona cannot widen Plan/Review mode, permissions, FileSafe, network, project, or parent-agent ceilings. Chat selection defaults to the current thread.</div>';
-  }
-
-  function mediaSplit() {
-    var st = window.PMState.state;
-    if (!selected.media) selected.media = "media-imagegen";
-    var list = st.mediaProviders.map(function (m) {
-      var chip = m.state === "connected" ? "Ready" : m.state === "degraded" ? "Degraded" : "Not configured";
-      return '<button class="sp-inv-item' + (selected.media === m.id ? " sel" : "") + '" data-inv="' + m.id + '"><span style="flex:1;min-width:0">' + esc(m.name) + '<span class="sub">' + esc(chip) + " · " + esc(m.capability) + '</span></span></button>';
-    }).join("");
-    return '<div class="sp-split"><div class="sp-inv"><div class="sp-inv-cap">Media routes</div>' + list + '</div><div class="sp-inspector sp-slide-r" id="sp-insp">' + mediaInspector() + "</div></div>";
-  }
-
-  function mediaInspector() {
-    var st = window.PMState.state;
-    var m = st.mediaProviders.filter(function (x) { return x.id === selected.media; })[0];
-    if (!m) return "";
-    var chip = m.state === "connected" ? '<span class="pm-badge pm-badge-ok">Connected</span>' : m.state === "degraded" ? '<span class="pm-badge pm-badge-warn">Degraded — fallback active</span>' : '<span class="pm-badge pm-badge-info">Not configured</span>';
-    var html = "<h3>" + window.PMIcons.get("image", 16) + " " + esc(m.name) + " " + chip + "</h3>" +
-      '<div class="sub">' + esc(m.capability) + " · " + esc(m.mode) + "</div>" +
-      '<dl class="sp-kv">' +
-      "<dt>Route</dt><dd>" + esc(m.route) + "</dd>" +
-      "<dt>Output</dt><dd>" + esc(m.output) + "</dd>" +
-      "<dt>Safety policy</dt><dd>" + esc(m.safety) + "</dd>" +
-      "<dt>Cost / allowance</dt><dd>" + esc(m.cost) + "</dd>" +
-      "<dt>Fallback</dt><dd>" + esc(m.fallback) + "</dd>" +
-      "</dl>";
-    if (m.state === "not-configured") {
-      html += '<div class="sp-ins-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-media-act="setup">Configure route</button></div>';
-    } else {
-      html += '<div class="sp-ins-actions"><button class="pm-btn pm-btn-sm" data-media-act="test">Test route</button><button class="pm-btn pm-btn-sm" data-media-act="history">Full history (' + m.history + ")</button></div>";
-      if (m.id === "media-vision") {
-        html += '<div class="sp-inv-cap" style="margin-top:12px">Recent activity</div>' + st.mediaHistory.map(function (h) {
-          return '<div class="sp-media-hist">' + esc(h.what) + ' <span class="pm-note">— ' + esc(h.route) + " · " + esc(h.when) + " · " + esc(h.outcome) + "</span></div>";
-        }).join("");
-      }
-    }
-    return html;
-  }
-
-  function renderWork(v) {
-    var d = dest(v.category);
-    if (!d) { renderHome(); return; }
-    var st = window.PMState.state;
-    var disc = st.ui.disclosure;
-    var html = '<div class="sp-work sp-orbit" id="sp-work">' +
-      '<div class="sp-bar">' +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="sp-back">' + window.PMIcons.get("arrowLeft", 13) + " Hub</button>" +
-        '<span class="title">' + esc(d.title) + "</span>" +
-        '<span class="pm-spacer"></span>' +
-        '<label class="sp-search-mini">' + window.PMIcons.get("search", 13) + '<input id="sp-q2" placeholder="Search…" aria-label="Search in Settings"></label>' +
-        '<span class="pm-seg sp-disc-seg" id="sp-disc">' +
-        ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '" style="padding:3px 8px;font-size:11px">' + (x === "standard" ? "Std" : x === "advanced" ? "Adv" : "All") + "</button>"; }).join("") +
-        "</span>" +
-      "</div>" +
-      '<div class="sp-body">' +
-        '<div class="sp-doc" id="sp-doc">' +
-        d.subcategories.map(function (sub) {
-          var mgr = "";
-          if (sub.manager) {
-            if (sub.manager === "providers") mgr = providersSplit(v);
-            else if (sub.manager === "personas") mgr = personasSplit(v);
-            else if (sub.manager === "media") mgr = mediaSplit();
-            else mgr = managerNote(sub);
-          }
-          return '<section class="sp-sub" data-sub-section="' + sub.id + '">' +
-            "<h2>" + esc(sub.title) + (sub.manager ? ' <span class="pm-badge pm-badge-muted">manager</span>' : "") + "</h2>" +
-            '<p class="lead">' + sub.settings.length + " settings" + (sub.manager ? " · split view: inventory left, inspector right" : "") + "</p>" +
-            mgr + sub.settings.map(settingRow).join("") +
-          "</section>";
-        }).join("") +
+    content.innerHTML =
+      '<div class="sp-home"><div class="sp-home-scroll"><div class="sp-wrap">' +
+        '<div class="sp-hub sp-rise">' +
+          '<div class="sp-hub-ring">' + ico("target", 24) + "</div>" +
+          '<span class="sp-kicker">Settings · Concept 04</span>' +
+          "<h1>Spoke</h1>" +
+          "<p>Every setting belongs to an intent. Start from what you want to change — the spokes carry you to the exact place, and the tick rail keeps your bearings inside each document.</p>" +
+          '<div class="sp-launcher">' +
+            '<div class="sp-launcher-field">' + ico("search", 16) +
+            '<input type="text" placeholder="Search every setting, manager, and provider…" aria-label="Search settings" data-sp-home-search>' +
+            "</div>" +
+            '<div class="sp-launcher-drop" hidden></div>' +
+            '<div class="sp-launcher-hint">Fuzzy matching included — “notifcation” still finds Notifications. Enter opens the top result.</div>' +
+          "</div>" +
         "</div>" +
-        '<nav class="sp-rail" id="sp-rail" aria-label="Subcategory progress">' +
-        d.subcategories.map(function (s) { return '<button class="sp-tick" data-sub="' + s.id + '"><span class="dot"></span>' + esc(s.title) + "</button>"; }).join("") +
-        "</nav>" +
-      "</div></div>";
-    content.innerHTML = html;
-    bindWork(v, d);
+        '<div class="sp-wings">' + wings + "</div>" +
+        '<div class="sp-az sp-rise-late">' +
+          '<button class="sp-az-toggle" data-sp-az-toggle aria-expanded="false">Or browse everything A–Z</button>' +
+          '<div class="sp-az-list" hidden>' + az + "</div>" +
+        "</div>" +
+        '<div class="sp-notices sp-rise-late"><div class="sp-notice-group-cap">Catalog health</div>' + catalogs + "</div>" +
+        noticesHtml() +
+        '<div class="sp-recents sp-rise-late"><div class="sp-recents-cap">Recently visited</div>' + recents + "</div>" +
+      "</div></div></div>";
+
+    wireLauncher(content.querySelector("[data-sp-home-search]"), content.querySelector(".sp-launcher-drop"));
   }
 
-  function bindWork(v, d) {
-    var scroller = document.getElementById("sp-work");
-    var doc = document.getElementById("sp-doc");
-    var ticks = content.querySelectorAll(".sp-tick");
-    document.getElementById("sp-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+  // ---------- Demonstrated managers (System & Data families) ----------
+  function mgStorage() {
+    var h = PMState.state.collections.storageHealth;
+    return M.managerShell({ id: "storage", title: "Storage & Retention", icon: "activity", health: h.pressure, body:
+      '<div class="sp-card-grid">' +
+        '<div class="sp-stat-card"><div class="k">Storage mode</div><div class="v">' + esc(h.mode) + '</div><div class="n">Durable data location</div></div>' +
+        '<div class="sp-stat-card"><div class="k">Pressure</div><div class="v">' + esc(h.pressure) + '</div><div class="n">No action needed</div></div>' +
+        '<div class="sp-stat-card"><div class="k">Encryption</div><div class="v">' + esc(h.encryption) + "</div></div>" +
+      "</div>" +
+      M.inspector([["Retention policy", h.retention], ["Legal holds", h.legalHold], ["Quarantine", h.quarantine]]) +
+      '<div class="pm-note">Quarantined artifacts wait for review; cleanup never touches them silently. Retention changes are disclosed before they delete anything.</div>'
+    });
+  }
 
-    spy = window.PMCore.scrollspy(scroller, function () {
-      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
-    }, function (id) {
-      ticks.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-sub") === id); });
-    }, { offset: 70 });
+  var selBackup = null;
+  function mgBackup() {
+    var runs = PMState.state.collections.backupRuns;
+    if (!selBackup || !runs.some(function (r) { return r.id === selBackup; })) selBackup = runs[0].id;
+    var master = runs.map(function (r) {
+      return '<button class="sp-md-item' + (r.id === selBackup ? " sel" : "") + '" data-sp-md="backup" data-id="' + esc(r.id) + '">' +
+        '<span style="flex:1;min-width:0"><b>' + esc(r.kind) + "</b>" +
+        '<span class="sub"><span class="sp-kind-chip stat">Status</span> Last: ' + esc(r.last) + "</span></span>" +
+        (r.verified ? M.badge("Verified", "ok") : M.badge("Warnings", "warn")) +
+      "</button>";
+    }).join("");
+    var sel = null;
+    runs.forEach(function (r) { if (r.id === selBackup) sel = r; });
+    var detail = sel
+      ? '<h4>' + esc(sel.kind) + (sel.verified ? M.badge("Verified", "ok") : M.badge("Warnings", "warn")) + "</h4>" +
+        M.inspector([
+          ["Last backup — read-only status", sel.last],
+          ["Schedule — persistent setting", sel.schedule],
+          ["Retention", sel.retention],
+          ["Verified", sel.verified ? "Yes" : "No" + (sel.note ? " — " + sel.note : "")]
+        ]) +
+        '<div class="pm-mgr-actions"><span class="sp-kind-chip act">One-shot action</span>' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="backup.now" data-backup="' + esc(sel.id) + '">Back Up Now</button></div>' +
+        '<div class="pm-note">' + esc(sel.kind) + " — Back Up Now runs once and never changes the schedule. The schedule and the last-backup status are separate rows above.</div>"
+      : '<div class="pm-empty">Select a backup class.</div>';
+    return M.managerShell({ id: "backup", title: "Backup & Restore", icon: "shieldCheck", health: runs.length + " backup classes", body:
+      '<div class="pm-note pm-rules-note">Back Up Now is a one-shot action. The schedule is a persistent setting. Last backup is read-only status. They are rendered differently on purpose.</div>' +
+      '<div class="sp-mgr-split"><div class="sp-md-master">' + master + "</div>" +
+      '<div class="sp-md-detail" data-md-detail>' + detail + "</div></div>" +
+      '<div class="pm-mgr-actions">' +
+        '<button class="pm-btn pm-btn-sm" data-act="backup.test-restore">Test restore</button>' +
+        '<button class="pm-btn pm-btn-sm" data-act="backup.log">Open backup log</button>' +
+      "</div>"
+    });
+  }
 
-    ticks.forEach(function (b) { b.addEventListener("click", function () { spy.jumpTo(b.getAttribute("data-sub")); }); });
+  function mgLifecycle() {
+    var longLabel = null;
+    D.generalFixtures.forEach(function (f) { if (f.id === "fx-long-label") longLabel = f; });
+    return M.managerShell({ id: "lifecycle", title: "Settings Lifecycle", icon: "sliders", health: "Export · Import · Reset · Copy", body:
+      '<div class="pm-mgr-actions">' +
+        '<button class="pm-btn pm-btn-sm" data-act="lifecycle.export">Export settings</button>' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="lifecycle.import-preview">Import… (preview first)</button>' +
+        '<button class="pm-btn pm-btn-sm" data-act="lifecycle.import-rollback">Roll back last import</button>' +
+        '<button class="pm-btn pm-btn-sm" data-act="lifecycle.copy-from">Copy Settings From…</button>' +
+        '<button class="pm-btn pm-btn-sm" data-act="lifecycle.reset-preview">Reset… (preview)</button>' +
+        '<button class="pm-btn pm-btn-danger pm-btn-sm" data-act="lifecycle.reset-apply">Reset all</button>' +
+      "</div>" +
+      '<div class="pm-note">Import shows conflicts and legacy-key migration before anything applies; a pre-import snapshot makes rollback one click. Copy Settings From… is a one-time transactional copy: preview, restore point, atomic apply, verification, receipt.</div>' +
+      '<div class="sp-longlabel">' +
+        '<span class="lbl">' + esc(longLabel ? longLabel.message : "Automatically create restore points before applying risky or bulk configuration changes") +
+        '<span class="d">Long localized label fixture — must wrap without clipping.</span></span>' +
+        '<button class="pm-toggle" data-sp-toggle="restore-points" aria-pressed="true" aria-label="Automatically create restore points"></button>' +
+      "</div>"
+    });
+  }
 
-    document.getElementById("sp-disc").querySelectorAll("[data-disc]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
-        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
-          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-          row.setAttribute("data-hidden", window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard");
-        });
-        content.querySelectorAll("#sp-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
-        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " settings.", "info");
-        if (spy) spy.refresh();
+  var histFilters = { kind: "All kinds", project: "All projects" };
+  var selHist = null;
+  function mgHistory() {
+    var filtered = PMState.state.collections.historyRows.filter(function (h) {
+      return (histFilters.kind === "All kinds" || h.kind === histFilters.kind) &&
+             (histFilters.project === "All projects" || h.project === histFilters.project);
+    });
+    if (!selHist || !filtered.some(function (h) { return h.id === selHist; })) selHist = filtered.length ? filtered[0].id : null;
+    var master = filtered.map(function (h) {
+      return '<button class="sp-md-item' + (h.id === selHist ? " sel" : "") + '" data-sp-md="history" data-id="' + esc(h.id) + '">' +
+        '<span style="flex:1;min-width:0"><b>' + esc(h.title) + "</b>" +
+        '<span class="sub">' + esc(h.when) + " · " + esc(h.kind) + " · " + esc(h.project) + "</span></span>" +
+        (h.deletable ? "" : M.badge("Legal hold", "warn")) +
+      "</button>";
+    }).join("");
+    var sel = null;
+    filtered.forEach(function (h) { if (h.id === selHist) sel = h; });
+    var detail = sel
+      ? '<h4>' + esc(sel.title) + M.badge(sel.kind, "muted") + (sel.deletable ? "" : M.badge("Legal hold", "warn")) + "</h4>" +
+        M.inspector([["When", sel.when], ["Project", sel.project], ["Size", sel.size], ["Deletion", sel.deletable ? "Allowed — asks first, writes a receipt" : "Blocked by legal hold"]]) +
+        '<div class="pm-mgr-actions">' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-hist="compare" data-id="' + esc(sel.id) + '">Compare</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-hist="export" data-id="' + esc(sel.id) + '">Export</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-hist="archive" data-id="' + esc(sel.id) + '">Archive</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-danger" data-sp-hist="delete" data-id="' + esc(sel.id) + '"' + (sel.deletable ? "" : " disabled") + ">Delete</button>" +
+        "</div>"
+      : '<div class="pm-empty">No record selected.</div>';
+    var kinds = ["All kinds", "Thread", "Goal transcript", "Planning run"];
+    var projects = ["All projects", "PuppetMaster", "Slint Port"];
+    return M.managerShell({ id: "history", title: "History & Sessions", icon: "clock", health: PMState.state.collections.historyRows.length + " records", body:
+      '<div class="sp-hist-filters">' +
+        '<label class="pm-note">Kind</label><select class="pm-select" data-sp-hist-filter="kind">' + kinds.map(function (k) { return '<option' + (k === histFilters.kind ? " selected" : "") + ">" + esc(k) + "</option>"; }).join("") + "</select>" +
+        '<label class="pm-note">Project</label><select class="pm-select" data-sp-hist-filter="project">' + projects.map(function (p) { return '<option' + (p === histFilters.project ? " selected" : "") + ">" + esc(p) + "</option>"; }).join("") + "</select>" +
+      "</div>" +
+      '<div class="sp-mgr-split"><div class="sp-md-master">' + (master || '<div class="pm-empty">No records match these filters.</div>') + "</div>" +
+      '<div class="sp-md-detail" data-md-detail>' + detail + "</div></div>" +
+      '<div class="pm-note">Deletion policy: threads follow the retention setting; planning records under legal hold cannot be deleted here. Deletion asks first and writes a receipt.</div>'
+    });
+  }
+
+  var selArt = null;
+  function mgArtifacts() {
+    var arts = PMState.state.collections.artifactRows;
+    if (!selArt || !arts.some(function (a) { return a.id === selArt; })) selArt = arts.length ? arts[0].id : null;
+    var master = arts.map(function (a) {
+      return '<button class="sp-md-item' + (a.id === selArt ? " sel" : "") + '" data-sp-md="artifacts" data-id="' + esc(a.id) + '">' +
+        '<span style="flex:1;min-width:0"><b>' + esc(a.name) + "</b>" +
+        '<span class="sub">' + esc(a.type) + " · " + esc(a.owner) + "</span></span>" +
+        (a.redacted ? M.badge("Redacted", "ok") : "") +
+      "</button>";
+    }).join("");
+    var sel = null;
+    arts.forEach(function (a) { if (a.id === selArt) sel = a; });
+    var detail = sel
+      ? '<h4>' + esc(sel.name) + (sel.owner.indexOf("PM-owned") === 0 ? M.badge("PM-owned", "info") : M.badge(sel.owner, "managed")) + (sel.redacted ? M.badge("Redacted", "ok") : "") + "</h4>" +
+        M.inspector([["Type", sel.type], ["Location", sel.location], ["Version", sel.version], ["Retention", sel.retention], ["Redaction", sel.redacted ? "Likely secrets scrubbed from the stored copy" : "Original content"]]) +
+        '<div class="pm-mgr-actions">' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-art="reveal" data-id="' + esc(sel.id) + '">Reveal</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-art="redact" data-id="' + esc(sel.id) + '">' + (sel.redacted ? "Unredact" : "Redact") + "</button>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-danger" data-sp-art="cleanup" data-id="' + esc(sel.id) + '">Clean up</button>' +
+        "</div>" +
+        '<div class="pm-note">' + (sel.owner.indexOf("PM-owned") === 0 ? "PM-owned artifacts carry PM identity in receipts." : "Provider-native artifacts keep their origin tool's identity — never relabeled.") + "</div>"
+      : '<div class="pm-empty">No artifact selected.</div>';
+    return M.managerShell({ id: "artifacts", title: "Runtime Artifacts", icon: "fileText", health: arts.length + " artifacts", body:
+      '<div class="sp-mgr-split"><div class="sp-md-master">' + master + "</div>" +
+      '<div class="sp-md-detail" data-md-detail>' + detail + "</div></div>"
+    });
+  }
+
+  function mgSourceControl() {
+    var sc = D.sourceControl;
+    var gh = D.ghActions;
+    var tools = sc.tools.map(function (t) {
+      return '<div class="sp-table-row"><div class="main"><b>' + esc(t.name) + M.stateChip(t.state) + "</b>" +
+        '<span class="sub">Exact installation: ' + esc(t.install) + " · Confidence: " + esc(t.confidence) + "</span></div>" +
+        '<div class="mid"></div><div class="ctl"></div></div>';
+    }).join("");
+    var wts = sc.worktrees.map(function (w) {
+      return '<div class="sp-table-row"><div class="main"><b>' + esc(w.name) + M.badge(w.state === "active" ? "Active" : "Merged", w.state === "active" ? "ok" : "muted") + "</b>" +
+        '<span class="sub">' + esc(w.path) + " · branch " + esc(w.branch) + "</span></div><div class='mid'></div><div class='ctl'></div></div>";
+    }).join("");
+    var jobs = gh.currentRun.jobs.map(function (j) {
+      return '<li>' + esc(j.name) + " — " + esc(j.conclusion) + " · " + esc(j.duration) + "</li>";
+    }).join("");
+    return M.managerShell({ id: "source-control", title: "Source Control & Worktrees", icon: "branch", health: sc.forge.name + " " + sc.forge.state, body:
+      '<div class="sp-group-cap">Tool health</div>' + tools +
+      M.inspector([
+        ["Forge connection", sc.forge.name + " — " + sc.forge.state + " (" + sc.forge.identity + ")"],
+        ["SSH key source", sc.forge.sshSource],
+        ["Test before merge", sc.testBeforeMerge ? "On" : "Off"],
+        ["Push policy", sc.pushPolicy + " · force push " + sc.forcePush.toLowerCase()],
+        ["Protected branches", sc.leases]
+      ]) +
+      '<div class="sp-group-cap">Worktrees (' + sc.worktrees.filter(function (w) { return w.state === "active"; }).length + " active)</div>" + wts +
+      '<div class="sp-group-cap">GitHub Actions</div>' +
+      '<div class="pm-note">' + esc(gh.readiness) + "</div>" +
+      gh.pinned.map(function (p) {
+        return '<div class="sp-table-row"><div class="main"><b>' + esc(p.name) + M.badge("Pinned", "info") + "</b>" +
+          '<span class="sub">' + esc(p.last) + " · " + p.runs + " runs</span></div><div class='mid'></div>" +
+          '<div class="ctl"></div></div>';
+      }).join("") +
+      '<div class="sp-expand open" data-sp-expand><button class="sp-expand-head">' + ico("branch", 13) + " Run " + esc(gh.currentRun.id) + " — " + esc(gh.currentRun.workflow) + " · " + esc(gh.currentRun.conclusion) + "</button>" +
+      '<div class="sp-expand-body"><ul>' + jobs + '</ul><button class="pm-btn pm-btn-sm" data-sp-sc="logs">View logs</button></div></div>'
+    });
+  }
+
+  function mgContainers() {
+    var c = D.containers;
+    var cards = c.top.map(function (t, i) {
+      var detail = t.expanded && t.expanded.length
+        ? '<div class="sp-expand-body"><ul>' + t.expanded.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>"
+        : '<div class="sp-expand-body"><div class="pm-empty">No detail rows discovered yet.</div></div>';
+      return '<div class="sp-expand' + (i === 0 ? " open" : "") + '" data-sp-expand>' +
+        '<button class="sp-expand-head">' + ico("grid", 13) + esc(t.name) + M.stateChip(t.state) +
+        '<span class="pm-note">' + esc(t.detail) + "</span></button>" + detail + "</div>";
+    }).join("");
+    return M.managerShell({ id: "containers", title: "Containers & Registries", icon: "grid", health: "Docker running", body:
+      cards + '<div class="pm-note">' + esc(c.note) + "</div>"
+    });
+  }
+
+  function mgWeb() {
+    var w = D.webSearchCfg;
+    return M.managerShell({ id: "web", title: "Web / Search / Fetch", icon: "globe", health: w.readiness, body:
+      M.inspector([
+        ["Provider priority", w.providerPriority.join(" → ")],
+        ["Search limit", w.limits.search],
+        ["Fetch timeout", w.limits.fetch],
+        ["Crawl depth", w.limits.crawl],
+        ["Site map cap", w.limits.map],
+        ["Extraction", w.limits.extract],
+        ["Credit guard", w.creditGuard],
+        ["Caches", w.caches],
+        ["Proxies", w.proxies],
+        ["Air-gap mode", w.airGap]
+      ]) +
+      '<div class="sp-longlabel"><span class="lbl">Browser sessions<span class="d">' + esc(w.browserSessions) + "</span></span>" + M.badge("Human-only", "managed") + "</div>" +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-sp-web="readiness">Run readiness check</button></div>'
+    });
+  }
+
+  function mgSearchIndex() {
+    var cfg = PMState.state.collections.searchIndexCfg;
+    var pct = parseInt(cfg.rebuild.progress, 10) || 0;
+    return M.managerShell({ id: "search-index", title: "Project Search Index", icon: "search", health: cfg.rebuild.state === "running" ? "Rebuilding " + cfg.rebuild.progress : "Disk " + cfg.disk, body:
+      M.inspector([
+        ["Enabled", cfg.enabled ? "Yes" : "No"],
+        ["Rebuild state", cfg.rebuild.state + (cfg.rebuild.state === "running" ? " — " + cfg.rebuild.progress : "")],
+        ["Last full rebuild", cfg.rebuild.lastFull],
+        ["Phases", cfg.rebuild.phases.join(" → ")],
+        ["Exclusions", cfg.exclusions.join(", ")],
+        ["Large files", cfg.fileSize],
+        ["Symlinks", cfg.symlinks],
+        ["Disk use", cfg.disk],
+        ["Remote cache", cfg.remoteCache]
+      ]) +
+      (cfg.rebuild.state === "running" ? '<div class="sp-progress" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"><i style="width:' + pct + '%"></i></div>' : "") +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="index.rebuild"' + (cfg.rebuild.state === "running" ? " disabled" : "") + ">Rebuild index</button></div>" +
+      '<div class="pm-note">' + esc(cfg.rebuild.note) + "</div>"
+    });
+  }
+
+  function mgCleanup() {
+    var rows = D.cleanupDryRun.map(function (r) {
+      return '<div class="sp-run-row"><span class="kind">' + esc(r.what) + (r.safe ? M.badge("Safe", "ok") : M.badge("Protected", "warn")) + "</span>" +
+        '<span class="meta">' + esc(r.size) + '<div class="pm-note">' + esc(r.note) + "</div></span>" +
+        '<span class="ctl"></span></div>';
+    }).join("");
+    return M.managerShell({ id: "cleanup", title: "Workspace Cleanup", icon: "trash", health: "Dry run first, always", body:
+      '<div class="pm-note pm-rules-note">Cleanup always previews a dry run before anything is removed. Active worktrees are protected unless explicitly included.</div>' +
+      rows +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="cleanup.dryrun">Preview cleanup (dry run)</button></div>'
+    });
+  }
+
+  function mgServerShell() {
+    var ss = D.serverShell;
+    var cards = ss.cards.map(function (c) {
+      return '<div class="sp-stat-card" data-server-card="' + esc(c.id) + '"><div class="k">' + esc(c.label) + '</div><div class="v">' + esc(c.value) + "</div></div>";
+    }).join("");
+    var project = M.inspector(ss.project.map(function (p) { return [p.label, p.value]; }));
+    var modules = ss.deferredModules.map(function (m) {
+      return '<div class="sp-stat-card" data-deferred="' + esc(m.id) + '"><div class="k">' + esc(m.name) + " — reserved</div>" +
+        '<div class="n">Owner: ' + esc(m.owner) + "</div>" +
+        '<div class="n">Insertion contract: ' + esc(m.contract) + "</div></div>";
+    }).join("");
+    return M.managerShell({ id: "server-shell", title: "Server & Hosts", icon: "server", health: ss.cards[0].value, body:
+      '<div class="sp-card-grid">' + cards + "</div>" +
+      '<div class="sp-group-cap">This project</div>' + project +
+      '<div class="sp-group-cap">Reserved insertion destinations</div>' +
+      '<div class="sp-card-grid">' + modules + "</div>" +
+      '<div class="pm-note">' + esc(ss.note) + "</div>"
+    });
+  }
+
+  // ---------- Shared-grammar managers ----------
+  function mgShared(id) {
+    var st = PMState.state;
+    switch (id) {
+      case "notifications":
+        return M.managerShell({ id: id, title: "Notification Destinations", icon: "inbox", health: st.collections.notificationDestinations.length + " destinations",
+          add: { act: "dest.save", label: "Add" },
+          body: M.resourceList(st.collections.notificationDestinations.map(function (d) {
+            return { id: d.id, title: d.name, chip: d.state, sub: d.kind + " · " + d.channel + (d.enabled ? "" : " · disabled"),
+              badges: d.builtin ? [["Built-in", "muted"]] : [],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="dest.test" data-dest="' + esc(d.id) + '">Test</button>' +
+                '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="dest.toggle" data-dest="' + esc(d.id) + '">' + (d.enabled ? "Disable" : "Enable") + "</button>" +
+                (d.builtin ? "" : '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-danger" data-act="dest.delete" data-dest="' + esc(d.id) + '">Delete</button>') };
+          }), { label: "Notification destinations" }) + M.destinationForm() +
+          '<div class="pm-note">Test-send is explicit, masked, and rate-limited. The title-bar stack is the only in-app notification surface.</div>' });
+      case "sounds":
+        return M.managerShell({ id: id, title: "Sound Library", icon: "spark", health: st.collections.soundLibrary.events.length + " events", body: M.soundLibraryPanel() });
+      case "themes":
+        return M.managerShell({ id: id, title: "Custom Themes", icon: "sun", health: D.customThemes.themes.length + " custom", body:
+          '<div class="sp-card-grid">' + D.customThemes.themes.map(function (t) {
+            return M.themePreviewCard(t) + (t.diagnostic ? '<div class="pm-note">' + esc(t.diagnostic) + "</div>" : "");
+          }).join("") + "</div>" +
+          '<div class="pm-note">Custom TOML themes inherit from a base theme; invalid files fall back to the base with a diagnostic instead of failing.</div>' });
+      case "permissions":
+        return M.managerShell({ id: id, title: "Permission Rules", icon: "shield", health: "Last match wins", body: M.permissionRuleEditor() });
+      case "context-sources":
+        return M.managerShell({ id: id, title: "Context & Instruction Sources", icon: "brain", health: D.contextSources.admitted.length + " admitted", body:
+          '<div class="sp-group-cap">Admitted this turn</div>' + M.inspector(D.contextSources.admitted.map(function (a) { return [a.name, a.detail + " · " + a.tokens + " tokens"]; })) +
+          '<div class="sp-group-cap">Omitted</div>' + M.inspector(D.contextSources.omitted.map(function (o) { return [o.name, o.reason]; })) +
+          '<div class="sp-group-cap">AGENTS.md chain</div>' + M.inspector(D.contextSources.chain.map(function (c) { return [c.path, c.admitted ? c.role + " — admitted" : c.role + " — " + (c.reason || "not admitted")]; })) });
+      case "memory":
+        return M.managerShell({ id: id, title: "Assistant Memory", icon: "brain", health: st.memory.length + " memories", body:
+          M.resourceList(st.memory.map(function (m) {
+            return { id: m.id, title: m.text, chip: m.state === "verified" ? "verified" : "needs-setup",
+              badges: [[m.scope, "muted"], [m.kind, "info"], [m.pinned ? "Pinned" : "Half-life: " + m.halfLife, m.pinned ? "ok" : "muted"]],
+              sub: "Evidence: " + m.evidence + " · accessed " + m.accessed,
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-mem="verify" data-id="' + esc(m.id) + '">Verify</button>' +
+                '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-mem="pin" data-id="' + esc(m.id) + '">' + (m.pinned ? "Unpin" : "Pin") + "</button>" };
+          }), { label: "Memories" }) +
+          '<div class="pm-note">Half-life changes retrieval activation, not truth — memories leave active recall; they are never rewritten.</div>' });
+      case "personas":
+        return M.managerShell({ id: id, title: "Persona Manager", icon: "target", health: st.personas.length + " personas", body:
+          M.resourceList(st.personas.map(function (p) {
+            return { id: p.id, title: p.name + " Persona", sub: p.description + " · capsule " + p.capsule + " · " + p.provenance,
+              badges: [[p.scope, "muted"], ["Eligible: " + p.eligible, "info"]].concat(p.childOnly ? [["Child roles only", "warn"]] : []),
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-persona="' + esc(p.id) + '">Preview capsule</button>' };
+          }), { label: "Personas" }) +
+          '<div class="pm-note">A Persona is behavior, not authority: it cannot widen access, force a provider, or eagerly load skills.</div>' });
+      case "crew":
+        return M.managerShell({ id: id, title: "Crew Template Manager", icon: "users", health: st.crewTemplates.length + " templates", body:
+          M.resourceList(st.crewTemplates.map(function (c) {
+            return { id: c.id, title: c.name, sub: c.purpose + " · " + c.members.length + " members · waves: " + c.waves,
+              badges: [["Requested " + c.requested + " / Effective " + c.effective, c.requested === c.effective ? "ok" : "warn"], [c.routePolicy, "muted"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-crew="' + esc(c.id) + '">Inspect members</button>' };
+          }), { label: "Crew templates" }) });
+      case "files":
+        return M.managerShell({ id: id, title: "File Manager", icon: "fileText", health: D.fileManagerCfg.changedOnDisk, body:
+          M.inspector([
+            ["Hidden files", D.fileManagerCfg.tree.showHidden ? "Shown" : "Hidden"],
+            ["Respect ignore rules", D.fileManagerCfg.tree.respectIgnored ? "Yes" : "No"],
+            ["Drag & drop", D.fileManagerCfg.dragDrop.enabled ? "On (confirm external)" : "Off"],
+            ["Large files", D.fileManagerCfg.largeFile.threshold + " — " + D.fileManagerCfg.largeFile.behavior],
+            ["Changed on disk", D.fileManagerCfg.changedOnDisk],
+            ["Recovery", D.fileManagerCfg.recovery.enabled ? "Every " + D.fileManagerCfg.recovery.interval : "Off"],
+            ["Tabs", D.fileManagerCfg.tabs.limit + " max · " + D.fileManagerCfg.tabs.splitGroups + " split groups"],
+            ["Worktree files", D.fileManagerCfg.transient]
+          ]) });
+      case "terminal":
+        return M.managerShell({ id: id, title: "Terminal Manager", icon: "terminal", health: st.terminalProfiles.length + " profiles", body:
+          M.resourceList(st.terminalProfiles.map(function (t) {
+            return { id: t.id, title: t.name + (t.isDefault ? " (default)" : ""), chip: "ready",
+              sub: t.shell + " · " + t.font + " · retention " + t.retention,
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-term="' + esc(t.id) + '">Preview palette</button>' };
+          }), { label: "Terminal profiles" }) });
+      case "lsp":
+        return M.managerShell({ id: id, title: "LSP Manager", icon: "code", health: st.lspServers.filter(function (l) { return l.state === "running"; }).length + " running", body:
+          M.resourceList(st.lspServers.map(function (l) {
+            return { id: l.id, title: l.name, chip: l.state === "running" ? "running" : l.state === "installed" ? "ready" : "not-found",
+              sub: l.executable + " " + l.version + " · " + l.health,
+              badges: [["Scope: " + l.scope, "muted"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-lsp="' + esc(l.id) + '">Restart</button>' };
+          }), { label: "Language servers" }) });
+      case "formatters":
+        return M.managerShell({ id: id, title: "Formatters", icon: "code", health: D.formatterTable.filter(function (f) { return f.state === "detected"; }).length + " detected", body:
+          M.resourceList(D.formatterTable.map(function (f) {
+            return { id: f.id, title: f.name, chip: f.state, sub: f.command + " · " + f.extensions + " · scope " + f.scope + (f.note ? " — " + f.note : ""),
+              badges: [[f.kind, "muted"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="formatter.test" data-formatter="' + esc(f.id) + '">Test</button>' };
+          }), { label: "Formatters" }) });
+      case "commands":
+        return M.managerShell({ id: id, title: "Commands & Shortcuts", icon: "zap", health: D.shortcutBindings.filter(function (b) { return b.state === "conflict"; }).length + " conflict", body:
+          M.resourceList(D.commandsCatalog.map(function (c) {
+            return { id: c.id, title: c.name, chip: "ready", sub: c.command + " · " + c.shellSafety,
+              badges: [["Scope: " + c.scope, "muted"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="command.dryrun" data-command="' + esc(c.id) + '">Dry run</button>' };
+          }), { label: "Custom commands" }) +
+          '<div class="sp-group-cap">Shortcuts</div>' +
+          M.resourceList(D.shortcutBindings.map(function (b) {
+            return { id: b.id, title: b.command, chip: b.state === "ok" ? "ready" : "error", sub: b.binding,
+              actions: b.state === "conflict" ? '<button class="pm-btn pm-btn-sm" data-act="shortcut.resolve" data-binding="' + esc(b.id) + '">Resolve conflict</button>' : "" };
+          }), { label: "Shortcut bindings" }) });
+      case "testing":
+        return M.managerShell({ id: id, title: "Testing & Debug Matrix", icon: "shieldCheck", health: "Global × Project", body:
+          M.inspector(D.testingMatrix.capabilities.map(function (c) { return [c.name, "Global: " + c.global + " · Project: " + c.project]; })) +
+          '<div class="pm-note">Capture: ' + esc(D.testingMatrix.capture.artifacts) + " · secret redaction " + (D.testingMatrix.capture.redactSecrets ? "on" : "off") + "</div>" });
+      case "mcp":
+        return M.managerShell({ id: id, title: "MCP Server Manager", icon: "puzzle", health: st.mcpServers.filter(function (s) { return s.state === "connected"; }).length + " connected",
+          add: { act: "notice.dismiss", label: "Add" },
+          body: M.resourceList(st.mcpServers.map(function (s) {
+            return { id: s.id, title: s.name, chip: s.state, sub: s.transport + " · protocol " + s.protocol + " · " + s.toolCount + " tools · " + s.freshness,
+              badges: [["Scope: " + s.scope, "muted"], ["Approval: " + s.approval, "info"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-mcp="' + esc(s.id) + '">View logs</button>' };
+          }), { label: "MCP servers" }) });
+      case "skills":
+        return M.managerShell({ id: id, title: "Skills Manager", icon: "puzzle", health: st.skills.filter(function (s) { return s.enabled; }).length + " enabled", body:
+          M.resourceList(st.skills.map(function (s) {
+            return { id: s.id, title: s.name, chip: s.enabled ? "ready" : "disabled",
+              sub: "Trust: " + s.trust + " · invoked " + s.invoked + "× · " + s.update + " · " + s.permissions,
+              badges: [["Scope: " + s.scope, "muted"], [s.selected ? "Selected" : "Not selected", s.selected ? "ok" : "muted"]],
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-skill="' + esc(s.id) + '">' + (s.enabled ? "Disable" : "Enable") + "</button>" };
+          }), { label: "Skills" }) });
+      case "plugins":
+        return M.managerShell({ id: id, title: "Plugins Manager", icon: "puzzle", health: st.plugins.filter(function (p) { return p.enabled; }).length + " enabled", body:
+          M.resourceList(st.plugins.map(function (p) {
+            return { id: p.id, title: p.name, chip: p.enabled ? "ready" : "error",
+              sub: p.compatibility + " · channel " + p.channel + " · " + p.update,
+              actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-plugin="' + esc(p.id) + '">' + (p.enabled ? "Disable" : "Enable") + "</button>" };
+          }), { label: "Plugins" }) });
+      case "tools":
+        return M.managerShell({ id: id, title: "Tools Inventory", icon: "sliders", health: D.tools.length + " tools", body:
+          M.resourceList(D.tools.map(function (t) {
+            return { id: t.name, title: t.name, chip: t.available ? "ready" : "disabled",
+              sub: "Invoked " + t.invoked + "× · risk " + t.risk + " · " + t.approval + (t.note ? " — " + t.note : ""),
+              badges: [["Installed", "muted"], [t.projectEnabled ? "Project-enabled" : "Project-disabled", t.projectEnabled ? "ok" : "warn"]],
+              actions: "" };
+          }), { label: "Tools" }) });
+      case "providers":
+        return mgProviders();
+      default:
+        return M.managerShell({ id: id, title: window.PMCore.managerTitle(id), icon: "gear", body: '<div class="pm-empty">Nothing configured yet.</div>' });
+    }
+  }
+
+  function mgProviders() {
+    var st = PMState.state;
+    var catalogs = st.catalogs.map(function (c) {
+      return '<div class="sp-run-row" data-catalog-row="' + esc(c.id) + '">' +
+        '<span class="kind">' + esc(c.name) + (c.state === "refreshing" ? '<span class="pm-spinner" data-spinner="1"></span>' : M.badge(c.lastKnownGood ? "Last-known-good kept" : "Live", c.lastKnownGood ? "info" : "ok")) + "</span>" +
+        '<span class="meta">Last checked: ' + esc(c.lastChecked) + " · activated " + esc(c.lastActivated) + " · " + esc(c.version) +
+        (c.materialChanges && c.materialChanges.length ? '<div class="pm-note">Material changes: ' + c.materialChanges.map(esc).join("; ") + "</div>" : "") + "</span>" +
+        '<span class="ctl"><button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (st.ui.refreshingCatalog ? " disabled" : "") + ">Refresh</button></span>" +
+      "</div>";
+    }).join("");
+    var byGroup = D.providerGroups.map(function (g) {
+      var provs = st.providers.filter(function (p) { return p.group === g; });
+      if (!provs.length) return "";
+      return '<div class="pm-group-cap">' + esc(g) + "</div>" + provs.map(function (p) { return M.providerFamilyCard(p); }).join("");
+    }).join("");
+    return M.managerShell({ id: "providers", title: "Provider Manager", icon: "robot", health: st.providers.length + " providers", body:
+      '<div class="sp-group-cap">Catalogs</div>' + catalogs +
+      byGroup +
+      '<div class="pm-note">Teacher: accounts (who you are), installations (which copy PM found), and models (what a request runs on) are separate on purpose.</div>' +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-act="teacher.explain" data-teacher="tch-providers">Why are these separate?</button></div>'
+    });
+  }
+
+  // ---------- Workspace document ----------
+  function managerFor(sub, container) {
+    var demonstrated = ["storage", "backup", "history", "artifacts", "source-control", "containers", "web", "search-index"];
+    if (sub.manager === "storage") container.innerHTML = mgStorage();
+    else if (sub.manager === "backup") container.innerHTML = mgBackup();
+    else if (sub.manager === "history") container.innerHTML = mgHistory();
+    else if (sub.manager === "artifacts") container.innerHTML = mgArtifacts();
+    else if (sub.manager === "source-control") container.innerHTML = mgSourceControl();
+    else if (sub.manager === "containers") container.innerHTML = mgContainers();
+    else if (sub.manager === "web") container.innerHTML = mgWeb();
+    else if (sub.manager === "search-index") container.innerHTML = mgSearchIndex();
+    else container.innerHTML = mgShared(sub.manager);
+  }
+
+  function renderWorkspace(view) {
+    var dest = destById(view.category) || D.destinations[0];
+    var subs = dest.subcategories;
+
+    var masterItems = D.destinations.map(function (d) {
+      var active = d.id === dest.id;
+      var subList = active ? d.subcategories.map(function (s) {
+        return '<button class="sp-master-sub' + (view.subcategory === s.id ? " active" : "") + '" data-sp-sub="' + esc(d.id) + "/" + esc(s.id) + '">' + esc(s.title) + "</button>";
+      }).join("") : "";
+      return '<button class="sp-master-item' + (active ? " active" : "") + '" data-sp-dest="' + esc(d.id) + '">' + ico(d.icon, 14) + esc(d.title) + "</button>" + subList;
+    }).join("");
+
+    var sections = subs.map(function (sub) {
+      var rows = sub.settings.map(function (s) { return M.settingRow(PMState.getSetting(s.id) || s); }).join("");
+      var mgr = "";
+      if (sub.manager) {
+        mgr = '<div class="sp-mgr-slot" data-mgr-slot="' + esc(sub.manager) + '"></div>';
+      }
+      var extra = "";
+      if (sub.id === "settings-lifecycle") extra = '<div class="sp-mgr-slot" data-mgr-slot="lifecycle"></div>';
+      if (sub.id === "cleanup") extra = '<div class="sp-mgr-slot" data-mgr-slot="cleanup"></div>';
+      if (sub.id === "server-shell") extra = '<div class="sp-mgr-slot" data-mgr-slot="server-shell"></div>';
+      return '<section class="sp-sub" id="sp-sub-' + esc(sub.id) + '" data-sub="' + esc(sub.id) + '">' +
+        "<h2>" + esc(sub.title) + (sub.manager ? M.badge("Manager", "info") : "") + "</h2>" +
+        '<p class="lead">' + esc(sub.settings.length) + " setting" + (sub.settings.length === 1 ? "" : "s") + (sub.manager ? " · " + esc(window.PMCore.managerTitle(sub.manager)) : "") + "</p>" +
+        rows + mgr + extra +
+      "</section>";
+    }).join("");
+
+    var ticks = subs.map(function (sub, i) {
+      return '<button class="sp-tick' + (i === 0 ? " active" : "") + '" data-sp-tick="' + esc(sub.id) + '" aria-label="Jump to ' + esc(sub.title) + '" title="' + esc(sub.title) + '"><span class="dot"></span></button>';
+    }).join("");
+
+    content.innerHTML =
+      '<div class="sp-work">' +
+        '<div class="sp-bar">' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-sp-home>' + ico("grid", 13) + " Home</button>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm sp-master-toggle" data-sp-master-toggle>' + ico("sliders", 13) + " Browse</button>" +
+          '<span class="title">' + esc(dest.title) + "</span>" +
+          '<span class="pm-badge pm-badge-muted">' + dest.status.summary + "</span>" +
+          '<span class="pm-spacer"></span>' +
+          '<button class="pm-btn pm-btn-sm" data-sp-launch>' + ico("search", 13) + " Search</button>" +
+        "</div>" +
+        '<div class="sp-body">' +
+          '<nav class="sp-master" aria-label="Settings destinations"><div class="sp-master-cap">Destinations</div>' + masterItems + "</nav>" +
+          '<div class="sp-detail"><div class="sp-detail-scroll" data-sp-scroller>' +
+            '<div class="sp-detail-doc sp-rise">' +
+              '<div class="sp-doc-head"><h1>' + ico(dest.icon, 18) + esc(dest.title) + "</h1><p>" + esc(dest.purpose) + "</p></div>" +
+              sections +
+            "</div>" +
+          "</div></div>" +
+          '<nav class="sp-rail" aria-label="Subcategory progress">' + ticks + "</nav>" +
+        "</div>" +
+      "</div>";
+
+    // Lazy-hydrate manager slots.
+    content.querySelectorAll("[data-mgr-slot]").forEach(function (slot) {
+      var id = slot.getAttribute("data-mgr-slot");
+      window.PMCore.hydrateManager(slot, function (container) {
+        if (id === "lifecycle") container.innerHTML = mgLifecycle();
+        else if (id === "cleanup") container.innerHTML = mgCleanup();
+        else if (id === "server-shell") container.innerHTML = mgServerShell();
+        else {
+          var sub = null;
+          subs.forEach(function (s) { if (s.manager === id) sub = s; });
+          if (sub) managerFor(sub, container);
+          else container.innerHTML = mgShared(id);
+        }
       });
     });
 
-    document.getElementById("sp-q2").addEventListener("keydown", function (e) {
-      if (e.key !== "Enter") return;
-      var hits = window.PMCore.search(e.target.value, INDEX);
-      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found.", "info"); return; }
-      var t = Object.assign({}, hits[0].target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
-    });
+    // Scrollspy drives the tick rail.
+    var scroller = content.querySelector("[data-sp-scroller]");
+    if (spy) spy.destroy();
+    spy = window.PMCore.scrollspy(scroller, function () {
+      return subs.map(function (s) { return { id: s.id, el: content.querySelector('[data-sub="' + s.id + '"]') }; });
+    }, function (activeId) {
+      content.querySelectorAll(".sp-tick").forEach(function (t) {
+        t.classList.toggle("active", t.getAttribute("data-sp-tick") === activeId);
+      });
+      content.querySelectorAll(".sp-master-sub").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-sp-sub") === dest.id + "/" + activeId);
+      });
+    }, { offset: 60 });
 
-    doc.addEventListener("click", function (e) {
-      var t;
-      if ((t = e.target.closest("[data-inv]"))) {
-        var id = t.getAttribute("data-inv");
-        var mgr = currentManager(v);
-        selected[mgr] = id;
-        var insp = document.getElementById("sp-insp");
-        if (insp) {
-          insp.innerHTML = mgr === "providers" ? providerInspector() : mgr === "personas" ? personaInspector() : mediaInspector();
-          insp.classList.remove("sp-slide-r");
-          void insp.offsetWidth;
-          insp.classList.add("sp-slide-r");
-        }
-        doc.querySelectorAll("[data-inv]").forEach(function (b) { b.classList.toggle("sel", b.getAttribute("data-inv") === id); });
-        return;
-      }
-      var row = e.target.closest("[data-setting-id]");
-      var btn = e.target.closest("button, select");
-      if (row && btn) {
-        var id2 = row.getAttribute("data-setting-id");
-        var s = window.PMState.getSetting(id2);
-        if (btn.matches("[data-ctl].pm-toggle")) { window.PMState.setSettingValue(id2, !(s.value === true)); patchRow(id2); return; }
-        if (btn.matches("[data-seg]")) { window.PMState.setSettingValue(id2, btn.getAttribute("data-seg")); patchRow(id2); return; }
-        if (btn.matches("[data-reset]")) { window.PMState.resetSetting(id2); patchRow(id2); return; }
-        if (btn.matches("[data-details]")) { row.classList.toggle("open"); btn.setAttribute("aria-expanded", row.classList.contains("open")); return; }
-        if (btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
-          if (s.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
-          window.PMState.receipt(s.actionLabel || "Opened", s.label + ": honest simulated result.", "sim");
-          return;
-        }
-      }
-      mgrClick(e, v);
-    });
-    doc.addEventListener("change", function (e) {
-      var row = e.target.closest("[data-setting-id]");
-      if (row && e.target.matches("[data-ctl]")) {
-        var id = row.getAttribute("data-setting-id");
-        window.PMState.setSettingValue(id, e.target.value);
-        patchRow(id);
-      }
-      if (e.target.matches("[data-continuation]")) window.PMState.receipt("Continuation saved", "Anthropic Max: " + e.target.value + " — future requests only.", "ok");
-    });
-
-    function currentManager(view) {
-      if (view.manager && IMPLEMENTED[view.manager]) return view.manager;
-      for (var i = 0; i < d.subcategories.length; i++) {
-        var m = d.subcategories[i].manager;
-        if (m && IMPLEMENTED[m]) return m;
-      }
-      return "providers";
+    if (view.subcategory) {
+      setTimeout(function () { spy.jumpTo(view.subcategory); }, 40);
     }
-
-    function mgrClick(e, view) {
-      var t;
-      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
-      var insp = e.target.closest("#sp-insp");
-      var mgr = currentManager(view);
-      if (mgr === "providers") {
-        var pid = selected.providers;
-        var acctEl = e.target.closest("[data-account]");
-        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
-        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); refreshSplit(view); return; }
-        if (aid && (t = e.target.closest("[data-nickname]"))) {
-          var acc = window.PMState.accountById(pid, aid);
-          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
-          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); refreshSplit(view); }
-          return;
-        }
-        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); refreshSplit(view); return; }
-        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); refreshSplit(view); return; }
-        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); refreshSplit(view); return; }
-        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); refreshSplit(view); return; }
-        if ((t = e.target.closest("[data-pa]"))) {
-          var act = t.getAttribute("data-pa");
-          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral setup runs in the underlying provider. Simulated.", "sim"); return; }
-          window.PMState.providerAction(pid, act); return;
-        }
-        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured state. Simulated navigation.", "info"); return; }
-        var ml = e.target.closest("[data-model]");
-        if (ml) {
-          var mid = ml.getAttribute("data-model");
-          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); refreshSplit(view); return; }
-          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); refreshSplit(view); return; }
-          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); refreshSplit(view); return; }
-          if ((t = e.target.closest("[data-alias]"))) {
-            var p = window.PMState.providerById(pid);
-            var m = p.models.filter(function (x) { return x.id === mid; })[0];
-            var next = prompt("Alias for " + m.name + ":", m.alias || "");
-            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); refreshSplit(view); }
-            return;
-          }
-          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); refreshSplit(view); return; }
-          if ((t = e.target.closest("[data-effort]"))) { t.parentNode.querySelectorAll("[data-effort]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Effort preference saved", "Applies when supported.", "ok"); return; }
-          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " requested when genuinely supported.", "ok"); return; }
-        }
-      }
-      if (mgr === "personas" && (t = e.target.closest("[data-persona-apply]"))) {
-        var scopeSel = doc.querySelector("[data-persona-scope]");
-        var persona = window.PMState.state.personas.filter(function (x) { return x.id === selected.personas; })[0];
-        if (scopeSel && persona) {
-          window.PMState.receipt("Persona scope applied", persona.name + " → " + scopeSel.value + ". Other threads are unchanged.", "ok");
-        }
-        return;
-      }
-      if (mgr === "media" && (t = e.target.closest("[data-media-act]"))) {
-        var mp = window.PMState.state.mediaProviders.filter(function (x) { return x.id === selected.media; })[0];
-        var a = t.getAttribute("data-media-act");
-        if (a === "setup") window.PMState.receipt("Configure route", mp.name + ": route picker opened. Simulated.", "sim");
-        if (a === "test") window.PMState.receipt("Test generated", mp.name + " produced a test asset with an honest simulated receipt.", "sim");
-        if (a === "history") window.PMState.receipt("Generation history", mp.history + " runs recorded. Viewer simulated.", "sim");
-        return;
-      }
-    }
-
-    function patchRow(id) {
-      var s = window.PMState.getSetting(id);
-      var el = content.querySelector('[data-setting-id="' + id + '"]');
-      if (!el) return;
-      var tmp = document.createElement("div");
-      tmp.innerHTML = settingRow(s);
-      var fresh = tmp.firstChild;
-      fresh.classList.toggle("open", el.classList.contains("open"));
-      el.replaceWith(fresh);
-    }
-    function refreshSplit(view) {
-      var mgr = currentManager(view);
-      var subId = null;
-      d.subcategories.forEach(function (s) { if (s.manager === mgr) subId = s.id; });
-      var section = content.querySelector('[data-sub-section="' + subId + '"]');
-      if (!section) return;
-      var h2 = section.querySelector("h2");
-      var lead = section.querySelector(".lead");
-      var rows = section.querySelectorAll(":scope > .sp-row");
-      section.innerHTML = "";
-      section.appendChild(h2);
-      section.appendChild(lead);
-      var tmp = document.createElement("div");
-      tmp.innerHTML = mgr === "providers" ? providersSplit(view) : mgr === "personas" ? personasSplit(view) : mediaSplit();
-      while (tmp.firstChild) section.appendChild(tmp.firstChild);
-      rows.forEach(function (r) { section.appendChild(r); });
-      if (spy) spy.refresh();
-    }
-    window._spokePatch = { patchRow: patchRow, refreshSplit: refreshSplit };
-
-    if (v.subcategory) spy.jumpTo(v.subcategory, function () { focusV(v); });
-    else if (v.manager) {
-      var subForMgr = null;
-      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
-      if (subForMgr) { spy.jumpTo(subForMgr, function () { focusV(v); }); return; }
-      focusV(v);
-    } else { scroller.scrollTop = 0; focusV(v); }
+    applyDeepFocus(view);
   }
 
-  function focusV(v) {
-    if (v.focusSetting) {
-      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
-      if (el) { el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(el); }
-    } else if (v.provider) {
-      selected.providers = v.provider;
-      var insp = document.getElementById("sp-insp");
-      if (insp) { insp.innerHTML = providerInspector(); window.PMCore.focusFlash(insp); }
-    } else if (v.persona) {
-      selected.personas = v.persona;
-      var insp2 = document.getElementById("sp-insp");
-      if (insp2) { insp2.innerHTML = personaInspector(); window.PMCore.focusFlash(insp2); }
+  function applyDeepFocus(view) {
+    if (view.setting) {
+      setTimeout(function () {
+        var row = content.querySelector('[data-setting-row="' + view.setting + '"]');
+        if (row) { row.scrollIntoView({ block: "center" }); window.PMCore.focusFlash(row); }
+      }, 60);
+    } else if (view.provider) {
+      setTimeout(function () {
+        var card = content.querySelector('[data-provider-card="' + view.provider + '"]');
+        if (!card) return;
+        // A provider deep link answers "what's going on with this provider" —
+        // surface the Installation & Updates pane so update/repair controls are visible.
+        var tab = card.querySelector('[data-ptab="install"]');
+        if (tab) tab.click();
+        card.scrollIntoView({ block: "start" }); window.PMCore.focusFlash(card);
+      }, 900);
+    } else if (view.manager) {
+      setTimeout(function () {
+        var mgr = content.querySelector('[data-manager="' + view.manager + '"]');
+        if (mgr) { mgr.scrollIntoView({ block: "start" }); window.PMCore.focusFlash(mgr); }
+      }, 900);
     }
   }
 
-  window.PMState.subscribe(function (kind) {
-    if (kind === "navigate") { route(); return; }
-    if (kind === "scenario") { route(); return; }
-    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._spokePatch) {
-      window._spokePatch.refreshSplit(window.PMState.state.view);
+  // ---------- Router render ----------
+  function render(view) {
+    currentView = view || { name: "home" };
+    if (currentView.name === "home") renderHome();
+    else renderWorkspace(currentView);
+  }
+
+  PMState.subscribe(function (kind, payload) {
+    if (kind === "navigate") { render(payload); return; }
+    if (currentView.name !== "workspace") {
+      if (currentView.name === "home" && (kind === "notices" || kind === "catalog" || kind === "scenario")) renderHome();
+      return;
+    }
+    var slotFor = {
+      backupRuns: "backup", notificationDestinations: "notifications", soundLibrary: "sounds", soundPacks: "sounds",
+      permissionRules: "permissions", formatterTable: "formatters", commandsCatalog: "commands", shortcutBindings: "commands",
+      storageHealth: "storage", historyRows: "history", artifactRows: "artifacts", searchIndexCfg: "search-index"
+    };
+    if (kind === "collections" && payload && payload.name) {
+      var slotId = slotFor[payload.name];
+      if (slotId) refreshSlot(slotId, payload.name === "searchIndexCfg");
+      return;
+    }
+    if (kind === "providers" || kind === "catalog") {
+      refreshSlot("providers");
+      return;
+    }
+    if (kind === "lifecycle") {
+      refreshSlot("backup"); refreshSlot("lifecycle"); refreshSlot("cleanup");
+      return;
+    }
+    if (kind === "notices" || kind === "scenario") { render(currentView); }
+  });
+
+  function refreshSlot(id, keepFocus) {
+    var slot = content.querySelector('[data-mgr-slot="' + id + '"]');
+    if (!slot || slot.querySelector("[data-skeleton]")) return;
+    var focused = keepFocus && document.activeElement && document.activeElement.closest('[data-mgr-slot="' + id + '"]');
+    if (id === "lifecycle") slot.innerHTML = mgLifecycle();
+    else if (id === "cleanup") slot.innerHTML = mgCleanup();
+    else if (id === "server-shell") slot.innerHTML = mgServerShell();
+    else if (id === "providers") slot.innerHTML = mgProviders();
+    else {
+      var dest = destById(currentView.category);
+      var sub = null;
+      if (dest) dest.subcategories.forEach(function (s) { if (s.manager === id) sub = s; });
+      if (sub) managerFor(sub, slot);
+      else slot.innerHTML = mgShared(id);
+    }
+    if (focused && document.activeElement) try { document.activeElement.focus(); } catch (e) {}
+  }
+
+  // ---------- Concept-local delegated interactions ----------
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-sp-open],[data-sp-dest],[data-sp-sub],[data-sp-home],[data-sp-launch],[data-sp-master-toggle],[data-sp-tick],[data-sp-az-toggle],[data-az],[data-sp-recent],[data-sp-notice],[data-sp-expand],[data-sp-md],[data-sp-hist],[data-sp-art],[data-sp-mem],[data-sp-persona],[data-sp-crew],[data-sp-term],[data-sp-lsp],[data-sp-mcp],[data-sp-skill],[data-sp-plugin],[data-sp-sc],[data-sp-web],[data-sp-toggle]") : null;
+    if (!t) return;
+    var ST = window.PMState;
+
+    if (t.hasAttribute("data-sp-md")) {
+      var fam = t.getAttribute("data-sp-md");
+      var id2 = t.getAttribute("data-id");
+      if (fam === "backup") selBackup = id2;
+      else if (fam === "history") selHist = id2;
+      else if (fam === "artifacts") selArt = id2;
+      refreshSlot(fam === "backup" ? "backup" : fam);
+      return;
+    }
+
+    if (t.hasAttribute("data-sp-open")) { ST.navigate({ name: "workspace", category: t.getAttribute("data-sp-open") }); return; }
+    if (t.hasAttribute("data-sp-dest")) { ST.navigate({ name: "workspace", category: t.getAttribute("data-sp-dest") }); return; }
+    if (t.hasAttribute("data-sp-sub")) {
+      var parts = t.getAttribute("data-sp-sub").split("/");
+      ST.navigate({ name: "workspace", category: parts[0], subcategory: parts[1] });
+      return;
+    }
+    if (t.hasAttribute("data-sp-home")) { ST.navigate({ name: "home" }); return; }
+    if (t.hasAttribute("data-sp-launch")) { openLauncherOverlay(); return; }
+    if (t.hasAttribute("data-sp-master-toggle")) {
+      var master = content.querySelector(".sp-master");
+      if (master) master.classList.toggle("drawer-open");
+      return;
+    }
+    if (t.hasAttribute("data-sp-tick")) {
+      var subId = t.getAttribute("data-sp-tick");
+      if (spy) spy.jumpTo(subId);
+      var dest = destById(currentView.category);
+      var want = { name: "workspace", category: currentView.category, subcategory: subId };
+      var wantHash = window.PMCore.viewToHash(want);
+      if (wantHash !== window.location.hash) ST.navigate(want);
+      return;
+    }
+    if (t.hasAttribute("data-sp-az-toggle")) {
+      var list = content.querySelector(".sp-az-list");
+      var open = list.hidden;
+      list.hidden = !open;
+      t.setAttribute("aria-expanded", String(open));
+      t.textContent = open ? "Hide the A–Z index" : "Or browse everything A–Z";
+      return;
+    }
+    if (t.hasAttribute("data-az")) {
+      var idx = parseInt(t.getAttribute("data-az"), 10);
+      ST.navigate(azIndex()[idx].target);
+      return;
+    }
+    if (t.hasAttribute("data-sp-recent")) {
+      var r = null;
+      ST.state.recents.forEach(function (x) { if (x.id === t.getAttribute("data-sp-recent")) r = x; });
+      if (r) {
+        var v = { name: "workspace", category: r.target.category };
+        if (r.target.subcategory) v.subcategory = r.target.subcategory;
+        if (r.target.manager) v.manager = r.target.manager;
+        if (r.target.provider) v.provider = r.target.provider;
+        if (r.target.setting) v.setting = r.target.setting;
+        ST.navigate(v);
+      }
+      return;
+    }
+    if (t.hasAttribute("data-sp-notice")) {
+      var n = null;
+      ST.state.notices.forEach(function (x) { if (x.id === t.getAttribute("data-sp-notice")) n = x; });
+      if (!n) return;
+      if (t.getAttribute("data-sp-notice-role") === "secondary" && n.secondary) {
+        ST.navigate({ name: "workspace", category: n.target.category, subcategory: n.target.subcategory, manager: n.target.manager, provider: n.target.provider });
+        return;
+      }
+      if (n.id === "rec-backup" && t.getAttribute("data-sp-notice-role") === "primary") { ST.backupNow("bk-settings"); return; }
+      var nv = { name: "workspace", category: n.target.category };
+      if (n.target.subcategory) nv.subcategory = n.target.subcategory;
+      if (n.target.manager) nv.manager = n.target.manager;
+      if (n.target.provider) nv.provider = n.target.provider;
+      if (n.target.setting) nv.setting = n.target.setting;
+      ST.navigate(nv);
+      return;
+    }
+    if (t.hasAttribute("data-sp-expand")) { t.closest(".sp-expand").classList.toggle("open"); return; }
+    if (t.hasAttribute("data-sp-toggle")) {
+      var on = t.getAttribute("aria-pressed") !== "true";
+      t.setAttribute("aria-pressed", String(on));
+      ST.receipt(on ? "Restore points on" : "Restore points off", on ? "A restore point will be created before risky or bulk configuration changes." : "Risky changes will no longer create automatic restore points.", "ok");
+      return;
+    }
+    if (t.hasAttribute("data-sp-hist")) {
+      var act = t.getAttribute("data-sp-hist");
+      var row = null;
+      ST.state.collections.historyRows.forEach(function (h) { if (h.id === t.getAttribute("data-id")) row = h; });
+      if (!row) return;
+      if (act === "delete" && !row.deletable) { ST.receipt("Deletion blocked", row.title + " is under legal hold.", "blocked"); return; }
+      var msg = { compare: ["Compare prepared", row.title + " lined up against the previous version. Simulated."],
+                  export: ["History exported", row.title + " written to a portable transcript with redactions applied. Simulated."],
+                  archive: ["Archived", row.title + " moved out of active history; it stays addressable. Simulated."],
+                  delete: ["Deleted", row.title + " removed. A receipt records the deletion. Simulated."] }[act];
+      ST.receipt(msg[0], msg[1], act === "delete" ? "info" : "ok");
+      return;
+    }
+    if (t.hasAttribute("data-sp-art")) {
+      var aact = t.getAttribute("data-sp-art");
+      var art = null;
+      ST.state.collections.artifactRows.forEach(function (a) { if (a.id === t.getAttribute("data-id")) art = a; });
+      if (!art) return;
+      if (aact === "reveal") ST.receipt("Revealed", art.name + " — its containing folder would open. Simulated.", "info");
+      if (aact === "redact") { art.redacted = !art.redacted; ST.receipt(art.redacted ? "Redacted" : "Unredacted", art.name + (art.redacted ? " — likely secrets scrubbed from the stored copy." : " — original content restored for review."), "ok"); refreshSlot("artifacts"); }
+      if (aact === "cleanup") ST.receipt("Cleanup asked first", art.name + " would be confirmed before removal; retention policy is disclosed. Simulated.", "info");
+      return;
+    }
+    if (t.hasAttribute("data-sp-mem")) {
+      var mem = null;
+      ST.state.memory.forEach(function (m) { if (m.id === t.getAttribute("data-id")) mem = m; });
+      if (!mem) return;
+      if (t.getAttribute("data-sp-mem") === "pin") mem.pinned = !mem.pinned;
+      else mem.state = "verified";
+      ST.receipt(t.getAttribute("data-sp-mem") === "pin" ? (mem.pinned ? "Pinned" : "Unpinned") : "Memory verified", mem.text.slice(0, 60), "ok");
+      refreshSlot("memory");
+      return;
+    }
+    if (t.hasAttribute("data-sp-persona")) {
+      var pe = null;
+      ST.state.personas.forEach(function (p) { if (p.id === t.getAttribute("data-sp-persona")) pe = p; });
+      if (pe) M.modal(pe.name + " — capsule preview", '<div class="pm-note">' + esc(pe.description) + "</div>" + M.inspector([["Capsule", pe.capsule], ["Provenance", pe.provenance], ["Eligible", pe.eligible], ["Scope", pe.scope]]), [{ label: "Close" }]);
+      return;
+    }
+    if (t.hasAttribute("data-sp-crew")) {
+      var cr = null;
+      ST.state.crewTemplates.forEach(function (c) { if (c.id === t.getAttribute("data-sp-crew")) cr = c; });
+      if (cr) M.modal(cr.name + " — members", M.inspector(cr.members.map(function (m) { return [m.role, m.route + " · persona " + m.persona]; })) + '<div class="pm-note">Requested ' + cr.requested + " / effective " + cr.effective + " · waves: " + esc(cr.waves) + "</div>", [{ label: "Close" }]);
+      return;
+    }
+    if (t.hasAttribute("data-sp-term")) {
+      var tp = null;
+      ST.state.terminalProfiles.forEach(function (p) { if (p.id === t.getAttribute("data-sp-term")) tp = p; });
+      if (tp) {
+        var sw = tp.palette.map(function (c) { return '<span class="pm-theme-swatch" style="background:' + esc(c) + '"></span>'; }).join("");
+        M.modal(tp.name + " — palette", '<div class="pm-theme-chips" style="display:flex;gap:6px;flex-wrap:wrap">' + sw + "</div>" + M.inspector([["Shell", tp.shell], ["Cursor", tp.cursor], ["Copy on select", tp.copyOnSelect ? "Yes" : "No"], ["Retention", tp.retention]]), [{ label: "Close" }]);
+      }
+      return;
+    }
+    if (t.hasAttribute("data-sp-lsp")) {
+      ST.receipt("LSP restart queued", "The language server restarts without losing editor state. Simulated.", "info");
+      return;
+    }
+    if (t.hasAttribute("data-sp-mcp")) {
+      var srv = null;
+      ST.state.mcpServers.forEach(function (s) { if (s.id === t.getAttribute("data-sp-mcp")) srv = s; });
+      if (srv) M.modal(srv.name + " — logs", srv.logs.length ? srv.logs.map(function (l) { return '<div class="pm-log">' + esc(l) + "</div>"; }).join("") : '<div class="pm-empty">No log lines yet.</div>', [{ label: "Close" }]);
+      return;
+    }
+    if (t.hasAttribute("data-sp-skill")) {
+      var sk = null;
+      ST.state.skills.forEach(function (s) { if (s.id === t.getAttribute("data-sp-skill")) sk = s; });
+      if (sk) { sk.enabled = !sk.enabled; ST.receipt(sk.enabled ? "Skill enabled" : "Skill disabled", sk.name + (sk.enabled ? " is available for selection." : " is installed but not offered."), "ok"); refreshSlot("skills"); }
+      return;
+    }
+    if (t.hasAttribute("data-sp-plugin")) {
+      var pl = null;
+      ST.state.plugins.forEach(function (p) { if (p.id === t.getAttribute("data-sp-plugin")) pl = p; });
+      if (pl) { pl.enabled = !pl.enabled; ST.receipt(pl.enabled ? "Plugin enabled" : "Plugin disabled", pl.name + ". Simulated.", "ok"); refreshSlot("plugins"); }
+      return;
+    }
+    if (t.hasAttribute("data-sp-sc")) {
+      M.modal("Run " + D.ghActions.currentRun.id + " — logs", D.ghActions.currentRun.jobs.map(function (j) { return '<div class="pm-log">' + esc(j.name) + ": " + esc(j.conclusion) + " (" + esc(j.duration) + ")</div>"; }).join(""), [{ label: "Close" }]);
+      return;
+    }
+    if (t.hasAttribute("data-sp-web")) {
+      ST.receipt("Readiness check", D.webSearchCfg.readiness + ". Simulated.", "info");
+      return;
     }
   });
 
-  route();
+  document.addEventListener("change", function (e) {
+    var f = e.target.closest ? e.target.closest("[data-sp-hist-filter]") : null;
+    if (f) {
+      histFilters[f.getAttribute("data-sp-hist-filter")] = e.target.value;
+      refreshSlot("history");
+    }
+  });
+
+  // ---------- Boot ----------
+  var initial = window.PMCore.startRouter();
+  render(initial);
+  window.__conceptReady = true;
 })();
 </script>
 </body>

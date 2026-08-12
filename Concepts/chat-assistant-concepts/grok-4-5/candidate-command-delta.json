@@ -1,0 +1,309 @@
+{
+  "schema_id": "pm.chat_candidate_command_delta.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "source_register": "CANDIDATE_COMMAND_ID_REGISTER.json (packet 2026-08-08)",
+  "census_source": "Plans/UI_Command_Catalog.md (read-only, grepped 2026-08-11)",
+  "updated_at": "2026-08-11",
+  "status": "complete",
+  "note": "Provisional. No canon IDs minted. Alias/conflict table locked by assistant-chat-update-plan Step 8 census.",
+  "alias_conflicts": [
+    {
+      "packet_candidate": "cmd.chat.history.pin",
+      "reuse": "cmd.chat.pin",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.pin": true,
+        "cmd.chat.history.pin": false
+      },
+      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict \u2014 do not mint duplicate."
+    },
+    {
+      "packet_candidate": "cmd.chat.restore_point.create",
+      "reuse": "cmd.chat.create_restore_point",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.create_restore_point": true,
+        "cmd.chat.restore_point.create": false
+      },
+      "note": "Reuse catalog create_restore_point; also branch_from_restore / delete_restore_point exist."
+    },
+    {
+      "packet_candidate": "cmd.chat.thread.rewind",
+      "reuse": "cmd.chat.rewind",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.rewind": true,
+        "cmd.chat.thread.rewind": false
+      },
+      "note": "Reuse catalog cmd.chat.rewind."
+    },
+    {
+      "packet_candidate": "cmd.chat.context.compact_now",
+      "reuse": "cmd.chat.compact_context",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.compact_context": true,
+        "cmd.chat.context.compact_now": false
+      },
+      "note": "Compact Now maps to catalog compact_context."
+    }
+  ],
+  "reuse_required": [
+    "cmd.chat.pin",
+    "cmd.chat.create_restore_point",
+    "cmd.chat.branch_from_restore",
+    "cmd.chat.delete_restore_point",
+    "cmd.chat.rewind",
+    "cmd.chat.compact_context",
+    "cmd.chat.goal.start",
+    "cmd.chat.goal.update",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "canonical Goal / worktree / browser / test / artifact / settings commands"
+  ],
+  "omit": [
+    "Resend (GAP-001)",
+    "Yolo label (use Full Access)"
+  ],
+  "entries": [
+    {
+      "candidate_id": "cmd.chat.history.pin",
+      "census": "alias/conflict",
+      "reuse": "cmd.chat.pin",
+      "family": "threads",
+      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict \u2014 do not mint duplicate."
+    },
+    {
+      "candidate_id": "cmd.chat.pin",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md (grep 2026-08-11)."
+    },
+    {
+      "candidate_id": "cmd.chat.restore_point.create",
+      "census": "alias/conflict",
+      "reuse": "cmd.chat.create_restore_point",
+      "family": "threads",
+      "note": "Reuse catalog create_restore_point; also branch_from_restore / delete_restore_point exist."
+    },
+    {
+      "candidate_id": "cmd.chat.create_restore_point",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md (grep 2026-08-11)."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.rewind",
+      "census": "alias/conflict",
+      "reuse": "cmd.chat.rewind",
+      "family": "threads",
+      "note": "Reuse catalog cmd.chat.rewind."
+    },
+    {
+      "candidate_id": "cmd.chat.rewind",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md (grep 2026-08-11)."
+    },
+    {
+      "candidate_id": "cmd.chat.context.compact_now",
+      "census": "alias/conflict",
+      "reuse": "cmd.chat.compact_context",
+      "family": "context",
+      "note": "Compact Now maps to catalog compact_context."
+    },
+    {
+      "candidate_id": "cmd.chat.compact_context",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md (grep 2026-08-11)."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.pause",
+      "census": "provisional",
+      "family": "goal",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.resume",
+      "census": "provisional",
+      "family": "goal",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.stop",
+      "census": "provisional",
+      "family": "goal",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.replan",
+      "census": "provisional",
+      "family": "goal",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.bsd.set",
+      "census": "provisional",
+      "family": "route_access",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.access.set",
+      "census": "provisional",
+      "family": "route_access",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.redirect",
+      "census": "provisional",
+      "family": "route_access",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.attachment.resolve",
+      "census": "provisional",
+      "family": "attachments",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.attachment.route",
+      "census": "provisional",
+      "family": "attachments",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.crew.start",
+      "census": "provisional",
+      "family": "crew_cross_project",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.cross_project.request",
+      "census": "provisional",
+      "family": "crew_cross_project",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.create",
+      "census": "provisional",
+      "family": "threads",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.request",
+      "census": "provisional",
+      "family": "threads",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.await",
+      "census": "provisional",
+      "family": "threads",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.branch",
+      "census": "provisional",
+      "family": "threads",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.thread.spawn",
+      "census": "provisional",
+      "family": "threads",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.artifact.open",
+      "census": "provisional",
+      "family": "history_artifacts",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.artifact.close",
+      "census": "provisional",
+      "family": "history_artifacts",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.history.unpin",
+      "census": "provisional",
+      "family": "history_artifacts",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.question.answer",
+      "census": "provisional",
+      "family": "questions",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.question.skip",
+      "census": "provisional",
+      "family": "questions",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.question.cancel",
+      "census": "provisional",
+      "family": "questions",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.question.submit",
+      "census": "provisional",
+      "family": "questions",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.context.source.add",
+      "census": "provisional",
+      "family": "context",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.context.source.remove",
+      "census": "provisional",
+      "family": "context",
+      "note": "Missing exact token in Plans/UI_Command_Catalog.md (grep 2026-08-11). Provisional only; do not mint canon from concept."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.start",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.chat.goal.update",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.account.select_profile",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.provider.switch_route",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.chat.branch_from_restore",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.chat.delete_restore_point",
+      "census": "reuse",
+      "family": "catalog",
+      "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    }
+  ]
+}

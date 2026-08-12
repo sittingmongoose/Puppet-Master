@@ -47,7 +47,9 @@
     subcategory: 0.96,
     action: 0.92,
     model: 0.9,
-    provider: 1.02
+    provider: 1.02,
+    status: 0.94,      // a read-only projection: findable, never mistaken for a control
+    diagnostic: 0.78   // findable on purpose, never as inviting as an ordinary row
   };
 
   var EXPOSURE_WEIGHT = {
@@ -118,6 +120,42 @@
         path: action.path || [action.label],
         exposure: action.exposure || "standard",
         keywords: (action.keywords || []).join(" ")
+      });
+    });
+
+    /* Status projections and diagnostics are separate kinds on purpose.
+     * "Last backup" is not a setting you can change and "Open backup log" is not
+     * a value at all, so searching "backup" has to return five visibly different
+     * kinds of row: setting, manager, action, status and diagnostic. Collapsing
+     * them into one list is exactly the failure the packet calls out. */
+    (data.statuses || []).forEach(function (s) {
+      records.push({
+        kind: "status",
+        id: s.id,
+        title: s.label,
+        subtitle: s.explanation,
+        value: s.value,
+        categoryId: s.categoryId || null,
+        subcategoryId: s.subcategoryId || null,
+        managerId: s.managerId || null,
+        path: s.path || [s.label],
+        exposure: s.exposure || "standard",
+        keywords: (s.keywords || []).join(" ")
+      });
+    });
+
+    (data.diagnostics || []).forEach(function (d) {
+      records.push({
+        kind: "diagnostic",
+        id: d.id,
+        title: d.label,
+        subtitle: d.explanation,
+        categoryId: d.categoryId || null,
+        subcategoryId: d.subcategoryId || null,
+        managerId: d.managerId || null,
+        path: d.path || [d.label],
+        exposure: d.exposure || "diagnostic",
+        keywords: (d.keywords || []).join(" ")
       });
     });
 
@@ -248,10 +286,28 @@
     { token: "advanced", label: "Level: Advanced", filters: { exposure: "advanced" } },
     { token: "expert", label: "Level: Expert", filters: { exposure: "expert" } },
     { token: "unavailable", label: "Level: Unavailable", filters: { exposure: "unavailable" } },
-    { token: "managers", label: "Kind: Managers", filters: { kind: "manager" } }
+    { token: "managers", label: "Kind: Managers", filters: { kind: "manager" } },
+    { token: "status", label: "Kind: Status", filters: { kind: "status" } },
+    { token: "diagnostics", label: "Kind: Diagnostics", filters: { kind: "diagnostic" } }
   ];
 
+  /* One label per kind, shared, so "setting" never reads as "Setting" in one
+   * concept and "Value" in another. */
+  var KIND_LABEL = {
+    setting: "Setting",
+    manager: "Manager",
+    category: "Destination",
+    subcategory: "Section",
+    action: "Action",
+    status: "Status",
+    diagnostic: "Diagnostic",
+    provider: "Provider",
+    model: "Model"
+  };
+
   window.PMSearch = {
+    KIND_LABEL: KIND_LABEL,
+    kindLabel: function (k) { return KIND_LABEL[k] || "Result"; },
     buildIndex: buildIndex,
     search: search,
     groupByCategory: groupByCategory,

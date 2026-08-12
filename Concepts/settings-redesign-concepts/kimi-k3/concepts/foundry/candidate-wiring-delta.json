@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "foundry",
+  "model": "kimi-k3",
+  "note": "Candidate production wiring per control family. Demo implementations simulate at the state-mutation step and always receipt as simulated.",
+  "families": [
+    {
+      "family": "navigation and values",
+      "controls": ["manager cards", "workspace nav", "search results", "all setting rows"],
+      "trace": "Shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+    },
+    {
+      "family": "terminal profiles and palette",
+      "controls": ["profile list", "profile editor fields", "16 ANSI wells"],
+      "trace": "UI source → cmd.settings.value.set (profile fields) → Terminal owner → readability-floor validation (opacity ≥ 70%) → profile/palette mutation → event → live preview re-projection from real palette values → diagnostics attribution → recovery: inherit-from-Default rows; palette reset"
+    },
+    {
+      "family": "lsp registry",
+      "controls": ["registry rows", "add custom server", "restart", "logs"],
+      "trace": "UI source → cmd.lsp.server.add / cmd.lsp.server.restart (new candidates) → LSP owner → binary-resolution + init validation → registry/attachment mutation → ObservableWork handshake phases + receipt → registry re-projection with requested/effective → diagnostics logs → recovery: restart returns to the last verified attachment; deep link to the row"
+    },
+    {
+      "family": "formatter registry",
+      "controls": ["add/remove/reset", "test action"],
+      "trace": "UI source → cmd.formatter.add / cmd.formatter.test → Formatters owner → command resolution + extension validation → registry mutation or scratch-buffer test → receipt with timing → registry re-projection with state badge → diagnostics attribution → recovery: reset to built-ins"
+    },
+    {
+      "family": "custom commands",
+      "controls": ["CRUD", "safety fix", "dry-run preview"],
+      "trace": "UI source → cmd.commands.custom.* → Commands owner → shell-safety validation (unquoted variables, wrong-shell syntax refuse with a specific message) → command record mutation → event + receipt → table re-projection → diagnostics record dry-run output → recovery: delete + reset; dry run demonstrably never sends work to an agent"
+    },
+    {
+      "family": "shortcuts",
+      "controls": ["remap recorder", "reset", "import/export", "cheat sheet"],
+      "trace": "UI source → cmd.shortcuts.bind → Commands owner → conflict detection against the live keymap (recorder captures real keydown chords) → binding mutation → event + receipt (conflict warns) → table re-projection with conflict highlight → diagnostics attribution → recovery: reset all restores defaults and clears conflicts"
+    },
+    {
+      "family": "catalog resources",
+      "controls": ["MCP restart", "project enablement toggles", "skill/plugin updates", "unload"],
+      "trace": "UI source → cmd.mcp.server.restart / domain enable verbs → MCP/Skills/Plugins/Tools owners → trust + compatibility validation (untrusted skills update manually; beta plugins warn) → resource state mutation → event + receipt → catalog re-projection with five-state inventory → Usage attribution when a server reports it → recovery: disable returns to the not-available projection"
+    },
+    {
+      "family": "testing matrix",
+      "controls": ["Auto/On/Off cells"],
+      "trace": "UI source → cmd.settings.value.set (matrix cell) → Testing owner → managed-policy permission (managed cells refuse) → matrix mutation → event → matrix re-projection → diagnostics attribution → recovery: set Auto"
+    }
+  ]
+}

@@ -61,6 +61,7 @@
     "artifact": [
       "loading",
       "ready",
+      "updated",
       "switch",
       "error",
       "close"
@@ -81,13 +82,50 @@
     "system": [
       "port_collision",
       "worktree_collision",
-      "reset"
+      "reset",
+      "compact_now",
+      "attachment_incompatible",
+      "attachment_resolver",
+      "active_turn_redirect",
+      "cache_warning",
+      "capacity_warning",
+      "cross_project",
+      "crew",
+      "reduced_motion",
+      "backup_snapshot",
+      "debug_session",
+      "bsd.off",
+      "bsd.auto_idle",
+      "bsd.auto_active",
+      "bsd.on",
+      "bsd.silent",
+      "bsd.advice",
+      "bsd.timeout",
+      "bsd.unavailable",
+      "bsd.quota",
+      "sync.offline",
+      "sync.queued",
+      "sync.reconnect",
+      "sync.replay",
+      "sync.snapshot",
+      "sync.server_work",
+      "restore_point.create",
+      "rewind",
+      "notification.push",
+      "browser_program_progress",
+      "provider_setup_required",
+      "access_limited_by_review",
+      "composer.ordinary",
+      "composer.spellcheck"
     ]
   },
   "requirements": [
     "Triggers must be deterministic for automated tests and visual capture.",
     "Reset must restore one known initial state.",
     "Renderers may vary by concept while consuming the same semantic events.",
-    "Do not expose these as permanent production Chat toolbar buttons."
+    "Do not expose these as permanent production Chat toolbar buttons.",
+    "BSD glow is demo-truthful only while auto-active; manual On never uses indefinite glow.",
+    "Offline reconnect replay is idempotent by outbox id.",
+    "Product UI copy uses Browser Program \u2014 never Playwright."
   ]
 }

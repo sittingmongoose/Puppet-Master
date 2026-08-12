@@ -4,13 +4,23 @@
    Standard kit header at top; thread slot fills the body; composer at the
    bottom. ABOVE the composer sits a tabbed dock: a pinnable Chats tab
    (kit historyPanel) in the first position, followed by one tab per work
-   surface that currently has data (Goal / Todo / Agents / Diff / Activity),
-   each carrying a live count badge (e.g. "Todo 3/5", "Agents 2", "4 files").
-   Selecting a tab reveals that surface in the pane. Tabs use surface
-   backgrounds; the active tab = accent-soft + weight, never a left border.
-   The open tab persists per thread in surfaceView.<tid>.w3Tab; the Chats
-   pin persists in surfaceView.<tid>.w3HistoryPinned (when pinned the Chats
-   tab is locked active and work-surface tabs cannot switch it away).
+   surface that currently has data (Goal / Todo / Agents / Diff / Activity /
+   Ops / Capacity / Crew), each carrying a live count badge (e.g. "Todo 3/5",
+   "Agents 2", "4 files", Ops = unresolved conflicts, Capacity = waves,
+   Crew = running). Ops leads the packet-surface cluster. Selecting a tab
+   reveals that surface in the pane. Tabs use surface backgrounds; the
+   active tab = accent-soft + weight, never a left border. The open tab
+   persists per thread in surfaceView.<tid>.w3Tab; the Chats pin persists
+   in surfaceView.<tid>.w3HistoryPinned (when pinned the Chats tab is
+   locked active and work-surface tabs cannot switch it away).
+
+   Packet additions: the BSD token variant mirrors its detail into a slim
+   strip at the bottom of the dock (K3BSD.detailHost, follows the active
+   thread). The shared artifact workspace (K3ArtifactWS — ONE shared node,
+   reparented never cloned) opens as a 280px left flex-sibling column
+   (.w3-art-col) at >= 975px; below 975px the same node moves into a new
+   "Artifacts" dock tab (auto-activated on open unless Chats is pinned).
+   The Chats tab and its pin are unaffected by artifact state; no overlays.
 
    Provides exactly one [data-k3-slot="thread"] and one
    [data-k3-slot="composer"]; the host fills them (THE ONE HARD RULE).
@@ -67,6 +77,34 @@
       kind: 'activity', label: 'Activity', icon: 'activity',
       present: function (p) { return p.activity; },
       badge: function (p) { return p.activity ? '' : ''; }
+    },
+    // packet surfaces — Ops leads this cluster (operational awareness is
+    // the most urgent), then Capacity, then Crew.
+    {
+      kind: 'ops', label: 'Ops', icon: 'port',
+      present: function (p) { return p.ops > 0; },
+      badge: function (p) { return String(p.ops); }
+    },
+    {
+      kind: 'capacity', label: 'Capacity', icon: 'capacity',
+      present: function (p) { return p.capacity; },
+      badge: function (p) {
+        return p.capacityWaves > 0
+          ? p.capacityWaves + (p.capacityWaves === 1 ? ' wave' : ' waves')
+          : '';
+      }
+    },
+    {
+      kind: 'crew', label: 'Crew', icon: 'crew',
+      present: function (p) { return p.crew; },
+      badge: function (p) { return p.crewRunning > 0 ? String(p.crewRunning) : ''; }
+    },
+    // narrow-width artifact fallback: present only while the workspace is
+    // open and the window is below the left-column breakpoint.
+    {
+      kind: 'artifacts', label: 'Artifacts', icon: 'artifact',
+      present: function (p) { return p.artOpen && p.artifacts > 0; },
+      badge: function (p) { return String(p.artifacts); }
     }
   ];
 
@@ -85,11 +123,22 @@
       var surfaceNode = null;     // the single live kit element shown in the pane
       var mountedKind = null;     // kind of surfaceNode currently mounted
       var historyEl = null;       // persistent kit.historyPanel element
+      var artNode = null;         // THE shared K3ArtifactWS surface (reparent, never clone)
+      var bsdHost = null;         // K3BSD.detailHost strip (token variant mirror)
+      var wideMode = false;       // root width >= 975px: artifact renders as a left column
       var unmounted = false;
 
       /* ---- skeleton ------------------------------------------------------ */
       var root = el('section', 'w3-root');
       root.setAttribute('data-k3-window', 'w3');
+
+      // artifact workspace column: a left flex sibling of the main column,
+      // shown only at >= 975px while the workspace is open for the active
+      // thread (below that the same node moves into the Artifacts dock tab).
+      var artCol = el('div', 'w3-art-col');
+      artCol.setAttribute('data-testid', 'w3-art-col');
+      artCol.hidden = true;
+      root.appendChild(artCol);
 
       var main = el('div', 'w3-main');
 
@@ -115,6 +164,15 @@
       pane.appendChild(paneBody);
       dock.appendChild(tabs);
       dock.appendChild(pane);
+
+      // BSD token variant: the selector-row token stays compact; its full
+      // detail is mirrored into this slim strip at the bottom of the dock.
+      // threadId null = the host follows the active thread itself.
+      if (window.K3BSD && typeof window.K3BSD.detailHost === 'function') {
+        bsdHost = window.K3BSD.detailHost(ctx, null);
+        bsdHost.classList.add('w3-bsd-host');
+        dock.appendChild(bsdHost);
+      }
       main.appendChild(dock);
 
       // create the persistent history element ONCE; it lives in paneBody
@@ -123,6 +181,16 @@
       historyEl.classList.add('w3-pane-history');
       historyEl.hidden = true;
       paneBody.appendChild(historyEl);
+
+      // THE shared artifact surface: created once, lives in paneBody below
+      // the breakpoint (Artifacts dock tab); reparented into .w3-art-col at
+      // >= 975px. Never cloned, never unmounted by tab swaps.
+      artNode = window.K3ArtifactWS ? window.K3ArtifactWS.surface(ctx) : null;
+      if (artNode) {
+        artNode.hidden = true;
+        paneBody.appendChild(artNode);
+      }
+      wideMode = ctx.env.width >= 975;
 
       // composer slot
       var composerSlot = el('div', 'w3-composer');
@@ -136,7 +204,8 @@
       function presence(tid) {
         var t = tid ? data.thread(tid) : null;
         var p = { goal: false, todo: false, agents: 0, files: 0, activity: false,
-                  todoDone: 0, todoTotal: 0 };
+                  todoDone: 0, todoTotal: 0, ops: 0, capacity: false, capacityWaves: 0,
+                  crew: false, crewRunning: 0, artifacts: 0, artOpen: false };
         if (!t) return p;
         if (t.activeGoal && !store.get('goalView.' + tid + '.cleared', false)) p.goal = true;
         var items = t.todo && arr(t.todo.items);
@@ -148,6 +217,18 @@
         arr(t.subagentGroups).forEach(function (g) { p.agents += arr(g.agents).length; });
         arr(t.diffGroups).forEach(function (g) { p.files += arr(g.files).length; });
         p.activity = arr(t.messages).some(function (m) { return !!m.activityGroup; });
+        if (window.K3Work && window.K3Work.opsSummary) {
+          var s = window.K3Work.opsSummary(tid);
+          p.ops = s ? arr(s.conflicts).filter(function (c) { return c.state !== 'resolved'; }).length : 0;
+        }
+        p.capacity = !!t.capacityForecast;
+        p.capacityWaves = t.capacityForecast ? (t.capacityForecast.waves || 0) : 0;
+        p.crew = !!t.crew;
+        p.crewRunning = t.crew
+          ? arr(t.crew.members).filter(function (m) { return String(m.status) !== 'queued'; }).length
+          : 0;
+        p.artifacts = arr(t.artifacts).length;
+        p.artOpen = !wideMode && store.get('artifactWs.' + tid + '.open', false) === true;
         return p;
       }
 
@@ -188,6 +269,9 @@
       function buildSurface(kind, tid) {
         if (kind === 'goal') return kit.goalSurface(ctx, tid);
         if (kind === 'todo') return kit.todoSurface(ctx, tid);
+        if (kind === 'ops') return kit.opsSurface ? kit.opsSurface(ctx, tid) : null;
+        if (kind === 'capacity') return kit.capacitySurface ? kit.capacitySurface(ctx, tid) : null;
+        if (kind === 'crew') return kit.crewSurface ? kit.crewSurface(ctx, tid) : null;
         if (kind === 'agents' || kind === 'diff' || kind === 'activity') {
           // Agents / Diff / Activity all live in the work-chips surface; we
           // surface that one element for any of these tabs. Its chips already
@@ -265,6 +349,7 @@
         pinBtn.addEventListener('click', function (e) {
           e.stopPropagation();
           if (!currentTid) currentTid = store.get('activeThreadId', null);
+          if (!currentTid) return; // never write surfaceView.null.*
           store.set('surfaceView.' + currentTid + '.w3HistoryPinned', !historyPinned());
         });
         chatsTab.appendChild(pinBtn);
@@ -300,10 +385,14 @@
         // history visibility: shown iff Chats is the active pane. The element
         // stays mounted (just hidden) so its state survives tab switches.
         var isChats = active === 'chats';
+        var isArt = active === 'artifacts';
         historyEl.hidden = !isChats;
+        // the shared artifact surface behaves like the history element when it
+        // rides the pane (narrow): hidden unless its tab is active
+        if (artNode && artNode.parentNode === paneBody) artNode.hidden = !isArt;
 
-        if (isChats) {
-          // hide any work surface under the chats pane
+        if (isChats || isArt) {
+          // hide any work surface under the chats/artifacts pane
           if (surfaceNode) surfaceNode.hidden = true;
         } else {
           // (Re)mount the work surface only when the active kind changes; this
@@ -373,20 +462,63 @@
       }
       tabs.addEventListener('scroll', paintOverflow, { passive: true });
 
+      /* ---- artifact column / pane placement ------------------------------- */
+      function placeArt() {
+        if (!artNode) return;
+        var open = currentTid ? store.get('artifactWs.' + currentTid + '.open', false) === true : false;
+        if (wideMode) {
+          artCol.hidden = !open;
+          root.classList.toggle('is-art-open', open);
+          if (open && artNode.parentNode !== artCol) artCol.appendChild(artNode);
+          artNode.hidden = !open;
+        } else {
+          artCol.hidden = true;
+          root.classList.remove('is-art-open');
+          if (artNode.parentNode !== paneBody) {
+            artNode.hidden = true;
+            paneBody.appendChild(artNode);
+          }
+        }
+      }
+      function onEnv(env) {
+        var now = (env ? env.width : ctx.env.width) >= 975;
+        if (now === wideMode) return;
+        wideMode = now;
+        placeArt();
+        refresh();
+      }
+      ctx.on('env', onEnv);
+      disposers.push(function () { ctx.off('env', onEnv); });
+
       /* ---- wiring --------------------------------------------------------- */
       disposers.push(store.subscribe('activeThreadId', rebuild));
       disposers.push(store.subscribe('surfaceView', refresh));
       disposers.push(store.subscribe('goalView', refresh));
+      disposers.push(store.subscribe('artifactWs', function () { placeArt(); refresh(); }));
       function onData(evt) {
         if (!evt) return;
+        if (evt.type === 'artifact-ws-changed') {
+          placeArt();
+          // narrow: opening an artifact switches the dock to the Artifacts tab
+          if (!wideMode && currentTid &&
+              store.get('artifactWs.' + currentTid + '.open', false) === true &&
+              activeTab(currentTid) !== 'artifacts' && !historyPinned()) {
+            store.set('surfaceView.' + currentTid + '.w3Tab', 'artifacts');
+          }
+          refresh();
+          return;
+        }
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });
 
       /* ---- boot + teardown ------------------------------------------------ */
       rebuild();
+      placeArt();
       // keep the overflow fade cues live across host resizes (e.g. 520px) and
       // tab mutations; ResizeObserver is widely supported and degrades quietly.
       if (typeof ResizeObserver === 'function') {
@@ -399,6 +531,7 @@
         if (unmounted) return;
         unmounted = true;
         unmountSurface();
+        try { if (bsdHost && bsdHost.unmount) bsdHost.unmount(); } catch (e) { /* ignore */ }
         try { if (historyEl && historyEl.unmount) historyEl.unmount(); } catch (e) { /* ignore */ }
         disposers.forEach(function (fn) { try { fn(); } catch (e) { /* ignore */ } });
         disposers = [];

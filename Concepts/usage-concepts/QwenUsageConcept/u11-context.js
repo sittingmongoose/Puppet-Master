@@ -282,6 +282,12 @@
     html += kv('Context cache hit', ctx.cacheHitRate + '%');
     html += kv('Current window', 'since ' + T().atClock(ctx.windowStartedAt));
     html += kv('Last activity', T().atClock(ctx.lastActivityAt));
+    if (ctx.stablePrefixId) html += kv('Stable prefix', ctx.stablePrefixId);
+    if (ctx.cacheEpoch) html += kv('Cache epoch', ctx.cacheEpoch);
+    if (ctx.toolSchemaOverhead) {
+      var tso = ctx.toolSchemaOverhead;
+      html += kv('Tool schema overhead (PM-derived)', ktok(tso.tokens) + ' · ' + tso.pctOfWindow + '% of window · ' + R().human(tso.source));
+    }
     html += '</div>';
     html += segBarHTML(ctx, false);
     if (th.switched) {

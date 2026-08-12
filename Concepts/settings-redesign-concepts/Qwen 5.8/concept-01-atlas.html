@@ -1,246 +1,419 @@
 <!doctype html>
-<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-01-atlas">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atlas — Settings Directory — Qwen 5.8</title>
 <link rel="stylesheet" href="_shared/pm-shell.css">
 <style>
-.at-home, .at-work { flex: 1; min-height: 0; overflow-y: auto; scroll-behavior: smooth; }
+/* ============================================================
+   Atlas — a directory of places, each with its own document.
+   Cartographic travel: every view arrives from a spatial origin.
+   ============================================================ */
+
+.at-home, .at-work { flex: 1; min-height: 0; overflow-y: auto; position: relative; }
+.at-home { scroll-behavior: smooth; }
 [data-reduced-motion="1"] .at-home, [data-reduced-motion="1"] .at-work { scroll-behavior: auto; }
 
-.at-enter { animation: atEnter .42s var(--ease, cubic-bezier(.2,.8,.2,1)) both; }
-@keyframes atEnter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.at-swap { animation: atSwap .3s ease both; }
-@keyframes atSwap { from { opacity: 0; } to { opacity: 1; } }
+/* --- Cartographic travel ------------------------------------ */
+.at-view { animation: atTravel .46s cubic-bezier(.2, .8, .2, 1) both; }
+.at-view[data-travel="back"] { animation-name: atTravelBack; }
+@keyframes atTravel {
+  from { opacity: 0; transform: translate3d(26px, 10px, 0) scale(.99); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes atTravelBack {
+  from { opacity: 0; transform: translate3d(-26px, 10px, 0) scale(.99); }
+  to { opacity: 1; transform: none; }
+}
+[data-reduced-motion="1"] .at-view,
+[data-reduced-motion="1"] .at-view[data-travel="back"] { animation: none; }
 
-.at-home-head { padding: 34px 40px 10px; max-width: 1180px; margin: 0 auto; width: 100%; }
+.at-rise { animation: atRise .3s ease both; }
+@keyframes atRise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+[data-reduced-motion="1"] .at-rise { animation: none; }
+
 .at-kicker { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
-.at-home-title { font-size: 30px; font-weight: 700; color: var(--text-1); margin: 4px 0 2px; letter-spacing: -.01em; }
-.at-home-sub { color: var(--text-2); font-size: 13.5px; max-width: 640px; }
 
-.at-searchwrap { padding: 18px 40px 6px; max-width: 1180px; margin: 0 auto; width: 100%; }
+/* --- Home ---------------------------------------------------- */
+.at-home-head { padding: 32px 40px 8px; max-width: 1200px; margin: 0 auto; width: 100%; }
+.at-home-title { font-size: 30px; font-weight: 700; color: var(--text-1); margin: 4px 0 2px; letter-spacing: -.01em; }
+.at-home-sub { color: var(--text-2); font-size: 13.5px; max-width: 660px; margin: 0; }
+
+.at-searchwrap { padding: 18px 40px 6px; max-width: 1200px; margin: 0 auto; width: 100%; }
 .at-search {
   display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong);
   border-radius: var(--radius-l); padding: 13px 16px; box-shadow: var(--shadow);
 }
 .at-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
-.at-search input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 15px; }
+.at-search input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 15px; min-width: 0; }
 .at-search .pm-ico { color: var(--text-3); }
 .at-search-hint { color: var(--text-3); font-size: 11px; white-space: nowrap; }
 
-.at-results { max-width: 1180px; margin: 0 auto; width: 100%; padding: 10px 40px 30px; }
+.at-results { max-width: 1200px; margin: 0 auto; width: 100%; padding: 10px 40px 30px; }
 .at-results-group { margin: 14px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
 .at-result {
   display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 1px solid var(--border);
   background: var(--surface); border-radius: var(--radius-m); padding: 10px 14px; cursor: pointer; margin-bottom: 6px;
+  color: var(--text-1);
 }
-.at-result:hover, .at-result.active { border-color: var(--accent); background: var(--surface-2); }
-.at-result .at-r-title { color: var(--text-1); font-weight: 600; }
-.at-result .at-r-path { color: var(--text-3); font-size: 11.5px; }
-.at-result .pm-ico { color: var(--text-3); }
+.at-result:hover, .at-result:focus-visible, .at-result.active { border-color: var(--accent); background: var(--surface-2); }
+.at-result .at-r-main { flex: 1; min-width: 0; }
+.at-r-title { color: var(--text-1); font-weight: 600; font-size: 13px; }
+.at-r-path { color: var(--text-3); font-size: 11.5px; }
+.at-r-note { color: var(--text-3); font-size: 11.5px; margin-top: 2px; }
+.pm-search-type {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px 7px; border-radius: 999px; border: 1px solid var(--border-strong);
+  color: var(--text-2); background: var(--surface-3); white-space: nowrap; flex: none;
+}
+.pm-search-type[data-rt="action"] { color: var(--info); border-color: color-mix(in srgb, var(--info) 45%, transparent); }
+.pm-search-type[data-rt="status"] { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
+.pm-search-type[data-rt="diagnostic"] { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.pm-search-type[data-rt="setup"] { color: var(--info); border-color: color-mix(in srgb, var(--info) 45%, transparent); }
+.pm-search-type[data-rt="unavailable"] { color: var(--text-3); }
+.pm-search-type[data-rt="manager"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
 
-.at-cols { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 26px; max-width: 1180px; margin: 0 auto; width: 100%; padding: 16px 40px 46px; align-items: start; }
-.pm-app[data-wtier="squeezed"] .at-cols, .pm-app[data-wtier="narrow"] .at-cols { grid-template-columns: 1fr; }
+.at-cols { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; max-width: 1200px; margin: 0 auto; width: 100%; padding: 14px 40px 46px; align-items: start; }
 
-.at-dir { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-l); background: var(--surface); overflow: hidden; }
+.at-dir { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-l); background: var(--surface); }
 .at-dir-cap { padding: 12px 18px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); border-bottom: 1px solid var(--border); }
 .at-dest {
-  display: grid; grid-template-columns: 34px minmax(0, 1fr) auto 18px; gap: 14px; align-items: center;
+  display: grid; grid-template-columns: 34px minmax(0, 1fr) auto auto; gap: 14px; align-items: center;
   width: 100%; text-align: left; border: none; border-bottom: 1px solid var(--border); background: none;
-  padding: 15px 18px; cursor: pointer;
+  padding: 14px 18px; cursor: pointer; color: var(--text-1); font: inherit;
+  transition: background-color .16s;
 }
 .at-dest:last-child { border-bottom: none; }
-.at-dest { transition: background-color .16s; }
-.at-dest:hover { background: var(--surface-2); }
-.at-dest-ico { transition: color .16s, border-color .16s; }
-.at-dest-ico { width: 34px; height: 34px; border-radius: var(--radius-m); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); }
-.at-dest:hover .at-dest-ico { color: var(--accent); border-color: var(--accent); }
-.at-dest-title { font-size: 14.5px; font-weight: 650; color: var(--text-1); }
-.at-dest-purpose { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+.at-dest:hover, .at-dest:focus-visible { background: var(--surface-2); }
+.at-dest-ico { width: 34px; height: 34px; border-radius: var(--radius-m); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); transition: color .16s, border-color .16s; }
+.at-dest:hover .at-dest-ico, .at-dest:focus-visible .at-dest-ico { color: var(--accent); border-color: var(--accent); }
+.at-dest-main { min-width: 0; }
+.at-dest-title { display: block; font-size: 14.5px; font-weight: 650; color: var(--text-1); }
+.at-dest-purpose { display: block; font-size: 12px; color: var(--text-2); margin-top: 1px; }
 .at-dest-status { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.at-dest .pm-ico.chev { color: var(--text-3); }
+.at-open {
+  display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text-1); font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  transition: border-color .16s, color .16s, background-color .16s;
+}
+.at-dest:hover .at-open, .at-dest:focus-visible .at-open { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
-.at-side { display: flex; flex-direction: column; gap: 18px; }
+.at-side { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 .at-side h3 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); font-weight: 650; }
-.at-notice { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 13px 14px; margin-bottom: 10px; }
+.at-notice { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 12px 14px; margin-bottom: 8px; }
 .at-notice-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 7px; }
+.at-notice-x { border: none; background: none; color: var(--text-3); cursor: pointer; padding: 2px; border-radius: var(--radius-s); display: inline-flex; }
+.at-notice-x:hover { color: var(--text-1); background: var(--surface-2); }
 .at-notice h4 { margin: 0 0 4px; font-size: 13px; color: var(--text-1); font-weight: 650; }
 .at-notice p { margin: 0 0 10px; font-size: 12px; color: var(--text-2); }
-.at-notice-actions { display: flex; gap: 8px; align-items: center; }
-.at-recent { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 9px 2px; cursor: pointer; color: var(--text-2); }
-.at-recent:hover { color: var(--text-1); }
+.at-notice-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.at-recent { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 9px 2px; cursor: pointer; color: var(--text-2); font: inherit; font-size: 12.5px; }
+.at-recent:hover, .at-recent:focus-visible { color: var(--text-1); }
 .at-recent .when { margin-left: auto; color: var(--text-3); font-size: 11px; white-space: nowrap; }
+.at-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 14px 16px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
 
+/* --- Workspace ------------------------------------------------ */
 .at-work-head {
-  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  padding: 12px 26px; background: var(--bg-shell); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 9px 22px; background: var(--bg-shell); border-bottom: 1px solid var(--border);
 }
 [data-chrome-blur="on"] .at-work-head { backdrop-filter: var(--chrome-blur); }
-.at-work-head .at-cat-title { font-size: 16px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
-.at-work-head .at-search-mini { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 6px 10px; min-width: 200px; flex: 0 1 300px; }
-.at-work-head .at-search-mini input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 12.5px; min-width: 0; }
-.at-work-head .pm-spacer { flex: 1; }
+.at-cat-title { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 700; color: var(--text-1); white-space: nowrap; }
+.at-cat-title .pm-ico { color: var(--accent); }
+.at-cat-purpose { color: var(--text-3); font-size: 12px; }
+.at-head-right { display: flex; align-items: center; gap: 8px; position: relative; margin-left: auto; }
 
-.at-work-body { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 0; align-items: start; }
-.pm-app[data-wtier="squeezed"] .at-work-body { grid-template-columns: 1fr; }
-.at-toc { position: sticky; top: 57px; padding: 18px 10px 18px 22px; max-height: calc(100vh - 140px); overflow-y: auto; }
-.pm-app[data-wtier="squeezed"] .at-toc { position: static; display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; max-height: none; }
-.at-toc-item {
-  position: relative; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: none; background: none;
-  color: var(--text-2); font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap;
-  transition: background-color .18s, color .18s;
+.at-cats { display: flex; gap: 2px; padding: 5px 14px; border-bottom: 1px solid var(--border); background: var(--bg-shell); overflow-x: auto; flex-wrap: nowrap; }
+.at-cat-tab {
+  display: inline-flex; align-items: center; gap: 6px; border: none; background: none; color: var(--text-2);
+  font-size: 12px; padding: 5px 10px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap; flex: none;
 }
-.at-toc-item:hover { color: var(--text-1); background: var(--surface-2); }
-.at-toc-item.active { color: var(--accent); font-weight: 650; background: var(--accent-soft); }
-.at-toc-item .pm-ico { opacity: 0; }
-.at-toc-item.active .pm-ico { opacity: 1; }
-.at-toc-drawer { display: none; }
-.pm-app[data-wtier="squeezed"] .at-toc:not(.open) .at-toc-item { display: none; }
-.pm-app[data-wtier="squeezed"] .at-toc.open { position: fixed; inset: 40px auto 26px 0; width: 250px; background: var(--surface); z-index: 60; border-right: 1px solid var(--border); max-height: none; box-shadow: var(--shadow); }
-.pm-app[data-wtier="squeezed"] .at-toc.open .at-toc-item { display: flex; }
-.at-toc-drawer { margin: 0 16px 8px; }
-.pm-app:not([data-wtier="squeezed"]) .at-toc-drawer { display: none; }
-.pm-app[data-wtier="squeezed"] .at-toc-drawer { display: inline-flex; }
+.at-cat-tab:hover { background: var(--surface-2); color: var(--text-1); }
+.at-cat-tab.active { background: var(--accent-soft); color: var(--accent); font-weight: 650; }
 
-.at-doc { padding: 22px 34px 80px; min-width: 0; max-width: 900px; }
-.at-sub { margin-bottom: 34px; scroll-margin-top: 70px; }
-.at-sub-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+.at-mini-searchwrap { position: relative; }
+.at-search-mini { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 5px 10px; width: 230px; }
+.at-search-mini input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 12.5px; min-width: 0; }
+.at-mini-drop {
+  position: absolute; top: calc(100% + 6px); right: 0; width: 340px; max-height: 340px; overflow-y: auto; z-index: 60;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m);
+  box-shadow: var(--shadow); padding: 6px; display: flex; flex-direction: column; gap: 4px;
+}
+.at-mini-drop .at-result { margin-bottom: 0; padding: 8px 10px; }
+.at-mini-drop-note { font-size: 11.5px; color: var(--text-3); padding: 8px; }
+
+.at-work-body { position: relative; display: grid; grid-template-columns: 232px minmax(0, 1fr); align-items: start; }
+.at-toc { position: sticky; top: 52px; align-self: start; padding: 16px 10px 16px 14px; max-height: calc(100vh - 170px); overflow-y: auto; min-width: 0; }
+.at-toc-cap { padding: 0 10px 8px; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.at-toc-marker {
+  position: absolute; left: 14px; width: 208px; height: 30px; border-radius: var(--radius-s);
+  background: var(--accent-soft); z-index: 0; pointer-events: none;
+  transition: transform .28s cubic-bezier(.2, .8, .2, 1), height .28s cubic-bezier(.2, .8, .2, 1);
+}
+[data-reduced-motion="1"] .at-toc-marker { transition: none; }
+.at-toc-item {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: none; background: none;
+  color: var(--text-2); font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap;
+  transition: color .18s;
+}
+.at-toc-item:hover { color: var(--text-1); }
+.at-toc-item.active { color: var(--accent); font-weight: 650; }
+.at-toc-item .pm-ico { flex: none; opacity: .55; }
+.at-toc-item.active .pm-ico { opacity: 1; }
+
+.at-toc-drawer { display: none; }
+.at-toc-close { display: none; position: absolute; top: 8px; right: 8px; }
+
+.at-doc { padding: 20px 30px 90px; min-width: 0; max-width: 940px; }
+.at-sub { margin-bottom: 36px; scroll-margin-top: 64px; }
+.at-sub-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
 .at-sub-head h2 { font-size: 17px; margin: 0; color: var(--text-1); font-weight: 700; }
 .at-sub-count { color: var(--text-3); font-size: 11.5px; }
-.at-sub-desc { color: var(--text-2); font-size: 12.5px; margin: 0 0 12px; }
 
-.at-row { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 8px; overflow: hidden; }
-.at-row-main { display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; }
-.at-row-label { font-size: 13.5px; font-weight: 600; color: var(--text-1); }
-.at-row-desc { font-size: 12px; color: var(--text-2); margin-top: 2px; }
-.at-row-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
-.at-row-main > div:first-child { flex: 1; min-width: 0; }
-.at-row-ctl { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex: none; }
-.at-row-ctl-line { display: flex; align-items: center; gap: 8px; }
-.at-row-detail { border-top: 1px solid var(--border); background: var(--surface-3); padding: 11px 16px; font-size: 12px; color: var(--text-2); display: none; }
-.at-row.open .at-row-detail { display: block; animation: pmReveal .22s ease both; }
-.at-row-detail dl { display: grid; grid-template-columns: 150px 1fr; gap: 4px 12px; margin: 0; }
-.at-row-detail dt { color: var(--text-3); }
-.at-row-detail dd { margin: 0; color: var(--text-1); }
-.at-row[data-hidden="true"] { display: none; }
+/* --- Demonstrated manager language (at-*) ---------------------- */
+.at-mgr-cap { margin: 18px 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
 
-.at-mgr-card { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 14px 16px; margin-bottom: 10px; }
-.at-mgr-card h4 { margin: 0 0 3px; font-size: 13.5px; color: var(--text-1); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.at-mgr-card .sub { font-size: 12px; color: var(--text-2); }
-.at-mgr-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-.at-group-cap { margin: 20px 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
-.at-acct { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 12px 14px; margin-bottom: 8px; }
-.at-acct-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.at-acct-head b { color: var(--text-1); font-size: 13px; }
-.at-acct-meta { font-size: 11.5px; color: var(--text-2); margin-top: 5px; display: flex; flex-wrap: wrap; gap: 5px 14px; }
-.at-acct-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
-.at-model { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 8px; }
-.at-model-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; flex-wrap: wrap; }
-.at-model-head .name { font-weight: 650; color: var(--text-1); font-size: 13px; }
-.at-model-head .alias { color: var(--text-3); font-size: 11.5px; font-family: var(--font-mono); }
-.at-model-head .prio { display: flex; gap: 2px; margin-left: auto; align-items: center; }
-.at-model-body { padding: 0 14px 12px; display: none; }
-.at-model.open .at-model-body { display: block; animation: pmReveal .22s ease both; }
-.at-caps { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
-.at-fav { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 2px; display: inline-flex; }
-.at-fav.on { color: var(--warn); }
-.at-role { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 10px; padding: 8px 2px; border-bottom: 1px solid var(--border); font-size: 12.5px; align-items: baseline; }
-.at-role:last-child { border-bottom: none; }
-.at-role .lbl { color: var(--text-2); }
-.at-role .eff { color: var(--text-1); font-weight: 600; }
-.at-role .req { color: var(--text-3); }
-.at-role.differs .eff { color: var(--warn); }
+.at-chain-row, .at-src-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 5px; font-size: 12.5px; color: var(--text-1); }
+.at-chain-row code { font-family: var(--font-mono); font-size: 12px; }
+.at-src-row .pm-note { flex: 1; min-width: 140px; }
+.at-src-row.omitted { background: var(--surface-3); color: var(--text-2); }
 
-.at-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 14px 16px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
 .at-mem { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 12px 14px; margin-bottom: 8px; }
 .at-mem .txt { color: var(--text-1); font-size: 13px; }
-.at-mem .meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.at-mem .meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; align-items: center; }
 .at-mem-actions { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
-.at-mcp-tools { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+
+.at-persona { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 12px 14px; margin-bottom: 8px; }
+.at-persona-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text-1); font-size: 13px; }
+.at-persona-head b { font-size: 13.5px; }
+.at-persona-desc { font-size: 12px; color: var(--text-2); margin: 4px 0 8px; }
+.at-persona-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 11.5px; color: var(--text-2); margin-bottom: 8px; }
+.at-persona-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.at-cap-chip {
+  display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border-strong); border-radius: var(--radius-m);
+  background: var(--surface-3); color: var(--text-1); font-size: 12.5px; padding: 8px 12px; flex-wrap: wrap;
+}
+.at-cap-chip .pm-ico { color: var(--info); }
+
+.at-crew-member { display: grid; grid-template-columns: minmax(110px, 160px) minmax(0, 1fr); gap: 4px 12px; font-size: 12px; padding: 5px 0; border-bottom: 1px dashed var(--border); }
+.at-crew-member:last-child { border-bottom: none; }
+.at-crew-member .role { color: var(--text-1); font-weight: 600; }
+.at-crew-member .route { color: var(--text-2); }
+.at-crew-member .cands { grid-column: 1 / -1; color: var(--text-3); font-size: 11.5px; }
+
+.at-bsd-grid { display: flex; flex-direction: column; gap: 4px; }
+.at-preset { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 8px 12px; margin-bottom: 6px; color: var(--text-1); font-size: 12.5px; }
+.at-preset .pm-note { flex: 1; min-width: 140px; }
+
+/* --- Shared-grammar manager touch-ups --------------------------- */
+.at-mgr .pm-mgr-head { position: relative; }
+.at-mgr .pm-rule-add input { flex: 1; min-width: 160px; }
+.at-mgr .pm-trace input { min-width: 200px; }
+.at-mgr .pm-form-grid label { min-width: 0; }
+.at-mgr .pm-inspect-row { grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); }
+.at-mgr .pm-reslist { display: flex; flex-direction: column; gap: 6px; }
+.at-resitem { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 9px 13px; }
+.at-resitem-main { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text-1); font-size: 12.5px; }
+.at-resitem-main b { font-size: 12.5px; }
+.at-resitem .pm-note { margin-top: 3px; }
+.at-resitem-actions { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
 .at-log { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); padding: 2px 0; }
+
+/* --- Width tiers -------------------------------------------------- */
+.pm-app[data-wtier="squeezed"] .at-cols, .pm-app[data-wtier="narrow"] .at-cols { grid-template-columns: 1fr; }
+.pm-app[data-wtier="squeezed"] .at-home-head, .pm-app[data-wtier="narrow"] .at-home-head,
+.pm-app[data-wtier="squeezed"] .at-searchwrap, .pm-app[data-wtier="narrow"] .at-searchwrap,
+.pm-app[data-wtier="squeezed"] .at-results, .pm-app[data-wtier="narrow"] .at-results,
+.pm-app[data-wtier="squeezed"] .at-cols, .pm-app[data-wtier="narrow"] .at-cols { padding-left: 18px; padding-right: 18px; }
+.pm-app[data-wtier="squeezed"] .at-search-hint, .pm-app[data-wtier="narrow"] .at-search-hint { display: none; }
+.pm-app[data-wtier="squeezed"] .at-dest { grid-template-columns: 34px minmax(0, 1fr); }
+.pm-app[data-wtier="squeezed"] .at-dest-status { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; }
+.pm-app[data-wtier="squeezed"] .at-open { grid-column: 1 / -1; justify-content: center; }
+
+.pm-app[data-wtier="squeezed"] .at-work-body, .pm-app[data-wtier="narrow"] .at-work-body { grid-template-columns: 1fr; }
+.pm-app[data-wtier="squeezed"] .at-toc, .pm-app[data-wtier="narrow"] .at-toc { display: none; }
+.pm-app[data-wtier="squeezed"] .at-toc-drawer, .pm-app[data-wtier="narrow"] .at-toc-drawer { display: inline-flex; }
+.pm-app[data-wtier="squeezed"] .at-toc.open, .pm-app[data-wtier="narrow"] .at-toc.open {
+  display: block; position: fixed; top: 46px; bottom: 32px; left: 0; width: min(280px, 84vw); z-index: 80;
+  background: var(--surface); border-right: 1px solid var(--border-strong); box-shadow: var(--shadow);
+  padding: 40px 12px 16px; max-height: none; overflow-y: auto;
+}
+.pm-app[data-wtier="squeezed"] .at-toc.open .at-toc-close, .pm-app[data-wtier="narrow"] .at-toc.open .at-toc-close { display: inline-flex; }
+.pm-app[data-wtier="squeezed"] .at-toc.open .at-toc-marker, .pm-app[data-wtier="narrow"] .at-toc.open .at-toc-marker { left: 12px; width: calc(min(280px, 84vw) - 28px); }
+.pm-app[data-wtier="squeezed"] .at-search-mini, .pm-app[data-wtier="narrow"] .at-search-mini { width: 160px; }
+.pm-app[data-wtier="squeezed"] .at-cat-purpose { display: none; }
+.pm-app[data-wtier="squeezed"] .at-mini-drop { width: min(340px, calc(100vw - 32px)); }
+.pm-app[data-wtier="squeezed"] .at-doc, .pm-app[data-wtier="narrow"] .at-doc { padding-left: 18px; padding-right: 18px; }
+
+/* Forms never clip: allow wrapping everywhere a control row can get tight. */
+.at-mgr .pm-set-ctl { justify-content: flex-start; }
+.pm-app[data-wtier="squeezed"] .pm-set-main { flex-direction: column; align-items: stretch; gap: 8px; }
 </style>
 </head>
-<body data-concept-model="Qwen 5.8" data-concept="atlas">
-<div id="app"></div>
-<script src="_shared/concept-hub-bridge.js"></script>
+<body>
+<div id="app" data-concept-model="Qwen 5.8"></div>
 <script src="_shared/pm-icons.js"></script>
 <script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-data-extra.js"></script>
 <script src="_shared/pm-state.js"></script>
 <script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-managers.js"></script>
 <script src="_shared/pm-shell.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
 <script>
 (function () {
   "use strict";
+
   var MODEL = "Qwen 5.8";
-  var shell = window.PMShell.mount({ conceptName: "Atlas concept", model: MODEL });
+  var D = window.PMDemoData;
+  var M = window.PMManagers;
+  var esc = M.esc;
+  var ico = function (n, s) { return window.PMIcons.get(n, s || 14); };
+
+  // ============================================================
+  // Boot (contract order)
+  // ============================================================
+  window.PMState.init("concept-01-atlas");
+  M.setPrefix("at-");
+  var shell = window.PMShell.mount({ conceptName: "Atlas", model: MODEL });
   var content = shell.content;
   var INDEX = window.PMCore.buildSearchIndex();
-  var IMPLEMENTED_MANAGERS = { providers: true, memory: true, mcp: true };
-  var MANAGER_HOME = { memory: "context", "context-sources": "context", crew: "planning", mcp: "extensions", skills: "extensions", terminal: "code", lsp: "code", media: "media", personas: "models", providers: "models" };
+
   var spy = null;
+  var currentCat = null;      // for cartographic travel direction
+  var currentView = null;
+  var localUi = { permView: "expert", openMems: {}, openPersonas: {}, miniDrop: false };
+  var memTrash = [];          // deleted gists: { index, snap } — full snapshots for reinsertion
+  var memHistory = {};         // id -> [{ text }] superseded versions, newest first
   var activeResult = -1;
-  var openModels = {};
 
-  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function destById(id) {
+    for (var i = 0; i < D.destinations.length; i++) if (D.destinations[i].id === id) return D.destinations[i];
+    return null;
+  }
+  function subById(d, sid) {
+    for (var i = 0; i < d.subcategories.length; i++) if (d.subcategories[i].id === sid) return d.subcategories[i];
+    return null;
+  }
+  function subForManager(d, mgr) {
+    for (var i = 0; i < d.subcategories.length; i++) if (d.subcategories[i].manager === mgr) return d.subcategories[i];
+    return null;
+  }
 
-  function route() {
-    var v = window.PMState.state.view;
-    if (spy) { spy.destroy(); spy = null; }
-    if (v.name === "home") renderHome();
-    else renderWorkspace(v);
+  // ============================================================
+  // Small shared render helpers
+  // ============================================================
+  function statusChip(dest) {
+    var k = dest.status.kind;
+    if (k === "attention") return '<span class="pm-badge pm-badge-danger">' + ico("alertTriangle", 11) + " " + esc(dest.status.summary) + "</span>";
+    if (k === "warn") return '<span class="pm-badge pm-badge-warn">' + ico("clock", 11) + " " + esc(dest.status.summary) + "</span>";
+    if (k === "setup") return '<span class="pm-badge pm-badge-info">' + ico("clock", 11) + " " + esc(dest.status.summary) + "</span>";
+    return '<span class="pm-badge pm-badge-ok">' + ico("checkCircle", 11) + " " + esc(dest.status.summary) + "</span>";
+  }
+
+  function rtChip(rt) {
+    return '<span class="pm-search-type" data-rt="' + esc(rt) + '">' + esc(rt) + "</span>";
   }
 
   function noticeCard(n) {
-    var icon = n.kind === "attention" ? "alertTriangle" : n.kind === "continue" ? "clock" : "spark";
-    var chip = n.kind === "attention" ? "pm-badge-danger" : n.kind === "continue" ? "pm-badge-info" : "pm-badge-ok";
-    return '<div class="at-notice" data-notice="' + n.id + '">' +
-      '<div class="at-notice-top"><span class="pm-badge ' + chip + '">' + window.PMIcons.get(icon, 11) + " " + esc(n.status) + '</span></div>' +
+    var chip = n.group === "attention" ? "pm-badge-danger" : n.group === "continue" ? "pm-badge-info" : "pm-badge-ok";
+    var icon = n.group === "attention" ? "alertTriangle" : n.group === "continue" ? "clock" : "spark";
+    return '<div class="at-notice" data-notice-card="' + esc(n.id) + '">' +
+      '<div class="at-notice-top"><span class="pm-badge ' + chip + '">' + ico(icon, 11) + " " + esc(n.status) + "</span>" +
+        '<button class="at-notice-x" data-act="notice.dismiss" data-notice="' + esc(n.id) + '" aria-label="Dismiss notice">' + ico("x", 13) + "</button></div>" +
       "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
-      '<div class="at-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-notice-action>' + esc(n.action) + "</button>" +
-      (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-notice-secondary>' + esc(n.secondary) + "</button>" : "") +
+      '<div class="at-notice-actions">' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-notice-go="' + esc(n.id) + '">' + esc(n.action) + "</button>" +
+        (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-notice-sec="' + esc(n.id) + '">' + esc(n.secondary) + "</button>" : "") +
       "</div></div>";
   }
 
+  function noticeAction(n, secondary) {
+    if (!secondary && n.id === "rec-backup") window.PMState.backupNow("bk-settings");
+    if (n.target) {
+      window.PMState.navigate(Object.assign({ name: "workspace" }, n.target));
+      return;
+    }
+    window.PMState.receipt(n.action, "Simulated in this concept.", "sim");
+  }
+
+  // ============================================================
+  // Home — directory, search, notices, recents
+  // ============================================================
   function renderHome() {
+    currentCat = null;
     var st = window.PMState.state;
-    var notices = st.notices;
-    var html = '<div class="at-home at-enter" id="at-home">' +
+    var dismissed = st.collections.dismissedNotices;
+    var groups = [["attention", "Needs attention"], ["continue", "Continue setup"], ["recommended", "Recommended"]];
+
+    var html = '<div class="at-home at-view" data-travel="back" id="at-home">' +
       '<div class="at-home-head">' +
-        '<div class="at-kicker">Settings · Atlas · ' + MODEL + '</div>' +
+        '<div class="at-kicker">Settings atlas · ' + MODEL + '</div>' +
         '<h1 class="at-home-title">Where would you like to go?</h1>' +
-        '<p class="at-home-sub">Search anything, or open a destination below. Each destination is a place with its own document — not a filter.</p>' +
+        '<p class="at-home-sub">Search anything, or open a destination. Each destination is a place with its own document — not a filter.</p>' +
       "</div>" +
-      '<div class="at-searchwrap"><label class="at-search">' + window.PMIcons.get("search", 18) +
-        '<input id="at-q" type="text" placeholder="Search settings, managers, providers, models…" autocomplete="off" aria-label="Search settings">' +
-        '<span class="at-search-hint"><span class="pm-kbd">↑</span> <span class="pm-kbd">↓</span> <span class="pm-kbd">Enter</span></span>' +
+      '<div class="at-searchwrap"><label class="at-search">' + ico("search", 18) +
+        '<input id="at-q" type="text" placeholder="Search settings, managers, actions, diagnostics…" autocomplete="off" aria-label="Search settings">' +
+        '<span class="at-search-hint"><span class="pm-kbd">Tab</span> <span class="pm-kbd">Enter</span></span>' +
       "</label></div>" +
-      '<div class="at-results" id="at-results" hidden></div>' +
+      '<div class="at-results" id="at-results" hidden aria-live="polite"></div>' +
       '<div class="at-cols" id="at-directory">' +
-        '<div class="at-dir"><div class="at-dir-cap">Destinations</div>' +
-        window.PMDemoData.destinations.map(function (d) {
-          var statusChip = d.status.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " " + esc(d.status.summary) + "</span>"
-            : d.status.kind === "setup" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("clock", 11) + " " + esc(d.status.summary) + "</span>"
-            : '<span class="pm-badge">' + window.PMIcons.get("checkCircle", 11) + " " + esc(d.status.summary) + "</span>";
-          return '<button class="at-dest" data-dest="' + d.id + '">' +
-            '<span class="at-dest-ico">' + window.PMIcons.get(d.icon, 17) + "</span>" +
-            "<span><span class=\"at-dest-title\">" + esc(d.title) + '</span><span class="at-dest-purpose">' + esc(d.purpose) + "</span></span>" +
-            '<span class="at-dest-status">' + statusChip + '<span class="pm-note">' + d.subcategories.length + " sections</span></span>" +
-            '<span class="chev">' + window.PMIcons.get("chevronRight", 16) + "</span></button>";
+        '<div class="at-dir" aria-label="Settings destinations"><div class="at-dir-cap">Directory — 10 destinations</div>' +
+        D.destinations.map(function (d) {
+          return '<button class="at-dest" data-dest="' + esc(d.id) + '">' +
+            '<span class="at-dest-ico">' + ico(d.icon, 17) + "</span>" +
+            '<span class="at-dest-main"><span class="at-dest-title">' + esc(d.title) + '</span><span class="at-dest-purpose">' + esc(d.purpose) + "</span></span>" +
+            '<span class="at-dest-status">' + statusChip(d) + '<span class="pm-note">' + d.subcategories.length + " sections</span></span>" +
+            '<span class="at-open">' + ico("open", 12) + " Open</span>" +
+          "</button>";
         }).join("") +
         "</div>" +
         '<div class="at-side">' +
-          (notices.length ? "<div><h3>Needs your attention</h3>" + notices.map(noticeCard).join("") + "</div>"
-            : "<div><h3>All clear</h3><div class=\"at-note-card\">Nothing needs attention right now. This is the calm state.</div></div>") +
-          (st.recents.length ? "<div><h3>Recent changes</h3>" + st.recents.map(function (r) {
-            return '<button class="at-recent" data-recent="' + r.id + '">' + window.PMIcons.get("history", 13) + "<span>" + esc(r.label) + " · " + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span></button>";
+          '<div><h3>Catalogs</h3><div class="at-dir" style="border-radius:var(--radius-m)">' +
+          st.catalogs.map(function (c) {
+            var chip = c.state === "refreshing"
+              ? '<span class="pm-badge pm-badge-info">' + ico("motion", 11) + " Refreshing</span>"
+              : '<span class="pm-badge pm-badge-ok">' + ico("checkCircle", 11) + " Up to date</span>";
+            return '<div class="at-src-row" style="margin:8px;border-radius:var(--radius-m)"><b>' + esc(c.name) + "</b>" + chip +
+              '<span class="pm-note">Checked ' + esc(c.lastChecked) + "</span>" +
+              '<button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh") + "</button></div>";
+          }).join("") +
+          "</div></div>" +
+          '<div class="at-side-notices" aria-label="Notices">' +
+          groups.map(function (g) {
+            var list = st.notices.filter(function (n) { return n.group === g[0] && dismissed.indexOf(n.id) < 0; });
+            if (!list.length) return "";
+            return "<h3>" + g[1] + "</h3>" + list.map(noticeCard).join("");
+          }).join("") +
+          (st.notices.every(function (n) { return dismissed.indexOf(n.id) >= 0; })
+            ? "<h3>Notices</h3><div class=\"at-note-card\">All clear. Dismissed notices stay dismissed unless their condition changes.</div>" : "") +
+          "</div>" +
+          (st.recents.length ? "<div><h3>Recently visited</h3>" + st.recents.map(function (r) {
+            return '<button class="at-recent" data-recent="' + esc(r.id) + '">' + ico("history", 13) + "<span>" + esc(r.label) + " · " + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span></button>";
           }).join("") + "</div>" : "") +
         "</div>" +
       "</div>" +
     "</div>";
+
     content.innerHTML = html;
     bindHome();
+  }
+
+  function hitIcon(kind) {
+    return kind === "setting" ? "sliders" : kind === "persona" ? "persona" : kind === "provider" || kind === "model" ? "plug" : kind === "action" ? "zap" : kind === "status" ? "gauge" : kind === "diagnostic" ? "activity" : kind === "setup" ? "clock" : kind === "unavailable" ? "x" : "grid";
+  }
+
+  function resultRow(h, i) {
+    return '<button class="at-result" data-hit="' + i + '">' +
+      ico(hitIcon(h.kind), 15) +
+      '<span class="at-r-main"><span class="at-r-title">' + esc(h.title) + "</span><br>" +
+      '<span class="at-r-path">' + esc(h.path.join(" › ")) + "</span>" +
+      (h.unavailableReason ? '<div class="at-r-note">' + esc(h.unavailableReason) + "</div>" : "") +
+      "</span>" + rtChip(h.resultType) +
+    "</button>";
   }
 
   function bindHome() {
@@ -248,60 +421,61 @@
     var results = document.getElementById("at-results");
     var dir = document.getElementById("at-directory");
     var last = null;
+    activeResult = -1;
 
     function run() {
       var v = q.value.trim();
-      if (!v) {
-        results.hidden = true; dir.hidden = false; activeResult = -1; return;
-      }
+      if (!v) { results.hidden = true; dir.hidden = false; last = null; activeResult = -1; return; }
       var hits = window.PMCore.search(v, INDEX);
       dir.hidden = true; results.hidden = false;
       if (!hits.length) {
-        results.innerHTML = '<div class="at-note-card">No matches for “' + esc(v) + '”. Try “compaction”, “OAuth”, “spellcheck”, or a provider name.</div>';
-        activeResult = -1; return;
+        results.innerHTML = '<div class="at-note-card">No matches for “' + esc(v) + '”. Try “compaction”, “spellcheck”, “backup”, or a provider name.</div>';
+        last = null; activeResult = -1; return;
       }
       var groups = {};
       hits.forEach(function (h) {
-        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : h.kind === "provider" || h.kind === "model" ? "Providers & models" : h.kind === "persona" ? "Personas" : "Places";
+        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : h.kind === "provider" || h.kind === "model" ? "Providers & models" : h.kind === "persona" ? "Personas" : h.kind === "action" ? "One-shot actions" : h.kind === "status" ? "Status" : h.kind === "diagnostic" ? "Diagnostics" : h.kind === "setup" ? "Setup" : "Places";
         (groups[g] = groups[g] || []).push(h);
       });
       var html = "";
+      var idx = 0;
       Object.keys(groups).forEach(function (g) {
         html += '<div class="at-results-group">' + g + "</div>";
-        groups[g].forEach(function (h) {
-          html += '<button class="at-result" data-hit>' +
-            '<span class="pm-ico">' + window.PMIcons.get(h.kind === "setting" ? "sliders" : h.kind === "manager" ? "grid" : h.kind === "persona" ? "persona" : "plug", 15) + "</span>" +
-            '<span style="flex:1;min-width:0"><span class="at-r-title">' + esc(h.title) + '</span><br><span class="at-r-path">' + esc(h.path.join(" › ")) + "</span></span>" +
-            window.PMIcons.get("arrowRight", 14) + "</button>";
-        });
+        groups[g].forEach(function (h) { html += resultRow(h, idx++); });
       });
       results.innerHTML = html;
-      results.querySelectorAll("[data-hit]").forEach(function (el, i) {
-        el.addEventListener("click", function () { go(hits[i]); });
-      });
       last = hits;
-      activeResult = -1;
+      activeResult = 0;
+      mark();
+    }
+
+    function mark() {
+      results.querySelectorAll("[data-hit]").forEach(function (b) {
+        b.classList.toggle("active", Number(b.getAttribute("data-hit")) === activeResult);
+      });
+      var el = results.querySelector('[data-hit="' + activeResult + '"]');
+      if (el) el.scrollIntoView({ block: "nearest" });
     }
 
     function go(hit) {
-      var t = Object.assign({}, hit.target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
+      if (!hit) return;
+      window.PMState.navigate(Object.assign({ name: "workspace" }, hit.target));
     }
 
     q.addEventListener("input", run);
     q.addEventListener("keydown", function (e) {
-      var btns = results.querySelectorAll("[data-hit]");
-      if (!btns.length) return;
-      if (e.key === "ArrowDown") { e.preventDefault(); activeResult = Math.min(activeResult + 1, btns.length - 1); mark(btns); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); activeResult = Math.max(activeResult - 1, 0); mark(btns); }
-      else if (e.key === "Enter" && last && last.length) { e.preventDefault(); go(last[Math.max(activeResult, 0)]); }
+      var n = last ? last.length : 0;
+      if (!n) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); activeResult = Math.min(activeResult + 1, n - 1); mark(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeResult = Math.max(activeResult - 1, 0); mark(); }
+      else if (e.key === "Enter") { e.preventDefault(); go(last[Math.max(activeResult, 0)]); }
       else if (e.key === "Escape") { q.value = ""; run(); }
     });
-    function mark(btns) {
-      btns.forEach(function (b, i) { b.classList.toggle("active", i === activeResult); });
-      if (activeResult >= 0 && btns[activeResult]) btns[activeResult].scrollIntoView({ block: "nearest" });
-    }
+
+    results.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-hit]");
+      if (b && last) go(last[Number(b.getAttribute("data-hit"))]);
+    });
 
     content.querySelectorAll("[data-dest]").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -314,591 +488,1244 @@
         if (r) window.PMState.navigate(Object.assign({ name: "workspace" }, r.target));
       });
     });
-    content.querySelectorAll("[data-notice]").forEach(function (card) {
-      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
-      if (!n) return;
-      var primary = card.querySelector("[data-notice-action]");
-      var secondary = card.querySelector("[data-notice-secondary]");
-      if (primary) primary.addEventListener("click", function () { noticeAction(n, n.action); });
-      if (secondary) secondary.addEventListener("click", function () { noticeAction(n, n.secondary); });
+    content.querySelectorAll("[data-notice-go]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var n = window.PMState.state.notices.filter(function (x) { return x.id === b.getAttribute("data-notice-go"); })[0];
+        if (n) noticeAction(n, false);
+      });
+    });
+    content.querySelectorAll("[data-notice-sec]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var n = window.PMState.state.notices.filter(function (x) { return x.id === b.getAttribute("data-notice-sec"); })[0];
+        if (n) noticeAction(n, true);
+      });
     });
   }
 
-  function noticeAction(n, label) {
-    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
-    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "continuation" }); return; }
-    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", manager: "mcp" }); return; }
-    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", subcategory: "media-io", setting: "media.io.audio-input" }); return; }
-    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "personas" }); return; }
-    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
-    window.PMState.receipt(label, "Simulated action for this notice.", "sim");
-  }
+  // ============================================================
+  // Demonstrated managers (C1 families)
+  // ============================================================
 
-  function settingRow(s) {
-    var meta = window.PMCore.settingMeta(s);
-    var ctl = "";
-    if (s.type === "toggle") {
-      ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + ' aria-label="' + esc(s.label) + '"></button>';
-    } else if (s.type === "select") {
-      ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" +
-        (s.source === "not-configured" && s.options && s.options[0] === "Not configured" ? "" : "") +
-        (s.options || []).map(function (o) { return '<option ' + (o === s.value ? "selected" : "") + ">" + esc(o) + "</option>"; }).join("") +
-        "</select>";
-    } else if (s.type === "segment") {
-      ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '"' + (meta.disabled ? " disabled" : "") + ">" + esc(o) + "</button>"; }).join("") + "</span>";
-    } else if (s.type === "text") {
-      ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '" ' + (meta.disabled ? "disabled" : "") + ">";
-    } else if (s.type === "action") {
-      ctl = '<button class="pm-btn pm-btn-sm" data-ctl data-action-label="' + esc(s.actionLabel || "Open") + '">' + esc(s.actionLabel || "Open") + "</button>";
-    }
-    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
-    var tierHidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
-    return '<div class="at-row" data-setting-id="' + s.id + '" data-tier="' + s.tier + '" data-hidden="' + tierHidden + '">' +
-      '<div class="at-row-main"><div>' +
-        '<div class="at-row-label">' + esc(s.label) + "</div>" +
-        '<div class="at-row-desc">' + esc(s.desc) + "</div>" +
-        '<div class="at-row-badges">' + badges + "</div>" +
-      "</div>" +
-      '<div class="at-row-ctl"><div class="at-row-ctl-line">' + ctl +
-        (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset title="Reset to default">Reset</button>' : "") +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-details aria-expanded="false" title="Details">' + window.PMIcons.get("chevronDown", 13) + "</button>" +
-      "</div>" +
-      '<span class="pm-note">' + esc(meta.sourceLabel) + " · " + esc(s.scope) + " scope</span>" +
-      "</div></div>" +
-      '<div class="at-row-detail"><dl>' +
-        "<dt>Setting</dt><dd>" + esc(s.id) + "</dd>" +
-        "<dt>Value source</dt><dd>" + esc(meta.sourceLabel) + "</dd>" +
-        (s.requested ? "<dt>Requested</dt><dd>" + esc(s.requested) + "</dd>" : "") +
-        (s.effective ? "<dt>Effective</dt><dd>" + esc(s.effective) + (s.reason ? " — " + esc(s.reason) : "") + "</dd>" : "") +
-        (s.inheritedFrom ? "<dt>Inherited from</dt><dd>" + esc(s.inheritedFrom) + "</dd>" : "") +
-        (s.managedBy ? "<dt>Managed by</dt><dd>" + esc(s.managedBy) + "</dd>" : "") +
-        (s.reason && !s.effective ? "<dt>Reason</dt><dd>" + esc(s.reason) + "</dd>" : "") +
-        "<dt>Exposure</dt><dd>" + esc(s.tier) + "</dd>" +
-      "</dl></div>" +
-    "</div>";
-  }
-
-  function managerNote(sub) {
-    var homes = { terminal: "Deck", lsp: "Deck", crew: "Deck", "context-sources": "Ledger", skills: "Ledger", personas: "Spoke", media: "Spoke" };
-    var where = homes[sub.manager] || "another concept";
-    return '<div class="at-note-card">' + window.PMIcons.get("info", 13) +
-      " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> surface is demonstrated in the " + where +
-      " concept of this set. In Atlas it stays reachable through navigation and search, with its surrounding settings shown here.</div>";
-  }
-
-  function providersManager(v) {
+  function mgrContextSources(el) {
     var st = window.PMState.state;
-    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
-    var html = '<div class="at-mgr-card"><h4>' + window.PMIcons.get("refresh", 15) + " Catalogs" +
-      st.catalogs.map(function (c) {
-        var chip = c.state === "refreshing" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("motion", 11) + " Refreshing — last-known-good active</span>"
-          : '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Up to date</span>";
-        return '<div class="at-acct" style="margin-top:10px"><div class="at-acct-head"><b>' + esc(c.name) + "</b>" + chip + "</div>" +
-          '<div class="at-acct-meta"><span>Last checked: ' + esc(c.lastChecked) + "</span><span>Activated: " + esc(c.lastActivated) + "</span><span>Source: " + esc(c.version) + "</span></div>" +
-          (c.materialChanges.length ? '<div class="at-acct-meta">' + c.materialChanges.map(function (m) { return '<span class="pm-badge pm-badge-warn">' + esc(m) + "</span>"; }).join("") + "</div>" : "") +
-          '<div class="at-acct-actions"><button class="pm-btn pm-btn-sm" data-catalog-refresh="' + c.id + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div></div>";
-      }).join("") +
-      "</div>";
-
-    groups.forEach(function (g) {
-      var ps = st.providers.filter(function (p) { return p.group === g; });
-      if (!ps.length) return;
-      html += '<div class="at-group-cap">' + esc(g) + "</div>";
-      ps.forEach(function (p) { html += providerCard(p, v); });
+    var cs = st.contextSources;
+    var admittedTokens = cs.admitted.reduce(function (a, s) { return a + parseFloat(s.tokens); }, 0);
+    el.innerHTML = M.managerShell({
+      id: "context-sources", icon: "brain", title: "Context & Instruction Sources",
+      health: cs.admitted.length + " admitted · " + cs.omitted.length + " omitted",
+      body:
+        '<div class="at-mgr-cap">AGENTS.md precedence chain</div>' +
+        cs.chain.map(function (c) {
+          return '<div class="at-chain-row"><code>' + esc(c.path) + "</code><span class=\"pm-note\">" + esc(c.role) + "</span>" +
+            (c.admitted ? M.badge("Admitted", "ok") : M.badge("Not admitted", "muted")) +
+            (c.reason ? '<span class="pm-note">' + esc(c.reason) + "</span>" : "") + "</div>";
+        }).join("") +
+        '<div class="at-mgr-cap">Admission receipt — last request</div>' +
+        cs.admitted.map(function (s) {
+          return '<div class="at-src-row"><b>' + esc(s.name) + "</b><span class=\"pm-note\">" + esc(s.detail) + '</span><span class="pm-badge">' + esc(s.tokens) + " tokens</span></div>";
+        }).join("") +
+        cs.omitted.map(function (s) {
+          return '<div class="at-src-row omitted"><b>' + esc(s.name) + "</b><span class=\"pm-note\">" + esc(s.reason) + "</span>" + M.badge("Omitted", "muted") + "</div>";
+        }).join("") +
+        '<div class="at-mgr-cap">Effective sources & compaction</div>' +
+        M.inspector([
+          ["Total admitted", admittedTokens.toFixed(1) + "K tokens"],
+          ["Strategy", cs.compaction.strategy],
+          ["Last compaction", cs.compaction.lastRun],
+          ["Cache state", cs.compaction.cacheState],
+          ["Source hash", cs.compaction.sourceHash],
+          ["Registry injection", "Never — Settings exposing a registry does not inject it into prompts"]
+        ]) +
+        '<div class="pm-note">Retrieval toggles live in the Context Assembly rows above. Admission is honest: what was in the last request, what was left out, and why.</div>'
     });
-
-    html += '<div class="at-group-cap">Agent role assignments</div><div class="at-mgr-card">' +
-      st.roles.map(function (r) {
-        return '<div class="at-role' + (r.differs ? " differs" : "") + '"><span class="lbl">' + esc(r.label) + '</span><span class="req">Requested: ' + esc(r.requested) +
-          '</span><span class="eff">Effective: ' + esc(r.effective) + (r.note ? ' <span class="pm-note">— ' + esc(r.note) + "</span>" : "") + "</span></div>";
-      }).join("") + "</div>";
-    return html;
   }
 
-  function providerCard(p, v) {
-    var chip = p.state === "ready" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Connected</span>"
-      : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("alertTriangle", 11) + " Needs a decision</span>"
-      : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " Signed in — invocation failed</span>"
-      : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("clock", 11) + " Setup required</span>"
-      : '<span class="pm-badge">' + window.PMIcons.get("download", 11) + " Not installed</span>";
-    var open = v && v.provider === p.id;
-    var html = '<div class="at-mgr-card" data-provider="' + p.id + '"><h4>' + esc(p.name) + " " + chip +
-      ' <span class="sub" style="font-weight:400">— ' + esc(p.stateLabel) + "</span></h4>";
-    if (p.state === "not-installed") {
-      html += '<div class="sub">' + esc(p.install.note) + '</div><div class="at-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Learn about CLI-owned login</button></div></div>';
-      return html;
-    }
-    if (p.setup) {
-      html += '<div class="sub">' + esc(p.setup.note) + "</div><ol style=\"margin:8px 0 0 18px;padding:0;color:var(--text-2);font-size:12px\">" +
-        p.setup.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>" +
-        '<div class="at-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div></div>';
-      return html;
-    }
-    if (p.state === "signed-out") {
-      html += '<div class="at-acct"><div class="at-acct-head"><b>' + esc(p.name) + " — installed</b>" +
-        '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("key", 11) + " Signed out</span></div>" +
-        '<div class="sub" style="margin-top:5px">' + esc(p.login.note) + "</div>" +
-        '<div class="at-acct-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div></div>';
-    }
-    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
-      var usageBits = [];
-      if (a.usage) {
-        if (a.usage.included === "exhausted") usageBits.push('<span class="pm-badge pm-badge-danger">Included usage exhausted</span>');
-        else if (a.usage.included) usageBits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
-        if (a.usage.remaining && a.usage.included !== "exhausted") usageBits.push('<span class="pm-note">Remaining: ' + esc(a.usage.remaining) + "</span>");
-        if (a.usage.extra) usageBits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
-        if (a.usage.reset) usageBits.push('<span class="pm-note">Reset: ' + esc(a.usage.reset) + "</span>");
-        if (a.usage.pressure) usageBits.push('<span class="pm-note">Pressure: ' + esc(a.usage.pressure) + "</span>");
-      }
-      return '<div class="at-acct" data-account="' + a.id + '"' + (a.enabled === false ? ' style="opacity:.66"' : "") + '>' +
-        '<div class="at-acct-head"><b>' + esc(a.label) + "</b>" +
-          (a.nickname ? '<span class="pm-badge">' + window.PMIcons.get("persona", 10) + " " + esc(a.nickname) + "</span>" : "") +
-          (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") +
-          (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky sessions</span>' : "") +
-          (a.enabled === false ? '<span class="pm-badge pm-badge-warn">Disabled</span>' : "") +
-          (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">Authenticated — not verified ready</span>' : "") +
-          '<span class="pm-note" style="margin-left:auto">priority ' + (a.priority || 1) +
-          ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
-          '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 11) + "</button></span>" +
-        "</div>" +
-        '<div class="at-acct-meta"><span>Auth owner: ' + esc(a.authOwner) + " (" + esc(a.authKind) + ")</span><span>Transport: " + esc(a.transport) + "</span>" +
-          (a.isolation ? "<span>Isolation: " + esc(a.isolation) + "</span>" : "") +
-          (a.identity ? "<span>Identity: " + esc(a.identity) + "</span>" : "") +
-          (a.health ? "<span>Last catalog: " + esc(a.health.catalog) + " · last generation: " + esc(a.health.generation) + "</span>" : "") +
-        "</div>" +
-        '<div class="at-acct-meta">' + usageBits.join("") + "</div>" +
-        (a.probe ? '<div class="at-acct-meta"><span class="pm-badge pm-badge-danger">Probe failed ' + esc(a.probe.at) + "</span><span>" + esc(a.probe.detail) + "</span></div>" : "") +
-        '<div class="at-acct-actions">' +
-          (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-use-account="' + a.id + '">Use this account for future requests</button>' : "") +
-          (a.preferred ? '<span class="pm-note">Used for future requests — running work is never retargeted.</span>' : "") +
-          '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
-          '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
-          '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
-          '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
-          '<button class="pm-btn pm-btn-sm" data-pa="probe">Run readiness probe</button>' +
-          '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
-          ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
-          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
-        "</div>" +
-        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ?
-          '<div class="at-acct-actions"><label style="font-size:12px;color:var(--text-2)">What happens next:</label><select class="pm-select" data-continuation>' +
-          a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
-      "</div>";
-    }).join("");
-
-    if (p.models.length) {
-      html += '<div class="at-group-cap" style="margin-top:14px">Models</div>' + p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
-        var caps = [];
-        if (m.effort.length) caps.push('<span class="pm-badge">Effort: ' + m.effort.length + " levels</span>");
-        caps.push(m.fast ? '<span class="pm-badge pm-badge-info">Normal / Fast supported</span>' : '<span class="pm-badge pm-badge-muted">No Fast variant</span>');
-        caps.push('<span class="pm-badge">In: ' + m.modalities.in.join(", ") + "</span>");
-        caps.push('<span class="pm-badge">Context: ' + esc(m.context) + "</span>");
-        if (m.tools) caps.push('<span class="pm-badge">Tools</span>');
-        if (m.mcp) caps.push('<span class="pm-badge">MCP</span>');
-        if (m.free) caps.push('<span class="pm-badge pm-badge-ok">' + esc(m.free) + "</span>");
-        var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">Available</span>'
-          : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">Unverified</span>'
-          : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Needs setup</span>'
-          : '<span class="pm-badge pm-badge-danger">Unavailable</span>';
-        return '<div class="at-model' + (openModels[p.id + ":" + m.id] ? " open" : "") + '" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
-          '<div class="at-model-head">' +
-            '<button class="at-fav' + (m.favorite ? " on" : "") + '" data-fav aria-label="Favorite ' + esc(m.name) + '" aria-pressed="' + m.favorite + '">' + window.PMIcons.get("star", 15) + "</button>" +
-            '<span class="name">' + esc(m.name) + "</span>" +
-            (m.alias ? '<span class="alias">alias: ' + esc(m.alias) + "</span>" : "") +
-            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") +
-            stateChip +
-            '<span class="prio"><button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 12) + '</button>' +
-            '<span class="pm-note">#' + m.priority + "</span>" +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 12) + "</button></span>" +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-model-open aria-expanded="false">Details</button>' +
-          "</div>" +
-          '<div class="at-model-body"><div class="at-caps">' + caps.join("") + "</div>" +
-            '<div class="pm-note" style="margin-top:8px">Evidence: ' + esc(m.evidence) + "</div>" +
-            (m.reason ? '<div class="pm-note" style="margin-top:4px;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
-            '<div class="at-acct-actions"><button class="pm-btn pm-btn-sm" data-alias>Edit alias</button>' +
-            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show in menus" : "Hide from menus") + "</button>" +
-            (m.effort.length ? '<span class="pm-seg">' + m.effort.map(function (e, i) { return '<button data-effort="' + e + '" class="' + (i === 1 ? "active" : "") + '">' + e + "</button>"; }).join("") + "</span>" : "") +
-            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal">Normal</button><button data-speed="Fast">Fast</button></span>' : "") +
-          "</div></div>" +
-        "</div>";
-      }).join("");
-    }
-    html += "</div>";
-    return html;
-  }
-
-  function memoryManager() {
+  function memTokenEstimate() {
     var st = window.PMState.state;
-    return '<div class="at-mgr-card"><h4>' + window.PMIcons.get("brain", 15) + " Assistant memory" +
-      ' <span class="sub" style="font-weight:400">— evidence-backed Gists. Half-life means fading from active recall, never deletion or truth decay.</span></h4>' +
-      '<div class="at-acct-actions"><input class="pm-input" placeholder="Search memories…" style="flex:1;min-width:160px" data-mem-q>' +
-      '<button class="pm-btn pm-btn-sm" data-mem-rebuild>Rebuild index</button>' +
-      '<button class="pm-btn pm-btn-sm" data-mem-capsule>Preview context capsule</button></div></div>' +
-      st.memory.map(function (m) {
-        var chips = [
-          m.state === "verified" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Verified</span>" : '<span class="pm-badge pm-badge-warn">' + window.PMIcons.get("clock", 11) + " Awaiting review</span>",
-          '<span class="pm-badge">' + esc(m.kind) + "</span>",
-          '<span class="pm-badge">' + esc(m.scope) + " scope</span>",
-          m.halfLife === "Fading" ? '<span class="pm-badge pm-badge-muted">Half-life: fading</span>' : '<span class="pm-badge pm-badge-muted">Half-life: stable</span>',
-          m.pinned ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("pin", 11) + " Pinned</span>" : ""
-        ].join("");
-        return '<div class="at-mem" data-memory="' + m.id + '"><div class="txt">' + esc(m.text) + "</div>" +
-          '<div class="meta">' + chips + '<span class="pm-note">Evidence: ' + esc(m.evidence) + " · " + m.versions + " version(s) · accessed " + esc(m.accessed) + "</span></div>" +
-          '<div class="at-mem-actions">' +
-            (m.state === "awaiting" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-mem-act="verify">Verify</button>' : "") +
-            '<button class="pm-btn pm-btn-sm" data-mem-act="pin">' + (m.pinned ? "Unpin" : "Pin") + "</button>" +
-            '<button class="pm-btn pm-btn-sm" data-mem-act="edit">Edit</button>' +
-            '<button class="pm-btn pm-btn-sm" data-mem-act="versions">Versions</button>' +
-            '<button class="pm-btn pm-btn-sm pm-btn-danger" data-mem-act="discard">Discard</button>' +
-          "</div></div>";
-      }).join("");
+    var k = st.memory.filter(function (m) { return m.pinned || m.state === "verified"; }).length;
+    return (0.1 + k * 0.08).toFixed(1);
   }
 
-  function mcpManager() {
+  function mgrMemory(el) {
     var st = window.PMState.state;
-    return st.mcpServers.map(function (s) {
-      var chip = s.state === "connected" ? '<span class="pm-badge pm-badge-ok">' + window.PMIcons.get("checkCircle", 11) + " Connected</span>"
-        : s.state === "needs-auth" ? '<span class="pm-badge pm-badge-info">' + window.PMIcons.get("key", 11) + " Needs authentication</span>"
-        : s.state === "error" ? '<span class="pm-badge pm-badge-danger">' + window.PMIcons.get("alertTriangle", 11) + " Error — disabled</span>"
-        : '<span class="pm-badge pm-badge-muted">Disabled by user</span>';
-      return '<div class="at-mgr-card" data-mcp="' + s.id + '"><h4>' + esc(s.name) + " " + chip + "</h4>" +
-        '<div class="sub">Transport: ' + esc(s.transport) + " · Protocol: " + esc(s.protocol) + " · Scope: " + esc(s.scope) + " · Approval: " + esc(s.approval) + " · Exposure: " + esc(s.exposure) + "</div>" +
-        '<div class="sub" style="margin-top:3px">' + esc(s.freshness) + (s.toolCount ? " · " + s.toolCount + " tools discovered" : "") + "</div>" +
-        (s.tools.length ? '<div class="at-mcp-tools">' + s.tools.map(function (t) { return '<span class="pm-badge">' + esc(t) + "</span>"; }).join("") +
-          (s.toolCount > s.tools.length ? '<span class="pm-badge pm-badge-muted">+' + (s.toolCount - s.tools.length) + " more, lazily exposed</span>" : "") + "</div>" : "") +
-        '<details style="margin-top:9px"><summary class="pm-note" style="cursor:pointer">Logs & diagnostics</summary>' +
-        s.logs.map(function (l) { return '<div class="at-log">' + esc(l) + "</div>"; }).join("") + "</details>" +
-        '<div class="at-mgr-actions">' +
-          (s.state === "needs-auth" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="connect">Connect</button>' : "") +
-          (s.state === "error" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="repair">Repair</button>' : "") +
-          (s.state === "disabled" ? '<button class="pm-btn pm-btn-sm" data-mcp-act="enable">Enable</button>' : "") +
-          (s.state === "connected" ? '<button class="pm-btn pm-btn-sm" data-mcp-act="reconnect">Reconnect</button>' : "") +
-          '<button class="pm-btn pm-btn-sm" data-mcp-act="tools">Inspect tools</button>' +
+    var mems = st.memory;
+    var fading = mems.filter(function (m) { return m.halfLife === "Fading"; }).length;
+    var cards = mems.map(function (m) {
+      var chips = [
+        m.state === "verified" ? M.badge("Verified", "ok") : M.badge("Awaiting review", "warn"),
+        M.badge(m.kind, "muted"), M.badge(m.scope + " scope", "info"),
+        m.halfLife === "Fading" ? M.badge("Half-life: fading", "muted") : M.badge("Half-life: stable", "muted"),
+        m.pinned ? M.badge("Pinned", "info") : ""
+      ].join("");
+      return '<div class="at-mem" data-memory="' + esc(m.id) + '"><div class="txt">' + esc(m.text) + "</div>" +
+        '<div class="meta">' + chips + '<span class="pm-note">Evidence: ' + esc(m.evidence) + " · " + m.versions + " version(s) · accessed " + esc(m.accessed) + "</span></div>" +
+        '<div class="at-mem-actions">' +
+          (m.state === "awaiting" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mem-act="verify">Verify</button>' : "") +
+          '<button class="pm-btn pm-btn-sm" data-mem-act="pin">' + (m.pinned ? "Unpin" : "Pin") + "</button>" +
+          '<button class="pm-btn pm-btn-sm" data-mem-act="edit">Edit</button>' +
+          '<button class="pm-btn pm-btn-sm" data-mem-act="versions">Versions (' + m.versions + ")</button>" +
+          '<button class="pm-btn pm-btn-sm pm-btn-danger" data-mem-act="delete">Delete</button>' +
         "</div></div>";
     }).join("");
+
+    el.innerHTML = M.managerShell({
+      id: "memory", icon: "brain", title: "Assistant Memory",
+      health: mems.length + " gists · " + fading + " fading",
+      add: { act: "memory.capsule", label: "Capsule preview" },
+      body:
+        '<div class="pm-note" style="margin-bottom:8px">Half-life changes retrieval activation, not truth. Fading memories leave active recall — they are never deleted or rewritten by decay alone.</div>' +
+        '<div class="at-mem-capsule at-cap-chip" style="margin-bottom:10px">' + ico("spark", 13) +
+          " Context capsule estimate: <b>" + memTokenEstimate() + "K tokens</b> — pinned and verified gists only; full sources are never injected.</div>" +
+        '<div class="pm-mgr-actions" style="margin-top:0;margin-bottom:10px">' +
+          '<button class="pm-btn pm-btn-sm" data-mem-tool="rebuild">Rebuild index</button>' +
+          '<button class="pm-btn pm-btn-sm" data-mem-tool="dedupe">Dedupe</button>' +
+          '<button class="pm-btn pm-btn-sm" data-mem-tool="redact">Redact secrets</button>' +
+          (memTrash.length ? '<button class="pm-btn pm-btn-sm" data-mem-tool="restore-last">Restore last deleted</button>' : "") +
+        "</div>" +
+        (cards || '<div class="pm-empty">No memories in active recall.</div>')
+    });
+  }
+
+  function mgrPersonas(el) {
+    var st = window.PMState.state;
+    var def = window.PMState.getSetting("behavior.personas.default");
+    var cards = st.personas.map(function (p) {
+      var isDefault = def && def.value === p.name;
+      return '<div class="at-persona" data-persona="' + esc(p.id) + '">' +
+        '<div class="at-persona-head"><b>' + esc(p.name) + "</b>" +
+          (p.core ? M.badge("Core", "muted") : M.badge("Custom", "info")) +
+          (isDefault ? M.badge("Thread default", "ok") : "") +
+          (p.childOnly ? M.badge("Child roles only", "warn") : "") +
+        "</div>" +
+        '<div class="at-persona-desc">' + esc(p.description) + "</div>" +
+        '<div class="at-persona-meta">' +
+          "<span>Capsule: " + esc(p.capsule) + " (model-facing preview)</span>" +
+          "<span>Provenance: " + esc(p.provenance) + "</span>" +
+          "<span>Eligible: " + esc(p.eligible) + "</span>" +
+          "<span>Scope: " + esc(p.scope) + "</span>" +
+        "</div>" +
+        '<div class="at-persona-actions">' +
+          '<button class="pm-btn pm-btn-sm" data-per-act="capsule">Capsule preview</button>' +
+          (!isDefault ? '<button class="pm-btn pm-btn-sm" data-per-act="default">Set as thread default</button>' : "") +
+          (p.childOnly ? '<button class="pm-btn pm-btn-sm" data-per-act="child">Include in my surfaces</button>' : "") +
+          '<button class="pm-btn pm-btn-sm" data-per-act="scan">Import scan</button>' +
+        "</div>" +
+      "</div>";
+    }).join("");
+
+    el.innerHTML = M.managerShell({
+      id: "personas", icon: "persona", title: "Persona Manager",
+      health: st.personas.length + " personas",
+      body:
+        '<div class="at-note-card">Persona is behavior, not authority. A Persona cannot grant Full Access, widen FileSafe, force a provider, or eagerly load all skills. Conversation mode and access profile are separate controls — the old ask/plan/regular/yolo coupling is corrected.</div>' +
+        cards +
+        '<div class="pm-note">Imported personas pass a provenance, secret, and prompt-injection scan before they can be selected. Choosing a Persona in Chat applies to the current thread only.</div>'
+    });
+  }
+
+  function goalCapacityChip() {
+    var sc = window.PMState.state.scenario;
+    if (sc === "exhausted") return '<span class="at-cap-chip">' + ico("gauge", 13) + " Sustainable fan-out now: <b>0</b> — Usage reports included capacity exhausted. <span class=\"pm-badge pm-badge-warn\">Operational — read-only</span></span>";
+    if (sc === "attention" || sc === "rollback") return '<span class="at-cap-chip">' + ico("gauge", 13) + " Sustainable fan-out now: <b>1</b> — Usage forecasts tight capacity until provider reset. <span class=\"pm-badge pm-badge-info\">Operational — read-only</span></span>";
+    return '<span class="at-cap-chip">' + ico("gauge", 13) + " Sustainable fan-out now: <b>2 concurrent children</b> — live value from Usage, not a setting. <span class=\"pm-badge pm-badge-info\">Operational — read-only</span></span>";
+  }
+
+  function mgrGoal(el) {
+    el.innerHTML = M.managerShell({
+      id: "goal-automation", icon: "target", title: "Goal & Automation",
+      health: "Defaults & ceilings",
+      body:
+        goalCapacityChip() +
+        '<div class="pm-note" style="margin-top:8px">Settings owns defaults and ceilings only. Usage reports current capacity; the Orchestrator admits actual work. The badge above updates with the Usage scenario in the demo tray — it is never editable here.</div>' +
+        M.inspector([
+          ["What lives here", "Concurrency ceiling, reserves, checkpoints, worktree isolation, low-usage behavior, route classes, guards"],
+          ["What does not", "Live run state, measured balances, admission decisions"],
+          ["Guards", "Spend (see Automation Guards rows), Time, Usage forecast, Reset awareness"]
+        ])
+    });
+  }
+
+  function mgrCrew(el) {
+    var st = window.PMState.state;
+    var cards = st.crewTemplates.map(function (t) {
+      var members = t.members.map(function (m) {
+        return '<div class="at-crew-member"><span class="role">' + esc(m.role) + "</span>" +
+          '<span class="route">' + esc(m.route) + " · " + esc(m.persona) + '</span>' +
+          '<span class="cands">Candidates: ' + esc(m.candidates.join(", ")) + "</span></div>";
+      }).join("");
+      return '<div class="at-crew" data-crew="' + esc(t.id) + '" style="margin-bottom:12px">' +
+        '<div class="at-persona-head"><b>' + esc(t.name) + "</b>" + M.badge(t.routePolicy + " routes", "muted") +
+          (t.differs ? M.badge("Effective differs", "diff") : "") +
+        "</div>" +
+        '<div class="at-persona-desc">' + esc(t.purpose) + (t.diffReason ? ' <span class="pm-note">— ' + esc(t.diffReason) + "</span>" : "") + "</div>" +
+        M.requestedEffective([{ label: "Members", requested: String(t.requested), effective: String(t.effective), reason: t.differs ? (t.diffReason || "Adapted under capacity.") : null }]) +
+        '<div class="at-mgr-cap">Members</div>' + members +
+        M.inspector([
+          ["Size", t.minMax + " members"],
+          ["Waves", t.waves],
+          ["Guards", "Spend: " + t.guards.spend + " · Time: " + t.guards.time],
+          ["Reserve", t.reserve ? "Keeps capacity for synthesis and verification" : "Off"],
+          ["Worktree", t.worktree],
+          ["Ports", t.ports],
+          ["Board", t.board],
+          ["Failure behavior", t.failure]
+        ]) +
+      "</div>";
+    }).join("");
+
+    el.innerHTML = M.managerShell({
+      id: "crew", icon: "layers", title: "Crew Template Manager",
+      health: st.crewTemplates.length + " templates",
+      body: cards + '<div class="pm-note">A Crew is a template for parallel work: roles, candidates, waves, and guards. It is not a Persona, a mode, a provider, a permission grant, or hidden memory.</div>'
+    });
+  }
+
+  function mgrPermissions(el) {
+    var fs = D.fileSafe;
+    var dl = D.doomLoop;
+    var expert = localUi.permView === "expert";
+    var eli5 =
+      '<div class="at-note-card">ELI5: Rules are read top to bottom like a guest list. The <b>last</b> rule that matches a path decides what happens. ' +
+      'A broad rule first plus a narrow rule later carves out an exception. Use Trace to watch the walk-down. FileSafe underneath everything is a floor no rule can remove.</div>';
+    el.innerHTML = M.managerShell({
+      id: "permissions", icon: "shieldCheck", title: "Permission Rules & FileSafe",
+      health: "Full Access ceiling · FileSafe ok",
+      body:
+        '<div class="pm-mgr-actions" style="margin-top:0">' +
+          '<span class="pm-note" style="margin-right:4px">View:</span>' +
+          '<span class="pm-seg" data-perm-view>' +
+            '<button data-perm-view="eli5"' + (!expert ? ' class="active"' : "") + ">ELI5</button>" +
+            '<button data-perm-view="expert"' + (expert ? ' class="active"' : "") + ">Expert</button>" +
+          "</span>" +
+        "</div>" +
+        (expert ? "" : eli5) +
+        '<div class="at-mgr-cap">Presets</div>' +
+        D.presets.map(function (p) {
+          return '<div class="at-preset"><b>' + esc(p.name) + '</b><span class="pm-note">' + esc(p.summary) + '</span><button class="pm-btn pm-btn-sm" data-preset="' + esc(p.id) + '">Apply preview</button></div>';
+        }).join("") +
+        '<div class="at-mgr-cap">Ordered rules — last match wins</div>' +
+        M.permissionRuleEditor() +
+        '<div class="at-mgr-cap">Per-tool overrides</div>' +
+        M.inspector(D.perToolOverrides.map(function (o) { return [o.tool, o.effect + " — " + o.note]; })) +
+        '<div class="at-mgr-cap">Doom loop guard</div>' +
+        M.inspector([["Threshold", dl.threshold], ["Action", dl.action], ["Why", dl.note]]) +
+        '<div class="at-mgr-cap">FileSafe — non-bypassable floor</div>' +
+        '<div class="at-preset"><b>Health</b>' + M.badge("ok", "ok") + '<span class="pm-note">Boundary: ' + esc(fs.boundary) + "</span></div>" +
+        '<div class="pm-note" style="margin-bottom:6px">Protected scopes:</div>' +
+        fs.protectedScopes.map(function (s) { return '<div class="at-chain-row"><code>' + esc(s) + "</code></div>"; }).join("") +
+        '<div class="pm-note">' + esc(fs.repairGuidance) + "</div>" +
+        '<div class="pm-note">' + esc(fs.note) + "</div>"
+    });
+  }
+
+  function mgrBsd(el) {
+    var b = D.bsdConfig;
+    var s = window.PMState.getSetting("behavior.bsd.mode");
+    el.innerHTML = M.managerShell({
+      id: "bsd", icon: "eye", title: "Back Seat Driver",
+      health: "Mode: " + (s ? s.value : b.mode),
+      body:
+        '<div class="at-cap-chip" style="margin-bottom:10px">' + ico("eye", 13) + " Mode: <b>" + esc(s ? s.value : b.mode) + "</b> — the Off / Auto / On segment lives in the rows above this card.</div>" +
+        '<div class="at-mgr-cap">Advanced configuration</div>' +
+        '<div class="at-bsd-grid">' +
+        M.inspector([
+          ["BSD route", b.route + " — bounded, separate from primary work"],
+          ["Risk triggers", b.riskTriggers ? "Engage on risky operations" : "Off"],
+          ["Phase triggers", b.phaseTriggers ? "Engage at phase boundaries" : "Off"],
+          ["Usage guard", b.usageGuard ? "Yields when capacity is tight" : "Off"],
+          ["Latency budget", b.latencyBudget + " maximum added per turn"],
+          ["Privacy boundary", b.privacyBoundary],
+          ["Authority", "Read-only by default; cannot widen authority"],
+          ["Blocking", "Cannot block primary work merely because it failed"],
+          ["Chat override", b.chatOverride]
+        ]) +
+        "</div>" +
+        '<div class="pm-note">' + esc(b.note) + "</div>"
+    });
+  }
+
+  // ============================================================
+  // Shared-grammar managers (managerShell + resourceList/inspector)
+  // ============================================================
+  function destRows() {
+    return window.PMState.state.collections.notificationDestinations.map(function (d) {
+      return {
+        id: d.id, name: d.name, chip: d.state,
+        badges: (d.enabled ? [] : [["Disabled", "muted"]]).concat(d.builtin ? [["Built-in", "muted"]] : []),
+        sub: d.kind + " · " + d.channel + " · thread: " + d.fields.thread + " · mentions: " + d.fields.mentions + " · predicate: " + d.fields.successPredicate + " · retry: " + d.fields.retry + (d.note ? " · " + d.note : ""),
+        actions: '<button class="pm-btn pm-btn-sm" data-act="dest.test" data-dest="' + esc(d.id) + '">Test send</button>' +
+          '<button class="pm-btn pm-btn-sm" data-act="dest.toggle" data-dest="' + esc(d.id) + '">' + (d.enabled ? "Disable" : "Enable") + "</button>" +
+          '<button class="pm-btn pm-btn-sm pm-btn-danger" data-act="dest.delete" data-dest="' + esc(d.id) + '"' + (d.builtin ? " disabled" : "") + ">Delete</button>"
+      };
+    });
+  }
+
+  function mgrNotifications(el) {
+    var st = window.PMState.state;
+    var list = st.collections.notificationDestinations;
+    var need = list.filter(function (d) { return d.state !== "connected"; }).length;
+    el.innerHTML = M.managerShell({
+      id: "notifications", icon: "inbox", title: "Notification Destinations",
+      health: list.length + " destinations" + (need ? " · " + need + " need attention" : ""),
+      body:
+        M.resourceList(destRows(), { label: "Destinations" }) +
+        '<div class="at-mgr-cap">Add a destination</div>' + M.destinationForm() +
+        '<div class="at-mgr-cap">Event routing</div>' +
+        M.inspector(st.collections.eventRouting.map(function (r) { return [r.event, r.destinations.join(", ") + " · quiet hours: " + r.quiet]; })) +
+        '<div class="at-mgr-cap">Quiet hours</div>' +
+        M.inspector([["Window", st.collections.quietHours.window], ["Critical events", st.collections.quietHours.criticalThrough ? "Let through" : "Held"], ["Suppressed last night", st.collections.quietHours.suppressedLastNight + " notices"]]) +
+        '<div class="pm-note">Test-send is explicit, masked, and rate-limited. The title-bar stack is the only in-app notification surface.</div>'
+    });
+  }
+
+  function mgrSounds(el) {
+    el.innerHTML = M.managerShell({ id: "sounds", icon: "wave", title: "Sound Library", health: "Uploads & packs", body: M.soundLibraryPanel() });
+  }
+
+  function mgrThemes(el) {
+    var built = window.PMShell.themes.map(function (t) { return M.themePreviewCard(t); }).join("");
+    var custom = window.PMState.state.collections.customThemes.themes.map(function (t) {
+      return M.themePreviewCard(t) + (t.state === "schema-invalid" ? '<div class="pm-note" style="max-width:260px;margin-bottom:8px">' + esc(t.diagnostic) + "</div>" : "");
+    }).join("");
+    el.innerHTML = M.managerShell({
+      id: "themes", icon: "sun", title: "Custom Themes", health: "8 built-in + " + window.PMState.state.collections.customThemes.themes.length + " custom",
+      body:
+        '<div class="at-mgr-cap">Built-in themes (demo tray applies them)</div><div>' + built + "</div>" +
+        '<div class="at-mgr-cap">Custom TOML themes</div><div>' + custom + "</div>" +
+        '<div class="pm-mgr-actions">' +
+          '<button class="pm-btn pm-btn-sm" data-theme-act="create">New custom theme</button>' +
+          '<button class="pm-btn pm-btn-sm" data-theme-act="import">Import TOML</button>' +
+          '<button class="pm-btn pm-btn-sm" data-theme-act="export">Export</button>' +
+          '<button class="pm-btn pm-btn-sm" data-theme-act="folder">Open theme folder</button>' +
+        "</div>" +
+        '<div class="pm-note">Live reload: ' + (window.PMState.state.collections.customThemes.liveReload ? "on" : "off") + " · loaded at startup: " + (window.PMState.state.collections.customThemes.loadAtStartup ? "yes" : "no") + ". Invalid themes fall back to their base theme with a diagnostic — the app never fails to paint.</div>"
+    });
+  }
+
+  function mgrTerminal(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "terminal", icon: "terminal", title: "Terminal Manager", health: st.terminalProfiles.length + " profiles",
+      body:
+        M.resourceList(st.terminalProfiles.map(function (t) {
+          return {
+            id: t.id, name: t.name + (t.isDefault ? " — default" : ""),
+            sub: "Shell: " + t.shell + " · env: " + t.env + " · font: " + t.font + " · cursor: " + t.cursor + " · retention: " + t.retention + " · startup: " + t.startup,
+            badges: t.palette ? [["Palette " + t.palette.length, "muted"]] : [],
+            actions: '<span class="pm-note">ANSI palette:</span>' + t.palette.map(function (c) { return '<span class="pm-theme-swatch" style="background:' + esc(c) + '" title="' + esc(c) + '"></span>'; }).join("") +
+              '<button class="pm-btn pm-btn-sm" data-term-act="preview" data-term="' + esc(t.id) + '">Preview strip</button>'
+          };
+        }), { label: "Profiles" }) +
+        '<div class="pm-note">Transcripts keep for the profile retention window. Clipboard, selection, and cursor behavior follow each profile.</div>'
+    });
+  }
+
+  function mgrLsp(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "lsp", icon: "code", title: "LSP Manager", health: st.lspServers.filter(function (s) { return s.state === "running"; }).length + " running",
+      body:
+        M.resourceList(st.lspServers.map(function (s) {
+          return {
+            id: s.id, name: s.name, chip: s.state === "running" ? "connected" : s.state === "installed" ? "ready" : "needs-setup",
+            sub: "Executable: " + s.executable + " · " + s.version + " · scope: " + s.scope + " · startup: " + s.startup + " · coverage: " + s.coverage + " · " + s.health,
+            actions: '<button class="pm-btn pm-btn-sm" data-lsp-act="restart" data-lsp="' + esc(s.id) + '">Restart</button>' +
+              '<button class="pm-btn pm-btn-sm" data-lsp-act="logs" data-lsp="' + esc(s.id) + '">Logs</button>' +
+              (s.state === "not-installed" ? '<button class="pm-btn pm-btn-sm" data-lsp-act="install" data-lsp="' + esc(s.id) + '">Install</button>' : "")
+          };
+        }), { label: "Language servers" }) +
+        '<div class="pm-note">Provenance is shown per server. Requested vs effective attachment follows the workspace; remote sessions degrade capabilities honestly.</div>'
+    });
+  }
+
+  function mgrFormatters(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "formatters", icon: "wand", title: "Formatters", health: st.collections.formatterTable.length + " configured",
+      body:
+        M.resourceList(st.collections.formatterTable.map(function (f) {
+          return {
+            id: f.id, name: f.name,
+            badges: [[f.state === "detected" ? "Detected" : f.state === "not-found" ? "Not found" : "Disabled", f.state === "detected" ? "ok" : f.state === "not-found" ? "warn" : "muted"], [f.kind, "muted"], [f.scope, "info"]],
+            sub: "Command: " + f.command + " · extensions: " + f.extensions + (f.version ? " · v" + f.version : "") + (f.note ? " · " + f.note : ""),
+            actions: '<button class="pm-btn pm-btn-sm" data-act="formatter.test" data-formatter="' + esc(f.id) + '">Test</button>'
+          };
+        }), { label: "Formatters" }) +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-fmt-act="add">Add formatter</button><button class="pm-btn pm-btn-sm" data-fmt-act="reset">Reset to detected</button></div>' +
+        '<div class="pm-note">Global switch and scope live in the rows above. Test runs the formatter on a sample file — it never reformats your project.</div>'
+    });
+  }
+
+  function mgrCommands(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "commands", icon: "zap", title: "Commands & Shortcuts",
+      health: st.collections.shortcutBindings.filter(function (b) { return b.state === "conflict"; }).length + " conflict",
+      body:
+        '<div class="at-mgr-cap">Custom commands</div>' +
+        M.resourceList(st.collections.commandsCatalog.map(function (c) {
+          return {
+            id: c.id, name: c.name, badges: [[c.scope, "info"]],
+            sub: "Command: " + c.command + " · parameters: " + (c.parameters.length ? c.parameters.join(", ") : "none") + " · includes: " + c.includes.join(", ") + " · shell safety: " + c.shellSafety + " · last run: " + c.lastRun,
+            actions: '<button class="pm-btn pm-btn-sm" data-act="command.dryrun" data-command="' + esc(c.id) + '">Dry run</button>'
+          };
+        }), { label: "Custom commands" }) +
+        '<div class="at-mgr-cap">Shortcut bindings</div>' +
+        M.resourceList(st.collections.shortcutBindings.map(function (b) {
+          return {
+            id: b.id, name: b.command, badges: [[b.binding, b.state === "conflict" ? "danger" : "muted"]].concat(b.state === "conflict" ? [["Conflict", "warn"]] : []),
+            sub: b.state === "conflict" ? "Conflicts with another command on the same binding." : "Bound and active.",
+            actions: b.state === "conflict" ? '<button class="pm-btn pm-btn-sm" data-act="shortcut.resolve" data-binding="' + esc(b.id) + '">Resolve</button>' : ""
+          };
+        }), { label: "Shortcuts" }) +
+        '<div class="pm-note">Dry run previews the exact shell line — it never sends work to an agent. Import/export keep bindings portable.</div>'
+    });
+  }
+
+  function mgrTesting(el) {
+    var tm = window.PMState.state.collections.testingMatrix;
+    var head = "<tr><th>Capability</th>" + tm.scopes.map(function (s) { return "<th>" + esc(s) + "</th>"; }).join("") + "</tr>";
+    var rows = tm.capabilities.map(function (c) {
+      return "<tr><td>" + esc(c.name) + "</td><td>" + M.badge(c.global, c.global === "Off" ? "muted" : c.global === "Auto" ? "info" : "ok") + "</td><td>" + M.badge(c.project, c.project === "Off" ? "muted" : c.project === "Auto" ? "info" : "ok") + "</td></tr>";
+    }).join("");
+    el.innerHTML = M.managerShell({
+      id: "testing", icon: "checkCircle", title: "Testing & Debug Matrix",
+      health: tm.capabilities.length + " capabilities",
+      body: '<table class="pm-table"><thead>' + head + "</thead><tbody>" + rows + "</tbody></table>" +
+        '<div class="pm-note" style="margin-top:8px">Evidence capture: ' + esc(tm.capture.artifacts) + " · secret redaction: " + (tm.capture.redactSecrets ? "on" : "off") + ". Modes are Global/Project × Auto/On/Off.</div>"
+    });
+  }
+
+  function mgrFiles(el) {
+    var f = D.fileManagerCfg;
+    el.innerHTML = M.managerShell({
+      id: "files", icon: "fileText", title: "File Manager", health: "Recovery on",
+      body:
+        M.inspector([
+          ["Tree", "Hidden: " + (f.tree.showHidden ? "shown" : "hidden") + " · ignore files: " + (f.tree.respectIgnored ? "respected" : "ignored") + " · compact folders: " + (f.tree.compactFolders ? "on" : "off")],
+          ["Drag & drop", f.dragDrop.enabled ? "Enabled — confirms external drops" : "Disabled"],
+          ["Large files", "Over " + f.largeFile.threshold + ": " + f.largeFile.behavior],
+          ["Changed on disk", f.changedOnDisk],
+          ["Recovery", "Every " + f.recovery.interval + " — " + f.recovery.note],
+          ["Tabs", f.tabs.limit + " tabs, up to " + f.tabs.splitGroups + " split groups"],
+          ["Deleted worktree files", f.transient]
+        ]) +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-files-act="reveal">Reveal project root</button></div>'
+    });
+  }
+
+  function mgrMcp(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "mcp", icon: "plug", title: "MCP Server Manager",
+      health: st.mcpServers.filter(function (s) { return s.state === "connected"; }).length + " connected",
+      body:
+        M.resourceList(st.mcpServers.map(function (s) {
+          var chip = s.state === "connected" ? "connected" : s.state === "needs-auth" ? "needs-auth" : s.state === "error" ? "error" : "disabled";
+          return {
+            id: s.id, name: s.name, chip: chip === "error" ? null : chip,
+            badges: (chip === "error" ? [["Error — disabled", "danger"]] : []).concat([[s.scope + " scope", "info"]]),
+            sub: "Transport: " + s.transport + " · protocol: " + s.protocol + " · approval: " + s.approval + " · exposure: " + s.exposure + " · " + s.freshness + (s.toolCount ? " · " + s.toolCount + " tools" : ""),
+            actions:
+              (s.state === "needs-auth" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="connect" data-mcp="' + esc(s.id) + '">Connect</button>' : "") +
+              (s.state === "error" ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-mcp-act="repair" data-mcp="' + esc(s.id) + '">Repair</button>' : "") +
+              (s.state === "disabled" ? '<button class="pm-btn pm-btn-sm" data-mcp-act="enable" data-mcp="' + esc(s.id) + '">Enable</button>' : "") +
+              '<button class="pm-btn pm-btn-sm" data-mcp-act="tools" data-mcp="' + esc(s.id) + '">Tools</button>' +
+              '<button class="pm-btn pm-btn-sm" data-mcp-act="logs" data-mcp="' + esc(s.id) + '">Logs</button>'
+          };
+        }), { label: "MCP servers" }) +
+        '<div class="pm-note">Auth, transport, and logs per server. Tool schemas stay progressively exposed — they are never loaded into every request.</div>'
+    });
+  }
+
+  function mgrSkills(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "skills", icon: "spark", title: "Skills Manager",
+      health: st.skills.filter(function (s) { return s.enabled; }).length + " enabled",
+      body: M.resourceList(st.skills.map(function (s) {
+        return {
+          id: s.id, name: s.name,
+          badges: [[s.trust === "Trusted" ? "Trusted" : "Not trusted yet", s.trust === "Trusted" ? "ok" : "warn"], [s.scope, "info"]]
+            .concat(s.enabled ? [] : [["Disabled", "muted"]]).concat(s.update === "Update available" ? [["Update available", "warn"]] : []),
+          sub: "Invoked " + s.invoked + "× · permissions: " + s.permissions,
+          actions: '<button class="pm-btn pm-btn-sm" data-skill-act="toggle" data-skill="' + esc(s.id) + '">' + (s.enabled ? "Disable" : "Enable") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-skill-act="trust" data-skill="' + esc(s.id) + '">' + (s.trust === "Trusted" ? "Revoke trust" : "Trust") + "</button>"
+        };
+      }), { label: "Skills" }) +
+      '<div class="pm-note">Installed · enabled · selected · invoked states are shown per skill. New skills start untrusted.</div>'
+    });
+  }
+
+  function mgrPlugins(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "plugins", icon: "puzzle", title: "Plugins Manager", health: st.plugins.length + " installed",
+      body: M.resourceList(st.plugins.map(function (p) {
+        return {
+          id: p.id, name: p.name,
+          badges: [[p.compatibility, p.compatibility === "Compatible" ? "ok" : "danger"], [p.channel, "muted"]]
+            .concat(p.enabled ? [["Enabled", "ok"]] : [["Failed to load", "warn"]]),
+          sub: "Update: " + p.update + " · permissions: " + p.permissions,
+          actions: '<button class="pm-btn pm-btn-sm" data-plugin-act="toggle" data-plugin="' + esc(p.id) + '">' + (p.enabled ? "Disable" : "Enable") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-plugin-act="update" data-plugin="' + esc(p.id) + '">Check update</button>'
+        };
+      }), { label: "Plugins" })
+    });
+  }
+
+  function mgrTools(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "tools", icon: "sliders", title: "Tools Inventory", health: st.tools.length + " tools",
+      body: M.resourceList(st.tools.map(function (t) {
+        return {
+          id: t.name, name: t.name,
+          badges: [[t.risk + " risk", t.risk === "High" ? "danger" : t.risk === "Medium" ? "warn" : "ok"]]
+            .concat(t.available ? [] : [["Not selected this turn", "muted"]]),
+          sub: "Invoked " + t.invoked + "× · approval: " + t.approval + (t.note ? " · " + t.note : ""),
+          actions: '<button class="pm-btn pm-btn-sm" data-tool-act="scope" data-tool="' + esc(t.name) + '">Scope for children</button>'
+        };
+      }), { label: "Tools" }) +
+      '<div class="pm-note">Child agents get scoped tool sets; installed schemas stay out of requests unless exposed.</div>'
+    });
+  }
+
+  function mgrStorage(el) {
+    var sh = window.PMState.state.collections.storageHealth;
+    el.innerHTML = M.managerShell({
+      id: "storage", icon: "server", title: "Storage & Retention", health: sh.pressure.split(" — ")[0],
+      body:
+        M.inspector([
+          ["Mode", sh.mode], ["Pressure", sh.pressure], ["Retention", sh.retention],
+          ["Legal hold", sh.legalHold], ["Encryption", sh.encryption], ["Quarantine", sh.quarantine]
+        ]) +
+        '<div class="pm-mgr-actions">' +
+          '<button class="pm-btn pm-btn-sm" data-storage-act="quarantine">Review quarantine</button>' +
+          '<button class="pm-btn pm-btn-sm" data-storage-act="holds">Legal holds</button>' +
+        "</div>" +
+        '<div class="pm-note">Cleanup lives under Workspace Cleanup and always previews first.</div>'
+    });
+  }
+
+  function mgrBackup(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "backup", icon: "history", title: "Backup & Restore", health: "4 backup classes",
+      add: { act: "backup.now", label: "Back Up Now", data: ' data-backup="bk-settings"' },
+      body:
+        M.resourceList(st.collections.backupRuns.map(function (b) {
+          return {
+            id: b.id, name: b.kind,
+            badges: [[b.verified ? "Verified" : "Warnings", b.verified ? "ok" : "warn"]],
+            sub: "Last: " + b.last + " · schedule: " + b.schedule + " · retention: " + b.retention + (b.note ? " · " + b.note : ""),
+            actions: '<button class="pm-btn pm-btn-sm" data-act="backup.now" data-backup="' + esc(b.id) + '">Run now</button>'
+          };
+        }), { label: "Backup classes" }) +
+        '<div class="pm-mgr-actions">' +
+          '<button class="pm-btn pm-btn-sm" data-act="backup.test-restore">Test restore</button>' +
+          '<button class="pm-btn pm-btn-sm" data-act="backup.log">Open backup log</button>' +
+          '<button class="pm-btn pm-btn-sm" data-act="teacher.explain" data-teacher="tch-backup">Explain action vs setting vs status</button>' +
+        "</div>" +
+        '<div class="pm-note">Back Up Now is a one-shot action. The schedule is a setting (rows above). Last backup is read-only status — three different kinds of row, rendered differently.</div>'
+    });
+  }
+
+  function mgrHistory(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "history", icon: "history", title: "History & Sessions", health: st.collections.historyRows.length + " records",
+      body: M.resourceList(st.collections.historyRows.map(function (h) {
+        return {
+          id: h.id, name: h.title, badges: [[h.kind, "info"]].concat(h.deletable ? [] : [["Legal hold", "warn"]]),
+          sub: h.when + " · " + h.project + " · " + h.size + (h.note ? " · " + h.note : ""),
+          actions: h.deletable ? '<button class="pm-btn pm-btn-sm" data-hist-act="archive" data-hist="' + esc(h.id) + '">Archive</button>' : ""
+        };
+      }), { label: "History" }) +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-hist-act="compare">Compare two</button><button class="pm-btn pm-btn-sm" data-hist-act="export">Export selection</button></div>' +
+      '<div class="pm-note">Filters, compare, export, and archive. Deletion policy follows the retention rows above; redaction scrubs likely secrets.</div>'
+    });
+  }
+
+  function mgrArtifacts(el) {
+    var st = window.PMState.state;
+    el.innerHTML = M.managerShell({
+      id: "artifacts", icon: "image", title: "Runtime Artifacts", health: st.collections.artifactRows.length + " artifacts",
+      body: M.resourceList(st.collections.artifactRows.map(function (a) {
+        return {
+          id: a.id, name: a.name, badges: [[a.type, "info"], [a.owner.indexOf("PM") === 0 ? "PM-owned" : "Provider-native", a.owner.indexOf("PM") === 0 ? "ok" : "muted"]].concat(a.redacted ? [["Redacted", "warn"]] : []),
+          sub: "Location: " + a.location + " · version: " + a.version + " · retention: " + a.retention,
+          actions: '<button class="pm-btn pm-btn-sm" data-art-act="reveal" data-art="' + esc(a.id) + '">Reveal</button>' +
+            '<button class="pm-btn pm-btn-sm" data-art-act="cleanup" data-art="' + esc(a.id) + '">Clean up</button>'
+        };
+      }), { label: "Artifacts" }) +
+      '<div class="pm-note">PM-owned artifacts carry PM identity; provider-native artifacts keep their origin. Both stay distinguishable in receipts.</div>'
+    });
+  }
+
+  function mgrSourceControl(el) {
+    var sc = D.sourceControl;
+    var gh = D.ghActions;
+    el.innerHTML = M.managerShell({
+      id: "source-control", icon: "branch", title: "Source Control & Worktrees",
+      health: sc.forge.name + " " + sc.forge.state,
+      body:
+        '<div class="at-mgr-cap">Exact installations</div>' +
+        M.resourceList(sc.tools.map(function (t) {
+          return { id: t.name, name: t.name, chip: t.state === "detected" ? "connected" : "needs-setup", sub: t.install + (t.confidence !== "n/a" ? " · confidence: " + t.confidence : "") };
+        }), { label: "Tools" }) +
+        '<div class="at-mgr-cap">Forge connection</div>' +
+        M.inspector([["Forge", sc.forge.name + " — " + sc.forge.state + " as " + sc.forge.identity], ["SSH source", sc.forge.sshSource], ["Test before merge", sc.testBeforeMerge ? "On" : "Off"], ["Push policy", sc.pushPolicy], ["Force push", sc.forcePush], ["Protected branches", sc.leases]]) +
+        '<div class="at-mgr-cap">Worktrees</div>' +
+        M.resourceList(sc.worktrees.map(function (w) {
+          return { id: w.id, name: w.name, chip: w.state === "active" ? "connected" : "ready", sub: w.path + " · branch " + w.branch,
+            actions: '<button class="pm-btn pm-btn-sm" data-wt-act="open" data-wt="' + esc(w.id) + '">Open</button>' };
+        }), { label: "Worktrees" }) +
+        '<div class="at-mgr-cap">GitHub Actions</div>' +
+        M.resourceList(gh.pinned.map(function (p) {
+          return { id: p.id, name: p.name, badges: [["Pinned", "info"]], sub: p.last + " · " + p.runs + " runs" };
+        }), { label: "Pinned workflows" }) +
+        M.inspector([["Current run", gh.currentRun.workflow + " — " + gh.currentRun.conclusion], ["Jobs", gh.currentRun.jobs.map(function (j) { return j.name + " (" + j.duration + ")"; }).join(" · ")], ["Readiness", gh.readiness]])
+    });
+  }
+
+  function mgrContainers(el) {
+    var ct = D.containers;
+    el.innerHTML = M.managerShell({
+      id: "containers", icon: "server", title: "Containers & Registries",
+      health: ct.top.filter(function (t) { return t.state === "running"; }).length + " running",
+      body:
+        ct.top.map(function (t) {
+          return '<div class="at-preset"><b>' + esc(t.name) + "</b>" + M.stateChip(t.state) + '<span class="pm-note">' + esc(t.detail) + "</span>" +
+            '<button class="pm-btn pm-btn-sm" data-cont-act="probe" data-cont="' + esc(t.name) + '">Probe</button></div>' +
+            (t.expanded.length ? '<div style="margin:-2px 0 8px">' + M.inspector(t.expanded.map(function (x) { var i = x.indexOf(":"); return [x.slice(0, i).trim(), x.slice(i + 1).trim()]; })) + "</div>" : "");
+        }).join("") +
+        '<div class="pm-note">' + esc(ct.note) + "</div>"
+    });
+  }
+
+  function mgrWeb(el) {
+    var w = D.webSearchCfg;
+    el.innerHTML = M.managerShell({
+      id: "web", icon: "globe", title: "Web / Search / Fetch", health: w.readiness.split(" — ")[0],
+      body:
+        M.inspector([
+          ["Provider priority", w.providerPriority.join(" → ")],
+          ["Limits", "search " + w.limits.search + " · fetch " + w.limits.fetch + " · crawl " + w.limits.crawl + " · map " + w.limits.map + " · extract " + w.limits.extract],
+          ["Credit guard", w.creditGuard], ["Caches", w.caches], ["Browser sessions", w.browserSessions],
+          ["Proxies", w.proxies], ["Air-gap", w.airGap], ["Readiness", w.readiness]
+        ]) +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-web-act="probe">Probe readiness</button></div>'
+    });
+  }
+
+  function mgrSearchIndex(el) {
+    var cfg = window.PMState.state.collections.searchIndexCfg;
+    var building = cfg.rebuild.state === "running";
+    el.innerHTML = M.managerShell({
+      id: "search-index", icon: "search", title: "Project Search Index",
+      health: building ? "Rebuilding " + cfg.rebuild.progress : "Idle · " + cfg.disk,
+      body:
+        M.inspector([
+          ["Enabled", cfg.enabled ? "On" : "Off"],
+          ["Rebuild", cfg.rebuild.state + (building ? " — " + cfg.rebuild.progress : "") + " · last full: " + cfg.rebuild.lastFull],
+          ["Phases", cfg.rebuild.phases.join(" → ")],
+          ["Exclusions", cfg.exclusions.join(", ")],
+          ["File size", cfg.fileSize], ["Symlinks", cfg.symlinks], ["Disk use", cfg.disk], ["Remote cache", cfg.remoteCache]
+        ]) +
+        (building ? '<div class="pm-note" style="margin-top:6px"><span class="pm-spinner" data-spinner="1"></span> Phased rebuild — editing stays responsive.</div>' : "") +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-act="index.rebuild"' + (building ? " disabled" : "") + ">Rebuild index</button></div>" +
+        '<div class="pm-note">' + esc(cfg.rebuild.note) + "</div>"
+    });
+  }
+
+  var MGR = {
+    "context-sources": mgrContextSources, memory: mgrMemory, personas: mgrPersonas,
+    "goal-automation": mgrGoal, crew: mgrCrew, permissions: mgrPermissions, bsd: mgrBsd,
+    notifications: mgrNotifications, sounds: mgrSounds, themes: mgrThemes,
+    terminal: mgrTerminal, lsp: mgrLsp, formatters: mgrFormatters, commands: mgrCommands, testing: mgrTesting, files: mgrFiles,
+    mcp: mgrMcp, skills: mgrSkills, plugins: mgrPlugins, tools: mgrTools,
+    storage: mgrStorage, backup: mgrBackup, history: mgrHistory, artifacts: mgrArtifacts,
+    "source-control": mgrSourceControl, containers: mgrContainers, web: mgrWeb, "search-index": mgrSearchIndex
+  };
+  var DEMO_MGR = { "context-sources": 1, memory: 1, personas: 1, "goal-automation": 1, crew: 1, permissions: 1, bsd: 1 };
+
+  // ============================================================
+  // Providers manager (catalog strip eager + grouped family cards lazy)
+  // ============================================================
+  function catalogStripHtml() {
+    var st = window.PMState.state;
+    return st.catalogs.map(function (c) {
+      var chip = c.state === "refreshing"
+        ? '<span class="pm-badge pm-badge-info">' + ico("motion", 11) + ' Refreshing — last-known-good active</span>'
+        : '<span class="pm-badge pm-badge-ok">' + ico("checkCircle", 11) + " Up to date" + (c.lastKnownGood ? " · last-known-good verified" : "") + "</span>";
+      return '<div class="at-src-row"><b>' + esc(c.name) + "</b>" + chip +
+        '<span class="pm-note">Checked ' + esc(c.lastChecked) + " · activated " + esc(c.lastActivated) + " · " + esc(c.version) + "</span>" +
+        (c.materialChanges.length ? c.materialChanges.map(function (m) { return M.badge(m, "warn"); }).join("") : "") +
+        '<button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button>" +
+      "</div>";
+    }).join("");
+  }
+
+  function providersBody(el) {
+    var st = window.PMState.state;
+    var html = "";
+    D.providerGroups.forEach(function (g) {
+      var ps = st.providers.filter(function (p) { return p.group === g; });
+      if (!ps.length) return;
+      html += '<div class="pm-group-cap at-mgr-cap">' + esc(g) + "</div>";
+      ps.forEach(function (p) { html += M.providerFamilyCard(p); });
+    });
+    html += '<div class="pm-group-cap at-mgr-cap">Agent role assignments — requested vs effective</div>' + M.requestedEffective(st.roles.map(function (r) {
+      return { label: r.label, requested: r.requested, effective: r.effective, reason: r.note };
+    }));
+    el.innerHTML = html;
+  }
+
+  function mgrProviders(el, eager) {
+    el.innerHTML = '<section class="pm-mgr at-mgr" data-manager="providers" aria-label="Provider Manager">' +
+      '<header class="pm-mgr-head"><div class="pm-mgr-title">' + ico("plug", 16) + "<b>Provider / Account / Model / Installation Manager</b>" +
+      '<span class="pm-mgr-health">' + window.PMState.state.providers.length + " providers · all fixtures reachable</span></div></header>" +
+      '<div class="pm-mgr-body"><div class="at-mgr-cap" style="margin-top:0">Catalogs</div><div data-catalog-strip>' + catalogStripHtml() + "</div>" +
+      '<div data-providers-body></div></div></section>';
+    var body = el.querySelector("[data-providers-body]");
+    if (eager) providersBody(body);
+    else window.PMCore.hydrateManager(body, providersBody);
+  }
+
+  // ============================================================
+  // Workspace
+  // ============================================================
+  function renderSub(sub, v) {
+    var st = window.PMState.state;
+    var mgrHtml = "";
+    if (sub.manager) {
+      var lazyId = "at-mgr-" + sub.manager;
+      mgrHtml = '<div data-manager-slot="' + esc(sub.manager) + '" id="' + lazyId + '"></div>';
+    }
+    // Demonstrated managers whose subcategory has no manager field of its own.
+    if (sub.id === "bsd") mgrHtml += '<div data-manager-slot="bsd" id="at-mgr-bsd"></div>';
+    if (sub.id === "goal-mode") mgrHtml += '<div data-manager-slot="goal-automation" id="at-mgr-goal"></div>';
+    var rows = sub.settings.map(function (s) { return M.settingRow(st.settings[s.id] || s); }).join("");
+    return '<section class="at-sub" id="sub-' + esc(sub.id) + '" data-sub-section="' + esc(sub.id) + '">' +
+      '<div class="at-sub-head"><h2>' + esc(sub.title) + '</h2><span class="at-sub-count">' + sub.settings.length + " settings" + (sub.manager ? " · manager: " + esc(window.PMCore.managerTitle(sub.manager)) : "") + "</span></div>" +
+      mgrHtml + rows +
+    "</section>";
   }
 
   function renderWorkspace(v) {
-    var d = dest(v.category);
+    var d = destById(v.category);
     if (!d) { renderHome(); return; }
+    var travel = "fwd";
+    if (currentCat && currentCat !== d.id) {
+      var ids = D.destinations.map(function (x) { return x.id; });
+      travel = ids.indexOf(d.id) < ids.indexOf(currentCat) ? "back" : "fwd";
+    } else if (!currentCat) {
+      travel = "fwd";
+    }
+    currentCat = d.id;
+
     var st = window.PMState.state;
-    var disc = st.ui.disclosure;
-    var html = '<div class="at-work at-enter" id="at-work">' +
+    var html = '<div class="at-work at-view" id="at-work" data-travel="' + travel + '">' +
       '<div class="at-work-head">' +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="at-back">' + window.PMIcons.get("arrowLeft", 14) + " Directory</button>" +
-        '<span class="at-cat-title">' + esc(d.title) + "</span>" +
-        '<label class="at-search-mini">' + window.PMIcons.get("search", 14) + '<input id="at-q2" placeholder="Search in Settings…" aria-label="Search in Settings"></label>' +
-        '<span class="pm-spacer"></span>' +
-        '<span class="pm-seg" id="at-disc">' +
-          ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '">' + (x === "standard" ? "Standard" : x === "advanced" ? "Advanced" : "All") + "</button>"; }).join("") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="at-back">' + ico("arrowLeft", 13) + " Directory</button>" +
+        '<span class="at-cat-title">' + ico(d.icon, 15) + esc(d.title) + "</span>" +
+        '<span class="at-cat-purpose">' + esc(d.purpose) + "</span>" +
+        '<span class="at-head-right">' +
+          '<span class="at-mini-searchwrap"><label class="at-search-mini">' + ico("search", 13) + '<input id="at-q2" type="text" placeholder="Search settings…" aria-label="Search in Settings" autocomplete="off"></label><div class="at-mini-drop" id="at-mini-drop" hidden></div></span>' +
         "</span>" +
       "</div>" +
-      '<button class="pm-btn pm-btn-sm at-toc-drawer" id="at-toc-toggle">' + window.PMIcons.get("list", 13) + " Sections</button>" +
+      '<nav class="at-cats" aria-label="Settings destinations">' +
+        D.destinations.map(function (x) {
+          return '<button class="at-cat-tab' + (x.id === d.id ? " active" : "") + '" data-cat="' + esc(x.id) + '">' + ico(x.icon, 12) + esc(x.title) + "</button>";
+        }).join("") +
+      "</nav>" +
+      '<button class="pm-btn pm-btn-sm at-toc-drawer" id="at-toc-toggle">' + ico("list", 13) + " Sections</button>" +
       '<div class="at-work-body">' +
         '<nav class="at-toc" id="at-toc" aria-label="Subcategories">' +
-        d.subcategories.map(function (s) {
-          return '<button class="at-toc-item" data-sub="' + s.id + '">' + window.PMIcons.get("compass", 13) + esc(s.title) + "</button>";
-        }).join("") +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico at-toc-close" id="at-toc-close" aria-label="Close sections">' + ico("x", 13) + "</button>" +
+          '<div class="at-toc-cap">Sections</div>' +
+          '<div class="at-toc-marker" id="at-toc-marker"></div>' +
+          d.subcategories.map(function (s) {
+            return '<button class="at-toc-item" data-sub="' + esc(s.id) + '">' + ico("compass", 12) + esc(s.title) + "</button>";
+          }).join("") +
         "</nav>" +
         '<div class="at-doc" id="at-doc">' +
-        d.subcategories.map(function (sub) {
-          var rows = sub.settings.map(function (s) { return settingRow(s); }).join("");
-          var mgr = "";
-          if (sub.manager) {
-            if (IMPLEMENTED_MANAGERS[sub.manager]) {
-              if (sub.manager === "providers") mgr = providersManager(v);
-              else if (sub.manager === "memory") mgr = memoryManager();
-              else if (sub.manager === "mcp") mgr = mcpManager();
-            } else {
-              mgr = managerNote(sub);
-            }
-          }
-          return '<section class="at-sub" id="sub-' + sub.id + '" data-sub-section="' + sub.id + '">' +
-            '<div class="at-sub-head"><h2>' + esc(sub.title) + '</h2><span class="at-sub-count">' + sub.settings.length + " settings" + (sub.manager ? " · manager" : "") + "</span></div>" +
-            mgr + rows +
-          "</section>";
-        }).join("") +
+        d.subcategories.map(function (sub) { return renderSub(sub, v); }).join("") +
+        '<div class="at-note-card">' + esc(d.title) + " is one of 10 destinations. Every setting row renders; managers hydrate lazily. Back/forward and deep links are honored.</div>" +
         "</div>" +
       "</div>" +
     "</div>";
+
     content.innerHTML = html;
     bindWorkspace(v, d);
+    hydrateManagers(d, v);
+  }
+
+  function hydrateManagers(d, v) {
+    d.subcategories.forEach(function (sub) {
+      var slots = [];
+      if (sub.manager) slots.push(sub.manager);
+      if (sub.id === "bsd") slots.push("bsd");
+      if (sub.id === "goal-mode") slots.push("goal-automation");
+      slots.forEach(function (mgrId) {
+        var slot = content.querySelector('[data-manager-slot="' + mgrId + '"]');
+        if (!slot) return;
+        if (mgrId === "providers") { mgrProviders(slot, false); return; }
+        var render = MGR[mgrId];
+        if (!render) {
+          slot.innerHTML = M.managerShell({ id: mgrId, title: window.PMCore.managerTitle(mgrId), body: '<div class="pm-empty">Shared grammar manager.</div>' });
+          return;
+        }
+        window.PMCore.hydrateManager(slot, function (el) { render(el); });
+      });
+    });
   }
 
   function bindWorkspace(v, d) {
     var scroller = document.getElementById("at-work");
     var doc = document.getElementById("at-doc");
 
-    document.getElementById("at-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+    document.getElementById("at-back").addEventListener("click", function () {
+      window.PMState.navigate({ name: "home" });
+    });
+    content.querySelectorAll("[data-cat]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-cat") });
+      });
+    });
 
+    var toc = document.getElementById("at-toc");
+    var marker = document.getElementById("at-toc-marker");
     var tocItems = content.querySelectorAll(".at-toc-item");
+
+    function placeMarker(id) {
+      var btn = toc.querySelector('[data-sub="' + id + '"]');
+      if (!btn || !marker) return;
+      // .at-toc is positioned (sticky), so btn.offsetTop is nav-local.
+      marker.style.transform = "translateY(" + btn.offsetTop + "px)";
+      marker.style.height = btn.offsetHeight + "px";
+      marker.style.top = "0";
+    }
+
+    if (spy) { spy.destroy(); spy = null; }
     spy = window.PMCore.scrollspy(scroller, function () {
       return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
     }, function (id) {
       tocItems.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-sub") === id); });
-    }, { offset: 76 });
+      placeMarker(id);
+    }, { offset: 84 });
 
     tocItems.forEach(function (b) {
       b.addEventListener("click", function () {
         spy.jumpTo(b.getAttribute("data-sub"));
-        var toc = document.getElementById("at-toc");
-        if (toc.classList.contains("open")) toc.classList.remove("open");
+        toc.classList.remove("open");
       });
     });
+
     var tocToggle = document.getElementById("at-toc-toggle");
-    if (tocToggle) tocToggle.addEventListener("click", function () { document.getElementById("at-toc").classList.toggle("open"); });
+    if (tocToggle) tocToggle.addEventListener("click", function () { toc.classList.toggle("open"); });
+    var tocClose = document.getElementById("at-toc-close");
+    if (tocClose) tocClose.addEventListener("click", function () { toc.classList.remove("open"); });
 
-    document.getElementById("at-disc").querySelectorAll("[data-disc]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
-        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
-          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-          var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
-          row.setAttribute("data-hidden", hidden);
-        });
-        content.querySelectorAll("#at-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
-        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " settings. Dangerous internals stay behind disclosure.", "info");
-        if (spy) spy.refresh();
-      });
-    });
-
+    // Mini search in the workspace head.
     var q2 = document.getElementById("at-q2");
+    var drop = document.getElementById("at-mini-drop");
+    var miniHits = [];
+    function miniRun() {
+      var val = q2.value.trim();
+      if (!val) { drop.hidden = true; miniHits = []; return; }
+      miniHits = window.PMCore.search(val, INDEX).slice(0, 8);
+      if (!miniHits.length) {
+        drop.innerHTML = '<div class="at-mini-drop-note">No matches for “' + esc(val) + '”.</div>';
+        drop.hidden = false; return;
+      }
+      drop.innerHTML = miniHits.map(function (h, i) { return resultRow(h, i); }).join("");
+      drop.hidden = false;
+    }
+    function miniGo(i) {
+      var h = miniHits[i];
+      if (!h) return;
+      drop.hidden = true; q2.value = "";
+      window.PMState.navigate(Object.assign({ name: "workspace" }, h.target));
+    }
+    q2.addEventListener("input", miniRun);
     q2.addEventListener("keydown", function (e) {
-      if (e.key !== "Enter") return;
-      var hits = window.PMCore.search(q2.value, INDEX);
-      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found for “" + q2.value + "”.", "info"); return; }
-      var t = Object.assign({}, hits[0].target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
+      if (e.key === "Enter") { e.preventDefault(); miniGo(0); }
+      if (e.key === "Escape") { drop.hidden = true; q2.value = ""; }
+    });
+    drop.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-hit]");
+      if (b) miniGo(Number(b.getAttribute("data-hit")));
+    });
+    document.addEventListener("click", function (e) {
+      if (!drop.hidden && !e.target.closest(".at-mini-searchwrap")) drop.hidden = true;
     });
 
-    doc.addEventListener("click", function (e) {
-      var row = e.target.closest("[data-setting-id]");
-      var btn = e.target.closest("button, select");
-      handleRowClick(e, row, btn);
-      handleManagerClick(e);
-    });
-    doc.addEventListener("input", function (e) {
-      if (e.target.matches("[data-mem-q]")) {
-        var qv = e.target.value.trim().toLowerCase();
-        content.querySelectorAll("[data-memory]").forEach(function (card) {
-          card.style.display = (!qv || card.textContent.toLowerCase().indexOf(qv) >= 0) ? "" : "none";
+    // Deep-link targets: subcategory jump, setting focus, provider scroll.
+    function maybeFocus() {
+      if (v.subcategory) {
+        spy.jumpTo(v.subcategory, function () { focusTarget(); });
+        return;
+      }
+      if (v.manager) {
+        var subForMgr = subForManager(d, v.manager);
+        if (subForMgr) { spy.jumpTo(subForMgr.id, function () { focusTarget(); }); return; }
+      }
+      focusTarget();
+    }
+    function focusTarget() {
+      if (v.setting) {
+        var row = content.querySelector('[data-setting-row="' + v.setting + '"]');
+        if (row) { row.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(row); }
+      } else if (v.provider) {
+        waitForEl('[data-provider-card="' + v.provider + '"]', function (card) {
+          card.scrollIntoView({ block: "start", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+          window.PMCore.focusFlash(card);
+          // Open the install tab when an update action is the point of the visit.
+          var instTab = card.querySelector('[data-ptab="install"]');
+          if (instTab) instTab.click();
+        });
+      } else if (v.manager) {
+        waitForEl('[data-manager="' + v.manager + '"]', function (mgr) {
+          mgr.scrollIntoView({ block: "start", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+          window.PMCore.focusFlash(mgr);
         });
       }
-    });
-    doc.addEventListener("change", function (e) {
-      var row = e.target.closest("[data-setting-id]");
-      if (row && e.target.matches("[data-ctl]")) {
-        var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-        if (s.type === "select") { window.PMState.setSettingValue(s.id, e.target.value); patchRow(s.id); }
-        if (s.type === "text") { window.PMState.setSettingValue(s.id, e.target.value); patchRow(s.id); }
-      }
-      if (e.target.matches("[data-continuation]")) {
-        window.PMState.receipt("Continuation saved", "Anthropic Max will now: " + e.target.value + ". Applies to future requests.", "ok");
-      }
-    });
-
-    function handleRowClick(e, row, btn) {
-      if (!btn) return;
-      if (row && btn.matches("[data-ctl]") && btn.classList.contains("pm-toggle")) {
-        var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-        window.PMState.setSettingValue(s.id, !(s.value === true));
-        patchRow(s.id);
-        return;
-      }
-      if (row && btn.matches("[data-seg]")) {
-        var s2 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-        window.PMState.setSettingValue(s2.id, btn.getAttribute("data-seg"));
-        patchRow(s2.id);
-        return;
-      }
-      if (row && btn.matches("[data-reset]")) {
-        var s3 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-        window.PMState.resetSetting(s3.id);
-        patchRow(s3.id);
-        return;
-      }
-      if (row && btn.matches("[data-details]")) {
-        row.classList.toggle("open");
-        btn.setAttribute("aria-expanded", row.classList.contains("open"));
-        return;
-      }
-      if (row && btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
-        var s4 = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-        if (s4.id === "context.compaction.now") { window.PMState.receipt("Compaction started", "A separately attributed compression helper is running. Simulated.", "sim"); return; }
-        if (s4.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
-        window.PMState.receipt(s4.actionLabel || "Opened", s4.label + ": honest simulated result — no real system was changed.", "sim");
-        return;
-      }
     }
-
-    function handleManagerClick(e) {
-      var t;
-      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
-      var provCard = e.target.closest("[data-provider]");
-      if (provCard) {
-        var pid = provCard.getAttribute("data-provider");
-        var acctEl = e.target.closest("[data-account]");
-        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
-        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); rerenderProviders(); return; }
-        if (aid && (t = e.target.closest("[data-nickname]"))) {
-          var acc = window.PMState.accountById(pid, aid);
-          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
-          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); rerenderProviders(); }
-          return;
-        }
-        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); rerenderProviders(); return; }
-        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); rerenderProviders(); return; }
-        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); rerenderProviders(); return; }
-        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); rerenderProviders(); return; }
-        if ((t = e.target.closest("[data-pa]"))) {
-          var act = t.getAttribute("data-pa");
-          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral connection setup starts — account creation, key creation, scopes, quota caveats, then back to the model row. Simulated.", "sim"); return; }
-          window.PMState.providerAction(pid, act); return;
-        }
-        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured balances and forecasts. This concept links out rather than recalculating. Simulated navigation.", "info"); return; }
-        var modelEl = e.target.closest("[data-model]");
-        if (modelEl) {
-          var p = window.PMState.providerById(pid);
-          var mid = modelEl.getAttribute("data-model");
-          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); rerenderProviders(); return; }
-          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); rerenderProviders(); return; }
-          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); rerenderProviders(); return; }
-          if ((t = e.target.closest("[data-model-open]"))) {
-            modelEl.classList.toggle("open");
-            openModels[pid + ":" + mid] = modelEl.classList.contains("open");
-            t.setAttribute("aria-expanded", modelEl.classList.contains("open"));
-            return;
-          }
-          if ((t = e.target.closest("[data-alias]"))) {
-            var m = p.models.filter(function (x) { return x.id === mid; })[0];
-            var next = window.prompt === undefined ? "" : prompt("Alias for " + m.name + ":", m.alias || "");
-            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); rerenderProviders(); }
-            return;
-          }
-          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); rerenderProviders(); return; }
-          if ((t = e.target.closest("[data-effort]"))) { t.parentNode.querySelectorAll("[data-effort]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Effort preference saved", "Applies when this model is used and effort is supported.", "ok"); return; }
-          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " variant will be requested when genuinely supported.", "ok"); return; }
-        }
-      }
-      var memEl = e.target.closest("[data-memory]");
-      if (memEl) {
-        var mem = window.PMState.state.memory.filter(function (x) { return x.id === memEl.getAttribute("data-memory"); })[0];
-        var actBtn = e.target.closest("[data-mem-act]");
-        if (actBtn && mem) {
-          var a = actBtn.getAttribute("data-mem-act");
-          if (a === "verify") { mem.state = "verified"; window.PMState.receipt("Memory verified", "Evidence checked; the Gist is now trusted.", "ok"); }
-          if (a === "pin") { mem.pinned = !mem.pinned; window.PMState.receipt(mem.pinned ? "Pinned" : "Unpinned", mem.text, "ok"); }
-          if (a === "edit") { window.PMState.receipt("Edit simulated", "Corrections create a new version; the old one stays restorable.", "sim"); }
-          if (a === "versions") { window.PMState.receipt("Version history", mem.versions + " version(s). Restore is simulated in this concept.", "sim"); }
-          if (a === "discard") { window.PMState.state.memory = window.PMState.state.memory.filter(function (x) { return x.id !== mem.id; }); window.PMState.receipt("Memory discarded", "Removed from active recall and index.", "ok"); }
-          rerenderManagerSection("memory");
-          return;
-        }
-      }
-      if ((t = e.target.closest("[data-mem-rebuild]"))) { window.PMState.receipt("Index rebuild queued", "Deduplication and re-embedding will run. Simulated.", "sim"); return; }
-      if ((t = e.target.closest("[data-mem-capsule]"))) { window.PMState.receipt("Capsule preview", "Bounded recall capsule: 3 pinned/verified Gists, ~0.4K tokens. Full sources are never injected.", "info"); return; }
-      var mcpEl = e.target.closest("[data-mcp]");
-      if (mcpEl) {
-        var srv = window.PMState.state.mcpServers.filter(function (x) { return x.id === mcpEl.getAttribute("data-mcp"); })[0];
-        var mact = e.target.closest("[data-mcp-act]");
-        if (mact && srv) {
-          var ma = mact.getAttribute("data-mcp-act");
-          if (ma === "connect") { window.PMState.receipt("Connect started", srv.name + " authorization flow opened. Simulated.", "sim"); }
-          if (ma === "repair") { srv.state = "connected"; srv.freshness = "Repaired just now"; window.PMState.receipt("Repaired", srv.name + " transport fixed and reconnected. Simulated.", "ok"); rerenderManagerSection("mcp"); }
-          if (ma === "enable") { srv.state = "connected"; srv.freshness = "Enabled just now"; window.PMState.receipt("Enabled", srv.name + " reconnected. Simulated.", "ok"); rerenderManagerSection("mcp"); }
-          if (ma === "reconnect") { window.PMState.receipt("Reconnecting", srv.name + " handshake queued. Simulated.", "sim"); }
-          if (ma === "tools") { window.PMState.receipt("Tool inventory", srv.name + ": " + srv.toolCount + " tools, progressively exposed. Schemas are not loaded into every request.", "info"); }
-          return;
-        }
-      }
+    function waitForEl(sel, fn) {
+      var tries = 0;
+      (function poll() {
+        var el = content.querySelector(sel);
+        if (el) { fn(el); return; }
+        if (++tries > 40) return;
+        setTimeout(poll, 120);
+      })();
     }
-
-    function patchRow(id) {
-      var s = window.PMState.getSetting(id);
-      var el = content.querySelector('[data-setting-id="' + id + '"]');
-      if (!el) return;
-      var tmp = document.createElement("div");
-      tmp.innerHTML = settingRow(s);
-      var fresh = tmp.firstChild;
-      fresh.classList.toggle("open", el.classList.contains("open"));
-      el.replaceWith(fresh);
-    }
-
-    function rerenderProviders() {
-      var section = content.querySelector('[data-sub-section="providers"]');
-      if (!section) return;
-      var head = section.querySelector(".at-sub-head");
-      var keep = section.querySelectorAll(":scope > .at-row");
-      section.innerHTML = "";
-      section.appendChild(head);
-      var tmp = document.createElement("div");
-      tmp.innerHTML = providersManager(window.PMState.state.view);
-      while (tmp.firstChild) section.appendChild(tmp.firstChild);
-      keep.forEach(function (r) { section.appendChild(r); });
-      if (spy) spy.refresh();
-    }
-
-    function rerenderManagerSection(which) {
-      var subId = which === "memory" ? "memory" : "mcp";
-      var section = content.querySelector('[data-sub-section="' + subId + '"]');
-      if (!section) return;
-      var head = section.querySelector(".at-sub-head");
-      var keep = section.querySelectorAll(":scope > .at-row");
-      section.innerHTML = "";
-      section.appendChild(head);
-      var tmp = document.createElement("div");
-      tmp.innerHTML = which === "memory" ? memoryManager() : mcpManager();
-      while (tmp.firstChild) section.appendChild(tmp.firstChild);
-      keep.forEach(function (r) { section.appendChild(r); });
-    }
-
-    window._atlasPatch = { patchRow: patchRow, rerenderProviders: rerenderProviders };
-
-    if (v.manager && v.manager !== "providers") {
-      var subForMgr = null;
-      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
-      if (subForMgr) {
-        spy.jumpTo(subForMgr, function () { maybeFocus(v); });
-        return;
-      }
-    }
-    if (v.subcategory) {
-      spy.jumpTo(v.subcategory, function () { maybeFocus(v); });
-    } else {
-      scroller.scrollTop = 0;
-      maybeFocus(v);
-    }
+    maybeFocus();
   }
 
-  function maybeFocus(v) {
-    if (v.focusSetting) {
-      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
-      if (el) {
-        el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
-        window.PMCore.focusFlash(el);
-      }
-    } else if (v.manager === "providers" && v.provider) {
-      var card = content.querySelector('[data-provider="' + v.provider + '"]');
-      if (card) { card.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(card); }
-    }
+  // ============================================================
+  // Targeted re-renders on state events
+  // ============================================================
+  function inWorkspace(cat) {
+    return currentView && currentView.name === "workspace" && currentView.category === cat;
+  }
+
+  function rerenderManagerInPlace(mgrId) {
+    var slot = content.querySelector('[data-manager-slot="' + mgrId + '"]');
+    if (!slot) return;
+    if (mgrId === "providers") { mgrProviders(slot, true); return; }
+    var render = MGR[mgrId];
+    if (render) render(slot);
+  }
+
+  function patchSettingRow(id) {
+    var el = content.querySelector('[data-setting-row="' + id + '"]');
+    if (!el) return;
+    var tmp = document.createElement("div");
+    tmp.innerHTML = M.settingRow(window.PMState.getSetting(id));
+    var fresh = tmp.firstChild;
+    fresh.classList.toggle("open", el.classList.contains("open"));
+    el.replaceWith(fresh);
   }
 
   window.PMState.subscribe(function (kind, payload) {
     if (kind === "navigate") { route(); return; }
-    if (kind === "scenario") {
-      if (window.PMState.state.view.name === "home") renderHome();
-      else route();
+    if (kind === "scenario") { route(); return; }
+    if (kind === "setting") { patchSettingRow(payload.id); if (inWorkspace("behavior") && payload.id.indexOf("behavior.bsd") === 0) rerenderManagerInPlace("bsd"); return; }
+    if (kind === "notices") { if (currentView && currentView.name === "home") renderHome(); return; }
+    if (kind === "catalog") {
+      var strip = content.querySelector("[data-catalog-strip]");
+      if (strip) strip.innerHTML = catalogStripHtml();
       return;
     }
-    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._atlasPatch) {
-      window._atlasPatch.rerenderProviders();
+    if (kind === "providers") {
+      if (!inWorkspace("models")) return;
+      var slot = content.querySelector('[data-manager-slot="providers"]');
+      if (!slot) return;
+      // Full provider body rebuild keeps the catalog strip intact.
+      var body = slot.querySelector("[data-providers-body]");
+      if (body) providersBody(body);
+      return;
+    }
+    if (kind === "collections") {
+      var n = payload.name;
+      // A trace re-render would wipe the freshly written trace result; the
+      // delegated handler already wrote it into the live panel.
+      if (n === "permissionRules" && inWorkspace("permissions") && !payload.trace) rerenderManagerInPlace("permissions");
+      if ((n === "notificationDestinations" || n === "eventRouting" || n === "quietHours") && inWorkspace("notifications")) rerenderManagerInPlace("notifications");
+      if ((n === "soundLibrary" || n === "soundPacks") && inWorkspace("notifications")) rerenderManagerInPlace("sounds");
+      if (n === "formatterTable" && inWorkspace("code")) rerenderManagerInPlace("formatters");
+      if ((n === "commandsCatalog" || n === "shortcutBindings") && inWorkspace("code")) rerenderManagerInPlace("commands");
+      if (n === "backupRuns" && inWorkspace("system")) rerenderManagerInPlace("backup");
+      if (n === "searchIndexCfg" && inWorkspace("system")) rerenderManagerInPlace("search-index");
+      return;
+    }
+    if (kind === "lifecycle") {
+      if (inWorkspace("system")) {
+        rerenderManagerInPlace("backup");
+        // Setting rows may have changed through import/reset — refresh the document rows cheaply.
+        var d = destById("system");
+        if (d) d.subcategories.forEach(function (sub) {
+          sub.settings.forEach(function (s) { patchSettingRow(s.id); });
+        });
+      }
+      return;
     }
   });
 
-  route();
+  // ============================================================
+  // Concept-local interactions (demonstrated managers)
+  // ============================================================
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    var el;
+
+    // Setting row details disclosure.
+    if ((el = t.closest(".pm-set-row .pm-set-label")) || (el = t.closest(".pm-set-row .pm-set-desc"))) {
+      var row = el.closest(".pm-set-row");
+      row.classList.toggle("open");
+      return;
+    }
+
+    // Permissions view toggle + presets.
+    if ((el = t.closest("[data-perm-view]")) && el.tagName === "BUTTON") {
+      localUi.permView = el.getAttribute("data-perm-view");
+      rerenderManagerInPlace("permissions");
+      return;
+    }
+    if ((el = t.closest("[data-preset]"))) {
+      var preset = D.presets.filter(function (p) { return p.id === el.getAttribute("data-preset"); })[0];
+      if (preset) window.PMState.receipt("Preset preview: " + preset.name, preset.summary + ". Applying presets is previewed first and receipted. Simulated in this concept.", "info");
+      return;
+    }
+
+    // Memory manager header actions (capsule preview + maintenance tools).
+    if ((el = t.closest('[data-act="memory.capsule"]'))) {
+      M.modal("Context capsule preview",
+        '<div class="pm-note">Bounded recall capsule assembled from pinned and verified gists. Estimate: <b>' + memTokenEstimate() + 'K tokens</b>. Full sources are never injected.</div>' +
+        window.PMState.state.memory.filter(function (m) { return m.pinned || m.state === "verified"; }).map(function (m) {
+          return '<div class="at-src-row"><b>' + esc(m.text) + "</b>" + M.badge(m.pinned ? "Pinned" : "Verified", "ok") + "</div>";
+        }).join(""),
+        [{ label: "Close" }]);
+      return;
+    }
+    if ((el = t.closest("[data-mem-tool]"))) {
+      var tool = el.getAttribute("data-mem-tool");
+      var slotM = content.querySelector('[data-manager-slot="memory"]');
+      if (tool === "rebuild") window.PMState.receipt("Memory index rebuild queued", "Re-embedding with current half-life activations. Simulated.", "sim");
+      if (tool === "dedupe") window.PMState.receipt("Dedupe pass", "Near-duplicate gists merged into one with combined evidence. Simulated.", "sim");
+      if (tool === "redact") window.PMState.receipt("Redaction pass", "Likely secrets scrubbed from stored gists; receipts record the redaction. Simulated.", "ok");
+      if (tool === "restore-last") {
+        if (memTrash.length) {
+          var item = memTrash.pop();
+          var list = window.PMState.state.memory;
+          list.splice(Math.min(Math.max(item.index, 0), list.length), 0, item.snap);
+          window.PMState.receipt("Memory restored", "The last deleted gist is back in active recall.", "ok");
+          window.PMState.emit("memory", { id: item.snap.id });
+          if (slotM) mgrMemory(slotM);
+        }
+      }
+      return;
+    }
+
+    // Memory actions.
+    var memCard = t.closest("[data-memory]");
+    if (memCard) {
+      var memId = memCard.getAttribute("data-memory");
+      var mem = window.PMState.state.memory.filter(function (m) { return m.id === memId; })[0];
+      var slot = content.querySelector('[data-manager-slot="memory"]');
+      var rerenderMem = function () { if (slot && content.contains(slot)) mgrMemory(slot); };
+      if ((el = t.closest("[data-mem-act]")) && mem) {
+        var a = el.getAttribute("data-mem-act");
+        if (a === "verify") { mem.state = "verified"; window.PMState.receipt("Memory verified", "Evidence checked — the gist is trusted for retrieval now. Simulated.", "ok"); rerenderMem(); }
+        else if (a === "pin") { mem.pinned = !mem.pinned; window.PMState.receipt(mem.pinned ? "Pinned" : "Unpinned", mem.text, "ok"); rerenderMem(); }
+        else if (a === "edit") {
+          window.PMCore.promptDialog("Edit memory", mem.text, function (v2) {
+            if (!v2 || v2 === mem.text) return;
+            (memHistory[mem.id] = memHistory[mem.id] || []).unshift({ text: mem.text });
+            mem.text = v2; mem.versions += 1; mem.state = "verified";
+            window.PMState.receipt("Memory edited", "A new version was created; the old one stays restorable. Simulated.", "ok");
+            window.PMState.emit("memory", { id: mem.id });
+            rerenderMem();
+          });
+        }
+        else if (a === "versions") {
+          var hist = memHistory[mem.id] || [];
+          var vrows = '<div class="at-log">v' + mem.versions + " — current · accessed " + esc(mem.accessed) + " · " + esc(mem.text.slice(0, 72)) + (mem.text.length > 72 ? "…" : "") + "</div>" +
+            hist.map(function (h, i) {
+              return '<div class="at-log">v' + (mem.versions - i - 1) + " — superseded · " + esc(h.text.slice(0, 72)) + (h.text.length > 72 ? "…" : "") + "</div>";
+            }).join("");
+          M.modal("Version history — " + mem.text.slice(0, 48) + "…",
+            '<div class="pm-note">' + mem.versions + " version(s). Restoring makes the previous text current and keeps both in history.</div>" + vrows,
+            [{ label: "Close" }].concat(hist.length ? [{ label: "Restore previous", primary: true, onClick: function () {
+              var h2 = memHistory[mem.id];
+              if (!h2 || !h2.length) return false;
+              var prev = h2.shift();
+              h2.unshift({ text: mem.text });
+              mem.text = prev.text; mem.versions += 1; mem.state = "verified";
+              window.PMState.receipt("Version restored", "An earlier version is current again; history is preserved. Simulated.", "ok");
+              window.PMState.emit("memory", { id: mem.id });
+              rerenderMem();
+              return false;
+            } }] : []));
+        }
+        else if (a === "delete") {
+          var stMem = window.PMState.state.memory;
+          var di = stMem.indexOf(mem);
+          if (di >= 0) stMem.splice(di, 1);
+          memTrash.push({ index: di, snap: JSON.parse(JSON.stringify(mem)) });
+          window.PMState.receipt("Memory deleted", "Removed from active recall and the index. Restore is available in this demo.", "ok");
+          rerenderMem();
+        }
+        window.PMState.emit("memory", { id: memId });
+        return;
+      }
+    }
+
+    // Persona actions.
+    var perCard = t.closest("[data-persona]");
+    if (perCard && (el = t.closest("[data-per-act]"))) {
+      var pId = perCard.getAttribute("data-persona");
+      var per = window.PMState.state.personas.filter(function (p) { return p.id === pId; })[0];
+      if (!per) return;
+      var act = el.getAttribute("data-per-act");
+      var slotP = content.querySelector('[data-manager-slot="personas"]');
+      if (act === "capsule") {
+        M.modal("Capsule preview — " + per.name,
+          '<div class="pm-note">Model-facing behavior capsule, ' + esc(per.capsule) + ". Personas ship bounded capsules, never full sources.</div>" +
+          M.inspector([["Mission", per.description], ["Provenance", per.provenance], ["Eligible surfaces", per.eligible], ["Scope", per.scope], ["Authority", "None — behavior only"]]),
+          [{ label: "Close" }]);
+      } else if (act === "default") {
+        window.PMState.setSettingValue("behavior.personas.default", per.name);
+        if (slotP) mgrPersonas(slotP);
+      } else if (act === "child") {
+        per.childOnly = false; per.scope = "Available";
+        window.PMState.receipt("Persona included", per.name + " is now eligible for your surfaces after a trust review. Simulated.", "ok");
+        if (slotP) mgrPersonas(slotP);
+      } else if (act === "scan") {
+        window.PMState.receipt("Import scan", per.name + ": provenance " + per.provenance + ". Diff, trust, secret, and prompt-injection scans passed. Simulated.", "info");
+      }
+      return;
+    }
+
+    // Shared-grammar manager actions (concept-local ones).
+    if ((el = t.closest("[data-theme-act]"))) {
+      var ta = el.getAttribute("data-theme-act");
+      if (ta === "create") window.PMState.receipt("New custom theme", "A starter TOML with base-theme inheritance was created. Only overridden tokens are stored. Simulated.", "sim");
+      if (ta === "import") window.PMState.receipt("Import TOML", "The file is validated against the theme schema before load; invalid themes fall back to their base with a diagnostic. Simulated.", "sim");
+      if (ta === "export") window.PMState.receipt("Theme exported", "Custom theme written out as portable TOML with base-theme reference. Simulated.", "sim");
+      if (ta === "folder") window.PMState.receipt("Theme folder", "themes/ opened in the file manager. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-term-act]"))) {
+      window.PMState.receipt("Terminal preview strip", "ANSI palette rendered against the profile background — local preview only. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-lsp-act]"))) {
+      var lspAct = el.getAttribute("data-lsp-act");
+      var lspId = el.getAttribute("data-lsp");
+      var srv = window.PMState.state.lspServers.filter(function (s) { return s.id === lspId; })[0];
+      if (!srv) return;
+      if (lspAct === "restart") window.PMState.receipt("Restart requested", srv.name + " will restart; diagnostics stay attached to the session. Simulated.", "sim");
+      if (lspAct === "logs") {
+        M.modal("Logs — " + srv.name, srv.logs.length ? srv.logs.map(function (l) { return '<div class="at-log">' + esc(l) + "</div>"; }).join("") : '<div class="pm-note">No log entries this session.</div>', [{ label: "Close" }]);
+      }
+      if (lspAct === "install") window.PMState.receipt("Install queued", srv.name + " installs through the official channel; capabilities appear after verification. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-mcp-act]"))) {
+      var mcpAct = el.getAttribute("data-mcp-act");
+      var mcpId = el.getAttribute("data-mcp");
+      var msrv = window.PMState.state.mcpServers.filter(function (s) { return s.id === mcpId; })[0];
+      if (!msrv) return;
+      if (mcpAct === "connect") { msrv.state = "connected"; msrv.freshness = "Connected just now"; window.PMState.receipt("Connected", msrv.name + " authorization completed. Simulated.", "ok"); }
+      if (mcpAct === "repair") { msrv.state = "connected"; msrv.freshness = "Repaired just now"; window.PMState.receipt("Repaired", msrv.name + " transport fixed and reconnected. Simulated.", "ok"); }
+      if (mcpAct === "enable") { msrv.state = "connected"; msrv.freshness = "Enabled just now"; window.PMState.receipt("Enabled", msrv.name + " is active again. Simulated.", "ok"); }
+      if (mcpAct === "tools") window.PMState.receipt("Tool inventory", msrv.name + ": " + msrv.toolCount + " tools, progressively exposed. Simulated.", "info");
+      if (mcpAct === "logs") {
+        M.modal("Logs — " + msrv.name, msrv.logs.map(function (l) { return '<div class="at-log">' + esc(l) + "</div>"; }).join(""), [{ label: "Close" }]);
+        return;
+      }
+      if (inWorkspace("extensions")) rerenderManagerInPlace("mcp");
+      return;
+    }
+    if ((el = t.closest("[data-skill-act]"))) {
+      var sk = window.PMState.state.skills.filter(function (s) { return s.id === el.getAttribute("data-skill"); })[0];
+      if (!sk) return;
+      if (el.getAttribute("data-skill-act") === "toggle") { sk.enabled = !sk.enabled; window.PMState.receipt(sk.enabled ? "Skill enabled" : "Skill disabled", sk.name + (sk.enabled ? " can be selected for turns." : " will not be selected."), "ok"); }
+      else { sk.trust = sk.trust === "Trusted" ? "Not trusted yet" : "Trusted"; window.PMState.receipt("Trust updated", sk.name + " is now " + sk.trust.toLowerCase() + ".", "ok"); }
+      if (inWorkspace("extensions")) rerenderManagerInPlace("skills");
+      return;
+    }
+    if ((el = t.closest("[data-plugin-act]"))) {
+      var pl = window.PMState.state.plugins.filter(function (p) { return p.id === el.getAttribute("data-plugin"); })[0];
+      if (!pl) return;
+      if (el.getAttribute("data-plugin-act") === "toggle") { pl.enabled = !pl.enabled; window.PMState.receipt(pl.enabled ? "Plugin enabled" : "Plugin disabled", pl.name + ".", "ok"); }
+      else window.PMState.receipt("Plugin update check", pl.name + ": " + pl.update + ". Simulated.", "info");
+      if (inWorkspace("extensions")) rerenderManagerInPlace("plugins");
+      return;
+    }
+    if ((el = t.closest("[data-tool-act]"))) {
+      window.PMState.receipt("Tool scope", "Children receive scoped tool sets by role; inventory states stay distinguishable. Simulated.", "info");
+      return;
+    }
+    if ((el = t.closest("[data-files-act]"))) {
+      window.PMState.receipt("Project root revealed", "The file manager opens at the workspace root. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-hist-act]"))) {
+      var ha = el.getAttribute("data-hist-act");
+      if (ha === "archive") window.PMState.receipt("Archived", "The record stays addressable under the retention policy. Simulated.", "ok");
+      if (ha === "compare") window.PMState.receipt("Compare", "Pick two records to diff their transcripts. Simulated.", "sim");
+      if (ha === "export") window.PMState.receipt("Exported", "Selected records written with redaction applied. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-art-act]"))) {
+      var aa = el.getAttribute("data-art-act");
+      window.PMState.receipt(aa === "reveal" ? "Artifact revealed" : "Artifact cleaned up", "Identity and provenance stay distinguishable in receipts. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-wt-act]"))) {
+      window.PMState.receipt("Worktree opened", "Switching windows to the selected worktree. Simulated.", "sim");
+      return;
+    }
+    if ((el = t.closest("[data-cont-act]"))) {
+      window.PMState.receipt("Capability probe", el.getAttribute("data-cont") + ": installation lifecycle shared, probes domain-specific. Simulated.", "info");
+      return;
+    }
+    if ((el = t.closest("[data-web-act]"))) {
+      window.PMState.receipt("Web readiness probe", D.webSearchCfg.readiness + ". Simulated.", "info");
+      return;
+    }
+    if ((el = t.closest("[data-storage-act]"))) {
+      var sa = el.getAttribute("data-storage-act");
+      window.PMState.receipt(sa === "quarantine" ? "Quarantine review" : "Legal holds", sa === "quarantine" ? D.storageHealth.quarantine + " — deletion needs your explicit review." : D.storageHealth.legalHold + ". Simulated.", "info");
+      return;
+    }
+    if ((el = t.closest("[data-fmt-act]"))) {
+      var fa = el.getAttribute("data-fmt-act");
+      window.PMState.receipt(fa === "add" ? "Add formatter" : "Reset formatters", fa === "add" ? "Register a custom formatter command; it starts disabled until detected. Simulated." : "Formatter table returns to detected defaults. Simulated.", "sim");
+      return;
+    }
+  });
+
+  // ============================================================
+  // Router
+  // ============================================================
+  function route() {
+    currentView = window.PMState.state.view;
+    if (spy) { spy.destroy(); spy = null; }
+    if (currentView.name === "home") renderHome();
+    else renderWorkspace(currentView);
+  }
+
+  var initial = window.PMCore.startRouter();
+  currentView = initial;
+  if (initial.name === "home") renderHome();
+  else renderWorkspace(initial);
+  window.__conceptReady = true;
 })();
 </script>
 </body>

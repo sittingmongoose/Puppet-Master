@@ -224,14 +224,30 @@
     }
     return '<span class="pmq-t5w-label">alerts</span><span class="pmq-t5w-num" data-t5num="alerts">' + (d.approvals + d.warnings) + "</span>";
   }
-
+  function workChipHtmlV3(domain, d, wapi) {
+    if (domain === "ops") return '<span class="pmq-t5w-label">ops</span><span class="pmq-t5w-num" data-t5num="ops">' + d.ops + "</span>";
+    if (domain === "bsd") return '<span class="pmq-t5w-label">bsd</span><span class="pmq-t5w-num" data-t5num="bsd">' + d.bsd + "</span>";
+    if (domain === "attach") return '<span class="pmq-t5w-label">attach</span><span class="pmq-t5w-num" data-t5num="attach">' + d.attach + "</span>";
+    if (domain === "artifacts") return '<span class="pmq-t5w-label">artifacts</span><span class="pmq-t5w-num" data-t5num="artifacts">' + wapi.store.threadArtifacts(wapi.store.activeKey()).length + "</span>";
+    return "";
+  }
   function workCardsFor(domain, key, wapi) {
     const b = wapi.builders;
     if (domain === "goal") { const c = b.goalCard(key); return c ? [c] : []; }
     if (domain === "todo") { const c = b.todoCard(key); return c ? [c] : []; }
     if (domain === "agents") return b.subagentCards(key);
     if (domain === "diff") return b.diffCards(key);
-    if (domain === "alerts") return b.approvalCards(key).concat(b.warningCards(key));
+    if (domain === "alerts") {
+      const cards = b.approvalCards(key);
+      const grant = b.grantCard(key);
+      if (grant) cards.push(grant);
+      b.capacityCards(key).forEach(c => cards.push(c));
+      return cards.concat(b.warningCards(key));
+    }
+    if (domain === "ops") return b.opsCards(key);
+    if (domain === "bsd") return b.bsdCards(key);
+    if (domain === "attach") return b.attachmentResolutionCards(key);
+    if (domain === "artifacts") return b.artifactCards(key);
     return [];
   }
 
@@ -243,6 +259,10 @@
     if (d.agents) defs.push("agents");
     if (d.diffFiles) defs.push("diff");
     if (d.approvals + d.warnings > 0) defs.push("alerts");
+    if (d.ops > 0) defs.push("ops");
+    if (d.bsd > 0) defs.push("bsd");
+    if (d.attach > 0) defs.push("attach");
+    if (wapi.store.threadArtifacts(key).length) defs.push("artifacts");
     if (!defs.length) return;
     if (workOpenDomain && defs.indexOf(workOpenDomain) < 0) workOpenDomain = null;
 
@@ -258,7 +278,7 @@
       chip.dataset.domain = domain;
       if (domain === "goal") chip.dataset.gst = d.goalStatus;
       chip.setAttribute("aria-expanded", String(workOpenDomain === domain));
-      chip.innerHTML = workChipHtml(domain, d, wapi);
+      chip.innerHTML = ["goal", "todo", "agents", "diff", "alerts"].indexOf(domain) >= 0 ? workChipHtml(domain, d, wapi) : workChipHtmlV3(domain, d, wapi);
       strip.appendChild(chip);
     });
     window.PMIcons.hydrate(strip);

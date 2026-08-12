@@ -32,6 +32,114 @@
       .replace(/"/g, '&quot;');
   }
 
+
+  var SYNC_CHIP_LABELS = {
+    cached: 'Cached',
+    synchronizing: 'Synchronizing',
+    live: 'Live',
+    offline: 'Offline',
+    reconnecting: 'Reconnect',
+    replay: 'Replay',
+    snapshot: 'Snapshot catch-up',
+    'server-work-continuing': 'Server work continuing'
+  };
+
+  function syncChipLabel(state, store) {
+    if (window.PMChatShell && typeof window.PMChatShell.syncChipLabel === 'function') {
+      return window.PMChatShell.syncChipLabel(state, store);
+    }
+    if (state === 'offline' && store && store.session && Array.isArray(store.session.outbox)) {
+      var queued = store.session.outbox.some(function (row) {
+        return row && row.status === 'queued';
+      });
+      if (queued) return 'Queued to send';
+    }
+    return SYNC_CHIP_LABELS[state] || String(state || 'Live');
+  }
+
+  function renderAttachmentResolverCard(store) {
+    var res = store && store.session && store.session.attachmentResolver;
+    if (!res) return '';
+    var choices = (res.choices || [])
+      .map(function (c) {
+        return (
+          '<button type="button" class="pm-btn pm-btn-secondary" data-attach-resolve="' +
+          escapeHtml(c.id) +
+          '">' +
+          escapeHtml(c.label) +
+          '</button>'
+        );
+      })
+      .join('');
+    var klass = res.class || 'unsupported';
+    var title =
+      klass === 'native'
+        ? 'Native'
+        : klass === 'pm-transformed'
+          ? 'PM transformed'
+          : klass === 'alternate'
+            ? 'Alternate'
+            : 'Unsupported';
+    return (
+      '<div class="pm-attach-resolver" data-attach-resolver-card data-attach-class="' +
+      escapeHtml(klass) +
+      '">' +
+      '<div class="pm-attach-resolver-title">Attachment · ' +
+      escapeHtml(title) +
+      '</div>' +
+      '<div class="pm-attach-resolver-lineage">' +
+      escapeHtml((res.lineage || []).join(' → ')) +
+      '</div>' +
+      '<div class="pm-attach-resolver-actions">' +
+      choices +
+      '</div></div>'
+    );
+  }
+
+  function renderCapacityForecast(store, thread) {
+    var line =
+      (thread && thread.capacityForecast) ||
+      (store && store.session && store.session.capacityForecast) ||
+      '';
+    if (!line) return '';
+    return (
+      '<div class="pm-capacity-forecast" data-capacity-forecast>' +
+      escapeHtml(line) +
+      '</div>'
+    );
+  }
+
+  /** Shared pin invariant helper for windows/wN update paths (Step5). */
+  function assertPinInvariants(store, windowId, chatWidthPx, opts) {
+    opts = opts || {};
+    var mode = historyMode(store);
+    var floor = MIN_CHAT_FLOOR[windowId] || 280;
+    var width = Number(chatWidthPx) || 0;
+    var issues = [];
+    if ((mode === 'pinned_full' || mode === 'pinned_compact') && opts.overlayScrim) {
+      issues.push('pinned-must-not-overlay-scrim');
+    }
+    if (mode === 'pinned_full' && width && width < floor + 200) {
+      issues.push('auto-compact-required');
+      if (store && typeof store.setHistoryMode === 'function') {
+        store.setHistoryMode('pinned_compact');
+      }
+    }
+    if (opts.artifactOpen && mode === 'closed' && opts.requireHistoryWithArtifact) {
+      issues.push('history-artifact-should-coexist-when-pinned');
+    }
+    return { ok: !issues.length, issues: issues, mode: historyMode(store), floor: floor };
+  }
+
+  function confirmBulkPersonaApply(personaLabel) {
+    var label = personaLabel || 'Researcher';
+    var copy = 'Apply ' + label + ' to all threads in this PlanningRun?';
+    if (typeof window.confirm === 'function') {
+      return window.confirm(copy);
+    }
+    return false;
+  }
+
   function historyMode(store) {
     var s = store && store.session;
     if (!s) return 'closed';
@@ -124,6 +232,7 @@
   }
 
   function openArtifactWorkspace(store, threadId, artifactId, opts) {
+    /* Opening an artifact must not auto-admit passages into Context Lens. */
     opts = opts || {};
     if (!store) return;
     var aw = getArtifactWorkspace(store);
@@ -150,12 +259,22 @@
     if (aw.queue.indexOf(art.id) < 0) aw.queue.push(art.id);
     if (typeof store._emit === 'function') store._emit();
     else if (store.emit) store.emit();
-    /* Resolve loading → ready unless forced */
+    /* Resolve loading → ready/error; update → updated when settleToUpdated. */
     if (aw.status === 'loading') {
       window.setTimeout(function () {
         if (aw.artifactId !== art.id) return;
         aw.status = opts.error ? 'error' : 'ready';
         if (opts.error) aw.errorMessage = opts.errorMessage || 'Failed to load artifact';
+        if (typeof store._emit === 'function') store._emit();
+        else if (store.notify) store.notify();
+        try {
+          window.dispatchEvent(new CustomEvent('pm-artifact-workspace', { detail: { aw: aw } }));
+        } catch (_) {}
+      }, opts.instant ? 0 : 420);
+    } else if (aw.status === 'update' && opts.settleToUpdated) {
+      window.setTimeout(function () {
+        if (aw.artifactId !== art.id) return;
+        aw.status = 'updated';
         if (typeof store._emit === 'function') store._emit();
         else if (store.notify) store.notify();
         try {
@@ -234,12 +353,45 @@
       .join('');
     var body = '';
     if (status === 'loading' || status === 'update') {
+      /* `update` is the transient switch path only; `updated` is the completed receipt. */
       body =
         '<div class="pm-art-status" data-art-status="' +
         escapeHtml(status) +
         '">' +
         (status === 'loading' ? 'Loading artifact…' : 'Updating…') +
         '<span class="pm-q-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>';
+    } else if (status === 'updated') {
+      body =
+        '<div class="pm-art-status is-updated" data-art-status="updated">' +
+        '<p class="pm-art-updated-receipt">Artifact updated</p>' +
+        '<p class="pm-art-meta">' +
+        escapeHtml(art.title || art.id || 'Artifact') +
+        ' · content refreshed · ready to inspect</p></div>';
+      var typUpdated = art.type || art.kind || 'document';
+      if (typUpdated === 'multi_file_diff' || typUpdated === 'diff') {
+        body +=
+          '<div class="pm-art-diff" data-art-body>' +
+          '<pre class="pm-art-pre">--- threads/provider-selector.js\n+++ threads/provider-selector.js\n@@ updated @@\n+export function accessProfile() { /* refreshed */ }</pre>' +
+          '<p class="pm-art-meta">Updated diff · +12 −3</p></div>';
+      } else if (typUpdated === 'visual_preview' || typUpdated === 'image') {
+        body +=
+          '<div class="pm-art-preview" data-art-body>' +
+          '<div class="pm-art-preview-frame" role="img" aria-label="Updated preview"></div>' +
+          '<p class="pm-art-meta">Preview refreshed</p></div>';
+      } else if (typUpdated === 'test_report') {
+        body +=
+          '<div class="pm-art-report" data-art-body>' +
+          '<ul><li>Pinned-history probe — pass</li><li>Updated interaction probe — pass</li></ul>' +
+          '<p class="pm-art-meta">Report updated</p></div>';
+      } else {
+        body +=
+          '<div class="pm-art-doc" data-art-body>' +
+          '<h3>' +
+          escapeHtml(art.title || 'Handoff') +
+          '</h3>' +
+          '<p>Latest revision applied. Thread-local state preserved; artifact queue unchanged.</p>' +
+          '<p class="pm-art-meta">Updated handoff receipt</p></div>';
+      }
     } else if (status === 'error') {
       body =
         '<div class="pm-art-status is-error" data-art-status="error">' +
@@ -614,7 +766,7 @@
   var spellDictProject = Object.create(null);
 
   function spellIsSuppressed(key) {
-    return !!(
+    return Boolean(
       spellIgnoreOnce[key] ||
       spellIgnoreDraft[key] ||
       spellDictPersonal[key] ||
@@ -698,9 +850,49 @@
     });
   }
 
+  function liveChromeSession(store) {
+    var session = (store && store.session) || {};
+    var local = store && typeof store.getActiveLocal === 'function' ? store.getActiveLocal() : null;
+    if (!local) return session;
+    return Object.assign({}, session, {
+      providerId: local.providerId != null ? local.providerId : session.providerId,
+      accountId: local.accountId != null ? local.accountId : session.accountId,
+      connectionId: local.connectionId != null ? local.connectionId : session.connectionId,
+      modelId: local.modelId != null ? local.modelId : session.modelId,
+      personaId: local.personaId != null ? local.personaId : session.personaId,
+      effortId: local.effortId != null ? local.effortId : session.effortId,
+      speedMode: local.speedMode != null ? local.speedMode : session.speedMode,
+      modeId: local.modeId != null ? local.modeId : session.modeId,
+      accessProfile: local.accessProfile != null ? local.accessProfile : session.accessProfile,
+      crewId: local.crewId != null ? local.crewId : session.crewId,
+      worktreeId: local.worktreeId !== undefined ? local.worktreeId : session.worktreeId,
+      bsd: local.bsd || session.bsd,
+      effectiveModelId: session.effectiveModelId != null ? session.effectiveModelId : null,
+      accessLimitedBy: session.accessLimitedBy != null ? session.accessLimitedBy : null
+    });
+  }
+
+  function accessTriggerLabel(store) {
+    var session = liveChromeSession(store);
+    var value = session.accessProfile || 'ask';
+    var label = value;
+    for (var i = 0; i < ACCESS_PROFILES.length; i++) {
+      if (ACCESS_PROFILES[i].value === value) {
+        label = ACCESS_PROFILES[i].label;
+        break;
+      }
+    }
+    if (session.accessLimitedBy) {
+      return label + ' · Limited by ' + String(session.accessLimitedBy);
+    }
+    return label;
+  }
+
   window.PMChatV2 = {
     HISTORY_MODES: HISTORY_MODES,
     ACCESS_PROFILES: ACCESS_PROFILES,
+    liveChromeSession: liveChromeSession,
+    accessTriggerLabel: accessTriggerLabel,
     SPEED_OPTIONS: SPEED_OPTIONS,
     MIN_CHAT_FLOOR: MIN_CHAT_FLOOR,
     CONCEPT_PARADIGMS: CONCEPT_PARADIGMS,
@@ -721,6 +913,12 @@
     activateCompactWorkChip: activateCompactWorkChip,
     paradigmForConcept: paradigmForConcept,
     applyPassiveSpellcheck: applyPassiveSpellcheck,
+    syncChipLabel: syncChipLabel,
+    SYNC_CHIP_LABELS: SYNC_CHIP_LABELS,
+    renderAttachmentResolverCard: renderAttachmentResolverCard,
+    renderCapacityForecast: renderCapacityForecast,
+    assertPinInvariants: assertPinInvariants,
+    confirmBulkPersonaApply: confirmBulkPersonaApply,
     escapeHtml: escapeHtml
   };
 })();

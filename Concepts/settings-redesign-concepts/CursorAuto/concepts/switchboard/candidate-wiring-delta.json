@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-03-switchboard",
+  "model": "CursorAuto",
+  "trace_rule": "UI source \u2192 command \u2192 canonical owner \u2192 validation/permission \u2192 state mutation or operation \u2192 event/receipt/ObservableWork \u2192 UI projection \u2192 Usage/diagnostic attribution \u2192 recovery/deep link",
+  "note": "Every trace ends with demo_note; concept-local state is simulated and labeled.",
+  "traces": [
+    {
+      "control_family": "settings row mutation",
+      "ui_source": "CAViews setting row",
+      "command": "registry-owned non-command mutation",
+      "canonical_owner": "settings inventory/schema",
+      "validation_permission": "managed/unavailable blocked",
+      "mutation_or_operation": "overrides[id]=value via PMStore",
+      "event_receipt": "PMStore.receipt labeled simulated",
+      "ui_projection": "row re-render with state badge",
+      "usage_diagnostic_attribution": "n/a in demo",
+      "recovery_deep_link": "search \u2192 setting focus wash",
+      "demo_note": "Concept-local demo state; labeled simulated; not production wiring."
+    },
+    {
+      "control_family": "provider installation select",
+      "ui_source": "InstallationCard select",
+      "command": "cmd.provider.installation.select (candidate)",
+      "canonical_owner": "Binary Locator / installation lifecycle",
+      "validation_permission": "installation exists; unknown-owner stays manual-only",
+      "mutation_or_operation": "installations[].selected swap in PMStore.providers",
+      "event_receipt": "receipt toast",
+      "ui_projection": "selected vs shadowed cards",
+      "usage_diagnostic_attribution": "provider diagnostic line",
+      "recovery_deep_link": "manager providers tab installations",
+      "demo_note": "Simulated installation lifecycle only."
+    },
+    {
+      "control_family": "Switchboard featured manager action",
+      "ui_source": "CAManagers data-ca-act controls",
+      "command": "family-specific candidate command",
+      "canonical_owner": "File Manager/Editor",
+      "validation_permission": "demo checks + managed flags",
+      "mutation_or_operation": "PMStore collection mutation",
+      "event_receipt": "PMStore.receipt",
+      "ui_projection": "manager body re-mount",
+      "usage_diagnostic_attribution": "n/a or Usage deep-link for providers",
+      "recovery_deep_link": "search manager in switchboard",
+      "demo_note": "All featured manager actions are simulated with receipts."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
    Concept 04 — Archive · Archive IA
    Finding-aid search → tickets → collection guides.
    Workspace: outline + box + running header (+ provenance).
-   Managers: Catalog Providers, Crew boxes, Media archive.
+   Managers: Storage, Backup, Lifecycle, History, Artifacts, Worktrees, Actions, Containers, Web/Search, Index, Cleanup, Server Shell (+ Providers). Retrieval motion.
    ========================================================================== */
 (function () {
   "use strict";
@@ -11,33 +11,36 @@
   var V = window.CAViews;
   var esc = V.esc;
 
-  PMStore.seed({
-    overrides: {},
-    dismissedNotices: [],
-    calmDemo: false,
-    providers: V.clone(DEMO.providers),
-    crews: V.clone(DEMO.crews),
-    mediaProviders: V.clone(DEMO.mediaProviders),
-    spell: {
+  var _seed = (window.CAManagers && CAManagers.defaultSeed)
+    ? CAManagers.defaultSeed(DEMO)
+    : { providers: V.clone(DEMO.providers) };
+  _seed.overrides = _seed.overrides || {};
+  _seed.dismissedNotices = _seed.dismissedNotices || [];
+  _seed.calmDemo = false;
+  if (!_seed.spell && DEMO.spellcheck) {
+    _seed.spell = {
       ignored: [],
-      personal: DEMO.spellcheck.personalDictionary.slice(),
-      project: DEMO.spellcheck.projectDictionary.slice()
-    }
-  });
+      personal: (DEMO.spellcheck.personalDictionary || []).slice(),
+      project: (DEMO.spellcheck.projectDictionary || []).slice()
+    };
+  }
+  PMStore.seed(_seed);
   PMStore.init("archive");
 
   var INDEX = PMSearch.buildIndex(DEMO);
   var root = document.getElementById("ar-root");
 
   var view = { name: "home" };
+  var _motionKind = "home";
+  var _prevCat = null;
   var spy = null;
   var openAdv = {};
   var resetArmed = null;
   var openProviders = {};
   var drawerPid = null;
 
-  var MANAGERS = { providers: true, crew: true, media: true };
-  var MANAGER_CATEGORY = { terminal: "code", crew: "collaboration", media: "media", lsp: "code", skills: "tools", tools: "tools", commands: "tools", personas: "providers", context: "context", memory: "context", mcp: "tools", spellcheck: "appearance" };
+  var MANAGERS = { providers: true, storage: true, backup: true, settingsLifecycle: true, history: true, artifacts: true, worktrees: true, githubActions: true, containers: true, web: true, searchIndex: true, cleanup: true, serverShell: true };
+  var MANAGER_CATEGORY = { appearanceMgr: "appearance", artifacts: "system", backup: "system", bsd: "permissions", cleanup: "system", commands: "tools", containers: "system", context: "context", crew: "collaboration", desktop: "general", fileManager: "code", formatters: "code", githubActions: "collaboration", goal: "planning", history: "context", lsp: "code", mcp: "tools", media: "media", memory: "context", notifications: "general", permissions: "permissions", personas: "providers", plugins: "tools", providers: "providers", searchIndex: "system", serverShell: "system", settingsLifecycle: "system", skills: "tools", soundLibrary: "appearance", spellcheck: "appearance", storage: "system", teacher: "general", terminal: "code", testing: "planning", tools: "tools", web: "tools", worktrees: "collaboration" };
 
   function catById(id) {
     for (var i = 0; i < DEMO.categories.length; i++) if (DEMO.categories[i].id === id) return DEMO.categories[i];
@@ -48,12 +51,26 @@
   /* navigation                                                          */
   /* ------------------------------------------------------------------ */
 
+  function captureNavOrigin(el, label) {
+    if (window.CAMotion && CAMotion.captureOrigin) CAMotion.captureOrigin(el, label || "nav");
+  }
+
+  function resolveManagerId(id) {
+    if (!id) return id;
+    if (MANAGERS[id]) return id;
+    /* Accept CAManagers canonical ids (contextSources, crews, …) */
+    var aliases = { contextSources: "context", crews: "crew", permissionsRules: "permissions", appearanceThemes: "appearanceMgr", spell: "spellcheck" };
+    var mapped = aliases[id];
+    if (mapped && MANAGERS[mapped]) return mapped;
+    return id;
+  }
+
   function navigate(target) {
     var t = target || {};
     if (t.manager === "usage") {
       view = { name: "manager", id: "providers", pid: null, tab: "usage" };
-    } else if (t.manager && MANAGERS[t.manager]) {
-      view = { name: "manager", id: t.manager, focusSetting: t.setting || null };
+    } else if (t.manager && MANAGERS[resolveManagerId(t.manager)]) {
+      view = { name: "manager", id: resolveManagerId(t.manager), focusSetting: t.setting || null };
     } else if (t.manager && MANAGER_CATEGORY[t.manager]) {
       view = { name: "workspace", cat: MANAGER_CATEGORY[t.manager], focusSub: t.sub || null, focusSetting: t.setting || null };
     } else if (t.category) {
@@ -69,6 +86,8 @@
   }
 
   function onSearchPick(result) {
+    _motionKind = "search";
+    if (window.CAMotion) CAMotion.captureOrigin(document.activeElement, "search");
     if (result.kind === "action") {
       if (/reset demo/i.test(result.title)) { PMStore.resetDemo(); PMStore.receipt("Demo data reset to its seeded state", "ok"); }
       else if (/settings home/i.test(result.title)) { view = { name: "home" }; render(); }
@@ -132,16 +151,23 @@
   }
 
   function panelsHtml() {
-    return DEMO.categories.map(function (c) {
+    var cats = DEMO.categories.slice().sort(function (a, b) {
+      var af = a.manager && MANAGERS[a.manager] ? 0 : 1;
+      var bf = b.manager && MANAGERS[b.manager] ? 0 : 1;
+      return af - bf;
+    });
+    return cats.map(function (c) {
       var st = liveStats(c);
-      return '<button type="button" class="ar-guide" data-open-cat="' + esc(c.id) + '">' +
-        '<div class="head">' + V.icon(c.icon) + '<span class="name">' + esc(c.title) + "</span></div>" +
+      var featured = c.manager && MANAGERS[c.manager];
+      return '<button type="button" class="ar-guide' + (featured ? " is-featured" : "") + '" data-open-cat="' + esc(c.id) + '">' +
+        '<div class="head">' + V.icon(c.icon) + '<span class="name">' + esc(c.title) + "</span>" +
+        (featured ? '<span class="ca-badge" data-kind="scope">Featured</span>' : "") + "</div>" +
         '<div class="stats"><span>' + st.total + " settings</span>" +
         (st.managed ? "<span>" + st.managed + " managed</span>" : "") +
         (st.risky ? "<span>" + st.risky + " expert</span>" : "") +
         (st.changed ? "<span>" + st.changed + " changed this session</span>" : "") + "</div>" +
         '<div class="status">' + esc(c.statusSummary) + "</div>" +
-        '<span class="open-label">Open collection</span>' +
+        '<span class="open-label">' + (featured ? "Open featured collection" : "Open collection") + "</span>" +
         "</button>";
     }).join("");
   }
@@ -152,10 +178,10 @@
     }).join("");
     return '<div class="ar-home"><div class="ar-aid">' +
       '<header class="ar-aid-head">' +
-      '<div class="ar-eyebrow">Concept 04 · Archive · finding aid <span class="ar-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
+      '<div class="ar-eyebrow">Concept 04 · Archive · retrieval · Storage/Backup/Lifecycle/History/Artifacts/Worktrees/Actions/Containers/Web/Index/Cleanup/Server shell<span class="ar-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
       "<h1>Finding aid</h1>" +
       '<div class="ar-searchbox">' + V.icon("search") +
-      '<input id="ar-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search the finding aid — settings, managers, actions"></div>' +
+      '<input id="ar-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search — settings, managers, actions"></div>' +
       '<div class="ar-hits" id="ar-hits" role="listbox" hidden></div>' +
       "</header>" +
       bandHtml() +
@@ -179,6 +205,8 @@
     });
     root.querySelectorAll("[data-open-cat]").forEach(function (b) {
       b.addEventListener("click", function () {
+        captureNavOrigin(b, "guide");
+        _motionKind = "workspace";
         view = { name: "workspace", cat: b.getAttribute("data-open-cat"), focusSub: null, focusSetting: null };
         render();
       });
@@ -401,7 +429,7 @@
         "<h4 style='font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--pm-ink-faint);margin:12px 0 6px'>Models</h4>" + V.catalogHtml(p) +
         p.models.map(function (m) { return V.modelRowHtml(p, m); }).join("") +
         "<h4 style='font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--pm-ink-faint);margin:12px 0 6px'>Usage</h4>" + V.usageHtml(p) +
-        "<h4 style='font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--pm-ink-faint);margin:12px 0 6px'>Routing</h4>" + V.routingHtml(p) +
+        "<h4 style='font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--pm-ink-faint);margin:12px 0 6px'>Routing</h4>" + V.routingHtml(p) + (V.installationsHtml ? V.installationsHtml(p) : "") +
         '<button type="button" class="ca-btn" data-variant="quiet" data-diag="' + esc(p.id) + '" style="margin-top:10px">Open diagnostics drawer</button>' +
         "</div>";
     }
@@ -520,33 +548,6 @@
       '<button type="button" class="ca-btn" data-variant="quiet" data-crew-edit="' + esc(crew.id) + '">Edit composition</button>' +
       "</div></div>";
   }
-
-  function renderCrew() {
-    var crews = PMStore.get("crews", []);
-    root.innerHTML = '<div class="ar-mgr"><div class="ar-console">' +
-      '<button type="button" class="ca-btn" data-variant="quiet" id="ar-back"><svg viewBox="0 0 24 24" aria-hidden="true" style="inline-size:12px;block-size:12px"><path d="m15 5-7 7 7 7"/></svg> Board</button>' +
-      '<h1 style="margin:0;font-size:15px">Crew</h1>' +
-      '<span class="ar-mgr-note">Reusable multi-agent execution templates, owned by the Orchestrator</span></div>' +
-      '<div class="ar-mgr-scroll">' +
-      '<div class="ar-eyebrow" style="margin-block-end:10px">Concept 04 · Archive <span class="ar-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
-      '<p class="ar-mgr-note" style="margin-block-end:12px">Settings configures the policy; the Orchestrator makes the live decision. Requested composition is preserved even when current capacity admits fewer concurrent members — and a Crew picked in one thread never changes another thread.</p>' +
-      crews.map(crewHtml).join("") +
-      "</div></div>";
-    document.getElementById("ar-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    root.querySelectorAll("[data-crew-policy] [data-value]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var id = b.closest("[data-crew-policy]").getAttribute("data-crew-policy");
-        var crews = PMStore.get("crews", []).slice();
-        crews.forEach(function (c) { if (c.id === id) c.routePolicy = b.getAttribute("data-value"); });
-        PMStore.set("crews", crews);
-        PMStore.receipt("Route policy updated for the template (simulated)", "ok");
-      });
-    });
-    root.querySelectorAll("[data-crew-edit]").forEach(function (b) {
-      b.addEventListener("click", function () { PMStore.receipt("Composition editing simulated — the template was not changed", "info"); });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* MEDIA MANAGER                                                       */
   /* ------------------------------------------------------------------ */
@@ -579,41 +580,17 @@
       '<button type="button" class="ca-btn" data-variant="quiet" data-media-diag="' + esc(m.id) + '" style="margin-top:8px">Run diagnostics</button></div></details>' +
       "</div>";
   }
-
-  function renderMedia() {
-    var providers = PMStore.get("mediaProviders", []);
-    root.innerHTML = '<div class="ar-mgr"><div class="ar-console">' +
-      '<button type="button" class="ca-btn" data-variant="quiet" id="ar-back"><svg viewBox="0 0 24 24" aria-hidden="true" style="inline-size:12px;block-size:12px"><path d="m15 5-7 7 7 7"/></svg> Board</button>' +
-      '<h1 style="margin:0;font-size:15px">Media</h1>' +
-      '<span class="ar-mgr-note">Image, audio, and video routes with the same rigor as coding providers</span></div>' +
-      '<div class="ar-mgr-scroll">' +
-      '<div class="ar-eyebrow" style="margin-block-end:10px">Concept 04 · Archive <span class="ar-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
-      providers.map(mediaHtml).join("") +
-      '<p class="ar-mgr-note">A free or local route can be no-cost but rate-limited, promotional, account-required, keyless, data-sharing, subscription-included, or temporarily unavailable — the badge never just says “Free”.</p>' +
-      "</div></div>";
-    document.getElementById("ar-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    root.querySelectorAll("[data-media-fallback]").forEach(function (sel) {
-      sel.addEventListener("change", function () {
-        var id = sel.getAttribute("data-media-fallback");
-        var list = PMStore.get("mediaProviders", []).slice();
-        list.forEach(function (m) { if (m.id === id) m.fallbackRoute = sel.value; });
-        PMStore.set("mediaProviders", list);
-        PMStore.receipt("Fallback route updated (simulated)", "ok");
-      });
-    });
-    root.querySelectorAll("[data-media-setup]").forEach(function (b) {
-      b.addEventListener("click", function () { PMStore.receipt("Media setup simulated — it would open the provider connection and return to this route", "info"); });
-    });
-    root.querySelectorAll("[data-media-diag]").forEach(function (b) {
-      b.addEventListener("click", function () { PMStore.receipt("Media diagnostics simulated — no generation ran", "info"); });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* render loop                                                         */
   /* ------------------------------------------------------------------ */
 
   function render() {
+    var __kind = _motionKind || (view.name === "manager" ? "manager" : view.name === "workspace" ? "workspace" : "home");
+    if (view.name === "workspace") {
+      if (_prevCat && _prevCat !== view.cat && __kind !== "search") __kind = "category";
+      _prevCat = view.cat;
+    }
+
     if (spy) { spy.detach(); spy = null; }
     var focusingSetting = view.focusSetting;
     var focusingSub = view.focusSub;
@@ -621,13 +598,34 @@
     var st = scroller ? scroller.scrollTop : 0;
     if (view.name === "workspace") renderWorkspace();
     else if (view.name === "manager") {
-      if (view.id === "crew") renderCrew();
-      else if (view.id === "media") renderMedia();
-      else renderProviders();
+      if (view.id === "providers") renderProviders();
+      else if (window.CAManagers && CAManagers.handles(view.id)) {
+        CAManagers.mount({
+          root: root,
+          managerId: view.id,
+          chrome: { wrapClass: "ar-mgr", barClass: "ar-ws-bar", detailClass: "ar-mgr-detail", backId: "ar-back" },
+          onBack: function () { view = { name: "home" }; render(); },
+          rerender: function () { render(); }
+        });
+      } else {
+        /* shared_grammar fallback — open Providers or Home with receipt */
+        PMStore.receipt("Manager “" + view.id + "” is available via shared grammar; opening Home", "info");
+        view = { name: "home" };
+        renderHome();
+      }
     } else renderHome();
     var after = root.querySelector(".ar-box") || root.querySelector("#ar-doc") || root.querySelector(".ar-mgr-scroll") || root.querySelector(".ar-home");
     if (after && !focusingSetting && !focusingSub) after.scrollTop = st;
-  }
+  
+    if (window.CAMotion) {
+      var focusEl = null;
+      if (__kind === "search") {
+        focusEl = root.querySelector(".ca-row.ca-motion-focus") || root.querySelector("[data-focus-land]") || root.querySelector(".ca-row");
+      }
+      CAMotion.afterRender(root, __kind === "category" ? "category" : (__kind === "search" ? "search" : view.name), { focusEl: focusEl });
+      _motionKind = view.name; /* reset default */
+    }
+}
 
   PMStore.on("change", function () { render(); });
   PMStore.on("reset", function () { openAdv = {}; openProviders = {}; drawerPid = null; });

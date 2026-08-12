@@ -82,6 +82,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       kit.syncChatTier(root, env);
       var histMode =
         kit.effectiveHistoryMode
@@ -121,6 +134,9 @@
         '</span>' +
         '</div>' +
         '<div class="w3-lamps" aria-label="Status lamps">' +
+        '<span class="w3-bsd-lamp-host">' +
+        kit.bsdSlotHtml('lamp') +
+        '</span>' +
         '<span class="w3-lamp ' +
         lampClass(meta.state) +
         '" data-lamp="run" title="' +

@@ -622,7 +622,9 @@ i[data-ico] svg { width: 100%; height: 100%; }
   flex-direction: column;
   min-height: 0;
   background: var(--surface-alt);
-  border-left: 1px solid var(--border-light);
+  /* Structural panel divider (not a status accent); logical property keeps
+     the banned-pattern gate simple. */
+  border-inline-start: 1px solid var(--border-light);
 }
 .pm-chat[hidden] { display: none; }
 .pm-chat-head {
@@ -956,6 +958,11 @@ i[data-ico] svg { width: 100%; height: 100%; }
   font-weight: 600;
   color: var(--accent-primary);
 }
+[data-theme="glass-light"] .pm-status-word[data-tone="recommended"] {
+  /* The raw accent lands near 1.8:1 on light glass surfaces; keep the hue,
+     buy contrast by mixing toward the text color. */
+  color: color-mix(in srgb, var(--accent-primary) 55%, var(--text-primary));
+}
 .pm-status-word[data-tone="ok"] {
   font-weight: 500;
   color: var(--text-secondary);
@@ -971,4 +978,115 @@ i[data-ico] svg { width: 100%; height: 100%; }
 .pm-stage, .pm-chat-body, .pm-chat-composer, .pm-theme-menu, .pm-states-drawer {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--text-primary) 16%, transparent) transparent;
+}
+
+/* ====================================================================
+   TITLE-BAR NOTIFICATION STACK (canon: sole in-app notification surface)
+   Count badge on the title-bar button; sprout inbox opens beneath it.
+   ==================================================================== */
+.pm-notify-wrap {
+  /* Sits between the page tabs (which carry margin-left:auto) and the
+     control cluster; no auto margin of its own so the tabs keep their
+     right-pushed layout. */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  -webkit-app-region: no-drag;
+}
+.pm-notify-btn {
+  position: relative;
+}
+.pm-notify-count {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--accent-primary);
+  color: var(--bg-base, #16141a);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+  pointer-events: none;
+}
+@keyframes pm-notify-join {
+  0% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+.pm-notify-btn.pm-notify-join {
+  animation: pm-notify-join 220ms var(--ease-settle, ease-out);
+}
+[data-motion="reduced"] .pm-notify-btn.pm-notify-join,
+html[data-reduced-motion="1"] .pm-notify-btn.pm-notify-join {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-notify-btn.pm-notify-join { animation: none; }
+}
+.pm-notify-inbox {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 240;
+  width: 300px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 10px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--elev-3, 0 12px 36px rgba(0, 0, 0, .4));
+  scrollbar-width: thin;
+}
+.pm-notify-head {
+  font-size: var(--fs-xs, 12px);
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 2px 4px 8px;
+}
+.pm-notify-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 9px;
+  border-radius: var(--radius-sm, 7px);
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+  background: var(--surface-alt);
+}
+.pm-notify-item strong {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.pm-notify-item span {
+  font-size: var(--fs-xs, 12px);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.pm-notify-clear {
+  display: block;
+  width: 100%;
+  padding: 6px 9px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 7px);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-xs, 12px);
+  cursor: pointer;
+}
+.pm-notify-clear:hover {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+.pm-notify-clear:focus-visible,
+.pm-notify-btn:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }

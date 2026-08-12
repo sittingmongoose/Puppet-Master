@@ -21,6 +21,16 @@
        a {error:'limit'} answer shows the inline "25 messages per operation"
        note. Done exits selection (setSelecting false + clear selectedIds).
 
+   - K3Lens.openReceipt(ctx, anchorEl) -> {close, el}
+       Context admission receipt popover: Included rows (objective, recent
+       messages, project instructions, Persona capsule, tools, prior-thread
+       excerpts, attachment representation — each with size + provenance)
+       and Left-out rows (each with its reason). Excerpt rows are removable;
+       a removal persists to store 'lensReceipt.removed' and refiles the row
+       under Left out with "Removed by you". Passages admitted from
+       prior-chat search (store 'lensReceipt.admitted') render as removable
+       excerpt rows. No secrets, system prompts, or registries ever appear.
+
    Freshness: both pieces subscribe ctx 'data' events, the store 'lens'
    prefix, and store 'activeThreadId' — shaping is thread-local, so chrome
    always reflects the active thread. css prefix k3l-. No emoji.
@@ -29,6 +39,27 @@
   'use strict';
 
   const SELECT_CAP = 25; // mirrors LENS_SELECT_CAP in data.js
+
+  // --- admission receipt content ------------------------------------------------
+  // Included rows; excerpt rows (excerpt: true) plus passages admitted from
+  // prior-chat search are user-removable. Sizes/provenance are the honest
+  // fixture values of this prototype — no secrets, system prompts, registries.
+  const RECEIPT_INCLUDED = [
+    { id: 'objective', label: 'Current objective', size: '240 tokens', provenance: 'Goal record · active thread' },
+    { id: 'recent', label: 'Recent messages', size: '6.1k tokens', provenance: 'Active thread · latest turn window' },
+    { id: 'instructions', label: 'Scoped project instructions', size: '480 tokens', provenance: 'Project scope · Tastebook' },
+    { id: 'persona', label: 'Persona capsule', size: '160 tokens', provenance: 'Active Persona' },
+    { id: 'tools', label: 'Selected tools', size: '1.9k tokens', provenance: 'Tool grant · this thread' },
+    { id: 'excerpt-1', label: 'Prior-thread excerpt', size: '310 tokens', provenance: 'thread-09 · cited message', excerpt: true },
+    { id: 'excerpt-2', label: 'Prior-thread excerpt', size: '285 tokens', provenance: 'thread-06 · cited message', excerpt: true },
+    { id: 'attachment-rep', label: 'Attachment representation', size: '420 tokens', provenance: 'Draft attachment · derived in PM' }
+  ];
+  const RECEIPT_OMITTED = [
+    { label: 'Older messages → summary', reason: 'Represented by the running summary' },
+    { label: '17 unused tool schemas', reason: 'Not granted for this thread' },
+    { label: 'Unrelated logs', reason: 'Below relevance threshold' },
+    { label: 'Memories below relevance threshold', reason: 'Below relevance threshold' }
+  ];
 
   function icon(name) { return window.K3Icons.get(name); }
   function activeThreadId(ctx) { return ctx.store.get('activeThreadId', null); }
@@ -83,6 +114,56 @@
     };
   }
 
+  // --- receipt rendering ---------------------------------------------------------
+  function admittedRows(ctx) {
+    const admitted = ctx.store.get('lensReceipt.admitted', []) || [];
+    return admitted.map((a) => ({
+      id: 'admitted-' + a.threadId + '-' + a.messageId,
+      label: 'Prior-chat search passage',
+      size: a.size || '',
+      provenance: (a.provenance || 'Prior-chat search') + ' · ' + a.threadId,
+      snippet: a.snippet || '',
+      excerpt: true
+    }));
+  }
+
+  function receiptRow(row, opts) {
+    const el = document.createElement('div');
+    el.className = 'k3l-receipt-row';
+    el.setAttribute('data-testid', 'k3-lens-receipt-row');
+
+    const main = document.createElement('span');
+    main.className = 'k3l-receipt-main';
+    const label = document.createElement('span');
+    label.className = 'k3l-receipt-label';
+    label.textContent = row.label;
+    main.appendChild(label);
+    const meta = document.createElement('span');
+    meta.className = 'k3l-receipt-meta';
+    meta.textContent = opts.omitted
+      ? row.reason
+      : [row.size, row.provenance].filter(Boolean).join(' · ');
+    main.appendChild(meta);
+    if (row.snippet) {
+      const snip = document.createElement('span');
+      snip.className = 'k3l-receipt-snippet';
+      snip.textContent = row.snippet;
+      main.appendChild(snip);
+    }
+    el.appendChild(main);
+
+    if (opts.removable) {
+      const rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'k3-btn k3-btn-ghost k3l-receipt-remove';
+      rm.setAttribute('data-testid', 'k3-lens-receipt-remove');
+      rm.textContent = 'Remove';
+      rm.addEventListener('click', () => opts.onRemove(row));
+      el.appendChild(rm);
+    }
+    return el;
+  }
+
   const K3Lens = {
     button(ctx) {
       const btn = document.createElement('button');
@@ -131,6 +212,14 @@
         });
         items.push({ type: 'separator' });
         items.push({
+          label: 'View admission receipt',
+          icon: 'receipt',
+          testid: 'k3-lens-receipt-open',
+          // Menu actions are followed by closeAll(), which would kill a
+          // popover opened synchronously — defer past the close.
+          action: () => setTimeout(() => K3Lens.openReceipt(ctx, btn), 0)
+        });
+        items.push({
           label: 'Turn Off',
           icon: 'close',
           action: () => ctx.data.turnOffLens(t)
@@ -143,6 +232,67 @@
 
       btn.unmount = unsubscribe;
       return btn;
+    },
+
+    // Context admission receipt: exactly what the model was given vs left out.
+    openReceipt(ctx, anchorEl) {
+      const panel = document.createElement('div');
+      panel.className = 'k3l-receipt';
+      panel.setAttribute('data-testid', 'k3-lens-receipt');
+
+      function removeRow(row) {
+        ctx.store.set('lensReceipt.removed.' + row.id, true);
+        render();
+      }
+
+      function render() {
+        const removed = ctx.store.get('lensReceipt.removed', {}) || {};
+        panel.textContent = '';
+
+        const head = document.createElement('div');
+        head.className = 'k3l-receipt-head';
+        head.textContent = 'Context admission receipt';
+        panel.appendChild(head);
+
+        const incHead = document.createElement('div');
+        incHead.className = 'k3l-receipt-section';
+        incHead.textContent = 'Included';
+        panel.appendChild(incHead);
+
+        const included = RECEIPT_INCLUDED.concat(admittedRows(ctx));
+        included.forEach((row) => {
+          if (removed[row.id]) return; // refiled under Left out below
+          panel.appendChild(receiptRow(row, {
+            omitted: false,
+            removable: !!row.excerpt,
+            onRemove: removeRow
+          }));
+        });
+
+        const outHead = document.createElement('div');
+        outHead.className = 'k3l-receipt-section';
+        outHead.textContent = 'Left out';
+        panel.appendChild(outHead);
+
+        RECEIPT_OMITTED.forEach((row) => {
+          panel.appendChild(receiptRow(row, { omitted: true, removable: false }));
+        });
+        included.forEach((row) => {
+          if (!removed[row.id]) return;
+          panel.appendChild(receiptRow(
+            Object.assign({}, row, { reason: 'Removed by you' }),
+            { omitted: true, removable: false }
+          ));
+        });
+
+        const foot = document.createElement('div');
+        foot.className = 'k3l-receipt-foot';
+        foot.textContent = 'Artifacts open in the workspace are not admitted unless explicitly added.';
+        panel.appendChild(foot);
+      }
+
+      render();
+      return pop;
     },
 
     mountBanner(hostEl, ctx) {

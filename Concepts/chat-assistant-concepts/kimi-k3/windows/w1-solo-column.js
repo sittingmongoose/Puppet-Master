@@ -115,6 +115,31 @@
       // drawer header bar: a pin toggle that, when pressed, keeps the drawer
       // open alongside the chat (no scrim, ignores outside-click/Esc close).
       var drawerHead = el('div', 'w1-drawer-head');
+      // dock tabs [Chats · Artifacts] — one dock, tab-switched; the active
+      // tab persists per thread in surfaceView.<tid>.w1DockTab.
+      var dockTabs = el('div', 'w1-dock-tabs');
+      dockTabs.setAttribute('role', 'tablist');
+      dockTabs.setAttribute('aria-label', 'Dock content');
+      var chatsTabBtn = el('button', 'w1-dock-tab');
+      chatsTabBtn.type = 'button';
+      chatsTabBtn.setAttribute('role', 'tab');
+      chatsTabBtn.setAttribute('data-kind', 'chats');
+      chatsTabBtn.setAttribute('data-testid', 'w1-dock-tab-chats');
+      var chatsTabIc = el('span', 'w1-dock-tab-ic');
+      chatsTabIc.appendChild(icon('history'));
+      chatsTabBtn.appendChild(chatsTabIc);
+      chatsTabBtn.appendChild(el('span', 'w1-dock-tab-label', 'Chats'));
+      var artsTabBtn = el('button', 'w1-dock-tab');
+      artsTabBtn.type = 'button';
+      artsTabBtn.setAttribute('role', 'tab');
+      artsTabBtn.setAttribute('data-kind', 'artifacts');
+      artsTabBtn.setAttribute('data-testid', 'w1-dock-tab-artifacts');
+      var artsTabIc = el('span', 'w1-dock-tab-ic');
+      artsTabIc.appendChild(icon('artifact'));
+      artsTabBtn.appendChild(artsTabIc);
+      artsTabBtn.appendChild(el('span', 'w1-dock-tab-label', 'Artifacts'));
+      dockTabs.appendChild(chatsTabBtn);
+      dockTabs.appendChild(artsTabBtn);
       var drawerPin = el('button', 'k3-icon-btn w1-drawer-pin');
       drawerPin.type = 'button';
       drawerPin.setAttribute('aria-pressed', 'false');
@@ -122,10 +147,19 @@
       drawerPin.title = 'Pin chat history';
       drawerPin.setAttribute('data-testid', 'w1-history-pin');
       drawerPin.appendChild(icon('pin'));
+      drawerHead.appendChild(dockTabs);
       drawerHead.appendChild(drawerPin);
+      // one dock, two panes: Chats (history panel) and Artifacts (the shared
+      // artifact workspace surface, reparented here — never cloned).
+      var chatsPane = el('div', 'w1-dock-pane w1-dock-chats');
       var historyEl = kit.historyPanel(ctx);
+      chatsPane.appendChild(historyEl);
+      var artsPane = el('div', 'w1-dock-pane w1-dock-artifacts');
+      var artifactSurfaceEl = window.K3ArtifactWS ? window.K3ArtifactWS.surface(ctx) : null;
+      if (artifactSurfaceEl) artsPane.appendChild(artifactSurfaceEl);
       drawer.appendChild(drawerHead);
-      drawer.appendChild(historyEl);
+      drawer.appendChild(chatsPane);
+      drawer.appendChild(artsPane);
       root.appendChild(scrim);
       root.appendChild(drawer);
 
@@ -136,6 +170,13 @@
         var t = tid ? data.thread(tid) : null;
         if (!t) return null;
         var parts = [];
+        // ops conflicts lead the summary (packet: operational awareness first)
+        var opsCount = 0;
+        if (window.K3Work && window.K3Work.opsSummary) {
+          var opsSum = window.K3Work.opsSummary(tid);
+          opsCount = opsSum ? arr(opsSum.conflicts).length : 0;
+        }
+        if (opsCount) parts.push(opsCount + (opsCount === 1 ? ' ops conflict' : ' ops conflicts'));
         var goal = t.activeGoal;
         if (goal && !store.get('goalView.' + tid + '.cleared', false)) {
           parts.push('Goal: ' + humanizeGoalStatus(goal.status));
@@ -152,6 +193,11 @@
         var files = 0;
         arr(t.diffGroups).forEach(function (g) { files += arr(g.files).length; });
         if (files) parts.push(files + (files === 1 ? ' file changed' : ' files changed'));
+        if (t.capacityForecast) parts.push('Capacity forecast');
+        if (t.crew) {
+          var crewN = arr(t.crew.members).length;
+          parts.push('Crew' + (crewN ? ' · ' + crewN + (crewN === 1 ? ' role' : ' roles') : ''));
+        }
         return parts.length ? parts.join(' · ') : null;
       }
 
@@ -182,9 +228,14 @@
         }
         status.hidden = false;
         statusSummary.textContent = summary;
+        // ops/approval conflicts lead; goal/todo follow; capacity/crew after;
+        // work chips last (packet: operational awareness first).
         var nodes = [
+          kit.opsSurface ? kit.opsSurface(ctx, currentTid) : null,
           kit.goalSurface(ctx, currentTid),
           kit.todoSurface(ctx, currentTid),
+          kit.capacitySurface ? kit.capacitySurface(ctx, currentTid) : null,
+          kit.crewSurface ? kit.crewSurface(ctx, currentTid) : null,
           kit.workChips(ctx, currentTid)
         ];
         nodes.forEach(function (n) {
@@ -299,6 +350,47 @@
       });
       // outside-click closes only when not pinned
       scrim.addEventListener('click', function () { if (!drawerPinned()) closeDrawer(); });
+
+      /* ---- dock tabs [Chats · Artifacts] ------------------------------------ */
+      function dockTab() {
+        if (!currentTid) return 'chats';
+        return store.get('surfaceView.' + currentTid + '.w1DockTab', 'chats');
+      }
+      function paintDockTabs() {
+        var tab = dockTab();
+        [chatsTabBtn, artsTabBtn].forEach(function (b) {
+          var on = b.getAttribute('data-kind') === tab;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        chatsPane.hidden = tab !== 'chats';
+        artsPane.hidden = tab !== 'artifacts';
+      }
+      chatsTabBtn.addEventListener('click', function () {
+        if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (currentTid) store.set('surfaceView.' + currentTid + '.w1DockTab', 'chats');
+      });
+      artsTabBtn.addEventListener('click', function () {
+        if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (currentTid) store.set('surfaceView.' + currentTid + '.w1DockTab', 'artifacts');
+      });
+      disposers.push(store.subscribe('surfaceView', paintDockTabs));
+      // artifact opened anywhere -> the dock pins open on the Artifacts tab
+      function onArtifactWs(evt) {
+        if (!evt || evt.type !== 'artifact-ws-changed') return;
+        var tid = evt.threadId || currentTid;
+        var ws = tid ? store.get('artifactWs.' + tid, null) : null;
+        if (ws && ws.open) {
+          if (tid && currentTid !== tid) return; // other thread's artifact
+          store.set('surfaceView.' + tid + '.w1DockTab', 'artifacts');
+          if (!drawerPinned()) store.set('surfaceView.' + tid + '.w1HistoryPinned', true);
+          openDrawer();
+          paintDockTabs();
+        }
+      }
+      ctx.on('data', onArtifactWs);
+      disposers.push(function () { ctx.off('data', onArtifactWs); });
+      paintDockTabs();
 
       /* ---- boot + teardown --------------------------------------------------- */
       drawer.style.display = 'none';

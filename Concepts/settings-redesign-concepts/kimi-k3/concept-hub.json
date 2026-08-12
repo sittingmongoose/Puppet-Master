@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "kimi-k3",
+  "presentation": "entries",
+  "order": 110,
+  "widthControl": {
+    "enabled": true,
+    "label": "Page width",
+    "role": "page",
+    "min": 700,
+    "max": 2500,
+    "step": 10,
+    "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "gallery",
+      "title": "kimi-k3 — Settings Redesign Bakeoff Gallery",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "bakeoff", "gallery"],
+      "order": 0
+    },
+    {
+      "id": "concept-01-concord",
+      "title": "Concept 01 — Concord (kimi-k3)",
+      "path": "concept-01-concord.html",
+      "openPath": "concept-01-concord.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "editorial", "dossier", "context", "memory", "permissions"],
+      "order": 10
+    },
+    {
+      "id": "concept-02-resonance",
+      "title": "Concept 02 — Resonance (kimi-k3)",
+      "path": "concept-02-resonance.html",
+      "openPath": "concept-02-resonance.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "studio", "console", "notifications", "sounds", "appearance"],
+      "order": 20
+    },
+    {
+      "id": "concept-03-foundry",
+      "title": "Concept 03 — Foundry (kimi-k3)",
+      "path": "concept-03-foundry.html",
+      "openPath": "concept-03-foundry.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "engineering", "bench", "developer", "terminal", "lsp"],
+      "order": 30
+    },
+    {
+      "id": "concept-04-vault",
+      "title": "Concept 04 — Vault (kimi-k3)",
+      "path": "concept-04-vault.html",
+      "openPath": "concept-04-vault.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "ledger", "timeline", "storage", "backup", "lifecycle"],
+      "order": 40
+    }
+  ]
+}

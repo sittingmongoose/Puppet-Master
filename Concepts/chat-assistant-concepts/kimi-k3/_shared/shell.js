@@ -96,9 +96,27 @@
     titleProject.textContent = 'Tastebook';
     titleLeft.append(railToggle, titleName, titleProject);
     const titleRight = el('div', 'k3s-title-right');
+    // Canonical notification boundary: the title-bar stack is the ONLY
+    // in-app notification surface (no chat-side panel, no corner toasts).
+    const notifBtn = el('button', 'k3s-icon-btn k3s-notif', 'k3s-notifications');
+    notifBtn.type = 'button';
+    notifBtn.setAttribute('aria-label', 'Notifications');
+    notifBtn.title = 'Notifications';
+    notifBtn.style.position = 'relative';
+    notifBtn.appendChild(icon('bell-stack'));
+    const notifBadge = el('span', 'k3s-notif-badge', 'k3s-notif-count');
+    notifBadge.style.cssText =
+      'position:absolute;top:1px;right:0;min-width:14px;height:14px;padding:0 3px;' +
+      'box-sizing:border-box;border-radius:7px;background:var(--accent-primary);' +
+      'color:var(--accent-contrast,#fff);font-size:9px;font-weight:700;line-height:14px;' +
+      'text-align:center;pointer-events:none;';
+    notifBadge.hidden = true;
+    notifBtn.appendChild(notifBadge);
     const agentTag = el('span', 'k3-agent-tag');
     agentTag.textContent = 'Kimi K3 concept prototype';
-    titleRight.appendChild(agentTag);
+    // Hub contract: renders data-concept-model="Kimi K3" on the visible tag.
+    agentTag.setAttribute('data-concept-model', 'Kimi K3');
+    titleRight.append(notifBtn, agentTag);
     titlebar.append(titleLeft, titleRight);
 
     // 2. Main row
@@ -249,7 +267,7 @@
         tab.setAttribute('aria-selected', isSel ? 'true' : 'false');
         tab.tabIndex = 0;
         const ic = el('span', 'k3s-tab-ic');
-        ic.appendChild(icon(t.kind === 'browser' ? 'browser' : 'artifact'));
+        ic.appendChild(icon(t.kind === 'browser' ? 'browser' : t.kind === 'settings' ? 'settings' : 'artifact'));
         const lab = el('span', 'k3s-tab-label');
         lab.textContent = t.title || t.id || 'Untitled';
         const closeBtn = el('button', 'k3s-tab-close');
@@ -279,6 +297,7 @@
     function renderTabBody(t) {
       tabBody.innerHTML = '';
       if (!t) return;
+      if (t.kind === 'settings') { renderSettingsTabBody(t); return; }
       const h = el('h3', 'k3s-tab-title');
       h.textContent = t.title || t.id || 'Untitled';
       const meta = el('div', 'k3s-tab-meta');
@@ -287,6 +306,184 @@
       const note = el('p', 'k3s-tab-note');
       note.textContent = 'Opened in an editor tab. Editor internals are out of scope for this prototype.';
       tabBody.append(h, meta, note);
+    }
+
+    // Fake Provider Settings editor tab (opened on 'settings-deeplink').
+    function renderSettingsTabBody(t) {
+      const h = el('h3', 'k3s-tab-title');
+      h.textContent = t.title || 'Provider Settings';
+      const meta = el('div', 'k3s-tab-meta');
+      meta.textContent = 'Settings';
+      const ret = store ? store.get('settingsReturn', null) : null;
+      const note = el('p', 'k3s-tab-note');
+      note.textContent = 'Provider Settings — prototype placeholder' +
+        (ret && ret.routeKey ? ' · ' + ret.routeKey : '');
+      const back = el('button', 'k3s-btn', 'k3s-settings-return');
+      back.type = 'button';
+      back.textContent = 'Return to thread';
+      back.addEventListener('click', () => {
+        const r = store ? store.get('settingsReturn', null) : null;
+        store.set('openTabs', currentTabs().filter((x) => x && x.id !== 'provider-settings'));
+        store.set('settingsReturn', null);
+        if (r && r.threadId && ctx.data && typeof ctx.data.thread === 'function' && ctx.data.thread(r.threadId)) {
+          store.set('activeThreadId', r.threadId);
+        }
+      });
+      tabBody.append(h, meta, note, back);
+    }
+
+    /* ---- title-bar notification stack ------------------------------------- */
+    function notifList() {
+      const n = store && store.get('notifications', []);
+      return Array.isArray(n) ? n : [];
+    }
+
+    function saveNotifs(list) {
+      if (store) store.set('notifications', list);
+    }
+
+    function renderNotifBadge() {
+      if (unmounted) return;
+      const c = notifList().filter((n) => n && !n.read).length;
+      notifBadge.hidden = c === 0;
+      notifBadge.textContent = c > 9 ? '9+' : String(c);
+      const label = c ? 'Notifications (' + c + ' unread)' : 'Notifications';
+      notifBtn.setAttribute('aria-label', label);
+      notifBtn.title = label;
+    }
+
+    function notifIcon(kind) {
+      if (kind === 'approval') return 'shield';
+      if (kind === 'provider-setup') return 'settings';
+      if (kind === 'sync' || kind === 'offline') return 'wifi-off';
+      return 'bell-stack';
+    }
+
+    function relTime(at) {
+      const t = typeof at === 'number' ? at : Date.parse(at);
+      if (!t || isNaN(t)) return '';
+      const s = Math.max(0, Math.round((Date.now() - t) / 1000));
+      if (s < 45) return 'just now';
+      const m = Math.round(s / 60);
+      if (m < 60) return m + 'm ago';
+      const h = Math.round(m / 60);
+      if (h < 24) return h + 'h ago';
+      return Math.round(h / 24) + 'd ago';
+    }
+
+    function openInbox() {
+      const panel = el('div', 'k3s-inbox-panel');
+      panel.style.cssText = 'display:flex;flex-direction:column;gap:6px;max-height:inherit;';
+      const head = el('div', 'k3s-inbox-head');
+      head.style.cssText = 'display:flex;align-items:center;gap:8px;';
+      const headTitle = el('span', 'k3s-inbox-title');
+      headTitle.style.cssText = 'font-weight:650;flex:1 1 auto;';
+      headTitle.textContent = 'Notifications';
+      const markAll = el('button', 'k3s-btn', 'k3s-inbox-mark-all');
+      markAll.type = 'button';
+      markAll.textContent = 'Mark all read';
+      head.append(headTitle, markAll);
+      const list = el('div', 'k3s-inbox-list ' + window.K3UI.scrollClass);
+      list.style.cssText = 'overflow-y:auto;display:flex;flex-direction:column;gap:4px;min-width:260px;';
+      panel.append(head, list);
+
+      const pop = window.K3UI.popover(notifBtn, panel, { className: 'k3s-inbox' });
+      pop.el.setAttribute('data-testid', 'k3s-inbox');
+
+      function renderRows() {
+        const items = notifList().slice().sort((a, b) => {
+          const ta = a && (typeof a.at === 'number' ? a.at : Date.parse(a.at)) || 0;
+          const tb = b && (typeof b.at === 'number' ? b.at : Date.parse(b.at)) || 0;
+          return tb - ta;
+        });
+        list.innerHTML = '';
+        if (!items.length) {
+          const empty = el('div', 'k3-footnote');
+          empty.textContent = 'No notifications.';
+          list.appendChild(empty);
+          return;
+        }
+        items.forEach((n) => {
+          if (!n) return;
+          const row = el('div', 'k3s-inbox-row' + (n.read ? ' is-read' : ''));
+          row.style.cssText =
+            'display:flex;align-items:flex-start;gap:8px;padding:6px 7px;border-radius:var(--radius-sm,6px);' +
+            'background:' + (n.read ? 'transparent' : 'var(--surface)') + ';' +
+            'border:var(--border-width,1px) solid var(--border-light,var(--border));';
+          const ic = el('span', 'k3s-inbox-ic');
+          ic.style.cssText = 'flex:0 0 auto;color:var(--text-muted);margin-top:1px;';
+          ic.appendChild(icon(notifIcon(n.kind)));
+          const body = el('div', 'k3s-inbox-body');
+          body.style.cssText = 'flex:1 1 auto;min-width:0;';
+          const title = el('div', 'k3s-inbox-row-title');
+          title.style.cssText = 'font-weight:' + (n.read ? '500' : '650') + ';';
+          title.textContent = n.title || 'Notification';
+          const text = el('div', 'k3s-inbox-row-body');
+          text.style.cssText = 'color:var(--text-secondary);font-size:var(--fs-xs,11px);';
+          text.textContent = n.body || '';
+          const time = el('div', 'k3s-inbox-row-time');
+          time.style.cssText = 'color:var(--text-muted);font-size:var(--fs-2xs,10px);margin-top:1px;';
+          time.textContent = relTime(n.at);
+          body.append(title, text, time);
+          const actions = el('div', 'k3s-inbox-actions');
+          actions.style.cssText = 'flex:0 0 auto;display:flex;flex-direction:column;gap:4px;';
+          const openBtn = el('button', 'k3s-btn', 'k3s-inbox-open');
+          openBtn.type = 'button';
+          openBtn.textContent = 'Open';
+          openBtn.addEventListener('click', () => {
+            saveNotifs(notifList().map((x) => (x && x.id === n.id ? Object.assign({}, x, { read: true }) : x)));
+            if (n.threadId && n.messageId) {
+              ctx.emit('reveal-message', { threadId: n.threadId, messageId: n.messageId });
+            }
+            pop.close();
+          });
+          const dismissBtn = el('button', 'k3s-btn', 'k3s-inbox-dismiss');
+          dismissBtn.type = 'button';
+          dismissBtn.textContent = 'Dismiss';
+          dismissBtn.addEventListener('click', () => {
+            saveNotifs(notifList().filter((x) => x && x.id !== n.id));
+            renderRows();
+          });
+          actions.append(openBtn, dismissBtn);
+          row.append(ic, body, actions);
+          list.appendChild(row);
+        });
+      }
+
+      markAll.addEventListener('click', () => {
+        saveNotifs(notifList().map((x) => (x ? Object.assign({}, x, { read: true }) : x)));
+        renderRows();
+      });
+      renderRows();
+    }
+
+    notifBtn.addEventListener('click', openInbox);
+
+    // Provider-setup deep link: open a fake Provider Settings editor tab and
+    // record a title-bar notification (deduped per route key).
+    function onSettingsDeeplink(evt) {
+      if (!evt || evt.type !== 'settings-deeplink') return;
+      const ret = store.get('settingsReturn', null) || {};
+      const routeKey = evt.routeKey || ret.routeKey || 'Provider route';
+      if (!currentTabs().some((t) => t && t.id === 'provider-settings')) {
+        store.set('openTabs', currentTabs().concat([
+          { id: 'provider-settings', title: 'Provider Settings', kind: 'settings' }
+        ]));
+      }
+      selectedTabId = 'provider-settings';
+      renderTabs();
+      const dup = notifList().some((n) => n && n.kind === 'provider-setup' && n.routeKey === routeKey);
+      if (!dup) {
+        saveNotifs(notifList().concat([{
+          id: 'notif-provider-' + String(routeKey).replace(/[^a-z0-9]+/gi, '-'),
+          kind: 'provider-setup',
+          title: 'Provider setup required',
+          body: routeKey + ' needs attention',
+          at: Date.now(),
+          read: false,
+          routeKey: routeKey
+        }]));
+      }
     }
 
     /* ---- events ----------------------------------------------------------- */
@@ -302,7 +499,12 @@
     ctx.on('env', onEnv);
     disposers.push(() => ctx.off('env', onEnv));
 
-    if (store && store.subscribe) disposers.push(store.subscribe('openTabs', renderTabs));
+    if (store && store.subscribe) {
+      disposers.push(store.subscribe('openTabs', renderTabs));
+      disposers.push(store.subscribe('notifications', renderNotifBadge));
+    }
+    ctx.on('data', onSettingsDeeplink);
+    disposers.push(() => ctx.off('data', onSettingsDeeplink));
 
     // Esc while popped out docks the chat (bubble phase: popups' capture-phase
     // Esc handler stops propagation first, so an open menu eats the key).
@@ -365,6 +567,7 @@
 
     syncEnv(ctx.env);
     renderTabs();
+    renderNotifBadge();
 
     return inst;
   }

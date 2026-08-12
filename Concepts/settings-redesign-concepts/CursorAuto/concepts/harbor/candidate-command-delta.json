@@ -1,0 +1,478 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-01-harbor",
+  "model": "CursorAuto",
+  "source_register": "CANDIDATE_COMMAND_ID_REGISTER.json (packet 2026-08-08)",
+  "census_source": "Plans/UI_Command_Catalog.md (read-only, grepped 2026-08-11)",
+  "note": "Provisional. No canon IDs minted; reuse/retire/conflict flags only.",
+  "preserve_or_reuse": [
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "cmd.usage.refresh",
+    "cmd.usage.export"
+  ],
+  "retire_or_alias": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "reason": "old chip/bloom architecture; preserve compatibility alias only if needed"
+    }
+  ],
+  "entries": [
+    {
+      "candidate_id": "cmd.settings.open",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.navigate",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.search.focus",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.search.select_result",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.category.select",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.subcategory.select",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.setting.focus",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.manager.open",
+      "census": "candidate",
+      "family": "navigation",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.value.set",
+      "census": "candidate",
+      "family": "values",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.default.restore",
+      "census": "candidate",
+      "family": "values",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.scope.inspect",
+      "census": "candidate",
+      "family": "values",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.export",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.import.preview",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.import.apply",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.import.rollback",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.reset.preview",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.reset.apply",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.copy_from_project.preview",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.copy_from_project.apply",
+      "census": "candidate",
+      "family": "lifecycle",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.scan",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.select",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.install",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.update",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.repair",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.rollback",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.installation.verify",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.connection.add",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.connection.authenticate",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.connection.reconnect",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.provider.catalog.refresh",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.model.favorite.set",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.model.alias.set",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.model.priority.set",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.model.visibility.set",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.memory.open",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.memory.verify",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.memory.edit",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.memory.delete",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.memory.restore",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.persona.manage",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.crew.template.create",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.crew.template.update",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.crew.template.delete",
+      "census": "candidate",
+      "family": "memory_persona_crew",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.permissions.rule.add",
+      "census": "candidate",
+      "family": "permissions",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.permissions.rule.update",
+      "census": "candidate",
+      "family": "permissions",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.permissions.rule.reorder",
+      "census": "candidate",
+      "family": "permissions",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.permissions.rule.delete",
+      "census": "candidate",
+      "family": "permissions",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.permissions.rule.test",
+      "census": "candidate",
+      "family": "permissions",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.upload",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.import_pack",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.preview",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.delete",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.sound.export",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.notifications.destination.test",
+      "census": "candidate",
+      "family": "notifications",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.theme.create",
+      "census": "candidate",
+      "family": "appearance",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.theme.import",
+      "census": "candidate",
+      "family": "appearance",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.theme.export",
+      "census": "candidate",
+      "family": "appearance",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.theme.preview",
+      "census": "candidate",
+      "family": "appearance",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.theme.apply",
+      "census": "candidate",
+      "family": "appearance",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.commands.custom.create",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.commands.custom.update",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.commands.custom.delete",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.commands.custom.dry_run",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.shortcuts.bind",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.shortcuts.reset",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.shortcuts.import",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.shortcuts.export",
+      "census": "candidate",
+      "family": "commands_shortcuts",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.mcp.server.add",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.mcp.server.restart",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.lsp.server.add",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.lsp.server.restart",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.formatter.add",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.formatter.test",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.storage.backup.open",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.artifact.manager.open",
+      "census": "candidate",
+      "family": "resources",
+      "note": "Provisional packet candidate; census Plans/UI_Command_Catalog.md read-only 2026-08-11. Exact-token reuse preferred when present (e.g. cmd.settings.bloom.open exists and is retire/alias)."
+    },
+    {
+      "candidate_id": "cmd.settings.bloom.open",
+      "census": "retire_or_alias",
+      "family": "navigation",
+      "note": "Exact catalog match in Plans/UI_Command_Catalog.md \u2014 retire or alias only; do not mint a replacement bloom surface."
+    }
+  ]
+}

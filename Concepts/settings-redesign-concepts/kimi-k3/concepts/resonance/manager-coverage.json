@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "resonance",
+  "model": "kimi-k3",
+  "groups": [
+    {
+      "id": "core",
+      "classification": "demonstrated",
+      "managers": {
+        "Settings Home": { "status": "demonstrated", "where": "Dashboard Home: master-bus search, status tiles, three notice groups, destination cards, recents, calm state" },
+        "Settings Search": { "status": "demonstrated", "where": "Typed fuzzy results across all kinds" },
+        "Settings Workspace": { "status": "demonstrated", "where": "Console-panel sections, left nav, scrollspy, deep links, Back/forward" },
+        "Provider/Account/Model/Installation": { "status": "demonstrated", "where": "Providers manager in console language; all 9 families, 17 fixtures" },
+        "Ordinary setting grammar": { "status": "demonstrated", "where": "Shared rowHtml across workspace and manager surfaces" }
+      }
+    },
+    {
+      "id": "concept_2",
+      "classification": "demonstrated",
+      "managers": {
+        "Notifications & Sounds": { "status": "demonstrated", "where": "Destination cards with per-kind fields, masked receipted test sends, event routing matrix, quiet/focus tab" },
+        "Sound Library/Uploads/Packs": { "status": "demonstrated", "where": "Waveform tiles with metadata, upload/replace/delete, event mappings, PeonPing/OpenPeon pack import with three check states" },
+        "Appearance": { "status": "demonstrated", "where": "Theme studio: hover preview + commit, family×Light/Dark/Auto rows, TOML editor with diagnostics and fallback, theme-locked row" },
+        "Spellcheck & Dictionaries": { "status": "demonstrated", "where": "Live demo paragraph with suggestions, dictionaries, source tri-state, grammar opt-in disclosure; no autocorrect" },
+        "Desktop/Tray/Window": { "status": "demonstrated", "where": "Tray, restore, Activity Bar, limits, and history groups with edit deep links" },
+        "Teacher/Help": { "status": "demonstrated", "where": "Explain-this-screen + guided coachmark overlay with safe handoff into a real deep link" }
+      }
+    },
+    {
+      "id": "concept_1",
+      "classification": "shared_grammar",
+      "managers": {
+        "Context & Instructions": { "status": "shared_grammar", "where": "Context and Memory workspace rows" },
+        "Memory": { "status": "shared_grammar", "where": "Assistant memory rows (enable/review/half-life)" },
+        "Personas": { "status": "shared_grammar", "where": "Persona default rows" },
+        "Goal & Automation": { "status": "shared_grammar", "where": "Goal defaults/verification rows" },
+        "Crew": { "status": "shared_grammar", "where": "Crew default rows" },
+        "Permissions & FileSafe": { "status": "shared_grammar", "where": "Permissions and Security workspace rows" },
+        "Back Seat Driver": { "status": "shared_grammar", "where": "BSD mode row in Goal and Automation" }
+      }
+    },
+    {
+      "id": "concept_3",
+      "classification": "shared_grammar",
+      "managers": {
+        "File Manager/Editor": { "status": "shared_grammar", "where": "Files rows in Terminal and Editor" },
+        "Terminal": { "status": "shared_grammar", "where": "Terminal profile/scrollback rows" },
+        "LSP": { "status": "shared_grammar", "where": "Developer Tools language-server rows" },
+        "Formatters": { "status": "shared_grammar", "where": "Formatting rows" },
+        "Commands & Shortcuts": { "status": "shared_grammar", "where": "Foundry family" },
+        "MCP": { "status": "shared_grammar", "where": "Developer Tools MCP rows" },
+        "Skills": { "status": "shared_grammar", "where": "Foundry family" },
+        "Plugins": { "status": "shared_grammar", "where": "Foundry family" },
+        "Tools": { "status": "shared_grammar", "where": "Foundry family" },
+        "Testing & Debug": { "status": "shared_grammar", "where": "Foundry family" }
+      }
+    },
+    {
+      "id": "concept_4",
+      "classification": "shared_grammar",
+      "managers": {
+        "Storage & Retention": { "status": "shared_grammar", "where": "System and Storage rows" },
+        "Backup & Restore": { "status": "shared_grammar", "where": "Snapshot rows" },
+        "Settings Lifecycle": { "status": "shared_grammar", "where": "Reset row; Vault owns the stepped flow" },
+        "History & Sessions": { "status": "shared_grammar", "where": "Startup restore rows" },
+        "Runtime Artifacts": { "status": "shared_grammar", "where": "Diagnostics bundle row" },
+        "Source Control/Worktrees": { "status": "shared_grammar", "where": "Source Control rows" },
+        "GitHub Actions": { "status": "shared_grammar", "where": "Forge connection row" },
+        "Containers & Registries": { "status": "shared_grammar", "where": "Vault family" },
+        "Web/Search/Fetch": { "status": "shared_grammar", "where": "Web extraction role row" },
+        "Project Search Index": { "status": "shared_grammar", "where": "Context project-code row" },
+        "Workspace Cleanup": { "status": "shared_grammar", "where": "Storage pressure row" },
+        "Future Server Module Shell": { "status": "deferred_named_owner", "owner": "Server host owner", "contract": "Insertion accepts manager module, deep links, status cards, command wiring" }
+      }
+    }
+  ],
+  "missing": []
+}

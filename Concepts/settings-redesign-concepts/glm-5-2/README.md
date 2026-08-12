@@ -1,82 +1,60 @@
-# GLM-5.2 — Puppet Master Settings Redesign Bakeoff
+# GLM-5.2 — Puppet Master Settings Redesign Bakeoff (Final Cumulative)
 
-Four genuinely different interactive Settings redesign concepts for Puppet Master. This is a concept bakeoff, not an implementation pass. No concept is ranked here.
+Four genuinely different interactive Settings concepts for Puppet Master, built against the **PM_Settings_Bakeoff_Final_Cumulative_2026-08-08** packet. This is concept work, not an implementation pass. No concept is ranked here.
 
-- **Model:** GLM-5.2 (folder `glm-5-2`, normalizes to `glm52`)
+- **Model:** GLM-5.2 (folder `glm-5-2`)
 - **Topic:** `settings-redesign`
-- **Open via ConceptHub:** `index.html` (workspace / comparison surface), or open any concept directly.
+- **Open via ConceptHub:** `index.html` (comparison surface), or open any concept directly.
 
 ## The four concepts
 
-| # | Concept | IA thesis | Search treatment | Workspace model | Motion | Manager deep-dives |
-|---|---------|-----------|------------------|-----------------|--------|--------------------|
-| 01 | **Control Room** | Settings as mission control — one dominant search is the primary verb; destinations are large editorial panels. | Dominant omni-search bar atop Home; results restructure Home; deep-links. | Book-TOC: left vertical category index + continuous document. | Editorial cinematic — staggered reveals, settle-then-text, soft focus flash. | Memory · MCP |
-| 02 | **Atlas** | Settings is territory to navigate, not a list to filter — regions with boundaries and a you-are-here marker; size encodes density. | Persistent Cmd+K command overlay (top-center); selecting flies the viewport to the region. | Focus + context: one region fills the canvas, compact minimap keeps the whole map visible. | Cartographic — smooth zoom/pan, scale+position continuity. | Crew · Skills/Plugins/Tools |
-| 03 | **Stack** | Settings never navigates away — one surface that expands; disclosure is the whole model. | Search is the head of the single stack; typing filters the stack inline. | Expand-in-place: destinations are expandable rows that grow into the full workspace; one open at a time. | Push/pop depth — FLIP reorders, height-settles-then-content. | Personas · Context & Instructions |
-| 04 | **Stream** | Settings is a river to read and jump within. | Search filters/jumps the stream; selecting scrolls the river to the section. | Continuous document; destinations are named sections; managers are channels within their section. | Scroll-linked flow — momentum-eased jumps; nothing animates when calm. | LSP · Terminal · Media |
+Every concept includes the full quiet PM shell, a search-centric Settings Home, cross-category fuzzy search, the full Settings Workspace (one category at a time, continuous document, category/subcategory navigation, scrollspy, deep links), the **Provider / Account / Model / Installation** manager, representative setting rows (9-state model), persistent demo state, all eight themes, reduced motion, and narrow/squeezed (760 px) layouts. Each concept additionally **owns** a distinct bucket of manager families, demonstrated as full deep demos; the four concepts **collectively** prove the complete coverage matrix with no family missing.
 
-Every concept also renders the **Provider/Agent/Model** manager in full, and the union of deep-dives across the four covers **all nine** candidate managers (Memory, Personas, Crew, Context & Instructions, MCP, LSP, Skills/Plugins/Tools, Terminal, Media).
+| # | Concept | IA thesis | Search treatment | Workspace model | Motion | Family bucket owned |
+|---|---------|-----------|------------------|-----------------|--------|---------------------|
+| 01 | **Control Room** | Settings as mission control — one dominant search is the primary verb; destinations are large editorial panels. | Dominant omni-search atop Home; results cascade; deep-links. | Book-TOC: left category index + continuous document. | Editorial cinematic — staggered reveals, settle-then-text. | Context · Memory · Personas · Goal & Automation · Crew · Permissions/FileSafe · Back Seat Driver |
+| 02 | **Atlas** | Settings is territory to navigate, not a list to filter — regions with boundaries and a you-are-here marker; size encodes density. | Persistent Cmd+K overlay (top-center); selecting flies the viewport to the region. | Focus + context: one region fills the canvas, compact minimap keeps the map visible. | Cartographic — smooth zoom/pan, scale+position continuity. | Notifications & Sounds · Sound Library/Uploads/Packs · Appearance · Spellcheck/Dictionaries · Desktop/Tray/Window · Teacher/Help |
+| 03 | **Stack** | Settings never navigates away — one surface that expands; disclosure is the whole model. | Search is the head of the single stack; typing filters inline. | Expand-in-place: destinations are expandable rows; one open at a time. | Push/pop depth — FLIP reorder, height-settles-then-content. | File Manager/Editor · Terminal · LSP · Formatters · Commands & Shortcuts · MCP · Skills/Plugins/Tools · Testing & Debug |
+| 04 | **Stream** | Settings is a river to read and jump within. | Search filters/jumps the stream; selecting scrolls to the section. | Continuous document; destinations are named sections; managers are channels. | Scroll-linked flow — momentum-eased jumps; nothing animates when calm. | Storage & Retention · Backup & Restore · Settings Lifecycle · History & Sessions · Runtime Artifacts · Source Control/Worktrees · GitHub Actions · Containers/Registries · Web/Search/Fetch · Project Search Index · Workspace Cleanup · Future Server module shell (deferred) |
 
-## What every concept shares
+Provider/Account/Model/Installation, Settings Home, Search, Workspace, and the ordinary setting-row grammar are **core** and appear in every concept.
 
-- **Search is central; no primary category pills.** Destinations read as places you open (title + purpose + status + open affordance), never filter chips.
-- **No emoji** (inline SVG icons only), **no colored left-side status borders**, **no raw internal labels**, **no clipped text**, **no fake no-op actions**.
-- **All eight themes** (Friendly/Glass/Retro/Basic × Dark/Light) plus **reduced motion**. IA + semantic status language is constant across themes; only material, typography, radius, border, shadow, and motion flavor differ.
-- **Required narrow/squeezed (760px) and surrounding-shell states**, with the quiet fake Puppet Master shell always present (top + bottom bars never removed for embed).
-- **Uniform manager language** — every dedicated manager renders through one shared shell (search/filter, add/connect, health summary, resource rows, requested-vs-effective state, loading/empty/error/managed/unavailable states, logs/diagnostics, consistent motion).
-- **Realistic shared demo data** (`assets/demo-data.js` — one source of truth): Provider→Account→Connection→Product→Model hierarchy, connection groups, multi-account + CLI profiles, continuously-refreshed catalogs, capability evidence, Memory Gists with half-life, Personas with scope, Crew requested-vs-effective, Context admitted/omitted, MCP/LSP/Skills/Terminal/Media resources, and a settings-inventory subset exercising every required row state.
-- **Slint-portable** — semantic state is kept separate from DOM geometry; glass uses one backdrop blur over a pre-baked wallpaper (the PMConcept7 technique); no DOM measurement as the source of semantic state, no nested backdrop-filter stacks, no SVG filters, no browser-only physics, no CSS-only behavior.
+## Family ownership is explicit in each concept
 
-## Functional controls
+Each Home renders an **owned-families strip** ("Deep demos — this concept owns") of destination-control cards (not filter pills) that open the concept's owned managers. The full settings surface (all categories, all managers) stays navigable in every concept via category navigation and search; non-owned families are reachable through the shared manager grammar (lighter). This satisfies "collectively prove every family" plus per-concept ownership with no `missing` classification.
 
-- **Search** — live fuzzy discovery across settings/categories/managers/destinations with deep-link jump to the owner category + setting (verified).
-- **Category/subcategory navigation** — TOC / minimap / subnav / landmark rail depending on concept, with controlled jump and IntersectionObserver scrollspy (no oscillation).
-- **Theme switcher** (all 8) and **reduced-motion** toggle, persisted via localStorage.
-- **Shell toggles** — left rail open/closed, Assistant panel open/closed (grid reflows; no clipping).
-- **Provider/Agent/Model** — refresh (preserves last-known-good rows during loading), reconnect (returns a visible simulated result), model favorite/alias, model options menu exposing effort + Normal/Fast only when supported, role assignments with requested-vs-effective.
-- **Manager actions** — every manager action returns either a visible simulated result or an honest unavailable state.
-- **Settings rows** — toggle/select/slider/text exercising Default / Recommended / Inherited / Auto / Not-configured / Managed / Custom / Unavailable / Effective-differs + exposure levels.
-- **Spellcheck** — subtle underline in prose fields, no autocorrect (HTML `spellcheck` simulates the concept; production needs a Slint-portable spelling-service abstraction).
+## What every concept shares (shared product architecture)
 
-## File layout
+`assets/` is the shared product architecture all four concepts build on:
 
-```
-Concepts/settings-redesign-concepts/glm-5-2/
-├─ concept-hub.json            # schemaVersion 1 · page width role · hybrid presentation
-├─ concept-hub-bridge.js       # ConceptHub bridge (pm-concept-ready / pm-concept-state)
-├─ index.html                  # comparison surface (gallery)
-├─ concept-01-control-room.html
-├─ concept-02-atlas.html
-├─ concept-03-stack.html
-├─ concept-04-stream.html
-├─ assets/
-│  ├─ themes.css               # 8 themes + reduced motion + density tokens
-│  ├─ shell.css                # quiet PM shell + universal primitives + settings rows
-│  ├─ managers.css             # uniform manager shell styling
-│  ├─ demo-data.js             # canonical data (single source of truth)
-│  ├─ icons.svg.js             # inline SVG icon library (no emoji)
-│  ├─ state.js                 # theme reducer, search, scrollspy/jump core
-│  ├─ shared.js                # shell + settings-row + manager-promo renderers
-│  └─ managers.js              # uniform manager shell + 10 manager renderers
-├─ README.md                   # this file
-├─ FINDINGS.md                 # IA choices, simulations, Slint risks (no ranking)
-├─ IMPACT_REGISTER.json        # Plans/inventory/command/wiring/schema impacts (record only)
-└─ TEST_REPORT.md              # test matrix results
-```
+- `themes.css` — eight themes (Friendly / Glass / Retro / Basic × light/dark) + reduced-motion hard kill.
+- `shell.css` — the quiet PM shell (top bar, activity bar, rail, chat, footer) + universal primitives (`.btn`, `.chip`, `.sdot`, `.field`, `.switch`, `.set-row`, …). Status is shown with circular status dots, **never** left accent borders.
+- `state.js` — theme reducer, navigation core (`openCategory/openSub/openManager/focusSub`), non-oscillating IntersectionObserver scrollspy, fuzzy cross-category search, `localStorage` persistence.
+- `shared.js` — shell renderers, the 9-state `SettingRow`, exposure control, theme picker, prose/spellcheck field, and the owned-families strip.
+- `managers.js` — the uniform `M.shell()` manager grammar + **35 dedicated managers** (10 baseline + 25 final-cumulative families) + a generic resource-row helper, with every action functional (no decorative controls).
+- `managers.css`, `icons.svg.js` (SVG only, no emoji), `motion.js`, `spellcheck.js`.
 
-## Validation
+## Coverage of the packet
 
-```
+- **Provider fixtures (17):** CLI found/ready, CLI signed-out, multiple installations (one selected, one shadowed), unknown-owner manual-only, explicit Install from official source, update-available Ask-first, update-scheduled-when-idle, verification-failed + rollback, Claude CLI OAuth (CLI-owned), OpenAI PM-direct OAuth, API key, OpenCode external server, Free Models needing setup, usage-unavailable-but-ready, catalog refresh last-known-good, account priority/fallback requested-vs-effective, Fast/Normal + effort variation.
+- **Auth boundary:** Claude CLI & Antigravity CLI OAuth are CLI-owned; PM-direct OAuth only for OpenAI/Codex, GitHub, Copilot.
+- **All manager families** in `MANAGER_COVERAGE_MATRIX.json` are demonstrated (owned by one concept) or shared-grammar; the Server/Project-Sync module is a deferred-owner insertion shell (named owners, insertion contract — no state machine invented).
+
+## Deliverables
+
+Per-concept registers live in `concepts/<name>/` (matching the CursorAuto / Qwen 5.8 convention): `impact-register.json`, `manager-coverage.json`, `candidate-command-delta.json`, `candidate-wiring-delta.json`, `candidate-dry-delta.json`, `plan-owner-delta.md`. A root `IMPACT_REGISTER.json` aggregates and indexes them. Candidate command IDs are **provisional** — they census existing `catalog.*` / `UCC-###` canon and flag reuse/alias/supersession/conflict; they do not mint canon.
+
+## Required design qualities honored
+
+Search-centric with no dead space · dense without becoming a wall of forms · no left accent borders · no emoji (SVG only) · no clipped/uneven text · no pill controls that imply filters when they are destinations · compact actionable notices (one stable status + one headline + one reason + ≤1 primary + ≤1 quiet secondary) · stable hierarchy across all eight themes.
+
+## How to view / validate
+
+```sh
+# Hub (repo root, OS-assigned port):
+python3 Concepts/ConceptHub/server.py --port 0 --no-browser
+# Validate this folder:
 python3 Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/glm-5-2
 ```
 
-## How to view
-
-Open the ConceptHub and navigate to the `settings-redesign` topic, or open `index.html` directly:
-
-```
-python3 Concepts/ConceptHub/server.py
-# open http://localhost:4177/concepts/settings-redesign-concepts/glm-5-2/index.html
-```
-
-Width presets (page role): 760 · 900 · 1280 · 1700 · 2200 · 2500. Toggle the left rail and Assistant panel via the activity-bar buttons to test squeezed states.
+See `FINDINGS.md` for information-architecture choices, inventory/plan conflicts surfaced, and Slint-portability risks. See `TEST_REPORT.md` for the verification matrix and results. No winner is recommended.

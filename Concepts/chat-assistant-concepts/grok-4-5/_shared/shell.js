@@ -233,6 +233,77 @@
     );
   }
 
+
+  /* Bind to session.sync.state enum; "Queued to send" is UI-derived (offline + outbox). */
+  var SYNC_LABELS = {
+    cached: 'Cached',
+    synchronizing: 'Synchronizing',
+    live: 'Live',
+    offline: 'Offline',
+    reconnecting: 'Reconnect',
+    replay: 'Replay',
+    snapshot: 'Snapshot catch-up',
+    'server-work-continuing': 'Server work continuing'
+  };
+
+  function syncChipLabel(state, store) {
+    var syncState = state || (store && store.session && store.session.sync && store.session.sync.state) || 'live';
+    if (syncState === 'offline' && store && store.session && Array.isArray(store.session.outbox)) {
+      var queued = store.session.outbox.some(function (row) {
+        return row && row.status === 'queued';
+      });
+      if (queued) return 'Queued to send';
+    }
+    if (SYNC_LABELS[syncState]) return SYNC_LABELS[syncState];
+    var values = Object.keys(SYNC_LABELS).map(function (k) { return SYNC_LABELS[k]; });
+    if (values.indexOf(syncState) >= 0) return syncState;
+    return String(syncState);
+  }
+
+  function notificationUnread(store) {
+    var list = (store && store.session && store.session.notifications) || [];
+    return list.filter(function (n) { return n && !n.read; }).length;
+  }
+
+  function notificationInboxHtml(store) {
+    var list = (store && store.session && store.session.notifications) || [];
+    var unread = notificationUnread(store);
+    var items = list.slice(0, 8).map(function (n) {
+      return (
+        '<button type="button" class="pm-shell-ntf-item' + (n.read ? '' : ' is-unread') + '" data-shell-ntf-id="' +
+        escapeHtml(n.id) + '" role="menuitem">' +
+        '<span class="pm-shell-ntf-title">' + escapeHtml(n.title || 'Notification') + '</span>' +
+        (n.body ? '<span class="pm-shell-ntf-body">' + escapeHtml(n.body) + '</span>' : '') +
+        '</button>'
+      );
+    }).join('');
+    if (!items) {
+      items = '<div class="pm-shell-ntf-empty">No notifications</div>';
+    }
+    return (
+      '<div class="pm-shell-inbox" data-shell-inbox>' +
+      '<button type="button" class="pm-shell-inbox-trigger" data-shell-inbox-toggle aria-haspopup="menu" aria-expanded="false" title="Notifications" aria-label="Notifications">' +
+      '<span class="pm-shell-inbox-sprout" aria-hidden="true">◎</span>' +
+      (unread ? '<span class="pm-shell-inbox-count" data-shell-inbox-count>' + unread + '</span>' : '<span class="pm-shell-inbox-count is-zero" data-shell-inbox-count hidden>0</span>') +
+      '</button>' +
+      '<div class="pm-shell-inbox-menu" data-shell-inbox-menu role="menu" hidden>' +
+      '<div class="pm-shell-inbox-head">Notifications</div>' +
+      items +
+      '</div></div>'
+    );
+  }
+
+  function syncChipHtml(store) {
+    var sync = (store && store.session && store.session.sync) || { state: 'live' };
+    var state = sync.state || 'live';
+    var label = syncChipLabel(state, store);
+    var displayState = label === 'Queued to send' ? 'queued-to-send' : state;
+    return (
+      '<span class="pm-shell-sync-chip" data-shell-sync-chip data-sync-state="' + escapeHtml(displayState) + '" title="' +
+      escapeHtml(sync.routeLabel || label) + '">' + escapeHtml(label) + '</span>'
+    );
+  }
+
   function buildDom(root, state) {
     root.id = root.id || 'shell-root';
     root.classList.add('pm-shell');
@@ -248,6 +319,8 @@
       '</span>' +
       '</div>' +
       '<div class="pm-titlebar-spacer"></div>' +
+      syncChipHtml(state.store) +
+      notificationInboxHtml(state.store) +
       themeMenuHtml(state.theme) +
       '<button type="button" class="pm-shell-close" data-shell-close title="Close popout" aria-label="Close popout" hidden>×</button>' +
       '</header>' +
@@ -301,11 +374,49 @@
     var onThemeListeners = [];
     buildDom(root, state);
     applyAttrs(root, state);
+    state.store = state.store || null;
+    state._storeUnsub = null;
     syncMountVisibility(root, state.mountMode);
     syncCloseVisibility(root, state);
 
     if (window.PMMenu && typeof window.PMMenu.init === 'function') {
       window.PMMenu.init(root);
+    }
+
+    function refreshChrome() {
+      var syncEl = root.querySelector('[data-shell-sync-chip]');
+      if (syncEl) {
+        var sync = (state.store && state.store.session && state.store.session.sync) || { state: 'live' };
+        var st = sync.state || 'live';
+        var label = syncChipLabel(st, state.store);
+        syncEl.setAttribute('data-sync-state', label === 'Queued to send' ? 'queued-to-send' : st);
+        syncEl.title = sync.routeLabel || label;
+        syncEl.textContent = label;
+      }
+      var countEl = root.querySelector('[data-shell-inbox-count]');
+      var unread = notificationUnread(state.store);
+      if (countEl) {
+        countEl.textContent = String(unread);
+        if (unread) {
+          countEl.hidden = false;
+          countEl.classList.remove('is-zero');
+        } else {
+          countEl.hidden = true;
+          countEl.classList.add('is-zero');
+        }
+      }
+      var menu = root.querySelector('[data-shell-inbox-menu]');
+      if (menu && state.store) {
+        var open = !menu.hidden;
+        var html = notificationInboxHtml(state.store);
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var nextMenu = tmp.querySelector('[data-shell-inbox-menu]');
+        if (nextMenu) {
+          menu.innerHTML = nextMenu.innerHTML;
+          menu.hidden = !open;
+        }
+      }
     }
 
     function applyTheme(theme, opts) {
@@ -378,14 +489,31 @@
         themeBtn.getAttribute('data-shell-theme-pick') ||
         themeBtn.getAttribute('data-theme-id');
       if (!id) return;
-      applyTheme(id);
+      /* Close open sprouts first so the theme pick is not swallowed on first click. */
       if (window.PMMenu && typeof window.PMMenu.closeAll === 'function') window.PMMenu.closeAll();
+      applyTheme(id);
       ev.preventDefault();
       ev.stopPropagation();
     }
     document.addEventListener('click', onDocThemeClick, true);
 
     function onRootClick(ev) {
+      var inboxToggle = ev.target && ev.target.closest && ev.target.closest('[data-shell-inbox-toggle]');
+      if (inboxToggle) {
+        var menuEl = root.querySelector('[data-shell-inbox-menu]');
+        if (menuEl) {
+          var willOpen = menuEl.hidden;
+          menuEl.hidden = !willOpen;
+          inboxToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        }
+        return;
+      }
+      var ntfItem = ev.target && ev.target.closest && ev.target.closest('[data-shell-ntf-id]');
+      if (ntfItem && state.store && typeof state.store.markNotificationRead === 'function') {
+        state.store.markNotificationRead(ntfItem.getAttribute('data-shell-ntf-id'));
+        refreshChrome();
+        return;
+      }
       var rail =
         ev.target && ev.target.closest && ev.target.closest('[data-rail-item]');
       if (rail && root.contains(rail)) {
@@ -444,6 +572,22 @@
       onThemeChange: function (fn) {
         if (typeof fn === 'function') onThemeListeners.push(fn);
       },
+      bindStore: function (store) {
+        state.store = store || null;
+        refreshChrome();
+        if (state._storeUnsub) {
+          try { state._storeUnsub(); } catch (_) {}
+          state._storeUnsub = null;
+        }
+        if (store && typeof store.subscribe === 'function') {
+          state._storeUnsub = store.subscribe(function () {
+            refreshChrome();
+          });
+        }
+      },
+      refreshChrome: function () {
+        refreshChrome();
+      },
       setToast: function (fn) {
         state.toast = typeof fn === 'function' ? fn : null;
       },
@@ -464,6 +608,10 @@
         };
       },
       unmount: function () {
+        if (state._storeUnsub) {
+          try { state._storeUnsub(); } catch (_) {}
+          state._storeUnsub = null;
+        }
         document.removeEventListener('click', onDocThemeClick, true);
         root.removeEventListener('click', onRootClick);
         root.innerHTML = '';
@@ -476,6 +624,10 @@
 
   window.PMChatShell = {
     mount: mount,
+    SYNC_LABELS: SYNC_LABELS,
+    syncChipLabel: syncChipLabel,
+    notificationInboxHtml: notificationInboxHtml,
+    syncChipHtml: syncChipHtml,
     THEMES: THEMES,
     normalizeTheme: normalizeTheme,
     themeLabel: themeLabel,

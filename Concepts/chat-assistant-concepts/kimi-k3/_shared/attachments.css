@@ -1,0 +1,155 @@
+/* ============================================================================
+   Kimi K3 — attachment resolver styles (window.K3Attachments). Token-driven
+   only: rides the shared surfaces/borders/radii/accents so all 8 themes
+   render complete. Popovers live inside .k3-pop portals (popups.css owns the
+   sprout motion and chrome); these rules cover only the resolver content.
+   Reduced-motion parity comes from the global data-motion contract
+   (motion.css collapses the --motion-* durations).
+   ========================================================================== */
+
+/* ---- chooser / detail popover ------------------------------------------- */
+.k3f-pop {
+  width: min(340px, calc(100vw - 16px));
+  max-width: min(340px, calc(100vw - 16px));
+  padding: 8px;
+}
+
+.k3f-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.k3f-title {
+  font-size: var(--fs-sm, 12px);
+  font-weight: 700;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--text-primary);
+}
+
+.k3f-sub {
+  margin-top: 2px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.k3f-state {
+  font-size: var(--fs-xs, 11px);
+  line-height: var(--lh-normal, 1.4);
+  color: var(--text-secondary);
+}
+
+.k3f-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.k3f-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  text-align: left;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md, 8px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3f-row:hover { background: var(--accent-soft); }
+.k3f-row:focus-visible {
+  outline: var(--border-width, 1px) solid var(--accent-primary);
+  outline-offset: -1px;
+}
+
+.k3f-row-ic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
+}
+.k3f-row-ic svg { width: 18px; height: 18px; }
+
+.k3f-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.k3f-row-name {
+  font-size: var(--fs-sm, 12px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.k3f-row-meta {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+}
+
+/* ---- composer chip badge -------------------------------------------------- */
+.k3f-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.k3f-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-pill, 999px);
+  color: var(--text-secondary);
+  background: var(--surface-raised, transparent);
+  border: var(--border-width, 1px) solid var(--border);
+}
+.k3f-badge-native { color: var(--accent-primary); border-color: var(--accent-primary); }
+.k3f-badge-transform { color: var(--accent-primary); background: var(--accent-soft); border-color: transparent; }
+.k3f-badge-alternate { color: var(--accent-primary); background: var(--accent-soft); border-color: var(--accent-primary); }
+.k3f-badge-consent { color: var(--warning, var(--accent-primary)); border-color: var(--warning, var(--accent-primary)); }
+.k3f-badge-unsupported { color: var(--danger, #d45a5a); border-color: var(--danger, #d45a5a); }
+
+/* ---- derived items + lineage detail --------------------------------------- */
+.k3f-derived {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.k3f-derived-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--surface-raised, transparent);
+}
+
+.k3f-lineage {
+  font-size: var(--fs-xs, 11px);
+  line-height: var(--lh-normal, 1.4);
+  color: var(--text-secondary);
+  border-left: 2px solid var(--border);
+  padding-left: 8px;
+}

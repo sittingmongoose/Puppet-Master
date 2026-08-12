@@ -501,3 +501,60 @@
 .pmq-ec-note { font-size: var(--fs-xs); color: var(--text-faint); line-height: 1.45; }
 .pmq-ec-lines { display: flex; flex-direction: column; gap: 6px; }
 .pmq-ec-lines span { height: 7px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+
+/* ---- v3: offline/sync strip + notification inbox (title-bar boundary) ---- */
+.pmq-syncstrip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border);
+  background: transparent; color: var(--text-secondary);
+  font-size: var(--fs-2xs); font-weight: 700; cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.pmq-syncstrip:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+.pmq-syncdot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-success); flex: none; }
+.pmq-syncstrip[data-status="offline"] .pmq-syncdot { background: var(--accent-error); }
+.pmq-syncstrip[data-status="offline"] { color: var(--accent-error); border-color: color-mix(in srgb, var(--accent-error) 45%, transparent); }
+.pmq-syncstrip[data-status="cached"] .pmq-syncdot { background: var(--accent-warning); }
+.pmq-syncstrip[data-status="reconnecting"] .pmq-syncdot,
+.pmq-syncstrip[data-status="replaying"] .pmq-syncdot,
+.pmq-syncstrip[data-status="synchronizing"] .pmq-syncdot { background: var(--accent-warning); }
+.pmq-syncstrip[data-status="snapshot"] .pmq-syncdot { background: var(--accent-secondary); }
+.pmq-syncstrip[data-status="snapshot"] { color: var(--accent-secondary); }
+
+.pmq-inbox {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: var(--radius-md);
+  border: 1px solid transparent; background: transparent; color: var(--text-secondary); cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.pmq-inbox:hover { background: var(--hover-fill); color: var(--text-primary); }
+.pmq-inbox .pmq-ico { width: 15px; height: 15px; }
+.pmq-inbox-count {
+  position: absolute; top: -3px; right: -3px; min-width: 14px; height: 14px; padding: 0 3px;
+  border-radius: var(--radius-pill); background: var(--accent-error); color: var(--text-on-accent, #fff);
+  font-size: 9px; font-weight: 800; line-height: 14px; text-align: center;
+}
+
+.pmq-obx-pop, .pmq-inbox-pop { display: flex; flex-direction: column; }
+.pmq-obx-row { display: flex; align-items: center; gap: 8px; padding: 7px 4px; border-bottom: 1px solid var(--border); }
+.pmq-obx-row:last-child { border-bottom: none; }
+.pmq-obx-text { flex: 1; min-width: 0; font-size: var(--fs-xs); color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmq-obx-meta { font-size: var(--fs-2xs); color: var(--text-faint); flex: none; }
+.pmq-obx-empty { padding: 12px 4px; font-size: var(--fs-xs); color: var(--text-faint); text-align: center; }
+.pmq-obx-foot { padding: 6px 8px 8px; display: flex; justify-content: flex-end; gap: 6px; }
+
+.pmq-inbox-row {
+  display: flex; align-items: flex-start; gap: 8px; padding: 8px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.pmq-inbox-row:last-child { border-bottom: none; }
+.pmq-inbox-row .pmq-ico { width: 14px; height: 14px; flex: none; margin-top: 2px; color: var(--text-faint); }
+.pmq-inbox-row.pmq-unread .pmq-ico { color: var(--accent-primary); }
+.pmq-inbox-row.pmq-unread { background: color-mix(in srgb, var(--accent-primary) 5%, transparent); }
+.pmq-inbox-main { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.pmq-inbox-title { font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); }
+.pmq-inbox-body { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.35; }
+.pmq-inbox-meta { font-size: var(--fs-2xs); color: var(--text-faint); }
+.pmq-inbox-row .pmq-btn-sm { flex: none; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); }
+.pmq-inbox-row .pmq-btn-sm:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+[data-motion="reduced"] .pmq-syncstrip, [data-motion="reduced"] .pmq-inbox { transition: none; }

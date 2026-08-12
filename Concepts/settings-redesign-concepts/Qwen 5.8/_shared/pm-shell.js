@@ -72,10 +72,15 @@
           '<option value="calm">Calm — no notices</option>' +
           '<option value="refreshing">Catalog refreshing</option>' +
           '<option value="exhausted">Usage exhausted</option>' +
+          '<option value="update-available">Provider update available</option>' +
+          '<option value="rollback">Update rolled back</option>' +
+          '<option value="import-conflict">Import conflict</option>' +
+          '<option value="lkg-active">Catalog last-known-good</option>' +
         '</select></div>' +
         '<div class="pm-tray-row"><span class="pm-tray-label">Left rail</span><button class="pm-btn pm-btn-sm" data-tray-rail>Open</button></div>' +
         '<div class="pm-tray-row"><span class="pm-tray-label">Assistant panel</span><button class="pm-btn pm-btn-sm" data-tray-assist>Open</button></div>' +
         '<div class="pm-tray-row"><span class="pm-tray-label">Width</span><span class="pm-note">Use the Hub width slider</span></div>' +
+        '<div class="pm-tray-row"><span class="pm-tray-label">Demo state</span><button class="pm-btn pm-btn-sm" data-tray-reset>Reset demo data</button></div>' +
       '</div>';
     document.body.appendChild(tray);
 
@@ -95,6 +100,10 @@
 
     var scenSel = tray.querySelector("[data-tray-scenario]");
     scenSel.addEventListener("change", function () { window.PMState.applyScenario(scenSel.value); });
+
+    tray.querySelector("[data-tray-reset]").addEventListener("click", function () {
+      window.PMState.resetDemo();
+    });
 
     var railBtn = tray.querySelector("[data-tray-rail]");
     railBtn.addEventListener("click", function () {

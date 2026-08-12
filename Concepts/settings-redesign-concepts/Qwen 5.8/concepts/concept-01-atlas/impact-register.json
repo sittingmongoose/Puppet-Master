@@ -1,0 +1,237 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-01-atlas",
+  "model": "Qwen 5.8",
+  "title": "Atlas \u2014 Settings Directory \u2014 Qwen 5.8",
+  "packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Settings surfaces replace the bloom modal with a full workspace; destination controls replace filter pills; left shell canon respected."
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "Concept taxonomy (10 destinations) demonstrates humanized grouping; inventory mapping + tier vocabulary migration required before canon adoption."
+    },
+    {
+      "owner": "Models System",
+      "impact": "Provider family card answers the six default questions; Free Models wrapper semantics demonstrated (never owns credentials/quota)."
+    },
+    {
+      "owner": "Multi-Account",
+      "impact": "Account rows demonstrate priority/sticky/enabled/preferred semantics; no simultaneous-profile pretense (isolation strategies shown)."
+    },
+    {
+      "owner": "CLI Bridged Providers",
+      "impact": "CLI-owned OAuth boundary shown (Anthropic/Antigravity); PM launches native flows only."
+    },
+    {
+      "owner": "Provider OpenCode",
+      "impact": "External server provider with managed-externally updates and unknown-owner manual-only installation."
+    },
+    {
+      "owner": "Media",
+      "impact": "Destination retired; fixtures redistributed (continuation \u2192 Providers; audio not-configured \u2192 Desktop fixture; video output \u2192 unavailable-capability search exemplar)."
+    },
+    {
+      "owner": "Prompt Pipeline",
+      "impact": "Context admission receipt demonstrated (admitted/omitted blocks, source hash)."
+    },
+    {
+      "owner": "Assistant Memory",
+      "impact": "Half-life = activation-not-truth; verify/edit/pin/delete/restore versions; capsule preview/token estimate; rebuild/dedupe/redact."
+    },
+    {
+      "owner": "Personas",
+      "impact": "Behavior-not-authority; import scan; mode-vs-access separation; provenance/eligible skills."
+    },
+    {
+      "owner": "Goal Runtime",
+      "impact": "Settings owns defaults/ceilings only; live capacity read-only from Usage badge."
+    },
+    {
+      "owner": "Orchestrator/Subagents",
+      "impact": "Crew requested vs effective with waves and guards; adaptive sizing fixture."
+    },
+    {
+      "owner": "Planning Wizard",
+      "impact": "High-quality planning route rows preserved with quality effect badge."
+    },
+    {
+      "owner": "PRD Builder",
+      "impact": "Same planning conversation route constraint surfaced."
+    },
+    {
+      "owner": "Permissions",
+      "impact": "Ordered rules, last-match-wins trace, presets, per-tool overrides, ELI5/Expert."
+    },
+    {
+      "owner": "FileSafe",
+      "impact": "Non-bypassable floor card: health, effective boundary, protected scopes, repair guidance."
+    },
+    {
+      "owner": "Commands",
+      "impact": "Custom commands with parameters/includes/shell-safety; dry-run never sends work to an agent."
+    },
+    {
+      "owner": "UI Command Catalog",
+      "impact": "Census performed against Plans/UI_Command_Catalog.md; candidate deltas carry reuse/retire/supersession/conflict flags; no canon minted."
+    },
+    {
+      "owner": "MCP",
+      "impact": "Transport/auth/logs/states (connected/needs-auth/error; Local Docs disabled pending repair) in shared grammar. Browser MCP routes are excluded per packet canon — PM uses its own Browser Program API."
+    },
+    {
+      "owner": "Skills",
+      "impact": "Trust/enabled/selected/invoked states."
+    },
+    {
+      "owner": "Plugins",
+      "impact": "Compatibility/channel/load-failure states."
+    },
+    {
+      "owner": "Tools",
+      "impact": "Inventory installed/enabled/available/selected/invoked."
+    },
+    {
+      "owner": "LSP",
+      "impact": "Catalog/provenance, requested/effective attachment, restart, logs, remote degradation note."
+    },
+    {
+      "owner": "Formatters",
+      "impact": "detected/not-found/disabled table with test action."
+    },
+    {
+      "owner": "File Manager",
+      "impact": "Tree/drag-drop/hidden/large-file/changed-on-disk/recovery fixtures."
+    },
+    {
+      "owner": "Testing",
+      "impact": "Global/Project \u00d7 Auto/On/Off matrix across 10 capabilities."
+    },
+    {
+      "owner": "Worktrees/Git/GitHub",
+      "impact": "Tool health exact-installation, forge connection, worktrees, pinned workflows + run/job/log browse."
+    },
+    {
+      "owner": "Containers/Registries",
+      "impact": "Docker/Podman/Kubernetes human top-level + expanded detail."
+    },
+    {
+      "owner": "Storage",
+      "impact": "Mode/pressure/retention/legal hold/encryption/quarantine; compaction as owner-admitted request only."
+    },
+    {
+      "owner": "Runtime Artifacts/Outputs",
+      "impact": "PM-owned vs provider-native identity; redaction/reveal/cleanup."
+    },
+    {
+      "owner": "Release/updates owner",
+      "impact": "Deferred Updates module named with insertion contract; provider update lifecycle states demonstrated."
+    },
+    {
+      "owner": "Binary Locator and installation lifecycle",
+      "impact": "Confidence ladder Proven/Strongly identified/Probable/Ambiguous/Unknown; unknown ownership manual-only; shadowed installations."
+    }
+  ],
+  "settings_inventory_impacts": [
+    "10 canonical destinations replace the 08-05 set: media deleted, safety renamed permissions, planning merged into behavior, notifications added; ids stable for deep links.",
+    "Setting ids re-rooted to destination prefixes (behavior.*, permissions.*, system.*); legacy safety.* ids migrate (import fixture demonstrates)."
+  ],
+  "settings_schema_impacts": [
+    "Row schema carries value-state vocabulary: default/recommended/inherited/auto/not-configured/managed/custom/unavailable/effective-differs + restart/reconnect/changed-elsewhere flags.",
+    "Search result types are first-class: setting/manager/action/status/diagnostic/setup/unavailable."
+  ],
+  "command_id_impacts": [
+    "See candidate-command-delta.json for this concept (census against Plans/UI_Command_Catalog.md; canon reused, no minting)."
+  ],
+  "wiring_impacts": [
+    "See candidate-wiring-delta.json; every control traces UI\u2192command\u2192owner\u2192validation\u2192mutation\u2192event/receipt\u2192projection\u2192attribution\u2192recovery; demo state marked simulated."
+  ],
+  "dry_component_impacts": [
+    "See candidate-dry-delta.json; shared families consumed from _shared/pm-managers.js; concept-specific candidates listed."
+  ],
+  "schema_event_storage_impacts": [
+    "Demo persistence uses localStorage[pm.settings-demo.<conceptId>] with 300ms debounce; production maps to settings schema revisions + receipts.",
+    "Receipts are append-only in-session; production needs EventRecord 2.0 equivalents for lifecycle mutations."
+  ],
+  "migration_supersession_impacts": [
+    {
+      "item": "Old chip/bloom/no-sidebar contract",
+      "detail": "The s4 bloom modal (shelves + horizontal rail, cmd.settings.bloom.open) is superseded by a full Settings Workspace with left navigation in all four concepts; bloom survives only as a possible quick-access alias."
+    },
+    {
+      "item": "Stale right-panel language",
+      "detail": "Left Activity Bar canon applied: rail controls one adjacent LEFT side-panel slot; assistant panel is right-side only as the chat panel, and no stale right-side-panel Settings descriptions were used."
+    },
+    {
+      "item": "regular/yolo coupling",
+      "detail": "Conversation mode and access profile decoupled: Personas row 'behavior-not-authority' states a Persona cannot grant Full Access; access profiles (Ask/Auto accept edits/Auto/Full Access) are separate from Plan/Review effect limits."
+    },
+    {
+      "item": "Invalid inventory values",
+      "detail": "Auto/Inherit/Not configured/Disabled never rendered as unexplained empty strings; explicit value states (Not configured, Managed, Auto, Unavailable with reason) shown in row grammar."
+    },
+    {
+      "item": "Media destination retired",
+      "detail": "media destination removed; continuation settings moved into the Provider manager; honest not-configured audio row kept as a Desktop fixture; video output kept searchable as an unavailable-capability exemplar."
+    }
+  ],
+  "slint_port_impacts": [
+    "Scrollspy must be model-backed state, not DOM geometry.",
+    "backdrop-filter \u2192 pre-baked blur assets (PMConcept7 T16 pattern).",
+    "color-mix() \u2192 precomputed per-theme tokens.",
+    "Long lists \u2192 virtualized/segmented repeaters.",
+    "prompt() replaced by PMCore.promptDialog modal (already done in this build).",
+    "Width tiers \u2192 size-change callbacks writing a tier enum."
+  ],
+  "test_fixtures": [
+    "Search typo 'notifcation' \u2192 Notifications; Enter deep-links + focus wash.",
+    "Hash deep link #/w/models/providers?provider=gemini-cli lands on provider.",
+    "Back/forward between Home and categories.",
+    "Catalog refresh in-flight then last-checked update (2.2s, LKG on failure).",
+    "Installation select + update apply \u2192 Ready and verification-failed \u2192 rolled-back paths.",
+    "Import preview \u2192 cancel \u2192 apply \u2192 rollback restores snapshot.",
+    "Sound upload \u2192 preview \u2192 repeat test-send rate-limit.",
+    "Theme hover preview \u2192 apply changes data-theme; invalid TOML fallback diagnostic.",
+    "Keyboard Tab reachability; widths 900/1280/1700/2200/2500 with no clipping; reduced motion parity; 8 themes."
+  ],
+  "deferred_named_owners": [
+    {
+      "module": "Servers",
+      "owner": "Server Backbone",
+      "insertion_contract": "System & Data > Server & Hosts reserved; manager grammar + deep-link slot ready"
+    },
+    {
+      "module": "Execution Hosts",
+      "owner": "Server Backbone",
+      "insertion_contract": "Host/Environment tree under Servers"
+    },
+    {
+      "module": "Clients",
+      "owner": "Server Backbone",
+      "insertion_contract": "Paired device cards"
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Hosted On / Project Files / Run Work rows"
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server Backbone",
+      "insertion_contract": "Pairing/session approvals; AuthBrowserSession human-only"
+    },
+    {
+      "module": "Updates",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "PM app/content update module slots"
+    }
+  ],
+  "unresolved_questions": [
+    "Canonical taxonomy adoption order: concept destinations vs settings_inventory.json categories \u2014 mapping table needed.",
+    "cmd.settings.bloom.open retirement timing vs compatibility alias.",
+    "Free Models quota handoff when an underlying provider adds metering."
+  ],
+  "demonstrated_families": "Context & Instructions, Memory, Personas, Goal/Automation, Crew, Permissions/FileSafe, Back Seat Driver"
+}

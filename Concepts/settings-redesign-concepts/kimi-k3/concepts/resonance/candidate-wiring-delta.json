@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "resonance",
+  "model": "kimi-k3",
+  "note": "Candidate production wiring per control family. Demo implementations simulate at the state-mutation step and always receipt as simulated.",
+  "families": [
+    {
+      "family": "navigation and values",
+      "controls": ["destination tiles", "workspace nav", "search results", "all setting rows"],
+      "trace": "Identical to the shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+    },
+    {
+      "family": "notification destinations",
+      "controls": ["destination enable switches", "Send test"],
+      "trace": "UI source → cmd.notifications.destination.toggle (canon) / cmd.notifications.destination.test (reused canon ID) → Notifications owner → credential-vault permission (masked references only) → destination state mutation or one-shot send → delivery receipt with masked payload + rate-limit note → destination card re-projection with the receipt → Usage: none; diagnostics log the send → recovery: disable the destination; deep link to its card"
+    },
+    {
+      "family": "event routing",
+      "controls": ["event → destination badges", "event → sound selects"],
+      "trace": "UI source → cmd.notifications.mapping.update (canon near-match) → Notifications owner → destination-exists validation → mapping mutation → event + receipt → matrix re-projection → diagnostics attribution → recovery: change the mapping back; the visual-state pairing is never removable"
+    },
+    {
+      "family": "sound library",
+      "controls": ["upload", "replace", "delete", "preview", "export", "pack import"],
+      "trace": "UI source → cmd.notifications.sound.* → Media owner → local-file picker (upload) or pack format+license validation (import) → library mutation (registered asset with metadata) → event + receipt → tile re-projection with waveform → Usage: none; preview is local WebAudio, no fetch → recovery: delete restores the default mapping; unverified packs never register"
+    },
+    {
+      "family": "theme studio",
+      "controls": ["swatch hover/commit", "TOML validate-and-apply", "create/import/export/open-folder"],
+      "trace": "UI source → cmd.theme.preview (reused canon) on hover, cmd.theme.apply on commit; custom themes → cmd.theme.create → Appearance owner → TOML schema validation → theme registry mutation on success ONLY (invalid input produces diagnostics + base fallback, never a broken apply) → theme-changed event → full-surface re-projection → diagnostics record validation output → recovery: base theme fallback is automatic; export before import"
+    },
+    {
+      "family": "spellcheck",
+      "controls": ["suggestion menu", "ignore/add-to-dictionary", "grammar disclosure"],
+      "trace": "UI source → local spellcheck service (no command ID — never leaves the machine) → dictionary mutation for ignore/add → receipt → paragraph re-projection → Usage: none; the grammar opt-in would route through a disclosed provider with cost/Usage attribution before enabling → recovery: dictionaries are editable rows"
+    },
+    {
+      "family": "teacher",
+      "controls": ["guided overlay", "explain this screen", "handoff"],
+      "trace": "UI source → cmd.settings.navigate (handoff target) → Teacher context owner (Personas) → overlay presents, never mutates → handoff closes the overlay and performs the real deep link → receipt records the transition → recovery: End tour at any step; no state changes during a tour"
+    }
+  ]
+}

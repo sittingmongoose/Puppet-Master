@@ -184,7 +184,7 @@
       addLabel: "Add connection", health: health,
       summary: "Providers, accounts, connections, models, and agent role assignments.",
       toolbar: [{id:"refresh",label:"Refresh all",icon:"refresh"}]
-    }, catalog + rows + roles);
+    }, catalog + rows + roles + M.installations());
   };
 
   /* ---------- MEMORY (deep-dive 01) ---------- */
@@ -543,6 +543,274 @@
     }, '<div class="media-list">' + rows + '</div>');
   };
 
+  /* ---------- GENERIC RESOURCE ROW + FAMILY HELPER (final-cumulative families) ---------- */
+  /* item: { title, dot, chips:[{label,kind}], detail, note:{text,kind}, actions:[{label,act,kind,icon}] } */
+  M.resRow = function (it) {
+    var chips = (it.chips || []).map(function (c) {
+      return '<span class="chip ' + (c.kind || "") + '">' + c.label + '</span>';
+    }).join("");
+    var note = it.note ? '<span class="mgr-note ' + it.note.kind + ' small">' + it.note.text + '</span>' : "";
+    var detail = it.detail ? '<span class="muted small">' + it.detail + '</span>' : "";
+    var actions = (it.actions || []).map(function (a) {
+      return '<button class="btn sm ' + (a.kind || "ghost") + '" data-mgr-act="' + a.act + '">' + (a.icon ? PM.svg(a.icon, 13) : "") + a.label + '</button>';
+    }).join("");
+    return [
+      '<div class="res-row" data-res>',
+        '<span class="sdot ' + (it.dot || "ok") + '"></span>',
+        '<div class="col grow gap-xs">',
+          '<div class="row center gap-sm wrap"><strong>' + it.title + '</strong>' + chips + '</div>',
+          detail, note,
+        '</div>',
+        '<div class="row center gap-xs">' + actions + '</div>',
+      '</div>'
+    ].join("");
+  };
+  M.family = function (opts, rows, extra) {
+    return M.shell(opts, (extra || "") + '<div class="res-list">' + (rows || []).map(M.resRow).join("") + '</div>');
+  };
+
+  /* ---------- C1: Context / Memory / Personas / Goal / Crew / Permissions / BSD ---------- */
+  M.goal = function () {
+    return M.family({ title:"Goals & Automation", icon:"target", addLabel:"New default",
+      health:{text:"Defaults + ceilings only — runtime admits actual work",kind:"ok"},
+      summary:"Settings owns defaults and ceilings. Usage reports capacity; orchestrator admits work.",
+      toolbar:[{id:"routes",label:"Worker / reviewer routes"}] }, PM_DEMO.goalRows,
+      '<div class="mgr-note info small">Requested vs effective preserved. High-quality planning route required by default.</div>');
+  };
+  M.permissions = function () {
+    return M.family({ title:"Permissions & FileSafe", icon:"shield", addLabel:"Add rule",
+      health:{text:"FileSafe enforced · non-bypassable",kind:"ok"},
+      summary:"Ordered rules (last-match-wins), per-tool overrides, per-Persona profiles. FileSafe is the floor.",
+      toolbar:[{id:"matrix",label:"Read-only / full matrix"}] }, PM_DEMO.permissionRows,
+      '<div class="mgr-note warn small">FileSafe is the non-bypassable floor. Requested/effective/origin shown where policy differs.</div>');
+  };
+  M.bsd = function () {
+    return M.family({ title:"Back Seat Driver", icon:"bsd", addLabel:"Configure trigger",
+      health:{text:"Auto (default) · 1 review pending",kind:"warn"},
+      summary:"Read-only observation. Auto engages only on risk/phase triggers. Cannot widen authority.",
+      toolbar:[{id:"health",label:"BSD health"}] }, PM_DEMO.bsdRows,
+      '<div class="mgr-note info small">BSD receives bounded deltas and cannot block primary work merely because it failed. Chat may override for one turn or thread.</div>');
+  };
+
+  /* ---------- C2: Notifications / Sounds / Appearance / Spellcheck / Desktop / Teacher ---------- */
+  M.notifications = function () {
+    return M.family({ title:"Notifications & Sounds", icon:"bell", addLabel:"Add destination",
+      health:{text:"8 destinations · 1 failing",kind:"warn"},
+      summary:"Delivery, event routing, sounds. The title-bar stack is the sole in-app surface.",
+      toolbar:[{id:"test",label:"Test send",icon:"bell"}] }, PM_DEMO.notificationRows,
+      '<div class="mgr-note info small">' + PM_DEMO.notificationMeta.routing + '. ' + PM_DEMO.notificationMeta.quiet + '. No bottom-right stack, bell, or dedicated panel.</div>');
+  };
+  M.sounds = function () {
+    return M.family({ title:"Sound Library", icon:"sound", addLabel:"Upload sound",
+      health:{text:PM_DEMO.soundMeta.mappings,kind:"ok"},
+      summary:"Built-in + uploaded sounds and imported packs. PeonPing/OpenPeon-compatible.",
+      toolbar:[{id:"export",label:"Export",icon:"external"}] }, PM_DEMO.soundRows,
+      '<div class="mgr-note info small">' + PM_DEMO.soundMeta.master + '. Packs require format + license checks; unverified packs are never bundled. Preview is local-only.</div>');
+  };
+  M.appearance = function () {
+    return M.family({ title:"Appearance", icon:"palette", addLabel:"Create theme",
+      health:{text:"Beyond eight themes · live reload on",kind:"ok"},
+      summary:"Families × light/dark/auto, custom TOML, fonts, UI scale, restart markers.",
+      toolbar:[{id:"folder",label:"Open theme folder",icon:"external"}] }, PM_DEMO.appearanceRows,
+      '<div class="mgr-note info small">Schema validation + base-theme inheritance + invalid-theme fallback. Live hover preview.</div>');
+  };
+  M.spellcheck = function () {
+    return M.family({ title:"Spellcheck & Dictionaries", icon:"spellcheck", addLabel:"Add pack",
+      health:{text:"Quiet underline · no autocorrect",kind:"ok"},
+      summary:"Automatic / system / PM-local dictionary sources; personal + project dictionaries.",
+      toolbar:[{id:"dict",label:"Manage dictionaries"}] }, PM_DEMO.spellcheckRows,
+      '<div class="mgr-note warn small">No autocorrect. Grammar/style is a separate opt-in provider-backed feature (privacy, route, cost disclosed).</div>');
+  };
+  M.desktop = function () {
+    return M.family({ title:"Desktop, Tray & Window", icon:"desktop", addLabel:"Profile",
+      health:{text:"Tray on · 1 buffer unrecovered",kind:"warn"},
+      summary:"Minimize-to-tray, automation badge, launch destination, restore, crash recovery, limits.",
+      toolbar:[{id:"test",label:"Test crash recovery"}] }, PM_DEMO.desktopRows);
+  };
+  M.teacher = function () {
+    return M.family({ title:"Teacher & Help", icon:"teacher", addLabel:"Tour",
+      health:{text:"Guided transitions on",kind:"ok"},
+      summary:"Explicit Teacher assistance and guided explanation — not only tooltips.",
+      toolbar:[{id:"explain",label:"Explain this screen",icon:"spark"}] }, PM_DEMO.teacherRows,
+      '<div class="mgr-note info small">Teacher explains the active surface and transitions safely into real actions.</div>');
+  };
+
+  /* ---------- C3: File Manager / Terminal / LSP / Formatters / Commands / MCP / Skills / Testing ---------- */
+  M.filemanager = function () {
+    return M.family({ title:"File Manager & Editor", icon:"folder", addLabel:"Add root",
+      health:{text:"2 changed on disk · 1 transient",kind:"warn"},
+      summary:"Tree, drag/drop, hidden/ignored, large-file thresholds, tabs, recovery.",
+      toolbar:[{id:"ignore",label:"Edit ignored"}] }, PM_DEMO.filemanagerRows);
+  };
+  M.formatters = function () {
+    return M.family({ title:"Formatters", icon:"format", addLabel:"Add formatter",
+      health:{text:"1 ownership conflict",kind:"warn"},
+      summary:"Global enable, built-in/custom table, detected/not-found, scope, health + test.",
+      toolbar:[{id:"test",label:"Test all",icon:"bolt"}] }, PM_DEMO.formatterRows,
+      '<div class="mgr-note info small">Single formatting ownership per language; resolves LSP vs formatter conflicts.</div>');
+  };
+  M.commands = function () {
+    return M.family({ title:"Commands & Shortcuts", icon:"command", addLabel:"New command",
+      health:{text:"1 shortcut conflict",kind:"warn"},
+      summary:"Custom command lifecycle, parameters, shell-safety, shortcuts, conflicts, cheat sheet.",
+      toolbar:[{id:"cheat",label:"Cheat sheet"},{id:"import",label:"Import"}] }, PM_DEMO.commandRows,
+      '<div class="mgr-note warn small">Dry-run preview never sends work to an agent.</div>');
+  };
+  M.testing = function () {
+    return M.family({ title:"Testing & Debug", icon:"beaker", addLabel:"Capability",
+      health:{text:"Auto/On/Off per capability · 1 unavailable",kind:"warn"},
+      summary:"Global/Project per-capability testing and debug toggles. DAP, capture, artifacts.",
+      toolbar:[{id:"profiles",label:"Run profiles"}] }, PM_DEMO.testingRows,
+      '<div class="mgr-note info small">PM-native Browser Program for built-in browser testing — no Playwright dependency.</div>');
+  };
+
+  /* ---------- C4: Storage / Backup / Lifecycle / History / Artifacts / Git / GitHub / Containers / Web / Index / Cleanup / Server ---------- */
+  M.storage = function () {
+    return M.family({ title:"Storage & Retention", icon:"database", addLabel:"Policy",
+      health:{text:"78% used · 1 legal hold",kind:"warn"},
+      summary:"Mode, retention, holds, pressure, compaction, quarantine, deletion, encryption, test restore.",
+      toolbar:[{id:"test",label:"Test restore"}] }, PM_DEMO.storageRows,
+      '<div class="mgr-note info small">Distinguishes internal snapshots, settings backup, project backup, full server backup, and workspace cleanup.</div>');
+  };
+  M.backup = function () {
+    return M.family({ title:"Backup & Restore", icon:"archive", addLabel:"Restore point",
+      health:{text:"Last backup today 02:00",kind:"ok"},
+      summary:"Back-up-now (action) vs schedule (setting) vs last backup (status) vs manager vs log.",
+      toolbar:[{id:"log",label:"Open log"}] }, PM_DEMO.backupRows,
+      '<div class="mgr-note info small">Actions and values stay distinct. Restore points are receipted.</div>');
+  };
+  M.settingsLifecycle = function () {
+    return M.family({ title:"Settings Lifecycle", icon:"lifecycle", addLabel:"Export",
+      health:{text:"3 import conflicts previewed",kind:"warn"},
+      summary:"Export/import/merge/conflict/validation/migration/rollback/receipt/reset.",
+      toolbar:[{id:"receipt",label:"Receipts"}] }, PM_DEMO.lifecycleRows,
+      '<div class="mgr-note warn small">Restore point before apply · atomic apply · rollback to snapshot · receipt + source disclosure. Copy Settings From is a one-time transactional copy — no universal inheritance system.</div>');
+  };
+  M.history = function () {
+    return M.family({ title:"History & Sessions", icon:"history", addLabel:"Archive",
+      health:{text:"3 sessions resumable",kind:"ok"},
+      summary:"Project/all-project filters, compare/export/rebuild/archive/deletion. PM-owned vs provider-native identity.",
+      toolbar:[{id:"rebuild",label:"Rebuild index"}] }, PM_DEMO.historyRows);
+  };
+  M.artifacts = function () {
+    return M.family({ title:"Runtime Artifacts", icon:"package", addLabel:"Reveal",
+      health:{text:"5 categories · 2.1 GB screenshots",kind:"warn"},
+      summary:"Type, location, version, retention, receipts, redaction, open/reveal/export/cleanup.",
+      toolbar:[{id:"cleanup",label:"Cleanup dry-run"}] }, PM_DEMO.artifactRows);
+  };
+  M.sourcecontrol = function () {
+    return M.family({ title:"Source Control & Worktrees", icon:"branch", addLabel:"Worktree",
+      health:{text:"Git healthy · force-push denied on main",kind:"ok"},
+      summary:"Changes/history/graph/worktrees, Git/Jujutsu/LFS, forge, SSH, test-before-merge, leases.",
+      toolbar:[{id:"graph",label:"Graph"}] }, PM_DEMO.sourcecontrolRows);
+  };
+  M.github = function () {
+    return M.family({ title:"GitHub Actions", icon:"github", addLabel:"Pin workflow",
+      health:{text:"Branch green · 1 approval pending",kind:"warn"},
+      summary:"Pinned workflows, branch readiness, run/job/log, starter workflow, account health.",
+      toolbar:[{id:"refresh",label:"Refresh",icon:"refresh"}] }, PM_DEMO.githubRows);
+  };
+  M.containers = function () {
+    return M.family({ title:"Containers & Registries", icon:"container", addLabel:"Connect",
+      health:{text:"Docker up · Podman stopped",kind:"warn"},
+      summary:"Docker / Podman / Kubernetes tools top-level; detail: Engine/CLI/Compose/kubectl/Helm/registries.",
+      toolbar:[{id:"health",label:"Health"}] }, PM_DEMO.containerRows,
+      '<div class="mgr-note info small">Domain-specific capability probes reuse the shared tool lifecycle.</div>');
+  };
+  M.webfetch = function () {
+    return M.family({ title:"Web, Search & Fetch", icon:"globe", addLabel:"Provider",
+      health:{text:"Ready · API near quota",kind:"warn"},
+      summary:"Provider priority, limits, credit guards, caches, sessions, proxies, air-gap, privacy.",
+      toolbar:[{id:"clear",label:"Clear cache"}] }, PM_DEMO.webfetchRows,
+      '<div class="mgr-note info small">PM-native Browser Program only. No Playwright runtime/facade/compatibility dependency.</div>');
+  };
+  M.searchindex = function () {
+    return M.family({ title:"Project Search Index", icon:"searchindex", addLabel:"Rebuild",
+      health:{text:"42k docs · 640 MB · 3 failures",kind:"warn"},
+      summary:"Enable, rebuild, exclusions, file-size/symlink, disk, remote cache, failures.",
+      toolbar:[{id:"rebuild",label:"Rebuild",icon:"refresh"}] }, PM_DEMO.searchindexRows);
+  };
+  M.cleanup = function () {
+    return M.family({ title:"Workspace Cleanup", icon:"broom", addLabel:"Dry-run",
+      health:{text:"2.7 GB reclaimable",kind:"warn"},
+      summary:"Dry-run first, worktree safety, evidence retention, receipts.",
+      toolbar:[{id:"dryrun",label:"Dry-run all"}] }, PM_DEMO.cleanupRows,
+      '<div class="mgr-note warn small">Never deletes without a preview + receipt. Worktree safety enforced.</div>');
+  };
+  M.server = function () {
+    return M.family({ title:"Server & Execution Hosts", icon:"server", addLabel:"Reserved",
+      health:{text:"Deferred owners — insertion shell only",kind:"neutral"},
+      summary:"Reserved manager grammar + semantic destinations for future owner modules.",
+      toolbar:[] }, PM_DEMO.serverRows,
+      '<div class="mgr-note info small">' + PM_DEMO.serverNote + '</div>');
+  };
+
+  /* ---------- PAM INSTALLATION LIFECYCLE (fixtures 3-8, 12, 14) ---------- */
+  M.installations = function () {
+    var updMap = {
+      ready:["ok","Ready"], "Update available":["warn","Update available — Ask first"],
+      "Waiting for work to finish":["info","Scheduled when idle"],
+      "Rolled back":["bad","Verification failed · rolled back"],
+      "Could not identify installation method":["bad","Could not identify method"],
+      selected:["accent","Selected (primary)"], "managed externally":["neutral","Managed externally"],
+      "Explicit install":["info","Explicit install — official source"]
+    };
+    var confMap = {
+      Proven:["ok","Proven"], "Strongly identified":["ok","Strongly identified"],
+      Probable:["info","Probable"], Ambiguous:["warn","Ambiguous"], Unknown:["bad","Unknown"],
+      "Not installed":["neutral","Not installed"]
+    };
+    var rows = PM_DEMO.installations.map(function (i) {
+      var conf = confMap[i.confidence] || ["neutral", i.confidence];
+      var upd = updMap[i.update] || ["neutral", i.update];
+      var note = i.note ? '<span class="mgr-note ' + (i.health === "bad" ? "bad" : i.health === "warn" ? "warn" : "info") + ' small">' + i.note + '</span>' : "";
+      var actions = [
+        '<button class="btn sm ghost" data-mgr-act="details">Details</button>',
+        '<button class="btn sm ghost" data-mgr-act="logs">Logs</button>'
+      ];
+      if (i.update === "Update available") actions.unshift('<button class="btn sm primary" data-mgr-act="apply">Update (ask)</button>');
+      if (i.update === "Explicit install") actions.unshift('<button class="btn sm primary" data-mgr-act="apply">Install (official)</button>');
+      if (i.update === "Rolled back") actions.unshift('<button class="btn sm primary" data-mgr-act="reconnect">Repair</button>');
+      if (i.update === "Could not identify installation method") actions.unshift('<button class="btn sm primary" data-mgr-act="open">Manual install</button>');
+      if (i.confidence === "Ambiguous") actions.unshift('<button class="btn sm primary" data-mgr-act="details">Identify</button>');
+      return [
+        '<div class="res-row" data-res>',
+          '<span class="sdot ' + i.health + '"></span>',
+          '<div class="col grow gap-xs">',
+            '<div class="row center gap-sm wrap"><strong>' + i.provider + '</strong>',
+              '<span class="chip ' + conf[0] + '">' + conf[1] + '</span>',
+              '<span class="chip ' + upd[0] + '">' + upd[1] + '</span>',
+              '<span class="chip">owner: ' + i.owner + '</span>',
+              '<span class="chip">auth: ' + i.auth + '</span>',
+              '<span class="chip">' + i.multi + '</span>',
+            '</div>',
+            '<div class="row center gap-xs wrap muted small">',
+              '<span class="chip mono">' + i.cmd + ' → ' + i.resolved + '</span>',
+              '<span class="chip">' + i.method + '</span>',
+              '<span class="chip">' + i.host + '</span>',
+            '</div>',
+            '<span class="muted small">evidence: ' + i.evidence + '</span>',
+            note,
+          '</div>',
+          '<div class="row center gap-xs">' + actions.join("") + '</div>',
+        '</div>'
+      ].join("");
+    }).join("");
+    var usage = '<div class="mgr-note warn small">' + PM_DEMO.usageUnavailable.provider + ': ' + PM_DEMO.usageUnavailable.note + '</div>';
+    return [
+      '<section class="provider" style="margin-top:var(--gap)">',
+        '<div class="provider-head"><div class="col gap-xs">',
+          '<div class="row center gap-sm"><h3>Provider CLI installations</h3>',
+          '<span class="chip info">5 confidence · 7 update states</span></div>',
+          '<span class="muted small">Acquisition is explicit, official-source, Host/Environment-specific — never bundled or pre-seeded.</span>',
+        '</div></div>',
+        '<div class="res-list">' + rows + '</div>',
+        '<div class="mgr-note info small">Auth boundary — CLI-owned OAuth: Claude CLI, Antigravity CLI. PM-direct OAuth: OpenAI/Codex, GitHub, Copilot. Success needs path + launch + auth/profile + catalog + adapter handshake + capabilities + dependent-route refresh — not installer exit code alone.</div>',
+        usage,
+      '</section>'
+    ].join("");
+  };
+
   /* ---------- ROUTER ---------- */
   M.render = function (managerId) {
     var fn = M[managerId];
@@ -557,7 +825,7 @@
     root.querySelectorAll('[data-manager-search]').forEach(function (inp) {
       inp.addEventListener("input", function () {
         var q = this.value.toLowerCase();
-        root.querySelectorAll("[data-conn],[data-model],[data-gist],[data-mcp],[data-skill],[data-persona],[data-lsp],[data-term],[data-media],[data-crew]").forEach(function (row) {
+        root.querySelectorAll("[data-conn],[data-model],[data-gist],[data-mcp],[data-skill],[data-persona],[data-lsp],[data-term],[data-media],[data-crew],[data-res]").forEach(function (row) {
           var txt = row.textContent.toLowerCase();
           row.style.display = (!q || txt.indexOf(q) > -1) ? "" : "none";
         });
@@ -703,6 +971,37 @@
       btn.addEventListener("click", function () {
         var mgr = root.getAttribute("data-manager-id");
         PM.toast("Add " + (mgr || "resource") + " — simulated in concept");
+      });
+    });
+    // generic resource-row actions (final-cumulative families) — every control functional
+    root.querySelectorAll('[data-mgr-act]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
+      btn.addEventListener("click", function () {
+        var act = this.getAttribute("data-mgr-act");
+        var row = this.closest("[data-res],[data-conn],[data-mcp]");
+        if (act === "reconnect" || act === "retry") {
+          var dot = row && row.querySelector(".sdot");
+          var self = this, orig = this.textContent;
+          self.disabled = true; self.textContent = "Working…";
+          setTimeout(function () {
+            self.disabled = false; self.textContent = orig;
+            if (dot) dot.className = "sdot ok";
+            if (row) row.querySelectorAll(".chip.bad,.chip.warn").forEach(function (c) { c.className = "chip ok"; });
+            PM.toast("Recovered · probe ok · receipt kept");
+          }, 900);
+        } else if (act === "enable") {
+          var enabling = this.textContent.indexOf("Enable") > -1;
+          this.textContent = enabling ? "Enabled" : "Enable";
+          PM.toast(enabling ? "Enabled" : "Disabled");
+        } else if (act === "preview") { PM.toast("Preview — local only"); }
+        else if (act === "test") { PM.toast("Test send — masked, rate-limited, receipted"); }
+        else if (act === "run") { PM.toast("Started — ObservableWork phase shown"); }
+        else if (act === "apply") { PM.toast("Applied · receipt kept · dependent routes refreshed"); }
+        else if (act === "export") { PM.toast("Exported · source disclosed"); }
+        else if (act === "delete") { PM.toast("Removed · receipt kept (no destructive call)"); }
+        else if (act === "open") { PM.toast("Opened owner surface — simulated"); }
+        else if (act === "logs") { PM.toast("Opened receipted log — simulated"); }
+        else { PM.toast(act.charAt(0).toUpperCase() + act.slice(1) + " — simulated"); }
       });
     });
   };

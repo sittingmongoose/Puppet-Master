@@ -198,6 +198,7 @@
                   '<div class="sr-results hidden" data-results><div class="sr-results-inner"></div></div>',
                   '<div class="sr-config">' + PM.shared.themePicker() + '</div>',
                 '</div>',
+                PM.shared.ownedStrip("c4"),
                 '<div class="sr-beat">' + beat.join("") + '</div>',
                 sections,
               '</div>',
@@ -311,6 +312,7 @@
           });
         });
         PM.shared.wireThemePicker();
+        PM.shared.wireOwnedStrip(stage);
         PM.shared.wireShell();
       }
 

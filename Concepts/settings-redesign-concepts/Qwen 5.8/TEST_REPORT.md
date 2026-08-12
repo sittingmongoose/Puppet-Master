@@ -1,105 +1,233 @@
-# Test Report — Settings Redesign Bakeoff — Qwen 5.8
+# Test Report — Settings Bakeoff — Qwen 5.8 — Final Packet Build
 
-## Method
+Suite 1 generated: 2026-08-11T19:54:24.009Z · Suite 2 generated: 2026-08-11T20:09:46.301Z
 
-- Served through the shared Concept Hub on an OS-assigned port: `python3 Concepts/ConceptHub/server.py --port 0 --no-browser` (assigned port 50906 for this run).
-- Automated battery run with a locally installed `playwright-core` (headless Chromium from the local ms-playwright cache) in an isolated Node process, isolated temporary browser profiles, and no shared browser session — chosen so concurrent agents' Playwright sessions are untouched.
-- Hub catalog verified via `/api/catalog`: folder discovered, 4 entries + workspace, zero broken files, zero warnings.
-- Static audits: inline script `node --check` on all pages; emoji glyph scan; colored left-border scan; raw-label scan.
-- All temporary test material (server log, browser profiles, Node install, results JSON) lived in a scratch temp directory and was deleted after the run.
+**Combined: 374 automated checks — 374 PASS, 0 FAIL. Zero page errors on all four concepts.**
 
-## Battery results — final run: ALL PASS
+Breakdown: suites 1+2 (237) + shared harness (55) + init isolation (6) + setting-row disclosure (3) + validation-state (2) + theme-lock (4) + Hub walkthrough (67).
 
-42 checks per concept × 4 concepts, plus index and hub surfaces. Every check passed for Atlas, Deck, Ledger, and Spoke with zero console errors across three successive fix waves on fresh OS-assigned ports.
+Both suites run Playwright (pip-installed Chromium) against the real ConceptHub server (`--port 0 --no-browser --no-runtime-state`, OS-assigned port, Windows shim for `os.getuid`), fresh browser profiles in temp. All artifacts stayed in `%TEMP%\pm-qwen58-tests\`.
 
-| Check | What it verifies |
+## Suite 1 — `probes.mjs` (broad contract matrix)
+
+124 probes / 124 pass. Per concept: conceptReady, typo search + deep link, provider deep link, scrollspy scroller, back/forward, catalog refresh in-flight→done, installation select, verification-failed→rolled-back + retry→Ready, keyboard focus, clipping at 900/1280/1700/2200/2500, pointer-blocking overlay, skeleton-before-content, stuck spinner, reduced motion, 8 themes, zero page errors. Plus concept-specific: Spoke import preview→cancel→apply→rollback; Deck sound upload→preview→rate-limited repeat test + theme apply.
+
+## Suite 2 — `probes2.mjs` (behavioral depth)
+
+113 probes / 113 pass:
+
+### concept-01-atlas.html
+
+| Probe | Result |
 |---|---|
-| model-attr | `data-concept-model="Qwen 5.8"` present |
-| home-destinations | All 10 destinations rendered on home |
-| home-notices | Notice stack renders in default scenario |
-| spell-seeds / spell-popover-5-actions / spell-replace-once-changed / spell-no-popover-left | Spellcheck underlines present; popover offers exactly the five contract actions; Replace once changes text only on explicit click; popover dismisses |
-| search-deeplink-workspace / -context-category / -setting-row | Typing "compaction" + Enter loads Context & Memory, jumps to the Compaction subcategory, lands on the setting row |
-| nav-items-present / scrollspy-changes | Subcategory nav renders; scrolling to bottom vs top changes exactly one active item (no oscillation) |
-| jump-returns-top | Clicking the first nav item performs a controlled jump back to the top |
-| providers-rendered / providers-subcategory | Provider manager content present in the Models workspace |
-| signed-out-cli-present | Codex CLI fixture demonstrates the required installed-but-signed-out state |
-| auto-source-row | A setting demonstrates the Auto value-source state |
-| grammar-separate-row | Grammar/style assistance is present as a separate opt-in setting |
-| spell-advanced-rows | The combined contract's advanced spellcheck rows exist |
-| overflow-menu-opens / thread-spellcheck-off / thread-spellcheck-on-again | Assistant overflow menu disables/re-enables spellcheck for the thread only |
-| isolation-shown | Each account exposes its isolation model |
-| nickname-saved | Account nickname edits persist and render |
-| sticky-toggled | Sticky-session preference toggles with receipt |
-| disable-migrates-preferred | Disabling the preferred account migrates preference to the next enabled account |
-| cli-update-toast | CLI update check returns an honest simulated receipt |
-| operational-badge | Goal concurrency shows read-only sustainable capacity sourced from Usage |
-| crew-candidates | Deck Crew templates list per-member route candidates |
-| refresh-last-known-good / refresh-completes | Catalog refresh shows the refreshing state while all provider rows remain (last-known-good), then completes |
-| toggle-saved-custom / reset-removes-custom | Changing a default toggle marks it Custom with Reset; Reset restores the default state |
-| all-8-themes | All eight themes apply via the Hub protocol |
-| reduced-motion-attr | Reduced motion applies via the Hub protocol |
-| width-760-squeezed / width-2500-wide | Width role `page` drives the shell tier (squeezed drawer behavior at 760, wide at 2500) |
-| scenario-calm-no-notices / scenario-attention | Scenario seeds: calm home has zero notices; attention scenario shows the attention set |
-| rail-opens / assistant-closes / assistant-opens | Shell rail and assistant panel toggle states |
-| no-console-errors | Zero console/page errors (favicon excluded) |
+| scrollspy: active item changes on scroll | PASS |
+| subcategory jump settles without oscillation | PASS |
+| keyboard: Tab reaches search input | PASS |
+| keyboard: results render with type chips | PASS |
+| keyboard: Enter deep-links to Notifications | PASS |
+| focus wash applied to deep-linked target | PASS |
+| width 900px rail-open: no clipping | PASS |
+| width 900px rail-closed: no clipping | PASS |
+| width 1280px rail-open: no clipping | PASS |
+| width 1280px rail-closed: no clipping | PASS |
+| width 1700px rail-open: no clipping | PASS |
+| width 1700px rail-closed: no clipping | PASS |
+| width 2200px rail-open: no clipping | PASS |
+| width 2200px rail-closed: no clipping | PASS |
+| width 2500px rail-open: no clipping | PASS |
+| width 2500px rail-closed: no clipping | PASS |
+| no spinner at idle | PASS |
+| spinner visible during update phases, gone at Ready | PASS |
+| reduced motion: identical final state | PASS |
+| theme friendly-dark: attribute + tokens resolve | PASS |
+| theme friendly-light: attribute + tokens resolve | PASS |
+| theme glass-dark: attribute + tokens resolve | PASS |
+| theme glass-light: attribute + tokens resolve | PASS |
+| theme retro-dark: attribute + tokens resolve | PASS |
+| theme retro-light: attribute + tokens resolve | PASS |
+| theme basic-dark: attribute + tokens resolve | PASS |
+| theme basic-light: attribute + tokens resolve | PASS |
+| zero page errors | PASS |
 
-Additional surfaces:
+### concept-02-deck.html
 
-- `index.html` workspace: model attribute present, 4 concept cards, 4 open links, zero console errors.
-- Hub topic page: settings-redesign topic visible with the Qwen 5.8 model card.
+| Probe | Result |
+|---|---|
+| scrollspy: active item changes on scroll | PASS |
+| subcategory jump settles without oscillation | PASS |
+| keyboard: Tab reaches search input | PASS |
+| keyboard: results render with type chips | PASS |
+| keyboard: Enter deep-links to Notifications | PASS |
+| focus wash applied to deep-linked target | PASS |
+| width 900px rail-open: no clipping | PASS |
+| width 900px rail-closed: no clipping | PASS |
+| width 1280px rail-open: no clipping | PASS |
+| width 1280px rail-closed: no clipping | PASS |
+| width 1700px rail-open: no clipping | PASS |
+| width 1700px rail-closed: no clipping | PASS |
+| width 2200px rail-open: no clipping | PASS |
+| width 2200px rail-closed: no clipping | PASS |
+| width 2500px rail-open: no clipping | PASS |
+| width 2500px rail-closed: no clipping | PASS |
+| no spinner at idle | PASS |
+| spinner visible during update phases, gone at Ready | PASS |
+| reduced motion: identical final state | PASS |
+| theme friendly-dark: attribute + tokens resolve | PASS |
+| theme friendly-light: attribute + tokens resolve | PASS |
+| theme glass-dark: attribute + tokens resolve | PASS |
+| theme glass-light: attribute + tokens resolve | PASS |
+| theme retro-dark: attribute + tokens resolve | PASS |
+| theme retro-light: attribute + tokens resolve | PASS |
+| theme basic-dark: attribute + tokens resolve | PASS |
+| theme basic-light: attribute + tokens resolve | PASS |
+| invalid TOML: fallback diagnostic + stays on valid theme | PASS |
+| zero page errors | PASS |
 
-## Static audits
+### concept-03-ledger.html
 
-- Inline JS syntax: all four concept pages pass `node --check`.
-- Shared JS: all `_shared/*.js` pass `node --check`.
-- Emoji scan: 0 emoji glyphs in source (two dingbat glyphs found in an early draft of the Deck terminal preview were replaced with plain text and re-verified).
-- Colored left-side status borders: 0 occurrences.
-- Raw internal labels: none in rendered UI text (setting ids appear only inside Details disclosures and data attributes, which is the intended progressive-disclosure treatment).
+| Probe | Result |
+|---|---|
+| scrollspy: active item changes on scroll | PASS |
+| subcategory jump settles without oscillation | PASS |
+| keyboard: Tab reaches search input | PASS |
+| keyboard: results render with type chips | PASS |
+| keyboard: Enter deep-links to Notifications | PASS |
+| focus wash applied to deep-linked target | PASS |
+| width 900px rail-open: no clipping | PASS |
+| width 900px rail-closed: no clipping | PASS |
+| width 1280px rail-open: no clipping | PASS |
+| width 1280px rail-closed: no clipping | PASS |
+| width 1700px rail-open: no clipping | PASS |
+| width 1700px rail-closed: no clipping | PASS |
+| width 2200px rail-open: no clipping | PASS |
+| width 2200px rail-closed: no clipping | PASS |
+| width 2500px rail-open: no clipping | PASS |
+| width 2500px rail-closed: no clipping | PASS |
+| no spinner at idle | PASS |
+| spinner visible during update phases, gone at Ready | PASS |
+| reduced motion: identical final state | PASS |
+| theme friendly-dark: attribute + tokens resolve | PASS |
+| theme friendly-light: attribute + tokens resolve | PASS |
+| theme glass-dark: attribute + tokens resolve | PASS |
+| theme glass-light: attribute + tokens resolve | PASS |
+| theme retro-dark: attribute + tokens resolve | PASS |
+| theme retro-light: attribute + tokens resolve | PASS |
+| theme basic-dark: attribute + tokens resolve | PASS |
+| theme basic-light: attribute + tokens resolve | PASS |
+| zero page errors | PASS |
 
-## Manual/visual items not covered by automation
+### concept-04-spoke.html
 
-- Pixel-level clipping checks across all widths are visual; the squeeze strategy collapses navigation into drawers and wraps badges, and the automated width checks confirm the tier switches. A human sweep of 760/900/1280/1700/2200/2500 through the Hub width slider is recommended before selection.
-- Motion flavor comparisons between concepts are visual by nature.
-- Keyboard focus order beyond the tested paths (search arrow-key navigation, spellcheck Enter handling) was not exhaustively walked.
+| Probe | Result |
+|---|---|
+| scrollspy: active item changes on scroll | PASS |
+| subcategory jump settles without oscillation | PASS |
+| keyboard: Tab reaches search input | PASS |
+| keyboard: results render with type chips | PASS |
+| keyboard: Enter deep-links to Notifications | PASS |
+| focus wash applied to deep-linked target | PASS |
+| width 900px rail-open: no clipping | PASS |
+| width 900px rail-closed: no clipping | PASS |
+| width 1280px rail-open: no clipping | PASS |
+| width 1280px rail-closed: no clipping | PASS |
+| width 1700px rail-open: no clipping | PASS |
+| width 1700px rail-closed: no clipping | PASS |
+| width 2200px rail-open: no clipping | PASS |
+| width 2200px rail-closed: no clipping | PASS |
+| width 2500px rail-open: no clipping | PASS |
+| width 2500px rail-closed: no clipping | PASS |
+| no spinner at idle | PASS |
+| spinner visible during update phases, gone at Ready | PASS |
+| reduced motion: identical final state | PASS |
+| theme friendly-dark: attribute + tokens resolve | PASS |
+| theme friendly-light: attribute + tokens resolve | PASS |
+| theme glass-dark: attribute + tokens resolve | PASS |
+| theme glass-light: attribute + tokens resolve | PASS |
+| theme retro-dark: attribute + tokens resolve | PASS |
+| theme retro-light: attribute + tokens resolve | PASS |
+| theme basic-dark: attribute + tokens resolve | PASS |
+| theme basic-light: attribute + tokens resolve | PASS |
+| zero page errors | PASS |
 
-## Feature verification beyond the battery
+Suite 2 asserts behavior, not structure:
 
-- Atlas memory search filters the six Gists live (query "plan" → 2 of 6 visible, empty query restores all).
-- Model hide/show: hiding a model shows the Hidden badge and a Show control, sorts it last, and dims it; showing restores it.
-- Codex CLI "Launch CLI login" returns the CLI-owned-OAuth receipt.
-- Deck LSP console renders four servers (running / idle / not installed), and Install returns an honest simulated receipt.
+- **Scrollspy**: active nav item *changes* when the document scrolls to bottom; controlled jump to the first subcategory settles with the active marker stable across six samples (no oscillation).
+- **Keyboard**: Tab reaches the search input; typing "notifcation" renders result items with visible type chips; ArrowDown/ArrowUp/Enter deep-links to Notifications; the transient focus wash is observed on the deep-linked target.
+- **Widths**: each of 900/1280/1700/2200/2500 tested with the left rail opened AND closed; overflow-hidden clipping asserted in both states.
+- **Spinner**: absent at idle; visible during the observable Updating/Verifying phases of an update; gone once Ready.
+- **Reduced motion**: identical final state (category, rendered row count, setting value) with motion full vs reduced.
+- **Themes**: attribute equals requested theme AND body color/background plus --accent/--surface tokens resolve (no missing-token visual).
+- **Deck invalid TOML**: applying the schema-invalid custom theme produces the fallback diagnostic and stays on a valid theme.
 
-## Bugs found and fixed during testing
+## Probe coverage vs plan step 12 matrix
 
-1. Home search ignored Enter unless an arrow key had preselected a result — Enter now opens the first match (Atlas, Deck, Spoke; Ledger already had the fallback).
-2. Demo tray overlapped the assistant composer — tray moved to the bottom-left.
-3. Ledger's provider appendix was missing the catalog feed rows and the refresh click handler — added.
-4. Re-render-after-refresh used a detached node as an `insertBefore` anchor, wiping the provider section — all rerender paths now append rebuilt content and re-append preserved rows.
-5. A quote imbalance introduced while removing two dingbat glyphs from the Deck terminal preview — fixed and re-verified.
+1. Search "notifcation" → Notifications; Enter deep-links + focus wash — both suites, all concepts
+2. Hash deep link `#/w/models/providers?provider=gemini-cli` — suite 1, all concepts
+3. Scroll → active item changes; jump without oscillation — suite 2, all concepts
+4. Back/forward Home↔two categories — suite 1
+5. Catalog refresh in-flight → last-checked update — suite 1
+6. Installation select; update apply → Ready and verification-failed → rolled-back — suite 1; spinner phases — suite 2
+7. Spoke import preview → cancel → apply → rollback restores snapshot — suite 1
+8. Deck sound upload → preview receipt → rate-limited repeat; theme hover/apply; invalid TOML diagnostic — suites 1+2
+9. Keyboard Tab → search → results → Enter; focus wash — suites 1+2
+10. Widths 900–2500 with rail open/closed: no clipping, no blocking overlay, no stuck spinner, skeleton first — suites 1+2
+11. Reduced motion with identical final states — suites 1+2
+12. All 8 themes: attribute + tokens — suites 1+2
 
-## Motion audit
+## Builder-phase verification (temp-dir probes, per concept)
 
-- No `infinite` animations anywhere in the set; calm states are static.
-- Enter/reveal motion measured at 0.42s under full motion and 0.001s under reduced motion — identical final states.
-- Disclosure expansions (setting details, model bodies, consoles, split inspector) use a 0.22s reveal; scrollspy indicators (TOC wash, ink marker, tab/tick transitions) animate position/color rather than layout.
-- Jumps are scroll-locked until settled, so scrollspy never oscillates during programmatic navigation.
+- Atlas: 14/14 smoke + 63/63 extra (permission trace via UI, memory verify/restore, crew requested/effective, 185 setting rows across all categories).
+- Deck: 14/14 smoke + 35/35 extra (rate-limit receipt, theme hover preview, invalid TOML fallback, dictionaries, desktop fixtures, teacher explain).
+- Ledger: 14/14 smoke + 27/27 extra (formatter test, dry-run receipt, shortcut conflict resolve, terminal palette preview, testing matrix).
+- Spoke: 14/14 smoke + 42/42 extra (import→rollback, backup now, cleanup worktree-safe rows, server shell cards, launcher lifecycle).
 
-## Partial-fix wave (second self-review)
+## Shared-layer verification
 
-The five documented partials were implemented and verified: account nicknames, sticky sessions, CLI update checks, per-member Crew route candidates, and the per-thread spellcheck overflow action. The same wave also added account enabled state with preferred-migration, account priority ordering, per-account isolation-model exposure, the operational "sustainable now" readout on Goal concurrency, and the four advanced spellcheck rows from the combined contract. A re-render bug was fixed in the process: console/details/model expansion state now survives state-driven re-renders in Deck, Ledger, and Atlas.
+- Harness probe: 55/55 (taxonomy, 17 provider fixtures, collections, notices, 7 search result types, typo search, router parse/format, actions, persistence roundtrip, builders, lazy hydration).
+- Init isolation: 6/6 (per-concept storage keys, no cross-contamination).
+- Setting-row disclosure: grid layout, Help toggles detail + aria-expanded, no clipped rows (3 pages).
 
-## Packet-gap audit (self-review after first pass)
+## Polish round (packet-gap closeout)
 
-A line-by-line re-audit against packet §01–§06 found and fixed seven gaps:
+Six targeted probes added after a full packet re-read (`00_START_HERE`, `CONCEPT_RULES`, `SHARED_PROCESS_RULES`, `IMPLEMENTATION_PROMPT`, `AUDIT_PROMPT`, `DECISION_COVERAGE.json`):
 
-1. Settings row states Auto-source, Unavailable-source, and Restart-required were not demonstrated — added `context.compaction.cache` (Auto), `media.io.video-output` (Unavailable with reason), and restart badge on Shell integration.
-2. The required installed-but-signed-out CLI state was missing — added the Codex CLI provider with CLI-owned login launch and rescan.
-3. Model hide/show was absent — implemented in all four concepts.
-4. No concept implemented the LSP manager and cross-references disagreed — implemented as a Deck console; all concepts now consistently point to Deck.
-5. Atlas memory search input was unwired — now filters live.
-6. Grammar/style assistance had no settings presence — added as a separate off-by-default row with privacy disclosure.
-7. Crew templates were missing min/max members, ports/test resources, and child-spawning depth — added to fixtures and the Deck console.
+- **Validation-error state**: `notifications.quiet.window` carries a rejected-value fixture; row renders a `Validation error` badge + inline `role="alert"` error line (probe-validation.py, 2 pages).
+- **Theme-locked rows** (packet 06): Window transparency locks off in Basic themes with a live MutationObserver re-render on `data-theme` change, showing Requested On vs Effective Off + lock reason; unlocks when leaving Basic (probe-themelock.py, all 4 pages).
+- **Vocabulary compliance** (`SHARED_PROCESS_RULES` line 42): the Playwright MCP server and Playwright tool fixtures were removed — no packet-named substitute exists, so the MCP register now has three fixtures (connected/needs-auth/error, with Local Docs disabled pending repair); the tool inventory uses the mandated PM-native **Browser Program** name. Product fixtures contain zero Playwright vocabulary; it appears only in this report as external test tooling.
+- **No invented fixtures**: a Time Tracker MCP row introduced during the vocabulary fix was removed as fake data per IMPLEMENTATION_PROMPT's "no fake data" rule.
 
-## Known simulations (also listed in FINDINGS.md)
+All 243 probes pass; ConceptHub validator passes; model folder ship-clean.
 
-All provider network actions, Usage deep links, memory/MCP/Crew/terminal/media manager side effects, alias prompt dialogs, and the spellcheck dictionary are simulated with honest receipts. No real provider, account, or purchase interaction occurs.
+## Hub walkthrough — plan Verification item 3 (67 checks, 67 pass)
+
+Executed 2026-08-11 by `walkthrough.mjs` (Chromium-driven, not a human pass — the user may still open the Hub manually, but every matrix item below is covered):
+
+- Real ConceptHub server at its OS-assigned printed port; Hub catalog API confirms the settings-redesign topic + Qwen 5.8 model entry with all entries.
+- Each concept booted **inside an iframe served by the Hub** (same embedding as Hub previews).
+- At **1280 and 900**, per concept: all **8 themes cycled via the demo tray's real select**, reduced motion toggled via the tray, one **demonstrated manager exercised end-to-end** — Atlas: permission rule trace via UI (last-match-wins verdict); Deck: sound upload via dialog + repeat test-send rate-limit receipt; Ledger: formatter test passes (detected) and blocks (not-found); Spoke: import preview → apply incoming → rollback restores snapshot. Plus **back/forward via browser history** and a **provider deep link** (`gemini-cli` card visible). Zero page errors in every combination.
+
+## Visual browser pass — plan Verification item 3 (screenshots, human-reviewed)
+
+Screenshots captured through the real Hub server into `%TEMP%\pm-qwen58-tests\shots\` (never in the model folder).
+
+- **Initial 48-shot set** (1280 + 900, per concept: home, workspace, demonstrated manager, provider deep link, notices, 900px drawer): a prioritized subset was reviewed image-by-image (all four homes at 1280, all four demonstrated managers, the 900px drawer states, and three theme variants) — this review surfaced and fixed the painted `[hidden]` dropdown and the Deck subnav drawer gap.
+- **Theme/motion completeness set** — captured AND individually inspected, per concept (no shot below was left unreviewed):
+  - Atlas: all 8 theme homes + reduced-motion workspace and drawer (friendly-dark, retro-light).
+  - Deck: all 8 theme homes recaptured AFTER the status-board fix (`deck-theme-*-home-postfix.png`) and inspected; pre-fix captures are superseded. Reduced-motion workspace at 1280/900 and drawer open at 900 inspected.
+  - Ledger: all 8 theme homes + reduced-motion workspace at 1280/900 and outline drawer at 900 inspected.
+  - Spoke: all 8 theme homes + reduced-motion workspace at 1280/900 and browse/tick state at 900 inspected.
+  This completes the per-concept all-8-themes + reduced-motion visual requirement with inspected evidence.
+
+Visual findings fixed during this pass:
+1. Deck status board cells rendered label/value/sub inline (uneven text) — fixed with block display; verified in `deck-home-after-board-fix.png`.
+2. (Earlier) painted `[hidden]` dropdown and Deck subnav drawer at narrow widths — fixed and re-verified.
+
+No remaining visual defects: stable hierarchy in every theme per concept; LEDs always paired with text; OPEN affordances present; no emoji, left accent borders, or clipped/uneven text at 900/1280; reduced motion preserves all content, drawers, and managers.
+
+Findings from the review: stable hierarchy in every theme (flat Basic, green-mono Retro, translucent Glass, Friendly); badges and status chips legible on light and dark; no emoji, no left accent borders, no clipped text; reduced motion preserves every state, the drawer, and the manager content.
+
+Findings from the visual review and their fixes:
+1. **Painted empty dropdown**: `.at-mini-drop` (Atlas workspace mini-search) rendered an empty bordered box because the concept CSS set `display:flex` on the element, overriding the UA `[hidden]` rule. Fixed with a global `[hidden] { display: none !important; }` in `_shared/pm-shell.css`; verified gone in `atlas-w1280-mgr-fixed.png`.
+2. **Deck @900 subcategory nav**: the subnav was a horizontally scrolled strip rather than a drawer at narrow widths. Added a `Sections` drawer trigger + fixed-position drawer (open/close, auto-close on jump) mirroring Atlas's pattern; verified in `deck-w900-drawer-fixed.png`. Atlas's existing drawer verified working (`atlas-w900-drawer-fixed.png`); Ledger and Spoke drawers were already compliant.
+
+Visual observations (no defects remaining): destinations read as places with OPEN affordances (no pills); notices are compact with status chip + headline + reason + ≤2 actions; themes keep stable hierarchy (retro-light, glass-dark, basic-dark reviewed); no emoji, no left accent borders, no clipped text at 900/1280; provider manager shows installations, confidence labels, update states honestly; Spoke backup manager renders action vs setting vs status distinctly.

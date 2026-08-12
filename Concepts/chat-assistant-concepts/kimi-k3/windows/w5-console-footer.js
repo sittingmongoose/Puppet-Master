@@ -2,14 +2,22 @@
    Kimi K3 — W5 Console Footer (chat-window concept).
 
    Standard kit header; thread slot; composer. ABOVE the composer sits a
-   console status strip — a single line (goal status \u00b7 todo n/m \u00b7
-   working summary) that expands UPWARD into a console panel holding a
-   pinnable Chats section (kit historyPanel) and all the kit work surfaces
-   (goal / todo / work chips). The strip stays pinned at the bottom of the
-   footer; the panel (a k3-acc region) grows upward into the transcript area.
-   Open state persists per thread in surfaceView.<tid>.w5ConsoleOpen; the
-   Chats pin persists in surfaceView.<tid>.w5HistoryPinned (when pinned the
-   console stays open on the Chats section).
+   console status strip — a single line (goal status · todo n/m ·
+   working summary + ops/capacity/crew count badges) that expands UPWARD
+   into a console panel holding a pinnable Chats section (kit historyPanel)
+   and all the kit work surfaces (ops / capacity / crew / goal / todo /
+   work chips / BSD detail mirror). The strip stays pinned at the bottom of
+   the footer; the panel (a k3-acc region) grows upward into the transcript
+   area. Open state persists per thread in surfaceView.<tid>.w5ConsoleOpen;
+   the Chats pin persists in surfaceView.<tid>.w5HistoryPinned (when pinned
+   the console stays open on the Chats section).
+
+   Artifact workspace adapter: at env.width >= 975 the ONE shared
+   K3ArtifactWS surface lives in a left "console bay" (280px flex sibling
+   of the chat, above the footer); below 975 the SAME node is reparented
+   (never cloned) into an Artifacts console section, and an open artifact
+   forces the console open — the console remains the single expand region.
+   Bay/section swaps carry surface state untouched (same element).
 
    Provides exactly one [data-k3-slot="thread"] and one
    [data-k3-slot="composer"]; the host fills them (THE ONE HARD RULE).
@@ -54,8 +62,21 @@
       var unmounted = false;
 
       /* ---- skeleton ------------------------------------------------------ */
+      var BREAKPOINT = 975;
+      var wide = ctx.env.width >= BREAKPOINT;
+
       var root = el('section', 'w5-root');
       root.setAttribute('data-k3-window', 'w5');
+
+      // artifact console bay (>= 975px): a left flex sibling hosting THE ONE
+      // shared artifact surface; below the breakpoint the same node becomes a
+      // console section (move-the-node, state carried).
+      var artBay = el('aside', 'w5-art-bay');
+      artBay.setAttribute('aria-label', 'Artifact workspace');
+      artBay.setAttribute('data-testid', 'w5-art-bay');
+      artBay.hidden = true;
+      var artSurface = window.K3ArtifactWS ? window.K3ArtifactWS.surface(ctx) : null;
+      root.appendChild(artBay);
 
       var main = el('div', 'w5-main');
 
@@ -99,6 +120,26 @@
       chatsSection.appendChild(historyEl);
       consoleBody.appendChild(chatsSection);
 
+      // Artifacts console section (< 975px host for the shared surface)
+      var artSection = el('section', 'w5-artifacts');
+      var artSecHead = el('div', 'w5-chats-head');
+      artSecHead.appendChild(el('span', 'w5-chats-title', 'Artifact'));
+      artSection.appendChild(artSecHead);
+      var artSecBody = el('div', 'w5-artifacts-body');
+      artSection.appendChild(artSecBody);
+      artSection.hidden = true;
+      consoleBody.appendChild(artSection);
+
+      // BSD detail section (token variant mirrors its detail into the console)
+      var bsdSection = el('section', 'w5-bsd');
+      var bsdSecHead = el('div', 'w5-chats-head');
+      bsdSecHead.appendChild(el('span', 'w5-chats-title', 'BSD'));
+      bsdSection.appendChild(bsdSecHead);
+      var bsdHost = window.K3BSD && window.K3BSD.detailHost ? window.K3BSD.detailHost(ctx, null) : null;
+      if (bsdHost) bsdSection.appendChild(bsdHost);
+      else bsdSection.hidden = true;
+      consoleBody.appendChild(bsdSection);
+
       consoleAccIn.appendChild(consoleBody);
       consoleAcc.appendChild(consoleAccIn);
       footer.appendChild(consoleAcc);
@@ -130,7 +171,7 @@
       function presence(tid) {
         var t = tid ? data.thread(tid) : null;
         var p = { goal: false, todo: false, chips: false, todoDone: 0, todoTotal: 0,
-                  agents: 0, files: 0 };
+                  agents: 0, files: 0, ops: 0, capacity: false, crew: 0 };
         if (!t) return p;
         if (t.activeGoal && !store.get('goalView.' + tid + '.cleared', false)) p.goal = true;
         var items = t.todo && arr(t.todo.items);
@@ -143,14 +184,22 @@
         arr(t.subagentGroups).forEach(function (g) { p.agents += arr(g.agents).length; });
         arr(t.diffGroups).forEach(function (g) { p.files += arr(g.files).length; });
         p.chips = p.agents > 0 || p.files > 0 || hasActivity;
+        if (window.K3Work && window.K3Work.opsSummary) {
+          var s = window.K3Work.opsSummary(tid);
+          p.ops = s ? arr(s.conflicts).filter(function (c) { return c.state !== 'resolved'; }).length : 0;
+        }
+        p.capacity = !!t.capacityForecast;
+        p.crew = t.crew ? arr(t.crew.members).length : 0;
         return p;
       }
-      function any(p) { return p.goal || p.todo || p.chips; }
+      function any(p) { return p.goal || p.todo || p.chips || p.ops > 0 || p.capacity || p.crew > 0; }
       function kindsOf(p) {
-        return (p.goal ? 'g,' : '') + (p.todo ? 't,' : '') + (p.chips ? 'c' : '');
+        return (p.goal ? 'g,' : '') + (p.todo ? 't,' : '') + (p.chips ? 'c,' : '') +
+               (p.ops ? 'o' + p.ops + ',' : '') + (p.capacity ? 'k,' : '') + (p.crew ? 'w' + p.crew : '');
       }
       function summaryOf(p, tid) {
         var parts = [];
+        if (p.ops) parts.push(p.ops + (p.ops === 1 ? ' conflict' : ' conflicts'));
         if (p.goal) {
           var g = data.thread(tid) && data.thread(tid).activeGoal;
           parts.push('Goal: ' + humanizeGoalStatus(g.status));
@@ -158,7 +207,9 @@
         if (p.todo) parts.push('Todo ' + p.todoDone + '/' + p.todoTotal);
         if (p.agents) parts.push(p.agents + (p.agents === 1 ? ' agent' : ' agents'));
         if (p.files) parts.push(p.files + (p.files === 1 ? ' file' : ' files'));
-        return parts.join(' \u00b7 ');
+        if (p.capacity) parts.push('Capacity');
+        if (p.crew) parts.push('Crew · ' + p.crew);
+        return parts.join(' · ');
       }
 
       /* ---- surfaces ------------------------------------------------------ */
@@ -174,6 +225,11 @@
       function buildSurfaces(tid) {
         unmountSurfaces();
         var p = presence(tid);
+        // ops conflicts lead the console work sections (packet ordering)
+        if (p.ops > 0 && kit.opsSurface) {
+          var o = kit.opsSurface(ctx, tid);
+          if (o) surfaceNodes.push(o);
+        }
         if (p.goal) {
           var g = kit.goalSurface(ctx, tid);
           if (g) surfaceNodes.push(g);
@@ -182,15 +238,52 @@
           var td = kit.todoSurface(ctx, tid);
           if (td) surfaceNodes.push(td);
         }
+        if (p.capacity && kit.capacitySurface) {
+          var cp = kit.capacitySurface(ctx, tid);
+          if (cp) surfaceNodes.push(cp);
+        }
+        if (p.crew > 0 && kit.crewSurface) {
+          var cw = kit.crewSurface(ctx, tid);
+          if (cw) surfaceNodes.push(cw);
+        }
         if (p.chips) {
           var c = kit.workChips(ctx, tid);
           if (c) surfaceNodes.push(c);
         }
-        // work surfaces append AFTER the (always-present) chats section so the
-        // persistent history element is never destroyed by a rebuild.
+        // work surfaces append AFTER the (always-present) chats/artifact/BSD
+        // sections so the persistent elements are never destroyed by a rebuild.
         surfaceNodes.forEach(function (n) { consoleBody.appendChild(n); });
         mountedSig = kindsOf(presence(tid));
       }
+
+      /* ---- artifact bay/section -------------------------------------------- */
+      function artOpen() {
+        return currentTid ? store.get('artifactWs.' + currentTid + '.open', false) === true : false;
+      }
+      function placeArtSurface() {
+        if (!artSurface) return;
+        var open = artOpen();
+        if (wide) {
+          artSection.hidden = true;
+          artBay.hidden = !open;
+          root.classList.toggle('is-bay-open', !!open);
+          if (open && artSurface.parentNode !== artBay) artBay.appendChild(artSurface);
+        } else {
+          artBay.hidden = true;
+          root.classList.remove('is-bay-open');
+          artSection.hidden = !open;
+          if (open && artSurface.parentNode !== artSecBody) artSecBody.appendChild(artSurface);
+        }
+      }
+      function onEnv2(env) {
+        var nowWide = (env ? env.width : ctx.env.width) >= BREAKPOINT;
+        if (nowWide === wide) return;
+        wide = nowWide;
+        placeArtSurface();
+      }
+      ctx.on('env', onEnv2);
+      disposers.push(function () { ctx.off('env', onEnv2); });
+      disposers.push(store.subscribe('artifactWs', placeArtSurface));
 
       function consoleOpen() {
         // pinned Chats forces the console open on the Chats section
@@ -211,6 +304,7 @@
       }
       chatsPin.addEventListener('click', function () {
         if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return; // never write surfaceView.null.*
         store.set('surfaceView.' + currentTid + '.w5HistoryPinned', !historyPinned());
       });
 
@@ -253,18 +347,30 @@
       function onData(evt) {
         if (!evt) return;
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
+        else if (evt.type === 'artifact-ws-changed') {
+          placeArtSurface();
+          // opening an artifact on narrow opens the console on the section
+          if (!wide && artOpen() && currentTid &&
+              store.get('surfaceView.' + currentTid + '.w5ConsoleOpen', false) !== true) {
+            store.set('surfaceView.' + currentTid + '.w5ConsoleOpen', true);
+          }
+        }
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });
 
       /* ---- boot + teardown ------------------------------------------------ */
       rebuild();
+      placeArtSurface();
 
       function unmount() {
         if (unmounted) return;
         unmounted = true;
         unmountSurfaces();
+        try { if (bsdHost && bsdHost.unmount) bsdHost.unmount(); } catch (e) { /* ignore */ }
         try { if (historyEl && historyEl.unmount) historyEl.unmount(); } catch (e) { /* ignore */ }
         disposers.forEach(function (fn) { try { fn(); } catch (e) { /* ignore */ } });
         disposers = [];

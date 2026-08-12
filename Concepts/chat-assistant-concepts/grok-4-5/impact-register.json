@@ -1,0 +1,1916 @@
+{
+  "schema_id": "pm.chat_concept_impact_register.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "updated_at": "2026-08-11",
+  "status": "complete",
+  "cache_bust_target": "v=37",
+  "plan_owner_impacts": [
+    {
+      "owner": "assistant-chat-design",
+      "impact": "BSD, offline/outbox, restore/rewind, notifications boundary, Browser Program activity, thread-local selectors, access profiles."
+    },
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Title-bar notification boundary; no Chat side notification panel; left Activity Bar / side-panel slot unchanged."
+    },
+    {
+      "owner": "Models System",
+      "impact": "Chat consumes route picker; provider setup required state defers acquisition to Settings."
+    },
+    {
+      "owner": "Multi-Account",
+      "impact": "Account/connection explicit in picker; reuse cmd.account.select_profile."
+    },
+    {
+      "owner": "Goal Runtime",
+      "impact": "Visible Goal Mode lifecycle; provisional pause/resume/stop/replan IDs."
+    },
+    {
+      "owner": "Orchestrator/Subagents",
+      "impact": "Subagent groups + Crew requested vs effective."
+    },
+    {
+      "owner": "Permissions / FileSafe",
+      "impact": "Access profiles + approval cards; Full Access limited-by-review."
+    },
+    {
+      "owner": "Testing/Browser/Artifacts",
+      "impact": "Browser Program terminology; left artifact workspace; no Playwright product strings."
+    },
+    {
+      "owner": "Server/Project Sync",
+      "impact": "Offline/reconnect/replay/snapshot/server-work-continuing projection."
+    },
+    {
+      "owner": "Notifications",
+      "impact": "Title-bar sprout only; not a second notification system."
+    },
+    {
+      "owner": "Usage",
+      "impact": "Capacity/cost warning chips only; no Usage redesign."
+    },
+    {
+      "owner": "Settings inventory",
+      "impact": "Provider/BSD defaults owned by Settings; Chat picks live route/BSD scope."
+    },
+    {
+      "owner": "UI Command Catalog / Wiring / DRY",
+      "impact": "Census + candidate deltas only; no canon edits from concept."
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "packet_candidate": "cmd.chat.history.pin",
+      "reuse": "cmd.chat.pin",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.pin": true,
+        "cmd.chat.history.pin": false
+      },
+      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict \u2014 do not mint duplicate."
+    },
+    {
+      "packet_candidate": "cmd.chat.restore_point.create",
+      "reuse": "cmd.chat.create_restore_point",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.create_restore_point": true,
+        "cmd.chat.restore_point.create": false
+      },
+      "note": "Reuse catalog create_restore_point; also branch_from_restore / delete_restore_point exist."
+    },
+    {
+      "packet_candidate": "cmd.chat.thread.rewind",
+      "reuse": "cmd.chat.rewind",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.rewind": true,
+        "cmd.chat.thread.rewind": false
+      },
+      "note": "Reuse catalog cmd.chat.rewind."
+    },
+    {
+      "packet_candidate": "cmd.chat.context.compact_now",
+      "reuse": "cmd.chat.compact_context",
+      "census": "alias/conflict",
+      "catalog_present": {
+        "cmd.chat.compact_context": true,
+        "cmd.chat.context.compact_now": false
+      },
+      "note": "Compact Now maps to catalog compact_context."
+    },
+    {
+      "note": "See candidate-command-delta.json for full provisional list and reuse table."
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "trace_id": "wire-pin-history",
+      "summary": "Pinned history control (window chrome) \u2192 cmd.chat.pin (reuse; not cmd.chat.history.pin)"
+    },
+    {
+      "trace_id": "wire-bsd",
+      "summary": "BSD picker Off/Auto/On + scope turn/thread \u2192 cmd.chat.bsd.set (provisional)"
+    },
+    {
+      "trace_id": "wire-offline-outbox",
+      "summary": "Composer send while sync.offline \u2192 thread send with stable outbox id (idempotent)"
+    },
+    {
+      "trace_id": "wire-restore-rewind",
+      "summary": "Restore point create / rewind \u2192 cmd.chat.create_restore_point / cmd.chat.rewind (reuse)"
+    },
+    {
+      "trace_id": "wire-notification",
+      "summary": "Title-bar notification sprout \u2192 reuse Settings/Notifications open commands; push is concept demo"
+    },
+    {
+      "trace_id": "wire-browser-program",
+      "summary": "Compact activity Browser Program progress \u2192 canonical browser/test commands (reuse; never Playwright product strings)"
+    },
+    {
+      "trace_id": "wire-access-limited",
+      "summary": "Access selector + limit line \u2192 cmd.chat.access.set (provisional)"
+    },
+    {
+      "trace_id": "wire-provider-setup",
+      "summary": "Composer provider-setup-required state \u2192 cmd.provider.switch_route / Settings provider setup (reuse)"
+    },
+    {
+      "trace_id": "wire-goal",
+      "summary": "Goal strip Edit/Pause/Resume/Stop/Clear/Replan \u2192 cmd.chat.goal.start/update (reuse); pause/resume/stop/replan provisional"
+    },
+    {
+      "trace_id": "wire-questions",
+      "summary": "Per-thread question renderer \u2192 cmd.chat.question.* (provisional)"
+    },
+    {
+      "trace_id": "wire-redirect",
+      "summary": "Active-turn redirect \u2192 cmd.chat.redirect (provisional)"
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "role": "ThreadShell",
+      "mapping": "_shared/shell.js + windows/*"
+    },
+    {
+      "role": "ThreadDetailSubscription",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "PinnedHistorySurface",
+      "mapping": "windows/* + _window-kit.js + store historyMode"
+    },
+    {
+      "role": "ArtifactWorkspace",
+      "mapping": "_shared/v2-runtime.js left sibling"
+    },
+    {
+      "role": "Composer",
+      "mapping": "_shared/composer.js"
+    },
+    {
+      "role": "ModelRoutePicker",
+      "mapping": "_shared/popups.js"
+    },
+    {
+      "role": "AccessPicker",
+      "mapping": "_shared/popups.js"
+    },
+    {
+      "role": "BSDPicker",
+      "mapping": "_shared/popups.js (Step2) + store setBsd"
+    },
+    {
+      "role": "ContextRing",
+      "mapping": "_shared/context-lens.js"
+    },
+    {
+      "role": "ContextLens",
+      "mapping": "_shared/context-lens.js"
+    },
+    {
+      "role": "CompactWorkCluster",
+      "mapping": "threads/_thread-kit.js + per-thread paradigms"
+    },
+    {
+      "role": "GoalSummary",
+      "mapping": "shared Goal strip"
+    },
+    {
+      "role": "TodoGroup",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "SubagentGroup",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "ActivityGroup",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "DiffSummary",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "QuestionFlow",
+      "mapping": "threads/q-renderers.js (distinct per t*)"
+    },
+    {
+      "role": "ApprovalCard",
+      "mapping": "v2-runtime compact approval"
+    },
+    {
+      "role": "RouteImpactCard",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    },
+    {
+      "role": "AttachmentResolutionCard",
+      "mapping": "store.resolveAttachment + warning card"
+    },
+    {
+      "role": "OfflineOutboxState",
+      "mapping": "store outbox/sync APIs + sync chip"
+    },
+    {
+      "role": "ObservableOperation",
+      "mapping": "activity/Browser Program progress"
+    },
+    {
+      "role": "ReceiptLink",
+      "mapping": "concept-local composition; keep identity per w\u00d7t"
+    }
+  ],
+  "schema_event_storage_impacts": [
+    "Conversation restore_point.* events remain Storage/Contracts-owned; concept demos local restorePoints[] only.",
+    "Outbox idempotency keys are concept-local until Outbox owner canon lands."
+  ],
+  "usage_impacts": [
+    "Capacity/forecast warnings projected in Chat; no Usage packet edits."
+  ],
+  "provider_runtime_impacts": [
+    "Route select + provider-setup-required composer state; CLI OAuth remains CLI-owned."
+  ],
+  "server_sync_impacts": [
+    "sync.state live|cached|synchronizing|offline|reconnecting|replay|snapshot|server-work-continuing"
+  ],
+  "slint_port_impacts": [
+    "Motion uses opacity/transform portables; reduced-motion opacity fallbacks; no web-only indefinite glow except auto-active BSD."
+  ],
+  "test_fixtures": [
+    "DEMO_SCENARIO_MANIFEST.json (expanded 2026-08-11; \u226518 history rows + BSD/offline/restore/Browser Program/notifications)",
+    "DEMO_TRIGGER_CONTRACT.json (expanded 2026-08-11; system.bsd.*/sync.*/restore/rewind/notification/browser_program/provider_setup/access_limited)",
+    "%TEMP%/pm-grok45-probes/* (not shipped)",
+    "demo-trigger-report.json",
+    "interaction-test-report.json"
+  ],
+  "per_concept_solutions": {
+    "windows": {
+      "w1": "Ledger Spine \u2014 pin-aware day/slim/peek; BSD in spine chrome; artifact chronology sibling",
+      "w2": "Overlay Capsule \u2014 peek drawer / pin dock; BSD on capsule chrome; left artifact sibling",
+      "w3": "Strip Console \u2014 density lock pin; BSD on strip; console left artifact",
+      "w4": "Pocket Index \u2014 pocket dock sibling; BSD near pocket controls; pocket-adjacent inspector",
+      "w5": "Dual Band \u2014 dual-band left rail; BSD on band controls; band+body left pane",
+      "w6": "Focus Stage \u2014 focus rail; BSD on stage chrome; focus split left canvas",
+      "w7": "Split Latch \u2014 latch sibling pane; BSD on latch; opposite-edge left sibling",
+      "w8": "Ribbon Dock \u2014 ribbon dock sibling; BSD on ribbon; ribbon artifact sibling"
+    },
+    "threads": {
+      "t1": "Prose Column \u2014 q-folio-leaf-morph; prose activity/Goal embedding",
+      "t2": "Turn Beats \u2014 beat/question morph; beat compact work",
+      "t3": "Soft Shelves \u2014 shelf Q; shelf activity groups",
+      "t4": "Yield Sheets \u2014 yield Q; sheet compact clusters",
+      "t5": "Live Condenser \u2014 condenser Q; live activity condensation",
+      "t6": "Margin Index \u2014 margin Q; margin-indexed work",
+      "t7": "One-Turn Focus \u2014 focus Q; single-turn emphasis",
+      "t8": "Paired Breath \u2014 paired-breath Q; paired activity rhythm"
+    }
+  },
+  "decision_coverage_dispositions": [
+    {
+      "id": "SET-011",
+      "title": "One left Activity Bar and side-panel slot",
+      "category": "shell",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings/shell; Chat preserves one left Activity Bar + side-panel slot (no second rail)."
+    },
+    {
+      "id": "VIS-001",
+      "title": "No AI-design tells",
+      "category": "visual",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "VIS-002",
+      "title": "Eight themes",
+      "category": "visual",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "VIS-003",
+      "title": "Film-level motion",
+      "category": "visual",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "VIS-004",
+      "title": "Slint 1.17.1 portability",
+      "category": "visual",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "VIS-005",
+      "title": "Deterministic demo triggers",
+      "category": "visual",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROV-001",
+      "title": "Canonical provider hierarchy",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-014",
+      "title": "Claude and Antigravity auth boundary",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-016",
+      "title": "Multi-account isolation strategies",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-017",
+      "title": "Requested/effective route",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-022",
+      "title": "Capability evidence layers",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-026",
+      "title": "Provider plan clarity",
+      "category": "providers",
+      "packets": [
+        "settings",
+        "usage",
+        "chat",
+        "onboarding"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "CTX-001",
+      "title": "Durable breadth, narrow context",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-002",
+      "title": "Context Admission Gate",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-003",
+      "title": "Explainable Context Lens",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-004",
+      "title": "Compact Now",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-005",
+      "title": "History search and retrieval",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-006",
+      "title": "Memory tiers",
+      "category": "memory",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-007",
+      "title": "Degrading memory semantics",
+      "category": "memory",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-008",
+      "title": "Assistant-only hidden memory",
+      "category": "memory",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-009",
+      "title": "Working-set cap is a ceiling",
+      "category": "memory",
+      "packets": [
+        "chat",
+        "prompt"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-010",
+      "title": "Persona capsule",
+      "category": "personas",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-011",
+      "title": "Persona cannot grant authority",
+      "category": "personas",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-013",
+      "title": "Persona scope and thread locality",
+      "category": "personas",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-015",
+      "title": "Progressive tools/skills/MCP",
+      "category": "tools",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-017",
+      "title": "External deterministic enforcement",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-018",
+      "title": "Compaction mechanics",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "CTX-020",
+      "title": "Time-Traveling conditional rules",
+      "category": "context",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "AGT-001",
+      "title": "Shared Goal Runtime",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-002",
+      "title": "Goal survives context and client loss",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-003",
+      "title": "Goal route is frozen",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-006",
+      "title": "Sustainable concurrency",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "usage",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-009",
+      "title": "Any agent may request another",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-010",
+      "title": "Thread search/read/request/spawn",
+      "category": "threads",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-011",
+      "title": "Thread request durability",
+      "category": "threads",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-012",
+      "title": "Branch/rewind/restore",
+      "category": "threads",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-013",
+      "title": "Cross-project grants",
+      "category": "threads",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-014",
+      "title": "Operational Awareness Service",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-015",
+      "title": "Worktree mediation",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-016",
+      "title": "Port/resource leases",
+      "category": "agents",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-017",
+      "title": "Testing and debug awareness",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-018",
+      "title": "Crew as execution strategy",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-019",
+      "title": "Adaptive Crew composition",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-020",
+      "title": "Back Seat Driver",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-021",
+      "title": "BSD UI override",
+      "category": "agents",
+      "packets": [
+        "settings",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "AGT-022",
+      "title": "Active-turn redirect",
+      "category": "threads",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-001",
+      "title": "Provider/model picker",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-002",
+      "title": "Persistent model submenus",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-003",
+      "title": "Access selector",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-004",
+      "title": "Plan/Review tool access",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-005",
+      "title": "Compact approvals",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-006",
+      "title": "Material route warnings",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-007",
+      "title": "Attachment resolver",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "usage",
+        "runtime",
+        "settings"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-008",
+      "title": "Pinned history geometry",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-009",
+      "title": "Left artifact workspace",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-010",
+      "title": "Distinct questionnaire systems",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-011",
+      "title": "Compact work clusters",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-012",
+      "title": "Rich demo scenario",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-013",
+      "title": "Functional controls",
+      "category": "chat",
+      "packets": [
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-014",
+      "title": "Passive spellcheck",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-015",
+      "title": "Spellcheck sources",
+      "category": "chat",
+      "packets": [
+        "settings",
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-016",
+      "title": "Offline/outbox state",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-017",
+      "title": "Shell/detail subscriptions",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-018",
+      "title": "T3 performance caveat",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-019",
+      "title": "Server-first subtlety",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-020",
+      "title": "No Playwright terminology",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "CHAT-021",
+      "title": "Notification boundary",
+      "category": "chat",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "disposition": "demonstrated",
+      "note": "Chat/agent topic demonstrated via store APIs, chrome, and demo triggers in grok-4-5."
+    },
+    {
+      "id": "USE-007",
+      "title": "Auxiliary purpose taxonomy",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "runtime",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-008",
+      "title": "Cache attribution",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-009",
+      "title": "Context operations",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-011",
+      "title": "Goal/Planning/PRD forecasts",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-013",
+      "title": "Attachment transformations",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-016",
+      "title": "BSD attribution",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-021",
+      "title": "Context Ring updates",
+      "category": "usage",
+      "packets": [
+        "usage",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "PRM-005",
+      "title": "Admission receipts",
+      "category": "prompt",
+      "packets": [
+        "prompt",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-008",
+      "title": "Self-recovering tool envelope",
+      "category": "prompt",
+      "packets": [
+        "prompt",
+        "runtime",
+        "usage",
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-009",
+      "title": "LSP write transaction",
+      "category": "runtime",
+      "packets": [
+        "runtime",
+        "prompt",
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-010",
+      "title": "DAP DebugSession",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-011",
+      "title": "Persistent EvalSession",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-014",
+      "title": "Session tree and time travel",
+      "category": "runtime",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-015",
+      "title": "Artifact-reference compaction",
+      "category": "runtime",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-016",
+      "title": "T3 environment supervisor",
+      "category": "runtime",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-017",
+      "title": "Durable command outbox",
+      "category": "runtime",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-018",
+      "title": "Replay/snapshot protocol",
+      "category": "runtime",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-019",
+      "title": "Streaming coalescing",
+      "category": "runtime",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-020",
+      "title": "ResourceGovernor and ObservableWork",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-022",
+      "title": "Server-first execution projection",
+      "category": "runtime",
+      "packets": [
+        "prompt",
+        "runtime",
+        "chat"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-023",
+      "title": "WSL optional and environment-specific",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-024",
+      "title": "Container server capability",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PRM-025",
+      "title": "No Playwright facade",
+      "category": "runtime",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "disposition": "demonstrated",
+      "note": "Browser Program terminology enforced; no Playwright product UI strings."
+    },
+    {
+      "id": "MGR-003",
+      "title": "Canonical notification surface",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-006",
+      "title": "Permissions & FileSafe manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-007",
+      "title": "Commands & shortcuts manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-011",
+      "title": "LSP manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-012",
+      "title": "Source Control/Worktree manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-017",
+      "title": "Testing & Debug manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-018",
+      "title": "History & Sessions manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-019",
+      "title": "Runtime artifacts/output manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-022",
+      "title": "Persona manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-023",
+      "title": "Crew manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-024",
+      "title": "Context & Instructions manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-027",
+      "title": "Media manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-028",
+      "title": "Teacher/help system",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "onboarding",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-030",
+      "title": "Accessibility & input manager",
+      "category": "managers",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "ONB-014",
+      "title": "Fresh shell result",
+      "category": "onboarding",
+      "packets": [
+        "onboarding",
+        "settings",
+        "chat"
+      ],
+      "disposition": "named-owner-deferred",
+      "note": "Named owner: Onboarding."
+    },
+    {
+      "id": "PROC-001",
+      "title": "One implementation prompt per topic",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-002",
+      "title": "One audit prompt per topic",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-003",
+      "title": "Concept scope",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-005",
+      "title": "Command ID discipline",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-006",
+      "title": "Wiring closure",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-007",
+      "title": "DRY closure",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-008",
+      "title": "Plan supersession",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-009",
+      "title": "Audit source completeness",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    },
+    {
+      "id": "PROC-010",
+      "title": "No silent packet drift",
+      "category": "process",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "disposition": "demonstrated",
+      "note": "Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "id": "SET-011",
+      "disposition": "named-owner-deferred",
+      "title": "One left Activity Bar and side-panel slot",
+      "owner_note": "Named owner: Settings/shell; Chat preserves one left Activity Bar + side-panel slot (no second rail)."
+    },
+    {
+      "id": "PROV-001",
+      "disposition": "named-owner-deferred",
+      "title": "Canonical provider hierarchy",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-014",
+      "disposition": "named-owner-deferred",
+      "title": "Claude and Antigravity auth boundary",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-016",
+      "disposition": "named-owner-deferred",
+      "title": "Multi-account isolation strategies",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-017",
+      "disposition": "named-owner-deferred",
+      "title": "Requested/effective route",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-022",
+      "disposition": "named-owner-deferred",
+      "title": "Capability evidence layers",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "PROV-026",
+      "disposition": "named-owner-deferred",
+      "title": "Provider plan clarity",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "USE-007",
+      "disposition": "named-owner-deferred",
+      "title": "Auxiliary purpose taxonomy",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-008",
+      "disposition": "named-owner-deferred",
+      "title": "Cache attribution",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-009",
+      "disposition": "named-owner-deferred",
+      "title": "Context operations",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-011",
+      "disposition": "named-owner-deferred",
+      "title": "Goal/Planning/PRD forecasts",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-013",
+      "disposition": "named-owner-deferred",
+      "title": "Attachment transformations",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-016",
+      "disposition": "named-owner-deferred",
+      "title": "BSD attribution",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "USE-021",
+      "disposition": "named-owner-deferred",
+      "title": "Context Ring updates",
+      "owner_note": "Named owner: Usage concepts."
+    },
+    {
+      "id": "MGR-003",
+      "disposition": "named-owner-deferred",
+      "title": "Canonical notification surface",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-006",
+      "disposition": "named-owner-deferred",
+      "title": "Permissions & FileSafe manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-007",
+      "disposition": "named-owner-deferred",
+      "title": "Commands & shortcuts manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-011",
+      "disposition": "named-owner-deferred",
+      "title": "LSP manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-012",
+      "disposition": "named-owner-deferred",
+      "title": "Source Control/Worktree manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-017",
+      "disposition": "named-owner-deferred",
+      "title": "Testing & Debug manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-018",
+      "disposition": "named-owner-deferred",
+      "title": "History & Sessions manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-019",
+      "disposition": "named-owner-deferred",
+      "title": "Runtime artifacts/output manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-022",
+      "disposition": "named-owner-deferred",
+      "title": "Persona manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-023",
+      "disposition": "named-owner-deferred",
+      "title": "Crew manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-024",
+      "disposition": "named-owner-deferred",
+      "title": "Context & Instructions manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-027",
+      "disposition": "named-owner-deferred",
+      "title": "Media manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-028",
+      "disposition": "named-owner-deferred",
+      "title": "Teacher/help system",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "MGR-030",
+      "disposition": "named-owner-deferred",
+      "title": "Accessibility & input manager",
+      "owner_note": "Named owner: Settings redesign / Models / Multi-Account inventory."
+    },
+    {
+      "id": "ONB-014",
+      "disposition": "named-owner-deferred",
+      "title": "Fresh shell result",
+      "owner_note": "Named owner: Onboarding."
+    }
+  ],
+  "files_modified_outside_workspace": [],
+  "collision_discipline": {
+    "port": 8775,
+    "browser_profile": "%TEMP%/pm-grok45-profile",
+    "probes_dir": "%TEMP%/pm-grok45-probes",
+    "no_verification_dir": true
+  },
+  "decision_coverage_summary": {
+    "named-owner-deferred": 29,
+    "demonstrated": 85
+  }
+}

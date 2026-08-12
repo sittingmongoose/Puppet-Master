@@ -17,6 +17,7 @@
     store.setSearch({
       query: q,
       scope: sc,
+      open: true,
       selectedResultId: selected
     });
     if (store.search) store.search.results = results;
@@ -24,36 +25,79 @@
   }
 
   function jumpTo(store, threadId, messageId) {
-    if (!store || !threadId || !messageId) return false;
-    if (store.session && store.session.activeThreadKey !== threadId) {
-      store.selectThread(threadId);
+    if (!store || !threadId || !messageId) return null;
+    if (store.selectThread) store.selectThread(threadId);
+    if (store.ensureMessageVisible) store.ensureMessageVisible(threadId, messageId);
+    if (store.setSearch) {
+      store.setSearch({
+        selectedResultId: threadId + ':' + messageId,
+        open: true
+      });
     }
-    store.ensureMessageVisible(threadId, messageId);
-    /* §14 — reveal collapsed / hidden match portion */
     var t = store.threads && store.threads[threadId];
-    var msg =
-      t && Array.isArray(t.messages)
-        ? t.messages.filter(function (m) {
-            return m && m.id === messageId;
-          })[0]
-        : null;
-    if (msg && msg.collapsedByDefault && store.toggleMessageExpanded) {
-      var ui = store.uiByThread && store.uiByThread[threadId];
-      var already = ui && ui.expandedMessageIds && ui.expandedMessageIds[messageId];
-      if (!already) store.toggleMessageExpanded(threadId, messageId);
+    var msgs = t && Array.isArray(t.messages) ? t.messages : [];
+    var hit = msgs.filter(function (m) {
+      return m.id === messageId;
+    })[0];
+    return hit || { threadId: threadId, messageId: messageId };
+  }
+
+  function openConversation(store, threadId, messageId) {
+    return jumpTo(store, threadId, messageId);
+  }
+
+  /** Only selected passages enter Lens — explicit admit. */
+  function addPassageToContext(store, threadId, messageId, snippet) {
+    if (!store || !threadId || !messageId) return null;
+    if (window.PMChatLens && typeof window.PMChatLens.admitPassage === 'function') {
+      return window.PMChatLens.admitPassage(store, threadId, messageId, snippet);
     }
-    var until = Date.now() + HIGHLIGHT_MS;
-    store.setSearch({
-      focusedTargetMessageId: messageId,
-      selectedResultId: threadId + ':' + messageId,
-      highlightUntil: until
-    });
-    store.setScrollAnchor(threadId, { messageId: messageId, offsetPx: 0 });
-    return true;
+    var t = store.threads && store.threads[threadId];
+    if (!t || !store.setLens) return null;
+    var admitted = Array.isArray(t.lens.admittedSources) ? t.lens.admittedSources.slice() : [];
+    if (
+      !admitted.some(function (s) {
+        return s && s.id === messageId;
+      })
+    ) {
+      admitted.unshift({
+        id: messageId,
+        kind: 'passage',
+        label: snippet || messageId
+      });
+    }
+    store.setLens(threadId, { admittedSources: admitted.slice(0, 32) });
+    return admitted;
+  }
+
+  function branchFromPoint(store, threadId, messageId, opts) {
+    if (!store || !threadId) return null;
+    opts = opts || {};
+    if (typeof store.branchThread === 'function') {
+      return store.branchThread(threadId, {
+        fromMessageId: messageId,
+        modelId: opts.modelId,
+        personaId: opts.personaId,
+        label: opts.label || 'Branch from search'
+      });
+    }
+    return null;
+  }
+
+  function copyLink(threadId, messageId) {
+    var href =
+      '#thread=' +
+      encodeURIComponent(threadId || '') +
+      '&message=' +
+      encodeURIComponent(messageId || '');
+    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(href).catch(function () {});
+    }
+    return href;
   }
 
   function escapeHtml(s) {
-    return String(s)
+    return String(s == null ? '' : s)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
@@ -61,21 +105,20 @@
   }
 
   function icon(name, cls) {
-    if (typeof window.PMIcon === 'function') return window.PMIcon(name, cls || '') || '';
-    return '';
+    if (typeof window.PMIcon === 'function') return window.PMIcon(name, cls || '');
+    return '<span class="' + escapeHtml(cls || '') + '" data-icon="' + escapeHtml(name) + '"></span>';
   }
 
   function threadTitle(store, threadId) {
-    var t =
-      store && store.threads && threadId ? store.threads[threadId] : null;
-    var title = t && t.title != null ? String(t.title).trim() : '';
-    return title || 'Untitled chat';
+    var t = store && store.threads && store.threads[threadId];
+    if (t && t.title) return String(t.title);
+    return 'Conversation';
   }
 
   function lensBadgesForMessage(store, threadId, messageId) {
     var t = store && store.threads && store.threads[threadId];
     var lens = t && t.lens;
-    if (!lens || !messageId) return '';
+    if (!lens) return '';
     var badges = [];
     if (Array.isArray(lens.mutedIds) && lens.mutedIds.indexOf(messageId) >= 0) {
       badges.push('<span class="pm-search-lens-badge is-muted">Muted</span>');
@@ -85,31 +128,66 @@
     }
     var subs = Array.isArray(lens.subcompacts) ? lens.subcompacts : [];
     for (var i = 0; i < subs.length; i++) {
-      var src = (subs[i] && subs[i].sourceIds) || [];
-      if (src.indexOf(messageId) >= 0) {
+      var src = subs[i] && subs[i].sourceIds;
+      if (Array.isArray(src) && src.indexOf(messageId) >= 0) {
         badges.push('<span class="pm-search-lens-badge is-subcompact">Subcompacted</span>');
         break;
       }
     }
-    return badges.length
-      ? '<span class="pm-search-lens-badges">' + badges.join('') + '</span>'
-      : '';
+    if (Array.isArray(lens.admittedSources)) {
+      for (var a = 0; a < lens.admittedSources.length; a++) {
+        if (lens.admittedSources[a] && lens.admittedSources[a].id === messageId) {
+          badges.push('<span class="pm-search-lens-badge is-admitted">In context</span>');
+          break;
+        }
+      }
+    }
+    return badges.length ? '<span class="pm-search-lens-badges">' + badges.join('') + '</span>' : '';
   }
 
   function groupByThread(results) {
     var order = [];
-    var map = Object.create(null);
+    var map = {};
     (Array.isArray(results) ? results : []).forEach(function (r) {
-      var tid = r.threadId;
-      if (!map[tid]) {
-        map[tid] = [];
-        order.push(tid);
+      if (!r || !r.threadId) return;
+      if (!map[r.threadId]) {
+        map[r.threadId] = [];
+        order.push(r.threadId);
       }
-      map[tid].push(r);
+      map[r.threadId].push(r);
     });
     return order.map(function (tid) {
       return { threadId: tid, results: map[tid] };
     });
+  }
+
+  function resultActionsHtml(r) {
+    var tid = escapeHtml(r.threadId);
+    var mid = escapeHtml(r.messageId);
+    return (
+      '<div class="pm-search-result-actions" role="group" aria-label="Result actions">' +
+      '<button type="button" class="pm-btn pm-btn-ghost pm-search-action" data-search-action="open" data-thread-id="' +
+      tid +
+      '" data-message-id="' +
+      mid +
+      '">Open conversation</button>' +
+      '<button type="button" class="pm-btn pm-btn-ghost pm-search-action" data-search-action="admit" data-thread-id="' +
+      tid +
+      '" data-message-id="' +
+      mid +
+      '" title="Add only this passage to Context Lens">Add passage to context</button>' +
+      '<button type="button" class="pm-btn pm-btn-ghost pm-search-action" data-search-action="branch" data-thread-id="' +
+      tid +
+      '" data-message-id="' +
+      mid +
+      '">Branch from this point</button>' +
+      '<button type="button" class="pm-btn pm-btn-ghost pm-search-action" data-search-action="copy-link" data-thread-id="' +
+      tid +
+      '" data-message-id="' +
+      mid +
+      '">Copy link</button>' +
+      '</div>'
+    );
   }
 
   /**
@@ -199,6 +277,7 @@
                     escapeHtml(r.snippet || '') +
                     '</span>' +
                     lensBadgesForMessage(store, r.threadId, r.messageId) +
+                    resultActionsHtml(r) +
                     '</li>'
                   );
                 })
@@ -214,11 +293,43 @@
     return head + scopes + body;
   }
 
+  /** Delegate search-action clicks; returns true if handled. */
+  function handleAction(store, action, threadId, messageId, snippet, toast) {
+    if (!action) return false;
+    if (action === 'open') {
+      openConversation(store, threadId, messageId);
+      if (toast) toast('Opened conversation');
+      return true;
+    }
+    if (action === 'admit') {
+      addPassageToContext(store, threadId, messageId, snippet);
+      if (toast) toast('Passage added to Context Lens');
+      return true;
+    }
+    if (action === 'branch') {
+      var nid = branchFromPoint(store, threadId, messageId);
+      if (toast) toast(nid ? 'Branched · ' + nid : 'Branch unavailable');
+      return true;
+    }
+    if (action === 'copy-link') {
+      copyLink(threadId, messageId);
+      if (toast) toast('Link copied');
+      return true;
+    }
+    return false;
+  }
+
   window.PMChatSearch = {
     run: run,
     jumpTo: jumpTo,
+    openConversation: openConversation,
+    addPassageToContext: addPassageToContext,
+    branchFromPoint: branchFromPoint,
+    copyLink: copyLink,
+    handleAction: handleAction,
     renderResultsHtml: renderResultsHtml,
     groupByThread: groupByThread,
-    threadTitle: threadTitle
+    threadTitle: threadTitle,
+    HIGHLIGHT_MS: HIGHLIGHT_MS
   };
 })();

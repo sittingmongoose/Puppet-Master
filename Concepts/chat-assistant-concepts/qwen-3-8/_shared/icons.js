@@ -57,7 +57,8 @@ window.PMIcons = (() => {
     star: S('<path d="m12 4 2.4 5 5.6.7-4.1 3.8 1.1 5.5-5-2.8-5 2.8 1.1-5.5L4 9.7 9.6 9z"/>'),
     shield: S('<path d="M12 3.5 19 6v6c0 4.5-3 7.5-7 8.5-4-1-7-4-7-8.5V6z"/><path d="m9 11.5 2.2 2.2L15.5 9"/>'),
     zap: S('<path d="M13 3.5 5 13.5h6l-1 7 8-10h-6z"/>'),
-    rewind: S('<path d="M11 12 20 6v12z"/><path d="M4 12 13 6v12z"/>')
+    rewind: S('<path d="M11 12 20 6v12z"/><path d="M4 12 13 6v12z"/>'),
+    bell: S('<path d="M12 4a5 5 0 0 1 5 5v3.5l1.5 3H5.5L7 12.5V9a5 5 0 0 1 5-5z"/><path d="M10 18.5a2 2 0 0 0 4 0"/>')
   };
   function hydrate(root) {
     (root || document).querySelectorAll("i[data-ico]").forEach(el => {

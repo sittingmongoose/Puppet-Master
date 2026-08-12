@@ -16,7 +16,11 @@
     { id: "attention-heavy", label: "Attention-heavy", hint: "All attention notices" },
     { id: "usage-exhausted", label: "Usage exhausted", hint: "Pressure critical + projection" },
     { id: "invocation-failed", label: "Invocation failed", hint: "Auth ok, calls failing" },
-    { id: "managed-workspace", label: "Managed workspace", hint: "Force managed overrides" }
+    { id: "managed-workspace", label: "Managed workspace", hint: "Force managed overrides" },
+    { id: "import-conflict", label: "Import conflict", hint: "Lifecycle import needs resolution" },
+    { id: "rollback-complete", label: "Rollback complete", hint: "Last import rolled back" },
+    { id: "sound-pack-blocked", label: "Sound pack blocked", hint: "License-blocked pack fixture" },
+    { id: "server-shell-deferred", label: "Server shell deferred", hint: "Named-owner insertion cards only" }
   ];
 
   function applyState(id) {
@@ -105,6 +109,60 @@
       });
       PMStore.set("overrides", ov);
       PMStore.receipt("Managed workspace — sample overrides set; managed rows stay non-editable where seeded", "info");
+      return;
+    }
+
+    if (id === "import-conflict") {
+      var life = V.clone(PMStore.get("settingsLifecycle", DEMO.settingsLifecycle || {}));
+      life.status = "import-conflict";
+      life.conflicts = [
+        { key: "appearance.theme", current: "Harbor Night", local: "Harbor Night", incoming: "Score Day", resolution: "unresolved" },
+        { key: "planning.goal-concurrency", current: "4", local: "4", incoming: "8", resolution: "unresolved" }
+      ];
+      life.lastJob = {
+        id: "job-import-demo",
+        phase: "preview",
+        conflicts: life.conflicts.slice(),
+        receipt: "Import preview ready — resolve conflicts before apply"
+      };
+      PMStore.set("settingsLifecycle", life);
+      PMStore.receipt("Import conflict fixture — resolve before apply", "warn");
+      return;
+    }
+
+    if (id === "rollback-complete") {
+      var life2 = V.clone(PMStore.get("settingsLifecycle", DEMO.settingsLifecycle || {}));
+      life2.status = "rollback-complete";
+      life2.lastJob = {
+        id: "job-import-demo",
+        phase: "rolled-back",
+        conflicts: [],
+        receipt: "Import rolled back to the previous snapshot (simulated)"
+      };
+      PMStore.set("settingsLifecycle", life2);
+      PMStore.receipt("Rollback complete — previous settings restored (simulated)", "ok");
+      return;
+    }
+
+    if (id === "sound-pack-blocked") {
+      var lib = V.clone(PMStore.get("soundLibrary", DEMO.soundLibrary || { items: [] }));
+      var items = lib.items || lib;
+      if (Array.isArray(items)) {
+        items.forEach(function (it) {
+          if (it && /openpeon|peon/i.test(String(it.pack || it.id || ""))) it.state = "license-blocked";
+        });
+        if (lib.items) lib.items = items; else lib = items;
+      }
+      PMStore.set("soundLibrary", lib);
+      PMStore.receipt("Sound pack blocked — OpenPeon license fixture applied", "warn");
+      return;
+    }
+
+    if (id === "server-shell-deferred") {
+      var shell = V.clone(PMStore.get("serverShell", DEMO.serverShell || { cards: [], deferredModules: [], note: "" }));
+      PMStore.set("serverShell", shell);
+      PMStore.receipt("Server shell deferred — named-owner insertion cards only; no fake bootstrap", "info");
+      return;
     }
   }
 

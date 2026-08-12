@@ -1,0 +1,142 @@
+{
+  "schema_id": "pm.chat_candidate_wiring_delta.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "updated_at": "2026-08-11",
+  "status": "complete",
+  "note": "Concept-level wiring traces only; Plans/Wiring_Matrix not edited.",
+  "traces": [
+    {
+      "id": "wire-pin-history",
+      "ui": "Pinned history control (window chrome)",
+      "command": "cmd.chat.pin (reuse; not cmd.chat.history.pin)",
+      "owner": "Assistant Chat / ThreadShell",
+      "validation": "geometry floor + no overlay while pinned",
+      "durable_state": "session.historyMode",
+      "receipt_event": "concept-local historyMode change",
+      "projection": "window pin geometry + registry paint",
+      "usage_diagnostics": "none",
+      "retry_recovery": "n/a"
+    },
+    {
+      "id": "wire-bsd",
+      "ui": "BSD picker Off/Auto/On + scope turn/thread",
+      "command": "cmd.chat.bsd.set (provisional)",
+      "owner": "Assistant Chat thread-local + Settings BSD policy defaults",
+      "validation": "mode/scope clamp; visual auto-active only when Auto and advising",
+      "durable_state": "thread.localState.bsd",
+      "receipt_event": "concept-local bsd visual/advice",
+      "projection": "BSD chip glow (auto-active only) / manual-On treatment",
+      "usage_diagnostics": "helper-call attribution when advising",
+      "retry_recovery": "unavailable/timeout \u2192 primary turn continues"
+    },
+    {
+      "id": "wire-offline-outbox",
+      "ui": "Composer send while sync.offline",
+      "command": "thread send with stable outbox id (idempotent)",
+      "owner": "Outbox + Server/Project Sync",
+      "validation": "offline enqueue; reconnect replay once",
+      "durable_state": "session.outbox[] + session.sync.state",
+      "receipt_event": "outbox status queued\u2192sending\u2192acked",
+      "projection": "offline/reconnect chip; queued badge on composer",
+      "usage_diagnostics": "no duplicate send after second reconnect",
+      "retry_recovery": "replayOutbox idempotent by outbox id"
+    },
+    {
+      "id": "wire-restore-rewind",
+      "ui": "Restore point create / rewind",
+      "command": "cmd.chat.create_restore_point / cmd.chat.rewind (reuse)",
+      "owner": "Assistant Chat (PD-RSP-08); Storage owns record",
+      "validation": "message boundary exists; rewind hides later messages from active context",
+      "durable_state": "thread.restorePoints[] + truncated messages demo",
+      "receipt_event": "restore_point.created (canon later)",
+      "projection": "restore/rewind motion + history continuity",
+      "usage_diagnostics": "does not erase usage",
+      "retry_recovery": "branch_from_restore for new thread (catalog)"
+    },
+    {
+      "id": "wire-notification",
+      "ui": "Title-bar notification sprout",
+      "command": "reuse Settings/Notifications open commands; push is concept demo",
+      "owner": "Notifications (not a Chat side panel)",
+      "validation": "title-bar boundary only",
+      "durable_state": "session.notifications[]",
+      "receipt_event": "concept-local notification row",
+      "projection": "title-bar unread count",
+      "usage_diagnostics": "none",
+      "retry_recovery": "mark read"
+    },
+    {
+      "id": "wire-browser-program",
+      "ui": "Compact activity Browser Program progress",
+      "command": "canonical browser/test commands (reuse; never Playwright product strings)",
+      "owner": "Browser Program API / Testing",
+      "validation": "terminology Browser Program only in product UI",
+      "durable_state": "activity group / observable op",
+      "receipt_event": "progress projection",
+      "projection": "compact activity row",
+      "usage_diagnostics": "none",
+      "retry_recovery": "error+retry on artifact/browser capture"
+    },
+    {
+      "id": "wire-access-limited",
+      "ui": "Access selector + limit line",
+      "command": "cmd.chat.access.set (provisional)",
+      "owner": "Assistant Chat + Review/Permissions",
+      "validation": "Full Access \u00b7 Limited by Review mode when constrained",
+      "durable_state": "session.accessLimitedBy + thread-local access",
+      "receipt_event": "concept-local access change",
+      "projection": "access chip concise limit line",
+      "usage_diagnostics": "none",
+      "retry_recovery": "n/a"
+    },
+    {
+      "id": "wire-provider-setup",
+      "ui": "Composer provider-setup-required state",
+      "command": "cmd.provider.switch_route / Settings provider setup (reuse)",
+      "owner": "Models/Multi-Account/Settings",
+      "validation": "send disabled with truthful reason until setup",
+      "durable_state": "session warning / composer state",
+      "receipt_event": "warning card",
+      "projection": "composer disabled + setup CTA",
+      "usage_diagnostics": "none",
+      "retry_recovery": "open Settings"
+    },
+    {
+      "id": "wire-goal",
+      "ui": "Goal strip Edit/Pause/Resume/Stop/Clear/Replan",
+      "command": "cmd.chat.goal.start/update (reuse); pause/resume/stop/replan provisional",
+      "owner": "Goal Runtime",
+      "validation": "phase transitions; compact work",
+      "durable_state": "thread.activeGoal",
+      "receipt_event": "goal phase change",
+      "projection": "shared Goal strip + compact cluster",
+      "usage_diagnostics": "capacity forecast warnings",
+      "retry_recovery": "replan / blocked"
+    },
+    {
+      "id": "wire-questions",
+      "ui": "Per-thread question renderer",
+      "command": "cmd.chat.question.* (provisional)",
+      "owner": "Assistant Chat QuestionFlow",
+      "validation": "answer/skip/cancel/submit; draft preserved",
+      "durable_state": "questionnaire + durable receipt message",
+      "receipt_event": "answer receipt",
+      "projection": "distinct t1\u2013t8 Q layouts",
+      "usage_diagnostics": "none",
+      "retry_recovery": "cancel ends flow; retrigger clean"
+    },
+    {
+      "id": "wire-redirect",
+      "ui": "Active-turn redirect",
+      "command": "cmd.chat.redirect (provisional)",
+      "owner": "Assistant Chat",
+      "validation": "partial preserved; Interrupted\u2192Redirected\u2192Resumed badge",
+      "durable_state": "demo.runningByThread + optional outbox",
+      "receipt_event": "redirect attempt",
+      "projection": "composer redirect-active + badge",
+      "usage_diagnostics": "attempt lineage",
+      "retry_recovery": "resume after redirect"
+    }
+  ]
+}

@@ -37,9 +37,9 @@
     typesForDisclosure: {
       essentials: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger'],
       standard: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger',
-        'runs', 'analytics', 'tools', 'cache', 'signals'],
+        'runs', 'operations', 'analytics', 'tools', 'cache', 'signals'],
       advanced: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger',
-        'runs', 'analytics', 'tools', 'cache', 'signals', 'authority']
+        'runs', 'operations', 'analytics', 'tools', 'cache', 'signals', 'authority']
     }
   };
 
@@ -209,6 +209,13 @@
       if (pct != null) html += '<b class="' + tone + '">' + pct + '%</b>';
       if (resetTxt) html += '<span class="u11w-reset" title="' + (m.resetAt ? t.full(m.resetAt) : '') + '">' + resetTxt + '</span>';
       html += '</div>';
+      row.meters.forEach(function (mm) {
+        if (mm === row.top) return;
+        if (mm.vs === 'unavailable' && mm.estimate) {
+          html += '<div class="u11w-planmeter estimate">' + ic('trend') + '<span>' + mm.label +
+            ' · Provider data unavailable · PM estimate ' + mm.estimate.usedPct + '% · ' + mm.estimate.conf + ' confidence</span></div>';
+        }
+      });
       if (showNext && !tiny && d.continuation[p.id]) {
         html += '<div class="u11w-whatsnext">' + ic('route') + '<span>' + d.continuation[p.id].whatHappensNext + '</span></div>';
       }
@@ -316,6 +323,17 @@
       html += '<span class="u11w-conn' + stCls + '" title="' + (cn.note || cn.label) + '">' + cn.label + cliBadge +
         (cn.state === 'needs_reconnect' ? '<em>needs attention</em>' : '') + '</span>';
     });
+    html += '</div>';
+    html += '<div class="u11w-acctmeta">';
+    if (a.priority != null) html += '<span class="u11w-acctprio" title="Routing priority · 1 = first choice">Priority ' + a.priority + '</span>';
+    if (a.lastUsedAt) {
+      var ago = Date.parse(d.meta.now) - Date.parse(a.lastUsedAt);
+      html += '<span class="u11w-acctlast">last used ' + T().dur(ago) + ' ago</span>';
+    }
+    html += '<span class="u11w-acctacts">' +
+      '<button type="button" class="u11w-minibtn" data-u11-act="usenext" data-acct="' + a.id + '">Use next</button>' +
+      '<button type="button" class="u11w-minibtn" data-u11-act="openmgmt" data-fam="' + a.familyId + '">Open provider console</button>' +
+      '</span>';
     html += '</div></div></div>';
     return html;
   }
@@ -454,9 +472,15 @@
       html += '<div class="u11w-capline dim">' + admitted + ' at a time · ' + waves + ' waves';
       if (run.reservedFor && run.reservedFor.length) html += ' · capacity kept aside for ' + run.reservedFor.join(', ');
       html += '</div>';
+      if (run.capacity) {
+        var c = run.capacity;
+        html += '<div class="u11w-capline dim">' + c.hardMax + ' hard max · ' + c.configuredPreferred + ' preferred · ' +
+          c.providerAdvertised + ' advertised · ' + c.predictedSustainable + ' sustainable</div>';
+      }
       if (fc) {
         html += '<div class="u11w-caprec">' + ic('check') + '<span>' + fc.recommendation + '</span></div>';
         html += '<div class="u11w-capconf">' + fc.confidence + ' · generated ' + T().atClock(fc.generatedAt) + '</div>';
+        html += '<div class="u11w-cta"><button type="button" class="u11w-minibtn" data-u11-act="reqforecast" data-run="' + run.id + '">Refresh forecast</button></div>';
       }
       html += '</div>';
     });
@@ -520,11 +544,15 @@
         var conn = d.connectionById[fm.connectionId];
         var model = d.modelById[fm.modelId];
         var meter = fm.meterId ? d.meterById[fm.meterId] : null;
-        html += '<div class="u11w-freerow">';
+        var cooling = fm.cooldownUntil && Date.parse(fm.cooldownUntil) > Date.parse(d.meta.now);
+        html += '<div class="u11w-freerow' + (cooling ? ' dim' : '') + '">';
         html += '<div class="u11w-freemain"><span class="u11w-planname">' + model.label + '</span>' +
           '<span class="u11w-planpath">' + fm.label + ' · via ' + (conn ? conn.label : '') + '</span></div>';
-        if (meter && meter.usedPct != null) html += R().meter(meter.usedPct, toneForPct(meter.usedPct));
-        html += '<span class="u11w-freedetail">' + fm.detail + '</span>';
+        if (cooling) html += '<span class="u11w-freedetail warn">Cooldown · back ' + T().when(fm.cooldownUntil, d.meta.now, 'cooldown') + '</span>';
+        else {
+          if (meter && meter.usedPct != null) html += R().meter(meter.usedPct, toneForPct(meter.usedPct));
+          html += '<span class="u11w-freedetail">' + fm.detail + '</span>';
+        }
         html += '</div>';
       });
       html += '</div>';
@@ -695,6 +723,42 @@
     }
     html += footActs(item);
     return denseWrap(item, html);
+  }
+
+  /* ---------- operations: maintenance & operations (packet §04) ---------- */
+  var OPS_KIND_ICON = { cli_update: 'route', offline_outbox: 'alert', server_continuity: 'check',
+    sound_preview: 'check', notification_test: 'check', backup: 'check', project_move: 'check' };
+  var OPS_STATUS_CLS = { completed: 'vs-ok', rolled_back: 'vs-warn', failed: 'vs-err', running: 'vs-info', queued: 'vs-mute' };
+  function renderOperations(item, sizeKey) {
+    var d = D();
+    var ops = d.operationsFor();
+    var html = topStrip(item, ops.length + ' activities');
+    ops.forEach(function (op) {
+      var host = d.hostById[op.hostId], env = d.envById[op.envId];
+      html += '<div class="u11w-opcard">';
+      html += '<div class="u11w-ophead">' + ic(OPS_KIND_ICON[op.kind] || 'check') +
+        '<span class="u11w-optt">' + op.title + '</span>' +
+        '<span class="vs ' + (OPS_STATUS_CLS[op.status] || 'vs-mute') + '"><span>' + R().human(op.status) + '</span></span></div>';
+      html += '<div class="u11w-opcopy">' + op.copy + '</div>';
+      if (op.phases && op.phases.length) {
+        html += '<div class="u11w-ophases">';
+        op.phases.forEach(function (ph) {
+          html += '<span class="u11w-ophase"><b>' + ph.label + '</b>' + T().dur(ph.ms) + '</span>';
+        });
+        html += '</div>';
+      }
+      if (host || env) {
+        html += '<div class="u11w-opline">' + (host ? host.label : '—') + (env ? ' · ' + env.label : '') + '</div>';
+      }
+      html += '<div class="u11w-opdetail">' + op.detail + '</div>';
+      if (op.validationEventId) {
+        html += '<div class="u11w-cta"><button type="button" class="u11w-minibtn" data-u11-act="openattempt" data-att="' + op.validationEventId + '">View the verification call</button></div>';
+      }
+      html += '</div>';
+    });
+    html += '<div class="us-foot">' + ic('info') + '<span>Maintenance is never model usage. When a maintenance flow verifies with a model, that call appears separately as a validation event.</span></div>';
+    html += footActs(item);
+    return html;
   }
 
   /* ---------- tools ---------- */
@@ -876,6 +940,10 @@
           scopeSelectSpec(item)
         ];
       } },
+    operations: { label: 'Maintenance & operations', icon: 'route', span: [2, 10],
+      desc: 'CLI updates, sync, backups, previews — never model tokens',
+      render: renderOperations,
+      config: function (item) { return [scopeSelectSpec(item)]; } },
     tools: { label: 'Tool usage', icon: 'chip', span: [3, 7],
       desc: 'Latency and error tax by tool, with self-recovery',
       render: renderTools,
@@ -1068,6 +1136,24 @@
         var res = window.U11.deepLink({ surface: 'settings', manager: 'providers',
           account_id: act.getAttribute('data-acct'), section: 'routing', focus_reason: 'reconnect' });
         if (window.toast) window.toast(res.toast);
+        return;
+      }
+      if (a === 'usenext') {
+        var acctId = act.getAttribute('data-acct');
+        var resU = window.U11.dispatch('cmd.provider.switch_route', { accountId: acctId });
+        var lab = window.U11.accountLabel(acctId);
+        if (window.toast) window.toast('Future work will prefer ' + lab + '. In-flight requests are never moved.');
+        return;
+      }
+      if (a === 'openmgmt') {
+        var famId = act.getAttribute('data-fam');
+        var resM = window.U11.dispatch('cmd.provider.usage.open_management', { familyId: famId });
+        if (window.toast) window.toast(resM.toast);
+        return;
+      }
+      if (a === 'reqforecast') {
+        var resF = window.U11.dispatch('cmd.usage.forecast.request', { runId: act.getAttribute('data-run') });
+        if (window.toast) window.toast(resF.toast);
         return;
       }
     });

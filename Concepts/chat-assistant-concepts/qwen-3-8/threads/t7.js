@@ -188,7 +188,18 @@
     if (d.agents) chips.push({ id: "agents", ico: "agents", label: "agents " + d.agents, cards: () => b.subagentCards(key) });
     if (d.diffFiles) chips.push({ id: "diff", ico: "diff", label: "diff +" + d.diffAdds + " \u2212" + d.diffDels, cards: () => b.diffCards(key) });
     const alerts = (d.approvals || 0) + (d.warnings || 0);
-    if (alerts) chips.push({ id: "alerts", ico: "warn", label: "alerts " + alerts, cards: () => b.approvalCards(key).concat(b.warningCards(key)) });
+    if (alerts) chips.push({ id: "alerts", ico: "warn", label: "alerts " + alerts, cards: () => {
+        const cards = b.approvalCards(key);
+        const grant = b.grantCard(key);
+        if (grant) cards.push(grant);
+        b.capacityCards(key).forEach(c => cards.push(c));
+        return cards.concat(b.warningCards(key));
+      } });
+    if (d.ops > 0) chips.push({ id: "ops", ico: "branch", label: "ops " + d.ops, cards: () => b.opsCards(key) });
+    if (d.bsd > 0) chips.push({ id: "bsd", ico: "sparkle", label: "bsd " + d.bsd, cards: () => b.bsdCards(key) });
+    if (d.attach > 0) chips.push({ id: "attach", ico: "attach", label: "attach " + d.attach, cards: () => b.attachmentResolutionCards(key) });
+    const t7Arts = b.artifactCards(key);
+    if (t7Arts.length) chips.push({ id: "artifacts", ico: "layers", label: "artifacts " + t7Arts.length, cards: () => b.artifactCards(key) });
     if (!chips.length) return;
 
     const open = openChip[key] || null;

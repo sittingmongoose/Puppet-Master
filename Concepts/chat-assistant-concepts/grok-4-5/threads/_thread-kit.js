@@ -332,10 +332,11 @@
     opts = opts || {};
     var rt = msg && msg.runtime;
     var active = !!opts.active;
+    var mid = escapeHtml(msg.id);
     var actions = [];
     actions.push(
       '<button type="button" class="pm-btn pm-btn-ghost pm-msg-action pm-msg-action-ico" data-msg-action="copy" data-message-id="' +
-        escapeHtml(msg.id) +
+        mid +
         '" title="Copy" aria-label="Copy">' +
         icon('copy', 'pm-btn-icon') +
         '</button>'
@@ -343,12 +344,39 @@
     if (msg.eligibleForEdit) {
       actions.push(
         '<button type="button" class="pm-btn pm-btn-ghost pm-msg-action pm-msg-action-ico" data-msg-action="edit" data-message-id="' +
-          escapeHtml(msg.id) +
+          mid +
           '" title="Edit" aria-label="Edit">' +
           icon('pencil', 'pm-btn-icon') +
           '</button>'
       );
     }
+    actions.push(
+      '<button type="button" class="pm-btn pm-btn-ghost pm-msg-action pm-msg-action-ico" data-msg-action="overflow" data-message-id="' +
+        mid +
+        '" title="More" aria-label="More" aria-haspopup="menu">' +
+        icon('more', 'pm-btn-icon') +
+        '</button>'
+    );
+    var overflow =
+      '<div class="pm-msg-overflow" data-msg-overflow="' +
+      mid +
+      '" hidden role="menu">' +
+      '<button type="button" role="menuitem" class="pm-msg-overflow-item" data-msg-action="branch-here" data-message-id="' +
+      mid +
+      '">Branch from here</button>' +
+      '<button type="button" role="menuitem" class="pm-msg-overflow-item" data-msg-action="branch-model" data-message-id="' +
+      mid +
+      '">Branch with another model</button>' +
+      '<button type="button" role="menuitem" class="pm-msg-overflow-item" data-msg-action="branch-persona" data-message-id="' +
+      mid +
+      '">Branch with another Persona</button>' +
+      '<button type="button" role="menuitem" class="pm-msg-overflow-item" data-msg-action="restore-point" data-message-id="' +
+      mid +
+      '">Create restore point</button>' +
+      '<button type="button" role="menuitem" class="pm-msg-overflow-item" data-msg-action="rewind" data-message-id="' +
+      mid +
+      '">Rewind to here</button>' +
+      '</div>';
     var meta = [];
     if (rt && rt.provider) {
       meta.push('<span class="pm-msg-meta-provider">' + escapeHtml(rt.provider) + '</span>');
@@ -360,7 +388,7 @@
     if (dur) meta.push('<span class="pm-msg-meta-duration">' + escapeHtml(dur) + '</span>');
     meta.push(
       '<button type="button" class="pm-btn pm-btn-ghost pm-msg-action pm-msg-action-ico" data-msg-action="more-info" data-message-id="' +
-        escapeHtml(msg.id) +
+        mid +
         '" title="More info" aria-label="More info">' +
         icon('info', 'pm-btn-icon') +
         '</button>'
@@ -369,6 +397,7 @@
       '<div class="pm-msg-hover">' +
       '<div class="pm-msg-hover-actions">' +
       actions.join('') +
+      overflow +
       '</div>' +
       '<div class="pm-msg-hover-meta">' +
       meta.join('') +
@@ -502,10 +531,15 @@
     if (running.workedSeconds != null && !running.startedAt && !running.startedMs) {
       secs = Number(running.workedSeconds) || 0;
     }
+    var badge =
+      running.badge
+        ? '<div class="pm-redirect-badge" data-redirect-badge>' + escapeHtml(running.badge) + '</div>'
+        : '';
     return (
       '<div class="pm-activity-live" data-activity-live data-activity-started="' +
       escapeHtml(String(started)) +
       '">' +
+      badge +
       '<span class="pm-activity-live-line pm-activity-live-title">' +
       escapeHtml(summary) +
       ' · Grok 4.5 · <span class="pm-activity-live-timer" data-activity-timer>' +
@@ -592,7 +626,7 @@
           '<span>Clear</span></button>'
       );
     }
-    if (goal.canReplan !== false) {
+    if (goal.canReplan) {
       actions.push(
         '<button type="button" class="pm-btn pm-btn-ghost pm-goal-act" data-goal-action="replan" title="Replan" aria-label="Replan">' +
           icon('refresh', 'pm-btn-icon') +
@@ -1216,8 +1250,34 @@
     );
   }
 
+  function countFanOutChildren(store) {
+    if (!store) return 0;
+    if (store.demo && Array.isArray(store.demo.fanOutChildren)) {
+      return store.demo.fanOutChildren.length;
+    }
+    if (!store.threads) return 0;
+    return Object.keys(store.threads).filter(function (k) {
+      return /thread-branch-/.test(k) || (store.threads[k] && store.threads[k].fanOutChild);
+    }).length;
+  }
+
+  function confirmBulkPersonaApply(personaLabel) {
+    var copy = 'Apply Researcher to all threads in this PlanningRun?';
+    if (personaLabel && personaLabel !== 'Researcher') {
+      copy = 'Apply ' + String(personaLabel) + ' to all threads in this PlanningRun?';
+    }
+    if (window.PMChatV2 && typeof window.PMChatV2.confirmBulkPersonaApply === 'function') {
+      return window.PMChatV2.confirmBulkPersonaApply(personaLabel || 'Researcher');
+    }
+    return typeof window.confirm === 'function' ? window.confirm(copy) : false;
+  }
+
   function renderComposer(store, threadId, buttonMode) {
     var thread = store && store.threads && store.threads[threadId];
+    var local =
+      store && typeof store.getThreadLocal === 'function'
+        ? store.getThreadLocal(threadId)
+        : (thread && thread.localState) || {};
     var draft = (thread && thread.draft && thread.draft.text) || '';
     var attachments =
       (thread && thread.draft && Array.isArray(thread.draft.attachments)
@@ -1229,6 +1289,25 @@
       (window.PMChatComposer
         ? window.PMChatComposer.buttonMode(store, threadId)
         : 'send');
+    var cState =
+      window.PMChatComposer && typeof window.PMChatComposer.composerState === 'function'
+        ? window.PMChatComposer.composerState(store, threadId)
+        : { id: 'ordinary', reason: '' };
+    var spellOn = !(local && local.spellcheckEnabled === false);
+    var running =
+      store && store.demo && store.demo.runningByThread ? store.demo.runningByThread[threadId] : null;
+    var redirectBadge =
+      running && running.badge
+        ? '<div class="pm-redirect-badge" data-redirect-badge>' + escapeHtml(running.badge) + '</div>'
+        : '';
+    var capacity =
+      window.PMChatV2 && typeof window.PMChatV2.renderCapacityForecast === 'function'
+        ? window.PMChatV2.renderCapacityForecast(store, thread)
+        : '';
+    var resolver =
+      window.PMChatV2 && typeof window.PMChatV2.renderAttachmentResolverCard === 'function'
+        ? window.PMChatV2.renderAttachmentResolverCard(store)
+        : '';
     var chips =
       attachments.length > 0
         ? '<div class="pm-composer-attachments" data-composer-attachments>' +
@@ -1260,9 +1339,20 @@
           '</div>'
         : '';
     return (
-      '<div class="pm-composer" data-composer>' +
+      '<div class="pm-composer' +
+      (cState.id === 'redirect-active' ? ' is-redirect-active' : '') +
+      '" data-composer data-composer-state="' +
+      escapeHtml(cState.id) +
+      '"' +
+      (cState.reason ? ' data-composer-reason="' + escapeHtml(cState.reason) + '"' : '') +
+      '>' +
+      redirectBadge +
+      capacity +
+      resolver +
       chips +
-      '<textarea class="pm-composer-input" data-composer-input spellcheck="true" rows="2" placeholder="Message Grok 4.5">' +
+      '<textarea class="pm-composer-input" data-composer-input spellcheck="' +
+      (spellOn ? 'true' : 'false') +
+      '" rows="2" placeholder="Message Grok 4.5">' +
       escapeHtml(draft) +
       '</textarea>' +
       '<div class="pm-composer-toolbar">' +
@@ -1277,9 +1367,15 @@
       '<button type="button" class="pm-btn pm-btn-ghost pm-composer-clear-draft" data-composer-clear-draft title="Clear draft" aria-label="Clear draft">' +
       icon('eraser', 'pm-btn-icon') +
       '<span>Clear</span></button>' +
+      '<button type="button" class="pm-btn pm-btn-ghost pm-composer-spell-disable" data-thread-action="disable-spellcheck" title="Disable spell check in this thread">Disable spell check in this thread</button>' +
       '<span class="pm-composer-toolbar-spacer"></span>' +
       composerButtonHtml(mode) +
       '</div>' +
+      (cState.reason && cState.id !== 'redirect-active'
+        ? '<div class="pm-composer-state-reason" data-composer-state-reason>' +
+          escapeHtml(cState.reason) +
+          '</div>'
+        : '') +
       '<div class="pm-composer-draft-peek" data-draft-revisions-panel hidden></div>' +
       '</div>'
     );
@@ -1879,13 +1975,16 @@
                 input.value = store.threads[id].draft.text || '';
               }
             }
-            if (
-              input &&
-              window.PMChatV2 &&
-              typeof window.PMChatV2.applyPassiveSpellcheck === 'function' &&
-              !(store.session && store.session.spellcheckEnabled === false)
-            ) {
-              window.PMChatV2.applyPassiveSpellcheck(input);
+            if (input && window.PMChatV2 && typeof window.PMChatV2.applyPassiveSpellcheck === 'function') {
+              var localSpell =
+                (store.getActiveLocal && store.getActiveLocal()) ||
+                (store.threads[id] && store.threads[id].localState) ||
+                {};
+              if (localSpell.spellcheckEnabled !== false) {
+                window.PMChatV2.applyPassiveSpellcheck(input);
+              } else {
+                input.setAttribute('spellcheck', 'false');
+              }
             }
           }
         });
@@ -2138,6 +2237,17 @@
           } else if (lensKind === 'done') {
             window.PMChatLens.turnOff(store, tidLens);
             if (env.toast) env.toast('Context Lens done');
+          } else if (lensKind === 'remove-source') {
+            var srcRm = lensActionBtn.getAttribute('data-source-id');
+            if (srcRm && typeof window.PMChatLens.removeAdmittedSource === 'function') {
+              window.PMChatLens.removeAdmittedSource(store, tidLens, srcRm);
+              if (env.toast) env.toast('Removed from Context Lens');
+            }
+          } else if (lensKind === 'compact-now') {
+            if (typeof window.PMChatLens.compactNow === 'function') {
+              window.PMChatLens.compactNow(store, tidLens);
+              if (env.toast) env.toast('Compact Now');
+            }
           }
           return;
         }
@@ -2389,7 +2499,7 @@
         }
         var el =
           t.closest(
-            '[data-msg-action], [data-goal-action], [data-q-action], [data-composer-button]'
+            '[data-msg-action], [data-goal-action], [data-q-action], [data-composer-button], [data-thread-action], [data-lens-action], [data-search-action], [data-attach-resolve]'
           );
         if (!el || !root.contains(el)) {
           if (typeof options.onClick === 'function') options.onClick(ev, buildCtx());
@@ -2462,16 +2572,104 @@
           }
           return;
         }
+        if (msgAction === 'overflow' && mid) {
+          var ov = root.querySelector('[data-msg-overflow="' + mid + '"]');
+          if (ov) ov.hidden = !ov.hidden;
+          return;
+        }
+        if (msgAction === 'branch-here' && mid) {
+          var bh = store.branchThread && store.branchThread(tid, { fromMessageId: mid });
+          if (env.toast) env.toast(bh ? 'Branched from here · ' + bh : 'Branch failed');
+          return;
+        }
+        if (msgAction === 'branch-model' && mid) {
+          var bm =
+            store.branchThread &&
+            store.branchThread(tid, { fromMessageId: mid, modelId: 'gemini-flash' });
+          if (env.toast) env.toast(bm ? 'Branched with another model · ' + bm : 'Branch failed');
+          return;
+        }
+        if (msgAction === 'branch-persona' && mid) {
+          var bp =
+            store.branchThread &&
+            store.branchThread(tid, { fromMessageId: mid, personaId: 'deep-researcher' });
+          if (env.toast) env.toast(bp ? 'Branched with another Persona · ' + bp : 'Branch failed');
+          return;
+        }
+        if (msgAction === 'restore-point' && mid) {
+          try {
+            var rpid = store.createRestorePoint && store.createRestorePoint(tid, mid, 'Restore point');
+            if (env.toast) env.toast(rpid ? 'Restore point · ' + rpid : 'Restore point failed');
+          } catch (err) {
+            if (env.toast) env.toast('Restore point failed');
+          }
+          return;
+        }
+        if (msgAction === 'rewind' && mid) {
+          try {
+            store.rewindTo && store.rewindTo(tid, mid);
+            if (env.toast) env.toast('Rewound to message');
+          } catch (err2) {
+            if (env.toast) env.toast('Rewind failed');
+          }
+          return;
+        }
+
+        var threadAction = el.getAttribute('data-thread-action');
+        if (threadAction === 'disable-spellcheck') {
+          if (typeof store.setThreadLocal === 'function') {
+            store.setThreadLocal(tid, { spellcheckEnabled: false });
+          }
+          if (env.toast) env.toast('Spell check disabled in this thread');
+          return;
+        }
+
+        var lensAction = el.getAttribute('data-lens-action');
+        if (lensAction && window.PMChatLens) {
+          if (lensAction === 'remove-source') {
+            window.PMChatLens.removeAdmittedSource(store, tid, el.getAttribute('data-source-id'));
+            if (env.toast) env.toast('Removed from Context Lens');
+            return;
+          }
+          if (lensAction === 'compact-now') {
+            window.PMChatLens.compactNow(store, tid);
+            if (env.toast) env.toast('Compact Now · cmd.chat.compact_context');
+            return;
+          }
+        }
+
+        var searchAction = el.getAttribute('data-search-action');
+        if (searchAction && window.PMChatSearch && typeof window.PMChatSearch.handleAction === 'function') {
+          var sTid = el.getAttribute('data-thread-id') || tid;
+          var sMid = el.getAttribute('data-message-id');
+          var snippetEl = el.closest('.pm-search-result');
+          var snippet =
+            snippetEl && snippetEl.querySelector('.pm-search-result-snippet')
+              ? snippetEl.querySelector('.pm-search-result-snippet').textContent
+              : '';
+          window.PMChatSearch.handleAction(store, searchAction, sTid, sMid, snippet, env.toast);
+          return;
+        }
+
+        var attachResolve = el.getAttribute('data-attach-resolve');
+        if (attachResolve) {
+          if (store.session) store.session.attachmentResolver = null;
+          if (store._emit) store._emit();
+          if (env.toast) env.toast('Attachment · ' + attachResolve);
+          return;
+        }
 
         var goalAction = el.getAttribute('data-goal-action');
         if (goalAction) {
           if (goalAction === 'edit-save') {
             var inputSave = root.querySelector('[data-goal-edit-input]');
-            var gSave = store.threads[tid] && store.threads[tid].goal;
-            if (gSave && inputSave) {
-              gSave.objective = inputSave.value;
-              gSave.title = String(inputSave.value || '').trim().slice(0, 80) || gSave.title;
+            var payloadSave = {};
+            if (inputSave) {
+              payloadSave.objective = inputSave.value;
+              payloadSave.title = String(inputSave.value || '').trim().slice(0, 80) || undefined;
             }
+            store.goalAction(tid, goalAction, payloadSave);
+            return;
           }
           store.goalAction(tid, goalAction);
           return;
@@ -2734,7 +2932,7 @@
     slotEl.appendChild(root);
 
     root.addEventListener('click', function (ev) {
-      var btn = ev.target && ev.target.closest && ev.target.closest('[data-msg-action], [data-goal-action], [data-q-action], [data-composer-button]');
+      var btn = ev.target && ev.target.closest && ev.target.closest('[data-msg-action], [data-goal-action], [data-q-action], [data-composer-button], [data-thread-action], [data-lens-action], [data-search-action], [data-attach-resolve]');
       if (!btn || !root.contains(btn)) return;
       var tid = store.session.activeThreadKey;
       var msgAction = btn.getAttribute('data-msg-action');
@@ -2774,13 +2972,15 @@
       if (goalAction) {
         if (goalAction === 'edit-save') {
           var inputSave2 = root.querySelector('[data-goal-edit-input]');
-          var gSave2 = store.threads[tid] && store.threads[tid].goal;
-          if (gSave2 && inputSave2) {
-            gSave2.objective = inputSave2.value;
-            gSave2.title = String(inputSave2.value || '').trim().slice(0, 80) || gSave2.title;
+          var payloadSave2 = {};
+          if (inputSave2) {
+            payloadSave2.objective = inputSave2.value;
+            payloadSave2.title = String(inputSave2.value || '').trim().slice(0, 80) || undefined;
           }
+          store.goalAction(tid, goalAction, payloadSave2);
+        } else {
+          store.goalAction(tid, goalAction);
         }
-        store.goalAction(tid, goalAction);
       }
       if (qAction === 'submit') {
         var cardStub = btn.closest('[data-questionnaire-id]');
@@ -2935,6 +3135,8 @@
     runQuestionnaireCarousel: runQuestionnaireCarousel,
     runQuestionnaireSettle: runQuestionnaireSettle,
     renderComposer: renderComposer,
+    countFanOutChildren: countFanOutChildren,
+    confirmBulkPersonaApply: confirmBulkPersonaApply,
     renderDock: renderDock,
     renderThoughts: renderThoughts,
     renderMoreInfoPanel: renderMoreInfoPanel,

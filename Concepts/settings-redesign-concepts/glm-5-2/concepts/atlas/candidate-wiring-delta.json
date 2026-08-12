@@ -1,0 +1,140 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-02-atlas",
+  "model": "GLM-5.2",
+  "provisional_note": "Provisional 9-step wiring traces for audit adjudication. Each trace follows the mandatory contract: ui_source → command → canonical_owner → validation/permission → state/op → event/receipt/ObservableWork → ui_projection → usage/diagnostic attribution → recovery/deeplink. No concept-only local state masquerades as production wiring. Existing catalog.* IDs cited as evidence; new candidates flagged.",
+  "trace_steps_legend": [
+    "1_ui_source",
+    "2_command",
+    "3_canonical_owner",
+    "4_validation_permission",
+    "5_state_or_op",
+    "6_event_receipt_observable_work",
+    "7_ui_projection",
+    "8_usage_diagnostic_attribution",
+    "9_recovery_deeplink"
+  ],
+  "traces": [
+    {
+      "trace_id": "atlas-trace-notif-testsend",
+      "flow": "Notification destination test-send (masked / rate-limited / receipted)",
+      "family": "Notifications & Sounds",
+      "command": "cmd.notifications.destination.test (reuse_existing, UCC-103)",
+      "steps": {
+        "1_ui_source": "NotificationDestination card → Test action (ReceiptLink component, masked fields shown)",
+        "2_command": "cmd.notifications.destination.test with payload {destination_id, masked_fields, idempotency_key, dry_run:false}",
+        "3_canonical_owner": "Notifications & Sounds delivery routing owner (UCC-103) + route/open for credential refs via SecretReference",
+        "4_validation_permission": "settings.notifications.manage permission; credential_ref resolved by SecretField/SecretReference (never raw); rate-limit window checked per destination; payload schema-validated",
+        "5_state_or_op": "Send a masked test message to the destination kind (slack/discord/webhook/ntfy/pushover/telegram/system_tray/in_app_title_bar). No persistent setting mutation; rate-limit counter incremented. Sound is NOT the only indication of result.",
+        "6_event_receipt_observable_work": "ObservableOperation with truthful phases (resolving credential → dispatching → awaiting ack); on completion emits notifications.destination.tested event + explicit dispatch receipt {dispatch_id, ack_status, result_status, latency_ms, masked_target, failure_detail?}; in-app title-bar stack is the sole in-app surface for the receipt",
+        "7_ui_projection": "ReceiptLink shows dispatch_id + result_status; failing webhook surfaces failure_detail + retry-within-window control; title-bar stack count reflects the test receipt",
+        "8_usage_diagnostic_attribution": "Receipt logged to notifications delivery audit JSONL (dispatch_id, destination_kind, event_kind, latency); rate-limit state in local kv; NOT attributed to provider Usage (test-send is free)",
+        "9_recovery_deeplink": "Failure → deep-link to destination editor (cmd.settings.open_notifications-shaped wrapper) with failure_detail pre-filled; rate-limited → show window reset time; credential_ref_missing → SecretField repair"
+      },
+      "concepts_exercised": ["NotificationDestination", "SecretField", "ObservableOperation", "ReceiptLink", "SettingsNotice"],
+      "negative_constraints": ["secrets never raw", "sound never sole indication", "no bottom-right stack / status-bar bell / dedicated panel"]
+    },
+    {
+      "trace_id": "atlas-trace-sound-upload-preview-packimport",
+      "flow": "Sound upload + preview + pack import (with license check)",
+      "family": "Sound Library/Uploads/Packs",
+      "command": "cmd.sound.upload (reuse_existing) → cmd.sound.preview (reuse_existing, local-only) → cmd.sound.pack.import (reuse_existing, UCC-103)",
+      "steps": {
+        "1_ui_source": "SoundLibraryItem ResourceList → Upload (SecretField none — local file pick) → Preview play → Import Pack",
+        "2_command": "cmd.sound.upload {source_ref, display_name, license, duration_seconds, sha256, idempotency_key}; cmd.sound.preview {asset_id, preview_surface, ttl_ms}; cmd.sound.pack.import {pack_source_ref, pack_format, idempotency_key}",
+        "3_canonical_owner": "Sound Library owner (UCC-103); local audio preview service (PM-local, never external)",
+        "4_validation_permission": "settings.sound.manage for upload/import; settings.sound.preview for local preview; sha256 dedupe; pack format + license check gate (unverified never bundled)",
+        "5_state_or_op": "Upload: compute sha256, store asset + metadata (source/license/version/duration/hash), set verification_state. Preview: local-only playback bound to SoundLibraryItem, ttl-bounded, never routes external notification. Pack import: per-asset format + license verification; verified assets committed, unverified quarantined, rejected listed with reasons.",
+        "6_event_receipt_observable_work": "sound.asset.uploaded, sound.pack.imported (with per-asset verification_state) events; preview emits explicit dispatch receipt only (no external delivery); ObservableOperation shows verify → commit → quarantine phases for the pack",
+        "7_ui_projection": "SoundLibraryItem shows verification badge (verified/unverified/quarantined); ResourceList HealthSummary aggregates verification state; preview play button local-only indicator; unverified pack surfaces quarantine row",
+        "8_usage_diagnostic_attribution": "Asset provenance records (source/license/version/duration/sha256/pack_ref/verification_state); NOT generated-media capability; pack import receipt stored with import_receipt_ref",
+        "9_recovery_deeplink": "duplicate_hash → offer use-existing; format_unsupported → manual conversion guidance; license_missing → block + explain; unverified asset → cmd.sound.asset.delete or restore-after-verify"
+      },
+      "concepts_exercised": ["SoundLibraryItem", "ResourceList", "HealthSummary", "ObservableOperation", "ReceiptLink"],
+      "negative_constraints": ["preview never external", "unverified never bundled", "no generated-media conflation"]
+    },
+    {
+      "trace_id": "atlas-trace-theme-preview-apply-fallback",
+      "flow": "Theme preview / apply / invalid-TOML fallback",
+      "family": "Appearance",
+      "command": "cmd.theme.preview (reuse_existing, UCC-108) → cmd.theme.set_mode (reuse_existing) → cmd.theme.import (new_candidate, schema validation)",
+      "steps": {
+        "1_ui_source": "ThemePreview component (live hover preview) → Apply → Import custom TOML",
+        "2_command": "cmd.theme.preview {scope, theme_patch, preview_surface, ttl_ms}; cmd.theme.set_mode {mode, expected_theme_revision, idempotency_key}; cmd.theme.import {source_ref, import_mode, authority_snapshot, idempotency_key}",
+        "3_canonical_owner": "Appearance/theme owner (UCC-108 cmd.theme.*) + settings_inventory custom_theme_descriptor schema",
+        "4_validation_permission": "settings.appearance.manage for import/apply; settings.appearance.preview for preview; TOML schema validation on import; expected_theme_revision optimistic concurrency",
+        "5_state_or_op": "Preview: ttl-bounded theme patch applied to preview_surface only, auto-reverts. Apply: set family/mode, emit theme_revision; Auto mode tracks OS prefers-color-scheme live. Import: parse TOML, run schema validation; valid → store theme; invalid → fall back to named base_theme, store diagnosis + fallback_theme_id. Startup load + live reload both resolve fallback at load time.",
+        "6_event_receipt_observable_work": "settings.theme.updated on apply; settings.theme.imported + import_receipt_ref on import (with schema_validation_result valid/invalid_with_fallback); preview = explicit dispatch receipt only; ObservableOperation shows parse → validate → commit/fallback phases",
+        "7_ui_projection": "ThemePreview live hover; ValueSourceBadge shows effective_variant (Auto resolves to light/dark); invalid theme surfaces diagnosis row + fallback indicator; restart markers shown where a token (e.g. font) requires restart",
+        "8_usage_diagnostic_attribution": "theme_validation_cache (keyed by sha256) so startup load skips re-parse; theme audit log of apply/import events",
+        "9_recovery_deeplink": "invalid TOML → diagnosis row deep-links to theme editor with errors pre-filled; fallback_theme_id applied automatically; stale_projection → re-read; cmd.theme.reset to return to defaults"
+      },
+      "concepts_exercised": ["ThemePreview", "ValueSourceBadge", "SettingRow", "ObservableOperation", "ReceiptLink", "AvailabilityReason"],
+      "negative_constraints": ["no runtime CSS var() chains in Slint (precompute per F3-431)", "fallback at load not first paint"]
+    },
+    {
+      "trace_id": "atlas-trace-spellcheck-dict-add",
+      "flow": "Spellcheck dictionary add word (personal vs project scope)",
+      "family": "Spellcheck & Dictionaries",
+      "command": "cmd.spellcheck.dictionary.add (new_candidate — no canon found)",
+      "steps": {
+        "1_ui_source": "SettingRow (personal/project dictionary Manage) → Add word(s) dialog",
+        "2_command": "cmd.spellcheck.dictionary.add {scope: personal|project, project_id?, words[], language, idempotency_key}",
+        "3_canonical_owner": "Spellcheck/dictionaries owner (new — no existing catalog owner); dictionary_source_descriptor schema",
+        "4_validation_permission": "settings.spellcheck.manage; project scope additionally needs project write; word normalization + dedupe within scope; language validated against installed language packs",
+        "5_state_or_op": "Append words to personal or project dictionary (separate scopes); update dictionary_revision. NO autocorrect side effect. Dictionary source (automatic/system/pm_local) governs which dictionary service consults the words.",
+        "6_event_receipt_observable_work": "spellcheck.dictionary.updated event {dictionary_revision, added_count, duplicate_skipped_count}; no long operation (synchronous commit); explicit dispatch receipt",
+        "7_ui_projection": "SettingRow shows updated dictionary_revision; ResourceList of words refreshes; underline behavior updates on next spellcheck pass; NO composer button added (spellcheck is a quiet shared service)",
+        "8_usage_diagnostic_attribution": "dictionary provenance (scope, language, added_at, source); NOT attributed to provider Usage",
+        "9_recovery_deeplink": "dictionary_unavailable → read-only diagnosis + fall back to PM-local; cmd.spellcheck.dictionary.remove to undo; grammar/style opt-in is a separate provider-backed flow with its own disclosure"
+      },
+      "concepts_exercised": ["SettingRow", "ResourceList", "ValueSourceBadge", "ReceiptLink"],
+      "negative_constraints": ["no autocorrect", "no permanent composer button", "grammar/style is separate opt-in with privacy/route/cost disclosure"]
+    },
+    {
+      "trace_id": "atlas-trace-provider-refresh-reconnect",
+      "flow": "Provider refresh (catalog last-known-good) + reconnect (CLI-owned OAuth boundary)",
+      "family": "Provider/Account/Model/Installation (core)",
+      "command": "cmd.model.refresh (reuse_existing, UCC-108) → cmd.provider.connection.reconnect (new_candidate)",
+      "steps": {
+        "1_ui_source": "ProviderFamilyCard HealthSummary → Refresh; AccountConnectionRow (failed) → Reconnect",
+        "2_command": "cmd.model.refresh {project_id?, provider_id?, account_id?, refresh_reason, idempotency_key}; cmd.provider.connection.reconnect {provider_id, account_id?, connection_id?, idempotency_key}",
+        "3_canonical_owner": "Provider/Account/Model/Installation owner (UCC-108 cmd.model.*) + CLI bridged providers owner for OAuth boundary",
+        "4_validation_permission": "settings.provider.read for refresh; settings.provider.manage for reconnect; projection-freshness gating clause; CLI-owned OAuth boundary: Claude/Antigravity → launch native CLI flow (PM never presents PM-direct OAuth); OpenAI/Codex/GitHub/Copilot → PM-direct OAuth allowed where supported",
+        "5_state_or_op": "Refresh: re-read catalog, hold last-known-good during operation, update model_catalog_revision. Reconnect: probe connection health (auth/profile identity, launch health, adapter handshake); failed → launch CLI-owned flow for CLI-owned OAuth; success → update last_successful_connection_utc.",
+        "6_event_receipt_observable_work": "model.catalog_refreshed event {model_catalog_revision, provider_status_refs}; provider.connection.probed event {connection_id, health_state}; ObservableOperation shows probe → (launch flow) → re-probe phases; requested/effective route difference surfaced where a fallback occurred",
+        "7_ui_projection": "HealthSummary updates (ready/needs_setup/cooling_down/unverified); AccountConnectionRow flips to healthy on success; RequestedEffectiveInspector shows requested vs effective route; stale overlay clears",
+        "8_usage_diagnostic_attribution": "provider_status_refs in model catalog; connection probe health attributable to provider_id/account_id; Usage disclosure for any PM-direct OAuth route taken",
+        "9_recovery_deeplink": "auth_missing/auth_expired → CLI-owned OAuth launch (or PM-direct where supported); provider_unavailable → hold + retry policy; cmd.provider.installation.verify then rollback if verification_failed"
+      },
+      "concepts_exercised": ["ProviderFamilyCard", "AccountConnectionRow", "HealthSummary", "RequestedEffectiveInspector", "ObservableOperation", "SecretField (CLI-owned boundary = NO PM secret field)"],
+      "negative_constraints": ["CLI-owned OAuth never PM-presented for Claude/Antigravity", "never infer Fast mode/modalities from names"]
+    },
+    {
+      "trace_id": "atlas-trace-open-manager-nav",
+      "flow": "Open-manager navigation (atlas region select + minimap deep-link)",
+      "family": "Settings Workspace (core) + Desktop/Tray/Window launch destination",
+      "command": "cmd.settings.manager.open (new_candidate, generic) / cmd.settings.region.select (new_candidate, atlas) — supersession of cmd.settings.bloom.open",
+      "steps": {
+        "1_ui_source": "Atlas region grid click OR minimap region click OR Cmd+K search result select OR tray launch-destination",
+        "2_command": "cmd.settings.region.select {region_id, subcategory_id?, focus_setting_id?, route_target, open_subject} normalizing to route/open; (legacy) cmd.settings.bloom.open superseded",
+        "3_canonical_owner": "Settings Workspace owner + route/open contract (route_target + OpenSubject + panel_context)",
+        "4_validation_permission": "settings.navigate permission; route/open guard; projection-freshness for the target region (manager lazy-hydration, does not block whole workspace)",
+        "5_state_or_op": "No setting mutation. Controlled jump: load the region's category document, scroll the requested subcategory/setting into view, flash-highlight the focused setting (reduced motion opens without the morph). Minimap active-region indicator + viewport rail scroll thumb update. Window/panel/tab restore co-applies when launched from tray.",
+        "6_event_receipt_observable_work": "Explicit route/open receipt (route_ref, opened_subject_ref, region_id, viewport_state); no domain event fabricated; ObservableOperation only if the region needs lazy hydration (truthful phase: hydrating → ready)",
+        "7_ui_projection": "Focus + context workspace: chosen region fills canvas, minimap keeps all regions visible (current highlighted), viewport rail shows in-view subcategory; you-are-here marker moves; reduced motion preserves every state and action",
+        "8_usage_diagnostic_attribution": "navigation audit (region_id, focus_setting_id, source: grid/minimap/search/tray); NOT provider Usage",
+        "9_recovery_deeplink": "invalid_route → error, no fallback mutation; manager hydration failure → unavailable region diagnosis; deep-link preserves focus_setting_id across re-entry"
+      },
+      "concepts_exercised": ["SettingsWorkspaceShell", "CategoryNavigation", "SubcategoryScrollspy", "SettingsSearch", "ManagerShell", "ReceiptLink"],
+      "negative_constraints": ["no concept-only local state as production wiring", "no uncontrolled scroll jumps", "manager load does not block entire workspace", "no bloom modal"]
+    }
+  ],
+  "cross_cutting_rules": [
+    "Setting-toggle rows (theme mode master, notifications-enabled, sound master volume, dictionary source, minimize-to-tray) apply instantly via the wiring map as registry-owned non-command values (F3-438/F3-439/F3-441); they do not dispatch a cmd.* and emit no fabricated command_applied event.",
+    "All long operations (test-send, pack import, theme import, catalog refresh, reconnect, installation verify) project truthful ObservableWork phases; no permanent spinner.",
+    "Receipts are immutable once recorded; they form the audit trail. Raw secrets never appear in receipts.",
+    "Recovery/deeplink is always a route/open target or an explicit diagnosis row — never a silent state change.",
+    "No SQLite; events/receipts/audit in file/JSONL/kv."
+  ]
+}

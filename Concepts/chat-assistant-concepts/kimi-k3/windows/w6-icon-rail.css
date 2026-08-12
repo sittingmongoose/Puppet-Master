@@ -177,3 +177,47 @@
   flex: 0 0 auto;
   padding: 10px 14px 14px;
 }
+
+/* ---- packet additions: artifact panel/overlay + side widening ------------- */
+[data-k3-window="w6"] .w6-art-list { display: flex; flex-direction: column; gap: 2px; padding: 4px; }
+[data-k3-window="w6"] .w6-art-item {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  padding: 5px 6px; border: 0; border-radius: var(--radius-sm, 6px);
+  background: none; cursor: pointer; font: inherit;
+  font-size: var(--fs-xs, 11px); color: var(--text); text-align: left;
+}
+[data-k3-window="w6"] .w6-art-item:hover { background: var(--accent-soft); }
+[data-k3-window="w6"] .w6-art-item.is-active { background: var(--accent-soft); font-weight: 600; }
+[data-k3-window="w6"] .w6-art-item-ic { display: inline-flex; flex: 0 0 auto; }
+[data-k3-window="w6"] .w6-art-item-ic svg { width: 13px; height: 13px; }
+[data-k3-window="w6"] .w6-art-item-title {
+  flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* wide (>= 720px) artifacts panel widens the side 200 -> 320px */
+[data-k3-window="w6"]:not(.is-narrow) .w6-side:has(.k3aw-surface) { width: 320px; flex-basis: 320px; }
+[data-k3-window="w6"] .w6-side .k3aw-surface { flex: 1 1 auto; min-height: 0; }
+/* narrow focused overlay viewer: deliberate, scrim + Esc, user-initiated */
+[data-k3-window="w6"] .w6-art-scrim {
+  position: absolute; inset: 0; z-index: 6;
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+  display: flex; align-items: center; justify-content: flex-start;
+}
+[data-k3-window="w6"] .w6-art-dialog {
+  width: min(480px, 90%); height: min(85%, 560px);
+  margin-left: 56px; /* clears the 48px rail */
+  display: flex; flex-direction: column;
+  background: var(--background);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.28);
+  overflow: hidden;
+}
+[data-k3-window="w6"] .w6-art-dialog-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; flex: 0 0 auto;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w6"] .w6-art-dialog-title { font-size: var(--fs-sm, 12px); font-weight: 600; flex: 1 1 auto; }
+[data-k3-window="w6"] .w6-art-dialog-body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+[data-k3-window="w6"] .w6-art-dialog-body .k3aw-surface { flex: 1 1 auto; min-height: 0; }
+html[data-motion="reduced"] [data-k3-window="w6"] .w6-art-dialog { animation: none; }

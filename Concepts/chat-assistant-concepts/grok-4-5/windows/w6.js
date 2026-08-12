@@ -120,6 +120,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       measure();
       if (kit.isHistoryPinned(store)) railOpen = true;
       var histMode =
@@ -170,6 +183,7 @@
         '</button>' +
         '<div class="w6-selectors">' +
         kit.selectorsHtml(store) +
+        kit.bsdSlotHtml('trailing') +
         '</div>' +
         '<button type="button" class="w6-ico" data-action="new-chat" title="New chat" aria-label="New chat">' +
         kit.icon('plus', 'pm-btn-icon') +

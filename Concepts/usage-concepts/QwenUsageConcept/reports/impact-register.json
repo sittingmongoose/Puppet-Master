@@ -1,0 +1,204 @@
+{
+  "schema_id": "pm.usage_concept_impact_register.v1",
+  "concept_or_work_id": "QwenUsageConcept/u11-prism",
+  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+  "date": "2026-08-11",
+  "scope_override": {
+    "standing_default_at_session_start": "P:\\.claude\\CLAUDE.md (developer-level) restricted edits to Plans/**; its explicit-request exception list (AGENTS.md, .cursorrules, .claude/**, .cursor/**) did not include Concepts/**.",
+    "provisional_authorization": "The approving prompt and the plan's Scope section carried the user's in-prompt override for Concepts/usage-concepts/QwenUsageConcept/** only (same pattern as the 2026-08-11 Settings/Chat concept sessions). This was treated as provisional pending principal ratification.",
+    "ratification": "During review an advisor objected on hierarchy grounds. The repo principal then (a) ruled live in-session ('Ignore the CLAUDE.md. You are authorized. I am authorizing it.') and (b) amended P:\\.claude\\CLAUDE.md Scope line 4 to 'Allowed edits: Plans/** Concepts/**'. The amendment is the operative authorization; the in-prompt override and ruling were provisional steps superseded by it.",
+    "agent_side_constraint": "The agent never amended CLAUDE.md itself (the 'do not amend unless asked' notes were agent-side defaults, not claims about the principal's power); the principal made the amendment directly.",
+    "no_precedent": "In-prompt authorizations do not waive developer-level project context. Future out-of-scope work must escalate and obtain a CLAUDE.md amendment (or an explicit request to make one); absent that, sessions default to BLOCKED.",
+    "audit": "Every write stayed inside Concepts/usage-concepts/QwenUsageConcept/** (u11-prism.html, u11-data.js, u11-widgets.js, u11-widgets.css, u11-rundetail.js, u11-context.js, u11-verify.mjs, reports/**, verify-shots/**, .verify/**). Plans/** and _shared/** untouched. Git unusable on the NAS share (dubious ownership); audited via session write log."
+  },
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/usage-feature.md",
+      "impact": "U11 demonstrates the full final cumulative dataset: BSD events, attachment transforms, operational maintenance, host/environment lineage, concurrency envelope, telemetry-unavailable estimate.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Multi-Account.md",
+      "impact": "Account rows now carry priority + lastUsedAt, a Use next action dispatching cmd.provider.switch_route (future work only; in-flight never moved), and Open provider console (provisional cmd.provider.usage.open_management).",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "impact": "Context ring compact module re-verified against packet §05 requirements; zero forbidden labels confirmed; new Maintenance & operations widget and estimate row follow the value-state chip vocabulary.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Models_System.md",
+      "impact": "requested/effective model and account divergence demonstrated on ue-608 (fallback) and thread:t-91 (switch); capability fields unchanged.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "impact": "CLI update lifecycle represented by ops-1 (check/wait-for-idle/install/verify/rollback) with the verify model call as separate validation attempt ue-609.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Goal_Runtime.md",
+      "impact": "Sustainable concurrency envelope (hardMax/configuredPreferred/providerAdvertised/effectiveNow/predictedSustainable) now on all three runs; Usage supplies the envelope data, Goal Runtime owns admission.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Free_Models.md",
+      "impact": "Free model cooldown (fixture 6) rendered in the free lens; lens stays routing-only, no Free Models quota ledger.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Notifications.md",
+      "impact": "Sound preview (ops-4) and notification test-send (ops-5) recorded as operational, never model usage.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Server_Project_Sync.md",
+      "impact": "Offline outbox (ops-2) and server continuity (ops-3) fixtures; reconnect replay attributed via operationalRef.",
+      "status": "deferred-named-owner"
+    },
+    {
+      "owner": "Plans/Storage_events.md",
+      "impact": "Attempt schema extended (bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, tokens.cacheWrite); event-schema-delta.json carries the full table.",
+      "status": "deferred-named-owner"
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "command": "cmd.usage.refresh",
+      "disposition": "reused",
+      "evidence": "Usage page head refresh; verified by harness"
+    },
+    {
+      "command": "cmd.usage.export",
+      "disposition": "reused",
+      "evidence": "Export intent flow; records→JSONL verified"
+    },
+    {
+      "command": "cmd.account.select_profile",
+      "disposition": "reused",
+      "evidence": "Scope picker selection"
+    },
+    {
+      "command": "cmd.provider.switch_route",
+      "disposition": "reused",
+      "evidence": "Account row 'Use next'"
+    },
+    {
+      "command": "cmd.usage.forecast.request",
+      "disposition": "provisional-candidate",
+      "evidence": "Capacity widget 'Refresh forecast'"
+    },
+    {
+      "command": "cmd.provider.usage.open_management",
+      "disposition": "provisional-candidate",
+      "evidence": "Account row 'Open provider console'"
+    },
+    {
+      "command": "cmd.usage.detail.open",
+      "disposition": "reuse-alias-flagged",
+      "evidence": "U11 dispatches cmd.chat.open_thread_context_details for the same affordance; recommend canonical owner adjudicates"
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "chain": "receipt → normalize w/ source quality → immutable event → logical-turn grouping → projections/forecast → UI → semantic deep link",
+      "u11_mapping": "attempts[].receiptRef/sourceClass → attempts[] → works[] → bucketTotals/forecasts → widgets → deepLink()"
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "role": "UsageEventStore",
+      "u11_owner": "u11-data.js attempts + attemptById"
+    },
+    {
+      "role": "SettlementResolver",
+      "u11_owner": "billingRoute + settlement fields"
+    },
+    {
+      "role": "UsageForecast",
+      "u11_owner": "forecasts[]"
+    },
+    {
+      "role": "HelperPurposeGroup",
+      "u11_owner": "buckets + purpose taxonomy"
+    },
+    {
+      "role": "MaintenanceActivity",
+      "u11_owner": "operational[] (new)"
+    },
+    {
+      "role": "ContextUsageDetail",
+      "u11_owner": "u11-context.js"
+    },
+    {
+      "role": "UsageWidgetHost",
+      "u11_owner": "shared PMWidgets + u11-widgets.js"
+    },
+    {
+      "role": "RunOutProjection",
+      "u11_owner": "NONE — no canonical definition; FINDINGS U1"
+    },
+    {
+      "role": "SourceFreshness",
+      "u11_owner": "meta.projectionHealth/projectionFreshness"
+    }
+  ],
+  "event_schema_impacts": [
+    "purpose values renamed to packet taxonomy (aliases in event-schema-delta.json)",
+    "billingRoute enum extended: extra_balance, usage_pack, no_charge_observed, unknown",
+    "new optional fields: bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, fallbackReason, tokens.cacheWrite",
+    "new collections: bsdEvents, operational, hosts, environments",
+    "legacy IDs renumbered: ue-600→ue-650, ue-601→ue-651, ue-610→ue-652 (definitions only)"
+  ],
+  "storage_retention_impacts": [
+    "meta.retentionDays stays 90; historical attempts keep immutable identity",
+    "new attempts ue-600..ue-611 carry costMicro 0 — cost identity preserved"
+  ],
+  "settings_deep_links": [
+    {
+      "surface": "settings",
+      "manager": "providers",
+      "section": "routing",
+      "focus_reason": "usage_quick_controls | reconnect"
+    },
+    {
+      "surface": "settings",
+      "manager": "usage",
+      "section": "usage_and_extra_usage",
+      "focus_reason": "see_all"
+    }
+  ],
+  "provider_adapter_impacts": [
+    "Gemini CLI vision model hosts attachment transform ue-602",
+    "OpenCode shared gateway stays keyless (ue-603)",
+    "Claude Work CLI profile hosts BSD ue-600/ue-601 and MoA aggregator ue-607"
+  ],
+  "server_sync_impacts": [
+    "host:truenas/env:docker lineage on ue-606/ue-607 and ops-3/6/7",
+    "offline outbox → reconnect replay joined via operationalRef"
+  ],
+  "demo_fixtures": [
+    "All 18 packet fixtures represented — see demo-fixture-report.json"
+  ],
+  "test_results": [
+    "visual-interaction-test-report.json — 77/77 pass. Exit 0."
+  ],
+  "unresolved_questions": [
+    "cmd.usage.detail.open vs cmd.chat.open_thread_context_details alias conflict — canonical owner must adjudicate",
+    "RunOutProjection has no canonical definition in Plans/** — needs an owner before production",
+    "billingRoute values extra_balance / no_charge_observed legal but not yet demonstrated by a fixture"
+  ],
+  "scope_reconciliation": {
+    "status": "closed",
+    "chronology": [
+      "2026-08-11 session start: standing default Plans/**-only; plan recorded the user's in-prompt override as provisional.",
+      "Review advisory #1: objected; agent recorded the override verbatim and continued under the principal's live ruling.",
+      "Review advisory #2: objected that a user utterance cannot waive developer-level context; agent escalated via ask().",
+      "Principal ruling: 'Ignore the CLAUDE.md. You are authorized. I am authorizing it.'",
+      "Review advisory #3/#4: contested persisted-memory framing; agent corrected then deleted the contested memory, retaining only neutral operational facts.",
+      "Principal amendment: P:\\.claude\\CLAUDE.md Scope now 'Allowed edits: Plans/** Concepts/**' — authorization cured at the developer level; all earlier provisional steps superseded."
+    ],
+    "current_authority": "P:\\.claude\\CLAUDE.md as amended 2026-08-11 (Concepts/** allowed). This register's earlier 'Plans/**-only' statements describe the pre-amendment default and are historical, not operative."
+  }
+}

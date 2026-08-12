@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concord",
+  "model": "kimi-k3",
+  "plan_owner_impacts": [
+    { "owner": "FinalGUISpec", "impact": "Concord demonstrates the dossier composition: front-page Home, outline + reading document + margin inspector workspace, manager chapters. The margin inspector is a candidate home for RequestedEffectiveInspector." },
+    { "owner": "settings inventory and schema", "impact": "Consumes the 12-category inventory slice; rows exercise all nine value states, six exposure levels, restart/reconnect markers, validation slot, and changed-elsewhere conflict bar. Invalid historical inventory values are superseded (see plan-owner-delta)." },
+    { "owner": "Models System", "impact": "Model rows carry capability evidence with freshness, Fast/Normal variation, effort levels, and the requested-vs-effective inspector." },
+    { "owner": "Multi-Account", "impact": "Two Anthropic accounts demonstrate priority, sticky sessions, isolation labels, and future-requests-only switching." },
+    { "owner": "CLI Bridged Providers", "impact": "Claude/Antigravity CLI-owned OAuth shown as launcher-only; no PM OAuth form for CLI providers." },
+    { "owner": "Provider OpenCode", "impact": "OpenCode rendered as an external server route with managed-externally update state and no usage reporting." },
+    { "owner": "Prompt Pipeline", "impact": "Context & Instructions manager exposes retrieval toggles, the AGENTS.md precedence chain, and the admission receipt as diagnostic surfaces." },
+    { "owner": "Assistant Memory", "impact": "Memory manager is the evidence ledger: half-life changes retrieval activation only, never truth or deletion; the Assistant-only hidden Gist is flagged as not used by automated systems." },
+    { "owner": "Personas", "impact": "Persona gallery with mission/boundary, capsule preview, provenance, eligible skills, and the explicit behavior-not-authority row; conversation mode vs access profile separation stated." },
+    { "owner": "Goal Runtime", "impact": "Goal manager holds defaults and ceilings only; live run state stays with the Orchestrator." },
+    { "owner": "Orchestrator/Subagents", "impact": "Crew templates show requested vs effective member counts with queued waves; capacity honesty is a first-class row." },
+    { "owner": "Planning Wizard", "impact": "Planning conversation route and quality guard surface in provider roles and Goal defaults." },
+    { "owner": "PRD Builder", "impact": "Same quality-guard coverage as Planning Wizard." },
+    { "owner": "Permissions", "impact": "Ordered granular rules with drag reorder, last-match-wins trace, per-tool overrides, ELI5/Expert toggle, doom-loop rows." },
+    { "owner": "FileSafe", "impact": "FileSafe floor card shows health, effective boundary, protected scopes, and repair guidance without bypass encouragement." },
+    { "owner": "UI Command Catalog", "impact": "Candidate command IDs exercised by Concord controls are annotated in candidate-command-delta.json; no canon minted." },
+    { "owner": "Release/updates owner", "impact": "Provider update lifecycle (check/install/version/rollback policy rows and truthful update states) is rendered in the Installation and updates tab." },
+    { "owner": "Binary Locator and installation lifecycle", "impact": "Multiple-installation resolution with selected/shadowed, confidence labels, and unknown-owner manual-only handling." }
+  ],
+  "settings_inventory_impacts": [
+    { "area": "value states", "impact": "All nine states demonstrated with working controls: default, recommended, inherited, auto, not-configured, managed, custom, unavailable, effective-differs." },
+    { "area": "fixtures", "impact": "Validation error (Default shell), changed-elsewhere bar (Notification volume), long explanation (Reset all settings), long localized label (tray automation row), restart marker (LSP autostart), reconnect marker (MCP approval, Assistant memory)." }
+  ],
+  "settings_schema_impacts": [
+    { "field": "setting.error", "impact": "Optional validation message rendered in the row error slot without mutating the stored value." },
+    { "field": "provider.installations[]", "impact": "Per-installation command/executable/method/package/host/environment/confidence/selected/shadowed." },
+    { "field": "provider.updatePolicy/updateState", "impact": "Update lifecycle fields using the packet vocabulary." },
+    { "field": "account.isolation/authSource/profileRoot", "impact": "Multi-account fields with honest isolation strategy labels." }
+  ],
+  "command_id_impacts": "See candidate-command-delta.json — Concord exercises the navigation, values, providers, memory/persona/crew, and permissions candidate families.",
+  "wiring_impacts": "See candidate-wiring-delta.json — every Concord control family traces UI source → command → owner → validation → mutation → receipt → projection → attribution → recovery.",
+  "dry_component_impacts": "See candidate-dry-delta.json.",
+  "schema_event_storage_impacts": [
+    { "area": "demo persistence", "impact": "sessionStorage only under pm.settings-demo.concord; receipts are transient toasts; no production storage schema is claimed." }
+  ],
+  "migration_supersession_impacts": [
+    { "superseded": "Settings chip/bloom/no-sidebar contract", "by": "Settings as a full destination with its own workspace shell" },
+    { "superseded": "stale right-side panel language", "by": "the margin inspector is a reading aid inside the Settings surface, not a second settings panel" },
+    { "superseded": "regular/yolo mode coupling", "by": "conversation mode vs access profile separation on the Personas manager" }
+  ],
+  "slint_port_impacts": [
+    { "surface": "margin inspector", "note": "Collapses by container width; model-backed, one ResizeObserver fallback only." },
+    { "surface": "rules drag reorder", "note": "HTML5 drag events; a Slint port needs an equivalent ordered-list gesture." },
+    { "surface": "scrollspy", "note": "IntersectionObserver with oscillation guard; ports need scroll-position-to-outline synchronization." }
+  ],
+  "test_fixtures": [
+    "Calm state (all notices dismissed)", "Reset demo data",
+    "Memory: fading gist crosses below the active set", "Memory: restore an earlier gist version",
+    "Persona import with injection scan", "Validation error on Default shell",
+    "Setting changed elsewhere (conflict bar)", "Permissions: trace a sample path",
+    "Back Seat Driver completes a review",
+    "Provider scenarios: sign-out, update-available, schedule-idle, verification-failed→rollback, usage-exhausted, catalog last-known-good, reset"
+  ],
+  "deferred_named_owners": [
+    { "module": "Servers", "owner": "Server host owner", "contract": "accepts manager module, deep links, status cards, command wiring" },
+    { "module": "Execution Hosts", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Clients", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Project Hosting & Files", "owner": "Storage owner", "contract": "same insertion contract" },
+    { "module": "Remote Access", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Updates (PM app)", "owner": "Release/updates owner", "contract": "same insertion contract" }
+  ],
+  "unresolved_questions": [
+    "Should the margin inspector become a canonical RequestedEffectiveInspector home, or stay a per-concept composition choice?",
+    "Does the admission receipt belong in Settings, or in a diagnostics surface that Settings deep-links to?"
+  ]
+}

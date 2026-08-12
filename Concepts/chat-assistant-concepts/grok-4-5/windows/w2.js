@@ -127,6 +127,7 @@
         kit.historyPinButtonHtml(store, 'w2-cap-btn') +
         '<div class="w2-cap-core">' +
         '<span class="w2-cap-kicker">Capsule</span>' +
+        kit.bsdSlotHtml('kicker') +
         '<span class="w2-cap-title" title="' +
         kit.escapeHtml(title) +
         '">' +
@@ -247,6 +248,7 @@
         '<header class="w2-wide-chrome">' +
         '<div class="w2-wide-lead">' +
         '<span class="w2-wide-kicker">Overlay Capsule</span>' +
+        kit.bsdSlotHtml('kicker') +
         '<span class="w2-wide-thread" data-thread-title title="' +
         kit.escapeHtml(title) +
         '">' +
@@ -332,6 +334,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       measure();
       if (narrow && kit.isHistoryPinned(store)) chatsOpen = true;
       var histMode =

@@ -1,0 +1,101 @@
+{
+  "concept": "QwenUsageConcept/u11-prism",
+  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06",
+  "date": "2026-08-11",
+  "census_method": "grep over Plans/** (canonical families) + grep over QwenUsageConcept/u11-* (in-concept dispatch sites)",
+  "existing_canonical_families": {
+    "cmd.usage.refresh": {
+      "plans_hits": 32,
+      "u11_use": "page head refresh button"
+    },
+    "cmd.usage.export": {
+      "plans_hits": 32,
+      "u11_use": "export intent flow (view/records/bundle)"
+    },
+    "cmd.account.select_profile": {
+      "plans_hits": 25,
+      "u11_use": "scope picker selection"
+    },
+    "cmd.provider.switch_route": {
+      "plans_hits": 20,
+      "u11_use": "account row 'Use next'"
+    },
+    "cmd.usage.view_budget": {
+      "plans_hits": 2,
+      "u11_use": "not dispatched in U11 (costs widget links instead)"
+    },
+    "cmd.provider.retry_after": {
+      "plans_hits": 2,
+      "u11_use": "not dispatched in U11 (no rate-limit fixture in this concept)"
+    }
+  },
+  "in_concept_dispatches": [
+    "cmd.usage.refresh",
+    "cmd.usage.export",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "cmd.chat.compact_context",
+    "cmd.chat.open_thread_context_details",
+    "cmd.chat.close_thread_context_details",
+    "cmd.chat.focus_thread_context_details",
+    "cmd.widget.add",
+    "cmd.widget.remove",
+    "cmd.widget.resize",
+    "cmd.widget.configure",
+    "cmd.widget.move",
+    "cmd.widget.reset_layout",
+    "cmd.usage.forecast.request",
+    "cmd.provider.usage.open_management"
+  ],
+  "verdicts": [
+    {
+      "command": "cmd.usage.detail.open",
+      "verdict": "reuse-alias",
+      "rationale": "Packet §06 lists it as a candidate to adjudicate. U11 already opens the identical surface via cmd.chat.open_thread_context_details (context ring More details, run inspector). U11 reuses the existing command rather than minting a second ID. CONFLICT FLAG: two candidate families point at one affordance — the canonical command owner should adjudicate which ID survives; recommend keeping cmd.chat.open_thread_context_details (already wired in three concepts) and retiring the alias."
+    },
+    {
+      "command": "cmd.usage.forecast.request",
+      "verdict": "provisional-candidate",
+      "rationale": "New — capacity widget 'Refresh forecast' button. Concept-only; no production handler. Needs a typed payload ({runId}) and receipt contract before registration."
+    },
+    {
+      "command": "cmd.provider.usage.open_management",
+      "verdict": "provisional-candidate",
+      "rationale": "New — account row 'Open provider console'. This is an OPEN/route action, NOT a purchase command: packet §06 requires real typed commands + confirmation + receipt for purchase/pack/reset/reload execution; opening a provider page is explicitly not that."
+    },
+    {
+      "command": "cmd.usage.range.set",
+      "verdict": "local-view-state",
+      "rationale": "Packet §06 allows date-range changes to remain local view state when no canonical side effect exists. U11 keeps window selection (5h/24h/7d) local to the analytics widget config."
+    },
+    {
+      "command": "cmd.usage.filter.set",
+      "verdict": "local-view-state",
+      "rationale": "Same as range: bucket/scope filtering stays local widget config; page scope changes already reuse cmd.account.select_profile."
+    },
+    {
+      "command": "cmd.provider.switch_route",
+      "verdict": "reused-canonical",
+      "rationale": "Reused verbatim for 'Use next' with U11's semantics toast: future work only, in-flight requests never moved (packet §01 Multi-account)."
+    }
+  ],
+  "census": {
+    "method": "grep over Plans/** (canonical owners + _shards), as verified in the approving plan",
+    "counts": {
+      "cmd.usage.refresh": 32,
+      "cmd.usage.export": 32,
+      "cmd.account.select_profile": 25,
+      "cmd.provider.switch_route": 20,
+      "cmd.usage.view_budget": 2,
+      "cmd.provider.retry_after": 2
+    },
+    "owners": [
+      "Plans/UI_Command_Catalog.md (UCC-116 registration table + canonical_text + preserved_exact_tokens)",
+      "Plans/Wiring_Matrix.production.json (catalog.usage_refresh / catalog.usage_export / catalog.account_select_profile / catalog.provider_switch_route)",
+      "Plans/usage-feature.md (presentation units)",
+      "Plans/Multi-Account.md (:5088 adoption source)",
+      "Plans/FinalGUISpec.md (CTA Card Contracts rate_limit row: cmd.provider.retry_after primary, cmd.provider.switch_route + cmd.usage.view_budget secondary)",
+      "Plans/_shards/** mirrors of the above"
+    ]
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "aligned_to": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "c3-focus-stack",
+  "model": "fable",
+  "groups": [
+    {
+      "id": "core",
+      "entries": [
+        {
+          "manager": "Settings Home",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c3-focus-stack.html#/home",
+            "fixtures": ["scenario:baseline", "scenario:calm", "scenario:attention-heavy", "scenario:first-run"],
+            "probes": ["hero search as the room's only furniture", "one collapsed notice queue row (calm state renders a genuinely calm line)", "destination plates with health footnotes (no filter pills)", "eleven native manager plates + the Personas moved-to-Atlas receipt entry", "recents half sheet"]
+          }
+        },
+        {
+          "manager": "Settings Search",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c3-focus-stack.html#/search/formatter",
+            "fixtures": ["typo:notifcations", "typo:apperance", "typo:permisions", "no-results:flux capacitor"],
+            "probes": ["results replace the plates in the same stack", "result kinds visibly distinct (setting, manager, manager-receipt with covering concept named, action)", "manager-receipt activation opens the cross-page receipt sheet with a real link", "search route mirrors into the hash with replaceState"]
+          }
+        },
+        {
+          "manager": "Settings Workspace",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c3-focus-stack.html#/dest/code/formatters",
+            "fixtures": ["scenario:managed-workspace", "fx.long-text", "fx.restart-required"],
+            "probes": ["one category document per sheet; scrollspy drives the crossfading you-are-here chip", "outline overlay jumps within the category, sideways-swaps categories, or pops home", "advanced/expert and diagnostics disclosures push half sheets (disclosure is navigation)", "scrollspy refines the route with replaceState; sheet pushes use pushState", "browser Back closes exactly the top sheet"]
+          }
+        },
+        {
+          "manager": "Provider/Account/Model/Installation",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c3-focus-stack.html#/manager/manager.providers?focus=claude/installations",
+            "fixtures": ["install-select", "install-update", "install-update-fail", "scenario:offline", "scenario:usage-exhausted"],
+            "probes": ["provider list sheet grouped by sign-in kind with two-step status (signed in vs runs models)", "provider detail sheet: seven default answers, auth boundary via PMProvider.resolveAuthBoundary, OpenCode serverInfo, ollama usage-unavailable-but-ready", "installations sheet: humanized cards (Claude npm selected + brew shadowed + TrueNAS Tool Store), codex ask-first update with live phases, antigravity waiting-idle, copilot rolled-back with two-entry history and honest retry, ollama manual-only with no manage actions", "advanced resolution sheet: configuredCommand/resolvedLauncher/actualExecutable/method/packageIdentity/managerRoot/host/env/arch/evidence", "cursor-cli explicit official-source offer with host picker and install-is-not-sign-in", "free routes with all six PMProvider states + freeCatalog freshness + change history", "roles group: requested/effective inspector with the batch-reviewer fallback reason", "effort + Normal/Fast menus and capability evidence sheets incl. the Haiku fastNote"]
+          }
+        },
+        {
+          "manager": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c3-focus-stack.html#/setting/system.health.diagnostics-verbosity",
+            "fixtures": ["fx.validation-error", "fx.changed-elsewhere", "fx.reconnect-required"],
+            "probes": ["rows render from PMState.resolveRowState only", "value chips for all nine states; blank inputs never mean auto", "details half sheet carries scope, defaults, requested/effective, and text editing", "expert changes confirm on their own sheet"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "entries": [
+        {
+          "manager": "File Manager/Editor",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.fileManager",
+          "evidence": {
+            "fixtures": ["scenario:baseline", "scenario:offline"],
+            "probes": ["tree: drag/drop ask|move|copy, hidden files, ignored dim|hide, large-file threshold with bounds validation", "tabs: limit capped by the desktop shell (20) + split groups", "changed-on-disk prompt|reload|keep", "recovery: autosave interval + recovered-buffer sheet (open/discard entries)", "transient-unavailable path with reason: /mnt/media-vault mount offline since 9:12 AM, retry answers honestly"]
+          }
+        },
+        {
+          "manager": "Terminal",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.terminalProfiles?focus=tp-default",
+          "evidence": {
+            "fixtures": ["scenario:baseline"],
+            "probes": ["profiles list with explicit shell-source chips (Automatic-detected / Inherited / Custom)", "detail sheet: live preview re-rendering on font/size/line-height/cursor/opacity edits", "sixteen-swatch ANSI strip + text/background swatch pair", "selection, copy-on-select, paste and link policies with app-default chips when absent", "CWD policy, env policy (minus provider keys), transcript retention, GPU renderer, startup command", "foreground/background behavior note", "diagnostics drawer sheet with recent log lines"]
+          }
+        },
+        {
+          "manager": "LSP",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.lsp?focus=lsp-rust",
+          "evidence": {
+            "fixtures": ["trigger:lsp-restart", "scenario:first-run (detected-only)", "scenario:offline (remote degradation copy)"],
+            "probes": ["registry with per-server provenance (Tool Store proven / detected unproven / cargo adopted / custom)", "detail: command/env/init for custom servers, scope, startup, capabilities, ownership", "requested-vs-effective attachment via PMProvider.resolveRoute (TS formatting owned by Prettier, reason shown)", "restart with truthful stopping/starting phases on the op line", "logs sheet; limits (restart cap, log detail); remote degradation facts", "custom server add/edit/remove with honest persistence in the live store"]
+          }
+        },
+        {
+          "manager": "Formatters",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.formatters?focus=fmt.prettier",
+          "evidence": {
+            "fixtures": ["trigger:formatter-test:fmt.prettier"],
+            "probes": ["global enable + the code.formatters.format-on-save registry row", "four-entry table: Prettier detected with before/after sample, rustfmt detected untested, Black not-found with per-host install hint, sqlfluff custom disabled with note", "Test wired to the shared trigger; the sample renders from lastTest", "Global vs Project scope per entry; enable/disable; custom add/edit/remove/reset", "health summary line (ready / not found / off counts)"]
+          }
+        },
+        {
+          "manager": "Commands & Shortcuts",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.commands",
+          "evidence": {
+            "fixtures": ["scenario:baseline (Cmd+Shift+M conflict present)"],
+            "probes": ["custom commands (/gates, /shard) with create/edit/delete, /-name + uniqueness validation, risky-pattern flagging", "dry-run preview sheet: expansion only, explicit never-sends-work-to-an-agent copy, no run button", "shortcut search; conflict card with functional winner-picking resolution", "remap via the functional key recorder with live conflict check and Escape-cancels semantics", "per-binding reset after remap; import/export honest receipts; cheat-sheet view"]
+          }
+        },
+        {
+          "manager": "MCP",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.mcp?focus=mcp-github",
+          "evidence": {
+            "fixtures": ["fx.reconnect-required", "scenario:first-run (empty + add flow)"],
+            "probes": ["list sheet: transport, health, cache-freshness, tools-exposed counts", "detail: requested vs negotiated protocol with the one-revision-behind consequence", "auth per server; lazy exposure note + per-tool exposure switches", "approval once|session|persistent + per-tool overrides", "discovered resources vs templates; server extensions; Claude-CLI projection note", "discovery cache with honest rediscover refusal while disconnected", "logs sheet with reconnect/back-off lines", "add-server form honoring extensions.mcp.default-transport; fresh entries are honestly not-connected-yet", "reconnect wired to the shared trigger; the flagged fixture server reconnects, rediscovers, and freshens its cache"]
+          }
+        },
+        {
+          "manager": "Skills",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.skills?focus=sk-db-migrate",
+          "evidence": {
+            "fixtures": ["scenario:first-run (honest empty)"],
+            "probes": ["provenance groups (project scripts vs catalog) with trust chips", "detail: permissions, trust rationale, availability truthfulness (off means agents never see it)", "enabling an untrusted skill confirms exactly the requested authority on an expert sheet", "uninstall resets trust; project skills state their repo residence"]
+          }
+        },
+        {
+          "manager": "Plugins",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.plugins?focus=pl-timeline",
+          "evidence": {
+            "fixtures": ["scenario:first-run (honest empty)"],
+            "probes": ["lifecycle list: active / update-available / failed with channel chips", "failed detail (two crashes) refuses reload with the honest reason", "update runs staged updating-verifying-done phases and lands active", "unload works without restart; load restores"]
+          }
+        },
+        {
+          "manager": "Tools",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.tools?focus=t-linear-issues",
+          "evidence": {
+            "fixtures": ["scenario:first-run (honest empty)"],
+            "probes": ["five-stage funnel summary with measured counts", "per-tool furthest-contiguous-stage words (Enabled-not-available for the disconnected Linear tool; Installed-off-here for Screenshot)", "detail trace: every No carries its reason; stages never inferred", "policy & risk facts; project enable switch re-measures instead of assuming"]
+          }
+        },
+        {
+          "manager": "Testing & Debug",
+          "classification": "demonstrated",
+          "route": "c3-focus-stack.html#/manager/manager.testing",
+          "evidence": {
+            "fixtures": ["scenario:baseline"],
+            "probes": ["eleven-capability matrix in one bounded horizontal scroller", "functional Global (Auto/On/Off) and Project (+ Inherit global) selects", "reasons inline: no display on the TrueNAS runner; desktop-only project", "exposure chips: quality + DAP advanced; persistent eval expert with confirm sheet", "inherit-global cells show the followed global value"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "entries": [
+        { "manager": "Context & Instructions", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ManagerShell", "AvailabilityReason"], "demonstrated_in": "c1-atlas.html" },
+        { "manager": "Memory", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ReceiptLink"], "demonstrated_in": "c1-atlas.html", "notes": "Reachable here as a covered navrow in the Context category and as manager-receipt search results with real links." },
+        { "manager": "Personas", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ManagerShell"], "demonstrated_in": "c1-atlas.html", "notes": "This concept's former Personas stack was removed; Home carries an honest receipt entry linking c1-atlas.html#/manager/manager.personas, and persisted views naming Personas fall back to Home." },
+        { "manager": "Goal/Automation", "classification": "shared_grammar", "grammar_components": ["SettingRow", "RequestedEffectiveInspector"], "demonstrated_in": "c1-atlas.html" },
+        { "manager": "Crew", "classification": "shared_grammar", "grammar_components": ["ResourceList", "RequestedEffectiveInspector"], "demonstrated_in": "c1-atlas.html" },
+        { "manager": "Permissions/FileSafe", "classification": "shared_grammar", "grammar_components": ["PermissionRuleEditor", "SettingsNotice"], "demonstrated_in": "c1-atlas.html" },
+        { "manager": "Back Seat Driver", "classification": "shared_grammar", "grammar_components": ["SettingRow", "RequestedEffectiveInspector"], "demonstrated_in": "c1-atlas.html" }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "entries": [
+        { "manager": "Notifications & Sounds", "classification": "shared_grammar", "grammar_components": ["NotificationDestination", "SoundLibraryItem"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Sound library & pack import", "classification": "shared_grammar", "grammar_components": ["SoundLibraryItem", "ObservableOperation"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Appearance", "classification": "shared_grammar", "grammar_components": ["ThemePreview"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Desktop/tray/window", "classification": "shared_grammar", "grammar_components": ["SettingRow"], "demonstrated_in": "c2-mission-control.html", "notes": "This concept consumes desktop.limits honestly: the file-manager tab limit is capped by the shell's maxEditorTabs." },
+        { "manager": "Teacher/help", "classification": "shared_grammar", "grammar_components": ["SetupFlowLauncher"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Spellcheck/dictionaries", "classification": "shared_grammar", "grammar_components": ["SettingRow"], "demonstrated_in": "c2-mission-control.html", "notes": "PMSpell remains attached to this concept's prose fields (queue note); the dictionary manager surface itself is c2's." },
+        { "manager": "Media", "classification": "shared_grammar", "grammar_components": ["ResourceList", "AvailabilityReason"], "demonstrated_in": "c2-mission-control.html" }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "entries": [
+        { "manager": "Storage & Retention", "classification": "shared_grammar", "grammar_components": ["SettingRow", "HealthSummary"], "demonstrated_in": "c4-ledger.html", "notes": "Reachable here as a covered navrow in the System category." },
+        { "manager": "Backup & Restore", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ObservableOperation"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Settings Lifecycle", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "History & Sessions", "classification": "shared_grammar", "grammar_components": ["ResourceList"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Runtime Artifacts", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Source Control/Worktrees", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SetupFlowLauncher"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "GitHub Actions", "classification": "shared_grammar", "grammar_components": ["ResourceList", "HealthSummary"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Containers & Registries", "classification": "shared_grammar", "grammar_components": ["ResourceList", "AvailabilityReason"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Web/Search/Fetch", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SettingRow"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Project Search Index", "classification": "shared_grammar", "grammar_components": ["HealthSummary", "ObservableOperation"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Workspace Cleanup", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        {
+          "manager": "Future Server Module Shell",
+          "classification": "deferred_named_owner",
+          "owner": "Server Backbone return (Post-Return Reconciliation v6); per-module owners named in PM_DATA.serverModules.reserved[].namedOwner",
+          "insertion_contract": "PM_DATA.serverModules.reserved: nine reserved destinations, each with namedOwner and insertionContract. The shell renders in c4-ledger.html; this concept only cross-links via covered receipts."
+        }
+      ]
+    }
+  ]
+}

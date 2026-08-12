@@ -5,30 +5,48 @@
     return document.documentElement.getAttribute("data-reduced-motion") === "1";
   }
 
+
+  // Theme-specific locked rows (packet 06): a row may be locked by the active
+  // theme (e.g. Window transparency in Basic themes, which have no translucency).
+  function isThemeLocked(s) {
+    return !!(s && s.themeLocked && document.documentElement.getAttribute("data-theme") &&
+      document.documentElement.getAttribute("data-theme").indexOf("basic-") === 0);
+  }
+  // --- Search index with result types ----------------------------------------
+  // resultType ∈ setting | manager | action | status | diagnostic | setup | unavailable
   function buildSearchIndex() {
     var st = window.PMState.state;
     var entries = [];
     window.PMDemoData.destinations.forEach(function (dest) {
-      entries.push({ kind: "destination", title: dest.title, path: [dest.title], keywords: dest.purpose, target: { name: "workspace", category: dest.id }, dest: dest.id });
+      entries.push({ kind: "destination", resultType: "manager", title: dest.title, path: [dest.title], keywords: dest.purpose, target: { name: "workspace", category: dest.id }, dest: dest.id });
       dest.subcategories.forEach(function (sub) {
-        entries.push({ kind: "subcategory", title: sub.title, path: [dest.title, sub.title], keywords: dest.title + " " + sub.title, target: { name: "workspace", category: dest.id, subcategory: sub.id }, dest: dest.id });
+        entries.push({ kind: "subcategory", resultType: "setting", title: sub.title, path: [dest.title, sub.title], keywords: dest.title + " " + sub.title, target: { name: "workspace", category: dest.id, subcategory: sub.id }, dest: dest.id });
         if (sub.manager) {
-          entries.push({ kind: "manager", title: managerTitle(sub.manager), path: [dest.title, sub.title], keywords: "manager " + sub.manager, target: { name: "workspace", category: dest.id, subcategory: sub.id, manager: sub.manager }, dest: dest.id });
+          entries.push({ kind: "manager", resultType: "manager", title: managerTitle(sub.manager), path: [dest.title, sub.title], keywords: "manager " + sub.manager, target: { name: "workspace", category: dest.id, subcategory: sub.id, manager: sub.manager }, dest: dest.id });
         }
         sub.settings.forEach(function (s) {
-          entries.push({ kind: "setting", title: s.label, path: [dest.title, sub.title, s.label], keywords: (s.keywords || "") + " " + s.desc, target: { name: "workspace", category: dest.id, subcategory: sub.id, setting: s.id }, dest: dest.id, settingId: s.id });
+          var rt = "setting";
+          if (s.type === "action") rt = s.keywords && s.keywords.indexOf("diagnostic") >= 0 ? "diagnostic" : "action";
+          if (s.type === "text" && s.source === "managed") rt = "status";
+          entries.push({ kind: "setting", resultType: rt, title: s.label, path: [dest.title, sub.title, s.label], keywords: (s.keywords || "") + " " + s.desc, target: { name: "workspace", category: dest.id, subcategory: sub.id, setting: s.id }, dest: dest.id, settingId: s.id });
         });
       });
     });
     st.providers.forEach(function (p) {
-      entries.push({ kind: "provider", title: p.name, path: ["Providers", p.name], keywords: p.group + " " + p.stateLabel, target: { name: "workspace", category: "models", manager: "providers", provider: p.id }, dest: "models" });
+      entries.push({ kind: "provider", resultType: "manager", title: p.name, path: ["Providers", p.name], keywords: p.group + " " + p.stateLabel, target: { name: "workspace", category: "models", manager: "providers", provider: p.id }, dest: "models" });
       p.models.forEach(function (m) {
-        entries.push({ kind: "model", title: m.name, path: ["Providers", p.name, m.name], keywords: (m.alias || "") + " model", target: { name: "workspace", category: "models", manager: "providers", provider: p.id, model: m.id }, dest: "models" });
+        entries.push({ kind: "model", resultType: "setting", title: m.name, path: ["Providers", p.name, m.name], keywords: (m.alias || "") + " model " + (m.freeState || ""), target: { name: "workspace", category: "models", manager: "providers", provider: p.id, model: m.id }, dest: "models" });
       });
     });
     st.personas.forEach(function (pe) {
-      entries.push({ kind: "persona", title: pe.name + " Persona", path: ["Personas", pe.name], keywords: pe.description, target: { name: "workspace", category: "models", manager: "personas", persona: pe.id }, dest: "models" });
+      entries.push({ kind: "persona", resultType: "manager", title: pe.name + " Persona", path: ["Personas", pe.name], keywords: pe.description, target: { name: "workspace", category: "behavior", manager: "personas", persona: pe.id }, dest: "behavior" });
     });
+    // One-shot action, status, diagnostic, setup, and unavailable exemplars.
+    entries.push({ kind: "action", resultType: "action", title: "Back Up Now", path: ["System & Data", "Backup & Restore"], keywords: "backup action one-shot", target: { name: "workspace", category: "system", manager: "backup" }, dest: "system" });
+    entries.push({ kind: "status", resultType: "status", title: "Last backup", path: ["System & Data", "Backup & Restore"], keywords: "backup status read-only 14 days", target: { name: "workspace", category: "system", manager: "backup" }, dest: "system" });
+    entries.push({ kind: "diagnostic", resultType: "diagnostic", title: "Open backup log", path: ["System & Data", "Backup & Restore"], keywords: "backup log diagnostic", target: { name: "workspace", category: "system", manager: "backup" }, dest: "system" });
+    entries.push({ kind: "setup", resultType: "setup", title: "Mistral free-tier setup", path: ["Providers", "Mistral AI (free tier)"], keywords: "setup mistral free models needs-setup", target: { name: "workspace", category: "models", manager: "providers", provider: "mistral-free" }, dest: "models" });
+    entries.push({ kind: "unavailable", resultType: "unavailable", title: "Video output", path: ["Retired capability"], keywords: "video output retired media unavailable", target: { name: "workspace", category: "models", subcategory: "continuation" }, dest: "models", unavailableReason: "Video output retired with the Media destination — kept searchable with a reason." });
     return entries;
   }
 
@@ -36,9 +54,34 @@
     var map = {
       providers: "Provider Manager", personas: "Persona Manager", terminal: "Terminal Manager", lsp: "LSP Manager",
       memory: "Assistant Memory Manager", "context-sources": "Context & Instruction Sources", crew: "Crew Template Manager",
-      mcp: "MCP Server Manager", skills: "Skills, Plugins & Tools", media: "Media Provider Manager"
+      mcp: "MCP Server Manager", skills: "Skills Manager", plugins: "Plugins Manager", tools: "Tools Inventory",
+      notifications: "Notification Destinations", sounds: "Sound Library", themes: "Custom Themes", permissions: "Permission Rules",
+      files: "File Manager", formatters: "Formatters", commands: "Commands & Shortcuts", testing: "Testing & Debug Matrix",
+      storage: "Storage & Retention", backup: "Backup & Restore", history: "History & Sessions", artifacts: "Runtime Artifacts",
+      "source-control": "Source Control & Worktrees", containers: "Containers & Registries", web: "Web / Search / Fetch",
+      "search-index": "Project Search Index"
     };
     return map[id] || id;
+  }
+
+  // Bounded Levenshtein with early exit.
+  function levDist(a, b, max) {
+    var m = a.length, n = b.length;
+    if (Math.abs(m - n) > max) return max + 1;
+    var prev = [], cur = [];
+    for (var j = 0; j <= n; j++) prev[j] = j;
+    for (var i = 1; i <= m; i++) {
+      cur[0] = i;
+      var rowMin = i;
+      for (var k = 1; k <= n; k++) {
+        var cost = a[i - 1] === b[k - 1] ? 0 : 1;
+        cur[k] = Math.min(prev[k] + 1, cur[k - 1] + 1, prev[k - 1] + cost);
+        if (cur[k] < rowMin) rowMin = cur[k];
+      }
+      if (rowMin > max) return max + 1;
+      var tmp = prev; prev = cur; cur = tmp;
+    }
+    return prev[n];
   }
 
   function score(entry, terms) {
@@ -48,11 +91,23 @@
     for (var i = 0; i < terms.length; i++) {
       var t = terms[i];
       if (!t) continue;
-      if (title === t) total += 120;
-      else if (title.indexOf(t) === 0) total += 70;
-      else if (title.indexOf(t) >= 0) total += 45;
-      else if (hay.indexOf(t) >= 0) total += 18;
-      else return 0;
+      var hit = false;
+      if (title === t) { total += 120; hit = true; }
+      else if (title.indexOf(t) === 0) { total += 70; hit = true; }
+      else if (title.indexOf(t) >= 0) { total += 45; hit = true; }
+      else if (hay.indexOf(t) >= 0) { total += 18; hit = true; }
+      if (!hit) {
+        // Typo tolerance: word-level edit distance (≤1; ≤2 for longer terms).
+        var fuzzy = false;
+        if (t.length >= 5) {
+          var maxd = t.length >= 8 ? 2 : 1;
+          var words = hay.split(/[^a-z0-9]+/);
+          for (var w = 0; w < words.length && !fuzzy; w++) {
+            if (words[w].length >= 4 && levDist(t, words[w], maxd) <= maxd) fuzzy = true;
+          }
+        }
+        if (fuzzy) total += 55; else return 0;
+      }
     }
     if (entry.kind === "setting") total += 4;
     if (entry.kind === "destination") total += 2;
@@ -72,11 +127,128 @@
     return out.slice(0, 24).map(function (x) { return x.entry; });
   }
 
+  // --- Hash router -------------------------------------------------------------
+  // #/home | #/w/<category>[/<subcategory>][?setting=<id>|manager=<id>|provider=<id>|model=<id>]
+  var routerReady = false;
+  var suppressHash = false;
+
+  function parseHash(hash) {
+    var h = hash || "";
+    if (h.charAt(0) === "#") h = h.slice(1);
+    if (!h || h === "/home") return { name: "home" };
+    var m = h.match(/^\/w\/([^/?]+)(?:\/([^/?]+))?(?:\?(.*))?$/);
+    if (!m) return { name: "home" };
+    var view = { name: "workspace", category: decodeURIComponent(m[1]), subcategory: m[2] ? decodeURIComponent(m[2]) : null };
+    if (m[3]) {
+      m[3].split("&").forEach(function (kv) {
+        var eq = kv.indexOf("=");
+        if (eq > 0) view[decodeURIComponent(kv.slice(0, eq))] = decodeURIComponent(kv.slice(eq + 1));
+      });
+    }
+    return view;
+  }
+
+  function viewToHash(view) {
+    if (!view || view.name === "home") return "#/home";
+    var h = "#/w/" + encodeURIComponent(view.category);
+    if (view.subcategory) h += "/" + encodeURIComponent(view.subcategory);
+    var params = [];
+    ["setting", "manager", "provider", "model"].forEach(function (k) {
+      if (view[k]) params.push(k + "=" + encodeURIComponent(view[k]));
+    });
+    if (params.length) h += "?" + params.join("&");
+    return h;
+  }
+
+  // Boot contract: PMState.init(id) → PMManagers.setPrefix(px) → PMShell.mount()
+  // → subscribe renderer → PMCore.startRouter(). startRouter returns the initial
+  // view for the caller to render synchronously; it never emits a navigate event
+  // for it (the renderer subscribes AFTER this point would be too late otherwise).
+  function startRouter() {
+    if (!routerReady) {
+      routerReady = true;
+      window.addEventListener("hashchange", function () {
+        if (suppressHash) { suppressHash = false; return; }
+        window.PMState.navigate(parseHash(window.location.hash));
+      });
+      window.PMState.subscribe(function (kind, payload) {
+        if (kind !== "navigate") return;
+        var want = viewToHash(payload);
+        if (want !== window.location.hash) {
+          suppressHash = true;
+          window.location.hash = want;
+        }
+      });
+    }
+    var initial = parseHash(window.location.hash);
+    window.PMState.state.view = initial;
+    return initial;
+  }
+
+  // --- Lazy manager hydration ----------------------------------------------------
+  function hydrateManager(container, renderFn) {
+    var skeleton = document.createElement("div");
+    skeleton.className = "pm-mgr-skeleton";
+    skeleton.setAttribute("data-skeleton", "1");
+    skeleton.setAttribute("aria-hidden", "true");
+    skeleton.innerHTML = '<div class="pm-skel-row"></div><div class="pm-skel-row short"></div><div class="pm-skel-row"></div><div class="pm-skel-row short"></div>';
+    container.innerHTML = "";
+    container.appendChild(skeleton);
+    var delay = reducedMotion() ? 0 : 250 + Math.floor(Math.random() * 250);
+    setTimeout(function () {
+      renderFn(container);
+      if (skeleton.parentNode) skeleton.parentNode.removeChild(skeleton);
+    }, delay);
+  }
+
+  // --- Dialog primitive (replaces window.prompt) -----------------------------------
+  var dialogHost = null;
+  function closeDialog() {
+    if (dialogHost && dialogHost.parentNode) dialogHost.parentNode.removeChild(dialogHost);
+    dialogHost = null;
+  }
+
+  function promptDialog(title, initial, onOk) {
+    closeDialog();
+    dialogHost = document.createElement("div");
+    dialogHost.className = "pm-dialog-overlay";
+    dialogHost.setAttribute("role", "presentation");
+    dialogHost.innerHTML =
+      '<div class="pm-dialog" role="dialog" aria-modal="true" aria-label="">' +
+        '<div class="pm-dialog-title"></div>' +
+        '<input class="pm-input pm-dialog-input" type="text">' +
+        '<div class="pm-dialog-actions">' +
+          '<button class="pm-btn pm-btn-sm pm-dialog-cancel">Cancel</button>' +
+          '<button class="pm-btn pm-btn-sm pm-btn-primary pm-dialog-ok">Save</button>' +
+        '</div>' +
+      '</div>';
+    dialogHost.querySelector("[aria-label]").setAttribute("aria-label", title);
+    dialogHost.querySelector(".pm-dialog-title").textContent = title;
+    var input = dialogHost.querySelector(".pm-dialog-input");
+    input.value = initial || "";
+    document.body.appendChild(dialogHost);
+    input.focus();
+    input.select();
+
+    function ok() {
+      var v = input.value.trim();
+      closeDialog();
+      if (onOk) onOk(v);
+    }
+    dialogHost.querySelector(".pm-dialog-ok").addEventListener("click", ok);
+    dialogHost.querySelector(".pm-dialog-cancel").addEventListener("click", closeDialog);
+    dialogHost.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); ok(); }
+      if (e.key === "Escape") { e.preventDefault(); closeDialog(); }
+    });
+    dialogHost.addEventListener("click", function (e) { if (e.target === dialogHost) closeDialog(); });
+  }
+
+  // --- Scrollspy --------------------------------------------------------------------
   function scrollspy(scroller, getSections, onActive, opts) {
     var o = opts || {};
     var offset = o.offset || 96;
     var lock = false;
-    var lockTimer = null;
     var current = null;
     var raf = null;
 
@@ -205,10 +377,13 @@
     if (s.source === "managed") badges.push({ label: s.managedBy ? "Managed by " + s.managedBy : "Managed", kind: "managed" });
     if (s.source === "not-configured") badges.push({ label: "Not configured", kind: "warn" });
     if (s.source === "unavailable") badges.push({ label: "Unavailable", kind: "warn" });
+    if (s.changedElsewhere) badges.push({ label: "Changed elsewhere", kind: "info" });
     if (s.recommended) badges.push({ label: "Recommended: " + s.recommended, kind: "ok" });
     if (s.operational) badges.push({ label: s.operational, kind: "info" });
     if (s.requested && s.effective && s.requested !== s.effective) badges.push({ label: "Effective differs", kind: "diff" });
     if (s.restart) badges.push({ label: "Restart required", kind: "warn" });
+    if (s.validationError) badges.push({ label: "Validation error", kind: "danger" });
+    if (isThemeLocked(s)) { badges.push({ label: "Locked by theme", kind: "managed" }); disabled = true; }
     if (s.risky) badges.push({ label: "Risky", kind: "danger" });
     if (s.tier === "advanced") badges.push({ label: "Advanced", kind: "muted" });
     if (s.tier === "expert") badges.push({ label: "Expert", kind: "danger" });
@@ -222,8 +397,8 @@
     wich: ["which"], teh: ["the"], prefered: ["preferred"], compactionn: ["compaction"]
   };
   var ignoredWords = {};
-  var personalDict = [];
-  var projectDict = [];
+
+  function dicts() { return window.PMState ? window.PMState.state.collections : { personalDict: [], projectDict: [] }; }
 
   function attachSpellcheck(root) {
     var nodes = root.querySelectorAll("[data-spell-text]");
@@ -244,6 +419,7 @@
       el.textContent = raw;
       return;
     }
+    var d = dicts();
     var re = /[A-Za-z']+/g;
     var last = 0;
     var m;
@@ -251,7 +427,7 @@
       if (m.index > last) el.appendChild(document.createTextNode(raw.slice(last, m.index)));
       var word = m[0];
       var low = word.toLowerCase();
-      if (SPELL_DICT[low] && !ignoredWords[low] && personalDict.indexOf(low) < 0 && projectDict.indexOf(low) < 0) {
+      if (SPELL_DICT[low] && !ignoredWords[low] && d.personalDict.indexOf(low) < 0 && d.projectDict.indexOf(low) < 0) {
         var span = document.createElement("span");
         span.className = "pm-spell";
         span.textContent = word;
@@ -280,8 +456,7 @@
     var sugg = SPELL_DICT[low] || [word];
     spellPop = document.createElement("div");
     spellPop.className = "pm-spell-pop";
-    var html = '<div class="pm-spell-pop-title">Suggestions for <b></b></div>';
-    spellPop.innerHTML = html;
+    spellPop.innerHTML = '<div class="pm-spell-pop-title">Suggestions for <b></b></div>';
     spellPop.querySelector("b").textContent = word;
     sugg.forEach(function (s) {
       var b = document.createElement("button");
@@ -299,8 +474,8 @@
     var actions = [
       ["Ignore once", function () { span.classList.remove("pm-spell"); span.removeAttribute("tabindex"); closeSpellPop(); }],
       ["Ignore for this draft", function () { ignoredWords[low] = true; document.querySelectorAll(".pm-spell").forEach(function (n) { if (n.textContent.toLowerCase() === low) { n.classList.remove("pm-spell"); n.removeAttribute("tabindex"); } }); closeSpellPop(); }],
-      ["Add to personal dictionary", function () { personalDict.push(low); document.querySelectorAll(".pm-spell").forEach(function (n) { if (n.textContent.toLowerCase() === low) { n.classList.remove("pm-spell"); n.removeAttribute("tabindex"); } }); window.PMState.receipt("Added to personal dictionary", word + " will not be underlined again.", "ok"); closeSpellPop(); }],
-      ["Add to project dictionary", function () { projectDict.push(low); document.querySelectorAll(".pm-spell").forEach(function (n) { if (n.textContent.toLowerCase() === low) { n.classList.remove("pm-spell"); n.removeAttribute("tabindex"); } }); window.PMState.receipt("Added to project dictionary", word + " is now in the shared project word list.", "ok"); closeSpellPop(); }]
+      ["Add to personal dictionary", function () { window.PMState.addToDictionary("personal", low); refreshSpans(low); closeSpellPop(); }],
+      ["Add to project dictionary", function () { window.PMState.addToDictionary("project", low); refreshSpans(low); closeSpellPop(); }]
     ];
     actions.forEach(function (a) {
       var b = document.createElement("button");
@@ -320,6 +495,12 @@
     spellPop.style.width = pw + "px";
   }
 
+  function refreshSpans(low) {
+    document.querySelectorAll(".pm-spell").forEach(function (n) {
+      if (n.textContent.toLowerCase() === low) { n.classList.remove("pm-spell"); n.removeAttribute("tabindex"); }
+    });
+  }
+
   document.addEventListener("click", function (e) {
     var span = e.target.closest ? e.target.closest(".pm-spell") : null;
     if (span) { openSpellPop(span); return; }
@@ -335,9 +516,16 @@
 
   window.PMCore = {
     reducedMotion: reducedMotion,
+    isThemeLocked: isThemeLocked,
     buildSearchIndex: buildSearchIndex,
     search: search,
     managerTitle: managerTitle,
+    parseHash: parseHash,
+    viewToHash: viewToHash,
+    startRouter: startRouter,
+    hydrateManager: hydrateManager,
+    promptDialog: promptDialog,
+    closeDialog: closeDialog,
     scrollspy: scrollspy,
     focusFlash: focusFlash,
     toast: toast,

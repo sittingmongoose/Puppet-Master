@@ -113,6 +113,8 @@ window.addEventListener("load", function () {
         thread: ["thread.send_request", "thread.receive_response", "thread.spawn_related", "thread.branch"],
         system: ["system.port_collision", "system.worktree_collision", "system.cross_project", "system.compact_now", "system.redirect", "system.crew", "system.reset"]
       };
+      var names = (window.PMChatDemoTriggers && window.PMChatDemoTriggers.names()) || [];
+      names.forEach(function (n) { var g = n.split(".")[0]; (groups[g] = groups[g] || []); if (groups[g].indexOf(n) < 0) groups[g].push(n); });
       Object.keys(groups).forEach(function (g) {
         var h = document.createElement("div");
         h.className = "pmq-harness-group";

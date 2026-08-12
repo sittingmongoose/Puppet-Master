@@ -115,3 +115,103 @@
 
 /* ---- hover row: minimal, fades in on attention --------------------------- */
 [data-k3-thread="t8"] .k3t-msg-hover { margin-top: 6px; }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t8 identity: everything
+   stays calm — packet cards keep the low-contrast surface tint and recede
+   until touched; the small records (markers, redirects, BSD results, queued
+   badges) collapse to quiet pills.
+   ========================================================================== */
+
+/* stacked packet records: low-contrast, gently aired */
+[data-k3-thread="t8"] .k3t-packet { margin-top: 10px; gap: 6px; }
+[data-k3-thread="t8"] .k3t-packet .k3t-card { margin-top: 0; }
+[data-k3-thread="t8"] .k3t-packet-chiprows .k3t-card { margin-top: 6px; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq / restorepoint /
+   branch: one shared low-contrast treatment, brightening only on hover
+   (same recede-until-attention language as the work chip) */
+[data-k3-thread="t8"] .k3t-routewarn,
+[data-k3-thread="t8"] .k3t-attach,
+[data-k3-thread="t8"] .k3t-bsdadvice,
+[data-k3-thread="t8"] .k3t-receipt,
+[data-k3-thread="t8"] .k3t-threadreq,
+[data-k3-thread="t8"] .k3t-restorepoint,
+[data-k3-thread="t8"] .k3t-branch {
+  background: var(--surface);
+  border-color: var(--border-light);
+  box-shadow: none;
+  opacity: .88;
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-thread="t8"] .k3t-routewarn:hover,
+[data-k3-thread="t8"] .k3t-attach:hover,
+[data-k3-thread="t8"] .k3t-bsdadvice:hover,
+[data-k3-thread="t8"] .k3t-receipt:hover,
+[data-k3-thread="t8"] .k3t-threadreq:hover,
+[data-k3-thread="t8"] .k3t-restorepoint:hover,
+[data-k3-thread="t8"] .k3t-branch:hover { opacity: 1; }
+
+/* markers, redirects, BSD results: quiet pills that shrink to their content
+   (both inside the inline packet stack and as expanded chip rows); redirect
+   states stay low-contrast — opacity for interrupted/resumed, a whisper of
+   accent on the pill edge for redirected */
+[data-k3-thread="t8"] .k3t-marker,
+[data-k3-thread="t8"] .k3t-redirect,
+[data-k3-thread="t8"] .k3t-bsdresult {
+  align-self: flex-start;
+  margin-top: 0;
+  padding: 3px 10px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+}
+[data-k3-thread="t8"] .k3t-redirect-interrupted,
+[data-k3-thread="t8"] .k3t-redirect-resumed { opacity: .75; }
+[data-k3-thread="t8"] .k3t-redirect-redirected {
+  border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+/* queued badge: a quiet pill that recedes */
+[data-k3-thread="t8"] .k3t-queued {
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  opacity: .85;
+}
+
+/* rewound region (inside the turn body): a centered quiet dashed pill */
+[data-k3-thread="t8"] .k3t-rewound {
+  justify-content: center;
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  opacity: .8;
+}
+
+/* server note: a quiet centered line in the work zone */
+[data-k3-thread="t8"] .k3t-server-note {
+  justify-content: center;
+  opacity: .8;
+}
+
+/* chip-mode packet rows: pill rows on the calm surface; an opened row
+   expands to the low-contrast card above */
+[data-k3-thread="t8"] .k3t-packet-row {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill, 999px);
+}
+[data-k3-thread="t8"] .k3t-packet-row:hover { background: var(--surface-elevated); }
+[data-k3-thread="t8"] .k3t-packet-row.is-open {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+}
+
+/* artifact shortcut + overflow: pill wrap, quiet more-button */
+[data-k3-thread="t8"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t8"] .k3t-shortcut-wrap .k3t-shortcut {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: var(--radius-pill, 999px);
+}
+[data-k3-thread="t8"] .k3t-shortcut-more { color: var(--text-muted); }

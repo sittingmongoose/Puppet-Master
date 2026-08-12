@@ -91,7 +91,9 @@
     pause: s('<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>'),
     paperclip: s('<path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>'),
     spellcheck: s('<path d="M4 19h4"/><path d="M6 19V7"/><path d="M14 19l3-8 3 8"/><path d="M15.2 16h3.6"/><path d="M4 7h4"/>'),
-    skip: s('<polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>')
+    skip: s('<polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/>'),
+    /* Back Seat Driver — gauge needle in a ring */
+    bsd: s('<circle cx="12" cy="12" r="8.5"/><path d="M12 12l3.6-3.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>')
   };
   window.PMIcon = function (name, cls) {
     var raw = window.PMIcons[name] || '';

@@ -1,0 +1,130 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-02-score",
+  "model": "CursorAuto",
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Score keeps quiet PM shell + remapped featured managers under cueing / rehearsal marks IA.",
+      "uncertainty": "low"
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "Manager destinations and fixture keys extend inventory without minting canon.",
+      "uncertainty": "low"
+    },
+    {
+      "owner": "Models System",
+      "impact": "Provider fixtures 1\u201317 + installations[] lifecycle cards.",
+      "uncertainty": "low"
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "id": "inventory-managers",
+      "note": "Featured managers for concept-02-score: Notifications & Sounds, Sound Library/Uploads/Packs, Appearance, Spellcheck & Dictionaries, Desktop/Tray/Window, Teacher/Help"
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "note": "Demo-only collections under PM_SETTINGS_DEMO; no canon schema write."
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "action": "retire_or_alias",
+      "id": "cmd.settings.bloom.open",
+      "reason": "old chip/bloom architecture"
+    },
+    {
+      "action": "reuse",
+      "note": "Reuse cmd.settings.open_notifications / open_storage_retention where catalog already defines navigation wrappers."
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "trace": "UI \u2192 candidate command \u2192 owner \u2192 validation \u2192 mutation/op \u2192 receipt \u2192 projection \u2192 recovery",
+      "demo_note": "All mutations are PMStore demo state with labeled receipts."
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "candidates": [
+        "SettingsDestination",
+        "SettingsNotice",
+        "SettingsWorkspaceShell",
+        "SettingsSearch",
+        "CategoryNavigation",
+        "SubcategoryScrollspy",
+        "SettingRow",
+        "ValueSourceBadge",
+        "AvailabilityReason",
+        "RequestedEffectiveInspector",
+        "ManagerShell",
+        "ResourceList/Card/Detail",
+        "CueSearchHero",
+        "RehearsalMarkRail",
+        "MovementPlate",
+        "SoundPreviewMeter",
+        "ThemeHoverPreview",
+        "TeacherCallout"
+      ]
+    }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "note": "Receipt toasts only; no production event bus."
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "supersedes": "PMConcept7 bloom/chip/no-sidebar contract",
+      "note": "Home destinations are place cards, not filter pills."
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "note": "cueing / rehearsal marks motion must map to property-driven final-state parity; no clipped-height animation."
+    }
+  ],
+  "test_fixtures": [
+    "provider installations 3\u20138",
+    "sound preview/test",
+    "import preview/apply/rollback",
+    "server shell deferred cards",
+    "States drawer fixtures"
+  ],
+  "deferred_named_owners": [
+    {
+      "name": "Future Server Module Shell",
+      "owner": "Server Claim/Bootstrap",
+      "contract": "Settings shows named insertion shell only; bootstrap state machine stays with Server Claim/Bootstrap."
+    },
+    {
+      "name": "Product Onboarding",
+      "owner": "Product Onboarding",
+      "contract": "Settings deep-links into onboarding; does not own first-run machine."
+    },
+    {
+      "name": "Doctor",
+      "owner": "Doctor",
+      "contract": "Health deep-links; Doctor owns diagnosis flows."
+    },
+    {
+      "name": "Installation/Deployment",
+      "owner": "Installation/Deployment",
+      "contract": "Install buttons call owner; Settings shows installation cards + receipts only."
+    },
+    {
+      "name": "Project Sync/Move",
+      "owner": "Project Sync/Move",
+      "contract": "Archive shows deferred card; sync/move owned elsewhere."
+    },
+    {
+      "name": "PM app updates",
+      "owner": "Release/updates owner",
+      "contract": "Update channel rows stay; app updater state machine deferred."
+    }
+  ],
+  "unresolved_questions": []
+}

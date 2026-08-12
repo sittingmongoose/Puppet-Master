@@ -98,7 +98,7 @@
       theme: theme,
       chatWidthPx: chatWidthPx,
       railOpen: railOpen,
-      reducedMotion: !!reducedMotion,
+      reducedMotion: Boolean(reducedMotion),
       restore: q.get('restore') === '1'
     };
   }
@@ -147,7 +147,7 @@
       var raw = sessionStorage.getItem(STORE_PERSIST_KEY);
       if (!raw) return false;
       var snap = JSON.parse(raw);
-      return !!store.restoreState(snap);
+      return Boolean(store.restoreState(snap));
     } catch (err) {
       console.warn('PMChatHost: restore failed', err);
       return false;
@@ -286,9 +286,11 @@
     if (accepted && pending) {
       store.setSelector('crewId', pending);
       applyCrewSelection(store, pending, toastFn);
-      if (typeof toastFn === 'function') toastFn('Default Crew · enabled for this session');
+      if (typeof toastFn === 'function') {
+        toastFn('Crew · ' + crewHumanLabel(pending) + ' · this session');
+      }
     } else {
-      if (typeof toastFn === 'function') toastFn('Default Crew · cancelled');
+      if (typeof toastFn === 'function') toastFn('Crew · cancelled');
       if (store._emit) store._emit();
     }
   }
@@ -451,35 +453,86 @@
         else host.appendChild(slot);
       }
       var html = '';
+      var L =
+        (window.PMChatLabels && window.PMChatLabels.APPROVAL) || {
+          question: 'Run 2 commands?',
+          scope: 'Workspace only · Needed to run the test suite',
+          deny: 'Deny',
+          allowOnce: 'Allow once',
+          allowSession: 'Allow for session',
+          details: 'Details'
+        };
+      var WL =
+        (window.PMChatLabels && window.PMChatLabels.WARNING) || {
+          continueHere: 'Continue here',
+          branchNewModel: 'Branch with new model',
+          startNewChat: 'Start new chat',
+          cancel: 'Cancel',
+          details: 'Details'
+        };
       var ap = store.session.approval;
       if (ap) {
         html +=
           '<div class="pm-approval-card" data-approval-card><div><strong>' +
-          String(ap.question || 'Approve?') +
-          '</strong></div><div>' +
-          String(ap.reason || '') +
+          String(ap.question || L.question) +
+          '</strong></div><div class="pm-appr-scope">' +
+          String(ap.reason || ap.scope || L.scope) +
           '</div><div class="pm-appr-actions">' +
-          '<button type="button" class="pm-btn" data-demo-family="decision" data-demo-event="deny">Deny</button>' +
-          '<button type="button" class="pm-btn" data-demo-family="decision" data-demo-event="approve">Allow once</button>' +
-          '<button type="button" class="pm-btn" data-appr-session>Allow for session</button>' +
-          '</div><details><summary>Details</summary><pre>' +
+          '<button type="button" class="pm-btn" data-demo-family="decision" data-demo-event="deny">' +
+          L.deny +
+          '</button>' +
+          '<button type="button" class="pm-btn" data-demo-family="decision" data-demo-event="approve">' +
+          L.allowOnce +
+          '</button>' +
+          '<button type="button" class="pm-btn" data-appr-session>' +
+          L.allowSession +
+          '</button>' +
+          '<button type="button" class="pm-btn pm-btn-ghost" data-appr-details>' +
+          L.details +
+          '</button>' +
+          '</div><details data-appr-details-panel hidden><summary>' +
+          L.details +
+          '</summary><pre>' +
           String(ap.details || '') +
           '</pre></details></div>';
       }
       var wn = store.session.warning;
       if (wn) {
+        var warnChoices =
+          wn.choices && wn.choices.length
+            ? wn.choices.slice()
+            : [WL.continueHere, WL.branchNewModel, WL.startNewChat, WL.cancel, WL.details];
+        /* Material warning primary set keeps Details available but not as the only path. */
         html +=
           '<div class="pm-warning-card" data-warning-card data-warn-tier="' +
           String(wn.tier || 'compact') +
           '"><div>' +
           String(wn.text || '') +
           '</div><div class="pm-warn-actions">' +
-          (wn.choices || [])
+          warnChoices
             .map(function (c) {
-              return '<button type="button" class="pm-btn pm-btn-ghost" data-warn-choice="' + String(c) + '">' + String(c) + '</button>';
+              var label = String(c);
+              var ghost = /details|cancel/i.test(label) ? ' pm-btn-ghost' : '';
+              return (
+                '<button type="button" class="pm-btn' +
+                ghost +
+                '" data-warn-choice="' +
+                label.replace(/"/g, '&quot;') +
+                '">' +
+                label +
+                '</button>'
+              );
             })
             .join('') +
-          '</div></div>';
+          '</div>' +
+          (wn.detail || wn.details
+            ? '<details data-warn-details-panel hidden><summary>' +
+              WL.details +
+              '</summary><pre>' +
+              String(wn.detail || wn.details || '') +
+              '</pre></details>'
+            : '') +
+          '</div>';
       }
       var cn = store.session.compactNow;
       if (cn && cn.status && cn.status !== 'idle') {
@@ -512,11 +565,15 @@
       var crew = store.session.crew;
       if (store.session.crewConfirmOpen && store.session.crewPendingConfirm) {
         html +=
-          '<div class="pm-crew-confirm" data-crew-confirm role="dialog" aria-label="Use default Crew">' +
-          '<div><strong>Use default Crew?</strong></div>' +
+          '<div class="pm-crew-confirm" data-crew-confirm role="dialog" aria-label="Use ' +
+          crewHumanLabel(store.session.crewPendingConfirm) +
+          ' for this session">' +
+          '<div><strong>Use ' +
+          crewHumanLabel(store.session.crewPendingConfirm) +
+          ' for this session?</strong></div>' +
           '<p class="pm-crew-confirm-copy">Enable ' +
           crewHumanLabel(store.session.crewPendingConfirm) +
-          ' for this session.</p>' +
+          ' for this Chat session.</p>' +
           '<div class="pm-crew-confirm-actions">' +
           '<button type="button" class="pm-btn pm-btn-ghost" data-crew-confirm-no>Not now</button>' +
           '<button type="button" class="pm-btn" data-crew-confirm-yes>Use</button>' +
@@ -525,7 +582,7 @@
       if (crew && (crew.requested || crew.effective || (crew.waves && crew.waves.length) || store.session.crewId)) {
         var reqLabel = crewHumanLabel(crew.requested || store.session.crewId);
         var effLabel = crewHumanLabel(crew.effective || crew.requested || store.session.crewId);
-        var mismatch = !!(crew.requested && crew.effective && crew.requested !== crew.effective);
+        var mismatch = Boolean(crew.requested && crew.effective && crew.requested !== crew.effective);
         html +=
           '<div class="pm-crew-card" data-crew-card' +
           (mismatch ? ' data-crew-mismatch="1"' : '') +
@@ -572,11 +629,20 @@
       }
       var access = store.session.accessProfile;
       var mode = store.session.modeId;
-      if (access === 'full' && (mode === 'review' || mode === 'plan')) {
+      var local =
+        typeof store.getActiveLocal === 'function' ? store.getActiveLocal() : null;
+      if (local && local.accessProfile) access = local.accessProfile;
+      if (local && local.modeId) mode = local.modeId;
+      /* Display-only: never mutate session.accessLimitedBy during render. */
+      var limitedBy = store.session.accessLimitedBy;
+      if (!limitedBy && access === 'full' && (mode === 'review' || mode === 'plan')) {
+        limitedBy = mode === 'review' ? 'Review mode' : 'Plan mode';
+      }
+      if (access === 'full' && limitedBy) {
         html +=
           '<div class="pm-warning-card" data-access-note>Full Access · Limited by ' +
-          (mode === 'review' ? 'Review' : 'Plan') +
-          ' mode</div>';
+          String(limitedBy) +
+          '</div>';
       }
       slot.innerHTML = html;
       slot.onclick = function (ev) {
@@ -584,6 +650,16 @@
         if (confirmBtn) {
           resolveCrewConfirm(store, confirmBtn.hasAttribute('data-crew-confirm-yes'), toast);
           softRefresh();
+          return;
+        }
+        var detailsBtn = ev.target.closest('[data-appr-details], [data-warn-choice]');
+        if (detailsBtn && detailsBtn.hasAttribute('data-appr-details')) {
+          var panel = slot.querySelector('[data-appr-details-panel]');
+          if (panel) {
+            if (panel.hasAttribute('hidden')) panel.removeAttribute('hidden');
+            else panel.setAttribute('hidden', '');
+            if (typeof panel.open === 'boolean') panel.open = !panel.hasAttribute('hidden');
+          }
           return;
         }
         var b = ev.target.closest('[data-demo-family], [data-appr-session], [data-warn-choice]');
@@ -600,8 +676,20 @@
         }
         if (b.hasAttribute('data-warn-choice')) {
           var choice = b.getAttribute('data-warn-choice') || '';
+          if (/^details$/i.test(choice)) {
+            var wpanel = slot.querySelector('[data-warn-details-panel]');
+            if (wpanel) {
+              if (wpanel.hasAttribute('hidden')) wpanel.removeAttribute('hidden');
+              else wpanel.setAttribute('hidden', '');
+              if (typeof wpanel.open === 'boolean') wpanel.open = !wpanel.hasAttribute('hidden');
+            }
+            return;
+          }
           if (/branch/i.test(choice) && store.branchThread) {
             store.branchThread(store.session.activeThreadKey);
+          }
+          if (/start new chat/i.test(choice)) {
+            demoCreateThread();
           }
           store.session.warning = null;
           if (store._emit) store._emit();
@@ -624,6 +712,18 @@
       if (root) {
         window.PMChatWindowKit.syncSearchPanel(root, store, { open: true });
       }
+    }
+    if (
+      store &&
+      window.PMChatWindowKit &&
+      typeof window.PMChatWindowKit.syncBsdSlots === 'function'
+    ) {
+      var bsdRoot =
+        (state.windowHandle &&
+          typeof state.windowHandle.getOverlayRoot === 'function' &&
+          state.windowHandle.getOverlayRoot()) ||
+        document.querySelector('.pm-chat-root');
+      if (bsdRoot) window.PMChatWindowKit.syncBsdSlots(bsdRoot, store);
     }
     requestAnimationFrame(function () {
       if (window.PMChatMotion && typeof window.PMChatMotion.refresh === 'function') {
@@ -838,7 +938,7 @@
         setMountMode(event.mode === 'popout' ? 'popout' : 'docked');
         break;
       case 'shell.rail':
-        state.railOpen = !!event.open;
+        state.railOpen = Boolean(event.open);
         if (state.shell) state.shell.setRailOpen(state.railOpen);
         softRefresh();
         break;
@@ -846,7 +946,7 @@
         if (event.kind === 'set-theme' && event.theme && state.shell) {
           state.theme = state.shell.updateTheme(event.theme);
         } else if (event.kind === 'reduced-motion' && state.shell) {
-          state.reducedMotion = !!event.value;
+          state.reducedMotion = Boolean(event.value);
           state.shell.setReducedMotion(state.reducedMotion);
         } else if (event.kind === 'open-editor-tab' && event.tab && state.shell && state.shell.openEditorTab) {
           state.shell.openEditorTab(event.tab);
@@ -927,6 +1027,15 @@
       .then(function (data) {
         state.store = window.PMChatStore.create(data);
         tryRestorePersisted(state.store, parsed.restore);
+        /* Step3–7 fixtures from demo-extend sessionExtras (additive). */
+        if (data && data.sessionExtras && state.store && state.store.session) {
+          var ex = data.sessionExtras;
+          if (ex.capacityForecast) state.store.session.capacityForecast = ex.capacityForecast;
+          if (Array.isArray(ex.notifications) && ex.notifications.length) {
+            state.store.session.notifications = ex.notifications.slice();
+          }
+          if (state.store._emit) state.store._emit();
+        }
 
         state.shell = window.PMChatShell.mount(root, {
           env: {
@@ -940,6 +1049,10 @@
           }
         });
         window.__pmShellHandle = state.shell;
+        window.__pmChatShell = state.shell;
+        if (state.shell && typeof state.shell.bindStore === 'function') {
+          state.shell.bindStore(state.store);
+        }
         if (state.shell && typeof state.shell.setToast === 'function') {
           state.shell.setToast(toast);
         }
@@ -1005,7 +1118,7 @@
               softRefresh();
             },
             onReducedMotion: function (p) {
-              state.reducedMotion = !!(p && p.on);
+              state.reducedMotion = Boolean(p && p.on);
               if (window.PMChatMotion && typeof window.PMChatMotion.setReduced === 'function') {
                 window.PMChatMotion.setReduced(state.reducedMotion);
               }
@@ -1021,7 +1134,7 @@
               softRefresh();
             },
             onRail: function (p) {
-              state.railOpen = !!(p && p.open);
+              state.railOpen = Boolean(p && p.open);
               if (state.shell) state.shell.setRailOpen(state.railOpen);
               softRefresh();
             },
@@ -1060,6 +1173,8 @@
     setMountMode: setMountMode,
     getStore: getStore,
     getEnv: getEnv,
-    persistStore: persistStore
+    persistStore: persistStore,
+    requestCrewConfirmOrApply: requestCrewConfirmOrApply,
+    resolveCrewConfirm: resolveCrewConfirm
   };
 })();

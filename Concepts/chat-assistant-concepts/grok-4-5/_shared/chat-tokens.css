@@ -28,6 +28,13 @@
   --elev-1: 0 4px 14px color-mix(in srgb, var(--text-primary) 8%, transparent);
   --elev-2: 0 10px 28px color-mix(in srgb, var(--text-primary) 12%, transparent);
   --elev-3: 0 18px 44px color-mix(in srgb, var(--text-primary) 18%, transparent);
+  --pm-bsd-auto-active: var(--accent-primary);
+  --pm-bsd-auto-active-glow: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  --pm-bsd-on: var(--accent-primary);
+  --pm-bsd-on-fg: var(--surface, var(--background));
+  --pm-bsd-off: var(--text-muted);
+  --pm-bsd-idle: var(--text-secondary);
+
 }
 
 /* ---- Friendly: soft coral-sky user chips, cozy dock ---- */
@@ -155,7 +162,7 @@
   --pm-q-option-selected-bg: rgba(183, 156, 255, 0.22);
   --pm-rail-bg: rgb(36, 27, 54);
   --pm-lens-chip-bg: color-mix(in srgb, var(--surface-elevated) 88%, #3a4658);
-  --pm-lens-bar-bg: rgb(52, 40, 78);
+  --pm-lens-bar-bg: color-mix(in srgb, var(--surface-alt, var(--surface)) 86%, #5a4a78);
   --pm-composer-bg: transparent;
   --pm-composer-input-bg: color-mix(in srgb, var(--surface-elevated) 88%, #3a4658);
   --pm-activity-dot: #F3B266;
@@ -182,4 +189,83 @@
   --pm-activity-dot: #B26A2A;
   --pm-chat-motion-enter: 320ms;
   --pm-chat-motion-surface: 320ms;
+}
+
+/* ---- Step2 chrome: model/access/BSD layout (owned with tokens) ---- */
+/* Model row provider icon rail + route badges */
+.pm-menu-model-row {
+  grid-template-columns: 1fr auto;
+}
+.pm6-tb-menu-item .pm-menu-item-rail {
+  display: inline-flex;
+  align-items: flex-start;
+  margin-right: 8px;
+  flex: 0 0 auto;
+}
+.pm6-tb-menu-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  text-align: left;
+}
+.pm-menu-item-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.pm-provider-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated, var(--surface)) 80%, transparent);
+  color: var(--text-secondary);
+}
+.pm-provider-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.pm-provider-chip .pm-provider-ico {
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+}
+.pm-model-route-badge {
+  margin-left: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: 4px;
+  padding: 1px 4px;
+}
+.pm-model-route-badge[data-route='effective'] {
+  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+}
+.pm-access-limit {
+  display: block;
+  font-size: 10px;
+  opacity: 0.72;
+  margin-top: 2px;
+}
+.pm-menu-trigger-stack {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+.pm-bsd-slot {
+  display: inline-flex;
+  align-items: center;
 }

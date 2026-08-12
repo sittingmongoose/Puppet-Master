@@ -33,6 +33,47 @@
     return id;
   }
 
+
+  var FAN_OUT_MAX = 3;
+
+  function countFanOutChildren(s) {
+    if (!s || !s.threads) return 0;
+    return Object.keys(s.threads).filter(function (k) {
+      return /^thread-branch-/.test(k) || (s.threads[k] && s.threads[k].fanOutChild);
+    }).length;
+  }
+
+  function spawnRelatedGuarded(s, id, opts) {
+    if (countFanOutChildren(s) >= FAN_OUT_MAX) {
+      toast('Fan-out capped at 3 demo children');
+      return null;
+    }
+    if (!s.branchThread) return null;
+    var nid = s.branchThread(id, opts || { label: 'spawn_related' });
+    if (nid && s.threads[nid]) s.threads[nid].fanOutChild = true;
+    return nid;
+  }
+
+  function deepThreadOp(s, id, kind, extra) {
+    extra = extra || {};
+    if (!s.session.threadOps) s.session.threadOps = [];
+    var op = {
+      id: 'top-' + Date.now().toString(36),
+      kind: kind,
+      source: extra.source || id,
+      target: extra.target || null,
+      sender: extra.sender || 'demo-harness',
+      budget: extra.budget || { tokens: 1200, children: FAN_OUT_MAX },
+      status: extra.status || 'ok',
+      resultRefs: extra.resultRefs || [],
+      at: new Date().toISOString()
+    };
+    s.session.threadOps.unshift(op);
+    s.session.threadOps = s.session.threadOps.slice(0, 24);
+    if (s._emit) s._emit();
+    return op;
+  }
+
   function fire(family, event, payload) {
     var s = store();
     if (!s) return;
@@ -96,14 +137,34 @@
         break;
       case 'goal.update':
       case 'goal.replan':
-        ensureGoal(s, id, 'updated_replan', 'Prototype');
+        ensureGoal(s, id, 'running');
+        if (s.goalAction) s.goalAction(id, 'replan');
         break;
       case 'goal.blocked':
         ensureGoal(s, id, 'blocked');
         break;
-      case 'goal.complete':
+      case 'goal.stop':
+        ensureGoal(s, id, 'running');
         if (s.goalAction) s.goalAction(id, 'stop');
-        ensureGoal(s, id, 'completed', 'Handoff');
+        else ensureGoal(s, id, 'stopped');
+        break;
+      case 'goal.clear':
+        ensureGoal(s, id, 'running');
+        if (s.goalAction) s.goalAction(id, 'clear');
+        else {
+          var tClear = s.threads[id];
+          if (tClear) tClear.goal = null;
+          if (s._emit) s._emit();
+        }
+        break;
+      case 'goal.edit':
+        ensureGoal(s, id, 'running');
+        if (s.goalAction) s.goalAction(id, 'edit');
+        break;
+      case 'goal.complete':
+        ensureGoal(s, id, 'running');
+        if (s.goalAction) s.goalAction(id, 'complete');
+        else ensureGoal(s, id, 'completed', 'Handoff');
         break;
       case 'todo.add':
         mutateTodos(s, id, 'add');
@@ -190,18 +251,59 @@
       case 'decision.details':
         toast(event === 'details' ? 'Approval details open' : 'Branch with new model');
         break;
-      case 'thread.send_request':
-        pushMessage(s, id, 'user', 'Please review the provider access flow in the sibling thread.');
+      case 'thread.send_request': {
+        var reqOp = deepThreadOp(s, id, 'send_request', {
+          target: 'thread-sibling',
+          status: 'sent',
+          resultRefs: ['msg:request']
+        });
+        pushMessage(
+          s,
+          id,
+          'user',
+          'Thread request · source ' +
+            reqOp.source +
+            ' → target sibling · budget ' +
+            reqOp.budget.tokens +
+            ' · Please review the provider access flow.'
+        );
         break;
-      case 'thread.receive_response':
-        pushMessage(s, id, 'assistant', 'Cross-thread response linked · provenance in Context Lens.');
+      }
+      case 'thread.receive_response': {
+        var respOp = deepThreadOp(s, id, 'receive_response', {
+          source: 'thread-sibling',
+          target: id,
+          status: 'received',
+          resultRefs: ['msg:response', 'lens:provenance']
+        });
+        pushMessage(
+          s,
+          id,
+          'assistant',
+          'Cross-thread response linked · provenance in Context Lens · op ' +
+            respOp.id +
+            ' · no hidden shared context.'
+        );
         break;
-      case 'thread.spawn_related':
-        if (s.branchThread) s.branchThread(id);
+      }
+      case 'thread.spawn_related': {
+        var child = spawnRelatedGuarded(s, id, { label: 'spawn_related' });
+        deepThreadOp(s, id, 'spawn_related', {
+          target: child,
+          status: child ? 'spawned' : 'capped',
+          resultRefs: child ? ['thread:' + child] : []
+        });
         break;
-      case 'thread.branch':
-        if (s.branchThread) s.branchThread(id);
+      }
+      case 'thread.branch': {
+        var branched = spawnRelatedGuarded(s, id, { label: 'branch' });
+        deepThreadOp(s, id, 'branch', {
+          target: branched,
+          status: branched ? 'branched' : 'capped',
+          resultRefs: branched ? ['thread:' + branched] : []
+        });
         break;
+      }
       case 'system.port_collision':
         s.session.warning = {
           tier: 'compact',
@@ -222,34 +324,48 @@
         resetScenario(s);
         break;
       case 'system.compact_now':
-        s.session.compactNow = { status: 'running', progress: 0.4 };
-        if (s._emit) s._emit();
-        setTimeout(function () {
-          s.session.compactNow = {
-            status: 'done',
-            progress: 1,
-            included: ['Goal summary', 'Latest 8 turns', 'Open Todos', 'Active questionnaire receipt'],
-            leftOut: ['Raw tool dumps', 'Older search pages', 'Duplicate diffs', 'Browser console noise']
-          };
+        if (window.PMChatLens && typeof window.PMChatLens.compactNow === 'function') {
+          window.PMChatLens.compactNow(s, id);
+          setTimeout(function () {
+            if (s.session.compactNow && typeof s.session.compactNow._finish === 'function') {
+              s.session.compactNow._finish();
+            }
+            refresh();
+          }, 520);
+        } else {
+          s.session.compactNow = { status: 'running', progress: 0.4, command: 'cmd.chat.compact_context' };
           if (s._emit) s._emit();
-          refresh();
-        }, 600);
+          setTimeout(function () {
+            s.session.compactNow = {
+              status: 'done',
+              progress: 1,
+              command: 'cmd.chat.compact_context',
+              included: ['Goal summary', 'Latest 8 turns', 'Open Todos', 'Active questionnaire receipt'],
+              leftOut: ['Raw tool dumps', 'Older search pages', 'Duplicate diffs', 'Browser console noise'],
+              historyRetained: true
+            };
+            if (s._emit) s._emit();
+            refresh();
+          }, 600);
+        }
         break;
       case 'system.attachment_incompatible':
-        s.session.warning = {
-          tier: 'modal',
-          text: 'The selected model cannot inspect video natively; PM can extract frames or use the configured vision route.',
-          choices: ['Extract frames', 'Alternate model', 'Cancel', 'Details']
-        };
-        if (s._emit) s._emit();
-        break;
+        fire('system', 'attachment_resolver');
+        return;
       case 'system.active_turn_redirect':
-        pushMessage(
-          s,
-          id,
-          'assistant',
-          'Active-turn redirect · original attempt preserved · interruption recorded · replacement attempt resumed.'
-        );
+        s.setRunning(id, {
+          status: 'running',
+          partialBody: 'Drafting the provider cache warning copy…',
+          badge: 'Interrupted',
+          stopped: false
+        });
+        if (typeof s.redirectActiveTurn === 'function') {
+          s.redirectActiveTurn(id, 'Redirect: keep the attempt, change the closing recommendation.');
+        }
+        setTimeout(function () {
+          if (typeof s.markRedirectResumed === 'function') s.markRedirectResumed(id);
+          refresh();
+        }, 700);
         break;
       case 'system.cache_warning':
         s.session.warning = {
@@ -260,37 +376,259 @@
         if (s._emit) s._emit();
         break;
       case 'system.capacity_warning':
+        s.session.capacityForecast =
+          'Requested specialists: 6 · Recommended concurrent: 2 · 3 waves · Reason: provider allowance and verification reserve';
         s.session.warning = {
           tier: 'compact',
-          text: 'Remaining included usage is unlikely to finish eight specialists; run two at a time and reserve capacity for synthesis.',
+          text:
+            s.session.capacityForecast +
+            ' · Remaining included usage is unlikely to finish eight specialists; run two at a time and reserve capacity for synthesis.',
           choices: ['Run two at a time', 'Cancel', 'Details']
         };
         if (s._emit) s._emit();
         break;
       case 'system.cross_project':
+        s.session.crossProjectGrant = {
+          text: 'This action would reach outside the current project. Confirm once, for this Goal, or open Settings.'
+        };
         s.session.warning = {
           tier: 'modal',
-          text: 'This action would reach outside the current project. Confirm once, for this thread, or open Settings.',
-          choices: ['Allow once', 'Allow for this thread', 'Open Settings', 'Cancel']
+          text: s.session.crossProjectGrant.text,
+          choices: ['Cancel', 'Allow once', 'Allow for this Goal', 'Open Settings']
         };
         if (s._emit) s._emit();
         break;
       case 'system.crew':
-        s.session.crewDefaultPrompted = true;
-        s.session.crewConfirmOpen = false;
-        s.session.crewPendingConfirm = null;
-        s.session.crewId = 'review-wave';
-        s.session.crew = {
-          requested: 'review-wave',
-          effective: 'research-pair',
-          reason: 'Adaptive route · capacity prefers Research pair for this turn',
-          waves: [
-            { id: 'w1', label: 'Provider research', state: 'running' },
-            { id: 'w2', label: 'Diff review', state: 'queued' },
-            { id: 'w3', label: 'Synthesis', state: 'queued' }
-          ]
+        /* Pending is a string crew id — host resolveCrewConfirm expects a string. */
+        s.session.crewDefaultPrompted = false;
+        s.session.crewConfirmOpen = true;
+        s.session.crewPendingConfirm = 'review-wave';
+        /* Do not set active crewId / waves until confirm accepts. */
+        if (s._emit) s._emit();
+        break;
+
+
+      case 'system.bsd.off':
+        if (s.setBsd) s.setBsd(id, { mode: 'off' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'off');
+        break;
+      case 'system.bsd.auto_idle':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'auto-idle');
+        break;
+      case 'system.bsd.auto_active':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'auto-active');
+        break;
+      case 'system.bsd.on':
+        if (s.setBsd) s.setBsd(id, { mode: 'on' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'on');
+        break;
+      case 'system.bsd.silent':
+        if (s.setBsd) s.setBsd(id, { mode: 'on', scope: 'thread' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'silent');
+        break;
+      case 'system.bsd.advice':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto', scope: 'turn' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'advice');
+        if (s.setThreadLocal) {
+          var localAdvice = s.getThreadLocal ? s.getThreadLocal(id) : null;
+          if (localAdvice && localAdvice.bsd) {
+            s.setThreadLocal(id, { bsd: Object.assign({}, localAdvice.bsd, { adviceId: 'bsd-advice-demo' }) });
+          }
+        }
+        break;
+      case 'system.bsd.timeout':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto', scope: 'turn' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'timed-out');
+        break;
+      case 'system.bsd.unavailable':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto', scope: 'turn' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'unavailable');
+        break;
+      case 'system.bsd.quota':
+        if (s.setBsd) s.setBsd(id, { mode: 'auto', scope: 'turn' });
+        if (s.setBsdVisual) s.setBsdVisual(id, 'quota-limited');
+        break;
+      case 'system.backup_snapshot':
+        s.session.warning = {
+          tier: 'compact',
+          text: 'Backup snapshot · last good: 12m ago · testing logs retained · restore available without rewriting chat history.',
+          choices: ['Open snapshot', 'Cancel', 'Details']
         };
         if (s._emit) s._emit();
+        break;
+      case 'system.debug_session':
+        s.session.warning = {
+          tier: 'compact',
+          text: 'Debug session · inspector attached · logs streaming · snapshots frozen for this Goal wave.',
+          choices: ['Keep debugging', 'Detach', 'Details']
+        };
+        if (s._emit) s._emit();
+        break;
+      case 'system.browser_program_progress':
+        s.session.browserProgram = {
+          label: 'Browser Program',
+          status: 'running',
+          step: 'Capture settings route',
+          progress: 0.55
+        };
+        s.session.warning = {
+          tier: 'compact',
+          text: 'Browser Program · Capture settings route · 55% · Expert Browser Program standby.',
+          choices: ['Show Program', 'Cancel', 'Details']
+        };
+        if (s._emit) s._emit();
+        break;
+      case 'system.attachment_resolver': {
+        var resolved =
+          typeof s.resolveAttachment === 'function'
+            ? s.resolveAttachment({ name: 'walkthrough.mp4', mime: 'video/mp4' })
+            : {
+                class: 'pm-transformed',
+                choices: [
+                  { id: 'cancel', label: 'Cancel' },
+                  { id: 'extract-pm', label: 'Extract in PM' },
+                  { id: 'use-gemini', label: 'Use Gemini for video' }
+                ]
+              };
+        s.session.attachmentResolver = resolved;
+        s.session.warning = {
+          tier: 'modal',
+          kind: 'attachment-resolver',
+          text:
+            'Attachment resolver · ' +
+            (resolved.class || 'unsupported') +
+            ' · lineage ' +
+            ((resolved.lineage || []).join(' → ') || 'uploaded'),
+          choices: (resolved.choices || []).map(function (c) {
+            return c.label;
+          })
+        };
+        if (s._emit) s._emit();
+        break;
+      }
+      case 'system.provider_setup_required':
+        s.session.providerSetupRequired = {
+          code: 'cli-not-found',
+          reason: 'CLI not found',
+          message: 'CLI not found · choose another model or repair in Settings (managers Settings-owned).',
+          settingsPath: 'settings://providers/xai'
+        };
+        s.session.composerState = 'provider-setup-required';
+        s.session.composerStateReason = s.session.providerSetupRequired.message;
+        s.session.sendDisabledReason =
+          s.session.sendDisabledReason || 'Provider setup required · send disabled';
+        if (typeof s.pushNotification === 'function') {
+          s.pushNotification({
+            title: 'Provider setup required',
+            body: 'CLI not found · return to Settings · providers/xai',
+            tone: 'warn'
+          });
+        }
+        toast('Settings deep-link · settings://providers/xai');
+        if (s._emit) s._emit();
+        break;
+      case 'system.access_limited_by_review':
+        s.session.sendDisabledReason = 'Access limited by review · send disabled until approval';
+        s.session.composerState = 'send-disabled';
+        s.session.warning = {
+          tier: 'compact',
+          text: 'Access limited by review · primary turn can continue in Ask mode only.',
+          choices: ['Stay in Ask', 'Open Settings', 'Details']
+        };
+        if (s._emit) s._emit();
+        break;
+      case 'system.notification.push':
+        if (typeof s.pushNotification === 'function') {
+          s.pushNotification({
+            title: 'Goal wave finished',
+            body: 'Synthesis ready · open the artifact workspace when you want the diff.',
+            tone: 'success'
+          });
+        }
+        break;
+      case 'system.restore_point.create': {
+        var tRp = s.threads[id];
+        var midRp =
+          tRp && tRp.messages && tRp.messages.length
+            ? tRp.messages[tRp.messages.length - 1].id
+            : null;
+        if (midRp && typeof s.createRestorePoint === 'function') {
+          var rpid = s.createRestorePoint(id, midRp, 'Demo restore point');
+          toast('Restore point · ' + rpid);
+        }
+        break;
+      }
+      case 'system.rewind': {
+        var tRw = s.threads[id];
+        var midRw =
+          tRw && tRw.messages && tRw.messages.length > 1
+            ? tRw.messages[Math.max(0, tRw.messages.length - 2)].id
+            : tRw && tRw.messages && tRw.messages[0]
+              ? tRw.messages[0].id
+              : null;
+        if (midRw && typeof s.rewindTo === 'function') {
+          s.rewindTo(id, midRw);
+        }
+        break;
+      }
+      case 'system.sync.offline':
+        if (s.setSyncState) s.setSyncState('offline');
+        s.session.composerState = 'offline-queued';
+        break;
+      case 'system.sync.queued':
+        /* UI label "Queued to send" = offline + outbox queued (not a sync enum). */
+        if (s.setSyncState) s.setSyncState('offline');
+        if (typeof s.enqueueOutbox === 'function') {
+          s.enqueueOutbox({
+            id: 'ob-demo-queued',
+            kind: 'send',
+            payload: { threadId: id, text: 'Queued demo send' },
+            status: 'queued'
+          });
+        }
+        s.session.composerState = 'offline-queued';
+        if (s._emit) s._emit();
+        break;
+      case 'system.sync.reconnect':
+        if (s.setSyncState) s.setSyncState('reconnecting');
+        break;
+      case 'system.sync.replay':
+        if (s.setSyncState) s.setSyncState('replay');
+        if (typeof s.replayOutbox === 'function') s.replayOutbox();
+        break;
+      case 'system.sync.snapshot':
+        if (s.setSyncState) s.setSyncState('snapshot');
+        break;
+      case 'system.sync.server_work':
+        if (s.setSyncState) s.setSyncState('server-work-continuing');
+        break;
+      case 'system.composer.ordinary':
+        s.session.composerState = 'ordinary';
+        s.session.composerStateReason = '';
+        s.session.providerSetupRequired = null;
+        s.session.crossProjectGrant = null;
+        s.session.sendDisabledReason = '';
+        if (s._emit) s._emit();
+        break;
+      case 'system.composer.redirect_active':
+        fire('system', 'active_turn_redirect');
+        return;
+      case 'system.composer.spellcheck':
+        s.session.composerState = 'spellcheck-suggestions';
+        s.session.spellcheckSuggestions = true;
+        if (s._emit) s._emit();
+        break;
+      case 'artifact.updated':
+        if (window.PMChatV2) {
+          /* Transient update, then settle to distinct updated receipt (not stuck on Updating…). */
+          window.PMChatV2.openArtifactWorkspace(s, id, 'artifact-handoff', {
+            status: 'update',
+            settleToUpdated: true,
+            instant: false
+          });
+        }
         break;
       case 'system.reduced_motion':
         document.documentElement.setAttribute('data-reduced-motion', '1');
@@ -378,6 +716,10 @@
     };
     if (status) t.goal.status = status;
     if (phase) t.goal.phase = phase;
+    if (typeof s.applyGoalCapabilities === 'function') s.applyGoalCapabilities(id);
+    else if (window.PMChatStore && typeof window.PMChatStore.normalizeGoalCapabilities === 'function') {
+      window.PMChatStore.normalizeGoalCapabilities(t.goal);
+    }
     if (s._emit) s._emit();
   }
 
@@ -520,6 +862,9 @@
     ['goal', 'pause'],
     ['goal', 'resume'],
     ['goal', 'replan'],
+    ['goal', 'stop'],
+    ['goal', 'clear'],
+    ['goal', 'edit'],
     ['goal', 'complete'],
     ['todo', 'add'],
     ['todo', 'complete'],
@@ -547,9 +892,39 @@
     ['system', 'cross_project'],
     ['system', 'crew'],
     ['system', 'attachment_incompatible'],
+    ['system', 'attachment_resolver'],
     ['system', 'compact_now'],
     ['system', 'active_turn_redirect'],
+    ['system', 'bsd.off'],
+    ['system', 'bsd.auto_idle'],
+    ['system', 'bsd.auto_active'],
+    ['system', 'bsd.on'],
+    ['system', 'bsd.silent'],
+    ['system', 'bsd.advice'],
+    ['system', 'bsd.timeout'],
+    ['system', 'bsd.unavailable'],
+    ['system', 'bsd.quota'],
+    ['system', 'backup_snapshot'],
+    ['system', 'debug_session'],
+    ['system', 'browser_program_progress'],
+    ['system', 'provider_setup_required'],
+    ['system', 'access_limited_by_review'],
+    ['system', 'notification.push'],
+    ['system', 'restore_point.create'],
+    ['system', 'rewind'],
+    ['system', 'sync.offline'],
+    ['system', 'sync.queued'],
+    ['system', 'sync.reconnect'],
+    ['system', 'sync.replay'],
+    ['system', 'sync.snapshot'],
+    ['system', 'sync.server_work'],
+    ['system', 'composer.ordinary'],
+    ['system', 'composer.spellcheck'],
+    ['artifact', 'updated'],
+    ['thread', 'send_request'],
+    ['thread', 'receive_response'],
     ['thread', 'spawn_related'],
+    ['thread', 'branch'],
     ['system', 'reduced_motion'],
     ['system', 'reset']
   ];
@@ -600,6 +975,14 @@
       if (!btn) return;
       fire(btn.getAttribute('data-demo-family'), btn.getAttribute('data-demo-event'));
     });
+    try {
+      var s0 = store();
+      if (s0 && ctx && ctx.shell && typeof ctx.shell.bindStore === 'function') {
+        ctx.shell.bindStore(s0);
+      } else if (s0 && window.__pmChatShell && typeof window.__pmChatShell.bindStore === 'function') {
+        window.__pmChatShell.bindStore(s0);
+      }
+    } catch (_) {}
   }
 
   window.PMChatDemoHarness = {

@@ -2,7 +2,7 @@
    Concept 03 — Switchboard · Switchboard IA
    Docked slash-search is the home. Workspaces dock the query in the header, switch
    categories from a jack strip, and drive a section jack strip
-   as scrollspy. Managers: Patch-bay Providers, Context matrix, Skills/Tools bay.
+   as scrollspy. Managers: File Manager, Terminal, LSP, Formatters, Commands, MCP, Skills, Plugins, Tools, Testing (+ Providers).
    ========================================================================== */
 (function () {
   "use strict";
@@ -11,35 +11,36 @@
   var V = window.CAViews;
   var esc = V.esc;
 
-  PMStore.seed({
-    overrides: {},
-    dismissedNotices: [],
-    calmDemo: false,
-    providers: V.clone(DEMO.providers),
-    skills: V.clone(DEMO.skills),
-    plugins: V.clone(DEMO.plugins),
-    tools: V.clone(DEMO.tools),
-    commands: V.clone(DEMO.commands),
-    spell: {
+  var _seed = (window.CAManagers && CAManagers.defaultSeed)
+    ? CAManagers.defaultSeed(DEMO)
+    : { providers: V.clone(DEMO.providers) };
+  _seed.overrides = _seed.overrides || {};
+  _seed.dismissedNotices = _seed.dismissedNotices || [];
+  _seed.calmDemo = false;
+  if (!_seed.spell && DEMO.spellcheck) {
+    _seed.spell = {
       ignored: [],
-      personal: DEMO.spellcheck.personalDictionary.slice(),
-      project: DEMO.spellcheck.projectDictionary.slice()
-    }
-  });
+      personal: (DEMO.spellcheck.personalDictionary || []).slice(),
+      project: (DEMO.spellcheck.projectDictionary || []).slice()
+    };
+  }
+  PMStore.seed(_seed);
   PMStore.init("switchboard");
 
   var INDEX = PMSearch.buildIndex(DEMO);
   var root = document.getElementById("sw-root");
 
   var view = { name: "home" };
+  var _motionKind = "home";
+  var _prevCat = null;
   var spy = null;
   var openAdv = {};
   var resetArmed = null;
   var openFams = {};     /* provider expansion state */
   var sheetPid = null;   /* provider shown in the side sheet */
 
-  var MANAGERS = { providers: true, context: true, skills: true };
-  var MANAGER_CATEGORY = { terminal: "code", crew: "collaboration", media: "media", lsp: "code", skills: "tools", tools: "tools", commands: "tools", personas: "providers", context: "context", memory: "context", mcp: "tools", spellcheck: "appearance" };
+  var MANAGERS = { providers: true, fileManager: true, terminal: true, lsp: true, formatters: true, commands: true, mcp: true, skills: true, plugins: true, tools: true, testing: true };
+  var MANAGER_CATEGORY = { appearanceMgr: "appearance", artifacts: "system", backup: "system", bsd: "permissions", cleanup: "system", commands: "tools", containers: "system", context: "context", crew: "collaboration", desktop: "general", fileManager: "code", formatters: "code", githubActions: "collaboration", goal: "planning", history: "context", lsp: "code", mcp: "tools", media: "media", memory: "context", notifications: "general", permissions: "permissions", personas: "providers", plugins: "tools", providers: "providers", searchIndex: "system", serverShell: "system", settingsLifecycle: "system", skills: "tools", soundLibrary: "appearance", spellcheck: "appearance", storage: "system", teacher: "general", terminal: "code", testing: "planning", tools: "tools", web: "tools", worktrees: "collaboration" };
 
   function catById(id) {
     for (var i = 0; i < DEMO.categories.length; i++) if (DEMO.categories[i].id === id) return DEMO.categories[i];
@@ -50,12 +51,26 @@
   /* navigation                                                          */
   /* ------------------------------------------------------------------ */
 
+  function captureNavOrigin(el, label) {
+    if (window.CAMotion && CAMotion.captureOrigin) CAMotion.captureOrigin(el, label || "nav");
+  }
+
+  function resolveManagerId(id) {
+    if (!id) return id;
+    if (MANAGERS[id]) return id;
+    /* Accept CAManagers canonical ids (contextSources, crews, …) */
+    var aliases = { contextSources: "context", crews: "crew", permissionsRules: "permissions", appearanceThemes: "appearanceMgr", spell: "spellcheck" };
+    var mapped = aliases[id];
+    if (mapped && MANAGERS[mapped]) return mapped;
+    return id;
+  }
+
   function navigate(target) {
     var t = target || {};
     if (t.manager === "usage") {
       view = { name: "manager", id: "providers", pid: null, tab: "usage" };
-    } else if (t.manager && MANAGERS[t.manager]) {
-      view = { name: "manager", id: t.manager, focusSetting: t.setting || null };
+    } else if (t.manager && MANAGERS[resolveManagerId(t.manager)]) {
+      view = { name: "manager", id: resolveManagerId(t.manager), focusSetting: t.setting || null };
     } else if (t.manager && MANAGER_CATEGORY[t.manager]) {
       view = { name: "workspace", cat: MANAGER_CATEGORY[t.manager], focusSub: t.sub || null, focusSetting: t.setting || null };
     } else if (t.category) {
@@ -71,6 +86,8 @@
   }
 
   function onSearchPick(result) {
+    _motionKind = "search";
+    if (window.CAMotion) CAMotion.captureOrigin(document.activeElement, "search");
     if (result.kind === "action") {
       if (/reset demo/i.test(result.title)) { PMStore.resetDemo(); PMStore.receipt("Demo data reset to its seeded state", "ok"); }
       else if (/settings home/i.test(result.title)) { view = { name: "home" }; render(); }
@@ -98,11 +115,17 @@
   }
 
   function cardsHtml() {
-    return DEMO.categories.map(function (c) {
-      return '<button type="button" class="sw-jack" data-cat="' + esc(c.id) + '">' +
+    var cats = DEMO.categories.slice().sort(function (a, b) {
+      var af = a.manager && MANAGERS[a.manager] ? 0 : 1;
+      var bf = b.manager && MANAGERS[b.manager] ? 0 : 1;
+      return af - bf;
+    });
+    return cats.map(function (c) {
+      var featured = c.manager && MANAGERS[c.manager];
+      return '<button type="button" class="sw-jack' + (featured ? " is-featured" : "") + '" data-cat="' + esc(c.id) + '">' +
         '<span class="sw-jack-pin" aria-hidden="true"></span>' +
-        '<span><span class="name">' + esc(c.title) + '</span><span class="purpose" style="display:block;font-size:12px;color:var(--pm-ink-dim)">' + esc(c.purpose) + "</span></span>" +
-        '<span class="status" style="font-size:11.5px;color:var(--pm-ink-faint)">' + esc(c.statusSummary) + "</span>" +
+        '<span><span class="name">' + esc(c.title) + '</span><span class="purpose ca-meta-block">' + esc(c.purpose) + "</span></span>" +
+        '<span class="status ca-meta-faint">' + esc(c.statusSummary) + (featured ? " · patch bay" : "") + "</span>" +
         "</button>";
     }).join("");
   }
@@ -112,9 +135,9 @@
       return '<button type="button" class="sw-recent" data-recent="' + i + '">' + V.icon("chevron") + esc(r.label) + "</button>";
     }).join("");
     return '<div class="sw-home"><div class="sw-home-core">' +
-      '<div class="sw-eyebrow">Concept 03 · Switchboard · jack / patch <span class="sw-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
+      '<div class="sw-eyebrow">Concept 03 · Switchboard · patching · File Manager/Terminal/LSP/Formatters/Commands/MCP/Skills/Plugins/Tools/Testing<span class="sw-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
       '<div class="sw-slash">' + V.icon("search") +
-      '<input id="sw-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="/ Search settings, managers, actions">' +
+      '<input id="sw-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search — settings, managers, actions">' +
       "<kbd>/</kbd></div>" +
       '<div class="sw-hits" id="sw-hits" role="listbox" aria-label="Search results" hidden></div>' +
       '<div class="sw-home-body" id="sw-home-body">' +
@@ -143,6 +166,8 @@
     input.focus();
     root.querySelectorAll("[data-cat]").forEach(function (b) {
       b.addEventListener("click", function () {
+        captureNavOrigin(b, b.className.indexOf("hb-berth") !== -1 ? "berth" : b.className.indexOf("sc-plate") !== -1 ? "plate" : b.className.indexOf("sw-jack") !== -1 ? "jack" : "category");
+        _motionKind = "workspace";
         view = { name: "workspace", cat: b.getAttribute("data-cat"), focusSub: null, focusSetting: null };
         render();
       });
@@ -212,7 +237,7 @@
       '<div class="sw-ws-bar">' +
       '<button type="button" class="ca-btn" data-variant="quiet" id="sw-back">Board</button>' +
       '<div class="sw-slash" style="flex:1;min-inline-size:180px;padding:6px 10px">' + V.icon("search") +
-      '<input id="sw-ws-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search all settings"></div>' +
+      '<input id="sw-ws-search" type="text" autocomplete="off" spellcheck="false" aria-label="Search settings" placeholder="Search — settings, managers, actions"></div>' +
       '<div class="sw-hits" id="sw-ws-hits" role="listbox" hidden></div>' +
       '<span class="ca-select"><select id="sw-space-select" aria-label="Jack">' + spaceOpts + "</select></span>" +
       '<button type="button" class="ca-btn" data-variant="quiet" id="sw-cat-reset">Reset patch</button>' +
@@ -360,7 +385,7 @@
           ? '<div class="ca-empty"><div class="ca-empty-title">Not installed</div><div class="ca-empty-guidance">' + esc(p.diagnostics[0]) + '</div><button type="button" class="ca-btn" data-variant="primary" data-pv="install" data-pid="' + esc(p.id) + '">Install</button></div>'
           : (p.accounts.length ? p.accounts.map(function (a) { return V.accountRowHtml(p, a); }).join("") : '<div class="ca-empty"><div class="ca-empty-title">Signed out</div><div class="ca-empty-guidance">The CLI is installed but no login exists in its isolated profile.</div><button type="button" class="ca-btn" data-variant="primary" data-pv="signin" data-pid="' + esc(p.id) + '">Sign in through the provider’s own flow</button></div>')) +
         (p.accountSwitchNote ? '<p class="sw-mgr-note">' + esc(p.accountSwitchNote) + "</p>" : "") +
-        "<h4>Models</h4>" + V.catalogHtml(p) +
+        "<h4>Models</h4>" + V.catalogHtml(p) + (V.installationsHtml ? V.installationsHtml(p) : "") +
         p.models.map(function (m) { return V.modelRowHtml(p, m); }).join("") +
         "<h4>Usage snapshot</h4>" + V.usageHtml(p) +
         '<button type="button" class="ca-btn" data-variant="quiet" data-sheet="' + esc(p.id) + '">Open the full brief</button>' +
@@ -440,40 +465,6 @@
   /* ------------------------------------------------------------------ */
   /* CONTEXT & INSTRUCTIONS MANAGER                                      */
   /* ------------------------------------------------------------------ */
-
-  function renderContext() {
-    var instructionSettings = ["context.include-project-instructions", "context.include-handoff", "context.include-journal", "context.use-previous-chats", "context.use-logs", "context.compaction-auto", "context.warn-route-changes"];
-    var controls = instructionSettings.map(function (sid) {
-      var s = DEMO.settings[sid];
-      return s ? V.rowHtml(s) : "";
-    }).join("");
-    var matrix = DEMO.contextSources.map(function (src) {
-      return '<div class="sw-matrix-row">' +
-        '<span class="ca-badge" data-kind="state" data-icon data-state="' + (src.admittedLastTurn ? "auto" : "not-configured") + '">' + (src.admittedLastTurn ? "Admitted" : "Omitted") + "</span>" +
-        '<span><span class="what">' + esc(src.label) + '</span><br><span class="why">' + esc(src.detail) + '</span><br><span class="prov">' + esc(src.provenance) + "</span></span>" +
-        '<span class="ca-badge" data-kind="scope">' + esc(src.kind) + "</span></div>";
-    }).join("");
-    root.innerHTML = '<div class="sw-mgr"><div class="sw-mgr-inner">' +
-      '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' +
-      '<button type="button" class="ca-btn sw-back" data-variant="quiet" id="sw-back"><svg viewBox="0 0 24 24" aria-hidden="true" style="inline-size:12px;block-size:12px"><path d="m15 5-7 7 7 7"/></svg> Home</button>' +
-      '<h1 style="margin:0;font-size:20px">Context and instructions</h1>' +
-      '<span class="ca-faint" style="font-size:12px">What enters each request, and why</span></div>' +
-      '<p class="sw-mgr-note">Durable breadth, narrow turn context: Puppet Master can retain everything without sending everything. FileSafe, permissions, routing, and budgets are enforced outside the model — not repeated as prompt prose.</p>' +
-      '<div class="ca-panel"><h3 class="ca-panel-h">Normal controls</h3>' + controls + "</div>" +
-      '<div class="ca-panel"><h3 class="ca-panel-h">Last turn, source by source</h3>' + matrix + "</div>" +
-      '<details class="ca-disclose"' + (openAdv.ctxAdvanced ? " open" : "") + ' data-adv="ctxAdvanced"><summary>Advanced — hashes, excerpts, and compaction strategy</summary><div class="ca-disclose-body">' +
-      '<div class="ca-logs"><div class="ca-log-line">AGENTS.md chain: user (a1b2) → project (c3d4) → Concepts folder (e5f6) — nearest scope wins</div>' +
-      '<div class="ca-log-line">compaction: semantic summary at 70% of the context limit, safeguard on</div>' +
-      '<div class="ca-log-line">persona capsule: 2 lines, 38 tokens — the full persona source is never injected</div>' +
-      '<div class="ca-log-line">tool schemas: 4 of 8 installed tools selected this turn (progressive disclosure)</div></div>' +
-      "</div></details>" +
-      "</div></div>";
-    document.getElementById("sw-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    root.querySelectorAll(".ca-disclose[data-adv], .sw-adv").forEach(function (d) {
-      d.addEventListener("toggle", function () { openAdv[d.getAttribute("data-adv")] = d.open; });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* TERMINAL MANAGER — profiles + live preview                          */
   /* ------------------------------------------------------------------ */
@@ -496,115 +487,17 @@
   }
 
   function inheritOrValue(v) { return v === "inherit" || v === "auto" || v === "not-configured"; }
-
-  function renderSkills() {
-    var skills = PMStore.get("skills", []);
-    var plugins = PMStore.get("plugins", []);
-    var tools = PMStore.get("tools", []);
-    var commands = PMStore.get("commands", []);
-
-    var skillsHtml = skills.map(function (s) {
-      return '<div class="ca-row"><div class="ca-row-main"><div class="ca-row-label">' + esc(s.name) +
-        ' <span class="ca-badge" data-kind="scope">' + esc(s.source) + "</span>" +
-        (s.trusted ? ' <span class="ca-badge" data-kind="state" data-icon data-state="default">Trusted</span>' : ' <span class="ca-badge" data-kind="state" data-icon data-state="recommended">Not trusted yet</span>') +
-        ' <span class="ca-badge" data-kind="scope">' + (s.scope === "project" ? "This project" : "Global") + "</span></div>" +
-        '<div class="ca-row-desc">Permissions: ' + esc(s.permissions.join(", ")) + " · Updated " + esc(s.updatedAt) + "</div></div>" +
-        '<div class="ca-row-control">' +
-        '<button type="button" class="ca-btn" data-variant="quiet" data-skill-inspect="' + esc(s.id) + '">Inspect source</button>' +
-        '<button type="button" class="ca-switch" role="switch" aria-checked="' + !!s.enabled + '" data-skill-enable="' + esc(s.id) + '" aria-label="Enable ' + esc(s.name) + '"></button>' +
-        "</div></div>";
-    }).join("");
-
-    var pluginsHtml = plugins.map(function (p) {
-      return '<div class="ca-row" data-state="' + (p.state === "failed" ? "unavailable" : "default") + '"><div class="ca-row-main"><div class="ca-row-label">' + esc(p.name) +
-        ' <span class="ca-badge" data-kind="scope">' + esc(p.channel) + " channel · v" + esc(p.version) + "</span></div>" +
-        '<div class="ca-row-desc">Requested permissions: ' + esc(p.requestedPermissions.join(", ")) + "</div>" +
-        (p.state === "failed" ? '<div class="ca-row-reason">' + esc(p.failureReason) + "</div>" : "") + "</div>" +
-        '<div class="ca-row-control">' + (p.state === "failed"
-          ? '<button type="button" class="ca-btn" data-variant="quiet" data-plugin-retry="' + esc(p.id) + '">Retry activation</button>'
-          : '<span class="ca-badge" data-kind="state" data-icon data-state="auto">Active</span>') + "</div></div>";
-    }).join("");
-
-    var toolsHtml = tools.map(function (t) {
-      var owner = t.owner === "pm" ? "Puppet Master" : "via MCP server “" + t.owner.replace("mcp:", "") + "”";
-      return '<div class="ca-row"><div class="ca-row-main"><div class="ca-row-label">' + esc(t.name) +
-        ' <span class="ca-badge" data-kind="scope">' + esc(owner) + "</span>" +
-        ' <span class="ca-badge" data-kind="effect" data-icon data-effect="' + (t.risk === "high" ? "safety" : t.risk === "medium" ? "cost" : "performance") + '">' + esc(t.risk) + " risk</span></div>" +
-        '<div class="ca-row-desc">' +
-        (t.installed ? "Installed" : "Not installed") + " · " +
-        (t.projectEnabled ? "enabled for this project" : "not enabled for this project") + " · " +
-        (t.availableThisTurn ? "available this turn" : "not exposed this turn") + (t.invoked ? " · invoked" : "") + " · approval: " + esc(t.approvalPolicy) + "</div></div>" +
-        '<div class="ca-row-control"><button type="button" class="ca-switch" role="switch" aria-checked="' + !!t.projectEnabled + '" data-tool-enable="' + esc(t.id) + '" aria-label="Enable ' + esc(t.name) + ' for this project"></button></div></div>';
-    }).join("");
-
-    var commandsHtml = commands.map(function (c) {
-      return '<div class="ca-row"' + (c.conflict ? ' data-state="effective-differs"' : "") + '><div class="ca-row-main"><div class="ca-row-label">' + esc(c.name) +
-        (c.custom ? ' <span class="ca-badge" data-kind="scope">Custom</span>' : "") +
-        (c.conflict ? ' <span class="ca-badge" data-kind="state" data-icon data-state="effective-differs">Shortcut conflict</span>' : "") + "</div>" +
-        '<div class="ca-row-desc">Shortcut: <b class="ca-mono">' + esc(c.shortcut) + "</b>" + (c.conflict ? " — shared with another command" : "") + "</div></div>" +
-        '<div class="ca-row-control">' +
-        (c.conflict ? '<button type="button" class="ca-btn" data-variant="quiet" data-cmd-remap="' + esc(c.id) + '">Remap</button>' : "") +
-        (c.custom ? '<button type="button" class="ca-btn" data-variant="quiet" data-cmd-reset="' + esc(c.id) + '">Remove custom</button>' : "") +
-        "</div></div>";
-    }).join("");
-
-    root.innerHTML = '<div class="sw-page sw-mgr"><div class="sw-col">' +
-      '<div class="sw-band"><div class="sw-eyebrow">Skills patch bay · Manager <span class="sw-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>' +
-      "<h1>Skills, plugins, tools, and commands</h1>" + '<p class="purpose">Related but distinct inventories with trust, scope, and approval policy.</p>' +
-      '<div class="tools"><button type="button" class="ca-btn" data-variant="quiet" id="sw-back"><svg viewBox="0 0 24 24" aria-hidden="true" style="inline-size:12px;block-size:12px"><path d="m15 5-7 7 7 7"/></svg> Board</button></div></div>' +
-      '<p class="sw-mgr-note">Not every installed tool schema reaches every agent: exposure is progressive at runtime, and this manager shows the state plainly. MCP-owned tools stay attributed to their server.</p>' +
-      '<h2 class="sw-inv-h">Skills</h2>' + skillsHtml +
-      '<h2 class="sw-inv-h">Plugins</h2>' + pluginsHtml +
-      '<h2 class="sw-inv-h">Tools</h2>' + toolsHtml +
-      '<h2 class="sw-inv-h">Commands</h2>' + commandsHtml +
-      "</div></div>";
-
-    document.getElementById("sw-back").addEventListener("click", function () { view = { name: "home" }; render(); });
-    root.querySelectorAll("[data-skill-enable]").forEach(function (sw) {
-      sw.addEventListener("click", function () {
-        var id = sw.getAttribute("data-skill-enable");
-        var skills = PMStore.get("skills", []).slice();
-        skills.forEach(function (s) { if (s.id === id) s.enabled = sw.getAttribute("aria-checked") !== "true"; });
-        PMStore.set("skills", skills);
-      });
-    });
-    root.querySelectorAll("[data-skill-inspect]").forEach(function (b) {
-      b.addEventListener("click", function () { PMStore.receipt("Source inspection simulated — no skill source was opened", "info"); });
-    });
-    root.querySelectorAll("[data-plugin-retry]").forEach(function (b) {
-      b.addEventListener("click", function () { PMStore.receipt("Plugin activation retried (simulated) — the failure state is kept for inspection", "warn"); });
-    });
-    root.querySelectorAll("[data-tool-enable]").forEach(function (sw) {
-      sw.addEventListener("click", function () {
-        var id = sw.getAttribute("data-tool-enable");
-        var tools = PMStore.get("tools", []).slice();
-        tools.forEach(function (t) { if (t.id === id) t.projectEnabled = sw.getAttribute("aria-checked") !== "true"; });
-        PMStore.set("tools", tools);
-      });
-    });
-    root.querySelectorAll("[data-cmd-remap]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var id = b.getAttribute("data-cmd-remap");
-        var commands = PMStore.get("commands", []).slice();
-        commands.forEach(function (c) { if (c.id === id) { c.shortcut = "Ctrl+Alt+G"; c.conflict = false; } });
-        PMStore.set("commands", commands);
-        PMStore.receipt("Shortcut remapped to Ctrl+Alt+G — the conflict is resolved", "ok");
-      });
-    });
-    root.querySelectorAll("[data-cmd-reset]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        var id = b.getAttribute("data-cmd-reset");
-        PMStore.set("commands", PMStore.get("commands", []).filter(function (c) { return c.id !== id; }));
-        PMStore.receipt("Custom command removed (simulated)", "warn");
-      });
-    });
-  }
-
   /* ------------------------------------------------------------------ */
   /* render loop                                                         */
   /* ------------------------------------------------------------------ */
 
   function render() {
+    var __kind = _motionKind || (view.name === "manager" ? "manager" : view.name === "workspace" ? "workspace" : "home");
+    if (view.name === "workspace") {
+      if (_prevCat && _prevCat !== view.cat && __kind !== "search") __kind = "category";
+      _prevCat = view.cat;
+    }
+
     if (spy) { spy.detach(); spy = null; }
     var focusingSetting = view.focusSetting;
     var focusingSub = view.focusSub;
@@ -612,13 +505,34 @@
     var st = scroller ? scroller.scrollTop : 0;
     if (view.name === "workspace") renderWorkspace();
     else if (view.name === "manager") {
-      if (view.id === "context") renderContext();
-      else if (view.id === "skills") renderSkills();
-      else renderProviders();
+      if (view.id === "providers") renderProviders();
+      else if (window.CAManagers && CAManagers.handles(view.id)) {
+        CAManagers.mount({
+          root: root,
+          managerId: view.id,
+          chrome: { wrapClass: "sw-mgr", barClass: "sw-ws-bar", detailClass: "sw-mgr-detail", backId: "sw-back" },
+          onBack: function () { view = { name: "home" }; render(); },
+          rerender: function () { render(); }
+        });
+      } else {
+        /* shared_grammar fallback — open Providers or Home with receipt */
+        PMStore.receipt("Manager “" + view.id + "” is available via shared grammar; opening Home", "info");
+        view = { name: "home" };
+        renderHome();
+      }
     } else renderHome();
     var after = root.querySelector(".sw-patch") || root.querySelector("#sw-doc") || root.querySelector(".sw-mgr") || root.querySelector(".sw-home");
     if (after && !focusingSetting && !focusingSub) after.scrollTop = st;
-  }
+  
+    if (window.CAMotion) {
+      var focusEl = null;
+      if (__kind === "search") {
+        focusEl = root.querySelector(".ca-row.ca-motion-focus") || root.querySelector("[data-focus-land]") || root.querySelector(".ca-row");
+      }
+      CAMotion.afterRender(root, __kind === "category" ? "category" : (__kind === "search" ? "search" : view.name), { focusEl: focusEl });
+      _motionKind = view.name; /* reset default */
+    }
+}
 
   PMStore.on("change", function () { render(); });
   PMStore.on("reset", function () { openAdv = {}; openFams = {}; sheetPid = null; });

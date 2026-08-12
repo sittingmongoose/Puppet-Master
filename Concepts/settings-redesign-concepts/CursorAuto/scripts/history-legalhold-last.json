@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "port": 54223,
+  "results": {
+    "ui": {
+      "heldRemoveVisible": false,
+      "unheldRemoveVisible": true,
+      "hasTestScaffoldCopy": false,
+      "hasHoldExplain": true
+    },
+    "after_held_injected": {
+      "ids": [
+        "hist-1",
+        "hist-2",
+        "hist-3",
+        "hist-4"
+      ],
+      "phase": "Remove blocked: legal hold on hist-2",
+      "toast": "Cannot remove legal-hold history hist-2 | Cannot remove legal-hold history hist-2 | ",
+      "stillHeld": true,
+      "rootClass": "ar-mgr-detail ca-mgr-body"
+    },
+    "unheld_btn_count": 1,
+    "after_unheld": {
+      "ids": [
+        "hist-2",
+        "hist-3",
+        "hist-4"
+      ],
+      "stillUnheld": false,
+      "stillHeld": true
+    }
+  }
+}

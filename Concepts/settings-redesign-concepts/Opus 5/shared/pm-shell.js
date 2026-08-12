@@ -108,6 +108,30 @@
     toggles.appendChild(motionBtn);
     review.appendChild(toggles);
 
+    /* Demo state and Reset. Every required fixture state therefore has two
+     * deterministic triggers: this select, and the "?demo=" tail on any route.
+     * Reset clears the persisted namespace so a reviewer can always get back to
+     * a known starting point without clearing site data by hand. */
+    var demoGroup = el("div", "pm-review-group");
+    var demoId = "pm-demo-" + (cfg.conceptId || "c");
+    demoGroup.innerHTML = '<label for="' + demoId + '">Demo state</label>';
+    var demoSel = el("select");
+    demoSel.id = demoId;
+    var demoStates = (window.PMData && window.PMData.demoStates) || [];
+    demoStates.forEach(function (d) {
+      var o = document.createElement("option");
+      o.value = d.id; o.textContent = d.label; o.title = d.note || "";
+      demoSel.appendChild(o);
+    });
+    demoSel.value = cfg.demoState || (demoStates[0] && demoStates[0].id) || "normal";
+    demoGroup.appendChild(demoSel);
+
+    var resetBtn = el("button", "pm-toggle", icon("undo") + "<span>Reset demo state</span>");
+    resetBtn.type = "button";
+    resetBtn.title = "Clear this concept's saved state and reload";
+    demoGroup.appendChild(resetBtn);
+    review.appendChild(demoGroup);
+
     if (cfg.extraControls) {
       var extra = el("div", "pm-review-group");
       extra.appendChild(cfg.extraControls);
@@ -130,6 +154,125 @@
         "<span>Settings</span>" +
       "</div>" +
       '<div class="pm-topbar-spacer"></div>';
+    /* Title-bar notification stack, count and inbox.
+     *
+     * This is the SOLE in-app notification affordance in the folder: there is no
+     * permanent bottom-right toast stack, no status-bar bell, no Activity Bar
+     * notification shortcut and no dedicated Notifications side panel anywhere.
+     * A second surface would quietly make this one optional, and then nothing
+     * would be the reliable place to look. Every simulated operation receipts
+     * into here, which is what makes "sound is never the only indication"
+     * structurally true rather than a promise in a document. */
+    var notices = [];
+    var notifySeen = 0;
+
+    var notifyWrap = el("div", "pm-notify-wrap");
+    var notifyBtn = el("button", "pm-notify", icon("bell") + '<span class="pm-notify-count" hidden>0</span>');
+    notifyBtn.type = "button";
+    notifyBtn.title = "Notification inbox";
+    notifyBtn.setAttribute("aria-label", "Notification inbox");
+    notifyBtn.setAttribute("aria-haspopup", "dialog");
+    notifyBtn.setAttribute("aria-expanded", "false");
+    var notifyCountEl = notifyBtn.querySelector(".pm-notify-count");
+
+    var notifyPanel = el("div", "pm-notify-panel");
+    notifyPanel.setAttribute("role", "dialog");
+    notifyPanel.setAttribute("aria-label", "Notification inbox");
+    notifyPanel.hidden = true;
+    var notifyHead = el("div", "pm-notify-head", "<strong>Notifications</strong>");
+    var clearBtn = el("button", "pm-notify-clear", "Clear all");
+    clearBtn.type = "button";
+    notifyHead.appendChild(clearBtn);
+    var notifyList = el("div", "pm-notify-list");
+    notifyPanel.appendChild(notifyHead);
+    notifyPanel.appendChild(notifyList);
+    notifyWrap.appendChild(notifyBtn);
+    notifyWrap.appendChild(notifyPanel);
+    topbar.appendChild(notifyWrap);
+
+    function renderNotices() {
+      notifyList.innerHTML = "";
+      if (!notices.length) {
+        notifyList.appendChild(el("div", "pm-notify-empty",
+          "Nothing here yet. Operations you run in this concept are receipted into this inbox."));
+      } else {
+        notices.forEach(function (n) {
+          var row = el("div", "pm-notify-item");
+          row.innerHTML =
+            '<div class="pm-notify-item-title">' + escapeHtml(n.title) + "</div>" +
+            '<div class="pm-notify-item-reason">' + escapeHtml(n.reason) + "</div>" +
+            '<div class="pm-notify-item-time">' + escapeHtml(n.at) + "</div>";
+          if (n.action && n.action.label) {
+            var act = el("button", "pm-notify-item-action", escapeHtml(n.action.label));
+            act.type = "button";
+            act.addEventListener("click", function () {
+              closeNotify();
+              if (typeof n.action.run === "function") n.action.run(n);
+              else if (cfg.onNotifyAction) cfg.onNotifyAction(n);
+            });
+            row.appendChild(act);
+          }
+          notifyList.appendChild(row);
+        });
+      }
+      var unread = notices.length - notifySeen;
+      if (unread > 0) {
+        notifyCountEl.hidden = false;
+        notifyCountEl.textContent = String(unread);
+        notifyBtn.setAttribute("data-unread", "true");
+      } else {
+        notifyCountEl.hidden = true;
+        notifyCountEl.textContent = "0";
+        notifyBtn.removeAttribute("data-unread");
+      }
+    }
+
+    function openNotify() {
+      notifyPanel.hidden = false;
+      notifyBtn.setAttribute("aria-expanded", "true");
+      notifySeen = notices.length;
+      renderNotices();
+      document.addEventListener("mousedown", onNotifyDown, true);
+      document.addEventListener("keydown", onNotifyKey, true);
+    }
+
+    function closeNotify() {
+      notifyPanel.hidden = true;
+      notifyBtn.setAttribute("aria-expanded", "false");
+      document.removeEventListener("mousedown", onNotifyDown, true);
+      document.removeEventListener("keydown", onNotifyKey, true);
+    }
+
+    function onNotifyDown(e) { if (!notifyWrap.contains(e.target)) closeNotify(); }
+    function onNotifyKey(e) { if (e.key === "Escape") { closeNotify(); notifyBtn.focus(); } }
+
+    notifyBtn.addEventListener("click", function () {
+      if (notifyPanel.hidden) openNotify(); else closeNotify();
+    });
+    clearBtn.addEventListener("click", function () { clearNotices(); });
+
+    function notify(entry) {
+      var e = entry || {};
+      notices.unshift({
+        id: e.id || ("n-" + notices.length + "-" + Date.now()),
+        title: e.title || "Notification",
+        reason: e.reason || "",
+        at: e.at || (window.PMSim ? window.PMSim.stamp() : ""),
+        action: e.action || null
+      });
+      if (notices.length > 40) notices.length = 40;
+      if (!notifyPanel.hidden) notifySeen = notices.length;
+      renderNotices();
+      live.textContent = (e.title || "Notification") + ". " + (e.reason || "");
+      return notices[0];
+    }
+
+    function clearNotices() {
+      notices.length = 0;
+      notifySeen = 0;
+      renderNotices();
+    }
+
     var topActions = el("div", "pm-topbar-actions");
     var tbRail = el("button", "pm-topbar-btn", icon("panelLeft"));
     tbRail.type = "button"; tbRail.title = "Toggle navigation rail"; tbRail.setAttribute("aria-label", "Toggle navigation rail");
@@ -322,6 +465,33 @@
 
     if (window.PMSpellcheck) window.PMSpellcheck.attach(field, {});
 
+    renderNotices();
+
+    /* One bridge, not many: every receipt PMSim emits anywhere on the page —
+     * manager actions, notice actions, provider refreshes — becomes an inbox
+     * entry here. Concepts never post receipts to the inbox themselves, so an
+     * operation can never appear twice or, worse, not at all. */
+    if (window.PMSim) {
+      window.PMSim.onReceipt(function (r) {
+        notify({
+          id: r.id + "-" + r.at,
+          title: r.label,
+          reason: window.PMSim.outcomeWord(r.outcome) + " · " + r.detail,
+          at: r.at,
+          action: cfg.onReceiptAction ? { label: "Show the receipt", run: function () { cfg.onReceiptAction(r); } } : null
+        });
+      });
+    }
+
+    demoSel.addEventListener("change", function () {
+      if (cfg.onDemoState) cfg.onDemoState(demoSel.value);
+    });
+
+    resetBtn.addEventListener("click", function () {
+      if (window.PMStore && cfg.conceptId) window.PMStore.clearPersisted(cfg.conceptId);
+      window.location.reload();
+    });
+
     return {
       app: app,
       main: main,
@@ -334,7 +504,14 @@
       setReducedMotion: setReducedMotion,
       widthMode: function () { return lastMode; },
       announce: function (msg) { live.textContent = msg; },
-      composerField: field
+      composerField: field,
+      notify: notify,
+      clearNotices: clearNotices,
+      notices: function () { return notices.slice(); },
+      openNotifications: openNotify,
+      closeNotifications: closeNotify,
+      setDemoState: function (id) { if (id) demoSel.value = id; },
+      demoState: function () { return demoSel.value; }
     };
   }
 

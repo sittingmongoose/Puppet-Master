@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "concept_id": "c4-ledger",
+  "model": "fable",
+  "note": "Classifications: demonstrated (built natively in this concept), shared_grammar (this concept's record+inspector grammar covers it; the named sibling concept demonstrates it), deferred_named_owner (reserved destination whose state machine belongs to a named plan owner). Never 'missing'.",
+  "groups": [
+    {
+      "id": "core",
+      "managers": [
+        { "name": "Settings Home", "status": "demonstrated", "where": "Home ledger: notices, recents, destination index, covered-manager receipts, all-records table." },
+        { "name": "Settings Search", "status": "demonstrated", "where": "Persistent query bar + state chips; dims never reflows; 'Matches elsewhere' panel; manager-receipt results render as cross-page anchors; search deep links fill and execute the bar." },
+        { "name": "Settings Workspace", "status": "demonstrated", "where": "Domain continuous documents with scrollspy, advanced/expert disclosures, diagnostics drawers, instant jumps." },
+        { "name": "Provider/Account/Model/Installation", "status": "demonstrated", "where": "Providers manager: five groups, account records with full controls, model records with capability evidence, installation records with resolution chain + update lifecycle, free routes (six states), free catalog freshness, roles with requested/effective diff." },
+        { "name": "Ordinary setting grammar", "status": "demonstrated", "where": "settingRowEl records + inspector (control, provenance chain, requested/effective, reset, caution gating) across all domains and inside managers." }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "managers": [
+        { "name": "Storage & Retention", "status": "demonstrated", "where": "manager.storage — vault, pressure (elevated/critical), usage by class, retention classes with legal hold, quarantine, compaction/migration, settings rows, receipts." },
+        { "name": "Backup & Restore", "status": "demonstrated", "where": "manager.backup — four kinds distinct, restore points (verified / verification-pending on tank/backups), action-vs-setting-vs-status strip, Back Up Now, test restore to scratch, encryption (PM-vault key)." },
+        { "name": "Settings Lifecycle (import/export/reset)", "status": "demonstrated", "where": "manager.lifecycle — export record, staged import preview (counts, 3 conflicts local-vs-incoming, invalid key, legacy migrations), merge/replace mode, cancel/apply/rollback with instant phases, history with both-direction rollback receipt, scoped reset with preview + confirm gate." },
+        { "name": "History & Sessions", "status": "demonstrated", "where": "manager.history — session records with project filter (second project included), compare/export/rebuild actions, archive + deletion 'ask' policies." },
+        { "name": "Runtime Artifacts", "status": "demonstrated", "where": "manager.artifacts — PM-owned vs provider-native identity, redaction applied/pending/none, expired cleanup candidate, honest open/reveal/export/clean receipts." },
+        { "name": "Source Control & Worktrees", "status": "demonstrated", "where": "manager.sourceControl — EGOLITE ten-section IA, one human card per tool per host, exact-environment install offers, connect-not-install forges, SSH keys, worktrees (leased/idle/stale) with lease-gated prune, safety + updates + diagnostics." },
+        { "name": "GitHub Actions", "status": "demonstrated", "where": "manager.actions — pinned passing/failing workflows, run records with jobs + log excerpts, refresh (honestly disabled offline), starter offer, account capability, panel boundary note." },
+        { "name": "Containers & Registries", "status": "demonstrated", "where": "manager.containers — three human resources with inspector detail, home-k3s cluster with kubeconfig contexts, ghcr ready + cert-warning registry with trust guidance, Unraid publishing." },
+        { "name": "Web / Search / Fetch", "status": "demonstrated", "where": "manager.web — priority-ordered providers with credit guards (warning + fixture stop), limits incl. the fetch-size setting row, caches with clear, PM Browser Program / Expert Browser Program / protected human-only sign-in session, proxy, custom CA, air-gap." },
+        { "name": "Project Search Index", "status": "demonstrated", "where": "manager.searchIndex — enable, rebuild with scanning/indexing/ready phases + static progress, exclusions, large-file/symlink policy, remote cache on the Home Server, failures (three under fx.index-failed)." },
+        { "name": "Workspace Cleanup", "status": "demonstrated", "where": "manager.cleanup — category records with lease safety note, dry run (2.1 GB, leased worktree skipped, receipt), apply gated behind caution confirm; dry run never deletes." },
+        {
+          "name": "Future Server Module Shell",
+          "status": "demonstrated-as-shell",
+          "where": "manager.servers — connected-server card, project card, hosts/environments (WSL Off healthy), paired clients are live records; the nine reserved destinations are deferred children below.",
+          "children": [
+            { "name": "Servers", "status": "deferred_named_owner", "owner": "Server Backbone return (Post-Return Reconciliation v6)" },
+            { "name": "Execution Hosts", "status": "deferred_named_owner", "owner": "Server Backbone return §5" },
+            { "name": "Clients", "status": "deferred_named_owner", "owner": "Server Backbone return §4" },
+            { "name": "Project Hosting & Files", "status": "deferred_named_owner", "owner": "storage-plan.md" },
+            { "name": "Project Defaults & Templates", "status": "deferred_named_owner", "owner": "FinalGUISpec.md (project settings canon)" },
+            { "name": "Remote Access", "status": "deferred_named_owner", "owner": "Server Backbone return §10" },
+            { "name": "Integrations & Tools", "status": "deferred_named_owner", "owner": "BinaryLocator_Spec.md / shared tool lifecycle" },
+            { "name": "Backup & Restore (full Server)", "status": "deferred_named_owner", "owner": "storage-plan.md", "note": "Settings/project backups are demonstrated in manager.backup; only the full-Server kind defers." },
+            { "name": "Updates", "status": "deferred_named_owner", "owner": "Release_Supply_Chain.md" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "managers": [
+        { "name": "Context & Instructions", "status": "shared_grammar", "demonstrated_in": "c1-atlas", "note": "Moved out of c4 in the final packet; honest receipt record links c1-atlas.html#/manager/manager.contextSources." },
+        { "name": "Memory", "status": "shared_grammar", "demonstrated_in": "c1-atlas" },
+        { "name": "Personas", "status": "shared_grammar", "demonstrated_in": "c1-atlas" },
+        { "name": "Goal & Automation", "status": "shared_grammar", "demonstrated_in": "c1-atlas" },
+        { "name": "Crew", "status": "shared_grammar", "demonstrated_in": "c1-atlas" },
+        { "name": "Permissions & FileSafe", "status": "shared_grammar", "demonstrated_in": "c1-atlas" },
+        { "name": "Back Seat Driver", "status": "shared_grammar", "demonstrated_in": "c1-atlas" }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "managers": [
+        { "name": "Notifications & Sounds", "status": "shared_grammar", "demonstrated_in": "c2-mission-control" },
+        { "name": "Sound Library/Uploads/Packs", "status": "shared_grammar", "demonstrated_in": "c2-mission-control" },
+        { "name": "Appearance", "status": "shared_grammar", "demonstrated_in": "c2-mission-control" },
+        { "name": "Spellcheck & Dictionaries", "status": "shared_grammar", "demonstrated_in": "c2-mission-control", "note": "c4 still exercises PMSpell on the notice-note prose field and the shell composer." },
+        { "name": "Desktop/Tray/Window", "status": "shared_grammar", "demonstrated_in": "c2-mission-control" },
+        { "name": "Teacher/Help", "status": "shared_grammar", "demonstrated_in": "c2-mission-control" }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "managers": [
+        { "name": "File Manager/Editor", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Terminal", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "LSP", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Formatters", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Commands & Shortcuts", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack", "note": "Moved out of c4 in the final packet; honest receipt record links c3-focus-stack.html#/manager/manager.commands." },
+        { "name": "MCP", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Skills", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack", "note": "Moved out of c4 in the final packet; receipt record links c3-focus-stack.html#/manager/manager.skills." },
+        { "name": "Plugins", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Tools", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" },
+        { "name": "Testing & Debug", "status": "shared_grammar", "demonstrated_in": "c3-focus-stack" }
+      ]
+    }
+  ]
+}

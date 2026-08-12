@@ -59,7 +59,7 @@
   }
 
   function threadRowMoreItemsHtml(threadId, thread) {
-    var pinned = !!(thread && thread.pinned);
+    var pinned = Boolean(thread && thread.pinned);
     var tid = escapeHtml(threadId || '');
     function item(action, label, iconName, extra) {
       return (
@@ -117,7 +117,7 @@
     if (window.PMChatV2 && typeof window.PMChatV2.isHistoryPinned === 'function') {
       return window.PMChatV2.isHistoryPinned(store);
     }
-    return !!(store && store.session && store.session.historyPinned);
+    return Boolean(store && store.session && store.session.historyPinned);
   }
 
   function syncArtifactIntoBody(root, store, env) {
@@ -331,8 +331,48 @@
    * @param {object} store
    * @param {string[]=} kinds defaults to persona/model/mode/worktree
    */
-  function selectorsHtml(store, kinds) {
+  function liveSelectorSession(store) {
     var session = (store && store.session) || {};
+    var local =
+      store && typeof store.getActiveLocal === 'function' ? store.getActiveLocal() : null;
+    if (!local) return session;
+    /* Thread-local route wins for live chrome; session keeps catalog/limit flags. */
+    return Object.assign({}, session, {
+      providerId: local.providerId != null ? local.providerId : session.providerId,
+      accountId: local.accountId != null ? local.accountId : session.accountId,
+      connectionId: local.connectionId != null ? local.connectionId : session.connectionId,
+      modelId: local.modelId != null ? local.modelId : session.modelId,
+      personaId: local.personaId != null ? local.personaId : session.personaId,
+      effortId: local.effortId != null ? local.effortId : session.effortId,
+      speedMode: local.speedMode != null ? local.speedMode : session.speedMode,
+      modeId: local.modeId != null ? local.modeId : session.modeId,
+      accessProfile: local.accessProfile != null ? local.accessProfile : session.accessProfile,
+      crewId: local.crewId != null ? local.crewId : session.crewId,
+      worktreeId: local.worktreeId !== undefined ? local.worktreeId : session.worktreeId,
+      bsd: local.bsd || session.bsd
+    });
+  }
+
+  function bsdSlotHtml(variant) {
+    if (window.PMChatPopups && typeof window.PMChatPopups.bsdSlotHtml === 'function') {
+      return window.PMChatPopups.bsdSlotHtml(variant);
+    }
+    return (
+      '<span class="pm-bsd-slot" data-bsd-slot="' +
+      escapeHtml(variant || 'mono') +
+      '"></span>'
+    );
+  }
+
+  function syncBsdSlots(root, store) {
+    if (window.PMChatPopups && typeof window.PMChatPopups.mountBsdSlots === 'function') {
+      return window.PMChatPopups.mountBsdSlots(root, store);
+    }
+    return [];
+  }
+
+  function selectorsHtml(store, kinds) {
+    var session = liveSelectorSession(store);
     var list =
       kinds && kinds.length ? kinds : ['persona', 'model', 'mode', 'access', 'crew', 'worktree'];
     var html = '';
@@ -438,7 +478,7 @@
       store && store.session && store.session.activeThreadKey
         ? store.threads[store.session.activeThreadKey]
         : null;
-    var pinned = !!(active && active.pinned);
+    var pinned = Boolean(active && active.pinned);
     return (
       menuItem('new-chat', 'New chat', 'plus') +
       menuItem('toggle-rail', 'Toggle chats', 'chat') +
@@ -549,7 +589,7 @@
       return threads[k];
     });
     list.sort(function (a, b) {
-      if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
+      if (Boolean(a.pinned) !== Boolean(b.pinned)) return a.pinned ? -1 : 1;
       var au = a.updatedAt || '';
       var bu = b.updatedAt || '';
       if (au !== bu) return au < bu ? 1 : -1;
@@ -776,7 +816,7 @@
     if (!root || !window.PMChatSearch) return null;
     var panel = ensureSearchPanel(root);
     if (!panel) return null;
-    var forceOpen = !!opts.forceOpen;
+    var forceOpen = Boolean(opts.forceOpen);
     var query =
       opts.query != null
         ? opts.query
@@ -787,7 +827,7 @@
       opts.scope ||
       (store && store.search && store.search.scope) ||
       'current';
-    var open = forceOpen || !!(opts.open != null ? opts.open : store && store.search && store.search.panelOpen);
+    var open = forceOpen || Boolean(opts.open != null ? opts.open : store && store.search && store.search.panelOpen);
     if (!open && !String(query || '').trim()) {
       panel.classList.remove('is-open', 'is-closing');
       panel.hidden = true;
@@ -942,7 +982,7 @@
       '</span></div>' +
       '</div>' +
       '<button type="button" class="pm-btn pm-ring-open-usage" data-ring-open-usage>' +
-      'Open Usage (stub)</button>' +
+      'Usage (Settings-owned)</button>' +
       '<div class="pm-ring-footnote">UsageRecord projection · Detail owned by Usage redesign (GAP-006)</div>';
     root.appendChild(pop);
     if (anchor && anchor.getBoundingClientRect) {
@@ -963,7 +1003,9 @@
     var usageBtn = pop.querySelector('[data-ring-open-usage]');
     if (usageBtn) {
       usageBtn.addEventListener('click', function () {
-        if (env && env.toast) env.toast('Usage Detail · owned by Usage redesign (GAP-006)');
+        if (env && env.toast) {
+          env.toast('Usage / quota · owned by Settings · deep-link not wired in this concept');
+        }
         closeRingPopover(root);
       });
     }
@@ -997,10 +1039,10 @@
     panel.className = 'pm-settings-panel';
     panel.setAttribute('data-settings-panel', '');
     panel.setAttribute('role', 'dialog');
-    panel.setAttribute('aria-label', 'Settings');
+    panel.setAttribute('aria-label', 'Chat appearance');
     panel.innerHTML =
       '<div class="pm-settings-head">' +
-      '<span class="pm-settings-title">Settings</span>' +
+      '<span class="pm-settings-title">Chat appearance</span>' +
       '<button type="button" class="pm-btn pm-btn-ghost" data-settings-close aria-label="Close">' +
       icon('x', 'pm-btn-icon') +
       '</button></div>' +
@@ -1023,7 +1065,7 @@
     var rmInput = panel.querySelector('[data-settings-rm]');
       if (rmInput) {
       rmInput.addEventListener('change', function () {
-        var on = !!rmInput.checked;
+        var on = Boolean(rmInput.checked);
         if (env && typeof env.emit === 'function') {
           env.emit({ type: 'ui.local', kind: 'reduced-motion', value: on });
         } else {
@@ -1096,6 +1138,8 @@
       window.PMMenu.init(root);
     }
 
+    syncBsdSlots(root, store);
+
     ensureSearchPanel(root);
     if (store && store.search && store.search.panelOpen) {
       syncSearchPanel(root, store, { open: true });
@@ -1145,23 +1189,17 @@
         return;
       }
       if (action === 'crew-summary') {
-        if (store && store.session) {
-          var crew = store.session.crew || {};
-          var req = store.session.crewId || crew.requested || 'none';
-          store.session.crew = {
-            requested: req || 'review-wave',
-            effective: req === 'review-wave' ? 'research-pair' : req || 'none',
-            waves: [{ id: 'w1', label: 'Research', state: 'running' }, { id: 'w2', label: 'Synth', state: 'queued' }]
-          };
+        /* Route through confirm/selector path — no silent apply. */
+        var pendingCrew =
+          (store && store.session && (store.session.crewId || (store.session.crew && store.session.crew.requested))) ||
+          'review-wave';
+        if (window.PMChatHost && typeof window.PMChatHost.requestCrewConfirmOrApply === 'function') {
+          window.PMChatHost.requestCrewConfirmOrApply(store, pendingCrew, env && env.toast);
+        } else if (store && store.session) {
+          store.session.crewDefaultPrompted = false;
+          store.session.crewPendingConfirm = pendingCrew;
+          store.session.crewConfirmOpen = true;
           if (store._emit) store._emit();
-          if (env && env.toast) {
-            env.toast(
-              'Crew · requested ' +
-                (store.session.crew.requested || 'none') +
-                ' · effective ' +
-                (store.session.crew.effective || 'none')
-            );
-          }
         }
         return;
       }
@@ -1484,7 +1522,7 @@
         title: (meta.label || meta.id || 'Window') + ' · Grok 4.5',
         modelLabel: env.modelLabel || MODEL,
         mountMode: env.mountMode,
-        compact: !!meta.compact
+        compact: Boolean(meta.compact)
       }) +
       '<div class="pm-chat-body">' +
       '<aside class="pm-chats-rail" data-chats-rail>' +
@@ -1566,6 +1604,9 @@
     runThreadRowAction: runThreadRowAction,
     activeTitle: activeTitle,
     selectorsHtml: selectorsHtml,
+    liveSelectorSession: liveSelectorSession,
+    bsdSlotHtml: bsdSlotHtml,
+    syncBsdSlots: syncBsdSlots,
     ensureOverflowSelectorHost: ensureOverflowSelectorHost,
     moreMenuItemsHtml: moreMenuItemsHtml,
     searchScopeButtonsHtml: searchScopeButtonsHtml,

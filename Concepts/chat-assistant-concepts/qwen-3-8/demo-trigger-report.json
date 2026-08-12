@@ -1,0 +1,583 @@
+{
+  "schema_id": "pm.chat_demo_trigger_report.v1",
+  "concept_id": "chat-assistant/qwen-3-8",
+  "registry_contract": "DEMO_TRIGGER_CONTRACT v2 — harness controls, never production commands",
+  "trigger_count": 84,
+  "drawer_parity": "host ?harness=1 drawer and gallery Demo popup both expose the FULL registry (host merges dynamically from window.PMChatDemoTriggers.names(); gallery merges from the iframe at menu-open time)",
+  "triggers": [
+    {
+      "name": "history.peek",
+      "description": "Unpin history (transient peek)",
+      "target": "store.setPin(false)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "history.pin_compact",
+      "description": "Pin history in compact form",
+      "target": "store.setPin(true)+setPinMode(compact)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "history.pin_full",
+      "description": "Pin history in full form",
+      "target": "store.setPin(true)+setPinMode(full)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "history.unpin",
+      "description": "Unpin history",
+      "target": "store.setPin(false)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "history.switch_thread",
+      "description": "Switch active thread from pinned surface",
+      "target": "store.switchThread",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.prepare",
+      "description": "Inject a fresh questionnaire",
+      "target": "injectQuest",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.open",
+      "description": "Inject/open a questionnaire",
+      "target": "injectQuest",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.select",
+      "description": "Select an option on the current question",
+      "target": "store.questSetAnswer",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.next",
+      "description": "Advance to next question",
+      "target": "store.questGoTo",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.validation_error",
+      "description": "Probe required-question validity",
+      "target": "store.questValid",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.skip",
+      "description": "Skip current question",
+      "target": "store.questSkip",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.cancel",
+      "description": "Cancel whole questionnaire",
+      "target": "store.questCancel",
+      "reachable_in": "both"
+    },
+    {
+      "name": "question.submit",
+      "description": "Answer remaining required + submit",
+      "target": "store.questSubmit",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.start",
+      "description": "Start or reset the session goal",
+      "target": "store.mutate(activeGoal)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.progress",
+      "description": "Advance goal phase + task",
+      "target": "store.goalAdvance",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.pause",
+      "description": "Pause goal",
+      "target": "store.goalAct(pause)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.resume",
+      "description": "Resume goal",
+      "target": "store.goalAct(resume)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.update",
+      "description": "Update objective",
+      "target": "store.goalSaveObjective",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.replan",
+      "description": "Replan objective",
+      "target": "store.goalSaveObjective",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.blocked",
+      "description": "Mark goal blocked",
+      "target": "goalStatus=blocked",
+      "reachable_in": "both"
+    },
+    {
+      "name": "goal.complete",
+      "description": "Mark goal complete",
+      "target": "goalStatus=complete",
+      "reachable_in": "both"
+    },
+    {
+      "name": "todo.add",
+      "description": "Add a todo",
+      "target": "store.todoAdd",
+      "reachable_in": "both"
+    },
+    {
+      "name": "todo.complete",
+      "description": "Complete first open todo",
+      "target": "store.todoSetState(complete)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "todo.reopen",
+      "description": "Reopen a completed todo",
+      "target": "store.todoSetState(pending)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "todo.block",
+      "description": "Block a todo",
+      "target": "store.todoSetState(blocked)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.spawn",
+      "description": "Spawn a specialist",
+      "target": "store.subagentSpawn",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.queue",
+      "description": "Queue last agent",
+      "target": "store.subagentSetStatus(queued)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.progress",
+      "description": "Run last agent",
+      "target": "store.subagentSetStatus(running)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.complete",
+      "description": "Complete last agent",
+      "target": "store.subagentSetStatus(complete)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.fail",
+      "description": "Fail last agent",
+      "target": "store.subagentSetStatus(failed)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "subagent.retry",
+      "description": "Retry last agent",
+      "target": "store.subagentSetStatus(retrying)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.thinking_summary",
+      "description": "Thinking stage",
+      "target": "store.activityAdvance(thought)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.search",
+      "description": "Search stage",
+      "target": "store.activityAdvance(search)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.read",
+      "description": "Read stage",
+      "target": "store.activityAdvance(read)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.fetch",
+      "description": "Fetch stage",
+      "target": "store.activityAdvance(fetch)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.browser",
+      "description": "Browser Program stage",
+      "target": "store.activityAdvance(browser)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.test",
+      "description": "Test stage",
+      "target": "store.activityAdvance(test)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.edit",
+      "description": "Edit stage",
+      "target": "store.activityAdvance(edit)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "activity.generate",
+      "description": "Generate stage",
+      "target": "store.activityAdvance(generate)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "diff.create",
+      "description": "Create change set",
+      "target": "store.diffCreate",
+      "reachable_in": "both"
+    },
+    {
+      "name": "diff.update",
+      "description": "Update change set counts",
+      "target": "store.diffUpdate",
+      "reachable_in": "both"
+    },
+    {
+      "name": "diff.open",
+      "description": "Open change set in artifact workspace",
+      "target": "store.artOpen(diff)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "artifact.loading",
+      "description": "Artifact -> loading",
+      "target": "store.artSetStatus(loading)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "artifact.ready",
+      "description": "Artifact -> ready (version bump)",
+      "target": "store.artSetStatus(ready,bump)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "artifact.switch",
+      "description": "Switch artifact",
+      "target": "store.artSwitch",
+      "reachable_in": "both"
+    },
+    {
+      "name": "artifact.error",
+      "description": "Artifact -> error",
+      "target": "store.artSetStatus(error)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "artifact.close",
+      "description": "Close artifact workspace",
+      "target": "store.artClose",
+      "reachable_in": "both"
+    },
+    {
+      "name": "decision.approval_open",
+      "description": "Inject approval card",
+      "target": "store.approvalInject",
+      "reachable_in": "both"
+    },
+    {
+      "name": "decision.details",
+      "description": "Open approval details",
+      "target": "expandedByIds toggle",
+      "reachable_in": "both"
+    },
+    {
+      "name": "decision.approve",
+      "description": "Allow once",
+      "target": "store.approvalResolve(allow-once)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "decision.deny",
+      "description": "Deny",
+      "target": "store.approvalResolve(deny)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "decision.branch",
+      "description": "Inject route warning with Branch",
+      "target": "store.warningInject(route)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "thread.send_request",
+      "description": "Send inter-thread request",
+      "target": "store.threadRequestSend",
+      "reachable_in": "both"
+    },
+    {
+      "name": "thread.receive_response",
+      "description": "Simulate request response",
+      "target": "store.threadRequestReceive",
+      "reachable_in": "both"
+    },
+    {
+      "name": "thread.spawn_related",
+      "description": "Spawn related thread",
+      "target": "store.spawnRelated",
+      "reachable_in": "both"
+    },
+    {
+      "name": "thread.branch",
+      "description": "Branch from message",
+      "target": "store.branchFrom",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.port_collision",
+      "description": "Legacy 4173 collision warning",
+      "target": "store.warningInject(collision)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.worktree_collision",
+      "description": "Worktree writer collision",
+      "target": "store.warningInject(collision)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.cross_project",
+      "description": "Cross-project grant warning",
+      "target": "store.crossProjectWarn",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.compact_now",
+      "description": "Compact Now",
+      "target": "store.compactNow",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.redirect",
+      "description": "Redirect active turn",
+      "target": "store.redirectTurn",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.crew",
+      "description": "Set demo crew",
+      "target": "store.crewSet",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.auto_eval",
+      "description": "BSD Auto evaluate -> silent",
+      "target": "store.bsdEvalStart+bsdResolve(silent)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.advice",
+      "description": "BSD evaluate -> advice card",
+      "target": "store.bsdEvalStart+bsdResolve(advice)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.timeout",
+      "description": "BSD timeout state",
+      "target": "store.bsdResolve(timeout)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.unavailable",
+      "description": "BSD unavailable state",
+      "target": "store.bsdResolve(unavailable)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.set_on",
+      "description": "BSD manual On",
+      "target": "store.bsdSet(on)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "bsd.set_off",
+      "description": "BSD Off",
+      "target": "store.bsdSet(off)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "conn.offline",
+      "description": "Connection -> offline",
+      "target": "store.connSetStatus(offline)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "conn.queue_send",
+      "description": "Queue an offline send",
+      "target": "store.connQueue",
+      "reachable_in": "both"
+    },
+    {
+      "name": "conn.reconnect",
+      "description": "Reconnect + replay outbox once",
+      "target": "store.connReconnect",
+      "reachable_in": "both"
+    },
+    {
+      "name": "conn.snapshot",
+      "description": "Snapshot catch-up",
+      "target": "store.connSnapshot",
+      "reachable_in": "both"
+    },
+    {
+      "name": "conn.server_work",
+      "description": "Goal continuing on Home Server",
+      "target": "store.connServerWork",
+      "reachable_in": "both"
+    },
+    {
+      "name": "notify.push",
+      "description": "Push a notification",
+      "target": "store.notifyPush",
+      "reachable_in": "both"
+    },
+    {
+      "name": "notify.open_inbox",
+      "description": "Open title-bar inbox",
+      "target": "pmq-open-inbox event",
+      "reachable_in": "both"
+    },
+    {
+      "name": "attachment.unsupported",
+      "description": "Unsupported video attachment: adds to live draft, sets route, opens resolver warning",
+      "target": "store.draft.attachments.push + store.attachSetRoute + warningInject(attachment)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "attachment.alternate_consent",
+      "description": "Alternate-route consent warning",
+      "target": "store.warningInject(attachment consent)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "ops.port_conflict",
+      "description": "Port 3000 conflict card",
+      "target": "store.opsAddPort+warningInject(collision)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "ops.worktree_waiting",
+      "description": "Waiting-writer worktree",
+      "target": "store.opsAddWorktree",
+      "reachable_in": "both"
+    },
+    {
+      "name": "ops.session_list",
+      "description": "Testing/debug/backup sessions",
+      "target": "store.opsAddSession x3",
+      "reachable_in": "both"
+    },
+    {
+      "name": "provider.setup_required",
+      "description": "Active provider -> install-required",
+      "target": "catalog group setupState=install-required",
+      "reachable_in": "both"
+    },
+    {
+      "name": "provider.update_available",
+      "description": "Active provider -> update-available",
+      "target": "catalog group setupState=update-available",
+      "reachable_in": "both"
+    },
+    {
+      "name": "capacity.forecast",
+      "description": "Capacity forecast warning (6/2/3 waves)",
+      "target": "store.warningInject(capacity forecast)",
+      "reachable_in": "both"
+    },
+    {
+      "name": "system.reset",
+      "description": "Clear localStorage + reload",
+      "target": "localStorage.clear+reload",
+      "reachable_in": "both"
+    }
+  ],
+  "scenario_coverage": {
+    "18 thread history entries": {
+      "by": "seed",
+      "detail": "demoData 15 threads + thread-16/17 (demo-extend) + thread-18 (buildOfflineCatchup)"
+    },
+    "A long provider/settings redesign conversation": {
+      "by": "seed",
+      "detail": "thread-17 (20 messages)"
+    },
+    "8 Todos": {
+      "by": "seed",
+      "detail": "thread-17 todo-17 (8 items incl. blocked)"
+    },
+    "3 subagents on different routes": {
+      "by": "seed",
+      "detail": "thread-17 sg-17: 5 agents on Qwen 3.8 / Kimi K3 / Opus 5 Fast incl. queued for sustainable capacity"
+    },
+    "2 question flows": {
+      "by": "seed",
+      "detail": "thread-12 q-layout-review + q-motion-review; thread-17 q17-redesign"
+    },
+    "Goal start/pause/resume/replan/blocked/complete": {
+      "by": "trigger",
+      "detail": "goal.start/pause/resume/replan/blocked/complete (thread-17 running goal seeded)"
+    },
+    "Reads/search/web/browser/test/edit/verify activity": {
+      "by": "seed+trigger",
+      "detail": "thread-17 stages read/search/web/browser/test/edit; verify via activity.* triggers + thread-18 read/search/web stages"
+    },
+    "Port 3000 collision and safe alternative": {
+      "by": "seed+trigger",
+      "detail": "thread-17 wr-17-port + operational.ports; ops.port_conflict trigger"
+    },
+    "Provider/cache/model warning": {
+      "by": "seed",
+      "detail": "thread-17 wr-17-route (cache loss, Branch offered)"
+    },
+    "Unsupported attachment flow": {
+      "by": "seed+trigger",
+      "detail": "thread-17 wr-17-attach + seedAttachRoutes unsupported; attachment.unsupported trigger"
+    },
+    "Cross-project grant": {
+      "by": "seed+trigger",
+      "detail": "thread-17 wr-17-xproj (read Project A / modify Project B); system.cross_project"
+    },
+    "3-file diff": {
+      "by": "seed",
+      "detail": "thread-17 dg-17 (3 files)"
+    },
+    "4 artifacts": {
+      "by": "seed",
+      "detail": "thread-17 artifacts (diff/preview/test/handoff)"
+    },
+    "Final verification and elapsed time": {
+      "by": "seed",
+      "detail": "thread-17 m18 final summary with worked duration"
+    },
+    "BSD Auto and On": {
+      "by": "seed+trigger",
+      "detail": "thread-17 bsdEvents (auto silent, on advice) + bsd.* triggers"
+    },
+    "Offline queued message and reconnect": {
+      "by": "seed+trigger",
+      "detail": "thread-18 story; conn.offline/queue_send/reconnect triggers"
+    },
+    "Thread request/spawn/branch": {
+      "by": "seed+trigger",
+      "detail": "thread-17 seedRequests; thread.send_request/spawn_related/branch triggers"
+    }
+  }
+}

@@ -72,17 +72,30 @@
     {
       "name": "Interface systems auditor",
       "route": "Fable",
-      "state_sequence": ["queued", "running", "completed"]
+      "state_sequence": [
+        "queued",
+        "running",
+        "completed"
+      ]
     },
     {
       "name": "Provider adapter researcher",
       "route": "Kimi K3",
-      "state_sequence": ["running", "completed"]
+      "state_sequence": [
+        "running",
+        "completed"
+      ]
     },
     {
       "name": "Slint and test reviewer",
       "route": "Qwen 3.8",
-      "state_sequence": ["queued", "running", "failed", "retrying", "completed"]
+      "state_sequence": [
+        "queued",
+        "running",
+        "failed",
+        "retrying",
+        "completed"
+      ]
     }
   ],
   "activity_groups": [
@@ -186,5 +199,80 @@
     "result_summary": "Updated the provider selector and access flow, preserved thread-local state, verified responsive pinning, and produced four inspectable artifacts.",
     "verification": "All targeted interaction probes passed",
     "elapsed": "1m 34s"
+  },
+  "bsd": {
+    "modes_demonstrated": [
+      "off",
+      "auto",
+      "on"
+    ],
+    "auto_states": [
+      "auto-idle",
+      "auto-active",
+      "silent",
+      "advice",
+      "timeout",
+      "unavailable",
+      "quota"
+    ],
+    "scopes": [
+      "turn",
+      "thread"
+    ],
+    "visual_rule": "Glow only while auto-active; manual On uses distinct non-glow treatment."
+  },
+  "offline_reconnect": {
+    "states": [
+      "offline",
+      "queued",
+      "reconnecting",
+      "replay",
+      "snapshot",
+      "server-work-continuing",
+      "live"
+    ],
+    "idempotency": "Outbox ids ack once; second reconnect does not duplicate delivery."
+  },
+  "restore_points": {
+    "create_trigger": "system.restore_point.create",
+    "rewind_trigger": "system.rewind",
+    "note": "Rewind hides later messages from active context without erasing usage."
+  },
+  "browser_program": {
+    "terminology": "Browser Program",
+    "progress_trigger": "system.browser_program_progress",
+    "forbidden_product_strings": [
+      "Playwright"
+    ]
+  },
+  "notifications": {
+    "boundary": "title-bar sprout only",
+    "samples": [
+      {
+        "id": "ntf-demo-1",
+        "title": "Snapshot catch-up ready"
+      },
+      {
+        "id": "ntf-demo-2",
+        "title": "Browser Program finished"
+      }
+    ],
+    "trigger": "system.notification.push"
+  },
+  "provider_setup_required": {
+    "trigger": "system.provider_setup_required",
+    "composer_state": "provider-setup-required"
+  },
+  "access_limited_by_review": {
+    "trigger": "system.access_limited_by_review",
+    "label_example": "Full Access \u00b7 Limited by Review mode"
+  },
+  "fixture_completeness": {
+    "history_rows": 18,
+    "todos": 8,
+    "subagents": 3,
+    "artifacts": 4,
+    "questions": 3,
+    "updated_at": "2026-08-11"
   }
 }

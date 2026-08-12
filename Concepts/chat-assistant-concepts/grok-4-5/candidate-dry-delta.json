@@ -1,0 +1,162 @@
+{
+  "schema_id": "pm.chat_candidate_dry_delta.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "updated_at": "2026-08-11",
+  "status": "complete",
+  "note": "Candidate DRY roles from packet 08; concept maps local modules \u2014 does not edit DRY owners.",
+  "runtime_owners": [
+    "Thread service",
+    "Goal Runtime",
+    "Orchestrator",
+    "Provider routing",
+    "Context Admission",
+    "Outbox",
+    "RuntimeResourceGovernor",
+    "ObservableWork",
+    "FileSafe",
+    "Permissions",
+    "Usage",
+    "Artifact service"
+  ],
+  "roles": [
+    {
+      "role": "ThreadShell",
+      "concept_mapping": "_shared/shell.js + windows/*",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ThreadDetailSubscription",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "PinnedHistorySurface",
+      "concept_mapping": "windows/* + _window-kit.js + store historyMode",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped"
+    },
+    {
+      "role": "ArtifactWorkspace",
+      "concept_mapping": "_shared/v2-runtime.js left sibling",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped"
+    },
+    {
+      "role": "Composer",
+      "concept_mapping": "_shared/composer.js",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ModelRoutePicker",
+      "concept_mapping": "_shared/popups.js",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "AccessPicker",
+      "concept_mapping": "_shared/popups.js",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "BSDPicker",
+      "concept_mapping": "_shared/popups.js (Step2) + store setBsd",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped"
+    },
+    {
+      "role": "ContextRing",
+      "concept_mapping": "_shared/context-lens.js",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ContextLens",
+      "concept_mapping": "_shared/context-lens.js",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "CompactWorkCluster",
+      "concept_mapping": "threads/_thread-kit.js + per-thread paradigms",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "GoalSummary",
+      "concept_mapping": "shared Goal strip",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "TodoGroup",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "SubagentGroup",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ActivityGroup",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped"
+    },
+    {
+      "role": "DiffSummary",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "QuestionFlow",
+      "concept_mapping": "threads/q-renderers.js (distinct per t*)",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped"
+    },
+    {
+      "role": "ApprovalCard",
+      "concept_mapping": "v2-runtime compact approval",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "RouteImpactCard",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "AttachmentResolutionCard",
+      "concept_mapping": "store.resolveAttachment + warning card",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "OfflineOutboxState",
+      "concept_mapping": "store outbox/sync APIs + sync chip",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ObservableOperation",
+      "concept_mapping": "activity/Browser Program progress",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    },
+    {
+      "role": "ReceiptLink",
+      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "do_not_clone_across_concepts": false,
+      "status": "mapped"
+    }
+  ]
+}

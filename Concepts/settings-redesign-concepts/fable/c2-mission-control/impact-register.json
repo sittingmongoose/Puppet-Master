@@ -1,0 +1,130 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "c2-mission-control",
+  "model": "fable",
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "impact": "Notifications & Sounds canon (F3-460/461): the destinations board + event routing matrix pattern, the canonical location General > Notifications & Sounds, and the title-bar stack as the sole in-app notification affordance need to be written into the notifications canon. The routing matrix's per-cell vocabulary (always / when-unfocused / failures-only / never) plus per-event sound mapping should become the canonical routing model."
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "impact": "Theme canon (F3-425/444): custom TOML themes with base-theme inheritance, schema-versioned validation (theme schema 1.2 in this demo), live reload, invalid-theme diagnosis with line-level errors, fallback-to-base semantics, restart markers for font substitutions, and the live hover/focus preview interaction all need canon entries. The eight built-in ids stay the palette source of truth."
+    },
+    {
+      "owner": "Plans/Media_Generation_and_Capabilities.md",
+      "impact": "The Media routes console stays in this concept as a beyond-assignment extra. Native-vs-PM-transformation identity, fallback routes, and per-purpose history rendered here should reconcile with the media plan's capability routing tables."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "impact": "New rows exercised here that need inventory entries (census note: inventory positions 817-826 are the packet's provisional block): notification destination configs (per-kind), routing matrix rows, sound library + pack registry, quiet hours, TOML theme rows, tray rows (general.desktop.minimize-to-tray / close-to-tray exist in the packet extension; destination/routing/sound/pack/theme-file rows are NEW and have no inventory ids yet)."
+    },
+    {
+      "owner": "Plans/settings_schema (registry schema owner)",
+      "impact": "Destination configs are typed per kind with secret fields as vault references only; routing rows are a matrix type (event x destination -> enum), not scalar rows; sound assets carry provenance (source, license, version, duration, hash, defaultFor); theme files are file-backed resources with validation state. None of these fit the current scalar row schema and need first-class resource types."
+    },
+    {
+      "owner": "Plans/Models_System.md",
+      "impact": "Capability chips (Fast, effort levels) render only from catalog + evidence, never inferred from names; the Haiku fastNote is the canonical counter-example. Requested vs effective route inspection on role-batch-reviewer uses PMProvider.resolveRoute and should match the models-system routing tables."
+    },
+    {
+      "owner": "Plans/Multi_Account.md",
+      "impact": "Account cards keep nickname/identity/authOwner/isolation/priority/useNext/sticky; the auth boundary chip (PMProvider.resolveAuthBoundary) makes CLI-owned vs PM-direct vs api-key vs server visible at the provider header. No simultaneous-profile pretense is added."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "impact": "Installations sub-console: humanized card + advanced resolution drawer; ownership confidence gates every manage action (unknown/ambiguous is manual-only); update lifecycle strings come from PMProvider.UPDATE_STATES; verification is the seven-point checklist, never installer exit code; copilot's verification-failed -> rolled-back history is the canonical failure narrative; cursor-cli's explicit official-source offer with exact host choice and install-not-sign-in demonstrates the acquisition policy."
+    },
+    {
+      "owner": "Plans/Provider_OpenCode.md",
+      "impact": "The OpenCode card renders serverInfo (url, version, reachability, last handshake) with a server-supplied catalog and a scoped vault token reference; the server owns provider credentials. Offline scenario flips reachability honestly."
+    },
+    {
+      "owner": "Plans/Wiring_Matrix (wiring owner)",
+      "impact": "Ten new traces land in candidate-wiring-delta.json (destinations add/test, routing set, sound upload, pack import, theme import/preview/apply, tray set, dictionary add, teacher handoff). All are concept-local state and must not be mistaken for production wiring."
+    },
+    {
+      "owner": "Release / updates owner (Release_Supply_Chain.md)",
+      "impact": "Built-in sound assets and bundled themes ship with license + version + hash metadata ('PM bundled'); imported packs must never be bundled while license-unverified. The release pipeline owns asset provenance stamping."
+    }
+  ],
+  "settings_inventory_impacts": [
+    { "id": "general.sounds.master-enabled", "status": "exists (packet extension)", "note": "Master sound switch; console master strip and workspace row share the value." },
+    { "id": "general.sounds.master-volume", "status": "exists (packet extension)", "note": "Slider; console volume cell mirrors it." },
+    { "id": "general.sounds.quiet-hours", "status": "exists (packet extension)", "note": "Console renders start/end time inputs; row keeps the humanized string." },
+    { "id": "general.desktop.minimize-to-tray", "status": "exists (packet extension)", "note": "Rendered as a row inside the Desktop console's tray strip." },
+    { "id": "general.desktop.close-to-tray", "status": "exists (packet extension)", "note": "As above." },
+    { "id": "notifications.destinations.*", "status": "NEW - no inventory ids", "note": "Per-kind destination configs (slack workspace/channel/threadOnFailure/mention/tokenRef; webhook url/method/headers/template/successPredicate; ntfy server/topic/priority/tags/clickTarget; pushover device/priority/userKeyRef; telegram chatId/parseMode/retry/botTokenRef). Census against inventory positions 817-826 before minting."
+    },
+    { "id": "notifications.routing.*", "status": "NEW - matrix, not scalar rows", "note": "Six events x destinations with the four-cell enum + per-event soundId." },
+    { "id": "notifications.sounds.library / packs", "status": "NEW - resource registry", "note": "Assets with provenance; packs with licenseCheck/formatCheck state machines." },
+    { "id": "appearance.customThemes.*", "status": "NEW - file-backed resources", "note": "TOML file, baseTheme, schemaVersion, liveReload, errors[], fallback, restart marker." },
+    { "id": "general.visual.glass-transparency / glass-background-mode", "status": "exists", "note": "Theme-specific lock is dynamic in this concept: rows unlock live while a Glass theme is active (including hover preview) and re-lock with the stated reason otherwise." },
+    { "id": "general.spellcheck.* + general.writing.grammar-assist", "status": "exists", "note": "Upgraded from plain rows into the Spellcheck & Dictionaries console; values unchanged." }
+  ],
+  "settings_schema_impacts": [
+    "Vault-reference secret type: fields matching *Ref render as reference selectors (choose existing / create in vault); reveal/copy never offered; import/export must exclude them.",
+    "Field-level validation errors: the webhook successPredicate typo ('staus') renders pinned under its field in both the card summary and the editor, and clears live when corrected - row-level error mush is not acceptable for multi-field resources.",
+    "Matrix setting type: event routing needs a first-class matrix representation with per-cell enum + per-row sound mapping.",
+    "File-backed resource state: themes carry {state: active|invalid|restart-required, errors[{line,key,message}], fallback{active,to,reason}} - the schema needs a diagnosable file resource shape.",
+    "Restart markers: uiScale.pendingRestart and theme font substitutions share one restart-banner projection; the schema should let any row or resource contribute to a single pending-restart set."
+  ],
+  "command_id_impacts": [
+    "See candidate-command-delta.json. Provisional: cmd.notifications.destination.add/update/delete, cmd.notifications.destination.test, cmd.notifications.routing.set, cmd.sounds.upload, cmd.sounds.preview, cmd.sounds.pack.import, cmd.desktop.tray.set, cmd.desktop.activitybar.reorder, cmd.teacher.explain, cmd.dictionary.word.add/remove. REUSE-FLAG on cmd.theme.* is load-bearing for this concept (appearance owner): census existing cmd.theme.create/import/export/preview/apply before minting anything."
+  ],
+  "wiring_impacts": [
+    "See candidate-wiring-delta.json: 10 traces, every one flagged concept_local_state:true with a real recovery deep link into c2-mission-control.html routes."
+  ],
+  "dry_component_impacts": [
+    "See candidate-dry-delta.json. This concept concretizes NotificationDestination, SoundLibraryItem, and ThemePreview natively, plus board/strip/matrix compositions of the shared families (SettingRow, ManagerShell, ObservableOperation, ReceiptLink, SecretField/SecretReference, InstallationCard, HealthSummary)."
+  ],
+  "schema_event_storage_impacts": [
+    "Staged 'op' events ({name, ref, phase}) project truthful ObservableWork phases for dest-test, sound-upload, pack-import, theme-reload, and the installation lifecycle; phases are state changes and are never skipped under reduced motion.",
+    "dest-test receipts persist a lastTest {when, ok, receiptId, masked:true} on the destination; the receipt id is the storage anchor.",
+    "Sound preview deliberately emits NO receipt (local-only); this asymmetry is a storage-level contract, not a UI choice."
+  ],
+  "migration_supersession_impacts": [
+    "Supersede the old Settings chip/bloom/no-sidebar contract (cmd.settings.bloom.open retires or aliases to cmd.settings.open).",
+    "Supersede stale right-side-panel language: the Activity Bar controls one adjacent LEFT side-panel slot; the Desktop console's Activity Bar board uses that canon.",
+    "Notification surface consolidation: retire any permanent bottom-right toast stack, status-bar bell, Activity Bar notification shortcut, and dedicated Notifications side panel. The title-bar stack/count/sprout inbox is the sole in-app affordance; c2's console carries the surfaceRule copy and routes dest-test results into that stack only.",
+    "Supersede any legacy 'regular/yolo' access-mode coupling in copy; access modes are Full Access / Auto / Auto accept edits / Ask for approval (the shared demo data still carries one banned-word sentence; c2 sanitizes at render time - recorded as a data defect, fix belongs in the shared data)."
+  ],
+  "slint_port_impacts": [
+    "Minimap: the proportional block track + draggable viewport window maps to a custom slider driven by the scrollspy registry model (offsets from the section model, never widget geometry); keyboard parity is already role=slider.",
+    "Hover-preview theme swap: pointer-enter/exit and focus/blur bind a preview override onto the theme property; restore-on-exit must be state-driven so a rebuild mid-preview restores correctly (this build restores on every rebuild).",
+    "Routing matrix: a model-backed TableView with sticky first column and horizontal scrolling inside the container; cells are ComboBox items bound per (event, destination) - virtualize columns if destinations grow.",
+    "Palette overlay: a modal dialog layer with roving listbox focus; result kinds are data, including cross-concept receipt rows that navigate to another page (in Slint, another window/route).",
+    "Theme swatches: cards render the target theme's real tokens via scoped data-theme attributes; in Slint, feed the swatch a palette struct per theme instead of re-styling.",
+    "Only the shared shell's single allowed backdrop-filter layer is used; the new consoles add none."
+  ],
+  "test_fixtures": [
+    { "id": "dest-test", "expect": "Explicit per-destination button; masked payload; 1/30s rate limit (rate-limited phase renders); receipted; lastTest updates on the card; delivered test joins the title-bar stack via PMShell.notify." },
+    { "id": "sound-preview-no-receipt", "expect": "Preview button plays locally: op phases playing->done, transient 'Playing locally' strip, and NO receipt is emitted." },
+    { "id": "sound-upload", "expect": "gentle-bell.ogg appears after checking phase with format/duration/hash noted; receipted." },
+    { "id": "pack-import-license-gate", "expect": "pack.openpeon-vol2 import runs format-check then license-check, ends blocked; receipt states unverified packs are never enabled; pack stays out of the library." },
+    { "id": "pack-import-format-gate", "expect": "pack.warcraft-rip rejected at format-check with the manifest detail; license check not run." },
+    { "id": "theme-reload", "expect": "theme.cobalt-mono validates and stays invalid; line-41 diagnosis renders; base theme remains in effect; receipt carries the line and message." },
+    { "id": "fx.validation-error", "expect": "Webhook successPredicate shows a FIELD-level error on card and editor; fetch-size row shows its own error in the workspace; notice deep-links to the webhook card." },
+    { "id": "fx.theme-fallback", "expect": "Notice targets the Appearance console; Cobalt Mono card shows diagnosis + fallback banner." },
+    { "id": "fx.restart-required", "expect": "Appearance console shows the restart banner; UI scale radio shows the takes-effect-after-restart marker; ui-scale row carries the restart flag." },
+    { "id": "scenario.first-run", "expect": "Destinations reduce to built-ins; sound library to built-ins; packs empty with a real empty state; custom themes empty with a real empty state; teacher lastSession Never." },
+    { "id": "scenario.offline", "expect": "Non-built-in ready destinations become unavailable with the queue-and-send reason; Test send disables with that reason; providers show last-known-good catalogs." },
+    { "id": "teacher-guided-slack", "expect": "teach.slack-setup step 1 highlights the real dest.slack card; step 2's action opens the REAL add-destination form with kind slack and the workspace field focused; nothing is pre-submitted." },
+    { "id": "install-update / install-update-fail", "expect": "codex Ask-first update runs updating->verifying->ready->done with truthful phase strip; copilot Retry runs the fail path and rolls back with both history entries." }
+  ],
+  "deferred_named_owners": [
+    { "item": "Real audio playback for preview/test sounds", "owner": "Media/audio runtime owner (Media_Generation_and_Capabilities.md)", "note": "The demo projects phases; actual device output and per-device routing are runtime work." },
+    { "item": "OS notification bridge (system destination, focus-assist respect)", "owner": "Desktop shell owner (FinalGUISpec.md desktop canon)", "note": "respectFocusAssist is rendered; the OS bridge is native work." },
+    { "item": "Vault reference creation flow", "owner": "Secrets/keychain owner", "note": "The selector offers 'New vault reference...' as a receipt; the real flow is keychain-native." },
+    { "item": "TOML theme parser + schema validator", "owner": "Theme system owner (F3-425/444)", "note": "Line-level diagnosis shape is fixed here; the parser is runtime work." },
+    { "item": "Tray icon + progress ring + real tray menu", "owner": "Desktop shell owner", "note": "The console shows a labeled static preview, never fake controls." },
+    { "item": "Full Server module shell", "owner": "Server Backbone return (Post-Return Reconciliation v6)", "note": "Reserved destinations render in c4-ledger; c2 only cross-links." }
+  ],
+  "unresolved_questions": [
+    "Should the routing matrix expose per-destination quiet-hours overrides (e.g. Telegram allowed during quiet hours for approval.needed), or does the master quiet-hours window always win?",
+    "Destination label auto-derivation (Slack · #channel) vs user-editable labels: which is canon when the channel is renamed upstream?",
+    "Does theme hover preview apply to a second window of the same profile, or is preview strictly per-window while Apply is per-profile?",
+    "Dictionary removal of shipped base words: is masking (this build's session-local 'removed' list) acceptable canon, or must base lists be immutable with only additions?",
+    "Where does the sound-pack license review live - a Settings-side human review flow, or a Release-pipeline-only path with Settings read-only?"
+  ]
+}

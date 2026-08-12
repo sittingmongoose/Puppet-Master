@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "foundry",
+  "model": "kimi-k3",
+  "groups": [
+    {
+      "id": "core",
+      "classification": "demonstrated",
+      "managers": {
+        "Settings Home": { "status": "demonstrated", "where": "Bench board Home: filter search bar, manager cards, notice groups, destination cards, recents, calm state" },
+        "Settings Search": { "status": "demonstrated", "where": "Typed fuzzy results across all kinds" },
+        "Settings Workspace": { "status": "demonstrated", "where": "Bench sections, left nav, scrollspy, deep links with accordion auto-open, Back/forward" },
+        "Provider/Account/Model/Installation": { "status": "demonstrated", "where": "Providers manager as bench table + detail tabs; all 9 families, 17 fixtures" },
+        "Ordinary setting grammar": { "status": "demonstrated", "where": "Shared rowHtml across workspace and manager surfaces" }
+      }
+    },
+    {
+      "id": "concept_3",
+      "classification": "demonstrated",
+      "managers": {
+        "File Manager/Editor": { "status": "demonstrated", "where": "Behavior table with transient/unavailable reasons and recovery" },
+        "Terminal": { "status": "demonstrated", "where": "Profile list + editor, 16-well ANSI palette, live preview" },
+        "LSP": { "status": "demonstrated", "where": "Registry with requested/effective, remote degradation, verification" },
+        "Formatters": { "status": "demonstrated", "where": "Detected/not-found/disabled states, receipted test, reset" },
+        "Commands & Shortcuts": { "status": "demonstrated", "where": "CRUD + shell-safety validation + dry-run; shortcuts with conflict highlight, remap, recorder" },
+        "MCP": { "status": "demonstrated", "where": "Catalog domain with transport/protocol/auth/resources/logs and five states" },
+        "Skills": { "status": "demonstrated", "where": "Catalog domain with trust-driven update policy" },
+        "Plugins": { "status": "demonstrated", "where": "Catalog domain with channel and compatibility" },
+        "Tools": { "status": "demonstrated", "where": "Catalog domain with owner attribution and approval policy" },
+        "Testing & Debug": { "status": "demonstrated", "where": "Global/Project × Auto/On/Off matrix with managed cell" }
+      }
+    },
+    {
+      "id": "concept_1",
+      "classification": "shared_grammar",
+      "managers": {
+        "Context & Instructions": { "status": "shared_grammar", "where": "Context and Memory workspace rows" },
+        "Memory": { "status": "shared_grammar", "where": "Memory rows" },
+        "Personas": { "status": "shared_grammar", "where": "Persona default rows" },
+        "Goal & Automation": { "status": "shared_grammar", "where": "Goal rows" },
+        "Crew": { "status": "shared_grammar", "where": "Crew rows" },
+        "Permissions & FileSafe": { "status": "shared_grammar", "where": "Permissions rows; tool approval policies cross-reference it" },
+        "Back Seat Driver": { "status": "shared_grammar", "where": "BSD mode row" }
+      }
+    },
+    {
+      "id": "concept_2",
+      "classification": "shared_grammar",
+      "managers": {
+        "Notifications & Sounds": { "status": "shared_grammar", "where": "Notifications and Sounds workspace rows" },
+        "Sound Library/Uploads/Packs": { "status": "shared_grammar", "where": "Resonance family" },
+        "Appearance": { "status": "shared_grammar", "where": "Appearance workspace rows" },
+        "Spellcheck & Dictionaries": { "status": "shared_grammar", "where": "Resonance family" },
+        "Desktop/Tray/Window": { "status": "shared_grammar", "where": "General desktop rows" },
+        "Teacher/Help": { "status": "shared_grammar", "where": "Row-level help affordance" }
+      }
+    },
+    {
+      "id": "concept_4",
+      "classification": "shared_grammar",
+      "managers": {
+        "Storage & Retention": { "status": "shared_grammar", "where": "System and Storage rows" },
+        "Backup & Restore": { "status": "shared_grammar", "where": "Snapshot rows" },
+        "Settings Lifecycle": { "status": "shared_grammar", "where": "Reset row; Vault owns the stepped flow" },
+        "History & Sessions": { "status": "shared_grammar", "where": "Startup restore rows" },
+        "Runtime Artifacts": { "status": "shared_grammar", "where": "Diagnostics bundle row" },
+        "Source Control/Worktrees": { "status": "shared_grammar", "where": "Source Control rows" },
+        "GitHub Actions": { "status": "shared_grammar", "where": "Forge connection row" },
+        "Containers & Registries": { "status": "shared_grammar", "where": "Vault family" },
+        "Web/Search/Fetch": { "status": "shared_grammar", "where": "Web extraction role row" },
+        "Project Search Index": { "status": "shared_grammar", "where": "Context project-code row" },
+        "Workspace Cleanup": { "status": "shared_grammar", "where": "Storage pressure row" },
+        "Future Server Module Shell": { "status": "deferred_named_owner", "owner": "Server host owner", "contract": "Insertion accepts manager module, deep links, status cards, command wiring" }
+      }
+    }
+  ],
+  "missing": []
+}

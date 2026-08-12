@@ -2,150 +2,243 @@
   "schema_id": "pm.chat_assistant_concept_update_impact_register.v2",
   "model": "Grok 4.5",
   "workspace": "Concepts/chat-assistant-concepts/grok-4-5",
-  "updated_at": "2026-08-05",
-  "cache_bust": "v=36",
+  "updated_at": "2026-08-11",
+  "cache_bust": "v=37",
   "concept_solutions": [
     {
       "concept_id": "w1",
       "pinned_history_solution": "Ledger spine pin-aware: pinned_full=day sections; pinned_compact=slim marks; peek=min overlay only when unpinned; update() always paint()",
       "artifact_workspace_solution": "Chronology-adjacent left sibling via shared syncArtifactIntoBody",
       "motion_notes": "Spine density morph; no overlay while pinned",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w2",
       "pinned_history_solution": "Peek=narrow drawer; pin=wide dock sibling / forced open without scrim",
       "artifact_workspace_solution": "Capsule left sibling",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w3",
       "pinned_history_solution": "Strip density lock via pin; compact=icon pills; full=titled pills",
       "artifact_workspace_solution": "Console viewport left sibling",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w4",
       "pinned_history_solution": "Pocket docks as sibling; closePocket blocked while pinned",
       "artifact_workspace_solution": "Pocket-adjacent inspector",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w5",
       "pinned_history_solution": "Dual-band left rail; closeRail blocked while pinned",
       "artifact_workspace_solution": "Band+body left pane",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w6",
       "pinned_history_solution": "Focus Stage rail; scroll no longer dismisses when pinned",
       "artifact_workspace_solution": "Focus split left canvas",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w7",
       "pinned_history_solution": "Latch becomes sibling pane; closeLatch blocked while pinned",
       "artifact_workspace_solution": "Opposite-edge capable left sibling",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "w8",
       "pinned_history_solution": "Ribbon dock sibling; closeChats blocked while pinned",
       "artifact_workspace_solution": "Ribbon artifacts stack",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t1",
       "question_renderer": "q-folio-leaf-morph",
       "question_structure": "pm-q-struct-folio + spine",
-      "compact_work_composition": "pm-cw-folio chips → folio leaves (data-kind on leaves); Goal strip acts retained",
-      "motion_notes": "Composer-anchored morph prepare→expand→settle",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "compact_work_composition": "pm-cw-folio chips \u2192 folio leaves (data-kind on leaves); Goal strip acts retained",
+      "motion_notes": "Composer-anchored morph prepare\u2192expand\u2192settle",
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t2",
       "question_renderer": "q-beat-attached",
       "question_structure": "pm-q-struct-beat + rail",
       "compact_work_composition": "pm-cw-beats on attached beat surfaces",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t3",
       "question_renderer": "q-shelf-stack",
       "question_structure": "pm-q-struct-shelf",
       "compact_work_composition": "pm-cw-shelves on work shelf",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t4",
       "question_renderer": "q-yield-sheet",
       "question_structure": "pm-q-struct-yield banner",
       "compact_work_composition": "pm-cw-yield above yield sheets",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t5",
       "question_renderer": "q-condenser-stage",
       "question_structure": "pm-q-struct-condenser meter",
       "compact_work_composition": "pm-cw-condenser via renderWorkSurfaces",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t6",
       "question_renderer": "q-margin-sidecar",
       "question_structure": "pm-q-struct-margin glyph",
       "compact_work_composition": "pm-cw-margin via renderWorkSurfaces",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t7",
       "question_renderer": "q-focus-stepper",
       "question_structure": "pm-q-struct-focus strip",
       "compact_work_composition": "pm-cw-focus via renderWorkSurfaces",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     },
     {
       "concept_id": "t8",
       "question_renderer": "q-paired-breath",
       "question_structure": "pm-q-struct-breath inhale/hint",
       "compact_work_composition": "pm-cw-breath via renderWorkSurfaces",
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"]
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*",
+        "interaction-test-report.json"
+      ]
     }
   ],
   "changes": [
     {
       "change_id": "chat-delta-001",
       "requirement": "Pinned history four modes + no overlay while pinned",
-      "implemented_in": ["_shared/store.js", "_shared/v2-runtime.js", "windows/*", "windows/_window-kit.js"],
-      "existing_bugs_fixed": ["pin close/scrim/scroll fight on w2/w4-w8", "w6 scroll-unpin", "partial update skipped historyMode paint"],
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"],
+      "implemented_in": [
+        "_shared/store.js",
+        "_shared/v2-runtime.js",
+        "windows/*",
+        "windows/_window-kit.js"
+      ],
+      "existing_bugs_fixed": [
+        "pin close/scrim/scroll fight on w2/w4-w8",
+        "w6 scroll-unpin",
+        "partial update skipped historyMode paint"
+      ],
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*"
+      ],
       "status": "implemented"
     },
     {
       "change_id": "chat-delta-002",
       "requirement": "Left artifact workspace",
-      "implemented_in": ["_shared/v2-runtime.js", "_shared/v2-surfaces.css", "threads/_thread-kit.js", "_shared/host-boot.js"],
-      "existing_bugs_fixed": ["editor-tab toast façade as sole open path"],
+      "implemented_in": [
+        "_shared/v2-runtime.js",
+        "_shared/v2-surfaces.css",
+        "threads/_thread-kit.js",
+        "_shared/host-boot.js"
+      ],
+      "existing_bugs_fixed": [
+        "editor-tab toast fa\u00e7ade as sole open path"
+      ],
       "status": "implemented",
-      "notes": ["GAP-009 editor-tab handoff retired for artifacts; left workspace is concept truth"]
+      "notes": [
+        "GAP-009 editor-tab handoff retired for artifacts; left workspace is concept truth"
+      ]
     },
     {
       "change_id": "chat-delta-003",
       "requirement": "Concept-specific question renderers + compact work + demo harness",
-      "implemented_in": ["threads/q-renderers.js", "threads/t1.js", "threads/t2.js", "threads/t3.js", "threads/t4.js", "threads/_thread-kit.js", "_shared/v2-runtime.js", "_shared/demo-harness.js"],
-      "existing_bugs_fixed": ["q-shared-fallback from conversation thread ids", "dead data-cw-expand chips", "t1–t4 missing compact band"],
+      "implemented_in": [
+        "threads/q-renderers.js",
+        "threads/t1.js",
+        "threads/t2.js",
+        "threads/t3.js",
+        "threads/t4.js",
+        "threads/_thread-kit.js",
+        "_shared/v2-runtime.js",
+        "_shared/demo-harness.js"
+      ],
+      "existing_bugs_fixed": [
+        "q-shared-fallback from conversation thread ids",
+        "dead data-cw-expand chips",
+        "t1\u2013t4 missing compact band"
+      ],
       "status": "implemented"
     },
     {
       "change_id": "chat-delta-004",
       "requirement": "Access/Crew/provider favorites/Normal-Fast/approvals/warnings/Compact Now/attachments/spellcheck",
-      "implemented_in": ["_shared/popups.js", "_shared/store.js", "_shared/host-boot.js", "_shared/context-lens.js", "windows/_window-kit.js", "threads/_thread-kit.js"],
+      "implemented_in": [
+        "_shared/popups.js",
+        "_shared/store.js",
+        "_shared/host-boot.js",
+        "_shared/context-lens.js",
+        "windows/_window-kit.js",
+        "threads/_thread-kit.js"
+      ],
       "status": "implemented"
     },
     {
       "change_id": "chat-delta-005",
       "requirement": "Rich demo + triggers + expanded probes",
-      "implemented_in": ["_shared/demo-extend.js", "DEMO_SCENARIO_MANIFEST.json", "DEMO_TRIGGER_CONTRACT.json", "_shared/demo-harness.js", "verification/run-v2-delta-probes.mjs"],
+      "implemented_in": [
+        "_shared/demo-extend.js",
+        "DEMO_SCENARIO_MANIFEST.json",
+        "DEMO_TRIGGER_CONTRACT.json",
+        "_shared/demo-harness.js"
+      ],
       "status": "implemented"
     },
     {
@@ -164,17 +257,18 @@
         "_shared/demo-harness.js",
         "index.html",
         "host.html",
-        "concept-hub.json",
-        "verification/run-v2-delta-probes.mjs"
+        "concept-hub.json"
       ],
       "existing_bugs_fixed": [
         "hydrate key mismatch goal/todos/state",
-        "V2 narrative skipped when message count ≥18",
+        "V2 narrative skipped when message count \u226518",
         "injectLensUi unbound store ReferenceError",
         "lavender Q / t2 left accent",
         "demo harness underscore machine labels failing matrix"
       ],
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs", "verification/results.json"],
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*"
+      ],
       "status": "implemented"
     },
     {
@@ -188,8 +282,7 @@
         "_shared/popups.js",
         "_shared/host-boot.js",
         "_shared/store.js",
-        "_shared/demo-harness.js",
-        "verification/run-v2-delta-probes.mjs"
+        "_shared/demo-harness.js"
       ],
       "existing_bugs_fixed": [
         "max-height Q expand prototype tell",
@@ -198,10 +291,12 @@
         "favorites no live re-sort",
         "crew mismatch without reason disclosure"
       ],
-      "functional_test_refs": ["verification/run-v2-delta-probes.mjs"],
+      "functional_test_refs": [
+        "%TEMP%/pm-grok45-probes/*"
+      ],
       "status": "implemented",
       "notes": [
-        "Not video frame-matched — no reference clips in-folder",
+        "Not video frame-matched \u2014 no reference clips in-folder",
         "Settings managers remain owner-elsewhere; chat owns route chrome only",
         "Finish-ups: CW is-collapsing, thread-model-override pill, Use default Crew? confirm+cancel toast; gates re-run at ?v=36"
       ]
@@ -218,21 +313,38 @@
     "thread.spawn_related|send_request|receive_response|branch"
   ],
   "test_results": {
-    "v2_delta": "43/43 pass (verification/v2-delta-probe-results.json)",
+    "v2_delta": "43/43 pass (historical path verification/v2-delta-probe-results.json; dir removed Step 8)",
     "reduced_motion": "2/2",
     "pair_smoke": "64/64 (prior; chrome DOM stable)",
     "geometry": "256/256",
-    "matrix": "64/64 (SHOT=1 → verification/screenshots/matrix/)"
+    "matrix": "64/64 (SHOT=1 \u2192 historical verification/screenshots/matrix/; dir removed Step 8)"
   },
   "files_modified_outside_workspace": [],
   "unresolved_owner_contract_conflicts": [
-    "GAP-001 Resend still in Plans/PM7 — concept omits Resend",
+    "GAP-001 Resend still in Plans/PM7 \u2014 concept omits Resend",
     "GAP-006 Context Ring Detail owned by Usage redesign",
-    "GAP-009 many chrome actions remain local façades without catalog IDs",
+    "GAP-009 many chrome actions remain local fa\u00e7ades without catalog IDs",
     "Access profile / attachment resolution enums not yet in Plans schemas",
     "historyMode pin contract not yet in Plans/assistant-chat-design.md",
-    "Crew requested≠effective routing policy belongs in Plans agent orchestration, not finalized here",
-    "ConceptHub ship-gate bans in-folder verification/ — retained by design for this concept's probe suite; owner must waive or relocate later",
-    "Full Provider/Crew managers owned by Settings redesign + Plans Agent-Config / Default Crew — chat chrome is route-only"
+    "Crew requested\u2260effective routing policy belongs in Plans agent orchestration, not finalized here",
+    "ConceptHub ship-gate bans in-folder verification/ \u2014 resolved: probes relocated to %TEMP%/pm-grok45-probes/; no verification/ ship folder (Step 8 / ?v=37)",
+    "Full Provider/Crew managers owned by Settings redesign + Plans Agent-Config / Default Crew \u2014 chat chrome is route-only"
+  ],
+  "step8_status": "complete",
+  "packet_reports": [
+    "impact-register.json",
+    "candidate-command-delta.json",
+    "candidate-wiring-delta.json",
+    "candidate-dry-delta.json",
+    "plan-owner-delta.md",
+    "demo-trigger-report.json",
+    "interaction-test-report.json"
+  ],
+  "probes_location": "%TEMP%/pm-grok45-probes (not shipped)",
+  "alias_conflicts_locked": [
+    "cmd.chat.history.pin \u2192 reuse cmd.chat.pin",
+    "cmd.chat.restore_point.create \u2192 reuse cmd.chat.create_restore_point",
+    "cmd.chat.thread.rewind \u2192 reuse cmd.chat.rewind",
+    "cmd.chat.context.compact_now \u2192 reuse cmd.chat.compact_context"
   ]
 }

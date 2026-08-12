@@ -59,18 +59,18 @@
     ],
 
     accounts: [
-      { id: 'acct:alibaba-personal',    familyId: 'fam:alibaba',     label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:alibaba-team',        familyId: 'fam:alibaba',     label: 'Team',     detail: 'Tastebook org seat',    configured: true, enabled: true,  state: 'needs_attention', attention: 'Reconnect needed — session expired' },
-      { id: 'acct:openai-personal',     familyId: 'fam:openai',      label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:openai-work',         familyId: 'fam:openai',      label: 'Work',     detail: 'jared@tastebook.io',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:claude-work',         familyId: 'fam:claude',      label: 'Work',     detail: 'Tastebook workspace',  configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:kimi-personal',       familyId: 'fam:kimi',        label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:opencode-personal',   familyId: 'fam:opencode',    label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:zai-personal',        familyId: 'fam:zai',         label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:antigravity-personal',familyId: 'fam:antigravity', label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:google-personal',     familyId: 'fam:google',      label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:github-personal',     familyId: 'fam:github',      label: 'Personal', detail: 'jaredsmacbookair',     configured: true, enabled: true,  state: 'ready' },
-      { id: 'acct:local-runtime',       familyId: 'fam:local',       label: 'This Mac', detail: 'Ollama runtime',       configured: true, enabled: true,  state: 'ready' },
+      { id: 'acct:alibaba-personal',    familyId: 'fam:alibaba',     label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-13 * MIN) },
+      { id: 'acct:alibaba-team',        familyId: 'fam:alibaba',     label: 'Team',     detail: 'Tastebook org seat',    configured: true, enabled: true,  state: 'needs_attention', attention: 'Reconnect needed — session expired', priority: 1, lastUsedAt: at(-26 * HOUR) },
+      { id: 'acct:openai-personal',     familyId: 'fam:openai',      label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-8 * MIN) },
+      { id: 'acct:openai-work',         familyId: 'fam:openai',      label: 'Work',     detail: 'jared@tastebook.io',   configured: true, enabled: true,  state: 'ready', priority: 2, lastUsedAt: at(-29 * MIN) },
+      { id: 'acct:claude-work',         familyId: 'fam:claude',      label: 'Work',     detail: 'Tastebook workspace',  configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-2 * MIN) },
+      { id: 'acct:kimi-personal',       familyId: 'fam:kimi',        label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-41 * MIN) },
+      { id: 'acct:opencode-personal',   familyId: 'fam:opencode',    label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-45 * MIN) },
+      { id: 'acct:zai-personal',        familyId: 'fam:zai',         label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-70 * MIN) },
+      { id: 'acct:antigravity-personal',familyId: 'fam:antigravity', label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-5 * HOUR) },
+      { id: 'acct:google-personal',     familyId: 'fam:google',      label: 'Personal', detail: 'jared@personal.dev',   configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-12 * MIN) },
+      { id: 'acct:github-personal',     familyId: 'fam:github',      label: 'Personal', detail: 'jaredsmacbookair',     configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-2 * HOUR) },
+      { id: 'acct:local-runtime',       familyId: 'fam:local',       label: 'This Mac', detail: 'Ollama runtime',       configured: true, enabled: true,  state: 'ready', priority: 1, lastUsedAt: at(-9 * HOUR) },
       /* historical-only identity: removed account, immutable in Ledger (§6.3) */
       { id: 'acct:openai-old',          familyId: 'fam:openai',      label: 'Old OpenAI', detail: 'retired API key',    configured: false, enabled: false, removed: true, removedLabel: 'Removed account' }
     ],
@@ -178,7 +178,7 @@
       { id: 'meter:kimi-trial',      productId: 'prod:kimi-trial',          label: 'Trial allowance', unit: 'requests', windowKind: 'trial',         used: 42, limit: 200, usedPct: 21, resetAt: null, expiresAt: '2026-08-16T04:00:00Z', vs: 'provider_reported', sourceClass: 'provider_reported', settlement: 'observed', conf: 'high' },
       /* OpenCode Go — native currency + UNKNOWN monthly limit */
       { id: 'meter:oc-go-5h',        productId: 'prod:oc-go-plan',          label: '5-hour credits',  unit: 'credits',  windowKind: 'rolling',       used: 145, limit: 200, usedPct: 72, resetAt: at(55 * MIN),            vs: 'provider_reported', sourceClass: 'provider_reported', settlement: 'observed', conf: 'high' },
-      { id: 'meter:oc-go-monthly',   productId: 'prod:oc-go-plan',          label: 'Monthly credits', unit: 'credits',  windowKind: 'billing_cycle', used: 4200, limit: null, usedPct: null, resetAt: '2026-09-01T04:00:00Z', vs: 'unknown', sourceClass: 'provider_reported', settlement: 'observed', conf: 'medium', note: 'Observed use · limit not exposed' },
+      { id: 'meter:oc-go-monthly',   productId: 'prod:oc-go-plan',          label: 'Monthly credits', unit: 'credits',  windowKind: 'billing_cycle', used: 4200, limit: null, usedPct: null, resetAt: '2026-09-01T04:00:00Z', vs: 'unavailable', sourceClass: 'provider_reported', settlement: 'observed', conf: 'medium', note: 'Provider ready · Usage details unavailable', estimate: { usedPct: 63, basis: 'PM history · last 7 days', conf: 'medium' } },
       { id: 'meter:oc-zen-bal',      productId: 'prod:oc-zen-balance',      label: 'Zen balance',     unit: 'USD',      windowKind: 'balance',       used: 0, limit: 3.20, usedPct: 0, resetAt: null,                      vs: 'provider_reported', sourceClass: 'provider_reported', settlement: 'settled', conf: 'high', note: 'Auto-reload off' },
       /* Z.AI — legacy request meter (unknown limit) + credit plan */
       { id: 'meter:zai-legacy-req',  productId: 'prod:zai-legacy-plan',     label: 'Included requests', unit: 'requests', windowKind: 'billing_cycle', used: 118, limit: null, usedPct: null, resetAt: '2026-08-16T04:00:00Z', vs: 'unknown', sourceClass: 'provider_reported', settlement: 'observed', conf: 'medium', note: 'Limit not exposed' },
@@ -273,7 +273,7 @@
        ================================================================ */
     freeModels: [
       { id: 'free:gemini-flash',   modelId: 'model:gemini-2-5-flash', connectionId: 'conn:google-gemini-cli', condition: 'request_limited',      label: 'Free, limited', detail: '60 requests/day · 18 used today', meterId: 'meter:google-free-day', eligible: true },
-      { id: 'free:glm-air',        modelId: 'model:glm-4-5-air',      connectionId: 'conn:zai-legacy',        condition: 'token_day',            label: 'Free, limited', detail: '200K tokens/day · 120K used', meterId: 'meter:zai-free-day', eligible: true },
+      { id: 'free:glm-air',        modelId: 'model:glm-4-5-air',      connectionId: 'conn:zai-legacy',        condition: 'token_day',            label: 'Free, limited', detail: '200K tokens/day · 120K used', meterId: 'meter:zai-free-day', eligible: true, cooldownUntil: at(40 * MIN) },
       { id: 'free:copilot-req',    modelId: 'model:gpt-5-6',          connectionId: 'conn:github-copilot-free', condition: 'compute_units',      label: 'Free, limited', detail: '50 premium requests/month · compute-unit metered', meterId: 'meter:github-free-mo', eligible: true },
       { id: 'free:oc-go-models',   modelId: 'model:qwen3-coder-plus', connectionId: 'conn:opencode-go',       condition: 'conditional_on_plan',  label: 'Free with account requirements', detail: 'Requires an active OpenCode Go plan', meterId: 'meter:oc-go-free', eligible: true },
       { id: 'free:kimi-trial',     modelId: 'model:kimi-k2',          connectionId: 'conn:kimi-code',         condition: 'free_until',           label: 'Free until Aug 16', detail: 'Trial ends Aug 16 00:00', meterId: 'meter:kimi-trial', eligible: true },
@@ -323,11 +323,11 @@
 
     attempts: [
       /* ---- work-1 · normal turn card (Hermes §11 example) ---- */
-      { eventId: 'ue-501', workId: 'work-1', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-501', workId: 'work-1', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-personal', effectiveAccountId: 'acct:openai-personal',
         connectionId: 'conn:openai-personal-codex', productId: 'prod:codex-plus',
         requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: 'model:gpt-5-6-codex',
-        billingRoute: 'plan_included', tokens: { input: 42100, output: 3200, cacheRead: 18000 },
+        billingRoute: 'plan_included', tokens: { input: 42100, output: 3200, cacheRead: 18000, cacheWrite: 2400 },
         costMicro: 0, startedAt: at(-16 * MIN), finishedAt: at(-8 * MIN),
         settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-501' },
       { eventId: 'ue-502', workId: 'work-1', bucket: 'context', purpose: 'compression', status: 'completed',
@@ -346,7 +346,7 @@
         costMicro: 0, startedAt: at(-13 * MIN), finishedAt: at(-9 * MIN),
         settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-503',
         subagent: { role: 'Reviewer', persona: 'Skeptical reviewer' } },
-      { eventId: 'ue-504', workId: 'work-1', bucket: 'research', purpose: 'web_extraction', status: 'completed',
+      { eventId: 'ue-504', workId: 'work-1', bucket: 'research', purpose: 'web_extract', status: 'completed',
         requestedAccountId: 'acct:google-personal', effectiveAccountId: 'acct:google-personal',
         connectionId: 'conn:google-gemini-cli', productId: 'prod:google-gemini-free',
         requestedModelId: 'model:gemini-2-5-flash', effectiveModelId: 'model:gemini-2-5-flash',
@@ -356,7 +356,7 @@
         note: 'Web extraction helper on free tier' },
 
       /* ---- work-2 · requested vs used mismatch (packet §8) ---- */
-      { eventId: 'ue-510', workId: 'work-2', bucket: 'retries', purpose: 'main_work', status: 'failed',
+      { eventId: 'ue-510', workId: 'work-2', bucket: 'retries', purpose: 'user_work', status: 'failed',
         requestedAccountId: 'acct:openai-work', effectiveAccountId: 'acct:openai-work',
         connectionId: 'conn:openai-work-codex', productId: 'prod:codex-business',
         requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: null,
@@ -364,7 +364,7 @@
         costMicro: 0, startedAt: at(-30 * MIN), finishedAt: at(-30 * MIN),
         settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-510',
         failReason: 'Work OpenAI had reached its limit' },
-      { eventId: 'ue-511', workId: 'work-2', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-511', workId: 'work-2', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-work', effectiveAccountId: 'acct:openai-personal',
         connectionId: 'conn:openai-personal-codex', productId: 'prod:codex-plus',
         requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: 'model:gpt-5-6-codex',
@@ -374,7 +374,7 @@
         mismatch: { reason: 'You chose Work OpenAI, but Puppet Master used Personal OpenAI because Work OpenAI had reached its limit.' } },
 
       /* ---- work-3 · mid-turn redirect (Hermes §6, delta §5) ---- */
-      { eventId: 'ue-520', workId: 'work-3', bucket: 'main', purpose: 'main_work', status: 'interrupted',
+      { eventId: 'ue-520', workId: 'work-3', bucket: 'main', purpose: 'user_work', status: 'interrupted',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
@@ -384,7 +384,7 @@
         sessionId: 'sess-t88-1', conversationMode: 'agent', reasoningEffort: 'high', speedMode: 'normal',
         requestedAccessProfile: 'full_access', effectiveAccessProfile: 'full_access',
         redirect: { support: 'interrupt_and_resume', wastedTokens: 6600, note: 'Interrupted by your correction; partial usage retained.' } },
-      { eventId: 'ue-521', workId: 'work-3', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-521', workId: 'work-3', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
@@ -396,7 +396,7 @@
         redirect: { resumed: true } },
 
       /* ---- work-4 · tool recovery, zero provider tokens (Hermes §5) ---- */
-      { eventId: 'ue-530', workId: 'work-4', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-530', workId: 'work-4', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
         connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
         requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
@@ -418,7 +418,7 @@
         note: 'Approval reviewer' },
 
       /* ---- work-6 · vision alternate route (Hermes §15.13) ---- */
-      { eventId: 'ue-550', workId: 'work-6', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-550', workId: 'work-6', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-personal', effectiveAccountId: 'acct:openai-personal',
         connectionId: 'conn:openai-personal-codex', productId: 'prod:codex-plus',
         requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: 'model:gpt-5-6-codex',
@@ -426,7 +426,7 @@
         costMicro: 0, startedAt: at(-75 * MIN), finishedAt: at(-72 * MIN),
         settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-550',
         note: 'Text-only main model' },
-      { eventId: 'ue-551', workId: 'work-6', bucket: 'research', purpose: 'vision_helper', status: 'completed',
+      { eventId: 'ue-551', workId: 'work-6', bucket: 'research', purpose: 'vision', status: 'completed',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-api', productId: 'prod:claude-api-payg',
         requestedModelId: 'model:claude-sonnet-4-6', effectiveModelId: 'model:claude-sonnet-4-6',
@@ -436,15 +436,15 @@
         note: 'Separately billed vision helper' },
 
       /* ---- work-7 · Goal children admitted now (delta §2) ---- */
-      { eventId: 'ue-560', workId: 'work-7', bucket: 'specialists', purpose: 'specialist', status: 'running',
+      { eventId: 'ue-560', workId: 'work-7', bucket: 'specialists', purpose: 'subagent', status: 'running',
         requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
         connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
         requestedModelId: 'model:qwen3-coder-plus', effectiveModelId: 'model:qwen3-coder-plus',
-        billingRoute: 'plan_included', tokens: { input: 12100, output: 800 },
+        billingRoute: 'plan_included', tokens: { input: 12100, output: 800, cacheWrite: 3100 },
         costMicro: 0, startedAt: at(-11 * MIN), finishedAt: null,
         settlement: 'streaming_partial', sourceClass: 'provider_reported', receiptRef: 'rcpt-560',
         subagent: { role: 'Pricing specialist', persona: 'Domain analyst', child: 'child-47-1' } },
-      { eventId: 'ue-561', workId: 'work-7', bucket: 'specialists', purpose: 'specialist', status: 'running',
+      { eventId: 'ue-561', workId: 'work-7', bucket: 'specialists', purpose: 'subagent', status: 'running',
         requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
         connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
         requestedModelId: 'model:qwen3-coder-plus', effectiveModelId: 'model:qwen3-coder-plus',
@@ -454,46 +454,46 @@
         subagent: { role: 'Migration specialist', persona: 'Domain analyst', child: 'child-47-2' } },
 
       /* ---- work-8 · PlanningRun: quality conversation + cheap extraction (delta §5) ---- */
-      { eventId: 'ue-570', workId: 'work-8', bucket: 'main', purpose: 'planning_conversation', status: 'completed',
+      { eventId: 'ue-570', workId: 'work-8', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
         billingRoute: 'plan_included', tokens: { input: 51200, output: 4100, cacheRead: 30100 },
         costMicro: 0, startedAt: at(-95 * MIN), finishedAt: at(-80 * MIN),
         settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-570',
-        note: 'High-quality conversational planning route' },
-      { eventId: 'ue-571', workId: 'work-8', bucket: 'research', purpose: 'source_extraction', status: 'completed',
+        note: 'High-quality conversational planning route', runLineage: 'planning_run' },
+      { eventId: 'ue-571', workId: 'work-8', bucket: 'research', purpose: 'subagent', status: 'completed',
         requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
         connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
         requestedModelId: 'model:qwen3-max', effectiveModelId: 'model:qwen3-max',
         billingRoute: 'plan_included', tokens: { input: 24800, output: 1200 },
         costMicro: 0, startedAt: at(-79 * MIN), finishedAt: at(-70 * MIN),
         settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-571',
-        subagent: { child: 'plan-12-ext-1', role: 'Extraction' } },
-      { eventId: 'ue-572', workId: 'work-8', bucket: 'research', purpose: 'source_extraction', status: 'completed',
+        roleLabel: 'Source extraction', subagent: { child: 'plan-12-ext-1', role: 'Extraction' } },
+      { eventId: 'ue-572', workId: 'work-8', bucket: 'research', purpose: 'subagent', status: 'completed',
         requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
         connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
         requestedModelId: 'model:qwen3-max', effectiveModelId: 'model:qwen3-max',
         billingRoute: 'plan_included', tokens: { input: 21300, output: 900 },
         costMicro: 0, startedAt: at(-79 * MIN), finishedAt: at(-69 * MIN),
         settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-572',
-        subagent: { child: 'plan-12-ext-2', role: 'Extraction' } },
-      { eventId: 'ue-573', workId: 'work-8', bucket: 'research', purpose: 'source_extraction', status: 'running',
+        roleLabel: 'Source extraction', subagent: { child: 'plan-12-ext-2', role: 'Extraction' } },
+      { eventId: 'ue-573', workId: 'work-8', bucket: 'research', purpose: 'subagent', status: 'running',
         requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
         connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
         requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
         billingRoute: 'plan_included', tokens: { input: 18100, output: 400 },
         costMicro: 0, startedAt: at(-24 * MIN), finishedAt: null,
         settlement: 'streaming_partial', sourceClass: 'provider_reported', receiptRef: 'rcpt-573',
-        subagent: { child: 'plan-12-ext-3', role: 'Extraction' } },
-      { eventId: 'ue-574', workId: 'work-8', bucket: 'research', purpose: 'source_extraction', status: 'queued',
+        roleLabel: 'Source extraction', subagent: { child: 'plan-12-ext-3', role: 'Extraction' } },
+      { eventId: 'ue-574', workId: 'work-8', bucket: 'research', purpose: 'subagent', status: 'queued',
         requestedAccountId: 'acct:kimi-personal', effectiveAccountId: null,
         connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
         requestedModelId: 'model:kimi-k2', effectiveModelId: null,
         billingRoute: 'plan_included', tokens: {},
         costMicro: 0, startedAt: null, finishedAt: null,
         settlement: 'unknown', sourceClass: 'unknown', receiptRef: null, queuedReason: 'pm_policy',
-        subagent: { child: 'plan-12-ext-4', role: 'Extraction' },
+        roleLabel: 'Source extraction', subagent: { child: 'plan-12-ext-4', role: 'Extraction' },
         note: 'Queued — no provider attempt yet' },
 
       /* ---- work-9 · mixed-provider Crew + reducer (delta §5) ---- */
@@ -530,24 +530,24 @@
         settlement: 'unknown', sourceClass: 'unknown', receiptRef: null,
         subagent: { role: 'Critique · copy', persona: 'Copy editor', child: 'crew-3-m4' },
         note: 'Queued — no provider attempt yet' },
-      { eventId: 'ue-584', workId: 'work-9', bucket: 'synthesis', purpose: 'reducer', status: 'queued',
+      { eventId: 'ue-584', workId: 'work-9', bucket: 'synthesis', purpose: 'crew_member', status: 'queued',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: null,
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: null,
         billingRoute: 'plan_included', tokens: {},
         costMicro: 0, startedAt: null, finishedAt: null,
         settlement: 'unknown', sourceClass: 'unknown', receiptRef: null,
-        note: 'Reducer/synthesis reserved until members finish' },
+        roleLabel: 'Reducer', note: 'Reducer/synthesis reserved until members finish' },
 
       /* ---- work-10 · model switch + replay (Hermes §15.4) ---- */
-      { eventId: 'ue-590', workId: 'work-10', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-590', workId: 'work-10', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-personal', effectiveAccountId: 'acct:openai-personal',
         connectionId: 'conn:openai-personal-codex', productId: 'prod:codex-plus',
         requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: 'model:gpt-5-6-codex',
-        billingRoute: 'plan_included', tokens: { input: 61000, output: 4800, cacheRead: 40200 },
+        billingRoute: 'plan_included', tokens: { input: 61000, output: 4800, cacheRead: 40200, cacheWrite: 1800 },
         costMicro: 0, startedAt: at(-160 * MIN), finishedAt: at(-140 * MIN),
         settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-590' },
-      { eventId: 'ue-591', workId: 'work-10', bucket: 'retries', purpose: 'context_replay', status: 'completed',
+      { eventId: 'ue-591', workId: 'work-10', bucket: 'retries', purpose: 'conversation_replay', status: 'completed',
         requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
         connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
         requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
@@ -555,7 +555,7 @@
         costMicro: 0, startedAt: at(-138 * MIN), finishedAt: at(-136 * MIN),
         settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-591',
         note: 'Replay after model switch — old cache did not carry over' },
-      { eventId: 'ue-592', workId: 'work-10', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-592', workId: 'work-10', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
         connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
         requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
@@ -564,31 +564,32 @@
         settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-592' },
 
       /* ---- work-11 · provider branch, ancestry preserved (delta §5) ---- */
-      { eventId: 'ue-600', workId: 'work-11', bucket: 'retries', purpose: 'branch_replay', status: 'completed',
+      { eventId: 'ue-650', workId: 'work-11', bucket: 'retries', purpose: 'conversation_replay', status: 'completed',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
         billingRoute: 'plan_included', tokens: { input: 44100, output: 300 },
         costMicro: 0, startedAt: at(-115 * MIN), finishedAt: at(-113 * MIN),
-        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-600',
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-650',
+        replayKind: 'branch',
         branch: { sourceThreadId: 'thread:t-91', branchPoint: 'msg-m47', ancestry: ['thread:t-91', 'work-10'],
           note: 'This branch replayed context on a new connection, so cache reuse restarted.' } },
-      { eventId: 'ue-601', workId: 'work-11', bucket: 'main', purpose: 'main_work', status: 'running',
+      { eventId: 'ue-651', workId: 'work-11', bucket: 'main', purpose: 'user_work', status: 'running',
         requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
         connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
         requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
         billingRoute: 'plan_included', tokens: { input: 21900, output: 1400, cacheRead: 15200 },
         costMicro: 0, startedAt: at(-112 * MIN), finishedAt: null,
-        settlement: 'streaming_partial', sourceClass: 'cli_reported', receiptRef: 'rcpt-601' },
+        settlement: 'streaming_partial', sourceClass: 'cli_reported', receiptRef: 'rcpt-651' },
 
       /* ---- work-12 · cross-project child (delta §5, §10.12) ---- */
-      { eventId: 'ue-610', workId: 'work-12', bucket: 'specialists', purpose: 'subagent', status: 'completed',
+      { eventId: 'ue-652', workId: 'work-12', bucket: 'specialists', purpose: 'subagent', status: 'completed',
         requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
         connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
         requestedModelId: 'model:qwen3-max', effectiveModelId: 'model:qwen3-max',
         billingRoute: 'plan_included', tokens: { input: 17600, output: 2100 },
         costMicro: 0, startedAt: at(-200 * MIN), finishedAt: at(-180 * MIN),
-        settlement: 'settled', sourceClass: 'provider_reported', receiptRef: 'rcpt-610',
+        settlement: 'settled', sourceClass: 'provider_reported', receiptRef: 'rcpt-652',
         crossProject: { sourceProject: 'Harbor', sourceProjectFriendly: 'Harbor', sourceThreadId: 'thread:t-77',
           spawnReason: 'Cross-project research for pricing Goal',
           note: 'Project and thread lineage preserved; paths redacted.' } },
@@ -604,7 +605,7 @@
         note: 'Active free-model probe — validation activity, not user work' },
 
       /* ---- historical · removed account (packet §6.3) ---- */
-      { eventId: 'ue-091', workId: 'work-h1', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-091', workId: 'work-h1', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-old', effectiveAccountId: 'acct:openai-old',
         connectionId: null, productId: null,
         requestedModelId: 'model:gpt-5-6', effectiveModelId: 'model:gpt-5-6',
@@ -612,14 +613,112 @@
         costMicro: 410000, startedAt: '2026-07-28T18:40:00Z', finishedAt: '2026-07-28T19:10:00Z',
         settlement: 'settled', sourceClass: 'provider_reported', receiptRef: 'rcpt-091',
         historicalIdentity: { accountId: 'acct:openai-old', label: 'Removed account · Old OpenAI' } },
-      { eventId: 'ue-092', workId: 'work-h1', bucket: 'main', purpose: 'main_work', status: 'completed',
+      { eventId: 'ue-092', workId: 'work-h1', bucket: 'main', purpose: 'user_work', status: 'completed',
         requestedAccountId: 'acct:openai-old', effectiveAccountId: 'acct:openai-old',
         connectionId: null, productId: null,
         requestedModelId: 'model:gpt-5-6', effectiveModelId: 'model:gpt-5-6',
         billingRoute: 'api_billed', tokens: { input: 18900, output: 1500 },
         costMicro: 260000, startedAt: '2026-07-28T17:55:00Z', finishedAt: '2026-07-28T18:12:00Z',
         settlement: 'settled', sourceClass: 'provider_reported', receiptRef: 'rcpt-092',
-        historicalIdentity: { accountId: 'acct:openai-old', label: 'Removed account · Old OpenAI' } }
+        historicalIdentity: { accountId: 'acct:openai-old', label: 'Removed account · Old OpenAI' } },
+
+      /* ---- final cumulative packet (2026-08-08) — BSD, attachment
+         transform, MoA, router/skill/title helpers, fallback, offline
+         replay, post-install verification, Extra Bundle settlement ---- */
+      { eventId: 'ue-600', workId: 'work-1', bucket: 'validation', purpose: 'bsd', status: 'completed',
+        requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
+        connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
+        requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
+        billingRoute: 'plan_included', tokens: { input: 2600, output: 120, cacheRead: 1400 },
+        costMicro: 0, startedAt: at(-19 * MIN), finishedAt: at(-19 * MIN),
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-630',
+        bsd: { mode: 'Auto', trigger: 'high-risk edit', silent: true, latencyMs: 4100 } },
+      { eventId: 'ue-601', workId: 'work-3', bucket: 'validation', purpose: 'bsd', status: 'completed',
+        requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
+        connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
+        requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
+        billingRoute: 'plan_included', tokens: { input: 4100, output: 260, cacheRead: 1800 },
+        costMicro: 0, startedAt: at(-5 * MIN), finishedAt: at(-5 * MIN),
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-631',
+        bsd: { mode: 'On', trigger: 'redirect', silent: false, advice: 'Keep the public API stable', duplicateOf: null } },
+      { eventId: 'ue-602', workId: 'work-6', bucket: 'research', purpose: 'attachment_transform', status: 'completed',
+        requestedAccountId: 'acct:google-personal', effectiveAccountId: 'acct:google-personal',
+        connectionId: 'conn:google-gemini-cli', productId: 'prod:google-gemini-free',
+        requestedModelId: 'model:gemini-2-5-flash', effectiveModelId: 'model:gemini-2-5-flash',
+        billingRoute: 'plan_included', tokens: { input: 5600, output: 480 },
+        costMicro: 0, startedAt: at(-73 * MIN), finishedAt: at(-72 * MIN),
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-632',
+        attachment: { name: 'receipt.jpg', transform: 'pm_vision_ocr', derivedArtifactIds: ['art-91'],
+          consent: 'project_default', localCompute: 'none', privacy: 'provider_route' } },
+      { eventId: 'ue-603', workId: 'work-1', bucket: 'tools', purpose: 'mcp_router', status: 'completed',
+        requestedAccountId: 'acct:opencode-personal', effectiveAccountId: 'acct:opencode-personal',
+        connectionId: 'conn:opencode-shared-gw', productId: 'prod:shared-gw-route',
+        requestedModelId: 'model:qwen3-max', effectiveModelId: 'model:qwen3-max',
+        billingRoute: 'free', tokens: { input: 1100, output: 140 },
+        costMicro: 0, startedAt: at(-11 * MIN), finishedAt: at(-11 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-633' },
+      { eventId: 'ue-604', workId: 'work-1', bucket: 'tools', purpose: 'skill_search', status: 'completed',
+        requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
+        connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
+        requestedModelId: 'model:qwen3-coder-plus', effectiveModelId: 'model:qwen3-coder-plus',
+        billingRoute: 'plan_included', tokens: { input: 900, output: 110, cacheRead: 300 },
+        costMicro: 0, startedAt: at(-10 * MIN), finishedAt: at(-10 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-634' },
+      { eventId: 'ue-605', workId: 'work-2', bucket: 'main', purpose: 'title_generation', status: 'completed',
+        requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
+        connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
+        requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
+        billingRoute: 'plan_included', tokens: { input: 800, output: 100 },
+        costMicro: 0, startedAt: at(-28 * MIN), finishedAt: at(-28 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-635' },
+      { eventId: 'ue-606', workId: 'work-8', bucket: 'research', purpose: 'moa_reference', status: 'completed',
+        requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
+        connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-coding-plan',
+        requestedModelId: 'model:qwen3-max', effectiveModelId: 'model:qwen3-max',
+        billingRoute: 'plan_included', tokens: { input: 3400, output: 420, cacheRead: 900 },
+        costMicro: 0, startedAt: at(-35 * MIN), finishedAt: at(-31 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-636',
+        hostId: 'host:truenas', envId: 'env:docker' },
+      { eventId: 'ue-607', workId: 'work-8', bucket: 'synthesis', purpose: 'moa_aggregator', status: 'running',
+        requestedAccountId: 'acct:claude-work', effectiveAccountId: 'acct:claude-work',
+        connectionId: 'conn:claude-work-cli', productId: 'prod:claude-max',
+        requestedModelId: 'model:claude-opus-4-6', effectiveModelId: 'model:claude-opus-4-6',
+        billingRoute: 'plan_included', tokens: { input: 6000, output: 900, cacheRead: 2000 },
+        costMicro: 0, startedAt: at(-29 * MIN), finishedAt: null,
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-637',
+        hostId: 'host:truenas', envId: 'env:docker' },
+      { eventId: 'ue-608', workId: 'work-10', bucket: 'retries', purpose: 'fallback_attempt', status: 'completed',
+        requestedAccountId: 'acct:openai-work', effectiveAccountId: 'acct:openai-personal',
+        connectionId: 'conn:openai-personal-codex', productId: 'prod:codex-plus',
+        requestedModelId: 'model:gpt-5-6-codex', effectiveModelId: 'model:gpt-5-6-codex',
+        billingRoute: 'plan_included', tokens: { input: 5200, output: 640, cacheRead: 1700 },
+        costMicro: 0, startedAt: at(-118 * MIN), finishedAt: at(-116 * MIN),
+        settlement: 'observed', sourceClass: 'cli_reported', receiptRef: 'rcpt-638',
+        fallbackReason: 'Work account at limit' },
+      { eventId: 'ue-609', workId: 'work-4', bucket: 'validation', purpose: 'probe', status: 'completed',
+        requestedAccountId: 'acct:opencode-personal', effectiveAccountId: 'acct:opencode-personal',
+        connectionId: 'conn:opencode-go', productId: 'prod:oc-go-plan',
+        requestedModelId: 'model:qwen3-coder-plus', effectiveModelId: 'model:qwen3-coder-plus',
+        billingRoute: 'plan_included', tokens: { input: 1500, output: 210 },
+        costMicro: 0, startedAt: at(-52 * MIN), finishedAt: at(-52 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-639',
+        validationFor: 'ops-1' },
+      { eventId: 'ue-610', workId: 'work-10', bucket: 'retries', purpose: 'conversation_replay', status: 'completed',
+        requestedAccountId: 'acct:kimi-personal', effectiveAccountId: 'acct:kimi-personal',
+        connectionId: 'conn:kimi-code', productId: 'prod:kimi-code-plan',
+        requestedModelId: 'model:kimi-k2', effectiveModelId: 'model:kimi-k2',
+        billingRoute: 'plan_included', tokens: { input: 4800, output: 150 },
+        costMicro: 0, startedAt: at(-105 * MIN), finishedAt: at(-104 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-640',
+        replayKind: 'offline_reconnect', operationalRef: 'ops-2' },
+      { eventId: 'ue-611', workId: 'work-1', bucket: 'main', purpose: 'user_work', status: 'completed',
+        requestedAccountId: 'acct:alibaba-personal', effectiveAccountId: 'acct:alibaba-personal',
+        connectionId: 'conn:alibaba-personal-coding', productId: 'prod:alibaba-extra-bundle',
+        requestedModelId: 'model:qwen3-coder-plus', effectiveModelId: 'model:qwen3-coder-plus',
+        billingRoute: 'usage_pack', tokens: { input: 3900, output: 540, cacheRead: 1200 },
+        costMicro: 0, startedAt: at(-6 * MIN), finishedAt: at(-4 * MIN),
+        settlement: 'observed', sourceClass: 'provider_reported', receiptRef: 'rcpt-641',
+        note: 'Drawn from the Extra Bundle after included usage ran low' }
     ],
 
     /* Tool operations with recovery evidence — zero provider usage
@@ -638,6 +737,81 @@
         copy: 'Full Access was limited by Review mode. Three denials in a row tripped the breaker.' }
     ],
 
+
+    /* ================================================================
+       4b · BSD EVENTS — final cumulative packet §02
+       Back Seat Driver calls are real provider attempts; a silent call
+       still counts, a suppressed duplicate does not.
+       ================================================================ */
+    bsdEvents: [
+      { id: 'bsd-1', eventId: 'ue-600', requestedState: 'Auto', effectiveState: 'Auto', trigger: 'High-risk edit detected',
+        result: 'silent', advice: null, latencyMs: 4100, overrideScope: null, copy: 'Silent check — no advice needed', detail: 'A silent provider call still counts as usage.' },
+      { id: 'bsd-2', eventId: 'ue-601', requestedState: 'On', effectiveState: 'On', trigger: 'Mid-turn redirect',
+        result: 'advice_emitted', advice: 'Keep the public API stable', latencyMs: 6800, overrideScope: 'this turn', copy: 'Advice emitted', detail: 'Shown in chat; route and tokens recorded here.' },
+      { id: 'bsd-3', eventId: null, requestedState: 'Auto', effectiveState: 'Auto', trigger: 'Duplicate of bsd-1 within cooldown',
+        result: 'duplicate_suppressed', advice: null, latencyMs: 0, overrideScope: null, copy: 'Duplicate suppressed', detail: 'No second provider call was made — zero additional usage.' }
+    ],
+
+    /* ================================================================
+       4c · OPERATIONAL MAINTENANCE — packet §04
+       Non-model maintenance & operational activity. NEVER token
+       totals; a maintenance flow's real model call lives separately
+       as a validation attempt (joined by validationEventId).
+       ================================================================ */
+    operational: [
+      { id: 'ops-1', kind: 'cli_update', title: 'Codex CLI update', status: 'rolled_back',
+        hostId: 'host:win-desktop', envId: 'env:native', providerUsage: 'validation_only', validationEventId: 'ue-609',
+        phases: [{ label: 'Check', ms: 2 * MIN }, { label: 'Wait for idle', ms: 9 * MIN }, { label: 'Install', ms: 3 * MIN }, { label: 'Verify', ms: 4 * MIN }, { label: 'Rollback', ms: 1 * MIN }],
+        failureClass: 'verify_failed', outcome: 'rolled_back',
+        copy: 'Update verified, then rolled back',
+        detail: 'Installer time is maintenance, not model usage. The verify step made one real model call (recorded separately).' },
+      { id: 'ops-2', kind: 'offline_outbox', title: 'Client offline · outbox', status: 'completed',
+        hostId: 'host:macbook', envId: 'env:native', providerUsage: 'validation_only', validationEventId: null,
+        phases: [{ label: 'Offline', ms: 22 * MIN }, { label: 'Outbox wait', ms: 22 * MIN }, { label: 'Reconnect + replay', ms: 3 * MIN }],
+        failureClass: null, outcome: 'completed',
+        copy: 'Queued while offline · replayed on reconnect',
+        detail: 'The reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.' },
+      { id: 'ops-3', kind: 'server_continuity', title: 'Home Server kept working', status: 'completed',
+        hostId: 'host:truenas', envId: 'env:docker', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'completed',
+        copy: 'Server work continued',
+        detail: 'Server work continues while the client is offline; slow thread load is not provider usage.' },
+      { id: 'ops-4', kind: 'sound_preview', title: 'Notification sound preview', status: 'completed',
+        hostId: 'host:win-desktop', envId: 'env:native', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'completed',
+        copy: 'Local sound preview — not usage',
+        detail: 'A local sound preview is not provider usage.' },
+      { id: 'ops-5', kind: 'notification_test', title: 'Notification test-send', status: 'completed',
+        hostId: 'host:win-desktop', envId: 'env:native', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'completed',
+        copy: 'Test notification sent',
+        detail: 'Operational receipt, not model usage.' },
+      { id: 'ops-6', kind: 'backup', title: 'Project Vault backup', status: 'completed',
+        hostId: 'host:truenas', envId: 'env:docker', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'completed',
+        copy: 'Vault backup completed',
+        detail: 'Backup is maintenance, never model usage.' },
+      { id: 'ops-7', kind: 'project_move', title: 'Project Move: Tastebook → Vault', status: 'completed',
+        hostId: 'host:truenas', envId: 'env:docker', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'completed',
+        copy: 'Project moved to Vault',
+        detail: 'Moving a project between storage locations is not provider usage.' }
+    ],
+
+    /* ================================================================
+       4d · HOSTS + ENVIRONMENTS — packet §04 server-first lineage
+       ================================================================ */
+    hosts: [
+      { id: 'host:macbook',   label: 'Jared’s MacBook Air', kind: 'desktop',     os: 'macOS 15' },
+      { id: 'host:win-desktop', label: 'Studio PC',         kind: 'desktop',     os: 'Windows 11' },
+      { id: 'host:truenas',   label: 'TrueNAS Home Server', kind: 'home_server', os: 'TrueNAS · Docker' }
+    ],
+    environments: [
+      { id: 'env:native', label: 'Native' },
+      { id: 'env:docker', label: 'Docker · pm-server' },
+      { id: 'env:wsl',    label: 'WSL (optional)' }
+    ],
+
     /* ================================================================
        5 · RUNS, FORECASTS, TIMING — delta §2/§5/§6
        Usage supplies the forecast; Goal Runtime/Orchestrator owns
@@ -646,6 +820,8 @@
     runs: [
       { id: 'run:goal-47', kind: 'goal', owningSurface: 'assistant_chat_goal', visibility: 'visible',
         title: 'Refactor pricing pipeline', project: 'Tastebook', status: 'running', phase: 'Specialist reviews',
+        hostId: 'host:win-desktop', envId: 'env:native',
+        capacity: { hardMax: 8, configuredPreferred: 4, providerAdvertised: 2, effectiveNow: 2, predictedSustainable: 2 },
         startedAt: at(-130 * MIN),
         requested: { children: 8, specialistsRequired: 8 },
         admitted: { now: 2, effectiveConcurrency: 2, sustainableConcurrency: 2 },
@@ -670,13 +846,17 @@
             { label: 'Waiting for provider capacity', ms: 9 * MIN },
             { label: 'Waiting for approval', ms: 6 * MIN },
             { label: 'Waiting for reset/cooldown', ms: 0 },
-            { label: 'Local tool/runtime time', ms: 19 * MIN }
+            { label: 'Local tool/runtime time', ms: 19 * MIN },
+            { label: 'Outbox/offline wait', ms: 0 },
+            { label: 'Reconnect / sync / replay', ms: 4 * MIN }
           ]
         },
         forecastId: 'fc-goal-47' },
 
       { id: 'run:plan-12', kind: 'planning_run', owningSurface: 'planning_wizard', visibility: 'internal',
         title: 'Spec: U11 usage concept', project: 'Puppet Master', status: 'running', phase: 'Source extraction',
+        hostId: 'host:truenas', envId: 'env:docker',
+        capacity: { hardMax: 8, configuredPreferred: 4, providerAdvertised: 2, effectiveNow: 2, predictedSustainable: 2 },
         startedAt: at(-100 * MIN),
         requested: { children: 6, specialistsRequired: 6 },
         admitted: { now: 2, effectiveConcurrency: 2, sustainableConcurrency: 2 },
@@ -691,6 +871,8 @@
 
       { id: 'run:crew-3', kind: 'crew', owningSurface: 'orchestrator', visibility: 'orchestrator',
         title: 'Design critique crew', project: 'Puppet Master', status: 'running', phase: 'Critique round 1',
+        hostId: 'host:macbook', envId: 'env:native',
+        capacity: { hardMax: 8, configuredPreferred: 6, providerAdvertised: 3, effectiveNow: 3, predictedSustainable: 3 },
         startedAt: at(-55 * MIN),
         requested: { members: 5 },
         admitted: { now: 3, effectiveConcurrency: 3, sustainableConcurrency: 3 },
@@ -761,6 +943,8 @@
         switched: false, ancestry: null,
         context: {
           used: 42200, limit: 128000, pct: 33, cacheHitRate: 96.8,
+          cacheEpoch: 'e-12', stablePrefixId: 'sp-88',
+          toolSchemaOverhead: { tokens: 5900, pctOfWindow: 5, source: 'pm_derived' },
           windowStartedAt: at(-3 * HOUR), lastActivityAt: at(-2 * MIN),
           segments: [
             { family: 'Messages', pct: 46, tokens: 19400 },
@@ -995,6 +1179,8 @@
   U11.meterById = indexBy(U11.meters);
   U11.modelById = indexBy(U11.models);
   U11.workById = indexBy(U11.works);
+  U11.hostById = indexBy(U11.hosts);
+  U11.envById = indexBy(U11.environments);
   U11.runById = indexBy(U11.runs);
   U11.forecastById = indexBy(U11.forecasts);
   U11.threadById = indexBy(U11.threads);
@@ -1142,6 +1328,17 @@
     });
   };
 
+  /* ---------- operational maintenance accessors (packet §04) ---------- */
+  U11.operationsFor = function () { return U11.operational; };
+  U11.attemptsOfOperational = function (opId) {
+    return U11.attempts.filter(function (a) { return a.validationFor === opId || a.operationalRef === opId; });
+  };
+  U11.bsdByEventId = (function () {
+    var m = {};
+    U11.bsdEvents.forEach(function (b) { if (b.eventId) m[b.eventId] = b; });
+    return m;
+  })();
+
   /* grouped ledger: logical works with their attempts (delta §4) */
   U11.worksWithAttempts = function (scopeId) {
     return U11.works
@@ -1181,7 +1378,7 @@
       'cmd.usage.refresh': 'Usage projections refreshed (demo)',
       'cmd.usage.export': 'Export prepared (demo)',
       'cmd.account.select_profile': 'Profile selected (demo)',
-      'cmd.provider.switch_route': 'Route switch queued (demo)',
+      'cmd.provider.switch_route': 'Future work will prefer this account. In-flight requests are never moved.',
       'cmd.chat.compact_context': 'Compaction dispatched (demo)',
       'cmd.chat.open_thread_context_details': 'Context details opened',
       'cmd.chat.focus_thread_context_details': 'Context details focused',
@@ -1191,7 +1388,9 @@
       'cmd.widget.resize': 'Widget resized',
       'cmd.widget.configure': 'Widget configured',
       'cmd.widget.move': 'Widget moved',
-      'cmd.widget.reset_layout': 'Layout reset to defaults'
+      'cmd.widget.reset_layout': 'Layout reset to defaults',
+      'cmd.usage.forecast.request': 'Forecast refreshed (demo)',
+      'cmd.provider.usage.open_management': 'Opening provider usage management (demo)'
     };
     return { ok: true, cmd: cmdId, toast: toasts[cmdId] || (cmdId + ' (demo)') };
   };

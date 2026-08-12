@@ -1,0 +1,181 @@
+/* ============================================================================
+   Kimi K3 — sync / outbox chrome (k3n-).
+   Header state pill (Live / Offline / Queued (N) / Reconnecting… /
+   Replaying… / Catching up… / Server continuing) + its popover: connection
+   route lines, outbox rows with per-op status, and the domain-failure
+   section (kept visually separate from transport health).
+   Reduced-motion parity: the busy pulse is killed under
+   html[data-motion="reduced"]; the steady state tint carries the signal.
+   ========================================================================== */
+
+/* ---- header pill ---- */
+.k3n-pill { gap: 6px; cursor: pointer; }
+.k3n-pill-icon { display: inline-flex; align-items: center; }
+.k3n-pill-icon svg { width: 13px; height: 13px; }
+.k3n-pill-icon[hidden] { display: none; }
+
+.k3n-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--text-muted);
+}
+
+.k3n-pill.is-live    { color: var(--text-secondary); }
+.k3n-pill.is-live .k3n-dot { background: var(--accent-lime, var(--accent-primary)); }
+
+.k3n-pill.is-offline {
+  color: var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 10%, transparent);
+  border-color: var(--accent-error);
+}
+.k3n-pill.is-offline .k3n-dot { background: var(--accent-error); }
+
+.k3n-pill.is-queued {
+  color: var(--accent-warning, var(--accent-orange, #e0a040));
+  background: color-mix(in srgb, var(--accent-warning, var(--accent-orange, #e0a040)) 12%, transparent);
+  border-color: var(--accent-warning, var(--accent-orange, #e0a040));
+}
+.k3n-pill.is-queued .k3n-dot { background: var(--accent-warning, var(--accent-orange, #e0a040)); }
+
+.k3n-pill.is-busy {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+.k3n-pill.is-busy .k3n-dot {
+  background: var(--accent-primary);
+  animation: k3-pulse calc(var(--k3-dur-slow, 360ms) * 2) var(--ease-smooth, ease) infinite;
+}
+
+.k3n-pill.is-server {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+.k3n-pill.is-server .k3n-dot { background: var(--accent-primary); }
+
+.k3n-pill.is-cached { color: var(--text-muted); }
+
+/* ---- popover ---- */
+.k3n-pop { min-width: 264px; max-width: 320px; padding: 10px 12px; }
+
+.k3n-pop-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.k3n-pop-title { font-weight: 600; font-size: 12.5px; color: var(--text-primary); }
+
+.k3n-status {
+  padding: 1px 8px;
+  font-size: 10.5px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--accent-soft);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.k3n-status-live { color: var(--accent-lime, var(--accent-primary)); }
+.k3n-status-offline {
+  background: color-mix(in srgb, var(--accent-error) 14%, transparent);
+  color: var(--accent-error);
+}
+.k3n-status-queued {
+  background: color-mix(in srgb, var(--accent-warning, var(--accent-orange, #e0a040)) 16%, transparent);
+  color: var(--accent-warning, var(--accent-orange, #e0a040));
+}
+.k3n-status-reconnecting,
+.k3n-status-replay,
+.k3n-status-snapshot,
+.k3n-status-synchronizing,
+.k3n-status-server-continuing { color: var(--accent-primary); }
+
+.k3n-sec { padding: 8px 0; border-top: 1px solid var(--border-light); }
+.k3n-sec-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.k3n-kv {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 1.5px 0;
+  font-size: 12px;
+}
+.k3n-kv-k { color: var(--text-muted); flex: 0 0 auto; }
+.k3n-kv-v {
+  color: var(--text-primary);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* outbox rows */
+.k3n-op {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+.k3n-op-text {
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3n-op-status {
+  flex: 0 0 auto;
+  padding: 0 7px;
+  font-size: 10.5px;
+  border-radius: var(--radius-pill, 999px);
+}
+.k3n-op-status.is-queued {
+  background: color-mix(in srgb, var(--accent-warning, var(--accent-orange, #e0a040)) 16%, transparent);
+  color: var(--accent-warning, var(--accent-orange, #e0a040));
+}
+.k3n-op-status.is-sent {
+  background: color-mix(in srgb, var(--accent-lime, var(--accent-primary)) 16%, transparent);
+  color: var(--accent-lime, var(--accent-primary));
+}
+.k3n-empty { font-size: 11.5px; color: var(--text-muted); }
+
+/* domain-failure section — deliberately separate from transport health */
+.k3n-sec-domains {
+  border-top: 1px dashed var(--border-light);
+}
+.k3n-domain-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+.k3n-domain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+.k3n-domain-name {
+  color: var(--accent-error);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3n-domain-retry { flex: 0 0 auto; font-size: 11px; padding: 1px 8px; }
+
+.k3n-reconnect { width: 100%; margin-top: 8px; font-size: 12px; }
+
+/* ---- reduced-motion parity ---- */
+html[data-motion="reduced"] .k3n-pill.is-busy .k3n-dot { animation: none !important; }

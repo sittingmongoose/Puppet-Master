@@ -1,0 +1,41 @@
+{
+  "concept": "QwenUsageConcept/u11-prism",
+  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06 wiring",
+  "date": "2026-08-11",
+  "chain": [
+    {
+      "stage": "Provider/CLI/raw receipt",
+      "u11_structure": "attempts[].receiptRef ('rcpt-*') — one receipt per real attempt; raw payloads never shown",
+      "note": "Historical snapshots preserve receipt refs + route (packet §01 historical stability)"
+    },
+    {
+      "stage": "Normalization with source quality",
+      "u11_structure": "attempts[].sourceClass (cli_reported | provider_reported | pm_observed | unknown) + settlement quality field on every event and meter (packet §04 data quality)",
+      "note": "Zero ≠ unknown; every figure carries its source"
+    },
+    {
+      "stage": "Immutable usage event",
+      "u11_structure": "attempts[] — append-only; failed/interrupted/queued attempts retained (ue-510, ue-520, ue-574, ue-583); final route never overwrites earlier attempts; removed accounts keep identity (ue-091/ue-092)"
+    },
+    {
+      "stage": "Logical-turn grouping",
+      "u11_structure": "works[] + worksWithAttempts() — turns, Goal phases, PlanningRun topics, Crew steps, thread requests; helpers grouped under their logical work, never hidden inside the main model"
+    },
+    {
+      "stage": "Projections / forecast",
+      "u11_structure": "bucketTotals(), forecasts[] (fc-goal-47, fc-plan-12), costs (single cost authority 61.85M + 125.57M = 187.42M), capacity envelope on runs; meter estimates when provider telemetry is unavailable (meter:oc-go-monthly)"
+    },
+    {
+      "stage": "Usage UI / widget",
+      "u11_structure": "u11-widgets.js TYPES registry on the shared PMWidgets engine (plans, costs, accounts, attention, context, capacity, runs, free, analytics, ledger, operations, tools, cache, signals, authority) with three disclosure levels"
+    },
+    {
+      "stage": "Semantic deep link to Settings/owner",
+      "u11_structure": "U11.deepLink() — settings/providers (routing, reconnect), settings/usage (usage_and_extra_usage), orchestrator/goals/crew run inspectors; Usage never mutates policy locally"
+    }
+  ],
+  "out_of_usage": [
+    "Route resolution and scheduling remain outside Usage (packet §06) — U11 shows measured admission state; Goal Runtime/Orchestrator decides",
+    "Purchase/pack/reset/auto-reload execution requires real typed commands + confirmation + receipt; U11's 'Open provider console' is an open action only"
+  ]
+}

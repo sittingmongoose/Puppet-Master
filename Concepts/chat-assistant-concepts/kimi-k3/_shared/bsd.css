@@ -1,0 +1,209 @@
+/* ============================================================================
+   Kimi K3 — BSD chrome (k3b-). States:
+   - Off            muted
+   - Auto idle      quiet
+   - Auto evaluating  theme-aware halo glow (--accent-primary), ONLY while
+                      autoActive is true; reduced motion -> steady soft outline
+   - On (manual)    DISTINCT filled accent + inverted glyph, never glows
+   - results        small status chips (advice pulses for attention)
+   Reduced-motion parity: every animation is killed under
+   html[data-motion="reduced"] with an identical-information final state.
+   ========================================================================== */
+
+/* ---- shared button base ---- */
+.k3b-btn { position: relative; }
+
+.k3b-glyph { display: inline-flex; align-items: center; justify-content: center; }
+.k3b-glyph svg { width: 15px; height: 15px; }
+.k3b-glyph-text {
+  font-family: var(--mono-font);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+
+/* state: Off — muted */
+.k3b-btn.k3b-off { color: var(--text-muted); opacity: .8; }
+
+/* state: Auto idle — quiet */
+.k3b-btn.k3b-auto { color: var(--text-secondary); }
+
+/* state: Auto actively evaluating — theme-aware halo glow */
+@keyframes k3b-halo {
+  0%, 100% { box-shadow: 0 0 0 1px var(--accent-soft), 0 0 8px 1px var(--accent-glow); }
+  50%      { box-shadow: 0 0 0 2px var(--accent-glow), 0 0 16px 4px var(--accent-glow); }
+}
+.k3b-btn.k3b-eval {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  animation: k3b-halo calc(var(--k3-dur-slow, 360ms) * 2.2) var(--ease-smooth, ease) infinite;
+}
+
+/* state: manual On — DISTINCT filled accent + inverted glyph, no glow */
+.k3b-btn.k3b-on {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--surface);
+  opacity: 1;
+}
+.k3b-btn.k3b-on:hover:not(:disabled) {
+  background: var(--accent-primary);
+  color: var(--surface);
+}
+.k3b-btn.k3b-on svg { stroke: currentColor; }
+
+/* ---- mono variant: circular monogram ---- */
+.k3b-mono { border-radius: 50%; }
+
+/* ---- chip variant ---- */
+.k3b-chip { gap: 6px; }
+.k3b-chip-label { white-space: nowrap; }
+.k3b-chip-result:empty { display: none; }
+
+/* ---- token variant: compact status token ---- */
+.k3b-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  font: inherit;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--accent-soft);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+}
+.k3b-token:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+.k3b-token-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex: 0 0 auto;
+}
+.k3b-token.k3b-eval .k3b-token-dot { background: var(--accent-primary); }
+.k3b-token.k3b-on .k3b-token-dot { background: var(--surface); }
+.k3b-token.k3b-off .k3b-token-dot { background: var(--text-muted); }
+
+/* ---- rail variant: icon with state ring ---- */
+.k3b-rail-ring {
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1.5px solid transparent;
+  pointer-events: none;
+}
+.k3b-rail.k3b-auto .k3b-rail-ring { border-color: var(--border-light); }
+.k3b-rail.k3b-eval .k3b-rail-ring { border-color: var(--accent-primary); }
+.k3b-rail.k3b-on .k3b-rail-ring { border-color: var(--surface); }
+.k3b-rail.k3b-off .k3b-rail-ring { border-color: transparent; }
+
+/* ---- result indicators ---- */
+.k3b-result-dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: 1px solid var(--surface);
+}
+.k3b-result-dot-advice { background: var(--accent-primary); }
+.k3b-result-dot-duplicate { background: var(--accent-warning, var(--accent-orange, #e0a040)); }
+.k3b-result-dot-timeout,
+.k3b-result-dot-unavailable { background: var(--accent-error); }
+.k3b-result-dot-quota { background: var(--accent-warning, var(--accent-orange, #e0a040)); }
+
+.k3b-result {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  font-size: 10.5px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--accent-soft);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.k3b-result-advice {
+  background: var(--accent-glow);
+  color: var(--accent-primary);
+  animation: k3-attention-pulse calc(var(--k3-dur-slow, 360ms) * 2.4) var(--ease-smooth, ease) infinite;
+}
+.k3b-result-timeout,
+.k3b-result-unavailable {
+  background: color-mix(in srgb, var(--accent-error) 14%, transparent);
+  color: var(--accent-error);
+}
+.k3b-result-duplicate,
+.k3b-result-quota {
+  background: color-mix(in srgb, var(--accent-warning, var(--accent-orange, #e0a040)) 16%, transparent);
+  color: var(--accent-warning, var(--accent-orange, #e0a040));
+}
+
+/* ---- detail surface (popover body + detail host share this) ---- */
+.k3b-pop { min-width: 240px; max-width: 300px; padding: 10px 12px; }
+.k3b-detail-host { padding: 8px 10px; }
+
+.k3b-detail-title {
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.k3b-radio-group { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+.k3b-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.k3b-radio:hover { background: var(--accent-soft); color: var(--text-primary); }
+.k3b-radio.is-checked { color: var(--text-primary); }
+.k3b-radio input { accent-color: var(--accent-primary); margin: 0; }
+
+.k3b-scope-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -4px 0 8px;
+  padding-left: 6px;
+}
+
+.k3b-last {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.k3b-foot {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-top: 6px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* ---- advice popover ---- */
+.k3b-pop-advice { min-width: 260px; }
+.k3b-advice-body {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  line-height: var(--line-height, 1.55);
+  color: var(--text-primary);
+}
+.k3b-advice-settings { margin-bottom: 8px; font-size: 12px; }
+
+/* ---- reduced-motion parity: same information, no animation ---- */
+html[data-motion="reduced"] .k3b-btn.k3b-eval {
+  animation: none !important;
+  /* steady soft outline carries the "evaluating" signal instead of the halo */
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+html[data-motion="reduced"] .k3b-result-advice { animation: none !important; }

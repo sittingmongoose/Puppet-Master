@@ -185,6 +185,107 @@ window.PMChatShell = (() => {
     toastStack.className = "pmq-toast-stack";
     root.appendChild(toastStack);
 
+    // ---- v3: offline/sync strip + notification inbox (title-bar boundary) ----
+    const SYNC_LABELS = {
+      live: "Live", cached: "Cached", synchronizing: "Syncing…",
+      offline: "Offline", reconnecting: "Reconnecting…", replaying: "Replaying…", snapshot: "Snapshot catch-up"
+    };
+    const titleRight = titlebar.querySelector(".pmq-titlebar-right");
+    const syncstrip = document.createElement("button");
+    syncstrip.className = "pmq-syncstrip";
+    syncstrip.type = "button";
+    syncstrip.setAttribute("aria-label", "Connection status");
+    titleRight.appendChild(syncstrip);
+    const inboxBtn = document.createElement("button");
+    inboxBtn.className = "pmq-inbox";
+    inboxBtn.type = "button";
+    inboxBtn.setAttribute("aria-label", "Notifications");
+    inboxBtn.innerHTML = '<i data-ico="bell"></i><span class="pmq-inbox-count" hidden>0</span>';
+    titleRight.appendChild(inboxBtn);
+
+    function syncLabel() {
+      if (!store) return "Live";
+      const conn = store.state.connection;
+      if (conn.status === "offline") return "Offline · " + conn.outbox.length + " queued";
+      if (conn.serverWork && conn.status === "live") return "Server work continuing";
+      return SYNC_LABELS[conn.status] || conn.status;
+    }
+    function renderSync() {
+      if (!store) { syncstrip.hidden = true; return; }
+      const conn = store.state.connection;
+      syncstrip.dataset.status = conn.status;
+      syncstrip.innerHTML = '<span class="pmq-syncdot"></span><span class="pmq-synclabel">' + window.PMFmt.esc(syncLabel()) + "</span>";
+      syncstrip.hidden = false;
+    }
+    function renderInbox() {
+      if (!store) return;
+      const unread = store.state.notifications.unread;
+      const countEl = inboxBtn.querySelector(".pmq-inbox-count");
+      countEl.hidden = unread === 0;
+      countEl.textContent = String(unread);
+      inboxBtn.setAttribute("aria-label", "Notifications" + (unread ? " · " + unread + " unread" : ""));
+    }
+    function ago(ts) {
+      const d = Date.now() - new Date(ts).getTime();
+      const m = Math.floor(d / 60000);
+      if (m < 1) return "just now";
+      if (m < 60) return m + "m ago";
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + "h ago";
+      return Math.floor(h / 24) + "d ago";
+    }
+    function openOutboxPopup() {
+      if (!store || !window.PMChatPopups) return;
+      const conn = store.state.connection;
+      const rows = conn.outbox.length
+        ? conn.outbox.map(e => '<div class="pmq-obx-row"><span class="pmq-obx-text">' + window.PMFmt.esc((e.draft.text || "").slice(0, 60)) + '</span><span class="pmq-obx-meta">queued ' + ago(e.at) + '</span><button class="pmq-btn pmq-btn-sm" type="button" disabled title="Available once back online">Send now</button></div>').join("")
+        : '<div class="pmq-obx-empty">Outbox is empty.</div>';
+      const wrap = document.createElement("div");
+      wrap.className = "pmq-obx-pop";
+      wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="activity"></i>Connection · ' + window.PMFmt.esc(syncLabel()) + '</div>' +
+        '<div class="pmq-popup-body pmq-scroll">' + rows + "</div>" +
+        '<div class="pmq-obx-foot">' +
+        (conn.status === "live" ? "" : '<button class="pmq-btn pmq-btn-primary" type="button" data-reconnect>Reconnect now</button>') +
+        "</div>";
+      window.PMIcons.hydrate(wrap);
+      const entry = window.PMChatPopups.open(syncstrip, wrap, { width: 300 });
+      const rc = wrap.querySelector("[data-reconnect]");
+      if (rc) rc.addEventListener("click", () => { store.connReconnect(); window.PMChatPopups.dismiss(entry); });
+    }
+    function openInboxPopup() {
+      if (!store || !window.PMChatPopups) return;
+      const ns = store.state.notifications.inbox;
+      const KIND_ICON = { approval: "shield", "goal-blocked": "warn", "update-available": "sparkle", collision: "warn", completion: "check" };
+      const rows = ns.length
+        ? ns.map(n => '<div class="pmq-inbox-row' + (n.read ? "" : " pmq-unread") + '" data-ntf="' + window.PMFmt.esc(n.id) + '">' +
+            '<i data-ico="' + (KIND_ICON[n.kind] || "bell") + '"></i>' +
+            '<span class="pmq-inbox-main"><span class="pmq-inbox-title">' + window.PMFmt.esc(n.title) + "</span>" +
+            '<span class="pmq-inbox-body">' + window.PMFmt.esc(n.body) + "</span>" +
+            '<span class="pmq-inbox-meta">' + ago(n.at) + " · " + window.PMFmt.esc(n.kind) + "</span></span>" +
+            (n.threadKey ? '<button class="pmq-btn pmq-btn-sm" type="button" data-ntfopen="' + window.PMFmt.esc(n.threadKey) + '">Open thread</button>' : "") +
+            (!n.read ? '<button class="pmq-btn pmq-btn-sm" type="button" data-ntfread="' + window.PMFmt.esc(n.id) + '">Mark read</button>' : "") +
+            "</div>").join("")
+        : '<div class="pmq-obx-empty">No notifications yet.</div>';
+      const wrap = document.createElement("div");
+      wrap.className = "pmq-inbox-pop";
+      wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="bell"></i>Notifications</div>' +
+        '<div class="pmq-popup-body pmq-scroll">' + rows + "</div>" +
+        '<div class="pmq-obx-foot">' + (ns.some(n => !n.read) ? '<button class="pmq-btn" type="button" data-readall>Mark all read</button>' : "") + "</div>";
+      window.PMIcons.hydrate(wrap);
+      const entry = window.PMChatPopups.open(inboxBtn, wrap, { width: 330 });
+      wrap.querySelectorAll("[data-ntfopen]").forEach(b => b.addEventListener("click", () => { store.switchThread(b.dataset.ntfopen); window.PMChatPopups.dismiss(entry); }));
+      wrap.querySelectorAll("[data-ntfread]").forEach(b => b.addEventListener("click", () => { store.notifyRead(b.dataset.ntfread); window.PMChatPopups.dismiss(entry); }));
+      const ra = wrap.querySelector("[data-readall]");
+      if (ra) ra.addEventListener("click", () => { store.notifyReadAll(); window.PMChatPopups.dismiss(entry); });
+    }
+    syncstrip.addEventListener("click", openOutboxPopup);
+    inboxBtn.addEventListener("click", openInboxPopup);
+    window.addEventListener("pmq-open-inbox", () => openInboxPopup());
+    if (store) {
+      store.subscribe(() => { renderSync(); renderInbox(); });
+      renderSync(); renderInbox();
+    }
+
     window.PMIcons.hydrate(root);
 
     titlebar.addEventListener("click", e => {
@@ -211,9 +312,10 @@ window.PMChatShell = (() => {
       const t = activeTabData;
       editorContent.hidden = false;
       const ico = t.kind === "browser capture" ? "globe" : t.kind === "data" ? "graph" : "file";
+      const kindLabel = t.kind === "browser capture" ? "Browser Program capture" : ((t.kind || "document").charAt(0).toUpperCase() + (t.kind || "document").slice(1));
       editorContent.innerHTML =
         '<div class="pmq-ec-head"><i data-ico="' + ico + '"></i><span class="pmq-ec-title">' + window.PMFmt.esc(t.title) + "</span>" +
-        '<span class="pmq-chip">' + window.PMFmt.esc((t.kind || "document").charAt(0).toUpperCase() + (t.kind || "document").slice(1)) + "</span></div>" +
+        '<span class="pmq-chip">' + window.PMFmt.esc(kindLabel) + "</span></div>" +
         (t.detail ? '<div class="pmq-ec-path"><i data-ico="branch"></i>' + window.PMFmt.esc(t.detail) + "</div>" : "") +
         '<div class="pmq-ec-note">Editor, browser and file-explorer internals are owned elsewhere; this panel is faithful shell dressing for the handoff.</div>' +
         '<div class="pmq-ec-lines"><span style="width:88%"></span><span style="width:64%"></span><span style="width:78%"></span><span style="width:52%"></span></div>';
@@ -245,7 +347,7 @@ window.PMChatShell = (() => {
       openTabs.push({ id: tab.id, el, data: tab });
       activeTabData = tab;
       renderEditorContent();
-      if (window.PMChatCommands) window.PMChatCommands.dispatch(tab.kind === "browser capture" ? "cmd.browser.open" : "cmd.editor.open", { title: tab.title, kind: tab.kind, path: tab.detail || "" }, { cataloged: false });
+      if (window.PMChatCommands) window.PMChatCommands.dispatch(tab.kind === "browser capture" ? "cmd.browser_program.open" : "cmd.editor.open", { title: tab.title, kind: tab.kind === "browser capture" ? "Browser Program capture" : tab.kind, path: tab.detail || "" }, tab.kind === "browser capture" ? {} : { cataloged: false });
       toast("Opened " + tab.title + " in an editor tab");
     }
 
