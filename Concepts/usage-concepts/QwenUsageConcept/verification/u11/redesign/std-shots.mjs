@@ -1,0 +1,20 @@
+import { writeFileSync } from 'node:fs';
+import { spawn } from 'node:child_process';
+const CHROME='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const chrome=spawn(CHROME,['--headless=new','--disable-gpu','--no-first-run','--remote-debugging-port=9224','--hide-scrollbars','about:blank'],{stdio:'ignore'});
+async function wsUrl(){for(let i=0;i<60;i++){try{const r=await fetch('http://127.0.0.1:9224/json');const l=await r.json();const p=l.find(t=>t.type==='page');if(p&&p.webSocketDebuggerUrl)return p.webSocketDebuggerUrl;}catch{}await new Promise(r=>setTimeout(r,250));}throw new Error('no chrome');}
+const ws=new WebSocket(await wsUrl());let id=0;const pend=new Map();
+ws.addEventListener('message',ev=>{const m=JSON.parse(ev.data);if(m.id&&pend.has(m.id)){pend.get(m.id)(m);pend.delete(m.id);}});
+await new Promise(r=>ws.addEventListener('open',r,{once:true}));
+const send=(method,params={})=>new Promise(res=>{const i=++id;pend.set(i,res);ws.send(JSON.stringify({id:i,method,params}));});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const shot=async n=>{const{result}=await send('Page.captureScreenshot',{format:'png'});writeFileSync(n+'.png',Buffer.from(result.data,'base64'));console.log('shot',n);};
+const js=e=>send('Runtime.evaluate',{expression:e,awaitPromise:true});
+await send('Page.enable');
+await send('Emulation.setDeviceMetricsOverride',{width:1600,height:1000,deviceScaleFactor:1,mobile:false});
+await send('Page.navigate',{url:'http://localhost:8741/u11-prism.html'});await sleep(2800);
+await js(`document.querySelector('#u11Disc [data-disc="standard"]').click()`);await sleep(2300);
+await shot('42-standard-overview');
+await js(`document.querySelector('.u11-item[data-tab="costs"]').click()`);await sleep(2300);
+await shot('43-standard-costs');
+chrome.kill();process.exit(0);
