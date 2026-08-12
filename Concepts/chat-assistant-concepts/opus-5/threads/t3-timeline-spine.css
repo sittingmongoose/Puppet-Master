@@ -580,3 +580,275 @@
  * little extra scroll distance and leaves a small gap under the last message, which
  * is what every chat client does anyway, and the pill floats over that gap. */
 [data-motion="reduced"][data-pmx-thread="t3"] .t3-root { transition: none !important; }
+
+/* ================================================================ packet: question run, work units,
+ * BSD side nodes and the artifact handoff. Every selector here is scoped to this concept's own
+ * classes, so nothing leaks into the other seven.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* ---- the question run: nodes ON the spine ---------------------------------------------------- */
+
+[data-pmx-thread="t3"] .t3-qrun {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  padding: var(--sm) 0 var(--sm) 0;
+}
+
+/* The run's own spine segment. It sits at the same x as the transcript's spine so the questions
+ * read as a continuation of the column rather than a parallel structure. */
+[data-pmx-thread="t3"] .t3-qrun::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}[data-pmx-thread="t3"] .t3-qnode {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--sm);
+  align-items: start;
+}
+
+/* The marker IS the state and the navigation. Square, because a spine of circles reads as a
+ * timeline of moments and this is a sequence of decisions. */
+[data-pmx-thread="t3"] .t3-qmark {
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  padding: 0;
+  border: 1px solid var(--accent-primary);
+  border-radius: 2px;
+  background: var(--background);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default),
+              transform var(--motion-fast) var(--ease-default);
+}[data-pmx-thread="t3"] .t3-qmark:hover { transform: scale(1.12); }
+
+/* Four states. Filled versus hollow is the progress indicator for this concept - there is no
+ * `2 of 3` label anywhere, because the run of filled markers already says it and a number beside
+ * a spine is a second, redundant counter. */
+[data-pmx-thread="t3"] .t3-qnode[data-state="answered"] > .t3-qmark { background: var(--accent-primary); }[data-pmx-thread="t3"] .t3-qnode[data-state="active"] > .t3-qmark {
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}[data-pmx-thread="t3"] .t3-qnode[data-state="pending"] > .t3-qmark { border-color: var(--border); }
+/* Skipped stays hollow AND loses the accent: it is a decision not to answer, which must not look
+ * like a question that is merely still pending. */
+[data-pmx-thread="t3"] .t3-qnode[data-state="skipped"] > .t3-qmark {
+  border-color: var(--text-muted);
+  border-style: dashed;
+  background: var(--background);
+}
+/* A node that is ACTIVE but was skipped keeps the dashed edge: the skip is still true until an answer
+ * replaces it, and losing that cue would hide why the submit refusal travelled here. */
+[data-pmx-thread="t3"] .t3-qnode[data-state="active"][data-skipped="1"] > .t3-qmark {
+  border-style: dashed;
+  border-color: var(--accent-warning);
+}[data-pmx-thread="t3"] .t3-qnode[data-state="cancelled"] > .t3-qmark {
+  border-color: var(--text-muted);
+  background: repeating-linear-gradient(45deg, var(--border) 0 2px, transparent 2px 4px);
+}[data-pmx-thread="t3"] .t3-qnode[data-state="preparing"] > .t3-qmark { border-style: dashed; border-color: var(--text-muted); }[data-pmx-thread="t3"] .t3-qnode[data-state="ready"] > .t3-qmark { background: var(--accent-lime); border-color: var(--accent-lime); }[data-pmx-thread="t3"] .t3-qbody { min-width: 0; padding-bottom: 2px; }[data-pmx-thread="t3"] .t3-qprompt {
+  margin: 0 0 var(--xs) 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text-primary);
+  /* Prose measure, inherited from the concept's transcript rule: a question is prose. */
+  max-width: 68ch;
+}
+
+/* An inactive node's prompt recedes; only the active one is at full contrast. That is what makes a
+ * run of six questions scannable without any node being hidden. */
+[data-pmx-thread="t3"] .t3-qnode[data-state="pending"] .t3-qprompt,
+[data-pmx-thread="t3"] .t3-qnode[data-state="answered"] .t3-qprompt,
+[data-pmx-thread="t3"] .t3-qnode[data-state="skipped"] .t3-qprompt { color: var(--text-muted); font-size: var(--fs-xs); }[data-pmx-thread="t3"] .t3-qopts { display: flex; flex-wrap: wrap; gap: var(--xs); margin-bottom: var(--xs); }
+
+/* `.t3-opt` is deliberately NOT restyled here. The concept's existing sheet already owns that button
+ * and my run reuses the same element, so a second rule set would be two owners for one class. */
+
+
+[data-pmx-thread="t3"] .t3-qfree {
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+/* The refusal renders AT the field. Hidden by default with no reserved space, so an unrefused card
+ * is not carrying an empty row. */
+[data-pmx-thread="t3"] .t3-qreason {
+  margin: 0 0 var(--xs) 0;
+  font-size: var(--fs-xs);
+  color: var(--accent-error);
+}[data-pmx-thread="t3"] .t3-qreason[data-show="0"] { display: none; }[data-pmx-thread="t3"] .t3-qacts { display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; }[data-pmx-thread="t3"] .t3-qact {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}[data-pmx-thread="t3"] .t3-qact:hover { border-color: var(--accent-primary); }[data-pmx-thread="t3"] .t3-qact-primary {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--background);
+  font-weight: 600;
+}[data-pmx-thread="t3"] .t3-qmini {
+  padding: 1px 7px;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}[data-pmx-thread="t3"] .t3-qmini:hover { color: var(--text-primary); border-color: var(--accent-primary); }[data-pmx-thread="t3"] .t3-qreceipt-row { display: flex; flex-direction: column; gap: 1px; padding: 4px 0; border-bottom: 1px solid var(--border); }[data-pmx-thread="t3"] .t3-qreceipt-q { font-size: var(--fs-xs); color: var(--text-muted); }[data-pmx-thread="t3"] .t3-qreceipt-a { font-size: var(--fs-xs); color: var(--text-primary); }
+
+/* ---- work units: the compact form is the marker alone ---------------------------------------- */
+
+[data-pmx-thread="t3"] .t3-wgroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--xs) 0;
+}[data-pmx-thread="t3"] .t3-wgroup::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}[data-pmx-thread="t3"] .t3-wunit {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--sm);
+  align-items: center;
+  min-height: 20px;
+}[data-pmx-thread="t3"] .t3-wunit-mark {
+  width: 15px; height: 15px;
+  padding: 0;
+  border: 1px solid var(--accent-primary);
+  border-radius: 2px;
+  background: var(--background);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-default),
+              background var(--motion-fast) var(--ease-default);
+}[data-pmx-thread="t3"] .t3-wunit-mark:hover { transform: scale(1.12); }[data-pmx-thread="t3"] .t3-wunit[data-state="working"] > .t3-wunit-mark { background: var(--accent-blue); border-color: var(--accent-blue); }[data-pmx-thread="t3"] .t3-wunit[data-state="blocked"] > .t3-wunit-mark { background: var(--accent-error); border-color: var(--accent-error); }[data-pmx-thread="t3"] .t3-wunit[data-state="complete"] > .t3-wunit-mark { background: var(--accent-lime); border-color: var(--accent-lime); }[data-pmx-thread="t3"] .t3-wunit[data-open="1"] > .t3-wunit-mark { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 20%, transparent); }[data-pmx-thread="t3"] .t3-wunit-label {
+  font-size: var(--fs-xs);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* THE condensation for this concept: a completed, closed group is its marker and nothing else. The
+ * label is removed from the layout rather than truncated, because a column of markers is scannable
+ * and a column of clipped labels is noise. The title attribute keeps the fact reachable. */
+[data-pmx-thread="t3"] .t3-wunit[data-condensed="1"] { grid-template-columns: 16px 0; }[data-pmx-thread="t3"] .t3-wunit[data-condensed="1"] > .t3-wunit-label { visibility: hidden; width: 0; }[data-pmx-thread="t3"] .t3-wunit-detail {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--xs) 0 var(--sm) 0;
+}[data-pmx-thread="t3"] .t3-wunit-note { margin: 0; font-size: var(--fs-xs); color: var(--text-muted); }[data-pmx-thread="t3"] .t3-act-row { display: flex; align-items: baseline; gap: var(--xs); flex-wrap: wrap; }[data-pmx-thread="t3"] .t3-act-kind {
+  min-width: 62px;
+  font-size: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}[data-pmx-thread="t3"] .t3-act-label { font-size: var(--fs-xs); color: var(--text-primary); }[data-pmx-thread="t3"] .t3-act-dur { font-size: var(--fs-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* ---- BSD: a side node hanging OFF the spine -------------------------------------------------- */
+
+/* Offset from the spine on purpose. Advice is a comment on the chronology, not an event in it, so it
+ * must attach without occupying a marker position in the run. */
+[data-pmx-thread="t3"] .t3-bsd { display: flex; flex-direction: column; gap: var(--xs); padding: var(--xs) 0 var(--xs) 24px; }[data-pmx-thread="t3"] .t3-bsd-node { position: relative; display: grid; grid-template-columns: 18px 1fr; gap: var(--xs); align-items: start; }
+
+/* The stem is what makes it a SIDE node: a short horizontal connector back toward the spine. */
+[data-pmx-thread="t3"] .t3-bsd-stem {
+  margin-top: 8px;
+  height: 1px;
+  background: var(--text-muted);
+  opacity: .6;
+}[data-pmx-thread="t3"] .t3-bsd-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border-radius: 0 3px 3px 0;
+  max-width: 60ch;
+}
+
+/* Severity is distinguishable by BORDER STYLE and by the kind label's words, not by colour alone -
+ * the label literally reads "caution" or "note", so the distinction survives a monochrome render and
+ * a screen reader. */
+[data-pmx-thread="t3"] .t3-bsd-node[data-severity="caution"] .t3-bsd-body {
+  border-left-style: double;
+  border-left-width: 4px;
+  border-left-color: var(--accent-error);
+}[data-pmx-thread="t3"] .t3-bsd-node[data-severity="note"] .t3-bsd-body { border-left-color: var(--accent-blue); }[data-pmx-thread="t3"] .t3-bsd-kind {
+  font-size: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}[data-pmx-thread="t3"] .t3-bsd-text { margin: 0; font-size: var(--fs-xs); line-height: 1.4; color: var(--text-primary); }[data-pmx-thread="t3"] .t3-bsd-ev { font-size: var(--fs-xs); color: var(--text-muted); font-family: var(--mono-font); }
+
+/* ---- artifact handoff: a spine node whose body is a compact card ----------------------------- */
+
+[data-pmx-thread="t3"] .t3-handoff {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--sm);
+  align-items: center;
+  padding: var(--xs) 0;
+}[data-pmx-thread="t3"] .t3-handoff-mark {
+  width: 15px; height: 15px;
+  border: 1px solid var(--accent-primary);
+  border-radius: 2px;
+  background: var(--accent-primary);
+}
+/* compiling versus ready, without colour as the only cue: the compiling marker is hollow. */
+[data-pmx-thread="t3"] .t3-handoff[data-state="loading"] .t3-handoff-mark,
+[data-pmx-thread="t3"] .t3-handoff[data-state="idle"] .t3-handoff-mark { background: var(--background); border-style: dashed; }[data-pmx-thread="t3"] .t3-handoff[data-state="error"] .t3-handoff-mark { background: var(--accent-error); border-color: var(--accent-error); }[data-pmx-thread="t3"] .t3-handoff-body {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  padding: 4px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+  max-width: 60ch;
+}[data-pmx-thread="t3"] .t3-handoff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }[data-pmx-thread="t3"] .t3-handoff-state { font-size: var(--fs-xs); color: var(--text-muted); }[data-pmx-thread="t3"] .t3-handoff-worked { font-size: var(--fs-xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }[data-pmx-thread="t3"] .t3-handoff-open {
+  margin-left: auto;
+  padding: 2px 9px;
+  border: 1px solid var(--accent-primary);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--accent-primary);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}[data-pmx-thread="t3"] .t3-handoff-open:hover { background: color-mix(in srgb, var(--accent-primary) 14%, transparent); }
+
+/* ---- this concept's own choreography --------------------------------------------------------- */
+
+/* Vertical travel down the spine. The shared entrance used to fade every concept's card identically;
+ * this one moves ALONG the column, which is the only direction that means anything here. */
+@keyframes t3-qnode-travel{
+  from { transform: translateY(-6px); opacity: .55; }
+  to   { transform: translateY(0); opacity: 1; }
+}[data-pmx-thread="t3"] .t3-qnode-travel { animation: t3-qnode-travel var(--motion-med) var(--ease-spring-real) both; }[data-motion="reduced"] [data-pmx-thread="t3"] .t3-qnode-travel { animation: none !important; }[data-motion="reduced"] [data-pmx-thread="t3"] .t3-qmark,
+[data-motion="reduced"] [data-pmx-thread="t3"] .t3-wunit-mark { transition: none !important; }
