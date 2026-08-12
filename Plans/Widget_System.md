@@ -1092,6 +1092,17 @@ Phase 2B batch 198 atomized `Widget_System-S0001` through `Widget_System-S0009` 
 
 ## PMConcept7 Home Workspace boundary clarification — 2026-08-04
 
+Amended 2026-08-12 — shared interaction vocabulary, separate layout ownership. Dashboard
+widget reorder and resize adopt the same direct-manipulation vocabulary as Home surface
+movement: a lifted item that tracks the pointer one-to-one, a real in-flow placeholder in
+the vacated cell carrying that item's grid span, neighbour reflow animated from pre-move
+rects, a top-left grab handle, corner resize that snaps to grid tracks live and re-renders
+the widget body once on release, and Escape / pointer-cancel / blur as the cancellation
+contract. Sharing that vocabulary is a presentation decision and does not merge ownership:
+Home layout continues to own surface placement under `home_workspace_layout.v1`, while
+widget layout continues to own widget placement under `widget_layout:v1:dashboard`. A
+widget drag never writes the Home record and a surface drag never writes the widget record.
+
 Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
 sections) are shell presentation surfaces, not Dashboard widgets. The Home layout
 may reuse U10 interaction semantics such as lift, placeholder, reflow, edge zones,

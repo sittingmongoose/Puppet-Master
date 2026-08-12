@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30784-L31411
+Source lines: L30913-L31543
 
-Source SHA256: `62b38f0b20ec5ffd6300105382188f64d70f5c26b8a41eb6761addafbf8d9360`
+Source SHA256: `dc51354b20dad6d8cf56051b7dcb649ab91d723ecfcf4a9dbbb2ab8a74341032`
 
 ---
 
@@ -21,7 +21,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The title bar hosts a rightward notification stack with a count badge, sitting between
-  the title-bar page tabs and the title-bar search, and this stack is the sole in-app
+  the title-bar search and the theme/settings cluster with equal clearance on both sides,
+  and this stack is the sole in-app
   notification affordance. Ephemeral toasts stage beneath the stack per the F3-447 staging
   contract and never join the stack or the alert store. Durable or important notifications
   stage and then join the collapsed stack with a join animation; the unread count renders
@@ -37,7 +38,7 @@ split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- "The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar search, and no other in-app surface offers a standing notification affordance."
+- "The title bar renders the rightward notification stack and count badge between the title-bar search and the theme/settings cluster, centred in that gap, and no other in-app surface offers a standing notification affordance."
 - "Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry."
 - "Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count from the shared alert store."
 - "Glass renders the collapsed-stack left mask as a mild peek from rgba(0,0,0,.72) to solid by 4%, retro renders a hard offset shadow, and friendly renders free-floating cozy solid cards above page content."
@@ -66,6 +67,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: the collapsed stack, staged toasts, and count badge render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
+- "Amended 2026-08-12: the placement between the title-bar page tabs and the title-bar search is retired as stale. It read as crowded against the page tabs; the stack now sits after the search, centred in the gap before the theme/settings cluster. Staging, join, count-badge and alert-store semantics are unchanged."
 - "The bottom-right standing toast stack surface is retired; ephemeral toasts stage beneath the title-bar notification stack per the amended F3-447 contract."
 - "The status-bar notifications bell and its popover are retired per the amended F3-448 inventory; the unread affordance is this unit's count badge."
 owner_boundary_notes:
@@ -306,6 +308,7 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
+- "Scope clarified 2026-08-12: this unit covers the title-bar PAGE tabs only. Editor file tabs are owned by F3-505 (contact-aware silhouette) and F3-466 (friendly tab shape); the sliding ink is not applied to editor file tabs."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
