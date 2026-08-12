@@ -111,6 +111,9 @@
     (function () {
       "use strict";
       PM.jumpOffset = function () { return 56; };
+      // Stack renders managers inline within the expanded destination item, so route
+      // owned-strip cards through the inline opener (shared default uses full-stage nav).
+      PM.openOwnedManager = openManagerInline;
       // Stack overrides openSub/openManager/openCategory to drive the expanded item
       PM.state.expanded = null; // which destination item is open
 

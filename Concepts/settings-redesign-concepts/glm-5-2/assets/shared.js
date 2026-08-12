@@ -483,8 +483,9 @@
     if (!root) return;
     root.querySelectorAll("[data-owned-manager]").forEach(function (a) {
       a.addEventListener("click", function () {
-        PM.openManager(this.getAttribute("data-owned-manager"));
-        PM.render && PM.render();
+        var id = this.getAttribute("data-owned-manager");
+        if (PM.openOwnedManager) PM.openOwnedManager(id);
+        else { PM.openManager(id); PM.render && PM.render(); }
       });
       a.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.click(); }

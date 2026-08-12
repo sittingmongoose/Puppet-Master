@@ -120,6 +120,17 @@
     (function () {
       "use strict";
       PM.jumpOffset = function () { return 60; };
+      // Stream renders managers as channels within their section, so owned-strip cards
+      // scroll to the owning section and switch to the manager's channel.
+      PM.openOwnedManager = function (id) {
+        var m = PM.managers[id]; if (!m) return;
+        var sec = document.querySelector('[data-section="' + m.managerCat + '"]');
+        if (!sec) return;
+        var scroller = PM.scroller();
+        if (scroller) scroller.scrollTo({ top: sec.offsetTop - 20, behavior: PM.state.reducedMotion ? "auto" : "smooth" });
+        var ch = sec.querySelector('[data-channel-manager="' + id + '"]');
+        if (ch) ch.click();
+      };
 
       function shell() {
         var s = document.querySelector(".pm-shell");
