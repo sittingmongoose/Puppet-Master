@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "concept-03-wayfinder",
+  "model": "5.6 Sol",
+  "candidate_component_families": {
+    "shared_shell": [
+      "SettingsWorkspaceShell",
+      "SettingsSearch",
+      "SettingsDestination",
+      "CategoryNavigation",
+      "SubcategoryScrollspy",
+      "SettingsNotice",
+      "SettingsReceipt"
+    ],
+    "setting_grammar": [
+      "SettingRow",
+      "ValueSourceBadge",
+      "AvailabilityReason",
+      "RequestedEffectiveInspector",
+      "SecretField/SecretReference"
+    ],
+    "manager_grammar": [
+      "ManagerShell",
+      "ResourceList/Card/Detail",
+      "HealthSummary",
+      "SetupFlowLauncher",
+      "ObservableOperation",
+      "ReceiptLink"
+    ],
+    "provider_grammar": [
+      "ProviderFamilyCard",
+      "AccountConnectionRow",
+      "InstallationCard",
+      "ModelRow",
+      "CapabilityEvidence",
+      "UsagePlanSummary"
+    ],
+    "assigned_specialists": [
+      {
+        "manager_id": "file-manager",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      },
+      {
+        "manager_id": "terminal",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      },
+      {
+        "manager_id": "lsp",
+        "candidate_roles": [
+          "LspResource"
+        ]
+      },
+      {
+        "manager_id": "formatters",
+        "candidate_roles": [
+          "FormatterResource"
+        ]
+      },
+      {
+        "manager_id": "commands-shortcuts",
+        "candidate_roles": [
+          "CommandEditor",
+          "ShortcutRecorder"
+        ]
+      },
+      {
+        "manager_id": "mcp",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      },
+      {
+        "manager_id": "skills",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      },
+      {
+        "manager_id": "plugins",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      },
+      {
+        "manager_id": "tools",
+        "candidate_roles": [
+          "ToolResource"
+        ]
+      },
+      {
+        "manager_id": "testing-debug",
+        "candidate_roles": [
+          "ManagerResourceAdapter"
+        ]
+      }
+    ]
+  },
+  "shared_state_owners": [
+    "SettingsRouteState",
+    "SettingsSearchIndex",
+    "SettingsValueState",
+    "ManagerResourceState",
+    "ProviderGraphState",
+    "TransactionalOperationState",
+    "ConceptReviewFixtureState"
+  ],
+  "concept_adapter": {
+    "name": "WayfinderSettingsAdapter",
+    "owns": [
+      "composition",
+      "density",
+      "motion choreography",
+      "responsive transformation",
+      "concept-specific visual hierarchy"
+    ],
+    "must_not_own": [
+      "canonical settings schema",
+      "provider auth semantics",
+      "installation policy",
+      "command canon",
+      "Usage calculations"
+    ]
+  },
+  "reuse_constraints": [
+    "Do not force all four concepts through one visual template.",
+    "MCP, Skills, Plugins, Tools, and Commands remain distinct manager adapters.",
+    "Provider installation and provider connection share graph identity but not action semantics.",
+    "Reduced motion changes choreography, not reachable state.",
+    "No colored side-border component contract."
+  ],
+  "canon_status": "candidate_design_roles_only"
+}

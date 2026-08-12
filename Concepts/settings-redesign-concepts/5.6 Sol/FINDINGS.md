@@ -1,141 +1,257 @@
-# 5.6 Sol — Settings Bakeoff Findings
+# 5.6 Sol — Final Settings Bakeoff Findings
 
-No concept is ranked or recommended in this document.
+These findings describe the four implemented concepts and the product architecture exercised by them. They do not select or recommend a winner.
 
-## Packet-fidelity result
+## 1. The existing Sol foundation was worth preserving
 
-The implementation was reconciled against `Concepts/CONCEPT_RULES.md`, PMConcept7 as a read-only baseline, and every file in the supplied `settings_bakeoff/` packet. The final concept lane contains the required Home, full one-category workspace, Provider/Agent/Model manager, Memory manager, Terminal manager, and additional inventory/detail managers. Search, navigation, scrollspy, setting controls, manager state, motion, shell controls, themes, narrow states, and simulation receipts are interactive rather than screenshot-only.
+The prior Sol work already contained a serious state/view/motion system: normalized Settings data, global search, exact navigation, browser deep links, scrollspy, responsive shell behavior, theme handling, reduced motion, and four materially different compositions. Replacing it with four new static mockups would have reduced fidelity.
 
-No critical or high functional, motion, accessibility, responsive, or packet-fidelity finding remains open in the concept implementation. The remaining items below are promotion boundaries, native-port considerations, deterministic-demo limits, or manual test limitations—not hidden concept defects.
+The final pass therefore extends the architecture rather than flattening it. The major change is coverage: the original flagship managers now sit beside the complete assigned manager families, provider installation boundaries, lifecycle operations, deterministic review fixtures, persistence, and repository-facing impact artifacts.
 
-## Information-architecture findings
+## 2. Shared semantics do not require shared composition
 
-### 5.6 Sol — Index House
+The four concepts use the same semantic records and transaction contracts, but their visual systems remain distinct:
 
-Index House treats Settings as a stable place system. Numbered Home destinations carry purpose, status, and an explicit forward affordance rather than behaving like filters. The same number and title become the workspace address.
+- **Index House** treats settings as addressable records with provenance and lineage.
+- **Switchboard** treats settings as operational signals, stations, previews, and readiness state.
+- **Wayfinder** treats settings as routes, prerequisites, checkpoints, verification, and recovery.
+- **Ledger** treats settings as dense requested/effective records, receipts, histories, and comparisons.
 
-Search is the dominant entry point on Home and remains beside workspace and manager navigation. A result resolves through the owner category and subcategory to a setting or manager resource. In the workspace, the directory controls major-category replacement and semantic subcategory jumps; the continuous record preserves reading flow; scrollspy moves the address marker; the evidence inspector atomically changes title, description, source, scope, exposure, effects, and requirements.
+This separation is important for a valid bakeoff. Differences are not limited to color, corner radius, or card arrangement. Each concept changes how the user understands location, causality, detail, and state transition.
 
-Providers become an addressable catalogue, Memory an evidence archive, Terminal a profile shelf with a working preview, and supporting inventories a room directory. At middle widths the evidence pane becomes a drawer; at squeezed widths navigation becomes a one-column navigator and evidence moves inline.
+## 3. Settings Home should orient before it manages
 
-Its motion thesis is “directory to room”: the selected address survives the transition, panes stage in sequence, and inspector facts crossfade without remounting the whole page. Reduced motion uses the final geometry plus static address emphasis and a brief focus cue.
+The most useful Home behavior is not a grid of every possible control. Home should answer:
 
-### 5.6 Sol — Switchboard
+- Where am I?
+- What needs attention?
+- What changed?
+- What can I configure here?
+- Which destination owns the next action?
 
-Switchboard treats Settings as an operational control surface. Search is a command console above rectangular destination bays; derived readiness summaries and action-led status strips answer what is usable and what should happen next without converting every preference into an alert.
+All four concepts therefore use Home as a destination and readiness surface, then move detailed work into the Settings workspace or a manager. Compact notices carry an action and an owner destination; they do not become oversized warning cards.
 
-The station bar switches major categories, the vertical signal track controls subcategory jumps, and the active signal follows scrollspy. A persistent effective-state tray explains requested/effective values, source, and future-versus-in-flight routing.
+## 4. Destination navigation should not be disguised filtering
 
-The Provider manager is a connection topology with health lanes, retained last-known-good rows, and a seven-stage refresh/readiness story. Memory is a verification queue, Terminal is a live profile instrument, and supporting managers become operational queues with meaningful actions and receipts. The provider master/detail layout is used only above a 1350 px effective main width; below that it becomes one column and then explicit narrow drill-in.
+Category pills are poorly suited to primary Settings navigation because they look temporary and filter-like. Stable Settings locations need address, current-location, keyboard, deep-link, and history semantics.
 
-Its motion thesis is “finite signal, then latch”: a destination bay becomes a station, a signal travels once, and content appears only after the station is established. Refresh stages connection, catalogue, and readiness while existing rows stay mounted. Reduced motion immediately installs the latched marker and final state.
+The concepts use directory entries, station rows, route checkpoints, or folio records. Search results resolve to the same destination model. This also makes narrow drill-in behavior and focus restoration predictable.
 
-### 5.6 Sol — Wayfinder
+## 5. Search is a router, not an isolated text filter
 
-Wayfinder treats Settings as routes toward human outcomes—make PM feel right, connect intelligence, control agents, keep context, plan and verify, coordinate work, extend capabilities, create media, and diagnose or recover. Canonical owner names remain visible so the humanized layer does not erase expert orientation.
+Global Settings search is strongest when its result describes and opens an exact destination:
 
-Search is the map origin and returns both the exact target and its route. The journey map switches categories, checkpoints control continuous chapters, and “you are here” follows scrollspy. Expert disclosure is a visible branch, not a second hidden settings system.
+```text
+screen -> category/subcategory -> setting
+screen -> manager/tab -> resource/child
+```
 
-Provider, Memory, and Terminal surfaces become guided connect, inspect, verify, preview, and repair journeys with direct expert branches. Supporting managers use the same journey grammar without inventing persistent wizard state. Three columns become two, then a navigator drawer with compact inline checkpoint context.
+The implemented search supports fuzzy matching, typo fixtures, no-result state, keyboard traversal, exact destination metadata, and deep-link-compatible navigation. A Usage result navigates to the Settings-side provider snapshot or records a handoff to the Usage owner rather than pretending that Settings owns the complete Usage product.
 
-Its motion thesis is “origin to waypoint”: the selected waypoint becomes the route banner, the route line resolves after layout, and the first checkpoint arrives. Expert detail grows as a branch; scrollspy moves the current-location marker. Reduced motion shows the completed route and current waypoint immediately.
+## 6. Provider setup and provider installation must remain separate
 
-### 5.6 Sol — Ledger
+The provider work revealed the most important architecture boundary in the pass. A provider family is not an executable, and an executable is not an authenticated account.
 
-Ledger treats Settings as a reference and comparison system. Home combines a masthead search, a destination register, and an adjacent attention/recent-change ledger. Search can temporarily become the primary filtered register without changing category controls into pills.
+The durable model should retain separate identities for:
 
-A pinned directory replaces the active major-category folio; a continuous document preserves chapter reading; a right-margin minimap controls semantic jumps and mirrors scrollspy. Requested/effective values, source, scope, evidence freshness, and history are intentionally prominent.
+- provider family;
+- account/profile;
+- connection/authentication owner;
+- entitlement/plan;
+- model and capability evidence;
+- executable installation;
+- host/environment;
+- discovery evidence;
+- ownership confidence;
+- update/rollback state.
 
-Providers use expandable hierarchy records, Memory uses an immutable evidence/version ledger, and Terminal compares saved and draft values side by side. At squeezed widths, tables reflow into labelled ledger entries and navigation becomes an outline menu; horizontal clipping is not used as the fallback.
+This prevents several dangerous UX shortcuts:
 
-Its motion thesis is “reference to folio”: the selected register reference becomes the folio masthead, geometry reflows through FLIP, a rule draws once, and text settles afterward. Reorder and version changes get compact line emphasis. Reduced motion uses immediate reflow with a changed rule and row tint.
+- treating detected credentials as permission to install software;
+- silently replacing an unknown installation;
+- treating CLI-owned OAuth as Puppet Master direct OAuth;
+- hiding a shadowed executable that may still affect invocation;
+- presenting Free Models as an independent synthetic provider;
+- dropping last-known-good catalogue data when refresh fails;
+- changing captured in-flight routing when a future preference changes.
 
-## Cross-concept findings
+## 7. Provider installation needs an evidence-led workflow
 
-- Search can remain central without making primary destinations look like filters. The four alternatives are an address search, an operational console, a map origin, and a filtered register.
-- Major categories and subcategories require different navigation semantics. Loading one major category while presenting all of its subcategories as one continuous document preserves both the category boundary and document flow.
-- Scrollspy must reflect semantic anchors rather than own product state. A controlled jump installs the semantic target first, locks observation until the destination settles or is interrupted, then gives observation ownership back.
-- One-shot focus requests are essential. A deep link may reveal Advanced content and focus a setting once; later edits must not scroll the user back to the original result.
-- Persistent shell and keyed local patches materially improve fidelity. Ordinary controls, provider rows, Memory records, Terminal drafts, receipts, and search options no longer lose focus through a coarse full-app remount.
-- Dedicated managers need the same source, scope, requested/effective, availability, history, and receipt language as ordinary settings, but each concept benefits from its own manager composition.
-- Provider family, account/profile, connection, product/plan, model route, runtime adapter, and capability evidence must remain separate in semantic state even when the UI simplifies a quiet default view.
-- Authentication is not readiness. The demo preserves signed-in but failed invocation, stale last-known-good data, capability evidence freshness, and quarantined refresh results as different states.
-- Preferred-account changes are future-only. The captured in-flight route remains visible and unchanged.
-- Normal/Fast, effort, modality, and role eligibility must be evidence-gated. Unsupported choices are absent or disabled with a reason; an unqualified low-quality route cannot replace the high-quality PRD/Planning conversation route.
-- Memory is better understood through evidence, immutable versions, access history, half-life, and restore-as-new-version behavior than through a flat transcript list.
-- Terminal needs saved-versus-draft state, a live preview, dirty-switch handling, and diagnostics; shell and font-size controls alone do not prove the manager system.
-- Spellcheck works best as a quiet input service. Explicit suggestions and dictionary scopes are useful; autocorrect, a permanent composer button, and undisclosed provider calls are not.
-- Short-lived toasts are insufficient for warnings, errors, and simulations. Persistent inline receipts make every boundary action honest and reviewable.
-- Usage is a boundary handoff, not a hidden duplicate manager. Global search can land on Provider → Usage for source-labelled snapshots, focus the destination heading, and preserve provider/account context while the full measured history remains owned by Usage.
-- Supporting managers lose credibility when they share synthetic placeholder facts. Context, Personas, Crew, MCP, LSP, extensions/tools, and Media need domain-shaped inventory fields, diagnostics, history, and actions even when their outer accessibility primitives are shared.
+The explicit installation workflow is most legible as:
 
-## Functional-fidelity findings
+```text
+Detect -> Review official source -> Confirm explicit install -> Verify ownership/version -> Ready
+```
 
-- The global combobox uses one central query/open/active-option/surface state and structured destinations, so Home, workspace, and managers cannot diverge in keyboard behavior.
-- Structured dispatch results let rendering, focus, announcements, and motion respond to the same action without encoding behavior in string render reasons.
-- Twelve scenarios clone the baseline and apply entity overlays. Attention summaries and Home notices are derived from those entities, which prevents a Calm scenario from retaining hidden errors or Setup from contradicting its resumable records.
-- Setting state is modeled as Default, Inherited, Auto, Not configured, Managed, Custom, Unavailable, or Effective value differs. Recommendation is independent. Source, scope, defaults, managed/unavailable reasons, restart/reconnect requirements, exposure, and material effects can coexist.
-- Separate Restore default and Use inherited value actions avoid the common reset ambiguity. Rejected bounded input remains visible with a connected inline error.
-- Every enabled action has one visible result. External boundaries are simulated with persistent receipts; unavailable and model-order boundary controls are disabled with explanatory text.
-- Focus consumption is state cleanup, not a visual event. It must not enqueue animation after the deep-link cue has completed.
-- Motion evidence needs to witness mounted participants and actual finite animation calls. Stage labels alone cannot prove that a blueprint survives selector drift or that reduced motion uses the intended single cue.
+Update and rollback are separate transactions. A failed verification should not collapse into a generic error banner; it should retain the prior version, show the failed step, explain what was preserved, and expose rollback or manual recovery.
 
-## Accessibility and responsive findings
+Unknown ownership is not an invitation to take control. It should become manual-only until the user explicitly resolves it.
 
-- The eight themes require semantic tokens, not theme-specific meaning. Text, status, focus, and control boundaries are independent tokens; state is never communicated by color alone.
-- Squeezed and zoomed layouts need type floors. Body copy remains at least 16 px, setting labels and descriptions at least 14 px, and essential metadata at least 12 px.
-- `100dvh`, `min-height: 0`, bounded internal scrolling, and overlay containment prevent competing page/canvas scroll regions and root overflow at 200%-zoom-equivalent widths.
-- Real comboboxes, tablists, disclosures, menus, current-location navigation, drawers, inert hidden shell panels, and focus restoration are necessary because browser appearance alone does not provide the interaction contract.
-- Native roles must stay internally coherent: interactive Ledger rows remain buttons rather than acquiring list-item roles, and narrow navigators are real dismissible drawers with a backdrop and focus return.
-- Narrow manager list/detail drill-in is more robust than squeezing a desktop split pane. Opening detail focuses the heading; Back or Escape returns focus to the originating row.
-- Responsive hiding is acceptable only with an equivalent reachable surface. Index House therefore moves evidence from the wide third pane into a labelled modal drawer at middle widths, then returns it inline in the squeezed document; CSS-only `display:none` is not a valid adaptation.
-- Coarse-pointer mode needs 44 × 44 px targets and no hover dependency. Forced-colors, RTL, mirrored directional icons, technical `dir` overrides, and 35% text expansion need explicit fixtures because ordinary responsive testing does not cover them.
+## 8. Requested and effective state should be a first-class grammar
 
-## Inventory, Usage, and canonical boundaries
+Many Settings values are not simply On or Off. They may be inherited, managed, unsupported, unavailable, auto-selected, overridden for a project, or temporarily ineffective because of capacity, policy, authentication, or environment.
 
-The packet identifies a real taxonomy tension: the current Settings inventory mixes user goals with implementation boundaries. These concepts propose humanized labels and search aliases while preserving all required domains, but they do not settle canonical category IDs, localization, aliases, migration, or owner placement. Those remain promotion decisions.
+The concepts consistently separate:
 
-Settings may show a compact provider usage snapshot and provider-specific “what happens next” state. Usage continues to own measured/provider-reported balances, history, projections, and forecasts. The concept does not create a second usage calculation system.
+- requested value;
+- effective value;
+- source/provenance;
+- scope;
+- reason;
+- material effect;
+- restart or reconnect requirement;
+- recovery or owner destination.
 
-CLI-owned OAuth, PM-direct connections, API credential pools, server routes, and Free Models delegation need distinct storage and wiring contracts. Claude and Antigravity remain CLI-owned OAuth examples; the concept does not present them as PM-direct OAuth.
+This grammar is especially useful for model routing, testing capabilities, permissions, context policy, Appearance, and tooling.
 
-Requested/effective state, capability evidence, catalogue quarantine, future-only provider preference, Memory versions/Undo, Terminal drafts, spelling dictionaries, narrow focus restoration, and semantic motion keys all imply production storage, events, commands, wiring, DRY components, and Slint adapters. `IMPACT_REGISTER.json` records probable owners and uncertainty. Candidate commands are explicitly `NOT_MINTED`; none were added to canon.
+## 9. Manager families should remain semantically distinct
 
-## Known simulations
+MCP, Skills, Plugins, Tools, and Commands are related but not interchangeable. Combining them into a generic extensions screen erases different ownership, trust, lifecycle, and restart/reconnect behavior.
 
-- provider or platform sign-in, installation, update, reconnect, repair, billing, purchase, model invocation, and usage refresh;
-- external catalogue discovery, capability qualification, generation, and support-bundle creation;
-- shell discovery, command execution, filesystem/CWD mutation, and native Terminal diagnostics;
-- operating-system spelling services, dictionary writes, and grammar/style provider assistance;
-- durable Memory/storage writes, index rebuild, deduplication, restore, and redaction;
-- production command dispatch, organization-policy enforcement, and native persistence.
+The Wayfinder concept keeps these families distinct while still showing dependencies among them. The same rule applies to:
 
-Fixture-local setting edits, search, navigation, jump/scrollspy, disclosure, provider state transitions, model controls, role gates, Memory versions/Undo, Terminal drafts/preview, spelling actions, themes, shell state, responsive drill-in, announcements, and receipts are real interactions inside the concept.
+- storage retention versus backup/restore;
+- notification preview versus test delivery;
+- provider setup versus executable installation;
+- settings import/export versus Copy Settings From;
+- source control versus worktree lifecycle;
+- runtime artifacts versus project search index;
+- cleanup versus retention policy.
 
-## Slint 1.17.1 translation
+## 10. Lifecycle operations need visible gates and receipts
 
-- Semantic state already lives outside DOM geometry. A Slint viewport adapter can emit section positions and controlled-scroll completion while Rust state remains authoritative.
-- Long settings, provider, model, Memory, Terminal, and manager inventories should use data-backed `ListModel`/`ListView` recycling. The fixture volume proves structure, not native production-scale performance.
-- The ten semantic motion intents map to Slint property animations and temporary proxy components. View Transitions are optional web preview enhancement; WAAPI choreography documents the fallback, not a browser-only requirement.
-- Sticky panes, drawers, and table-to-labelled-entry reflow require explicit Slint layout states rather than CSS breakpoint magic.
-- Glass uses a bounded web backdrop treatment. Native Slint may use a tinted translucent material if live blur is not appropriate.
-- Search scoring, scenario overlays, receipt retention, refresh deduplication/quarantine, future-only routing, model qualification, Memory versioning, Terminal draft validation, and spelling exclusions should move to Rust domain services while views consume normalized models and actions.
+Import, restore, reset, install, update, test, cleanup, theme, and sound-pack actions should not be single opaque buttons. The user needs to see what is being examined, what requires a choice, what will change, what is protected, and what recovery remains.
 
-## Source conflicts and resolutions
+The transaction system therefore supports:
 
-Resolved within this concept lane:
+- staged progression;
+- hard choice gates;
+- validation before mutation;
+- failure at a deterministic stage;
+- rollback where meaningful;
+- result receipts;
+- return to the owning destination.
 
-- The packet templates say `CursorAuto`; the direct user instruction names `5.6 Sol`, which is used in the folder, document titles, visible labels, manifest, and every `data-concept-model` marker.
-- PMConcept7’s fuzzy search keyboard behavior and live theme/motion precedent are preserved conceptually. Its category pills, horizontal notice rail, and bloom modal are intentionally superseded by the packet’s full Settings architecture. PMConcept7 itself remains unchanged.
-- Upstream-product breadth informed fixtures only. No upstream layout was copied one-to-one.
+The import flow is a representative example: validation occurs before merge/replace selection, conflicts must be reviewed, sensitive values remain explicit, and completion is not reported before the choice gate is satisfied.
 
-Unresolved for canonical promotion:
+## 11. Local preview and external effect must be visibly different
 
-- humanized taxonomy aliases, stable canonical category ownership, localization, and migration;
-- exact existing command identities, payloads, permission checks, receipts, and Undo semantics for concept actions;
-- Settings/Usage summary and deep-link wiring ownership;
-- storage/event ownership for requested/effective values, provider catalogue versions and quarantine, future-only routing, Memory versions, Terminal drafts, and spelling dictionaries;
-- production qualification sources for provider/model capability, usage, and freshness labels;
-- Slint-native virtualization and motion performance thresholds.
+This distinction matters for Notifications & Sounds and Appearance.
 
-No unresolved source conflict prevents review of the four concept artifacts. None of the unresolved items was implemented outside this model folder.
+A sound preview is a local audition. A test send exercises a notification route. A theme preview is reversible and should not silently commit the theme. Custom TOML validation should show unsupported tokens and a safe fallback before apply.
+
+Switchboard’s motion reinforces this boundary: preview choreography stays local to the preview station, while transactional state moves through a finite operational sequence.
+
+## 12. Spellcheck should assist without becoming autocorrect
+
+The spellcheck design keeps deliberate actions separate:
+
+- Replace once;
+- Ignore once;
+- Ignore for draft;
+- Add to Personal dictionary;
+- Add to Project dictionary.
+
+Technical content remains excluded: code, URLs, paths, commands, hashes, identifiers, structured data, literal text, and named models/providers/Personas/tools. No provider call or silent autocorrection is implied.
+
+## 13. The deferred Server module needs an insertion contract, not invented behavior
+
+The final packet requires awareness of the future Server architecture but not a speculative backend. Ledger therefore reserves explicit destinations for:
+
+- Servers;
+- Execution Hosts;
+- Clients;
+- Project Hosting & Files;
+- Remote Access;
+- Updates.
+
+The shell demonstrates where those modules join Settings navigation, search, deep links, and ownership. It does not invent networking, host-selection, authentication, synchronization, or update state machines that belong to the later Server owner work.
+
+## 14. Persistent review state materially improves concept evaluation
+
+A Settings concept is difficult to evaluate when every refresh loses the exact state under review. Namespaced local persistence now retains navigation, manager state, selections, theme, density, motion preference, fixtures, provider state, and transaction history.
+
+Persistence also needs a trustworthy reset. The final reset restores the entire authored baseline, not merely the current fixture or route. A regression test was added after browser testing exposed a theme-restoration defect in the first implementation.
+
+## 15. Deterministic triggers are better than hidden demo assumptions
+
+The 24 named triggers make required states reviewable without source edits or timing luck. This supports design review, browser automation, accessibility inspection, and eventual Slint parity.
+
+A useful fixture contract contains:
+
+- stable ID;
+- destination;
+- state mutation;
+- visible status;
+- primary action;
+- recovery action;
+- expected test probe;
+- reset behavior.
+
+The concepts expose these through both an in-page fixture tray and `PMSettingsDemo`.
+
+## 16. Motion should explain causality, not decorate inactivity
+
+The strongest motion sequences in this pass communicate one of five things:
+
+- destination transfer;
+- system reconciliation;
+- transaction progress;
+- preview versus commit;
+- failure and recovery.
+
+The four concepts therefore use different participant roles for the same semantic intent. This is more meaningful than applying one easing curve to four skins.
+
+Film-level motion in a Settings product does not require constant spectacle. It requires careful staging, continuity, focus, restraint, and a clear final frame. Indefinite pulses, large glow fields, text shimmer, and delayed focus were intentionally avoided.
+
+## 17. Reduced motion must preserve the same product state
+
+Reduced motion is not a separate simplified application. The destination, transaction result, focus target, receipt, error, and recovery state must remain identical.
+
+The implementation installs final geometry immediately and retains only restrained focus or opacity cues. The browser matrix checks all eight themes with reduced motion in every concept.
+
+## 18. Narrow layouts should change mode rather than merely compress
+
+The concepts use intentional responsive modes:
+
+- wide multi-pane workspace;
+- standard desktop workspace;
+- narrow list/detail drill-in;
+- very narrow destination-first mode;
+- squeezed-height navigation and manager handling.
+
+At narrow widths, secondary evidence becomes a drawer, inline section, or next-step destination. Controls are not simply squeezed until labels clip.
+
+The tested width range is 520–2500 pixels, with additional long-copy, 135% text, RTL, coarse-pointer, and forced-color checks.
+
+## 19. Impact analysis must remain provisional until owner adjudication
+
+The six artifacts per concept deliberately distinguish concept evidence from canon. They identify probable owner docs, candidate command reuse, supersession, wiring, DRY candidates, and plan-owner impacts, but they do not edit those authorities.
+
+The command census found 699 unique `cmd.*` tokens. Presence in the catalog is only a first filter. Semantic reuse still requires matching scope, persistence, validation, ownership, ObservableWork behavior, receipts, recovery, and Usage/diagnostic implications.
+
+`cmd.settings.bloom.open` is consistently flagged for supersession or compatibility alias review because the final destination-navigation model replaces the old bloom/chip behavior.
+
+## 20. Browser execution found a real defect that structural tests did not
+
+State and architecture tests passed before the persistence profile cycle. Browser reload/reset testing then revealed that Reset Demo State returned Home and cleared fixtures but retained a restored theme.
+
+The fix changed reset from a partial baseline operation to a complete authored-state restore and added a dedicated state regression test. This validates the value of running real profile persistence, not only isolated unit state.
+
+## 21. Production boundaries remain explicit
+
+The concepts simulate external operations. They do not authenticate real providers, install CLIs, update binaries, mutate files, send notifications, restore backups, operate containers, modify source control, invoke test tools, clean workspaces, or configure future Servers.
+
+What is implemented is the complete interaction contract for design review:
+
+- information architecture;
+- state model;
+- validation and choices;
+- deterministic progress/failure/rollback;
+- receipts;
+- deep links;
+- focus and keyboard behavior;
+- responsive and reduced-motion behavior;
+- candidate command, wiring, DRY, and Plan-owner impact.
+
+That boundary keeps the bakeoff honest while making later implementation implications concrete.

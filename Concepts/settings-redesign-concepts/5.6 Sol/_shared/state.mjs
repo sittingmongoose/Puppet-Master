@@ -11,7 +11,11 @@ const {
   allSettings = () => [],
   buildSearchIndex = () => [],
   categoryById = () => CATEGORIES[0],
-  managerById = () => null
+  managerById = () => null,
+  CONCEPT_MANAGER_ASSIGNMENTS = {},
+  FLOW_TEMPLATES = {},
+  DETERMINISTIC_TRIGGERS = [],
+  MANAGER_COVERAGE_LABELS = {}
 } = DATA;
 
 const SPELLING_FIXTURE = DATA.SPELLING_FIXTURE || {
@@ -79,7 +83,13 @@ const EVENT_DEFAULTS = {
   spelling: { scopes: ["spelling", "receipts", "focus"], motionKey: "spelling-action" },
   receipt: { scopes: ["receipts", "announcer"], motionKey: "receipt" },
   "receipt-clear": { scopes: ["receipts"], motionKey: "receipt-dismiss" },
-  "focus-consumed": { scopes: ["focus"], motionKey: "none" }
+  "focus-consumed": { scopes: ["focus"], motionKey: "none" },
+  "manager-resource": { scopes: ["manager", "detail", "receipts"], motionKey: "setting-save" },
+  "manager-flow": { scopes: ["manager", "flow", "receipts", "focus"], motionKey: "transaction" },
+  "provider-installation": { scopes: ["provider", "manager", "flow", "receipts"], motionKey: "transaction" },
+  "theme-preview": { scopes: ["presentation", "manager", "preview"], motionKey: "preview" },
+  "fixture": { scopes: ["view", "manager", "data", "focus"], motionKey: "transaction" },
+  "persistence": { scopes: ["view", "data", "receipts"], motionKey: "none" }
 };
 
 const THEME_BY_ID = new Map(THEMES);
@@ -90,6 +100,18 @@ const TERMINAL_EDITABLE = new Set([
   "cwd", "environment", "transcript", "historyLimit", "rendering", "renderer", "performance", "startup"
 ]);
 const TECHNICAL_CONTEXTS = new Set(["code", "code-block", "inline-code", "url", "path", "command", "hash", "identifier", "structured-data", "literal", "model", "provider", "persona", "tool"]);
+const PERSISTENCE_SCHEMA = 2;
+
+function safeStorage() {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    const key = "pm-sol-storage-probe";
+    window.localStorage.setItem(key, "1");
+    window.localStorage.removeItem(key);
+    return window.localStorage;
+  } catch { return null; }
+}
+
 
 export function clone(value) {
   if (value === undefined) return undefined;
@@ -352,7 +374,14 @@ export class SettingsStore {
     this.setupSessions = clone(SETUP_SESSIONS);
     this.recentChanges = clone(RECENT_CHANGES);
     this.genericManagers = clone(DATA.MANAGER_INVENTORIES || {});
+    this.managerAssignments = clone(CONCEPT_MANAGER_ASSIGNMENTS);
+    this.flowTemplates = clone(FLOW_TEMPLATES);
+    this.fixtureTriggers = clone(DETERMINISTIC_TRIGGERS);
+    this.managerCoverageLabels = clone(MANAGER_COVERAGE_LABELS);
+    this.managerOperations = [];
     this.providerOperations = [];
+    this._storage = safeStorage();
+    this._persistenceKey = `pm.settings.sol.final.${conceptId}`;
     this.receiptHistory = RECEIPT_FIXTURES.map((entry, index) => deepFreeze({
       id: entry.id || `fixture-receipt-${index + 1}`,
       title: entry.title,
@@ -420,6 +449,7 @@ export class SettingsStore {
       refreshingProviderIds: [],
       selectedProviderId: this.providers[0]?.id || null,
       selectedAccountId: this.providers[0]?.activeAccountId || this.providers[0]?.accounts?.[0]?.id || null,
+      selectedInstallationId: this.providers[0]?.installations?.find((entry) => entry.selected)?.id || this.providers[0]?.installations?.[0]?.id || null,
       selectedMemoryId: firstMemory,
       memoryQuery: "",
       memoryFilters: { query: "", kind: "all", scope: "all", state: "all", pinned: "all" },
@@ -429,6 +459,17 @@ export class SettingsStore {
       managerQuery: "",
       selectedManagerResource: {},
       managerStates: {},
+      managerHydration: {},
+      activeFlow: null,
+      flowHistory: [],
+      previewTheme: null,
+      themeBeforePreview: null,
+      customThemeDraft: 'accent = "system"\nsurface = "quiet"',
+      customThemeStatus: { state: "idle", errors: [], fallback: null },
+      soundPreview: null,
+      externalChange: null,
+      activeFixture: null,
+      persistence: { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA },
       spellingMenu: null,
       receipts: [],
       revision: 0,
@@ -448,6 +489,7 @@ export class SettingsStore {
     }));
     this.state.scenarioOverlay = clone(SCENARIOS[this.state.scenario]?.entityOverlay || SCENARIOS[this.state.scenario]?.overlay || {});
     this._applyScenarioOverlay(this.state.scenarioOverlay);
+    this._initialState = deepFreeze(clone(this.state));
 
     this._motionMedia = media;
     this._onMotionPreference = (event) => {
@@ -459,6 +501,7 @@ export class SettingsStore {
     };
     media?.addEventListener?.("change", this._onMotionPreference);
     this._applyPresentationToDocument();
+    this._restorePersistentState();
   }
 
   subscribe(listener) {
@@ -467,6 +510,7 @@ export class SettingsStore {
   }
 
   destroy() {
+    this._persistState();
     this._motionMedia?.removeEventListener?.("change", this._onMotionPreference);
     this.listeners.clear();
   }
@@ -492,6 +536,7 @@ export class SettingsStore {
     this.state.revision = event.revision;
     this.state.lastEvent = event;
     for (const listener of this.listeners) listener(this.state, event);
+    this._persistState();
     return event;
   }
 
@@ -499,6 +544,345 @@ export class SettingsStore {
     Object.assign(this.state, values);
     if (values.search) this._syncSearchAliases();
     return this.emit(reason, details);
+  }
+
+  _persistentPayload() {
+    return {
+      schema: PERSISTENCE_SCHEMA,
+      conceptId: this.conceptId,
+      savedAt: nowISO(),
+      state: {
+        screen: this.state.screen,
+        categoryId: this.state.categoryId,
+        subcategoryId: this.state.subcategoryId,
+        managerId: this.state.managerId,
+        managerTab: this.state.managerTab,
+        selectedProviderId: this.state.selectedProviderId,
+        selectedAccountId: this.state.selectedAccountId,
+        selectedInstallationId: this.state.selectedInstallationId,
+        selectedMemoryId: this.state.selectedMemoryId,
+        selectedTerminalId: this.state.selectedTerminalId,
+        selectedManagerResource: this.state.selectedManagerResource,
+        managerStates: this.state.managerStates,
+        managerHydration: this.state.managerHydration,
+        theme: this.state.theme,
+        density: this.state.density,
+        reducedMotionOverride: this.state.reducedMotionOverride,
+        activeFixture: this.state.activeFixture,
+        customThemeDraft: this.state.customThemeDraft,
+        customThemeStatus: this.state.customThemeStatus,
+        externalChange: this.state.externalChange,
+        flowHistory: this.state.flowHistory
+      },
+      genericManagers: this.genericManagers,
+      providers: this.providers,
+      managerOperations: this.managerOperations
+    };
+  }
+
+  _persistState() {
+    if (!this._storage || !this.state?.persistence) return false;
+    try {
+      const payload = this._persistentPayload();
+      this._storage.setItem(this._persistenceKey, JSON.stringify(payload));
+      this.state.persistence.lastSavedAt = payload.savedAt;
+      return true;
+    } catch {
+      this.state.persistence.available = false;
+      return false;
+    }
+  }
+
+  _restorePersistentState() {
+    if (!this._storage) return false;
+    try {
+      const payload = JSON.parse(this._storage.getItem(this._persistenceKey) || "null");
+      if (!payload || payload.schema !== PERSISTENCE_SCHEMA || payload.conceptId !== this.conceptId) return false;
+      if (payload.genericManagers) this.genericManagers = clone(payload.genericManagers);
+      if (Array.isArray(payload.providers) && payload.providers.length) this.providers = clone(payload.providers);
+      if (Array.isArray(payload.managerOperations)) this.managerOperations = clone(payload.managerOperations);
+      Object.assign(this.state, clone(payload.state || {}));
+      this.state.persistence = { available: true, restored: true, lastSavedAt: payload.savedAt || null, schema: PERSISTENCE_SCHEMA };
+      this._refreshEffectiveMotion();
+      this._applyPresentationToDocument();
+      return true;
+    } catch {
+      this._storage.removeItem(this._persistenceKey);
+      return false;
+    }
+  }
+
+  resetPersistentDemo() {
+    try { this._storage?.removeItem(this._persistenceKey); } catch { /* local concept only */ }
+    const revision = this.state.revision;
+    this._restoreBaseline();
+    this.state = clone(this._initialState);
+    this.state.revision = revision;
+    this.state.lastEvent = null;
+    this.state.persistence = { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA };
+    this._applyScenarioOverlay(this.state.scenarioOverlay);
+    this._refreshEffectiveMotion();
+    this._syncPresentationSettings();
+    this._applyPresentationToDocument();
+    this.openHome();
+    this.receipt("Demo state reset", "The deterministic concept state returned to its authored baseline.", "success");
+    return true;
+  }
+
+  assignedManagers(conceptId = this.conceptId) {
+    return [...(this.managerAssignments?.[conceptId] || [])];
+  }
+
+  managerInventory(managerId) {
+    return this.genericManagers?.[managerId] || null;
+  }
+
+  managerResource(managerId, resourceId) {
+    return this.genericManagers?.[managerId]?.items?.find((entry) => entry.id === resourceId) || null;
+  }
+
+  selectManagerResource(managerId, resourceId) {
+    if (!this.managerResource(managerId, resourceId)) return false;
+    this.state.selectedManagerResource = { ...this.state.selectedManagerResource, [managerId]: resourceId };
+    const focusRequest = this._newFocus("resource", resourceId, { selector: `[data-manager-resource^="${managerId}:${resourceId}"]`, preventScroll: true });
+    this.emit({ action: "manager-resource", scopes: ["manager", "detail", "focus"], focusRequest, motionKey: `${this.conceptId}:manager-resource` });
+    return true;
+  }
+
+  updateManagerResource(managerId, resourceId, changes = {}) {
+    const resource = this.managerResource(managerId, resourceId);
+    if (!resource) return false;
+    Object.assign(resource, clone(changes));
+    this.managerOperations = [...this.managerOperations, { id: `manager-op-${++this._operationSequence}`, managerId, resourceId, changes: clone(changes), at: nowISO(), simulation: true }].slice(-100);
+    this.receipt("Manager fixture updated", `${resource.title} recorded a deterministic local state change.`, "success");
+    this.emit({ action: "manager-resource", scopes: ["manager", "detail", "receipts"], motionKey: `${this.conceptId}:manager-resource-update` });
+    return true;
+  }
+
+  _flowKind(managerId, resourceId, action = "") {
+    const text = `${managerId} ${resourceId || ""} ${action}`.toLowerCase();
+    if (/provider/.test(text) && /install/.test(text)) return "provider-install";
+    if (/provider/.test(text) && /update/.test(text)) return "provider-update";
+    if (/sound|pack/.test(text)) return "sound-pack";
+    if (/settings-import|import settings/.test(text)) return "settings-import";
+    if (/settings-copy|copy settings/.test(text)) return "settings-copy";
+    if (/settings-reset|reset settings/.test(text)) return "settings-reset";
+    if (/backup|restore/.test(text)) return "backup-restore";
+    if (/cleanup/.test(text)) return "cleanup";
+    if (/test|debug/.test(text)) return "test";
+    if (/theme|appearance/.test(text)) return "theme";
+    return "generic";
+  }
+
+  startFlow(kind = "generic", options = {}) {
+    const template = this.flowTemplates[kind] || this.flowTemplates.generic;
+    if (!template) return false;
+    this.state.activeFlow = {
+      id: `flow-${++this._operationSequence}`,
+      kind,
+      label: template.label,
+      managerId: options.managerId || this.state.managerId,
+      resourceId: options.resourceId || null,
+      providerId: options.providerId || null,
+      installationId: options.installationId || null,
+      stages: clone(template.stages),
+      stageIndex: Number(options.stageIndex || 0),
+      status: options.status || "active",
+      choiceStage: template.choiceStage ?? null,
+      choices: clone(template.choices || []),
+      choice: options.choice || null,
+      rollbackAvailable: Boolean(options.rollbackAvailable),
+      failureReason: options.failureReason || null,
+      startedAt: nowISO(),
+      simulation: true
+    };
+    this.emit({ action: "manager-flow", scopes: ["manager", "flow", "focus"], motionKey: `${this.conceptId}:flow-start` });
+    return clone(this.state.activeFlow);
+  }
+
+  chooseFlow(choice) {
+    const flow = this.state.activeFlow;
+    if (!flow || !flow.choices.includes(choice)) return false;
+    flow.choice = choice;
+    this.emit({ action: "manager-flow", scopes: ["manager", "flow"], motionKey: `${this.conceptId}:flow-choice` });
+    return true;
+  }
+
+  advanceFlow(options = {}) {
+    const flow = this.state.activeFlow;
+    if (!flow || !["active", "choice-required"].includes(flow.status)) return false;
+    if (flow.choiceStage === flow.stageIndex && !flow.choice) {
+      flow.status = "choice-required";
+      this.receipt("Choice required", "Choose Merge or Replace before the settings import can continue.", "warning");
+      this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-gate` });
+      return false;
+    }
+    const outcome = typeof options === "string" ? options : options.outcome;
+    if (outcome === "fail") {
+      flow.status = "failed";
+      flow.failureReason = typeof options === "object" ? options.reason || "Deterministic verification fixture failed." : "Deterministic verification fixture failed.";
+      flow.rollbackAvailable = true;
+      this.receipt("Verification failed", `${flow.label} stopped before activation. Rollback is available.`, "warning", { persistent: true });
+      this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-failed` });
+      return clone(flow);
+    }
+    flow.status = "active";
+    if (flow.stageIndex < flow.stages.length - 1) flow.stageIndex += 1;
+    else {
+      flow.status = "complete";
+      this.state.flowHistory = [...this.state.flowHistory, clone(flow)].slice(-25);
+      this.receipt("Operation verified", `${flow.label} completed as a deterministic concept transaction.`, "success", { persistent: true });
+    }
+    this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-advance` });
+    return clone(flow);
+  }
+
+  rollbackFlow() {
+    const flow = this.state.activeFlow;
+    if (!flow || !flow.rollbackAvailable) return false;
+    flow.status = "rolled-back";
+    flow.rollbackAvailable = false;
+    flow.rolledBackAt = nowISO();
+    this.state.flowHistory = [...this.state.flowHistory, clone(flow)].slice(-25);
+    this.receipt("Rollback complete", `${flow.label} restored its prior deterministic state.`, "success", { persistent: true });
+    this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-rollback` });
+    return clone(flow);
+  }
+
+  closeFlow() {
+    if (!this.state.activeFlow) return false;
+    this.state.activeFlow = null;
+    this.emit({ action: "manager-flow", scopes: ["manager", "flow"], motionKey: `${this.conceptId}:flow-close` });
+    return true;
+  }
+
+  runManagerAction(managerId, resourceId, action) {
+    const resource = resourceId ? this.managerResource(managerId, resourceId) : null;
+    const kind = this._flowKind(managerId, resourceId, action);
+    if (/preview locally/i.test(action || "")) return this.previewSound(resourceId);
+    if (/start|import|restore|reset|cleanup|test|update|install/i.test(action || "")) return this.startFlow(kind, { managerId, resourceId });
+    this.receipt("Local manager action recorded", `${resource?.title || managerId} recorded ${action || "an inspect action"}; no external side effect occurred.`, "managed", { simulation: true });
+    this.emit({ action: "manager-resource", scopes: ["manager", "receipts"], motionKey: `${this.conceptId}:manager-action` });
+    return true;
+  }
+
+  previewSound(resourceId) {
+    const resource = this.managerResource("notifications-sounds", resourceId);
+    if (!resource) return false;
+    this.state.soundPreview = { resourceId, state: "playing", localOnly: true, startedAt: nowISO() };
+    this.emit({ action: "manager-resource", scopes: ["manager", "preview"], motionKey: `${this.conceptId}:sound-preview` });
+    return clone(this.state.soundPreview);
+  }
+
+  stopSoundPreview() {
+    if (!this.state.soundPreview) return false;
+    this.state.soundPreview = { ...this.state.soundPreview, state: "stopped" };
+    this.emit({ action: "manager-resource", scopes: ["manager", "preview"], motionKey: `${this.conceptId}:sound-stop` });
+    return true;
+  }
+
+  previewTheme(theme) {
+    if (!THEME_BY_ID.has(theme)) return false;
+    if (!this.state.themeBeforePreview) this.state.themeBeforePreview = this.state.theme;
+    this.state.previewTheme = theme;
+    this.state.theme = theme;
+    this.state.presentation.theme = theme;
+    this._applyPresentationToDocument();
+    this.emit({ action: "theme-preview", scopes: ["presentation", "manager", "preview"], motionKey: `${this.conceptId}:theme-preview` });
+    return true;
+  }
+
+  applyThemePreview() {
+    if (!this.state.previewTheme) return false;
+    const applied = this.state.previewTheme;
+    this.state.previewTheme = null;
+    this.state.themeBeforePreview = null;
+    this.receipt("Theme applied", `${applied} is now the saved deterministic theme for this concept.`, "success");
+    this.emit({ action: "theme-preview", scopes: ["presentation", "manager", "receipts"], motionKey: `${this.conceptId}:theme-apply` });
+    return true;
+  }
+
+  revertThemePreview() {
+    if (!this.state.themeBeforePreview) return false;
+    this.state.theme = this.state.themeBeforePreview;
+    this.state.presentation.theme = this.state.themeBeforePreview;
+    this.state.previewTheme = null;
+    this.state.themeBeforePreview = null;
+    this._applyPresentationToDocument();
+    this.emit({ action: "theme-preview", scopes: ["presentation", "manager"], motionKey: `${this.conceptId}:theme-revert` });
+    return true;
+  }
+
+  validateCustomTheme(draft = this.state.customThemeDraft) {
+    this.state.customThemeDraft = String(draft || "");
+    const errors = [];
+    if (/unsupported_|left_border|emoji/i.test(this.state.customThemeDraft)) errors.push("Unsupported or prohibited token");
+    if (!/accent\s*=|surface\s*=|text\s*=/i.test(this.state.customThemeDraft)) errors.push("At least one semantic theme token is required");
+    this.state.customThemeStatus = errors.length ? { state: "invalid", errors, fallback: "friendly-dark" } : { state: "valid", errors: [], fallback: null };
+    this.emit({ action: "theme-preview", scopes: ["manager", "preview"], motionKey: `${this.conceptId}:theme-validate` });
+    return clone(this.state.customThemeStatus);
+  }
+
+  markExternalChange(managerId, resourceId, effectiveValue = "Changed on another client") {
+    this.state.externalChange = { managerId, resourceId, effectiveValue, detectedAt: nowISO(), status: "unresolved" };
+    this.emit({ action: "manager-resource", scopes: ["manager", "detail"], motionKey: `${this.conceptId}:external-change` });
+    return clone(this.state.externalChange);
+  }
+
+  reconcileExternalChange(choice = "review") {
+    if (!this.state.externalChange) return false;
+    this.state.externalChange.status = choice === "accept" ? "accepted" : choice === "keep" ? "kept-local" : "reviewed";
+    this.receipt("External change reconciled", `The changed-elsewhere fixture was ${this.state.externalChange.status}.`, "success");
+    this.emit({ action: "manager-resource", scopes: ["manager", "detail", "receipts"], motionKey: `${this.conceptId}:external-reconcile` });
+    return true;
+  }
+
+  selectProviderInstallation(providerId, installationId) {
+    const provider = this.providers.find((entry) => entry.id === providerId);
+    const installation = provider?.installations?.find((entry) => entry.id === installationId);
+    if (!provider || !installation) return false;
+    this.state.selectedProviderId = providerId;
+    this.state.selectedInstallationId = installationId;
+    this.emit({ action: "provider-installation", scopes: ["provider", "manager", "focus"], motionKey: `${this.conceptId}:installation-select` });
+    return true;
+  }
+
+  runProviderInstallationAction(providerId, installationId, installationAction) {
+    if (!this.selectProviderInstallation(providerId, installationId)) return false;
+    const kind = /install/i.test(installationAction) && !/update/i.test(installationAction) ? "provider-install" : "provider-update";
+    return this.startFlow(kind, { managerId: "providers", providerId, installationId });
+  }
+
+  triggerFixture(fixtureId) {
+    const fixture = this.fixtureTriggers.find((entry) => entry.id === fixtureId);
+    if (!fixture) return false;
+    this.state.activeFixture = fixtureId;
+    if (fixture.kind === "search") {
+      this.openHome();
+      this.setSearch(fixture.query, true, "home");
+    } else if (fixture.managerId) {
+      this.openManager(fixture.managerId, fixture.managerId === "providers" ? "installations" : "overview", { resourceId: fixture.target });
+    }
+    if (fixture.kind === "manager-resource") this.updateManagerResource(fixture.managerId, fixture.target, { status: fixture.status, fixtureMessage: fixture.message });
+    if (fixture.kind === "provider-state") { const provider = this.provider(fixture.target); if (provider) { provider.state = fixture.status; provider.stateLabel = titleCase(fixture.status); } }
+    if (fixture.kind === "provider-catalog") { const provider = this.provider(fixture.target); if (provider?.catalogue) provider.catalogue.state = fixture.status; }
+    if (fixture.kind === "provider-route") { const provider = this.provider(fixture.target); if (provider?.routing) provider.routing.fixtureState = fixture.status; }
+    if (fixture.kind === "provider-installation") this.selectProviderInstallation(fixture.target, fixture.installationId);
+    if (fixture.kind === "flow-state") {
+      this.startFlow(fixture.flow, { managerId: fixture.managerId });
+      if (fixture.status === "choice-required") { this.state.activeFlow.stageIndex = this.state.activeFlow.choiceStage; this.state.activeFlow.status = "choice-required"; }
+      if (fixture.status === "rolled-back") { this.state.activeFlow.status = "rolled-back"; this.state.activeFlow.rollbackAvailable = false; }
+    }
+    if (fixture.kind === "external-change") this.markExternalChange(fixture.managerId, fixture.target);
+    if (fixture.kind === "manager-state") this.state.managerStates = { ...this.state.managerStates, [fixture.target]: fixture.status };
+    if (fixture.kind === "long-copy") {
+      const resource = this.managerResource(fixture.managerId, fixture.target);
+      if (resource) resource.detail = `${fixture.message} This expanded review fixture deliberately carries multiple clauses, explicit provenance language, and a nontrivial technical label so wrapping, localization pressure, and squeezed-window behavior can be inspected without ellipsis.`;
+    }
+    if (fixture.kind === "hydration") this.state.managerHydration = { ...this.state.managerHydration, [fixture.target]: { state: "loading", startedAt: nowISO() } };
+    this.receipt("Review fixture applied", `${fixture.label}: ${fixture.message}`, "managed", { simulation: true });
+    this.emit({ action: "fixture", scopes: ["view", "manager", "data", "receipts"], motionKey: `${this.conceptId}:fixture` });
+    return clone(fixture);
   }
 
   _syncSearchAliases() {
@@ -870,12 +1254,14 @@ export class SettingsStore {
     this.state.navigationOpen = false;
     this.state.inspectorOpen = false;
     this.state.managerQuery = "";
+    this.state.managerHydration = { ...this.state.managerHydration, [manager.id]: { state: "hydrated", hydratedAt: nowISO() } };
     this._setSearch({ surface: `manager:${manager.id}`, query: "", open: false, activeIndex: 0, optionCount: 0 });
     if (manager.id === "providers" && options.resourceId) {
       const provider = this.providers.find((entry) => entry.id === options.resourceId);
       if (provider) {
         this.state.selectedProviderId = provider.id;
         this.state.selectedAccountId = provider.accounts.find((entry) => entry.id === options.childResourceId)?.id || provider.activeAccountId || provider.accounts[0]?.id || null;
+        this.state.selectedInstallationId = provider.installations?.find((entry) => entry.id === options.childResourceId)?.id || provider.installations?.find((entry) => entry.selected)?.id || provider.installations?.[0]?.id || null;
       }
     } else if (manager.id === "memory" && options.resourceId && this.memories.some((entry) => entry.id === options.resourceId)) {
       this.state.selectedMemoryId = options.resourceId;
@@ -1779,6 +2165,26 @@ export class SettingsStore {
       case "terminal.diagnostics": return this.runTerminalDiagnostics(input.profileId || input.id);
       case "terminal.switch.resolve": return this.resolveTerminalSwitch(input.choice);
       case "spelling.action": return this.spellAction(input.name || input.operation || input.spellingAction, input);
+      case "manager.resource.select": return this.selectManagerResource(input.managerId, input.resourceId || input.id);
+      case "manager.resource.update": return this.updateManagerResource(input.managerId, input.resourceId || input.id, input.changes || {});
+      case "manager.action": return this.runManagerAction(input.managerId || this.state.managerId, input.resourceId, input.name || input.managerAction || input.operation);
+      case "flow.start": return this.startFlow(input.kind || "generic", input);
+      case "flow.choose": return this.chooseFlow(input.choice);
+      case "flow.advance": return this.advanceFlow(input);
+      case "flow.rollback": return this.rollbackFlow();
+      case "flow.close": return this.closeFlow();
+      case "provider.installation.select": return this.selectProviderInstallation(input.providerId, input.installationId || input.id);
+      case "provider.installation.action": return this.runProviderInstallationAction(input.providerId, input.installationId, input.installationAction || input.name || input.operation);
+      case "sound.preview": return this.previewSound(input.resourceId || input.id);
+      case "sound.stop": return this.stopSoundPreview();
+      case "theme.preview": return this.previewTheme(input.theme || input.value);
+      case "theme.apply": return this.applyThemePreview();
+      case "theme.revert": return this.revertThemePreview();
+      case "theme.validate": return this.validateCustomTheme(input.draft || input.value);
+      case "external.change": return this.markExternalChange(input.managerId, input.resourceId, input.effectiveValue);
+      case "external.reconcile": return this.reconcileExternalChange(input.choice);
+      case "fixture.trigger": return this.triggerFixture(input.fixtureId || input.id);
+      case "persistence.reset": return this.resetPersistentDemo();
       case "receipt.dismiss": return this.dismissReceipt(input.receiptId || input.id);
       default: return false;
     }
@@ -1829,6 +2235,11 @@ export class SettingsStore {
       settings: [...this.settings.values()],
       providers: this.providers,
       providerOperations: this.providerOperations,
+      managerOperations: this.managerOperations,
+      managerAssignments: this.managerAssignments,
+      managerCoverageLabels: this.managerCoverageLabels,
+      flowTemplates: this.flowTemplates,
+      fixtureTriggers: this.fixtureTriggers,
       roles: this.roles,
       memories: this.memories,
       terminals: this.terminals,

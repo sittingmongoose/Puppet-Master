@@ -1,0 +1,351 @@
+{
+  "schema_id": "pm.settings_manager_coverage.v1",
+  "concept_id": "concept-01-index-house",
+  "model": "5.6 Sol",
+  "concept_thesis": "Stable-address archive of settings, provenance, memory, and delegated behavior.",
+  "shared_required": [
+    {
+      "family": "Full quiet PM shell",
+      "route": "all concept pages",
+      "evidence": [
+        ".pm-shell",
+        ".shell-topbar",
+        ".activity-bar",
+        ".project-rail",
+        ".assistant-panel",
+        ".status-bar"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Home",
+      "route": "#home",
+      "evidence": [
+        "[data-view-heading]",
+        ".manager-directory",
+        ".persistence-bar",
+        ".fixture-tray"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Search",
+      "route": "#home and every workspace/manager",
+      "evidence": [
+        "[data-search-input]",
+        "[data-search-results]",
+        "aria-activedescendant",
+        "Cmd/Ctrl+K"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Workspace",
+      "route": "#category/<category>/<subcategory>",
+      "evidence": [
+        "category navigation",
+        "continuous setting document",
+        "scrollspy",
+        "deep-link focus"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "route": "all categories",
+      "evidence": [
+        "default/custom/inherited/managed/unavailable/validation/restart/reconnect/requested-effective"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "route": "#manager/providers/<tab>",
+      "evidence": [
+        "overview",
+        "accounts",
+        "models",
+        "installations",
+        "usage",
+        "routing",
+        "roles",
+        "support"
+      ],
+      "status": "demonstrated"
+    }
+  ],
+  "assigned_manager_families": [
+    {
+      "manager_id": "providers",
+      "family": "Provider / Account / Model / Installation",
+      "assignment": "shared_core",
+      "route": "#manager/providers/installations",
+      "deep_link_example": "#manager/providers/installations",
+      "resource_count": 7,
+      "primary_actions": [
+        "discover installations",
+        "select installation",
+        "authenticate at correct owner",
+        "refresh catalogue",
+        "update",
+        "verify",
+        "roll back",
+        "select future account/model route"
+      ],
+      "deterministic_fixture_ids": [
+        "provider-selected-shadowed",
+        "provider-unknown-owner",
+        "provider-cli-oauth-signed-out",
+        "provider-not-installed",
+        "provider-catalog-stale",
+        "provider-refresh-last-good",
+        "provider-route-difference"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('providers'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "context",
+      "family": "Context & Instructions",
+      "assignment": "assigned",
+      "route": "#manager/context/overview",
+      "deep_link_example": "#manager/context/overview?resource=project-instructions",
+      "resource_count": 7,
+      "primary_actions": [
+        "inspect source order",
+        "toggle admission",
+        "review requested/effective context"
+      ],
+      "deterministic_fixture_ids": [
+        "long-copy"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('context'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "memory",
+      "family": "Memory",
+      "assignment": "assigned",
+      "route": "#manager/memory/overview",
+      "deep_link_example": "#manager/memory/overview",
+      "resource_count": 0,
+      "primary_actions": [
+        "search",
+        "filter",
+        "verify",
+        "pin",
+        "edit",
+        "discard",
+        "undo",
+        "restore immutable version"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('memory'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "personas",
+      "family": "Personas",
+      "assignment": "assigned",
+      "route": "#manager/personas/overview",
+      "deep_link_example": "#manager/personas/overview?resource=assistant-persona",
+      "resource_count": 9,
+      "primary_actions": [
+        "inspect capsule",
+        "edit",
+        "validate",
+        "duplicate",
+        "enable/disable"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('personas'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "goal-automation",
+      "family": "Goal & Automation",
+      "assignment": "assigned",
+      "route": "#manager/goal-automation/overview",
+      "deep_link_example": "#manager/goal-automation/overview?resource=goal-default",
+      "resource_count": 3,
+      "primary_actions": [
+        "set project/global default",
+        "inspect inherited/effective policy",
+        "preview automation guard"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('goal-automation'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "crew",
+      "family": "Crew",
+      "assignment": "assigned",
+      "route": "#manager/crew/overview",
+      "deep_link_example": "#manager/crew/overview?resource=release-review",
+      "resource_count": 4,
+      "primary_actions": [
+        "create/edit template",
+        "change route policy",
+        "inspect limits and isolation"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('crew'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "permissions-filesafe",
+      "family": "Permissions & FileSafe",
+      "assignment": "assigned",
+      "route": "#manager/permissions-filesafe/overview",
+      "deep_link_example": "#manager/permissions-filesafe/overview?resource=grant-project-write",
+      "resource_count": 3,
+      "primary_actions": [
+        "add/edit/reorder/test rule",
+        "inspect managed source",
+        "review FileSafe alternative"
+      ],
+      "deterministic_fixture_ids": [
+        "managed-setting"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('permissions-filesafe'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "back-seat-driver",
+      "family": "Back Seat Driver",
+      "assignment": "assigned",
+      "route": "#manager/back-seat-driver/overview",
+      "deep_link_example": "#manager/back-seat-driver/overview?resource=bsd-mode",
+      "resource_count": 3,
+      "primary_actions": [
+        "set Off/Auto/On",
+        "inspect effective advisor route",
+        "review usage guard"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('back-seat-driver'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    }
+  ],
+  "provider_fixture_coverage": {
+    "route": "#manager/providers/installations",
+    "fixtures": [
+      "ready/authenticated CLI",
+      "found but signed out",
+      "selected and shadowed installs",
+      "unknown ownership manual-only",
+      "explicit official-source install",
+      "Ask-first update",
+      "idle update",
+      "verify failure and rollback",
+      "Claude CLI-owned OAuth",
+      "OpenAI PM-direct OAuth",
+      "API key",
+      "OpenCode external server",
+      "Free Models underlying setup",
+      "ready with usage unavailable",
+      "catalog refresh last-known-good",
+      "account fallback requested/effective",
+      "Fast/Normal and effort variation"
+    ],
+    "deterministic_trigger_ids": [
+      "provider-selected-shadowed",
+      "provider-unknown-owner",
+      "provider-cli-oauth-signed-out",
+      "provider-not-installed",
+      "provider-catalog-stale",
+      "provider-refresh-last-good",
+      "provider-route-difference"
+    ],
+    "status": "demonstrated"
+  },
+  "responsive_and_accessibility": {
+    "widths": [
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "squeezed_height": 640,
+    "reduced_motion": true,
+    "themes": 8,
+    "keyboard": true,
+    "focus_restoration": true,
+    "no_primary_filter_pills": true
+  },
+  "missing": []
+}

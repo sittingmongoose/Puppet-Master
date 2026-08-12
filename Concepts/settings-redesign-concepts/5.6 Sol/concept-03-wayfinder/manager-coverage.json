@@ -1,0 +1,421 @@
+{
+  "schema_id": "pm.settings_manager_coverage.v1",
+  "concept_id": "concept-03-wayfinder",
+  "model": "5.6 Sol",
+  "concept_thesis": "Guided toolchain routes with explicit setup, verification, and recovery checkpoints.",
+  "shared_required": [
+    {
+      "family": "Full quiet PM shell",
+      "route": "all concept pages",
+      "evidence": [
+        ".pm-shell",
+        ".shell-topbar",
+        ".activity-bar",
+        ".project-rail",
+        ".assistant-panel",
+        ".status-bar"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Home",
+      "route": "#home",
+      "evidence": [
+        "[data-view-heading]",
+        ".manager-directory",
+        ".persistence-bar",
+        ".fixture-tray"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Search",
+      "route": "#home and every workspace/manager",
+      "evidence": [
+        "[data-search-input]",
+        "[data-search-results]",
+        "aria-activedescendant",
+        "Cmd/Ctrl+K"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Workspace",
+      "route": "#category/<category>/<subcategory>",
+      "evidence": [
+        "category navigation",
+        "continuous setting document",
+        "scrollspy",
+        "deep-link focus"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "route": "all categories",
+      "evidence": [
+        "default/custom/inherited/managed/unavailable/validation/restart/reconnect/requested-effective"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "route": "#manager/providers/<tab>",
+      "evidence": [
+        "overview",
+        "accounts",
+        "models",
+        "installations",
+        "usage",
+        "routing",
+        "roles",
+        "support"
+      ],
+      "status": "demonstrated"
+    }
+  ],
+  "assigned_manager_families": [
+    {
+      "manager_id": "providers",
+      "family": "Provider / Account / Model / Installation",
+      "assignment": "shared_core",
+      "route": "#manager/providers/installations",
+      "deep_link_example": "#manager/providers/installations",
+      "resource_count": 7,
+      "primary_actions": [
+        "discover installations",
+        "select installation",
+        "authenticate at correct owner",
+        "refresh catalogue",
+        "update",
+        "verify",
+        "roll back",
+        "select future account/model route"
+      ],
+      "deterministic_fixture_ids": [
+        "provider-selected-shadowed",
+        "provider-unknown-owner",
+        "provider-cli-oauth-signed-out",
+        "provider-not-installed",
+        "provider-catalog-stale",
+        "provider-refresh-last-good",
+        "provider-route-difference"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('providers'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "file-manager",
+      "family": "File Manager & Editor",
+      "assignment": "assigned",
+      "route": "#manager/file-manager/overview",
+      "deep_link_example": "#manager/file-manager/overview?resource=editor-default",
+      "resource_count": 3,
+      "primary_actions": [
+        "select editor/file route",
+        "inspect remote/local owner",
+        "test open behavior"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('file-manager'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "terminal",
+      "family": "Terminal",
+      "assignment": "assigned",
+      "route": "#manager/terminal/overview",
+      "deep_link_example": "#manager/terminal/overview",
+      "resource_count": 0,
+      "primary_actions": [
+        "select profile",
+        "edit draft",
+        "apply/reset",
+        "diagnose"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('terminal'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "lsp",
+      "family": "LSP",
+      "assignment": "assigned",
+      "route": "#manager/lsp/overview",
+      "deep_link_example": "#manager/lsp/overview?resource=rust-analyzer",
+      "resource_count": 5,
+      "primary_actions": [
+        "add/restart server",
+        "inspect language/capability evidence"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('lsp'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "formatters",
+      "family": "Formatters",
+      "assignment": "assigned",
+      "route": "#manager/formatters/overview",
+      "deep_link_example": "#manager/formatters/overview?resource=formatter-js",
+      "resource_count": 3,
+      "primary_actions": [
+        "add/test formatter",
+        "resolve owner conflict",
+        "set requested/effective route"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('formatters'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "commands-shortcuts",
+      "family": "Commands & Shortcuts",
+      "assignment": "assigned",
+      "route": "#manager/commands-shortcuts/overview",
+      "deep_link_example": "#manager/commands-shortcuts/overview?resource=cmd-settings-open",
+      "resource_count": 3,
+      "primary_actions": [
+        "create/edit/dry-run command",
+        "record/reset/import/export shortcut"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('commands-shortcuts'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "mcp",
+      "family": "MCP",
+      "assignment": "assigned",
+      "route": "#manager/mcp/overview",
+      "deep_link_example": "#manager/mcp/overview?resource=github-server",
+      "resource_count": 4,
+      "primary_actions": [
+        "add/reconnect/restart server",
+        "inspect exposure and approvals"
+      ],
+      "deterministic_fixture_ids": [
+        "reconnect-required"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('mcp'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "skills",
+      "family": "Skills",
+      "assignment": "assigned",
+      "route": "#manager/skills/overview",
+      "deep_link_example": "#manager/skills/overview?resource=skill-plan-audit",
+      "resource_count": 2,
+      "primary_actions": [
+        "inspect source",
+        "set up dependency",
+        "review permission requirement"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('skills'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "plugins",
+      "family": "Plugins",
+      "assignment": "assigned",
+      "route": "#manager/plugins/overview",
+      "deep_link_example": "#manager/plugins/overview?resource=plugin-jj",
+      "resource_count": 2,
+      "primary_actions": [
+        "install/update/disable plugin",
+        "show restart requirement"
+      ],
+      "deterministic_fixture_ids": [
+        "restart-required"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('plugins'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "tools",
+      "family": "Tools",
+      "assignment": "assigned",
+      "route": "#manager/tools/overview",
+      "deep_link_example": "#manager/tools/overview?resource=tool-ripgrep",
+      "resource_count": 3,
+      "primary_actions": [
+        "enable/disable/test tool",
+        "inspect unavailable reason"
+      ],
+      "deterministic_fixture_ids": [
+        "unavailable-setting"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('tools'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "testing-debug",
+      "family": "Testing & Debug",
+      "assignment": "assigned",
+      "route": "#manager/testing-debug/overview",
+      "deep_link_example": "#manager/testing-debug/overview?resource=test-browser",
+      "resource_count": 5,
+      "primary_actions": [
+        "set Auto/On/Off",
+        "run/watch test",
+        "open evidence",
+        "debug/stop/recover"
+      ],
+      "deterministic_fixture_ids": [
+        "testing-unavailable",
+        "lazy-hydration"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('testing-debug'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    }
+  ],
+  "provider_fixture_coverage": {
+    "route": "#manager/providers/installations",
+    "fixtures": [
+      "ready/authenticated CLI",
+      "found but signed out",
+      "selected and shadowed installs",
+      "unknown ownership manual-only",
+      "explicit official-source install",
+      "Ask-first update",
+      "idle update",
+      "verify failure and rollback",
+      "Claude CLI-owned OAuth",
+      "OpenAI PM-direct OAuth",
+      "API key",
+      "OpenCode external server",
+      "Free Models underlying setup",
+      "ready with usage unavailable",
+      "catalog refresh last-known-good",
+      "account fallback requested/effective",
+      "Fast/Normal and effort variation"
+    ],
+    "deterministic_trigger_ids": [
+      "provider-selected-shadowed",
+      "provider-unknown-owner",
+      "provider-cli-oauth-signed-out",
+      "provider-not-installed",
+      "provider-catalog-stale",
+      "provider-refresh-last-good",
+      "provider-route-difference"
+    ],
+    "status": "demonstrated"
+  },
+  "responsive_and_accessibility": {
+    "widths": [
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "squeezed_height": 640,
+    "reduced_motion": true,
+    "themes": 8,
+    "keyboard": true,
+    "focus_restoration": true,
+    "no_primary_filter_pills": true
+  },
+  "missing": []
+}

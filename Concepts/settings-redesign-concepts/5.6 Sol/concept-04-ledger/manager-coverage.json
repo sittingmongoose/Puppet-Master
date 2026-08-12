@@ -1,0 +1,471 @@
+{
+  "schema_id": "pm.settings_manager_coverage.v1",
+  "concept_id": "concept-04-ledger",
+  "model": "5.6 Sol",
+  "concept_thesis": "Dense requested/effective and provenance folio for lifecycle, storage, source, and runtime systems.",
+  "shared_required": [
+    {
+      "family": "Full quiet PM shell",
+      "route": "all concept pages",
+      "evidence": [
+        ".pm-shell",
+        ".shell-topbar",
+        ".activity-bar",
+        ".project-rail",
+        ".assistant-panel",
+        ".status-bar"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Home",
+      "route": "#home",
+      "evidence": [
+        "[data-view-heading]",
+        ".manager-directory",
+        ".persistence-bar",
+        ".fixture-tray"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Search",
+      "route": "#home and every workspace/manager",
+      "evidence": [
+        "[data-search-input]",
+        "[data-search-results]",
+        "aria-activedescendant",
+        "Cmd/Ctrl+K"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Settings Workspace",
+      "route": "#category/<category>/<subcategory>",
+      "evidence": [
+        "category navigation",
+        "continuous setting document",
+        "scrollspy",
+        "deep-link focus"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "route": "all categories",
+      "evidence": [
+        "default/custom/inherited/managed/unavailable/validation/restart/reconnect/requested-effective"
+      ],
+      "status": "demonstrated"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "route": "#manager/providers/<tab>",
+      "evidence": [
+        "overview",
+        "accounts",
+        "models",
+        "installations",
+        "usage",
+        "routing",
+        "roles",
+        "support"
+      ],
+      "status": "demonstrated"
+    }
+  ],
+  "assigned_manager_families": [
+    {
+      "manager_id": "providers",
+      "family": "Provider / Account / Model / Installation",
+      "assignment": "shared_core",
+      "route": "#manager/providers/installations",
+      "deep_link_example": "#manager/providers/installations",
+      "resource_count": 7,
+      "primary_actions": [
+        "discover installations",
+        "select installation",
+        "authenticate at correct owner",
+        "refresh catalogue",
+        "update",
+        "verify",
+        "roll back",
+        "select future account/model route"
+      ],
+      "deterministic_fixture_ids": [
+        "provider-selected-shadowed",
+        "provider-unknown-owner",
+        "provider-cli-oauth-signed-out",
+        "provider-not-installed",
+        "provider-catalog-stale",
+        "provider-refresh-last-good",
+        "provider-route-difference"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('providers'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "storage-retention",
+      "family": "Storage & Retention",
+      "assignment": "assigned",
+      "route": "#manager/storage-retention/overview",
+      "deep_link_example": "#manager/storage-retention/overview?resource=store-primary",
+      "resource_count": 3,
+      "primary_actions": [
+        "inspect root/health",
+        "set retention",
+        "request compaction",
+        "manage legal hold"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('storage-retention'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "backup-restore",
+      "family": "Backup & Restore",
+      "assignment": "assigned",
+      "route": "#manager/backup-restore/overview",
+      "deep_link_example": "#manager/backup-restore/overview?resource=backup-program",
+      "resource_count": 3,
+      "primary_actions": [
+        "create/verify/restore backup",
+        "preview scope",
+        "roll back"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('backup-restore'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "settings-lifecycle",
+      "family": "Settings Lifecycle",
+      "assignment": "assigned",
+      "route": "#manager/settings-lifecycle/overview",
+      "deep_link_example": "#manager/settings-lifecycle/overview?resource=settings-import",
+      "resource_count": 4,
+      "primary_actions": [
+        "export",
+        "validate import",
+        "merge/replace",
+        "copy settings",
+        "reset",
+        "reconcile changed-elsewhere",
+        "roll back"
+      ],
+      "deterministic_fixture_ids": [
+        "rollback-complete",
+        "changed-elsewhere",
+        "import-conflict"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('settings-lifecycle'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "history-sessions",
+      "family": "History & Sessions",
+      "assignment": "assigned",
+      "route": "#manager/history-sessions/overview",
+      "deep_link_example": "#manager/history-sessions/overview?resource=session-goal",
+      "resource_count": 3,
+      "primary_actions": [
+        "filter/open/retain/delete session history with policy"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('history-sessions'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "runtime-artifacts",
+      "family": "Runtime Artifacts",
+      "assignment": "assigned",
+      "route": "#manager/runtime-artifacts/overview",
+      "deep_link_example": "#manager/runtime-artifacts/overview?resource=artifact-browser-run",
+      "resource_count": 3,
+      "primary_actions": [
+        "filter/open/watch/export artifact and source evidence"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('runtime-artifacts'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "source-control-worktrees",
+      "family": "Source Control & Worktrees",
+      "assignment": "assigned",
+      "route": "#manager/source-control-worktrees/overview",
+      "deep_link_example": "#manager/source-control-worktrees/overview?resource=scm-git",
+      "resource_count": 3,
+      "primary_actions": [
+        "select/create/lock/recover/prune worktree",
+        "open review/conflict"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('source-control-worktrees'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "github-actions",
+      "family": "GitHub Actions",
+      "assignment": "assigned",
+      "route": "#manager/github-actions/overview",
+      "deep_link_example": "#manager/github-actions/overview?resource=gha-ci",
+      "resource_count": 3,
+      "primary_actions": [
+        "dispatch/watch/cancel/rerun/open logs"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('github-actions'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "containers-registries",
+      "family": "Containers & Registries",
+      "assignment": "assigned",
+      "route": "#manager/containers-registries/overview",
+      "deep_link_example": "#manager/containers-registries/overview?resource=container-docker",
+      "resource_count": 4,
+      "primary_actions": [
+        "select context",
+        "login",
+        "inspect/build/start/stop",
+        "scan/prune",
+        "tag/push"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('containers-registries'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "web-search-fetch",
+      "family": "Web, Search & Fetch",
+      "assignment": "assigned",
+      "route": "#manager/web-search-fetch/overview",
+      "deep_link_example": "#manager/web-search-fetch/overview?resource=web-browser",
+      "resource_count": 3,
+      "primary_actions": [
+        "set policy/provider",
+        "test route",
+        "inspect redaction and artifact evidence"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('web-search-fetch'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "project-search-index",
+      "family": "Project Search Index",
+      "assignment": "assigned",
+      "route": "#manager/project-search-index/overview",
+      "deep_link_example": "#manager/project-search-index/overview?resource=index-main",
+      "resource_count": 3,
+      "primary_actions": [
+        "set scope",
+        "rebuild/refresh index",
+        "inspect stale/error state"
+      ],
+      "deterministic_fixture_ids": [],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('project-search-index'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "workspace-cleanup",
+      "family": "Workspace Cleanup",
+      "assignment": "assigned",
+      "route": "#manager/workspace-cleanup/overview",
+      "deep_link_example": "#manager/workspace-cleanup/overview?resource=cleanup-caches",
+      "resource_count": 3,
+      "primary_actions": [
+        "inventory candidates",
+        "exclude protected paths",
+        "preview/delete/verify receipts"
+      ],
+      "deterministic_fixture_ids": [
+        "cleanup-protected"
+      ],
+      "required_states_demonstrated": [
+        "loading/lazy hydration",
+        "empty or unconfigured",
+        "error/validation failure",
+        "unavailable",
+        "managed/inherited",
+        "requested/effective difference"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('workspace-cleanup'); PMSettingsDemo.whenIdle();",
+      "status": "demonstrated",
+      "named_owner_docs": []
+    },
+    {
+      "manager_id": "future-server-shell",
+      "family": "Future Server Module Shell",
+      "assignment": "assigned",
+      "route": "#manager/future-server-shell/overview",
+      "deep_link_example": "#manager/future-server-shell/overview?resource=server-module",
+      "resource_count": 6,
+      "primary_actions": [
+        "navigate to deferred insertion destinations only; no invented backend action"
+      ],
+      "deterministic_fixture_ids": [
+        "deferred-server-shell"
+      ],
+      "required_states_demonstrated": [
+        "deferred named owner",
+        "stable insertion destination",
+        "no invented state machine"
+      ],
+      "test_probe": "PMSettingsDemo.openManager('future-server-shell'); PMSettingsDemo.whenIdle();",
+      "status": "deferred_named_owner",
+      "named_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Release_Supply_Chain.md"
+      ]
+    }
+  ],
+  "provider_fixture_coverage": {
+    "route": "#manager/providers/installations",
+    "fixtures": [
+      "ready/authenticated CLI",
+      "found but signed out",
+      "selected and shadowed installs",
+      "unknown ownership manual-only",
+      "explicit official-source install",
+      "Ask-first update",
+      "idle update",
+      "verify failure and rollback",
+      "Claude CLI-owned OAuth",
+      "OpenAI PM-direct OAuth",
+      "API key",
+      "OpenCode external server",
+      "Free Models underlying setup",
+      "ready with usage unavailable",
+      "catalog refresh last-known-good",
+      "account fallback requested/effective",
+      "Fast/Normal and effort variation"
+    ],
+    "deterministic_trigger_ids": [
+      "provider-selected-shadowed",
+      "provider-unknown-owner",
+      "provider-cli-oauth-signed-out",
+      "provider-not-installed",
+      "provider-catalog-stale",
+      "provider-refresh-last-good",
+      "provider-route-difference"
+    ],
+    "status": "demonstrated"
+  },
+  "responsive_and_accessibility": {
+    "widths": [
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "squeezed_height": 640,
+    "reduced_motion": true,
+    "themes": 8,
+    "keyboard": true,
+    "focus_restoration": true,
+    "no_primary_filter_pills": true
+  },
+  "missing": []
+}

@@ -1,0 +1,189 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-01-index-house",
+  "model": "5.6 Sol",
+  "concept_title": "5.6 Sol \u2014 Index House",
+  "concept_thesis": "Stable-address archive of settings, provenance, memory, and delegated behavior.",
+  "plan_owner_impacts": [
+    {
+      "owner_doc": "Plans/Models_System.md",
+      "manager_id": "providers",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Multi-Account.md",
+      "manager_id": "providers",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "manager_id": "providers",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "manager_id": "providers",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "manager_id": "providers",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/agent-rules-context.md",
+      "manager_id": "context",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "manager_id": "context",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "manager_id": "memory",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Personas.md",
+      "manager_id": "personas",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "manager_id": "goal-automation",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "manager_id": "goal-automation",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "manager_id": "crew",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "manager_id": "crew",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Permissions_System.md",
+      "manager_id": "permissions-filesafe",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/FileSafe.md",
+      "manager_id": "permissions-filesafe",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "manager_id": "back-seat-driver",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    },
+    {
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "manager_id": "back-seat-driver",
+      "impact": "Audit canonical state, command ownership, requested/effective fields, lifecycle receipts, and recovery/deep-link semantics exposed by this concept.",
+      "mutation_in_this_pass": false
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "surface": "Settings Home/workspace and assigned managers",
+      "impact": "Inventory must expose stable category/subcategory/setting/manager destinations plus source, scope, exposure, requested/effective, availability, restart/reconnect, and changed-elsewhere state.",
+      "status": "audit_required_not_modified"
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "fields": [
+        "manager_id",
+        "resource_id",
+        "requested_value",
+        "effective_value",
+        "effective_reason",
+        "source_owner",
+        "availability",
+        "validation",
+        "restart_required",
+        "reconnect_required",
+        "revision",
+        "changed_elsewhere",
+        "recovery_route"
+      ],
+      "status": "candidate_shape_only"
+    }
+  ],
+  "command_id_impacts": {
+    "file": "candidate-command-delta.json",
+    "reuse": 6,
+    "candidate": 13,
+    "supersession": 1,
+    "conflict": 0
+  },
+  "wiring_impacts": {
+    "file": "candidate-wiring-delta.json",
+    "flow_count": 9,
+    "production_wiring_changed": false
+  },
+  "dry_component_impacts": {
+    "file": "candidate-dry-delta.json",
+    "status": "candidate_only"
+  },
+  "schema_event_storage_impacts": [
+    "Persistent demo proves revisioned local projections; production needs typed operation/receipt identity, redaction, idempotency, and last-known-good recovery.",
+    "Provider installation identity must remain separate from accounts/connections/entitlements/models.",
+    "Settings import/copy/reset and backup/restore require preview, conflict policy, verification, and rollback state."
+  ],
+  "migration_supersession_impacts": [
+    "Retire old category chip/bloom/no-sidebar contract and adjudicate cmd.settings.bloom.open as compatibility alias only.",
+    "Retire stale right-panel language in favor of responsive inspector/drawer/inline evidence.",
+    "Do not revive regular/yolo mode coupling or invalid inventory values."
+  ],
+  "slint_port_impacts": [
+    "Map manager/resource collections to Slint ListModel structures.",
+    "Keep DOM geometry and IntersectionObserver out of product state; port section-position and focus signals.",
+    "Translate semantic motion blueprints (including transaction/preview) to Slint timelines with reduced-motion parity.",
+    "Use lazy manager hydration and bounded list virtualization for low-memory targets."
+  ],
+  "test_fixtures": [
+    "provider-selected-shadowed",
+    "provider-unknown-owner",
+    "provider-cli-oauth-signed-out",
+    "provider-not-installed",
+    "provider-catalog-stale",
+    "provider-refresh-last-good",
+    "provider-route-difference",
+    "managed-setting",
+    "no-search-results",
+    "typo-search",
+    "long-copy"
+  ],
+  "deferred_named_owners": [],
+  "unresolved_questions": [
+    "Exact command IDs and aliases require canonical UI Command Catalog adjudication.",
+    "Exact settings inventory IDs and schema fields require owner audit; concept fixture IDs are not canon."
+  ],
+  "write_surface": "Concepts/settings-redesign-concepts/5.6 Sol only"
+}

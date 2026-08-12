@@ -1,0 +1,439 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-02-switchboard",
+  "model": "5.6 Sol",
+  "catalog_census": {
+    "authority": "Plans/UI_Command_Catalog.md",
+    "unique_cmd_tokens_scanned": 699,
+    "method": "Exact cmd.* token census; trailing prose punctuation removed.",
+    "note": "A catalog match proves only ID presence, not semantic compatibility."
+  },
+  "entries": [
+    {
+      "action": "Open manager destination",
+      "id": "cmd.settings.manager.open",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.settings.bloom.open"
+      ],
+      "catalog_absent": true,
+      "reason": "Stable manager destination supersedes the old bloom/chip interaction.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Open category",
+      "id": "cmd.settings.category.select",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.settings.bloom.open"
+      ],
+      "catalog_absent": true,
+      "reason": "Primary navigation is a destination, not a bloom modal.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Reset category",
+      "id": "cmd.settings.category.reset",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.settings.category.reset"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Select account profile",
+      "id": "cmd.account.select_profile",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.account.select_profile"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists; future-only routing remains explicit.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Switch provider route",
+      "id": "cmd.provider.switch_route",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.provider.switch_route"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Refresh provider catalogue",
+      "id": "cmd.provider.catalog.refresh",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.model.refresh"
+      ],
+      "catalog_absent": true,
+      "reason": "Model refresh exists, but provider-family catalogue refresh has a distinct validation/last-known-good contract.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Select provider installation",
+      "id": "cmd.provider.installation.select",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "No exact catalog row; installation identity is separate from provider connection.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Install provider CLI",
+      "id": "cmd.provider.installation.install",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.catalog.install_item"
+      ],
+      "catalog_absent": true,
+      "reason": "Generic catalog installation must not silently subsume official provider CLI acquisition.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Update provider CLI",
+      "id": "cmd.provider.installation.update",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.catalog.update_item"
+      ],
+      "catalog_absent": true,
+      "reason": "Needs ownership, selected-installation, official-source, verify, and rollback semantics.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Verify provider CLI",
+      "id": "cmd.provider.installation.verify",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "Verification is a separate operation and receipt.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Roll back provider CLI",
+      "id": "cmd.provider.installation.rollback",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "Required recovery action after verification failure.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Retire old Settings bloom",
+      "id": "cmd.settings.bloom.open",
+      "classification": "supersession",
+      "catalog_matches": [
+        "cmd.settings.bloom.open"
+      ],
+      "catalog_absent": false,
+      "reason": "Keep only a compatibility alias if migration requires it; do not preserve its old interaction contract.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Preview sound locally",
+      "id": "cmd.sound.preview",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.sound.preview"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Upload sound asset",
+      "id": "cmd.sound.upload",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.sound.upload"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Import sound pack",
+      "id": "cmd.sound.pack.import",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.sound.pack.import"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact catalog row exists; validate license/format before apply.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Test notification destination",
+      "id": "cmd.notifications.destination.test",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.notifications.destination.test"
+      ],
+      "catalog_absent": false,
+      "reason": "Explicit test send.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Preview theme",
+      "id": "cmd.theme.preview",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.theme.preview"
+      ],
+      "catalog_absent": false,
+      "reason": "Exact preview command.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Apply theme",
+      "id": "cmd.theme.apply",
+      "classification": "candidate",
+      "catalog_matches": [
+        "cmd.theme.set_mode",
+        "cmd.theme.set_density",
+        "cmd.theme.set_accent"
+      ],
+      "catalog_absent": true,
+      "reason": "A compound semantic theme apply may need a new command or typed reuse adjudication.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Reset theme",
+      "id": "cmd.theme.reset",
+      "classification": "reuse",
+      "catalog_matches": [
+        "cmd.theme.reset"
+      ],
+      "catalog_absent": false,
+      "reason": "Existing reset.",
+      "provisional": false,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Set spellcheck policy",
+      "id": "cmd.spellcheck.policy.set",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "Persistent no-autocorrect policy and dictionary scope.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Set desktop startup policy",
+      "id": "cmd.desktop.startup.set",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "Persistent desktop behavior.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    },
+    {
+      "action": "Open Teacher help",
+      "id": "cmd.teacher.open",
+      "classification": "candidate",
+      "catalog_matches": [],
+      "catalog_absent": true,
+      "reason": "Navigation wrapper; no exact command found.",
+      "provisional": true,
+      "payload_requirements": [
+        "scope/target identity",
+        "requested revision or idempotency key",
+        "permission/availability result",
+        "typed success/error",
+        "receipt or ObservableWork identity",
+        "recovery/deep-link target"
+      ]
+    }
+  ],
+  "required_adjudication": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "classification": "supersession",
+      "decision": "Retire old bloom/chip behavior; preserve a compatibility alias only if historical deep links require it."
+    },
+    {
+      "family": "provider installation lifecycle",
+      "classification": "candidate/conflict",
+      "decision": "Do not reuse generic catalog install commands unless ownership, official-source, verification, rollback, and provider-specific auth boundaries are fully typed."
+    },
+    {
+      "family": "persistent value versus one-shot action",
+      "classification": "boundary",
+      "decision": "Manager navigation, persistent mutation, preview, test-send, and ObservableWork operations remain distinct."
+    }
+  ],
+  "canon_status": "provisional_only_no_ids_minted"
+}
