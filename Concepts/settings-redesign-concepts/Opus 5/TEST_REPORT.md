@@ -153,13 +153,20 @@ interactive control clipped outside the app box.
 
 ## V5 — Content bans
 
-Scanned all 40 files in the folder (35 code files for the code-only bans).
+Every ban was scanned across **all 63 files in the folder**, then reported against the two sets the
+folder actually contains:
 
-Counts below are over the **34 implementation files** (`shared/*.js`, `shared/*.css`,
-`concepts/*/concept.{js,css}`, the five HTML pages). The banned words do appear in this report and in the
-impact registers, because naming what is superseded is part of the deliverable.
+- **34 implementation files** — `shared/*.js` (19), `shared/*.css` (2), `concepts/*/concept.{js,css}` (8),
+  and the 5 HTML pages. This is where the bans apply.
+- **29 documentation and register files** — `README.md`, `TEST_REPORT.md`, `FINDINGS.md`,
+  `IMPACT_REGISTER.json`, `concept-hub.json` and the 24 per-concept register files.
 
-| Ban | Result in implementation files |
+**Implementation files: 0 occurrences of every ban.** The banned words do occur in the second set —
+`bloom` 35 times, `yolo` 11, `toast` 5, `playwright` 1, `TODO`/"not implemented" 3, `lorem ipsum` 1 —
+in every case naming what is superseded, banned or absent, which is what the packet asks the registers
+to record.
+
+| Ban | Result in the 34 implementation files |
 |---|---|
 | `playwright` | **0 occurrences** |
 | `yolo` | **0 occurrences** |
