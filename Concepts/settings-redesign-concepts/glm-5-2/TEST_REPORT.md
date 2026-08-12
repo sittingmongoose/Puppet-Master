@@ -2,7 +2,26 @@
 
 Verification of the four concepts against the **PM_Settings_Bakeoff_Final_Cumulative_2026-08-08** packet. The shared ConceptHub served the concepts on an OS-assigned port (`python3 Concepts/ConceptHub/server.py --port 0 --no-browser`, isolated profile dir). Every concept page and asset returned HTTP 200.
 
-> **Environment note.** This run had no interactive browser backend available in the session (`agent.browsers` reported no backend; `jsdom` absent). Verification was therefore performed at three levels: (1) static source + JSON validation, (2) headless execution of the shared scripts in Node with a minimal DOM shim that actually invokes every renderer and helper, and (3) CSS/code-level analysis of the responsive/theme/motion matrix. Interactive browser verification (live clicks, screenshots) should be re-run in a browser-capable environment; the deterministic triggers and state transitions are all wired and headless-verified, so a browser run is confirmation rather than discovery.
+> **Verification scope.** Three levels: (1) static source + JSON validation, (2) headless execution of the shared scripts in Node with a minimal DOM shim that invokes every renderer and helper, and (3) **an interactive Playwright browser audit** (headless Chromium) that loaded each concept, exercised the deterministic triggers, captured screenshots, and collected console/page errors. The Playwright run was a **transient external test tool installed in a scratch dir outside the repo** — per the packet rule, Puppet Master's own browser surface is the PM-native Browser Program; no Playwright dependency, file, or reference was added to the product or concept folder.
+
+## 0. Interactive browser audit (Playwright, headless Chromium)
+
+Loaded each of the four concepts through ConceptHub, ran the deterministic trigger matrix, and screenshotted Home / owned-manager / narrow-760 states (12 screenshots, all 84–186 KB — real rendered content, no blank/error pages). A visual pass on the Control Room Home confirmed the quiet shell (top + bottom bars), the "Deep demos — this concept owns" strip, large destination panels (not filter pills), and no clipping/overlap/left-borders/emoji.
+
+| Probe (per concept) | 01 Control Room | 02 Atlas | 03 Stack | 04 Stream |
+|---|---|---|---|---|
+| Home rendered + owned-card count | ✓ / 7 | ✓ / 6 | ✓ / 8 | ✓ / 12 |
+| Quiet shell top + bottom bars | ✓ | ✓ | ✓ | ✓ |
+| `data-concept-model="GLM-5.2"` | ✓ | ✓ | ✓ | ✓ |
+| Owned manager opens + renders (`[data-manager-id]`) | ✓ context | ✓ notifications | ✓ filemanager | ✓ storage |
+| Cross-category search returns results | ✓ | ✓ | ✓ | ✓ |
+| Theme apply (`data-theme` flips) | ✓ | ✓ | ✓ | ✓ |
+| Reduced-motion toggle (`data-reduced-motion`) | ✓ | ✓ | ✓ | ✓ |
+| Narrow 760 px — no horizontal overflow | ✓ (0 px) | ✓ (0 px) | ✓ (0 px) | ✓ (0 px) |
+| No clipped sample text | ✓ (0) | ✓ (0) | ✓ (0) | ✓ (0) |
+| Console errors / page errors | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+
+**Bug found and fixed by the audit.** The audit caught a real runtime defect that static + headless checks missed: the owned-families strip was wired with `PM.shared.wireOwnedStrip(stage)` inside each concept's `wireHome()`, but `stage` is only declared in `home()` — so reading it threw `ReferenceError: stage is not defined` on every page load, aborting `wireHome` before the owned cards (and shell re-wire) were bound. The owned-manager "Open" cards therefore did nothing on click in 01/02/03. Fix: pass `document.querySelector("[data-stage]")` instead. After the fix, all four concepts pass the full trigger matrix with zero console/page errors. (Stack/Stream owned cards were additionally routed through their inline/channel openers so the manager visibly renders in those IAs.)
 
 ## 1. Validation commands (all PASS)
 
