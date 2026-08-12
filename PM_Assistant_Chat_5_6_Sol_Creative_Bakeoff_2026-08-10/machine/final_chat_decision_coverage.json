@@ -1,0 +1,1441 @@
+{
+  "schema_id": "pm.packet_decision_coverage.v1",
+  "packet": "chat",
+  "topics": [
+    {
+      "id": "SET-011",
+      "title": "One left Activity Bar and side-panel slot",
+      "requirement": "The Activity Bar is the narrow left navigation rail; it controls one adjacent left side-panel slot. Settings concepts must use the latest left-placement canon and not resurrect old right-side language.",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "category": "shell",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-001",
+      "title": "No AI-design tells",
+      "requirement": "No left-side color accent bars, emoji, uneven/cutoff text, decorative filler, or pill controls that imply the wrong interaction.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-002",
+      "title": "Eight themes",
+      "requirement": "Friendly, Glass, Retro, and Basic in light and dark are supported, with consistent information architecture and semantics.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-003",
+      "title": "Film-level motion",
+      "requirement": "Motion clarifies spatial continuity and state change; it never causes clipping, uncontrolled jumps, indefinite pulsing, or layout before content is stable. Reduced motion has a complete static/opacity alternative.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-004",
+      "title": "Slint 1.17.1 portability",
+      "requirement": "Concepts may use HTML/CSS but cannot depend on browser-only filters, arbitrary DOM measurement, unbounded nested scrolling, or nonportable physics. Long lists must map to virtualized/segmented Slint models.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-005",
+      "title": "Deterministic demo triggers",
+      "requirement": "Every major state has a trigger/reset path for automated visual and interaction testing without adding production toolbar clutter.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-001",
+      "title": "Canonical provider hierarchy",
+      "requirement": "Use Provider family \u2192 Account/Profile \u2192 Connection \u2192 Product/Entitlement \u2192 Models/Capabilities. Provider installation is a separate host/environment resource.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-014",
+      "title": "Claude and Antigravity auth boundary",
+      "requirement": "Claude CLI and Antigravity CLI OAuth are CLI-owned. PM may isolate profiles and launch native login, but does not present PM-direct OAuth. Direct API connections remain separate.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-016",
+      "title": "Multi-account isolation strategies",
+      "requirement": "Support native profiles, isolated homes, auth-only profiles, credential pools, PM-managed connections, and single-active-login limitations. Do not fake concurrency where a CLI cannot isolate accounts.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-017",
+      "title": "Requested/effective route",
+      "requirement": "Every request retains requested provider/account/connection/model and effective provider/account/connection/model plus reason, product/plan, and settlement route.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-022",
+      "title": "Capability evidence layers",
+      "requirement": "Merge catalog declaration, provider discovery, authenticated-account discovery, safe probe, observed use, and admin/user override. Expose supported, unsupported, likely, unverified, temporary unavailable, PM transformed, or alternate route.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-026",
+      "title": "Provider plan clarity",
+      "requirement": "Separate reference API price, active plan/product, included usage, extra balance/packs, actual settlement, connection used, freshness, and confidence. Do not imply a plan-included call was billed at catalog API price.",
+      "packets": [
+        "settings",
+        "usage",
+        "chat",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-001",
+      "title": "Durable breadth, narrow context",
+      "requirement": "PM may retain full history, ledgers, Goal state, memories, logs, artifacts, and registries; each model request receives only the smallest task-relevant admitted view.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-002",
+      "title": "Context Admission Gate",
+      "requirement": "Run admission before protected/immune context. Protected after admission does not mean always injected.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-003",
+      "title": "Explainable Context Lens",
+      "requirement": "Context Lens shows included and omitted sources, reasons, sizes, provenance, cache state, and removable retrieved excerpts without exposing raw secrets or giant system prompts.",
+      "packets": [
+        "chat",
+        "prompt",
+        "usage"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-004",
+      "title": "Compact Now",
+      "requirement": "Compact Now is an explicit context operation that preserves canonical history and produces a receipt; it is not history deletion or Usage rewriting.",
+      "packets": [
+        "chat",
+        "prompt",
+        "usage"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-005",
+      "title": "History search and retrieval",
+      "requirement": "Human and agent search can find prior project threads, code, logs, and artifacts; only selected passages enter context with provenance.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-006",
+      "title": "Memory tiers",
+      "requirement": "Separate transcript/history, degrading evidence-backed Assistant Gists, Goal/run state, planning/spec ledger, tool/artifact memory, and ephemeral working context.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-007",
+      "title": "Degrading memory semantics",
+      "requirement": "Half-life affects retrieval activation, not truth or deletion. Faded Gists remain searchable, evidence-backed, editable, and recoverable.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-008",
+      "title": "Assistant-only hidden memory",
+      "requirement": "Assistant Gists remain Assistant-only. PRD, Planning, Orchestrator, Crew, and subagents use explicit thread/ledger/Goal/artifact retrieval, not hidden personal memory.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-009",
+      "title": "Working-set cap is a ceiling",
+      "requirement": "The Assistant Working Set cap is a hard maximum, not a target to fill. Empty sections need not be serialized.",
+      "packets": [
+        "chat",
+        "prompt"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-010",
+      "title": "Persona capsule",
+      "requirement": "Separate durable Persona definition, runtime metadata/preferences, and a bounded model-facing behavior capsule. Full Persona bodies do not enter every request.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-011",
+      "title": "Persona cannot grant authority",
+      "requirement": "Persona may request capabilities/preferences but cannot widen Permissions, FileSafe, access profile, mode ceiling, provider availability, or route.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-013",
+      "title": "Persona scope and thread locality",
+      "requirement": "Persona/model/account/effort/speed/access/Crew/context/worktree changes in Chat default to the current thread; project/global defaults affect future threads unless explicitly bulk-applied.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-015",
+      "title": "Progressive tools/skills/MCP",
+      "requirement": "Track installed, enabled, available, selected for this turn, and invoked. Only selected schemas enter context.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "tools",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-017",
+      "title": "External deterministic enforcement",
+      "requirement": "FileSafe, Permissions, write scope, route/budgets, work-item identity, schemas, leases, and loop breakers are enforced outside prose; model receives only compact effective state.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-018",
+      "title": "Compaction mechanics",
+      "requirement": "Use bounded summarizer input, head/tail retention, actionable-user-turn tail, transaction/lease commit fence, redaction, minimum gain, ghost-skill markers, soft defer, and provider-aware optional micro-compaction.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-020",
+      "title": "Time-Traveling conditional rules",
+      "requirement": "Dormant scoped rules may trigger on streaming text/tool/path/AST conditions and inject one concise correction/steer with bounded retry. Deterministic safety remains outside this engine.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "context",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-001",
+      "title": "Shared Goal Runtime",
+      "requirement": "Visible Assistant Goal Mode, internal PRD/Planning goals, and Orchestrator GoalRuns share durable objective, phase, cursor, child lineage, checkpoints, evidence, replan, and certification.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-002",
+      "title": "Goal survives context and client loss",
+      "requirement": "Compaction, thread death, server restart, client disconnect, and UI close do not erase Goal state or stop approved host-owned work.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-003",
+      "title": "Goal route is frozen",
+      "requirement": "Changing parent-thread model/Persona/access does not silently retarget an active Goal. Explicit update creates a revisioned replan or applies at a validated safe boundary.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-006",
+      "title": "Sustainable concurrency",
+      "requirement": "Distinguish hard max, configured max, provider/account max, current effective max, and predicted sustainable max. Prefer complete smaller waves over many starved children.",
+      "packets": [
+        "chat",
+        "usage",
+        "prompt",
+        "runtime"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-009",
+      "title": "Any agent may request another",
+      "requirement": "Any running agent may request an eligible agent from any available provider; Orchestrator admits and launches it under route, budget, permission, nesting, and resource ceilings.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-010",
+      "title": "Thread search/read/request/spawn",
+      "requirement": "Assistant agents can list/search/read project threads, send typed requests, await replies, resume inactive threads, spawn related threads, and preserve lineage without copying full transcripts.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-011",
+      "title": "Thread request durability",
+      "requirement": "Cross-thread requests have source/target thread, sender, bounded task, selected refs, scope, budget, status, result refs, timestamps, and cycle/fanout limits.",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-012",
+      "title": "Branch/rewind/restore",
+      "requirement": "Support Branch from here, model/Persona branch, rewind, immutable restore points, and sibling re-answering of earlier question flows without mutating the source thread.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-013",
+      "title": "Cross-project grants",
+      "requirement": "Cross-project access is off by default; grants distinguish read/write and Once/Thread/Goal/persistent project pair. One-time grants never silently persist.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-014",
+      "title": "Operational Awareness Service",
+      "requirement": "Agents get a compact task-relevant projection plus on-demand tools for active work, worktrees, ports, processes, services, tests, debug, browsers, devices, logs, backups, snapshots, and Usage.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-015",
+      "title": "Worktree mediation",
+      "requirement": "Agents may request worktree provisioning; Worktree Manager performs it under policy, records ownership/lease/base/cleanup, and preserves patches after failed integration.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-016",
+      "title": "Port/resource leases",
+      "requirement": "Ports, browser pages, test runners, devices, worktrees, file scopes, and provider permits have typed leases with owner, host/environment, state, TTL/heartbeat, and cleanup.",
+      "packets": [
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-017",
+      "title": "Testing and debug awareness",
+      "requirement": "Agents can inspect and, under policy, use browser, LSP, DAP, eval, simulators/emulators/devices, logs, traces, screenshots, console, and network evidence.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-018",
+      "title": "Crew as execution strategy",
+      "requirement": "Crew is an Orchestrator-owned composition of child runs, not a Persona, mode, provider, permission grant, or hidden memory. It has explicit board, roles, routes, budgets, worktrees, and reducer.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-019",
+      "title": "Adaptive Crew composition",
+      "requirement": "Crew member count and waves adapt to provider, Usage, host resources, and isolation while preserving required roles and independent evidence.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-020",
+      "title": "Back Seat Driver",
+      "requirement": "BSD is a bounded delta-only advisor with Off, Auto default, and On. Auto is risk/phase-triggered; On can evaluate every turn; it cannot widen authority or block primary work when unavailable.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-021",
+      "title": "BSD UI override",
+      "requirement": "Assistant Chat has a BSD selector/monogram. Auto glows only while active; manual On uses a different semantic treatment. Override scopes are one turn or current thread.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-022",
+      "title": "Active-turn redirect",
+      "requirement": "User correction can steer an active turn while preserving original attempt, partial output, interruption/redirect state, and replacement/resumed attempt.",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-001",
+      "title": "Provider/model picker",
+      "requirement": "Provider icon rail, provider/account filtering, favorites, recents, search, disabled reasons, and explicit active account/connection.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-002",
+      "title": "Persistent model submenus",
+      "requirement": "Model selection keeps the stack open for effort and Normal/Fast choices when supported; unsupported controls are absent or explained, not clutter.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-003",
+      "title": "Access selector",
+      "requirement": "Use Ask for approval, Auto accept edits, Auto, Full Access. Conversation mode and access profile are separate; effective policy shows stricter mode/project/FileSafe constraints.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-004",
+      "title": "Plan/Review tool access",
+      "requirement": "Plan and Review may use read files, search, web search/fetch, browser inspection, screenshots, logs, diagnostics, static analysis, and safe sandboxed tests; consequential effects still require elevation.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-005",
+      "title": "Compact approvals",
+      "requirement": "Default popup has one direct question, one short scope/reason line, immediate actions, and Details for exact commands/files/domains/persistence/safer alternatives.",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-006",
+      "title": "Material route warnings",
+      "requirement": "Warn only for material cache/context/cost/privacy/capability/tool/attachment consequences. Offer Continue here, Branch, Start new chat, or Cancel as appropriate.",
+      "packets": [
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-007",
+      "title": "Attachment resolver",
+      "requirement": "Classify Native, PM transformed, Alternate model, or Unsupported. ZIPs are safely unpacked by PM; media can be transcribed/sampled/routed with consent and lineage.",
+      "packets": [
+        "chat",
+        "usage",
+        "runtime",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-008",
+      "title": "Pinned history geometry",
+      "requirement": "Pinned history remains outside transcript/composer, uses spare workspace first, preserves minimum readable chat width, has compact fallback, persists through resize/thread switch, and works with artifacts.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-009",
+      "title": "Left artifact workspace",
+      "requirement": "Code/files, multi-file diffs, images/screenshots, and reports open left of Chat outside the transcript with loading, updated, error, retry, switch, and close states.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-010",
+      "title": "Distinct questionnaire systems",
+      "requirement": "Each concept has a distinct spatial and motion solution for questions, transitions, progress, selection, submission, cancel, and skip semantics. Shared data logic is allowed; cloned renderer is not.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-011",
+      "title": "Compact work clusters",
+      "requirement": "Goal, Todo, subagents, searches, reads, browser work, tests, edits, diffs, verification, and artifacts remain compact until expanded; completed groups condense but stay reopenable.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-012",
+      "title": "Rich demo scenario",
+      "requirement": "Demo includes at least 18 threads, long realistic exchange, 8 Todos, 3 subagents on different routes, question flows, Goal states, tools, tests, port collision, warnings, diff, artifacts, and verification.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-013",
+      "title": "Functional controls",
+      "requirement": "No decorative controls, console-only handlers, stuck resizers, pointer-blocking overlays, scroll-lock leaks, offscreen popups, clipped text, or unresolved loading states.",
+      "packets": [
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-014",
+      "title": "Passive spellcheck",
+      "requirement": "Subtle underlines and context-menu suggestions only; no toolbar button or autocorrect. Skip code, URLs, paths, commands, hashes, identifiers, structured data, and known PM/provider names.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-015",
+      "title": "Spellcheck sources",
+      "requirement": "Automatic prefers OS service then PM local; System-only and PM-local-only are Advanced. Support language, personal dictionary, project dictionary, technical prose, unknown names, and thread override.",
+      "packets": [
+        "settings",
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-016",
+      "title": "Offline/outbox state",
+      "requirement": "Show cached, synchronizing, live, offline, queued, reconnecting, replay, snapshot, and server-owned work continuing states. Commands use a durable outbox.",
+      "packets": [
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-017",
+      "title": "Shell/detail subscriptions",
+      "requirement": "Thread list/pinned history use lightweight shells/summaries; only focused or explicitly watched threads subscribe to full detail/tool streams.",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-018",
+      "title": "T3 performance caveat",
+      "requirement": "Treat current slow T3 thread load/sync as a negative benchmark; do not claim its present implementation is already optimal merely because the architecture is sound.",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-019",
+      "title": "Server-first subtlety",
+      "requirement": "Chat uses compact execution/connection state; do not duplicate large Project/Host banners. Host-owned background work continues across client disconnect.",
+      "packets": [
+        "chat",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-020",
+      "title": "No Playwright terminology",
+      "requirement": "Use PM BrowserWorkspace, Browser Program, and PM-native Expert Browser Program only. No Playwright runtime, facade, compatibility vocabulary, port, MCP route, or command family.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-021",
+      "title": "Notification boundary",
+      "requirement": "Important in-app notifications use the canonical title-bar stack/inbox, not a new Chat notification panel or permanent bottom-right stack.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-007",
+      "title": "Auxiliary purpose taxonomy",
+      "requirement": "Attribute subagent, vision, compression, web extraction, approval review, MCP routing, skill search, title, probe, attachment transform, fallback, replay, BSD, and other helper calls.",
+      "packets": [
+        "usage",
+        "runtime",
+        "chat"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-008",
+      "title": "Cache attribution",
+      "requirement": "Record predicted impact, actual read/write tokens, hit rate, invalidation/reduced-reuse reason, ContextEpoch, and source quality.",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-009",
+      "title": "Context operations",
+      "requirement": "Compact Now, automatic compaction, pruning, discarded stale compactions, branch/replay, and context helper calls are separate attributable operations.",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-011",
+      "title": "Goal/Planning/PRD forecasts",
+      "requirement": "Show likelihood-to-finish, confidence, reset/cooldown timing, estimated ranges, and recommended wave size without claiming certainty.",
+      "packets": [
+        "usage",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-013",
+      "title": "Attachment transformations",
+      "requirement": "Meter original attachment, transformation type, derived artifact IDs, alternate route, consent/policy, local resources, tokens/cost, privacy boundary, and parent turn.",
+      "packets": [
+        "usage",
+        "chat",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-016",
+      "title": "BSD attribution",
+      "requirement": "Silent BSD calls still count; record trigger, route, cost, latency, advice emitted/suppressed, failure/timeout, and override scope.",
+      "packets": [
+        "usage",
+        "chat",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-021",
+      "title": "Context Ring updates",
+      "requirement": "Context detail uses compact top bar with correct source colors, cache info inline, no misleading provider-reported/high/medium labels, and concise human wording.",
+      "packets": [
+        "usage",
+        "chat"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-005",
+      "title": "Admission receipts",
+      "requirement": "Persist included/excluded blocks, hashes, sizes, reasons, Persona/rules/tools/attachments, instruction-load measurements, cache prefix, and redaction profile.",
+      "packets": [
+        "prompt",
+        "chat",
+        "runtime"
+      ],
+      "category": "prompt",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-008",
+      "title": "Self-recovering tool envelope",
+      "requirement": "Tools return typed failure class, retryability, truncation/spill, CWD change, already-applied, ambiguity locations, verification, hints, retries, and final outcome.",
+      "packets": [
+        "prompt",
+        "runtime",
+        "usage",
+        "chat"
+      ],
+      "category": "prompt",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-009",
+      "title": "LSP write transaction",
+      "requirement": "Capture versions, sync servers, apply format/code actions, write, notify save/watch, and return fresh/deferred diagnostics tied to resulting version.",
+      "packets": [
+        "runtime",
+        "prompt",
+        "chat"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-010",
+      "title": "DAP DebugSession",
+      "requirement": "Typed durable launch/attach, breakpoints, stepping, threads, stack, scopes, variables, evaluate, modules/sources/disassembly/memory/output/termination.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-011",
+      "title": "Persistent EvalSession",
+      "requirement": "Sandboxed Python/JS/Ruby/Julia-style sessions retain variables, stream output, spill artifacts, distinguish local compute from external waits, and allow controlled nested calls.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-014",
+      "title": "Session tree and time travel",
+      "requirement": "Use parent-pointer session/branch structure; switching leaf rebuilds bounded context and preserves original histories.",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-015",
+      "title": "Artifact-reference compaction",
+      "requirement": "Large old tool results can compact to immutable bounded-readable artifact references with visible lineage and recovery path.",
+      "packets": [
+        "chat",
+        "runtime",
+        "prompt",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-016",
+      "title": "T3 environment supervisor",
+      "requirement": "One supervisor per environment owns retries, transport replacement, authentication blocking, probes, and offline behavior; domain sync states remain independent.",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-017",
+      "title": "Durable command outbox",
+      "requirement": "Messages, questionnaire answers, redirects, approvals, Goal controls, and linked-thread creation persist offline with exact route/attachments/IDs and replay safely.",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-018",
+      "title": "Replay/snapshot protocol",
+      "requirement": "Resume from sequence cursor, attach/buffer live stream before replay, and choose adaptive replay versus snapshot based on bytes/decode/network/device/tool payload\u2014not fixed event count only.",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-019",
+      "title": "Streaming coalescing",
+      "requirement": "Durable events may remain granular; Slint/UI updates coalesce tokens and intermediate progress to avoid relayout storms while preserving terminal ordering.",
+      "packets": [
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-020",
+      "title": "ResourceGovernor and ObservableWork",
+      "requirement": "RuntimeResourceGovernor is the sole DRY policy/admission owner with host-local enforcement; ObservableWork is the truthful shared phase/wait/progress projection.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-022",
+      "title": "Server-first execution projection",
+      "requirement": "Prompts receive compact Project Home/Execution Host/Environment/Source/readiness/conflict summaries, not server catalogs, WSL inventories, container manifests, Tool Store or credentials.",
+      "packets": [
+        "prompt",
+        "runtime",
+        "chat"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-023",
+      "title": "WSL optional and environment-specific",
+      "requirement": "Native Windows is complete without WSL. WSL2 is optional; user-owned and PM-managed distributions, paths, tools, profiles, and resource budgets remain distinct.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-024",
+      "title": "Container server capability",
+      "requirement": "Docker/TrueNAS/Unraid/Kubernetes deployments are full Servers/Execution Hosts with immutable signed baseline and persistent Tool Store/profile volumes; no desktop worker is required.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-025",
+      "title": "No Playwright facade",
+      "requirement": "PM uses its native Browser Program API. User projects may run Playwright as an external test dependency, but PM core has no Playwright runtime, facade, compatibility promise, packages, ports, MCP, commands, or capture engine.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-003",
+      "title": "Canonical notification surface",
+      "requirement": "Title-bar stack/count/sprout inbox is the sole in-app notification affordance; no permanent bottom-right stack, status-bar bell, Activity Bar shortcut, or separate notification side panel.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-006",
+      "title": "Permissions & FileSafe manager",
+      "requirement": "Global wildcard, per-tool overrides, ordered granular rules, last-match explanation, reordering, presets, scope, external-directory allowlist, doom-loop policy, Persona profiles, requested/effective origin, ELI5/Expert.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-007",
+      "title": "Commands & shortcuts manager",
+      "requirement": "Global/Project commands, CRUD, schema, variables/includes, shell injection, dry-run preview, keyboard search/conflicts/remap/reset/import/export/cheat sheet.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-011",
+      "title": "LSP manager",
+      "requirement": "Searchable registry/catalog/provenance, command/env/init/config, requested/effective attachment, custom CRUD, limits, remote degradation, restart, logs, verification.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-012",
+      "title": "Source Control/Worktree manager",
+      "requirement": "Changes/History/Graph/Worktrees, lifecycle/recovery/cleanup, branch/push/force-push/test-before-merge, leases/write authority, host/environment and tool readiness.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-017",
+      "title": "Testing & Debug manager",
+      "requirement": "Global/Project Auto/On/Off by capability; browser/native/mobile/device/API/DB/security/performance; session controls, visible evidence, hot reload, DAP, eval.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-018",
+      "title": "History & Sessions manager",
+      "requirement": "Project/all-project scope, approved-only, archived, compare, export, rebuild, auto-archive, deletion retention, and queue behavior.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-019",
+      "title": "Runtime artifacts/output manager",
+      "requirement": "Artifact identities/types, locations, retention, versions, logs, receipts, open/reveal/export/cleanup, redaction, PM-owned versus provider-native.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-022",
+      "title": "Persona manager",
+      "requirement": "Core/custom/imported Personas, bounded capsule preview, source/version, role boundaries, eligible skills, capability requests, thread/project defaults, import trust/diff/scan.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-023",
+      "title": "Crew manager",
+      "requirement": "Templates, roles, Persona/capability routes, diversity, member ranges, adaptive sizing, usage reserve, waves, write/worktree policy, board, reducer, failure/stop.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-024",
+      "title": "Context & Instructions manager",
+      "requirement": "History/code/log retrieval toggles, scoped rules, effective instruction sources, included/omitted last request, Persona footprint, tools selected, compaction/cache, receipts.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-027",
+      "title": "Media manager",
+      "requirement": "Input modalities, screenshots/redaction, image/audio/video/TTS/music routes, requested/effective connection, output destination, retention, alternate-route consent.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-028",
+      "title": "Teacher/help system",
+      "requirement": "Help icon opens Teacher context, explains current screen, offers guided overlay, and safely transitions into real actions; it is more than setting hover text.",
+      "packets": [
+        "settings",
+        "onboarding",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-030",
+      "title": "Accessibility & input manager",
+      "requirement": "UI scale, fonts, contrast-related state, reduced motion, focus/input behavior, spellcheck, dictionaries, and local-versus-provider writing assistance.",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-014",
+      "title": "Fresh shell result",
+      "requirement": "Fresh default is Basic Dark, Chat open, Editor 1 only, seven tabs, localhost preview, hidden auto test-runner, up to four panels available.",
+      "packets": [
+        "onboarding",
+        "settings",
+        "chat"
+      ],
+      "category": "onboarding",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-001",
+      "title": "One implementation prompt per topic",
+      "requirement": "Each topic packet contains one cumulative implementation prompt. It instructs the agent to present its platform plan first, wait for user approval, then continue under the same prompt.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-002",
+      "title": "One audit prompt per topic",
+      "requirement": "Each topic packet contains one audit-only prompt used after implementation/concept work. No separate Plan and Build prompts are supplied.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-003",
+      "title": "Concept scope",
+      "requirement": "Settings, Chat, Usage, and Onboarding/Doctor concept agents do not edit PMConcept7, Plans, command catalogs, wiring, or DRY owners unless separately authorized; they maintain traceable impact registers.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-005",
+      "title": "Command ID discipline",
+      "requirement": "Reuse canonical IDs where they exist; provide alias/supersession for old IDs; do not mint duplicates. Candidate IDs in packets are provisional until catalog audit.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-006",
+      "title": "Wiring closure",
+      "requirement": "Every user action maps UI source \u2192 command \u2192 canonical owner \u2192 payload/validation \u2192 state/event/receipt \u2192 UI projection \u2192 Usage/diagnostics \u2192 recovery.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-007",
+      "title": "DRY closure",
+      "requirement": "Shared components and services are reused across Settings, Chat, Onboarding, Doctor, Usage, and runtime; no parallel manager, auth, Usage, notification, progress, or install systems.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-008",
+      "title": "Plan supersession",
+      "requirement": "Later work must identify and retire stale bloom/chip/right-panel/yolo/regular/Playwright/provider-bundling/local-first clauses rather than leaving contradictory active canon.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-009",
+      "title": "Audit source completeness",
+      "requirement": "Audit must compare concepts/code against this decision register, source Plans, current PMConcept7, current commands/wiring/DRY, and latest owner handoffs; absence from demo is not proof of deferral.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-010",
+      "title": "No silent packet drift",
+      "requirement": "The final cumulative packets supersede unused intermediate packets. Agents must not merge old Plan/Build prompts or obsolete provider/browser/onboarding policies back in.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    }
+  ]
+}

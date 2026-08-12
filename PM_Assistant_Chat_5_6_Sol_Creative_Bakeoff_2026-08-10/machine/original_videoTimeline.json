@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "activityVideo": {
+    "file": "ScreenRecording_07-29-2026 19-24-09_1.mov",
+    "durationSeconds": 36.423,
+    "dimensions": [
+      1030,
+      1300
+    ],
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.3,
+        "state": "thinking",
+        "visibleLabel": "Thinking for 4s",
+        "changes": [
+          "Explanatory prose progressively appears below one active heading.",
+          "The region grows downward without creating a new permanent card for each text increment."
+        ]
+      },
+      {
+        "start": 4.4,
+        "end": 8.3,
+        "state": "file exploration",
+        "visibleLabel": "Exploring 5 files, then 7 files",
+        "changes": [
+          "The active region replaces the thought text.",
+          "File-read rows appear progressively.",
+          "The count increases as more files are included."
+        ]
+      },
+      {
+        "start": 8.4,
+        "end": 12.0,
+        "state": "design import",
+        "visibleLabel": "Importing from Figma",
+        "changes": [
+          "One processing row appears, then a second step.",
+          "The operation remains attached to the same conversation location."
+        ]
+      },
+      {
+        "start": 12.1,
+        "end": 15.3,
+        "state": "file mutation",
+        "visibleLabel": "Making 1 edit, then creation and multiple edits",
+        "changes": [
+          "Changed-file rows appear.",
+          "Added and removed line totals are aligned separately from file names.",
+          "The summary evolves as work is added."
+        ]
+      },
+      {
+        "start": 15.4,
+        "end": 17.3,
+        "state": "asset generation",
+        "visibleLabel": "Generating assets \u2014 2 images",
+        "changes": [
+          "The active region replaces the prior edit details.",
+          "A generated-assets result line appears."
+        ]
+      },
+      {
+        "start": 17.4,
+        "end": 18.4,
+        "state": "update completion",
+        "visibleLabel": "Updated screens",
+        "changes": [
+          "A compact completion result replaces the active asset state."
+        ]
+      },
+      {
+        "start": 18.5,
+        "end": 19.9,
+        "state": "second thought phase",
+        "visibleLabel": "Thinking for 2s",
+        "changes": [
+          "A shorter diagnostic explanation appears progressively."
+        ]
+      },
+      {
+        "start": 20.0,
+        "end": 21.3,
+        "state": "final edit",
+        "visibleLabel": "Making an edit",
+        "changes": [
+          "One changed file and its line totals are shown."
+        ]
+      },
+      {
+        "start": 21.4,
+        "end": 23.9,
+        "state": "condensed history and response",
+        "visibleLabel": "13 tools used",
+        "changes": [
+          "The changing execution region condenses into one summary.",
+          "Ordinary assistant prose appears below it.",
+          "A validation or completion line appears separately."
+        ]
+      },
+      {
+        "start": 24.0,
+        "end": 27.3,
+        "state": "artifact compilation and completion",
+        "visibleLabel": "Billing Settings",
+        "changes": [
+          "A distinct artifact card appears.",
+          "It first shows a compiling state and later a completed or versioned state.",
+          "The artifact is visually distinct from execution history."
+        ]
+      },
+      {
+        "start": 27.4,
+        "end": 28.6,
+        "state": "total elapsed disclosure",
+        "visibleLabel": "Worked for 1m 34s",
+        "changes": [
+          "A separate total task-duration line appears beneath the artifact."
+        ]
+      },
+      {
+        "start": 28.7,
+        "end": 30.7,
+        "state": "retrospective edit inspection",
+        "visibleLabel": "Edit history expanded",
+        "changes": [
+          "The condensed edit group opens and shows created or edited files and line totals."
+        ]
+      },
+      {
+        "start": 30.8,
+        "end": 33.3,
+        "state": "retrospective exploration inspection",
+        "visibleLabel": "File exploration expanded",
+        "changes": [
+          "The exploration group opens and shows the inspected files.",
+          "The foreground historical category changes without adding new conversation messages."
+        ]
+      },
+      {
+        "start": 33.4,
+        "end": 36.423,
+        "state": "retrospective thought inspection",
+        "visibleLabel": "Thought history expanded",
+        "changes": [
+          "The earlier thought explanation is restored for inspection.",
+          "The conversation and artifact remain in place."
+        ]
+      }
+    ],
+    "functionalObservations": [
+      "One active execution location changes state over time.",
+      "Intermediate states are replaced in the foreground rather than permanently accumulated.",
+      "Completed execution condenses into grouped, expandable history.",
+      "Thought, exploration, import, edit, asset and completion categories remain inspectable.",
+      "The artifact and final prose remain separate from the execution trace.",
+      "Step duration and total task duration are distinct."
+    ],
+    "notEstablished": [
+      "The recording does not prove that only one historical category may be expanded at once.",
+      "The recording does not define blocked, paused, resumed or cancelled activity behavior.",
+      "The visual styling is reference evidence, not a design to copy."
+    ]
+  },
+  "questionnaireVideo": {
+    "file": "ScreenRecording_07-29-2026 19-42-23_1.mov",
+    "durationSeconds": 19.833,
+    "dimensions": [
+      1204,
+      2492
+    ],
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 6.4,
+        "state": "question one",
+        "visibleLabel": "1 of 4",
+        "changes": [
+          "The card shows a title, progress, previous and next controls, close, option rows, a freeform row, Skip and a primary action.",
+          "Rows receive hover or focus emphasis.",
+          "A selected answer remains visible.",
+          "The outer footprint remains stable."
+        ]
+      },
+      {
+        "start": 6.5,
+        "end": 8.0,
+        "state": "question one to question two",
+        "visibleLabel": "2 of 4",
+        "changes": [
+          "The next control is activated.",
+          "Old contents clear, fade or translate while the outer card remains.",
+          "Question two appears and the prior answer remains retained."
+        ]
+      },
+      {
+        "start": 8.1,
+        "end": 9.9,
+        "state": "question three",
+        "visibleLabel": "3 of 4",
+        "changes": [
+          "The next question presents scheduling choices.",
+          "The same card footprint and control positions remain."
+        ]
+      },
+      {
+        "start": 10.0,
+        "end": 13.3,
+        "state": "reverse and forward navigation",
+        "visibleLabel": "1 of 4 through 3 of 4",
+        "changes": [
+          "The user moves backward and forward across prior questions.",
+          "Selections remain intact.",
+          "Content is replaced inside the stable card rather than stacking dialogs."
+        ]
+      },
+      {
+        "start": 13.8,
+        "end": 15.8,
+        "state": "question four",
+        "visibleLabel": "4 of 4",
+        "changes": [
+          "Duration choices appear.",
+          "The final primary action is unavailable before a valid answer.",
+          "Skip remains available."
+        ]
+      },
+      {
+        "start": 16.0,
+        "end": 19.833,
+        "state": "backward review",
+        "visibleLabel": "4 of 4 back through earlier questions",
+        "changes": [
+          "The user navigates backward through answered questions.",
+          "Recorded answers remain visible.",
+          "The same transition behavior is reused."
+        ]
+      }
+    ],
+    "functionalObservations": [
+      "Stable questionnaire footprint.",
+      "Explicit progress.",
+      "Backward and forward review.",
+      "Answer retention.",
+      "Options plus freeform response.",
+      "Skip path.",
+      "Completion gating.",
+      "Content transition without stacking separate dialogs."
+    ],
+    "notEstablished": [
+      "The host strip below the card may not be part of the questionnaire.",
+      "The recording does not define multiple queued questionnaires, persistence across restart, cancellation semantics or historical transcript treatment.",
+      "The visual styling is reference evidence, not a design to copy."
+    ]
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-07-30",
+  "internalSources": [
+    {
+      "name": "PMConcept7",
+      "path": "Concepts/PMConcept7.html",
+      "role": "Current concept source and interaction reference; not production canon."
+    },
+    {
+      "name": "Rail Concepts README",
+      "path": "Concepts/rail-concepts/README.md",
+      "role": "Comparison-workspace behavior reference."
+    },
+    {
+      "name": "Assistant Chat design",
+      "path": "Plans/assistant-chat-design.md",
+      "role": "Primary Assistant Chat behavior owner."
+    },
+    {
+      "name": "Final GUI specification",
+      "path": "Plans/FinalGUISpec.md",
+      "role": "Shared GUI, theme, overlay and geometry owner."
+    },
+    {
+      "name": "Goal Runtime System",
+      "path": "Plans/Goal_Runtime_System.md",
+      "role": "Goal lifecycle and durable runtime owner."
+    },
+    {
+      "name": "Orchestrator and subagent integration",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "role": "Child-run and orchestration projection owner."
+    },
+    {
+      "name": "UI Command Catalog",
+      "path": "Plans/UI_Command_Catalog.md",
+      "role": "Canonical UI command IDs."
+    },
+    {
+      "name": "UI Wiring Rules",
+      "path": "Plans/UI_Wiring_Rules.md",
+      "role": "Command registration and fail-closed wiring rules."
+    },
+    {
+      "name": "PlanUnit index",
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "role": "Canonical PlanUnit inventory used for the supplied extract."
+    }
+  ],
+  "chatAndAgentProjects": [
+    {
+      "name": "OpenAI Codex",
+      "category": "Coding and agent environment",
+      "observedFocus": "Dedicated agent application, project-scoped threads, changes and evidence inside agent work",
+      "url": "https://openai.com/index/introducing-the-codex-app/"
+    },
+    {
+      "name": "ChatGPT",
+      "category": "General assistant",
+      "observedFocus": "Projects, persistent conversations, search, branching and file-supported work",
+      "url": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt"
+    },
+    {
+      "name": "Claude",
+      "category": "General assistant",
+      "observedFocus": "Conversation plus separate artifact workspace and project context",
+      "url": "https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
+    },
+    {
+      "name": "Claude Code",
+      "category": "Coding agent",
+      "observedFocus": "Tasks, tools, subagents, permissions and execution activity in a terminal-oriented workflow",
+      "url": "https://docs.anthropic.com/en/docs/claude-code/overview"
+    },
+    {
+      "name": "Gemini Apps",
+      "category": "General assistant",
+      "observedFocus": "Pinned and recent chats, search, rename, branch and delete behavior",
+      "url": "https://support.google.com/gemini/"
+    },
+    {
+      "name": "Gemini CLI",
+      "category": "Coding agent",
+      "observedFocus": "Project-scoped history, checkpoints and resumable command-line agent work",
+      "url": "https://github.com/google-gemini/gemini-cli"
+    },
+    {
+      "name": "Microsoft 365 Copilot",
+      "category": "Collaborative assistant",
+      "observedFocus": "Chat history, thread management and handoff into adjacent work surfaces",
+      "url": "https://support.microsoft.com/en-us/copilot"
+    },
+    {
+      "name": "GitHub Copilot",
+      "category": "Coding assistant",
+      "observedFocus": "Chat, edits, agents and repository context inside development workflows",
+      "url": "https://docs.github.com/en/copilot"
+    },
+    {
+      "name": "Visual Studio Code Chat and Agents",
+      "category": "Coding environment",
+      "observedFocus": "Dedicated agent sessions, chat views, edits, tools and mode selection",
+      "url": "https://code.visualstudio.com/docs/copilot/overview"
+    },
+    {
+      "name": "Cursor",
+      "category": "Coding environment",
+      "observedFocus": "Chat, agent runs, edits, checkpoints, tools and project history",
+      "url": "https://docs.cursor.com/"
+    },
+    {
+      "name": "Cline",
+      "category": "Coding agent",
+      "observedFocus": "Task history, checkpoints, tool use, browser actions and file changes",
+      "url": "https://docs.cline.bot/"
+    },
+    {
+      "name": "Roo Code",
+      "category": "Coding agent",
+      "observedFocus": "Modes, task history, tools, checkpoints and delegated work",
+      "url": "https://docs.roocode.com/"
+    },
+    {
+      "name": "Continue",
+      "category": "Coding assistant",
+      "observedFocus": "Chat, Plan and Agent modes with explicit authority boundaries",
+      "url": "https://docs.continue.dev/ide-extensions/agent/quick-start"
+    },
+    {
+      "name": "OpenCode",
+      "category": "Coding agent",
+      "observedFocus": "Sessions, tools, provider routing and terminal-first agent interaction",
+      "url": "https://opencode.ai/docs/"
+    },
+    {
+      "name": "Windsurf Cascade",
+      "category": "Coding agent",
+      "observedFocus": "Code and chat modes, plans, todo lists, tool calls and checkpoints",
+      "url": "https://docs.windsurf.com/windsurf/cascade/cascade"
+    },
+    {
+      "name": "Zed Agent Panel",
+      "category": "Coding environment",
+      "observedFocus": "Independent project threads, history, context and agent actions",
+      "url": "https://zed.dev/docs/ai/agent-panel"
+    },
+    {
+      "name": "Aider",
+      "category": "Coding agent",
+      "observedFocus": "Chat modes, repository map, edits, commits and history management",
+      "url": "https://aider.chat/docs/"
+    },
+    {
+      "name": "Warp",
+      "category": "Terminal and agent environment",
+      "observedFocus": "Agent conversations made from queries and terminal blocks across panes and tabs",
+      "url": "https://docs.warp.dev/agent-mode/agent-mode"
+    },
+    {
+      "name": "JetBrains AI Assistant",
+      "category": "Coding assistant",
+      "observedFocus": "Tool windows, chat history, rename, delete and editor integration",
+      "url": "https://www.jetbrains.com/help/idea/ai-assistant.html"
+    },
+    {
+      "name": "Sourcegraph Cody",
+      "category": "Coding assistant",
+      "observedFocus": "Repository-aware chat, context, commands and edit workflows",
+      "url": "https://sourcegraph.com/docs/cody"
+    },
+    {
+      "name": "OpenHands",
+      "category": "Open-source coding agent",
+      "observedFocus": "Conversation-level tool calls, file changes, observations and execution state",
+      "url": "https://docs.all-hands.dev/"
+    },
+    {
+      "name": "Goose",
+      "category": "Open-source agent",
+      "observedFocus": "Desktop, command-line and API surfaces with tool and extension activity",
+      "url": "https://block.github.io/goose/"
+    },
+    {
+      "name": "LibreChat",
+      "category": "Open-source assistant",
+      "observedFocus": "Multi-provider conversations, branching, presets, agents and artifacts",
+      "url": "https://www.librechat.ai/docs"
+    },
+    {
+      "name": "Open WebUI",
+      "category": "Open-source assistant",
+      "observedFocus": "Conversation history, tools, task lists, models and workspace features",
+      "url": "https://docs.openwebui.com/"
+    },
+    {
+      "name": "LobeChat",
+      "category": "Open-source assistant",
+      "observedFocus": "Assistants, topics, message history, models and knowledge features",
+      "url": "https://lobehub.com/docs"
+    },
+    {
+      "name": "AnythingLLM",
+      "category": "Open-source assistant",
+      "observedFocus": "Workspace chats and run details with collapsible thinking, tools, files, response and metrics",
+      "url": "https://docs.anythingllm.com/"
+    },
+    {
+      "name": "Dify",
+      "category": "Workflow and assistant platform",
+      "observedFocus": "Conversation applications and human-input workflow pauses with resumable forms",
+      "url": "https://docs.dify.ai/"
+    },
+    {
+      "name": "Flowise",
+      "category": "Workflow and assistant platform",
+      "observedFocus": "Chatflows, agent flows, execution traces and embedded chat surfaces",
+      "url": "https://docs.flowiseai.com/"
+    },
+    {
+      "name": "Langflow",
+      "category": "Workflow and assistant platform",
+      "observedFocus": "Flow execution, playground conversations, traces and component outputs",
+      "url": "https://docs.langflow.org/"
+    },
+    {
+      "name": "Pieces",
+      "category": "Developer assistant",
+      "observedFocus": "Long-term context, conversation history and code-oriented workstream memory",
+      "url": "https://docs.pieces.app/"
+    },
+    {
+      "name": "GitLab Duo Chat",
+      "category": "Coding assistant",
+      "observedFocus": "Sidebar and editor quick-chat surfaces with project and code context",
+      "url": "https://docs.gitlab.com/user/gitlab_duo_chat/"
+    }
+  ],
+  "motionSources": [
+    {
+      "name": "Material Design 3: Motion overview",
+      "category": "Design system",
+      "observedFocus": "Motion as state, hierarchy and spatial relationship",
+      "url": "https://m3.material.io/styles/motion/overview"
+    },
+    {
+      "name": "Material Design 3: Easing and duration",
+      "category": "Design system",
+      "observedFocus": "Tokenized easing and duration families",
+      "url": "https://m3.material.io/styles/motion/easing-and-duration/overview"
+    },
+    {
+      "name": "Material Design 3: Transition patterns",
+      "category": "Design system",
+      "observedFocus": "Container and shared-axis transition patterns",
+      "url": "https://m3.material.io/styles/motion/transitions/transition-patterns"
+    },
+    {
+      "name": "Apple Human Interface Guidelines: Motion",
+      "category": "Platform guideline",
+      "observedFocus": "Motion, continuity, direct manipulation and restraint",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/motion"
+    },
+    {
+      "name": "Apple Accessibility: Reduce Motion",
+      "category": "Platform guideline",
+      "observedFocus": "Reduced-motion behavior and platform preference",
+      "url": "https://developer.apple.com/accessibility/"
+    },
+    {
+      "name": "Fluent 2: Motion",
+      "category": "Design system",
+      "observedFocus": "Relationships, continuity, enter, exit and transition motion",
+      "url": "https://fluent2.microsoft.design/motion"
+    },
+    {
+      "name": "Fluent 2: Duration",
+      "category": "Design system",
+      "observedFocus": "Duration tokens by distance and interaction scale",
+      "url": "https://fluent2.microsoft.design/motion#duration"
+    },
+    {
+      "name": "Fluent 2: Easing",
+      "category": "Design system",
+      "observedFocus": "Natural acceleration and deceleration curves",
+      "url": "https://fluent2.microsoft.design/motion#easing"
+    },
+    {
+      "name": "Carbon: Motion overview",
+      "category": "Design system",
+      "observedFocus": "Productive and expressive motion systems",
+      "url": "https://carbondesignsystem.com/elements/motion/overview/"
+    },
+    {
+      "name": "Carbon: Productive motion",
+      "category": "Design system",
+      "observedFocus": "Frequent, task-focused state transitions",
+      "url": "https://carbondesignsystem.com/elements/motion/productive-motion/"
+    },
+    {
+      "name": "Carbon: Expressive motion",
+      "category": "Design system",
+      "observedFocus": "Infrequent emphasis and larger transitions",
+      "url": "https://carbondesignsystem.com/elements/motion/expressive-motion/"
+    },
+    {
+      "name": "Adobe Spectrum: Motion",
+      "category": "Design system",
+      "observedFocus": "Motion principles, durations and easing",
+      "url": "https://spectrum.adobe.com/page/motion/"
+    },
+    {
+      "name": "Adobe Spectrum: Coach marks and transitions",
+      "category": "Design system",
+      "observedFocus": "Contextual reveal and dismissal behavior",
+      "url": "https://spectrum.adobe.com/page/coach-mark/"
+    },
+    {
+      "name": "Atlassian Design System: Motion",
+      "category": "Design system",
+      "observedFocus": "Motion tokens and purposeful UI feedback",
+      "url": "https://atlassian.design/foundations/motion/"
+    },
+    {
+      "name": "Atlassian Design System: Reduced motion",
+      "category": "Design system",
+      "observedFocus": "Alternative behavior under motion reduction",
+      "url": "https://atlassian.design/foundations/motion/#accessibility"
+    },
+    {
+      "name": "Shopify Polaris: Motion",
+      "category": "Design system",
+      "observedFocus": "Outcome clarification, hierarchy and motion restraint",
+      "url": "https://polaris.shopify.com/design/motion"
+    },
+    {
+      "name": "Salesforce Kinetics System",
+      "category": "Design system",
+      "observedFocus": "Choreography and transition primitives",
+      "url": "https://www.lightningdesignsystem.com/kinetics/"
+    },
+    {
+      "name": "Salesforce Kinetics: Choreography",
+      "category": "Design system",
+      "observedFocus": "Coordinated sequences and element relationships",
+      "url": "https://www.lightningdesignsystem.com/kinetics/choreography/"
+    },
+    {
+      "name": "SAP Fiori: Motion design",
+      "category": "Design system",
+      "observedFocus": "State change, navigation and feedback motion",
+      "url": "https://experience.sap.com/fiori-design-web/motion-design/"
+    },
+    {
+      "name": "SAP Fiori: Animation",
+      "category": "Design system",
+      "observedFocus": "Animation behavior for enterprise interfaces",
+      "url": "https://experience.sap.com/fiori-design-web/animation/"
+    },
+    {
+      "name": "Ant Design: Motion",
+      "category": "Design system",
+      "observedFocus": "Natural, concise and continuous motion principles",
+      "url": "https://ant.design/docs/spec/motion/"
+    },
+    {
+      "name": "GitHub Primer: Motion foundations",
+      "category": "Design system",
+      "observedFocus": "Semantic motion tokens and accessibility alternatives",
+      "url": "https://primer.style/foundations/motion"
+    },
+    {
+      "name": "GitHub Primer Primitives guide",
+      "category": "Design system",
+      "observedFocus": "Motion token implementation and duration constraints",
+      "url": "https://github.com/primer/primitives/blob/main/DESIGN_TOKENS_GUIDE.md"
+    },
+    {
+      "name": "Radix Primitives: Animation guide",
+      "category": "Component library",
+      "observedFocus": "State-driven animation and data attributes",
+      "url": "https://www.radix-ui.com/primitives/docs/guides/animation"
+    },
+    {
+      "name": "Radix Context Menu",
+      "category": "Component library",
+      "observedFocus": "Computed transform origin and collision-aware popup motion",
+      "url": "https://www.radix-ui.com/primitives/docs/components/context-menu"
+    },
+    {
+      "name": "Motion: Transitions",
+      "category": "Animation library",
+      "observedFocus": "Spring, tween and transition configuration",
+      "url": "https://motion.dev/docs/react-transitions"
+    },
+    {
+      "name": "Motion: Layout animations",
+      "category": "Animation library",
+      "observedFocus": "Layout continuity and shared layout changes",
+      "url": "https://motion.dev/docs/react-layout-animations"
+    },
+    {
+      "name": "Motion: Reduced motion",
+      "category": "Animation library",
+      "observedFocus": "Disabling transform and layout motion while retaining safe feedback",
+      "url": "https://motion.dev/docs/react-reduce-motion"
+    },
+    {
+      "name": "MDN: prefers-reduced-motion",
+      "category": "Web platform",
+      "observedFocus": "User preference detection and alternate motion behavior",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+    },
+    {
+      "name": "MDN: Web Animations API",
+      "category": "Web platform",
+      "observedFocus": "Browser-managed animation timing and playback",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API"
+    },
+    {
+      "name": "MDN: View Transition API",
+      "category": "Web platform",
+      "observedFocus": "Coordinating old and new visual states",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API"
+    },
+    {
+      "name": "web.dev: Animations guide",
+      "category": "Web performance",
+      "observedFocus": "Compositor-friendly motion and performance measurement",
+      "url": "https://web.dev/articles/animations-guide"
+    },
+    {
+      "name": "web.dev: High-performance CSS animations",
+      "category": "Web performance",
+      "observedFocus": "Transform and opacity performance behavior",
+      "url": "https://web.dev/articles/animations-guide#avoid-properties-that-trigger-layout-or-paint"
+    },
+    {
+      "name": "web.dev: View transitions",
+      "category": "Web platform",
+      "observedFocus": "Page and state transition implementation",
+      "url": "https://web.dev/articles/view-transitions"
+    },
+    {
+      "name": "Nielsen Norman Group: Animation for attention and comprehension",
+      "category": "UX research",
+      "observedFocus": "Feedback, orientation and cognitive cost",
+      "url": "https://www.nngroup.com/articles/animation-usability/"
+    },
+    {
+      "name": "Nielsen Norman Group: Motion and animation in interfaces",
+      "category": "UX research",
+      "observedFocus": "Purpose, timing and interruption risk",
+      "url": "https://www.nngroup.com/topic/animation/"
+    },
+    {
+      "name": "Smashing Magazine: Accessible animations",
+      "category": "Specialist publication",
+      "observedFocus": "Motion reduction and preserving meaning",
+      "url": "https://www.smashingmagazine.com/2020/09/design-reduced-motion-sensitivities/"
+    },
+    {
+      "name": "Smashing Magazine: Animation principles for the web",
+      "category": "Specialist publication",
+      "observedFocus": "Choreography, continuity and performance",
+      "url": "https://www.smashingmagazine.com/2016/08/css-animations-motion-curves/"
+    },
+    {
+      "name": "A List Apart: Web animation at work",
+      "category": "Specialist publication",
+      "observedFocus": "Functional animation and interface communication",
+      "url": "https://alistapart.com/article/web-animation-at-work/"
+    },
+    {
+      "name": "W3C WCAG: Animation from interactions",
+      "category": "Standard",
+      "observedFocus": "User ability to disable nonessential interaction-triggered motion",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html"
+    }
+  ]
+}

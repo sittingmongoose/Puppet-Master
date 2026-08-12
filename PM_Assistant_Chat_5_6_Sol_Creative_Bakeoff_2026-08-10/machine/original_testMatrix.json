@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "themes": [
+    "friendly-dark",
+    "friendly-light",
+    "retro-dark",
+    "retro-light",
+    "basic-light",
+    "basic-dark",
+    "glass-dark",
+    "glass-light"
+  ],
+  "widths": [
+    {
+      "id": "minimum",
+      "px": 520
+    },
+    {
+      "id": "normal",
+      "px": 750
+    },
+    {
+      "id": "wider",
+      "px": 975
+    },
+    {
+      "id": "wide",
+      "px": 1200
+    }
+  ],
+  "coreConfigurations": [
+    {
+      "theme": "friendly-dark",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "friendly-dark",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "friendly-dark",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "friendly-dark",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "friendly-light",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "friendly-light",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "friendly-light",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "friendly-light",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "retro-dark",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "retro-dark",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "retro-dark",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "retro-dark",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "retro-light",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "retro-light",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "retro-light",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "retro-light",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "basic-light",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "basic-light",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "basic-light",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "basic-light",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "basic-dark",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "basic-dark",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "basic-dark",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "basic-dark",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "glass-dark",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "glass-dark",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "glass-dark",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "glass-dark",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    },
+    {
+      "theme": "glass-light",
+      "widthPreset": "minimum",
+      "chatWidthPx": 520
+    },
+    {
+      "theme": "glass-light",
+      "widthPreset": "normal",
+      "chatWidthPx": 750
+    },
+    {
+      "theme": "glass-light",
+      "widthPreset": "wider",
+      "chatWidthPx": 975
+    },
+    {
+      "theme": "glass-light",
+      "widthPreset": "wide",
+      "chatWidthPx": 1200
+    }
+  ],
+  "coreConfigurationCount": 32,
+  "railStates": [
+    "open",
+    "closed"
+  ],
+  "mounts": [
+    "docked",
+    "popout"
+  ],
+  "coreFeatureStates": [
+    "baseline conversation",
+    "long assistant message collapsed",
+    "long assistant message expanded",
+    "long user message collapsed",
+    "long user message expanded",
+    "active activity summary",
+    "completed activity history collapsed",
+    "completed activity history expanded",
+    "questionnaire active",
+    "questionnaire historical record",
+    "goal only",
+    "todo only",
+    "subagents only",
+    "diff only",
+    "goal plus todo",
+    "goal plus todo plus subagents plus diff",
+    "search current thread",
+    "search all threads",
+    "Context Lens selection",
+    "Context Lens applied state",
+    "active thought collapsed",
+    "active thought expanded by setting",
+    "composer working and empty",
+    "composer working with typed draft",
+    "draft recovery",
+    "artifact shortcut and editor-tab handoff",
+    "long-thread older-history jump",
+    "popout state restoration"
+  ],
+  "coverageRules": [
+    "Every one of the eight window concepts is visually checked with its default thread concept in every core configuration, with the fake application rail open and closed.",
+    "Every one of the eight thread concepts is visually checked in at least one host window in every core configuration; two structurally different host windows are preferred.",
+    "All sixty-four within-agent window and thread pairings receive an automated mount and console-error smoke test. Full visual review of all pairings is not required.",
+    "Docked and pop-out mounts are exercised. State must survive changing mounts.",
+    "Every core feature state is captured and visually reviewed across all thirty-two theme-width configurations for the selected required host pairing.",
+    "Reduced-motion behavior is tested separately for every motion-bearing interaction.",
+    "Automated geometry checks do not replace visual inspection."
+  ],
+  "automatedAssertions": [
+    "no horizontal overflow",
+    "no clipped prose",
+    "no menu clipped by viewport",
+    "no menu behind another layer",
+    "custom scrollbars present",
+    "no console errors",
+    "search exact-message jump works",
+    "unloaded history is searchable",
+    "scroll anchor preserved on expansion",
+    "docked and popout state match",
+    "send and stop state machine works",
+    "draft restores",
+    "questionnaire queue order works",
+    "goal controls preserve state",
+    "no emoji characters",
+    "no colored left-side accent border selectors",
+    "no user-facing underscored status labels"
+  ],
+  "visualAuditFindings": [
+    "message hierarchy parseability",
+    "amount of conversation visible",
+    "nested containment density",
+    "line length and wrapping",
+    "metadata competition",
+    "activity compaction clarity",
+    "questionnaire overcrowding",
+    "dynamic work-surface collisions",
+    "theme consistency",
+    "popup motion and attachment",
+    "reduced-motion final state",
+    "long-message control discoverability",
+    "selected search target clarity",
+    "long-thread orientation",
+    "fake shell spacing with rail open and closed"
+  ],
+  "reportRequired": true
+}
