@@ -78,7 +78,33 @@
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/>',
     calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
     upload: '<path d="M12 16V4M6 10l6-6 6 6"/><path d="M4.5 20h15"/>',
-    download: '<path d="M12 4v12M6 10l6 6 6-6"/><path d="M4.5 20h15"/>'
+    download: '<path d="M12 4v12M6 10l6 6 6-6"/><path d="M4.5 20h15"/>',
+    /* Final cumulative packet additions (2026-08-08). Same grammar:
+       24 viewBox, stroke-current, width 1.8, no fills except starFill. */
+    bell: '<path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/>',
+    speaker: '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4v-5z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.7a8 8 0 0 1 0 10.6"/>',
+    package: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9M8 5.3l8 4.5"/>',
+    box: '<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M3.5 11h17M5 8l1.6-3.5h10.8L19 8M12 14.5h.01"/>',
+    database: '<ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/>',
+    disk: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3a9 9 0 0 1 9 9"/>',
+    undo: '<path d="M8 5L3.5 9.5 8 14"/><path d="M3.5 9.5H15a5.5 5.5 0 0 1 0 11h-3"/>',
+    keyboard: '<rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M6 12.7h.01M9.3 12.7h.01M12.6 12.7h.01M15.9 12.7h.01M7.5 15.5h9"/>',
+    font: '<path d="M5 19L11 5h2l6 14"/><path d="M7.5 14h9"/>',
+    tray: '<path d="M3.5 13.5V18a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-4.5"/><path d="M3.5 13.5h5l1.5 2.5h4l1.5-2.5h5"/><path d="M12 4v7M9 8.2l3 2.8 3-2.8"/>',
+    windowIcon: '<rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18M6.2 6.8h.01M8.8 6.8h.01"/>',
+    grad: '<path d="M12 4.5L22 9l-10 4.5L2 9l10-4.5z"/><path d="M6.5 11v5c0 1.4 2.5 2.6 5.5 2.6s5.5-1.2 5.5-2.6v-5M22 9v5"/>',
+    beaker: '<path d="M9.5 3.5h5M10.5 3.5v5.2L4.9 18a2 2 0 0 0 1.8 3h10.6a2 2 0 0 0 1.8-3l-5.6-9.3V3.5"/><path d="M7.5 14.5h9"/>',
+    bug: '<circle cx="12" cy="13.5" r="5.5"/><path d="M12 8V6M9.2 8.6L7 5.5M14.8 8.6L17 5.5M6.5 13.5h-3M20.5 13.5h-3M7.6 17.5L5 20M16.4 17.5L19 20M12 10.5V17"/>',
+    broom: '<path d="M13.5 3l7.5 7.5"/><path d="M12 8.5L15.5 12 9 18.5a13 13 0 0 1-6 2.5 13 13 0 0 1 2.5-6L12 8.5z"/><path d="M7 14.5l2.5 2.5"/>',
+    container: '<path d="M3 8.5l9-4 9 4v7l-9 4-9-4v-7z"/><path d="M7 10.3v5M12 12.5v5M17 10.3v5M3 8.5l9 4 9-4"/>',
+    kube: '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5l4.6 2.3 1.1 5-3.2 4H9.5l-3.2-4 1.1-5L12 6.5z"/><circle cx="12" cy="12" r="1.2"/>',
+    workflow: '<rect x="3" y="3.5" width="6" height="6" rx="1.5"/><rect x="15" y="14.5" width="6" height="6" rx="1.5"/><path d="M9 6.5h6a2 2 0 0 1 2 2v6"/><circle cx="6" cy="17.5" r="2.5"/><path d="M8.5 17.5H15"/>',
+    worktree: '<circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="12" r="2.2"/><path d="M6 7.7v8.6M6.5 12h9.3M15.8 12H8"/>',
+    hourglass: '<path d="M6.5 3.5h11M6.5 20.5h11M8 3.5v3.2a4 4 0 0 0 8 0V3.5M8 20.5v-3.2a4 4 0 0 1 8 0v3.2"/><path d="M12 11v2"/>',
+    route: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" stroke-dasharray="0"/>',
+    sliders: '<path d="M5 5v5M5 14v5M12 5v2M12 11v8M19 5v8M19 17v2"/><path d="M3 10h4M10 7h4M17 13h4"/>',
+    certificate: '<circle cx="12" cy="9" r="5"/><path d="M12 6.5l.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2L9.1 8.6l2-.3.9-1.8z" stroke-width="1.2"/><path d="M9 13.5L7.5 20.5l4.5-2.5 4.5 2.5L15 13.5"/>',
+    coin: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M14.8 9.2a3.3 3.3 0 0 0-2.8-1.2c-1.7 0-3 .9-3 2.2s1.3 1.9 3 2.2 3 1 3 2.2-1.3 2.2-3 2.2a3.4 3.4 0 0 1-2.9-1.3"/>'
   };
 
   function get(name) {

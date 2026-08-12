@@ -146,6 +146,16 @@
     cards.push(...b.diffCards(key));
     const live = b.activityLiveCard(key);
     if (live) cards.push(live);
+    const grant = b.grantCard(key);
+    if (grant) cards.push(grant);
+    b.capacityCards(key).forEach(c => cards.push(c));
+    b.approvalCards(key).forEach(c => cards.push(c));
+    b.warningCards(key).forEach(c => cards.push(c));
+    b.bsdCards(key).forEach(c => cards.push(c));
+    b.opsCards(key).forEach(c => cards.push(c));
+    b.attachmentResolutionCards(key).forEach(c => cards.push(c));
+    b.artifactCards(key).forEach(c => cards.push(c));
+    b.receiptCards(key).forEach(c => cards.push(c));
     if (!cards.length) return;
 
     const d = wapi.data;
@@ -165,6 +175,15 @@
     if (d.agents) segs += '<span class="pmq-t6work-seg">agents <b data-t6num="agents">' + d.agents + "</b></span>";
     if (d.diffFiles) segs += '<span class="pmq-t6work-seg pmq-t6work-diffseg"><b class="pmq-diff-add" data-t6num="adds">+' + d.diffAdds +
       '</b><b class="pmq-diff-del" data-t6num="dels">\u2212' + d.diffDels + "</b></span>";
+    if (d.grant || d.capacity || d.ops || d.bsd || d.attach) {
+      const flags = [];
+      if (d.grant) flags.push("grant");
+      if (d.capacity) flags.push("capacity");
+      if (d.ports) flags.push("port");
+      if (d.bsd) flags.push("bsd");
+      if (d.attach) flags.push("attach");
+      segs += '<span class="pmq-t6work-seg pmq-t6work-flags">' + flags.map(f => '<b data-t6flag>' + f + "</b>").join("") + "</span>";
+    }
     row.innerHTML = segs;
 
     const gw = document.createElement("div");

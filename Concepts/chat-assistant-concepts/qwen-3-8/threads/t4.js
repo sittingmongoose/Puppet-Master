@@ -200,7 +200,26 @@
     if (d.todoTotal) domains.push({ id: "tasks", label: "Tasks", value: d.todoDone + "/" + d.todoTotal, build: () => { const el = wapi.builders.todoCard(key); return el ? [el] : []; } });
     if (d.agents) domains.push({ id: "agents", label: "Agents", value: String(d.agents), build: () => wapi.builders.subagentCards(key) });
     if (d.diffFiles) domains.push({ id: "diff", label: "Diff", value: "+" + d.diffAdds + " \u2212" + d.diffDels, build: () => wapi.builders.diffCards(key) });
-    if (!domains.length) return;
+    if (d.ops > 0) domains.push({ id: "ops", label: "Ops", value: String(d.ops), build: () => wapi.builders.opsCards(key) });
+    if (d.bsd > 0) domains.push({ id: "bsd", label: "BSD", value: String(d.bsd), build: () => wapi.builders.bsdCards(key) });
+    if (d.attach > 0) domains.push({ id: "attach", label: "Attach", value: String(d.attach), build: () => wapi.builders.attachmentResolutionCards(key) });
+    if (d.capacity > 0) domains.push({ id: "capacity", label: "Capacity", value: String(d.capacity), build: () => wapi.builders.capacityCards(key) });
+
+    /* Surfaces outside the spine domains keep their ordinary inline treatment
+       in the content lane so nothing actionable is dropped. */
+    const rest = [];
+    wapi.builders.approvalCards(key).forEach(el => rest.push(el));
+    const grant = wapi.builders.grantCard(key);
+    if (grant) rest.push(grant);
+    wapi.builders.warningCards(key).forEach(el => rest.push(el));
+    const live = wapi.builders.activityLiveCard(key);
+    if (live) rest.push(live);
+    const crew = wapi.builders.crewCard(key);
+    if (crew) rest.push(crew);
+    wapi.builders.artifactCards(key).forEach(el => rest.push(el));
+    wapi.builders.questRecordCards(key).forEach(el => rest.push(el));
+
+    if (!domains.length && !rest.length) return;
 
     const s = wapi.store.thread(key);
     const wrap = document.createElement("div");
@@ -246,17 +265,6 @@
     }
     container.appendChild(wrap);
 
-    /* Surfaces outside the four spine domains keep their ordinary inline
-       treatment in the content lane so nothing actionable is dropped. */
-    const rest = [];
-    wapi.builders.approvalCards(key).forEach(el => rest.push(el));
-    wapi.builders.warningCards(key).forEach(el => rest.push(el));
-    const live = wapi.builders.activityLiveCard(key);
-    if (live) rest.push(live);
-    const crew = wapi.builders.crewCard(key);
-    if (crew) rest.push(crew);
-    wapi.builders.artifactCards(key).forEach(el => rest.push(el));
-    wapi.builders.questRecordCards(key).forEach(el => rest.push(el));
     if (rest.length) {
       const restWrap = document.createElement("div");
       restWrap.className = "pmq-surfaces pmq-t4w-rest";

@@ -1,0 +1,305 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept": "concept-04-stream",
+  "model": "GLM-5.2",
+  "ia_metaphor": "landmark-river + scroll-linked flow",
+  "rule_reference": "missing is a failure; deferred requires a named canonical owner and insertion contract",
+  "coverage_principle": "C4-owned families + core are demonstrated with a real per-family demo note. Sibling-owned families (concepts 1/2/3) are reachable through the shared manager grammar and marked shared_grammar. The Future Server Module Shell is deferred_named_owner with named owners + insertion contracts. No family is 'missing'.",
+  "families": [
+    {
+      "family": "Settings Home",
+      "group": "core",
+      "classification": "demonstrated",
+      "demo_note": "Stream renders the Settings Workspace shell with a landmark river; Home is the river root landing with deferred Server region shell + Storage Health summary.",
+      "named_owner": "Plans/FinalGUISpec.md"
+    },
+    {
+      "family": "Settings Search",
+      "group": "core",
+      "classification": "demonstrated",
+      "demo_note": "Universal search focuses via nav_focus_route; result select scrolls the river to the setting's landmark (deep link 'Open setting: {id}'). Search indexes metadata without eagerly hydrating all managers.",
+      "named_owner": "Plans/FinalGUISpec.md (search-owner)"
+    },
+    {
+      "family": "Settings Workspace",
+      "group": "core",
+      "classification": "demonstrated",
+      "demo_note": "Full Settings Workspace with persistent left CategoryNavigation + scroll-linked SubcategoryScrollspy over the river. Loading/empty/error/unavailable/managed states shown per landmark.",
+      "named_owner": "Plans/FinalGUISpec.md"
+    },
+    {
+      "family": "Provider/Account/Model/Installation",
+      "group": "core",
+      "classification": "demonstrated",
+      "demo_note": "Provider manager with full object model, 7 installation lifecycle fixtures (CLI found+authenticated, found-not-signed-in, multiple installations one shadowed, unknown owner manual-only, explicit install, update available, verify-failed-rollback-succeeded), CLI-owned vs PM-direct OAuth boundary, and requested/effective disclosure. Reuses catalog.provider_switch_route / account_select_profile / model_list.",
+      "named_owner": "Plans/Multi-Account.md + Plans/Models_System.md + Plans/BinaryLocator_Spec.md"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "group": "core",
+      "classification": "demonstrated",
+      "demo_note": "SettingRow grammar across all C4 landmarks: label/value/help/scope with ValueSourceBadge (inherited/managed/default/custom), AvailabilityReason, and action/setting/status/manager variants. General fixtures (Default/Custom/Inherited/Managed/Unavailable/Validation error/Restart required/Reconnect required/Changed elsewhere) rendered.",
+      "named_owner": "Plans/FinalGUISpec.md"
+    },
+    {
+      "family": "Storage & Retention",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "StorageHealth landmark: server-anchored mode (one Project Home Server + physical Project Vault), retention, legal holds (managed, suspends deletion/compaction), pressure, non-destructive compaction (receipts), quarantine, project/data deletion (irreversible, receipt), encryption, periodic test-restore. DISTINCT from settings/project/full-server backup and workspace cleanup. Fixture: storage.legal_hold_active.",
+      "named_owner": "Plans/storage-plan.md (#Case-L-3)"
+    },
+    {
+      "family": "Backup & Restore",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Backup landmark keeps action (Back Up Now) vs setting (schedule) vs status (last backup) vs manager vs log (diagnostic) DISTINCT. Back Up Now -> cmd.storage.backup_now with ObservableWork + receipt. Internal snapshots / settings backup / project backup / full server backup distinguished. Fixture: storage.backup_now.",
+      "named_owner": "Plans/storage-plan.md (backup/restore/compaction)"
+    },
+    {
+      "family": "Settings Lifecycle",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Lifecycle landmark: export/backup, import (merge/replace + 3-conflict preview), validation, legacy-key migration, restore-point before apply, atomic apply, rollback to snapshot, receipt+source disclosure, reset-to-defaults (preview first). Copy Settings From = ONE-TIME transactional copy (~10 categories), destination independent after; NOT universal inheritance. NO raw format dropdown as primary. Fixture: lifecycle.import_3_conflicts_rollback + copy_from_project_one_time.",
+      "named_owner": "Plans/Commands_System.md + Plans/settings_inventory.json"
+    },
+    {
+      "family": "History & Sessions",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "History landmark: project/all-project filters, compare/export/rebuild/archive/deletion policy, PM-owned vs provider-native identity, resumable sessions. Virtualized list. Reuses catalog.chat_rewind/revert/history open ids.",
+      "named_owner": "Plans/FinalGUISpec.md + Plans/storage-plan.md (transcript/retention)"
+    },
+    {
+      "family": "Runtime Artifacts",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Runtime Artifacts landmark: type/location/version/retention/receipts/redaction/open/reveal/export/cleanup; PM-owned vs provider-native identity; identity-based open (no fake repo paths); identity-preserving export with manifest (no shadow IDs). Fixture: artifact manager rows.",
+      "named_owner": "Plans/Runtime_Artifacts_Panel.md + Plans/Project_Output_Artifacts.md"
+    },
+    {
+      "family": "Source Control/Worktrees",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Source Control landmark: changes/history/graph/worktrees, branch/bookmark/revision, Git/Jujutsu/LFS, forge connection, SSH source, test-before-merge, push/force-push policy (deny main), leases, recovery/cleanup, tool health. Reuses catalog.git_worktree_* + source_control_* + catalog.git_*. Fixture: git.force_push_deny_main.",
+      "named_owner": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "family": "GitHub Actions",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "GitHub Actions landmark: pinned workflows, current-branch readiness, refresh, run/job/log browsing, starter workflow, account capability, setup/health. Reuses catalog.github_actions_* + catalog.actions_*. Shell-surface boundary stops at hosted workflow/admin contract owned by GitHub_Integration.md.",
+      "named_owner": "Plans/GitHub_Integration.md"
+    },
+    {
+      "family": "Containers & Registries",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Containers landmark: Docker/Podman/Kubernetes top-level (human) with detail (Engine/CLI/Compose/Buildx/socket/kubectl/Helm/clusters/kubeconfig-contexts/registries/Unraid/SSH-remotes/versions/auth/health). Domain capability probes reuse shared tool lifecycle. Reuses catalog.docker_*. Fixture: container.podman_stopped.",
+      "named_owner": "Plans/Containers_Registry_and_Unraid.md"
+    },
+    {
+      "family": "Web/Search/Fetch",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Web landmark: provider priority, search/fetch/crawl/map/extract limits, credit guards, caches, PM-native Browser sessions (NO Playwright terminology; BrowserWorkspace/Browser Program/Expert Browser Program only), proxies/certs, air-gap, privacy (no prompt exfiltration), readiness. Reuses catalog.chat_web_* + catalog.browser_*. Fixture: web.air_gap_pm_native_browser.",
+      "named_owner": "Plans/storage-plan.md (web content cache) + Plans/FinalGUISpec.md (browser shell)"
+    },
+    {
+      "family": "Project Search Index",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Search Index landmark: enable, rebuild (phase/progress non-blocking, CancellationToken on disable), exclusions, file-size/symlink policy, disk use, remote cache, clear cache, failures surfaced. Reuses catalog.search_rebuild_index + catalog.search_evict_remote_cache. Fixture: searchindex.rebuild_3_failures.",
+      "named_owner": "Plans/FinalGUISpec.md (search-owner index control surface)"
+    },
+    {
+      "family": "Workspace Cleanup",
+      "group": "concept_4",
+      "classification": "demonstrated",
+      "demo_note": "Cleanup landmark: dry-run first, worktree safety, evidence retention floor, receipts. Distinct from runtime artifact cleanup and storage compaction. Reuses catalog.docker_cleanup_scan (container-scoped) for container cleanup; new cmd.cleanup.dry_run/clean for workspace. Fixture: cleanup.dry_run_then_clean.",
+      "named_owner": "Plans/WorktreeGitImprovement.md (cleanup) + Plans/storage-plan.md (bounded collections)"
+    },
+    {
+      "family": "Future Server Module Shell",
+      "group": "concept_4",
+      "classification": "deferred_named_owner",
+      "demo_note": "Deferred Server region reserves grammar + semantic destinations for Servers / Execution Hosts / Clients / Project Hosting & Files / Remote Access / Updates. Human-language cards only (Home Server Connected, Clients N paired, Hosted On, Project Files, Run Work). NO backend state machine invented here; Project Sync/Move/PM-update explicitly not implemented. Each named owner carries an insertion contract (see impact-register.deferred_named_owners).",
+      "named_owners": {
+        "Servers": "Plans/Server_Backbone.md (reserved)",
+        "Execution Hosts": "Plans/Server_Backbone.md (reserved, Execution Host section)",
+        "Clients": "Plans/Server_Backbone.md (reserved, Clients section)",
+        "Project Hosting & Files": "Plans/Server_Backbone.md (reserved) + Plans/Release_Supply_Chain.md",
+        "Remote Access": "Plans/Server_Backbone.md (reserved, Remote Access section)",
+        "Updates": "Plans/Release_Supply_Chain.md"
+      }
+    },
+    {
+      "family": "Context & Instructions",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Reachable via shared SettingRow/ManagerShell/SettingsSearch grammar; Stream does not deep-own it. No rendering required here beyond shared-grammar proof.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Memory",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar; memory retention interacts with Storage & Retention landmark only at the retention-policy boundary (memory.retention.* ids surface here as ordinary rows).",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Personas",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar only.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Goal & Automation",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar only.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Crew",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar only.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar; permission gates are consumed by Stream ops (backup.write, cleanup.run) but the Permissions manager itself is sibling-owned.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Back Seat Driver",
+      "group": "concept_1",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 1). Shared grammar only.",
+      "sibling_owner_concept": "concept-01"
+    },
+    {
+      "family": "Notifications & Sounds",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar; backup/cleanup/import completion may fire notification destinations but the Notifications manager is sibling-owned.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "Sound Library/Uploads/Packs",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar only.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "Appearance",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar; all-theme + reduced-motion support proven in Stream consumes the Appearance-owned theme tokens.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar only.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "Desktop/Tray/Window",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar; Stream's long-running ops (backup/rebuild) respect tray/minimize-to-tray behavior owned here.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "Teacher/Help",
+      "group": "concept_2",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 2). Shared grammar; ELI5/Expert copy for Storage/Lifecycle/Containers rows is authored here per FinalGUISpec 7.4.0.",
+      "sibling_owner_concept": "concept-02"
+    },
+    {
+      "family": "File Manager/Editor",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar; artifact reveal/export fall through to file-manager open primitives (catalog.file_reveal / file_open).",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Terminal",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar; transcript-retention interacts with History & Sessions only at the retention boundary.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "LSP",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Formatters",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar; Stream's lifecycle/storage commands register shortcuts through the shared shortcut recorder.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "MCP",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Skills",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Plugins",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Tools",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar; git/docker/web tool health reuses the shared tool lifecycle but the Tools manager itself is sibling-owned.",
+      "sibling_owner_concept": "concept-03"
+    },
+    {
+      "family": "Testing & Debug",
+      "group": "concept_3",
+      "classification": "shared_grammar",
+      "demo_note": "Sibling-owned (concept 3). Shared grammar only.",
+      "sibling_owner_concept": "concept-03"
+    }
+  ],
+  "summary": {
+    "total_families": 40,
+    "demonstrated": 16,
+    "shared_grammar": 23,
+    "deferred_named_owner": 1,
+    "missing": 0,
+    "assertion": "No family is 'missing'. All 5 core + 11 C4-owned families demonstrated; all 23 sibling-owned families reachable via shared grammar; Future Server Module Shell deferred with named owners + insertion contracts."
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept": "concept-03-stack",
+  "model": "GLM-5.2",
+  "concept_design_note": "Single-surface progressive disclosure: Settings Home is one vertical stack of expandable destination rows; search is the stack head; notices sit at the head; expanding a destination hosts its subcategory subnav + setting rows + inline manager. C3 families are deep-owned (demonstrated with per-family demo notes). Core families are demonstrated. Sibling-owned families are reachable through the shared SettingRow grammar (shared_grammar). The future Server module is deferred_named_owner with a named canonical owner and insertion contract. NO family is classified 'missing'.",
+  "coverage": [
+    {
+      "group": "core",
+      "manager": "Settings Home",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Rendered as the stack root: a vertical list of expandable destination rows with notices at the head and search as the stack head.",
+      "settings_ids": [],
+      "gui_related": true
+    },
+    {
+      "group": "core",
+      "manager": "Settings Search",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Omni-search is the HEAD of the stack; results span settings/categories/managers; selecting a result deep-links into the correct expanded destination + subcategory + focus-flash row.",
+      "settings_ids": [],
+      "command_ids_existing": ["catalog.search_show", "catalog.search_open_result"],
+      "gui_related": true
+    },
+    {
+      "group": "core",
+      "manager": "Settings Workspace",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Single expandable-stack workspace shell; each destination expands in place with a sticky in-row subnav; deep-link + collapse-all; manager loading does not block the workspace.",
+      "settings_ids": [],
+      "gui_related": true
+    },
+    {
+      "group": "core",
+      "manager": "Provider/Account/Model/Installation",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Expanded 'AI Brains' destination demonstrates the full object model, all 7 installation lifecycle fixtures, CLI-owned vs PM-direct OAuth boundary (labeled distinctly), and requested/effective provider+model.",
+      "settings_ids": [],
+      "command_ids_existing": ["catalog.provider_switch_route", "catalog.account_select_profile", "catalog.model_list", "catalog.model_refresh", "catalog.health_provider_setup_open", "catalog.onboarding_provider_setup_open"],
+      "command_candidates": ["cmd.provider.installation.scan", "cmd.provider.installation.select", "cmd.provider.installation.verify", "cmd.provider.installation.rollback"],
+      "gui_related": true
+    },
+    {
+      "group": "core",
+      "manager": "Ordinary setting grammar",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Every C3 family renders ordinary SettingRow instances with nine-state chip, value source, exposure filter (Standard/Advanced/Expert), and scope (Global/Project).",
+      "settings_ids": ["code.editing.lsp-enabled", "code.editing.formatters-enabled", "extensions.commands.command-mode", "planning.testing.capability-policy"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "File Manager/Editor",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Inline file-manager surface: virtualized/lazy tree, workspace-only drag/drop (FileSafe enforced), hidden/ignored (.gitignore + globs), large-file hex preview threshold, tabs/split groups, changed-on-disk (reload/keep/compare), recovery + transient/unavailable reasons.",
+      "settings_ids": ["code.editing.large-file-threshold", "code.editing.max-file-size-mb", "code.editing.editor-strip-collapsed"],
+      "command_ids_existing": ["catalog.file_open", "catalog.file_new_file", "catalog.file_new_folder", "catalog.file_rename", "catalog.file_delete", "catalog.file_copy_path", "catalog.file_reveal", "catalog.file_refresh", "catalog.file_expand_capped", "catalog.file_save_local_copy", "catalog.editor_close_tab"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Terminal",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Terminal surface: profiles, shell/env (inherit/minimal), font+fallback, ANSI palette, opacity/readability, cursor/blink, copy-links, CWD, retention, live preview.",
+      "settings_ids": ["code.terminal.shell", "code.terminal.cwd", "code.terminal.font-family", "code.terminal.font-size", "code.terminal.theme", "code.terminal.allowed-profiles", "code.terminal.transcript-retention", "code.terminal.scrollback-limit", "code.terminal.readability-signals", "code.terminal.copy-behavior", "code.terminal.rendering-mode"],
+      "command_ids_existing": ["catalog.terminal_open", "catalog.terminal_show", "catalog.terminal_focus", "catalog.terminal_split_pane", "catalog.terminal_kill_session", "catalog.terminal_clear_scrollback"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "LSP",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "LSP catalog: registry/catalog/provenance, startup mode, requested/effective attachment inspector, formatting-ownership conflict badge (vs Formatter), restart/logs, remote degradation via AvailabilityReason.",
+      "settings_ids": ["code.editing.lsp-enabled", "code.editing.lsp-server-catalog", "code.editing.lsp-custom-servers", "code.editing.lsp-root-override", "code.editing.lsp-host-attachment", "code.editing.lsp-auto-restart", "code.editing.lsp-restart", "code.editing.lsp-max-memory", "code.editing.lsp-max-cpu"],
+      "command_ids_existing": ["catalog.lsp_restart_server", "catalog.lsp_format_document", "catalog.lsp_format_selection", "catalog.lsp_open_problems"],
+      "command_candidates": ["cmd.lsp.server.add", "cmd.lsp.server.open_logs", "cmd.lsp.formatting_ownership.resolve"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Formatters",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Formatter table: global enable, built-in/custom rows, detected/not-found/disabled health, command/env/ext, add/remove/reset, Global/Project scope, health+test, single-ownership-per-language conflict resolution.",
+      "settings_ids": ["code.editing.formatters-enabled", "code.editing.formatter-catalog", "code.editing.formatter-custom"],
+      "command_candidates": ["cmd.formatter.add", "cmd.formatter.test", "cmd.formatter.remove", "cmd.formatter.reset", "cmd.formatter.resolve_conflict", "cmd.formatter.scope.set"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Commands & Shortcuts",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Dedicated manager: custom command lifecycle (create/update/delete), parameters/includes, shell-safety gate, dry-run preview (HARD-GATED to NEVER send to an agent), validation, shortcut search/conflict/remap/reset/import/export/cheat-sheet.",
+      "settings_ids": ["extensions.commands.custom-commands", "extensions.commands.command-mode", "extensions.commands.command-scope", "extensions.commands.command-model", "extensions.commands.command-persona", "extensions.commands.command-permissions", "extensions.commands.override-builtin", "extensions.commands.keyboard-shortcuts", "extensions.commands.conflict-handling", "extensions.commands.search-shortcuts", "extensions.commands.reset-shortcuts", "extensions.commands.backup-shortcuts", "extensions.commands.shortcut-hints"],
+      "command_ids_existing": ["catalog.settings_agent_rules_dry_method_default_guard_set"],
+      "command_candidates": ["cmd.commands.custom.create", "cmd.commands.custom.update", "cmd.commands.custom.delete", "cmd.commands.custom.dry_run", "cmd.shortcuts.bind", "cmd.shortcuts.remap", "cmd.shortcuts.reset", "cmd.shortcuts.import", "cmd.shortcuts.export", "cmd.shortcuts.conflict.resolve"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "MCP",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "MCP resource rows: transport (stdio/remote-url/sse), scope, exposed-tools-of-total, approval duration, last-contact, reconnect-on-failure with visible receipt, lazy-exposure, logs.",
+      "settings_ids": ["system.mcp.server-list", "system.mcp.transport", "system.mcp.server-scope", "system.mcp.lazy-exposure", "system.mcp.timeout", "system.mcp.health-status", "system.mcp.oauth-refresh", "system.mcp.show-availability"],
+      "command_ids_existing": ["catalog.remote_reconnect"],
+      "command_candidates": ["cmd.mcp.server.add", "cmd.mcp.server.restart", "cmd.mcp.server.reconnect", "cmd.mcp.server.approve", "cmd.mcp.server.open_logs"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Skills",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Skills manager is the shared host demonstrating catalog/provenance/trust, install/update/compatibility/unload, project-enablement, effective-availability, policy/risk. ALSO hosts the four distinct kinds (skill/plugin/tool/command-as-kind) with shared row grammar and a kind discriminator.",
+      "settings_ids": ["extensions.skills.your-skills", "extensions.skills.skill-on-off", "extensions.skills.discovery", "extensions.skills.auto-invocation", "extensions.skills.auto-enable-new", "extensions.skills.validate", "extensions.skills.permissions", "extensions.skills.projection", "extensions.skills.pattern-permissions"],
+      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_update_item", "catalog.catalog_remove_item"],
+      "command_candidates": ["cmd.skill.enable", "cmd.skill.disable", "cmd.skill.update", "cmd.skill.validate"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Plugins",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Plugins demonstrated as a DISTINCT kind inside the Skills manager: package install (catalog vs local), hook-timeout, tool-override (plugins may replace built-in tools), remove. Distinct lifecycle from skill enablement.",
+      "settings_ids": ["extensions.plugins.plugin-on-off", "extensions.plugins.add-from-catalog", "extensions.plugins.add-local", "extensions.plugins.remove", "extensions.plugins.packages", "extensions.plugins.hook-timeout", "extensions.plugins.tool-override", "extensions.plugins.auto-enable-new", "extensions.plugins.registry-view"],
+      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_remove_item"],
+      "command_candidates": ["cmd.plugin.enable", "cmd.plugin.disable", "cmd.plugin.update"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Tools",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Tools demonstrated as a DISTINCT kind with the full 5 lifecycle states: installed / project-enabled / currently-available / selected-for-turn / actually-invoked, surfaced via RequestedEffectiveInspector. Effective-availability is the projection; select-for-turn is a transient per-turn mutation.",
+      "settings_ids": ["system.mcp.tool-toggle", "safety.rules.per-tool-permissions", "safety.rules.default-tool-permission", "personas.tools.tool-posture", "ai.usage.max-tool-rounds"],
+      "command_candidates": ["cmd.tool.enable", "cmd.tool.disable", "cmd.tool.select_for_turn", "cmd.tool.invoke_preview"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_3",
+      "manager": "Testing & Debug",
+      "classification": "demonstrated",
+      "owner_concept": "concept-03-stack",
+      "demo_note": "Per-capability Auto/On/Off grid: unit/integration, built-in browser (PM-native Browser Program, NO Playwright terminology), desktop/native, hot-reload, simulator/emulator/device (may be unavailable), API/database, console/network, perf/sec/a11y, DAP debugger, persistent eval, capture/artifacts.",
+      "settings_ids": ["planning.testing.capability-policy", "planning.testing.test-visibility", "planning.testing.cap-built-in-browser", "planning.testing.cap-simulator", "planning.testing.cap-physical-device", "planning.testing.cap-desktop-gui", "planning.testing.cap-hot-reload", "planning.testing.cap-live-preview", "planning.testing.cap-accessibility", "planning.testing.cap-api-contract", "planning.testing.cap-database", "planning.testing.cap-console-network", "planning.testing.cap-performance", "planning.testing.cap-security", "planning.testing.session-actions"],
+      "command_ids_existing": ["catalog.testing_capability_policy_set", "catalog.testing_visibility_policy_set", "catalog.testing_open_panel", "catalog.testing_run", "catalog.testing_cancel_run", "catalog.run_debug_start", "catalog.debug_start"],
+      "command_candidates": ["cmd.testing.capability.set"],
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Context & Instructions",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar in Stack's 'Memory & Context' destination; deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Memory",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Personas",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar (Personas destination); deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Goal & Automation",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar (Planning destination); deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Crew",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Permissions & FileSafe",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Permissions/FileSafe row grammar reused by the File Manager's workspace-only drag/drop enforcement; deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_1",
+      "manager": "Back Seat Driver",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-01-control-room",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-01.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Notifications & Sounds",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "SettingsNotice component (head of stack) shares grammar with Notifications; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Sound Library/Uploads/Packs",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "Reachable via shared ResourceList grammar; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Appearance",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "Theme/density/accent row grammar reused by Stack's all-theme + reduced-motion support; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Spellcheck & Dictionaries",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Desktop/Tray/Window",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_2",
+      "manager": "Teacher/Help",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-02-atlas",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-02.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Storage & Retention",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Backup & Restore",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Settings Lifecycle",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Import/export/reset row grammar shared with Stack's lifecycle surfaces; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "History & Sessions",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Runtime Artifacts",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared ResourceList grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Source Control/Worktrees",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; the .gitignore-aware ignore rows in File Manager share grammar with Source Control; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "GitHub Actions",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Containers & Registries",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Stack demonstrates the shared tool-lifecycle grammar applies to containers; container capability probes are concept-04's deep demo.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Web/Search/Fetch",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Project Search Index",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Workspace Cleanup",
+      "classification": "shared_grammar",
+      "owner_concept": "concept-04-stream",
+      "demo_note": "Reachable via shared SettingRow grammar; deep demo is concept-04.",
+      "gui_related": true
+    },
+    {
+      "group": "concept_4",
+      "manager": "Future Server Module Shell",
+      "classification": "deferred_named_owner",
+      "owner_concept": "concept-04-stream",
+      "named_canonical_owner": "future Plans/Server_Module.md (not yet authored)",
+      "insertion_contract": "Stack reserves an expandable destination whose body is a deferred shell using the shared ManagerShell + ResourceList grammar; no backend state machine invented here. Reaches production when the Server module owner doc is authored (concept-04 owns the surrounding server/host/client shell).",
+      "gui_related": true
+    }
+  ],
+  "summary": {
+    "total_managers_in_matrix": 40,
+    "demonstrated": 15,
+    "shared_grammar": 24,
+    "deferred_named_owner": 1,
+    "missing": 0,
+    "rule_check": "missing == 0 (PASS); deferred carries named canonical owner + insertion contract (PASS)."
+  }
+}

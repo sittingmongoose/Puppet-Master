@@ -59,5 +59,26 @@ window.PM_ICONS = {
   arrowDown:'<path d="M12 5v14M5 12l7 7 7-7"/>',
   dot:      '<circle cx="12" cy="12" r="3"/>',
   vbar:     '<path d="M12 4v16"/>',
-  overflow: '<circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/>'
+  overflow: '<circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/>',
+  /* final-cumulative family icons (SVG, no emoji) */
+  target:     '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/>',
+  bsd:        '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 14.4 5.5 18M12 14.4 18.5 18M9.6 11 4 9M14.4 11 20 9"/>',
+  sound:      '<path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/>',
+  palette:    '<path d="M12 3a9 9 0 0 0 0 18c1.5 0 1.8-1 1.8-1.9 0-1.4 1-1.9 1.9-1.9H17a4 4 0 0 0 4-4A9 9 0 0 0 12 3Z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="11" r="1"/>',
+  spellcheck: '<path d="M4 6h7M4 10h7M4 14h5"/><path d="m15 13 2 2 4-4"/>',
+  desktop:    '<rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M3 8h18M8 21h8M12 17v4"/>',
+  teacher:    '<path d="M12 4 2 9l10 5 10-5-10-5Z"/><path d="M6 11v5c0 1 3 3 6 3s6-2 6-3v-5"/>',
+  folder:     '<path d="M3 7a1 1 0 0 1 1-1h5l2 2h8a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7Z"/>',
+  format:     '<path d="M4 6h16M4 10h10M4 14h16M4 18h10"/>',
+  command:    '<path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6Z"/>',
+  beaker:     '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7 14h10"/>',
+  database:   '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+  archive:    '<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/>',
+  lifecycle:  '<path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-8-5"/><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 8 5"/><path d="M21 4v4h-4M3 20v-4h4"/>',
+  package:    '<path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5M12 12v10"/>',
+  branch:     '<circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 2.5-6 5.5"/>',
+  github:     '<circle cx="12" cy="12" r="9"/><path d="M9 19c-2 0-2-2-2-3v-1.6M15 19c2 0 2-2 2-3v-1.6M9 19v-2a3 3 0 0 1 .9-2.2"/>',
+  container:  '<rect x="3" y="8" width="18" height="9" rx="1"/><path d="M7 8v9M11 8v9M15 8v9"/>',
+  searchindex:'<path d="M4 6h7M4 10h7M4 14h5"/><circle cx="16" cy="14.5" r="3"/><path d="m21 19.5-2.6-2.6"/>',
+  broom:      '<path d="M19 4 12 11"/><path d="M10.5 12.5l-5.5 5.5c-1 1-1 2.2 0 3.2l.8.8c1 1 2.2 1 3.2 0l5.5-5.5"/><path d="M9 13l4 4"/>'
 };

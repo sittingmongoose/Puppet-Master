@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "topic": "chat-assistant",
+  "model": "Kimi K3",
+  "presentation": "entries",
+  "order": 20,
+  "widthControl": {
+    "enabled": true,
+    "label": "Chat width",
+    "role": "chat",
+    "min": 520,
+    "max": 1200,
+    "step": 5,
+    "default": 750,
+    "presets": [520, 750, 975, 1200],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "workspace",
+      "title": "Kimi K3 · Assistant Chat comparison workspace",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["gallery", "composition", "8 windows", "8 threads"],
+      "order": 1
+    },
+    {
+      "id": "host",
+      "title": "Single concept host (any window × thread pairing)",
+      "path": "host.html",
+      "openPath": "host.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["host", "pairing"],
+      "order": 2
+    }
+  ]
+}

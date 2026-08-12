@@ -86,6 +86,23 @@
     html += '<div class="u11rd-admitline"><b>' + queued + '</b> queued · ' + run.queued.waves + ' waves</div>';
     html += '<div class="u11rd-admitline dim">Sustainable concurrency ' + run.admitted.sustainableConcurrency +
       (run.reservedFor && run.reservedFor.length ? ' · reserved for ' + run.reservedFor.join(', ') : '') + '</div>';
+    if (run.capacity) {
+      var cap = run.capacity;
+      html += '<div class="u11rd-grid">';
+      html += kv('Hard max', cap.hardMax);
+      html += kv('Configured preferred', cap.configuredPreferred);
+      html += kv('Provider advertised', cap.providerAdvertised);
+      html += kv('Effective now', cap.effectiveNow);
+      html += kv('Predicted sustainable', cap.predictedSustainable);
+      html += '</div>';
+    }
+    if (run.hostId) {
+      var rhost = d.hostById[run.hostId], renv = run.envId ? d.envById[run.envId] : null;
+      html += '<div class="u11rd-grid">';
+      html += kv('Execution host', rhost ? rhost.label : run.hostId);
+      if (renv) html += kv('Environment', renv.label);
+      html += '</div>';
+    }
     html += '</div>';
 
     /* members */
@@ -247,6 +264,66 @@
       html += '</div>';
     });
 
+    /* Back Seat Driver (packet §02) — silent calls still count */
+    if (att.bsd) {
+      var bsde = d.bsdByEventId[eventId] || null;
+      html += section('Back Seat Driver', R().human(att.bsd.mode));
+      html += '<div class="u11rd-grid">';
+      if (bsde) {
+        html += kv('Requested state', bsde.requestedState);
+        html += kv('Effective state', bsde.effectiveState);
+        html += kv('Trigger', bsde.trigger);
+        html += kv('Result', R().human(bsde.result));
+        html += kv('Latency', bsde.latencyMs ? (bsde.latencyMs / 1000).toFixed(1) + 's' : '—');
+        if (bsde.overrideScope) html += kv('Override scope', bsde.overrideScope);
+      } else {
+        html += kv('Mode', R().human(att.bsd.mode));
+        html += kv('Trigger', att.bsd.trigger);
+        html += kv('Result', att.bsd.silent ? 'silent' : 'advice emitted');
+      }
+      html += '</div>';
+      if (bsde) html += '<div class="u11rd-anote">' + ic('info') + '<span>' + bsde.copy + ' — ' + bsde.detail + '</span></div>';
+      if (att.bsd.advice) html += '<div class="u11rd-anote">Advice: ' + att.bsd.advice + '</div>';
+    }
+
+    /* Attachment transform (packet §02) */
+    if (att.attachment) {
+      var attc = att.attachment;
+      html += section('Attachment', R().human(attc.transform));
+      html += '<div class="u11rd-grid">';
+      html += kv('Original', attc.name);
+      html += kv('Transform', R().human(attc.transform));
+      html += kv('Derived artifacts', attc.derivedArtifactIds.join(', ') || '—');
+      html += kv('Consent', R().human(attc.consent));
+      html += kv('Privacy boundary', R().human(attc.privacy));
+      html += kv('Local compute', R().human(attc.localCompute));
+      html += '</div>';
+    }
+
+    /* Execution host lineage (packet §04) */
+    if (att.hostId) {
+      var ahost = d.hostById[att.hostId], aenv = att.envId ? d.envById[att.envId] : null;
+      html += section('Execution host', 'server-first lineage');
+      html += '<div class="u11rd-grid">';
+      html += kv('Host', ahost ? ahost.label : att.hostId);
+      if (ahost) html += kv('OS', ahost.os);
+      if (aenv) html += kv('Environment', aenv.label);
+      html += '</div>';
+    }
+
+    /* operational linkage (packet §04) */
+    if (att.validationFor || att.operationalRef) {
+      var opId = att.validationFor || att.operationalRef;
+      var op = null;
+      d.operational.forEach(function (o) { if (o.id === opId) op = o; });
+      if (op) {
+        html += '<div class="u11rd-anote">' + ic('route') + '<span>' +
+          (att.validationFor ? 'Verification call for maintenance “' + op.title + '” — the installer time is not usage; this call is.'
+                             : 'Replay triggered by “' + op.title + '” — attributed to the reconnect, not new user work.') +
+          '</span></div>';
+      }
+    }
+
     /* route snapshot for the focused attempt (Hermes §10) — no secrets */
     var conn = att.connectionId ? d.connectionById[att.connectionId] : null;
     if (conn) {
@@ -259,6 +336,8 @@
       html += kv('Account', d.accountLabel(conn.accountId));
       html += kv('Expected product', prod ? prod.label : '—');
       html += kv('Billing route', R().human(att.billingRoute));
+      html += kv('Settlement', R().human(att.settlement));
+      html += kv('Cache write', att.tokens && att.tokens.cacheWrite != null ? fmt().tok(att.tokens.cacheWrite) : 'not exposed');
       html += '</div>';
       if (conn.authMethod === 'cli_owned_profile') {
         html += '<div class="u11rd-note">' + ic('info') +
@@ -307,6 +386,7 @@
     if (t.input != null) parts.push(fmt().tok(t.input) + ' in');
     if (t.output != null) parts.push(fmt().tok(t.output) + ' out');
     if (t.cacheRead != null) parts.push(fmt().tok(t.cacheRead) + ' cache read');
+    if (t.cacheWrite != null) parts.push(fmt().tok(t.cacheWrite) + ' cache write');
     if (t.reasoning != null) parts.push(fmt().tok(t.reasoning) + ' reasoning');
     return parts.join(' · ');
   }

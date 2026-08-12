@@ -12,61 +12,92 @@
     "max": 2500,
     "step": 10,
     "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
     "previewWidth": "test"
   },
   "workspace": {
     "id": "workspace",
-    "title": "Bakeoff index — Qwen 5.8",
+    "title": "Bakeoff index \u2014 Qwen 5.8",
     "path": "index.html",
     "openPath": "index.html",
     "openActions": "both",
     "controlMode": "internal",
-    "tags": ["index", "comparison"],
+    "tags": [
+      "index",
+      "comparison",
+      "final-packet"
+    ],
     "order": 1
   },
   "entries": [
     {
       "id": "concept-01-atlas",
-      "title": "01 Atlas — Settings Directory — Qwen 5.8",
+      "title": "01 Atlas \u2014 Settings Directory \u2014 Qwen 5.8",
       "path": "concept-01-atlas.html",
       "openPath": "concept-01-atlas.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "directory", "toc"],
+      "tags": [
+        "settings",
+        "directory",
+        "toc",
+        "final-packet"
+      ],
       "order": 10,
       "previewWidth": "test"
     },
     {
       "id": "concept-02-deck",
-      "title": "02 Deck — Command Center — Qwen 5.8",
+      "title": "02 Deck \u2014 Command Center \u2014 Qwen 5.8",
       "path": "concept-02-deck.html",
       "openPath": "concept-02-deck.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "console", "status"],
+      "tags": [
+        "settings",
+        "console",
+        "status",
+        "final-packet"
+      ],
       "order": 20,
       "previewWidth": "test"
     },
     {
       "id": "concept-03-ledger",
-      "title": "03 Ledger — One Document — Qwen 5.8",
+      "title": "03 Ledger \u2014 One Document \u2014 Qwen 5.8",
       "path": "concept-03-ledger.html",
       "openPath": "concept-03-ledger.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "document", "appendix"],
+      "tags": [
+        "settings",
+        "document",
+        "appendix",
+        "final-packet"
+      ],
       "order": 30,
       "previewWidth": "test"
     },
     {
       "id": "concept-04-spoke",
-      "title": "04 Spoke — Settings by Intent — Qwen 5.8",
+      "title": "04 Spoke \u2014 Settings by Intent \u2014 Qwen 5.8",
       "path": "concept-04-spoke.html",
       "openPath": "concept-04-spoke.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "intent", "split-view"],
+      "tags": [
+        "settings",
+        "intent",
+        "split-view",
+        "final-packet"
+      ],
       "order": 40,
       "previewWidth": "test"
     }

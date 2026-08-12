@@ -1,83 +1,82 @@
-# FINDINGS — CursorAuto Settings Bakeoff
+# FINDINGS — CursorAuto Settings Bakeoff Final Packet
 
-Per packet `06`: IA choices, deliberate divergence, inventory/Plans conflicts, simulated functionality, and Slint risks. **No ranking.**
+Date: 2026-08-11  
+Packet: `PM_Settings_Bakeoff_Final_Cumulative_2026-08-08`  
+Scope: `Concepts/settings-redesign-concepts/CursorAuto/**` only.
 
-## 0. Originality note (fixed)
+## What changed
 
-An earlier CursorAuto delivery still carried peer bakeoff class systems (`ldg-` / `cl-` / `wb-`) and peer IA metaphors (chapter/index, minimap, constellation, workbench, ops-console, “Clear skies”, “Front page”, ledger language). That was rejected. This folder was rewritten so concept chrome uses only `hb-` / `sc-` / `sw-` / `ar-`, shared primitives use `ca-*`, and those peer DNA strings are absent outside this admission. Peer bakeoff folders were not used as layout sources for the rewrite. Home/Workspace shells were rebuilt as true pier / cue-plate / jack-patch / finding-aid IA (not renames), then exercised with isolated interactive QA (`scripts/ca-interactive-qa.py`).
+1. Remapped featured managers to packet concept_1..4 while keeping Harbor/Score/Switchboard/Archive shells.
+2. Expanded shared demo with provider installations[] fixtures 1–17 and remapped family datasets via `pm-settings-demo-extra.js`.
+3. Added CursorAuto-owned `ca-managers.js` rich manager grammar; fixed `AUTH_MODEL` (`pm-direct-oauth`); data-driven search; extended States drawer.
+4. Wrote six governance artifacts per concept; refreshed root `IMPACT_REGISTER.json` paths.
+5. Updated interactive QA peer managers + packet probes (sound preview, import rollback, server shell, installations).
 
-Exact deep-link honesty: search hits emit `data-setting-id`; harness asserts `getElementById('row-' + id)` (no document-order soft selector). Workspace render captures focus before clear and skips scroll restore when deep-linking. Packet-06 CDP now covers full States + Refresh/Reconnect, scrollspy, jump offset, LKG refresh, activate toast, effort/Normal-Fast gating, badges/reset, and a second dedicated manager per concept. Targeted polish: Free Models six auth-route labels, spellcheck Normal/Advanced Manage rows, Switchboard/Archive `noticeHtml`, and `.ca-disclose` on diagnostics/advanced surfaces.
+## Simulations / limitations
 
-## 1. Major information-architecture choices
+- All mutations are `PMStore` demo state with labeled `PMStore.receipt` toasts — no real install/sign-in/audio/file IO.
+- Sound preview/test are simulated (no audio binary).
+- Future Server Module Shell never fakes owner state machines.
+- Command IDs in deltas are provisional candidates pending catalog census adjudication.
+- Media remains as ordinary category rows / search exemplar only.
 
-### Harbor (Concept 01)
-- Home hierarchy: pier-desk search → small triage → berth cards → recents.
-- Workspace: pier slips + cargo document; docking motion.
-- Managers as drydocks/lockers: Providers, Memory, Terminal; LSP checklist on open.
-- Motion: docking (settle before text).
+## Originality
 
-### Score (Concept 02)
-- Home: hero cue search; cue notices; movement plates.
-- Workspace: single-column score + top rehearsal-mark rail + light side index.
-- Managers: Ensemble Providers, Personas cast, MCP instruments.
-- Motion: cueing.
+No peer-model class systems (`ldg-` / `cl-` / `wb-` etc.) were copied into shared or concept sources. Peer artifact folders were read only as schema shape references for governance JSON.
 
-### Switchboard (Concept 03)
-- Home: docked `/` search; jack column; compact triage.
-- Workspace: jack strip + patch-sheet document; patching motion.
-- Managers: Patch-bay Providers (collapsed expand), Context matrix, Skills/Tools bay.
-- Motion: patching (no endless pulse).
+## Film-level polish pass (post-audit)
 
-### Archive (Concept 04)
-- Home: finding-aid search; tickets; collection-guide grid.
-- Workspace: outline + box document + running header (+ provenance inspector).
-- Managers: Catalog Providers, Crew boxes, Media archive.
-- Motion: retrieval.
+Raised after an honest audit against packet 09:
 
-## 2. What each concept deliberately explores differently
+- Fixed `__omp_shell` toggle corruption in `ca-managers.js`.
+- Added `ca-motion.js` directed stages (home / workspace / category / manager / search land).
+- Replaced conflicting duplicate view-enter keyframes with metaphor choreography + shared stagger/focus/sound/theme/import cues.
+- Deepened thin resource/list managers (LSP/Skills/Plugins/Tools/Formatters/History/Artifacts/Cleanup) beyond one-liner wrappers.
+- Rewrote coverage notes to be manager-specific; Future Server Module Shell classified `deferred_named_owner`.
+- Removed `concepts/switchboard/_scratch`.
 
-| Axis | Harbor | Score | Switchboard | Archive |
-|---|---|---|---|---|
-| Home hierarchy | Pier desk + berths | Cue search + plates | Docked `/` + jacks | Finding-aid + guides |
-| Destinations | Berth cards | Movement plates | Jack rows | Collection guides |
-| Workspace space | Split pier | Single-column score | Jack strip + sheet | Outline + box |
-| Nav/scrollspy | Slips | Rehearsal marks | Lit jacks | Folders / running header |
-| Managers vs settings | Drydocks / lockers | Ensemble / cast / instruments | Patch bays + matrix | Special collections |
-| Density / motion | Medium / docking | Editorial / cueing | Operator / patching | Catalog / retrieval |
+Still simulated (by design): real audio binaries, real installs/sign-in, real import IO.
 
-## 3. Inventory / Plans conflicts found
+## Deeper elevation pass
 
-Recorded in `IMPACT_REGISTER.json` (not applied). Headlines:
+Follow-up after film-level polish:
 
-1. Primary category pills → destinations-as-places.
-2. Nine explicit row states vs empty-field Auto/Inherit ambiguity.
-3. Humanized taxonomy vs implementation-bound inventory categories.
-4. Provider hierarchy (family → account → connection → product/entitlement → model) vs flat API-key lists.
-5. Claude/Antigravity CLI-owned OAuth (no PM-direct) vs any PM-OAuth paths.
-6. Free Models as grouping, not billing identity.
-7. Usage owns measurement; Settings shows snapshot + deep-link only.
-8. Spellcheck as shared local service (no permanent composer button, no autocorrect).
-9. Crew/Goal requested vs effective concurrency.
-10. Assistant Gist half-life = fades from active context (not expires/false).
+- Aligned demo seeds ↔ manager renderers (Desktop, Teacher, Cleanup, SearchIndex, Web, FileManager, Permissions, Goal, ServerShell).
+- Deepened Context (budget + instruction chain), Desktop probes, Cleanup dry-run phases, Commands conflict resolve, SearchIndex rebuild LKG, FileManager associations, Web fetch/search cards.
+- Provider catalog refresh now drives `CAMotion` provider-refresh stage + pulse.
+- Origin continuity: berth/plate/jack/guide clicks capture spatial origin into `--ca-origin-*`.
+- Switchboard `is-querying` sheen + shared budget meter styling.
 
-## 4. Functionality that remains simulated
+## Search continuity fix
 
-Interactive but not backed by real systems (honest receipts):
+Packet-09 search-result continuity was verified end-to-end (Enter path, not direct mounts). Fixed debounce race, manager ranking/aliases, category-over-manager picks, notifications seed shape, and visible Context switch labels.
 
-- Provider OAuth/CLI login, install/update/rescan, reconnect, readiness probes.
-- Catalog network refresh (UI preserves last-known-good during loading).
-- Usage balances/projections (fixture snapshots; deep-link to Usage is conceptual).
-- Manager add/connect/rebuild/diagnostics.
-- States drawer fixtures (calm, attention-heavy, usage exhausted, invocation failed, managed).
-- Spellcheck uses demo dictionaries + underlines; Appearance Input now includes Personal/Project dictionary Manage, project Use, language packs, and thread/project override Manage (simulated receipts). Production still needs a Slint-portable spelling service (HTML `spellcheck` may assist simulation only). No multi-surface Chat/PRD spellcheck, thread-overflow disable, or grammar/style separate control in this pass.
-- Theme/motion/width preferences via Hub bridge or local controls; demo edits in sessionStorage.
+## No winner
 
-No silent no-ops: controls either mutate demo state visibly or report simulation/unavailable.
+This folder does not rank Harbor vs Score vs Switchboard vs Archive.
 
-## 5. Slint 1.17.1 translation risks
+## Deep polish pass (post-final)
 
-- Scrollspy may use IntersectionObserver in HTML; semantic model is section registry + offset (portable). Documented as web preview aid.
-- Glass theme may use limited backdrop-filter; avoid nested stacks; production should prefer opaque/plate fallbacks.
-- Long lists should stay data-backed/virtualized in production; demo instantiates modest fixture counts.
-- Terminal live preview is CSS-styled HTML, not a real PTY — production maps to native terminal profile preview widgets.
-- Avoid DOM geometry as semantic state; concept store keeps overrides/providers separate from layout.
+Follow-up polish after packet closeout:
+
+- Deepened thin shared managers: LSP, Skills, Plugins, Tools, Formatters, History, Artifacts (rich cards, ownership, legal-hold, redact phases, toggles).
+- Enriched History / Artifacts / Formatters demo seeds (kinds, retention, ownership, legal-hold).
+- Removed dead wrong-slot concept renderers (Harbor Terminal/LSP, Score Personas/MCP, Switchboard Context/Skills custom sheets, Archive Crew/Media).
+- Remapped Harbor workspace Drydocks to concept_1 featured managers.
+- Featured-first ordering + `is-featured` chrome on Harbor berths, Score plates, Switchboard jacks, Archive guides.
+- Motion polish: origin-aware metaphor keyframes; shared utility classes; structural borders use `border-inline-start`.
+- Unified Switchboard search placeholder with other concepts.
+
+Still simulated by design: real audio, installs/sign-in, import IO.
+
+
+## ScoutPlanGaps remediation (2026-08-12)
+
+Closed critical shared contract mismatches and QA false positives called out by the read-only gap census:
+
+1. `pm-settings-demo-extra.js` seeds now match `ca-managers.js` renderer shapes (notifications routing objects + full destination set; sound events/packs; appearanceThemes object; testing.capabilities; githubActions/containers objects).
+2. `SEED_KEYS` includes `meta`; binders deepened for logs/connect/toggle, teacher, storage buckets; Harbor overview shows host/env installations.
+3. Interactive QA no longer treats skipped/missing controls as success; workspace-aware search + Switchboard `data-fam` + Archive home reset.
+4. Re-verified: ConceptHub validate pass; interactive QA `failures: []` with evidenced packet probes.
+
+Still simulated by design: real audio, installs/sign-in, import IO. No winner among Harbor/Score/Switchboard/Archive.

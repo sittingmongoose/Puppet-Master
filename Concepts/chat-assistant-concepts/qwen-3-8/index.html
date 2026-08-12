@@ -345,6 +345,10 @@
   panes.a.pinBtn.addEventListener("click", () => setPanePin("a", !state.panes.a.pin));
   panes.b.pinBtn.addEventListener("click", () => setPanePin("b", !state.panes.b.pin));
   function demoMenu(anchor, p) {
+    // Merge the live registry from the iframe so drawers expose the FULL registry.
+    let live = [];
+    try { live = panes[p].frame.contentWindow.__pmDemoTriggers() || []; } catch (e) { live = []; }
+    live.forEach(n => { const g = n.split(".")[0]; (DEMO_TRIGGERS[g] = DEMO_TRIGGERS[g] || []); if (!DEMO_TRIGGERS[g].includes(n)) DEMO_TRIGGERS[g].push(n); });
     const items = [];
     Object.keys(DEMO_TRIGGERS).forEach(g => {
       items.push({ sep: true, label: g });

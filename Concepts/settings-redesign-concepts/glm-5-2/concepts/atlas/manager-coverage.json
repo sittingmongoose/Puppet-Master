@@ -1,0 +1,264 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "concept-02-atlas",
+  "model": "GLM-5.2",
+  "classification_legend": {
+    "demonstrated": "Concept renders a full region/manager for this family with representative deep flows and all critical states.",
+    "shared_grammar": "Family is owned by a sibling concept; Atlas reaches it via the shared setting-row grammar, ManagerShell, ResourceList, and minimap navigation so it is not missing.",
+    "deferred_named_owner": "Family is a future module; named canonical owner + insertion contract provided. Never 'missing'.",
+    "missing": "FAIL — not used by this concept. The rule forbids missing."
+  },
+  "coverage_rule": "Every family across the matrix is classified demonstrated, shared_grammar, or deferred_named_owner. Atlas demonstrates its C2-owned families + the required core surface; sibling-owned families are reachable through shared grammar; the future Server module is deferred to its named owner.",
+  "families": [
+    {
+      "family": "Settings Home",
+      "classification": "demonstrated",
+      "owner_bucket": "core",
+      "demo_note": "Atlas Home is the atlas overview: destinations as bounded regions on a 12-column grid sized by content density; a right rail holds legend + notices + theme; a you-are-here marker tracks the current region. Home's four jobs (search, enter destination, attention notices, resume recent) are all present."
+    },
+    {
+      "family": "Settings Search",
+      "classification": "demonstrated",
+      "owner_bucket": "core",
+      "demo_note": "Cmd+K command overlay centered at the top of the atlas; focusing dims the map and surfaces typed results (scalar setting, manager destination, one-shot action, read-only status, diagnostic, setup workflow, unavailable capability); selecting flies the viewport to the region/section. Fuzzy multi-token, deep-linkable. Typo fixture exercised."
+    },
+    {
+      "family": "Settings Workspace",
+      "classification": "demonstrated",
+      "owner_bucket": "core",
+      "demo_note": "Focus + context: the chosen region fills the canvas as a continuous document of its subcategories; a compact minimap rail keeps every region visible (current highlighted); a viewport rail shows the in-view subcategory with a scroll-position thumb. Scrolling updates the minimap; clicking a subcategory performs a controlled jump."
+    },
+    {
+      "family": "Provider/Account/Model/Installation",
+      "classification": "demonstrated",
+      "owner_bucket": "core",
+      "demo_note": "Full object model (Provider family → Account/Profile → Connection → Product/Entitlement → Models/capabilities; Host/Environment → Installation). Connection groups: installed apps, connected accounts, API, server, free-community. Demonstrates 7 installation lifecycle fixtures (confidence + update states), CLI-owned vs PM-direct OAuth boundary, requested/effective routes, Free Models setup, catalog freshness. Provider region is never a flat list."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "classification": "demonstrated",
+      "owner_bucket": "core",
+      "demo_note": "SettingRow grammar across all regions: title, concise explanation, current value/state, default or source, scope, availability, restart/reconnect requirement, help/details, validation/error. Nine explicit value states rendered via ValueSourceBadge. Exposure levels Standard/Advanced/Expert/Managed/Diagnostic/Unavailable. Search finds all levels."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "8-destination router (in-app title-bar stack [SOLE in-app surface], system/tray, Slack, Discord, generic webhook, ntfy, Pushover, Telegram) with event routing, per-event sound mappings, quiet/focus. Test-send masked + rate-limited + receipted. Title-bar stack is the only in-app notification affordance — no bottom-right stack, status-bar bell, Activity Bar shortcut, or dedicated side panel."
+    },
+    {
+      "family": "Sound Library/Uploads/Packs",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "Built-in + uploaded sounds with source/license/version/duration/hash metadata; PeonPing/OpenPeon-compatible pack import with format + license checks (unverified packs never bundled); local-only preview; master volume; import/export; delete/replace. ResourceList manager with HealthSummary showing verification state."
+    },
+    {
+      "family": "Appearance",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "Beyond 8 themes: 4 families (Friendly/Glass/Retro/Basic) × Light/Dark/Auto, OS-following (prefers-color-scheme live), custom TOML with schema validation + invalid-with-fallback, base-theme inheritance, startup load + live reload, custom + fallback fonts, UI scale, restart markers, create/import/export/open-folder, live hover preview, theme-specific locked/unavailable rows."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "Dictionary sources Automatic (OS service then PM local)/system-only/PM-local-only; personal + project dictionaries as separate scopes; technical-prose toggle; underline-unknown-names; language packs; thread/project overrides. NO autocorrect. Grammar/style is a separate opt-in provider-backed feature with privacy/route/cost/Usage disclosure (deferred engine, demonstrated gate)."
+    },
+    {
+      "family": "Desktop/Tray/Window",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "Minimize-to-tray, tray-while-automation badge, Pause/Resume/Quit, launch destination, window/panel/tab restore, crash recovery, unsaved-buffer protection, activity-bar reorder/hide/overflow, side-panel restore, editor/tab/tree limits. App-level tray controls kept distinct from run-scoped orchestrator pause/resume."
+    },
+    {
+      "family": "Teacher/Help",
+      "classification": "demonstrated",
+      "owner_bucket": "concept_2 (Atlas-owned)",
+      "demo_note": "Explicit Teacher assistance beyond tooltips: explain-current-screen, guided transitions into real actions, tooltip detail at hover and keyboard focus. Teacher can explain the Notifications region and transition safely into opening a destination."
+    },
+    {
+      "family": "Context & Instructions",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1 (Control Room). Atlas reaches it through the shared SettingRow + ManagerShell grammar and the minimap; the same region grid + scrollspy + ValueSourceBadge apply. No deep flow invented here."
+    },
+    {
+      "family": "Memory",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Atlas renders representative rows via the shared grammar so the family is reachable and non-missing; memory-specific CRUD belongs to the sibling."
+    },
+    {
+      "family": "Personas",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Reuses ManagerShell + ResourceList/Card/Detail. Atlas minimap can deep-link into the Personas region; no persona model invented here."
+    },
+    {
+      "family": "Goal & Automation",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Requested/effective rendering pattern (used for Goal concurrency) is shared with Atlas's provider requested/effective route rendering."
+    },
+    {
+      "family": "Crew",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Crew template requested/effective composition reuses RequestedEffectiveInspector semantics that Atlas also exercises for provider routes."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Atlas notification destination credentials reuse the SecretField/SecretReference discipline that Permissions/FileSafe own."
+    },
+    {
+      "family": "Back Seat Driver",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_1",
+      "demo_note": "Owned by concept_1. Reachable via shared grammar; not deep-owned by Atlas."
+    },
+    {
+      "family": "File Manager/Editor",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3 (Stack). Atlas references editor/tab/tree limits in the Desktop/Tray/Window region but does not invent the File Manager model."
+    },
+    {
+      "family": "Terminal",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. Reachable via shared ManagerShell grammar."
+    },
+    {
+      "family": "LSP",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. The shared installation-lifecycle pattern (confidence + update states) that Atlas demonstrates for providers also applies to LSP."
+    },
+    {
+      "family": "Formatters",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. Reachable via shared grammar."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. Atlas Cmd+K overlay is search-only, not a shortcut recorder; shortcut binding belongs to concept_3."
+    },
+    {
+      "family": "MCP",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. ResourceList/Card/Detail grammar shared."
+    },
+    {
+      "family": "Skills",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3."
+    },
+    {
+      "family": "Plugins",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3."
+    },
+    {
+      "family": "Tools",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3. Shared tool-lifecycle grammar."
+    },
+    {
+      "family": "Testing & Debug",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_3",
+      "demo_note": "Owned by concept_3."
+    },
+    {
+      "family": "Storage & Retention",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4 (Stream). Atlas reuses cmd.settings.open_storage_retention as a manager-open pattern exemplar; storage model belongs to concept_4."
+    },
+    {
+      "family": "Backup & Restore",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4. Atlas import/export flows for themes and sound packs are domain-scoped; the global settings import/export/reset lifecycle belongs to concept_4."
+    },
+    {
+      "family": "History & Sessions",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4. Atlas window/session restore references it but does not own the history model."
+    },
+    {
+      "family": "Runtime Artifacts",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Source Control/Worktrees",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "GitHub Actions",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Containers & Registries",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Web/Search/Fetch",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Project Search Index",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4. Distinct from Settings Search (which Atlas owns/demonstrates)."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "classification": "shared_grammar",
+      "owner_bucket": "concept_4",
+      "demo_note": "Owned by concept_4."
+    },
+    {
+      "family": "Future Server Module Shell",
+      "classification": "deferred_named_owner",
+      "owner_bucket": "concept_4 (future)",
+      "named_canonical_owner": "concept_04 (Storage/Recovery/Server-first topology) + Plans server-first topology owner (Servers / Execution Hosts / Clients / Project Hosting & Files / Remote Access / Updates)",
+      "insertion_contract": "Atlas reserves a System region slot and exposes the shared ManagerShell + ResourceList/Card/Detail + HealthSummary grammar + route/open deep-link target so a future Server module can drop in as a region without re-architecting the atlas. No server backend state machine, Project Sync, or app-update state machine is invented here. The insertion point is a stable region id + a cmd.settings.manager.open-shaped wrapper.",
+      "demo_note": "Not rendered as content; only the insertion destination is preserved."
+    }
+  ],
+  "summary": {
+    "demonstrated": 11,
+    "shared_grammar": 28,
+    "deferred_named_owner": 1,
+    "missing": 0,
+    "total": 40,
+    "missing_rule": "missing is a failure; this concept records zero missing families."
+  }
+}

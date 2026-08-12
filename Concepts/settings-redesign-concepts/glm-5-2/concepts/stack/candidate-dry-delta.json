@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept": "concept-03-stack",
+  "model": "GLM-5.2",
+  "note": "DRY component families this concept exercises (names are candidate design roles, not final component IDs). Each entry states the role, which C3/core surfaces use it, and a reuse note flagging how Stack adapts the shared grammar. No new component is minted where a shared family already covers the role.",
+  "components": [
+    {
+      "component_role": "SettingsDestination",
+      "role": "Expandable destination row that opens a place (not a filter); carries icon, title, purpose, status, and an expand/collapse affordance.",
+      "used_by": ["stack root", "every C3 destination (File Manager, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills/Plugins/Tools, Testing)", "core (AI Brains)"],
+      "reuse_note": "Shared family reused unchanged in intent; Stack renders destinations as expandable rows instead of navigating to a separate page. Open affordance = expand-in-place, superseding bloom.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SettingsNotice",
+      "role": "Status-critical notice at the head of the stack with one clear action (attention / continue / recommended).",
+      "used_by": ["stack head", "verify-failed provider fixture", "formatter not-found", "changed-on-disk file"],
+      "reuse_note": "Shared grammar reused; Stack pins notices to the stack head so they remain visible above expanded destinations.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SettingsWorkspaceShell",
+      "role": "Surrounding workspace: loads one major surface at a time, sticky subnav, deep-link, manager-load-does-not-block.",
+      "used_by": ["the whole Settings workspace"],
+      "reuse_note": "Shell contract reused unchanged; Stack renders the body as a single expandable stack rather than a split rail. active_destination_id + active_subcategory are the portable semantic state.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SettingsSearch",
+      "role": "Omni-search across settings/categories/managers/destinations; selecting a result deep-links.",
+      "used_by": ["stack head (search is the HEAD of the single stack)"],
+      "reuse_note": "Reused unchanged; in Stack the result deep-link expands the target destination in place and focus-flashes the row (no bloom modal).",
+      "gui_related": true
+    },
+    {
+      "component_role": "CategoryNavigation",
+      "role": "Top-level category index.",
+      "used_by": ["stack root (destination rows)"],
+      "reuse_note": "Reused; categories collapse to expandable destination rows. Selecting a category expands it rather than swapping the whole pane.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SubcategoryScrollspy",
+      "role": "Active-subcategory tracking with controlled jump + focus-flash.",
+      "used_by": ["expanded destination body (sticky in-row subnav pills)"],
+      "reuse_note": "Role reused; the mechanism is portable: active pill is model state (PM.state.active_subcategory). Web demo uses scrollspy; Slint maps to a visibility/offset hook, not DOM measurement.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SettingRow",
+      "role": "Ordinary setting row: nine-state chip, value source, exposure filter, scope (Global/Project).",
+      "used_by": ["every C3 family", "core families", "sibling families via shared_grammar"],
+      "reuse_note": "Shared grammar reused unchanged across all families; this is the universal atom. Blank is never a state.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ManagerShell",
+      "role": "Inline manager surface (resource list + detail) hosted inside an expanded destination.",
+      "used_by": ["File Manager", "LSP", "Formatters", "Commands & Shortcuts", "MCP", "Skills/Plugins/Tools", "Testing", "Provider/Installation"],
+      "reuse_note": "Shared shell reused; Stack embeds it in the expanded destination body (not a separate page). Manager loads async and does not block the workspace.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ResourceList / ResourceCard / ResourceDetail",
+      "role": "Typed resource listing for managers; card + detail variants per kind.",
+      "used_by": ["LSP servers", "Formatters", "MCP servers", "Skills/Plugins/Tools (four kinds)", "Terminal profiles", "File tree nodes", "Testing capabilities"],
+      "reuse_note": "Shared list/card/detail reused with a kind discriminator; the four C3 kinds (skill/plugin/tool/command-as-kind) render through the same family with distinct lifecycle fields.",
+      "gui_related": true
+    },
+    {
+      "component_role": "HealthSummary",
+      "role": "Aggregated health (detected/not-found/disabled/healthy/failed) for a resource family.",
+      "used_by": ["Formatters (detected/not-found/disabled)", "LSP (effective/degraded)", "MCP (ok/failed)", "Tools (5-state availability)", "Provider installations (verify status)"],
+      "reuse_note": "Reused unchanged; rolls up per-resource health into a family summary line.",
+      "gui_related": true
+    },
+    {
+      "component_role": "LspResource",
+      "role": "Typed resource card for a language server: provenance, startup mode, requested/effective attachment, formatting-ownership flag, restart/logs.",
+      "used_by": ["LSP manager"],
+      "reuse_note": "Specialization of ResourceCard; carries the LSP-specific conflict badge that feeds cmd.lsp.formatting_ownership.resolve.",
+      "gui_related": true
+    },
+    {
+      "component_role": "FormatterResource",
+      "role": "Typed resource card for a formatter: per-language owner, command/env/ext, scope, health, test-result.",
+      "used_by": ["Formatters manager"],
+      "reuse_note": "Specialization of ResourceCard; carries the single-ownership-per-language resolve affordance.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ToolResource",
+      "role": "Typed resource card for a tool rendering the 5-state lifecycle ladder (installed / project-enabled / currently-available / selected-for-turn / actually-invoked).",
+      "used_by": ["Tools kind axis inside the Skills manager"],
+      "reuse_note": "Specialization of ResourceCard; pairs with RequestedEffectiveInspector to expose effective-availability vs requested state.",
+      "gui_related": true
+    },
+    {
+      "component_role": "CommandEditor",
+      "role": "Editor for custom commands: body, parameters, includes, shell-safety scan, mode (safe/normal/unrestricted), dry-run gate.",
+      "used_by": ["Commands & Shortcuts manager"],
+      "reuse_note": "Concept-specific role; the dry-run button is hard-wired to dispatch_target=preview_only and never offers 'send to agent'.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ShortcutRecorder",
+      "role": "Captures a key combo for a binding with inline conflict detection against existing bindings + when-clauses.",
+      "used_by": ["Commands & Shortcuts manager (shortcut remap/bind/reset/import/export)"],
+      "reuse_note": "Concept-specific role; conflict detection runs at capture time and routes to cmd.shortcuts.conflict.resolve on clash.",
+      "gui_related": true
+    },
+    {
+      "component_role": "SetupFlowLauncher",
+      "role": "Launches an install/setup flow when a resource is not-found/unavailable (e.g. shfmt missing, simulator absent, provider not signed in).",
+      "used_by": ["Formatters (not-found)", "Testing (simulator unavailable)", "Provider installations (explicit install / update-available)"],
+      "reuse_note": "Shared family reused; routes to the correct owner (BinaryLocator for binaries, PM-direct/CLI OAuth for providers).",
+      "gui_related": true
+    },
+    {
+      "component_role": "ObservableOperation",
+      "role": "Wraps a user action as an observable work item with progress/result/failure.",
+      "used_by": ["formatter.test", "command.dry_run", "mcp.reconnect", "lsp.restart", "tool.select_for_turn", "formatter.resolve_conflict", "shortcut.remap"],
+      "reuse_note": "Shared family reused; every C3 action surfaces as an ObservableOperation.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ReceiptLink",
+      "role": "Deep-linkable receipt attached to an operation outcome.",
+      "used_by": ["all ObservableOperation outcomes across C3"],
+      "reuse_note": "Shared family reused; receipts carry owner-tagged ids so the audit trail can attribute usage/diagnostics.",
+      "gui_related": true
+    },
+    {
+      "component_role": "RequestedEffectiveInspector",
+      "role": "Shows requested vs effective state diff (LSP attachment, tool 5-state availability, provider requested/effective, MCP transport).",
+      "used_by": ["LSP", "Tools", "Provider/Installation", "MCP"],
+      "reuse_note": "Shared family reused; the requested/effective distinction is the portable part. Drives AvailabilityReason when effective degrades.",
+      "gui_related": true
+    },
+    {
+      "component_role": "AvailabilityReason",
+      "role": "Explains why a resource/capability is unavailable (simulator not installed, remote-LSP degraded, MCP unreachable, tool not currently-available) without a hard error.",
+      "used_by": ["Testing (simulator/device)", "LSP (remote degradation)", "MCP (reconnect failed)", "Tools (ladder gap)"],
+      "reuse_note": "Shared family reused; never blocks the workspace; always offers a recovery deep-link.",
+      "gui_related": true
+    },
+    {
+      "component_role": "ValueSourceBadge",
+      "role": "Indicates where a setting value comes from (Default/Recommended/Inherited/Auto/Custom/Managed).",
+      "used_by": ["all SettingRow instances across C3 + core"],
+      "reuse_note": "Shared atom reused; pairs with the nine-state chip so blank is never a state.",
+      "gui_related": true
+    },
+    {
+      "component_role": "InstallationCard",
+      "role": "Typed card for a provider/model installation fixture with verify/rollback status and OAuth-boundary label.",
+      "used_by": ["Provider/Account/Model/Installation manager (7 fixtures)"],
+      "reuse_note": "Shared family reused; CLI-owned vs PM-direct OAuth boundary is shown as a distinct label per card. Verify-failed-then-rollback is fixture #8.",
+      "gui_related": true
+    }
+  ],
+  "summary": {
+    "total_components_exercised": 22,
+    "shared_reused": 19,
+    "concept_specializations": ["CommandEditor", "ShortcutRecorder", "LspResource", "FormatterResource", "ToolResource"],
+    "note": "No component is minted where a shared family covers the role; the C3-specific work is in typed resource cards (Lsp/Formatter/Tool) and the command/shortcut editors, all of which compose over shared ManagerShell + ResourceList/Card/Detail."
+  }
+}

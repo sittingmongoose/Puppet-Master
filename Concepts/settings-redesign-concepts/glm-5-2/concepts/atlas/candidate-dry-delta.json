@@ -1,0 +1,152 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "concept-02-atlas",
+  "model": "GLM-5.2",
+  "provisional_note": "Candidate DRY component-family roles exercised by Atlas, for audit adjudication. Names are design roles, not final component IDs. The audit agent later adjudicates exact canonical names. Each entry states role, used_by (which Atlas region/flow), and reuse_note (how it composes with the shared grammar and what to preserve on Slint port).",
+  "component_families": [
+    {
+      "name": "SettingsWorkspaceShell",
+      "role": "The focus+context workspace container: holds the active region's continuous-document main pane, the minimap rail (context), and the viewport rail (in-view subcategory). Owns category-load-one-at-a-time, controlled-jump scrollspy, and the route/open deeplink target.",
+      "used_by": ["every Atlas region", "open-manager nav flow", "deep-linked setting focus"],
+      "reuse_note": "Shared across all four concepts (each composes it differently). Preserve on Slint: model-backed scroll position (no DOM measurement), layout-driven reflow at narrow widths (collapse minimap + viewport rail below 1280px), accessible main-content region."
+    },
+    {
+      "name": "SettingsSearch",
+      "role": "Cross-category fuzzy multi-token search returning typed results (scalar setting, manager destination, one-shot action, read-only status, diagnostic, setup workflow, unavailable capability). Atlas variant = Cmd+K overlay that dims the map.",
+      "used_by": ["Home Cmd+K overlay", "search-result → region fly-to", "typo fixture"],
+      "reuse_note": "Search indexes metadata without eagerly opening all managers (lazy hydration). Slint: popup/focus-scope overlay; map-dim via semi-transparent rectangle, not filter stack. Preserve deep-link + focus-highlight on result select."
+    },
+    {
+      "name": "SettingsDestination",
+      "role": "A destination control communicating title, purpose, optional health/setup summary, and clear navigation affordance. Atlas variant = bounded region sized by content density with a you-are-here marker.",
+      "used_by": ["Home region grid (all 11 demonstrated families)", "Future Server module insertion slot"],
+      "reuse_note": "Replaces filter-pill silhouette (supersession). Never reads as a chip. Slint: render via repeater over category model; density-encoded grid spans translate to layout containers."
+    },
+    {
+      "name": "SettingsNotice",
+      "role": "One stable status treatment, one actionable headline, one short reason, at most one primary + one quiet secondary action. Categories: needs-attention / continue-setup / recommended.",
+      "used_by": ["Home right rail (legend + notices + theme)", "notification test-send receipt projection", "invalid-theme fallback diagnosis"],
+      "reuse_note": "Do not repeat category/type/urgency/status in four text layers. Alert/Attention lives in the stable status area, not in the explanatory sentence. Title-bar notification stack is the SOLE in-app surface — no separate notification panel."
+    },
+    {
+      "name": "CategoryNavigation",
+      "role": "Region grid + minimap: select a category/region; communicates density + current region + needs-attention border.",
+      "used_by": ["Home region grid", "minimap rail in workspace"],
+      "reuse_note": "Atlas-specific: navigation is territorial, not a list. Slint: model-backed active-region indicator; controlled jump (no scroll jump). Shared semantics with sibling concepts' category nav."
+    },
+    {
+      "name": "SubcategoryScrollspy",
+      "role": "Synchronizes the in-view subcategory with the left-nav/minimap indicator as the document scrolls; clicking a subcategory performs a controlled jump.",
+      "used_by": ["workspace viewport rail", "minimap active-region indicator", "deep-linked setting scroll-into-view"],
+      "reuse_note": "Atlas uses it twice (minimap + viewport thumb). Slint: drive from ListView item-index model, NOT pixel measurement. Reduced motion preserves every state and action."
+    },
+    {
+      "name": "SettingRow",
+      "role": "The unit setting grammar: title, concise explanation, current value/state, default or source, scope, availability, restart/reconnect requirement, help/details, validation/error. Renders the nine explicit value states.",
+      "used_by": ["all six Atlas-owned regions", "core ordinary grammar demonstration", "all general fixtures (Default/Custom/Inherited/Managed/Unavailable/etc.)"],
+      "reuse_note": "Shared grammar backbone. Exposure levels Standard/Advanced/Expert/Managed/Diagnostic/Unavailable; search finds all levels. Auto/Inherit/Not configured/Disabled never render as empty string."
+    },
+    {
+      "name": "ValueSourceBadge",
+      "role": "Visual marker for the nine value states (Default/Recommended/Inherited/Auto/Not configured/Managed/Custom/Unavailable/Effective differs).",
+      "used_by": ["theme mode effective_variant (Auto resolves to light/dark)", "provider requested vs effective route", "dictionary source resolved_source", "managed/unavailable appearance rows"],
+      "reuse_note": "Consumes the settings_schema_impacts setting_value_state_enum. RequestedEffectiveInspector composes it for requested vs effective pairs."
+    },
+    {
+      "name": "ManagerShell",
+      "role": "Manager header + search/filter + add/connect/create action + health summary + resource list/card/detail + requested/effective + loading/empty/failed/unavailable/managed states + logs/receipts/diagnostics access.",
+      "used_by": ["Notifications & Sounds region", "Sound Library region", "Appearance/custom-theme region", "Spellcheck region", "Provider/Account/Model/Installation region", "Desktop/Tray/Window region"],
+      "reuse_note": "Every manager feels designed by the same team. A manager may compose differently when the domain demands, but reuses shared semantics and component families. Manager load does not block the entire workspace (lazy hydration)."
+    },
+    {
+      "name": "ResourceList",
+      "role": "Card/table list of resources with health, provenance, and lifecycle actions.",
+      "used_by": ["Sound Library assets", "notification destinations", "custom themes", "dictionaries", "provider installations/accounts"],
+      "reuse_note": "Composes with ResourceCard + ResourceDetail. Slint: virtualized/segmented for long lists (sound library, dictionaries)."
+    },
+    {
+      "name": "ResourceCard",
+      "role": "Single-resource card with status, provenance, and primary action.",
+      "used_by": ["SoundLibraryItem", "NotificationDestination", "ProviderFamilyCard", "AccountConnectionRow", "InstallationCard"],
+      "reuse_note": "Domain cards specialize the shared card. ProviderFamilyCard/AccountConnectionRow/InstallationCard are domain specializations reused from the provider grammar."
+    },
+    {
+      "name": "ResourceDetail",
+      "role": "Detail editor/inspector for a selected resource.",
+      "used_by": ["notification destination editor (channel/thread/headers/template/success predicate/retry/device)", "custom theme editor (TOML + schema validation)", "dictionary editor", "installation advanced detail (configured command/resolved launcher/actual executable/package identity/discovery evidence/confidence)"],
+      "reuse_note": "May use different internal composition per domain but reuses shared semantics."
+    },
+    {
+      "name": "HealthSummary",
+      "role": "Aggregate health/setup summary for a manager: ready/needs-setup/unavailable/managed/degraded states with reasons.",
+      "used_by": ["Provider region (catalog freshness, connection health, verification state)", "Sound Library (verification_state aggregate)", "Desktop/Tray (tray availability, automation badge)", "Spellcheck (dictionary source availability)"],
+      "reuse_note": "Never maps an unknown state to an enabled action. Preserves exact owner reason for disabled projections."
+    },
+    {
+      "name": "NotificationDestination",
+      "role": "Card+editor for one of 8 destination kinds (in_app_title_bar [sole in-app], system_tray, slack, discord, generic_webhook, ntfy, pushover, telegram) with channel/thread/mentions/headers/template/success_predicate/priority/parse_mode/retry/device_selection + credential_ref.",
+      "used_by": ["Notifications & Sounds region destination router", "test-send flow", "event-mapping target list"],
+      "reuse_note": "SecretField composes for credential_ref (webhook URL, bot tokens). Test action is masked + rate-limited + receipted. NEVER route local sound preview through external delivery."
+    },
+    {
+      "name": "SoundLibraryItem",
+      "role": "Card for a built-in/uploaded/pack sound asset with source/license/version/duration/sha256 metadata, verification badge, local-only preview, and lifecycle actions (delete/replace/export).",
+      "used_by": ["Sound Library region", "pack import flow", "per-event sound mapping picker"],
+      "reuse_note": "Local-only preview bound to a PM-local audio service (no DOM <audio> on Slint). Unverified packs never bundled. Replace preserves mappings or remaps explicitly."
+    },
+    {
+      "name": "ThemePreview",
+      "role": "Live hover preview of a theme/family/mode/custom-TOML patch with ttl; apply commits; invalid falls back to base.",
+      "used_by": ["Appearance region", "theme import flow (valid/invalid-with-fallback)", "OS Auto live flip"],
+      "reuse_note": "Slint: precompiled token sets (no runtime var()/color-mix() chains per F3-431). Fallback resolves at load time. Restart markers where a token (font) requires restart."
+    },
+    {
+      "name": "SetupFlowLauncher",
+      "role": "Launches a guided setup/onboarding flow (Free Models setup, provider explicit install, dictionary language pack install).",
+      "used_by": ["Free Models row (wrapper over routes, owns no credentials)", "provider explicit Install from official source", "spellcheck language pack install"],
+      "reuse_note": "Provider CLI initial acquisition stays explicit/official-source/never bundled. Free Models never owns credentials/quota/switching/Usage."
+    },
+    {
+      "name": "ObservableOperation",
+      "role": "Truthful phased projection of a long operation (resolving → dispatching → verifying → committing; or hydrating → ready).",
+      "used_by": ["notification test-send", "sound pack import", "theme import", "provider catalog refresh + reconnect", "installation verify/rollback", "manager lazy hydration"],
+      "reuse_note": "No permanent spinner. Wait states show truthful phases. Slint-portable (no browser-only physics)."
+    },
+    {
+      "name": "ReceiptLink",
+      "role": "Links a UI outcome to an immutable receipt/dispatch record (dispatch_id, result_status, masked_target, latency, failure_detail).",
+      "used_by": ["notification test-send receipt", "sound pack import receipt", "theme import receipt", "provider probe receipt", "route/open navigation receipt"],
+      "reuse_note": "Raw secrets never appear in receipts. Receipts form the audit trail. Replays display original result without implying a second side effect."
+    },
+    {
+      "name": "SecretField",
+      "role": "PM-owned secret input vs secure vault/reference selector vs CLI-owned auth vs environment-backed secret vs command-helper/vault-backed secret vs non-secret text. Distinguishes reveal/copy/persist/test semantics by type.",
+      "used_by": ["notification destination credentials (webhook URL, bot tokens) → SecretReference", "API-key provider connections → PM-owned secret input", "generic webhook headers → SecretReference"],
+      "reuse_note": "Atlas uses SecretField/SecretReference for notification + API-key credentials. CLI-owned OAuth (Claude/Antigravity) is NOT a SecretField — it stays behind a CLI-owned boundary with no PM-side secret input. Normal UI never exposes raw tokens."
+    },
+    {
+      "name": "AvailabilityReason",
+      "role": "Renders why a row/control is unavailable, managed, locked, or degraded with the exact owner reason.",
+      "used_by": ["managed/unavailable appearance rows", "unverified sound packs (quarantined)", "failed/rolled-back provider installations", "system-tray-unavailable", "dictionary-source-unavailable", "restart-required markers"],
+      "reuse_note": "Never maps an unknown state to an enabled action; preserves exact owner reason (stale projection, permission failure, operation in progress, source verification failure, missing confirmation)."
+    },
+    {
+      "name": "RequestedEffectiveInspector",
+      "role": "Shows requested vs effective value/route and why a fallback occurred.",
+      "used_by": ["provider requested/effective route", "account priority/fallback", "Free Models requested vs effective", "theme Auto requested vs OS-resolved effective_variant"],
+      "reuse_note": "Composes ValueSourceBadge. Shared with sibling concepts' Goal concurrency and Crew composition inspectors."
+    }
+  ],
+  "families_not_exercised_by_atlas": {
+    "note": "These DRY families belong to sibling-owned domains; Atlas does not exercise them but reaches the domains via shared grammar.",
+    "list": ["MemoryRow", "PersonaCard", "CrewTemplate", "PermissionRuleEditor", "CommandEditor", "ShortcutRecorder", "Lsp/Formatter/ToolResource", "StorageHealth", "ArtifactRow"]
+  },
+  "portability_guardrails": [
+    "Drive scrollspy + minimap from model-backed item-index, not pixel/DOM measurement.",
+    "Precompile theme token sets; no runtime CSS var()/color-mix() chains (F3-431).",
+    "Bind sound preview to a PM-local audio service; no DOM <audio> in Slint.",
+    "Glass themes: bake one backdrop blur over a pre-baked wallpaper; opaque-plate fallback for the refresh overlay.",
+    "Cmd+K overlay = popup/focus-scope + semi-transparent dim rectangle, not a filter stack.",
+    "Virtualize/segment long ResourceLists (sound library, dictionaries)."
+  ]
+}

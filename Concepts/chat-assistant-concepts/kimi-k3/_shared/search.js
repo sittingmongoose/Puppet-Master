@@ -15,6 +15,11 @@
    - Selecting a result persists store.search, expands collapsed hits FIRST,
      switches threads when cross-thread (60ms tick), then emits
      K3 'reveal-message' {threadId, messageId}.
+   - Each result row carries a trailing "more" menu: Open conversation
+     (the default pick), Add passage to context (admits the passage to the
+     Context Lens receipt via store 'lensReceipt.admitted'), Branch from
+     this point (K3ThreadOps.branchFrom, then activates the branch), and
+     Copy link ('thread-NN#message-id' to the clipboard).
    - Survives docked/pop-out remount: restores query from the store and
      re-emits a pending focusTarget younger than 5s after a 150ms tick.
    ========================================================================== */
@@ -98,6 +103,69 @@
     return idx != null && idx < win.total - win.initialCount;
   }
 
+  // --- result-row actions ---------------------------------------------------------
+  // Admits the passage to the Context Lens receipt (store lensReceipt.admitted).
+  function addPassageToContext(ctx, result) {
+    const admitted = (ctx.store.get('lensReceipt.admitted', []) || []).slice();
+    const snippet = String(result.snippet || '').trim();
+    admitted.push({
+      threadId: result.threadId,
+      messageId: result.messageId,
+      snippet: snippet.length > 140 ? snippet.slice(0, 140).trim() + '...' : snippet,
+      provenance: 'Prior-chat search',
+      size: '~' + Math.max(1, Math.round(snippet.length / 4)) + ' tokens'
+    });
+    ctx.store.set('lensReceipt.admitted', admitted);
+    ctx.emit('data', { type: 'lens-changed', threadId: result.threadId });
+  }
+
+  function branchFromResult(ctx, result) {
+    if (!(window.K3ThreadOps && typeof window.K3ThreadOps.branchFrom === 'function')) return;
+    const branch = window.K3ThreadOps.branchFrom(result.threadId, result.messageId, {});
+    if (branch && branch.id) ctx.store.set('activeThreadId', branch.id);
+  }
+
+  function copyResultLink(result) {
+    const link = result.threadId + '#' + result.messageId;
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(link).catch(() => legacyCopy(link));
+      return;
+    }
+    legacyCopy(link);
+  }
+
+  function legacyCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) { /* clipboard unavailable */ }
+    document.body.removeChild(ta);
+  }
+
+  function openResultMenu(ctx, result, anchor, onPick) {
+    ctx.ui.menu(anchor, [
+      { label: 'Open conversation', icon: 'external', action: () => onPick(result) },
+      {
+        label: 'Add passage to context',
+        icon: 'lens',
+        testid: 'k3-search-admit',
+        action: () => addPassageToContext(ctx, result)
+      },
+      {
+        label: 'Branch from this point',
+        icon: 'branch',
+        testid: 'k3-search-branch',
+        action: () => branchFromResult(ctx, result)
+      },
+      { type: 'separator' },
+      { label: 'Copy link', icon: 'copy', action: () => copyResultLink(result) }
+    ]);
+  }
+
   function buildResultRow(ctx, result, query, indexOf, onPick) {
     const row = el('button', 'k3s2-result');
     row.type = 'button';
@@ -110,6 +178,24 @@
     if (result.isSubcompactSummary) top.appendChild(chip('Summary', true));
     if (isOlderHistory(indexOf, ctx, result)) top.appendChild(chip('Older history', false));
     if (result.inCollapsedRegion) top.appendChild(chip('Collapsed', false));
+
+    const moreBtn = el('span', 'k3-icon-btn k3s2-result-more');
+    moreBtn.setAttribute('role', 'button');
+    moreBtn.setAttribute('tabindex', '0');
+    moreBtn.setAttribute('data-testid', 'k3-search-result-more');
+    moreBtn.setAttribute('aria-label', 'Result actions');
+    moreBtn.title = 'Result actions';
+    moreBtn.appendChild(window.K3Icons.get('more'));
+    const openMenu = (e) => {
+      e.stopPropagation(); // never triggers the row pick
+      e.preventDefault();
+      openResultMenu(ctx, result, moreBtn, onPick);
+    };
+    moreBtn.addEventListener('click', openMenu);
+    moreBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') openMenu(e);
+    });
+    top.appendChild(moreBtn);
     row.appendChild(top);
 
     const snippet = el('span', 'k3s2-snippet');

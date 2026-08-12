@@ -1,0 +1,761 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-04-stream",
+  "model": "GLM-5.2",
+  "ia_metaphor": "landmark-river + scroll-linked flow",
+  "note": "Provisional concept artifact only. Does not edit canon. IDs are candidate/provisional pending audit-agent adjudication against the live catalog and inventory.",
+  "plan_owner_impacts": [
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "impact": "Stream concept replaces the old Settings chip/bloom/right-side-panel contract with a landmark-river Settings Workspace: a single scrolling content river with landmark anchors (Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control & Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Project Search Index, Workspace Cleanup) plus a deferred Server-region insertion shell. CategoryNavigation and SubcategoryScrollspy drive scroll-linked active-landmark highlighting. Deep links `Open setting: {id}` must land on a river anchor and scroll, not open a detached panel.",
+      "gui_related": true,
+      "evidence_refs": ["FinalGUISpec.md:943 (github_actions shell owner)", "FinalGUISpec.md:963 (search index control surface)", "FinalGUISpec.md:989 (Settings > Branching/Health owns global git/worktree policy; Settings > Advanced owns GitHub Actions + Docker defaults)"]
+    },
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "impact": "Server-first topology is reflected in human-language status cards only (Home Server Connected, Processing on this server, Clients N paired, Hosted On / Project Files / Run Work). No raw server catalogs, kubeconfigs, package roots, or credential realms are exposed by default. The deferred Server region reserves insertion destinations but renders a human-language shell, not a state machine.",
+      "gui_related": true,
+      "evidence_refs": ["07_SERVER_HOST_AND_OWNER_BOUNDARIES.md (server-first topology, human cards)"]
+    },
+    {
+      "owner_doc": "Plans/settings_inventory.json",
+      "impact": "Stream exercises the C4-heavy inventory ids: system.advanced.export-settings, system.advanced.import-settings, system.advanced.reset-defaults, system.advanced.request-storage-compaction, system.advanced.inspect-holds-quarantine, system.advanced.runtime-artifacts, system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, branching.worktrees.* (worktree-cleanup, evidence-retention-days, force-push-policy, github-pinned-workflows, github-actions-auto-refresh, pre-merge-tests, recovery-tools, source-control-sections, clean-workspace-now, clean-all-worktrees), code.execution.* (container-runtime, docker-binary-path, default-registry, cleanup-aggressiveness, cleanup-scan-cadence, disk-threshold), web.index.* and web.fetch.* and web.providers.*. Inventory ids flagged invalid or stale (config-format as raw primary) are surfaced in migration_supersession_impacts.",
+      "gui_related": false,
+      "evidence_refs": ["settings_inventory.json (826 settings, system/web/branching/code groups)"]
+    },
+    {
+      "owner_doc": "Plans/settings_inventory.schema.json",
+      "impact": "Stream consumes the inventory schema's per-setting fields (id, label, desc, category) to render SettingRow grammar and ValueSourceBadge (inherited/managed/default/custom). Any schema change adding action-vs-setting-vs-status classification, or a restore-point/atomic-apply marker on lifecycle families, must remain schema-authoritative here before the GUI reads it.",
+      "gui_related": false,
+      "evidence_refs": ["settings_inventory.schema.json"]
+    },
+    {
+      "owner_doc": "Plans/storage-plan.md",
+      "impact": "Stream's Storage & Retention landmark and Backup & Restore landmark project #Case-L-3 concepts: legal hold (managed, suspends deletion + compaction), non-destructive compaction (receipts, never rewrites closed seglog in place), quarantine, project/data deletion (irreversible, receipt), encryption, periodic test-restore. The concept must keep internal snapshots / settings backup / project backup / full server backup / workspace cleanup visually and operationally distinct.",
+      "gui_related": true,
+      "evidence_refs": ["storage-plan.md:479 (retention/compaction never rewrite closed segments)", "storage-plan.md:1487 (canonical-store lock covers backup/restore/retention/compaction)", "storage-plan.md:966 (receipt retention classes: durable / bounded cache / discardable)"]
+    },
+    {
+      "owner_doc": "Plans/WorktreeGitImprovement.md",
+      "impact": "Stream's Source Control/Worktrees landmark surfaces changes/history/graph/worktrees, branch/bookmark/revision, Git/Jujutsu/LFS, forge connection, SSH source, test-before-merge, push/force-push policy (deny main), leases, recovery/cleanup, and exact tool installation health. Worktree safety is the precondition for Workspace Cleanup; cleanup dry-run must not destroy evidence.",
+      "gui_related": true,
+      "evidence_refs": ["WorktreeGitImprovement.md:39 (worktrees part of patch/apply/verify/rollback pipeline)", "WorktreeGitImprovement.md:74 (reliable creation/merge/cleanup + recovery)"]
+    },
+    {
+      "owner_doc": "Plans/GitHub_Integration.md",
+      "impact": "Stream's GitHub Actions landmark surfaces pinned workflows, current-branch readiness, refresh, run/job/log browsing, starter workflow, account capability, and setup/health. It reuses catalog.github_actions_* command ids and orchestrator_open_github_actions deep links.",
+      "gui_related": true,
+      "evidence_refs": ["FinalGUISpec.md:953 (github_actions shell-surface owner boundary stops at hosted workflow/admin contract owned by GitHub_Integration.md)"]
+    },
+    {
+      "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+      "impact": "Stream's Containers & Registries landmark shows human top-level Docker/Podman/Kubernetes with detail (Engine/CLI/Compose/Buildx/socket/kubectl/Helm/clusters/kubeconfig-contexts/registries/Unraid/SSH-remotes/versions/auth/health). Domain-specific capability probes reuse the shared tool lifecycle. Container start/switch reuse catalog.docker_container_start / catalog.docker_context_select.",
+      "gui_related": true,
+      "evidence_refs": ["05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md (containers detail list)", "catalog.docker_* (host/container/registry/compose coverage)"]
+    },
+    {
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "impact": "Stream's Runtime Artifacts landmark shows type/location/version/retention/receipts/redaction/open/reveal/export/cleanup with PM-owned vs provider-native identity. Opens resolve by artifact_id identity first, not fake repo paths; bundles preserve canonical IDs and must not mint shadow IDs.",
+      "gui_related": true,
+      "evidence_refs": ["Runtime_Artifacts_Panel.md:110-115 (identity-based open, identity-preserving export, manifest non-surrogate rule)"]
+    },
+    {
+      "owner_doc": "Plans/Project_Output_Artifacts.md",
+      "impact": "Stream's Runtime Artifacts / output rows align with Project_Output_Artifacts ownership of generated output taxonomy and manifest contract so ArtifactRow open/reveal/export stay identity-preserving.",
+      "gui_related": false,
+      "evidence_refs": ["Runtime_Artifacts_Panel.md:8-9 (export taxonomy + manifest contract bridge)"]
+    },
+    {
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "impact": "Stream's deferred Updates insertion shell (inside the deferred Server region) reserves grammar for PM application/content update state machines without implementing them here. Pinned-workflow and starter-workflow surfaces in the GitHub Actions landmark stay within GitHub_Integration ownership and do not implement PM self-update.",
+      "gui_related": false,
+      "evidence_refs": ["07_SERVER_HOST_AND_OWNER_BOUNDARIES.md (do not implement Project Sync/Move/PM update here)"]
+    },
+    {
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "impact": "Stream's Containers/Git/Web tool health and Provider CLI installation rows reuse the shared installation lifecycle (scan/select/install/update/repair/rollback/verify). Provider CLI initial acquisition remains the strict explicit exception (manual install path), honoring the CLI-owned vs PM-direct OAuth boundary.",
+      "gui_related": false,
+      "evidence_refs": ["05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md (tool lifecycle shared)", "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md (provider CLI initial acquisition strict exception)"]
+    },
+    {
+      "owner_doc": "Plans/Commands_System.md",
+      "impact": "Stream's lifecycle commands (export/import.preview/import.apply/import.rollback/reset/copy_from_project) and storage commands (backup.open/compact) introduce new command families that must follow the command_kind + normalization + alias_of_command_id contract. One-shot actions (Back Up Now, Compact, Copy Settings From) must be classified domain_action, not shell_view.",
+      "gui_related": false,
+      "evidence_refs": ["UI_Command_Catalog.md 2.0 (command entry contract, command_kind)"]
+    },
+    {
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "impact": "Stream reuses existing catalog ids (catalog.settings_bloom_open alias, catalog.settings_category_reset, catalog.docker_container_start, catalog.git_worktree_create/switch/prune/recover, catalog.search_rebuild_index, catalog.search_evict_remote_cache, catalog.artifacts_*, catalog.actions_* + catalog.github_actions_*, catalog.chat_web_fetch/search/crawl) and proposes new candidate families for settings lifecycle, storage compaction, artifact manager open/reveal/export/cleanup, cleanup dry-run. Provisional only.",
+      "gui_related": false,
+      "evidence_refs": ["UI_Command_Catalog.md (catalog.* census)", "CANDIDATE_COMMAND_ID_REGISTER.json"]
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "inventory_id": "system.advanced.export-settings",
+      "concept_role": "Settings Lifecycle > Export/Backup entry point (action). Distinct from scheduled backup setting and from last-backup status.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.settings.export",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.import-settings",
+      "concept_role": "Settings Lifecycle > Import (merge/replace + conflict preview). Paired with restore-point-before-apply and rollback-to-snapshot.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.settings.import.preview",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.reset-defaults",
+      "concept_role": "Settings Lifecycle > Reset to Defaults. Preview-first; restore-point created before apply.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.settings.reset.preview",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.config-format",
+      "concept_role": "FLAG: raw format dropdown as primary is invalid. Must not be the primary lifecycle affordance; format is an export parameter, not an export identity. Candidate for supersession/relabelling.",
+      "action_setting_status": "setting",
+      "wired_command": null,
+      "gui_related": true,
+      "flag": "invalid_as_primary"
+    },
+    {
+      "inventory_id": "system.advanced.legacy-config-names",
+      "concept_role": "Compatibility-only toggle; kept as inherited/default disclosure, never primary navigation.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.request-storage-compaction",
+      "concept_role": "Storage & Retention > non-destructive compaction request. Suspended while a legal hold is active. Emits receipts.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.storage.compact",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.inspect-holds-quarantine",
+      "concept_role": "Storage & Retention > legal hold + quarantine inspection. Managed hold suspends deletion/compaction.",
+      "action_setting_status": "manager",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.runtime-artifacts",
+      "concept_role": "Runtime Artifacts > Inspect Working Files manager entry. Reuses ArtifactRow open/reveal/export/cleanup.",
+      "action_setting_status": "manager",
+      "wired_command": "cmd.artifact.manager.open",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.chat-history-retention",
+      "concept_role": "History & Sessions > chat history retention policy (PM-owned identity).",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.runtime-history-days",
+      "concept_role": "History & Sessions > runtime history retention window.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "system.advanced.released-safe-point-days",
+      "concept_role": "Storage & Retention > released safe-point retention. Drives rollback-to-snapshot availability.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.worktree-cleanup",
+      "concept_role": "Workspace Cleanup > worktree cleanup policy when a chat is deleted. Preconditioned on worktree safety + evidence retention.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.clean-workspace-now",
+      "concept_role": "Workspace Cleanup > on-demand clean. Must dry-run first; receipts retained.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.cleanup.dry_run",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.evidence-retention-days",
+      "concept_role": "Workspace Cleanup > evidence retention floor. Cleanup must not drop below this.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.force-push-policy",
+      "concept_role": "Source Control > force-push policy (deny main).",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.github-pinned-workflows",
+      "concept_role": "GitHub Actions > pinned workflows list.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.pre-merge-tests",
+      "concept_role": "Source Control > test-before-merge gate.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "branching.worktrees.recovery-tools",
+      "concept_role": "Source Control > fix a stuck branch/workspace recovery.",
+      "action_setting_status": "action",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.container-runtime",
+      "concept_role": "Containers > Docker/Podman/Kubernetes engine selection.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.docker-binary-path",
+      "concept_role": "Containers > Docker program location (shared tool lifecycle; not a primary affordance).",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.default-registry",
+      "concept_role": "Containers & Registries > default image registry.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.cleanup-aggressiveness",
+      "concept_role": "Workspace Cleanup > disk cleanup style.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.cleanup-scan-cadence",
+      "concept_role": "Workspace Cleanup > cleanup scan schedule.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "code.execution.disk-threshold",
+      "concept_role": "Storage & Retention > pressure / warn-at disk usage.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.index.enable",
+      "concept_role": "Project Search Index > enable/disable. Cancels builder with CancellationToken on disable.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.index.rebuild",
+      "concept_role": "Project Search Index > rebuild (phase/progress, non-blocking).",
+      "action_setting_status": "action",
+      "wired_command": "cmd.searchindex.rebuild",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.index.evict-cache",
+      "concept_role": "Project Search Index > clear index cache.",
+      "action_setting_status": "action",
+      "wired_command": "cmd.searchindex.clear_cache",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.fetch.air-gap-mode",
+      "concept_role": "Web/Search/Fetch > air-gap/offline behavior.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.fetch.proxy-mode",
+      "concept_role": "Web/Search/Fetch > network proxy (privacy, no prompt exfiltration).",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.fetch.browser-session-profile",
+      "concept_role": "Web/Search/Fetch > PM-native Browser session type. Uses BrowserWorkspace / Browser Program / Expert Browser Program only; no Playwright terminology.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.fetch.cost-hard-cap",
+      "concept_role": "Web/Search/Fetch > credit hard cap guard.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    },
+    {
+      "inventory_id": "web.providers.provider-order",
+      "concept_role": "Web/Search/Fetch > provider priority.",
+      "action_setting_status": "setting",
+      "gui_related": true
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "schema_doc": "Plans/settings_inventory.schema.json",
+      "impact": "Stream requires the schema to distinguish action vs setting vs status vs manager rows so SettingRow can render the correct affordance (button vs toggle vs badge vs card). Candidate addition: an `action_setting_status` enum {action, setting, status, manager} on lifecycle/storage rows. Provisional until audit agent owns the schema edit.",
+      "gui_related": false
+    },
+    {
+      "schema_doc": "Plans/settings_inventory.schema.json",
+      "impact": "Copy Settings From is a ONE-TIME transactional copy across ~10 categories; the destination is independent after. The schema must NOT introduce a universal inheritance/parent-child link for this. ValueSourceBadge remains the only inheritance disclosure surface (inherited/managed/default/custom).",
+      "gui_related": false
+    },
+    {
+      "schema_doc": "Plans/settings_inventory.schema.json",
+      "impact": "Deferred Server region ids are reserved/placeholder only. Schema must not encode server-backend state machine fields (kubeconfig realms, package roots) into inventory rows; the region exposes human-language shell cards.",
+      "gui_related": false
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "candidate": "cmd.settings.bloom.open",
+      "existing_canonical": "catalog.settings_bloom_open",
+      "disposition": "alias",
+      "rationale": "Old chip/bloom architecture is retired; the landmark-river Settings Workspace replaces it. Preserve a compatibility alias only if existing shortcuts/palette entries reference it; the alias normalizes to cmd.settings.navigate (Settings Workspace open at root landmark).",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.storage.backup.open",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Backup manager open. No existing catalog.* opens a backup manager; catalog.settings_bloom_open is unrelated. Distinct from cmd.storage.backup_now (action).",
+      "distinguishes": "shell_view open vs domain_action back-up-now vs setting schedule vs status last-backup vs log diagnostic",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.storage.backup_now",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "One-shot Back Up Now action. Emits ObservableWork + receipt; idempotent per restore-point window.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.storage.compact",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Non-destructive compaction request. Blocked while legal hold active; emits receipts; never rewrites closed segments.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.import.preview",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Import conflict preview (merge/replace). Pure read; no mutation. Surfaces 3-way conflict list before apply.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.import.apply",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Atomic apply of previewed import. Restore-point created before apply; legacy-key migration run; validation gates.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.import.rollback",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Rollback to restore-point snapshot after a failed/undesired import apply. Receipt + source disclosure.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.reset.preview",
+      "existing_canonical": "catalog.settings_category_reset",
+      "disposition": "supersede",
+      "rationale": "catalog.settings_category_reset exists but is per-category only and lacks preview-first semantics. Reset-to-defaults needs a preview-then-apply pair with restore-point; supersede with alias preservation.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.copy_from_project.preview",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "ONE-TIME transactional copy preview across ~10 categories. Destination independent after; NOT universal inheritance.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.copy_from_project.apply",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Applies the one-time copy atomically with restore-point + receipt. No ongoing link created.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.artifact.manager.open",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Runtime artifacts manager open. catalog.artifacts_* rows are scoped actions (play/watch/sort/show_sources) not a manager shell open.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.artifact.reveal",
+      "existing_canonical": "catalog.file_reveal",
+      "disposition": "reuse_existing",
+      "rationale": "Reveal-in-file-manager reuses catalog.file_reveal; artifact identity resolved first then falls back to path reveal.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.artifact.export",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Identity-preserving artifact bundle export with manifest (no shadow IDs). Distinct from chat/data export.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.artifact.cleanup",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Runtime artifact cleanup respecting retention + receipts; respects redaction. Distinct from workspace cleanup.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.git.worktree.manage",
+      "existing_canonical": "catalog.git_worktree_create",
+      "disposition": "conflict",
+      "rationale": "A coarse 'manage' verb conflicts with the granular existing family (create/switch/prune/recover/remove/lock/unlock/select). Do NOT add a catch-all; reuse the granular ids. Flag as conflict to prevent duplication.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.container.start",
+      "existing_canonical": "catalog.docker_container_start",
+      "disposition": "reuse_existing",
+      "rationale": "Container start reuses catalog.docker_container_start. Engine switch reuses catalog.docker_context_select. No new id needed.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.container.switch_engine",
+      "existing_canonical": "catalog.docker_context_select",
+      "disposition": "reuse_existing",
+      "rationale": "Switching Docker/Podman/Kubernetes engine maps to docker context select.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.webfetch.clear_cache",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Clear web content cache (web.fetch.cache-size/ttl families). catalog.chat_web_* are runtime web ops, not cache management.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.searchindex.rebuild",
+      "existing_canonical": "catalog.search_rebuild_index",
+      "disposition": "reuse_existing",
+      "rationale": "Project Search Index rebuild reuses catalog.search_rebuild_index. Phase/progress is ObservableWork, not a new command.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.searchindex.clear_cache",
+      "existing_canonical": "catalog.search_evict_remote_cache",
+      "disposition": "reuse_existing",
+      "rationale": "Clear index/remote cache reuses catalog.search_evict_remote_cache (web.index.evict-cache).",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.cleanup.dry_run",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Workspace cleanup dry-run (worktree safety + evidence retention). No existing dry-run for workspace cleanup; docker_cleanup_scan is container-scoped only.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.cleanup.clean",
+      "existing_canonical": null,
+      "disposition": "new_candidate",
+      "rationale": "Apply cleanup after dry-run approval; receipts retained.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.navigate",
+      "existing_canonical": "catalog.nav_open_subject",
+      "disposition": "reuse_existing",
+      "rationale": "Settings category/landmark navigation reuses the nav_open_subject family with a settings subject kind; the landmark-river scroll is a UI projection of the same navigation primitive.",
+      "gui_related": false
+    },
+    {
+      "candidate": "cmd.settings.search.focus",
+      "existing_canonical": "catalog.nav_focus_route",
+      "disposition": "reuse_existing",
+      "rationale": "Focus the settings search input reuses nav_focus_route with the universal-search settings scope.",
+      "gui_related": false
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "flow": "Back Up Now (action)",
+      "wiring_summary": "Backup button -> cmd.storage.backup_now -> Backup owner -> permission gate (backup.write) -> restore-point + backup op -> ObservableWork + backup receipt event -> last-backup status badge + receipt link -> Usage attribution (backup op) -> recovery: open receipt / open backup manager. Distinct from scheduled-backup setting and last-backup status.",
+      "must_not": "Must not mutate the backup schedule setting; must not masquerade as a one-line toggle."
+    },
+    {
+      "flow": "Import preview -> apply -> rollback",
+      "wiring_summary": "Import button -> cmd.settings.import.preview -> Settings Lifecycle owner -> read-only conflict preview -> (apply) cmd.settings.import.apply -> validation + legacy-key migration + restore-point -> atomic apply -> event/receipt + ObservableWork -> conflict-resolved + applied projection -> Usage/diagnostic attribution -> rollback via cmd.settings.import.rollback to restore-point.",
+      "must_not": "Apply must not run without a restore-point; rollback must not be silently disabled."
+    },
+    {
+      "flow": "Copy Settings From (transactional one-time)",
+      "wiring_summary": "Copy From button -> cmd.settings.copy_from_project.preview -> Settings Lifecycle owner -> diff preview across ~10 categories -> (apply) cmd.settings.copy_from_project.apply -> restore-point + atomic copy -> receipt + source disclosure -> destination independent after -> recovery: rollback. NO ongoing inheritance link is created.",
+      "must_not": "Must not create a parent-child inheritance relationship; destination is independent after apply."
+    },
+    {
+      "flow": "Storage compact (non-destructive + receipt)",
+      "wiring_summary": "Compact button -> cmd.storage.compact -> Storage owner -> legal-hold check (block if active) -> non-destructive compaction op (never rewrite closed segments) -> compaction receipt event -> StorageHealth + receipt link -> diagnostic attribution -> recovery: open receipt / inspect holds.",
+      "must_not": "Must not compact while legal hold active; must not rewrite closed seglog segments in place."
+    },
+    {
+      "flow": "Container start",
+      "wiring_summary": "Container row start -> catalog.docker_container_start -> Containers owner -> engine health + kubeconfig/auth gate -> container start op -> ObservableWork + container receipt -> container status row -> diagnostic attribution -> recovery: open logs / open docker manager.",
+      "must_not": "Must not bypass engine health gate; reuses existing catalog id (no new command)."
+    },
+    {
+      "flow": "Search index rebuild (phase/progress)",
+      "wiring_summary": "Rebuild button -> catalog.search_rebuild_index -> Search owner -> enable + exclusions + size/symlink gate -> rebuild op (phased, non-blocking, CancellationToken on disable) -> phase/progress ObservableWork -> index status (indexing/stale/ready/fallback) -> diagnostic attribution -> recovery: open failures / clear cache (catalog.search_evict_remote_cache).",
+      "must_not": "Must not block the whole Settings workspace; failures must be surfaced, not hidden."
+    },
+    {
+      "flow": "Cleanup dry-run -> clean (worktree safety + receipt)",
+      "wiring_summary": "Clean button -> cmd.cleanup.dry_run -> Workspace Cleanup owner -> worktree safety + evidence-retention check -> dry-run report (no mutation) -> (approve) cmd.cleanup.clean -> cleanup op -> cleanup receipt event -> StorageHealth/disk projection + receipt link -> diagnostic attribution -> recovery: open receipt / inspect holds.",
+      "must_not": "Must not destroy evidence below evidence-retention floor; must not skip dry-run for destructive cleanup."
+    }
+  ],
+  "dry_component_impacts": [
+    {"component": "SettingsWorkspaceShell", "role": "River shell hosting the scrolling landmark content + persistent left navigation", "used_by": "all concepts", "reuse_note": "Stream's variant: scroll-linked landmark river; shell stays identical, only the scrollspy driver differs."},
+    {"component": "CategoryNavigation", "role": "Left category/subcategory tree", "used_by": "all concepts", "reuse_note": "Unchanged; selects a landmark and scrolls the river."},
+    {"component": "SubcategoryScrollspy", "role": "Scroll-linked active-landmark highlight", "used_by": "stream (primary), others (secondary)", "reuse_note": "Stream's signature interaction; portable to other concepts."},
+    {"component": "SettingsSearch", "role": "Universal search over settings", "used_by": "all concepts", "reuse_note": "Reuse; deep links scroll the river to a setting's landmark."},
+    {"component": "SettingRow", "role": "Ordinary setting row grammar (label/value/help/scope)", "used_by": "all concepts", "reuse_note": "C4 rows add action/status/manager variants via action_setting_status."},
+    {"component": "ValueSourceBadge", "role": "Inherited/managed/default/custom disclosure", "used_by": "all concepts", "reuse_note": "Only inheritance surface; Copy Settings From does NOT add a new inheritance badge."},
+    {"component": "ManagerShell", "role": "Manager container (header + health + resource list + detail)", "used_by": "all concepts", "reuse_note": "Wraps Storage, Backup, Runtime Artifacts, Source Control, GitHub Actions, Containers, Web, Search Index, Cleanup managers."},
+    {"component": "ResourceList", "role": "Virtualized list of resources", "used_by": "all concepts", "reuse_note": "Drives artifact/history/container/worktree/run rows."},
+    {"component": "ResourceCard", "role": "Per-resource summary card", "used_by": "all concepts", "reuse_note": "Backup last-run card, container card, registry card, host card."},
+    {"component": "ResourceDetail", "role": "Per-resource detail pane", "used_by": "all concepts", "reuse_note": "Artifact detail, container detail, run/job/log detail."},
+    {"component": "HealthSummary", "role": "Manager readiness/health summary", "used_by": "all concepts", "reuse_note": "Tool health for git/docker/web providers; engine health."},
+    {"component": "StorageHealth", "role": "Storage pressure/hold/quarantine/compaction summary", "used_by": "stream", "reuse_note": "Stream-specific composite; composes HealthSummary + hold/quarantine badges."},
+    {"component": "ArtifactRow", "role": "Runtime artifact row (open/reveal/export/cleanup)", "used_by": "stream", "reuse_note": "Identity-based open first; PM-owned vs provider-native identity badge."},
+    {"component": "ObservableOperation", "role": "Truthful phase/progress/wait surface for ops", "used_by": "all concepts", "reuse_note": "Back Up Now, compaction, import apply, index rebuild, cleanup, container start all project through this."},
+    {"component": "ReceiptLink", "role": "Link to durable receipt", "used_by": "all concepts", "reuse_note": "Every irreversible/compaction/cleanup/import/container action carries one."},
+    {"component": "SetupFlowLauncher", "role": "Launches bounded setup flow when a capability requires it", "used_by": "all concepts", "reuse_note": "Container engine setup, registry auth, forge connection, SSH source setup."},
+    {"component": "SettingsDestination", "role": "Deep-link target resolver (Open setting: {id})", "used_by": "all concepts", "reuse_note": "Lands on a river landmark and scrolls."},
+    {"component": "SettingsNotice", "role": "Inline notice/managed-state banner", "used_by": "all concepts", "reuse_note": "Legal-hold-active, compaction-suspended, import-conflict, air-gap-on notices."}
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "area": "storage-plan.md #Case-L-3 retention/hold/compaction/quarantine",
+      "impact": "Stream's Storage & Retention landmark projects these storage-owned families: legal hold (managed, suspends deletion + compaction), non-destructive compaction (receipts, append-only successor records, never rewrite closed seglog), quarantine, project/data deletion (irreversible, tombstone + receipt), encryption-at-rest, periodic test-restore. GUI is a projection only; it does not re-own storage key registration.",
+      "gui_related": true
+    },
+    {
+      "area": "event_family_registry.json",
+      "impact": "Candidate event families exercised by Stream ops: backup_performed, restore_point_created, settings_imported (with restore_point_ref + conflict_count), settings_rolled_back, storage_compacted (with receipt_ref + preserved_set), legal_hold_changed, storage_pressure_evaluated, artifact_cleaned, cleanup_performed (with dry_run_ref + evidence_retention_floor), search_index_rebuilt (with phase + failure_count). Provisional families; registry ownership stays with storage/event owners.",
+      "gui_related": false
+    },
+    {
+      "area": "Receipt retention classes (storage-plan.md:966)",
+      "impact": "Stream respects durable / bounded-cache / discardable receipt classes. Backup/compaction/cleanup/import receipts are durable; index phase progress and web cache stats are bounded-cache; live stream frames are discardable.",
+      "gui_related": false
+    },
+    {
+      "area": "Canonical-store lock (storage-plan.md:1487)",
+      "impact": "Backup/restore/compaction/import-apply acquire the aggregate canonical-store lock; Stream's ObservableWork must show truthful wait phases when the lock is contended, never fake liveness.",
+      "gui_related": true
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "target": "Settings chip/bloom/no-sidebar contract",
+      "action": "retire",
+      "rationale": "Old bloom architecture (catalog.settings_bloom_open) is superseded by the landmark-river Settings Workspace. Preserve compatibility alias only.",
+      "gui_related": true
+    },
+    {
+      "target": "Stale right-side-panel language",
+      "action": "supersede",
+      "rationale": "Any canon describing settings as a right-side detached panel is superseded by the integrated scrolling river + persistent left navigation.",
+      "gui_related": true
+    },
+    {
+      "target": "system.advanced.config-format as raw primary lifecycle affordance",
+      "action": "supersede",
+      "rationale": "Format is an export parameter, not export identity or primary affordance. The primary lifecycle entries are export/import/reset/copy_from_project actions.",
+      "gui_related": true
+    },
+    {
+      "target": "stale regular/yolo mode coupling",
+      "action": "supersede",
+      "rationale": "Per REFERENCE_SUPERSESSIONS/10_PLAN_COMMAND_WIRING_DRY_IMPACT; force-push policy + git safety preset replace yolo coupling.",
+      "gui_related": false
+    },
+    {
+      "target": "Invalid inventory values (config-format primary, bloom-only entry)",
+      "action": "migrate",
+      "rationale": "Inventory rows that present config-format as the primary settings affordance or bloom as the only settings entry must migrate to the lifecycle action set + landmark navigation.",
+      "gui_related": false
+    },
+    {
+      "target": "usage.jsonl / tier_id-centric Show in Usage pivots",
+      "action": "supersede",
+      "rationale": "Runtime Artifact Show in Usage/Ledger must pivot by receipt + attempt + usage_event_ref, not run/tier only (Runtime_Artifacts_Panel drift).",
+      "gui_related": false
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "area": "Virtualize artifact/history/container/run lists",
+      "impact": "Runtime Artifacts, History & Sessions, Containers/Images, GitHub Actions runs, and Source Control history/graph rows must use a virtualized Slint list model. Large repos produce many runs/images/commits; naive ListBox will jank. Use a model-backed proxy with windowed delegates.",
+      "gui_related": true
+    },
+    {
+      "area": "Model-backed backup progress",
+      "impact": "Back Up Now / compaction / import-apply / index-rebuild progress is model-driven ObservableWork, not a property the view mutates directly. Slint binding reads a ProgressModel that the owner updates; view never invents phase text.",
+      "gui_related": true
+    },
+    {
+      "area": "Portable scroll + scrollspy",
+      "impact": "Landmark-river scroll must be portable: scroll position is a model field (active_landmark_id), and SubcategoryScrollspy both drives and reflects it. On deep link, set active_landmark_id then scroll; on user scroll, update active_landmark_id. Works across renderer backends (Skia/FemtoVG/software).",
+      "gui_related": true
+    },
+    {
+      "area": "Reduced-motion + all-theme support",
+      "impact": "Scroll-linked highlight and ObservableOperation transitions must honor reduce-animations; themes (light/dark/glass/retro) must not break landmark contrast or receipt-link affordance.",
+      "gui_related": true
+    },
+    {
+      "area": "Lazy manager hydration",
+      "impact": "Managers hydrate lazily and probes are bounded/cached/coalesced/ResourceGovernor-governed. The Settings Workspace must not block on opening all C4 managers at once; each landmark hydrates on near-scroll or on demand.",
+      "gui_related": true
+    }
+  ],
+  "test_fixtures": [
+    {
+      "id": "fixture.storage.legal_hold_active",
+      "family": "Storage & Retention",
+      "scenario": "A managed legal hold is active; user attempts compaction and project deletion. Both are suspended; StorageHealth shows hold badge; receipts explain suspension. (Failing-webhook fixture N/A here.)",
+      "expected": "Compaction/deletion blocked with reason; hold inspectable; no data loss."
+    },
+    {
+      "id": "fixture.storage.backup_now",
+      "family": "Backup & Restore",
+      "scenario": "User clicks Back Up Now (action). ObservableWork shows truthful phase; receipt emitted; last-backup status badge updates; schedule setting unchanged.",
+      "expected": "Action vs setting vs status kept distinct; receipt link works."
+    },
+    {
+      "id": "fixture.lifecycle.import_3_conflicts_rollback",
+      "family": "Settings Lifecycle",
+      "scenario": "Import a settings bundle with 3 conflicts. Preview shows all 3; apply creates restore-point then applies atomically; rollback returns to restore-point snapshot; receipt + source disclosure present.",
+      "expected": "Preview accurate; restore-point exists before apply; rollback fully restores; legacy-key migration run."
+    },
+    {
+      "id": "fixture.lifecycle.copy_from_project_one_time",
+      "family": "Settings Lifecycle",
+      "scenario": "Copy Settings From another project across ~10 categories. After apply, destination is independent: changing source settings does not propagate.",
+      "expected": "No inheritance link created; one-time transactional copy only."
+    },
+    {
+      "id": "fixture.container.podman_stopped",
+      "family": "Containers & Registries",
+      "scenario": "Podman engine selected but stopped. Container start is gated with health reason; start button disabled with explanation; switch-engine (docker context select) offered.",
+      "expected": "Health-gated start; no silent failure; recovery path offered."
+    },
+    {
+      "id": "fixture.searchindex.rebuild_3_failures",
+      "family": "Project Search Index",
+      "scenario": "Rebuild index with 3 file failures (oversize, symlink-loop, permission). Non-blocking phased progress surfaces each failure; index ends degraded but usable; failures list openable.",
+      "expected": "Non-blocking; failures surfaced not hidden; CancellationToken honored on disable."
+    },
+    {
+      "id": "fixture.cleanup.dry_run_then_clean",
+      "family": "Workspace Cleanup",
+      "scenario": "Workspace cleanup dry-run reports worktrees in use and evidence above retention floor; after approval, clean runs but preserves evidence; receipts retained.",
+      "expected": "Dry-run before mutation; worktree safety honored; evidence retention floor respected."
+    },
+    {
+      "id": "fixture.deferred.server_region_reserved",
+      "family": "Future Server Module Shell",
+      "scenario": "Deferred Server region renders a human-language shell (Home Server Connected / Clients N paired) and reserves grammar + semantic destinations for Servers/Execution Hosts/Clients/Project Hosting & Files/Remote Access/Updates. No backend state machine is invoked.",
+      "expected": "Shell renders; named owners + insertion contracts reserved; no invented state machine."
+    },
+    {
+      "id": "fixture.web.air_gap_pm_native_browser",
+      "family": "Web/Search/Fetch",
+      "scenario": "Air-gap mode on; web ops fail closed with clear reason; PM-native Browser sessions (BrowserWorkspace / Browser Program) only; no Playwright terminology; protected AuthBrowserSession never exposed as ordinary workspace.",
+      "expected": "Air-gap honored; PM-native browser only; auth session hidden."
+    },
+    {
+      "id": "fixture.git.force_push_deny_main",
+      "family": "Source Control/Worktrees",
+      "scenario": "Force-push policy denies main; attempt to force-push main is blocked with reason; feature-branch force-push allowed per policy.",
+      "expected": "Policy enforced; reason surfaced; recovery path offered."
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "module": "Servers",
+      "named_canonical_owner": "Plans/Server_Backbone.md (reserved; not yet authored)",
+      "insertion_contract": "Stream reserves a Server landmark/region with human-language cards (Home Server Connected, Processing on this server, Clients N paired). Grammar: ManagerShell + ResourceCard + HealthSummary + ReceiptLink. Deep-link target reserved. NO backend state machine, no raw server catalog exposure. When Server_Backbone.md is authored it owns host identity, connection lifecycle, and receipts; Stream binds the reserved destinations.",
+      "gui_related": true
+    },
+    {
+      "module": "Execution Hosts",
+      "named_canonical_owner": "Plans/Server_Backbone.md (reserved; Execution Host section)",
+      "insertion_contract": "Reserves a human-language 'Run Work' / execution-host destination (Automatic / Home Server / On this server). Home Server is default Execution Host when capability-compatible; native Windows/macOS/Linux, Docker, TrueNAS, Unraid, Kubernetes are execution-capable forms; WSL optional and does not replace native Windows. Stream binds grammar only; capability matching + host lifecycle owned by Server_Backbone.md.",
+      "gui_related": true
+    },
+    {
+      "module": "Clients",
+      "named_canonical_owner": "Plans/Server_Backbone.md (reserved; Clients section)",
+      "insertion_contract": "Reserves a 'Clients' card (N paired) and client-pairing grammar. No client state machine in Stream; pairing/auth lifecycle owned by Server_Backbone.md.",
+      "gui_related": true
+    },
+    {
+      "module": "Project Hosting & Files",
+      "named_canonical_owner": "Plans/Server_Backbone.md (reserved; Project Hosting & Files section)",
+      "insertion_contract": "Reserves 'Hosted On' / 'Project Files' human-language project cards. Project Sync, Project Move, and PM application/content update state machines are explicitly NOT implemented here. Stream binds the card grammar only; sync/move/hosting lifecycle owned by Server_Backbone.md + Release_Supply_Chain.md.",
+      "gui_related": true
+    },
+    {
+      "module": "Remote Access",
+      "named_canonical_owner": "Plans/Server_Backbone.md (reserved; Remote Access section)",
+      "insertion_contract": "Reserves Remote Access / SSH-remote grammar for execution environments and container SSH remotes. SSH source/cert/credential realms are never exposed as raw config by default; human-language connection cards only. Lifecycle owned by Server_Backbone.md.",
+      "gui_related": true
+    },
+    {
+      "module": "Updates",
+      "named_canonical_owner": "Plans/Release_Supply_Chain.md (PM application/content updates)",
+      "insertion_contract": "Reserves an Updates insertion point in the deferred Server region for PM app/content update flows. Stream does NOT implement update state machines; it binds the reserved shell grammar (status card + SetupFlowLauncher) to Release_Supply_Chain.md ownership. system.advanced.auto-update / catalog-updates / update-frequency inventory rows remain owned by Release_Supply_Chain.md.",
+      "gui_related": true
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "id": "q.stream.01",
+      "question": "Should cmd.storage.backup.open and cmd.artifact.manager.open become first-class catalog shell_view ids now, or remain candidate until the audit agent adjudicates? Impact: palette/shortcut registration.",
+      "blocks": "command palette wiring",
+      "default_if_unresolved": "treat as candidate new_candidate; do not register in catalog until adjudicated"
+    },
+    {
+      "id": "q.stream.02",
+      "question": "Does catalog.settings_category_reset get superseded by cmd.settings.reset.preview/apply, or does it stay canonical for per-category reset with reset.preview as a separate scope?",
+      "blocks": "reset wiring",
+      "default_if_unresolved": "supersede with alias preservation; per-category reset normalizes through reset.preview with a category filter"
+    },
+    {
+      "id": "q.stream.03",
+      "question": "Where exactly does Copy Settings From source its ~10 category list — schema-driven (inventory category set) or hardcoded in the lifecycle owner? Impact: extensibility.",
+      "blocks": "copy_from_project category enumeration",
+      "default_if_unresolved": "schema-driven from inventory categories; lifecycle owner reads the category list from inventory"
+    },
+    {
+      "id": "q.stream.04",
+      "question": "Is the deferred Server region a single landmark with sub-cards, or six sibling landmarks (one per named owner)? Impact: scrollspy/river layout.",
+      "blocks": "river layout",
+      "default_if_unresolved": "single 'Servers & Hosting' landmark with sub-cards per named owner; scrollspy anchors each sub-card"
+    },
+    {
+      "id": "q.stream.05",
+      "question": "Should searchindex failures route through ReceiptLink or a dedicated IndexFailureRow? Impact: DRY component census.",
+      "blocks": "search index failure surface",
+      "default_if_unresolved": "reuse ReceiptLink for durable failures; ResourceDetail for transient phase failures"
+    }
+  ]
+}

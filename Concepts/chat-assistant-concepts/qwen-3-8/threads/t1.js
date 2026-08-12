@@ -153,7 +153,7 @@
   function workRender(container, key, wapi) {
     const d = wapi.data;
     const hasDiff = d.diffAdds > 0 || d.diffDels > 0;
-    if (!d.goalStatus && !d.todoTotal && !d.agents && !hasDiff && !d.approvals && !d.warnings && !d.live) return;
+    if (!d.goalStatus && !d.todoTotal && !d.agents && !hasDiff && !d.approvals && !d.warnings && !d.live && !d.grant && !d.capacity && !d.ops && !d.bsd && !d.attach) return;
 
     const segs = [];
     if (d.goalStatus) {
@@ -180,6 +180,11 @@
     if (d.warnings > 0) {
       segs.push('<span class="pmq-t1-wseg"><span class="pmq-t1-wval" data-wcell="warnings">' + d.warnings + "</span> warnings</span>");
     }
+    if (d.grant) segs.push('<span class="pmq-t1-wseg">cross-project grant</span>');
+    if (d.capacity > 0) segs.push('<span class="pmq-t1-wseg">capacity forecast</span>');
+    if (d.ports > 0) segs.push('<span class="pmq-t1-wseg">port ' + d.ports + '</span>');
+    if (d.bsd > 0) segs.push('<span class="pmq-t1-wseg">BSD ' + d.bsd + "</span>");
+    if (d.attach > 0) segs.push('<span class="pmq-t1-wseg">' + d.attach + " attachments</span>");
     if (!segs.length) return;
 
     const s = wapi.store.thread(key);
@@ -198,6 +203,13 @@
        stay reachable inside the same disclosure. */
     wapi.builders.approvalCards(key).forEach(c => cards.push(c));
     wapi.builders.warningCards(key).forEach(c => cards.push(c));
+    const grant = wapi.builders.grantCard(key);
+    if (grant) cards.push(grant);
+    wapi.builders.capacityCards(key).forEach(c => cards.push(c));
+    wapi.builders.bsdCards(key).forEach(c => cards.push(c));
+    wapi.builders.opsCards(key).forEach(c => cards.push(c));
+    wapi.builders.attachmentResolutionCards(key).forEach(c => cards.push(c));
+    wapi.builders.artifactCards(key).forEach(c => cards.push(c));
     const crew = wapi.builders.crewCard(key);
     if (crew) cards.push(crew);
     const interactive = cards.length > 0;

@@ -2,6 +2,10 @@
 
 Binding API and conventions for every file in this folder. Concept pages depend on `_shared/` exactly as specified here; `_shared/` implements exactly this. Anything not specified is per-concept freedom (and divergence is required).
 
+**Revision 2 (final cumulative packet, 2026-08-08).** Adds `pm-demo-data-ext.js`, `pm-provider.js`, the deterministic deep-link contract, fixture overlays, the expanded trigger registry, per-concept manager manifests, and the title-bar notification stack. Sections marked "(rev 2)" below are new; everything else from revision 1 still binds.
+
+**Differentiation clause (rev 2, binding):** the shared layer exports NO HTML and NO CSS for manager surfaces. `pm-provider.js` and `pm-state.js` return plain data; each concept composes its own markup, layout, and motion. Re-authoring a manager that another concept previously owned starts from the shared data + semantics, never from the sibling concept's markup. Concept class prefixes (`atlas-`, `mc-`, `fs-`, `lg-`) never cross files.
+
 ## Ground rules (from packet + CONCEPT_RULES — non-negotiable)
 
 - Work ONLY inside `Concepts/settings-redesign-concepts/fable/`.
@@ -36,6 +40,8 @@ Binding API and conventions for every file in this folder. Concept pages depend 
   <!-- static shell skeleton (below) with data-concept-model="fable" literal in markup -->
   <script src="_shared/pm-icons.js"></script>
   <script src="_shared/pm-demo-data.js"></script>
+  <script src="_shared/pm-demo-data-ext.js"></script>
+  <script src="_shared/pm-provider.js"></script>
   <script src="_shared/pm-state.js"></script>
   <script src="_shared/pm-scrollspy.js"></script>
   <script src="_shared/pm-spell.js"></script>
@@ -156,3 +162,48 @@ All copy is realistic product English — no lorem ipsum, no internal enum leaka
 - Semantic state lives in JS state (store/spy state), never derived from DOM geometry except through PMSpy's documented mapping.
 - Every interactive control: keyboard operable, visible focus, `aria-pressed`/`aria-expanded`/`role` as appropriate.
 - Category switch loads ONE domain's continuous document; search deep-links via `PMSpy.reveal`.
+
+## `_shared/pm-demo-data-ext.js` (rev 2) — final cumulative packet data
+
+Loads immediately after `pm-demo-data.js` and before any concept script (PMState snapshots `PM_DATA` lazily at first `init`, so all extension merging completes at parse time). The base file stays frozen at its 2026-08-05 shape; everything new carries `src:"packet-2026-08-08"` where a provenance field exists. Demo "now" stays 2026-08-05.
+
+New top-level collections: `serverTopology` (3 hosts / 7 environments incl. healthy-Off WSL / 3 clients / project card), `serverModules` (9 reserved future destinations, each with `namedOwner` + `insertionContract`), `notifications` (master + surfaceRule + 8 destinations + 6 routing rows + `sounds.library`/`sounds.packs`), `appearance` (base, 3 custom TOML themes — active / invalid-with-line-error+fallback / restart-required — fonts, uiScale, glass-locked rows), `desktop`, `teacher` (5 topics, explain-screen and guided-action kinds), `fileManager`, `formatters` (detected / not-found / disabled + lastTest), `testingDebug` (11-capability Auto/On/Off global+project matrix), `storage`, `backups` (4 distinct kinds, restore points, test restore), `settingsLifecycle` (export, staged import preview with 3 conflicts + invalid + legacy migration, history incl. rollback-complete, reset), `sessionsHistory`, `artifacts` (pm vs provider-native identity, redaction states), `sourceControl` (tools per host w/ exact-environment install offers, forges connect-not-install, ssh, worktrees w/ leases), `githubActions` (pinned passing/failing, runs w/ jobs + log excerpts), `containers` (docker/podman/k8s human cards + detail, cluster, registries incl. cert-warning, Unraid), `webResearch` (providers w/ credit guards, PM Browser Program vocabulary, human-only AuthBrowserSession), `searchIndex`, `cleanup` (dry-run w/ lease skip), `bsd`, `goalDefaults`, `permissionsModel` (ordered rules, last-match-wins trace, presets, per-Persona, FileSafe floor, doom-loop), `freeCatalog` (models.dev + Free Coding Models freshness/change history).
+
+Provider upgrades: `providers[].installations` (confidence `proven|strong|probable|ambiguous|unknown`; update states `up-to-date|update-available|waiting-idle|updating|verifying|ready|verification-failed|rolled-back|needs-repair|managed-externally|unknown-method`; unknown/ambiguous ⇒ `manualOnly`), `providers[].authBoundary` (`cli-owned|pm-direct-oauth|api-key|server|wrapper`), `cursor-cli.setupOffer` (explicit official-source install, exact host choices), the `opencode` external-server provider, `local-ollama.usageDetails` (usage unavailable, provider ready), `freeRoutes[].state` over exactly `ready|needs-setup|cooling-down|no-longer-free|no-longer-available|unverified`, one role with `requestedRoute`/`effectiveRoute`/`fallbackReason`.
+
+New settings rows: sounds (3), desktop (2), BSD mode radio, storage/backup/lifecycle rows, `system.health.diagnostics-verbosity` (the canonical deep-link probe target), `extensions.web.fetch-size-limit` (validationError fixture), `extensions.mcp.default-transport` (reconnect fixture), `code.formatters.format-on-save`. Typo synonyms `notifcations`/`apperance`/`permisions` ride on high-traffic rows; the no-results probe query is `flux capacitor`.
+
+## `_shared/pm-provider.js` (rev 2) — `window.PMProvider`
+
+DOM-free provider semantics; the single source of provider state strings.
+- `resolveInstallation(inst)` → `{id, title, version, selected, shadowed, shadowNote, confidence:{id,label}, manualOnly, manualOnlyReason, update, actions:[{id,label}], advanced:{configuredCommand, resolvedLauncher, actualExecutable, method, packageIdentity, managerRoot, hostId, envId, arch, evidence[]}}`. Unknown/ambiguous ownership never offers update/repair actions.
+- `resolveUpdateState(update)` → `{state, label, tone, busy, detail, available, policy, history, verifyChecklist}` (checklist = the seven success conditions; installer exit code alone is never success).
+- `resolveFreeRoute(route)` → `{state, label, tone, note, qualifier, underlyingProviderId, wrapperNote, setupSteps}`.
+- `resolveAuthBoundary(provider)` → `{kind, label, pmDirect, note, signInVerb}` — Claude/Antigravity are `cli-owned` (no PM-direct OAuth); OpenAI/GitHub/Copilot may be `pm-direct-oauth`.
+- `resolveRoute(roleOrModel)` → `{requested, effective, differs, why}`.
+- `resolveProviderStatus(provider)` → `{state, label, tone, note}`; `resolveUsageDetails(provider)` → usage-unavailable-but-ready projection.
+- `installOfferSteps(provider)` → explicit-install offer + policyNote (never bundled, never silent, exact host/environment, install ≠ sign-in).
+- Constants: `UPDATE_STATES`, `FREE_ROUTE_STATES`, `VERIFY_CHECKLIST`. Tones map to `.pm-status-word[data-tone]` (`ok|attention|setup|muted|progress`).
+
+## `pm-state.js` additions (rev 2)
+
+- Scenarios now include `first-run` (systematic empty: every manager renders its real empty state) and `offline` (systematic unavailable: honest reasons + last-known-good catalogs). `applyScenario(id, {persist:false})` applies ephemerally.
+- **Fixture overlays** — `PMState.fixtures` (12: `fx.import-conflict fx.rollback-complete fx.changed-elsewhere fx.restart-required fx.reconnect-required fx.validation-error fx.theme-fallback fx.storage-pressure fx.credit-guard fx.index-failed fx.long-text fx.doom-loop-tripped`), `PMState.setFixtures([ids])`, `PMState.activeFixtures()`. Overlays are additive, idempotent, applied after the scenario mutation on every rebuild, persisted under store key `fixtures`.
+- **Trigger registry** — `PMState.trigger(name, ref)` now covers: `provider-refresh catalog-refresh reconnect invoke-test install-scan install-select install-update install-update-fail install-repair import-preview import-cancel import-apply import-rollback sound-preview sound-upload pack-import dest-test sound-test theme-reload backup-now test-restore index-rebuild cleanup-dry-run formatter-test lsp-restart actions-refresh permission-test changed-elsewhere teacher-explain`. Staged phases emit `op` events (`{name, ref, phase, …}`) — truthful ObservableWork projections, never skipped under reduced motion. `sound-preview` is local-only and deliberately produces NO receipt; `dest-test` is masked, rate-limited (1/30s at human timescale), receipted, and lands in the title-bar stack.
+- `PMState.setTimescale(n)` — 0 makes every staged trigger settle immediately (probe mode).
+- **Manager manifest** — `PMState.registerManagers({conceptId, native:[managerIds], coveredIn:{id:{concept, page, label}}})`. Search returns non-native managers as `kind:"manager-receipt"` with `coveredIn`; concepts render those as honest cross-concept receipts. `PMState.managerDefs` lists all manager ids (16 original + 23 packet families).
+- **Deterministic deep links** — `<page>.html[?hub=1]#/<route>?<params>`; `route := home | dest/<domainId>[/<subId>] | manager/<managerId> | setting/<settingId> | search/<query>`; `params := scenario, fixture (comma list), trigger (comma list of name[:ref]), focus, instant=1, pin=1, theme, motion=reduced`. The hash owns data/navigation; hub `?hub=1` + postMessage own presentation. URL-applied state is ephemeral unless `pin=1`. API: `parseDeepLink(loc)`, `buildHash(route, params)`, `writeRoute(route|hash, {replace, params})` (pushState for navigation so Back/forward is real; replace for scrollspy), `bindRouter({open})` (applies the initial link — scenario → fixtures → route → focus → triggers — listens to `hashchange`, then stamps `data-pm-state="ready"` on `<html>` and posts `pm-concept-applied` to the parent). Boot order per concept: `PMShell.init` → `PMState.init` → build UI → `PMState.bindRouter({open})`.
+- States drawer now shows 8 scenario radios, 12 fixture checkboxes, and the full trigger registry grouped by family.
+
+## `pm-shell.js` additions (rev 2)
+
+- **Title-bar notification stack** (canon: the sole in-app notification affordance): count badge + sprout inbox injected between the page tabs and the control cluster. `PMShell.notify({title, detail})` (session-only, used by `dest-test`), `PMShell.notificationCount()`. Join animation is a one-shot translate, killed under reduced motion. No corner toast stacks, no status-bar bell, no notifications side panel.
+- `PMShell.applyView({theme, reducedMotion})` — deterministic deep links may force presentation when the page runs standalone; hub postMessage remains authoritative when framed.
+
+## `pm-icons.js` additions (rev 2)
+
+New names: `bell speaker package box database disk undo keyboard font tray windowIcon grad beaker bug broom container kube workflow worktree hourglass route sliders certificate coin`. Same grammar as revision 1.
+
+## Per-concept register files (rev 2)
+
+Each concept owns a subdirectory `c<N>-<name>/` containing exactly: `impact-register.json` (schema `pm.settings_concept_impact_register.v1`), `manager-coverage.json` (schema `pm.settings_concept_manager_coverage.v1`, aligned to the packet matrix; classifications `demonstrated | shared_grammar | deferred_named_owner`; never `missing`), `candidate-command-delta.json`, `candidate-wiring-delta.json` (every trace carries an honest `concept_local_state` flag), `candidate-dry-delta.json`, `plan-owner-delta.md`. Candidate IDs are provisional; canon is never minted here. The top-level `IMPACT_REGISTER.json` is a thin roll-up pointing at the four subdirectories.

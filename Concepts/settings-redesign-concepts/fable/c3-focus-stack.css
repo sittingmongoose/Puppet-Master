@@ -103,12 +103,13 @@
   transform-origin: 12% 30%;
 }
 
-/* Half sheets: disclosure surfaces (advanced, details, confirmations). */
+/* Half sheets: disclosure surfaces (advanced, details, confirmations).
+   The left hairline is a neutral structural inset (never a status accent),
+   drawn as a shadow so no status-colored edge borders exist anywhere. */
 .fs-sheet.is-half {
   left: auto;
   width: min(600px, 86%);
-  border-left: var(--border-width) solid var(--border); /* neutral structural hairline, not a status accent */
-  box-shadow: var(--elev-3);
+  box-shadow: inset var(--border-width) 0 0 0 var(--border), var(--elev-3);
   transform-origin: 100% 30%;
 }
 
@@ -198,6 +199,10 @@
   font-family: var(--display-font);
   font-size: var(--fs-xl);
   font-weight: 700;
+  /* Squeezed states (e.g. 900px shell with the Assistant panel open) narrow
+     the sheet below is-narrow's shell-width trigger; let long words break
+     inside the two-line clamp instead of clipping horizontally. */
+  overflow-wrap: anywhere;
   line-height: 1.15;
   overflow: hidden;
 }
@@ -1185,6 +1190,193 @@
 [data-theme^="basic"] .fs-hero-search input { box-shadow: none; }
 [data-theme^="basic"] .fs-sheet { transition-duration: var(--motion-fast); }
 [data-theme^="friendly"] .fs-plate { border-radius: var(--radius-md); }
+
+/* ---------------------------------------------- rev 2 manager pieces */
+
+/* Empty states: honest, quiet, with one real affordance. */
+.fs-empty {
+  margin: 12px 0;
+  padding: 18px 16px;
+  border: var(--border-width) dashed var(--border);
+  border-radius: var(--radius-md);
+}
+.fs-empty .fs-btn { margin-top: 10px; }
+
+/* Cross-page links share the button silhouette; underline stays off the
+   chrome but the external icon says "leaves this page". */
+a.fs-btn { text-decoration: none; }
+
+/* Code blocks (command expansion, formatter samples). One bounded
+   horizontal scroller; the sheet body remains the only vertical scroller. */
+.fs-code {
+  margin: 6px 0;
+  padding: 10px 12px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-family: var(--mono-font);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Truthful staged-phase line (ops land here while a trigger runs). */
+.fs-opline {
+  margin: 6px 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  font-style: italic;
+}
+.fs-opline.is-done { font-style: normal; color: var(--text-muted); }
+
+/* Inline validation errors: text + weight, never color alone. */
+.fs-form-error {
+  margin: 8px 0 0;
+  color: var(--accent-error);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+/* Formatter before/after sample. */
+.fs-sample {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 8px 0;
+}
+.fs-sample-label {
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.pm-shell.is-narrow .fs-sample { grid-template-columns: 1fr; }
+
+/* Keyboard shortcut rows + keycaps. */
+.fs-kbd-combo { display: inline-flex; align-items: center; gap: 3px; }
+.fs-kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-family: var(--mono-font);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  box-shadow: 0 1px 0 var(--border);
+}
+.fs-kbd-plus { color: var(--text-muted); font-size: var(--fs-xs); }
+.fs-shortcut {
+  display: grid;
+  grid-template-columns: minmax(150px, auto) 1fr auto;
+  column-gap: 14px;
+  align-items: center;
+  padding: 8px 10px;
+  border-top: var(--border-width) solid color-mix(in srgb, var(--border-light) 55%, transparent);
+}
+.fs-shortcut:hover { background: color-mix(in srgb, var(--surface-alt) 60%, transparent); }
+.fs-shortcut-keys { display: inline-flex; }
+.fs-shortcut-label { display: flex; align-items: baseline; gap: 8px; min-width: 0; font-size: var(--fs-sm); color: var(--text-primary); }
+.fs-shortcut-scope { color: var(--text-muted); font-size: var(--fs-xs); }
+.fs-shortcut-acts { display: inline-flex; gap: 4px; }
+.fs-shortcut.is-cheat { grid-template-columns: minmax(150px, auto) 1fr; }
+.pm-shell.is-narrow .fs-shortcut { grid-template-columns: 1fr; row-gap: 4px; }
+
+/* The shortcut recorder capture area. Slint note: a FocusScope consuming
+   key events while armed; the dashed frame is the armed affordance. */
+.fs-capture {
+  margin: 10px 0;
+  padding: 22px 16px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+  text-align: center;
+  cursor: text;
+}
+.fs-capture:focus-visible, .fs-capture:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border));
+}
+.fs-capture-keys { min-height: 28px; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: var(--fs-md); }
+
+/* Tools availability funnel: five measured stages. */
+.fs-funnel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 10px 0 16px;
+  padding: 12px 14px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+}
+.fs-funnel-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 74px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border-light);
+}
+.fs-funnel-stage b { font-size: var(--fs-lg); color: var(--text-primary); }
+.fs-funnel-stage span { font-size: var(--fs-2xs); color: var(--text-muted); text-align: center; }
+.fs-funnel-arrow { display: inline-flex; color: var(--text-muted); }
+.fs-funnel-arrow i[data-ico] { display: inline-flex; width: 13px; height: 13px; }
+
+/* Testing & Debug capability matrix. ONE bounded horizontal scroller
+   inside the sheet's single vertical scroller (Slint: GridLayout of
+   ComboBoxes inside one ScrollView; no nested unbounded scrolling). */
+.fs-matrix-scroll { overflow-x: auto; margin: 8px 0; }
+.fs-matrix {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+.fs-matrix th {
+  text-align: left;
+  padding: 6px 10px;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: var(--border-width) solid var(--border);
+}
+.fs-matrix td {
+  padding: 9px 10px;
+  vertical-align: top;
+  border-bottom: var(--border-width) solid color-mix(in srgb, var(--border-light) 55%, transparent);
+}
+.fs-matrix-name { min-width: 220px; }
+.fs-matrix .fs-row-label { font-size: var(--fs-sm); }
+.fs-matrix .fs-row-desc { max-width: 340px; }
+
+/* Terminal color pair swatches. */
+.fs-colorpair { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; font-family: var(--mono-font); font-size: var(--fs-xs); }
+.fs-colorswatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-xs);
+  border: var(--border-width) solid var(--border-light);
+}
+
+/* Progress tone for shared status words (PMProvider busy states). Same
+   weight/icon grammar as the other tones; color never carries alone. */
+.pm-status-word[data-tone="progress"] { color: var(--text-secondary); font-style: italic; }
+.pm-status-word[data-tone="progress"] i[data-ico] { color: var(--accent-blue); }
 
 /* Reduced motion: the shell's three global kill switches already force all
    transitions/animations to .01ms. End states are identical; the spine

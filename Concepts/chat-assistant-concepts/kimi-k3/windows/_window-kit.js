@@ -27,10 +27,11 @@
 
   // --- locked selector vocabularies -----------------------------------------
   var PERSONAS = ['Research analyst', 'Pair programmer', 'Planner', 'Reviewer'];
-  var MODELS = ['Kimi K3', 'Kimi K3 Pro', 'GPT-5', 'Claude Sonnet 4.6'];
-  var EFFORTS = ['High', 'Medium', 'Low'];
   var MODES = ['Ask', 'Agent', 'Plan', 'Deep plan'];
   var WORKTREES = ['main', 'feat-usage-redesign', 'fix-import-tests'];
+  // selectors.model / selectors.effort remain as the persisted project-default
+  // mirror for old sessions; the route picker (_shared/route.js) owns model,
+  // effort, and speed selection now.
   var SELECTOR_DEFAULTS = {
     persona: 'Research analyst',
     model: 'Kimi K3',
@@ -382,93 +383,125 @@
     }
 
     var persona = peerButton('persona', 'Persona', 'k3w-kit-persona');
-    var model = peerButton('model', 'Model', 'k3w-kit-model');
     var mode = peerButton('mode', 'Mode', 'k3w-kit-mode');
     var worktree = iconButton('worktree', 'Worktree', 'k3w-kit-worktree-btn', 'k3w-kit-worktree');
 
     wrap.appendChild(persona.btn);
-    wrap.appendChild(model.btn);
+    // Route picker replaces the old Model peer (the effort flyout moves into
+    // the picker's submenu stack — clean cutover, no second effort menu).
+    // K3Route.button keeps data-testid "k3w-kit-model" for harness compat.
+    var routeBtn = window.K3Route.button(ctx);
+    wrap.appendChild(routeBtn);
     wrap.appendChild(mode.btn);
+    var accessBtn = window.K3Access.button(ctx);
+    wrap.appendChild(accessBtn);
+    var bsdBtn = window.K3BSD.button(ctx,
+      (window.K3BSD_VARIANTS && window.K3BSD_VARIANTS[ctx.env.windowId]) || 'mono');
+    wrap.appendChild(bsdBtn);
     wrap.appendChild(worktree);
 
     persona.btn.addEventListener('click', function () {
-      var cur = store.get('selectors.persona', SELECTOR_DEFAULTS.persona);
+      var tid = store.get('activeThreadId', null);
+      var eff = tid ? ctx.data.effective(tid) : null;
+      var cur = (eff && eff.persona) || store.get('selectors.persona', SELECTOR_DEFAULTS.persona);
       var items = PERSONAS.map(function (p) {
         return {
           label: p,
           selected: p === cur,
-          action: function () { store.set('selectors.persona', p); }
+          action: function () {
+            // Persona is thread-local by default (packet: thread-local state);
+            // "project default" is an explicit secondary choice.
+            if (tid) ctx.data.setThreadLocal(tid, { persona: p });
+            else store.set('selectors.persona', p);
+          }
         };
       });
-      items.push({ type: 'header', label: 'Applies from the next turn' });
+      items.push({ type: 'header', label: 'Applies from the next turn · this thread only' });
+      if (tid) {
+        items.push({
+          label: 'Set as project default',
+          icon: 'check',
+          action: function () {
+            var tl = store.get('threadLocal.' + tid, null);
+            if (tl && tl.persona != null) store.set('selectors.persona', tl.persona);
+          }
+        });
+      }
       ui(ctx).menu(persona.btn, items, { searchable: true, searchPlaceholder: 'Search personas', width: 220 });
     });
 
-    model.btn.addEventListener('click', function () {
-      var curModel = store.get('selectors.model', SELECTOR_DEFAULTS.model);
-      var curEffort = store.get('selectors.effort', SELECTOR_DEFAULTS.effort);
-      var items = MODELS.map(function (m) {
-        return {
-          label: m,
-          selected: m === curModel,
-          submenu: [{ type: 'header', label: 'Reasoning effort' }].concat(EFFORTS.map(function (e) {
-            return {
-              label: e,
-              selected: m === curModel && e === curEffort,
-              action: function () {
-                store.set('selectors.model', m);
-                store.set('selectors.effort', e);
-              }
-            };
-          }))
-        };
-      });
-      ui(ctx).menu(model.btn, items, { searchable: true, searchPlaceholder: 'Search models', width: 220 });
-    });
-
     mode.btn.addEventListener('click', function () {
-      var cur = store.get('selectors.mode', SELECTOR_DEFAULTS.mode);
+      var tid = store.get('activeThreadId', null);
+      var eff = tid ? ctx.data.effective(tid) : null;
+      var cur = (eff && eff.mode) || store.get('selectors.mode', SELECTOR_DEFAULTS.mode);
       var items = MODES.map(function (m) {
         return {
           label: m,
           selected: m === cur,
-          action: function () { store.set('selectors.mode', m); }
+          action: function () {
+            if (tid) ctx.data.setThreadLocal(tid, { mode: m });
+            else store.set('selectors.mode', m);
+          }
         };
       });
+      items.push({ type: 'header', label: 'Conversation/workflow mode is separate from the access profile · this thread only' });
       ui(ctx).menu(mode.btn, items, { width: 180 });
     });
 
     worktree.addEventListener('click', function () {
-      var cur = store.get('selectors.worktree', SELECTOR_DEFAULTS.worktree);
+      var tid = store.get('activeThreadId', null);
+      var eff = tid ? ctx.data.effective(tid) : null;
+      var cur = (eff && eff.worktree) || store.get('selectors.worktree', SELECTOR_DEFAULTS.worktree);
       var items = WORKTREES.map(function (w) {
         return {
           label: w,
           selected: w === cur,
-          action: function () { store.set('selectors.worktree', w); }
+          action: function () {
+            if (tid) ctx.data.setThreadLocal(tid, { worktree: w });
+            else store.set('selectors.worktree', w);
+          }
         };
       });
       ui(ctx).menu(worktree, items, { width: 220 });
     });
 
+    // "This thread" mini chip appended to a peer label when the field carries
+    // a thread-local override (packet: scope must be visible without crowding).
+    function paintScope(btnEl, overridden) {
+      var old = btnEl.querySelector('.k3w-kit-scope');
+      if (old) old.remove();
+      if (!overridden) return;
+      var chip = el('span', 'k3w-kit-scope', 'This thread');
+      chip.setAttribute('data-testid', 'k3w-kit-scope');
+      btnEl.appendChild(chip);
+    }
+
     function refreshLabels() {
-      var p = store.get('selectors.persona', SELECTOR_DEFAULTS.persona);
-      var m = store.get('selectors.model', SELECTOR_DEFAULTS.model);
-      var e = store.get('selectors.effort', SELECTOR_DEFAULTS.effort);
-      var mo = store.get('selectors.mode', SELECTOR_DEFAULTS.mode);
-      var w = store.get('selectors.worktree', SELECTOR_DEFAULTS.worktree);
+      var tid = store.get('activeThreadId', null);
+      var eff = tid ? ctx.data.effective(tid) : null;
+      var p = (eff && eff.persona) || store.get('selectors.persona', SELECTOR_DEFAULTS.persona);
+      var mo = (eff && eff.mode) || store.get('selectors.mode', SELECTOR_DEFAULTS.mode);
+      var w = (eff && eff.worktree) || store.get('selectors.worktree', SELECTOR_DEFAULTS.worktree);
       persona.label.textContent = p;
-      model.label.textContent = m + ' · ' + e;
       mode.label.textContent = mo;
       persona.btn.title = 'Persona: ' + p;
-      model.btn.title = 'Model: ' + m + ' · ' + e;
       mode.btn.title = 'Mode: ' + mo;
       worktree.title = 'Worktree: ' + w;
       worktree.setAttribute('aria-label', 'Worktree: ' + w);
+      paintScope(persona.btn, !!(eff && eff.overrides.persona));
+      paintScope(mode.btn, !!(eff && eff.overrides.mode));
     }
     var unsub = store.subscribe('selectors', refreshLabels);
+    var unsubTl = store.subscribe('threadLocal', refreshLabels);
+    var unsubActive = store.subscribe('activeThreadId', refreshLabels);
     refreshLabels();
 
-    wrap.unmount = function () { unsub(); };
+    wrap.unmount = function () {
+      unsub(); unsubTl(); unsubActive();
+      if (routeBtn.unmount) routeBtn.unmount();
+      if (accessBtn.unmount) accessBtn.unmount();
+      if (bsdBtn.unmount) bsdBtn.unmount();
+    };
     return wrap;
   }
 
@@ -605,15 +638,42 @@
         root.appendChild(box);
 
         compact.addEventListener('click', function () {
+          // Real operation: visible progress -> durable receipt in the
+          // transcript. Canonical history and historical Usage are untouched.
           box.innerHTML = '';
-          box.appendChild(el('div', 'k3-footnote', 'Context compacted — prototype'));
+          var prog = el('div', 'k3-footnote k3w-kit-ringpop-progress', 'Compacting context…');
+          box.appendChild(prog);
           ui(ctx).springResize(root);
+          var tid2 = ctx.store.get('activeThreadId', null);
+          var finish = function () {
+            if (tid2) {
+              ctx.data.appendRecord(tid2, {
+                receiptCard: {
+                  id: 'rc-compact-' + tid2,
+                  kind: 'compact',
+                  title: 'Context compacted',
+                  lines: [
+                    { label: 'Tokens', value: '41,200 → 9,800' },
+                    { label: 'Summary represents', value: '34 messages' },
+                    { label: 'History', value: 'untouched — branch ancestry preserved' }
+                  ]
+                }
+              });
+            }
+            window.K3.emit('data', { type: 'compact-now-done', threadId: tid2 });
+            box.innerHTML = '';
+            box.appendChild(el('div', 'k3-footnote', 'Context compacted — receipt added to the transcript.'));
+            ui(ctx).springResize(root);
+          };
+          if (ui(ctx).reduced()) finish();
+          else setTimeout(finish, 700);
         });
         more.addEventListener('click', function () {
-          if (box.querySelector('.k3w-kit-ringpop-note')) return;
-          box.appendChild(el('div', 'k3-footnote k3w-kit-ringpop-note',
-            'Context Detail is owned by the parallel Usage-page redesign; this prototype preserves the entry point only'));
-          ui(ctx).springResize(root);
+          // Context Lens admission receipt (sources + provenance), not a
+          // generic token dump.
+          if (window.K3Lens && typeof window.K3Lens.openReceipt === 'function') {
+            window.K3Lens.openReceipt(ctx, more);
+          }
         });
       }, { align: 'right' });
     }
@@ -677,6 +737,20 @@
         },
         { type: 'separator' },
         {
+          // Quiet spellcheck scope toggle (packet: thread overflow may carry it)
+          label: (tid && store.get('spell.threadDisabled.' + tid, false))
+            ? 'Enable spell check in this thread'
+            : 'Disable spell check in this thread',
+          icon: 'spell',
+          disabled: !t,
+          action: function () {
+            if (!tid || !window.K3Spell) return;
+            var cur = store.get('spell.threadDisabled.' + tid, false);
+            window.K3Spell.toggleThread(tid, !cur);
+          }
+        },
+        { type: 'separator' },
+        {
           label: t && t.archived ? 'Unarchive thread' : 'Archive thread',
           icon: t && t.archived ? 'unarchive' : 'archive',
           disabled: !t,
@@ -709,7 +783,12 @@
     var chipHolder = el('span', 'k3w-kit-title-chip');
     line1.appendChild(title);
     line1.appendChild(chipHolder);
-    line1.appendChild(el('span', 'k3-agent-tag', 'Kimi K3'));
+    // Offline/sync pill arrives via the header for every window concept.
+    var syncPill = window.K3Sync ? window.K3Sync.pill(ctx) : null;
+    if (syncPill) chipHolder.appendChild(syncPill);
+    var tag = el('span', 'k3-agent-tag', 'Kimi K3');
+    tag.setAttribute('data-concept-model', 'Kimi K3');
+    line1.appendChild(tag);
 
     var line2 = el('div', 'k3w-kit-controls');
     var sel = selectorRow(ctx);
@@ -1197,12 +1276,18 @@
       if (isPaused) {
         controls.appendChild(goalControl('Resume', {
           disabled: goal.canResume === false && !overrideStatus(),
-          onClick: function () { store.set('goalView.' + threadId + '.statusOverride', 'running'); }
+          onClick: function () {
+            if (window.K3Work) window.K3Work.resumeGoal(threadId);
+            else store.set('goalView.' + threadId + '.statusOverride', 'running');
+          }
         }));
       } else if (!isFinal) {
         controls.appendChild(goalControl('Pause', {
           disabled: goal.canPause === false,
-          onClick: function () { store.set('goalView.' + threadId + '.statusOverride', 'paused'); }
+          onClick: function () {
+            if (window.K3Work) window.K3Work.pauseGoal(threadId);
+            else store.set('goalView.' + threadId + '.statusOverride', 'paused');
+          }
         }));
       }
       if (!isFinal) {
@@ -1215,7 +1300,9 @@
               confirmLabel: 'Stop goal',
               danger: true
             }).then(function (ok) {
-              if (ok) store.set('goalView.' + threadId + '.statusOverride', 'stopped');
+              if (!ok) return;
+              if (window.K3Work) window.K3Work.stopGoal(threadId);
+              else store.set('goalView.' + threadId + '.statusOverride', 'stopped');
             });
           }
         }));
@@ -1256,9 +1343,12 @@
         kvs.appendChild(kvRow('Worked', fmtDuration(goal.workedSeconds)));
         kvs.appendChild(kvRow('Elapsed', fmtDuration(goal.totalElapsedSeconds)));
         if (goal.progress && typeof goal.progress.total === 'number') {
-          kvs.appendChild(kvRow('Progress', (goal.progress.complete || 0) + ' of ' + goal.progress.total));
+          kvs.appendChild(kvRow('Progress', (goal.progress.complete || goal.progress.done || 0) + ' of ' + goal.progress.total));
         }
+        if (goal.phase) kvs.appendChild(kvRow('Phase', goal.phase));
         detail.appendChild(kvs);
+        detail.appendChild(el('div', 'k3-footnote',
+          'Goal state survives compaction, disconnect, and UI close.'));
         if (st === 'blocked') {
           var bc = blockedCard();
           bc.classList.add('k3-shake-now'); // one-shot attention shake on reveal
@@ -1291,6 +1381,25 @@
         card.appendChild(ev);
       }
 
+      // Completion receipt: durable, compact, evidence-linked.
+      if (st === 'completed' || st === 'complete') {
+        var receipt = el('div', 'k3w-kit-goal-receipt');
+        receipt.setAttribute('data-testid', 'k3w-kit-goal-receipt');
+        receipt.appendChild(el('div', 'k3w-kit-goal-receipt-title', 'Completion receipt'));
+        var rl = el('div', 'k3w-kit-goal-kvs');
+        rl.appendChild(kvRow('Objective', goal.objective || goal.title || '—'));
+        if (goal.phase) rl.appendChild(kvRow('Final phase', goal.phase));
+        var ev2 = evidenceLines();
+        rl.appendChild(kvRow('Evidence', ev2 && ev2.length ? ev2.length + ' activity lines' : '—'));
+        rl.appendChild(kvRow('Artifacts', arr(thread.artifacts).length + ' attached'));
+        rl.appendChild(kvRow('Worked', fmtDuration(goal.workedSeconds)));
+        if (Number(goal.totalElapsedSeconds) && Number(goal.totalElapsedSeconds) !== Number(goal.workedSeconds)) {
+          rl.appendChild(kvRow('Elapsed', fmtDuration(goal.totalElapsedSeconds)));
+        }
+        receipt.appendChild(rl);
+        card.appendChild(receipt);
+      }
+
       if (replannedNote) {
         card.appendChild(el('div', 'k3-footnote k3w-kit-goal-note', 'Replanned — tasks and schedule updated (prototype)'));
       }
@@ -1311,19 +1420,36 @@
         save.type = 'button';
         save.addEventListener('click', function () {
           if (pop) pop.close();
-          flashReplanning = true;
-          replannedNote = true;
-          render();
-          clearTimeout(flashTimer);
-          // The replan flash lingers as a status pill + objective shimmer. Under
-          // reduced motion the CSS is instant, so clear the flash state at once
-          // (the replanned footnote stays) instead of letting the pill appear
-          // then silently vanish 1.2s later.
-          var flashMs = K3.motionReduced() ? 0 : 1200;
-          flashTimer = setTimeout(function () {
-            flashReplanning = false;
+          var newObjective = ta.value;
+          // Real replan flow: explicit safe-boundary choice, durable revision
+          // note on the goal record, then the replan flash.
+          ui(ctx).confirm({
+            title: 'Replan with the updated objective?',
+            body: 'Tasks and schedule update inside the current safe boundary. Widening scope or retargeting the route needs an explicit Goal update.',
+            confirmLabel: 'Replan within boundary',
+            cancelLabel: 'Keep current plan'
+          }).then(function (ok) {
+            if (!ok) return;
+            goal.objective = newObjective;
+            goal.revisions = arr(goal.revisions);
+            goal.revisions.push({ at: new Date().toISOString(), note: 'Objective edited; replanned within the safe boundary.' });
+            if (window.K3Work && typeof window.K3Work.replanGoal === 'function') {
+              window.K3Work.replanGoal(threadId, { objective: newObjective, boundary: 'safe' });
+            }
+            flashReplanning = true;
+            replannedNote = true;
             render();
-          }, flashMs);
+            clearTimeout(flashTimer);
+            // The replan flash lingers as a status pill + objective shimmer. Under
+            // reduced motion the CSS is instant, so clear the flash state at once
+            // (the replanned footnote stays) instead of letting the pill appear
+            // then silently vanish 1.2s later.
+            var flashMs = K3.motionReduced() ? 0 : 1200;
+            flashTimer = setTimeout(function () {
+              flashReplanning = false;
+              render();
+            }, flashMs);
+          });
         });
         row.appendChild(save);
         box.appendChild(row);
@@ -1344,8 +1470,19 @@
       }
       render();
     });
+    // K3Work mutates thread.activeGoal directly and nudges via touchThread;
+    // re-read the record so lifecycle ops (pause/resume/complete) repaint.
+    function onData(evt) {
+      if (!evt || evt.threadId && evt.threadId !== threadId) return;
+      if (evt.type === 'threads-changed' || evt.type === 'restarted') {
+        var t2 = ctx.data.thread(threadId);
+        if (t2 && t2.activeGoal) { goal = t2.activeGoal; render(); }
+      }
+    }
+    window.K3.on('data', onData);
     wrapped.unmount = function () {
       clearTimeout(flashTimer);
+      window.K3.off('data', onData);
       unsub();
       innerUnmount();
     };
@@ -1515,8 +1652,168 @@
     return yieldWrap(ctx, threadId, row);
   }
 
+  // === 12. capacitySurface (packet: sustainable capacity forecast) ============
+  function capacitySurface(ctx, threadId) {
+    var thread = ctx.data.thread(threadId);
+    var fc = thread && thread.capacityForecast;
+    if (!fc) return null;
+
+    var card = el('section', 'k3w-kit-capacity k3w-kit-surface');
+    card.setAttribute('data-testid', 'k3w-kit-capacity');
+
+    function render() {
+      card.innerHTML = '';
+      var head = el('div', 'k3w-kit-surface-head');
+      head.appendChild(iconSpan('capacity', 'k3w-kit-surface-ic'));
+      head.appendChild(el('span', 'k3w-kit-surface-title', 'Capacity forecast'));
+      head.appendChild(el('span', 'k3w-kit-surface-meta',
+        'Recommended ' + (fc.recommended || 1) + ' concurrent · ' + (fc.waves || 1) + ' waves'));
+      card.appendChild(head);
+      var rows = el('div', 'k3w-kit-kv-rows');
+      rows.appendChild(kvRow('Requested specialists', String(fc.requested || 0)));
+      rows.appendChild(kvRow('Recommended concurrent', String(fc.recommended || 0)));
+      rows.appendChild(kvRow('Waves', String(fc.waves || 0)));
+      rows.appendChild(kvRow('Reason', fc.reason || ''));
+      card.appendChild(rows);
+      card.appendChild(el('div', 'k3-footnote',
+        'A compact forecast, not a guarantee. Required independent roles are preserved.'));
+    }
+    function onData(evt) {
+      if (evt && evt.type === 'capacity-changed' && (!evt.threadId || evt.threadId === threadId)) {
+        var t2 = ctx.data.thread(threadId);
+        fc = t2 && t2.capacityForecast;
+        if (fc) render();
+      }
+    }
+    window.K3.on('data', onData);
+    render();
+    card.unmount = function () { window.K3.off('data', onData); };
+    return yieldWrap(ctx, threadId, card);
+  }
+
+  // === 13. crewSurface (packet: crew as execution strategy) ===================
+  function crewSurface(ctx, threadId) {
+    var thread = ctx.data.thread(threadId);
+    var crew = thread && thread.crew;
+    if (!crew) return null;
+
+    var card = el('section', 'k3w-kit-crew k3w-kit-surface');
+    card.setAttribute('data-testid', 'k3w-kit-crew');
+
+    function routeLabel(routeKey) {
+      var r = routeKey ? ctx.data.routeByKey(routeKey) : null;
+      return r ? r.providerName + ' · ' + r.accountLabel + ' · ' + r.modelShort : (routeKey || '—');
+    }
+    function render() {
+      card.innerHTML = '';
+      var head = el('div', 'k3w-kit-surface-head');
+      head.appendChild(iconSpan('crew', 'k3w-kit-surface-ic'));
+      head.appendChild(el('span', 'k3w-kit-surface-title', 'Crew — ' + (crew.templateLabel || crew.templateId || 'custom')));
+      var waves = crew.waves || {};
+      head.appendChild(el('span', 'k3w-kit-surface-meta',
+        (waves.concurrent || 0) + ' running · ' + (waves.queued || 0) + ' queued'));
+      card.appendChild(head);
+      var rows = el('div', 'k3w-kit-crew-rows');
+      arr(crew.members).forEach(function (m) {
+        var row = el('div', 'k3w-kit-crew-row');
+        row.appendChild(el('span', 'k3w-kit-crew-role', m.role || 'Member'));
+        row.appendChild(el('span', 'k3w-kit-crew-route', routeLabel(m.route)));
+        var st = el('span', 'k3-chip k3w-kit-state');
+        var stKey = normStateKey(m.status || 'queued');
+        st.appendChild(el('span', 'k3-dot' + (threadDotVariant(stKey) ? ' ' + threadDotVariant(stKey) : '')));
+        st.appendChild(el('span', 'k3w-kit-state-label', humanizeThreadState(stKey)));
+        row.appendChild(st);
+        rows.appendChild(row);
+      });
+      card.appendChild(rows);
+      var tpl = null;
+      arr(ctx.data.crewTemplates()).forEach(function (t) { if (t.id === crew.templateId) tpl = t; });
+      card.appendChild(el('div', 'k3-footnote',
+        (tpl && tpl.reserveReason ? tpl.reserveReason + '. ' : '') +
+        'Members produce independent results; the parent thread reduces. Crew selection is local to this thread.'));
+    }
+    function onData(evt) {
+      if (evt && evt.type === 'crew-changed' && (!evt.threadId || evt.threadId === threadId)) {
+        var t2 = ctx.data.thread(threadId);
+        crew = t2 && t2.crew;
+        if (crew) render();
+      }
+    }
+    window.K3.on('data', onData);
+    render();
+    card.unmount = function () { window.K3.off('data', onData); };
+    return yieldWrap(ctx, threadId, card);
+  }
+
+  // === 14. opsSurface (packet: operational awareness) =========================
+  function opsSurface(ctx, threadId) {
+    var summary = window.K3Work ? window.K3Work.opsSummary(threadId) : null;
+    if (!summary || !arr(summary.conflicts).length) return null;
+
+    var card = el('section', 'k3w-kit-ops k3w-kit-surface');
+    card.setAttribute('data-testid', 'k3w-kit-ops');
+
+    function render() {
+      summary = window.K3Work.opsSummary(threadId);
+      card.innerHTML = '';
+      var conflicts = arr(summary.conflicts).filter(function (c) { return c.state !== 'resolved'; });
+      if (!conflicts.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      var head = el('div', 'k3w-kit-surface-head');
+      head.appendChild(iconSpan('port', 'k3w-kit-surface-ic'));
+      head.appendChild(el('span', 'k3w-kit-surface-title',
+        conflicts.length === 1 ? '1 operational conflict' : conflicts.length + ' operational conflicts'));
+      card.appendChild(head);
+      conflicts.forEach(function (c) {
+        var row = el('div', 'k3w-kit-ops-conflict');
+        var text = el('span', 'k3w-kit-ops-text',
+          'Port ' + c.port + ' is used by ' + (c.ownerLabel || c.owner || 'another worktree') + '.');
+        row.appendChild(text);
+        var actions = el('span', 'k3w-kit-ops-actions');
+        if (c.alternative != null) {
+          var useAlt = el('button', 'k3-btn k3-btn-ghost k3w-kit-mini', 'Use ' + c.alternative + ' instead?');
+          useAlt.type = 'button';
+          useAlt.setAttribute('data-testid', 'k3w-kit-ops-alt');
+          useAlt.addEventListener('click', function () {
+            window.K3Work.applyPortAlternative(threadId, c);
+          });
+          actions.appendChild(useAlt);
+        }
+        var detailsBtn = el('button', 'k3-btn k3-btn-ghost k3w-kit-mini', 'Details');
+        detailsBtn.type = 'button';
+        detailsBtn.addEventListener('click', function () {
+          var box = el('div', 'k3w-kit-ops-details');
+          box.appendChild(kvRow('Port', String(c.port)));
+          box.appendChild(kvRow('Owner', c.ownerLabel || c.owner || '—'));
+          box.appendChild(kvRow('Worktree', c.owner || '—'));
+          box.appendChild(kvRow('Thread', c.threadId || '—'));
+          if (c.alternative != null) box.appendChild(kvRow('Alternative', String(c.alternative) + ' (free)'));
+          var s2 = window.K3Work.opsSummary(threadId);
+          box.appendChild(el('div', 'k3w-kit-ops-sub', 'Worktrees'));
+          arr(s2.worktrees).forEach(function (w) {
+            box.appendChild(kvRow(w.label || w.id, humanizeThreadState(w.state) + (w.cleanup ? ' · cleanup ' + w.cleanup : '')));
+          });
+          if (s2.allowance) box.appendChild(kvRow('Allowance', s2.allowance.reserve + ' · resets ' + (s2.allowance.reset || '—')));
+          if (s2.pressure) box.appendChild(kvRow('Pressure', 'CPU ' + s2.pressure.cpu + ' · memory ' + s2.pressure.memory));
+          ui(ctx).popover(detailsBtn, box, { className: 'k3w-kit-ops-pop k3-scroll' });
+        });
+        actions.appendChild(detailsBtn);
+        row.appendChild(actions);
+        card.appendChild(row);
+      });
+    }
+    function onData(evt) {
+      if (evt && evt.type === 'ops-conflict') render();
+    }
+    window.K3.on('data', onData);
+    render();
+    card.unmount = function () { window.K3.off('data', onData); };
+    return yieldWrap(ctx, threadId, card);
+  }
+
   // === public surface ==========================================================
   window.K3WindowKit = {
+    PERSONAS: PERSONAS,
     selectorRow: selectorRow,
     searchBox: searchBox,
     lensButton: lensButton,
@@ -1527,6 +1824,9 @@
     historyPanel: historyPanel,
     goalSurface: goalSurface,
     todoSurface: todoSurface,
-    workChips: workChips
+    workChips: workChips,
+    capacitySurface: capacitySurface,
+    crewSurface: crewSurface,
+    opsSurface: opsSurface
   };
 })();

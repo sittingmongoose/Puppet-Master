@@ -943,3 +943,284 @@ html[data-motion='reduced'] .pm-btn:active {
     transition-delay: 0ms !important;
   }
 }
+
+
+/* ---- BSD visual states (glow only while auto-active) ---- */
+@keyframes pm-bsd-halo {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--pm-bsd-auto-active, var(--accent-primary)) 55%, transparent),
+      0 0 8px 1px var(--pm-bsd-auto-active-glow, color-mix(in srgb, var(--accent-primary) 45%, transparent));
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px var(--pm-bsd-auto-active, var(--accent-primary)),
+      0 0 16px 4px var(--pm-bsd-auto-active-glow, color-mix(in srgb, var(--accent-primary) 55%, transparent));
+  }
+}
+
+.pm-bsd-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.pm-bsd-trigger {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--border, #666) 70%, transparent);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.pm-bsd-control.is-off .pm-bsd-trigger {
+  color: var(--pm-bsd-off, var(--text-muted));
+  opacity: 0.82;
+}
+
+.pm-bsd-control.is-auto-idle .pm-bsd-trigger {
+  color: var(--pm-bsd-idle, var(--text-secondary));
+}
+
+.pm-bsd-control.is-auto-active .pm-bsd-trigger {
+  color: var(--pm-bsd-auto-active, var(--accent-primary));
+  border-color: var(--pm-bsd-auto-active, var(--accent-primary));
+  animation: pm-bsd-halo calc(var(--pm-chat-motion-surface, 260ms) * 2.2) ease-in-out infinite;
+}
+
+/* Manual On — distinct filled accent, never glows */
+.pm-bsd-control.is-on .pm-bsd-trigger {
+  background: var(--pm-bsd-on, var(--accent-primary));
+  border-color: var(--pm-bsd-on, var(--accent-primary));
+  color: var(--pm-bsd-on-fg, var(--surface));
+  animation: none;
+  box-shadow: none;
+}
+
+.pm-bsd-mono .pm-bsd-trigger {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+  position: relative;
+}
+
+.pm-bsd-mono-face {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+}
+
+.pm-bsd-mono-mark {
+  position: absolute;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.001;
+}
+
+.pm-bsd-lamp .pm-bsd-trigger {
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.pm-bsd-lamp[data-bsd-lamp],
+.pm-bsd-lamp .pm-bsd-lamp,
+span.pm-bsd-lamp {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-flex;
+  background: var(--text-muted);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 50%, transparent);
+}
+
+.pm-bsd-control.is-auto-active .pm-bsd-lamp,
+.pm-bsd-control.is-auto-active [data-bsd-lamp] {
+  background: var(--pm-bsd-auto-active, var(--accent-primary));
+}
+
+.pm-bsd-control.is-on .pm-bsd-lamp,
+.pm-bsd-control.is-on [data-bsd-lamp] {
+  background: var(--pm-bsd-on-fg, var(--surface));
+}
+
+.pm-bsd-chip .pm-bsd-trigger {
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: color-mix(in srgb, var(--accent-soft, var(--surface-elevated)) 55%, transparent);
+}
+
+.pm-bsd-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pm-bsd-panel {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 240px;
+  max-width: 300px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border, rgba(127,127,127,.4));
+  background: var(--surface-elevated, var(--surface));
+  box-shadow: var(--elev-2, 0 10px 28px rgba(0,0,0,.18));
+  color: var(--text-primary);
+}
+
+.pm-bsd-panel[hidden] { display: none !important; }
+
+.pm-bsd-panel-title {
+  font-weight: 600;
+  font-size: 12.5px;
+  margin-bottom: 8px;
+}
+
+.pm-bsd-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.pm-bsd-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.pm-bsd-radio:hover {
+  background: color-mix(in srgb, var(--accent-soft, #444) 35%, transparent);
+  color: var(--text-primary);
+}
+
+.pm-bsd-radio.is-checked { color: var(--text-primary); }
+.pm-bsd-radio input { accent-color: var(--accent-primary); margin: 0; }
+
+.pm-bsd-scope-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -4px 0 8px;
+}
+
+.pm-bsd-foot {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-top: 6px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.pm-bsd-glyph,
+.pm-bsd-glyph svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.pm-bsd-glyph-text {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+html[data-reduced-motion='1'] .pm-bsd-control.is-auto-active .pm-bsd-trigger,
+html[data-motion='reduced'] .pm-bsd-control.is-auto-active .pm-bsd-trigger,
+[data-reduced-motion='1'] .pm-bsd-control.is-auto-active .pm-bsd-trigger {
+  animation: none !important;
+  /* Steady soft outline carries the evaluating signal */
+  box-shadow: 0 0 0 2px var(--pm-bsd-auto-active-glow, color-mix(in srgb, var(--accent-primary) 55%, transparent));
+}
+
+html[data-reduced-motion='1'] .pm-bsd-control.is-on .pm-bsd-trigger,
+html[data-motion='reduced'] .pm-bsd-control.is-on .pm-bsd-trigger,
+[data-reduced-motion='1'] .pm-bsd-control.is-on .pm-bsd-trigger {
+  animation: none !important;
+  box-shadow: none;
+}
+
+/* OS-level reduced motion (host may leave data-reduced-motion=0) */
+@media (prefers-reduced-motion: reduce) {
+  .pm-bsd-control.is-auto-active .pm-bsd-trigger {
+    animation: none !important;
+    box-shadow: 0 0 0 2px var(--pm-bsd-auto-active-glow, color-mix(in srgb, var(--accent-primary) 55%, transparent));
+  }
+  .pm-bsd-control.is-on .pm-bsd-trigger {
+    animation: none !important;
+    box-shadow: none;
+  }
+}
+
+
+/* ---- Step 8: offline/reconnect chip + restore/rewind + reduced-motion opacity ---- */
+.pm-shell-sync-chip {
+  transition: color var(--pm-chat-motion-chip, 160ms) ease,
+    background-color var(--pm-chat-motion-chip, 160ms) ease,
+    border-color var(--pm-chat-motion-chip, 160ms) ease,
+    opacity var(--pm-chat-motion-chip, 160ms) ease;
+}
+.pm-shell-sync-chip[data-sync-state="offline"],
+.pm-shell-sync-chip[data-sync-state="queued"],
+.pm-shell-sync-chip[data-sync-state="queued-to-send"] {
+  opacity: 0.92;
+}
+.pm-shell-sync-chip[data-sync-state="reconnecting"],
+.pm-shell-sync-chip[data-sync-state="replay"] {
+  opacity: 1;
+}
+.pm-shell-sync-chip[data-sync-state="live"] {
+  opacity: 1;
+}
+
+@keyframes pm-restore-flash {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+.pm-restore-flash,
+.pm-rewind-settle {
+  animation: pm-restore-flash var(--pm-chat-motion-surface, 260ms) ease-out;
+}
+
+html[data-reduced-motion='1'] .pm-shell-sync-chip,
+html[data-motion='reduced'] .pm-shell-sync-chip,
+html[data-reduced-motion='1'] .pm-restore-flash,
+html[data-motion='reduced'] .pm-restore-flash,
+html[data-reduced-motion='1'] .pm-rewind-settle,
+html[data-motion='reduced'] .pm-rewind-settle {
+  animation: none !important;
+  transition: opacity 0.01ms linear !important;
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-shell-sync-chip,
+  .pm-restore-flash,
+  .pm-rewind-settle {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .pm-bsd-control.is-auto-active .pm-bsd-trigger {
+    animation: none !important;
+    box-shadow: 0 0 0 2px var(--pm-bsd-auto-active-glow, color-mix(in srgb, var(--accent-primary) 55%, transparent));
+  }
+}

@@ -608,3 +608,82 @@ textarea.k3t-edit-area { width: 100%; }
 
 /* the search-jump flash target settles with a soft glow (refines k3-flash) */
 .k3t-msg.is-flashing { animation: k3-flash var(--k3-dur-slow, 360ms) var(--ease-out, ease-out) 2; }
+
+/* ==========================================================================
+   Packet card family (final cumulative update): route warnings, attachments,
+   BSD advice/results, receipts, thread requests, restore points, branches,
+   redirect markers, rewound regions, queued badges. Base styles only —
+   per-thread identities differentiate under [data-k3-thread="tN"].
+   ========================================================================== */
+.k3t-packet { display: flex; flex-direction: column; }
+.k3t-packet > * + * { margin-top: 0; }
+.k3t-card-actions {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.k3t-routewarn-routes {
+  margin-top: 6px; font-size: var(--fs-xs, 11px); color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.k3t-routewarn-primary { margin-top: 6px; font-size: var(--fs-sm, 12px); }
+.k3t-attach-reason { margin-top: 6px; font-size: var(--fs-sm, 12px); }
+.k3t-attach-derived { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.k3t-bsdadvice-summary { margin-top: 6px; font-size: var(--fs-sm, 12px); }
+.k3t-bsdadvice-detail { max-width: 320px; font-size: var(--fs-sm, 12px); }
+.k3t-bsdresult {
+  display: flex; align-items: center; gap: 6px; margin-top: 6px;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-bsdresult svg, .k3t-marker svg { width: 12px; height: 12px; }
+.k3t-receipt-rows { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+.k3t-receipt-summary { margin-top: 6px; font-size: var(--fs-sm, 12px); }
+.k3t-threadreq-task { margin-top: 6px; font-size: var(--fs-sm, 12px); }
+.k3t-threadreq-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.k3t-lineage { font-size: var(--fs-xs, 11px); }
+.k3t-redirect {
+  display: flex; align-items: center; gap: 6px; margin-top: 6px;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-redirect svg { width: 12px; height: 12px; flex: 0 0 auto; }
+.k3t-redirect-interrupted { color: var(--text-muted); font-style: italic; }
+.k3t-redirect-redirected { color: var(--accent-primary); }
+.k3t-redirect-resumed { color: var(--text-muted); }
+.k3t-marker {
+  display: flex; align-items: center; gap: 6px; margin-top: 6px;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-marker-ic { display: inline-flex; flex: 0 0 auto; }
+.k3t-rewound {
+  display: flex; align-items: center; gap: 8px;
+  margin: 6px 0; padding: 6px 10px;
+  border: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-queued {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--accent-soft);
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-queued-ic { display: inline-flex; }
+.k3t-queued-ic svg { width: 11px; height: 11px; }
+.k3t-server-note {
+  display: flex; align-items: center; gap: 6px; margin-top: 8px;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.k3t-packet-chiprows { display: flex; flex-direction: column; gap: 2px; padding-top: 8px; }
+.k3t-packet-row {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; padding: 4px 6px;
+  border-radius: var(--radius-sm, 6px);
+  font: inherit; font-size: var(--fs-xs, 11px); color: var(--text-muted);
+  text-align: left;
+}
+.k3t-packet-row:hover { background: var(--accent-soft); color: var(--text); }
+.k3t-packet-row.is-open { color: var(--text); }
+.k3t-packet-row-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k3t-details-pop { max-width: 340px; }
+.k3t-shortcut-wrap { display: inline-flex; align-items: stretch; gap: 2px; }
+.k3t-shortcut-more { align-self: center; }
+html[data-motion="reduced"] .k3t-packet-row { transition: none; }

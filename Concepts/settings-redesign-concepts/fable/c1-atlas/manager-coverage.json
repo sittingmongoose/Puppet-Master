@@ -1,0 +1,153 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "aligned_to": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "c1-atlas",
+  "model": "fable",
+  "groups": [
+    {
+      "id": "core",
+      "entries": [
+        {
+          "manager": "Settings Home",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c1-atlas.html#/home",
+            "fixtures": ["scenario:baseline", "scenario:calm", "scenario:attention-heavy", "scenario:first-run"],
+            "probes": ["masthead + full-width search", "directory grouped by Parts with destination rows (no filter pills)", "notice groups with one status word, one headline, one reason, max two actions", "recents"]
+          }
+        },
+        {
+          "manager": "Settings Search",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c1-atlas.html#/search/diagnostics",
+            "fixtures": ["typo:notifcations", "typo:apperance", "typo:permisions", "no-results:flux capacitor"],
+            "probes": ["cross-category fuzzy results keep part headings", "result kinds visibly distinct (setting, manager, manager-receipt, action)", "manager-receipt rows are real links into the covering concept", "Enter activates the top-scored result"]
+          }
+        },
+        {
+          "manager": "Settings Workspace",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c1-atlas.html#/dest/context/instructions",
+            "fixtures": ["scenario:managed-workspace", "fx.long-text"],
+            "probes": ["one category loads as a continuous numbered document", "leader-dot TOC with ink marker scrollspy", "controlled subcategory jumps", "advanced/expert disclosures and per-domain diagnostics drawer", "narrow widths collapse the TOC into the Contents drawer"]
+          }
+        },
+        {
+          "manager": "Provider/Account/Model/Installation",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c1-atlas.html#/manager/manager.providers",
+            "fixtures": ["install-update", "install-update-fail", "install-select", "scenario:offline", "scenario:usage-exhausted"],
+            "probes": ["humanized installation cards with confidence + update state + advanced resolution detail", "auth boundary per provider via PMProvider.resolveAuthBoundary", "cursor-cli explicit install offer with exact host/environment picker", "OpenCode serverInfo with vault token reference", "free routes in all six states + catalog freshness", "requested/effective on role-batch-reviewer and the Opus model row", "Haiku fastNote (capability never inferred from names)"]
+          }
+        },
+        {
+          "manager": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c1-atlas.html#/setting/system.health.diagnostics-verbosity",
+            "fixtures": ["fx.validation-error", "fx.restart-required", "fx.changed-elsewhere"],
+            "probes": ["all nine value states as marginalia chips", "blank text never means auto (explicit Set a value entry point)", "expert rows lock until deliberate unlock", "deep-linked settings reveal with focus flash"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "entries": [
+        {
+          "manager": "Context & Instructions",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.contextSources",
+          "notes": "Appendix E: everyday controls (rowHtml over contextSources.normalControls), AGENTS.md precedence chain, source hashes + prefix hash, last-request admitted/omitted with token counts and reasons, persona footprint, selected-vs-installed tools, compaction strategy, cache compatibility, exposing-never-injects boundary."
+        },
+        {
+          "manager": "Memory",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.memory",
+          "notes": "Appendix B: gist library with evidence, verify/pin/edit/discard/fade, functional version restore, capsule preview with token estimate, recall dynamics (half-life is retrieval activation, not deletion), maintenance (rebuild/dedupe, summarize, archive, redact) with honest receipts, Assistant-only visibility note, real first-run empty state."
+        },
+        {
+          "manager": "Personas",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.personas",
+          "notes": "Appendix F: core cast with mission/use boundary, model-facing capsule in the marginalia column, footprint, provenance, eligible-not-eager skills, thread/project/global default scope control, blocked import with diff/trust/secret/prompt-injection findings, behavior-not-authority statute."
+        },
+        {
+          "manager": "Goal & Automation",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.goal",
+          "notes": "Appendix G: checkpoint policy, pause/resume, verification strength, sustainable fan-out with configured ceiling paired to read-only sustainable-now, capacity reserve, planning/worker/reviewer route classes with requested/effective via PMProvider.resolveRoute, cross-project and worktree policy, testing-defaults pointer (real link to Focus Stack), boundary note."
+        },
+        {
+          "manager": "Crew",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.crew",
+          "notes": "Appendix H: template tables (purpose, member roles, persona requirements, route candidates, min/max, adaptive sizing, requested 5 / effective 2 with 2 queued waves, usage/time guards, reserve, write/worktree policy, board topology, diversity/corroboration, reducer/synthesis, failure/stop) plus duplicate and starter-template actions and the what-a-Crew-is-not boundary."
+        },
+        {
+          "manager": "Permissions & FileSafe",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.permissions",
+          "notes": "Appendix I: access profile radio with Plan/Review note, locked global wildcard row 1, ordered rules with functional reorder + renumbering + live re-evaluation, rule test via PMState.trigger('permission-test') rendering the 1-4-5-match trace, add-rule form with validation, presets with preview/apply, per-Persona profiles, scope words, requested/effective/origin example, ELI5/Expert toggle, wildcard help, FileSafe floor panel with no bypass affordance, doom-loop threshold/action with the fx.doom-loop-tripped panel."
+        },
+        {
+          "manager": "Back Seat Driver",
+          "classification": "demonstrated",
+          "route": "c1-atlas.html#/manager/manager.bsd",
+          "notes": "Appendix J: Off/Auto(default)/On plate, requested class vs effective route via resolveRoute, toggleable risk/phase triggers, usage guard, latency budget, bounded-deltas privacy boundary, read-only tool access, health with cannot-block-primary, chat override for one turn or this thread."
+        }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "entries": [
+        { "manager": "Notifications & Sounds", "classification": "shared_grammar", "grammar_components": ["SettingsNotice", "SettingRow", "ValueSourceBadge", "ReceiptLink"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Sound Library/Uploads/Packs", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ObservableOperation", "ReceiptLink"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Appearance", "classification": "shared_grammar", "grammar_components": ["SettingRow", "AvailabilityReason", "ValueSourceBadge"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Spellcheck & Dictionaries", "classification": "shared_grammar", "grammar_components": ["SettingRow", "SettingsSearch"], "demonstrated_in": "c2-mission-control.html", "notes": "Atlas still exercises the PMSpell proofing sample in section 1.4 as contract-required shared behavior." },
+        { "manager": "Desktop/Tray/Window", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ValueSourceBadge"], "demonstrated_in": "c2-mission-control.html" },
+        { "manager": "Teacher/Help", "classification": "shared_grammar", "grammar_components": ["SetupFlowLauncher", "ReceiptLink"], "demonstrated_in": "c2-mission-control.html" }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "entries": [
+        { "manager": "File Manager/Editor", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ManagerShell", "HealthSummary"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "Terminal", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SettingRow"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "LSP", "classification": "shared_grammar", "grammar_components": ["ManagerShell", "ResourceList", "HealthSummary"], "demonstrated_in": "c3-focus-stack.html", "notes": "Atlas retains Appendix D as a numbered cross-reference stub linking to c3-focus-stack.html#/manager/manager.lsp." },
+        { "manager": "Formatters", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ObservableOperation"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "Commands & Shortcuts", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SettingsSearch"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "MCP", "classification": "shared_grammar", "grammar_components": ["ManagerShell", "ResourceList", "HealthSummary", "SecretReference"], "demonstrated_in": "c3-focus-stack.html", "notes": "Atlas retains Appendix C as a numbered cross-reference stub linking to c3-focus-stack.html#/manager/manager.mcp." },
+        { "manager": "Skills", "classification": "shared_grammar", "grammar_components": ["ResourceList", "AvailabilityReason"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "Plugins", "classification": "shared_grammar", "grammar_components": ["ResourceList", "HealthSummary"], "demonstrated_in": "c3-focus-stack.html" },
+        { "manager": "Tools", "classification": "shared_grammar", "grammar_components": ["ResourceList", "RequestedEffectiveInspector"], "demonstrated_in": "c3-focus-stack.html", "notes": "Atlas shows the selected-vs-installed funnel view natively inside Context & Instructions (E.4)." },
+        { "manager": "Testing & Debug", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ValueSourceBadge"], "demonstrated_in": "c3-focus-stack.html", "notes": "Appendix G carries the honest testing-defaults pointer with a real cross-page link." }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "entries": [
+        { "manager": "Storage & Retention", "classification": "shared_grammar", "grammar_components": ["SettingRow", "HealthSummary", "SettingsNotice"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Backup & Restore", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Settings Lifecycle", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink", "SettingsNotice"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "History & Sessions", "classification": "shared_grammar", "grammar_components": ["ResourceList"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Runtime Artifacts", "classification": "shared_grammar", "grammar_components": ["ResourceList", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Source Control/Worktrees", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SetupFlowLauncher"], "demonstrated_in": "c4-ledger.html", "notes": "Appendix G's worktree policy row defers mechanics to the Ledger surface." },
+        { "manager": "GitHub Actions", "classification": "shared_grammar", "grammar_components": ["ResourceList", "HealthSummary"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Containers & Registries", "classification": "shared_grammar", "grammar_components": ["ResourceList", "AvailabilityReason"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Web/Search/Fetch", "classification": "shared_grammar", "grammar_components": ["ResourceList", "SettingRow"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Project Search Index", "classification": "shared_grammar", "grammar_components": ["HealthSummary", "ObservableOperation"], "demonstrated_in": "c4-ledger.html" },
+        { "manager": "Workspace Cleanup", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html" },
+        {
+          "manager": "Future Server Module Shell",
+          "classification": "deferred_named_owner",
+          "owner": "Server Backbone return (Post-Return Reconciliation v6); per-module owners named in PM_DATA.serverModules.reserved[].namedOwner",
+          "insertion_contract": "PM_DATA.serverModules.reserved: nine reserved destinations, each with namedOwner and insertionContract (manager destination with health summary, claim/bootstrap deep links, receipts). The shell itself renders in c4-ledger.html."
+        }
+      ]
+    }
+  ]
+}

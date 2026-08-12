@@ -51,3 +51,12 @@ See Build stubs for Edit eligibility, command façades, Context Ring stub, expir
 ## Deferred to later integration
 
 Map closed gaps to handoff `09` register sections when an integration agent updates Plans, catalog, wiring, schemas, and DRY.
+
+## Step 8 cumulative notes (2026-08-11)
+
+| Gap ID | Feature | Description | Class | Prototype impact | Later owner |
+|--------|---------|-------------|---------|------------------|-------------|
+| GAP-020 | Goal pause/resume/stop/replan catalog | Packet candidates lack exact catalog rows; start/update exist. | missing | Provisional harness Goal controls; census in candidate-command-delta.json | UI Command Catalog |
+| GAP-021 | Packet vs catalog restore/rewind/pin/compact aliases | Packet IDs conflict with catalog tokens (`history.pin`, `restore_point.create`, `thread.rewind`, `context.compact_now`). | conflicting | Reuse catalog; flag alias/conflict in reports | Catalog / wiring integration |
+| GAP-022 | verification/ ship folder | ConceptHub forbids `verification/` temp dirs in concept tree. | process | Probes live under `%TEMP%/pm-grok45-probes/` only; durable reports at concept root | Concept maintainers |
+

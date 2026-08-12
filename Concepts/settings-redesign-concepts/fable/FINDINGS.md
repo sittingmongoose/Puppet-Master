@@ -1,6 +1,28 @@
 # FINDINGS — fable Settings bakeoff
 
-Required written findings per packet section 06: major information-architecture choices per concept, what each deliberately explores differently, inventory/Plans conflicts found, functionality that remains simulated, and Slint translation risks. This document records observations only. **It contains no ranking and no recommendation** (packet rule; the user may ask later).
+Required written findings: major information-architecture choices per concept, what each deliberately explores differently, inventory/Plans conflicts found, functionality that remains simulated, and Slint translation risks. This document records observations only. **It contains no ranking and no recommendation** (packet rule; the user may ask later).
+
+Updated for the **final cumulative packet pass (2026-08-08)**, which reassigned the manager families and roughly doubled the built surface area.
+
+## 0. Final cumulative pass — family reassignment map
+
+The packet's four-group assignment was adopted literally. Managers that previously lived in the "wrong" concept were re-authored in the destination's idiom from shared data and semantics (never from the sibling's markup, per the contract's differentiation clause); the source concept keeps an honest cross-concept receipt.
+
+| Family | Was (2026-08-05 pass) | Now | Note |
+|---|---|---|---|
+| Context & Instructions | c4 Ledger | **c1 Atlas** (Appendix E) | re-authored as document plates |
+| Personas | c3 Focus Stack | **c1 Atlas** (Appendix F) | capsule preview moved into marginalia |
+| Crew | c2 Mission Control | **c1 Atlas** (Appendix H) | roster/topology tables |
+| Permissions & FileSafe, Goal & Automation, Back Seat Driver | — (rows only) | **c1 Atlas** (Appendices I, G, J) | new builds |
+| Notifications & Sounds, Sound Library/packs, Appearance, Desktop/Tray, Teacher | — | **c2 Mission Control** | new consoles; Spellcheck rows upgraded to a console |
+| MCP | c1 Atlas (Appendix C) | **c3 Focus Stack** | re-authored as sheet stacks; c1 keeps a numbered stub |
+| LSP | c1 Atlas (Appendix D) | **c3 Focus Stack** | same |
+| Commands & Shortcuts, Skills/Plugins/Tools | c4 Ledger | **c3 Focus Stack** | three distinct stacks sharing lifecycle grammar |
+| File Manager, Formatters, Testing & Debug | — | **c3 Focus Stack** | new builds |
+| All twelve data-lifecycle families (Storage → Server module shell) | — | **c4 Ledger** | new builds in the record+inspector grammar |
+| Media routes | c2 Mission Control | c2 (kept) | beyond assignment, marked in manager-coverage.json |
+
+The provider manager was upgraded identically in all four concepts (installations with the ten-state update lifecycle, auth boundaries, explicit official-source install offers, OpenCode external server, Free Models six states with catalog freshness, requested/effective routes) through the new DOM-free `_shared/pm-provider.js` resolver, so product behavior is shared while composition stays per-concept.
 
 ## 1. Major information-architecture choices per concept
 
@@ -52,7 +74,7 @@ Required written findings per packet section 06: major information-architecture 
 | Motion | "Typesetting" reading-order compose | "Instrumental" state-driven morphs + region shimmer | "Spatial continuity" push/pop; first-class reduced mode | "Instantaneous" — zero animation by design |
 | Narrow behavior | Tree becomes top Contents drawer; marginalia stacks inline | Minimap folds to bottom-sheet outline; icon-only rail with focus-reachable labels | Natively narrow-safe; spine narrows, sheets go full-width | Navigator becomes overlay drawer; inspector becomes bottom detail sheet |
 
-Manager coverage across the four (each concept builds the provider manager plus two others): Memory (c1), MCP (c1), Crew (c2), Media (c2), Personas (c3), Terminal (c3), Context & Instructions (c4), Skills/Plugins/Tools (c4), plus **Commands & shortcuts built ledger-native in c4** during the compliance pass (filterable shortcut table, conflict + resolution, inspector-side remap/reset, custom-command lifecycle; the other three concepts route its deep links to honest cross-concept receipts), plus **Language servers built as c1's Appendix D** in the follow-up pass — the full packet 04 LSP list (installed/detected/missing states humanized, language coverage, executable with an explicit Auto-detected value, version, scope, startup mode, capabilities, conflict cautions, formatting/diagnostics ownership, restart/install receipts, log drawers, and a D.2 ownership table). Every group-A and group-B manager named by the packet now has a built surface. In the same pass the **MCP manager was completed**: discovered resources and templates (with an honest empty state), extensions, discovery-cache freshness, provider/CLI projection notes, and an add-a-server flow ending in an honest simulated receipt. c2/c3/c4 route Language-server deep links to cross-concept receipts naming Atlas. `CONTRACT.md` is retained deliberately as the shared-layer specification (documented in README's folder map; it is a build-time artifact, not a page dependency).
+Manager coverage now follows the final packet's four-group assignment exactly (see §0): c1 proves the agent-policy group (Context & Instructions, Memory, Personas, Goal & Automation, Crew, Permissions & FileSafe, BSD), c2 the ambience-and-input group (Notifications & Sounds, Sound Library/uploads/packs, Appearance with custom TOML themes, Spellcheck & Dictionaries, Desktop/Tray/Window, Teacher/Help, plus Media beyond assignment), c3 the developer-tooling group (File Manager, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills, Plugins, Tools, Testing & Debug), and c4 the data-lifecycle group (Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control/Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Search Index, Workspace Cleanup, and the reserved Server module shell with nine named-owner insertion destinations). Every concept also proves the shared core group. Families a concept does not own surface in its search and stubs as honest cross-concept receipts with working links; the machine-readable proof lives in each concept folder's `manager-coverage.json`. `CONTRACT.md` (revision 2) remains the binding shared-layer specification.
 
 ## 3. Inventory / Plans conflicts found
 
@@ -67,7 +89,10 @@ Recorded here and mirrored with uncertainty grades in `IMPACT_REGISTER.json`. No
 7. **"No clipped text" vs editorial truncation (resolved).** Both formerly-flagged cases were fixed: c3's row descriptions no longer clamp at two lines (they wrap fully; the details sheet still carries extended facts), and c4's record-row value chips now wrap paragraph-length values instead of ellipsizing (max-width retained so chips stay chip-shaped; the inspector remains the editing surface). The only remaining truncations are single-line ellipses on *descriptions/labels* (index blurbs, recents strip below the 760px floor) and c3's two-line sheet-title clamp, none of which cut a required label, value, action, or status at supported widths (verified by the theme-by-width clip sweeps).
 8. **Single blur layer in glass themes (resolved).** The shell title bar (from `_shared/pm-shell.css`) carries the one allowed backdrop-filter on c1/c2/c4/index. On c3, the topmost sheet carries it instead and c3's stylesheet makes the shell titlebar yield (`backdrop-filter: none` under glass) — so every page renders exactly one blur layer. Slint equivalent for lower layers stays pre-composited opaque surfaces.
 9. **Diagnostic drawer placement ambiguity.** The packet allows a per-domain diagnostics drawer; c2 renders diagnostics per-subcategory, c1/c4 per-domain. Both readings satisfy the contract text; a promoted design should pick one.
-10. **Shared trigger API gap (recorded, not a Plans conflict).** `PMState.trigger` covers provider-scoped transitions only; MCP server reconnect had to be staged locally in concept JS (c1). If MCP reconnect semantics matter to canon, the trigger/event surface needs an MCP scope.
+10. **Shared trigger API gap (resolved this pass, lesson recorded).** The trigger registry now spans installations, settings lifecycle, sounds/notifications, appearance, storage/index/cleanup, tooling, permissions, and Teacher; `reconnect` resolves MCP server ids ahead of the first-provider fallback. The lesson stands for canon: production commands need typed, owner-scoped payloads — id-precedence heuristics are a demo convenience, not a wiring contract.
+11. **Inventory census discrepancy (new).** Counts disagree across artifacts: 817 (PM7 build assertion), 818/819 (PM6 sidecar / PM7 embedded payload), 824 (F3-441 PlanUnit text), 826 (`Plans/settings_inventory.json` itself). The rows this pass adds (sounds, desktop/tray, BSD mode, storage/backup/lifecycle, formatters, web limits, MCP transport preference — all `src:"packet-2026-08-08"`) exist in no canon count. The implementation census must reconcile the number before minting ids.
+12. **Navigation-command overlap (new).** Canon carries point commands `cmd.settings.open_notifications` and `cmd.settings.open_storage_retention` alongside the packet's `cmd.settings.navigate` candidate family. Every per-concept command delta flags these as supersede-into-family (aliases), and `cmd.settings.category.reset` as a merge candidate against `cmd.settings.reset.apply {scope: category}`; `cmd.theme.*` is flagged reuse-before-mint against the appearance candidates. `cmd.settings.bloom.open` is flagged retire-with-compatibility-alias in all four deltas.
+13. **Notification surface consolidation (confirmed by construction).** The title-bar stack + sprout inbox in the shared shell is the only in-app notification affordance in the entire folder — destination test-sends land there, and no corner stack, status-bar bell, or notifications side panel exists to retire.
 
 ## 4. Functionality that remains simulated
 
@@ -80,8 +105,9 @@ Everything below returns an honest, visibly labeled simulated receipt (`PMState.
 - **Collection editors and actions:** list/keyvalue/multiselect "Manage"/"Edit" editors and action-type settings return receipts.
 - **Manager actions:** create Crew template, new persona, new terminal profile, add media route, run test generation, MCP connect, plugin Update/Retry, role qualified-override requests, memory version restore (single-version demo gists), log viewers. Real local demo-state mutations do exist where honest: gist pin/verify, plugin enable/disable, account rename/enable/priority, model favorite/alias/hide, effort/speed choices.
 - **Spellcheck:** dictionary additions persist only to the namespaced localStorage; the per-thread disable is a shell overflow receipt. Suggestions never auto-replace.
-- **Cross-concept manager deep-links:** managers not built in a given concept return honest receipts naming the sibling concept that builds them (c1 and c4 do this systematically).
-- **Scenario switching** rebuilds the working data from pristine, discarding in-session edits (inherent to `PMState.applyScenario`); depth/effort choices live on the working copy and do not persist across reloads.
+- **Cross-concept manager deep-links:** managers not built in a given concept return honest receipts naming the sibling concept that builds them — now systematic in all four via `PMState.registerManagers`.
+- **Scenario switching** rebuilds the working data from pristine, discarding in-session edits (inherent to `PMState.applyScenario`); fixture overlays re-apply automatically after every rebuild.
+- **New in this pass, all honestly simulated:** installation update/verify/rollback/repair walk truthful staged phases in the demo store; the explicit Cursor CLI install offer ends in a receipt (nothing downloads); sound preview is local-only with deliberately no receipt, while destination test-sends are masked, rate-limited, and receipted into the title-bar stack; pack import runs real license/format gates against fixture packs; TOML theme reload re-validates fixture files; the settings-import chain (preview → conflicts → restore point → atomic apply → rollback) mutates only the demo store with receipts in both directions; backup-now/test-restore/index-rebuild/cleanup-dry-run are staged phase simulations; permission rule tests emit the last-match-wins trace from fixture rules; Teacher overlays highlight real elements and can hand off into real (still demo-scoped) flows.
 
 ## 5. Slint translation risks
 
@@ -95,6 +121,15 @@ Target: Slint 1.17.1, cross-platform. Shared risks first, then per-concept.
 - **Spellcheck service abstraction:** `contenteditable` + DOM-range underline spans + context menu must become a spelling-service decoration layer over `TextEdit` with a popup menu service; the demo module is already isolated behind `PMSpell.attach`.
 - **color-mix() tints** used for cautions/diffs/dims across concepts become precomputed per-theme rgba brush tokens.
 - **Inline SVG icon strings** become path/image primitives from a shared icon table.
+
+### New surfaces (this pass)
+
+- **Routing matrix (c2)** and **testing matrix (c3)**: bounded grids of select cells — GridLayout over models; each stays under ~90 cells, no virtualization needed in the demo, `ListView` recommended at production scale.
+- **Reorderable lists** (c1 permission rules, c2 Activity Bar order): move-up/move-down buttons mutating a model — deliberately not HTML drag-and-drop, so the Slint port is trivial.
+- **Key recorder (c3)**: keydown capture with live conflict check → `FocusScope` key handling.
+- **Theme hover-preview (c2)**: temporary `data-theme` attribute swap on the root — in Slint a preview theme property that rebinds token brushes; keyboard focus drives the same path as hover.
+- **Import preview diff records (c4)** and **evaluation trace (c1)**: pure model-driven lists; no DOM measurement anywhere.
+- **Hash router (shared)**: maps to a navigation intent bus; `pushState/replaceState` history becomes the app's own back-stack. The `data-pm-state="ready"` handshake maps to a test-hook signal after initial navigation settles.
 
 ### c1 Atlas
 
@@ -137,8 +172,11 @@ Target: Slint 1.17.1, cross-platform. Shared risks first, then per-concept.
 - The preview pane's content blocker intermittently cancelled requests to URLs containing "mission-control" (a mandated filename); c2 ships a same-origin fallback loader. Behavior under the real ConceptHub server is re-verified in the folder-level test pass.
 - Google Fonts were blocked in the sandboxed test browser, so some visual verification ran on fallback fonts; the allowed fonts link is intact.
 - c3's boot retries for up to 15s if shared modules settle late — observed only in file:// snapshot previews; served pages boot immediately.
-- Expert rows re-lock on re-render, not on scroll-away (c1). Inline renames commit on Enter only; blur cancels silently (c1). Resume-at targets follow scrollspy deadband hysteresis (c3). State-chip filtering maps manager rows only approximately (c4). c4's narrow-only nav-button rule is injected from JS as a one-line style tag rather than living in the CSS file.
+- Expert rows re-lock on re-render, not on scroll-away (c1). Inline renames commit on Enter only; blur cancels silently (c1). Resume-at targets follow scrollspy deadband hysteresis (c3). State-chip filtering maps manager rows only approximately (c4). (c4's narrow nav-button rule now lives in its CSS file — resolved this pass.)
 - Store events rebuild the open console inspector in c2; an effort/speed menu open at that exact moment closes (state preserved, focus not).
+- Deep links into non-native managers land on Home with an honest receipt naming the covering concept; the clickable cross-page links live in search results, stubs, and receipt panels rather than auto-redirecting (deliberate: a URL never silently navigates to a different page).
+- The `reconnect` trigger's MCP-vs-provider precedence is id-based; two fixtures sharing an id across families would confuse it (none do).
+- The exhaustive theme/cross-product pass (TEST_REPORT §3c) caught two defects the sampled sweeps missed, both fixed: the glass-light "Recommended" status word rendered at 1.84:1 contrast (shared-shell tone override added), and c3's sheet titles clipped in the squeezed state — a 900px shell with the Assistant panel open squeezes the sheet below what `is-narrow`'s shell-width trigger sees (`overflow-wrap: anywhere` added inside the two-line clamp). Lesson for canon: squeeze detection should key on the content pane's width, not the window's — recorded for the Slint port, where a container-width binding is the natural expression.
 
 Width sampling beyond the build-time checks (full 760-2500 sweep across rail/panel combos, all-theme passes, and the functional smoke matrix) belongs to `TEST_REPORT.md`, which is written by the verification pass from real results.
 

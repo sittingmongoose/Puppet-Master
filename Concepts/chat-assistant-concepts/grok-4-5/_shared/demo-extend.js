@@ -485,7 +485,10 @@
       ['thread-12', 'active', false, 'MCP July specification review'],
       ['thread-13', 'ordinary', false, 'Memory degradation audit'],
       ['thread-14', 'completed', false, 'Persona context-footprint audit'],
-      ['thread-15', 'ordinary', false, 'Crew capacity planning']
+      ['thread-15', 'ordinary', false, 'Crew capacity planning'],
+      ['thread-16', 'blocked-approval', false, 'Worktree collision recovery'],
+      ['thread-17', 'completed', false, 'Slint 1.17.1 port notes'],
+      ['thread-18', 'active', false, 'Assistant Chat visual testing']
     ];
     var previews = {
       'thread-02': 'Goal running · forecast reset paths and provider quota chips.',
@@ -500,8 +503,24 @@
       'thread-12': 'MCP July spec deltas still need a Slint-safe reading.',
       'thread-13': 'Memory degradation: prefer explicit chips over silent rewrite.',
       'thread-14': 'Persona footprint audit closed with Subcompact receipts.',
-      'thread-15': 'Crew capacity: run two at a time; reserve synthesis budget.'
+      'thread-15': 'Crew capacity: run two at a time; reserve synthesis budget.',
+      'thread-16': 'Blocked · worktree feature/chat already has a writer; switch or wait.',
+      'thread-17': 'Completed · Slint 1.17.1 port notes handed to implementation.',
+      'thread-18': 'Active · theme/width/reduced-motion visual matrix still running.'
     };
+    /* Ensure ≥18 history rows exist even when demoData ships 15 threads. */
+    histStates.forEach(function (row) {
+      if (byId(threads, row[0])) return;
+      threads.push({
+        id: row[0],
+        title: row[3],
+        state: row[1],
+        threadState: row[1],
+        pinned: Boolean(row[2]),
+        messages: []
+      });
+    });
+
     histStates.forEach(function (row) {
       var th = byId(threads, row[0]);
       if (!th) return;
@@ -536,10 +555,156 @@
       }
     });
 
+
+
+    /* Step 8 fixtures: BSD Auto+On, offline queue sample, restore points, Browser Program activity. */
+    var t01s8 = byId(threads, 'thread-01');
+    if (t01s8) {
+      t01s8.localState = t01s8.localState || {};
+      t01s8.localState.bsd = t01s8.localState.bsd || {
+        mode: 'auto',
+        scope: 'thread',
+        visual: 'auto-idle',
+        adviceId: null
+      };
+      if (!t01s8.restorePoints || !t01s8.restorePoints.length) {
+        var rpMsg = null;
+        (t01s8.messages || []).some(function (m) {
+          if (m && m.id === 't01-v2-3') {
+            rpMsg = m;
+            return true;
+          }
+          return false;
+        });
+        if (!rpMsg && t01s8.messages && t01s8.messages.length) rpMsg = t01s8.messages[0];
+        if (rpMsg) {
+          t01s8.restorePoints = [
+            {
+              id: 'rp-demo-goal-start',
+              threadId: 'thread-01',
+              messageId: rpMsg.id,
+              label: 'After Goal start',
+              createdAt: '2026-08-05T12:13:00.000Z',
+              messageIndex: (t01s8.messages || []).indexOf(rpMsg)
+            }
+          ];
+        }
+      }
+      t01s8.activity = t01s8.activity || [];
+      var hasBp = t01s8.activity.some(function (a) {
+        return a && /Browser Program/i.test(String(a.summary || a.kind || ''));
+      });
+      if (!hasBp) {
+        t01s8.activity.push({
+          kind: 'browser',
+          summary: 'Browser Program · settings route capture in progress · Expert profile'
+        });
+      }
+      /* Replace stale verification/ paths in demo diffs with report paths (ConceptHub forbids verification/). */
+      (t01s8.diffGroups || []).forEach(function (g) {
+        (g.files || []).forEach(function (f) {
+          if (f && String(f.path || '').indexOf('verification/') !== -1) {
+            f.path = 'interaction-test-report.json';
+          }
+        });
+      });
+      var hasOfflineBeat = (t01s8.messages || []).some(function (m) {
+        return m && m.id === 't01-s8-offline';
+      });
+      if (!hasOfflineBeat) {
+        t01s8.messages = t01s8.messages || [];
+        t01s8.messages.push({
+          id: 't01-s8-offline',
+          role: 'user',
+          body: 'Queue this while offline · reconnect must deliver exactly once.',
+          createdAt: '2026-08-05T12:40:00.000Z',
+          sentAt: '2026-08-05T12:40:00.000Z',
+          runtime: { delivery: 'queued', outboxId: 'ob-demo-offline-1' },
+          eligibleForEdit: true
+        });
+      }
+    }
+
+    data.sessionExtras = data.sessionExtras || {};
+    data.sessionExtras.sync = data.sessionExtras.sync || {
+      state: 'live',
+      routeLabel: 'Home Server · This Windows computer',
+      cursor: 0
+    };
+    data.sessionExtras.outbox = data.sessionExtras.outbox || [
+      {
+        id: 'ob-demo-offline-1',
+        kind: 'send',
+        payload: { threadId: 'thread-01', text: 'Queue this while offline · reconnect must deliver exactly once.' },
+        status: 'acked',
+        createdAt: '2026-08-05T12:40:00.000Z',
+        ackedAt: '2026-08-05T12:41:00.000Z'
+      }
+    ];
+    data.sessionExtras.bsdDemo = {
+      auto: 'auto-idle → auto-active glow only while advising',
+      on: 'manual On distinct non-glow treatment'
+    };
+
+    /* Step4–7 feature fixtures: capacity forecast, crew thread-local, compact-work compositions, notifications. */
+    data.sessionExtras = data.sessionExtras || {};
+    data.sessionExtras.capacityForecast =
+      'Requested specialists: 6 · Recommended concurrent: 2 · 3 waves · Reason: provider allowance and verification reserve';
+    data.sessionExtras.notifications = [
+      {
+        id: 'ntf-demo-1',
+        title: 'Snapshot catch-up ready',
+        body: 'Server work continuing · open title-bar inbox when convenient.',
+        tone: 'info',
+        read: false,
+        createdAt: '2026-08-05T12:00:00.000Z'
+      },
+      {
+        id: 'ntf-demo-2',
+        title: 'Browser Program finished',
+        body: 'Expert Browser Program captured the settings route.',
+        tone: 'success',
+        read: false,
+        createdAt: '2026-08-05T12:05:00.000Z'
+      }
+    ];
+
+    var compactWork = {
+      'thread-01': 'pm-cw-folio',
+      'thread-02': 'pm-cw-beats',
+      'thread-03': 'pm-cw-shelves',
+      'thread-04': 'pm-cw-yield',
+      'thread-05': 'pm-cw-condenser',
+      'thread-06': 'pm-cw-margin',
+      'thread-07': 'pm-cw-focus',
+      'thread-08': 'pm-cw-breath'
+    };
+    Object.keys(compactWork).forEach(function (tid) {
+      var th = byId(threads, tid);
+      if (!th) return;
+      th.compactWorkComposition = compactWork[tid];
+      th.localState = th.localState || {};
+      if (th.localState.spellcheckEnabled == null) th.localState.spellcheckEnabled = true;
+      if (!th.localState.crewId) th.localState.crewId = tid === 'thread-05' ? 'review-wave' : 'research-pair';
+    });
+
+    var t05 = byId(threads, 'thread-05');
+    if (t05) {
+      t05.capacityForecast =
+        'Requested specialists: 6 · Recommended concurrent: 2 · 3 waves · Reason: provider allowance and verification reserve';
+      t05.crew = {
+        requested: 'review-wave',
+        effective: 'research-pair',
+        reason: 'Adaptive route · capacity prefers Research pair for this turn',
+        threadLocal: true
+      };
+    }
+
     data.behaviorNotes =
       (data.behaviorNotes || '') +
       ' | Grok demo-extend: thoughts/activity/markdown/collapse/surfaces/goal-depth/browser/attach enrichment applied at load.' +
-      ' | V2 scenario: settings-provider-chat-redesign fixtures on thread-01 + history row variety.';
+      ' | V2 scenario: settings-provider-chat-redesign fixtures on thread-01 + history row variety.' +
+      ' | Step8: ≥18 history rows, BSD Auto/On samples, offline/outbox sample, restore point, Browser Program activity, notifications.';
     return data;
   }
 

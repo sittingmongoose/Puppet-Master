@@ -97,3 +97,85 @@
 
 /* ---- hover row: quiet ----------------------------------------------------- */
 [data-k3-thread="t4"] .k3t-msg-hover { margin-top: 6px; }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t4 identity: packet records
+   are full-width neutral bands — flat surface, hairline edge, no register-1
+   quote chrome; the asymmetric user/assistant registers stay untouched.
+   ========================================================================== */
+
+/* stacked packet records span the full measure as bands */
+[data-k3-thread="t4"] .k3t-packet { margin-top: 12px; gap: 10px; }
+[data-k3-thread="t4"] .k3t-packet .k3t-card { margin-top: 0; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq / restorepoint /
+   branch: neutral bands (t4's flat .k3t-card band, kept explicit per kind) */
+[data-k3-thread="t4"] .k3t-routewarn,
+[data-k3-thread="t4"] .k3t-attach,
+[data-k3-thread="t4"] .k3t-bsdadvice,
+[data-k3-thread="t4"] .k3t-receipt,
+[data-k3-thread="t4"] .k3t-threadreq,
+[data-k3-thread="t4"] .k3t-restorepoint,
+[data-k3-thread="t4"] .k3t-branch {
+  background: var(--surface);
+  border-color: var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+  box-shadow: none;
+}
+
+/* line records (BSD result, redirect, marker): hairline band separators
+   across the full measure; redirect states ride base text colors, the
+   redirected state adds weight only */
+[data-k3-thread="t4"] .k3t-bsdresult,
+[data-k3-thread="t4"] .k3t-redirect,
+[data-k3-thread="t4"] .k3t-marker {
+  margin-top: 0;
+  padding: 6px 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t4"] .k3t-redirect-redirected { font-weight: 600; }
+[data-k3-thread="t4"] .k3t-redirect-interrupted,
+[data-k3-thread="t4"] .k3t-redirect-resumed { font-style: italic; }
+
+/* rewound region: a centered dashed band across the full width */
+[data-k3-thread="t4"] .k3t-rewound {
+  justify-content: center;
+  margin: 4px 0;
+  padding: 8px 0;
+  border: 0;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+  border-bottom: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: 0;
+}
+
+/* queued badge: neutral tint (inside right-docked user quotes it simply
+   sits under the quote prose — the band language stays neutral) */
+[data-k3-thread="t4"] .k3t-queued { background: var(--surface-elevated); }
+
+/* server note: a centered neutral band in the work zone */
+[data-k3-thread="t4"] .k3t-server-note {
+  justify-content: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+}
+
+/* chip-mode packet rows: full-width neutral rows; an opened row expands to
+   the full band */
+[data-k3-thread="t4"] .k3t-packet-row {
+  padding: 5px 8px;
+  border-radius: var(--radius-sm, 6px);
+}
+[data-k3-thread="t4"] .k3t-packet-row:hover { background: var(--surface-elevated); }
+[data-k3-thread="t4"] .k3t-packet-row.is-open { background: var(--surface); }
+[data-k3-thread="t4"] .k3t-packet-chiprows .k3t-card { margin-top: 8px; }
+
+/* artifact shortcut + overflow: the wrap spans the measure, the more-button
+   stays a neutral bordered unit */
+[data-k3-thread="t4"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t4"] .k3t-shortcut-wrap .k3t-shortcut { flex: 1 1 auto; min-width: 0; }
+[data-k3-thread="t4"] .k3t-shortcut-more {
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+}

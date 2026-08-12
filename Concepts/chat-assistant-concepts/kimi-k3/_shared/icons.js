@@ -87,7 +87,34 @@
     'rail-close': '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M10 4.5v15"/><path d="m16 9.5-2.8 2.5 2.8 2.5"/>',
     'popout': '<rect x="3.5" y="13" width="9.5" height="7.5" rx="1.5"/><path d="M14.5 9.5 19.5 4.5M14 4.5h5.5V10"/>',
     'dock': '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M15 4.5v15"/><path d="M6 12h5M8.8 9.8 11 12l-2.2 2.2"/>',
-    'menu': '<path d="M4 7h16M4 12h16M4 17h16"/>'
+    'menu': '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    // --- final cumulative packet additions ------------------------------------
+    'provider-anthropic': '<path d="M12 4.5v15"/><path d="M5.5 8.2l13 7.6"/><path d="M18.5 8.2l-13 7.6"/>',
+    'provider-openai': '<path d="M12 3.5 18.9 7.5v9L12 20.5 5.1 16.5v-9Z"/><circle cx="12" cy="12" r="3.2"/>',
+    'provider-google': '<path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M12 12h8"/>',
+    'provider-xai': '<path d="M5.5 5.5l13 13"/><path d="M18.5 5.5l-13 13"/>',
+    'provider-ollama': '<circle cx="12" cy="12" r="7.5"/><circle cx="9.4" cy="10.6" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.6" cy="10.6" r="1.1" fill="currentColor" stroke="none"/><path d="M9.5 15.2c1.5 1 3.5 1 5 0"/>',
+    'star': '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9Z"/>',
+    'star-filled': '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9Z" fill="currentColor" stroke="none"/>',
+    'shield': '<path d="M12 3l7 2.8v5.4c0 4.6-3 7.7-7 9.3-4-1.6-7-4.7-7-9.3V5.8Z"/><path d="m8.8 11.8 2.2 2.2 4.2-4.2"/>',
+    'bsd': '<circle cx="12" cy="12" r="8.5"/><path d="M12 12l3.6-3.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
+    'wifi': '<path d="M4.5 9.5a11 11 0 0 1 15 0"/><path d="M7.5 13a7 7 0 0 1 9 0"/><path d="M10.4 16.4a3 3 0 0 1 3.2 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/>',
+    'wifi-off': '<path d="M4.5 9.5a11 11 0 0 1 15 0"/><path d="M10.4 16.4a3 3 0 0 1 3.2 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/><path d="M4 4l16 16"/>',
+    'inbox': '<path d="M4 13.5 6.5 5h11L20 13.5V19H4Z"/><path d="M4 13.5h5l1.5 2h3l1.5-2h5"/>',
+    'bell-stack': '<path d="M11 5a4.6 4.6 0 0 1 4.6 4.6v2.6l1.4 2.8H5l1.4-2.8V9.6A4.6 4.6 0 0 1 11 5Z"/><path d="M9.2 18a2 2 0 0 0 3.8 0"/><path d="M16.8 4.6a6.8 6.8 0 0 1 2.7 4.2"/>',
+    'paperclip-zip': '<rect x="6" y="3.5" width="12" height="17" rx="2"/><path d="M12 3.5v2.5M10.5 6h3M12 8.5V11"/><path d="M9.5 15.5h5"/>',
+    'paperclip-pdf': '<path d="M6.5 3.5h7L19 9v11.5h-12.5Z"/><path d="M13.5 3.5V9H19"/><path d="M9 13h6M9 16.5h4"/>',
+    'paperclip-mov': '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M10.5 9.5v5l4.5-2.5Z"/>',
+    'paperclip-xlsx': '<rect x="4.5" y="4.5" width="15" height="15" rx="2"/><path d="M4.5 9.5h15M4.5 14.5h15M10 4.5v15"/>',
+    'paperclip-png': '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 16.8 4.5-4.5 4 4 3-3 4.5 4.5"/>',
+    'paperclip-bin': '<path d="M12 3 20 7.5v9L12 21l-8-4.5v-9Z"/><path d="M12 12 20 7.5M12 12 4 7.5M12 12v9"/>',
+    'rewind': '<path d="M11 5.5 4.5 12l6.5 6.5Z"/><path d="M19 5.5 12.5 12l6.5 6.5Z"/>',
+    'redirect': '<path d="M5 19V9a3 3 0 0 1 3-3h11"/><path d="m15.5 3 3.5 3-3.5 3"/>',
+    'crew': '<circle cx="8" cy="8" r="2.6"/><circle cx="16.5" cy="8" r="2.6"/><path d="M3.5 19.5c.6-3 2.4-4.5 4.5-4.5s3.9 1.5 4.5 4.5M12.5 19.5c.6-3 2.1-4.5 4-4.5s3.5 1.5 4 4.5"/>',
+    'capacity': '<path d="M5 19.5v-6M10 19.5v-10M15 19.5v-4M20 19.5v-13"/>',
+    'port': '<rect x="4" y="7.5" width="16" height="9.5" rx="2"/><path d="M8 7.5V12M12 7.5V12M16 7.5V12"/>',
+    'receipt': '<path d="M6 3.5h12V21l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4L6 21Z"/><path d="M9 8h6M9 12h6"/>',
+    'spell': '<path d="M4 6.5h12M4 10.5h8"/><path d="m13 17.5 2.2 2.2 4.3-4.7"/>'
   };
 
   const templates = {}; // name -> pristine template <svg> (never inserted)

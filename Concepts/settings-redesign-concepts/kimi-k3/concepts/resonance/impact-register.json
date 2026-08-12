@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "resonance",
+  "model": "kimi-k3",
+  "plan_owner_impacts": [
+    { "owner": "FinalGUISpec", "impact": "Resonance demonstrates the studio-console composition: dashboard Home with status tiles, console panels in the workspace, waveform sound tiles, and the event-to-destination routing matrix." },
+    { "owner": "settings inventory and schema", "impact": "Consumes the shared 12-category slice; Notifications & Sounds normal rows match the packet exactly; theme-locked rows carry explicit unavailable reasons." },
+    { "owner": "Media", "impact": "Sound library treats audio assets as versioned artifacts with source/license/hash metadata; preview is local-only WebAudio." },
+    { "owner": "Prompt Pipeline", "impact": "No direct surface; spellcheck grammar opt-in discloses its route before enabling." },
+    { "owner": "Release/updates owner", "impact": "Provider update lifecycle renders in the shared provider manager installation tab." },
+    { "owner": "Binary Locator and installation lifecycle", "impact": "Same shared installation cards as every kimi-k3 concept." },
+    { "owner": "UI Command Catalog", "impact": "Notifications and appearance candidate IDs annotated in candidate-command-delta.json; cmd.notifications.destination.test and cmd.theme.preview reused from canon." }
+  ],
+  "settings_inventory_impacts": [
+    { "area": "notifications", "impact": "Delivery, sounds, and behavior rows; quiet-hours not-configured token; German long-label row proves wrapping." },
+    { "area": "appearance", "impact": "Theme, follow-system, contrast, density, text size, UI scale (effective-differs), reduced motion (auto token); custom TOML themes are manager state, not inventory rows." }
+  ],
+  "settings_schema_impacts": [
+    { "field": "sound metadata", "impact": "source/license/version/duration/hash/default-mapping per asset; unverified packs never register." },
+    { "field": "destination credential", "impact": "Credentials render as masked vault references, never raw tokens." }
+  ],
+  "command_id_impacts": "See candidate-command-delta.json — Resonance exercises the notifications and appearance families plus shared navigation/values.",
+  "wiring_impacts": "See candidate-wiring-delta.json.",
+  "dry_component_impacts": "See candidate-dry-delta.json — adds NotificationDestination, SoundLibraryItem, ThemePreview instances.",
+  "schema_event_storage_impacts": [
+    { "area": "demo persistence", "impact": "sessionStorage only under pm.settings-demo.resonance; test-send receipts are transient; no production storage schema claimed." }
+  ],
+  "migration_supersession_impacts": [
+    { "superseded": "permanent bottom-right notification stack", "by": "the title-bar inbox as the sole in-app surface, stated in copy" },
+    { "superseded": "status-bar bell / Activity Bar notification icon", "by": "the same single-surface rule" }
+  ],
+  "slint_port_impacts": [
+    { "surface": "waveform tiles", "note": "Deterministic bar arrays render as SVG; a Slint port draws the same bars from data." },
+    { "surface": "hover theme preview", "note": "Pointer enter/leave with Escape restore; a port needs an equivalent transient-preview gesture." },
+    { "surface": "coachmark overlay", "note": "Fixed-position rings measured from getBoundingClientRect — the one DOM-measurement dependence; a port anchors to widget rects." }
+  ],
+  "test_fixtures": [
+    "Calm state", "Reset demo data", "Test-send to Slack (masked, receipted)",
+    "Sound upload (simulated pick)", "Sound preview (local WebAudio tone)",
+    "Pack import: valid / wrong format / unverified license",
+    "Theme hover preview → commit", "Invalid TOML → diagnostics + fallback",
+    "Teacher guided overlay", "Changed elsewhere bar", "Validation error",
+    "Provider scenarios (all seven shared)"
+  ],
+  "deferred_named_owners": [
+    { "module": "Servers", "owner": "Server host owner", "contract": "accepts manager module, deep links, status cards, command wiring" },
+    { "module": "Execution Hosts", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Clients", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Project Hosting & Files", "owner": "Storage owner", "contract": "same insertion contract" },
+    { "module": "Remote Access", "owner": "Server host owner", "contract": "same insertion contract" },
+    { "module": "Updates (PM app)", "owner": "Release/updates owner", "contract": "same insertion contract" }
+  ],
+  "unresolved_questions": [
+    "Does the generic webhook destination's success predicate belong in Settings or in a delivery-log diagnostic surface?",
+    "Should pack license verification accept an OSI allowlist, or stay manual-confirm?"
+  ]
+}

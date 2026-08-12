@@ -336,6 +336,140 @@
     if (refocus) { els.chatOverflow.focus(); }
   }
 
+  /* ---------- title-bar notification stack ---------------------------
+     Canon: the title-bar stack with count badge and sprout inbox is the
+     SOLE in-app notification affordance. Session-only; never persisted. */
+
+  var notifications = [];
+
+  function buildNotifyStack() {
+    var titlebar = document.querySelector('.pm-titlebar');
+    var controls = document.querySelector('.pm-tb-controls');
+    if (!titlebar || !controls || byId('pmNotifyBtn')) { return; }
+
+    var wrap = document.createElement('div');
+    wrap.className = 'pm-notify-wrap';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pm-tb-btn pm-notify-btn';
+    btn.id = 'pmNotifyBtn';
+    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.title = 'Notifications';
+    btn.innerHTML = '<i data-ico="wave"></i>' +
+      '<span class="pm-notify-count" id="pmNotifyCount" hidden>0</span>' +
+      '<span class="pm-visually-hidden">Notifications</span>';
+
+    var inbox = document.createElement('div');
+    inbox.className = 'pm-notify-inbox';
+    inbox.id = 'pmNotifyInbox';
+    inbox.setAttribute('role', 'dialog');
+    inbox.setAttribute('aria-label', 'Notifications');
+    inbox.hidden = true;
+
+    wrap.appendChild(btn);
+    wrap.appendChild(inbox);
+    titlebar.insertBefore(wrap, controls);
+    hydrateIcons(wrap);
+    els.notifyBtn = btn;
+    els.notifyInbox = inbox;
+    els.notifyCount = byId('pmNotifyCount');
+
+    function renderInbox() {
+      inbox.innerHTML = '';
+      var head = document.createElement('div');
+      head.className = 'pm-notify-head';
+      head.textContent = notifications.length
+        ? (notifications.length === 1 ? '1 notification' : notifications.length + ' notifications')
+        : 'No notifications';
+      inbox.appendChild(head);
+      for (var i = 0; i < notifications.length; i++) {
+        var n = notifications[i];
+        var row = document.createElement('div');
+        row.className = 'pm-notify-item';
+        row.innerHTML = '<strong></strong><span></span>';
+        row.querySelector('strong').textContent = n.title;
+        row.querySelector('span').textContent = n.detail || '';
+        inbox.appendChild(row);
+      }
+      if (notifications.length) {
+        var clear = document.createElement('button');
+        clear.type = 'button';
+        clear.className = 'pm-notify-clear';
+        clear.textContent = 'Clear all';
+        clear.addEventListener('click', function () {
+          notifications = [];
+          updateCount();
+          renderInbox();
+        });
+        inbox.appendChild(clear);
+      }
+    }
+
+    function updateCount() {
+      if (!els.notifyCount) { return; }
+      els.notifyCount.textContent = String(notifications.length);
+      els.notifyCount.hidden = notifications.length === 0;
+    }
+
+    function openInbox() {
+      renderInbox();
+      inbox.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      state.notifyOpen = true;
+    }
+    function closeInbox(refocus) {
+      inbox.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      state.notifyOpen = false;
+      if (refocus) { btn.focus(); }
+    }
+
+    btn.addEventListener('click', function () {
+      if (state.notifyOpen) { closeInbox(true); } else { openInbox(); }
+    });
+    inbox.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') { ev.preventDefault(); closeInbox(true); }
+    });
+    document.addEventListener('mousedown', function (ev) {
+      if (state.notifyOpen && !inbox.contains(ev.target) && ev.target !== btn && !btn.contains(ev.target)) {
+        closeInbox(false);
+      }
+    });
+
+    state._notifyInternals = { updateCount: updateCount, renderInbox: renderInbox };
+  }
+
+  function notify(entry) {
+    if (!entry || (!entry.title && !entry.detail)) { return; }
+    notifications.unshift({
+      title: String(entry.title || 'Notification'),
+      detail: entry.detail == null ? '' : String(entry.detail),
+      when: Date.now()
+    });
+    if (notifications.length > 30) { notifications.length = 30; }
+    if (state._notifyInternals) {
+      state._notifyInternals.updateCount();
+      if (state.notifyOpen) { state._notifyInternals.renderInbox(); }
+    }
+    if (els.notifyBtn && document.documentElement.getAttribute('data-motion') !== 'reduced') {
+      els.notifyBtn.classList.remove('pm-notify-join');
+      void els.notifyBtn.offsetWidth; /* restart the one-shot join animation */
+      els.notifyBtn.classList.add('pm-notify-join');
+    }
+  }
+
+  function notificationCount() { return notifications.length; }
+
+  /* Route hook: deterministic deep links may force theme/motion when the
+     page runs standalone. Hub postMessage remains authoritative when present. */
+  function applyView(view) {
+    if (!view || typeof view !== 'object') { return; }
+    if (typeof view.theme === 'string' && themeById(view.theme)) { applyTheme(view.theme, false); }
+    if (typeof view.reducedMotion === 'boolean') { applyMotion(view.reducedMotion, false); }
+  }
+
   /* ---------- ConceptHub bridge (validate.py contract) --------------- */
 
   function applyHubState(hubState) {
@@ -450,6 +584,7 @@
     fillRail();
     fillChat();
     buildThemeMenu();
+    buildNotifyStack();
 
     /* restore persisted prefs (falling back to current markup state) */
     var savedTheme = loadPref('theme');
@@ -511,6 +646,9 @@
   window.PMShell = {
     init: init,
     status: status,
-    toast: toast
+    toast: toast,
+    notify: notify,
+    notificationCount: notificationCount,
+    applyView: applyView
   };
 })();

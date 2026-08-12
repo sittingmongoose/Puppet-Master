@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.chat_interaction_test_report.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "updated_at": "2026-08-11",
+  "status": "complete",
+  "cache_bust": "v=40",
+  "probes_dir": "%TEMP%\\pm-grok45-probes",
+  "no_verification_dir": true,
+  "cases": [
+    {
+      "id": "residual-fixes",
+      "status": "passed",
+      "runner": "residual-fixes-probe.mjs",
+      "result": "%TEMP%\\pm-grok45-probes\\residual-fixes-result.json",
+      "passed": 13,
+      "failed": 0,
+      "note": "branch fromMessageId; empty admit; video+pdf CTAs; no product fan-out toast; bulk persona; cache v39; lens no elev shadow"
+    },
+    {
+      "id": "store-bsd-restore-sync",
+      "status": "passed",
+      "runner": "store-api-probe.mjs",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "id": "offline-idempotency",
+      "status": "passed",
+      "runner": "offline-idempotency-probe.mjs"
+    },
+    {
+      "id": "terminology-no-playwright-ui",
+      "status": "passed",
+      "runner": "terminology-grep-probe.mjs",
+      "hits": []
+    },
+    {
+      "id": "matrix-smoke-w6-t1",
+      "status": "passed",
+      "runner": "matrix-smoke-probe.mjs",
+      "result": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
+      "passed": 64,
+      "failed": 0,
+      "note": "8 themes \u00d7 4 widths (520/750/975/1200) \u00d7 2 rm on w6\u00d7t1"
+    },
+    {
+      "id": "bsd-placement-w1-w8",
+      "status": "passed",
+      "runner": "matrix-smoke-probe.mjs",
+      "passed": 8,
+      "failed": 0,
+      "note": "mono/kicker/lamp/chip/trailing/trailing/latch/rail"
+    },
+    {
+      "id": "q-structure-t1-t8",
+      "status": "passed",
+      "runner": "matrix-smoke-probe.mjs",
+      "passed": 8,
+      "failed": 0,
+      "note": "data-q-renderer ids match RENDERER_IDS"
+    },
+    {
+      "id": "live-spotcheck",
+      "status": "passed",
+      "runner": "live-spotcheck-probe.mjs",
+      "result": "%TEMP%\\pm-grok45-probes\\live-spotcheck-result.json",
+      "passed": 12,
+      "failed": 0,
+      "note": "pin+artifact, BSD\u00d73, offline idempotency, redirect, attachment CTAs, title-bar notifications"
+    },
+    {
+      "id": "polish-visual",
+      "status": "passed",
+      "runner": "polish-visual-probe.mjs",
+      "result": "%TEMP%\\pm-grok45-probes\\polish-visual-result.json",
+      "passed": 8,
+      "failed": 0,
+      "note": "quieter paradigm/lens; theme first-click retro-dark; bulk persona PlanningRun section"
+    },
+    {
+      "id": "pinned-artifact-coexist",
+      "status": "passed",
+      "runner": "live-spotcheck-probe.mjs",
+      "note": "history.pin_full + artifact.ready; assertPinInvariants ok; unpin restores closed"
+    },
+    {
+      "id": "bsd-glow-rules",
+      "status": "passed",
+      "runner": "live-spotcheck-probe.mjs",
+      "note": "auto-active has .is-auto-active; bsd.on clears indefinite glow"
+    },
+    {
+      "id": "notification-titlebar",
+      "status": "passed",
+      "runner": "live-spotcheck-probe.mjs",
+      "note": "system.notification.push increments [data-shell-inbox-count]; no chat side notification panel"
+    },
+    {
+      "id": "step8-system-triggers-present",
+      "status": "passed",
+      "note": "demo-harness cases+buttons include bsd/sync/restore/rewind/notification/browser_program/provider_setup/access_limited"
+    },
+    {
+      "id": "demo-manifest-18-history",
+      "status": "passed",
+      "history_rows": 18
+    },
+    {
+      "id": "reports-seven-exist",
+      "status": "passed"
+    },
+    {
+      "id": "concepthub-validate",
+      "status": "passed",
+      "result": "Concept validation passed: Concepts\\chat-assistant-concepts\\grok-4-5"
+    },
+    {
+      "id": "deep-polish-chrome",
+      "status": "passed",
+      "note": "paradigm watermark + lens bar quieting; PDF Use Gemini for documents; bulk persona short label"
+    }
+  ],
+  "summary": {
+    "passed": 17,
+    "failed": 0,
+    "pending": 0,
+    "represented": 0,
+    "cache_bust": "v=40"
+  },
+  "concepthub": {
+    "command": "python Concepts\\ConceptHub\\validate.py Concepts\\chat-assistant-concepts\\grok-4-5",
+    "result": "Concept validation passed: Concepts\\chat-assistant-concepts\\grok-4-5",
+    "exit_code": 0,
+    "no_verification_dir": true
+  },
+  "probes": {
+    "goal_lifecycle": {
+      "ok": true,
+      "passed": 8,
+      "failed": 0
+    },
+    "route_chrome": {
+      "ok": true,
+      "passed": 10,
+      "failed": 0
+    },
+    "residual_fixes": {
+      "ok": true,
+      "passed": 13
+    },
+    "matrix_smoke": {
+      "ok": true,
+      "matrix": "64/64",
+      "bsd": "8/8",
+      "q": "8/8"
+    },
+    "live_spotcheck": {
+      "ok": true,
+      "passed": 12
+    },
+    "polish_visual": {
+      "ok": true,
+      "passed": 8
+    },
+    "store_api": {
+      "ok": true,
+      "passed": 12
+    },
+    "offline_idempotency": {
+      "ok": true
+    },
+    "terminology": {
+      "ok": true
+    }
+  },
+  "honesty_pass": {
+    "goal": "demo-complete handlers; GAP-020 catalog IDs remain",
+    "provider_crew": "route chrome enriched; managers Settings-owned; stubs honest",
+    "wxt_winner": "none declared"
+  }
+}

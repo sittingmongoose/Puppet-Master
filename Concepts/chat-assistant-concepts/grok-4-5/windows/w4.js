@@ -109,6 +109,19 @@
 
     function paint() {
       store = env.store;
+      if (window.PMChatV2 && typeof window.PMChatV2.assertPinInvariants === 'function') {
+        var artOpen = Boolean(
+          store &&
+            store.session &&
+            store.session.artifactWorkspace &&
+            store.session.artifactWorkspace.open
+        );
+        window.PMChatV2.assertPinInvariants(store, ID, env && env.chatWidthPx, {
+          overlayScrim: false,
+          artifactOpen: artOpen
+        });
+      }
+
       var tier = kit.syncChatTier(root, env);
       if (kit.isHistoryPinned(store)) pocketOpen = true;
       var histMode =
@@ -134,6 +147,7 @@
         '<header class="w4-chrome">' +
         '<div class="w4-chrome-lead">' +
         '<span class="w4-chrome-kicker">Pocket</span>' +
+        kit.bsdSlotHtml('chip') +
         '<span class="w4-chrome-thread" data-thread-title title="' +
         kit.escapeHtml(title) +
         '">' +

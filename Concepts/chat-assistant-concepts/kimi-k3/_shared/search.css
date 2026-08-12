@@ -190,3 +190,27 @@
 /* ---- open() variant: input carried inside the popover ---------------------- */
 .k3s2-open-input { margin-bottom: 8px; }
 .k3s2-open-results:empty { display: none; }
+
+/* ============================================================================
+   Step 3 additions — per-result action affordance (.k3s2-result-more).
+   A span with role="button" (the row itself is a <button>; nesting buttons
+   is invalid HTML). Sits trailing on the top chip line; quiet until hover.
+   ========================================================================== */
+
+.k3s2-result-more {
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  color: var(--text-muted);
+}
+.k3s2-result-more svg { width: 13px; height: 13px; }
+.k3s2-result:hover .k3s2-result-more,
+.k3s2-result:focus-within .k3s2-result-more,
+.k3s2-result-more:focus-visible { opacity: 1; }
+.k3s2-result-more:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3s2-result-more:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--accent-primary);
+}

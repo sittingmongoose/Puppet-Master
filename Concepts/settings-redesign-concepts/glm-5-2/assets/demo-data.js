@@ -606,3 +606,408 @@
     { id:"basic-light",   family:"Basic",   mode:"Light" }
   ];
 })();
+
+/* ===== FINAL CUMULATIVE PACKET EXTENSION (2026-08-08) =====
+   Adds the remaining manager families so the four concepts COLLECTIVELY prove the
+   complete MANAGER_COVERAGE_MATRIX. Baseline data above is kept intact; this block
+   only ADDS subcategories, manager registry entries, family data, the PAM installation
+   lifecycle fixtures, and an ownerConcept map. Shared by all four concepts. */
+(function () {
+  "use strict";
+  var D = window.PM_DEMO;
+
+  /* ----- OWNERSHIP: which concept deeply demonstrates each family ----- */
+  D.ownerConcept = {
+    pam:"all",
+    context:"c1", memory:"c1", personas:"c1", goal:"c1", crew:"c1", permissions:"c1", bsd:"c1",
+    notifications:"c2", sounds:"c2", appearance:"c2", spellcheck:"c2", desktop:"c2", teacher:"c2",
+    filemanager:"c3", terminal:"c3", lsp:"c3", formatters:"c3", commands:"c3", mcp:"c3", skills:"c3", testing:"c3",
+    storage:"c4", backup:"c4", settingsLifecycle:"c4", history:"c4", artifacts:"c4",
+    sourcecontrol:"c4", github:"c4", containers:"c4", webfetch:"c4", searchindex:"c4", cleanup:"c4", server:"c4",
+    media:"none"
+  };
+  /* concept display meta for owned-family strips + coverage registers */
+  D.concepts = {
+    "c1": { id:"concept-01-control-room", name:"Control Room",  families:["context","memory","personas","goal","crew","permissions","bsd"] },
+    "c2": { id:"concept-02-atlas",        name:"Atlas",         families:["notifications","sounds","appearance","spellcheck","desktop","teacher"] },
+    "c3": { id:"concept-03-stack",        name:"Stack",         families:["filemanager","terminal","lsp","formatters","commands","mcp","skills","testing"] },
+    "c4": { id:"concept-04-stream",       name:"Stream",        families:["storage","backup","settingsLifecycle","history","artifacts","sourcecontrol","github","containers","webfetch","searchindex","cleanup","server"] }
+  };
+
+  /* ----- register a subcategory (+ optional manager binding) ----- */
+  function addSub(catId, sub) {
+    var cat = D.catById[catId]; if (!cat) return;
+    cat.sub.push(sub); sub.cat = catId;
+    D.subById[catId + "." + sub.id] = sub;
+    if (sub.manager && D.managers[sub.manager]) D.managers[sub.manager].managerCat = catId;
+    var key = catId + "." + sub.id;
+    if (!D.settingsBySub[key]) D.settingsBySub[key] = [
+      { id: key + ".placeholder", label:"Managed in a dedicated surface", expl:"Open the " + sub.title + " manager for inventory, status, requested/effective state, and logs.",
+        type:"readonly", value:"—", state:"default", source:"Default", exposure:"standard" }
+    ];
+  }
+
+  /* ----- NEW MANAGER REGISTRY ENTRIES ----- */
+  var MREG = {
+    personas: { title:"Personas",              managerCat:"agents",   icon:"users",   ownerConcept:"c1" },
+    goal:     { title:"Goals & Automation",     managerCat:"planning", icon:"target",  ownerConcept:"c1" },
+    permissions:{ title:"Permissions & FileSafe", managerCat:"permissions", icon:"shield", ownerConcept:"c1" },
+    bsd:      { title:"Back Seat Driver",       managerCat:"planning", icon:"bsd",     ownerConcept:"c1" },
+    notifications:{ title:"Notifications & Sounds", managerCat:"general", icon:"bell",  ownerConcept:"c2" },
+    sounds:   { title:"Sound Library",          managerCat:"general",  icon:"sound",   ownerConcept:"c2" },
+    appearance:{ title:"Appearance",            managerCat:"appearance", icon:"palette", ownerConcept:"c2" },
+    spellcheck:{ title:"Spellcheck & Dictionaries", managerCat:"appearance", icon:"spellcheck", ownerConcept:"c2" },
+    desktop:  { title:"Desktop, Tray & Window", managerCat:"general",  icon:"desktop", ownerConcept:"c2" },
+    teacher:  { title:"Teacher & Help",         managerCat:"general",  icon:"teacher", ownerConcept:"c2" },
+    filemanager:{ title:"File Manager & Editor", managerCat:"code",    icon:"folder",  ownerConcept:"c3" },
+    formatters:{ title:"Formatters",            managerCat:"code",     icon:"format",  ownerConcept:"c3" },
+    commands: { title:"Commands & Shortcuts",   managerCat:"code",     icon:"command", ownerConcept:"c3" },
+    testing:  { title:"Testing & Debug",        managerCat:"planning", icon:"beaker",  ownerConcept:"c3" },
+    storage:  { title:"Storage & Retention",    managerCat:"system",   icon:"database", ownerConcept:"c4" },
+    backup:   { title:"Backup & Restore",       managerCat:"system",   icon:"archive", ownerConcept:"c4" },
+    settingsLifecycle:{ title:"Settings Lifecycle", managerCat:"system", icon:"lifecycle", ownerConcept:"c4" },
+    history:  { title:"History & Sessions",     managerCat:"system",   icon:"history", ownerConcept:"c4" },
+    artifacts:{ title:"Runtime Artifacts",      managerCat:"system",   icon:"package", ownerConcept:"c4" },
+    sourcecontrol:{ title:"Source Control & Worktrees", managerCat:"git", icon:"branch", ownerConcept:"c4" },
+    github:   { title:"GitHub Actions",         managerCat:"git",      icon:"github",  ownerConcept:"c4" },
+    containers:{ title:"Containers & Registries", managerCat:"system", icon:"container", ownerConcept:"c4" },
+    webfetch: { title:"Web, Search & Fetch",    managerCat:"system",   icon:"globe",   ownerConcept:"c4" },
+    searchindex:{ title:"Project Search Index", managerCat:"system",   icon:"searchindex", ownerConcept:"c4" },
+    cleanup:  { title:"Workspace Cleanup",      managerCat:"system",   icon:"broom",   ownerConcept:"c4" },
+    server:   { title:"Server & Execution Hosts", managerCat:"system", icon:"server",  ownerConcept:"c4" }
+  };
+  Object.keys(MREG).forEach(function (id) {
+    if (!D.managers[id]) D.managers[id] = Object.assign({ id:id }, MREG[id]);
+    else Object.assign(D.managers[id], MREG[id]);
+  });
+  D.managers.pam.ownerConcept = "all";
+  D.managers.context.ownerConcept = "c1"; D.managers.memory.ownerConcept = "c1"; D.managers.crew.ownerConcept = "c1";
+  D.managers.mcp.ownerConcept = "c3"; D.managers.skills.ownerConcept = "c3";
+  D.managers.lsp.ownerConcept = "c3"; D.managers.terminal.ownerConcept = "c3"; D.managers.media.ownerConcept = "none";
+
+  /* ----- NEW SUBCATEGORIES ----- */
+  addSub("agents",      { id:"personas",   title:"Personas",            manager:"personas" });
+  addSub("permissions", { id:"rules",      title:"Rules & FileSafe",    manager:"permissions" });
+  addSub("planning",    { id:"automation", title:"Goal & automation",   manager:"goal" });
+  addSub("planning",    { id:"bsd",        title:"Back Seat Driver",    manager:"bsd" });
+  addSub("general",     { id:"notifications", title:"Notifications & Sounds", manager:"notifications" });
+  addSub("general",     { id:"sounds",     title:"Sound library",       manager:"sounds" });
+  addSub("general",     { id:"desktop",    title:"Desktop, tray & window", manager:"desktop" });
+  addSub("general",     { id:"teacher",    title:"Teacher & help",      manager:"teacher" });
+  addSub("appearance",  { id:"customize",  title:"Custom themes",       manager:"appearance" });
+  addSub("appearance",  { id:"dictionaries", title:"Dictionaries",      manager:"spellcheck" });
+  addSub("code",        { id:"files",      title:"File manager & editor", manager:"filemanager" });
+  addSub("code",        { id:"formatters", title:"Formatters",          manager:"formatters" });
+  addSub("code",        { id:"commands",   title:"Commands & shortcuts", manager:"commands" });
+  addSub("planning",    { id:"debug",      title:"Testing & debug",     manager:"testing" });
+  addSub("git",         { id:"source-control", title:"Source control",  manager:"sourcecontrol" });
+  addSub("git",         { id:"github",     title:"GitHub Actions",      manager:"github" });
+  addSub("system",      { id:"storage",    title:"Storage & retention", manager:"storage" });
+  addSub("system",      { id:"backup",     title:"Backup & restore",    manager:"backup" });
+  addSub("system",      { id:"lifecycle",  title:"Settings lifecycle",  manager:"settingsLifecycle" });
+  addSub("system",      { id:"history-mgr",title:"History & sessions",  manager:"history" });
+  addSub("system",      { id:"artifacts",  title:"Runtime artifacts",   manager:"artifacts" });
+  addSub("system",      { id:"containers", title:"Containers & registries", manager:"containers" });
+  addSub("system",      { id:"web",        title:"Web, search & fetch", manager:"webfetch" });
+  addSub("system",      { id:"search-index", title:"Project search index", manager:"searchindex" });
+  addSub("system",      { id:"cleanup",    title:"Workspace cleanup",   manager:"cleanup" });
+  addSub("system",      { id:"server",     title:"Server & execution hosts", manager:"server" });
+
+  /* ----- FAMILY DATA (uniform shape consumed by M.resRow) -----
+     row: { title, dot, chips:[{label,kind}], detail, note:{text,kind}, actions:[{label,act,kind,icon}] } */
+  function R(title, dot, chips, detail, note, actions){ return {title:title, dot:dot, chips:chips, detail:detail, note:note, actions:actions}; }
+  function C(label,kind){ return {label:label, kind:kind||""}; }
+  function A(label,act,kind,icon){ return {label:label, act:act, kind:kind||"ghost", icon:icon||""}; }
+
+  /* C1 — Context / Memory / Personas / Goal / Crew / Permissions / BSD */
+  D.goalRows = [
+    R("Goal worker route","ok",[C("Requested Opus 5"),C("Effective Opus 5","ok")],"High-quality conversational planning route.","",[A("Edit","edit"),A("History","logs")]),
+    R("Reviewer route","warn",[C("Requested GPT-5"),C("Effective GPT-5 (4o fallback)","warn")],"Fallback applied — OpenAI — Personal rate window.","",[A("Why","details"),A("Edit","edit")]),
+    R("Sustainable fan-out","info",[C("Ceiling 8"),C("Effective 2 now","warn")],"Three waves recommended before provider reset.","",[A("Plan","details")]),
+    R("Capacity reserve","ok",[C("On")],"Keep budget for synthesis and verification.","",[A("Adjust","edit")]),
+    R("Checkpoint + compact","ok",[C("Auto")],"Checkpoint long Goals; compact context safely.","",[A("Policy","edit")]),
+    R("Cross-project policy","neutral",[C("Off")],"Children may not read other projects by default.","",[A("Edit","edit")])
+  ];
+  D.permissionRows = [
+    R("Global wildcard default","ok",[C("Ask")],"Default approval before any consequential act.","",[A("Edit","edit")]),
+    R("Ordered rules (last-match-wins)","info",[C("7 rules")],"Granular globs evaluated bottom-up; reorderable.","",[A("Reorder","edit"),A("Test","test")]),
+    R("Per-tool overrides","ok",[C("shell-exec: confirm on write outside workspace")],"Elevated tools keep an explicit policy.","",[A("Edit","edit")]),
+    R("External-directory allowlist","warn",[C("2 paths")],"Read-only by default; write needs approval.","",[A("Manage","edit")]),
+    R("Doom-loop threshold","info",[C("8 repeated acts then pause")],"Stops tight tool-loop burn.","",[A("Adjust","edit")]),
+    R("FileSafe floor","ok",[C("Enforced"),C("Non-bypassable","accent")],"Protected scopes: **/.env, **/secrets/**. Health OK.","",[A("Repair","details"),A("View","logs")]),
+    R("Per-Persona profiles","info",[C("3 profiles")],"Tighter scope for Reviewer/Researcher personas.","",[A("Matrix","details")])
+  ];
+  D.bsdRows = [
+    R("Back Seat Driver mode","ok",[C("Auto (default)")],"Runs only when risk/phase triggers justify it.","",[A("On","enable"),A("Off","edit")]),
+    R("Route","info",[C("Reviewer persona")],"Read-only observation of in-flight work.","",[A("Edit","edit")]),
+    R("Risk / phase triggers","ok",[C("Risky writes, long Goals")],"Auto engages on elevation and long-running work.","",[A("Edit","edit")]),
+    R("Usage guard","ok",[C("Bounded deltas")],"Receives bounded deltas; cannot widen authority.","",[A("Policy","edit")]),
+    R("Latency budget","info",[C("Up to 400ms")],"Never blocks primary work on its own failure.","",[A("Adjust","edit")]),
+    R("Privacy boundary","ok",[C("No prompt exfiltration")],"Cannot ship turns or secrets off-host.","",[A("Details","details")]),
+    R("Health","warn",[C("1 review pending")],"Chat may override BSD for one turn or thread.","",[A("Logs","logs")])
+  ];
+
+  /* C2 — Notifications / Sounds / Appearance / Spellcheck / Desktop / Teacher */
+  D.notificationRows = [
+    R("In-app title-bar stack","ok",[C("In-app"),C("Default surface")],"Sole in-app notification affordance.","",[A("Test","test"),A("Edit","edit")]),
+    R("System / tray","ok",[C("Tray")],"Native OS notifications.","",[A("Test","test"),A("Edit","edit")]),
+    R("Slack","ok",[C("channel: #pm-alerts"),C("mentions: @here")],"Template + parse mode configured.","",[A("Test","test"),A("Logs","logs")]),
+    R("Discord","ok",[C("channel: 1234")],"Webhook with success predicate.","",[A("Test","test"),A("Edit","edit")]),
+    R("Generic webhook","bad",[C("failing"),C("retry 3")],"Endpoint returning 502 — receipted.","",[A("Retry","reconnect", "primary"),A("Logs","logs")]),
+    R("ntfy","ok",[C("topic: pm"),C("priority: high")],"Tags + click target set.","",[A("Test","test")]),
+    R("Pushover","neutral",[C("Disabled")],"Paused by user.","",[A("Enable","enable","primary")]),
+    R("Telegram","ok",[C("bot"),C("thread: 42")],"Rate-limited test-send only.","",[A("Test","test"),A("Edit","edit")])
+  ];
+  D.notificationMeta = { quiet:"Focus on from 22:00 to 07:00", routing:"12 events routed; sound is never the only signal" };
+  D.soundRows = [
+    R("Soft chime (built-in)","ok",[C("Built-in"),C("0.9s")],"Default for completion.","",[A("Preview","preview","primary"),A("Map","edit")]),
+    R("ping-uploaded.wav","ok",[C("Uploaded"),C("CC0"),C("1.2s"),C("sha 4a91")],"Source + license + hash recorded.","",[A("Preview","preview","primary"),A("Replace","edit"),A("Export","export")]),
+    R("PeonPing Pack","ok",[C("Imported pack"),C("format ok"),C("license verified")],"PeonPing/OpenPeon-compatible; format + license checked.","",[A("Preview","preview","primary"),A("Details","details")]),
+    R("OpenPeon community","warn",[C("Imported pack"),C("unverified")],"License missing — not bundled until verified.","",[A("Verify","reconnect","primary"),A("Remove","delete")]),
+    R("legacy-bell.wav","bad",[C("Unverified"),C("no license")],"Rejected on import; local preview only.","",[A("Preview","preview"),A("Discard","delete")])
+  ];
+  D.soundMeta = { master:"Master volume 80%", mappings:"9 events mapped; per-event plus master" };
+  D.appearanceRows = [
+    R("Theme family plus mode","ok",[C("Friendly"),C("Dark"),C("Auto-follow OS: on")],"Four families, light/dark/auto.","",[A("Preview","preview","primary"),A("Apply","apply")]),
+    R("Custom TOML theme — dusk","ok",[C("Valid"),C("inherits Glass")],"Schema-validated; base-theme inheritance.","",[A("Edit","edit"),A("Export","export")]),
+    R("Custom TOML theme — draft","bad",[C("Invalid: bad color token")],"Falls back to base; diagnosis shown.","",[A("Diagnose","details","primary"),A("Open folder","open")]),
+    R("Custom and fallback fonts","info",[C("Cal Sans / Quicksand")],"Per-family font overrides.","",[A("Edit","edit")]),
+    R("UI scale","info",[C("110%")],"Live hover preview; restart marker on extremes.","",[A("Adjust","edit")]),
+    R("Live reload","ok",[C("On")],"Startup load plus live reload of custom themes.","",[A("Toggle","enable")]),
+    R("Restart markers","neutral",[C("None pending")],"Some appearance changes need a restart.","",[A("Details","details")])
+  ];
+  D.spellcheckRows = [
+    R("Check spelling","ok",[C("On")],"Quiet underline in prose fields.","",[A("Toggle","enable")]),
+    R("Language","info",[C("Automatic")],"Detects per field.","",[A("Edit","edit")]),
+    R("Dictionary source","info",[C("Automatic: OS service then PM local")],"No autocorrect — ever.","",[A("Configure","edit")]),
+    R("Personal dictionary","ok",[C("214 words")],"Add via right-click in any field.","",[A("Manage","edit")]),
+    R("Project dictionary","warn",[C("Use when available")],"Project list not found here.","",[A("Manage","edit")]),
+    R("Check technical prose","ok",[C("On")],"Skips code, paths, identifiers.","",[A("Toggle","enable")]),
+    R("Language packs","neutral",[C("2 installed: en-US, en-GB")],"Add more language packs.","",[A("Add","add")])
+  ];
+  D.desktopRows = [
+    R("Minimize / close to tray","ok",[C("On")],"Hides window while automation runs.","",[A("Toggle","enable")]),
+    R("Tray state while automation runs","info",[C("Badge: running")],"Pause/Resume/Quit from the tray.","",[A("Configure","edit")]),
+    R("Launch destination","ok",[C("Last workspace")],"Where PM opens on launch.","",[A("Edit","edit")]),
+    R("Window / panel / tab restore","ok",[C("Restore")],"Reopens prior layout.","",[A("Policy","edit")]),
+    R("Crash recovery","ok",[C("Auto-resume")],"Restores unsaved buffers on relaunch.","",[A("Test","test")]),
+    R("Unsaved buffer protection","warn",[C("1 buffer unrecovered")],"Prompts before destructive close.","",[A("Review","details")]),
+    R("Activity bar reorder / hide / overflow","ok",[C("Custom order")],"Rail items reorderable; overflow folds.","",[A("Edit","edit")]),
+    R("Side-panel restore","ok",[C("Per workspace")],"Remembers open/narrow/wide per space.","",[A("Edit","edit")]),
+    R("Editor / tab / tree limits","info",[C("tabs: 12, tree: 8k nodes")],"Bounds prevent UI stall on big projects.","",[A("Adjust","edit")])
+  ];
+  D.teacherRows = [
+    R("Teacher assistance","ok",[C("On")],"Guided explanation beyond tooltips.","",[A("Toggle","enable")]),
+    R("Explain this screen","info",[C("On this screen: Settings Home")],"Teacher narrates the active surface.","",[A("Explain","run","primary")]),
+    R("Guided transitions","ok",[C("On")],"Walks safe transitions into real actions.","",[A("Configure","edit")]),
+    R("Tooltip detail","info",[C("Standard")],"What changes / when it takes effect / side effects.","",[A("Adjust","edit")]),
+    R("Grammar and style assistance","neutral",[C("Opt-in: provider-backed")],"Separate feature; privacy, route, cost disclosed.","",[A("Configure","details")])
+  ];
+
+  /* C3 — File Manager / Terminal / LSP / Formatters / Commands / MCP / Skills / Testing */
+  D.filemanagerRows = [
+    R("Tree behavior","ok",[C("Virtualized, lazy")],"Handles large trees without blocking.","",[A("Configure","edit")]),
+    R("Drag / drop","ok",[C("Workspace only")],"External drop asks; FileSafe enforced.","",[A("Policy","edit")]),
+    R("Hidden / ignored","ok",[C("respects .gitignore")],"Plus user ignore globs.","",[A("Edit","edit")]),
+    R("Large-file threshold","info",[C("5 MB then hex preview")],"Avoids loading huge blobs into the editor.","",[A("Adjust","edit")]),
+    R("Tabs and split groups","ok",[C("4 groups")],"Per-group focus; max-tabs limit applies.","",[A("Configure","edit")]),
+    R("Changed on disk","warn",[C("2 files changed externally")],"Reload / keep / compare offered.","",[A("Review","details","primary")]),
+    R("Recovery and transient","warn",[C("1 transient: network mount unmounted")],"Unavailable reasons shown; not hidden.","",[A("Details","details")])
+  ];
+  D.formatterRows = [
+    R("Global formatting","ok",[C("On")],"Single ownership per language.","",[A("Toggle","enable")]),
+    R("rustfmt","ok",[C("Detected"),C("Rust"),C("edition 2024")],"command + env + extensions set.","",[A("Test","test"),A("Edit","edit")]),
+    R("Prettier","warn",[C("Detected"),C("conflict w/ TS LSP")],"Formatting ownership conflict — resolve.","",[A("Resolve","reconnect","primary"),A("Logs","logs")]),
+    R("black","ok",[C("Detected"),C("Python"),C("line-length 100")],"command + env set.","",[A("Test","test")]),
+    R("shfmt","bad",[C("Not found")],"Install to enable shell formatting.","",[A("Install","add","primary")]),
+    R("Custom formatter","info",[C("go: goreturns")],"Add / remove / reset; Global/Project scope.","",[A("Edit","edit")])
+  ];
+  D.commandRows = [
+    R("/seal","ok",[C("Custom"),C("Cmd+Shift+S"),C("project")],"Parameters + includes; shell-safety checked.","",[A("Edit","edit"),A("Dry-run","run","primary")]),
+    R("/compile","warn",[C("Built-in"),C("Cmd+Shift+C"),C("conflict: PM6 plugin")],"Shortcut conflict — remap.","",[A("Remap","edit","primary"),A("Reset","test")]),
+    R("/audit","ok",[C("Built-in"),C("global"),C("no shortcut")],"Validation passes.","",[A("Bind","edit")]),
+    R("/deploy","ok",[C("Custom"),C("Cmd+D"),C("project")],"Dry-run preview never sends to an agent.","",[A("Dry-run","run","primary"),A("Edit","edit")]),
+    R("Shortcuts","info",[C("Cheat sheet"),C("import / export")],"Search, remap, reset, import, export.","",[A("Cheat sheet","details"),A("Import","add")])
+  ];
+  D.testingRows = [
+    R("Unit / integration","ok",[C("Auto")],"Runs with verification.","",[A("Configure","edit")]),
+    R("Built-in browser","ok",[C("On")],"PM-native Browser Program.","",[A("Configure","edit")]),
+    R("Desktop / native","neutral",[C("Off")],"Off by default.","",[A("Enable","enable","primary")]),
+    R("Hot reload / previews","ok",[C("On")],"Live preview capture.","",[A("Configure","edit")]),
+    R("Simulator / emulator / device","bad",[C("Unavailable"),C("no toolchain")],"Install a toolchain to enable.","",[A("Install","add","primary")]),
+    R("API / database","ok",[C("Auto")],"Fixtures + teardown.","",[A("Configure","edit")]),
+    R("Console / network","ok",[C("On")],"Captured per run.","",[A("Configure","edit")]),
+    R("Performance / security / a11y","neutral",[C("Off")],"Opt-in deep checks.","",[A("Enable","enable","primary")]),
+    R("DAP debugger","ok",[C("On")],"Persistent eval supported.","",[A("Configure","edit")]),
+    R("Capture / artifacts","ok",[C("On")],"Bounded retention.","",[A("Configure","edit")])
+  ];
+
+  /* C4 — Storage / Backup / Lifecycle / History / Artifacts / Git / GitHub / Containers / Web / Index / Cleanup / Server */
+  D.storageRows = [
+    R("Storage mode","info",[C("Server-anchored")],"One Project Home Server; physical Project Vault.","",[A("Details","details")]),
+    R("Retention","ok",[C("90-day default")],"Per-class retention windows.","",[A("Edit","edit")]),
+    R("Legal hold","warn",[C("1 hold active")],"Managed; suspends deletion/compaction.","",[A("View","details")]),
+    R("Pressure","warn",[C("78% used")],"Compaction suggested at 80%.","",[A("Compact","run","primary")]),
+    R("Compaction","ok",[C("Idle, safe")],"Non-destructive; preserves receipts.","",[A("Run","run"),A("Logs","logs")]),
+    R("Quarantine","info",[C("2 items quarantined")],"Untrusted artifacts isolated.","",[A("Review","details")]),
+    R("Project / data deletion","bad",[C("Irreversible: receipt required")],"Double-confirm; evidence retained.","",[A("Policy","edit")]),
+    R("Encryption","ok",[C("At rest"),C("in transit")],"Verified.","",[A("Details","details")]),
+    R("Test restore","ok",[C("Last verified 2d ago")],"Periodic restore verification.","",[A("Run","test"),A("Receipt","logs")])
+  ];
+  D.backupRows = [
+    R("Back Up Now","info",[C("Action")],"Creates a restore point immediately.","",[A("Back up","run","primary")]),
+    R("Backup schedule","ok",[C("Daily at 02:00")],"Setting — when automatic backups run.","",[A("Edit","edit")]),
+    R("Last backup","ok",[C("Status: today 02:00")],"Read-only projection.","",[A("Receipt","logs")]),
+    R("Backup and Restore","info",[C("Manager")],"Dedicated surface for restore points.","",[A("Open","open")]),
+    R("Open backup log","neutral",[C("Diagnostic")],"Receipted operation history.","",[A("Open","logs")])
+  ];
+  D.lifecycleRows = [
+    R("Export settings","ok",[C("Action")],"Snapshot of current settings bundle.","",[A("Export","export","primary")]),
+    R("Import settings","warn",[C("3 conflicts previewed")],"Merge or replace; preview before apply.","",[A("Preview","preview","primary"),A("Cancel","test")]),
+    R("Reset to defaults","bad",[C("Destructive: preview first")],"Requires confirmation + receipt.","",[A("Preview","preview","primary")]),
+    R("Copy Settings From","info",[C("Transactional, one-time")],"About ten broad categories; destination independent after.","",[A("Preview","preview","primary")]),
+    R("Restore point","ok",[C("auto: pre-import")],"Atomic apply; rollback to snapshot.","",[A("Rollback","reconnect","primary"),A("Receipt","logs")]),
+    R("Legacy-key migration","info",[C("2 keys remapped")],"Validation on load.","",[A("Details","details")])
+  ];
+  D.historyRows = [
+    R("Project history","ok",[C("Filtered to this project")],"Compare / export / rebuild / archive.","",[A("Open","open")]),
+    R("All-project history","info",[C("Scope: all")],"Same actions, broader scope.","",[A("Open","open")]),
+    R("Deletion policy","warn",[C("90 days")],"Archive before deletion; receipt kept.","",[A("Edit","edit")]),
+    R("PM-owned vs provider-native identity","info",[C("Distinguished")],"Provider threads attributed correctly.","",[A("Details","details")]),
+    R("Sessions","ok",[C("3 resumable")],"Crash-safe session restore.","",[A("Restore","run","primary")])
+  ];
+  D.artifactRows = [
+    R("Build outputs","ok",[C("out/dist"),C("v2026.08.11"),C("retain 14d")],"Type + location + version + retention.","",[A("Reveal","open"),A("Export","export")]),
+    R("Test reports","ok",[C("junit"),C("retain 30d")],"Open / reveal / export / cleanup.","",[A("Open","open"),A("Cleanup","run")]),
+    R("Goal receipts","info",[C("PM-owned identity")],"Receipted; redactable.","",[A("Reveal","open"),A("Redact","edit")]),
+    R("Captured screenshots","warn",[C("retain 7d"),C("2.1 GB")],"Bounded; cleanup dry-run available.","",[A("Cleanup","run","primary"),A("Logs","logs")]),
+    R("Provider exports","info",[C("provider-native identity")],"Attributed to the originating provider.","",[A("Open","open"),A("Export","export")])
+  ];
+  D.sourcecontrolRows = [
+    R("Git","ok",[C("tool healthy"),C("2.46")],"Identity + auto-fetch configured.","",[A("Configure","edit")]),
+    R("Worktrees","ok",[C("4 active"),C("1 per Goal")],"Auto-provision policy: Ask.","",[A("Manage","open")]),
+    R("Branch / bookmark / revision","info",[C("trunk-based")],"Short-lived branches.","",[A("Graph","details")]),
+    R("Jujutsu / LFS","neutral",[C("Jujutsu not configured")],"Optional; LFS on for media.","",[A("Configure","edit")]),
+    R("Forge connection","ok",[C("GitHub authenticated")],"SSH source verified.","",[A("Details","details")]),
+    R("Test before merge","ok",[C("On")],"Gate merges on green tests.","",[A("Policy","edit")]),
+    R("Push / force-push policy","warn",[C("force-push: deny main")],"Leases on protected branches.","",[A("Edit","edit")]),
+    R("Recovery and cleanup","info",[C("prune weekly")],"Stale branches removed; receipts kept.","",[A("Run","run"),A("Logs","logs")])
+  ];
+  D.githubRows = [
+    R("Current-branch readiness","ok",[C("green: 3 workflows")],"Pinned workflows tracked for this branch.","",[A("Refresh","refresh"),A("Open","open")]),
+    R("CI build","ok",[C("passing"),C("4m12s")],"Run / job / log browsable.","",[A("Logs","logs")]),
+    R("Release publish","warn",[C("approval pending")],"Account capability: publish allowed.","",[A("Approve","enable","primary"),A("Logs","logs")]),
+    R("Starter workflow","info",[C("node-ci.yml")],"Scaffold for new repos.","",[A("Use","add")]),
+    R("Account health","ok",[C("1 forge connected")],"Rate-limit + auth healthy.","",[A("Details","details")])
+  ];
+  D.containerRows = [
+    R("Docker","ok",[C("Desktop"),C("Engine 27.1"),C("Compose")],"CLI + Buildx available.","",[A("Details","details"),A("Logs","logs")]),
+    R("Podman","warn",[C("CLI 5.2"),C("machine stopped")],"Rootless; start machine to use.","",[A("Start","reconnect","primary")]),
+    R("Kubernetes tools","info",[C("kubectl"),C("Helm"),C("2 contexts")],"kubeconfig contexts: default, staging.","",[A("Switch","edit"),A("Details","details")]),
+    R("Registries","ok",[C("ghcr.io authed"),C("local:5000")],"Pull/push health OK.","",[A("Manage","edit")]),
+    R("Unraid publishing","info",[C("configured")],"SSH remote publishing target.","",[A("Details","details")]),
+    R("SSH remotes","ok",[C("build-host")],"Host/environment tracked per remote.","",[A("Details","details")])
+  ];
+  D.webfetchRows = [
+    R("Provider priority","ok",[C("web-search MCP, then built-in fetch")],"Ordered fallback.","",[A("Reorder","edit")]),
+    R("Search / fetch / crawl limits","info",[C("crawl: 200 pages")],"Per-operation caps.","",[A("Edit","edit")]),
+    R("Credit guards","warn",[C("API near quota")],"Pauses before overage.","",[A("Details","details")]),
+    R("Caches","ok",[C("on: 512 MB")],"Search + fetch cache TTL configured.","",[A("Clear","run")]),
+    R("Browser sessions","info",[C("PM-native Browser Program")],"No Playwright dependency.","",[A("Details","details")]),
+    R("Proxies / certificates","ok",[C("system proxy")],"Cert chain validated.","",[A("Edit","edit")]),
+    R("Air-gap behavior","neutral",[C("offline ready")],"Degrades to cache; readiness shown.","",[A("Details","details")]),
+    R("Privacy","ok",[C("no prompt exfiltration")],"Enforced.","",[A("Details","details")]),
+    R("Readiness","ok",[C("ready")],"All probes green.","",[A("Details","details")])
+  ];
+  D.searchindexRows = [
+    R("Search index","ok",[C("enabled"),C("42k docs")],"Cross-file fuzzy + symbol index.","",[A("Configure","edit")]),
+    R("Rebuild","info",[C("last: 1h ago")],"Phase/progress shown; non-blocking.","",[A("Rebuild","run","primary"),A("Logs","logs")]),
+    R("Exclusions","ok",[C("respects .gitignore + node_modules")],"Plus user exclusions.","",[A("Edit","edit")]),
+    R("File-size / symlink policy","info",[C("skip more than 8 MB, follow symlinks")],"Configurable thresholds.","",[A("Edit","edit")]),
+    R("Disk use","warn",[C("640 MB")],"Remote cache optional.","",[A("Clear","run")]),
+    R("Failures","bad",[C("3 files failed: 2 binary, 1 encoding")],"Failures surfaced, not hidden.","",[A("Details","details"),A("Retry","reconnect","primary")])
+  ];
+  D.cleanupRows = [
+    R("Workspace cleanup","info",[C("dry-run first")],"Never deletes without a preview + receipt.","",[A("Dry-run","preview","primary")]),
+    R("Orphaned worktrees","warn",[C("2: 1.8 GB")],"Safe to remove; evidence retained.","",[A("Review","details"),A("Clean","run","primary")]),
+    R("Stale builds","ok",[C("out/: 920 MB")],"Removable.","",[A("Clean","run")]),
+    R("Caches","ok",[C("1.4 GB")],"Clearable per category.","",[A("Clear","run")]),
+    R("Logs","info",[C("older than retention")],"Archived then pruned.","",[A("Archive","export"),A("Prune","run")]),
+    R("Receipts","ok",[C("kept per policy")],"Every cleanup is receipted.","",[A("Logs","logs")])
+  ];
+  D.serverRows = [
+    R("Servers","neutral",[C("Module reserved")],"Insertion contract: server catalog + claim.","",[A("Owner","details")]),
+    R("Execution Hosts","neutral",[C("Module reserved")],"Home Server is default host when compatible.","",[A("Owner","details")]),
+    R("Clients","neutral",[C("3 paired (shell reference)")],"Pairing handled by the owner module.","",[A("Owner","details")]),
+    R("Project Hosting and Files","neutral",[C("Module reserved")],"Project Vault + file hosting.","",[A("Owner","details")]),
+    R("Remote Access","neutral",[C("Module reserved")],"SSH + remote execution.","",[A("Owner","details")]),
+    R("Updates","neutral",[C("Module reserved")],"PM app/content updates owner.","",[A("Owner","details")])
+  ];
+  D.serverNote = "These owners are deferred. The Settings framework accepts their manager modules, deep links, status cards, and command wiring later. No state machine is invented here.";
+
+  /* ----- PAM INSTALLATION LIFECYCLE (fixtures 3-8, 12, 14) ----- */
+  /* Provider CLI acquisition is explicit, official-source, host-specific; never bundled. */
+  D.installations = [
+    { id:"claude-cli", provider:"Claude CLI", owner:"Claude (official)", confidence:"Proven",
+      cmd:"claude", resolved:"/usr/local/bin/claude", method:"Homebrew", root:"isolated CLI home",
+      host:"macOS native", evidence:"package db + launch probe", multi:"native profile",
+      update:"managed externally", auth:"CLI-owned OAuth", health:"ok" },
+    { id:"claude-cli-shadow", provider:"Claude CLI", owner:"Claude (official)", confidence:"Strongly identified",
+      cmd:"claude", resolved:"/opt/homebrew/Cellar/claude/1.4/bin/claude", method:"Homebrew", root:"shadow install",
+      host:"macOS native", evidence:"symlink chain traced", multi:"isolated home (shadowed)",
+      update:"selected", auth:"CLI-owned OAuth", health:"ok",
+      note:"Multiple installations found. One selected, one shadowed. Shadowed install ignored unless explicitly chosen." },
+    { id:"legacy-ai", provider:"Unknown AI helper", owner:"Unknown", confidence:"Ambiguous",
+      cmd:"ai", resolved:"~/bin/ai", method:"unknown", root:"—", host:"macOS native",
+      evidence:"bare command; no package record", multi:"single-active-login",
+      update:"Could not identify installation method", auth:"manual only", health:"warn",
+      note:"Unknown/ambiguous ownership — manual only. Never guessed from a bare path." },
+    { id:"opencode", provider:"OpenCode", owner:"OpenCode (official)", confidence:"Probable",
+      cmd:"opencode", resolved:"/usr/local/bin/opencode", method:"npm global", root:"external server",
+      host:"Linux native", evidence:"npm metadata", multi:"auth-only profile",
+      update:"ready", auth:"PM-direct OAuth", health:"ok",
+      note:"External server connection. Distinct from bundled providers." },
+    { id:"codex-cli", provider:"Codex CLI", owner:"OpenAI (official)", confidence:"Proven",
+      cmd:"codex", resolved:"/usr/local/bin/codex", method:"npm global", root:"PM-managed direct",
+      host:"macOS native", evidence:"npm + probe", multi:"PM-managed direct",
+      update:"Update available", auth:"PM-direct OAuth", health:"warn",
+      note:"Update available — Ask first. Latest-compatible policy." },
+    { id:"antigravity-cli", provider:"Antigravity CLI", owner:"Antigravity (official)", confidence:"Proven",
+      cmd:"antigravity", resolved:"/usr/local/bin/antigravity", method:".pkg installer", root:"isolated CLI home",
+      host:"macOS native", evidence:"installer receipt", multi:"native profile",
+      update:"Waiting for work to finish", auth:"CLI-owned OAuth", health:"warn",
+      note:"Scheduled when idle: requires proven ownership, compatible target, no active requests, repair/rollback path." },
+    { id:"ffmpeg", provider:"media helper", owner:"FFmpeg (official)", confidence:"Strongly identified",
+      cmd:"ffmpeg", resolved:"/opt/homebrew/bin/ffmpeg", method:"Homebrew", root:"—",
+      host:"macOS native", evidence:"package db", multi:"—",
+      update:"Rolled back", auth:"—", health:"bad",
+      note:"Verification failed after update; rollback succeeded. Path + launch + adapter handshake re-verified." }
+  ];
+  D.installations.push(
+    { id:"gemini-cli", provider:"Gemini CLI", owner:"Google (official)", confidence:"Not installed",
+      cmd:"gemini", resolved:"—", method:"—", root:"—", host:"macOS native",
+      evidence:"not present; official source identified", multi:"native profile (on install)",
+      update:"Explicit install", auth:"CLI-owned OAuth", health:"neutral",
+      note:"Not installed. Explicit Install from the official package source, on this exact Host/Environment. Never bundled or pre-seeded; never silently demand-installed by Project/model/Goal/agent demand." }
+  );
+  /* fixture 14: usage unavailable but provider ready */
+  D.usageUnavailable = { provider:"OpenAI — Personal", note:"Usage details unavailable right now; provider is ready and routing." };
+
+  /* ----- EXTENDED PRIMARY DESTINATIONS (cover all families; curated areas) ----- */
+  var extraDest = [
+    { id:"general", title:"General & Desktop", purpose:"Startup, desktop, tray, notifications, sounds, teacher, and updates.",
+      status:"1 webhook failing", statusKind:"bad", target:"general.notifications", manager:"notifications" },
+    { id:"permissions", title:"Permissions & FileSafe", purpose:"Approvals, ordered rules, sandboxes, and the non-bypassable floor.",
+      status:"FileSafe enforced", statusKind:"ok", target:"permissions.rules", manager:"permissions" },
+    { id:"code", title:"Code, Languages & Commands", purpose:"Editor, terminal, LSP, formatters, commands, and shortcuts.",
+      status:"1 conflict", statusKind:"warn", target:"code.files", manager:"filemanager" },
+    { id:"system", title:"System, Storage & Server", purpose:"Health, storage, backup, lifecycle, history, artifacts, containers, web, index, cleanup, and the future Server shell.",
+      status:"78% used", statusKind:"warn", target:"system.storage", manager:"storage" }
+  ];
+  var have = {}; D.destinations.forEach(function (d) { have[d.id] = 1; });
+  extraDest.forEach(function (d) { if (!have[d.id]) D.destinations.push(d); });
+  [{id:"context",mgr:"memory"},{id:"planning",mgr:"goal"},{id:"git",mgr:"sourcecontrol"},{id:"extensions",mgr:"mcp"},{id:"appearance",mgr:"appearance"}].forEach(function (p){
+    var d = D.destinations.filter(function(x){return x.id===p.id;})[0];
+    if (d && !d.manager) d.manager = p.mgr;
+  });
+})();

@@ -23,7 +23,7 @@
       "openPath": "concept-01-control-room.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["editorial", "command-center", "book-toc", "memory", "mcp"],
+      "tags": ["control-room", "book-toc", "context", "memory", "personas", "goal", "crew", "permissions", "bsd"],
       "order": 10
     },
     {
@@ -33,7 +33,7 @@
       "openPath": "concept-02-atlas.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["spatial", "focus-and-context", "minimap", "crew", "skills"],
+      "tags": ["atlas", "minimap", "notifications", "sounds", "appearance", "spellcheck", "desktop", "teacher"],
       "order": 20
     },
     {
@@ -43,7 +43,7 @@
       "openPath": "concept-03-stack.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["single-surface", "progressive-disclosure", "flip", "personas", "context"],
+      "tags": ["stack", "expand-in-place", "filemanager", "terminal", "lsp", "formatters", "commands", "mcp", "skills", "testing"],
       "order": 30
     },
     {
@@ -53,7 +53,7 @@
       "openPath": "concept-04-stream.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["continuous-document", "landmark-rail", "lsp", "terminal", "media"],
+      "tags": ["stream", "landmark-river", "storage", "backup", "lifecycle", "history", "artifacts", "sourcecontrol", "github", "containers", "webfetch", "searchindex", "cleanup", "server"],
       "order": 40
     }
   ],

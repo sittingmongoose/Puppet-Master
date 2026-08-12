@@ -163,3 +163,35 @@
 
 /* reduced motion: the padding transition is the only motion here; the global
    gate collapses it, and the resting state is identical either way. */
+
+/* ---- packet additions: collapsed Chats chip + left artifact gutter -------- */
+[data-k3-window="w4"] .w4-chats-collapsed {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 999px; background: var(--surface); cursor: pointer;
+  font: inherit; font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+[data-k3-window="w4"] .w4-chats-collapsed:hover { color: var(--text); background: var(--accent-soft); }
+[data-k3-window="w4"] .w4-chats-collapsed svg { width: 13px; height: 13px; }
+[data-k3-window="w4"] .w4-chats-collapsed[hidden],
+[data-k3-window="w4"] .w4-chats-card[hidden] { display: none; }
+[data-k3-window="w4"] .w4-chip-anchor {
+  position: absolute; right: 8px; top: 8px; z-index: 3;
+}
+[data-k3-window="w4"] .w4-chip-anchor[hidden] { display: none; }
+/* mirrored LEFT anchor card hosting the shared artifact surface (>= 975px) */
+[data-k3-window="w4"] .w4-art-gutter {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 260px; display: flex; flex-direction: column;
+  border-right: var(--border-width, 1px) solid var(--border-light);
+  background: var(--surface); z-index: 2;
+}
+[data-k3-window="w4"] .w4-art-gutter[hidden] { display: none; }
+[data-k3-window="w4"] .w4-art-gutter [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+/* transcript keeps clear of the open artifact gutter */
+[data-k3-window="w4"] .w4-transcript-area:has(.w4-art-gutter:not([hidden])) .w4-thread { margin-left: 260px; }
+/* narrow: the surface joins the chips row above the composer (cap 240px) */
+[data-k3-window="w4"] .w4-chips > [class*="k3aw"] {
+  max-height: 240px; overflow: auto; width: 100%;
+}
+html[data-motion="reduced"] [data-k3-window="w4"] .w4-art-gutter { transition: none; }

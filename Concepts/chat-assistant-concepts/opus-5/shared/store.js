@@ -7,11 +7,13 @@
   'use strict';
 
   var LS_KEY = 'pmx.opus5.state';
-  /* v4 replaced the threadHistory open/pinned boolean pair with a four-state enum, moved the
-   * runtime selectors from global session state into the per-thread view, and added the
-   * artifact and spellcheck slices. rehydrate() rejects a version mismatch outright, so an
-   * older snapshot is discarded rather than half-merged into a shape it does not fit. */
-  var LS_VERSION = 4;
+  /* v5 adds the packet's domain slices: route recents and provider setup ladder, transport/domain
+   * sync with an idempotent outbox, operational grants, the title-bar notification inbox, a spell
+   * source, and the per-thread BSD / decision / context / thread-operation / attachment / Crew /
+   * capacity records. rehydrate() rejects a version mismatch outright, so a stale v4
+   * `pmx.opus5.state` is discarded rather than half-merged into a shape it does not fit — which is
+   * why there is no migration code here and must not be. */
+  var LS_VERSION = 5;
 
   function clone(v) {
     if (v === null || typeof v !== 'object') return v;
@@ -47,7 +49,29 @@
       goalRuntime: null,
       thought: { keepActiveOpen: false, expanded: {} },
       loadedFrom: null,
-      run: null
+      run: null,
+      /* ---- v5 per-thread domain slices -------------------------------------------------
+       * Every one of these is thread-local by construction. The packet requires a Back Seat
+       * Driver mode, a route/approval decision surface, context admission edits, thread
+       * operations, attachments, a Crew and a capacity forecast to apply to THIS thread only;
+       * putting them in session state is the exact bug that made selectors global in v3. */
+      bsd: { state: 'auto-idle', advice: [], lastAt: null, scope: 'thread' },
+      /* Approvals, material warnings, operational conflicts and cross-project grants share one
+       * compact-decision list so a concept needs one renderer, not four. Formalizes the ad-hoc
+       * `pending` array the demo director used to write. */
+      decisions: [],
+      context: { removed: [], compact: null },
+      threadOps: {
+        requests: [], spawned: [], branches: [], restorePoints: [],
+        rewoundTo: null, redirect: null
+      },
+      attachments: [],
+      crew: null,
+      capacity: null,
+      /* Set once the fixture's authored seeds (bsd/decisions/attachments/threadOps/conflicts/
+       * outboxSeed/syncSeed) have been folded into this slice, so a remount does not re-seed
+       * over the user's own edits. */
+      seeded: false
     };
   }
 
@@ -75,7 +99,9 @@
           effort: 'High',
           speed: 'normal',          // 'normal' | 'fast', capability-gated per route
           mode: 'Agent',
-          access: 'ask',            // ask | autoEdits | auto | full
+          access: 'ask',            // ask | auto_edits | auto | full
+          bsd: 'auto',              // off | auto | on
+          bsdScope: 'thread',       // turn | thread
           worktree: 'main',
           crew: null
         },
@@ -90,7 +116,36 @@
         /* Left-of-chat artifact workspace. Lives in session rather than ui so an artifact state
          * tick does not re-run every composition's width/rail/mount layout pass. */
         artifact: { open: false, activeId: null, byId: {} },
-        spell: { enabled: true, disabledThreads: {}, ignoredInDraft: {}, personal: [], project: [] },
+        spell: {
+          enabled: true, disabledThreads: {}, ignoredInDraft: {}, personal: [], project: [],
+          /* Which dictionary PM is using. 'automatic' resolves to the system dictionary when one
+           * is available and to PM's own list otherwise; the resolution is shown, never guessed at
+           * by the reader. */
+          source: 'automatic',      // automatic | system | pm-local
+          language: 'en-US'
+        },
+        /* Most-recently-used routes, distinct from favorites: favorites are chosen, recents are
+         * observed. Both are needed because the picker shows them as separate groups. */
+        recents: { models: [], accounts: [] },
+        /* accountId -> setup ladder literal. The eight install/update states plus the four
+         * connection states share one field because a route is either usable or it is not, and the
+         * reason has to be one specific sentence rather than a generic failure. */
+        providerSetup: {},
+        /* Transport and domain health are separate axes: a live connection can still carry a
+         * degraded provider, and an offline client can still hold a healthy last-known domain. */
+        sync: {
+          transport: 'live',        // live | offline | reconnecting | synchronizing | cached
+          domain: 'live',           // live | degraded | failed
+          outbox: [],
+          replayed: {},             // outbox entry id -> true; the idempotency ledger
+          snapshot: null,
+          serverWork: []
+        },
+        /* Cross-project and operational grants. `resolved` records which conflicts have been
+         * settled so a resolved conflict does not reappear on the next projection. */
+        ops: { grants: {}, resolved: {} },
+        /* Title-bar inbox. Chat itself owns no notification panel — see PMXNotify. */
+        notify: { items: [], open: false },
         /* Bumped by the demo harness on every reset so a deterministic run can be identified. */
         demo: { generation: 0 }
       },
@@ -152,13 +207,72 @@
    * function with no access to the project defaults, and because seeding must also repair a
    * rehydrated view whose runtime predates this shape. A COPY is taken, never a reference —
    * sharing the defaults object would make every thread's selector writes global again, which
-   * is the exact bug this slice exists to fix. */
+   * is the exact bug this slice exists to fix.
+   *
+   * The same call also folds the fixture's authored per-thread state (BSD mode and advice,
+   * decisions, attachments, thread operations, operational conflicts, outbox and sync seeds) into
+   * the view exactly once. The fixture is allowed to AUTHOR state; the store remains the single
+   * source of truth for it. `attachData` supplies the normalized thread record — without it the
+   * seed step is skipped, so an unbound store still returns a usable view. */
   Store.prototype.view = function (threadId) {
     var tid = threadId || this._s.session.activeThreadId;
     if (!this._s.view[tid]) this._s.view[tid] = defaultView();
     var v = this._s.view[tid];
     if (!v.runtime) v.runtime = clone(this._s.session.defaults);
+    if (!v.seeded && this._data) this._seedView(tid, v);
     return v;
+  };
+
+  /* Called once by PMXData after normalization so `view()` can seed from authored fixture state.
+   * Passing the data in rather than reaching for a global keeps the store dependency-free. */
+  Store.prototype.attachData = function (data) {
+    this._data = data || null;
+    return this;
+  };
+
+  Store.prototype._seedView = function (tid, v) {
+    v.seeded = true;
+    var t = null;
+    try { t = this._data && this._data.threadById ? this._data.threadById(tid) : null; } catch (e) { t = null; }
+    if (!t) return;
+    if (t.bsd) {
+      v.bsd.scope = t.bsd.scope || v.bsd.scope;
+      v.bsd.state = t.bsd.mode === 'on' ? 'on' : (t.bsd.mode === 'off' ? 'off' : 'auto-idle');
+      v.bsd.advice = clone(t.bsd.advice || []);
+      if (t.bsd.mode) this.setRuntimeQuiet(tid, 'bsd', t.bsd.mode);
+    }
+    if (t.decisions && t.decisions.length) v.decisions = clone(t.decisions);
+    if (t.conflicts && t.conflicts.length) {
+      /* A conflict is a decision with an owner, so it joins the same compact-decision list
+       * rather than founding a second one. */
+      for (var i = 0; i < t.conflicts.length; i++) {
+        var c = clone(t.conflicts[i]);
+        c.kind = 'conflict';
+        c.status = c.status || 'pending';
+        v.decisions.push(c);
+      }
+    }
+    if (t.attachments && t.attachments.length) v.attachments = clone(t.attachments);
+    if (t.threadOps) {
+      for (var k in t.threadOps) {
+        if (Object.prototype.hasOwnProperty.call(t.threadOps, k)) v.threadOps[k] = clone(t.threadOps[k]);
+      }
+    }
+    if (t.outboxSeed && t.outboxSeed.length && !this._s.session.sync.outbox.length) {
+      this._s.session.sync.outbox = clone(t.outboxSeed);
+    }
+    if (t.syncSeed) {
+      if (t.syncSeed.transport) this._s.session.sync.transport = t.syncSeed.transport;
+      if (t.syncSeed.domain) this._s.session.sync.domain = t.syncSeed.domain;
+    }
+  };
+
+  /* Seed-time runtime write. Identical to setRuntime but silent, because seeding happens inside
+   * a view() read and must not notify subscribers mid-render. */
+  Store.prototype.setRuntimeQuiet = function (threadId, key, value) {
+    var v = this._s.view[threadId];
+    if (!v || !v.runtime) return;
+    v.runtime[key] = value;
   };
 
   /* Read one thread-local runtime field, falling back to the project default. */
@@ -256,7 +370,8 @@
        * written before a sub-key existed still boots with that key present rather than
        * undefined. Listing them explicitly (rather than deep-merging) keeps the set of
        * persisted session slices visible in one place. */
-      ['defaults', 'favorites', 'search', 'threadHistory', 'artifact', 'spell', 'demo']
+      ['defaults', 'favorites', 'search', 'threadHistory', 'artifact', 'spell', 'demo',
+       'recents', 'providerSetup', 'sync', 'ops', 'notify']
         .forEach(function (slice) {
           base.session[slice] = Object.assign(fresh[slice], incomingSession[slice] || {});
         });
@@ -280,7 +395,9 @@
   };
 
   Store.prototype.reset = function () {
+    var d = this._data;
     this._s = defaultState();
+    this._data = d;
     this._notify(['ui', 'session', 'view']);
   };
 

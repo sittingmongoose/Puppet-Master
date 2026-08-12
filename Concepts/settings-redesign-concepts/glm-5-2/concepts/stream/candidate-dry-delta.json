@@ -1,0 +1,131 @@
+{
+  "schema_id": "pm.settings_concept_dry_delta.v1",
+  "concept": "concept-04-stream",
+  "model": "GLM-5.2",
+  "ia_metaphor": "landmark-river + scroll-linked flow",
+  "source_reference": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md (DRY component families). Names are candidate design roles, not final component IDs; audit agent adjudicates exact canonical names.",
+  "principle": "Stream exercises the shared DRY grammar so that C4 managers (Storage, Backup, Lifecycle, History, Runtime Artifacts, Source Control, GitHub Actions, Containers, Web, Search Index, Cleanup) reuse the same shells/rows/health/observable/receipt components as core and as sibling-owned families. No C4 family introduces a bespoke component when a shared role fits.",
+  "components": [
+    {
+      "component": "SettingsDestination",
+      "role": "Deep-link target resolver. Maps 'Open setting: {id}' / category / landmark ids to a river anchor + scroll position. Owns active_landmark_id resolution.",
+      "used_by": ["Settings Search result select", "receipt-driven deep links from Orchestrator", "import conflict deep link", "cleanup dry-run item deep link"],
+      "reuse_note": "Stream's only addition is the scroll behavior binding; the resolver contract is shared. Works for all concepts."
+    },
+    {
+      "component": "SettingsNotice",
+      "role": "Inline notice / managed-state banner. Surfaces legal-hold-active, compaction-suspended, import-conflict, air-gap-on, engine-unhealthy, index-degraded.",
+      "used_by": ["Storage & Retention (hold/pressure/air-gap)", "Settings Lifecycle (conflict/rollback)", "Containers (engine health)", "Project Search Index (degraded)"],
+      "reuse_note": "Shared banner grammar; severity + action CTA + dismiss/acknowledge policy reused unchanged."
+    },
+    {
+      "component": "SettingsWorkspaceShell",
+      "role": "River shell hosting scrolling landmark content + persistent left CategoryNavigation. Owns layout, panel restore, and lazy hydration gating.",
+      "used_by": ["all concepts"],
+      "reuse_note": "Identical shell across concepts; Stream's variant only changes the scrollspy driver. No C4-specific shell."
+    },
+    {
+      "component": "SettingsSearch",
+      "role": "Universal search over settings metadata (without eagerly hydrating all managers). Result select routes through SettingsDestination.",
+      "used_by": ["all concepts", "search over C4 inventory ids"],
+      "reuse_note": "Shared; search indexes metadata so Storage/Containers/Git/Web managers are searchable without full hydration."
+    },
+    {
+      "component": "CategoryNavigation",
+      "role": "Left category/subcategory tree. Selecting a category sets active_landmark_id and scrolls the river.",
+      "used_by": ["all concepts"],
+      "reuse_note": "Shared; C4 categories (Storage/Backup/Lifecycle/History/Artifacts/SourceControl/GitHubActions/Containers/Web/SearchIndex/Cleanup/Server) are just more tree nodes."
+    },
+    {
+      "component": "SubcategoryScrollspy",
+      "role": "Scroll-linked active-landmark highlight. Both drives and reflects scroll position via active_landmark_id. Bidirectional with CategoryNavigation.",
+      "used_by": ["stream (primary/signature)", "other concepts (secondary, portable)"],
+      "reuse_note": "Stream's signature interaction; implemented once and portable. The scrollspy algorithm is renderer-agnostic (Skia/FemtoVG/software)."
+    },
+    {
+      "component": "SettingRow",
+      "role": "Ordinary setting row grammar: label/value/help/scope/availability. Renders the action_setting_status variant (action button / toggle / badge / manager card).",
+      "used_by": ["all concepts", "every C4 setting id"],
+      "reuse_note": "Shared row grammar; C4 adds the action/status/manager variants but reuses the same row shell, focus/keyboard contract, and ValueSourceBadge slot."
+    },
+    {
+      "component": "ValueSourceBadge",
+      "role": "Inherited/managed/default/custom disclosure. The ONLY inheritance disclosure surface.",
+      "used_by": ["all concepts"],
+      "reuse_note": "Critical for Stream: Copy Settings From does NOT add a new badge. After a one-time copy, affected rows read 'custom', never 'inherited'. Managed/legal-hold rows read 'managed'."
+    },
+    {
+      "component": "ManagerShell",
+      "role": "Manager container: header + HealthSummary + ResourceList + ResourceDetail + SetupFlowLauncher hook. Lazy hydration boundary.",
+      "used_by": ["Storage manager", "Backup manager", "Runtime Artifacts manager", "Source Control manager", "GitHub Actions manager", "Containers manager", "Web manager", "Search Index manager", "Cleanup manager", "Provider manager (core)"],
+      "reuse_note": "Every C4 manager is a ManagerShell instance. No bespoke manager frame."
+    },
+    {
+      "component": "ResourceList",
+      "role": "Virtualized list of resources with windowed delegates. Backed by a model proxy (not direct view mutation).",
+      "used_by": ["Runtime Artifacts list", "History & Sessions list", "Containers/Images list", "GitHub Actions runs list", "Source Control history/graph", "Worktrees list", "backups/log list"],
+      "reuse_note": "Shared virtualized list; Stream requires this for large artifact/history/image/run datasets to avoid jank."
+    },
+    {
+      "component": "ResourceCard",
+      "role": "Per-resource summary card (status + key fields + quick actions + ReceiptLink slot).",
+      "used_by": ["backup last-run card", "container card", "registry card", "host card (deferred Server region)", "pinned workflow card", "worktree card"],
+      "reuse_note": "Shared card grammar; the deferred Server region reuses ResourceCard for human-language host/client cards."
+    },
+    {
+      "component": "ResourceDetail",
+      "role": "Per-resource detail pane: full fields + identity refs + open/reveal/export/cleanup actions + lineage.",
+      "used_by": ["artifact detail", "container detail", "run/job/log detail", "worktree detail", "backup detail"],
+      "reuse_note": "Shared; identity refs (artifact_id/run_id/attempt_id/receipt_id) resolve canonically before layout."
+    },
+    {
+      "component": "HealthSummary",
+      "role": "Manager readiness/health summary: aggregate status + per-item health + degraded reasons + fix-It links.",
+      "used_by": ["git/docker/web tool health", "engine health", "forge connection health", "registry auth health", "search index health", "provider installation health (core)"],
+      "reuse_note": "Shared; C4 capability probes (docker/kubectl/git/web) reuse HealthSummary + the shared tool lifecycle."
+    },
+    {
+      "component": "StorageHealth",
+      "role": "Composite storage summary: pressure + legal-hold + quarantine + compaction + retention + last-backup. Composes HealthSummary + Storage-specific badges.",
+      "used_by": ["Storage & Retention landmark", "Backup & Restore landmark (last-backup subset)"],
+      "reuse_note": "Stream-specific composite, but built FROM shared HealthSummary + SettingsNotice. The composition is portable to other concepts that need a multi-signal health summary."
+    },
+    {
+      "component": "ArtifactRow",
+      "role": "Runtime artifact row: type/location/version/retention/receipts/redaction + open/reveal/export/cleanup. PM-owned vs provider-native identity badge.",
+      "used_by": ["Runtime Artifacts manager", "History & Sessions (artifact-attempt linkage)"],
+      "reuse_note": "Identity-based open first (artifact_id); path reveal is fallback. Reuses ResourceList row contract but adds identity/redaction semantics specific to runtime artifacts."
+    },
+    {
+      "component": "ObservableOperation",
+      "role": "Truthful phase/progress/wait surface for long ops. Model-driven (ProgressModel); view never invents phase text or fake liveness.",
+      "used_by": ["Back Up Now", "storage compact", "import apply/rollback", "copy_from_project apply", "search index rebuild", "workspace cleanup", "container start", "reset apply"],
+      "reuse_note": "Shared across ALL Stream ops. Lock-wait is a visible phase. CancellationToken honored (e.g., index rebuild on disable)."
+    },
+    {
+      "component": "ReceiptLink",
+      "role": "Link to durable receipt. Renders receipt_ref, opens receipt detail, carries source disclosure.",
+      "used_by": ["backup/compaction/cleanup/import/copy/reset/container/artifact actions"],
+      "reuse_note": "Every irreversible or receipt-bearing C4 action carries a ReceiptLink. Shared component; receipt retention class (durable/bounded/discardable) is a storage concern, not a view concern."
+    },
+    {
+      "component": "SetupFlowLauncher",
+      "role": "Launches a bounded setup flow when a selected capability requires it (engine missing, registry unauth, forge unconnected, SSH source unset).",
+      "used_by": ["Containers engine setup", "registry auth", "forge connection (GitHub)", "SSH source setup", "web proxy/cert setup", "deferred Server region client pairing (reserved)"],
+      "reuse_note": "Shared; Stream reuses it for every capability that needs first-run setup. WSL setup shown ONLY when a selected capability requires it (WSL Off is healthy)."
+    }
+  ],
+  "families_not_exercised_here": {
+    "note": "These DRY roles exist in the broader candidate list but belong to sibling-owned families. Stream does not exercise them directly; they are listed to prove Stream is not silently dropping them.",
+    "roles": [
+      "AvailabilityReason (consumed by SettingRow/HealthSummary; Stream reuses it for unavailable rows but does not own it)",
+      "RequestedEffectiveInspector (core provider concern; Stream reuses for requested/effective model disclosure only)",
+      "SecretField/SecretReference (sibling-owned; Stream's web proxy-credentials / registry auth reference it but do not render the editor)",
+      "ProviderFamilyCard / AccountConnectionRow / InstallationCard / ModelRow / CapabilityEvidence / UsagePlanSummary (core provider family; Stream demonstrates the manager but the cards are core-owned)",
+      "MemoryRow / PersonaCard / CrewTemplate / PermissionRuleEditor (concept 1)",
+      "NotificationDestination / SoundLibraryItem / ThemePreview (concept 2)",
+      "CommandEditor / ShortcutRecorder / Lsp/Formatter/ToolResource (concept 3)"
+    ]
+  },
+  "assertion": "Every C4-owned flow in Stream is composed from the 18 shared DRY roles above. No bespoke C4-only shell/row/health/observable/receipt component is introduced. StorageHealth is the only Stream-specific composite, and it is built from shared HealthSummary + SettingsNotice."
+}

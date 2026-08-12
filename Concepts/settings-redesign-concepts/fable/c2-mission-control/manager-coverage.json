@@ -1,0 +1,171 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "aligned_to": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_id": "c2-mission-control",
+  "model": "fable",
+  "groups": [
+    {
+      "id": "core",
+      "entries": [
+        {
+          "manager": "Settings Home",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/home",
+            "fixtures": ["scenario:baseline", "scenario:calm", "scenario:attention-heavy", "scenario:first-run"],
+            "probes": ["persistent global health strip (providers / usage / notices)", "ranked triage stack grouped attention/setup/recommended with one status word, one headline, one reason, max two actions", "rectangular station cards with title + purpose + health + open affordance (no filter pills)", "console cards for the eight native consoles plus the honest Crew receipt station linking c1-atlas.html#/manager/manager.crew", "recents"]
+          }
+        },
+        {
+          "manager": "Settings Search",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/search/notifcations",
+            "fixtures": ["typo:notifcations", "typo:apperance", "typo:permisions", "no-results:flux capacitor"],
+            "probes": ["Ctrl/Cmd-K command palette; search deep links open it pre-filled and executed", "result kinds visibly distinct: setting (with owner breadcrumb + exposure), console, action, cross-concept receipt, Teacher guide", "manager-receipt rows name the owning concept and activate as real cross-page links", "empty palette offers Explain this screen (Teacher woven in)"]
+          }
+        },
+        {
+          "manager": "Settings Workspace",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/dest/general/notifications",
+            "fixtures": ["scenario:managed-workspace", "fx.long-text", "fx.changed-elsewhere"],
+            "probes": ["one category loads as a continuous document", "right-edge proportional minimap is primary navigation (heat glyphs, draggable viewport window, role=slider keyboard parity)", "left station rail secondary with per-sub scrollspy", "scrollspy replaces the route (dest/<domain>/<sub>) so Back/forward stays one entry per navigation", "narrow mode: bottom-sheet outline + icon rail", "console substations invert the relation: the console is primary, plain settings hang off it"]
+          }
+        },
+        {
+          "manager": "Provider/Account/Model/Installation",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.providers",
+            "fixtures": ["trigger:install-update:openai-codex/inst.codex.npm", "trigger:install-update-fail:copilot/inst.copilot.ghext", "trigger:install-select", "scenario:offline", "scenario:usage-exhausted"],
+            "probes": ["installations sub-console: humanized cards (claude npm selected / brew shadowed / TrueNAS tool-store) + advanced resolution drawer with evidence and update history", "all provider state strings resolve through PMProvider (status, update lifecycle, free-route states, auth boundary, routes)", "codex Ask-first update with truthful op phase strip; antigravity waiting-idle; copilot rolled-back with Retry re-running the honest fail path; ollama unknown-owner manual-only with zero manage actions", "cursor-cli explicit official-source install offer with host picker and install-not-sign-in policy note", "auth boundary chip per provider; OpenCode external server card with serverInfo + server-supplied catalog", "free routes in all six states + Free & community catalog freshness block (models.dev / Free Coding Models, last-known-good, change history)", "local-ollama usage-unavailable-but-ready", "requested vs effective on role-batch-reviewer with the fallback reason; Fast/effort capability chips backed by evidence; Haiku fastNote"]
+          }
+        },
+        {
+          "manager": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/setting/system.health.diagnostics-verbosity",
+            "fixtures": ["fx.validation-error", "fx.restart-required", "fx.reconnect-required", "fx.changed-elsewhere"],
+            "probes": ["rows render exclusively from PMState.resolveRowState (all nine value states)", "blank inputs never mean auto/inherit/not-configured (explicit chips + Set a value)", "advanced/expert/diagnostic disclosures with the expert unlock caution", "deep links reveal + focus-flash the row"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "entries": [
+        {
+          "manager": "Notifications & Sounds",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.notifications",
+            "fixtures": ["trigger:dest-test:dest.slack", "fx.validation-error", "scenario:first-run", "scenario:offline"],
+            "probes": ["master strip: enabled, volume, quiet hours (time inputs), focus behavior", "surfaceRule copy: title-bar stack is the sole in-app affordance", "destinations BOARD with all 8 cards: in-app locked+ready with lockedReason, system, Slack ready (workspace/channel/threadOnFailure/mention/vault tokenRef), Discord needs-setup, generic webhook with the FIELD-level successPredicate error ('staus' typo) that clears live when corrected, ntfy, Pushover disabled with device, Telegram", "add/edit/remove flows with per-kind fields; secrets only as vault references", "explicit Test send per destination -> PMState.trigger('dest-test', id): masked, rate-limited, receipted, lastTest on the card, delivered test joins the title-bar stack", "EVENT ROUTING MATRIX: 6 events x destinations with functional always/when-unfocused/failures-only/never selects + per-event sound mapping + the run.failed sound-never-sole-signal note"]
+          }
+        },
+        {
+          "manager": "Sound Library/Uploads/Packs",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.sounds",
+            "fixtures": ["trigger:sound-upload", "trigger:sound-preview:snd.soft-chime", "trigger:pack-import:pack.openpeon-vol2", "trigger:pack-import:pack.warcraft-rip", "scenario:first-run"],
+            "probes": ["asset table: built-ins with source/license/version/duration/hash + defaultFor chips; uploads with uploadedAt; pack-sourced entries", "local-only preview (op phases, transient Playing indicator, deliberately NO receipt) vs explicit receipted test-send - stated and enforced", "upload fixture: gentle-bell.ogg appears after format/duration/hash checks", "pack gates: PeonPing Classic imported (CC-BY-4.0 verified), OpenPeon Vol. 2 import BLOCKED at the license gate with receipt, warcraft-rip.zip rejected at the format gate with detail", "'unverified packs are never bundled or enabled' copy", "delete (uploads only; built-ins/pack sounds honestly refuse) / replace / export with honest receipts"]
+          }
+        },
+        {
+          "manager": "Appearance",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.appearance",
+            "fixtures": ["fx.theme-fallback", "fx.restart-required", "trigger:theme-reload:theme.cobalt-mono", "scenario:first-run"],
+            "probes": ["8-theme grid with LIVE hover preview (mouseenter/leave AND focus/blur; attribute swap only, reduced-motion safe); swatches render the target theme's real tokens via scoped data-theme", "Apply persists via PMShell.applyView + the shell's own storage key, with a receipt noting live apply", "Light/Dark/Auto radio + follow-OS toggle", "custom TOML cards: Platyr Dusk active with base + live reload; Cobalt Mono INVALID with line-41 diagnosis panel, fallback-active banner, Reload wired to theme-reload; Paper Print valid restart-required", "create/import/export/open-folder with honest receipts; base-theme inheritance + schema validation copy", "fonts block: ui/mono selects; Berkeley Mono not-installed with the fallback chain in effect", "UI scale options with pendingRestart marker (fx.restart-required)", "glass-transparency/glass-background-mode locked outside Glass with reason - and unlocking live while Glass is active"]
+          }
+        },
+        {
+          "manager": "Spellcheck & Dictionaries",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.dictionary",
+            "fixtures": ["scenario:baseline", "scenario:first-run"],
+            "probes": ["normal block from real rows: Check spelling On, Language Automatic, Dictionary source Automatic, Personal dictionary Manage, Project dictionary", "advanced source order copy (Automatic - OS then PM local / System only / PM local only) + technical prose, unknown names, language packs, thread/project overrides rows", "personal + project dictionary CRUD boards: word chips with remove, add input; additions persist via the same store keys PMSpell writes (spell.personal / spell.project)", "NO autocorrect copy", "grammar/style assist as a separate opt-in provider-backed row with privacy/route/cost/Usage disclosure", "live demo pointer opens the Assistant composer where PMSpell already runs"]
+          }
+        },
+        {
+          "manager": "Desktop/Tray/Window",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.desktop",
+            "fixtures": ["scenario:baseline"],
+            "probes": ["tray strip: minimize/close-to-tray from the real settings rows; automation badge progress-ring note; tray menu preview (Show/Hide, Pause/Resume, Quit) as a quiet static rendering explicitly labeled a preview, not fake controls", "launch destination select + window/panel/tab restore toggles", "crash recovery card: last recovery, 3 buffers restored, always-on unsaved protection, journal receipt", "Activity Bar board: functional reorder (up/down), hide/show with the hidden list, overflow policy select; left side-panel canon in copy", "editor tab / tree render / history archive day limits as functional inputs"]
+          }
+        },
+        {
+          "manager": "Teacher/Help",
+          "classification": "demonstrated",
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.teacher",
+            "fixtures": ["trigger:teacher-explain:teach.slack-setup", "trigger:teacher-explain:teach.provider-priority", "scenario:first-run"],
+            "probes": ["availability row + last session", "topic list with kind chips (explain-screen vs guided-action), surface labels, canTransitionToAction markers", "Explain this screen action -> PMState.trigger('teacher-explain', topicId) opens the step overlay; highlight refs outline REAL elements (dest.slack card, provider accounts, at-a-glance block, custom themes)", "the guided Slack topic hands off into the REAL add-destination flow with kind slack pre-set and the workspace field focused - nothing pre-submitted", "cross-concept topics (permissions, storage) state their owning concept and link there", "woven into the Cmd-K palette: matching topics ride along; empty palette offers Explain this screen", "help-everywhere: rows keep hover + focus + explicit details affordances (never hover-only)"]
+          }
+        },
+        {
+          "manager": "Media routes",
+          "classification": "demonstrated",
+          "beyond_assignment": true,
+          "evidence": {
+            "route": "c2-mission-control.html#/manager/manager.media",
+            "fixtures": ["scenario:baseline", "scenario:invocation-failed"],
+            "probes": ["kept from the prior pass as a beyond-assignment extra: per-purpose routes, native vs PM-transformation identity, fallback route, generation history, no-provider honest failure state"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "entries": [
+        { "manager": "Context & Instructions", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ValueSourceBadge", "AvailabilityReason"], "demonstrated_in": "c1-atlas.html#/manager/manager.contextSources" },
+        { "manager": "Memory", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "ReceiptLink"], "demonstrated_in": "c1-atlas.html#/manager/manager.memory" },
+        { "manager": "Personas", "classification": "shared_grammar", "grammar_components": ["PersonaCard", "ManagerShell"], "demonstrated_in": "c1-atlas.html#/manager/manager.personas" },
+        { "manager": "Goal & Automation", "classification": "shared_grammar", "grammar_components": ["RequestedEffectiveInspector", "SettingRow"], "demonstrated_in": "c1-atlas.html#/manager/manager.goal" },
+        { "manager": "Crew", "classification": "shared_grammar", "grammar_components": ["CrewTemplate", "HealthSummary"], "demonstrated_in": "c1-atlas.html#/manager/manager.crew", "notes": "Moved OUT of this concept this pass: the previous native Crew console was removed and replaced with an honest receipt station on Home, a receipt panel in the workspace subcategory, and a validated view-restore fallback. Search returns it as a cross-concept receipt." },
+        { "manager": "Permissions & FileSafe", "classification": "shared_grammar", "grammar_components": ["PermissionRuleEditor", "SettingsNotice"], "demonstrated_in": "c1-atlas.html#/manager/manager.permissions" },
+        { "manager": "Back Seat Driver", "classification": "shared_grammar", "grammar_components": ["SettingRow", "RequestedEffectiveInspector"], "demonstrated_in": "c1-atlas.html#/manager/manager.bsd" }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "entries": [
+        { "manager": "File Manager/Editor", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ManagerShell"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.fileManager" },
+        { "manager": "Terminal", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.terminalProfiles" },
+        { "manager": "LSP", "classification": "shared_grammar", "grammar_components": ["Lsp/Formatter/ToolResource", "HealthSummary"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.lsp" },
+        { "manager": "Formatters", "classification": "shared_grammar", "grammar_components": ["Lsp/Formatter/ToolResource", "ObservableOperation"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.formatters" },
+        { "manager": "Commands & Shortcuts", "classification": "shared_grammar", "grammar_components": ["CommandEditor", "ShortcutRecorder"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.commands" },
+        { "manager": "MCP", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "SetupFlowLauncher"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.mcp" },
+        { "manager": "Skills", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.skills" },
+        { "manager": "Plugins", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.plugins" },
+        { "manager": "Tools", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "AvailabilityReason"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.tools" },
+        { "manager": "Testing & Debug", "classification": "shared_grammar", "grammar_components": ["SettingRow", "ManagerShell"], "demonstrated_in": "c3-focus-stack.html#/manager/manager.testing" }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "entries": [
+        { "manager": "Storage & Retention", "classification": "shared_grammar", "grammar_components": ["StorageHealth", "SettingRow"], "demonstrated_in": "c4-ledger.html#/manager/manager.storage" },
+        { "manager": "Backup & Restore", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html#/manager/manager.backup" },
+        { "manager": "Settings Lifecycle", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html#/manager/manager.lifecycle" },
+        { "manager": "History & Sessions", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail"], "demonstrated_in": "c4-ledger.html#/manager/manager.history" },
+        { "manager": "Runtime Artifacts", "classification": "shared_grammar", "grammar_components": ["ArtifactRow"], "demonstrated_in": "c4-ledger.html#/manager/manager.artifacts" },
+        { "manager": "Source Control/Worktrees", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "InstallationCard"], "demonstrated_in": "c4-ledger.html#/manager/manager.sourceControl" },
+        { "manager": "GitHub Actions", "classification": "shared_grammar", "grammar_components": ["HealthSummary", "ResourceList/Card/Detail"], "demonstrated_in": "c4-ledger.html#/manager/manager.actions" },
+        { "manager": "Containers & Registries", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "AvailabilityReason"], "demonstrated_in": "c4-ledger.html#/manager/manager.containers" },
+        { "manager": "Web/Search/Fetch", "classification": "shared_grammar", "grammar_components": ["ResourceList/Card/Detail", "SettingsNotice"], "demonstrated_in": "c4-ledger.html#/manager/manager.web" },
+        { "manager": "Project Search Index", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "HealthSummary"], "demonstrated_in": "c4-ledger.html#/manager/manager.searchIndex" },
+        { "manager": "Workspace Cleanup", "classification": "shared_grammar", "grammar_components": ["ObservableOperation", "ReceiptLink"], "demonstrated_in": "c4-ledger.html#/manager/manager.cleanup" },
+        { "manager": "Future Server Module Shell", "classification": "deferred_named_owner", "named_owner": "Server Backbone return (Post-Return Reconciliation v6); insertion contracts per module in PM_DATA.serverModules", "demonstrated_in": "c4-ledger.html#/manager/manager.servers", "notes": "Reserved destinations with named owners render in c4; c2 cross-links only." }
+      ]
+    }
+  ]
+}

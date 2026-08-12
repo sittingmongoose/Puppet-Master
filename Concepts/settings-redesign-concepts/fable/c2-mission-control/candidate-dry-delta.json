@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "c2-mission-control",
+  "model": "fable",
+  "note": "Status per packet DRY family: concretized (this concept renders a native composition of the role), reused (consumed via shared data/semantics without new composition), not-exercised (belongs to another concept's surfaces). Variance notes are the anti-clone evidence: same product behavior, deliberately different composition.",
+  "entries": [
+    {
+      "family": "NotificationDestination",
+      "status": "concretized",
+      "concrete_component": "mc-dest card on the destinations BOARD",
+      "shape": "{ id, kind, label, state: ready|needs-setup|validation-error|disabled|unavailable, builtIn, locked?, lockedReason?, config (per-kind; *Ref fields are vault references), validationError?{field,message}, lastTest?{when,ok,receiptId,masked}, rateLimit? }",
+      "variance_notes": "Mission Control renders destinations as an operational board of rectangular cards with per-card test/phase strips and an inline editor - not a list, sheet, or inspector. The webhook validation error is pinned to its field in both summary and editor. Atlas's grammar would render the same data as a numbered manual section; the data and semantics are shared, the composition is not."
+    },
+    {
+      "family": "SoundLibraryItem",
+      "status": "concretized",
+      "concrete_component": "mc-soundtable row",
+      "shape": "{ id, name, source: built-in|upload|pack:<id>, format, sampleRate, duration, hash, license, version?, uploadedAt?, defaultFor[] }",
+      "variance_notes": "A provenance-first asset table (source, license, hash as first-class columns) with per-row local-only preview strips. Preview emits NO receipt by contract; delete honestly refuses on built-ins and pack sounds. The console idiom keeps it a matrix-like table rather than cards."
+    },
+    {
+      "family": "ThemePreview",
+      "status": "concretized",
+      "concrete_component": "mc-theme-card grid + mc-themecard custom TOML cards",
+      "shape": "built-in: { id, label, family, mode } with live hover/focus preview and persistent apply; custom: { id, name, file, baseTheme, state: active|invalid|restart-required, schemaVersion, liveReload, errors[{line,key,message}], fallback{active,to,reason}, restartNote? }",
+      "variance_notes": "Swatches render the REAL tokens by scoping data-theme onto the card, so preview and swatch can never disagree. Invalid themes get a diagnosis panel plus fallback banner, not a generic error row. Hover preview restores on every rebuild (state-driven, reduced-motion safe)."
+    },
+    {
+      "family": "SettingRow",
+      "status": "reused",
+      "concrete_component": "mc-row rendered exclusively from PMState.resolveRowState",
+      "variance_notes": "The new consoles hang plain rows off their boards (inverted relation: console primary, rows in a Configure drawer) instead of rows owning the page."
+    },
+    {
+      "family": "ManagerShell",
+      "status": "concretized",
+      "concrete_component": "boardFrame (toolbar strip + scrolling body of boards/strips/matrices) alongside the existing consoleFrame (inventory + inspector)",
+      "variance_notes": "Two manager shells on purpose: inventory/inspector for providers and media, board/strip/matrix for the new families. Both keep the shared roles (header, health summary, add action, states, receipts) - the composition differs per domain, as the packet allows."
+    },
+    {
+      "family": "ObservableOperation",
+      "status": "concretized",
+      "concrete_component": "mc-opstrip driven by staged 'op' events",
+      "variance_notes": "One strip component projects every staged trigger (install lifecycle, dest-test, sound-upload, pack-import, theme-reload) with truthful phases that never skip under reduced motion; terminal phases re-render the region from mutated data."
+    },
+    {
+      "family": "ReceiptLink",
+      "status": "reused",
+      "concrete_component": "PMState.receipt -> shell toast + persisted receipt ids on cards (lastTest.receiptId, pack import results)",
+      "variance_notes": "Cross-concept receipts additionally carry REAL links (Crew station, palette manager-receipt rows, Teacher cross-surface links)."
+    },
+    {
+      "family": "SecretField/SecretReference",
+      "status": "concretized",
+      "concrete_component": "mc-vault chip + vault-reference selector in destination editors",
+      "variance_notes": "Secrets exist only as vault references: the chip shows the reference id with a key glyph; the editor offers choose-existing or create-in-vault (receipted); reveal/copy do not exist. Raw tokens are unrepresentable in this UI."
+    },
+    {
+      "family": "InstallationCard",
+      "status": "concretized",
+      "concrete_component": "mc-inst humanized card + advanced resolution drawer",
+      "variance_notes": "All states/labels resolve through PMProvider; confidence gates actions (unknown owner = zero manage actions); the rolled-back card's Retry re-runs the honest fail path; the drawer exposes the full resolver trace and update history."
+    },
+    {
+      "family": "HealthSummary",
+      "status": "reused",
+      "concrete_component": "consoleSummary feeding station cards, board toolbars, and the global health strip",
+      "variance_notes": "The persistent health strip is this concept's signature; new consoles contribute summaries (destinations ready, packs held at the gate, invalid theme fallback) to the same strip vocabulary."
+    },
+    {
+      "family": "SettingsDestination",
+      "status": "concretized",
+      "concrete_component": "mc-station cards (+ the anchor-based receipt station variant for Crew)",
+      "variance_notes": "The receipt-station variant proves a destination can honestly point OUT of the concept: it is a real anchor with the owning concept named, not a dead button."
+    },
+    {
+      "family": "SettingsSearch",
+      "status": "concretized",
+      "concrete_component": "Ctrl/Cmd-K palette over PMState.search",
+      "variance_notes": "Adds two result kinds beyond the shared set: cross-concept manager receipts (real links) and Teacher guides; the empty state offers Explain this screen."
+    },
+    {
+      "family": "RequestedEffectiveInspector",
+      "status": "reused",
+      "concrete_component": "role cards + model rows via PMProvider.resolveRoute",
+      "variance_notes": "Requested/Effective render as paired chips with the why-line, inside the roles drawer rather than a dedicated inspector pane."
+    },
+    { "family": "SettingsNotice", "status": "reused", "concrete_component": "triage stack on Home", "variance_notes": "Ranked stack grouped by kind; fixture notices deep-link into the new consoles (webhook card, appearance diagnosis)." },
+    { "family": "SetupFlowLauncher", "status": "reused", "concrete_component": "free-route stepped setup + cursor-cli install offer", "variance_notes": "The install offer adds the exact-host picker and the install-is-not-sign-in step." },
+    { "family": "CommandEditor", "status": "not-exercised", "variance_notes": "Commands & shortcuts are proven in c3-focus-stack." },
+    { "family": "StorageHealth", "status": "not-exercised", "variance_notes": "Storage is proven in c4-ledger; c2 links there from notices." },
+    { "family": "PermissionRuleEditor", "status": "not-exercised", "variance_notes": "Proven in c1-atlas; the Teacher last-match-wins topic cross-links there." }
+  ]
+}

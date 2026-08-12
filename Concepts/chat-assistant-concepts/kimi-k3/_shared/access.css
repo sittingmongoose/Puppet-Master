@@ -1,0 +1,158 @@
+/* ============================================================================
+   Kimi K3 — access profile + compact approval styles (window.K3Access).
+   Token-driven only; the Details panel lives inside a .k3-pop.k3-popover
+   portal (popups.css owns sprout motion/chrome) — these rules style content.
+   Reduced motion collapses transitions via the global data-motion contract.
+   ========================================================================== */
+
+/* Details popover variant */
+.k3a-pop {
+  width: min(360px, calc(100vw - 16px));
+  max-width: min(360px, calc(100vw - 16px));
+  padding: 10px;
+}
+
+.k3a-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.k3a-detail-title {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.k3a-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.k3a-detail-label {
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.k3a-detail-item {
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-secondary);
+  font-family: var(--mono-font, monospace);
+  overflow-wrap: anywhere;
+}
+
+/* ---- compact approval / grant card ------------------------------------------ */
+.k3a-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--surface-elevated);
+  border: var(--border-width-inner, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+}
+.k3a-card.is-decided {
+  opacity: 0.85;
+}
+
+.k3a-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.k3a-card-ic {
+  display: inline-flex;
+  color: var(--accent-primary);
+}
+.k3a-card-ic svg { width: 16px; height: 16px; }
+.k3a-card-title {
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.k3a-card-sub {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+}
+
+.k3a-card-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.k3a-btn {
+  padding: 4px 12px;
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: var(--border-width-inner, 1px) solid var(--accent-primary);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3a-btn:hover { background: var(--accent-glow); }
+.k3a-btn-ghost {
+  color: var(--text-secondary);
+  background: transparent;
+  border-color: var(--border-light);
+}
+.k3a-btn-ghost:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3a-btn-deny {
+  color: var(--accent-error, var(--text-secondary));
+  background: transparent;
+  border-color: var(--border-light);
+}
+.k3a-btn-deny:hover {
+  color: var(--accent-error, var(--text-secondary));
+  background: color-mix(in srgb, var(--accent-error, #c33) 12%, transparent);
+  border-color: var(--accent-error, var(--border-light));
+}
+
+.k3a-card-decided {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+.k3a-card-decided.is-denied { color: var(--accent-error, var(--text-muted)); }
+.k3a-card-decided-ic { display: inline-flex; }
+.k3a-card-decided-ic svg { width: 14px; height: 14px; }
+
+/* ---- cross-project grant: read vs write shown distinctly ---------------------- */
+.k3a-xp-rw {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.k3a-xp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm, 13px);
+  color: var(--text-primary);
+}
+.k3a-xp-tag {
+  flex: 0 0 auto;
+  padding: 1px 8px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  border-radius: var(--radius-pill, 999px);
+}
+.k3a-xp-read {
+  color: var(--text-secondary);
+  background: var(--accent-soft);
+}
+.k3a-xp-write {
+  color: var(--accent-error, var(--text-primary));
+  background: color-mix(in srgb, var(--accent-error, #c33) 12%, transparent);
+}
+
+/* reduced motion: identical final state, no transitions */
+html[data-motion="reduced"] .k3a-btn {
+  transition: none;
+}

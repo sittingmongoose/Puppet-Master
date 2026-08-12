@@ -93,3 +93,82 @@
 
 /* ---- hover row: quiet, flush inside the card ------------------------------ */
 [data-k3-thread="t3"] .k3t-msg-hover { margin-top: 4px; }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t3 identity: every packet
+   record is a bordered sub-unit inside its turn card — the same surface /
+   border / radius language as the unit grid, one level down.
+   ========================================================================== */
+
+/* stacked packet records stay inside the unit */
+[data-k3-thread="t3"] .k3t-packet { margin-top: 10px; gap: 8px; }
+[data-k3-thread="t3"] .k3t-packet .k3t-card { margin-top: 0; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq / restorepoint /
+   branch: raised sub-units nested in the turn card */
+[data-k3-thread="t3"] .k3t-routewarn,
+[data-k3-thread="t3"] .k3t-attach,
+[data-k3-thread="t3"] .k3t-bsdadvice,
+[data-k3-thread="t3"] .k3t-receipt,
+[data-k3-thread="t3"] .k3t-threadreq,
+[data-k3-thread="t3"] .k3t-restorepoint,
+[data-k3-thread="t3"] .k3t-branch {
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+}
+/* restore points and branches are structural sub-units: headed like a unit */
+[data-k3-thread="t3"] .k3t-restorepoint .k3t-rowhead,
+[data-k3-thread="t3"] .k3t-branch .k3t-rowhead {
+  padding-bottom: 6px;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+
+/* line records (BSD result, redirect, marker) stay quiet inside the unit;
+   redirect states ride tint/weight, never accent borders */
+[data-k3-thread="t3"] .k3t-bsdresult,
+[data-k3-thread="t3"] .k3t-redirect,
+[data-k3-thread="t3"] .k3t-marker { padding: 2px; }
+[data-k3-thread="t3"] .k3t-redirect-interrupted,
+[data-k3-thread="t3"] .k3t-redirect-resumed { font-style: italic; }
+[data-k3-thread="t3"] .k3t-redirect-redirected { font-weight: 600; }
+
+/* rewound region renders inside the turn body: an inset dashed sub-unit */
+[data-k3-thread="t3"] .k3t-rewound {
+  background: var(--surface-elevated);
+  border-radius: var(--radius-sm, 6px);
+}
+
+/* queued badge matches the unit chrome */
+[data-k3-thread="t3"] .k3t-queued {
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+}
+
+/* server note: a small unit band in the work zone */
+[data-k3-thread="t3"] .k3t-server-note {
+  margin-top: 0;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+}
+
+/* chip-mode packet rows: sub-unit rows; an opened row expands to a full
+   sub-unit card */
+[data-k3-thread="t3"] .k3t-packet-row { border-radius: var(--radius-sm, 6px); }
+[data-k3-thread="t3"] .k3t-packet-row:hover { background: var(--surface-elevated); }
+[data-k3-thread="t3"] .k3t-packet-row.is-open {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+}
+[data-k3-thread="t3"] .k3t-packet-chiprows .k3t-card { margin-top: 4px; }
+
+/* artifact shortcut + overflow join as one bordered unit */
+[data-k3-thread="t3"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t3"] .k3t-shortcut-wrap .k3t-shortcut { flex: 1 1 auto; min-width: 0; }
+[data-k3-thread="t3"] .k3t-shortcut-more {
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+}

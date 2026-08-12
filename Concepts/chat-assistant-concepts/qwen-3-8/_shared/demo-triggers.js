@@ -11,6 +11,11 @@ window.PMChatDemoTriggers = (() => {
 
   function key(c) { return c.store.activeKey(); }
 
+  function activeGroup(c) {
+    const eff = c.store.effectiveSettings(key(c));
+    return c.store.catalog().find(p => p.provider === eff.provider) || null;
+  }
+
   function injectQuest(c, payload) {
     const t = c.store.demoThread(key(c));
     const q = {
@@ -123,6 +128,54 @@ window.PMChatDemoTriggers = (() => {
     "system.compact_now": (c, p) => c.store.compactNow(key(c)),
     "system.redirect": (c, p) => c.store.redirectTurn(key(c), (p && p.text) || "Focus on the access profiles first."),
     "system.crew": (c, p) => c.store.crewSet(key(c), { title: "Harness crew", summary: "2 requested · 1 concurrent · 2 waves", members: [ { role: "Reviewer", route: "Qwen 3.8 · workspace key", state: "running" }, { role: "Researcher", route: "Kimi K3 · developer key", state: "queued" } ], note: "Scoped to this thread." }),
+
+    // ---- final cumulative packet triggers (v3 domains) ----
+    "bsd.auto_eval": (c, p) => { c.store.bsdEvalStart(key(c)); setTimeout(() => c.store.bsdResolve("silent"), 900); },
+    "bsd.advice": (c, p) => { c.store.bsdEvalStart(key(c)); setTimeout(() => c.store.bsdResolve("advice", (p && p.text) || "Consider splitting this change into two reviewable steps before the next turn."), 900); },
+    "bsd.timeout": (c, p) => { c.store.bsdEvalStart(key(c)); setTimeout(() => c.store.bsdResolve("timeout"), 900); },
+    "bsd.unavailable": (c, p) => c.store.bsdResolve("unavailable"),
+    "bsd.set_on": (c, p) => c.store.bsdSet("on", "thread"),
+    "bsd.set_off": (c, p) => c.store.bsdSet("off", "thread"),
+
+    "conn.offline": (c, p) => c.store.connSetStatus("offline"),
+    "conn.queue_send": (c, p) => c.store.connQueue({ threadKey: key(c), text: (p && p.text) || "Queued while offline — will send on reconnect.", attachments: [] }),
+    "conn.reconnect": (c, p) => c.store.connReconnect(),
+    "conn.snapshot": (c, p) => c.store.connSnapshot("Snapshot catch-up: history synced from Home Server."),
+    "conn.server_work": (c, p) => c.store.connServerWork(key(c)),
+
+    "notify.push": (c, p) => c.store.notifyPush({ title: (p && p.title) || "Goal needs approval", body: (p && p.body) || "Two commands are waiting on your decision.", kind: (p && p.kind) || "approval", threadKey: key(c) }),
+    "notify.open_inbox": (c, p) => { window.dispatchEvent(new CustomEvent("pmq-open-inbox")); },
+
+    "attachment.unsupported": (c, p) => {
+      const id = (p && p.id) || "att-demo-video";
+      const k = key(c);
+      const st = c.store.thread(k);
+      c.store.mutate(() => {
+        if (!st.draft.attachments.some(x => (typeof x === "string" ? x : x.id) === id)) st.draft.attachments.push(id);
+      });
+      c.store.attachSetRoute(k, id, "unsupported", false);
+      c.store.warningInject(k, { tier: "confirm", kind: "attachment", text: "This model cannot read video.", detail: "The attachment arrived on a text-only route. Extract the frames in PM, or route the original to an alternate model with your consent.", pendingAttach: id, choices: ["Cancel", "Extract in PM", "Use Gemini"] });
+    },
+    "attachment.alternate_consent": (c, p) => {
+      const id = (p && p.id) || "att-demo-video";
+      c.store.warningInject(key(c), { tier: "confirm", kind: "attachment", text: "Route the original to an alternate model?", detail: "Consent is required once; PM keeps the lineage from the original attachment.", pendingAttach: id, choices: ["Cancel", "Consent once"] });
+    },
+
+    "ops.port_conflict": (c, p) => {
+      c.store.opsAddPort(key(c), { port: 3000, owner: "checkout redesign in another worktree", threadKey: key(c), worktree: "checkout-redesign", suggestion: 3001 });
+      c.store.warningInject(key(c), { tier: "confirm", kind: "collision", text: "Port 3000 is owned by checkout redesign in another worktree.", detail: "Requested 3000 for the visual-test server. The safe alternative is 3001; taking it does not disturb the other worktree.", choices: ["Use 3001", "Cancel"] });
+    },
+    "ops.worktree_waiting": (c, p) => c.store.opsAddWorktree(key(c), { name: "checkout-redesign", state: "waiting-writer", owner: "checkout redesign" }),
+    "ops.session_list": (c, p) => {
+      c.store.opsAddSession(key(c), { kind: "browser", label: "Browser Program capture · smoke pass", state: "running" });
+      c.store.opsAddSession(key(c), { kind: "debug", label: "Debug session · provider-selector.js", state: "attached" });
+      c.store.opsAddSession(key(c), { kind: "backup", label: "Backup · nightly snapshot", state: "complete" });
+    },
+
+    "provider.setup_required": (c, p) => { const g = activeGroup(c); if (g) c.store.mutate(() => { g.setupState = "install-required"; }); },
+    "provider.update_available": (c, p) => { const g = activeGroup(c); if (g) c.store.mutate(() => { g.setupState = "update-available"; }); },
+
+    "capacity.forecast": (c, p) => c.store.warningInject(key(c), { tier: "confirm", kind: "capacity", text: "Requested specialists: 6 · Recommended concurrent: 2 · 3 waves.", detail: "Reason: provider allowance and verification reserve. Required independent roles cannot be dropped. Forecast, not guarantee.", forecast: { requested: 6, recommended: 2, waves: 3, reason: "provider allowance and verification reserve" }, choices: ["Start waves", "Cancel"] }),
     "system.reset": (c, p) => {
       try { localStorage.removeItem(window.PMChatStore.STORAGE_KEY); } catch (e) {}
       location.reload();

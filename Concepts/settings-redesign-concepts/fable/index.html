@@ -188,11 +188,13 @@
           <p class="bx-kicker">fable · Settings Bakeoff</p>
           <h1 class="bx-title">Four answers to one question: what organizes Settings?</h1>
           <p class="bx-lede">
-            Each concept replaces the current bloom-modal Settings with the same three-surface
+            Each concept replaces the current chip-and-modal Settings with the same three-surface
             architecture — a search-centric Home, a one-category-at-a-time Workspace, and dedicated
-            Managers — but each is organized around a different first principle. They share demo data,
-            semantics, and themes; they deliberately do not share a skeleton. This page describes each
-            concept's thesis and its distinct answers so they can be compared on their own terms.
+            Managers — but each is organized around a different first principle, and each proves a
+            different quarter of the manager grammar natively (agent policy in Atlas, ambience and
+            input in Mission Control, developer tooling in Focus Stack, data lifecycle in Ledger).
+            They share demo data, semantics, and themes; they deliberately do not share a skeleton.
+            Every concept carries its own six-file impact register in a sibling folder of the same name.
           </p>
 
           <div class="bx-grid">
@@ -215,7 +217,7 @@
                 <dt>Navigation</dt>
                 <dd>A persistent leader-dot table-of-contents tree; the loaded section expands and a sliding ink dot in the right gutter tracks the active subcategory.</dd>
                 <dt>Managers</dt>
-                <dd>Appendices in the same book (Providers &amp; models, Memory, Connected servers), cross-referenced from the document.</dd>
+                <dd>Appendices in the same book — Providers &amp; models, Memory, Context &amp; Instructions, Personas, Goal &amp; Automation, Crew, Permissions &amp; FileSafe, and the Back Seat Driver. Connected servers and Language servers remain as numbered cross-reference stubs proven natively in Focus Stack.</dd>
                 <dt>Editing</dt>
                 <dd>Inline in the document rows; advanced and diagnostic entries sit behind per-subcategory disclosures.</dd>
                 <dt>Motion</dt>
@@ -245,7 +247,7 @@
                 <dt>Navigation</dt>
                 <dd>Station cards on Home; inside a category, a proportional minimap is the primary scroll-position instrument.</dd>
                 <dt>Managers</dt>
-                <dd>Primary surfaces — live consoles that settings attach to, rather than pages settings link out to.</dd>
+                <dd>Primary surfaces — live consoles for Providers, Notifications &amp; Sounds, the Sound Library with uploads and packs, Appearance with custom TOML themes, Spellcheck &amp; Dictionaries, Desktop &amp; tray, Teacher, and Media routes. Crew moved to Atlas and is cross-referenced honestly.</dd>
                 <dt>Editing</dt>
                 <dd>In configure drawers attached to stations; status changes morph glyph and label together, never color alone.</dd>
                 <dt>Motion</dt>
@@ -277,7 +279,7 @@
                 <dt>Navigation</dt>
                 <dd>A spatial sheet stack with a visible layer spine; an outline chip opens the in-category jump overlay; plates remember position and offer resume.</dd>
                 <dt>Managers</dt>
-                <dd>Sheets on the same spine as categories — one surface at a time, always poppable back to Home.</dd>
+                <dd>Sheet stacks on the same spine — Providers, Connected servers, Language servers, Formatters, Files &amp; editor, Terminal profiles, Commands &amp; shortcuts, Skills, Plugins, Tools, and the Testing &amp; Debug matrix; list, detail, and diagnostics each get a layer.</dd>
                 <dt>Editing</dt>
                 <dd>On the focused sheet only; anything deeper (advanced, help, warnings) pushes a half-sheet instead of expanding inline.</dd>
                 <dt>Motion</dt>
@@ -308,7 +310,7 @@
                 <dt>Navigation</dt>
                 <dd>A navigator column plus query filtering; the scrollspy marker steps discretely; Home mirrors the navigator as a compact index table.</dd>
                 <dt>Managers</dt>
-                <dd>Record collections browsed through the same navigator-and-inspector pattern as ordinary settings.</dd>
+                <dd>Record collections in the same navigator-and-inspector grammar — Providers, Storage &amp; Retention, Backup &amp; Restore, the transactional Settings Lifecycle (import preview, conflicts, atomic apply, rollback), History &amp; Sessions, Runtime Artifacts, Source Control &amp; Worktrees, GitHub Actions, Containers &amp; Registries, Web/Search/Fetch, the Project Search Index, Workspace Cleanup, and the reserved Server module shell.</dd>
                 <dt>Editing</dt>
                 <dd>Inspector-side only — rows are records, the inspector is the sole editing surface.</dd>
                 <dt>Motion</dt>
@@ -327,7 +329,8 @@
             <ul>
               <li><strong>Width:</strong> use the hub's Page width control (760–2500, presets at 760 / 900 / 1280 / 1700 / 2200 / 2500) and combine it with the shell's rail and Assistant toggles — effective content width is what matters.</li>
               <li><strong>Themes:</strong> all eight themes (Friendly, Glass, Retro, Basic, each in dark and light) are available from the palette button in the titlebar; semantic status language is identical across themes.</li>
-              <li><strong>States:</strong> each concept page mounts a States drawer (bottom-right) with scenario presets — baseline, calm, attention-heavy, usage-exhausted, invocation-failed, managed-workspace — plus transient triggers like refresh and reconnect.</li>
+              <li><strong>States:</strong> each concept page mounts a States drawer (bottom-right) with eight scenario presets — baseline, calm, attention-heavy, usage-exhausted, invocation-failed, managed-workspace, first-run, offline — twelve composable fixture overlays (import conflict, rollback complete, theme fallback, storage pressure, and more), and the full trigger registry grouped by family.</li>
+              <li><strong>Deterministic links:</strong> every state is also reachable by URL — <code>#/manager/&lt;id&gt;</code>, <code>#/setting/&lt;id&gt;</code>, <code>#/search/&lt;query&gt;</code> with <code>?scenario=</code>, <code>&amp;fixture=</code>, <code>&amp;trigger=</code>, and <code>&amp;instant=1</code> parameters. The README lists a full cookbook.</li>
               <li><strong>Reduced motion:</strong> toggle it from the titlebar on any page; every concept reaches identical end states, and the calm scenario renders with no permanent animation.</li>
             </ul>
           </section>
@@ -342,6 +345,8 @@
   </div>
   <script src="_shared/pm-icons.js"></script>
   <script src="_shared/pm-demo-data.js"></script>
+  <script src="_shared/pm-demo-data-ext.js"></script>
+  <script src="_shared/pm-provider.js"></script>
   <script src="_shared/pm-state.js"></script>
   <script src="_shared/pm-scrollspy.js"></script>
   <script src="_shared/pm-spell.js"></script>

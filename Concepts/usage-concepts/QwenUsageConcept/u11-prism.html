@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="_shared/base.css">
 <link rel="stylesheet" href="_shared/usage-shared.css">
 <link rel="stylesheet" href="_shared/usage-widgets.css">
-<link rel="stylesheet" href="u11-widgets.css?v=20260805j">
-<link rel="stylesheet" href="u11-rundetail.css?v=20260805j">
-<link rel="stylesheet" href="u11-context.css?v=20260805j">
+<link rel="stylesheet" href="u11-widgets.css?v=20260811a">
+<link rel="stylesheet" href="u11-rundetail.css?v=20260811a">
+<link rel="stylesheet" href="u11-context.css?v=20260811a">
 <style>
 /* =====================================================================
    U11 — PRISM II
@@ -519,16 +519,16 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
 <script src="_shared/icons.js"></script>
 <script src="_shared/usage-icons.js"></script>
-<script src="u11-icons.js?v=20260805j"></script>
+<script src="u11-icons.js?v=20260811a"></script>
 <script src="_shared/menu.js"></script>
 <script src="_shared/usage-data.js"></script>
-<script src="u11-time.js?v=20260805j"></script>
-<script src="u11-data.js?v=20260805j"></script>
+<script src="u11-time.js?v=20260811a"></script>
+<script src="u11-data.js?v=20260811a"></script>
 <script src="_shared/usage-chrome.js"></script>
 <script src="_shared/usage-widgets.js"></script>
-<script src="u11-widgets.js?v=20260805j"></script>
-<script src="u11-rundetail.js?v=20260805j"></script>
-<script src="u11-context.js?v=20260805j"></script>
+<script src="u11-widgets.js?v=20260811a"></script>
+<script src="u11-rundetail.js?v=20260811a"></script>
+<script src="u11-context.js?v=20260811a"></script>
 <script>
 (function () {
   'use strict';
@@ -586,7 +586,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     'u11-free': [{ type: 'free', c: 4, r: 11 }, { type: 'authority', c: 2, r: 8 }],
     'u11-context': [{ type: 'context', c: 2, r: 10 }, { type: 'cache', c: 2, r: 10 }],
     'u11-analytics': [{ type: 'analytics', c: 4, r: 11 }, { type: 'costs', c: 2, r: 9 }],
-    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }],
+    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }, { type: 'operations', c: 2, r: 10 }],
     'u11-attention': [{ type: 'attention', c: 3, r: 11 }],
     'u11-cache': [{ type: 'cache', c: 3, r: 11 }],
     'u11-tools': [{ type: 'tools', c: 3, r: 11 }],
@@ -1190,6 +1190,41 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
   /* ---------- export intent flow (§18) ---------- */
   var expSprout = $('u11ExportSprout');
+  /* U11 sprout lifecycle guard. The shared menu.js tracks these sprouts in
+     openMenus (openAt pushes them) and its document-level "outside click"
+     handler cannot tell sprout-internal clicks from real outside clicks —
+     so it closes the sheet/export mid-flow (packet §05 hard failure: dead
+     controls). U11-local fix, shared files untouched:
+     - a capture-phase click sets _keepOpen only for in-sprout clicks;
+     - a MutationObserver reasserts .is-open when menu.js strips it while
+       _keepOpen holds (the sprout's own target-phase handlers already ran);
+     - genuine outside clicks clear _keepOpen first and close via U11, so
+       Esc / trigger-toggle / outside-close all still work. */
+  (function () {
+    var sprouts = [sheetSprout, expSprout];
+    function isOpen(s) { return !s.hidden && s.classList.contains('is-open'); }
+    function hideSprout(s) { s.classList.remove('is-open', 'is-closing'); s.hidden = true; }
+    document.addEventListener('click', function (e) {
+      var inside = !!(e.target.closest && e.target.closest('#u11SheetSprout, #u11ExportSprout'));
+      var onTrigger = !!(e.target.closest && e.target.closest('#u11Settings, #u11Export'));
+      sprouts.forEach(function (s) {
+        if (inside && e.target.closest('#' + s.id)) { s._keepOpen = true; return; }
+        s._keepOpen = false;
+        if (!inside && !onTrigger && isOpen(s)) hideSprout(s);
+      });
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') sprouts.forEach(hideSprout);
+    }, true);
+    sprouts.forEach(function (s) {
+      new MutationObserver(function () {
+        if (s._keepOpen && !s.classList.contains('is-open') && s.classList.contains('is-closing')) {
+          s.classList.remove('is-closing');
+          s.classList.add('is-open');
+        }
+      }).observe(s, { attributes: true, attributeFilter: ['class'] });
+    });
+  })();
   var expState = { intent: null, fmt: null };
   function exportHTML() {
     var html = '<div class="u11-sheet">';

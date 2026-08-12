@@ -2169,7 +2169,7 @@
         {
           "id": "t05-m0006",
           "role": "assistant",
-          "body": "The thread shows a short current-action summary while the browser session records navigation, selections, screenshots, and source references.",
+          "body": "The thread shows a short current-action summary while the Browser Program records navigation, selections, screenshots, and source references.",
           "sentAt": "2026-08-02T14:22:40Z",
           "runtime": {
             "provider": "Alibaba",
@@ -8407,7 +8407,7 @@
         {
           "id": "t13-m0011",
           "role": "user",
-          "body": "One of them is a browser capture.",
+          "body": "One of them is a Browser Program capture.",
           "sentAt": "2026-08-10T16:59:00Z",
           "runtime": {
             "provider": "OpenAI",
@@ -8637,7 +8637,7 @@
         },
         {
           "id": "artifact-capture",
-          "title": "Research browser capture",
+          "title": "Research Browser Program capture",
           "kind": "browser capture",
           "projectPath": "artifacts/research-browser-capture.html",
           "openTarget": "editor tab"

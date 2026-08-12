@@ -1,0 +1,6 @@
+advisors:
+  - name: default
+    model: openai-codex/gpt-5.6-sol:xhigh
+    enabled: false
+  - name: Advisor 2
+    model: openai-codex/gpt-5.6-sol:xhigh

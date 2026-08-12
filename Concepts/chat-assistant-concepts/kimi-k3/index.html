@@ -54,7 +54,7 @@
 </head>
 <body>
 <header class="k3ws-top">
-  <div class="k3ws-brand">
+  <div class="k3ws-brand" data-concept-model="Kimi K3">
     <b>Kimi K3 — Assistant Chat Concept Workspace</b>
     <span>Eight windows and eight threads · any pairing mountable · prototype gallery, not the Puppet Master Home page</span>
   </div>
@@ -77,6 +77,11 @@
     <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-rail" data-testid="k3-ws-rail">Rail: open</button>
     <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-rm" data-testid="k3-ws-rm">Reduced motion: off</button>
     <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-mount" data-testid="k3-ws-mount">Form: docked</button>
+  </div>
+  <div class="k3ws-sep"></div>
+  <div class="k3ws-ctl">
+    <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-demo" data-testid="k3-ws-demo-triggers">Demo triggers</button>
+    <span class="k3-footnote">review harness — not product UI</span>
   </div>
 </header>
 
@@ -256,6 +261,59 @@
     applyEnv();
   });
 
+  // Demo triggers: deterministic scenario keys broadcast to every live frame
+  // (host pages apply them via K3States when the k3-demo-trigger message
+  // arrives). Review harness only. This list MUST equal K3States.drivers:
+  // the 43 packet triggers plus the 28 revision-2 view states.
+  const DEMO_TRIGGERS = [
+    'route-picker', 'route-submenu', 'route-warning', 'route-effective',
+    'provider-setup', 'provider-update',
+    'access-limited', 'approval-card',
+    'bsd-auto-glow', 'bsd-manual-on', 'bsd-advice', 'bsd-unavailable',
+    'lens-receipt', 'compact-now', 'prior-chat-search',
+    'thread-request', 'thread-spawn', 'branch-menu', 'restore-point',
+    'rewind', 'redirect-active',
+    'goal-replan', 'goal-complete', 'goal-blocked',
+    'capacity-forecast', 'crew-board',
+    'ops-conflict-port', 'worktree-states', 'cross-project-grant',
+    'artifact-left-code', 'artifact-left-diff', 'artifact-left-image',
+    'artifact-left-report', 'artifact-loading', 'artifact-error-retry',
+    'artifact-plus-pinned',
+    'attachment-native', 'attachment-transformed', 'attachment-alternate',
+    'attachment-unsupported',
+    'offline-queue', 'offline-reconnect',
+    'notify-approval'
+  ];
+  const DEMO_VIEW_STATES = [
+    'baseline',
+    'long-a-collapsed', 'long-a-expanded', 'long-u-collapsed', 'long-u-expanded',
+    'live-activity', 'activity-collapsed', 'activity-expanded',
+    'questionnaire', 'questionnaire-history',
+    'goal-only', 'todo-only', 'subagents-only', 'diff-only',
+    'goal-todo', 'all-surfaces',
+    'search-current', 'search-all',
+    'lens-select', 'lens-applied',
+    'thought-collapsed', 'thought-expanded',
+    'stop-visible', 'send-visible',
+    'draft-restored', 'artifact-handoff', 'deep-jump', 'mount-restored'
+  ];
+  const triggerItem = (key) => ({
+    label: key,
+    testid: 'k3-ws-trigger-' + key,
+    action: () => window.K3Bridge.sendDemoTrigger(frames.concat(stageFrame ? [stageFrame] : []), key)
+  });
+  document.getElementById('k3ws-demo').addEventListener('click', (e) => {
+    window.K3UI.menu(e.currentTarget, [
+      { type: 'header', label: 'Demo triggers' },
+      ...DEMO_TRIGGERS.map(triggerItem),
+      { type: 'separator' },
+      { type: 'header', label: 'Revision-2 view states' },
+      ...DEMO_VIEW_STATES.map(triggerItem),
+      { type: 'separator' },
+      { type: 'header', label: 'review harness — not product UI' }
+    ], { searchable: true });
+  });
+
   // Re-broadcast env to frames that report ready (late loaders).
   window.addEventListener('message', (e) => {
     if (e.data && e.data.k3 === true && e.data.type === 'k3-ready') {
@@ -276,6 +334,15 @@
   applyEnv();
   layoutCards();
   window.addEventListener('resize', layoutCards);
+
+  // ConceptHub bridge: apply hub state locally, and fan the raw hub message
+  // out to every hosted frame (each frame's own listenHub applies it).
+  window.K3Bridge.listenHub(function (msg) {
+    frames.concat(stageFrame ? [stageFrame] : []).forEach(function (f) {
+      if (f && f.contentWindow) f.contentWindow.postMessage(msg, '*');
+    });
+  });
+  window.K3Bridge.announceHub();
 
   window.__k3ws = { env, sel, frames: () => frames, stage: () => stageFrame };
 })();

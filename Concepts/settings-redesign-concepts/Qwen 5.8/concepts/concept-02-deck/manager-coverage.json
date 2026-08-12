@@ -1,0 +1,272 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v1",
+  "concept_id": "concept-02-deck",
+  "model": "Qwen 5.8",
+  "packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "source_matrix": "MANAGER_COVERAGE_MATRIX.json (pm.settings_bakeoff_manager_coverage.v1)",
+  "groups": [
+    {
+      "id": "core",
+      "required_in": "all",
+      "managers": [
+        {
+          "name": "Settings Home",
+          "classification": "demonstrated",
+          "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        },
+        {
+          "name": "Settings Search",
+          "classification": "demonstrated",
+          "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        },
+        {
+          "name": "Settings Workspace",
+          "classification": "demonstrated",
+          "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        },
+        {
+          "name": "Provider/Account/Model/Installation",
+          "classification": "demonstrated",
+          "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        },
+        {
+          "name": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        }
+      ]
+    },
+    {
+      "id": "concept_1",
+      "required_in": "concept_1",
+      "managers": [
+        {
+          "name": "Context & Instructions",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Memory",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Personas",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Goal & Automation",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Crew",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Permissions & FileSafe",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Back Seat Driver",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        }
+      ]
+    },
+    {
+      "id": "concept_2",
+      "required_in": "concept_2",
+      "managers": [
+        {
+          "name": "Notifications & Sounds",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        },
+        {
+          "name": "Sound Library/Uploads/Packs",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        },
+        {
+          "name": "Appearance",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        },
+        {
+          "name": "Spellcheck & Dictionaries",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        },
+        {
+          "name": "Desktop/Tray/Window",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        },
+        {
+          "name": "Teacher/Help",
+          "classification": "demonstrated",
+          "note": "Deep demonstrated implementation per this concept's packet assignment."
+        }
+      ]
+    },
+    {
+      "id": "concept_3",
+      "required_in": "concept_3",
+      "managers": [
+        {
+          "name": "File Manager/Editor",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Terminal",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "LSP",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Formatters",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Commands & Shortcuts",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "MCP",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Skills",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Plugins",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Tools",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Testing & Debug",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        }
+      ]
+    },
+    {
+      "id": "concept_4",
+      "required_in": "concept_4",
+      "managers": [
+        {
+          "name": "Storage & Retention",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Backup & Restore",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Settings Lifecycle",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "History & Sessions",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Runtime Artifacts",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Source Control/Worktrees",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "GitHub Actions",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Containers & Registries",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Web/Search/Fetch",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Project Search Index",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Workspace Cleanup",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        },
+        {
+          "name": "Future Server Module Shell",
+          "classification": "shared_grammar",
+          "note": "shared_grammar: manager shell + representative list + working basic actions via the shared layer; never a dead control or placeholder."
+        }
+      ]
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "module": "Servers",
+      "owner": "Server Backbone",
+      "insertion_contract": "Manager grammar reserved under System & Data; human-language cards only; deep-link slot #/w/system/server-shell."
+    },
+    {
+      "module": "Execution Hosts",
+      "owner": "Server Backbone",
+      "insertion_contract": "Host/Environment tree nested under Servers; capability-compatible Home Server default."
+    },
+    {
+      "module": "Clients",
+      "owner": "Server Backbone",
+      "insertion_contract": "Paired device list card; pairing approvals surface."
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Source Location card (Hosted On / Project Files / Run Work); Project Sync status slots."
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server Backbone",
+      "insertion_contract": "Pairing and session approvals; AuthBrowserSession remains human-only."
+    },
+    {
+      "module": "Updates",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "PM application/content update module; status cards and deep-link slots reserved; no state machine invented here."
+    }
+  ],
+  "classification_rule": "missing is a failure; deferred requires a named canonical owner and insertion contract. This register contains zero 'missing' classifications."
+}

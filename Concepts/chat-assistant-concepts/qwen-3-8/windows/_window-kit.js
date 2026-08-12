@@ -301,7 +301,7 @@ window.PMChatWindowKit = (() => {
     env.popups.menu(anchor, env.store.ACCESS_PROFILES.map(a => ({
       label: a, icon: a === "Full Access" ? "shield" : a === "Ask for approval" ? "question" : "sparkle",
       sub: subs[a], checked: cur === a, keepOpen: true,
-      onpick: () => env.store.setThreadSettings(key, { access: a })
+      onpick: () => env.store.accessSet(key, a)
     })), { title: "Access · this thread", width: 290, onrender: body => {
       const note = env.store.accessNote(key);
       if (note) {
@@ -319,79 +319,107 @@ window.PMChatWindowKit = (() => {
     const key = store.activeKey();
     const wrap = document.createElement("div");
     wrap.className = "pmq-modelpop";
-    const entry = env.popups.open(anchor, wrap, { width: 320, cls: "pmq-model-popup" });
+    const entry = env.popups.open(anchor, wrap, { width: 396, cls: "pmq-model-popup" });
     let panel = null;
     let filter = "";
+    let railFilter = "";
 
     function pending() {
       return (store.state.threads[key].warnings || []).find(w => w.kind === "route" && !w.resolved && w.pending);
     }
-    function modelRow(p, accLabel, m) {
+    function setupLabel(state) {
+      if (state === "install-required") return "Install required — open Provider Settings";
+      if (state === "update-available") return "Update available";
+      if (state === "sign-in-required") return "Sign-in required";
+      if (state === "update-failed") return "Update failed; rolled back";
+      return "";
+    }
+    function modelRow(p, accLabel, m, accId) {
       const c = store.effectiveSettings(key);
-      const checked = c.model === m.name && c.provider === p.provider;
+      const acct = store.effectiveAccount(key);
+      const checked = c.model === m.name && c.provider === p.provider && (acct.accountId || null) === (accId || null);
       const fav = store.state.session.favorites.includes(m.name);
-      const disabled = m.disabled && m.disabledReason;
-      return '<div class="pmq-mp-row' + (checked ? " pmq-on" : "") + (disabled ? " pmq-off" : "") + '" data-model="' + esc(m.name) + '" data-prov="' + esc(p.provider) + '" role="button" tabindex="0" aria-disabled="' + (disabled ? "true" : "false") + '">' +
+      const disabled = m.disabled || m.disabledReason;
+      return '<div class="pmq-mp-row' + (checked ? " pmq-on" : "") + (disabled ? " pmq-off" : "") + '" data-model="' + esc(m.name) + '" data-prov="' + esc(p.provider) + '" data-acc="' + esc(accId || "") + '" role="button" tabindex="0" aria-disabled="' + (disabled ? "true" : "false") + '">' +
         '<span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span>' +
         '<span class="pmq-mp-main"><span class="pmq-mp-name">' + esc(m.name) + "</span>" +
-        '<span class="pmq-mp-sub">' + esc(accLabel) + (disabled ? " · " + esc(m.disabledReason) : "") + "</span></span>" +
+        '<span class="pmq-mp-sub">' + esc(accLabel) + (disabled ? " · " + esc(m.disabledReason || "Unavailable") : "") + "</span></span>" +
         (m.fast ? '<span class="pmq-mp-cap">Fast</span>' : "") +
         (m.caps && m.caps.video ? '<span class="pmq-mp-cap">Video</span>' : "") +
         '<button class="pmq-mp-fav' + (fav ? " pmq-on" : "") + '" type="button" data-fav="' + esc(m.name) + '" aria-label="Toggle favorite ' + esc(m.name) + '" aria-pressed="' + fav + '"><i data-ico="star"></i></button>' +
         (checked ? '<i data-ico="check" class="pmq-mp-check"></i>' : "") +
         "</div>";
     }
-    function pickModel(p, m) {
+    function pickModel(p, m, accId) {
       const consequence = store.modelConsequence(key, { provider: p.provider, model: m.name });
-      panel = { provider: p, model: m };
+      panel = { provider: p, model: m, accountId: accId || null };
       if (!consequence) {
-        store.applyModelChange(key, { provider: p.provider, model: m.name });
+        store.applyModelChange(key, { provider: p.provider, model: m.name, accountId: accId || null });
       } else {
         store.warningInject(key, {
           tier: consequence.tier, kind: "route", text: consequence.text, detail: consequence.detail,
-          pending: { provider: p.provider, model: m.name },
+          pending: { provider: p.provider, model: m.name, accountId: accId || null },
           choices: ["Switch here", "Branch with this model", "Start new chat", "Cancel"]
         });
       }
       render();
     }
+    function railHtml() {
+      const cat = store.catalog();
+      return '<div class="pmq-mp-rail" role="tablist" aria-label="Providers">' +
+        '<button class="pmq-mp-railbtn' + (railFilter === "" ? " pmq-on" : "") + '" type="button" data-rail="" role="tab" aria-selected="' + (railFilter === "") + '" aria-label="All providers"><i data-ico="layers"></i></button>' +
+        cat.map(p => '<button class="pmq-mp-railbtn' + (railFilter === p.id ? " pmq-on" : "") + '" type="button" data-rail="' + esc(p.id) + '" role="tab" aria-selected="' + (railFilter === p.id) + '" aria-label="' + esc(p.provider) + '" title="' + esc(p.provider) + '"><span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span></button>').join("") +
+        "</div>";
+    }
     function render() {
       const c = store.effectiveSettings(key);
+      const acct = store.effectiveAccount(key);
       const cat = store.catalog();
       const pd = pending();
       let html = "";
       if (!panel) {
         html += '<div class="pmq-popup-head"><i data-ico="sparkle"></i><span>Model</span></div>' +
           '<div class="pmq-mp-search"><i data-ico="search"></i><input type="text" placeholder="Search models and providers" spellcheck="false" aria-label="Search models" value="' + esc(filter) + '"></div>' +
+          '<div class="pmq-mp-listwrap">' + railHtml() +
           '<div class="pmq-popup-body pmq-scroll pmq-mp-body">';
         const recents = store.state.session.recentModels;
-        if (recents.length && !filter) {
+        if (recents.length && !filter && !railFilter) {
           html += '<div class="pmq-chats-group">Recent</div>';
           recents.forEach(rn => {
-            const hit = store.catalogModel(rn);
-            if (hit) html += modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Recent", hit.model);
+            const name = typeof rn === "string" ? rn : rn.model;
+            const hit = store.catalogModel(name);
+            if (hit) html += modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Recent", hit.model, rn.accountId || null);
           });
         }
         const favs = store.state.session.favorites;
-        if (!filter) {
+        if (!filter && !railFilter) {
           html += '<div class="pmq-chats-group">Favorites</div>';
           html += favs.length ? favs.map(fn => {
             const hit = store.catalogModel(fn);
-            return hit ? modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Favorite", hit.model) : "";
+            return hit ? modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Favorite", hit.model, null) : "";
           }).join("") : '<div class="pmq-mp-empty">Star a model to keep it within reach.</div>';
         }
         cat.forEach(p => {
+          if (railFilter && p.id !== railFilter) return;
           p.accounts.forEach(acc => {
             const shown = p.models.filter(m => m.accounts.includes(acc.id))
               .filter(m => !filter || (m.name + " " + p.provider).toLowerCase().includes(filter));
             if (!shown.length) return;
-            html += '<div class="pmq-mp-prov"><span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span><span>' + esc(p.provider) + '</span><span class="pmq-mp-acct">' + esc(acc.label) + "</span></div>";
-            shown.forEach(m => { html += modelRow(p, acc.label, m); });
+            const activeAcc = acct.accountId === acc.id;
+            const conn = store.connectionKindOf(acc);
+            html += '<div class="pmq-mp-account' + (activeAcc ? " pmq-on" : "") + '" data-accsel="' + esc(acc.id) + '" role="button" tabindex="0" aria-label="Select account ' + esc(acc.label) + '">' +
+              '<span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span><span class="pmq-mp-acct-main"><span>' + esc(p.provider) + '</span><span class="pmq-mp-acct-sub">' + esc(acc.label) + " · " + esc(conn) + "</span></span>" +
+              (activeAcc ? '<span class="pmq-mp-acct-active">Active</span><i data-ico="check" class="pmq-mp-check"></i>' : "") + "</div>";
+            shown.forEach(m => { html += modelRow(p, acc.label, m, acc.id); });
           });
+          if (p.setupState) {
+            html += '<div class="pmq-mp-setup" data-setup="' + esc(p.setupState) + '"><i data-ico="warn"></i><span>' + esc(setupLabel(p.setupState)) + '</span><button class="pmq-btn pmq-btn-sm" type="button" data-setupopen="' + esc(p.provider) + '">Open Settings</button></div>';
+          }
         });
-        html += "</div>" +
-          '<div class="pmq-mp-foot">' +
-          (pd ? '<span class="pmq-mp-route pmq-warn">Requested ' + esc(pd.pending.model) + " · effective " + esc(c.model) + " · awaiting decision</span>"
+        html += "</div></div>" +
+          '<div class="pmq-mp-foot pmq-mp-foot-2">' +
+          '<span class="pmq-mp-acctline">Account · ' + esc(acct.accountLabel) + " · " + esc(acct.connection) + "</span>" +
+          (pd ? '<span class="pmq-mp-route pmq-warn">Requested ' + esc(pd.pending.provider) + "/" + esc(pd.pending.accountId || "default") + "/" + esc(pd.pending.model) + " · effective " + esc(c.provider) + "/" + esc(c.model) + " · awaiting decision</span>"
             : '<span class="pmq-mp-route">Route · ' + esc(c.provider) + " / " + esc(c.model) + (c.speed === "Fast" ? " · Fast" : "") + "</span>") +
           "</div>";
       } else {
@@ -421,6 +449,22 @@ window.PMChatWindowKit = (() => {
         const i = wrap.querySelector(".pmq-mp-search input");
         if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
       });
+      wrap.querySelectorAll("[data-rail]").forEach(b => b.addEventListener("click", () => {
+        railFilter = b.dataset.rail;
+        render();
+      }));
+      wrap.querySelectorAll("[data-accsel]").forEach(r => r.addEventListener("click", () => {
+        store.setAccount(r.dataset.accsel || null);
+        render();
+      }));
+      wrap.querySelectorAll("[data-accsel]").forEach(r => r.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); r.click(); }
+      }));
+      wrap.querySelectorAll("[data-setupopen]").forEach(b => b.addEventListener("click", e => {
+        e.stopPropagation();
+        env.hostApi.toast(b.dataset.setupopen + " provider settings live in the Settings page");
+        if (window.PMChatCommands) window.PMChatCommands.dispatch("cmd.shell.page", { page: "settings:provider" }, { cataloged: false });
+      }));
       wrap.querySelectorAll("[data-fav]").forEach(b => b.addEventListener("click", e => {
         e.stopPropagation();
         store.favoriteToggle(b.dataset.fav);
@@ -430,7 +474,7 @@ window.PMChatWindowKit = (() => {
         if (r.getAttribute("aria-disabled") === "true") return;
         const p = store.catalog().find(x => x.provider === r.dataset.prov);
         const m = p && p.models.find(x => x.name === r.dataset.model);
-        if (p && m) pickModel(p, m);
+        if (p && m) pickModel(p, m, r.dataset.acc || null);
       }));
       wrap.querySelectorAll(".pmq-mp-row").forEach(r => r.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); r.click(); }
@@ -448,6 +492,48 @@ window.PMChatWindowKit = (() => {
     return entry;
   }
 
+  function bsdChipClass(bsd) {
+    if (bsd.mode === "off") return "pmq-bsd-off";
+    if (bsd.mode === "on") return "pmq-bsd-on";
+    return bsd.state === "evaluating" ? "pmq-bsd-active" : "pmq-bsd-auto";
+  }
+  function bsdStateDot(state) {
+    if (state === "silent" || state === "advice" || state === "timeout" || state === "unavailable" || state === "quota") {
+      return '<span class="pmq-bsd-dot" data-bsdst="' + esc(state) + '" title="BSD ' + esc(state) + '"></span>';
+    }
+    return "";
+  }
+  function bsdPopup(anchor, env) {
+    const store = env.store;
+    const key = store.activeKey();
+    const bsd = store.bsdEffective(key);
+    const modeItem = (mode, label, hint) => ({
+      label, icon: mode === "off" ? "mute" : "sparkle", sub: hint,
+      checked: bsd.mode === mode,
+      onpick: () => store.bsdSet(mode, null)
+    });
+    const items = [
+      modeItem("off", "Off", "No second opinion this thread"),
+      modeItem("auto", "Auto — system default", "Evaluates quietly; speaks only when useful"),
+      modeItem("on", "On", "Manual check every turn"),
+      { sep: true },
+      { label: "This turn", icon: "timer", sub: "Arms one turn, then reverts to thread scope", checked: bsd.scope === "turn", onpick: () => store.bsdSet(null, "turn") },
+      { label: "This thread", icon: "chats", sub: "Applies to every turn in this thread", checked: bsd.scope === "thread", onpick: () => store.bsdSet(null, "thread") }
+    ];
+    env.popups.menu(anchor, items, { title: "Back Seat Driver · read-only advisor", width: 290 });
+  }
+  function setupStripHtml(store, key) {
+    const eff = store.effectiveSettings(key);
+    const g = store.catalog().find(p => p.provider === eff.provider);
+    if (!g || !g.setupState) return "";
+    const labels = {
+      "install-required": "Install required · Settings",
+      "update-available": "Provider update available · Settings",
+      "waiting": "Waiting for current work",
+      "update-failed": "Update failed; rolled back"
+    };
+    return '<div class="pmq-setupstrip" data-setup="' + esc(g.setupState) + '"><i data-ico="warn"></i><span>' + esc(labels[g.setupState] || g.setupState) + "</span></div>";
+  }
   function selectorRow(env, root) {
     const el = document.createElement("div");
     el.className = "pmq-selrow";
@@ -455,11 +541,15 @@ window.PMChatWindowKit = (() => {
       const key = env.store.activeKey();
       const s = env.store.effectiveSettings(key);
       const note = env.store.accessNote(key);
+      const bsd = env.store.bsdEffective(key);
+      const modeLabel = bsd.mode === "off" ? "Off" : bsd.mode === "on" ? "On" : "Auto";
       el.innerHTML =
         '<button class="pmq-sel" type="button" data-sel="persona" aria-label="Persona"><span class="pmq-sel-k">Persona</span><span class="pmq-sel-v">' + esc(s.persona) + '</span><i data-ico="chevDown"></i></button>' +
         '<button class="pmq-sel" type="button" data-sel="model" aria-label="Model"><span class="pmq-sel-k">Model</span><span class="pmq-sel-v">' + esc(s.model) + (s.speed === "Fast" ? " · Fast" : "") + " · " + esc(s.effort) + '</span><i data-ico="chevDown"></i></button>' +
         '<button class="pmq-sel" type="button" data-sel="mode" aria-label="Mode"><span class="pmq-sel-k">Mode</span><span class="pmq-sel-v">' + esc(s.mode) + '</span><i data-ico="chevDown"></i></button>' +
-        '<button class="pmq-sel" type="button" data-sel="access" aria-label="Access"><span class="pmq-sel-k">Access</span><span class="pmq-sel-v">' + esc(s.access) + (note ? " · limited" : "") + '</span><i data-ico="chevDown"></i></button>';
+        '<button class="pmq-sel" type="button" data-sel="access" aria-label="Access"><span class="pmq-sel-k">Access</span><span class="pmq-sel-v">' + esc(s.access) + (note ? " · limited" : "") + '</span><i data-ico="chevDown"></i></button>' +
+        '<button class="pmq-sel pmq-sel-bsd ' + bsdChipClass(bsd) + '" type="button" data-sel="bsd" aria-label="Back Seat Driver"><span class="pmq-sel-k">BSD</span><span class="pmq-sel-v">' + esc(modeLabel) + "</span>" + bsdStateDot(bsd.state) + '<i data-ico="chevDown"></i></button>' +
+        setupStripHtml(env.store, key);
       window.PMIcons.hydrate(el);
     }
     render();
@@ -469,6 +559,7 @@ window.PMChatWindowKit = (() => {
       if (b.dataset.sel === "persona") personaPopup(b, env);
       else if (b.dataset.sel === "model") modelPopup(b, env, root);
       else if (b.dataset.sel === "mode") modePopup(b, env);
+      else if (b.dataset.sel === "bsd") bsdPopup(b, env);
       else accessPopup(b, env);
     });
     bind(root, env.store.subscribe(render));
@@ -504,6 +595,7 @@ window.PMChatWindowKit = (() => {
       for (let i = msgs.length - 1; i >= 0; i--) {
         if (msgs[i].runtime) { used = msgs[i].runtime.contextUsed; limit = msgs[i].runtime.contextLimit; break; }
       }
+      const adm = env.store.admissionOf(key);
       const wrap = document.createElement("div");
       wrap.className = "pmq-ctx-pop";
       wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="lens"></i>Context</div>' +
@@ -511,10 +603,13 @@ window.PMChatWindowKit = (() => {
         '<div class="pmq-ctx-meter"><span class="pmq-ctx-fill" style="width:' + Math.round(100 * used / limit) + '%"></span></div>' +
         '<div class="pmq-ctx-row"><span>Context used</span><b>' + window.PMFmt.context(used, limit) + "</b></div>" +
         '<div class="pmq-ctx-row"><span>Messages stored</span><b>' + msgs.length + "</b></div>" +
-        '<div class="pmq-ctx-note">Detailed usage records are owned by the parallel Usage redesign. This ring is an entry point stub.</div>' +
+        '<div class="pmq-ctx-row"><span>Cache</span><b>' + esc(adm.cache.state) + "</b></div>" +
+        '<div class="pmq-ctx-note">' + esc(adm.cache.note || "Detailed usage records are owned by the parallel Usage redesign.") + "</div>" +
+        '<button class="pmq-menu-item" type="button" data-compact><i data-ico="compact"></i><span>Compact Now</span></button>' +
         '<button class="pmq-menu-item" type="button" data-usage><i data-ico="editorOpen"></i><span>Open Usage</span></button>' +
         "</div>";
       window.PMIcons.hydrate(wrap);
+      wrap.querySelector("[data-compact]").addEventListener("click", () => env.store.compactNow(key));
       wrap.querySelector("[data-usage]").addEventListener("click", () => env.hostApi.toast("Usage page is owned by the parallel Usage redesign"));
       env.popups.open(el, wrap, { width: 250 });
     });
@@ -655,10 +750,14 @@ window.PMChatWindowKit = (() => {
       const snip = (relStart < 0 || relEnd <= relStart)
         ? esc(r.snippet)
         : esc(r.snippet.slice(0, relStart)) + '<mark class="pmq-srmark">' + esc(r.snippet.slice(relStart, relEnd)) + "</mark>" + esc(r.snippet.slice(relEnd));
-      return '<button class="pmq-srrow" type="button" data-msg="' + r.msgId + '" data-thread="' + r.threadKey + '">' +
+      return '<div class="pmq-srrow" role="button" tabindex="0" data-msg="' + esc(r.msgId) + '" data-thread="' + esc(r.threadKey) + '">' +
         '<span class="pmq-srrow-snip">' + snip + "</span>" +
-        '<span class="pmq-srrow-meta">' + (showThread ? "" : "Jump to message") + "</span>" +
-        "</button>";
+        '<span class="pmq-srrow-meta">' + (showThread ? "" : "Open conversation") + "</span>" +
+        '<span class="pmq-srrow-acts">' +
+        '<button class="pmq-btn pmq-btn-sm" type="button" data-sract="add" title="Add passage to context">Add passage</button>' +
+        '<button class="pmq-btn pmq-btn-sm" type="button" data-sract="branch" title="Branch from this point">Branch</button>' +
+        '<button class="pmq-btn pmq-btn-sm" type="button" data-sract="copy" title="Copy link">Copy link</button>' +
+        "</span></div>";
     }
 
     input.addEventListener("input", render);
@@ -685,6 +784,23 @@ window.PMChatWindowKit = (() => {
     results.addEventListener("click", e => {
       const row = e.target.closest("[data-msg]");
       if (!row) return;
+      const act = e.target.closest("[data-sract]");
+      if (act) {
+        e.stopPropagation();
+        const a = act.dataset.sract;
+        if (a === "add") {
+          env.store.contextSourceAdd(env.store.activeKey(), row.dataset.thread, row.dataset.msg);
+          env.hostApi.toast("Passage added to this thread's context");
+        } else if (a === "branch") {
+          const id = env.store.branchFrom(row.dataset.thread, row.dataset.msg, { switchTo: true });
+          if (id) env.hostApi.toast("Branched from that point");
+        } else if (a === "copy") {
+          const link = location.origin + location.pathname + "?dt=" + encodeURIComponent(row.dataset.thread) + "#" + encodeURIComponent(row.dataset.msg);
+          try { navigator.clipboard.writeText(link); } catch (err) {}
+          env.hostApi.toast("Link copied to clipboard");
+        }
+        return;
+      }
       if (window.PMChatNav) window.PMChatNav.jumpToMessage(row.dataset.thread, row.dataset.msg, null, false);
     });
 
@@ -735,31 +851,33 @@ window.PMChatWindowKit = (() => {
   function openLensBreakdown(anchor, env) {
     const store = env.store;
     const key = store.activeKey();
-    const msgs = store.messages(key);
-    const st = store.thread(key);
-    const included = [];
-    const leftout = [];
-    included.push(Math.min(msgs.length, st.loadedCount) + " recent turns");
-    const g = store.goalEffectiveStatus(key);
-    if (g) included.push("active task · goal " + g);
-    included.push("scoped rules · " + store.effectiveSettings(key).persona + " persona capsule");
-    included.push("selected tools · search, lens, editor handoff");
-    if (st.draft.attachments.length) included.push(st.draft.attachments.length + " attachments");
-    included.push("retrieved history · search jumps");
-    const older = msgs.length - st.loadedCount;
-    leftout.push(older > 0 ? older + " older turns represented by summary" : "no older turns omitted");
-    leftout.push("unused tools and unrelated logs");
-    leftout.push("irrelevant memory and other threads");
+    const adm = store.admissionOf(key);
+    const includedRows = adm.included.map((x, idx) =>
+      '<div class="pmq-ctx-row pmq-ctx-inc' + (x.removed ? " pmq-removed" : "") + '" data-admidx="' + idx + '">' +
+      '<span class="pmq-ctx-inc-main">' + esc(x.label) + '<span class="pmq-ctx-inc-meta">' + esc(x.kind) + " · " + esc(x.size) + " · from " + esc(x.provenance) + "</span></span>" +
+      (x.removable && !x.removed ? '<button class="pmq-btn pmq-btn-sm" type="button" data-admremove="' + idx + '">Remove</button>' : (x.removed ? '<span class="pmq-ctx-inc-gone">Removed</span>' : "")) +
+      "</div>"
+    ).join("");
+    const omittedRows = adm.omitted.map(x =>
+      '<div class="pmq-ctx-row"><span>' + esc(x.label) + '<span class="pmq-ctx-inc-meta">' + esc(x.reason) + "</span></span></div>"
+    ).join("");
     const wrap = document.createElement("div");
-    wrap.className = "pmq-ctx-pop";
-    wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="lens"></i>Context Lens · breakdown</div>' +
-      '<div class="pmq-popup-body">' +
-      '<div class="pmq-chats-group">Included</div>' + included.map(x => '<div class="pmq-ctx-row"><span>' + esc(x) + "</span></div>").join("") +
-      '<div class="pmq-chats-group">Left out</div>' + leftout.map(x => '<div class="pmq-ctx-row"><span>' + esc(x) + "</span></div>").join("") +
-      '<div class="pmq-ctx-note">A concise, trustworthy breakdown. The raw prompt and FileSafe rulebook stay hidden.</div>' +
+    wrap.className = "pmq-ctx-pop pmq-ctx-lens";
+    wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="lens"></i>Context Lens · receipt</div>' +
+      '<div class="pmq-popup-body pmq-scroll">' +
+      '<div class="pmq-ctx-row pmq-ctx-pressure"><span>Context pressure</span><b>' + Math.round((adm.pressure || 0) * 100) + "%</b></div>" +
+      '<div class="pmq-chats-group">Included</div>' + includedRows +
+      '<div class="pmq-chats-group">Left out</div>' + omittedRows +
+      '<div class="pmq-ctx-note">Receipt of what PM included and left out. Raw secrets and the FileSafe rulebook are never shown.</div>' +
       "</div>";
     window.PMIcons.hydrate(wrap);
-    env.popups.open(anchor, wrap, { width: 290 });
+    const entry = env.popups.open(anchor, wrap, { width: 330 });
+    wrap.querySelectorAll("[data-admremove]").forEach(b => b.addEventListener("click", () => {
+      store.admissionRemove(key, Number(b.dataset.admremove));
+      env.popups.dismiss(entry);
+      openLensBreakdown(anchor, env);
+    }));
+    return entry;
   }
 
   function artIcon(a) {

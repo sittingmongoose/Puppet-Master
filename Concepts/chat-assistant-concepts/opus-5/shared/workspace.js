@@ -51,7 +51,10 @@
    * for a global. Binding is mandatory — an unbound service silently returns empty state,
    * which is exactly how the questionnaire and draft suites failed the first time. */
   function bindServices(s, d) {
-    ['PMXDrafts', 'PMXLens', 'PMXSearch', 'PMXSurfaces', 'PMXRuntime', 'PMXQuestionnaire', 'PMXArtifacts', 'PMXDemo']
+    ['PMXObservable', 'PMXRoute', 'PMXAccess', 'PMXBsd', 'PMXApprovals', 'PMXContextAdmit',
+     'PMXThreadOps', 'PMXOps', 'PMXAttach', 'PMXSync', 'PMXSpell', 'PMXNotify', 'PMXCapacity',
+     'PMXCrew', 'PMXDrafts', 'PMXLens', 'PMXSearch', 'PMXSurfaces', 'PMXRuntime',
+     'PMXQuestionnaire', 'PMXArtifacts', 'PMXThreadHistory', 'PMXDemo']
       .forEach(function (name) {
         var svc = global[name];
         if (svc && typeof svc.bind === 'function') svc.bind(s, d);
@@ -75,7 +78,24 @@
       motion: global.PMXMotion,
       icons: global.PMXIcons,
       toast: global.PMXToast,
-      listwindow: global.PMXListWindow
+      listwindow: global.PMXListWindow,
+      /* ---- packet services. Every one is reached through ctx.services so no concept module
+       * touches a global, per CONTRACT section 4. */
+      observable: global.PMXObservable,
+      route: global.PMXRoute,
+      access: global.PMXAccess,
+      bsd: global.PMXBsd,
+      approvals: global.PMXApprovals,
+      contextAdmit: global.PMXContextAdmit,
+      threadOps: global.PMXThreadOps,
+      ops: global.PMXOps,
+      capacity: global.PMXCapacity,
+      crew: global.PMXCrew,
+      attach: global.PMXAttach,
+      sync: global.PMXSync,
+      spell: global.PMXSpell,
+      notify: global.PMXNotify,
+      threadHistory: global.PMXThreadHistory
     };
   }
 
@@ -491,6 +511,11 @@
 
     return global.PMXData.load().then(function (d) {
       data = d;
+      /* The store seeds each thread's authored fixture state (BSD, decisions, attachments,
+       * thread operations, conflicts, outbox) the first time that thread's view is touched. It
+       * needs the normalized corpus to do it, and it must have it BEFORE any service binds,
+       * because binding is what first reads a view. */
+      store.attachData(d);
       /* Re-bind now that the data actually exists. Services that seed state from the corpus
        * — the questionnaire queue above all — get nothing if they are bound before the load
        * resolves, and the failure is silent: an empty queue looks exactly like a thread with
@@ -542,6 +567,10 @@
       global.PMXWorkspace.THEMES = THEMES;
       global.PMXWorkspace.PRESETS = PRESETS;
       global.PMXWorkspace.ready = true;
+      /* The ConceptHub embed handshake goes LAST, after `ready` is true: the Hub may answer the
+       * ready message with a theme, reduced-motion and width state in the same tick, and applying
+       * those before the compositions exist would write state nothing is listening to yet. */
+      if (global.PMXHubBridge) global.PMXHubBridge.install(store);
       document.body.setAttribute('data-pmx-ready', '1');
       return global.PMXWorkspace;
     }).catch(function (err) {

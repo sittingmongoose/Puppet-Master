@@ -195,6 +195,18 @@
     if (d.todoTotal) domains.push({ id: "tasks", label: "tasks", value: d.todoDone + "/" + d.todoTotal, build: () => { const el = wapi.builders.todoCard(key); return el ? [el] : []; } });
     if (d.agents) domains.push({ id: "agents", label: "agents", value: String(d.agents), build: () => wapi.builders.subagentCards(key) });
     if (d.diffFiles) domains.push({ id: "diff", label: "diff", value: "+" + d.diffAdds + " \u2212" + d.diffDels, build: () => wapi.builders.diffCards(key) });
+    const t3Alerts = [];
+    wapi.builders.approvalCards(key).forEach(c => t3Alerts.push(c));
+    const grant = wapi.builders.grantCard(key);
+    if (grant) t3Alerts.push(grant);
+    wapi.builders.capacityCards(key).forEach(c => t3Alerts.push(c));
+    wapi.builders.warningCards(key).forEach(c => t3Alerts.push(c));
+    if (t3Alerts.length) domains.push({ id: "alerts", label: "alerts", value: String(t3Alerts.length), build: () => t3Alerts });
+    if (d.ops > 0) domains.push({ id: "ops", label: "ops", value: String(d.ops), build: () => wapi.builders.opsCards(key) });
+    if (d.bsd > 0) domains.push({ id: "bsd", label: "bsd", value: String(d.bsd), build: () => wapi.builders.bsdCards(key) });
+    if (d.attach > 0) domains.push({ id: "attach", label: "attach", value: String(d.attach), build: () => wapi.builders.attachmentResolutionCards(key) });
+    const t3Arts = wapi.builders.artifactCards(key);
+    if (t3Arts.length) domains.push({ id: "artifacts", label: "artifacts", value: String(t3Arts.length), build: () => t3Arts });
     if (!domains.length) return;
 
     const s = wapi.store.thread(key);

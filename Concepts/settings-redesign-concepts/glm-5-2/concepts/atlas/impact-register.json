@@ -1,0 +1,485 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-02-atlas",
+  "model": "GLM-5.2",
+  "concept_ia": "Atlas — spatial/cartographic Information Architecture: destinations are bounded regions sized by content density, focus+context workspace with a minimap rail + viewport rail, and a Cmd+K search overlay that dims the map. Concept-owned families are demonstrated as full regions; sibling families are reachable through the shared setting-row grammar and the minimap.",
+  "provisional_only_note": "All command IDs, schema field names, and component names in this register are provisional concept deltas for audit adjudication. No canon is minted here. Existing catalog.* and UCC IDs are cited as evidence, not modified.",
+  "plan_owner_impacts": [
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_units": ["F3-432", "F3-433", "F3-434", "F3-435", "F3-436", "F3-437", "F3-438", "F3-439", "F3-440", "F3-441", "F3-442", "F3-443", "F3-444", "F3-445", "F3-446", "F3-447"],
+      "impact": "Atlas demonstrates the search-first Settings surface (F3-432) as a cartographic atlas rather than bloom chips, and the setting-row grammar (F3-438) across all six C2 regions. The category-bloom modal model behind cmd.settings.bloom.open (F3-434 deep-link) is superseded in this concept by region/minimap navigation that preserves the same deep-link + focus-highlight semantics without the bloom silhouette. The notification-surface rule (title-bar stack is the sole in-app affordance; no bottom-right stack, status-bar bell, Activity Bar shortcut, or dedicated side panel) must be reflected in F3-432/F3-433 attention notices. Theme family/mode model (Friendly/Glass/Retro/Basic × Light/Dark/Auto with OS prefers-color-scheme live following) supersedes any 8-flat-enum rendering of general.visual.theme.",
+      "gui_related": true,
+      "action": "record + adjudicate during compile; do not edit canon from this concept"
+    },
+    {
+      "owner_doc": "Plans/settings_inventory.json",
+      "plan_units": ["F3-441"],
+      "impact": "Atlas exercises the inventory rows for notifications, sound, theme/appearance, tray, window-restore, crash-recovery, and teacher/help. Census gap: there are no inventory rows for spellcheck on/off, dictionary source, personal dictionary, or project dictionary — these must be added (see settings_inventory_impacts). general.visual.theme is an 8-value select; Atlas renders the family/mode model and flags the 8-enum as inventory lineage to reconcile. general.interaction.notification-method/notification-destinations/notification-mapping describe a multi-destination router (8 destinations) that the inventory does not yet model as a structured object.",
+      "gui_related": true,
+      "action": "add missing spellcheck rows; model notification destination as structured object; reconcile theme 8-enum with family/mode"
+    },
+    {
+      "owner_doc": "Plans/settings_inventory.schema.json",
+      "plan_units": ["F3-441"],
+      "impact": "Schema needs extension for: (a) notification destination objects (kind, channel/thread, headers, template, success_predicate, priority, parse_mode, retry, device_selection), (b) sound asset metadata (source, license, version, duration_seconds, sha256, default_mapping, pack_ref, verification_state), (c) custom theme TOML descriptor (base_theme, family, mode, tokens, schema_validation_result, fallback_theme), (d) dictionary source descriptor (source_kind, language, path_or_ref). The nine-state value model (Default/Recommended/Inherited/Auto/Not configured/Managed/Custom/Unavailable/Effective differs) must be representable per setting row.",
+      "gui_related": false,
+      "action": "extend schema; preserve v1 backward compatibility"
+    },
+    {
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_units": [],
+      "impact": "Uploaded sound assets are user-supplied audio, NOT generated media. They must not be modeled under media.image/media.video/media.tts/media.music capability flags. The asset metadata (source, license, version, duration, hash) parallels the generated-media artifact provenance fields but lives in the sound-library domain. Atlas records this boundary so audit does not conflate sound uploads with generated audio/TTS.",
+      "gui_related": false,
+      "action": "keep sound-library uploads out of generated-media capability matrix; cross-reference provenance field shapes only"
+    },
+    {
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_units": ["UCC-103", "UCC-108"],
+      "impact": "Atlas reuses the existing notifications/sound/theme/model command families (UCC-103, UCC-108) verbatim and flags cmd.settings.bloom.open for alias/supersession by atlas region navigation. New candidate families not in canon: theme create/import/export (custom TOML), spellcheck dictionary management, settings manager open navigation, provider installation scan/verify/reconnect, app tray/quit/window-restore, teacher explain-screen. cmd.alert.* (UCC-108: acknowledge/snooze/dismiss/open_source/mute_rule) is a DIFFERENT system (attention alerts/concerns) from cmd.notifications.* (delivery routing) and must not be conflated or aliased.",
+      "gui_related": true,
+      "action": "adjudicate new candidate IDs; retire/alias bloom; record alert vs notification boundary"
+    },
+    {
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_units": [],
+      "impact": "Command normalization for atlas navigation (region select, minimap pan, scrollspy jump, manager open) must carry route_target + OpenSubject + panel-context per the route/open contract. Setting mutations remain registry-owned non-command values (F3-438/F3-439/F3-441) — Atlas never turns a setting toggle into a command. One-shot actions (test-send, sound preview, pack import, theme preview/apply) are commands with typed payloads.",
+      "gui_related": false,
+      "action": "ensure atlas nav normalizes to route/open; setting rows stay non-command"
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "setting_id": "general.visual.theme",
+      "impact": "Render as family + mode (Friendly/Glass/Retro/Basic × Light/Dark/Auto) rather than an 8-value flat select. The 8 options remain valid lineage; the UI groups them. Invalid values that do not resolve under family/mode must be flagged during migration.",
+      "disposition": "reinterpret_existing"
+    },
+    {
+      "setting_id": "general.visual.theme-mode",
+      "impact": "Auto must follow OS prefers-color-scheme live and switch without restart. Atlas demonstrates the live OS flip fixture.",
+      "disposition": "confirm_behavior"
+    },
+    {
+      "setting_id": "general.visual.manage-custom-themes",
+      "impact": "Backs the custom-TOML theme manager region. Needs schema-validation result, base-theme inheritance, invalid-theme diagnosis + fallback, and create/import/export/open-folder actions. Inventory row currently implies a flat manage panel.",
+      "disposition": "extend"
+    },
+    {
+      "setting_id": "general.interaction.notifications-enabled",
+      "impact": "Master toggle for the 8-destination router. When off, no destination sends; quiet/focus windows still apply to the master.",
+      "disposition": "confirm_behavior"
+    },
+    {
+      "setting_id": "general.interaction.notification-destinations",
+      "impact": "Must model up to 8 destinations: in-app title-bar stack (sole in-app surface), system/tray, Slack, Discord, generic webhook, ntfy, Pushover, Telegram. Each carries channel/thread, mentions, headers, template, success predicate, priority, parse mode, retry, device selection. Secrets stored as refs only.",
+      "disposition": "extend_to_structured_object"
+    },
+    {
+      "setting_id": "general.interaction.notification-mapping",
+      "impact": "Per-event routing to one or more destinations. Event taxonomy must cover blocked work, approval needed, completion, failure, and advisory events. Sound cannot be the only indication of these.",
+      "disposition": "extend"
+    },
+    {
+      "setting_id": "general.interaction.sound-catalog",
+      "impact": "Backs the Sound Library region: built-in + uploaded sounds with source/license/version/duration/hash metadata; PeonPing/OpenPeon-compatible pack import with format + license checks; local-only preview; master volume; import/export; delete/replace.",
+      "disposition": "extend"
+    },
+    {
+      "setting_id": "general.interaction.sound-management",
+      "impact": "Resource-list manager for sound assets. Unverified packs are never bundled. Replace-on-delete must preserve mappings or remap explicitly.",
+      "disposition": "extend"
+    },
+    {
+      "setting_id": "general.interaction.minimize-to-tray",
+      "impact": "Desktop/tray/window region. Tray-while-automation badge, Pause/Resume/Quit, launch destination, and window/panel/tab restore are co-located. Inventory rows exist for minimize-to-tray and tray-notifications but not for launch-destination, tray badge, or Pause/Resume/Quit app-lifecycle controls.",
+      "disposition": "extend_with_missing_rows"
+    },
+    {
+      "setting_id": "general.startup.window-state",
+      "impact": "Window/panel/tab restore including crash recovery and unsaved-buffer protection. Inventory rows exist for window-state, crash-restore, unsaved-capture, restore-panel, max-persisted-tabs. Activity-bar reorder/hide/overflow and side-panel restore are not inventoried.",
+      "disposition": "extend_with_missing_rows"
+    },
+    {
+      "setting_id": "general.interaction.mode",
+      "impact": "Teacher/Help region anchor (Explain Things To Me). Atlas demonstrates explicit Teacher assistance beyond tooltips: explain-current-screen, guided transitions, tooltip detail. Inventory rows for mode, show-tooltips, explain-disabled, chat-eli5, teach-model exist; explain-current-screen is a new candidate action.",
+      "disposition": "extend"
+    },
+    {
+      "setting_id": "(missing)",
+      "impact": "Spellcheck rows are ABSENT from the inventory census: check-spelling on/off, language (Automatic), dictionary source (Automatic/system/PM-local), personal dictionary manage, project dictionary use/manage, check-technical-prose, underline-unknown-names, language packs, thread/project overrides. These must be added under a general.spellcheck.* namespace. NO autocorrect row — grammar/style is a separate opt-in provider-backed feature.",
+      "disposition": "add_missing"
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "name": "notification_destination_object",
+      "impact": "Structured object schema for a single destination: kind enum (in_app_title_bar, system_tray, slack, discord, generic_webhook, ntfy, pushover, telegram), destination_config (channel/thread, mentions[], headers_ref, body_template, success_predicate, priority, parse_mode, retry_policy, device_selection[]), credential_ref (SecretReference, never raw), enabled, last_test_receipt_ref.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "name": "sound_asset_metadata",
+      "impact": "Object schema: asset_id, source (builtin/uploaded/pack), license, version, duration_seconds, sha256, default_mapping_event, pack_ref, verification_state (verified/unverified/quarantined), display_name. Unverified assets cannot be bundled or auto-mapped to critical events.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "name": "custom_theme_descriptor",
+      "impact": "TOML-backed theme descriptor: base_theme (Friendly/Glass/Retro/Basic), family, mode (light/dark/auto), token_overrides{}, schema_version, schema_validation_result (valid/invalid_with_fallback), fallback_theme_id, inherited_tokens[]. Invalid TOML falls back to the named base theme and surfaces a diagnosis row.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "name": "dictionary_source_descriptor",
+      "impact": "Object schema: source_kind (automatic/system_only/pm_local_only), resolved_source (OS service then PM local, when automatic), language, path_or_ref, personal_words[], project_words[]. Personal and project dictionaries are separate scopes.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "name": "setting_value_state_enum",
+      "impact": "Nine explicit value states (Default/Recommended/Inherited/Auto/Not configured/Managed/Custom/Unavailable/Effective differs). Auto/Inherit/Not configured/Disabled must never render as an empty string. ValueSourceBadge consumes this enum.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    },
+    {
+      "name": "tray_window_lifecycle",
+      "impact": "Group the tray/window/restore controls under one schema namespace: minimize_to_tray, tray_automation_badge, launch_destination, window_restore, panel_restore, activity_bar_overflow, crash_recovery, unsaved_buffer_protection, editor_tab_tree_limits. App-level Quit/Pause/Resume are actions, not settings.",
+      "owner_doc": "Plans/settings_inventory.schema.json"
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "family": "theme",
+      "existing_canon": ["cmd.theme.set_mode", "cmd.theme.set_accent", "cmd.theme.set_density", "cmd.theme.preview", "cmd.theme.reset"],
+      "reuse_or_new": {
+        "reuse_existing": ["cmd.theme.set_mode (family/mode + Auto OS-follow)", "cmd.theme.set_accent", "cmd.theme.set_density", "cmd.theme.preview (live hover preview)", "cmd.theme.reset"],
+        "new_candidate": ["cmd.theme.create", "cmd.theme.import", "cmd.theme.export", "cmd.theme.open_folder", "cmd.theme.validate"]
+      },
+      "conflict": "none — existing cmd.theme.* covers mutation/preview/reset; create/import/export/open-folder are genuinely absent",
+      "distinguishes": "set_mode/set_accent/set_density = persistent setting mutation; preview = one-shot action with ttl; create/import/export = resource lifecycle; open_folder = route/open navigation"
+    },
+    {
+      "family": "notifications_delivery",
+      "existing_canon": ["cmd.notifications.destination.create", "cmd.notifications.destination.update", "cmd.notifications.destination.delete", "cmd.notifications.destination.toggle", "cmd.notifications.destination.test", "cmd.notifications.mapping.update", "cmd.notifications.override.set"],
+      "reuse_or_new": {
+        "reuse_existing": ["cmd.notifications.destination.test (masked + rate-limited + receipted test-send)", "cmd.notifications.destination.create/update/delete/toggle", "cmd.notifications.mapping.update", "cmd.notifications.override.set (quiet/focus)"]
+      },
+      "conflict": "none; do NOT alias cmd.alert.* (acknowledge/snooze/dismiss/mute_rule) — that is the attention-alerts/concerns system, a different domain",
+      "distinguishes": "destination.test = one-shot action (rate-limited, masked secrets, returns receipt); create/update/delete/toggle = resource lifecycle; mapping.update = persistent setting mutation"
+    },
+    {
+      "family": "sound_library",
+      "existing_canon": ["cmd.sound.preview", "cmd.sound.upload", "cmd.sound.pack.import", "cmd.sound.asset.delete", "cmd.sound.asset.restore", "cmd.sound.asset.export", "cmd.sound.mapping.set"],
+      "reuse_or_new": {
+        "reuse_existing": ["cmd.sound.preview (local-only, never external)", "cmd.sound.upload", "cmd.sound.pack.import (PeonPing/OpenPeon; format + license check; unverified never bundled)", "cmd.sound.asset.delete/restore/export", "cmd.sound.mapping.set"],
+        "new_candidate": ["cmd.sound.asset.replace", "cmd.sound.master_volume.set"]
+      },
+      "conflict": "none",
+      "distinguishes": "preview = local-only one-shot; upload/pack.import = resource ingest with verification gate; delete/restore/export = lifecycle; mapping.set = persistent; master_volume = persistent scalar"
+    },
+    {
+      "family": "settings_navigation",
+      "existing_canon": ["cmd.settings.bloom.open", "cmd.settings.open_notifications", "cmd.settings.open_storage_retention", "cmd.settings.category.reset", "cmd.settings.suggestion.dismiss"],
+      "reuse_or_new": {
+        "alias_or_supersede": ["cmd.settings.bloom.open → atlas region/minimap navigation (preserve deep-link + focus-highlight semantics; keep as compatibility alias only if needed)"],
+        "new_candidate": ["cmd.settings.manager.open (generic open-a-manager wrapper over route/open)", "cmd.settings.region.select (atlas-specific region nav, normalizes to route/open)", "cmd.settings.scrollspy.jump"]
+      },
+      "conflict": "cmd.settings.bloom.open describes a bloom modal that Atlas deliberately replaces; supersession, not conflict — semantics (deep-link + focus) are preserved",
+      "distinguishes": "all navigation/route-open; never setting mutation. open_notifications/open_storage_retention are existing manager-open wrappers to reuse as the pattern for cmd.settings.manager.open"
+    },
+    {
+      "family": "spellcheck_dictionaries",
+      "existing_canon": [],
+      "evidence": "none found — grep of Plans/UI_Command_Catalog.md and Plans/Wiring_Matrix.production.json for spell/dictionary yields no cmd.spellcheck.* or cmd.dictionary.* IDs",
+      "reuse_or_new": {
+        "new_candidate": ["cmd.spellcheck.dictionary.add", "cmd.spellcheck.dictionary.remove", "cmd.spellcheck.dictionary.import", "cmd.spellcheck.dictionary.personal.manage", "cmd.spellcheck.dictionary.project.manage", "cmd.spellcheck.source.set"]
+      },
+      "conflict": "none (greenfield); NO autocorrect command — grammar/style is a separate opt-in provider-backed feature requiring privacy/route/cost disclosure",
+      "distinguishes": "add/remove/import = resource lifecycle; personal.manage/project.manage = persistent scope mutation; source.set = persistent setting"
+    },
+    {
+      "family": "provider_installation_and_connection",
+      "existing_canon": ["cmd.model.refresh", "cmd.model.list", "cmd.account.select_profile", "cmd.provider.switch_route", "cmd.usage.refresh", "cmd.usage.export", "cmd.onboarding.free_models.refresh", "cmd.onboarding.free_models.retry", "cmd.onboarding.free_models.setup"],
+      "reuse_or_new": {
+        "reuse_existing": ["cmd.model.refresh (catalog refresh with last-known-good)", "cmd.model.list", "cmd.account.select_profile", "cmd.provider.switch_route (requested/effective route)", "cmd.onboarding.free_models.refresh/retry/setup (Free Models wrapper)"],
+        "new_candidate": ["cmd.provider.installation.scan", "cmd.provider.installation.install (explicit, official source)", "cmd.provider.installation.update (Ask first / when idle)", "cmd.provider.installation.verify", "cmd.provider.installation.rollback", "cmd.provider.connection.reconnect"]
+      },
+      "conflict": "none; CLI-owned OAuth boundary respected — Claude/Antigravity OAuth stay CLI-owned; PM-direct OAuth only for supported routes (OpenAI/Codex, GitHub, Copilot)",
+      "distinguishes": "scan/verify = read diagnostic; install/update/rollback = lifecycle action (explicit consent); reconnect = one-shot; refresh/list = read"
+    },
+    {
+      "family": "app_tray_window_lifecycle",
+      "existing_canon": ["cmd.orchestrator.pause", "cmd.orchestrator.resume"],
+      "reuse_or_new": {
+        "distinct_from_existing": ["cmd.orchestrator.pause/resume are RUN-scoped (goal/scheduler), NOT app tray lifecycle — do not alias"],
+        "new_candidate": ["cmd.app.tray.minimize", "cmd.app.tray.restore", "cmd.app.quit", "cmd.app.window.state.restore", "cmd.app.activity_bar.configure"]
+      },
+      "conflict": "naming hazard only: tray Pause/Resume must not be confused with cmd.orchestrator.pause/resume (different scope)",
+      "distinguishes": "tray minimize/restore/quit = one-shot app actions; window.state.restore = lifecycle on launch; activity_bar.configure = persistent"
+    },
+    {
+      "family": "teacher_help",
+      "existing_canon": [],
+      "evidence": "none found — no cmd.teacher.* or cmd.help.* in catalog",
+      "reuse_or_new": {
+        "new_candidate": ["cmd.teacher.explain_screen", "cmd.teacher.transition_guide", "cmd.help.open_for_setting"]
+      },
+      "conflict": "none (greenfield); must not duplicate cmd.alert.open_source (route to alert source) — different intent",
+      "distinguishes": "explain_screen/transition_guide = one-shot assistant action; help.open_for_setting = route/open navigation"
+    }
+  ],
+  "wiring_impacts": [
+    "Every Atlas user action traces the 9-step wiring contract (ui_source → command → canonical_owner → validation/permission → state/op → event/receipt/ObservableWork → ui_projection → usage/diagnostic attribution → recovery/deeplink). Full per-flow traces in candidate-wiring-delta.json.",
+    "Setting-toggle rows (theme mode, notifications-enabled, sound master volume, dictionary source, minimize-to-tray) remain registry-owned non-command values per F3-438/F3-439/F3-441 — they apply instantly through the wiring map, not through a cmd.* dispatch.",
+    "One-shot actions (destination test-send, sound preview, pack import, theme preview/apply, installation scan/verify) are wired commands with ObservableWork phases for long operations and explicit dispatch receipts.",
+    "Atlas region/minimap navigation wires through route/open (route_target + OpenSubject + panel-context); no concept-only local state may masquerade as production wiring."
+  ],
+  "dry_component_impacts": [
+    "Atlas exercises the full shared DRY family set (see candidate-dry-delta.json): SettingsWorkspaceShell, SettingsSearch (Cmd+K overlay variant), CategoryNavigation (region grid), SubcategoryScrollspy (minimap + viewport rail), SettingRow, ValueSourceBadge, ManagerShell, ResourceList/Card/Detail, HealthSummary, NotificationDestination, SoundLibraryItem, ThemePreview, SetupFlowLauncher, ObservableOperation, ReceiptLink.",
+    "Atlas-specific composition: minimap rail reuses SubcategoryScrollspy semantics with a model-backed active-region indicator; viewport rail reuses it with a scroll-position thumb.",
+    "SecretField is used for notification destination credentials (webhook URL, bot tokens) and is NEVER used for CLI-owned OAuth (Claude/Antigravity) which stays behind a CLI-owned boundary with no PM-side secret field.",
+    "AvailabilityReason is exercised heavily: managed/unavailable theme rows, unverified sound packs, failed/rolled-back installations, system-tray-unavailable, dictionary-source-unavailable."
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "area": "event_taxonomy",
+      "impact": "Reuse existing settings.theme.updated (cmd.theme.*). New event candidates for adjudication: notifications.destination.tested (rate-limited test-send receipt), sound.pack.imported (with verification_state), sound.asset.replaced, spellcheck.dictionary.updated, provider.installation.scanned/verified/rolled_back, app.window.state.restored. No fabricated *.command_applied events.",
+      "storage": "file/JSONL/kv event log; NO SQLite"
+    },
+    {
+      "area": "test_send_receipt",
+      "impact": "Test-send receipts store destination_kind, masked_target, dispatch_id, ack_status, result_status, latency_ms, and failure detail — never the raw secret. Rate-limit state (per-destination window) is local kv.",
+      "storage": "local JSONL receipt log + kv rate-limit counters"
+    },
+    {
+      "area": "sound_asset_provenance",
+      "impact": "Asset metadata (source, license, version, duration, sha256, pack_ref, verification_state) is stored as resource records, paralleling generated-media artifact provenance but in the sound domain.",
+      "storage": "resource records under sound-library namespace"
+    },
+    {
+      "area": "theme_validation_cache",
+      "impact": "Custom TOML theme validation results (schema_version, valid/invalid_with_fallback, fallback_theme_id, diagnosed_errors[]) cached so startup load does not re-parse invalid themes repeatedly.",
+      "storage": "local kv cache keyed by theme sha256"
+    },
+    {
+      "area": "notification_audit",
+      "impact": "Delivered notifications keep an audit trail (event_kind, destination_kind, dispatch_id, receipt_ref) so usage/diagnostic attribution works. This is delivery audit, NOT the cmd.alert.* attention system.",
+      "storage": "append-only JSONL audit log"
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "target": "cmd.settings.bloom.open + category bloom modal",
+      "reason": "Atlas replaces the bloom/chip architecture with bounded regions + minimap navigation. Deep-link + focus-highlight semantics are preserved. Supersession, not removal — keep bloom as compatibility alias only if external callers depend on it.",
+      "canonical_ref": "Plans/UI_Command_Catalog.md UCC-103 region; F3-434 deep-link"
+    },
+    {
+      "target": "category rendering as filter pills",
+      "reason": "Packet 01/00_START_HERE: primary category controls must stop reading as filter pills. Atlas regions are destinations with title/purpose/health/navigation, never chips.",
+      "canonical_ref": "01_CORE_ARCHITECTURE.md"
+    },
+    {
+      "target": "general.visual.theme 8-flat-enum rendering",
+      "reason": "Theme selector model is family + mode (Friendly/Glass/Retro/Basic × Light/Dark/Auto). The 8 inventory options are valid lineage but must be grouped, not rendered as a flat 8-row list.",
+      "canonical_ref": "FINDINGS.md theme selector model; settings_inventory.json general.visual.theme"
+    },
+    {
+      "target": "invalid theme inventory values",
+      "reason": "Any inventory value that does not resolve under family/mode (or fails TOML schema validation for custom themes) must be diagnosed and fall back to a named base theme during migration, not silently dropped.",
+      "canonical_ref": "06 notifications/appearance"
+    },
+    {
+      "target": "stale right-side-panel language",
+      "reason": "Left-shell canon: Activity Bar is the narrow left icon rail controlling one adjacent left side-panel slot. Any right-side-panel Settings descriptions are superseded.",
+      "canonical_ref": "01_CORE_ARCHITECTURE.md left shell canon"
+    },
+    {
+      "target": "regular/yolo mode coupling",
+      "reason": "Stale regular/yolo mode coupling is superseded per REFERENCE_SUPERSESSIONS; Atlas mode controls (Explain Things To Me, tooltips) are independent of any retired mode taxonomy.",
+      "canonical_ref": "REFERENCE_SUPERSESSIONS.md"
+    },
+    {
+      "target": "notification surface proliferation",
+      "reason": "Retire any bottom-right stack, status-bar bell, Activity Bar notification shortcut, or dedicated Notifications side panel. The title-bar stack is the sole in-app notification affordance.",
+      "canonical_ref": "06 notifications surface rule"
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "area": "theme_live_reload",
+      "risk": "medium",
+      "impact": "Slint 1.17.1 cannot rely on runtime CSS var() chains or color-mix(). Theme tokens must be precompiled per F3-431. Live reload (incl. OS prefers-color-scheme flip in Auto mode) requires re-baking the active token set and re-emitting to the scene graph. Invalid-TOML fallback must resolve at load time, not at first paint.",
+      "mitigation": "precompute token sets; emit a theme-applied signal on reload; keep fallback resolution in the loader"
+    },
+    {
+      "area": "sound_preview_local_only",
+      "risk": "medium",
+      "impact": "Concept uses the browser HTML audio element for local-only preview. Slint has no DOM; production needs a native audio playback abstraction. Preview must NEVER route through external notification delivery.",
+      "mitigation": "introduce a PM-local audio-preview service bound to SoundLibraryItem; gate behind cmd.sound.preview"
+    },
+    {
+      "area": "scrollspy_and_minimap",
+      "risk": "medium",
+      "impact": "Atlas scrollspy (minimap active-region indicator + viewport-rail scroll thumb) in the browser relies on scroll/resize measurement. Slint forbids arbitrary DOM measurement; use model-backed scroll-position + layout-driven indicators. No uncontrolled scroll jumps (motion rule).",
+      "mitigation": "drive scrollspy from the Slint ListView item-index model, not pixel measurement; synchronize minimap via model binding"
+    },
+    {
+      "area": "glass_backdrop",
+      "risk": "low-with-fallback",
+      "impact": "backdrop-filter has no Slint analogue. Glass themes bake one backdrop blur over a pre-baked wallpaper (F3-431/T16). The manager refresh-overlay falls back to an opaque plate under glass (no nested blur).",
+      "mitigation": "preserve the opaque-plate fallback; re-bake wallpaper at native resolution"
+    },
+    {
+      "area": "css_grid_regions",
+      "risk": "low",
+      "impact": "The 12-column region grid is a layout spec, not semantic state. Translates to nested VerticalLayout/HorizontalLayout in Slint. Responsive reflow at narrow widths needs manual translation (collapse minimap + viewport rail below 1280px).",
+      "mitigation": "model regions as a repeater over a category model; let Slint layout containers handle flow"
+    },
+    {
+      "area": "cmdk_overlay",
+      "risk": "low",
+      "impact": "The Cmd+K search overlay dims the map and surfaces results. In Slint this is a popup/focus-scope over the atlas; map-dim is a semi-transparent rectangle, not a filter stack.",
+      "mitigation": "use Slint PopupWindow + focus-scope; avoid heavy filter stacks"
+    },
+    {
+      "area": "spellcheck_underline",
+      "risk": "medium",
+      "impact": "Concept uses the browser spellcheck attribute to simulate underlines. Slint needs a portable spelling-service abstraction for underline rendering. NO autocorrect behavior is ported (grammar/style is separate provider-backed opt-in).",
+      "mitigation": "introduce a spellcheck-service trait; render underlines via text-decoration equivalent; keep grammar/style behind its own provider gate"
+    }
+  ],
+  "test_fixtures": [
+    {
+      "id": "atlas-notif-8destinations",
+      "family": "Notifications & Sounds",
+      "description": "All 8 destinations configured: in-app title-bar stack (sole in-app surface), system/tray, Slack, Discord, generic webhook, ntfy, Pushover, Telegram. Includes a failing webhook (4xx) to exercise the success-predicate + retry + receipted failure path. Secrets masked everywhere."
+    },
+    {
+      "id": "atlas-notif-testsend-masked-ratelimited",
+      "family": "Notifications & Sounds",
+      "description": "Test-send on a webhook destination: payload masked, rate-limit window enforced (second tap within window is blocked with a receipt), returns a dispatch_id + result_status. Sound cannot be the only indication of completion."
+    },
+    {
+      "id": "atlas-sound-unverified-pack",
+      "family": "Sound Library/Uploads/Packs",
+      "description": "PeonPing/OpenPeon-compatible pack import fails format + license check (unverified). The pack is never bundled; the asset is quarantined; mappings are not auto-applied. Built-in + verified uploaded sounds remain available."
+    },
+    {
+      "id": "atlas-sound-local-preview",
+      "family": "Sound Library/Uploads/Packs",
+      "description": "Local-only preview of a built-in and an uploaded sound; preview never triggers external notification delivery. Delete/replace on an uploaded sound remaps the orphaned event mapping explicitly."
+    },
+    {
+      "id": "atlas-theme-invalid-toml-fallback",
+      "family": "Appearance",
+      "description": "Custom TOML theme fails schema validation; falls back to named base theme; diagnosis row shows the error; effective theme is the fallback; live reload + startup load both handle it without a blank surface."
+    },
+    {
+      "id": "atlas-theme-os-autoflip",
+      "family": "Appearance",
+      "description": "Theme mode = Auto; OS flips light↔dark; PM follows live without restart. Restart markers shown where a token change requires restart (e.g., font swap)."
+    },
+    {
+      "id": "atlas-appearance-managed-unavailable",
+      "family": "Appearance",
+      "description": "Theme-specific locked (managed) rows and unavailable rows render with AvailabilityReason; UI scale slider with restart marker; custom + fallback fonts."
+    },
+    {
+      "id": "atlas-spellcheck-sources",
+      "family": "Spellcheck & Dictionaries",
+      "description": "Dictionary source = Automatic (OS service then PM local), system-only, PM-local-only. Personal + project dictionaries shown as separate scopes. Technical-prose toggle, underline-unknown-names, language packs. NO autocorrect anywhere."
+    },
+    {
+      "id": "atlas-spellcheck-grammar-optin",
+      "family": "Spellcheck & Dictionaries",
+      "description": "Grammar/style assistance is a separate opt-in provider-backed feature with privacy/route/cost/Usage disclosure. Off by default; turning on shows the disclosure before any route is taken."
+    },
+    {
+      "id": "atlas-tray-automation-badge",
+      "family": "Desktop/Tray/Window",
+      "description": "Tray-while-automation badge active; Pause/Resume/Quit reachable from tray; minimize-to-tray on; launch destination = last workspace; window/panel/tab restore after a clean relaunch."
+    },
+    {
+      "id": "atlas-crash-unsaved-protect",
+      "family": "Desktop/Tray/Window",
+      "description": "Crash recovery restores sessions; unsaved-buffer protection prompts on Quit; editor/tab/tree limits enforced; activity-bar reorder/hide/overflow persisted."
+    },
+    {
+      "id": "atlas-teacher-explain-screen",
+      "family": "Teacher/Help",
+      "description": "Teacher explains the current screen (Notifications region); guided transition into a real action (open a destination); tooltip detail at hover and keyboard focus."
+    },
+    {
+      "id": "atlas-provider-cli-ready",
+      "family": "Provider/Account/Model/Installation (core)",
+      "description": "Provider fixture: CLI found, authenticated, ready. Installation confidence = Proven. Account requested/effective route equal."
+    },
+    {
+      "id": "atlas-provider-not-signed-in",
+      "family": "Provider/Account/Model/Installation (core)",
+      "description": "CLI found, not signed in. Reconnect action launches the CLI-owned OAuth flow (Claude/Antigravity) — PM never presents PM-direct OAuth for these. API-key connection shown as a separate group."
+    },
+    {
+      "id": "atlas-provider-update-rollback",
+      "family": "Provider/Account/Model/Installation (core)",
+      "description": "Update available (Ask first); verification failed; rollback succeeded. Catalog refresh holds last-known-good during the operation."
+    },
+    {
+      "id": "atlas-provider-free-models-setup",
+      "family": "Provider/Account/Model/Installation (core)",
+      "description": "Free Models row requiring underlying setup; wrapper over routes (owns no credentials); catalog freshness with source version + check/import/activation times."
+    },
+    {
+      "id": "atlas-general-states",
+      "family": "All regions",
+      "description": "General fixtures exercised across regions: Default, Custom, Inherited, Managed, Unavailable, Validation error, Restart required, Reconnect required, Setting changed elsewhere, No results, Search typo, Deep-linked setting, Long localized label, Narrow/squeezed layout."
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "family": "Future Server Module Shell (Servers / Execution Hosts / Clients / Project Hosting & Files / Remote Access / Updates)",
+      "named_canonical_owner": "concept_04 (Storage/Recovery/Server-first topology) + Plans server-first topology owner",
+      "insertion_contract": "Atlas reserves a System region slot and the shared ManagerShell + ResourceList grammar so a future Server module can drop in as a region + manager without re-architecting the atlas. No server backend state machine is invented here. Deep-link + route/open target reserved.",
+      "classification": "deferred_named_owner"
+    },
+    {
+      "family": "Grammar/Style assistance (provider-backed)",
+      "named_canonical_owner": "Prompt Pipeline / Provider capability owner (opt-in provider-backed feature)",
+      "insertion_contract": "Spellcheck region reserves a clearly-separated, off-by-default Grammar/Style panel with privacy/route/cost/Usage disclosure. Atlas shows the disclosure surface and the opt-in gate; the provider-backed grammar engine is wired later by its owner.",
+      "classification": "deferred_named_owner"
+    },
+    {
+      "family": "Project Sync / PM application & content updates",
+      "named_canonical_owner": "Release/updates owner + Project Sync owner (per packet 07)",
+      "insertion_contract": "Atlas does not implement Project Sync or app-update state machines. A System region insertion point is reserved for the Updates manager; route/open target and command wiring deferred to that owner.",
+      "classification": "deferred_named_owner"
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question": "Should the generic open-a-manager wrapper be cmd.settings.manager.open, or should each manager keep a dedicated cmd.settings.open_<family> wrapper (matching the existing cmd.settings.open_notifications / cmd.settings.open_storage_retention pattern)?",
+      "blocks": "candidate-command-delta settings_navigation family",
+      "owner_hint": "Plans/UI_Command_Catalog.md adjudication"
+    },
+    {
+      "question": "Do cmd.alert.* (attention alerts/concerns: acknowledge/snooze/dismiss/mute_rule) and cmd.notifications.* (delivery routing) need a shared receipt taxonomy, or do they stay fully independent event families? Atlas treats them as independent but records the boundary.",
+      "blocks": "command_id_impacts notifications_delivery family",
+      "owner_hint": "Plans/UI_Command_Catalog.md + Plans/Commands_System.md"
+    },
+    {
+      "question": "Does the custom TOML theme schema live in Plans/settings_inventory.schema.json (as a structured setting value) or in a dedicated Plans/Theme_System.md owner doc with its own schema? Atlas assumes inventory-schema extension but flags the alternative.",
+      "blocks": "settings_schema_impacts custom_theme_descriptor",
+      "owner_hint": "Plans/FinalGUISpec.md F3-441 owner + theme owner"
+    },
+    {
+      "question": "App-level tray Pause/Resume vs run-scoped cmd.orchestrator.pause/resume — confirm the tray controls route to app lifecycle (cmd.app.*) and never alias the orchestrator run controls. Naming hazard only, not a semantic conflict.",
+      "blocks": "candidate-command-delta app_tray_window_lifecycle family",
+      "owner_hint": "Plans/UI_Command_Catalog.md + Desktop/Tray owner"
+    },
+    {
+      "question": "Atlas region/minimap navigation introduces a region.select + scrollspy.jump candidate. Should these normalize into a single compact cmd.nav.open_subject wrapper over route/open, or stay as settings-scoped commands?",
+      "blocks": "candidate-command-delta settings_navigation family",
+      "owner_hint": "Plans/UI_Command_Catalog.md route/open normalization"
+    },
+    {
+      "question": "Where exactly do the missing spellcheck inventory rows live (general.spellcheck.*) and what is their tier/exposure? The census shows zero spellcheck rows today.",
+      "blocks": "settings_inventory_impacts (missing)",
+      "owner_hint": "Plans/settings_inventory.json + Plans/FinalGUISpec.md F3-441"
+    }
+  ]
+}

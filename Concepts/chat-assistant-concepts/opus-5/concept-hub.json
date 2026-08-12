@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "topic": "chat-assistant",
+  "model": "Opus 5",
+  "presentation": "hybrid",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Chat width",
+    "role": "chat",
+    "min": 520,
+    "max": 1200,
+    "step": 5,
+    "default": 750,
+    "presets": [520, 750, 975, 1200],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "title": "Opus 5 · Assistant Chat comparison workspace",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "standard",
+    "tags": ["gallery", "8 windows", "8 threads", "64 pairings"],
+    "order": 1
+  },
+  "entries": [
+    {
+      "id": "stage",
+      "title": "Single pairing stage (deep-linkable)",
+      "path": "stage.html",
+      "openPath": "stage.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["pairing", "stage"],
+      "order": 2
+    },
+    {
+      "id": "contact",
+      "title": "All eight themes at once",
+      "path": "contact.html",
+      "openPath": "contact.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["themes", "contact sheet"],
+      "order": 3
+    },
+    {
+      "id": "runner",
+      "title": "Interaction test runner",
+      "path": "tests/runner.html",
+      "openPath": "tests/runner.html",
+      "openActions": "both",
+      "controlMode": "internal",
+      "tags": ["tests"],
+      "order": 4
+    }
+  ]
+}

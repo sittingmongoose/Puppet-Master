@@ -41,6 +41,7 @@ window.PMChatDemoExtend = (() => {
     }
     if (!data.threads.find(t => t.id === "thread-16")) data.threads.push(buildShowcase());
     if (!data.threads.find(t => t.id === "thread-17")) data.threads.push(buildRedesign());
+    if (!data.threads.find(t => t.id === "thread-18")) data.threads.push(buildOfflineCatchup());
     if (!data.catalog) data.catalog = buildCatalog();
     enrichStates(data);
     return data;
@@ -60,14 +61,19 @@ window.PMChatDemoExtend = (() => {
           { name: "Opus 5", accounts: ["ant-pro", "ant-cli"], effort: ["Low", "Medium", "High", "Max"], fast: false, caps: { video: false, vision: true }, context: 200000 },
           { name: "Opus 5 Fast", accounts: ["ant-pro"], effort: ["Medium", "High"], fast: true, caps: { video: false, vision: true }, context: 128000, disabledReason: null }
         ] },
-      { id: "openai", provider: "OpenAI", accounts: [ { id: "oa-team", label: "Team workspace" } ],
+      { id: "openai", provider: "OpenAI", setupState: "update-available", accounts: [ { id: "oa-team", label: "Team workspace" } ],
         models: [
           { name: "GPT-5.6 Pro", accounts: ["oa-team"], effort: ["Low", "Medium", "High", "Max"], fast: true, caps: { video: true, vision: true }, context: 192000 },
-          { name: "GPT-5.6 Mini", accounts: ["oa-team"], effort: ["Low", "Medium"], fast: true, caps: { video: false, vision: true }, context: 96000, disabledReason: "Credential expired · re-sign in from Settings" }
+          { name: "GPT-5.6 Mini", accounts: ["oa-team"], effort: ["Low", "Medium"], fast: true, caps: { video: false, vision: true }, context: 96000, disabled: true, disabledReason: "Credential expired · re-sign in from Settings" }
         ] },
       { id: "moonshot", provider: "Moonshot", accounts: [ { id: "ms-dev", label: "Developer key" } ],
         models: [
           { name: "Kimi K3", accounts: ["ms-dev"], effort: ["Medium", "High"], fast: false, caps: { video: true, vision: true }, context: 128000 }
+        ] },
+      { id: "google", provider: "Google", setupState: "install-required", accounts: [ { id: "g-cloud", label: "Cloud key" } ],
+        models: [
+          { name: "Gemini 3 Pro", accounts: ["g-cloud"], effort: ["Low", "Medium", "High"], fast: true, caps: { video: true, vision: true }, context: 1000000, disabled: true, disabledReason: "Install required — open Provider Settings" },
+          { name: "Gemini 3 Flash", accounts: ["g-cloud"], effort: ["Low", "Medium"], fast: true, caps: { video: true, vision: true }, context: 500000, disabled: true, disabledReason: "Install required — open Provider Settings" }
         ] }
     ];
   }
@@ -190,7 +196,7 @@ window.PMChatDemoExtend = (() => {
           ]
         }
       }),
-      m17(8, "assistant", "Collision: the visual-test server wants port 4173, but the Usage concept already owns it. I will take 4174 and leave theirs running — the safe alternative is recorded in the warning card above."),
+      m17(8, "assistant", "Collision: the visual-test server wants port 3000, but checkout redesign in another worktree already owns it. I will take 3001 and leave theirs running — the safe alternative is recorded in the warning card above."),
       m17(9, "user", "Spin up help for the research and the Slint review, but do not flood the run — capacity matters."),
       m17(10, "assistant", "Three specialists requested. Current usage is likely to finish two at a time, so PM will run two waves and reserve capacity for the final synthesis. The interface systems auditor finished on Fable; the provider adapter researcher is mid-run on Kimi K3; the Slint and test reviewer failed once on a sandbox timeout and is retrying on Qwen 3.8."),
       m17(11, "assistant", "The auditor's findings are in: provider and account must be separate choices, favorites first, and the effort submenu stays nested. The reviewer's first attempt died on a port bind; the retry uses the safe port."),
@@ -230,9 +236,11 @@ window.PMChatDemoExtend = (() => {
       },
       subagentGroups: [
         { id: "sg-17", label: "Redesign specialists", state: "running", counts: null, agents: [
-          { name: "Interface systems auditor", task: "Audit selector and access surfaces", currentActivity: "Findings delivered", status: "complete", workedSeconds: 41 },
-          { name: "Provider adapter researcher", task: "Compare external approval models", currentActivity: "Reading adapter docs", status: "running", workedSeconds: 33 },
-          { name: "Slint and test reviewer", task: "Portability and probe review", currentActivity: "Retry · sandbox rebound to 4174", status: "retrying", workedSeconds: 18 }
+          { name: "Interface systems auditor", task: "Audit selector and access surfaces", currentActivity: "Findings delivered", status: "completed", route: "Qwen 3.8", workedSeconds: 41 },
+          { name: "Provider adapter researcher", task: "Compare external approval models", currentActivity: "Reading adapter docs", status: "running", route: "Kimi K3", workedSeconds: 33 },
+          { name: "Slint and test reviewer", task: "Portability and probe review", currentActivity: "Queued for sustainable capacity", status: "queued", route: "Opus 5 Fast", workedSeconds: 0 },
+          { name: "Capacity verifier", task: "Verify wave reserves hold", currentActivity: "Blocked on port 3000", status: "blocked", route: "Qwen 3.8", workedSeconds: 12 },
+          { name: "Handoff writer", task: "Draft impact handoff", currentActivity: "Stopped by user", status: "stopped", route: "Opus 5 Fast", workedSeconds: 8 }
         ] }
       ],
       diffGroups: [
@@ -260,7 +268,46 @@ window.PMChatDemoExtend = (() => {
         { id: "artifact-handoff", title: "Implementation impact handoff", kind: "document", projectPath: "Tastebook · docs/" }
       ],
       browserSessions: [],
-      draftState: null,
+      draftState: { currentText: "", attachments: ["screen-capture.mp4"], revisionHistory: [] },
+      seedAttachRoutes: { "screen-capture.mp4": { route: "unsupported", consented: false, reeval: false, lineage: "screen-capture.mp4", job: null } },
+      operational: {
+        ports: [ { port: 3000, owner: "checkout redesign in another worktree", threadKey: "thread-17", worktree: "checkout-redesign", suggestion: 3001, state: "conflict" } ],
+        worktrees: [
+          { name: "checkout-redesign", state: "waiting-writer", owner: "checkout redesign" },
+          { name: "qwen-3-8-concepts", state: "isolated", owner: "this thread" }
+        ],
+        sessions: [
+          { kind: "browser", label: "Browser Program capture · smoke pass", state: "running" },
+          { kind: "debug", label: "Debug session · provider-selector.js", state: "attached" },
+          { kind: "backup", label: "Backup · nightly snapshot", state: "complete" },
+          { kind: "snapshot", label: "Snapshot · catch-up from Home Server", state: "pending" }
+        ]
+      },
+      admission: {
+        included: [
+          { label: "Current objective", kind: "goal", size: "0.4k", provenance: "thread-17", removable: false },
+          { label: "Recent messages", kind: "history", size: "18.2k", provenance: "thread-17", removable: false },
+          { label: "Scoped project instructions", kind: "instructions", size: "2.1k", provenance: "Puppet Master", removable: false },
+          { label: "Persona capsule", kind: "persona", size: "0.8k", provenance: "Interface engineer", removable: false },
+          { label: "Selected tools", kind: "tools", size: "3.4k", provenance: "session", removable: false },
+          { label: "Prior-thread excerpt · routing table", kind: "excerpt", size: "1.1k", provenance: "thread-04", removable: true },
+          { label: "Prior-thread excerpt · pinned geometry", kind: "excerpt", size: "0.9k", provenance: "thread-11", removable: true },
+          { label: "Attachment representation · screen-capture.mp4", kind: "attachment", size: "0.6k", provenance: "draft", removable: true }
+        ],
+        omitted: [
+          { label: "Older messages", reason: "summary-represented" },
+          { label: "17 unused tool schemas", reason: "not selected for this thread" },
+          { label: "Unrelated logs", reason: "below relevance threshold" },
+          { label: "Below-threshold memories", reason: "relevance below threshold" }
+        ],
+        cache: { state: "warm", note: "Provider cache warm; replay not required." },
+        pressure: 0.42
+      },
+      bsdAdvice: { id: "bsd-adv-17", text: "Consider running the verification wave before the handoff draft — two roles in wave three depend on wave-two results.", at: "2026-08-04T14:52:00Z" },
+      bsdEvents: [
+        { mode: "auto", scope: "thread", result: "silent", at: "2026-08-04T14:31:00Z", note: "BSD Auto evaluated the turn and stayed silent." },
+        { mode: "on", scope: "thread", result: "advice", at: "2026-08-04T14:52:00Z", note: "Manual On produced one suggestion, shown as an advice card." }
+      ],
       seedApprovals: [
         { id: "ap-17-run", question: "Run 2 commands?", scope: "Workspace only · Needed to run the test suite", resolved: null,
           details: [ { k: "Commands", v: "node verification/run-matrix.mjs --suite=v2 · node verification/static-server.mjs --port 0" }, { k: "Files touched", v: "verification/results/run-*/" }, { k: "Network", v: "localhost only" }, { k: "Persistence", v: "none" } ],
@@ -268,33 +315,102 @@ window.PMChatDemoExtend = (() => {
       ],
       seedWarnings: [
         { id: "wr-17-port", tier: "confirm", kind: "collision", resolved: null,
-          text: "Port 4173 is owned by the Usage concept visual-test server.",
-          detail: "Requested 4173 for the browser probe server. The safe alternative is 4174; taking it does not disturb the other worktree.",
-          choices: ["Use port 4174", "Cancel"] },
+          text: "Port 3000 is owned by checkout redesign in another worktree.",
+          detail: "Requested 3000 for the visual-test server. The safe alternative is 3001; taking it does not disturb the other worktree.",
+          choices: ["Use 3001", "Cancel"] },
         { id: "wr-17-route", tier: "confirm", kind: "route", resolved: null,
           text: "Switching models replays this conversation without the current provider cache.",
           detail: "Requested route Anthropic / Opus 5 uses a separate paid connection. Provider cache and prompt pricing do not carry over; Usage records the replay separately.",
           pending: { provider: "Anthropic", model: "Opus 5" },
           choices: ["Continue here", "Switch here", "Branch with this model", "Start new chat", "Cancel"] },
         { id: "wr-17-cap", tier: "confirm", kind: "capacity", resolved: null,
-          text: "Three specialists requested; current usage is likely to finish two at a time.",
-          detail: "PM will run two waves and reserve capacity for the final synthesis. No permanent usage dashboard is added to Chat.",
-          choices: ["Run waves", "Cancel"] }
+          text: "Requested specialists: 6 · Recommended concurrent: 2 · 3 waves.",
+          detail: "Reason: provider allowance and verification reserve. Required independent roles cannot be dropped. Forecast, not guarantee.",
+          forecast: { requested: 6, recommended: 2, waves: 3, reason: "provider allowance and verification reserve" },
+          choices: ["Start waves", "Cancel"] },
+        { id: "wr-17-xproj", tier: "modal", kind: "cross-project", resolved: null,
+          text: "This task will read Project A and modify Project B.",
+          detail: "Cross-project work is off by default. Choose a scope: allow once, allow for this Goal, or review Settings. This choice never persists silently.",
+          projectRead: "Project A", projectWrite: "Project B",
+          choices: ["Cancel", "Allow once", "Allow for this Goal", "Open Settings"] },
+        { id: "wr-17-attach", tier: "confirm", kind: "attachment", resolved: null,
+          text: "This model cannot read video.",
+          pendingAttach: "screen-capture.mp4",
+          choices: ["Cancel", "Extract in PM", "Use Gemini"] }
       ],
       seedRequests: [
         { id: "tr-17-1", target: "thread-04", text: "Send the provider routing decisions table to this redesign thread.", status: "answered",
           response: "Routing table quoted in the child thread; requested-vs-effective columns confirmed per account.", at: "2026-08-04T14:40:00Z" }
       ],
       crew: {
-        title: "Redesign crew", summary: "3 requested · 2 concurrent · 2 waves",
+        title: "Redesign crew", summary: "5 requested · 2 concurrent · 3 waves",
         members: [
-          { role: "Interface systems auditor", route: "Fable · workspace key", state: "complete" },
+          { role: "Interface systems auditor", route: "Qwen 3.8 · workspace key", state: "completed" },
           { role: "Provider adapter researcher", route: "Kimi K3 · developer key", state: "running" },
-          { role: "Slint and test reviewer", route: "Qwen 3.8 · workspace key", state: "retrying" }
+          { role: "Slint and test reviewer", route: "Opus 5 Fast · Pro plan", state: "queued" },
+          { role: "Capacity verifier", route: "Qwen 3.8 · workspace key", state: "blocked" },
+          { role: "Handoff writer", route: "Opus 5 Fast · Pro plan", state: "stopped" }
         ],
-        note: "Crew is scoped to this thread; the parent synthesizes after wave two."
+        note: "Crew is scoped to this thread; the parent synthesizes after wave three."
       },
       tags: ["showcase", "providers", "access", "goal", "subagents", "diff", "artifacts", "approvals", "warnings"]
+    };
+  }
+
+  function r18(i, worked) {
+    return {
+      provider: "Alibaba", model: "Qwen 3.8", persona: "Interface engineer", mode: "Agent", effort: "Medium",
+      workedSeconds: worked, totalElapsedSeconds: worked, tokenCount: 320 + i * 90,
+      contextUsed: 6000 + i * 900, contextLimit: 128000, estimatedCost: [0.01, 0.02][i % 2]
+    };
+  }
+
+  function m18(i, role, body, extra) {
+    const sentAt = new Date(new Date("2026-08-06T08:30:00Z").getTime() + i * 150000).toISOString();
+    return Object.assign({
+      id: "t18-m" + String(i + 1).padStart(4, "0"), role: role, body: body, sentAt: sentAt,
+      runtime: r18(i, 5 + (i % 4) * 4), eligibleForEdit: false, collapsedByDefault: false
+    }, extra || {});
+  }
+
+  function buildOfflineCatchup() {
+    const messages = [
+      m18(0, "user", "Sync the usage ledger while I am on the train — the connection is flaky. Queue anything that cannot go through immediately."),
+      m18(1, "assistant", "I will batch the ledger sync and queue each step with a durable client ID, so a reconnect replays every entry exactly once."),
+      m18(2, "assistant", "Connection dropped. Two requests are now in the outbox; their IDs are the idempotency keys for the replay."),
+      m18(3, "assistant", "Working from cache while offline: the ledger summary, last verified totals and the pending reconciliations are all readable locally.", {
+        activityGroup: {
+          id: "t18-ag1", status: "complete", workedSeconds: 41, compactLabel: "6 tools used",
+          stages: [
+            { kind: "read", label: "Read cached ledger", count: 2, durationSeconds: 9, summary: "Local snapshot is 3 hours old but complete." },
+            { kind: "search", label: "Searched queued entries", count: 3, durationSeconds: 11, summary: "Two outbox entries pending replay." },
+            { kind: "web", label: "Checked provider status page", count: 1, durationSeconds: 7, summary: "No incident reported; local link suspected." }
+          ]
+        }
+      }),
+      m18(4, "user", "Send the reconciliation note to the home server as soon as we are back online."),
+      m18(5, "assistant", "Queued. The outbox now holds three entries in original order; each carries its queued-at timestamp and a stable ID."),
+      m18(6, "assistant", "Reconnecting… replaying the outbox. Each entry is sent exactly once — already-replayed entries are skipped, never duplicated."),
+      m18(7, "assistant", "Replay complete: three queued messages delivered in order, receipts matched by entry ID. The sync strip returned to Live."),
+      m18(8, "user", "Did anything get sent twice during the flap?"),
+      m18(9, "assistant", "No. The durable client IDs make every entry idempotent; the server acknowledges by ID, so a retry of the same entry is a no-op."),
+      m18(10, "assistant", "Snapshot catch-up: the Home Server pushed one compressed summary of work that happened while we were offline — applied without rewriting any message."),
+      m18(11, "user", "Good — keep the outbox visible until it drains, and label anything that replayed."),
+      m18(12, "assistant", "Done. Replayed messages carry a receipt line; the title-bar strip shows Live with zero queued. The ledger is fully reconciled.")
+    ];
+    return {
+      id: "thread-18", title: "Offline catch-up and reconnect", project: "Puppet Master", pinned: false,
+      threadState: "waiting for reconnect", updatedAt: "2026-08-06T09:20:00Z", archived: false, initialVisibleMessageCount: 50,
+      scriptedReplyIds: ["reply-04", "reply-05"], scriptedReplyCursor: 0, messages: messages,
+      activeGoal: null, todo: null, subagentGroups: [], diffGroups: [], questionnaires: [], artifacts: [],
+      browserSessions: [], draftState: null,
+      seedWarnings: [
+        { id: "wr-18-sync", tier: "confirm", kind: "collision", resolved: null,
+          text: "Snapshot catch-up pending from Home Server.",
+          detail: "One compressed summary will be applied on reconnect; it never rewrites canonical messages.",
+          choices: ["Apply on reconnect", "Cancel"] }
+      ],
+      tags: ["offline", "outbox", "reconnect", "replay", "snapshot"]
     };
   }
 

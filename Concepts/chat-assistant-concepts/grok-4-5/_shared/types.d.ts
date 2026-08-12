@@ -157,23 +157,118 @@ interface RunDemoState {
   [key: string]: unknown;
 }
 
+type AccessProfile = 'ask' | 'auto-edits' | 'auto' | 'full';
+type SpeedMode = 'normal' | 'fast';
+type BsdMode = 'off' | 'auto' | 'on';
+type BsdScope = 'turn' | 'thread';
+type BsdVisual =
+  | 'off'
+  | 'auto-idle'
+  | 'auto-active'
+  | 'on'
+  | 'silent'
+  | 'advice'
+  | 'dup-suppressed'
+  | 'timed-out'
+  | 'unavailable'
+  | 'quota-limited';
+
+type SyncState =
+  | 'live'
+  | 'cached'
+  | 'synchronizing'
+  | 'offline'
+  | 'reconnecting'
+  | 'replay'
+  | 'snapshot'
+  | 'server-work-continuing';
+
+type OutboxKind = 'send' | 'question' | 'redirect' | 'approval' | 'goal' | 'thread-request';
+type OutboxStatus = 'queued' | 'sending' | 'acked' | 'failed';
+type NotificationTone = 'info' | 'warn' | 'error' | 'success';
+
+interface ThreadLocalState {
+  providerId: string;
+  accountId: string;
+  connectionId: string;
+  modelId: string;
+  personaId: string;
+  effortId: string;
+  speedMode: SpeedMode;
+  modeId: string;
+  accessProfile: AccessProfile;
+  bsd: {
+    mode: BsdMode;
+    scope: BsdScope;
+    visual: BsdVisual;
+    adviceId: string | null;
+  };
+  crewId: string;
+  worktreeId: string | null;
+  spellcheckEnabled: boolean;
+  frozen: boolean;
+}
+
+interface RestorePoint {
+  id: string;
+  threadId: string;
+  messageId: string;
+  label: string;
+  createdAt: string;
+  messageIndex: number;
+}
+
+interface OutboxItem {
+  id: string;
+  kind: OutboxKind;
+  payload: unknown;
+  status: OutboxStatus;
+  createdAt: string;
+  ackedAt?: string;
+}
+
+interface SessionNotification {
+  id: string;
+  title: string;
+  body: string;
+  tone: NotificationTone;
+  read: boolean;
+  createdAt: string;
+}
+
+interface AttachmentResolveResult {
+  class: 'native' | 'pm-transformed' | 'alternate' | 'unsupported';
+  lineage: string[];
+  choices: { id: string; label: string }[];
+  file: { name: string; [key: string]: unknown };
+}
+
 interface ThreadRecord {
-  key: string;
+  id: string;
   title: string;
   pinned: boolean;
   archived: boolean;
+  state: string | null;
+  tags: string[];
+  project: unknown;
+  updatedAt: string | null;
   messages: Message[];
-  unloadedOlderIds: string[];
   draft: ComposerDraft;
   draftRevisions: ComposerDraft[];
   lens: ContextLensState;
   goal: GoalState | null;
-  todos: TodoItem[];
-  subagents: SubagentGroup[];
-  diffs: DiffSurface[];
-  activity: ActivityState;
-  questionnaireQueue: Questionnaire[];
-  historyMeta: { renamed?: string; branches?: string[] };
+  todos: TodoItem[] | null;
+  subagentGroups: SubagentGroup[];
+  diffGroups: DiffSurface[];
+  activity: ActivityState[] | ActivityState;
+  questionnaires: Questionnaire[];
+  artifacts: unknown[];
+  browserSessions: unknown[];
+  scriptedReplyIds: string[];
+  scriptedReplyCursor: number;
+  initialVisibleMessageCount: number;
+  localState: ThreadLocalState;
+  restorePoints: RestorePoint[];
 }
 
 /**
@@ -186,12 +281,40 @@ interface ChatSemanticStore {
 
   session: {
     activeThreadKey: string;
+    /** Defaults for newly created threads */
     personaId: string;
     modelId: string;
+    defaultModelId: string;
+    threadModelOverride: string | null;
     modeId: string;
     effortId: string;
+    speedMode: SpeedMode;
+    accessProfile: AccessProfile;
+    providerId: string;
+    accountId: string;
+    connectionId: string;
+    crewId: string;
     worktreeId: string | null;
     keepThoughtExpandedWhileActive: boolean;
+    historyPinned: boolean;
+    historyMode: 'closed' | 'peek' | 'pinned_compact' | 'pinned_full';
+    artifactWorkspace: {
+      open: boolean;
+      artifactId: string | null;
+      status: string;
+      queue: unknown[];
+      scrollTop: number;
+      errorMessage: string | null;
+    };
+    favoritesModelIds: string[];
+    approval: unknown;
+    warning: unknown;
+    compactNow: { status: string; progress: number };
+    spellcheckEnabled: boolean;
+    accessLimitedBy: string | null;
+    sync: { state: SyncState; routeLabel: string; cursor: number };
+    outbox: OutboxItem[];
+    notifications: SessionNotification[];
   };
 
   threads: Record<string, ThreadRecord>;
@@ -215,6 +338,20 @@ interface ChatSemanticStore {
 
   subscribe(fn: () => void): () => void;
   getSnapshot(): ChatSemanticStore;
+  setThreadLocal(threadId: string, patch: Partial<ThreadLocalState>): ThreadLocalState;
+  getThreadLocal(threadId: string): ThreadLocalState;
+  getActiveLocal(): ThreadLocalState;
+  setBsd(threadId: string, opts: { mode?: BsdMode; scope?: BsdScope }): ThreadLocalState['bsd'];
+  setBsdVisual(threadId: string, visual: BsdVisual): BsdVisual;
+  createRestorePoint(threadId: string, messageId: string, label?: string): string;
+  rewindTo(threadId: string, messageIdOrRestorePointId: string): { messageId: string; via: string; removedCount: number };
+  redirectActiveTurn(threadId: string, text: string): { attemptId: string; messageId: string; partialBody: string };
+  enqueueOutbox(item: Partial<OutboxItem> & { id?: string }): OutboxItem;
+  replayOutbox(): string[];
+  setSyncState(state: SyncState): SyncState;
+  pushNotification(n: Partial<SessionNotification>): SessionNotification;
+  markNotificationRead(id: string): boolean;
+  resolveAttachment(fileMeta: unknown): AttachmentResolveResult;
 }
 
 declare global {

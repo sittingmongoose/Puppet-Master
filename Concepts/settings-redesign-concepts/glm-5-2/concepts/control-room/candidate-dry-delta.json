@@ -1,0 +1,208 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept": "concept-01-control-room",
+  "model": "GLM-5.2",
+  "note": "Candidate design roles from 10_PLAN_COMMAND_WIRING_DRY_IMPACT, NOT final component IDs. The audit agent adjudicates canonical names. This concept exercises the components marked exercised=true; reuse_note states what this concept proves about the shared shape.",
+  "components": [
+    {
+      "component": "SettingsDestination",
+      "exercised": true,
+      "role": "A primary area entry point: large editorial panel with title, purpose, live status, and open affordance (never a filter chip).",
+      "used_by": ["Settings Home", "every manager entry", "deferred Server Module Shell"],
+      "reuse_note": "Control Room proves the destination must carry a live status chip + purpose text and route to a manager or category. The shape is shared across all four concepts; only layout (editorial panel vs minimap region vs expandable row vs stream section) differs."
+    },
+    {
+      "component": "SettingsNotice",
+      "exercised": true,
+      "role": "Attention/continue/recommended callout with exactly one primary action and an optional secondary.",
+      "used_by": ["Settings Home (needs-attention, continue-setup, recommended)"],
+      "reuse_note": "Proves a notice carries a consequence string + single clear action + deep-link target. Attention/continue/recommended are the three semantic kinds; styling is theme-driven."
+    },
+    {
+      "component": "SettingsWorkspaceShell",
+      "exercised": true,
+      "role": "Full workspace container: left navigation index + continuous content area + exposure control + prose fields.",
+      "used_by": ["Settings Workspace (all categories)"],
+      "reuse_note": "Control Room instantiates it as book-TOC (left vertical index + continuous document). The shell contract (navigation + content + exposure + backbar + crumb) is shared; the navigation metaphor varies per concept."
+    },
+    {
+      "component": "SettingsSearch",
+      "exercised": true,
+      "role": "Omni-search across settings/categories/managers/destinations with result kinds (setting/category/subcategory/manager/destination) and deep-link jump.",
+      "used_by": ["Settings Home (dominant bar)", "Workspace (TOC search)"],
+      "reuse_note": "Control Room makes search the primary verb on Home. Result rows normalize a kind + label + expl + target. No-results and typo-suggestion are required fixtures."
+    },
+    {
+      "component": "CategoryNavigation",
+      "exercised": true,
+      "role": "Category-level navigation index (book-TOC vertical list with glyphs).",
+      "used_by": ["Settings Workspace"],
+      "reuse_note": "Proves category entries carry a glyph + title and expand to subcategories. Active category state is shared semantic state, not DOM class only."
+    },
+    {
+      "component": "SubcategoryScrollspy",
+      "exercised": true,
+      "role": "Syncs left TOC highlight to scroll position in a continuous document; oscillation-free; portable (no DOM measurement as semantic state).",
+      "used_by": ["Settings Workspace"],
+      "reuse_note": "Control Room is the canonical stress-test: active-index must derive from a portable section model so the Slint port can replicate it. jump offset (PM.jumpOffset) is a shared primitive."
+    },
+    {
+      "component": "SettingRow",
+      "exercised": true,
+      "role": "Universal setting row: title, explanation, current value/state, default/source, scope, availability, restart/reconnect, help, validation/error.",
+      "used_by": ["all categories", "all managers (ordinary controls)"],
+      "reuse_note": "Exercises all 9 value states and exposure levels. The row is the atomic unit every concept must render identically."
+    },
+    {
+      "component": "ValueSourceBadge",
+      "exercised": true,
+      "role": "Indicates Default/Recommended/Inherited/Auto/Not-configured/Managed/Custom/Unavailable/Effective-differs.",
+      "used_by": ["SettingRow", "MemoryRow", "PermissionRuleEditor", "provider rows"],
+      "reuse_note": "Never represents Auto/Inherit/Not-configured/Disabled as an unexplained empty string. Shared across every value-bearing row."
+    },
+    {
+      "component": "AvailabilityReason",
+      "exercised": true,
+      "role": "Explains why a row/control is unavailable or managed (restart required, reconnect required, changed elsewhere, managed policy, capability missing).",
+      "used_by": ["SettingRow", "InstallationCard", "MemoryRow", "ModelRow"],
+      "reuse_note": "Control Room shows restart-required, reconnect-required, changed-elsewhere, and unavailable fixtures; the reason string is shared semantic content."
+    },
+    {
+      "component": "RequestedEffectiveInspector",
+      "exercised": true,
+      "role": "Shows requested vs effective value with origin and fallback reason.",
+      "used_by": ["Provider/Account/Model", "Goals & Automation (worker/reviewer routes)", "Crew (members+concurrency)", "Personas (capabilities)", "Permissions (effective result)"],
+      "reuse_note": "Control Room is the heaviest user: one shared inspector shape prevents per-manager divergence across five families. The triple (requested/effective/origin) is the shared contract."
+    },
+    {
+      "component": "ManagerShell",
+      "exercised": true,
+      "role": "Uniform dedicated-manager shell: header, search/filter, add/connect/create, HealthSummary, resource list, requested/effective inspector, loading/empty/error/managed/unavailable states, logs/diagnostics.",
+      "used_by": ["Memory", "Personas", "Crew", "Permissions & FileSafe", "Provider/Account/Model", "Context & Instructions"],
+      "reuse_note": "Every manager feels designed by the same team. Control Room proves the shell across six C1 managers + the core provider manager."
+    },
+    {
+      "component": "ResourceList",
+      "exercised": true,
+      "role": "Card/table/list of resources (Gists, Personas, Crew templates, Permission rules, Connections, Installations, Models).",
+      "used_by": ["all managers"],
+      "reuse_note": "Shares row/card semantics; only the row kind (MemoryRow vs PersonaCard vs InstallationCard) specializes."
+    },
+    {
+      "component": "HealthSummary",
+      "exercised": true,
+      "role": "Projects health: FileSafe floor health, provider installation health, memory rebuild status, connection health.",
+      "used_by": ["Permissions & FileSafe", "Provider/Account/Model", "Memory"],
+      "reuse_note": "One health shape; FileSafe status is a health summary, never a disable toggle."
+    },
+    {
+      "component": "SecretField",
+      "exercised": true,
+      "role": "Credential control distinguishing PM-owned secret input, vault reference, CLI-owned auth, PM-direct OAuth, env-backed secret, command-helper secret, non-secret text.",
+      "used_by": ["Provider/Account/Model (API keys, OAuth)", "Permissions & FileSafe"],
+      "reuse_note": "Control Room proves the CLI-owned vs PM-direct OAuth boundary must be visible in the field kind. Normal UI never exposes raw tokens; reveal/copy/persist/test differ by type."
+    },
+    {
+      "component": "MemoryRow",
+      "exercised": true,
+      "role": "Specialized resource row: half-life/fade indicator, verified/unverified provenance, pin, version history entry, capsule token estimate.",
+      "used_by": ["Memory"],
+      "reuse_note": "Distinct from generic ResourceList row. Fade indicator must never imply deletion."
+    },
+    {
+      "component": "PersonaCard",
+      "exercised": true,
+      "role": "Specialized resource card: mission/use boundary, model-facing capsule preview, source/version/provenance, eligible skills, requested capabilities, child-only flag.",
+      "used_by": ["Personas"],
+      "reuse_note": "Enforces behavior-not-authority visually; cannot show authority-granting controls."
+    },
+    {
+      "component": "CrewTemplate",
+      "exercised": true,
+      "role": "Crew template editor/card: purpose, member roles, persona/capability requirements, allowed provider/account/model candidates, min/max members, adaptive sizing/waves, reserve, write/worktree policy, board topology, diversity/reducer/failure.",
+      "used_by": ["Crew"],
+      "reuse_note": "Orchestrator-owned; requested vs effective members/concurrency projected, not mutated here."
+    },
+    {
+      "component": "PermissionRuleEditor",
+      "exercised": true,
+      "role": "Ordered last-match-wins rule editor: add/update/reorder/delete, per-tool overrides, per-Persona profiles, wildcard help, ELI5/Expert views, test/dry-run.",
+      "used_by": ["Permissions & FileSafe"],
+      "reuse_note": "Reorder is a first-class operation; effective-result sample re-renders on every mutation; FileSafe floor non-bypassable."
+    },
+    {
+      "component": "SetupFlowLauncher",
+      "exercised": true,
+      "role": "Launches a bounded setup flow (Free Models underlying setup, explicit provider Install, Product Onboarding) and resumes with return context.",
+      "used_by": ["Provider/Account/Model (Free Models row, explicit Install)"],
+      "reuse_note": "Control Room exercises the Free-Models-needs-setup and explicit-Install fixtures. Setup is separate from Installation/Deployment and Server Claim/Bootstrap."
+    },
+    {
+      "component": "ObservableOperation",
+      "exercised": true,
+      "role": "Truthful progress/wait projection for one-shot actions (catalog refresh, reconnect, install/verify, memory rebuild, permission test).",
+      "used_by": ["all managers (one-shot actions)"],
+      "reuse_note": "Backed by ObservableWork; manager loading does not block the entire Settings workspace."
+    },
+    {
+      "component": "ReceiptLink",
+      "exercised": true,
+      "role": "Links a completed action to its durable receipt/source disclosure (memory event, permission event, catalog change history, install log).",
+      "used_by": ["Memory", "Permissions & FileSafe", "Provider/Account/Model"],
+      "reuse_note": "Every mutating action and ObservableWork emits a receipt; ReceiptLink is the shared drill-down."
+    },
+    {
+      "component": "ProviderFamilyCard",
+      "exercised": true,
+      "role": "Provider family overview: connected state, account/connection/product in use, included usage, models available, setup/repair needs.",
+      "used_by": ["Provider/Account/Model"],
+      "reuse_note": "Default view answers the six canonical questions (connected? which account? included? when included ends? models? needs setup?)."
+    },
+    {
+      "component": "AccountConnectionRow",
+      "exercised": true,
+      "role": "Account/profile row: nickname, discovered identity, auth source, enabled, priority, sticky-session, usage/quota, last successful connection/generation, health, model visibility.",
+      "used_by": ["Provider/Account/Model"],
+      "reuse_note": "Must not pretend a CLI supports simultaneous profiles; auth_boundary (cli_owned/pm_direct/api_key) visible."
+    },
+    {
+      "component": "InstallationCard",
+      "exercised": true,
+      "role": "Installation card: configured command, resolved launcher, actual executable, method, package identity, manager root, host/env, discovery confidence.",
+      "used_by": ["Provider/Account/Model"],
+      "reuse_note": "Advanced detail shows full resolver trace; normal view is one humanized card. Confidence Proven..Unknown; Unknown/Ambiguous is manual-only."
+    },
+    {
+      "component": "ModelRow",
+      "exercised": true,
+      "role": "Model row: favorite, alias, priority, visibility, reasoning/effort, Normal/Fast, modalities, tool/structured-output, context limit, observed availability.",
+      "used_by": ["Provider/Account/Model"],
+      "reuse_note": "Capability evidence retained with freshness; Fast mode and modalities never inferred from names."
+    },
+    {
+      "component": "CapabilityEvidence",
+      "exercised": true,
+      "role": "Evidence + freshness for model capabilities (Fast/Normal, effort, modalities, tool support).",
+      "used_by": ["Provider/Account/Model (ModelRow)"],
+      "reuse_note": "Control Room exercises the Fast/Normal + effort capability-variation fixture; evidence provenance required."
+    },
+    {
+      "component": "UsagePlanSummary",
+      "exercised": true,
+      "role": "Projects included usage, what happens when included usage ends, extra-usage/billing, per-account quota/cooldown.",
+      "used_by": ["Provider/Account/Model"],
+      "reuse_note": "Ties to cmd.usage.refresh / cmd.usage.export (reuse). Usage details may be unavailable while provider is ready (fixture)."
+    },
+    {
+      "component": "FileSafeFloorIndicator",
+      "exercised": true,
+      "role": "Non-bypassable FileSafe floor status: effective boundary, protected scopes, repair guidance.",
+      "used_by": ["Permissions & FileSafe"],
+      "reuse_note": "Projects health only; never offers bypass. Distinct from a generic HealthSummary because it is a hard floor."
+    }
+  ],
+  "summary": {
+    "exercised_count": 28,
+    "note": "All 28 components listed are exercised=true by this concept. Sibling-owned components (NotificationDestination, SoundLibraryItem, ThemePreview, CommandEditor, ShortcutRecorder, Lsp/Formatter/ToolResource, StorageHealth, ArtifactRow) are reachable via shared grammar but exercised by their owning concepts."
+  }
+}

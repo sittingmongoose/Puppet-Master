@@ -130,3 +130,119 @@
 
 /* ---- hover row: quiet, flush with the message seam ------------------------- */
 [data-k3-thread="t2"] .k3t-msg-hover { margin-top: 5px; }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t2 identity: restore-point,
+   branch, redirect, and marker records register as nodes ON the spine — the
+   same node geometry as message dots (12px dot, center -41px from the
+   message seam == spine center at list-x 11). Remaining packet cards ride
+   the seam as ordinary records.
+   ========================================================================== */
+
+/* stacked packet records ride the message seam */
+[data-k3-thread="t2"] .k3t-packet { margin-top: 12px; gap: 8px; }
+[data-k3-thread="t2"] .k3t-packet .k3t-card { margin-top: 0; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq keep the kit card —
+   intentional inheritance: the spine is the differentiator, the record body
+   stays neutral */
+[data-k3-thread="t2"] .k3t-routewarn,
+[data-k3-thread="t2"] .k3t-attach,
+[data-k3-thread="t2"] .k3t-bsdadvice,
+[data-k3-thread="t2"] .k3t-receipt,
+[data-k3-thread="t2"] .k3t-threadreq { border-radius: var(--radius-sm, 6px); }
+
+/* milestone nodes on the spine (inline mode; chip-mode rows stay node-free) */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-restorepoint,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-branch,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-marker,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-bsdresult { position: relative; }
+[data-k3-thread="t2"] .k3t-work-inline .k3t-restorepoint::before,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-branch::before,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect::before,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-marker::before,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-bsdresult::before {
+  content: "";
+  position: absolute;
+  left: -47px;                    /* dot center -41 == spine center */
+  top: 16px;                      /* aligns with the card's rowhead */
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--background);  /* opaque ground knocks out the spine */
+  border: 2px solid var(--text-muted);
+  pointer-events: none;
+}
+/* restore point: a square checkpoint node */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-restorepoint::before { border-radius: 3px; }
+/* branch: an accent ring — a new timeline forks here */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-branch::before {
+  border-color: var(--accent-primary);
+}
+/* redirect + BSD result: a small filled tick centered on their single line */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect::before,
+[data-k3-thread="t2"] .k3t-work-inline .k3t-bsdresult::before {
+  left: -45px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+}
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect-redirected::before {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+/* interrupted reads as an open tick, resumed as a quiet filled one */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect-interrupted::before {
+  background: var(--background);
+  border-color: var(--text-muted);
+}
+[data-k3-thread="t2"] .k3t-work-inline .k3t-redirect-resumed::before {
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+}
+/* marker line: node centers on its single line */
+[data-k3-thread="t2"] .k3t-work-inline .k3t-marker::before { top: 4px; }
+
+/* rewound region (list level): indents to the message seam with a small
+   tick on the spine, dashed box kept as the collapsed-region cue */
+[data-k3-thread="t2"] .k3t-rewound {
+  position: relative;
+  margin: 6px 0 6px 32px;
+  background: transparent;
+}
+[data-k3-thread="t2"] .k3t-rewound::before {
+  content: "";
+  position: absolute;
+  left: -45px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translateY(-50%);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--text-muted);
+  pointer-events: none;
+}
+
+/* queued badge: neutral tint pill on the seam */
+[data-k3-thread="t2"] .k3t-queued { background: var(--surface-elevated); }
+
+/* server note: a dashed hairline separates it from the work-zone cards */
+[data-k3-thread="t2"] .k3t-server-note {
+  padding-top: 8px;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+}
+
+/* chip-mode packet rows: compact node-free rows; an opened row expands to
+   the full card riding the same seam */
+[data-k3-thread="t2"] .k3t-packet-row { border-radius: var(--radius-sm, 6px); }
+[data-k3-thread="t2"] .k3t-packet-row.is-open { background: var(--surface-elevated); }
+[data-k3-thread="t2"] .k3t-packet-chiprows .k3t-card { margin-top: 6px; }
+
+/* artifact shortcut + overflow: the wrap stretches across the seam */
+[data-k3-thread="t2"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t2"] .k3t-shortcut-wrap .k3t-shortcut { flex: 1 1 auto; min-width: 0; }
+[data-k3-thread="t2"] .k3t-shortcut-more { flex: 0 0 auto; }

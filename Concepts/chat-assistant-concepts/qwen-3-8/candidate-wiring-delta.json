@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.chat_candidate_wiring_delta.v1",
+  "note": "Per-family wiring traces for the final cumulative cutover in chat-assistant/qwen-3-8. Owning services named per packet §08.",
+  "rows": [
+    {
+      "family": "questions",
+      "control": "eight concept-specific question renderers over one shared controller",
+      "command": "cmd.chat.question.answer/skip/submit/cancel",
+      "owning_service": "Thread service (question runtime projection)",
+      "validation": "required gating (questValid), skip-one vs cancel-whole, oldest-first queue",
+      "durable_state": "questIndex/questSkipped/questCancelled/questSubmitted/questAnswers per thread (persisted)",
+      "event_receipt": "questRecordCards durable receipt row",
+      "projection": "concept renderer is presentation-only; state is the DRY unit",
+      "usage_diagnostics": "answers payload carries question_id + value",
+      "retry_recovery": "draft preservation across flow; cancel restores prior state"
+    },
+    {
+      "family": "goal",
+      "control": "goal card start/pause/resume/stop/edit buttons",
+      "command": "cmd.chat.goal.start/pause/resume/stop/update/replan",
+      "owning_service": "Goal Runtime (canonical) — Chat is projection only",
+      "validation": "status transitions running/paused/stopped/blocked/complete",
+      "durable_state": "goalStatus/goalObjective/replanCount/goalPhaseIdx per thread",
+      "event_receipt": "goal status chips in work compositions; blocked state glyph",
+      "projection": "thread-local goal card, phases rail",
+      "usage_diagnostics": "replan_count in replan payload",
+      "retry_recovery": "pause/resume idempotent; clear is local-only (no command)"
+    },
+    {
+      "family": "context",
+      "control": "Context Ring popup (Compact Now), lens menu, search Add passage, Lens receipt Remove",
+      "command": "cmd.chat.context.compact_now/lens_set_mode/lens_toggle/source.add/source.remove",
+      "owning_service": "Context Admission (canonical) — receipt is projection",
+      "validation": "subcompact cap 25; removable-only removal",
+      "durable_state": "lens mode/applied, compactEvents, admission.included removed flags",
+      "event_receipt": "compactReceipts row; removed excerpt shows 'Removed'",
+      "projection": "Included/Left out receipt with provenance + sizes; no raw secrets",
+      "usage_diagnostics": "cache state warm/cold/restart in ring popup",
+      "retry_recovery": "lens_toggle idempotent per message"
+    },
+    {
+      "family": "route_access",
+      "control": "model picker rail + account rows, access popup, BSD chip, redirect menu",
+      "command": "cmd.chat.route.select / access.set / bsd.set / redirect",
+      "owning_service": "Provider routing (canonical) + Permissions (access) + BSD advisor (read-only)",
+      "validation": "requested-vs-effective pending warnings; BSD never widens access",
+      "durable_state": "settings.provider/model/account/effort/speed/access per thread; bsd mode/scope; redirectNote",
+      "event_receipt": "route warning resolution receipts; BSD advice card",
+      "projection": "Account · label · connection footer; BSD chip states",
+      "usage_diagnostics": "route.select payload includes effort/speed/account_id",
+      "retry_recovery": "pending route warning retains requested triple until resolved"
+    },
+    {
+      "family": "threads",
+      "control": "search results (Branch), kebab, request/spawn cards, restore-point message action",
+      "command": "cmd.chat.thread.request/await/branch/spawn/rewind + cmd.chat.restore_point.create",
+      "owning_service": "Thread service",
+      "validation": "branch preserves source + ancestry; rewind hides without erasing usage",
+      "durable_state": "extraThreads (persisted), threadRequests, restorePoints, rewindAnchor",
+      "event_receipt": "receipt rows for restore point / redirect; request cards show status",
+      "projection": "branch carries message_id + model in payload",
+      "usage_diagnostics": "request payload includes text",
+      "retry_recovery": "branchFrom deterministic id (key-bN); spawn id key-cN"
+    },
+    {
+      "family": "history_artifacts",
+      "control": "pin button, artifact workspace tabs/close/retry",
+      "command": "cmd.chat.history.pin/unpin + cmd.chat.artifact.open/close/switch/retry",
+      "owning_service": "Artifact service (workspace shell) + PinnedHistorySurface governor",
+      "validation": "governor demotes forms before chat width; never overlays transcript",
+      "durable_state": "ui.pinnedByWin/pinModeByWin/artwsByWin; artState per thread",
+      "event_receipt": "artifact status transitions loading/ready/error/retry",
+      "projection": "eight window presentations over one state machine",
+      "usage_diagnostics": "window_id in all history/artifact payloads",
+      "retry_recovery": "retry resets status to loading; version bump on ready"
+    },
+    {
+      "family": "decisions",
+      "control": "approval cards (Deny/Allow once/Allow for session/Details), warning cards, grant card, capacity card",
+      "command": "cmd.chat.approval.* + cmd.chat.warning.resolve + cmd.chat.cross_project.request",
+      "owning_service": "Permissions",
+      "validation": "warning.resolve restricted to capacity/collision/privacy/context/cache; one-time grant never persists",
+      "durable_state": "approvals/warnings resolved values per thread",
+      "event_receipt": "grant resolution receipt; resolved warnings hidden",
+      "projection": "dedicated grant card with read/write distinction",
+      "usage_diagnostics": "choice carried in payload",
+      "retry_recovery": "resolve idempotent per warning id"
+    },
+    {
+      "family": "attachments",
+      "control": "attachment resolver card (Cancel/Extract in PM/Use Gemini), consent warning",
+      "command": "cmd.chat.attachment.resolve + cmd.chat.attachment.route",
+      "owning_service": "Media + FileSafe + Provider routing",
+      "validation": "consent BEFORE alternate-route command; Cancel removes attachment (never fake native route)",
+      "durable_state": "attachRoutes { route, consented, reeval, lineage, job }",
+      "event_receipt": "transform job running/done label; route badge",
+      "projection": "resolver card + warning consent flow",
+      "usage_diagnostics": "lineage from original attachment id",
+      "retry_recovery": "job state running -> done; reeval on model change"
+    },
+    {
+      "family": "offline",
+      "control": "composer send while offline, sync strip reconnect",
+      "command": "cmd.chat.outbox.queue + cmd.chat.outbox.flush",
+      "owning_service": "Outbox + Server/Project Sync integration",
+      "validation": "stable-ID + idempotency: outbox entry id is the idempotency key; sentOnce flag skips replays",
+      "durable_state": "state.connection { status, outbox[], replay, serverWork, snapshot } persisted",
+      "event_receipt": "replayed messages carry queuedReplay receipt row",
+      "projection": "sync strip Offline · N queued; outbox popup",
+      "usage_diagnostics": "flush count payload",
+      "retry_recovery": "replay exactly once in original order; reconnect offline->reconnecting->replaying->live"
+    },
+    {
+      "family": "crew_cross_project",
+      "control": "capacity card Start waves, crew card",
+      "command": "cmd.chat.crew.start",
+      "owning_service": "Orchestrator + RuntimeResourceGovernor",
+      "validation": "forecast not guarantee; required independent roles cannot be dropped",
+      "durable_state": "crew per thread",
+      "event_receipt": "crew summary row",
+      "projection": "capacity forecast card (Requested 6 / Recommended 2 / 3 waves)",
+      "usage_diagnostics": "crew_id payload",
+      "retry_recovery": "Start waves resolves capacity warning via warningAction"
+    }
+  ]
+}

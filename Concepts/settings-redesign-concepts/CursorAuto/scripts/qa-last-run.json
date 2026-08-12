@@ -1,0 +1,513 @@
+{
+  "pid": 42388,
+  "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-42388",
+  "started": 1786497030.5301983,
+  "hub_port": 57300,
+  "hub_pid": 60112,
+  "concepts": [
+    {
+      "id": "harbor",
+      "ready": true,
+      "steps": {
+        "home": {
+          "ok": true
+        },
+        "states": {
+          "ok": true
+        },
+        "deeplink": {
+          "ok": true,
+          "pick": {
+            "ok": true,
+            "title": "SettingGoal worker ceiling",
+            "kind": "setting",
+            "settingId": "planning.goal-concurrency",
+            "managerId": null
+          }
+        },
+        "workspace": {
+          "ok": true
+        },
+        "providers": {
+          "ok": true
+        },
+        "peer_manager": {
+          "ok": true,
+          "peer": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerAssistant memoryManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "memory"
+            },
+            "markers": false,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"mem-verify\"]"
+            },
+            "toast": true,
+            "ok": true
+          },
+          "second": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerBack Seat DriverManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "bsd"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"bsd-toggle\"]"
+            },
+            "toast": true,
+            "ok": true
+          }
+        },
+        "packet_probes": {
+          "ok": true,
+          "probes": {
+            "installations": {
+              "ok": true,
+              "detail": {
+                "hasInstallUI": true,
+                "selectCount": 1,
+                "panelHeads": [
+                  "Host / environment installations"
+                ],
+                "hasAnthropic": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerProvidersManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "providers"
+              }
+            },
+            "sound_preview": {
+              "ok": true,
+              "skipped": true
+            },
+            "import_rollback": {
+              "ok": true,
+              "skipped": true
+            },
+            "server_shell": {
+              "ok": true,
+              "skipped": true
+            }
+          }
+        },
+        "spellcheck": {
+          "ok": true
+        },
+        "theme": {
+          "ok": true,
+          "mid": "glass-dark"
+        },
+        "motion": {
+          "ok": true,
+          "reduced": true,
+          "restored": true
+        },
+        "width": {
+          "ok": true,
+          "squeezed": false
+        },
+        "console": {
+          "ok": true,
+          "errors": [],
+          "cdp": []
+        }
+      },
+      "ok": true
+    },
+    {
+      "id": "score",
+      "ready": true,
+      "steps": {
+        "home": {
+          "ok": true
+        },
+        "states": {
+          "ok": true
+        },
+        "deeplink": {
+          "ok": true,
+          "pick": {
+            "ok": true,
+            "title": "SettingGoal worker ceiling",
+            "kind": "setting",
+            "settingId": "planning.goal-concurrency",
+            "managerId": null
+          }
+        },
+        "workspace": {
+          "ok": true
+        },
+        "providers": {
+          "ok": true
+        },
+        "peer_manager": {
+          "ok": true,
+          "peer": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerNotifications and soundsManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "notifications"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"notif-test\"]"
+            },
+            "toast": true,
+            "ok": true
+          },
+          "second": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerSound libraryManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "soundLibrary"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"snd-preview\"]"
+            },
+            "toast": true,
+            "ok": true
+          }
+        },
+        "packet_probes": {
+          "ok": true,
+          "probes": {
+            "installations": {
+              "ok": true,
+              "detail": {
+                "hasInstallUI": true,
+                "selectCount": 2,
+                "panelHeads": [
+                  "Host / environment installations",
+                  "Host / environment installations",
+                  "Host / environment installations",
+                  "Host / environment installations",
+                  "Host / environment installations",
+                  "Free Models \u2014 six auth routes"
+                ],
+                "hasAnthropic": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerProvidersManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "providers"
+              }
+            },
+            "sound_preview": {
+              "ok": true,
+              "detail": {
+                "clicked": true,
+                "present": true,
+                "phase": "Preview waveform for ping-soft (simulated)",
+                "toast": "Preview played for ping-soft (simulated audio) | Preview played for ping-soft (simulated audio)"
+              }
+            },
+            "import_rollback": {
+              "ok": true,
+              "skipped": true
+            },
+            "server_shell": {
+              "ok": true,
+              "skipped": true
+            }
+          }
+        },
+        "spellcheck": {
+          "ok": true
+        },
+        "theme": {
+          "ok": true,
+          "mid": "glass-dark"
+        },
+        "motion": {
+          "ok": true,
+          "reduced": true,
+          "restored": true
+        },
+        "width": {
+          "ok": true,
+          "squeezed": false
+        },
+        "console": {
+          "ok": true,
+          "errors": [],
+          "cdp": []
+        }
+      },
+      "ok": true
+    },
+    {
+      "id": "switchboard",
+      "ready": true,
+      "steps": {
+        "home": {
+          "ok": true
+        },
+        "states": {
+          "ok": true
+        },
+        "deeplink": {
+          "ok": true,
+          "pick": {
+            "ok": true,
+            "title": "SettingGoal worker ceiling",
+            "kind": "setting",
+            "settingId": "planning.goal-concurrency",
+            "managerId": null
+          }
+        },
+        "workspace": {
+          "ok": true
+        },
+        "providers": {
+          "ok": true
+        },
+        "peer_manager": {
+          "ok": true,
+          "peer": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerSkillsManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "skills"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act]"
+            },
+            "toast": true,
+            "ok": true
+          },
+          "second": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerTesting and debugManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "testing"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act]"
+            },
+            "toast": true,
+            "ok": true
+          }
+        },
+        "packet_probes": {
+          "ok": true,
+          "probes": {
+            "installations": {
+              "ok": true,
+              "detail": {
+                "hasInstallUI": true,
+                "selectCount": 1,
+                "panelHeads": [
+                  "Host / environment installations",
+                  "Free Models \u2014 six auth routes"
+                ],
+                "hasAnthropic": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerProvidersManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "providers"
+              }
+            },
+            "sound_preview": {
+              "ok": true,
+              "skipped": true
+            },
+            "import_rollback": {
+              "ok": true,
+              "skipped": true
+            },
+            "server_shell": {
+              "ok": true,
+              "skipped": true
+            }
+          }
+        },
+        "spellcheck": {
+          "ok": true
+        },
+        "theme": {
+          "ok": true,
+          "mid": "glass-dark"
+        },
+        "motion": {
+          "ok": true,
+          "reduced": true,
+          "restored": true
+        },
+        "width": {
+          "ok": true,
+          "squeezed": false
+        },
+        "console": {
+          "ok": true,
+          "errors": [],
+          "cdp": []
+        }
+      },
+      "ok": true
+    },
+    {
+      "id": "archive",
+      "ready": true,
+      "steps": {
+        "home": {
+          "ok": true
+        },
+        "states": {
+          "ok": true
+        },
+        "deeplink": {
+          "ok": true,
+          "pick": {
+            "ok": true,
+            "title": "SettingGoal worker ceiling",
+            "kind": "setting",
+            "settingId": "planning.goal-concurrency",
+            "managerId": null
+          }
+        },
+        "workspace": {
+          "ok": true
+        },
+        "providers": {
+          "ok": true
+        },
+        "peer_manager": {
+          "ok": true,
+          "peer": {
+            "pick": {
+              "ok": true,
+              "title": "ManagerSettings lifecycleManagers",
+              "kind": "manager",
+              "settingId": null,
+              "managerId": "settingsLifecycle"
+            },
+            "markers": true,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"settingsLifecycle-preview\"]"
+            },
+            "toast": true,
+            "ok": true
+          },
+          "second": {
+            "pick": {
+              "ok": true,
+              "title": "unavailableFuture server module shellManagers",
+              "kind": "unavailable",
+              "settingId": null,
+              "managerId": "serverShell"
+            },
+            "markers": false,
+            "action": {
+              "ok": true,
+              "sel": "[data-ca-act=\"server-deferred\"]"
+            },
+            "toast": true,
+            "ok": true
+          }
+        },
+        "packet_probes": {
+          "ok": true,
+          "probes": {
+            "installations": {
+              "ok": true,
+              "detail": {
+                "hasInstallUI": true,
+                "selectCount": 1,
+                "panelHeads": [
+                  "Host / environment installations",
+                  "Free Models \u2014 six auth routes"
+                ],
+                "hasAnthropic": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerProvidersManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "providers"
+              }
+            },
+            "sound_preview": {
+              "ok": true,
+              "skipped": true
+            },
+            "import_rollback": {
+              "ok": true,
+              "detail": {
+                "preview": true,
+                "rollback": true,
+                "phase": "Settings lifecycle rollback receipt: restored previous demo snapshot (simulated)",
+                "manager": true
+              }
+            },
+            "server_shell": {
+              "ok": true,
+              "detail": {
+                "hasDeferred": true,
+                "card": true,
+                "ack": true
+              }
+            }
+          }
+        },
+        "spellcheck": {
+          "ok": true
+        },
+        "theme": {
+          "ok": true,
+          "mid": "glass-dark"
+        },
+        "motion": {
+          "ok": true,
+          "reduced": true,
+          "restored": true
+        },
+        "width": {
+          "ok": true,
+          "squeezed": false
+        },
+        "console": {
+          "ok": true,
+          "errors": [],
+          "cdp": []
+        }
+      },
+      "ok": true
+    }
+  ],
+  "failures": [],
+  "mode": "playwright-sync",
+  "finished": 1786497091.441704
+}

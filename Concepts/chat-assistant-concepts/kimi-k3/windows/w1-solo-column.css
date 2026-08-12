@@ -195,3 +195,22 @@
 [data-k3-window="w1"]:has(.w1-drawer.is-pinned) .w1-scrim {
   display: none !important;
 }
+
+/* ---- packet additions: dock tabs [Chats · Artifacts] + artifact pane ------ */
+.w1-dock-tabs { display: flex; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0; }
+.w1-dock-tab {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 8px; border: 0; border-radius: var(--radius-sm, 6px);
+  background: none; cursor: pointer; font: inherit;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+.w1-dock-tab:hover { background: var(--accent-soft); color: var(--text); }
+.w1-dock-tab.is-active { background: var(--accent-soft); color: var(--text); font-weight: 600; }
+.w1-dock-tab-ic { display: inline-flex; }
+.w1-dock-tab-ic svg { width: 13px; height: 13px; }
+.w1-dock-tab-label { white-space: nowrap; }
+.w1-dock-pane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.w1-dock-pane[hidden] { display: none; }
+.w1-dock-artifacts { overflow: auto; }
+.w1-dock-artifacts .k3aw-surface, .w1-dock-artifacts [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+html[data-motion="reduced"] .w1-dock-tab { transition: none; }

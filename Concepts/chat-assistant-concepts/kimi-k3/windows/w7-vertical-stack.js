@@ -92,6 +92,14 @@
       historyEl.classList.add('w7-chats-history');
       chatsBandBody.appendChild(historyEl);
 
+      // ops band (k3-acc): compact operational conflicts — leads the stack
+      var opsBand = el('div', 'k3-acc w7-band w7-band-ops');
+      var opsBandIn = el('div', 'k3-acc-in');
+      var opsBandBody = el('div', 'w7-band-body');
+      opsBandIn.appendChild(opsBandBody);
+      opsBand.appendChild(opsBandIn);
+      main.appendChild(opsBand);
+
       // goal band (k3-acc): open only when a goal surface exists
       var goalBand = el('div', 'k3-acc w7-band w7-band-goal');
       var goalBandIn = el('div', 'k3-acc-in');
@@ -104,9 +112,59 @@
       var todoBand = el('div', 'k3-acc w7-band w7-band-todo');
       var todoBandIn = el('div', 'k3-acc-in');
       var todoBandBody = el('div', 'w7-band-body');
+      todoBandBody.className = 'w7-band-body';
       todoBandIn.appendChild(todoBandBody);
       todoBand.appendChild(todoBandIn);
       main.appendChild(todoBand);
+
+      // capacity + crew bands (k3-acc): forecast / crew roster
+      var capBand = el('div', 'k3-acc w7-band w7-band-capacity');
+      var capBandIn = el('div', 'k3-acc-in');
+      var capBandBody = el('div', 'w7-band-body');
+      capBandIn.appendChild(capBandBody);
+      capBand.appendChild(capBandIn);
+      main.appendChild(capBand);
+
+      var crewBand = el('div', 'k3-acc w7-band w7-band-crew');
+      var crewBandIn = el('div', 'k3-acc-in');
+      var crewBandBody = el('div', 'w7-band-body');
+      crewBandIn.appendChild(crewBandBody);
+      crewBand.appendChild(crewBandIn);
+      main.appendChild(crewBand);
+
+      // Artifact bay: w7's zero-side-column answer to the artifact workspace —
+      // a full-width in-flow snap band (the packet's "a stack" approach) between
+      // the work bands and the transcript. Collapsible; capped so the
+      // transcript keeps a 180px floor. Header (toggle) always visible when an
+      // artifact is open; the shared surface node is reparented, never cloned.
+      var artBay = el('div', 'w7-band w7-band-artbay');
+      artBay.setAttribute('data-testid', 'w7-artbay');
+      var artHead = el('div', 'w7-artbay-head');
+      var artToggle = el('button', 'w7-artbay-toggle');
+      artToggle.type = 'button';
+      artToggle.setAttribute('aria-expanded', 'true');
+      var artToggleText = el('span', 'w7-artbay-toggle-text', 'Artifact');
+      var artToggleChev = el('span', 'w7-artbay-toggle-chev');
+      artToggleChev.appendChild(icon('chevron-down'));
+      artToggle.appendChild(artToggleText);
+      artToggle.appendChild(artToggleChev);
+      var artClose = el('button', 'k3-icon-btn w7-artbay-close');
+      artClose.type = 'button';
+      artClose.setAttribute('aria-label', 'Close artifact');
+      artClose.title = 'Close artifact';
+      artClose.appendChild(icon('close'));
+      artHead.appendChild(artToggle);
+      artHead.appendChild(artClose);
+      var artAcc = el('div', 'k3-acc w7-artbay-acc is-open');
+      var artAccIn = el('div', 'k3-acc-in');
+      var artBody = el('div', 'w7-artbay-body');
+      artAccIn.appendChild(artBody);
+      artAcc.appendChild(artAccIn);
+      artBay.appendChild(artHead);
+      artBay.appendChild(artAcc);
+      artBay.hidden = true;
+      main.appendChild(artBay);
+      var artSurface = window.K3ArtifactWS ? window.K3ArtifactWS.surface(ctx) : null;
 
       var threadSlot = el('div', 'w7-thread');
       threadSlot.setAttribute('data-k3-slot', 'thread');
@@ -127,6 +185,22 @@
       function hasTodo(tid) {
         var t = tid ? data.thread(tid) : null;
         return !!(t && t.todo && arr(t.todo.items).length);
+      }
+      function hasOps(tid) {
+        if (!tid || !window.K3Work || !window.K3Work.opsSummary) return false;
+        var s = window.K3Work.opsSummary(tid);
+        return !!(s && arr(s.conflicts).filter(function (c) { return c.state !== 'resolved'; }).length);
+      }
+      function hasCapacity(tid) {
+        var t = tid ? data.thread(tid) : null;
+        return !!(t && t.capacityForecast);
+      }
+      function hasCrew(tid) {
+        var t = tid ? data.thread(tid) : null;
+        return !!(t && t.crew);
+      }
+      function artOpen() {
+        return currentTid ? store.get('artifactWs.' + currentTid + '.open', false) === true : false;
       }
 
       /* ---- Chats band (history) ----------------------------------------- */
@@ -157,30 +231,44 @@
         chatsPin.appendChild(icon(pinned ? 'pin-off' : 'pin'));
       }
       chatsToggle.addEventListener('click', function () {
-        if (!currentTid) {
-          // no active thread yet: flip a transient local-only state
-          currentTid = store.get('activeThreadId', null);
-        }
+        if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return; // never write surfaceView.null.*
         store.set('surfaceView.' + currentTid + '.w7ChatsOpen', !chatsOpen());
       });
       chatsPin.addEventListener('click', function () {
         if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return;
         store.set('surfaceView.' + currentTid + '.w7HistoryPinned', !chatsPinned());
       });
 
       /* ---- bands --------------------------------------------------------- */
+      var opsNode = null, capNode = null, crewNode = null;
       function unmountBands() {
-        if (goalNode) { try { if (goalNode.unmount) goalNode.unmount(); } catch (e) { /* ignore */ } }
-        if (todoNode) { try { if (todoNode.unmount) todoNode.unmount(); } catch (e) { /* ignore */ } }
+        [goalNode, todoNode, opsNode, capNode, crewNode].forEach(function (n) {
+          if (n) { try { if (n.unmount) n.unmount(); } catch (e) { /* ignore */ } }
+        });
         goalNode = null;
         todoNode = null;
+        opsNode = null;
+        capNode = null;
+        crewNode = null;
         goalBandBody.innerHTML = '';
         todoBandBody.innerHTML = '';
+        opsBandBody.innerHTML = '';
+        capBandBody.innerHTML = '';
+        crewBandBody.innerHTML = '';
       }
 
       function rebuild() {
         unmountBands();
         currentTid = store.get('activeThreadId', null);
+
+        var o = hasOps(currentTid);
+        if (o && kit.opsSurface) {
+          opsNode = kit.opsSurface(ctx, currentTid);
+          if (opsNode) opsBandBody.appendChild(opsNode);
+        }
+        opsBand.classList.toggle('is-open', !!(opsNode && o));
 
         var g = hasGoal(currentTid);
         if (g) {
@@ -196,20 +284,64 @@
         }
         todoBand.classList.toggle('is-open', !!(todoNode && t));
 
+        var cp = hasCapacity(currentTid);
+        if (cp && kit.capacitySurface) {
+          capNode = kit.capacitySurface(ctx, currentTid);
+          if (capNode) capBandBody.appendChild(capNode);
+        }
+        capBand.classList.toggle('is-open', !!(capNode && cp));
+
+        var cw = hasCrew(currentTid);
+        if (cw && kit.crewSurface) {
+          crewNode = kit.crewSurface(ctx, currentTid);
+          if (crewNode) crewBandBody.appendChild(crewNode);
+        }
+        crewBand.classList.toggle('is-open', !!(crewNode && cw));
+
+        paintArtBay();
         paintChats();
       }
 
       function refresh() {
         if (unmounted) return;
         if (!currentTid) { rebuild(); return; }
-        var g = hasGoal(currentTid);
-        var t = hasTodo(currentTid);
         // rebuild only when a band's presence flips; otherwise the surfaces
         // are already live and self-updating.
-        var gFlip = g !== !!goalNode;
-        var tFlip = t !== !!todoNode;
-        if (gFlip || tFlip) rebuild();
+        if (hasGoal(currentTid) !== !!goalNode ||
+            hasTodo(currentTid) !== !!todoNode ||
+            hasOps(currentTid) !== !!opsNode ||
+            hasCapacity(currentTid) !== !!capNode ||
+            hasCrew(currentTid) !== !!crewNode) rebuild();
       }
+
+      /* ---- artifact bay ---------------------------------------------------- */
+      function paintArtBay() {
+        var open = artOpen();
+        artBay.hidden = !open;
+        if (!open || !artSurface) return;
+        var t = data.thread(currentTid);
+        var ws = store.get('artifactWs.' + currentTid, null);
+        var active = ws && ws.activeId;
+        var title = 'Artifact';
+        if (t && active) {
+          arr(t.artifacts).forEach(function (a) { if (a.id === active) title = a.title || a.id; });
+        }
+        artToggleText.textContent = title;
+        var collapsed = store.get('surfaceView.' + currentTid + '.w7ArtBayCollapsed', false) === true;
+        artAcc.classList.toggle('is-open', !collapsed);
+        artToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        if (artSurface.parentNode !== artBody) artBody.appendChild(artSurface);
+      }
+      artToggle.addEventListener('click', function () {
+        if (!currentTid) return;
+        store.set('surfaceView.' + currentTid + '.w7ArtBayCollapsed',
+          !(store.get('surfaceView.' + currentTid + '.w7ArtBayCollapsed', false)));
+        paintArtBay(); // surfaceView subs feed paintChats only; repaint the bay directly
+      });
+      artClose.addEventListener('click', function () {
+        if (currentTid && window.K3ArtifactWS) window.K3ArtifactWS.close(ctx, currentTid);
+      });
+      disposers.push(store.subscribe('artifactWs', paintArtBay));
 
       /* ---- wiring --------------------------------------------------------- */
       disposers.push(store.subscribe('activeThreadId', rebuild));
@@ -218,7 +350,10 @@
       function onData(evt) {
         if (!evt) return;
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
+        else if (evt.type === 'artifact-ws-changed') paintArtBay();
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });

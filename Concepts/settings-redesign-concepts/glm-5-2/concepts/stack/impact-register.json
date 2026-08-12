@@ -1,0 +1,816 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-03-stack",
+  "model": "GLM-5.2",
+  "concept_title": "03 Stack — single-surface progressive disclosure (expand-in-place + push/pop FLIP depth)",
+  "design_contract_summary": "Settings Home is ONE vertical stack of expandable destination rows; search is the HEAD of the stack; selecting a row expands it IN PLACE (push/pop FLIP depth) rather than navigating away; notices sit at the head; each expanded destination hosts its subcategory subnav + setting rows + inline manager surfaces; the four C3 kinds (Skills/Plugins/Tools/Commands) are demonstrated distinctly inside the shared Skills manager plus a dedicated Commands & Shortcuts manager; core (Home/Search/Workspace/Provider/installations/ordinary row grammar) is demonstrated; sibling families are reachable via shared row grammar.",
+  "plan_owner_impacts": [
+    {
+      "impact_id": "imp-plan-001",
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "gui_related": true,
+      "requirement": "Settings workspace is a single expandable stack, not a category modal/bloom; selecting a destination expands it in place with push/pop FLIP depth and a sticky in-row subnav.",
+      "concept_behavior": "Destination rows (.st-item) expand to reveal body with subcategory pills (.st-subnav sticky) + setting sections + inline manager; only one destination expands its full manager at a time; collapse-all returns to stack top.",
+      "supersedes_or_conflicts_with": ["legacy one-category bloom modal", "category filter chips", "right-rail detail pane split"],
+      "settings_ids": [],
+      "command_ids_existing": ["catalog.settings_bloom_open"],
+      "command_candidates_not_minted": ["cmd.settings.expand", "cmd.settings.collapse", "cmd.settings.collapse_all"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-002",
+      "owner_doc": "Plans/FileManager.md",
+      "gui_related": true,
+      "requirement": "File Manager/Editor demonstrates tree (virtualized/lazy), workspace-only drag/drop with FileSafe enforcement, hidden/ignored (.gitignore + globs), large-file threshold hex preview, tabs/split groups, changed-on-disk (reload/keep/compare), recovery + transient/unavailable reasons.",
+      "concept_behavior": "Inline file-manager surface inside the expanded 'Code & Execution' destination: virtualized tree, drag/drop constrained to workspace roots, .gitignore-aware ignore rows, large-file row flips to hex preview above code.editing.large-file-threshold, changed-on-disk badge offers reload/keep/compare, transient/unavailable shown via AvailabilityReason.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["code.editing.large-file-threshold", "code.editing.max-file-size-mb"],
+      "command_ids_existing": ["catalog.file_open", "catalog.file_new_file", "catalog.file_rename", "catalog.file_delete", "catalog.file_expand_capped", "catalog.editor_close_tab"],
+      "command_candidates_not_minted": ["cmd.file_manager.tree_reveal", "cmd.file_manager.changed_on_disk.resolve"],
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-plan-003",
+      "owner_doc": "Plans/LSPSupport.md",
+      "gui_related": true,
+      "requirement": "LSP manager: registry/catalog/provenance, startup mode, requested/effective attachment, formatting-ownership conflicts, restart/logs, remote degradation.",
+      "concept_behavior": "LSP catalog rows show provenance (built-in/catalog/custom), startup mode, requested vs effective attachment (inspector), and a formatting-ownership conflict badge when a server claims formatDocument while a Formatter also owns the language; restart + open-logs actions; remote-LSP degraded state.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["code.editing.lsp-enabled", "code.editing.lsp-server-catalog", "code.editing.lsp-custom-servers", "code.editing.lsp-host-attachment", "code.editing.lsp-auto-restart", "code.editing.lsp-restart", "code.editing.lsp-max-memory", "code.editing.lsp-max-cpu"],
+      "command_ids_existing": ["catalog.lsp_restart_server", "catalog.lsp_format_document", "catalog.lsp_format_selection"],
+      "command_candidates_not_minted": ["cmd.lsp.server.add", "cmd.lsp.server.open_logs", "cmd.lsp.formatting_ownership.resolve"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-004",
+      "owner_doc": "Plans/Formatters_System.md",
+      "gui_related": true,
+      "requirement": "Formatters: global enable, built-in/custom table, detected/not-found/disabled, command/env/ext, add/remove/reset, Global/Project scope, health+test, single-ownership-per-language conflict resolution.",
+      "concept_behavior": "Formatter table with per-language owner, detected/not-found/disabled health, command/env/ext editor, Global/Project scope switch; when two formatters claim a language, a single-ownership resolve-conflict flow picks the effective owner and demotes the other (not a silent dual-run).",
+      "supersedes_or_conflicts_with": ["dual-formatter silent fallback"],
+      "settings_ids": ["code.editing.formatters-enabled", "code.editing.formatter-catalog", "code.editing.formatter-custom"],
+      "command_ids_existing": [],
+      "command_candidates_not_minted": ["cmd.formatter.add", "cmd.formatter.test", "cmd.formatter.remove", "cmd.formatter.reset", "cmd.formatter.resolve_conflict", "cmd.formatter.scope.set"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-005",
+      "owner_doc": "Plans/Commands_System.md",
+      "gui_related": true,
+      "requirement": "Commands & Shortcuts dedicated manager: custom command lifecycle, parameters/includes, shell-safety, dry-run preview (NEVER sends to an agent), validation, shortcut search/conflicts/remap/reset/import/export/cheat-sheet.",
+      "concept_behavior": "Dedicated Commands & Shortcuts destination: CommandEditor with parameters/includes/shell-safety gate; Dry-run button renders a preview receipt and is HARD-GATED so it can never dispatch to an agent; shortcut recorder + conflict detection + remap + reset + import/export + cheat-sheet.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["extensions.commands.custom-commands", "extensions.commands.command-mode", "extensions.commands.command-scope", "extensions.commands.command-permissions", "extensions.commands.override-builtin", "extensions.commands.keyboard-shortcuts", "extensions.commands.conflict-handling", "extensions.commands.reset-shortcuts", "extensions.commands.backup-shortcuts", "extensions.commands.search-shortcuts"],
+      "command_ids_existing": ["catalog.settings_agent_rules_dry_method_default_guard_set"],
+      "command_candidates_not_minted": ["cmd.commands.custom.create", "cmd.commands.custom.update", "cmd.commands.custom.delete", "cmd.commands.custom.dry_run", "cmd.shortcuts.bind", "cmd.shortcuts.remap", "cmd.shortcuts.reset", "cmd.shortcuts.import", "cmd.shortcuts.export", "cmd.shortcuts.conflict.resolve"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-006",
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "gui_related": false,
+      "requirement": "Register provisional command families for C3 deep flows; reuse existing canonical IDs (lsp_restart_server, testing_capability_policy_set, catalog install/update/remove) and retire cmd.settings.bloom.open.",
+      "concept_behavior": "Command-delta register flags reuse vs alias vs new_candidate per family; no concept-only local state may masquerade as production wiring.",
+      "supersedes_or_conflicts_with": ["catalog.settings_bloom_open (retire, alias-only)"],
+      "settings_ids": [],
+      "command_ids_existing": ["catalog.lsp_restart_server", "catalog.testing_capability_policy_set", "catalog.testing_visibility_policy_set", "catalog.catalog_install_item", "catalog.catalog_update_item", "catalog.catalog_remove_item", "catalog.terminal_open", "catalog.file_open"],
+      "command_candidates_not_minted": [],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-007",
+      "owner_doc": "Plans/MCP_Integration.md",
+      "gui_related": true,
+      "requirement": "MCP manager: transport/scope/exposed-tools/approval/reconnect/logs.",
+      "concept_behavior": "MCP resource rows expose transport (stdio/sse/remote-url), scope, exposed-tools-of-total, approval duration, last-contact, reconnect-on-failure with a visible result receipt, and a logs viewer; lazy-exposure loads tool detail only on expand.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["system.mcp.server-list", "system.mcp.transport", "system.mcp.server-scope", "system.mcp.lazy-exposure", "system.mcp.timeout", "system.mcp.health-status", "system.mcp.oauth-refresh"],
+      "command_ids_existing": ["catalog.remote_reconnect"],
+      "command_candidates_not_minted": ["cmd.mcp.server.add", "cmd.mcp.server.restart", "cmd.mcp.server.reconnect", "cmd.mcp.server.approve", "cmd.mcp.server.open_logs"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-008",
+      "owner_doc": "Plans/Skills_System.md",
+      "gui_related": true,
+      "requirement": "Skills manager demonstrates catalog/provenance/trust, install/update/compatibility/unload, project-enablement, effective-availability, policy/risk — and HOSTS the distinct Plugins/Tools/Commands-as-kinds inside the same shared grammar.",
+      "concept_behavior": "Shared Skills manager surface lists Skills and ALSO a distinct kind axis for Plugins/Tools/Commands-as-kinds: four distinct kinds, each with its own lifecycle and info badges, but identical row grammar (ResourceList/Card/Detail). Skills carry provenance/trust/compatibility, project enablement, auto-invocation policy.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["extensions.skills.your-skills", "extensions.skills.skill-on-off", "extensions.skills.discovery", "extensions.skills.auto-invocation", "extensions.skills.auto-enable-new", "extensions.skills.validate", "extensions.skills.permissions", "extensions.skills.projection"],
+      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_update_item", "catalog.catalog_remove_item"],
+      "command_candidates_not_minted": ["cmd.skill.enable", "cmd.skill.disable", "cmd.skill.update", "cmd.skill.validate"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-009",
+      "owner_doc": "Plans/Plugins_System.md",
+      "gui_related": true,
+      "requirement": "Plugins demonstrated as a DISTINCT kind inside the Skills manager (distinct lifecycle: package install, hook-timeout, tool-override) — not flattened into Skills.",
+      "concept_behavior": "Plugin kind rows surface package list, hook-timeout, tool-override (plugins may replace built-in tools), add-from-catalog vs add-local provenance, remove; lifecycle states distinct from skill enablement.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": ["extensions.plugins.plugin-on-off", "extensions.plugins.add-from-catalog", "extensions.plugins.add-local", "extensions.plugins.remove", "extensions.plugins.packages", "extensions.plugins.hook-timeout", "extensions.plugins.tool-override", "extensions.plugins.auto-enable-new"],
+      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_remove_item"],
+      "command_candidates_not_minted": ["cmd.plugin.enable", "cmd.plugin.disable", "cmd.plugin.update"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-010",
+      "owner_doc": "Plans/Tools.md",
+      "gui_related": true,
+      "requirement": "Tools carry the full 5 lifecycle states (installed / project-enabled / currently-available / selected-for-turn / actually-invoked) and are demonstrated as a DISTINCT kind inside the Skills manager.",
+      "concept_behavior": "Tool kind rows render a 5-state ladder with requested/effective inspector: a tool can be installed but not project-enabled, enabled but currently-unavailable, available but not selected-for-turn, selected but not yet invoked; effective-availability is the projection.",
+      "supersedes_or_conflicts_with": ["single enabled/disabled boolean for tools"],
+      "settings_ids": ["system.mcp.tool-toggle", "safety.rules.per-tool-permissions", "safety.rules.default-tool-permission", "personas.tools.tool-posture", "ai.usage.max-tool-rounds"],
+      "command_ids_existing": [],
+      "command_candidates_not_minted": ["cmd.tool.select_for_turn", "cmd.tool.enable", "cmd.tool.disable", "cmd.tool.invoke_preview"],
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-plan-011",
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "gui_related": true,
+      "requirement": "Testing & Debug: per-capability Auto/On/Off grid; built-in browser is PM-native Browser Program (NO Playwright terminology); simulator/emulator/device may be unavailable; DAP debugger; capture/artifacts.",
+      "concept_behavior": "Testing capability grid renders Auto/On/Off per capability (unit/integration, built-in browser [PM-native], desktop/native, hot-reload, simulator/emulator/device, API/database, console/network, perf/sec/a11y, DAP debugger, persistent eval, capture/artifacts); unavailable capabilities surface AvailabilityReason, not a hard error.",
+      "supersedes_or_conflicts_with": ["Playwright terminology / external browser-driver coupling"],
+      "settings_ids": ["planning.testing.capability-policy", "planning.testing.cap-built-in-browser", "planning.testing.cap-simulator", "planning.testing.cap-physical-device", "planning.testing.cap-desktop-gui", "planning.testing.cap-hot-reload", "planning.testing.cap-accessibility", "planning.testing.cap-api-contract", "planning.testing.cap-performance", "planning.testing.cap-security", "planning.testing.test-visibility"],
+      "command_ids_existing": ["catalog.testing_capability_policy_set", "catalog.testing_visibility_policy_set", "catalog.testing_open_panel", "catalog.testing_run", "catalog.testing_cancel_run"],
+      "command_candidates_not_minted": ["cmd.testing.capability.set"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-012",
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "gui_related": false,
+      "requirement": "Installation lifecycle (7 fixtures) and CLI-owned vs PM-direct OAuth boundary; provider installation cards requested/effective.",
+      "concept_behavior": "Provider/Account/Model/Installation manager inside the expanded 'AI Brains' destination shows all 7 installation fixtures (found+ready, found+not-signed-in, multi-install shadowed, unknown-owner manual-only, explicit install, update-available-ask, update-scheduled-idle + verify-failed-rollback); OAuth boundary: CLI-owned OAuth profiles vs PM-direct OAuth vs API-key vs OpenCode-external are labeled distinctly.",
+      "supersedes_or_conflicts_with": [],
+      "settings_ids": [],
+      "command_ids_existing": ["catalog.provider_switch_route", "catalog.account_select_profile", "catalog.health_provider_setup_open", "catalog.onboarding_provider_setup_open"],
+      "command_candidates_not_minted": ["cmd.provider.installation.scan", "cmd.provider.installation.select", "cmd.provider.installation.verify", "cmd.provider.installation.rollback"],
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-plan-013",
+      "owner_doc": "Plans/settings_inventory.json",
+      "gui_related": false,
+      "requirement": "Settings inventory must expose the C3 families under code/extensions/system categories with explicit state per row; inventory must not carry stale regular/yolo values or invalid values.",
+      "concept_behavior": "Stack consumes the inventory category/subgroup model (code.terminal, code.editing, extensions.skills/plugins/commands, system.mcp, planning.testing); each row carries explicit Default/Recommended/Inherited/Auto/Not-configured/Managed/Custom/Unavailable/Effective-differs state — never blank-as-state.",
+      "supersedes_or_conflicts_with": ["stale regular/yolo mode coupling", "blank-field-as-state convention", "invalid inventory values"],
+      "settings_ids": ["code.editing.lsp-enabled", "code.editing.formatters-enabled", "extensions.commands.command-mode", "planning.testing.capability-policy"],
+      "command_ids_existing": [],
+      "command_candidates_not_minted": [],
+      "uncertainty": "low"
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "impact_id": "imp-inv-001",
+      "settings_id": "code.editing.formatter-catalog",
+      "change": "Add per-language owner + health (detected/not-found/disabled) + Global/Project scope; required for single-ownership conflict resolution.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-002",
+      "settings_id": "code.editing.formatter-custom",
+      "change": "Custom formatter row must carry command/env/ext + test-result + scope; reuse as the add/remove/reset target.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-003",
+      "settings_id": "code.editing.lsp-host-attachment",
+      "change": "Must model requested vs effective attachment (RequestedEffectiveInspector) and formatting-ownership flag.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-004",
+      "settings_id": "code.terminal.allowed-profiles",
+      "change": "Profiles list with env-inherit (minimal/full) + font-fallback; required for terminal live preview.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-005",
+      "settings_id": "extensions.commands.command-mode",
+      "change": "Retire stale regular/yolo coupling; replace with explicit Freedom-level (Safe/Normal/Unrestricted) + shell-safety gate + per-command permissions override.",
+      "supersedes": "stale regular/yolo mode coupling",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-inv-006",
+      "settings_id": "extensions.commands.conflict-handling",
+      "change": "Shortcut conflict policy drives cmd.shortcuts.conflict.resolve; row must show the colliding command + remap/reset affordance.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-007",
+      "settings_id": "system.mcp.tool-toggle",
+      "change": "Single-tool toggle must reflect the 5 tool lifecycle states, not a boolean: enabled != available != selected != invoked.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-inv-008",
+      "settings_id": "planning.testing.capability-policy",
+      "change": "Per-capability Auto/On/Off value (tri-state) per capability row; built-in browser = PM-native Browser Program.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-009",
+      "settings_id": "planning.testing.cap-simulator",
+      "change": "Must support Unavailable state (simulator/emulator/device may be absent) surfaced via AvailabilityReason.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-010",
+      "settings_id": "extensions.skills.your-skills",
+      "change": "Skill list is the shared host for four distinct kinds (skill/plugin/tool/command-as-kind); kind axis must be queryable.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-inv-011",
+      "settings_id": "code.editing.lsp-restart",
+      "change": "Action setting (one-shot), not a persistent value; must be classified as a command, not a stored preference.",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "impact_id": "imp-sch-001",
+      "field": "settings_row.state",
+      "change": "Enum must include Default/Recommended/Inherited/Auto/Not-configured/Managed/Custom/Unavailable/Effective-differs; blank is never a state.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-sch-002",
+      "field": "settings_row.exposure_level",
+      "change": "Standard/Advanced/Expert-risky/Managed-read-only/Diagnostic/Unavailable exposure filter drives which rows render in the expanded destination.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-sch-003",
+      "field": "settings_row.kind",
+      "change": "Distinguish persistent_value vs one_shot_action vs manager_navigation so lsp-restart / dry-run / open-manager are not stored as preferences.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-sch-004",
+      "field": "manager_resource.lifecycle_state",
+      "change": "Tool kind requires a 5-value ladder (installed/project-enabled/currently-available/selected-for-turn/actually-invoked); skill/plugin use the subset that applies.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-sch-005",
+      "field": "formatter.ownership",
+      "change": "Per-language single-owner constraint: effective_owner + demoted_owners[]; format-document command resolves to exactly one owner.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-sch-006",
+      "field": "testing.capability_policy",
+      "change": "Tri-state Auto/On/Off per capability with effective_resolution (Auto resolves to On/Off given environment).",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-sch-007",
+      "field": "command.dry_run_gate",
+      "change": "Schema-level invariant: dry-run commands carry dispatch_target=preview_only and CANNOT carry an agent recipient; enforced at validation.",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "impact_id": "imp-cmd-001",
+      "candidate": "cmd.lsp.server.restart",
+      "existing": "catalog.lsp_restart_server",
+      "disposition": "reuse_existing",
+      "evidence": "catalog.lsp_restart_server present in UI_Command_Catalog; identical semantics (restart language server).",
+      "distinguishes": "settings surface invokes the canonical owner; no new ID minted.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-002",
+      "candidate": "cmd.lsp.server.add",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No catalog.lsp_server_add exists; custom-server registration is a settings mutation.",
+      "distinguishes": "Persistent registration (add custom LSP) vs one-shot restart.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-003",
+      "candidate": "cmd.formatter.add / cmd.formatter.test / cmd.formatter.resolve_conflict",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No catalog.formatter_* exists; formatter table CRUD + single-ownership resolution are settings-owned.",
+      "distinguishes": "resolve_conflict is a persistent ownership mutation; test is one-shot health probe.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-004",
+      "candidate": "lsp.format_document",
+      "existing": "catalog.lsp_format_document",
+      "disposition": "conflict",
+      "evidence": "catalog.lsp_format_document exists but Formatters_System also claims format ownership per language; without resolution two owners race.",
+      "distinguishes": "Single-ownership-per-language resolve flow must designate the effective owner before format dispatch; formatter wins by default when a custom formatter owns the language.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-cmd-005",
+      "candidate": "cmd.commands.custom.dry_run",
+      "existing": "catalog.settings_agent_rules_dry_method_default_guard_set",
+      "disposition": "alias",
+      "evidence": "Existing dry-method default-guard setting is related; dry-run preview is a distinct one-shot action that MUST NEVER dispatch to an agent.",
+      "distinguishes": "Hard validation gate: payload carries dispatch_target=preview_only, no agent recipient; receipt is a preview, not an invocation.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-006",
+      "candidate": "cmd.commands.custom.create / update / delete",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No catalog.commands_* custom-command lifecycle exists.",
+      "distinguishes": "Persistent mutation with parameters/includes + shell-safety validation.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-007",
+      "candidate": "cmd.shortcuts.bind / remap / reset / import / export",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No catalog.shortcuts_* exists; reset/export may alias extensions.commands.reset-shortcuts / backup-shortcuts as settings.",
+      "distinguishes": "bind/remap are persistent; conflict.resolve is a guarded mutation that rejects clashing combos.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-008",
+      "candidate": "cmd.mcp.server.reconnect",
+      "existing": "catalog.remote_reconnect",
+      "disposition": "alias",
+      "evidence": "catalog.remote_reconnect covers remote reconnect; MCP server reconnect should reuse the canonical reconnect family, not mint a parallel verb.",
+      "distinguishes": "MCP reconnect carries transport-aware receipt (stdio vs remote-url) and exposed-tools re-probe.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-cmd-009",
+      "candidate": "cmd.mcp.server.add / restart",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No catalog.mcp_* add/restart exists.",
+      "distinguishes": "add is persistent server registration with transport; restart is one-shot.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-010",
+      "candidate": "skill/plugin/tool install / update / remove",
+      "existing": "catalog.catalog_install_item, catalog.catalog_update_item, catalog.catalog_remove_item, catalog.install_item, catalog.update_item, catalog.remove_item",
+      "disposition": "reuse_existing",
+      "evidence": "Canonical catalog item lifecycle verbs already exist; Skills/Plugins/Tools install/update/remove must reuse them with a kind discriminator, not mint per-kind verbs.",
+      "distinguishes": "kind=skill|plugin|tool param reuses one verb family; enable/disable/select-for-turn are the new distinct verbs.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-011",
+      "candidate": "cmd.tool.select_for_turn",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No existing verb for the selected-for-turn step of the 5-state tool ladder.",
+      "distinguishes": "Transient per-turn selection (not persistent enable); idempotent within a turn.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-cmd-012",
+      "candidate": "cmd.skill.enable / cmd.plugin.enable / cmd.tool.enable",
+      "existing": null,
+      "disposition": "new_candidate",
+      "evidence": "No per-kind enable verb; enable maps to distinct lifecycle transitions (skill project-enablement vs plugin on-off vs tool currently-available).",
+      "distinguishes": "Each kind has a distinct enable semantics; do not collapse into one.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-013",
+      "candidate": "cmd.testing.capability.set",
+      "existing": "catalog.testing_capability_policy_set, catalog.testing_visibility_policy_set",
+      "disposition": "reuse_existing",
+      "evidence": "Canonical capability/visibility policy verbs exist; per-capability Auto/On/Off grid reuses testing_capability_policy_set with a capability param.",
+      "distinguishes": "Tri-state value + capability key param; do not mint a per-capability verb.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-014",
+      "candidate": "cmd.settings.manager.open",
+      "existing": "catalog.settings_bloom_open",
+      "disposition": "supersede",
+      "evidence": "Bloom open is the legacy category-modal verb; Stack expands a destination in place, which is a different motion + state.",
+      "distinguishes": "manager.open targets a destination_id + expand; bloom.open targeted a modal chip; retire bloom, alias only if compatibility required.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-cmd-015",
+      "candidate": "terminal.open / file.open / editor.close_tab",
+      "existing": "catalog.terminal_open, catalog.file_open, catalog.editor_close_tab",
+      "disposition": "reuse_existing",
+      "evidence": "Canonical file/terminal/editor verbs exist; Stack's inline File Manager + Terminal surfaces reuse them.",
+      "distinguishes": "Navigation verb reused; only the embedding surface is new.",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "impact_id": "imp-wire-001",
+      "route": "formatter.resolve_conflict",
+      "rule": "Must trace ui_source -> command -> canonical_owner (Formatters_System) -> validation (single-owner-per-language) -> state mutation (effective_owner swap) -> event/receipt -> ui_projection (HealthSummary + demoted row) -> usage/diagnostic -> recovery/deeplink. See candidate-wiring-delta.json.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-wire-002",
+      "route": "commands.custom.dry_run",
+      "rule": "Hard gate at validation step: payload MUST carry dispatch_target=preview_only and no agent recipient; ObservableWork emits a preview receipt only. Never crosses the agent dispatch boundary.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-wire-003",
+      "route": "stack.expand (push/pop FLIP)",
+      "rule": "expanded-destination is model state (PM.state.active_destination_id + expanded_set), NOT DOM measurement; FLIP computes first/last geometry on the web demo only and must map to a property/layout animation in Slint.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-wire-004",
+      "route": "tool.select_for_turn",
+      "rule": "Transient per-turn mutation idempotent within a turn; projects to effective-availability (5-state ladder) and emits a selection receipt without invocation.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-wire-005",
+      "route": "mcp.server.reconnect",
+      "rule": "Reuses remote_reconnect semantics; emits transport-aware receipt + exposed-tools re-probe + health projection; failure surfaces AvailabilityReason + retry/deep-link.",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "impact_id": "imp-dry-001",
+      "component_role": "SettingsWorkspaceShell",
+      "used_by": "all destinations",
+      "reuse_note": "Stack renders the shell as a single vertical stack with expandable destination rows instead of a split rail; the shell contract (load one major surface, sticky subnav, deep-link) is unchanged.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-002",
+      "component_role": "SettingRow",
+      "used_by": "every C3 + core family",
+      "reuse_note": "Ordinary row grammar reused unchanged; nine-state chip + value source + exposure filter.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-003",
+      "component_role": "ManagerShell + ResourceList/Card/Detail",
+      "used_by": "File Manager, LSP, Formatters, Commands & Shortcuts, MCP, Skills/Plugins/Tools, Testing",
+      "reuse_note": "Shared manager grammar hosts the four C3 kinds with a kind discriminator; ResourceList/Card/Detail render each kind.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-004",
+      "component_role": "HealthSummary + Lsp/Formatter/ToolResource",
+      "used_by": "LSP, Formatters, Tools, MCP",
+      "reuse_note": "HealthSummary aggregates detected/not-found/disabled; Lsp/Formatter/ToolResource are the typed card variants.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-005",
+      "component_role": "CommandEditor + ShortcutRecorder",
+      "used_by": "Commands & Shortcuts",
+      "reuse_note": "CommandEditor carries parameters/includes/shell-safety + dry-run gate; ShortcutRecorder does conflict detection at capture time.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-006",
+      "component_role": "RequestedEffectiveInspector + AvailabilityReason",
+      "used_by": "LSP attachment, Tool 5-state, Provider requested/effective, MCP transport",
+      "reuse_note": "Requested/effective diff is the portable inspector; AvailabilityReason explains unavailable simulator/device/remote-LSP without a hard error.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-007",
+      "component_role": "ObservableOperation + ReceiptLink",
+      "used_by": "formatter.test, command.dry_run, mcp.reconnect, lsp.restart, tool.select_for_turn",
+      "reuse_note": "Every action surfaces an ObservableOperation + receipt; ReceiptLink deep-links back to the owning manager.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-008",
+      "component_role": "SettingsSearch + CategoryNavigation + SubcategoryScrollspy",
+      "used_by": "stack head + expanded destination body",
+      "reuse_note": "Search is the stack head; CategoryNavigation collapses to expandable rows; SubcategoryScrollspy becomes the sticky in-row subnav pills.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-dry-009",
+      "component_role": "SetupFlowLauncher + SettingsDestination + SettingsNotice",
+      "used_by": "Provider installation fixtures, recovery notices, formatter-not-found setup",
+      "reuse_note": "SetupFlowLauncher drives install/update/verify; SettingsDestination renders each expanded row; SettingsNotice sits at stack head.",
+      "gui_related": true
+    }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "impact_id": "imp-evt-001",
+      "event": "settings.destination.expanded",
+      "fields": "destination_id, expanded (bool), active_subcategory, source (user/search/deeplink)",
+      "storage": "session projection only (UI state), not a persistent setting.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-evt-002",
+      "event": "formatter.ownership.resolved",
+      "fields": "language, effective_owner, demoted_owners[], scope, receipt_id",
+      "storage": "persistent settings mutation + receipt.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-evt-003",
+      "event": "command.dry_run.previewed",
+      "fields": "command_id, preview_payload, dispatch_target=preview_only, agent_recipient=null",
+      "storage": "receipt only; invariant: never an agent dispatch event.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-evt-004",
+      "event": "tool.lifecycle.changed",
+      "fields": "tool_id, kind, from_state, to_state (one of 5), turn_id (for selected-for-turn)",
+      "storage": "lifecycle projection; selected-for-turn is transient per turn.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-evt-005",
+      "event": "mcp.server.reconnect.completed",
+      "fields": "server_id, transport, result, exposed_tools_count, last_contact",
+      "storage": "health projection + receipt.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-evt-006",
+      "event": "testing.capability.policy_changed",
+      "fields": "capability, value (Auto/On/Off), effective_resolution, scope",
+      "storage": "persistent settings mutation; Auto resolves at runtime.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-evt-007",
+      "storage_rule": "No SQLite / no Playwright terminology; events are append-only receipts over the existing settings/event store. PM-native Browser Program is the only browser-test execution surface.",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "impact_id": "imp-mig-001",
+      "retire": "cmd.settings.bloom.open / catalog.settings_bloom_open",
+      "reason": "Old chip/bloom category-modal architecture; Stack expands destinations in place. Preserve a compatibility alias only if an external deeplink still resolves bloom ids.",
+      "replacement": "cmd.settings.manager.open (expand destination_id in place).",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-mig-002",
+      "retire": "stale regular/yolo command-mode coupling",
+      "reason": "regular/yolo is stale and unsafe as a binary; replaced by explicit Freedom-level (Safe/Normal/Unrestricted) + shell-safety gate + per-command permissions.",
+      "replacement": "extensions.commands.command-mode (Freedom-level) + shell_safety gate.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-mig-003",
+      "retire": "legacy right-rail detail pane split",
+      "reason": "Stack is single-surface; no persistent right rail. Manager detail renders inline in the expanded destination.",
+      "replacement": "inline ManagerShell inside expanded destination body.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-mig-004",
+      "retire": "invalid inventory values (blank-as-state, dual-formatter silent fallback, boolean tool toggle)",
+      "reason": "Inventory must carry explicit nine-state rows; formatter ownership is single per language; tool availability is a 5-state ladder not a boolean.",
+      "replacement": "settings_row.state enum + formatter.ownership + manager_resource.lifecycle_state.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-mig-005",
+      "retire": "Playwright / external browser-driver terminology in testing",
+      "reason": "Built-in browser testing is the PM-native Browser Program only.",
+      "replacement": "planning.testing.cap-built-in-browser (PM-native Browser Program).",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "impact_id": "imp-slint-001",
+      "surface": "expand-in-place + push/pop FLIP",
+      "note": "FLIP (first/last/invert/play) is web-DOM idiom using getBoundingClientRect. The PORTABLE contract is the semantic state: active_destination_id + expanded_set + active_subcategory. Slint must map expand to a property/layout animation (height + opacity) driven by model state, with no DOM-measurement semantic state.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-slint-002",
+      "surface": "virtualized file tree",
+      "note": "Web demo may render a capped tree; production Slint tree must be virtualized/lazy (viewport-windowed nodes) with expand-capped semantics mapped from catalog.file_expand_capped. Tree state is model-owned.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-slint-003",
+      "surface": "terminal rows",
+      "note": "Terminal transcript must be virtualized (scrollback-limit rows retained, viewport-windowed render) with font+fallback + ANSI palette + opacity; not a DOM <pre> with infinite growth.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-slint-004",
+      "surface": "FLIP reorder of destination rows",
+      "note": "Push/pop depth is a layout/opacity animation on expand, not a DOM reflow measurement; reduced-motion reaches the same final expanded state instantly.",
+      "gui_related": true,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-slint-005",
+      "surface": "sticky in-row subnav (scrollspy replacement)",
+      "note": "Web IntersectionObserver scrollspy is replaced in Stack by a sticky subnav pill bar inside the expanded body; active pill is driven by scroll-offset/section-visibility model state, portable to Slint as a visibility/offset hook, not DOM measurement.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-slint-006",
+      "surface": "manager loading does not block workspace",
+      "note": "Each expanded destination loads its manager asynchronously; Slint must not block the Settings workspace shell while a manager resource list resolves.",
+      "gui_related": true,
+      "uncertainty": "low"
+    }
+  ],
+  "test_fixtures": [
+    {
+      "impact_id": "imp-fixture-001",
+      "fixture": "formatter single-ownership conflict",
+      "setup": "Two formatters (e.g. prettier + biome) both claim language=typescript; assert resolve-conflict designates exactly one effective owner and demotes the other.",
+      "assert": "format-document resolves to the effective owner; demoted row shows not-effective badge.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-002",
+      "fixture": "shfmt not-found",
+      "setup": "Custom formatter shfmt registered but binary not on PATH; health=not-found.",
+      "assert": "HealthSummary shows not-found + SetupFlowLauncher offers install; formatter.test returns a failure receipt.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-003",
+      "fixture": "shortcut conflict",
+      "setup": "User binds Cmd+Shift+P which collides with an existing command palette binding.",
+      "assert": "ShortcutRecorder detects conflict at capture time; conflict-handling policy offers remap/reset; no silent overwrite.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-004",
+      "fixture": "tool 5-state ladder",
+      "setup": "A tool that is installed, project-enabled, currently-available, selected-for-turn, but NOT yet invoked.",
+      "assert": "RequestedEffectiveInspector shows all five states; effective-availability projects to available; select-for-turn emits a selection receipt without invocation.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-005",
+      "fixture": "MCP reconnect-failed",
+      "setup": "Remote MCP server unreachable on reconnect; result=failed.",
+      "assert": "AvailabilityReason surfaces failure; reconnect receipt visible; retry/deep-link offered; lazy-exposure does not re-probe tools until reconnect succeeds.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-006",
+      "fixture": "simulator/emulator/device unavailable",
+      "setup": "planning.testing.cap-simulator = On but no simulator installed.",
+      "assert": "Capability row shows Unavailable via AvailabilityReason (not a hard error); Auto would resolve to Off.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-007",
+      "fixture": "command dry-run never sends to agent",
+      "setup": "User runs dry-run on a custom command that includes a shell include.",
+      "assert": "Preview receipt rendered; dispatch_target=preview_only; agent_recipient=null; no agent dispatch event emitted.",
+      "gui_related": false
+    },
+    {
+      "impact_id": "imp-fixture-008",
+      "fixture": "LSP formatting-ownership conflict",
+      "setup": "LSP server exposes formatDocument while a custom Formatter owns the language.",
+      "assert": "Conflict badge shown; resolve flow picks the formatter as effective owner; lsp.format_document routes to the formatter.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-009",
+      "fixture": "provider installation verify-failed-then-rollback",
+      "setup": "Installation fixture #8: verification failed, rollback succeeded.",
+      "assert": "InstallationCard shows verify-failed then rollback-complete; requested/effective provider returns to last-known-good.",
+      "gui_related": true
+    },
+    {
+      "impact_id": "imp-fixture-010",
+      "fixture": "deep-linked setting lands in correct expanded destination",
+      "setup": "Search result for 'formatter' deep-links into the expanded Code & Execution destination, editing subcategory, formatter row.",
+      "assert": "Destination expands, subnav active=editing, row focus-flashes; no bloom modal.",
+      "gui_related": true
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "impact_id": "imp-deferred-001",
+      "family": "Future Server Module Shell",
+      "named_canonical_owner": "future Plans/Server_Module.md (not yet authored)",
+      "insertion_contract": "Stack reserves an expandable destination whose body is a deferred shell; no backend state machine invented in this concept. Reaches production via shared ManagerShell + ResourceList grammar when the Server module is authored.",
+      "classification": "deferred_named_owner",
+      "gui_related": true,
+      "uncertainty": "high"
+    },
+    {
+      "impact_id": "imp-deferred-002",
+      "family": "Containers & Registries",
+      "named_canonical_owner": "Plans/Containers_Registry_and_Unraid.md (existing, sibling-owned by concept-04)",
+      "insertion_contract": "Reachable via shared row grammar in Stack; deep demo is concept-04. Stack demonstrates the shared tool-lifecycle grammar applies, not the container capability probes.",
+      "classification": "shared_grammar",
+      "gui_related": false,
+      "uncertainty": "low"
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "impact_id": "imp-q-001",
+      "question": "Should multiple destinations be allowed to expand simultaneously in the Stack, or strictly one-expanded-manager-at-a-time? Multi-expand improves scanability but weakens the push/pop depth metaphor.",
+      "gui_related": true,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-q-002",
+      "question": "When a formatter owns a language AND the LSP also exposes formatDocument, does the resolve flow default to the formatter unconditionally, or honor a per-project LSP-preference override? Needs Formatters_System + LSPSupport adjudication.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-q-003",
+      "question": "Should the tool selected-for-turn state persist across turns within a goal, or reset per turn? Affects the 5-state ladder projection and the receipt model.",
+      "gui_related": false,
+      "uncertainty": "medium"
+    },
+    {
+      "impact_id": "imp-q-004",
+      "question": "Is cmd.settings.manager.open a single canonical verb with a destination_id param, or should each manager have its own open verb (cmd.file_manager.open, cmd.lsp.open, etc.)? Affects alias discipline vs catalog compactness.",
+      "gui_related": false,
+      "uncertainty": "low"
+    },
+    {
+      "impact_id": "imp-q-005",
+      "question": "PM-native Browser Program capability probe: does its availability feed planning.testing.cap-built-in-browser Auto resolution, and what is the exact AvailabilityReason string when the Browser Program is not installed?",
+      "gui_related": false,
+      "uncertainty": "medium"
+    }
+  ]
+}

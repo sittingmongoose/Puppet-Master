@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "c4-ledger",
+  "model": "fable",
+  "concretized_families": [
+    {
+      "family": "StorageHealth",
+      "concretized_as": "Storage manager records: vault (mode/path), pressure (normal/elevated/critical with free-space + policy link), usage-by-class stacked bar + class records, retention classes with legal-hold pin, quarantine records, compaction/migration status records.",
+      "api_sketch": "StorageHealth { vault: {mode, path}, pressure: {state, freeGB, note}, classes: [{id, label, gb, retention}], holds: [classId], quarantine: [{id, item, when, reason}] } -> record rows + inspector blocks",
+      "notes": "Pressure tone mapping (ok/setup/attention) and the cleanup cross-action belong to the family, not the concept."
+    },
+    {
+      "family": "ArtifactRow",
+      "concretized_as": "Artifact records with identity (pm | provider-native + note), type, producedBy session ref, vault location, version, retention (incl. expired), redaction state machine (none/pending/applied), receipt link, and the open/reveal/export/clean action set with honest receipts.",
+      "api_sketch": "ArtifactRow { id, name, type, identity, identityNote?, producedBy, location, version, retention, redaction: {state, rules}, receiptId, actions[] }",
+      "notes": "The identity split is the load-bearing field; both values rendered as labeled chips, never inferred from location."
+    },
+    {
+      "family": "ObservableOperation",
+      "concretized_as": "The op-phase strip: every staged trigger (import-preview/apply/rollback, backup-now, test-restore, index-rebuild, cleanup-dry-run, actions-refresh, install-update/-fail/-repair) renders its declared phase sequence with the current phase highlighted. Phases are instant state changes — never skipped under reduced motion because they are content, not animation.",
+      "api_sketch": "ObservableOperation { name, ref, phases: [id], current, extra? } consumed from PMState 'op' events keyed name:ref",
+      "notes": "c4 is the phase-heaviest concept: 11 operations declare sequences in OP_PHASES. The declared-sequence + humanized-label pattern (PHASE_LABELS) should be the family contract."
+    },
+    {
+      "family": "ReceiptLink",
+      "concretized_as": "Receipt chips on records (dry run, lifecycle history, exports, artifacts), a receipts section in Storage, both-direction rollback receipts, and honest simulated receipts on every action that cannot truly run. Receipt ids are stable rcpt.* strings surfaced in kv blocks.",
+      "api_sketch": "ReceiptLink { id, label, when, detail? } — chip form on rows, kv form in inspectors, section form for collections",
+      "notes": "c4's flows are the receipt-heaviest in the bakeoff (import chain, backups, cleanup, installs); the family must support receipts that OUTLIVE the object they describe (artifact clean, session delete)."
+    },
+    {
+      "family": "RequestedEffectiveInspector",
+      "concretized_as": "One diff panel component reused for: setting requested-vs-effective, model effective routes, role route fallbacks (role-batch-reviewer via PMProvider.resolveRoute), and import conflict local-vs-incoming.",
+      "api_sketch": "DiffPanel { rows: [{key, value}], why } — two-to-three labeled rows plus one reason line",
+      "notes": "The import-conflict reuse shows the family generalizes beyond requested/effective to any two-value-plus-reason comparison."
+    },
+    {
+      "family": "ManagerShell + ResourceList/Card/Detail",
+      "concretized_as": "All thirteen native managers are the same composition: managerHeader (health line + optional add action) -> sections of recRow records -> inspector detail. ResourceCard collapses to a ledger row; Detail is always the inspector pane.",
+      "api_sketch": "recRow { kind, id, ref?, label, sub?, chips[], word?, mono?, states?, inert?, subRow? } — one constructor for every family",
+      "notes": "The single recRow constructor across storage/backup/lifecycle/history/artifacts/sourceControl/actions/containers/web/index/cleanup/servers is the DRY proof: thirteen managers, one record grammar."
+    },
+    {
+      "family": "SetupFlowLauncher",
+      "concretized_as": "Cursor CLI explicit-install offer (official source, host radio picker, three steps, policy note, install-is-not-sign-in), forge connect offers, free-route stepped setup, exact-environment tool install offers.",
+      "api_sketch": "SetupOffer { officialSource, sourceNote, hostChoices[], steps[], policyNote } via PMProvider.installOfferSteps",
+      "notes": "Install vs connect vs sign-in vocabulary is enforced by the family, not per-surface copy."
+    },
+    {
+      "family": "HealthSummary",
+      "concretized_as": "Manager header health lines + inspector summary grids (per-manager counts) when nothing is selected.",
+      "api_sketch": "HealthSummary { cells: [{label, n}] }",
+      "notes": "Zero-count cells render muted, never hidden."
+    }
+  ],
+  "variance_notes": {
+    "composition": "c4 is a record ledger with a persistent right inspector as the ONLY editing surface. c1 (atlas), c2 (mission control), and c3 (focus stack) compose the same shared semantics (PMState resolvers, PMProvider state strings, op events) into different surfaces — the shared layer exports no HTML/CSS, and the lg- class namespace never crosses files. Anti-clone evidence: the same manager families render as records+inspector here versus entirely different idioms in siblings, with identical product behavior.",
+    "motion": "Zero motion by identity: the stylesheet declares no animations or transitions; withInstantMotion forces every controlled jump to behavior:auto; operation phases and filter dimming are instant state changes. Reduced motion is therefore literally identical to normal — the concept doubles as proof the system works motionless.",
+    "filtering": "Query bar + state chips dim records in place; they never reflow, and the chips are filters that look and behave like filters (they are not destinations, so the no-filter-pill-destinations rule is satisfied)."
+  }
+}

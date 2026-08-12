@@ -188,7 +188,18 @@
     if (d.diffFiles) domains.push({ id: "diffs", ico: "diff", label: "Diffs", count: "+" + d.diffAdds + " \u2212" + d.diffDels, cards: () => b.diffCards(key) });
     if (d.live) domains.push({ id: "activity", ico: "activity", label: "Activity", count: (d.live.stages ? d.live.stages.length : 0) + " steps", cards: () => [b.activityLiveCard(key)] });
     const alerts = (d.approvals || 0) + (d.warnings || 0);
-    if (alerts) domains.push({ id: "alerts", ico: "warn", label: "Alerts", count: String(alerts), cards: () => b.approvalCards(key).concat(b.warningCards(key)) });
+    if (alerts || d.grant || d.capacity) domains.push({ id: "alerts", ico: "warn", label: "Alerts", count: String(alerts + (d.grant ? 1 : 0) + (d.capacity || 0)), cards: () => {
+        const cards = b.approvalCards(key);
+        const grant = b.grantCard(key);
+        if (grant) cards.push(grant);
+        b.capacityCards(key).forEach(c => cards.push(c));
+        return cards.concat(b.warningCards(key));
+      } });
+    if (d.ops > 0) domains.push({ id: "ops", ico: "branch", label: "Ops", count: String(d.ops), cards: () => b.opsCards(key) });
+    if (d.bsd > 0) domains.push({ id: "bsd", ico: "sparkle", label: "BSD", count: String(d.bsd), cards: () => b.bsdCards(key) });
+    if (d.attach > 0) domains.push({ id: "attach", ico: "attach", label: "Attachments", count: String(d.attach), cards: () => b.attachmentResolutionCards(key) });
+    const t8Arts = b.artifactCards(key);
+    if (t8Arts.length) domains.push({ id: "artifacts", ico: "layers", label: "Artifacts", count: String(t8Arts.length), cards: () => b.artifactCards(key) });
     if (!domains.length) return;
 
     const openMap = wlOpen[key] || (wlOpen[key] = {});

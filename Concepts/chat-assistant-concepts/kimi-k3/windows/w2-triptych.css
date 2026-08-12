@@ -177,3 +177,32 @@
 
 /* inspector surfaces share the kit card spacing but sit flush in a column */
 [data-k3-window="w2"] .w2-insp-body .k3w-kit-surface { width: 100%; }
+
+/* ---- packet additions: rail [Chats · Artifacts] tabs + artifact pane ------ */
+[data-k3-window="w2"] .w2-rail-tabs {
+  display: flex; align-items: center; gap: 2px;
+  padding: 4px 6px; flex: 0 0 auto;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w2"] .w2-rail-tabs[hidden] { display: none; }
+[data-k3-window="w2"] .w2-rail-tab {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 8px; border: 0; border-radius: var(--radius-sm, 6px);
+  background: none; cursor: pointer; font: inherit;
+  font-size: var(--fs-xs, 11px); color: var(--text-muted);
+}
+[data-k3-window="w2"] .w2-rail-tab:hover { background: var(--accent-soft); color: var(--text); }
+[data-k3-window="w2"] .w2-rail-tab[aria-selected="true"] {
+  background: var(--accent-soft); color: var(--text); font-weight: 600;
+}
+[data-k3-window="w2"] .w2-rail-tab svg { width: 13px; height: 13px; }
+[data-k3-window="w2"] .w2-rail-pane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+[data-k3-window="w2"] .w2-rail-pane[hidden] { display: none; }
+[data-k3-window="w2"] .w2-rail-art { overflow: auto; }
+/* Artifacts tab widens the persistent rail 170 -> 300px; chat keeps >= 420px
+   at the 975px breakpoint (JS only shows the tab strip on the wide layout). */
+[data-k3-window="w2"] .w2-rail.is-art { width: 300px; flex-basis: 300px; }
+[data-k3-window="w2"] .w2-rail.is-art .w2-rail-art [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+/* narrow: the surface lives inside the Work drawer region (JS reparents it) */
+[data-k3-window="w2"] .w2-work-body [class*="k3aw"] { min-height: 180px; }
+html[data-motion="reduced"] [data-k3-window="w2"] .w2-rail { transition: none; }

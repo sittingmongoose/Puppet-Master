@@ -19,6 +19,13 @@
 <link rel="stylesheet" href="_shared/lens.css">
 <link rel="stylesheet" href="_shared/questionnaire.css">
 <link rel="stylesheet" href="_shared/questionnaire-variants.css">
+<link rel="stylesheet" href="_shared/route.css">
+<link rel="stylesheet" href="_shared/access.css">
+<link rel="stylesheet" href="_shared/bsd.css">
+<link rel="stylesheet" href="_shared/sync.css">
+<link rel="stylesheet" href="_shared/attachments.css">
+<link rel="stylesheet" href="_shared/artifact-ws.css">
+<link rel="stylesheet" href="_shared/devdrawer.css">
 <link rel="stylesheet" href="windows/_window-kit.css">
 <link rel="stylesheet" href="threads/_thread-kit.css">
 <link rel="stylesheet" href="windows/w1-solo-column.css">
@@ -39,11 +46,14 @@
 <link rel="stylesheet" href="threads/t8-calm-chips.css">
 </head>
 <body>
-<!-- The fake Puppet Master shell renders into #k3-app. -->
-<div id="k3-app"></div>
+<!-- The fake Puppet Master shell renders into #k3-app. The visible
+     data-concept-model="Kimi K3" label renders in the shell titlebar and the
+     window header; the attribute also lives here so static checks see it. -->
+<div id="k3-app" data-concept-model="Kimi K3"></div>
 
 <script src="_shared/demo-data.js"></script>
 <script src="_shared/demo-augment.js"></script>
+<script src="_shared/demo-packet.js"></script>
 <script src="_shared/k3.js"></script>
 <script src="_shared/store.js"></script>
 <script src="_shared/icons.js"></script>
@@ -54,6 +64,17 @@
 <script src="_shared/search.js"></script>
 <script src="_shared/lens.js"></script>
 <script src="_shared/questionnaire.js"></script>
+<script src="_shared/route.js"></script>
+<script src="_shared/access.js"></script>
+<script src="_shared/bsd.js"></script>
+<script src="_shared/sync.js"></script>
+<script src="_shared/attachments.js"></script>
+<script src="_shared/spellcheck.js"></script>
+<script src="_shared/threadops.js"></script>
+<script src="_shared/work.js"></script>
+<script src="_shared/artifact-ws.js"></script>
+<script src="_shared/demo.js"></script>
+<script src="_shared/devdrawer.js"></script>
 <script src="_shared/states.js"></script>
 <script src="_shared/shell.js"></script>
 <script src="windows/_window-kit.js"></script>
@@ -94,6 +115,11 @@
   }
 
   const ctx = K3.makeCtx();
+
+  // Hoisted observability handle: K3States.apply records stateApplied here,
+  // and the initial ?state= application happens inside mountPairing() below —
+  // long before the full hook object is assembled at the end of boot.
+  window.__k3 = { stateApplied: null };
 
   // 3. Fake shell (title bar, app rail, dashboard ghost, editor tabs,
   //    docked dock + pop-out floating window roots).
@@ -159,19 +185,28 @@
   // 5. Bridge: announce + accept env/pairing/snapshot messages.
   window.K3Bridge.listenInHost(applyPairing);
   window.K3Bridge.announceReady();
+  window.K3Bridge.listenHub();
+  window.K3Bridge.announceHub();
 
   // 6. Boot.
   mountPairing();
 
-  // 7. Test/observability hooks.
-  window.__k3 = {
+  // 7. Test/observability hooks (merged — stateApplied recorded during the
+  //    initial mount above must survive).
+  window.__k3 = Object.assign(window.__k3, {
     env: K3.env,
     store,
     data,
     pairing: () => ({ windowId: K3.env.windowId, threadId: K3.env.threadId, mode: K3.env.mode }),
     remount: mountPairing,
     applyPairing
-  };
+  });
+
+  // 8. Dev drawer (review harness; ships separately — guard keeps this inert
+  //    until devdrawer.js is present).
+  if (K3.env && new URLSearchParams(location.search).get('demo') === '1' && window.K3DevDrawer) {
+    window.K3DevDrawer.mount(document.body, ctx);
+  }
 })();
 </script>
 </body>

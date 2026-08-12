@@ -492,9 +492,10 @@
 .atlas-row-desc { margin: 3px 0 0; color: var(--text-secondary); font-size: var(--fs-sm); line-height: 1.5; max-width: 62ch; }
 .atlas-row.is-inert .atlas-row-label { color: var(--text-muted); }
 
-/* marginalia column: structural hairline (neutral, not a status accent) */
+/* marginalia column: structural hairline (neutral, not a status accent).
+   Drawn with an inset shadow so no border sits on the left edge at all. */
 .atlas-marg {
-  border-left: 1px solid var(--border-light);
+  box-shadow: inset 1px 0 0 var(--border-light);
   padding-left: 15px;
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -902,6 +903,180 @@
 .atlas-addsrv .atlas-tune-label:first-child { margin-top: 0; }
 .atlas-addsrv input[type="text"] { width: 100%; }
 
+/* ---------------- installations (Appendix A) ---------------- */
+
+.atlas-inst {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin: 8px 0;
+}
+.atlas-inst-head { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-size: var(--fs-sm); font-weight: 600; }
+.atlas-inst-sub { margin-top: 3px; color: var(--text-secondary); font-size: var(--fs-xs); line-height: 1.5; max-width: 66ch; }
+.atlas-inst-phase { margin-top: 5px; font-size: var(--fs-xs); color: var(--text-secondary); font-style: italic; }
+.atlas-inst .atlas-model-ctl { margin-top: 8px; }
+.atlas-inst-history { margin-top: 8px; }
+.atlas-inst-history .atlas-version-row { border-bottom: 1px dotted var(--border-light); }
+.atlas-inst-history .atlas-version-row:last-child { border-bottom: 0; }
+
+/* one-line evidence bullets inside the advanced disclosure */
+.atlas-ev-list { margin: 4px 0 0; padding-left: 18px; font-size: var(--fs-xs); color: var(--text-secondary); line-height: 1.55; }
+.atlas-ev-list li { margin: 2px 0; }
+
+/* ---------------- two-column body (facts | marginalia) ---------------- */
+
+.atlas-duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 30%, 300px);
+  column-gap: 20px;
+  align-items: start;
+}
+.pm-shell.is-narrow .atlas-duo { grid-template-columns: minmax(0, 1fr); row-gap: 10px; }
+
+/* ---------------- statute book (Appendix I) ---------------- */
+
+.atlas-statute {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 3px 12px;
+  align-items: baseline;
+  padding: 9px 4px;
+  border-bottom: 1px solid var(--border-light);
+}
+.atlas-statute.is-managed { background: var(--surface-alt); border-radius: var(--radius-xs); }
+.atlas-statute-num { font-family: var(--display-font); font-size: var(--fs-md); color: var(--text-muted); letter-spacing: .04em; }
+.atlas-statute-text { min-width: 0; font-size: var(--fs-sm); line-height: 1.5; }
+.atlas-statute-text code { font-family: var(--mono-font); font-size: .92em; background: var(--surface-alt); border-radius: var(--radius-xs); padding: 1px 5px; }
+.atlas-statute-meta { grid-column: 2; color: var(--text-muted); font-size: var(--fs-xs); display: flex; gap: 6px 12px; flex-wrap: wrap; align-items: center; }
+.atlas-statute-acts { display: flex; gap: 5px; align-items: center; justify-self: end; }
+.atlas-decision { font-weight: 700; font-size: var(--fs-xs); letter-spacing: .05em; text-transform: uppercase; }
+.atlas-decision[data-d="allow"] { color: var(--accent-lime, var(--accent-primary)); }
+.atlas-decision[data-d="deny"] { color: var(--accent-error); }
+.atlas-decision[data-d="ask"] { color: var(--text-secondary); }
+
+/* evaluation trace */
+.atlas-trace {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  background: var(--surface);
+}
+.atlas-trace-input { font-family: var(--mono-font); font-size: var(--fs-xs); overflow-x: auto; white-space: pre; padding-bottom: 6px; }
+.atlas-trace-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  align-items: baseline;
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--border-light);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.atlas-trace-row:last-of-type { border-bottom: 0; }
+.atlas-trace-row.is-match { color: var(--text-primary); }
+.atlas-trace-row.is-winner { font-weight: 700; }
+.atlas-trace-verdict { margin-top: 8px; font-size: var(--fs-sm); line-height: 1.5; color: var(--text-secondary); }
+
+/* add-rule / propose forms */
+.atlas-form {
+  margin: 10px 0 4px;
+  padding: 12px 14px;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.atlas-form .atlas-tune-label { margin-top: 8px; }
+.atlas-form .atlas-tune-label:first-child { margin-top: 0; }
+.atlas-form input[type="text"] { width: 100%; }
+.atlas-field-error { color: var(--accent-error); font-size: var(--fs-xs); margin-top: 4px; }
+
+/* FileSafe floor panel: a heavier double rule, never a colored edge */
+.atlas-floor {
+  margin-top: 12px;
+  border-top: 3px double var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 2px 14px;
+}
+.atlas-floor-scopes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.atlas-floor-scopes code {
+  font-family: var(--mono-font);
+  font-size: var(--fs-xs);
+  background: var(--surface-alt);
+  border-radius: var(--radius-xs);
+  padding: 2px 7px;
+}
+
+/* ---------------- crew member table ---------------- */
+
+.atlas-members { margin-top: 6px; }
+.atlas-member {
+  display: grid;
+  grid-template-columns: minmax(90px, max-content) minmax(90px, max-content) minmax(0, 1fr);
+  gap: 2px 16px;
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--border-light);
+  font-size: var(--fs-xs);
+}
+.atlas-member:last-child { border-bottom: 0; }
+.atlas-member-role { font-weight: 600; color: var(--text-primary); font-size: var(--fs-sm); }
+.atlas-member-persona { color: var(--text-secondary); }
+.atlas-member-routes { color: var(--text-muted); line-height: 1.5; }
+.pm-shell.is-narrow .atlas-member { grid-template-columns: minmax(0, 1fr); }
+
+/* ---------------- import scan (Appendix F) ---------------- */
+
+.atlas-scan { margin-top: 10px; }
+.atlas-scan-row {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 3px 14px;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--border-light);
+  font-size: var(--fs-xs);
+}
+.atlas-scan-row:last-child { border-bottom: 0; }
+.atlas-scan-row dt { color: var(--text-muted); font-weight: 600; }
+.atlas-scan-row .atlas-scan-note { color: var(--text-secondary); line-height: 1.55; max-width: 62ch; }
+
+/* ---------------- appendix stubs (C and D) ---------------- */
+
+.atlas-stub-note {
+  margin: 14px 0 4px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 70ch;
+}
+.atlas-stub-note a { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
+
+/* cross-concept receipt rows in search results render as real links */
+a.atlas-dir-row { text-decoration: none; color: inherit; }
+
+/* chip line (selected-vs-installed tools, trigger chips) */
+.atlas-chipline { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; align-items: center; }
+
+/* boundary plate: statute-flavored list of what a thing can never do */
+.atlas-boundary { margin: 12px 0 4px; padding: 0; list-style: none; max-width: 70ch; }
+.atlas-boundary li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--border-light);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.atlas-boundary li:last-child { border-bottom: 0; }
+.atlas-boundary i[data-ico] { width: 14px; height: 14px; margin-top: 3px; color: var(--text-muted); }
+.atlas-boundary i[data-ico] svg { width: 100%; height: 100%; }
+.atlas-boundary strong { color: var(--text-primary); }
+
 /* ---------------- narrow behavior ----------------
    Below 900px effective shell width the TOC tree collapses into a top
    "Contents" drawer. Slint: conditional layout swap on a width property. */
@@ -923,7 +1098,7 @@
 .pm-shell.is-narrow .atlas-contents-btn { display: inline-flex; }
 .pm-shell.is-narrow .atlas-row { grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
 .pm-shell.is-narrow .atlas-marg {
-  border-left: 0;
+  box-shadow: none;
   border-top: 1px dotted var(--border-light);
   padding-left: 0;
   padding-top: 7px;
@@ -935,6 +1110,8 @@
 .pm-shell.is-narrow .atlas-model { grid-template-columns: minmax(0, 1fr); row-gap: 6px; }
 .pm-shell.is-narrow .atlas-acct { grid-template-columns: minmax(0, 1fr); }
 .pm-shell.is-narrow .atlas-dir-status { display: none; }
+.pm-shell.is-narrow .atlas-statute { grid-template-columns: 30px minmax(0, 1fr); }
+.pm-shell.is-narrow .atlas-statute-acts { grid-column: 2; justify-self: start; }
 .pm-shell.is-narrow .atlas-answers { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 .pm-shell.is-narrow .atlas-answers dt { margin-top: 6px; }
 

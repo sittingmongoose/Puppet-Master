@@ -1,0 +1,534 @@
+/* ============================================================================
+   concord.css — Concept 01 "Concord" (editorial dossier)
+   ----------------------------------------------------------------------------
+   A calm reading-document Settings surface. Structure:
+     .ccd
+     ├─ .ccd-home            front page (masthead, search, notices, rows)
+     ├─ .ccd-ws              workspace (outline rail + document + margin)
+     └─ .ccd-mgr             manager chapter (header + body + margin)
+   The right margin inspector collapses under 1280px of .ccd width
+   (container query on .ccd itself; .ccd-narrow class is the JS fallback).
+   Motion signature: slow ease-out crossfades; panels slide from the
+   triggering edge. Reduced motion collapses everything to opacity-only.
+   ========================================================================== */
+
+.ccd {
+  container-type: inline-size;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  background: var(--pm-bg);
+  color: var(--pm-ink);
+}
+
+/* ---------- shared dossier primitives ---------- */
+.ccd-eyebrow {
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+}
+
+.ccd-h1 {
+  margin: 4px 0 2px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.ccd-h2 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.ccd-sub {
+  margin: 0;
+  color: var(--pm-ink-dim);
+  font-size: 12.5px;
+  max-inline-size: 68ch;
+}
+
+.ccd-section + .ccd-section { margin-block-start: 22px; }
+
+/* crossfade used everywhere; reduced motion keeps the opacity step */
+.ccd-fade {
+  animation: ccd-fade calc(260ms * var(--pm-motion-scale, 1)) ease-out;
+}
+
+@keyframes ccd-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ccd-slide-in {
+  animation: ccd-slide calc(280ms * var(--pm-motion-scale, 1)) cubic-bezier(.2, .7, .2, 1);
+}
+
+@keyframes ccd-slide {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+[data-motion="reduced"] .ccd-slide-in { animation: ccd-fade 1ms; }
+[data-motion="reduced"] .ccd-fade { animation-duration: 1ms; }
+
+/* ---------- Home: the front page ---------- */
+.ccd-home {
+  height: 100%;
+  overflow: auto;
+  padding: 30px 36px 56px;
+}
+
+.ccd-home-inner { max-inline-size: 860px; margin-inline: auto; }
+
+.ccd-masthead {
+  padding-block-end: 18px;
+  border-block-end: 2px solid var(--pm-ink);
+  margin-block-end: 18px;
+}
+
+.ccd-search { position: relative; margin-block-end: 22px; }
+
+.ccd-search > input {
+  inline-size: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--pm-ink);
+  background: var(--pm-bg-raised);
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+}
+
+.ccd-search > input:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 1px;
+}
+
+.ccd-hits {
+  position: absolute;
+  z-index: 30;
+  inset-inline: 0;
+  inset-block-start: calc(100% + 6px);
+  max-block-size: 380px;
+  overflow: auto;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+  padding: 6px;
+}
+
+.ccd-hits[hidden] { display: none; }
+
+.ccd-notices { display: grid; gap: 10px; }
+
+.ccd-notice-group {
+  margin: 14px 0 6px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+}
+
+.ccd-calm {
+  padding: 18px;
+  text-align: center;
+  border: 1px dashed var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  color: var(--pm-ink-faint);
+  font-size: 12.5px;
+}
+
+/* destination rows — full-width dossier entries, never pills */
+.ccd-dests { display: grid; }
+
+.ccd-dest {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 13px 4px;
+  border: 0;
+  border-block-end: 1px solid var(--pm-line);
+  background: none;
+  font: inherit;
+  text-align: start;
+  color: var(--pm-ink);
+  cursor: pointer;
+  transition: background-color calc(160ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ccd-dest:hover, .ccd-dest:focus-visible { background: var(--pm-bg-raised); }
+.ccd-dest:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+
+.ccd-dest-title { font-size: 14px; font-weight: 650; }
+.ccd-dest-purpose { grid-column: 1; color: var(--pm-ink-dim); font-size: 12px; }
+.ccd-dest-health { grid-row: 1; grid-column: 2; font-size: 11.5px; color: var(--pm-ink-dim); }
+.ccd-dest-arrow {
+  grid-row: 1 / span 2;
+  grid-column: 3;
+  color: var(--pm-ink-faint);
+  transition: transform calc(180ms * var(--pm-motion-scale, 1)) ease, color calc(180ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ccd-dest:hover .ccd-dest-arrow { transform: translateX(3px); color: var(--pm-ink-dim); }
+.ccd-dest-arrow svg { inline-size: 15px; block-size: 15px; }
+
+/* recents */
+.ccd-recents { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.ccd-recent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--pm-ink-dim);
+  cursor: pointer;
+}
+
+.ccd-recent:hover { color: var(--pm-ink); border-color: var(--pm-ink-faint); }
+.ccd-recent:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.ccd-recent svg { inline-size: 12px; block-size: 12px; }
+
+/* ---------- Workspace: outline + document + margin ---------- */
+.ccd-ws {
+  height: 100%;
+  min-block-size: 0;
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr) 296px;
+}
+
+.ccd-outline {
+  min-block-size: 0;
+  overflow: auto;
+  padding: 18px 14px;
+  border-inline-end: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+
+.ccd-outline-cat {
+  display: block;
+  inline-size: 100%;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--pm-radius-s);
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: start;
+  color: var(--pm-ink-dim);
+  cursor: pointer;
+}
+
+.ccd-outline-cat:hover { background: var(--pm-bg-sunken); color: var(--pm-ink); }
+.ccd-outline-cat[aria-current="true"] { color: var(--pm-ink); background: var(--pm-bg-sunken); box-shadow: inset 0 0 0 1px var(--pm-line); }
+
+.ccd-outline-subs { margin: 2px 0 10px; padding: 0 0 0 12px; display: grid; gap: 1px; }
+
+.ccd-outline-sub {
+  display: block;
+  inline-size: 100%;
+  padding: 4px 10px;
+  border: 0;
+  border-inline-start: 2px solid var(--pm-line);
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  text-align: start;
+  color: var(--pm-ink-faint);
+  cursor: pointer;
+}
+
+.ccd-outline-sub:hover { color: var(--pm-ink-dim); }
+.ccd-outline-sub[aria-current="true"] { color: var(--pm-ink); border-inline-start-color: var(--pm-accent); font-weight: 600; }
+
+.ccd-doc {
+  min-block-size: 0;
+  overflow: auto;
+  padding: 26px 34px 80px;
+}
+
+.ccd-doc-inner { max-inline-size: 720px; margin-inline: auto; }
+
+.ccd-doc-head {
+  padding-block-end: 14px;
+  border-block-end: 2px solid var(--pm-ink);
+  margin-block-end: 16px;
+}
+
+.ccd-sec { scroll-margin-top: 20px; margin-block-end: 26px; }
+
+.ccd-sec > h3 {
+  margin: 0 0 2px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.ccd-sec > .ccd-sec-sum {
+  margin: 0 0 10px;
+  color: var(--pm-ink-faint);
+  font-size: 12px;
+}
+
+.ccd-sec .pm-row {
+  padding: 12px 0;
+  border-block-end: 1px solid color-mix(in srgb, var(--pm-line) 55%, transparent);
+}
+
+.ccd-adv {
+  margin-block-start: 8px;
+}
+
+/* margin inspector */
+.ccd-margin {
+  min-block-size: 0;
+  overflow: auto;
+  padding: 22px 18px;
+  border-inline-start: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  font-size: 12px;
+}
+
+.ccd-margin-h {
+  margin: 0 0 10px;
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+}
+
+.ccd-margin-card {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg);
+  padding: 12px 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.ccd-margin-card h4 { margin: 0; font-size: 12.5px; }
+
+.ccd-margin dl { margin: 0; }
+
+.ccd-margin .pm-kv { grid-template-columns: minmax(86px, 110px) minmax(0, 1fr); font-size: 11.5px; }
+
+.ccd-margin-empty { color: var(--pm-ink-faint); font-size: 12px; line-height: 1.5; }
+
+/* margin collapses under 1280px of concept width */
+@container (max-width: 1280px) {
+  .ccd-ws { grid-template-columns: 232px minmax(0, 1fr); }
+  .ccd-margin { display: none; }
+}
+
+.ccd-narrow .ccd-ws { grid-template-columns: 232px minmax(0, 1fr); }
+.ccd-narrow .ccd-margin { display: none; }
+
+/* outline becomes a drawer header under ~900px */
+@container (max-width: 900px) {
+  .ccd-ws { grid-template-columns: minmax(0, 1fr); }
+  .ccd-outline { display: none; }
+  .ccd-outline-select { display: block; }
+}
+
+.ccd-outline-select { display: none; margin-block-end: 12px; }
+.ccd-squeezed .ccd-ws { grid-template-columns: minmax(0, 1fr); }
+.ccd-squeezed .ccd-outline { display: none; }
+.ccd-squeezed .ccd-outline-select { display: block; }
+
+/* ---------- Manager chapter ---------- */
+.ccd-mgr {
+  height: 100%;
+  min-block-size: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+}
+
+@container (max-width: 1280px) {
+  .ccd-mgr { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ccd-narrow .ccd-mgr { grid-template-columns: minmax(0, 1fr); }
+
+.ccd-mgr-body {
+  min-block-size: 0;
+  overflow: auto;
+  padding: 26px 34px 80px;
+}
+
+.ccd-mgr-inner { max-inline-size: 860px; margin-inline: auto; display: grid; gap: 14px; }
+
+.ccd-mgr-head {
+  padding-block-end: 14px;
+  border-block-end: 2px solid var(--pm-ink);
+}
+
+.ccd-mgr-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-block-start: 10px;
+}
+
+.ccd-mgr-nav button {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--pm-ink-faint);
+  cursor: pointer;
+  padding: 4px 0;
+  border-block-end: 2px solid transparent;
+}
+
+.ccd-mgr-nav button:hover { color: var(--pm-ink-dim); }
+.ccd-mgr-nav button[aria-current="true"] { color: var(--pm-ink); border-block-end-color: var(--pm-accent); font-weight: 600; }
+
+/* dossier cards used by Concord managers */
+.ccd-card {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.ccd-card-h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ccd-card-h h4 { margin: 0; font-size: 13.5px; font-weight: 650; }
+.ccd-card-h .pm-badge { margin-inline-start: auto; }
+
+.ccd-ledger { display: grid; }
+
+.ccd-ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 14px;
+  padding: 11px 2px;
+  border-block-end: 1px solid color-mix(in srgb, var(--pm-line) 55%, transparent);
+}
+
+.ccd-ledger-main { min-inline-size: 0; display: grid; gap: 3px; }
+.ccd-ledger-title { font-size: 12.5px; font-weight: 600; overflow-wrap: anywhere; }
+.ccd-ledger-sub { font-size: 11.5px; color: var(--pm-ink-dim); }
+.ccd-ledger-side { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: end; }
+
+/* half-life bar — decay changes retrieval, never truth */
+.ccd-halflife {
+  inline-size: 120px;
+  block-size: 6px;
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  border: 1px solid var(--pm-line);
+  overflow: hidden;
+}
+
+.ccd-halflife > span {
+  display: block;
+  block-size: 100%;
+  background: var(--pm-info);
+  border-radius: 999px;
+}
+
+.ccd-halflife[data-low="true"] > span { background: var(--pm-warn); }
+
+/* persona gallery */
+.ccd-persona-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.ccd-persona {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  padding: 13px 15px;
+  display: grid;
+  gap: 6px;
+  text-align: start;
+  font: inherit;
+  color: var(--pm-ink);
+  cursor: pointer;
+  transition: border-color calc(160ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ccd-persona:hover, .ccd-persona:focus-visible { border-color: color-mix(in srgb, var(--pm-accent) 45%, var(--pm-line)); }
+.ccd-persona:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.ccd-persona-name { font-weight: 650; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ccd-persona-sum { font-size: 12px; color: var(--pm-ink-dim); }
+.ccd-persona-capsule {
+  font-family: var(--pm-font-mono);
+  font-size: 11px;
+  color: var(--pm-ink-faint);
+  border-inline-start: 2px solid var(--pm-line);
+  padding-inline-start: 8px;
+}
+
+/* rules editor */
+.ccd-rule {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+}
+
+.ccd-rule[draggable="true"] { cursor: grab; }
+.ccd-rule.is-drag { opacity: .5; }
+.ccd-rule-pat { font-family: var(--pm-font-mono); font-size: 11.5px; }
+
+.ccd-trace { display: grid; gap: 4px; font-size: 12px; }
+.ccd-trace-step { display: flex; gap: 8px; align-items: baseline; }
+.ccd-trace-step .pm-mono { flex: 1; }
+
+/* demo drawer content */
+.ccd-demo-head { padding: 16px 16px 10px; }
+.ccd-demo-head h2 { margin: 0 0 4px; font-size: 15px; }
+.ccd-demo-head p { margin: 0; font-size: 12px; color: var(--pm-ink-faint); }
+
+.ccd-demo-list {
+  padding: 0 16px 24px;
+  display: grid;
+  gap: 6px;
+  overflow: auto;
+}
+
+.ccd-demo-group {
+  margin-block: 10px 2px;
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+}
+
+.ccd-demo-list .pm-btn { justify-content: flex-start; }
+
+/* focus settle flash for deep links — non-flashing single settle */
+.pm-focus-settle {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 2px;
+  border-radius: var(--pm-radius-s);
+}

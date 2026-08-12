@@ -22,6 +22,30 @@
      thought-expanded · stop-visible · send-visible · draft-restored ·
      artifact-handoff · deep-jump · mount-restored
 
+   Packet trigger keys (43) — target fixture thread per key:
+     thread-16 (showcase — goal+8 todos+subs+3-file diff+4 artifacts+
+       approval+route warning+questionnaire):
+       route-picker, route-submenu, route-warning, route-effective,
+       provider-setup, provider-update, access-limited, approval-card,
+       bsd-auto-glow, bsd-manual-on, bsd-advice, bsd-unavailable,
+       compact-now, goal-replan, goal-complete, goal-blocked,
+       ops-conflict-port, worktree-states, artifact-left-code,
+       artifact-left-diff, artifact-left-image, artifact-left-report,
+       artifact-loading, artifact-error-retry, artifact-plus-pinned,
+       notify-approval,
+       prior-chat-search (thread-16 stays active; results come from PRIOR
+       chats via an all-scope search)
+     thread-17 (attachments/grant):
+       attachment-native, attachment-transformed, attachment-alternate,
+       attachment-unsupported, cross-project-grant
+     thread-18 (sync/thread-ops):
+       thread-request, thread-spawn, branch-menu, restore-point, rewind,
+       redirect-active, offline-queue, offline-reconnect
+     thread-19 (crew/capacity):
+       capacity-forecast, crew-board
+     thread-02 (lens):
+       lens-receipt
+
    Where a key's ideal payload does not exist on a single thread, the closest
    thread is chosen and the substitution is recorded in TEST_REPORT.md.
    ========================================================================== */
@@ -48,7 +72,12 @@
     thought:         'thread-11',  // t11-m0006: one complete + one active segment
     draft:           'thread-08',  // "Draft recovery check"
     artifact:        'thread-13',  // artifacts (editor-tab handoff)
-    deepJump:        'thread-09'   // t09-m0113 — older, paged-out message
+    deepJump:        'thread-09',  // t09-m0113 — older, paged-out message
+    // ---- packet fixtures (demo-packet.js) ----------------------------------
+    showcase:        'thread-16',  // route/approval/bsd/goal/ops/artifacts
+    attach:          'thread-17',  // attachment resolver + cross-project grant
+    syncOps:         'thread-18',  // offline queue/reconnect + thread ops
+    crew:            'thread-19'   // crew board + capacity forecast
   };
 
   var M = {
@@ -85,6 +114,86 @@
   function selectThread(ctx, tid) {
     ctx.store.set('activeThreadId', tid);
     emit(ctx, 'threads-changed');
+  }
+
+  // ---- packet trigger helpers ------------------------------------------------
+  function demo() { return window.K3Demo || null; }
+
+  // Shared prelude for the packet triggers: clean view slices, close any
+  // leftover popup (route pickers, menus), select the target fixture thread.
+  function packetPrep(ctx, tid) {
+    resetViewSlices(ctx);
+    try { if (window.K3UI) window.K3UI.closeAll(); } catch (e) { /* no popups */ }
+    selectThread(ctx, tid);
+  }
+
+  // True when the thread transcript already carries an open card of the given
+  // payload field (avoids piling up duplicates on repeated drives).
+  function hasOpenCard(ctx, tid, field, kind) {
+    var msgs = [];
+    try { msgs = ctx.data.messages(tid) || []; } catch (e) { return false; }
+    for (var i = msgs.length - 1; i >= 0; i--) {
+      var c = msgs[i] && msgs[i][field];
+      if (!c) continue;
+      if (kind && c.kind !== kind) continue;
+      if (c.status === 'open' || c.state === 'open') return true;
+    }
+    return false;
+  }
+
+  function hasUndecidedApproval(ctx, tid) {
+    var msgs = [];
+    try { msgs = ctx.data.messages(tid) || []; } catch (e) { return false; }
+    for (var i = msgs.length - 1; i >= 0; i--) {
+      var c = msgs[i] && msgs[i].approvalCard;
+      if (c && !c.decision && !(ctx.store.get('approvals.' + c.id, null) || {}).decision) return true;
+    }
+    return false;
+  }
+
+  // Artifact workspace driver: open one of thread-16's typed artifacts left
+  // of chat (the window adapter owns placement).
+  function artifactDriver(artifactId) {
+    return function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.artifactOpen(ctx, artifactId);
+    };
+  }
+
+  // Attachment resolver driver: classify a fixture file against thread-17's
+  // active route (native / PM-transformed / alternate-route consent /
+  // unsupported). Falls back to a draft attachment when K3Attachments is
+  // absent.
+  function attachmentDriver(file, opts) {
+    return function (ctx) {
+      packetPrep(ctx, T.attach);
+      // thread-17's narrative route is Anthropic · Work · Claude Sonnet 4.5
+      // (its fixture warning card reads from it) — pin it so capability
+      // classification is deterministic; nothing else seeds a route.
+      ctx.data.setThreadLocal(T.attach, { route: 'anthropic/work/claude-sonnet-4.5' });
+      emit(ctx, 'route-changed', { threadId: T.attach, routeKey: 'anthropic/work/claude-sonnet-4.5' });
+      if (!(window.K3Attachments && typeof window.K3Attachments.resolve === 'function')) {
+        var d = demo();
+        if (d) d.attachFile(ctx, file.name);
+        return;
+      }
+      if (opts && opts.googleOk) {
+        // The alternate-route consent card needs an OK video route to point
+        // at; Google's fixture connection is sign-in-required, so lift it for
+        // the synchronous classify only, then restore (fixtures stay pristine).
+        var conn = null, prev = null;
+        (ctx.data.providerCatalog() || []).forEach(function (p) {
+          if (p.id !== 'google') return;
+          (p.accounts || []).forEach(function (a) { if (a.connection) conn = a.connection; });
+        });
+        if (conn) { prev = conn.status; conn.status = 'ok'; }
+        try { window.K3Attachments.resolve(ctx, file); }
+        finally { if (conn) conn.status = prev; }
+        return;
+      }
+      window.K3Attachments.resolve(ctx, file);
+    };
   }
 
   // ---- individual state drivers ------------------------------------------
@@ -416,6 +525,303 @@
       sv[T.baseline] = Object.assign({}, sv[T.baseline] || {}, { activityOpen: true, todoOpen: true });
       s.set('surfaceView', sv);
       emit(ctx, 'threads-changed');
+    },
+
+    /* ---- packet trigger drivers (43; fixture map in the header comment) ----- */
+
+    'route-picker': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.routePickerDemo(ctx);
+    },
+
+    'route-submenu': function (ctx) {
+      // Picker with the persistent effort/speed step stack open on the first
+      // available route (model click -> effort -> speed -> Apply).
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.routePickerDemo(ctx);
+      setTimeout(function () {
+        try {
+          var row = document.querySelector('.k3r-row:not(.is-dim)');
+          if (row) row.click();
+        } catch (e) { /* picker not mounted yet */ }
+      }, 60);
+    },
+
+    'route-warning': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d && !hasOpenCard(ctx, T.showcase, 'routeWarningCard', 'route-switch')) {
+        d.injectRouteWarning(ctx);
+      }
+    },
+
+    'route-effective': function (ctx) {
+      // Explicit thread-local override: route chip, scope chip, and picker
+      // footer all show the EFFECTIVE route for this thread (Anthropic ·
+      // Personal · Claude Haiku 4.5) diverging from the project default.
+      packetPrep(ctx, T.showcase);
+      ctx.data.setThreadLocal(T.showcase, { route: 'anthropic/personal/claude-haiku-4.5' });
+      emit(ctx, 'route-changed', { threadId: T.showcase, routeKey: 'anthropic/personal/claude-haiku-4.5' });
+      var d = demo();
+      if (d) d.routePickerDemo(ctx); // footer reads the effective route
+    },
+
+    'provider-setup': function (ctx) {
+      // Selecting a route whose connection needs setup diverts to Provider
+      // Settings (settingsReturn + settings-deeplink) — never a silent switch.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.selectRoute(ctx, 'openai/work/gpt-5.2'); // api-key-required
+    },
+
+    'provider-update': function (ctx) {
+      // xAI connection ships 'update-available': title-bar notification +
+      // picker status line ("Updates install only when idle…").
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) { d.injectProviderUpdate(ctx); d.routePickerDemo(ctx); }
+    },
+
+    'access-limited': function (ctx) {
+      // Full Access narrowed by workspace policy: the access chip shows the
+      // "Limited by workspace policy" note; FileSafe rules still apply.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.setAccess(ctx, 'full');
+      ctx.data.setThreadLocal(T.showcase, { accessLimitedBy: 'workspace policy' });
+      emit(ctx, 'access-changed', { threadId: T.showcase, access: 'full' });
+    },
+
+    'approval-card': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d && !hasUndecidedApproval(ctx, T.showcase)) d.injectApproval(ctx);
+    },
+
+    'bsd-auto-glow': function (ctx) {
+      // Auto mode actively evaluating — the truthful glow window.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) { d.setBsd(ctx, 'auto', 'thread'); d.bsdAutoGlow(ctx, true); }
+    },
+
+    'bsd-manual-on': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.setBsd(ctx, 'on', 'thread');
+    },
+
+    'bsd-advice': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) { d.setBsd(ctx, 'auto', 'thread'); d.bsdPushAdvice(ctx); }
+    },
+
+    'bsd-unavailable': function (ctx) {
+      // Display-only result: BSD never blocks the send path.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) { d.setBsd(ctx, 'auto', 'thread'); d.bsdPushResult(ctx, 'unavailable'); }
+    },
+
+    'lens-receipt': function (ctx) {
+      packetPrep(ctx, T.lensThread);
+      var d = demo();
+      if (d) d.lensReceipt(ctx);
+    },
+
+    'compact-now': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.compactNow(ctx);
+    },
+
+    'prior-chat-search': function (ctx) {
+      // Cross-thread ("prior chats") search run FROM the showcase thread:
+      // every hit lives in another thread, so the result rows carry the
+      // prior-chat action menu (open / add to context / branch / copy link).
+      // K3Search only runs on input/open, so seed the store THEN open the
+      // popover — it reads the seeded query + scope and renders immediately.
+      packetPrep(ctx, T.showcase);
+      ctx.store.set('search', { query: SEARCH.all, scope: 'all', selectedResult: null, focusTarget: null });
+      emit(ctx, 'threads-changed');
+      if (window.K3Search && typeof window.K3Search.open === 'function') {
+        try {
+          var anchor = document.querySelector('[data-testid="k3w-kit-search-open"]') ||
+            document.querySelector('[data-testid="k3w-kit-search"]') || document.body;
+          window.K3Search.open(ctx, anchor);
+        } catch (e) { /* search kit not mounted */ }
+      }
+    },
+
+    'thread-request': function (ctx) {
+      // Fresh PENDING typed request (thread-18 -> thread-09, bounded task +
+      // evidence refs + scope + budget); the fixture's answered request stays.
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (d) d.threadRequestTo(ctx, 'thread-09');
+    },
+
+    'thread-spawn': function (ctx) {
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (d) d.threadSpawn(ctx);
+    },
+
+    'branch-menu': function (ctx) {
+      // The message More menu carrying the Branch family — opened from the
+      // first message's hover row (menu content is the state under review).
+      packetPrep(ctx, T.syncOps);
+      setTimeout(function () {
+        try {
+          var btn = document.querySelector('[data-testid="k3t-more-info"]');
+          if (btn) btn.click();
+        } catch (e) { /* thread not mounted yet */ }
+      }, 80);
+    },
+
+    'restore-point': function (ctx) {
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (d) d.threadRestorePoint(ctx);
+    },
+
+    'rewind': function (ctx) {
+      // Non-destructive: later messages collapse into a rewound region with a
+      // restore link; nothing is deleted.
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (d) d.threadRewind(ctx);
+    },
+
+    'redirect-active': function (ctx) {
+      // Active turn interrupted + resumed with a redirected instruction
+      // (interrupted / redirected / resumed markers all visible).
+      packetPrep(ctx, T.syncOps);
+      ctx.data.send(T.syncOps, 'Draft the reconnect rollout checklist');
+      var d = demo();
+      if (d) d.redirectActive(ctx);
+      emit(ctx, 'working');
+    },
+
+    'goal-replan': function (ctx) {
+      // Replan flow on the running goal — the safe-boundary choice is the
+      // visible end state.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.goalReplan(ctx);
+    },
+
+    'goal-complete': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.goalComplete(ctx);
+    },
+
+    'goal-blocked': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.goalBlocked(ctx);
+    },
+
+    'capacity-forecast': function (ctx) {
+      // thread-19 ships the forecast record (requested 6 / recommended 2 /
+      // 3 waves / allowance-reserve reason); the capacity surface mounts.
+      packetPrep(ctx, T.crew);
+      ctx.data.touchThread(T.crew, 'capacity-changed');
+    },
+
+    'crew-board': function (ctx) {
+      // thread-19 ships the crew (4 roles, 2 concurrent + 2 queued waves);
+      // the crew surface mounts.
+      packetPrep(ctx, T.crew);
+      ctx.data.touchThread(T.crew, 'crew-changed');
+    },
+
+    'ops-conflict-port': function (ctx) {
+      // Re-surface the port-3000 lease collision (with the 3001 alternative)
+      // even if it was resolved earlier in this session.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.injectPortConflict(ctx);
+    },
+
+    'worktree-states': function (ctx) {
+      // Catalog worktree states (conflict-detected / isolated-clean /
+      // patch-preserved) surface on the ops view.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.worktreeStates(ctx);
+    },
+
+    'cross-project-grant': function (ctx) {
+      packetPrep(ctx, T.attach);
+      var d = demo();
+      if (d && !hasOpenCard(ctx, T.attach, 'crossProjectCard')) d.injectCrossProjectGrant(ctx);
+    },
+
+    'artifact-left-code':   artifactDriver('art-16-code'),
+    'artifact-left-diff':   artifactDriver('art-16-diff'),
+    'artifact-left-image':  artifactDriver('art-16-shot'),
+    'artifact-left-report': artifactDriver('art-16-report'),
+
+    'artifact-loading': function (ctx) {
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (!d) return;
+      d.artifactOpen(ctx, 'art-16-code');
+      d.artifactLoading(ctx);
+    },
+
+    'artifact-error-retry': function (ctx) {
+      // Error state; the surface's own Retry button drives error -> loading.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (!d) return;
+      d.artifactOpen(ctx, 'art-16-diff');
+      d.artifactErrorRetry(ctx);
+    },
+
+    'artifact-plus-pinned': function (ctx) {
+      // Coexistence rule: pinned history AND the left artifact surface.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (!d) return;
+      d.artifactOpen(ctx, 'art-16-code');
+      d.pinHistory(ctx);
+    },
+
+    'attachment-native':      attachmentDriver({ name: 'capture.png', kind: 'image', size: '1.9 MB' }),
+    'attachment-transformed': attachmentDriver({ name: 'spec.pdf', kind: 'pdf', size: '2.1 MB' }),
+    'attachment-alternate':   attachmentDriver({ name: 'demo.mov', kind: 'video', size: '48.7 MB' }, { googleOk: true }),
+    'attachment-unsupported': attachmentDriver({ name: 'model.bin', kind: 'binary', size: '812 MB' }),
+
+    'offline-queue': function (ctx) {
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (!d) return;
+      d.goOffline(ctx);
+      d.queueOffline(ctx, 'Queued while offline — pick this up on reconnect');
+    },
+
+    'offline-reconnect': function (ctx) {
+      // Offline + queued, then ONE deterministic reconnect step: the pill
+      // sits at Reconnecting (further steps advance replay -> snapshot -> live).
+      packetPrep(ctx, T.syncOps);
+      var d = demo();
+      if (!d) return;
+      d.goOffline(ctx);
+      d.queueOffline(ctx, 'Queued while offline — pick this up on reconnect');
+      d.reconnectStep(ctx);
+    },
+
+    'notify-approval': function (ctx) {
+      // Title-bar notification stack: approval-needed inbox item + badge.
+      packetPrep(ctx, T.showcase);
+      var d = demo();
+      if (d) d.injectApprovalNeeded(ctx);
     }
   };
 
@@ -433,7 +839,25 @@
     'thought-collapsed', 'thought-expanded',
     'stop-visible', 'send-visible',
     'draft-restored', 'artifact-handoff',
-    'deep-jump', 'mount-restored'
+    'deep-jump', 'mount-restored',
+    // ---- packet triggers (43) ----
+    'route-picker', 'route-submenu', 'route-warning', 'route-effective',
+    'provider-setup', 'provider-update',
+    'access-limited', 'approval-card',
+    'bsd-auto-glow', 'bsd-manual-on', 'bsd-advice', 'bsd-unavailable',
+    'lens-receipt', 'compact-now', 'prior-chat-search',
+    'thread-request', 'thread-spawn', 'branch-menu', 'restore-point',
+    'rewind', 'redirect-active',
+    'goal-replan', 'goal-complete', 'goal-blocked',
+    'capacity-forecast', 'crew-board',
+    'ops-conflict-port', 'worktree-states', 'cross-project-grant',
+    'artifact-left-code', 'artifact-left-diff', 'artifact-left-image',
+    'artifact-left-report', 'artifact-loading', 'artifact-error-retry',
+    'artifact-plus-pinned',
+    'attachment-native', 'attachment-transformed', 'attachment-alternate',
+    'attachment-unsupported',
+    'offline-queue', 'offline-reconnect',
+    'notify-approval'
   ];
 
   function apply(key, ctx) {

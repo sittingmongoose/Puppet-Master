@@ -1,0 +1,465 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "resonance",
+  "model": "kimi-k3",
+  "census_sources": [
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Wiring_Matrix.production.json"
+  ],
+  "note": "All IDs provisional \u2014 no canon minted. Census performed 2026-08-11 against the three canon files.",
+  "annotations": {
+    "navigation": [
+      {
+        "id": "cmd.settings.open",
+        "verdict": "new",
+        "canon": "absent; canon has narrower cmd.settings.open_notifications / open_storage_retention (UI_Command_Catalog.md) \u2014 a generic open supersedes the per-panel verbs"
+      },
+      {
+        "id": "cmd.settings.navigate",
+        "verdict": "new",
+        "canon": "absent; deep-link navigation with category/sub/setting payload"
+      },
+      {
+        "id": "cmd.settings.search.focus",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.search.select_result",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.category.select",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.subcategory.select",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.setting.focus",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.manager.open",
+        "verdict": "new",
+        "canon": "absent"
+      }
+    ],
+    "values": [
+      {
+        "id": "cmd.settings.value.set",
+        "verdict": "new",
+        "canon": "absent; must distinguish persistent setting mutation from one-shot actions"
+      },
+      {
+        "id": "cmd.settings.default.restore",
+        "verdict": "new",
+        "canon": "absent; canon cmd.settings.category.reset is per-category, different semantics"
+      },
+      {
+        "id": "cmd.settings.scope.inspect",
+        "verdict": "new",
+        "canon": "absent"
+      }
+    ],
+    "lifecycle": [
+      {
+        "id": "cmd.settings.export",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.import.preview",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.import.apply",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.import.rollback",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.reset.preview",
+        "verdict": "new",
+        "canon": "absent; global reset with preview, not cmd.settings.category.reset"
+      },
+      {
+        "id": "cmd.settings.reset.apply",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.copy_from_project.preview",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.settings.copy_from_project.apply",
+        "verdict": "new",
+        "canon": "absent"
+      }
+    ],
+    "providers": [
+      {
+        "id": "cmd.provider.installation.scan",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.installation.select",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.installation.install",
+        "verdict": "new",
+        "canon": "absent; must carry explicit user trigger + official source + host/environment payload"
+      },
+      {
+        "id": "cmd.provider.installation.update",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.installation.repair",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.installation.rollback",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.installation.verify",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.connection.add",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.connection.authenticate",
+        "verdict": "new",
+        "canon": "absent; CLI-owned OAuth launches native flow, PM-direct OAuth is a separate branch"
+      },
+      {
+        "id": "cmd.provider.connection.reconnect",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.catalog.refresh",
+        "verdict": "alias",
+        "canon": "cmd.model.refresh (UI_Command_Catalog.md) is the near-match; catalog refresh is catalog-scoped, alias only if the canon payload gains a scope field"
+      },
+      {
+        "id": "cmd.model.favorite.set",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.model.alias.set",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.model.priority.set",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.model.visibility.set",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.provider.switch_route",
+        "verdict": "reuse",
+        "canon": "exact match in canon (preserve)"
+      },
+      {
+        "id": "cmd.account.select_profile",
+        "verdict": "reuse",
+        "canon": "exact match in canon (preserve)"
+      },
+      {
+        "id": "cmd.usage.refresh",
+        "verdict": "reuse",
+        "canon": "exact match in canon (preserve)"
+      },
+      {
+        "id": "cmd.usage.export",
+        "verdict": "reuse",
+        "canon": "exact match in canon (preserve)"
+      }
+    ],
+    "memory_persona_crew": [
+      {
+        "id": "cmd.memory.open",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.memory.verify",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.memory.edit",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.memory.delete",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.memory.restore",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.persona.manage",
+        "verdict": "alias",
+        "canon": "canon family cmd.persona.create/update/delete/import/export/select (UI_Command_Catalog.md) covers the verbs; manage is a navigation alias to the manager"
+      },
+      {
+        "id": "cmd.crew.template.create",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.crew.template.update",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.crew.template.delete",
+        "verdict": "new",
+        "canon": "absent"
+      }
+    ],
+    "permissions": [
+      {
+        "id": "cmd.permissions.rule.add",
+        "verdict": "alias",
+        "canon": "cmd.permissions.create_global_rule / create_project_rule (UI_Command_Catalog.md); the candidate unifies scope as a payload field"
+      },
+      {
+        "id": "cmd.permissions.rule.update",
+        "verdict": "alias",
+        "canon": "cmd.permissions.update_rule (UI_Command_Catalog.md)"
+      },
+      {
+        "id": "cmd.permissions.rule.reorder",
+        "verdict": "alias",
+        "canon": "cmd.permissions.reorder_rule (UI_Command_Catalog.md)"
+      },
+      {
+        "id": "cmd.permissions.rule.delete",
+        "verdict": "alias",
+        "canon": "cmd.permissions.delete_rule (UI_Command_Catalog.md)"
+      },
+      {
+        "id": "cmd.permissions.rule.test",
+        "verdict": "new",
+        "canon": "absent; the sample-path trace has no canon verb"
+      }
+    ],
+    "notifications": [
+      {
+        "id": "cmd.notifications.sound.upload",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.notifications.sound.import_pack",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.notifications.sound.preview",
+        "verdict": "new",
+        "canon": "absent; local-only preview, no send"
+      },
+      {
+        "id": "cmd.notifications.sound.delete",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.notifications.sound.export",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.notifications.destination.test",
+        "verdict": "reuse",
+        "canon": "exact match in canon (UI_Command_Catalog.md)"
+      }
+    ],
+    "appearance": [
+      {
+        "id": "cmd.theme.create",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.theme.import",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.theme.export",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.theme.preview",
+        "verdict": "reuse",
+        "canon": "exact match in canon (UI_Command_Catalog.md)"
+      },
+      {
+        "id": "cmd.theme.apply",
+        "verdict": "new",
+        "canon": "absent; canon cmd.theme.set_mode/set_accent/set_density are field mutations, apply is the commit verb"
+      }
+    ],
+    "commands_shortcuts": [
+      {
+        "id": "cmd.commands.custom.create",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.commands.custom.update",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.commands.custom.delete",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.commands.custom.dry_run",
+        "verdict": "new",
+        "canon": "absent; dry run never sends work to an agent"
+      },
+      {
+        "id": "cmd.shortcuts.bind",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.shortcuts.reset",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.shortcuts.import",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.shortcuts.export",
+        "verdict": "new",
+        "canon": "absent"
+      }
+    ],
+    "resources": [
+      {
+        "id": "cmd.mcp.server.add",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.mcp.server.restart",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.lsp.server.add",
+        "verdict": "new",
+        "canon": "absent; canon cmd.lsp.* covers editor actions only, not server lifecycle"
+      },
+      {
+        "id": "cmd.lsp.server.restart",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.formatter.add",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.formatter.test",
+        "verdict": "new",
+        "canon": "absent"
+      },
+      {
+        "id": "cmd.storage.backup.open",
+        "verdict": "new",
+        "canon": "absent; canon cmd.storage.open_root/open_value are storage-root navigation, not backup"
+      },
+      {
+        "id": "cmd.artifact.manager.open",
+        "verdict": "new",
+        "canon": "absent; canon cmd.artifacts.* covers artifact actions, not the manager"
+      }
+    ],
+    "retired": [
+      {
+        "id": "cmd.settings.bloom.open",
+        "verdict": "supersession",
+        "canon": "exists in canon; the chip/bloom architecture is superseded by Settings-as-destination. Preserve a compatibility alias to cmd.settings.open only if a caller census requires it."
+      }
+    ]
+  },
+  "exercised_by_concept": [
+    "cmd.settings.open",
+    "cmd.settings.navigate",
+    "cmd.settings.search.focus",
+    "cmd.settings.search.select_result",
+    "cmd.settings.category.select",
+    "cmd.settings.subcategory.select",
+    "cmd.settings.setting.focus",
+    "cmd.settings.manager.open",
+    "cmd.settings.value.set",
+    "cmd.settings.default.restore",
+    "cmd.notifications.destination.test",
+    "cmd.notifications.sound.upload",
+    "cmd.notifications.sound.import_pack",
+    "cmd.notifications.sound.preview",
+    "cmd.notifications.sound.delete",
+    "cmd.notifications.sound.export",
+    "cmd.theme.preview",
+    "cmd.theme.apply",
+    "cmd.theme.create",
+    "cmd.theme.import",
+    "cmd.theme.export",
+    "cmd.provider.installation.select",
+    "cmd.provider.installation.update",
+    "cmd.provider.installation.rollback",
+    "cmd.provider.catalog.refresh",
+    "cmd.provider.connection.authenticate",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route"
+  ]
+}

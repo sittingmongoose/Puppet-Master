@@ -4,12 +4,18 @@
    Standard kit header; thread slot; composer. Work surfaces render as
    floating cards anchored to the transcript's right edge when the chat is
    wide (env.width >= 975) — absolute-positioned in a right gutter that
-   overlays the thread's right margin. A pinnable Chats anchor card (kit
-   historyPanel) lives alongside the work cards in the gutter. At narrower
-   widths the SAME surface elements — plus the Chats card — collapse into a
-   single row above the composer, with no rebuild (DOM state travels between
-   hosts on the live 'env' flip). The Chats pin persists per thread in
-   surfaceView.<tid>.w4HistoryPinned.
+   overlays the thread's right margin. The lead work card is ops/conflicts
+   (kit opsSurface), then capacity/crew, then goal/todo/chips. A pinnable
+   Chats anchor card (kit historyPanel) lives alongside the work cards in
+   the gutter; when unpinned it collapses to a persistent Chats chip so
+   history always remains reachable. The artifact workspace (K3ArtifactWS,
+   ONE shared node, reparented never cloned) opens as a mirrored absolute
+   LEFT anchor card (260px column) when wide, and joins the in-flow row
+   above the composer (240px cap) when narrow. At narrower widths the SAME
+   surface elements — plus the Chats card — collapse into a single row
+   above the composer, with no rebuild (DOM state travels between hosts on
+   the live 'env' flip). The Chats pin persists per thread in
+   surfaceView.<tid>.w4HistoryPinned; artifact state in artifactWs.<tid>.
 
    Provides exactly one [data-k3-slot="thread"] and one
    [data-k3-slot="composer"]; the host fills them (THE ONE HARD RULE).
@@ -76,6 +82,17 @@
       historyCard.appendChild(historyHead);
       historyCard.appendChild(historyEl);
 
+      // collapsed Chats chip: the persistent entry point whenever the Chats
+      // card is unpinned (repairs the dead end where an unpinned card with
+      // no work surfaces left history unreachable). Clicking pins the card.
+      var chatsChip = el('button', 'w4-chats-collapsed');
+      chatsChip.type = 'button';
+      chatsChip.setAttribute('data-testid', 'w4-chats-collapsed');
+      chatsChip.setAttribute('aria-label', 'Show chats history');
+      chatsChip.title = 'Show chats history';
+      chatsChip.appendChild(icon('history'));
+      chatsChip.appendChild(el('span', 'w4-chats-collapsed-label', 'Chats'));
+
       // body: the transcript column owns the layout; the anchor gutter is an
       // absolute right-edge overlay that floats over the thread's right
       // margin (it does NOT steal width from the transcript). The chips row
@@ -97,6 +114,22 @@
       gutter.appendChild(gutterBody);
       transcriptArea.appendChild(gutter);
 
+      // floating corner anchor for the collapsed Chats chip when the right
+      // gutter itself is closed (wide layout, unpinned, no work)
+      var chipAnchor = el('div', 'w4-chip-anchor');
+      chipAnchor.hidden = true;
+      transcriptArea.appendChild(chipAnchor);
+
+      // artifact anchor card (wide layout): mirrored absolute LEFT gutter
+      // hosting the ONE shared K3ArtifactWS surface node (reparented, never
+      // cloned). Narrow layout: the same node joins the chips row instead.
+      var artGutter = el('aside', 'w4-art-gutter');
+      artGutter.setAttribute('aria-label', 'Artifact workspace');
+      artGutter.setAttribute('data-testid', 'w4-art-gutter');
+      artGutter.hidden = true;
+      transcriptArea.appendChild(artGutter);
+      var artEl = null; // lazy: window.K3ArtifactWS.surface(ctx) — shared node
+
       body.appendChild(transcriptArea);
 
       // chips row (narrow layout): collapses all surfaces into one row
@@ -115,7 +148,7 @@
       function presence(tid) {
         var t = tid ? data.thread(tid) : null;
         var p = { goal: false, todo: false, chips: false, todoDone: 0, todoTotal: 0,
-                  agents: 0, files: 0 };
+                  agents: 0, files: 0, ops: 0, capacity: false, crew: false };
         if (!t) return p;
         if (t.activeGoal && !store.get('goalView.' + tid + '.cleared', false)) p.goal = true;
         var items = t.todo && arr(t.todo.items);
@@ -128,11 +161,18 @@
         arr(t.subagentGroups).forEach(function (g) { p.agents += arr(g.agents).length; });
         arr(t.diffGroups).forEach(function (g) { p.files += arr(g.files).length; });
         p.chips = p.agents > 0 || p.files > 0 || hasActivity;
+        if (window.K3Work && window.K3Work.opsSummary) {
+          var s = window.K3Work.opsSummary(tid);
+          p.ops = s ? arr(s.conflicts).filter(function (c) { return c.state !== 'resolved'; }).length : 0;
+        }
+        p.capacity = !!t.capacityForecast;
+        p.crew = !!t.crew;
         return p;
       }
-      function any(p) { return p.goal || p.todo || p.chips; }
+      function any(p) { return p.goal || p.todo || p.chips || p.ops > 0 || p.capacity || p.crew; }
       function kindsOf(p) {
-        return (p.goal ? 'g,' : '') + (p.todo ? 't,' : '') + (p.chips ? 'c' : '');
+        return (p.ops ? 'o' + p.ops + ',' : '') + (p.goal ? 'g,' : '') + (p.todo ? 't,' : '') +
+               (p.capacity ? 'k,' : '') + (p.crew ? 'w,' : '') + (p.chips ? 'c' : '');
       }
 
       /* ---- surfaces ------------------------------------------------------ */
@@ -155,6 +195,11 @@
       function buildSurfaces(tid) {
         unmountSurfaces();
         var p = presence(tid);
+        // ops conflicts lead the cards (packet: operational awareness first)
+        if (p.ops > 0 && kit.opsSurface) {
+          var o = kit.opsSurface(ctx, tid);
+          if (o) { o.classList.add('w4-card'); surfaceNodes.push(o); }
+        }
         if (p.goal) {
           var g = kit.goalSurface(ctx, tid);
           if (g) { g.classList.add('w4-card'); surfaceNodes.push(g); }
@@ -162,6 +207,14 @@
         if (p.todo) {
           var td = kit.todoSurface(ctx, tid);
           if (td) { td.classList.add('w4-card'); surfaceNodes.push(td); }
+        }
+        if (p.capacity && kit.capacitySurface) {
+          var cp = kit.capacitySurface(ctx, tid);
+          if (cp) { cp.classList.add('w4-card'); surfaceNodes.push(cp); }
+        }
+        if (p.crew && kit.crewSurface) {
+          var cw = kit.crewSurface(ctx, tid);
+          if (cw) { cw.classList.add('w4-card'); surfaceNodes.push(cw); }
         }
         if (p.chips) {
           var c = kit.workChips(ctx, tid);
@@ -171,21 +224,42 @@
         placeSurfaces();
       }
 
-      // Move the live surface elements (and the always-present history card)
-      // into the active host without rebuilding (preserves DOM state across the
-      // breakpoint flip). The history card sits FIRST in the host so it leads.
       function placeSurfaces() {
         var host = wide ? gutterBody : chipsHost;
         if (historyCard.parentNode !== host) host.insertBefore(historyCard, host.firstChild);
         surfaceNodes.forEach(function (n) {
           if (n && n.parentNode !== host) host.appendChild(n);
         });
+        // the collapsed Chats chip: wide floats in the transcript-area corner
+        // anchor; narrow leads the chips row. Always reachable when unpinned.
+        var chipHost = wide ? chipAnchor : chipsHost;
+        if (chatsChip.parentNode !== chipHost) chipHost.insertBefore(chatsChip, chipHost.firstChild);
+        placeArt();
         paint();
       }
 
-      // The Chats anchor card is always present, so the host (gutter/chips) is
-      // visible whenever the history card is in the DOM. Pinned state forces
-      // the host visible even when there is no other work.
+      /* ---- artifact gutter (mirrored LEFT anchor card) --------------------- */
+      function artOpen() {
+        return currentTid ? store.get('artifactWs.' + currentTid + '.open', false) === true : false;
+      }
+      function placeArt() {
+        if (!artEl && window.K3ArtifactWS) artEl = window.K3ArtifactWS.surface(ctx);
+        if (!artEl) return;
+        var open = artOpen();
+        if (wide) {
+          artGutter.hidden = !open;
+          if (open && artEl.parentNode !== artGutter) artGutter.appendChild(artEl);
+          artEl.hidden = !open;
+        } else {
+          artGutter.hidden = true;
+          if (open && artEl.parentNode !== chipsHost) chipsHost.appendChild(artEl);
+          artEl.hidden = !open;
+        }
+      }
+
+      // The Chats anchor card collapses to the persistent chip when unpinned;
+      // pinning restores the card. The chip is always visible when unpinned,
+      // in BOTH layouts, regardless of work (the repair for the dead end).
       function historyPinned() {
         return store.get('surfaceView.' + currentTid + '.w4HistoryPinned', false) === true;
       }
@@ -201,24 +275,35 @@
       }
       historyPin.addEventListener('click', function () {
         if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return; // never write surfaceView.null.*
         store.set('surfaceView.' + currentTid + '.w4HistoryPinned', !historyPinned());
+      });
+      // chip click = pin (restore the card); null-thread safe
+      chatsChip.addEventListener('click', function () {
+        if (!currentTid) currentTid = store.get('activeThreadId', null);
+        if (!currentTid) return;
+        store.set('surfaceView.' + currentTid + '.w4HistoryPinned', true);
       });
 
       function paint() {
         if (unmounted) return;
         var p = presence(currentTid);
         var hasWork = any(p);
-        // the host shows when there is work OR the history card is pinned
-        // (the history card itself is always present, so a pinned card keeps
-        // the host open even with no work surfaces).
-        var showHost = hasWork || historyPinned();
+        var pinned = historyPinned();
 
-        // anchor gutter: wide + (work or pinned)
-        gutter.hidden = !(wide && showHost);
+        // unpinned -> the full card hides, the compact chip carries the entry
+        // point; pinned -> card visible, chip hidden.
+        historyCard.hidden = !pinned;
+        chatsChip.hidden = pinned;
+
+        // right gutter: wide + (work or pinned card inside)
+        gutter.hidden = !(wide && (hasWork || pinned));
         gutterHead.hidden = !hasWork;
 
-        // chips row: narrow + (work or pinned)
-        chipsHost.hidden = !(showHost) || wide;
+        // chip anchor overlay (wide + unpinned); narrow: chip lives in the
+        // chips row, which stays visible whenever it holds the chip or card
+        chipAnchor.hidden = !(wide && !pinned);
+        chipsHost.hidden = wide ? true : false;
 
         paintPin();
       }
@@ -243,10 +328,14 @@
       function onData(evt) {
         if (!evt) return;
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
+        else if (evt.type === 'artifact-ws-changed') placeArt();
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });
+      disposers.push(store.subscribe('artifactWs', function () { placeArt(); }));
 
       function onEnv() {
         var nowWide = ctx.env.width >= BREAKPOINT;
@@ -259,6 +348,7 @@
 
       /* ---- boot + teardown ------------------------------------------------ */
       rebuild();
+      placeArt();
 
       function unmount() {
         if (unmounted) return;

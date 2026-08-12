@@ -123,3 +123,109 @@
   /* keep the focus tint inside the measure + margin footprint */
   [data-k3-thread="t6"] .k3t-msg.is-focused { padding: 8px 150px 8px 10px; }
 }
+
+/* ============================================================================
+   Packet card family (final cumulative update). t6 identity: packet records
+   stay slim inline entries on the measure; on wide containers (>=700px)
+   their meta and action rows dock into the reserved right margin, same as
+   the hover row. Docking uses in-flow negative margins (never absolute
+   placement) so rows can wrap without overlapping the next record — no
+   layout shift, no clipping.
+   ========================================================================== */
+
+/* stacked packet records share t6's slim hairline cadence */
+[data-k3-thread="t6"] .k3t-packet { margin-top: 12px; gap: 10px; }
+[data-k3-thread="t6"] .k3t-packet .k3t-card { margin-top: 0; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq / restorepoint /
+   branch intentionally inherit t6's slim record (hairline above, no box);
+   only their internal rhythm tightens */
+[data-k3-thread="t6"] .k3t-routewarn,
+[data-k3-thread="t6"] .k3t-attach,
+[data-k3-thread="t6"] .k3t-bsdadvice,
+[data-k3-thread="t6"] .k3t-receipt,
+[data-k3-thread="t6"] .k3t-threadreq,
+[data-k3-thread="t6"] .k3t-restorepoint,
+[data-k3-thread="t6"] .k3t-branch { padding-top: 8px; }
+
+/* line records (BSD result, redirect, marker) share the hairline cadence;
+   redirect states ride italic/weight, never accent borders */
+[data-k3-thread="t6"] .k3t-bsdresult,
+[data-k3-thread="t6"] .k3t-redirect,
+[data-k3-thread="t6"] .k3t-marker {
+  margin-top: 0;
+  padding-top: 6px;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t6"] .k3t-redirect-interrupted,
+[data-k3-thread="t6"] .k3t-redirect-resumed { font-style: italic; }
+[data-k3-thread="t6"] .k3t-redirect-redirected { font-weight: 600; }
+
+/* rewound region: centered on the measure, dashed hairlines top + bottom */
+[data-k3-thread="t6"] .k3t-rewound {
+  width: 100%;
+  max-width: calc(68ch);
+  margin: 4px auto;
+  padding: 8px 0;
+  border: 0;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+  border-bottom: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: 0;
+}
+
+/* queued badge: chromeless note */
+[data-k3-thread="t6"] .k3t-queued {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* server note rides the measure with a dashed hairline above */
+[data-k3-thread="t6"] .k3t-server-note {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+}
+
+/* chip-mode packet rows: bare rows, hover = ink only; an opened row expands
+   to the same slim record treatment as inline mode */
+[data-k3-thread="t6"] .k3t-packet-row {
+  padding: 4px 0;
+  border-radius: 0;
+}
+[data-k3-thread="t6"] .k3t-packet-row:hover {
+  background: transparent;
+  color: var(--text-primary);
+}
+[data-k3-thread="t6"] .k3t-packet-chiprows .k3t-card { margin-top: 8px; }
+
+/* artifact shortcut + overflow: the wrap stretches, the more-button is
+   chromeless */
+[data-k3-thread="t6"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t6"] .k3t-shortcut-wrap .k3t-shortcut { flex: 1 1 auto; min-width: 0; }
+[data-k3-thread="t6"] .k3t-shortcut-more {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+/* wide container: packet meta and action rows dock right into the reserved
+   150px margin column, echoing the parked hover row */
+@container (min-width: 700px) {
+  [data-k3-thread="t6"] .k3t-packet .k3t-card-actions,
+  [data-k3-thread="t6"] .k3t-packet-chiprows .k3t-card-actions,
+  [data-k3-thread="t6"] .k3t-threadreq-meta,
+  [data-k3-thread="t6"] .k3t-routewarn-routes,
+  [data-k3-thread="t6"] .k3t-bsdresult,
+  [data-k3-thread="t6"] .k3t-redirect,
+  [data-k3-thread="t6"] .k3t-marker {
+    margin-right: -150px;
+    justify-content: flex-end;
+    text-align: right;
+  }
+  [data-k3-thread="t6"] .k3t-queued {
+    display: flex;
+    margin-right: -150px;
+    justify-content: flex-end;
+  }
+}

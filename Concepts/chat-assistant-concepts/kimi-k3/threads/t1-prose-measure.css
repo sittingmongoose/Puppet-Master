@@ -131,3 +131,91 @@
 
 /* ---- hover row: quiet, flush with the measure ------------------------------- */
 [data-k3-thread="t1"] .k3t-msg-hover { margin-top: 4px; }
+
+/* ============================================================================
+   Packet card family (final cumulative update): route warnings, attachments,
+   BSD advice/results, receipts, thread requests, restore points, branches,
+   redirect markers, rewound regions, queued badges, server notes, chip-mode
+   packet rows, artifact shortcut overflow. t1 keeps every one a slim inline
+   record on the reading column — hairline separators, minimal chrome.
+   ========================================================================== */
+
+/* stacked packet records: one hairline cadence, flush with the prose */
+[data-k3-thread="t1"] .k3t-packet { margin-top: 12px; gap: 10px; }
+[data-k3-thread="t1"] .k3t-packet .k3t-card { margin-top: 0; }
+
+/* routewarn / attach / bsdadvice / receipt / threadreq / restorepoint /
+   branch intentionally inherit t1's slim record (hairline above, flush with
+   the reading column, no box); only their internal rhythm tightens */
+[data-k3-thread="t1"] .k3t-routewarn,
+[data-k3-thread="t1"] .k3t-attach,
+[data-k3-thread="t1"] .k3t-bsdadvice,
+[data-k3-thread="t1"] .k3t-receipt,
+[data-k3-thread="t1"] .k3t-threadreq,
+[data-k3-thread="t1"] .k3t-restorepoint,
+[data-k3-thread="t1"] .k3t-branch { padding-top: 8px; }
+[data-k3-thread="t1"] .k3t-receipt-rows { gap: 2px; }
+[data-k3-thread="t1"] .k3t-card-actions { margin-top: 6px; }
+
+/* line records (BSD result, redirect, marker) join the same hairline
+   cadence — separated entries, never boxed; redirect states ride the base
+   text colors, the redirected state adds weight only */
+[data-k3-thread="t1"] .k3t-bsdresult,
+[data-k3-thread="t1"] .k3t-redirect,
+[data-k3-thread="t1"] .k3t-marker {
+  margin-top: 0;
+  padding-top: 6px;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t1"] .k3t-redirect-redirected { font-weight: 600; }
+[data-k3-thread="t1"] .k3t-redirect-interrupted,
+[data-k3-thread="t1"] .k3t-redirect-resumed { font-style: italic; }
+
+/* rewound region: a centered hairline band aligned to the monogram column */
+[data-k3-thread="t1"] .k3t-rewound {
+  width: 100%;
+  max-width: calc(68ch + 40px);
+  margin: 4px auto;
+  padding: 8px 0 8px 40px;
+  border: 0;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+  border-bottom: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: 0;
+}
+
+/* queued badge: no pill — a quiet inline note under the prose */
+[data-k3-thread="t1"] .k3t-queued {
+  margin-top: 8px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* server note rides the measure with a dashed hairline above */
+[data-k3-thread="t1"] .k3t-server-note {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+}
+
+/* chip-mode packet rows: bare rows, hover = ink only; an opened row expands
+   to the same slim record treatment as inline mode */
+[data-k3-thread="t1"] .k3t-packet-row {
+  padding: 4px 0;
+  border-radius: 0;
+}
+[data-k3-thread="t1"] .k3t-packet-row:hover {
+  background: transparent;
+  color: var(--text-primary);
+}
+[data-k3-thread="t1"] .k3t-packet-chiprows .k3t-card { margin-top: 8px; }
+
+/* artifact shortcut + overflow: the wrap stretches, the more-button is
+   chromeless */
+[data-k3-thread="t1"] .k3t-shortcut-wrap { display: flex; width: 100%; gap: 4px; }
+[data-k3-thread="t1"] .k3t-shortcut-wrap .k3t-shortcut { flex: 1 1 auto; min-width: 0; }
+[data-k3-thread="t1"] .k3t-shortcut-more {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}

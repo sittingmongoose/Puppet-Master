@@ -1,0 +1,13 @@
+lsp:
+  enabled: true
+  lazy: true
+  shared: true
+  formatOnWrite: false
+  diagnosticsOnWrite: true
+  diagnosticsOnEdit: true
+
+ttsr:
+  enabled: true
+  contextMode: discard
+  interruptMode: always
+  repeatMode: once

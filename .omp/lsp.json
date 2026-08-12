@@ -1,0 +1,26 @@
+{
+  "servers": {
+    "rust-analyzer": {
+      "rootMarkers": [".git"]
+    },
+    "pyright": {
+      "rootMarkers": [".git"]
+    },
+    "typescript-language-server": {
+      "rootMarkers": [".git"]
+    },
+    "vscode-html-language-server": {
+      "rootMarkers": [".git"]
+    },
+    "vscode-css-language-server": {
+      "rootMarkers": [".git"]
+    },
+    "slint-lsp": {
+      "command": "slint-lsp",
+      "args": [],
+      "fileTypes": [".slint"],
+      "languageId": "slint",
+      "rootMarkers": [".git"]
+    }
+  }
+}

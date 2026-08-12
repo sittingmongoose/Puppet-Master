@@ -192,7 +192,7 @@
           keywords: ["claude", "openai", "antigravity", "ollama", "openrouter", "copilot", "free"],
           settings: [
             { id: "prov-manager", label: "Providers, accounts and connections", explanation: "Installed tools, signed-in apps, API keys, server endpoints and free routes, with health and usage for each.", kind: "manager", managerId: "manager-providers",
-              state: st({ value: "7 families · 2 need attention", source: "custom", isDefault: false }) },
+              state: st({ value: "8 families · 2 need attention", source: "custom", isDefault: false }) },
             { id: "prov-default-account", label: "Preferred account when several are signed in", explanation: "Which account is used first when a provider has more than one. Changing this affects future requests only.", kind: "select",
               options: ["Most recently used", "Highest remaining usage", "Explicit priority order"],
               state: st({ value: "Explicit priority order", defaultValue: "Most recently used", isDefault: false, source: "custom" }) },
@@ -208,7 +208,7 @@
           keywords: ["catalog", "models.dev", "favourite", "alias", "priority", "fast", "effort"],
           settings: [
             { id: "model-manager", label: "Models and capabilities", explanation: "Favourites, aliases, ordering, capability evidence and per-model availability.", kind: "manager", managerId: "manager-providers",
-              state: st({ value: "38 models · 4 unavailable", source: "custom", isDefault: false }) },
+              state: st({ value: "25 models · 7 unavailable", source: "custom", isDefault: false }) },
             { id: "model-catalog-refresh", label: "Refresh catalogues in the background", explanation: "Keep models.dev and Free Coding Models current, serving the last known good catalogue while a refresh runs.", kind: "toggle",
               state: st({ value: true, defaultValue: true }) },
             { id: "model-catalog-quarantine", label: "Quarantine a catalogue that fails validation", explanation: "If an update arrives malformed, keep the previous catalogue and raise a notice instead of applying it.", kind: "toggle", exposure: "advanced",
@@ -746,7 +746,7 @@
           id: "ext-tools", title: "Tools & commands", summary: "The unified inventory and its shortcuts.",
           keywords: ["tool", "command", "shortcut", "conflict"],
           settings: [
-            { id: "tools-manager", label: "Tool inventory", explanation: "What is installed, enabled for this project, currently available, selected for a turn and actually invoked.", kind: "manager", managerId: "manager-skills",
+            { id: "tools-manager", label: "Tool inventory", explanation: "What is installed, enabled for this project, currently available, selected for a turn and actually invoked.", kind: "manager", managerId: "manager-tools",
               state: st({ value: "64 tools · 41 enabled here", source: "custom", isDefault: false }) },
             { id: "tools-expose-all", label: "Expose every tool schema to every agent", explanation: "Disabled deliberately. Sending the whole inventory each turn crowds out the actual task.", kind: "toggle", exposure: "expert",
               state: st({ value: false, defaultValue: false,
@@ -1728,7 +1728,11 @@
     { id: "exhausted", label: "Included usage exhausted", note: "Provider-specific continuation choices become the primary decision." }
   ];
 
-  window.PMData = Object.freeze({
+  /* Deliberately not frozen here. Domain modules (pm-data-install.js,
+   * pm-data-taxonomy.js, pm-data-agents.js, pm-data-desktop.js, pm-data-dev.js,
+   * pm-data-system.js) contribute after this file loads; shared/pm-data-seal.js
+   * freezes the finished object last. */
+  window.PMData = {
     categories: categories,
     notices: notices,
     providers: providers,
@@ -1745,6 +1749,10 @@
       "GLM", "Mistral", "Groq", "Nano Banana", "Slint", "orchard", "Orchestrator", "FileSafe",
       "AGENTS", "MCP", "LSP", "Jira", "Datadog", "Notion", "Figma", "Sentry", "postgres", "zsh",
       "PowerShell", "Persona", "Personas", "Gist", "Gists", "PlanningRun", "Priya", "Jared"
-    ]
-  });
+    ],
+
+    /* Provider installation lifecycle. Filled by shared/pm-data-install.js. */
+    installations: [],
+    updateAttempts: []
+  };
 })();

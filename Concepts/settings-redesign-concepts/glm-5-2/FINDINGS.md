@@ -1,33 +1,43 @@
-# FINDINGS — GLM-5.2 Settings Bakeoff
+# FINDINGS — GLM-5.2 Settings Bakeoff (Final Cumulative)
 
-Per the packet, this file records IA choices, what each concept deliberately explores differently, inventory/Plans conflicts found, functionality that remains simulated, and Slint translation risks. **No ranking or recommendation** is made unless the user later asks.
+Per the **PM_Settings_Bakeoff_Final_Cumulative_2026-08-08** packet (which supersedes all prior Settings packets), this file records IA choices, what each concept deliberately explores differently, the per-concept family-ownership partition, inventory/Plans conflicts found, functionality that remains simulated, and Slint translation risks. **No ranking or recommendation** is made.
+
+## Per-concept family ownership (the final packet's coverage matrix)
+
+The four concepts collectively prove the complete `MANAGER_COVERAGE_MATRIX.json` with no family `missing`. Each concept **owns** a bucket (full deep demos) and shares the rest via the common manager grammar:
+
+- **01 Control Room** owns: Context & Instructions, Memory, Personas, Goal & Automation, Crew, Permissions/FileSafe, Back Seat Driver.
+- **02 Atlas** owns: Notifications & Sounds, Sound Library/Uploads/Packs, Appearance, Spellcheck/Dictionaries, Desktop/Tray/Window, Teacher/Help.
+- **03 Stack** owns: File Manager/Editor, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills/Plugins/Tools, Testing & Debug.
+- **04 Stream** owns: Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control/Worktrees, GitHub Actions, Containers/Registries, Web/Search/Fetch, Project Search Index, Workspace Cleanup, and the **deferred** Future Server/Project Sync insertion shell.
+
+Every concept also demonstrates the **core** surface (Settings Home, Search, Workspace, Provider/Account/Model/Installation, ordinary setting-row grammar). Each Home makes ownership explicit via an **owned-families strip** of destination-control cards (not filter pills). The full surface stays navigable everywhere; non-owned families are `shared_grammar`.
 
 ## Major information-architecture choices
 
 ### Concept 01 — Control Room (editorial / command center)
-- **Home** is mission control: one dominant omni-search bar is the largest interactive element and the primary verb. Below it, a notices band (needs-attention / continue-setup / recommended — each with one headline, one consequence, one primary action), then **large editorial destination panels** carrying a title, a one-line purpose, a live status chip, and an explicit "Open" affordance.
-- **Workspace** is a **book-TOC**: a persistent left vertical category index with collapsible subcategories, and a single continuous-document main pane for the active category. Settings search lives above the TOC.
+- **Home** is mission control: one dominant omni-search bar is the largest interactive element and the primary verb. Below it, the owned-families strip, then a notices band (needs-attention / continue-setup / recommended — each one headline, one consequence, one primary action), then **large editorial destination panels** with title, one-line purpose, live status chip, and explicit "Open" affordance.
+- **Workspace** is a **book-TOC**: a persistent left vertical category index with collapsible subcategories, and a single continuous-document main pane for the active category.
 - **Managers** open as a full stage with a back bar + breadcrumb.
-- **Deliberately explores:** search primacy and editorial destination scale; the destination panel as the unit of importance (vs. a list or a map).
+- **Explores:** search primacy and editorial destination scale; the destination panel as the unit of importance.
 
 ### Concept 02 — Atlas (spatial / cartographic)
-- **Home** is an **atlas overview**: destinations are **named regions** with real boundaries placed on a 12-column grid, where **region size encodes content density** (more subcategories/managers = larger region). A "you-are-here" marker tracks the current region; needs-attention regions get a distinct border. A right rail holds the legend + notices + theme.
-- **Workspace** is **focus + context**: the chosen region fills the canvas as a continuous document, while a compact **minimap** rail keeps every region visible (current one highlighted) and a **viewport rail** shows the in-view subcategory with a scroll-position thumb.
-- **Search** is a **Cmd+K command overlay** centered at the top; focusing dims the map and surfaces results; selecting flies the viewport to the region/section.
-- **Deliberately explores:** territory-as-navigation vs. list-as-navigation; whether a minimap makes the whole system legible at a glance.
+- **Home** is an **atlas overview**: destinations are **named regions** with real boundaries on a 12-column grid, where **region size encodes content density**. A "you are here" marker tracks the current region; needs-attention regions get a distinct border. A right rail holds legend + notices + theme; the owned-families strip spans full width below the canvas.
+- **Workspace** is **focus + context**: the chosen region fills the canvas as a continuous document, while a compact **minimap** keeps every region visible and a **viewport rail** shows the in-view subcategory with a scroll thumb.
+- **Search** is a **Cmd+K overlay** centered at the top; selecting flies the viewport to the region/section.
+- **Explores:** territory-as-navigation vs list-as-navigation; whether a minimap makes the whole system legible at a glance.
 
 ### Concept 03 — Stack (single surface / progressive disclosure)
-- **Home** is a **prioritized single stack**: a persistent search head, then status-critical notices, then **destinations as expandable rows** (chevron + status + open affordance — never pills).
-- **Workspace** is **expand-in-place**: clicking a destination row grows it inline into the full workspace (subnav + continuous document + manager-promo cards); **only one row is expanded at a time**. There is no separate workspace route — disclosure is the whole model.
-- **Search** filters the stack inline and can deep-link into an expanded row.
-- **Deliberately explores:** whether Settings needs navigation at all, or whether progressive disclosure on one surface is enough; the cost/benefit of never leaving Home.
+- **Home** is a **prioritized single stack**: a persistent search head, then the owned-families strip, then status-critical notices, then **destinations as expandable rows** (chevron + status + open affordance — never pills).
+- **Workspace** is **expand-in-place**: clicking a destination row grows it inline into the full workspace (subnav + continuous document + manager-promo cards); **only one row is expanded at a time**. Disclosure is the whole model.
+- **Search** filters the stack inline and deep-links into an expanded row; managers render inline.
+- **Explores:** whether Settings needs navigation at all, or whether progressive disclosure on one surface is enough.
 
 ### Concept 04 — Stream (continuous navigable document)
-- **Home** is the **headwaters**: a persistent **landmark rail** of named tick markers (on a ruler line — explicitly not pills), search, and an opening status beat, followed by the whole settings system as **named sections** in one continuous river.
-- **Workspace** *is* Home — every category is a section in the stream; **managers are channels** you switch among via tabs within their section.
-- **Search** filters/jumps the river; selecting scrolls (momentum-eased) to the matching section and switches its channel.
-- **Scroll** drives the **landmark rail** (active marker advances) and a **progress indicator** along the rail.
-- **Deliberately explores:** reading-vs-jumping; whether a single long document with good landmarks is more legible than a hierarchy.
+- **Home** is the **headwaters**: a persistent **landmark rail** of named tick markers (on a ruler — explicitly not pills), search, the owned-families strip, an opening status beat, then the whole settings system as **named sections** in one continuous river.
+- **Workspace** *is* Home — every category is a section; **managers are channels** switched via tabs within their section.
+- **Search** filters/jumps the river; **scroll** drives the landmark rail and a progress indicator.
+- **Explores:** reading-vs-jumping; whether a single long document with good landmarks is more legible than a hierarchy.
 
 ## What each concept deliberately explores differently
 
@@ -37,57 +47,60 @@ Per the packet, this file records IA choices, what each concept deliberately exp
 | Where search lives | Dominant bar atop Home | Cmd+K overlay, top-center | Head of the single stack | In the headwaters, above the river |
 | Workspace shape | Book-TOC + continuous doc | Focus + context + minimap | Expand-in-place (no route) | The river itself |
 | Nav/jump mechanism | Left TOC + jump + scrollspy | Minimap + viewport pan | Subnav within expanded row | Landmark rail + channel tabs |
-| How managers relate | Full-stage surfaces, back-bar | Full-stage surfaces, back-bar | Rendered inline within the expanded row | Inline as channels within their section |
+| How managers relate | Full-stage surfaces, back-bar | Full-stage surfaces, back-bar | Inline within the expanded row | Inline as channels within their section |
 | Motion philosophy | Editorial cinematic (staggered) | Cartographic zoom/pan | Push/pop depth (FLIP) | Scroll-linked flow (calm at rest) |
 
 These are genuinely different answers to the same questions, not four skins of one design.
 
 ## Inventory / Plans conflicts found
 
-These are recorded in detail in `IMPACT_REGISTER.json` (record only — not applied). Headline conflicts:
+Recorded in detail in the per-concept `concepts/<name>/impact-register.json` (record only — not applied). Headline conflicts:
 
-1. **Primary category controls must stop reading as filter pills** (packet `01`, `00_START_HERE`). All four concepts replace the pill silhouette with destination panels / regions / rows / sections. This supersedes any existing inventory UI that renders categories as rounded chips.
-2. **Settings row state model** (packet `01`) requires nine unambiguous states. Several demo rows in the legacy bloom modal used empty fields to mean "auto"/"inherit"; the new model forbids that. Affects `settings_inventory.json` row definitions.
-3. **Category reorganization** (packet `01`): the humanized taxonomy (General, Appearance & Motion, Agents & Models, Permissions, Context/Memory/History, Planning/Goals, Git/Crew, Extensions, Media, System) differs from the legacy implementation-bound category list. Every required domain is preserved but regrouped.
-4. **Provider hierarchy** (packet `02`): Provider→Account→Connection→Product→Model is strictly separated; the legacy flat "API key list" flattens distinct concepts. Connection groups (installed apps / connected accounts / API / server / free-community) replace the flat list.
-5. **Claude/Antigravity CLI-owned OAuth** (packet `02`): PM must never present PM-direct OAuth for Claude or Antigravity; only CLI-owned flows inside isolated profiles. Any existing PM-OAuth path for these is a conflict.
-6. **Goal Mode requested-vs-effective** (packet `03`): configured concurrency ≠ current effective capacity; the slider shows both. Any setting that implies "set concurrency = run concurrency" is wrong.
-7. **Crew requested-vs-effective composition** (packet `03`): a template may request 5 members while capacity admits 2 and queues 3. Any UI that shows only the requested count is incomplete.
-8. **Spellcheck as a quiet shared service** (packet `04`): no permanent composer button, no autocorrect, skips technical content. Any existing spellcheck toolbar mode conflicts.
-9. **Theme selector model** (from PMConcept7 rev 7): family + mode (Auto/Light/Dark) rather than eight separate entries. The concepts follow the family/mode model.
+1. **Primary category controls must stop reading as filter pills** (`01`). All four concepts use destination panels / regions / rows / sections. The owned-families strip is destination-control cards, not pills.
+2. **Settings row state model** requires nine unambiguous states; the new managers + rows forbid empty-field-as-auto/inherit. Affects `settings_inventory.json`.
+3. **Humanized taxonomy** regroups domains (General & Desktop, Appearance, Agents & Models, Permissions & FileSafe, Code/Languages/Commands, Context/Memory/History, Planning/Goals/Testing/BSD, Git/Worktrees/Source Control/Crew/GitHub, Extensions, Media, System/Storage/Server). Every required domain is preserved.
+4. **Provider hierarchy** Provider→Account→Connection→Product→Model strictly separated; flat "API key list" flattens distinct concepts. Connection groups replace the flat list.
+5. **Provider CLI acquisition is explicit / official-source / host-specific — never bundled or pre-seeded.** Installations carry 5 confidence levels and 7 update states; unknown/ambiguous ownership is manual-only.
+6. **CLI-owned OAuth boundary:** Claude CLI & Antigravity CLI OAuth are CLI-owned; PM-direct OAuth only for OpenAI/Codex, GitHub, Copilot. Any PM-OAuth path for Claude/Antigravity is a conflict.
+7. **Goal Mode requested-vs-effective:** configured concurrency ≠ current effective capacity. Settings owns defaults+ceilings; runtime admits actual work.
+8. **Crew requested-vs-effective:** a template may request 5, capacity admits 2, queues 3.
+9. **Spellcheck as a quiet shared service:** no permanent button, no autocorrect, skips technical content. Grammar/style is a separate opt-in provider-backed feature.
+10. **Notifications title-bar stack is the sole in-app surface** — no bottom-right stack, bell, or dedicated Notifications side panel. Sound is never the only failure/approval signal. PeonPing/OpenPeon packs require format + license checks; unverified packs are never bundled.
+11. **Settings Lifecycle:** Copy Settings From is a one-time transactional copy (no universal inheritance system); no raw format dropdown as the primary interaction; restore point + atomic apply + rollback + receipt.
+12. **Server/Project Sync is deferred.** The Stream concept reserves manager grammar + semantic destinations for Servers / Execution Hosts / Clients / Project Hosting & Files / Remote Access / Updates with **named canonical owners and insertion contracts** — no state machine invented here.
+13. **Browser is PM-native only** — no Playwright runtime/facade/compatibility dependency.
 
 ## Functionality that remains simulated
 
-All of the following are **interactive in the concept** (they respond and show results) but do not call real backends:
+All of the following are **interactive** (they respond and show visible results) but do not call real backends:
 
-- Provider **refresh** (shows a "last-known-good held" overlay, then a toast — simulates stale-while-revalidate).
-- Provider/account **reconnect** (flips the row to healthy after a delay — simulates a probe).
-- Model **favorite/alias/effort/Normal-Fast** menu (applies a toast — no persistence to a real catalog).
-- **Search** runs against the in-memory demo dataset, not the real 818-setting inventory.
-- **Settings toggles/selects/sliders** update UI and toast; they do not write to `settings_inventory.json`.
-- **Manager add/connect** returns a simulated "Add … — simulated in concept" toast (honest about being a concept).
-- **Goal concurrency effective value** is a fixed demo number (2), not computed from live Usage/Orchestrator capacity.
-- **Spellcheck** uses the browser's HTML `spellcheck` attribute to simulate the underline concept; production needs a Slint-portable spelling-service abstraction (recorded as a Slint impact).
-- **Theme/reduced-motion/density** persist via localStorage only.
+- Provider **refresh** (last-known-good overlay + toast — stale-while-revalidate), **reconnect** (flips row healthy after a delay — simulated probe), **install/update/verify/repair** (toasts + state flips; success criteria are documented but not executed).
+- All **25 new family managers'** row actions (preview, test-send, run, enable, edit, open, logs, export, delete, dry-run…) run through a single generic action handler that produces honest toasts/state changes — no real operation.
+- Model favorite/alias/effort/Normal-Fast menu, search (against the in-memory demo dataset, not the 818-setting inventory), settings toggles/selects/sliders (UI + toast; no write to `settings_inventory.json`), theme/reduced-motion/density (localStorage only).
+- **Spellcheck** uses the browser `spellcheck` attribute to simulate the underline; production needs a Slint-portable spelling-service abstraction.
 
 No fake no-op actions are used: every control either does something visible or honestly reports it is simulated/unavailable.
 
-## Slint translation risks
+## Slint translation risks (Slint 1.17.1)
 
-Recorded per packet `05` (Slint 1.17.1 portability). The concepts deliberately avoid the listed unportable patterns; residual risks:
+Residual risks (semantic state is kept separate from DOM geometry throughout):
 
-1. **CSS Grid with `grid-template-areas`** (the shell) → Slint uses layout containers; the grid is a layout spec, not semantic state, so it translates to nested `VerticalLayout`/`HorizontalLayout`. Low risk but requires manual translation of the responsive reflow.
-2. **`backdrop-filter` (glass themes)** → Slint 1.17.1 has no analogue. Glass themes use **one backdrop blur over a pre-baked wallpaper** (the PMConcept7 T16 technique, already proven). The concept's glass implementation bakes the wallpaper into `--glass-wall`; production re-bakes at native resolution. The manager refresh-overlay also uses a backdrop blur and **falls back to an opaque plate under glass** (no nested blur) — this fallback must be preserved.
-3. **`color-mix(in srgb, …)`** is used for themed chip borders. Slint build is expected to precompute these (per FinalGUISpec F3-431); the concept leaves them as `color-mix` rather than hand-precomputing, since the Slint build owns that pass.
-4. **IntersectionObserver scrollspy** → not a DOM-measurement-as-semantic-state violation (it observes section visibility, not geometry-as-state), but Slint scroll views need an equivalent visibility/offset hook. Each concept keeps the active-sub **state** in `PM.state.activeSub` separate from DOM positions, so the semantic state is portable; only the observer mechanism is web-specific.
-5. **Smooth scroll + FLIP animations** → Slint has animations but not the web's `scrollTo({behavior})` or FLIP. Reduced-motion paths already reach the same final state via opacity/state changes; the motion paths need re-expression as Slint property animations.
-6. **`localStorage` persistence** → production uses the real settings store; the concept's localStorage is a web-only convenience with no Slint equivalent. Low risk (it is not semantic state).
-7. **Long lists** (provider/model rows, memory Gists) → the concepts render the full demo set (small). Production must virtualize per packet `05` ("no always-instantiated rendering of hundreds of rows"); the row components are already data-driven and stateless, so virtualization is additive.
-8. **`max-height` transition on Stack expand** → uses `max-height` animation which is a web idiom; Slint would animate `height` or use a layout animation. Reduced-motion path is opacity-only and portable.
-9. **Motion helpers (`motion.js`)** → FLIP, staggerIn, transitionView, smoothJump, pulseOnce, crossFade, growSettle are all web-DOM-idiom animations. The **semantic state** they animate (expanded/active-saved/active-sub) lives in `PM.state`, separate from DOM geometry. Slint port: each helper maps to a Slint property animation or layout animation; the reduced-motion fallbacks (opacity/state-only) are portable as-is.
-10. **Spellcheck demo (`spellcheck.js`)** → uses `contenteditable` + TreeWalker text-node wrapping, which is browser-only. Production must use a **Slint-portable spelling-service abstraction** (packet 04); the concept's dictionary/suggestion-menu/skip-logic contract is the portable part, not the DOM-wrapping mechanism.
-11. **Exposure-level disclosure** → the segmented control filters rows by `data-exposure` attribute; in Slint this is a model filter on the settings list, not a DOM show/hide. Portable.
-12. **Setup-stepper modal** → uses `position:fixed` overlay; Slint uses `PopupWindow` or a dialog component. Portable.
+1. **CSS Grid `grid-template-areas`** (shell) → nested Slint layout containers; responsive reflow translates manually.
+2. **`backdrop-filter` (glass)** → no Slint analogue. Glass uses **one backdrop blur over a pre-baked wallpaper** (PMConcept7 T16 technique). The manager refresh-overlay **falls back to an opaque plate under glass** (no nested blur) — preserve this.
+3. **`color-mix(in srgb,…)`** themed borders → Slint build precomputes (FinalGUISpec F3-431).
+4. **IntersectionObserver scrollspy** → observes section visibility, not geometry-as-state. Active-sub state lives in `PM.state.activeSub`; only the observer is web-specific. Stream's landmark rail uses scroll math (also portable as state).
+5. **Smooth scroll + FLIP** → reduced-motion paths reach the same final state via opacity/state; motion re-expresses as Slint property animations.
+6. **`localStorage`** → web-only convenience, not semantic state.
+7. **Long lists** (35 managers' resource rows, memory Gists, history, artifacts) → demo sets are small; production must virtualize. Row components are data-driven and stateless, so virtualization is additive.
+8. **`max-height` transition (Stack expand)** → web idiom; Slint animates `height`/layout. Reduced-motion path is opacity-only.
+9. **Motion helpers (motion.js)** → FLIP/staggerIn/transitionView/smoothJump/pulseOnce/crossFade/growSettle animate semantic state that lives in `PM.state`; each maps to a Slint property animation. Reduced-motion fallbacks are portable as-is.
+10. **Spellcheck demo** → `contenteditable` + TreeWalker is browser-only; the dictionary/suggestion-menu/skip contract is the portable part.
+11. **Exposure-level disclosure** → model filter in Slint, not DOM show/hide. Portable.
+12. **Owned-families strip + setup-stepper modal** → `position:fixed`/cards translate to Slint layout + `PopupWindow`. Portable.
+
+## Deliverables layout
+
+Per-concept registers live in `concepts/<name>/` (matching the CursorAuto / Qwen 5.8 sibling convention): `impact-register.json`, `manager-coverage.json`, `candidate-command-delta.json`, `candidate-wiring-delta.json`, `candidate-dry-delta.json`, `plan-owner-delta.md`. The root `IMPACT_REGISTER.json` is an aggregate index pointing into them. Candidate command IDs are provisional — they census existing `catalog.*` / `UCC-###` canon and flag reuse/alias/supersession/conflict; they do not mint canon.
 
 ## No ranking
 

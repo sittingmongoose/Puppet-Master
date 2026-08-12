@@ -3,12 +3,21 @@
 
    Three columns when there is room: a persistent history rail (left, ~170px,
    kit historyPanel), the transcript column, and a right-hand "inspector"
-   column holding the work surfaces (goal / todo / work chips). The inspector
-   only exists at env.width >= 975; below that the SAME surface elements move
-   (no rebuild — DOM state is carried) into a bottom drawer above the
-   composer, toggled by a "Work" button (a k3-acc region, not an overlay).
-   The flip happens live on 'env' changes; surfaces rebuild only when the
-   active thread changes.
+   column holding the work surfaces (ops conflicts lead, then capacity /
+   crew / goal / todo / work chips). The inspector only exists at
+   env.width >= 975; below that the SAME surface elements move (no rebuild —
+   DOM state is carried) into a bottom drawer above the composer, toggled by
+   a "Work" button (a k3-acc region, not an overlay). The flip happens live
+   on 'env' changes; surfaces rebuild only when the active thread changes.
+
+   Artifact workspace adapter (K3ArtifactWS, THE ONE shared surface —
+   reparented, never cloned): at >= 975px the rail gains [Chats · Artifacts]
+   tabs; the Artifacts tab hosts the surface and widens the rail 170 -> 300px
+   (CSS .is-art, chat floor >= 420px at 975px total). Below 975px the surface
+   rides the same move-the-node mechanics into the top of the Work drawer.
+   Opening an artifact flips the tab / opens the drawer automatically; the
+   Chats pane and history rail are otherwise untouched (tab/drawer switch
+   only, per-thread keys w2RailTab / w2WorkOpen).
 
    Provides exactly one [data-k3-slot="thread"] and one
    [data-k3-slot="composer"]; the host fills them (THE ONE HARD RULE).
@@ -63,11 +72,42 @@
 
       var body = el('div', 'w2-body');
 
-      // left: persistent history rail
+      // left: persistent history rail. Wide layout adds [Chats · Artifacts]
+      // tabs; the Artifacts tab hosts the shared artifact workspace surface
+      // and widens the rail (CSS .is-art). Narrow layout leaves the rail on
+      // the Chats pane, untouched.
       var rail = el('aside', 'w2-rail');
       rail.setAttribute('aria-label', 'Chat history');
+
+      function railTabBtn(label, iconName, tabId) {
+        var b = el('button', 'w2-rail-tab');
+        b.type = 'button';
+        b.setAttribute('role', 'tab');
+        b.setAttribute('data-w2-tab', tabId);
+        var ic = el('span', 'w2-rail-tab-ic');
+        ic.appendChild(icon(iconName));
+        b.appendChild(ic);
+        b.appendChild(el('span', 'w2-rail-tab-label', label));
+        return b;
+      }
+      var railTabs = el('div', 'w2-rail-tabs');
+      railTabs.setAttribute('role', 'tablist');
+      railTabs.setAttribute('aria-label', 'History rail view');
+      railTabs.hidden = true;
+      var tabChats = railTabBtn('Chats', 'history', 'chats');
+      var tabArts = railTabBtn('Artifacts', 'artifact', 'artifacts');
+      railTabs.appendChild(tabChats);
+      railTabs.appendChild(tabArts);
+      rail.appendChild(railTabs);
+
       var historyEl = kit.historyPanel(ctx);
-      rail.appendChild(historyEl);
+      var railChats = el('div', 'w2-rail-pane w2-rail-chats');
+      railChats.appendChild(historyEl);
+      rail.appendChild(railChats);
+
+      var railArts = el('div', 'w2-rail-pane w2-rail-art');
+      railArts.hidden = true;
+      rail.appendChild(railArts);
       body.appendChild(rail);
 
       // middle: transcript column + work drawer + composer
@@ -117,10 +157,15 @@
       root.appendChild(body);
       hostEl.appendChild(root);
 
+      // THE ONE shared artifact workspace surface — same node every call,
+      // reparented between the rail Artifacts pane (wide) and the Work
+      // drawer (narrow); never cloned.
+      var artSurface = window.K3ArtifactWS ? window.K3ArtifactWS.surface(ctx) : null;
+
       /* ---- presence + summary -------------------------------------------- */
       function presence(tid) {
         var t = tid ? data.thread(tid) : null;
-        var p = { goal: false, todo: false, chips: false, todoDone: 0, todoTotal: 0, agents: 0, files: 0 };
+        var p = { goal: false, todo: false, chips: false, ops: false, capacity: false, crew: false, artifacts: 0, todoDone: 0, todoTotal: 0, agents: 0, files: 0 };
         if (!t) return p;
         if (t.activeGoal && !store.get('goalView.' + tid + '.cleared', false)) p.goal = true;
         var items = t.todo && arr(t.todo.items);
@@ -133,14 +178,23 @@
         arr(t.subagentGroups).forEach(function (g) { p.agents += arr(g.agents).length; });
         arr(t.diffGroups).forEach(function (g) { p.files += arr(g.files).length; });
         p.chips = p.agents > 0 || p.files > 0 || hasActivity;
+        p.artifacts = arr(t.artifacts).length;
+        p.capacity = !!t.capacityForecast;
+        p.crew = !!t.crew;
+        var ops = window.K3Work && typeof window.K3Work.opsSummary === 'function' ? window.K3Work.opsSummary(tid) : null;
+        p.ops = !!(ops && arr(ops.conflicts).some(function (c) { return c && c.state !== 'resolved'; }));
         return p;
       }
-      function anyPresence(p) { return p.goal || p.todo || p.chips; }
+      function anyPresence(p) { return p.goal || p.todo || p.chips || p.ops || p.capacity || p.crew || p.artifacts > 0; }
       function kindsOf(p) {
-        return (p.goal ? 'goal,' : '') + (p.todo ? 'todo,' : '') + (p.chips ? 'chips' : '');
+        // artifact presence is NOT a rebuild kind: the artifact surface is a
+        // persistent shared node, never rebuilt with the kit surfaces.
+        return (p.ops ? 'ops,' : '') + (p.capacity ? 'cap,' : '') + (p.crew ? 'crew,' : '') +
+               (p.goal ? 'goal,' : '') + (p.todo ? 'todo,' : '') + (p.chips ? 'chips' : '');
       }
       function summaryOf(p, tid) {
         var parts = [];
+        if (p.ops) parts.push('Port conflict');
         if (p.goal) {
           var g = data.thread(tid).activeGoal;
           parts.push('Goal: ' + humanizeStatus(g.status));
@@ -148,6 +202,7 @@
         if (p.todo) parts.push('Todo ' + p.todoDone + '/' + p.todoTotal);
         if (p.agents) parts.push(p.agents + (p.agents === 1 ? ' agent' : ' agents'));
         if (p.files) parts.push(p.files + (p.files === 1 ? ' file changed' : ' files changed'));
+        if (p.artifacts) parts.push(p.artifacts + (p.artifacts === 1 ? ' artifact' : ' artifacts'));
         return parts.join(' · ');
       }
 
@@ -175,6 +230,20 @@
       function buildSurfaces() {
         unmountSurfaces();
         var p = presence(currentTid);
+        // operational awareness leads (packet: approvals/warnings lead), then
+        // capacity / crew, then the pre-existing goal / todo / chips.
+        if (p.ops && kit.opsSurface) {
+          var o = kit.opsSurface(ctx, currentTid);
+          if (o) surfaceNodes.push(o);
+        }
+        if (p.capacity && kit.capacitySurface) {
+          var cp = kit.capacitySurface(ctx, currentTid);
+          if (cp) surfaceNodes.push(cp);
+        }
+        if (p.crew && kit.crewSurface) {
+          var cw = kit.crewSurface(ctx, currentTid);
+          if (cw) surfaceNodes.push(cw);
+        }
         if (p.goal) {
           var g = kit.goalSurface(ctx, currentTid);
           if (g) surfaceNodes.push(g);
@@ -191,6 +260,18 @@
         placeSurfaces();
       }
 
+      // The shared artifact surface rides the same move-the-node mechanics:
+      // wide -> the rail's Artifacts pane; narrow -> the top of the Work
+      // drawer region. Reparented, never cloned.
+      function placeArtSurface() {
+        if (!artSurface) return;
+        if (wide) {
+          if (artSurface.parentNode !== railArts) railArts.appendChild(artSurface);
+        } else if (artSurface.parentNode !== workBody || workBody.firstChild !== artSurface) {
+          workBody.insertBefore(artSurface, workBody.firstChild);
+        }
+      }
+
       // Move the live surface elements into the active host and paint all
       // breakpoint-dependent chrome. Moving nodes keeps their DOM state.
       function placeSurfaces() {
@@ -198,11 +279,16 @@
         surfaceNodes.forEach(function (n) {
           if (n && n.parentNode !== host) host.appendChild(n);
         });
+        placeArtSurface();
         paint();
       }
 
       function drawerOpen() {
         return store.get('surfaceView.' + currentTid + '.w2WorkOpen', false) === true;
+      }
+      function railTab() {
+        if (!currentTid) return 'chats';
+        return store.get('surfaceView.' + currentTid + '.w2RailTab', 'chats');
       }
 
       function paint() {
@@ -222,6 +308,16 @@
         workBtnSummary.textContent = any ? summaryOf(p, currentTid) : '';
         workAcc.classList.toggle('is-open', !wide && open);
         if (wide) workAcc.classList.remove('is-open');
+
+        // rail tabs + pane swap: wide only; narrow the rail stays on Chats
+        // (history rail untouched — tab/drawer switch is the only change)
+        var artTab = wide && railTab() === 'artifacts';
+        railTabs.hidden = !wide;
+        rail.classList.toggle('is-art', artTab);
+        tabChats.setAttribute('aria-selected', artTab ? 'false' : 'true');
+        tabArts.setAttribute('aria-selected', artTab ? 'true' : 'false');
+        railChats.hidden = artTab;
+        railArts.hidden = !artTab;
       }
 
       function rebuildAll() {
@@ -244,13 +340,43 @@
         paint();
       });
 
+      tabChats.addEventListener('click', function () {
+        if (!currentTid) return;
+        store.set('surfaceView.' + currentTid + '.w2RailTab', 'chats');
+        paint();
+      });
+      tabArts.addEventListener('click', function () {
+        if (!currentTid) return;
+        store.set('surfaceView.' + currentTid + '.w2RailTab', 'artifacts');
+        paint();
+      });
+
+      // Opening an artifact flips the rail to the Artifacts tab (wide) or
+      // opens the Work drawer (narrow) so the surface lands where the user is
+      // looking. Close/status events just repaint; the surface self-renders.
+      function onWsChanged(evt) {
+        if (unmounted) return;
+        if (evt.threadId && currentTid && evt.threadId !== currentTid) return;
+        if (evt.open && currentTid) {
+          if (wide) {
+            if (railTab() !== 'artifacts') store.set('surfaceView.' + currentTid + '.w2RailTab', 'artifacts');
+          } else if (!drawerOpen()) {
+            store.set('surfaceView.' + currentTid + '.w2WorkOpen', true);
+          }
+        }
+        paint();
+      }
+
       /* ---- wiring ------------------------------------------------------------ */
       disposers.push(store.subscribe('activeThreadId', rebuildAll));
       disposers.push(store.subscribe('goalView', refresh));
       function onData(evt) {
         if (!evt) return;
         if (evt.type === 'threads-changed' || evt.type === 'restarted' ||
-            evt.type === 'message-added' || evt.type === 'questionnaire-resolved') refresh();
+            evt.type === 'message-added' || evt.type === 'questionnaire-resolved' ||
+            evt.type === 'ops-conflict' || evt.type === 'capacity-changed' ||
+            evt.type === 'crew-changed') refresh();
+        else if (evt.type === 'artifact-ws-changed') onWsChanged(evt);
       }
       ctx.on('data', onData);
       disposers.push(function () { ctx.off('data', onData); });
@@ -271,6 +397,9 @@
         if (unmounted) return;
         unmounted = true;
         unmountSurfaces();
+        // release THE shared artifact surface so the next window can reparent
+        // it (never destroyed — it outlives any single window mount)
+        try { if (artSurface && root.contains(artSurface)) artSurface.remove(); } catch (e) { /* ignore */ }
         disposers.forEach(function (fn) { try { fn(); } catch (e) { /* ignore */ } });
         disposers = [];
         try { if (headerEl.unmount) headerEl.unmount(); } catch (e) { /* ignore */ }

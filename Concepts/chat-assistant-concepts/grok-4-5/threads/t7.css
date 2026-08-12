@@ -25,10 +25,10 @@
 }
 .t7-paradigm-label {
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
 }
 .t7-nav {
   margin-left: auto;

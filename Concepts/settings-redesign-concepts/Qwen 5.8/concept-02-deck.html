@@ -1,764 +1,1546 @@
 <!doctype html>
-<html lang="en" data-theme="basic-dark" data-reduced-motion="0">
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-02-deck">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deck — Settings Command Center — Qwen 5.8</title>
 <link rel="stylesheet" href="_shared/pm-shell.css">
 <style>
+/* ============ Deck motion ============ */
 .dk-home, .dk-work { flex: 1; min-height: 0; overflow-y: auto; }
-.dk-enter { animation: dkEnter .38s cubic-bezier(.2,.8,.2,1) both; }
+.dk-enter { animation: dkEnter .36s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes dkEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.dk-stage > * { animation: dkStage .34s cubic-bezier(.2,.8,.2,1) both; }
+.dk-stage > * { animation: dkStage .32s cubic-bezier(.2,.8,.2,1) both; }
 .dk-stage > *:nth-child(2) { animation-delay: .05s; }
 .dk-stage > *:nth-child(3) { animation-delay: .1s; }
 .dk-stage > *:nth-child(4) { animation-delay: .15s; }
+.dk-stage > *:nth-child(5) { animation-delay: .2s; }
+.dk-stage > *:nth-child(6) { animation-delay: .25s; }
 @keyframes dkStage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.dk-doc .dk-sub, .dk-doc .dk-extra { animation: dkStage .3s cubic-bezier(.2,.8,.2,1) both; }
+.dk-doc > *:nth-child(2) { animation-delay: .04s; }
+.dk-doc > *:nth-child(3) { animation-delay: .08s; }
+.dk-doc > *:nth-child(4) { animation-delay: .12s; }
+.dk-doc > *:nth-child(5) { animation-delay: .16s; }
+.dk-doc > *:nth-child(6) { animation-delay: .2s; }
+.dk-doc > *:nth-child(n+7) { animation-delay: .24s; }
+/* LED attention pulse is bounded: exactly three beats, then steady. */
+.dk-led-att { animation: dkLedPulse 1.1s ease-in-out 3; }
+@keyframes dkLedPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+[data-reduced-motion="1"] .dk-enter, [data-reduced-motion="1"] .dk-stage > *,
+[data-reduced-motion="1"] .dk-doc .dk-sub, [data-reduced-motion="1"] .dk-doc .dk-extra,
+[data-reduced-motion="1"] .dk-led-att, [data-reduced-motion="1"] .dk-inbox-pop { animation: none; }
 
-.dk-wrap { max-width: 1120px; margin: 0 auto; padding: 26px 30px 70px; width: 100%; }
-.dk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+/* ============ Shared Deck atoms ============ */
+.dk-wrap { max-width: 1140px; margin: 0 auto; padding: 26px 30px 80px; width: 100%; }
 .dk-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); font-family: var(--font-mono); }
 .dk-title { font-size: 26px; font-weight: 750; color: var(--text-1); margin: 2px 0 0; letter-spacing: -.01em; }
-.dk-head-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.dk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.dk-cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.dk-led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.dk-led-ok { background: var(--ok); }
+.dk-led-warn { background: var(--warn); }
+.dk-led-att { background: var(--err); }
+.dk-led-info { background: var(--info); }
+.dk-led-off { background: var(--text-3); }
 
-.dk-cmd { position: relative; margin-bottom: 22px; }
-.dk-cmd-field { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; }
+/* ============ Command field ============ */
+.dk-cmd { position: relative; margin-bottom: 24px; }
+.dk-cmd-field { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 13px 15px; }
 .dk-cmd-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.dk-cmd-field input { flex: 1; background: none; border: none; outline: none; color: var(--text-1); font-size: 14.5px; font-family: var(--font-mono); }
+.dk-cmd-field input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--text-1); font-size: 14.5px; font-family: var(--font-mono); }
 .dk-cmd-field .pm-ico { color: var(--accent); }
-.dk-drop { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 50; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); max-height: 380px; overflow-y: auto; padding: 6px; }
+.dk-drop { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 60; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); max-height: 380px; overflow-y: auto; padding: 6px; }
 .dk-drop[hidden] { display: none; }
-.dk-drop-group { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 8px 10px 4px; }
 .dk-drop-item { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-radius: var(--radius-s); padding: 8px 10px; cursor: pointer; color: var(--text-1); }
 .dk-drop-item:hover, .dk-drop-item.active { background: var(--accent-soft); }
-.dk-drop-item .path { color: var(--text-3); font-size: 11px; font-family: var(--font-mono); }
+.dk-drop-main { flex: 1; min-width: 0; }
+.dk-drop-title { font-size: 13px; font-weight: 650; }
+.dk-drop-path { color: var(--text-3); font-size: 11px; font-family: var(--font-mono); }
+.dk-drop-empty { padding: 10px 12px; color: var(--text-2); font-size: 12.5px; }
 
-.dk-board-cap, .dk-mod-cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
-.dk-board { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
-.dk-notice { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 11px 14px; }
-.pm-app[data-wtier="squeezed"] .dk-notice { grid-template-columns: 1fr; gap: 8px; }
-.dk-notice .reason { color: var(--text-2); font-size: 12px; margin-top: 2px; }
-.dk-notice .head { color: var(--text-1); font-weight: 650; font-size: 13px; }
-.dk-notice-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
-.dk-calm { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 16px; color: var(--text-2); font-size: 12.5px; }
+/* ============ Status board ============ */
+.dk-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-bottom: 26px; }
+.dk-cell { display: flex; align-items: center; gap: 10px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 12px 14px; cursor: pointer; color: var(--text-1); transition: border-color .16s, background-color .16s; }
+.dk-cell:hover { border-color: var(--accent); background: var(--surface-2); }
+.dk-cell-led { flex: none; display: flex; align-items: center; }
+.dk-cell-body { flex: 1; min-width: 0; }
+.dk-cell-label { display: block; font-size: 11px; font-family: var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+.dk-cell-value { display: block; font-size: 13px; font-weight: 650; margin-top: 2px; }
+.dk-cell-sub { display: block; font-size: 11.5px; color: var(--text-2); margin-top: 1px; }
+.dk-cell-open { flex: none; display: flex; align-items: center; gap: 4px; color: var(--accent); font-size: 11px; font-weight: 650; font-family: var(--font-mono); }
 
-.dk-mods { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-.dk-mod { display: flex; flex-direction: column; gap: 8px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 16px; cursor: pointer; min-height: 148px; }
-.dk-mod { transition: border-color .16s, background-color .16s; }
-.dk-mod:hover { border-color: var(--accent); background: var(--surface-2); }
+/* ============ Destination tiles ============ */
+.dk-mods { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-bottom: 28px; }
+.dk-mod { display: flex; flex-direction: column; gap: 8px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 16px; cursor: pointer; min-height: 150px; color: var(--text-1); transition: border-color .16s, background-color .16s; }
+.dk-mod:hover, .dk-mod:focus-visible { border-color: var(--accent); background: var(--surface-2); }
 .dk-mod-top { display: flex; align-items: center; gap: 10px; }
-.dk-mod-ico { width: 32px; height: 32px; border-radius: var(--radius-s); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); }
+.dk-mod-ico { width: 32px; height: 32px; border-radius: var(--radius-s); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); flex: none; }
 .dk-mod h3 { margin: 0; font-size: 14.5px; color: var(--text-1); font-weight: 700; }
 .dk-mod p { margin: 0; color: var(--text-2); font-size: 12px; flex: 1; }
-.dk-mod-readout { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.dk-mod-readout { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .dk-mod-open { display: flex; align-items: center; gap: 6px; color: var(--accent); font-size: 12px; font-weight: 650; font-family: var(--font-mono); }
-.dk-led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
-.dk-led-ok { background: var(--ok); } .dk-led-warn { background: var(--warn); } .dk-led-err { background: var(--err); } .dk-led-off { background: var(--text-3); }
 
-.dk-strip { position: sticky; top: 0; z-index: 30; background: var(--bg-shell); border-bottom: 1px solid var(--border); padding: 10px 18px; display: flex; gap: 10px; align-items: center; }
+/* ============ Notices ============ */
+.dk-notice { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 11px 14px; margin-bottom: 8px; }
+.pm-app[data-wtier="squeezed"] .dk-notice { grid-template-columns: 1fr; gap: 8px; }
+.dk-notice .head { color: var(--text-1); font-weight: 650; font-size: 13px; }
+.dk-notice .reason { color: var(--text-2); font-size: 12px; margin-top: 2px; }
+.dk-notice-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; align-items: center; }
+.dk-calm { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 16px; color: var(--text-2); font-size: 12.5px; display: flex; gap: 8px; align-items: center; }
+
+/* ============ Recents ============ */
+.dk-recents { display: flex; flex-direction: column; gap: 6px; }
+.dk-recent { display: flex; align-items: center; gap: 10px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 8px 12px; cursor: pointer; color: var(--text-1); }
+.dk-recent:hover { border-color: var(--accent); }
+.dk-recent b { font-size: 12.5px; }
+.dk-recent .where { color: var(--text-2); font-size: 11.5px; flex: 1; min-width: 0; }
+.dk-recent .when { color: var(--text-3); font-size: 11px; font-family: var(--font-mono); }
+
+/* ============ Title-bar inbox (sole in-app notification surface) ============ */
+.dk-inbox { position: relative; display: inline-flex; }
+.dk-inbox-btn { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-3); color: var(--text-2); font-size: 11.5px; cursor: pointer; }
+.dk-inbox-btn:hover { color: var(--text-1); border-color: var(--border-strong); }
+.dk-inbox-count { min-width: 16px; height: 16px; border-radius: 999px; background: var(--accent); color: var(--accent-contrast); font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+.dk-inbox-count.zero { background: var(--surface-2); color: var(--text-3); border: 1px solid var(--border); }
+.dk-inbox-pop { position: absolute; top: calc(100% + 8px); right: 0; width: 330px; max-width: 86vw; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); z-index: 80; padding: 8px; animation: dkStage .18s ease both; }
+.dk-inbox-pop[hidden] { display: none; }
+.dk-inbox-item { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; background: none; border: none; border-radius: var(--radius-s); padding: 8px 10px; cursor: pointer; color: var(--text-1); }
+.dk-inbox-item:hover { background: var(--accent-soft); }
+.dk-inbox-item .t { font-size: 12px; font-weight: 600; }
+.dk-inbox-item .r { font-size: 11px; color: var(--text-2); }
+.dk-inbox-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 10px 2px; }
+
+/* ============ Workspace: sticky strip ============ */
+.dk-work { position: relative; }
+.dk-strip { position: sticky; top: 0; z-index: 40; background: var(--bg-shell); border-bottom: 1px solid var(--border); padding: 9px 16px; display: flex; gap: 10px; align-items: center; }
 [data-chrome-blur="on"] .dk-strip { backdrop-filter: var(--chrome-blur); }
-.dk-strip .pm-back { flex: none; }
-.dk-tabs { display: flex; gap: 4px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.dk-back { flex: none; }
+.dk-tabs { display: flex; gap: 4px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; scroll-behavior: smooth; }
 .dk-tabs::-webkit-scrollbar { display: none; }
-.dk-tab { position: relative; border: none; background: none; color: var(--text-2); font-size: 12.5px; padding: 7px 12px; cursor: pointer; white-space: nowrap; border-radius: var(--radius-s); font-family: var(--font-mono); transition: background-color .18s, color .18s; }
+.dk-tab { position: relative; border: none; background: none; color: var(--text-2); font-size: 12.5px; padding: 7px 12px; cursor: pointer; white-space: nowrap; border-radius: var(--radius-s); font-family: var(--font-mono); transition: background-color .18s, color .18s; flex: none; }
 .dk-tab:hover { color: var(--text-1); background: var(--surface-2); }
 .dk-tab.active { color: var(--accent); background: var(--accent-soft); font-weight: 700; }
-.dk-strip .dk-search-mini { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-s); padding: 6px 10px; flex: 0 1 260px; min-width: 150px; }
-.dk-strip .dk-search-mini input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12px; font-family: var(--font-mono); }
+.dk-find { flex: none; }
 
-.dk-doc { max-width: 780px; margin: 0 auto; padding: 24px 22px 90px; }
-.dk-sub { margin-bottom: 30px; scroll-margin-top: 66px; }
-.dk-sub h2 { font-size: 16px; color: var(--text-1); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+/* ============ Workspace body: subnav + document ============ */
+.dk-work-body { display: grid; grid-template-columns: 198px minmax(0, 1fr); gap: 24px; max-width: 1180px; margin: 0 auto; padding: 20px 26px 90px; width: 100%; }
+.pm-app[data-wtier="narrow"] .dk-work-body, .pm-app[data-wtier="squeezed"] .dk-work-body { grid-template-columns: 1fr; gap: 12px; padding: 14px 16px 80px; }
+.dk-subnav { position: sticky; top: 58px; align-self: start; display: flex; flex-direction: column; gap: 2px; max-height: calc(100vh - 140px); overflow-y: auto; }
+.pm-app[data-wtier="narrow"] .dk-subnav, .pm-app[data-wtier="squeezed"] .dk-subnav { display: none; }
+.pm-app[data-wtier="narrow"] .dk-subnav.open, .pm-app[data-wtier="squeezed"] .dk-subnav.open { display: flex; flex-direction: column; position: fixed; top: 46px; bottom: 32px; left: 0; width: min(280px, 84vw); z-index: 80; background: var(--surface); border-right: 1px solid var(--border-strong); box-shadow: var(--shadow); padding: 40px 12px 16px; overflow-y: auto; }
+.dk-subnav-close { display: none; }
+.pm-app[data-wtier="narrow"] .dk-subnav.open .dk-subnav-close, .pm-app[data-wtier="squeezed"] .dk-subnav.open .dk-subnav-close { display: inline-flex; position: absolute; top: 8px; right: 8px; }
+.dk-subnav-drawer { display: none; }
+.pm-app[data-wtier="narrow"] .dk-subnav-drawer, .pm-app[data-wtier="squeezed"] .dk-subnav-drawer { display: inline-flex; }
+.dk-subnav-item { position: relative; display: flex; align-items: center; gap: 8px; text-align: left; border: none; background: none; color: var(--text-2); font-size: 12px; padding: 6px 10px 6px 16px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap; }
+.dk-subnav-item::before { content: ""; position: absolute; left: 5px; top: 50%; width: 5px; height: 5px; border-radius: 50%; transform: translateY(-50%); background: var(--border-strong); transition: background-color .18s, box-shadow .18s; }
+.dk-subnav-item:hover { color: var(--text-1); background: var(--surface-2); }
+.dk-subnav-item.active { color: var(--accent); font-weight: 650; }
+.dk-subnav-item.active::before { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dk-doc { min-width: 0; }
+.dk-doc-head { margin-bottom: 18px; }
+.dk-doc-head h1 { font-size: 20px; color: var(--text-1); margin: 3px 0 4px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dk-doc-head p { margin: 0; color: var(--text-2); font-size: 12.5px; }
+.dk-sub { margin-bottom: 34px; scroll-margin-top: 70px; }
+.dk-sub h2 { font-size: 15.5px; color: var(--text-1); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .dk-sub h2 .idx { font-family: var(--font-mono); color: var(--text-3); font-size: 12px; }
-.dk-row { border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface); margin-bottom: 6px; }
-.dk-row-line { display: flex; align-items: center; gap: 12px; padding: 10px 14px; }
-.dk-row-line > div:first-child { flex: 1; min-width: 0; }
-.dk-row-label { color: var(--text-1); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.dk-row-desc { color: var(--text-3); font-size: 11.5px; margin-top: 1px; }
-.dk-row-ctl { display: flex; align-items: center; gap: 8px; flex: none; }
-.dk-readout { font-family: var(--font-mono); font-size: 12px; color: var(--accent); background: var(--accent-soft); border-radius: var(--radius-s); padding: 3px 8px; white-space: nowrap; }
-.dk-row-detail { display: none; border-top: 1px solid var(--border); background: var(--surface-3); padding: 10px 14px; font-size: 12px; color: var(--text-2); font-family: var(--font-mono); }
-.dk-row.open .dk-row-detail { display: block; }
-.dk-row[data-hidden="true"] { display: none; }
+.dk-extra { scroll-margin-top: 70px; margin-bottom: 34px; }
+.dk-extra h2 { font-size: 15.5px; color: var(--text-1); margin: 0 0 4px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dk-extra .dk-extra-why { color: var(--text-3); font-size: 11.5px; margin: 0 0 10px; }
 
-.dk-console { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 10px; overflow: hidden; }
-.dk-console-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; flex-wrap: wrap; }
-.dk-console-head:hover { background: var(--surface-2); }
-.dk-console-head .name { font-weight: 700; color: var(--text-1); font-size: 13.5px; }
-.dk-console-head .pm-ico.chev { margin-left: auto; color: var(--text-3); transition: transform .2s; }
-.dk-console.open .pm-ico.chev { transform: rotate(90deg); }
-.dk-console-body { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
-.dk-console.open .dk-console-body { display: block; animation: pmReveal .22s ease both; }
-.dk-kv { display: grid; grid-template-columns: 160px 1fr; gap: 3px 12px; font-size: 12px; margin: 8px 0; }
-.dk-kv dt { color: var(--text-3); font-family: var(--font-mono); }
-.dk-kv dd { margin: 0; color: var(--text-1); }
-.dk-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
-.dk-cap-line { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 18px 0 8px; }
-.dk-model-line { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-s); margin-bottom: 6px; background: var(--surface-3); flex-wrap: wrap; }
-.dk-model-line .name { font-weight: 650; color: var(--text-1); }
-.dk-model-line .meta { color: var(--text-3); font-family: var(--font-mono); font-size: 11px; }
-.dk-fav { background: none; border: none; color: var(--text-3); cursor: pointer; padding: 2px; display: inline-flex; }
-.dk-fav.on { color: var(--warn); }
-.dk-role-grid { display: grid; grid-template-columns: 160px 1fr 1fr; gap: 8px 12px; font-size: 12px; align-items: baseline; }
-.pm-app[data-wtier="squeezed"] .dk-role-grid { grid-template-columns: 1fr; }
-.dk-role-grid .h { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; color: var(--text-3); text-transform: uppercase; }
-.dk-role-grid .eff { color: var(--text-1); font-weight: 650; }
-.dk-role-grid .req { color: var(--text-3); }
-.dk-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 13px 15px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
+/* Deck flavor on shared rows/managers */
+.dk-set-row { border-radius: var(--radius-s); }
+.dk-mgr { border-radius: var(--radius-m); margin: 14px 0 4px; }
+.dk-mgr .pm-mgr-head { background: var(--surface-3); }
+.dk-provider { border-radius: var(--radius-m); }
 
-.dk-wave { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.dk-wave-m { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--accent); display: inline-flex; align-items: center; justify-content: center; color: var(--accent); background: none; }
-.dk-wave-m.admitted { background: var(--accent); color: var(--accent-contrast); }
-.dk-wave-m.queued { border-style: dashed; opacity: .7; }
-.dk-term-preview { border-radius: var(--radius-s); padding: 10px 12px; font-family: var(--font-mono); font-size: 11.5px; margin-top: 8px; border: 1px solid var(--border); }
-.dk-pal { display: flex; gap: 4px; margin-top: 8px; }
-.dk-pal span { width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--border-strong); }
+/* ============ Destination list (demonstrated) ============ */
+.dk-dest { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 10px 13px; margin-bottom: 8px; }
+.dk-dest-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--text-1); font-size: 12.5px; }
+.dk-dest-head b { font-size: 13px; }
+.dk-dest-meta { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 11.5px; color: var(--text-2); margin-top: 5px; }
+.dk-dest-actions { display: inline-flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.dk-dest-note { font-size: 11.5px; color: var(--warn); margin-top: 5px; }
+.dk-route-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+.dk-route-table th { text-align: left; color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; padding: 4px 8px; border-bottom: 1px solid var(--border-strong); }
+.dk-route-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); color: var(--text-1); vertical-align: top; }
+.dk-route-table .dests { color: var(--text-2); }
+.dk-surface-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); background: var(--surface-3); padding: 11px 13px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--text-2); }
+
+/* ============ Dictionaries (demonstrated spellcheck) ============ */
+.dk-dict-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pm-app[data-wtier="squeezed"] .dk-dict-cols { grid-template-columns: 1fr; }
+.dk-dict-col { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 10px 12px; }
+.dk-dict-col h4 { margin: 0 0 8px; font-size: 12.5px; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
+.dk-word { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface-3); color: var(--text-1); font-size: 11.5px; padding: 2px 6px 2px 9px; margin: 0 5px 5px 0; }
+.dk-word button { border: none; background: none; color: var(--text-3); cursor: pointer; display: inline-flex; padding: 1px; border-radius: 50%; }
+.dk-word button:hover { color: var(--err); }
+.dk-dict-add { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.dk-dict-add input { flex: 1; min-width: 140px; }
+
+/* ============ Theme grid (demonstrated) ============ */
+.dk-theme-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.dk-theme-card { cursor: pointer; position: relative; transition: border-color .15s, transform .15s; min-width: 150px; flex: 0 1 auto; }
+.dk-theme-card:hover { border-color: var(--accent); }
+.dk-theme-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.dk-theme-card.applied::after { content: "Applied"; position: absolute; top: 8px; right: 8px; font-size: 10px; font-weight: 700; color: var(--ok); border: 1px solid var(--ok); border-radius: 999px; padding: 0 6px; }
+.dk-theme-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.dk-theme-diag { border: 1px solid var(--err); border-radius: var(--radius-s); background: color-mix(in srgb, var(--err) 8%, transparent); color: var(--text-1); font-size: 11.5px; padding: 7px 10px; margin-top: 6px; font-family: var(--font-mono); }
+.dk-preview-note { font-size: 11px; color: var(--text-3); margin-top: 8px; }
+
+/* ============ Desktop/Tray/Window + Teacher (Deck-demonstrated) ============ */
+.dk-ab { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+.dk-ab-row { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface-3); padding: 6px 10px; flex-wrap: wrap; }
+.dk-ab-row.hidden-item { opacity: .55; }
+.dk-ab-row .nm { flex: 1; min-width: 100px; font-size: 12.5px; color: var(--text-1); font-weight: 600; }
+.dk-fxcard { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 9px 12px; margin-bottom: 7px; display: flex; gap: 9px; align-items: flex-start; flex-wrap: wrap; font-size: 12px; color: var(--text-2); }
+.dk-fxcard .st { flex: none; }
+.dk-teacher-card { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 11px 13px; margin-bottom: 8px; }
+.dk-teacher-card b { color: var(--text-1); font-size: 13px; }
+.dk-teacher-card .screen { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+.dk-teacher-card p { margin: 5px 0 8px; color: var(--text-2); font-size: 12px; }
+.dk-teacher-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ Misc ============ */
+.dk-cap-line { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 18px 0 8px; display: flex; align-items: center; gap: 8px; }
+.dk-swatches { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.dk-swatches span { width: 15px; height: 15px; border-radius: 3px; border: 1px solid var(--border-strong); }
+.dk-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; color: var(--text-2); font-size: 12.5px; margin: 10px 0; background: var(--surface-3); }
+.dk-quietline { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--text-2); }
 </style>
 </head>
-<body data-concept-model="Qwen 5.8" data-concept="deck">
-<div id="app"></div>
-<script src="_shared/concept-hub-bridge.js"></script>
+<body>
+<div id="app" data-concept-model="Qwen 5.8"></div>
 <script src="_shared/pm-icons.js"></script>
 <script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-data-extra.js"></script>
 <script src="_shared/pm-state.js"></script>
 <script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-managers.js"></script>
 <script src="_shared/pm-shell.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
 <script>
 (function () {
   "use strict";
+
   var MODEL = "Qwen 5.8";
+
+  // ---- Boot (contract order) ------------------------------------------------
+  window.PMState.init("concept-02-deck");
+  window.PMManagers.setPrefix("dk-");
   var shell = window.PMShell.mount({ conceptName: "Deck concept", model: MODEL });
   var content = shell.content;
+
+  var ST = window.PMState;
+  var M = window.PMManagers;
+  var D = window.PMDemoData;
+  var esc = M.esc;
   var INDEX = window.PMCore.buildSearchIndex();
-  var IMPLEMENTED = { providers: true, crew: true, terminal: true, lsp: true };
-  var MANAGER_HOME = { memory: "Ledger", "context-sources": "Ledger", skills: "Ledger", mcp: "Atlas", personas: "Spoke", media: "Spoke" };
+
   var spy = null;
+  var openPanes = {};
   var activeDrop = -1;
-  var openConsoles = {};
+  var dropHits = [];
 
-  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // Deck-local fixture state for the Desktop/Tray/Window demonstration rows.
+  var deckDesktop = {
+    minTray: true, closeTray: false, trayRunning: true, crashRecovery: true, bufferProtect: true,
+    launchDest: "Restore last workspace", restore: "Last size",
+    activityBar: [
+      { id: "ab-explore", label: "Explorer", hidden: false },
+      { id: "ab-search", label: "Search", hidden: false },
+      { id: "ab-scm", label: "Source Control", hidden: false },
+      { id: "ab-run", label: "Run & Debug", hidden: true },
+      { id: "ab-ext", label: "Extensions", hidden: false }
+    ]
+  };
+
+  function ico(n, s) { return window.PMIcons.get(n, s || 14); }
   function led(kind) { return '<span class="dk-led dk-led-' + kind + '" aria-hidden="true"></span>'; }
+  function wsView(o) { var v = { name: "workspace" }; Object.keys(o).forEach(function (k) { v[k] = o[k]; }); return v; }
+  function dest(id) { for (var i = 0; i < D.destinations.length; i++) if (D.destinations[i].id === id) return D.destinations[i]; return null; }
+  function destKindLed(kind) { return kind === "attention" ? "att" : kind === "warn" ? "warn" : kind === "info" ? "info" : "ok"; }
+  function reduced() { return window.PMCore.reducedMotion(); }
 
-  function route() {
-    var v = window.PMState.state.view;
-    if (spy) { spy.destroy(); spy = null; }
-    if (v.name === "home") renderHome(); else renderWork(v);
+  // ---- Title-bar inbox: the ONLY in-app notification surface ----------------
+  var inbox = document.createElement("div");
+  inbox.className = "dk-inbox";
+  inbox.innerHTML =
+    '<button class="dk-inbox-btn" data-inbox-btn aria-haspopup="true" aria-label="Title-bar notification inbox">' +
+      ico("inbox", 13) + '<span class="dk-inbox-count zero" data-inbox-count>0</span>' +
+    '</button>' +
+    '<div class="dk-inbox-pop" data-inbox-pop hidden></div>';
+  var topbar = shell.app.querySelector(".pm-topbar");
+  topbar.insertBefore(inbox, topbar.querySelector(".pm-spacer"));
+
+  function liveNotices() {
+    var dis = ST.state.collections.dismissedNotices;
+    return ST.state.notices.filter(function (n) { return dis.indexOf(n.id) < 0; });
+  }
+
+  function refreshInbox() {
+    var list = liveNotices();
+    var count = inbox.querySelector("[data-inbox-count]");
+    count.textContent = String(list.length);
+    count.classList.toggle("zero", list.length === 0);
+    var pop = inbox.querySelector("[data-inbox-pop]");
+    var items = list.slice(0, 4).map(function (n) {
+      return '<button class="dk-inbox-item" data-inbox-go="' + esc(n.id) + '">' +
+        '<span class="t">' + esc(n.headline) + "</span>" +
+        '<span class="r">' + esc(n.status) + " · " + esc(n.reason) + "</span>" +
+      "</button>";
+    }).join("");
+    pop.innerHTML = items +
+      '<div class="dk-inbox-foot"><span class="pm-note">Title-bar stack — the only in-app surface. No status-bar bell.</span>' +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-inbox-home>Home</button></div>';
+  }
+
+  inbox.querySelector("[data-inbox-btn]").addEventListener("click", function (e) {
+    e.stopPropagation();
+    var pop = inbox.querySelector("[data-inbox-pop]");
+    refreshInbox();
+    pop.hidden = !pop.hidden;
+  });
+  document.addEventListener("click", function (e) {
+    var pop = inbox.querySelector("[data-inbox-pop]");
+    if (!pop.hidden && !(e.target.closest && e.target.closest(".dk-inbox"))) pop.hidden = true;
+  });
+  inbox.addEventListener("click", function (e) {
+    var go = e.target.closest ? e.target.closest("[data-inbox-go]") : null;
+    if (go) {
+      var n = null;
+      ST.state.notices.forEach(function (x) { if (x.id === go.getAttribute("data-inbox-go")) n = x; });
+      inbox.querySelector("[data-inbox-pop]").hidden = true;
+      if (n) noticePrimary(n);
+      return;
+    }
+    if (e.target.closest && e.target.closest("[data-inbox-home]")) {
+      inbox.querySelector("[data-inbox-pop]").hidden = true;
+      ST.navigate({ name: "home" });
+    }
+  });
+  refreshInbox();
+
+  // ---- Notice actions ---------------------------------------------------------
+  function noticePrimary(n) {
+    switch (n.id) {
+      case "gemini-probe": ST.navigate(wsView({ category: "models", manager: "providers", provider: "gemini-cli" })); return;
+      case "anthropic-usage": ST.navigate(wsView({ category: "models", subcategory: "continuation", setting: "models.continuation.anthropic-max" })); return;
+      case "mcp-docs": ST.navigate(wsView({ category: "extensions", manager: "mcp" })); return;
+      case "perm-conflict": ST.navigate(wsView({ category: "permissions", manager: "permissions" })); return;
+      case "update-openai": ST.navigate(wsView({ category: "models", manager: "providers", provider: "openai" })); return;
+      case "continue-mistral": ST.navigate(wsView({ category: "models", manager: "providers", provider: "mistral-free" })); return;
+      case "continue-pack": ST.navigate(wsView({ category: "notifications", manager: "sounds" })); return;
+      case "rec-backup": ST.backupNow("bk-settings"); return;
+      case "rec-persona": ST.navigate(wsView({ category: "behavior", manager: "personas" })); return;
+    }
+    if (n.target) ST.navigate(wsView(n.target)); else ST.receipt(n.action, "Simulated notice action.", "sim");
+  }
+  function noticeSecondary(n) {
+    switch (n.id) {
+      case "gemini-probe": ST.navigate(wsView({ category: "models", manager: "providers", provider: "gemini-cli" })); return;
+      case "anthropic-usage": ST.receipt("Usage", "Usage shows measured balances, forecasts, and resets. It is a separate surface from Settings. Simulated navigation.", "info"); return;
+      case "mcp-docs": ST.receipt("Repair queued", "Local Docs MCP server repair queued — transport spawn will be retried with logging. Simulated.", "sim"); return;
+      case "update-openai": ST.navigate(wsView({ category: "models", manager: "providers" })); return;
+      case "rec-backup": ST.navigate(wsView({ category: "system", manager: "backup" })); return;
+    }
+    if (n.target) ST.navigate(wsView(n.target)); else ST.receipt(n.secondary || n.action, "Simulated notice action.", "sim");
+  }
+
+  // ---- HOME -------------------------------------------------------------------
+  function providerCounts() {
+    var ok = 0, att = 0;
+    ST.state.providers.forEach(function (p) { if (p.state === "ready") ok++; else att++; });
+    return { ok: ok, att: att };
+  }
+  function settingsBackupAge() {
+    var run = null;
+    ST.state.collections.backupRuns.forEach(function (b) { if (b.id === "bk-settings") run = b; });
+    return run ? run.last : "unknown";
+  }
+
+  function noticeCard(n) {
+    var chipKind = n.kind === "attention" ? "danger" : n.kind === "continue" ? "info" : "ok";
+    var ledKind = n.kind === "attention" ? "att" : n.kind === "continue" ? "warn" : "ok";
+    return '<div class="dk-notice" data-notice-card="' + esc(n.id) + '">' +
+      '<div><span class="pm-badge pm-badge-' + chipKind + '">' + led(ledKind) + " " + esc(n.status) + "</span></div>" +
+      '<div><div class="head">' + esc(n.headline) + '</div><div class="reason">' + esc(n.reason) + "</div></div>" +
+      '<div class="dk-notice-actions">' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-notice-go="' + esc(n.id) + '">' + esc(n.action) + "</button>" +
+        (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-notice-go2="' + esc(n.id) + '">' + esc(n.secondary) + "</button>" : "") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-act="notice.dismiss" data-notice="' + esc(n.id) + '" aria-label="Dismiss notice">' + ico("x", 12) + "</button>" +
+      "</div>" +
+    "</div>";
+  }
+
+  function noticeGroup(title, cap, list) {
+    if (!list.length) return "";
+    return '<div class="dk-cap" style="margin-top:16px">' + cap + " " + esc(title) + " (" + list.length + ")</div>" +
+      list.map(noticeCard).join("");
   }
 
   function renderHome() {
-    var st = window.PMState.state;
-    var attn = st.notices.filter(function (n) { return n.kind === "attention"; });
-    var others = st.notices.filter(function (n) { return n.kind !== "attention"; });
-    var html = '<div class="dk-home dk-enter" id="dk-home"><div class="dk-wrap dk-stage">' +
-      '<div class="dk-head"><div><div class="dk-kicker">SETTINGS // DECK // ' + MODEL + '</div><h1 class="dk-title">Command center</h1></div>' +
-      '<div class="dk-head-meta">' +
-        '<span class="pm-badge pm-badge-ok">' + led("ok") + " 7 destinations healthy</span>" +
-        '<span class="pm-badge pm-badge-warn">' + led("warn") + " " + attn.length + " need decisions</span>" +
-        '<span class="pm-badge">' + window.PMIcons.get("robot", 11) + " Route: Claude Sonnet 4.5</span>" +
-      "</div></div>" +
-      '<div class="dk-cmd"><label class="dk-cmd-field">' + window.PMIcons.get("search", 17) +
-        '<input id="dk-q" placeholder="Search or type a command… (settings, providers, models, managers)" autocomplete="off" aria-label="Search settings">' +
+    var st = ST.state;
+    var pc = providerCounts();
+    var notices = liveNotices();
+    var attention = notices.filter(function (n) { return n.kind === "attention"; });
+    var cont = notices.filter(function (n) { return n.kind === "continue"; });
+    var recommended = notices.filter(function (n) { return n.kind === "recommended"; });
+    var discordNote = null;
+    st.collections.notificationDestinations.forEach(function (d) { if (d.state === "needs-auth") discordNote = d; });
+
+    var html = '<div class="dk-home dk-enter"><div class="dk-wrap dk-stage">' +
+      '<div class="dk-head"><div><div class="dk-kicker">SETTINGS // DECK // ' + MODEL + '</div>' +
+      '<h1 class="dk-title">Command center</h1></div></div>' +
+
+      '<div class="dk-cmd"><label class="dk-cmd-field">' + ico("search", 17) +
+        '<input id="dk-q" type="text" placeholder="Search or type a command… settings, providers, models, managers" autocomplete="off" aria-label="Search settings">' +
         '<span class="pm-kbd">Enter</span></label>' +
-        '<div class="dk-drop" id="dk-drop" hidden></div></div>' +
-      '<div class="dk-board-cap">' + window.PMIcons.get("alertCircle", 13) + " Status board</div>" +
+        '<div class="dk-drop" id="dk-drop" hidden role="listbox" aria-label="Search results"></div></div>' +
+
+      '<div class="dk-cap">' + ico("activity", 13) + " Status board</div>" +
       '<div class="dk-board">' +
-        (st.notices.length ? st.notices.map(function (n) {
-          var chip = n.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + led("err") + " " + esc(n.status) + "</span>"
-            : n.kind === "continue" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " " + esc(n.status) + "</span>"
-            : '<span class="pm-badge pm-badge-ok">' + led("ok") + " " + esc(n.status) + "</span>";
-          return '<div class="dk-notice" data-notice="' + n.id + '"><div>' + chip + "</div>" +
-            '<div><div class="head">' + esc(n.headline) + '</div><div class="reason">' + esc(n.reason) + "</div></div>" +
-            '<div class="dk-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-na>' + esc(n.action) + "</button>" +
-            (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-ns>' + esc(n.secondary) + "</button>" : "") +
-            "</div></div>";
-        }).join("") : '<div class="dk-calm">' + window.PMIcons.get("checkCircle", 14) + " All systems nominal. No notices — this is the calm state.</div>") +
+        '<button class="dk-cell" data-open="models"><span class="dk-cell-led">' + (pc.att ? led("att") : led("ok")) + '</span>' +
+          '<span class="dk-cell-body"><span class="dk-cell-label">Providers</span>' +
+          '<span class="dk-cell-value">' + pc.ok + " connected · " + pc.att + ' need decisions</span>' +
+          '<span class="dk-cell-sub">Gemini probe failing · Codex signed out · Antigravity not installed</span></span>' +
+          '<span class="dk-cell-open">OPEN ' + ico("arrowRight", 12) + "</span></button>" +
+        '<button class="dk-cell" data-open="notifications"><span class="dk-cell-led">' + (attention.length ? led("att") : led("ok")) + '</span>' +
+          '<span class="dk-cell-body"><span class="dk-cell-label">Notices</span>' +
+          '<span class="dk-cell-value">' + notices.length + " open · " + attention.length + " need attention</span>" +
+          '<span class="dk-cell-sub">' + (discordNote ? esc(discordNote.name) + " needs a reconnect" : "All destinations reachable") + "</span></span>" +
+          '<span class="dk-cell-open">OPEN ' + ico("arrowRight", 12) + "</span></button>" +
+        '<button class="dk-cell" data-open="system"><span class="dk-cell-led">' + led("warn") + '</span>' +
+          '<span class="dk-cell-body"><span class="dk-cell-label">Backup</span>' +
+          '<span class="dk-cell-value">Settings backup ' + esc(settingsBackupAge()) + "</span>" +
+          '<span class="dk-cell-sub">Four backup classes · snapshots verified</span></span>' +
+          '<span class="dk-cell-open">OPEN ' + ico("arrowRight", 12) + "</span></button>" +
       "</div>" +
-      '<div class="dk-mod-cap">' + window.PMIcons.get("grid", 13) + " Destinations</div>" +
+      '<div class="dk-cap">' + ico("refresh", 13) + " Catalog feeds</div>" +
+      st.catalogs.map(function (c) {
+        var chip = c.state === "refreshing"
+          ? '<span class="pm-badge pm-badge-info">' + led("info") + " Refreshing — last-known-good active</span>"
+          : '<span class="pm-badge pm-badge-ok">' + led("ok") + " Current</span>";
+        return '<div class="dk-catalog" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:10px 14px;margin-bottom:8px">' +
+          chip + '<b style="color:var(--text-1);font-size:13px">' + esc(c.name) + "</b>" +
+          '<span class="pm-note">checked ' + esc(c.lastChecked) + " · " + esc(c.version) + " · activated " + esc(c.lastActivated) + "</span>" +
+          '<span style="margin-left:auto"></span>' +
+          '<button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button>" +
+        "</div>";
+      }).join("") +
+      '<div class="dk-cap">' + ico("grid", 13) + " Destinations</div>" +
       '<div class="dk-mods">' +
-        window.PMDemoData.destinations.map(function (d) {
-          var ledKind = d.status.kind === "attention" ? "err" : d.status.kind === "setup" ? "warn" : "ok";
-          return '<button class="dk-mod" data-dest="' + d.id + '">' +
-            '<div class="dk-mod-top"><span class="dk-mod-ico">' + window.PMIcons.get(d.icon, 16) + '</span><h3>' + esc(d.title) + "</h3></div>" +
+        D.destinations.map(function (d) {
+          return '<button class="dk-mod" data-open="' + esc(d.id) + '">' +
+            '<div class="dk-mod-top"><span class="dk-mod-ico">' + ico(d.icon, 16) + '</span><h3>' + esc(d.title) + "</h3></div>" +
             "<p>" + esc(d.purpose) + "</p>" +
-            '<div class="dk-mod-readout">' + led(ledKind) + '<span class="pm-note">' + esc(d.status.summary) + "</span>" +
+            '<div class="dk-mod-readout">' + led(destKindLed(d.status.kind)) + '<span class="pm-note">' + esc(d.status.summary) + "</span>" +
             '<span class="pm-badge">' + d.subcategories.length + " sections</span></div>" +
-            '<span class="dk-mod-open">OPEN ' + window.PMIcons.get("arrowRight", 13) + "</span>" +
+            '<span class="dk-mod-open">OPEN ' + ico("arrowRight", 13) + "</span>" +
           "</button>";
         }).join("") +
       "</div>" +
+
+      '<div class="dk-cap">' + ico("alertCircle", 13) + " Notices</div>" +
+      (notices.length
+        ? noticeGroup("Needs attention", ico("alertTriangle", 12), attention) +
+          noticeGroup("Continue setup", ico("clock", 12), cont) +
+          noticeGroup("Recommended", ico("spark", 12), recommended)
+        : '<div class="dk-calm">' + ico("checkCircle", 14) + " All systems nominal. No notices — this is the calm state.</div>") +
+
+      '<div class="dk-cap" style="margin-top:22px">' + ico("history", 13) + " Recents</div>" +
+      '<div class="dk-recents">' +
+        st.recents.map(function (r) {
+          return '<button class="dk-recent" data-recent="' + esc(r.id) + '">' + ico("clock", 13) +
+            "<b>" + esc(r.label) + '</b><span class="where">' + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span>" +
+            ico("arrowRight", 12) + "</button>";
+        }).join("") +
+      "</div>" +
     "</div></div>";
+
     content.innerHTML = html;
-    bindHome();
+    bindHomeSearch();
   }
 
-  function bindHome() {
+  function bindHomeSearch() {
     var q = document.getElementById("dk-q");
     var drop = document.getElementById("dk-drop");
-    var hits = [];
+    if (!q || !drop) return;
 
     function run() {
       var v = q.value.trim();
       activeDrop = -1;
       if (!v) { drop.hidden = true; return; }
-      hits = window.PMCore.search(v, INDEX);
-      if (!hits.length) {
-        drop.innerHTML = '<div class="dk-drop-group">No matches</div><div class="dk-note-card" style="margin:6px">Try “continuation”, “spellcheck”, “OAuth”, or a provider name.</div>';
-        drop.hidden = false; return;
+      dropHits = window.PMCore.search(v, INDEX);
+      if (!dropHits.length) {
+        drop.innerHTML = '<div class="dk-drop-empty">No matches. Try “continuation”, “spellcheck”, “OAuth”, or a provider name.</div>';
+        drop.hidden = false;
+        return;
       }
-      var groups = {};
-      hits.forEach(function (h) {
-        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : (h.kind === "provider" || h.kind === "model") ? "Providers & models" : h.kind === "persona" ? "Personas" : "Destinations";
-        (groups[g] = groups[g] || []).push(h);
-      });
-      var html = "";
-      Object.keys(groups).forEach(function (g) {
-        html += '<div class="dk-drop-group">' + g + "</div>";
-        groups[g].forEach(function (h) {
-          html += '<button class="dk-drop-item" data-hit><span style="flex:1;min-width:0">' + esc(h.title) + '<br><span class="path">' + esc(h.path.join(" › ")) + "</span></span>" + window.PMIcons.get("arrowRight", 13) + "</button>";
-        });
-      });
-      drop.innerHTML = html;
+      drop.innerHTML = dropHits.map(function (h, i) {
+        return '<button class="dk-drop-item" data-hit="' + i + '" role="option">' +
+          '<span class="dk-drop-main">' +
+            '<span class="dk-drop-title">' + esc(h.title) + "</span> " +
+            '<span class="pm-search-type" data-rt="' + esc(h.resultType) + '">' + esc(h.resultType) + "</span><br>" +
+            '<span class="dk-drop-path">' + esc(h.path.join(" › ")) + (h.unavailableReason ? " — " + esc(h.unavailableReason) : "") + "</span>" +
+          "</span>" + ico("arrowRight", 13) + "</button>";
+      }).join("");
       drop.hidden = false;
-      drop.querySelectorAll("[data-hit]").forEach(function (el, i) {
-        el.addEventListener("mousedown", function (ev) { ev.preventDefault(); go(hits[i]); });
-      });
     }
     function go(h) {
+      if (!h) return;
       drop.hidden = true;
-      var t = Object.assign({}, h.target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
+      if (h.unavailableReason) ST.receipt("Unavailable capability", h.title + ": " + h.unavailableReason, "info");
+      ST.navigate(wsView(h.target));
+    }
+    function mark() {
+      drop.querySelectorAll("[data-hit]").forEach(function (b, i) { b.classList.toggle("active", i === activeDrop); });
     }
     q.addEventListener("input", run);
     q.addEventListener("focus", run);
-    q.addEventListener("blur", function () { setTimeout(function () { drop.hidden = true; }, 140); });
+    q.addEventListener("blur", function () { setTimeout(function () { drop.hidden = true; }, 160); });
     q.addEventListener("keydown", function (e) {
       var items = drop.querySelectorAll("[data-hit]");
-      if (e.key === "ArrowDown") { e.preventDefault(); activeDrop = Math.min(activeDrop + 1, items.length - 1); mark(items); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); activeDrop = Math.max(activeDrop - 1, 0); mark(items); }
-      else if (e.key === "Enter" && hits.length) { e.preventDefault(); go(hits[Math.max(activeDrop, 0)]); }
+      if (e.key === "ArrowDown") { e.preventDefault(); activeDrop = Math.min(activeDrop + 1, items.length - 1); mark(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeDrop = Math.max(activeDrop - 1, 0); mark(); }
+      else if (e.key === "Enter" && dropHits.length) { e.preventDefault(); go(dropHits[Math.max(activeDrop, 0)]); }
       else if (e.key === "Escape") { drop.hidden = true; }
     });
-    function mark(items) { items.forEach(function (b, i) { b.classList.toggle("active", i === activeDrop); }); }
-
-    content.querySelectorAll("[data-dest]").forEach(function (b) {
-      b.addEventListener("click", function () { window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") }); });
-    });
-    content.querySelectorAll("[data-notice]").forEach(function (card) {
-      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
-      if (!n) return;
-      var na = card.querySelector("[data-na]");
-      var ns = card.querySelector("[data-ns]");
-      if (na) na.addEventListener("click", function () { noticeGo(n); });
-      if (ns) ns.addEventListener("click", function () { noticeGo(n, true); });
+    drop.addEventListener("mousedown", function (e) {
+      var item = e.target.closest ? e.target.closest("[data-hit]") : null;
+      if (!item) return;
+      e.preventDefault();
+      go(dropHits[parseInt(item.getAttribute("data-hit"), 10)]);
     });
   }
 
-  function noticeGo(n, secondary) {
-    if (secondary && n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
-    if (secondary && n.id === "anthropic-usage") { window.PMState.receipt("Deep link to Usage", "Usage shows measured balances and forecasts. Simulated navigation.", "info"); return; }
-    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
-    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "anthropic" }); return; }
-    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", subcategory: "mcp" }); return; }
-    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", subcategory: "media-io", setting: "media.io.audio-input" }); return; }
-    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "personas" }); return; }
-    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
-    window.PMState.receipt(n.action, "Simulated notice action.", "sim");
+  // ---- Manager builders -------------------------------------------------------
+
+  function mgrHealthAtt(list) {
+    var att = list.filter(function (p) { return p.state !== "ready"; }).length;
+    return att ? att + " of " + list.length + " need attention" : "All " + list.length + " healthy";
   }
 
-  function settingRow(s, i) {
-    var meta = window.PMCore.settingMeta(s);
-    var ctl = "";
-    var readout = '<span class="dk-readout">' + esc(s.type === "toggle" ? (s.value ? "ON" : "OFF") : s.value) + "</span>";
-    if (s.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + '></button>';
-    else if (s.type === "select") ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" + (s.options || []).map(function (o) { return "<option" + (o === s.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
-    else if (s.type === "segment") ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '">' + esc(o) + "</button>"; }).join("") + "</span>";
-    else if (s.type === "text") ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '"' + (meta.disabled ? " disabled" : "") + ">";
-    else if (s.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-ctl>' + esc(s.actionLabel || "Open") + "</button>";
-    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
-    var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
-    return '<div class="dk-row" data-setting-id="' + s.id + '" data-hidden="' + hidden + '">' +
-      '<div class="dk-row-line"><div>' +
-        '<div class="dk-row-label">' + esc(s.label) + " " + badges + "</div>" +
-        '<div class="dk-row-desc">' + esc(s.desc) + "</div></div>" +
-        '<div class="dk-row-ctl">' + readout + ctl +
-        (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset>Reset</button>' : "") +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-details aria-expanded="false">' + window.PMIcons.get("chevronDown", 12) + "</button>" +
-      "</div></div>" +
-      '<div class="dk-row-detail">id ' + esc(s.id) + " · source " + esc(meta.sourceLabel) + " · scope " + esc(s.scope) + " · tier " + esc(s.tier) +
-      (s.requested ? " · requested " + esc(s.requested) : "") + (s.effective ? " · effective " + esc(s.effective) : "") +
-      (s.reason ? " · " + esc(s.reason) : "") + (s.inheritedFrom ? " · inherited from " + esc(s.inheritedFrom) : "") + (s.managedBy ? " · managed by " + esc(s.managedBy) : "") +
-      "</div></div>";
-  }
-
-  function providersConsole(v) {
-    var st = window.PMState.state;
-    var html = '<div class="dk-cap-line">Catalog feeds</div>' +
+  function providersManager() {
+    var st = ST.state;
+    var body = '<div class="dk-cap-line">' + ico("refresh", 12) + " Catalog feeds</div>" +
       st.catalogs.map(function (c) {
-        return '<div class="dk-console open"><div class="dk-console-head" data-console-toggle>' +
-          (c.state === "refreshing" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Refreshing — last-known-good active</span>" : '<span class="pm-badge pm-badge-ok">' + led("ok") + " Current</span>") +
-          '<span class="name">' + esc(c.name) + '</span><span class="meta pm-note">checked ' + esc(c.lastChecked) + " · " + esc(c.version) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-          '<div class="dk-console-body"><dl class="dk-kv">' +
-          "<dt>Last activated</dt><dd>" + esc(c.lastActivated) + "</dd>" +
-          "<dt>Last known good</dt><dd>" + (c.lastKnownGood ? "Yes — bad updates are quarantined" : "No") + "</dd>" +
-          (c.materialChanges.length ? "<dt>Material changes</dt><dd>" + c.materialChanges.map(esc).join("; ") + "</dd>" : "") +
-          '</dl><div class="dk-actions"><button class="pm-btn pm-btn-sm" data-catalog-refresh="' + c.id + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div></div></div>";
+        var chip = c.state === "refreshing"
+          ? '<span class="pm-badge pm-badge-info">' + led("info") + ' Refreshing — last-known-good active</span>'
+          : '<span class="pm-badge pm-badge-ok">' + led("ok") + " Current</span>";
+        return '<div class="dk-mgr pm-mgr" style="margin-bottom:8px"><header class="pm-mgr-head"><div class="pm-mgr-title">' + chip +
+          "<b>" + esc(c.name) + '</b><span class="pm-mgr-health">checked ' + esc(c.lastChecked) + " · " + esc(c.version) + "</span></div>" +
+          '<button class="pm-btn pm-btn-sm" data-act="catalog.refresh" data-catalog="' + esc(c.id) + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" +
+          (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></header>" +
+          '<div class="pm-mgr-body">' + M.inspector([
+            ["Last activated", c.lastActivated],
+            ["Last known good", c.lastKnownGood ? "Yes — bad updates are quarantined" : "No"],
+            ["Material changes", c.materialChanges.length ? c.materialChanges.join("; ") : "None"]
+          ]) + "</div></div>";
       }).join("");
 
-    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
-    groups.forEach(function (g) {
+    D.providerGroups.forEach(function (g) {
       var ps = st.providers.filter(function (p) { return p.group === g; });
       if (!ps.length) return;
-      html += '<div class="dk-cap-line">' + esc(g) + "</div>";
-      ps.forEach(function (p) { html += providerConsole(p, v); });
+      body += '<div class="pm-group-cap">' + esc(g) + "</div>" + ps.map(M.providerFamilyCard).join("");
     });
-    html += '<div class="dk-cap-line">Agent role assignments — requested vs effective</div>' +
-      '<div class="dk-console open"><div class="dk-console-body"><div class="dk-role-grid">' +
-      '<span class="h">Role</span><span class="h">Requested</span><span class="h">Effective</span>' +
-      st.roles.map(function (r) {
-        return '<span>' + esc(r.label) + '</span><span class="req">' + esc(r.requested) + '</span><span class="eff">' + esc(r.effective) +
-          (r.differs ? ' <span class="pm-badge pm-badge-diff">Differs</span>' : "") + (r.note ? ' <span class="pm-note">' + esc(r.note) + "</span>" : "") + "</span>";
-      }).join("") + "</div></div></div>";
-    return html;
+
+    body += '<div class="dk-cap-line">' + ico("target", 12) + " Agent role assignments — requested vs effective</div>" +
+      M.requestedEffective(st.roles.map(function (r) { return { label: r.label, requested: r.requested, effective: r.effective, reason: r.note }; }));
+
+    return M.managerShell({
+      id: "providers", title: "Provider Manager", icon: "robot",
+      health: mgrHealthAtt(st.providers),
+      add: { act: "teacher.explain", label: "Teacher: explain this screen", data: ' data-teacher="tch-providers"' },
+      body: body
+    });
   }
 
-  function providerConsole(p, v) {
-    var open = openConsoles["p:" + p.id] || (v && v.provider === p.id);
-    var chip = p.state === "ready" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Connected</span>"
-      : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Decision needed</span>"
-      : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">' + led("err") + " Invocation failed</span>"
-      : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Setup required</span>"
-      : '<span class="pm-badge">' + led("off") + " Not installed</span>";
-    var html = '<div class="dk-console' + (open ? " open" : "") + '" data-provider="' + p.id + '" data-console-key="p:' + p.id + '">' +
-      '<div class="dk-console-head" data-console-toggle>' + chip + '<span class="name">' + esc(p.name) + '</span><span class="pm-note">' + esc(p.stateLabel) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-      '<div class="dk-console-body">';
-    if (p.state === "not-installed") {
-      html += "<p class=\"pm-note\">" + esc(p.install.note) + '</p><div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button><button class="pm-btn pm-btn-sm" data-pa="diagnostics">About CLI-owned login</button></div></div></div>';
-      return html;
-    }
-    if (p.setup) {
-      html += "<p class=\"pm-note\">" + esc(p.setup.note) + "</p><ol style=\"margin:6px 0 0 18px;padding:0;color:var(--text-2);font-size:12px\">" + p.setup.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
-        '</ol><div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div></div></div>';
-      return html;
-    }
-    if (p.state === "signed-out") {
-      html += '<div class="dk-console" style="margin-bottom:8px"><div class="dk-console-head">' +
-        '<span class="pm-badge pm-badge-warn">' + led("warn") + " Installed — signed out</span>" +
-        '<span class="name">No active profile</span></div>' +
-        '<div class="dk-console-body"><p class="pm-note" style="margin:0 0 8px">' + esc(p.login.note) + "</p>" +
-        '<div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div></div></div>';
-    }
-    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
-      var bits = [];
-      if (a.usage) {
-        if (a.usage.included === "exhausted") bits.push('<span class="pm-badge pm-badge-danger">' + led("err") + " Included usage exhausted</span>");
-        else if (a.usage.included) bits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
-        if (a.usage.remaining && a.usage.included !== "exhausted") bits.push('<span class="pm-note">remaining ' + esc(a.usage.remaining) + "</span>");
-        if (a.usage.extra) bits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
-        if (a.usage.reset) bits.push('<span class="pm-note">reset ' + esc(a.usage.reset) + "</span>");
-        if (a.usage.pressure) bits.push('<span class="pm-note">pressure ' + esc(a.usage.pressure) + "</span>");
-      }
-      return '<div class="dk-console' + (openConsoles["a:" + a.id] ? " open" : "") + '" style="margin-bottom:8px" data-account="' + a.id + '" data-console-key="a:' + a.id + '"><div class="dk-console-head" data-console-toggle>' +
-        (a.preferred ? '<span class="pm-badge pm-badge-info">' + led("ok") + " Preferred</span>" : "") +
-        (a.enabled === false ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Disabled</span>" : "") +
-        '<span class="name">' + esc(a.label) + "</span>" +
-        (a.nickname ? '<span class="pm-badge">' + esc(a.nickname) + "</span>" : "") +
-        (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky</span>' : "") +
-        (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Authenticated ≠ ready</span>" : "") +
-        '<span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-        '<div class="dk-console-body">' +
-        '<dl class="dk-kv">' +
-        "<dt>Auth owner</dt><dd>" + esc(a.authOwner) + " — " + esc(a.authKind) + "</dd>" +
-        "<dt>Transport</dt><dd>" + esc(a.transport) + "</dd>" +
-        (a.isolation ? "<dt>Isolation</dt><dd>" + esc(a.isolation) + "</dd>" : "") +
-        (a.identity ? "<dt>Identity</dt><dd>" + esc(a.identity) + "</dd>" : "") +
-        (a.health ? "<dt>Health</dt><dd>catalog " + esc(a.health.catalog) + " · generation " + esc(a.health.generation) + "</dd>" : "") +
-        "<dt>Priority</dt><dd>" + (a.priority || 1) +
-        ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 10) + "</button>" +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 10) + "</button></dd>" +
-        "</dl>" +
-        '<div class="dk-actions" style="margin-top:0">' + bits.join("") + "</div>" +
-        (a.probe ? '<div class="dk-actions"><span class="pm-badge pm-badge-danger">' + led("err") + " Probe failed " + esc(a.probe.at) + '</span><span class="pm-note">' + esc(a.probe.detail) + "</span></div>" : "") +
-        '<div class="dk-actions">' +
-        (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-use-account="' + a.id + '">Use for future requests</button>' : "") +
-        (a.preferred ? '<span class="pm-note">Future requests use this account. Running work is never retargeted.</span>' : "") +
-        '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
-        '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="probe">Readiness probe</button>' +
-        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
-        ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
+  function notificationsManager() {
+    var st = ST.state;
+    var dests = st.collections.notificationDestinations;
+    var enabled = dests.filter(function (d) { return d.enabled; }).length;
+    var needsAuth = dests.filter(function (d) { return d.state === "needs-auth"; })[0];
+    var q = st.collections.quietHours;
+
+    var rows = dests.map(function (d) {
+      var fxc = d.id === "dest-discord" ? M.badge("Reconnect required", "warn") : "";
+      return '<div class="dk-dest" data-dest-row="' + esc(d.id) + '" data-dest="' + esc(d.id) + '">' +
+        '<div class="dk-dest-head">' +
+          "<b>" + esc(d.name) + "</b>" +
+          M.badge(d.kind, "muted") + M.stateChip(d.state) + fxc +
+          (d.builtin ? M.badge("Built-in", "muted") : "") +
+          '<span class="dk-dest-actions">' +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="dest.toggle" data-dest="' + esc(d.id) + '">' + (d.enabled ? "Disable" : "Enable") + "</button>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="dest.test" data-dest="' + esc(d.id) + '">Test</button>' +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.dest.edit" data-dest="' + esc(d.id) + '">Edit</button>' +
+            (d.builtin ? "" : '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-danger" data-act="dest.delete" data-dest="' + esc(d.id) + '">Delete</button>') +
+          "</span>" +
         "</div>" +
-        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ? '<div class="dk-actions"><label class="pm-note">What happens next:</label><select class="pm-select" data-continuation>' + a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
-        "</div></div>";
+        '<div class="dk-dest-meta">' +
+          "<span>Channel: " + esc(d.channel) + "</span>" +
+          "<span>Thread: " + esc(d.fields.thread) + "</span>" +
+          "<span>Mentions: " + esc(d.fields.mentions) + "</span>" +
+          "<span>Template: " + esc(d.fields.template) + "</span>" +
+          "<span>Success: " + esc(d.fields.successPredicate) + "</span>" +
+          "<span>Retry: " + esc(d.fields.retry) + "</span>" +
+        "</div>" +
+        (d.note ? '<div class="dk-dest-note">' + esc(d.note) + "</div>" : "") +
+      "</div>";
     }).join("");
-    if (p.models.length) {
-      html += '<div class="dk-cap-line">Models — priority order</div>' +
-        p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
-          var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Available</span>"
-            : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Unverified</span>"
-            : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Needs setup</span>"
-            : '<span class="pm-badge pm-badge-danger">' + led("err") + " Unavailable</span>";
-          return '<div class="dk-model-line" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
-            '<button class="dk-fav' + (m.favorite ? " on" : "") + '" data-fav aria-pressed="' + m.favorite + '" aria-label="Favorite">' + window.PMIcons.get("star", 14) + "</button>" +
-            '<span class="name">' + esc(m.name) + "</span>" +
-            (m.alias ? '<span class="meta">alias ' + esc(m.alias) + "</span>" : "") +
-            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") +
-            stateChip +
-            '<span class="meta">P' + m.priority + " · " + esc(m.context) + " ctx" + (m.effort.length ? " · effort" : "") + (m.fast ? " · Normal/Fast" : "") + (m.free ? " · " + esc(m.free) : "") + "</span>" +
-            '<span style="margin-left:auto;display:flex;gap:4px">' +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
-            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
-            '<button class="pm-btn pm-btn-sm" data-alias>Alias</button>' +
-            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show" : "Hide") + "</button>" +
-            (m.effort.length ? '<select class="pm-select" data-effort-sel style="padding:3px 6px;font-size:11px">' + m.effort.map(function (e) { return "<option>" + e + "</option>"; }).join("") + "</select>" : "") +
-            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal" style="padding:2px 7px;font-size:11px">N</button><button data-speed="Fast" style="padding:2px 7px;font-size:11px">F</button></span>' : "") +
-            "</span>" +
-            (m.reason ? '<div class="pm-note" style="width:100%;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
-            '<div class="pm-note" style="width:100%">Evidence: ' + esc(m.evidence) + "</div>" +
-          "</div>";
-        }).join("");
-    }
-    html += "</div></div>";
-    return html;
+
+    var routing = '<table class="dk-route-table"><thead><tr><th>Event</th><th>Destinations</th><th>During quiet hours</th></tr></thead><tbody>' +
+      st.collections.eventRouting.map(function (r) {
+        return "<tr><td>" + esc(r.event) + '</td><td class="dests">' + esc(r.destinations.join(" · ")) + "</td><td>" + esc(r.quiet) + "</td></tr>";
+      }).join("") + "</tbody></table>" +
+      '<div class="pm-note" style="margin-top:6px">Routing is event-first: every event names its destinations, with a fallback and dedupe policy in Event Routing settings.</div>';
+
+    return M.managerShell({
+      id: "notifications", title: "Notification Destinations", icon: "inbox",
+      health: enabled + " of " + dests.length + " enabled" + (needsAuth ? " · " + needsAuth.name + " needs auth" : ""),
+      body:
+        '<div class="dk-surface-card">' + ico("inbox", 15) +
+          '<span><b>In-app surface:</b> the title-bar stack is the only in-app notification surface. There is no status-bar bell, no corner stack, no side panel.</span>' +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.inbox.flash">Flash the title-bar inbox</button>' +
+        "</div>" +
+        '<div class="dk-cap-line">Destinations</div>' + rows +
+        '<div class="dk-cap-line">Add a destination</div>' + M.destinationForm() +
+        '<div class="dk-cap-line">Event routing</div>' + routing +
+        '<div class="dk-cap-line">Quiet hours</div>' +
+        '<div class="dk-quietline">' + led(q.enabled ? "ok" : "off") +
+          '<span>' + (q.enabled ? "Active" : "Off") + " · window " + esc(q.window) + " · critical events " + (q.criticalThrough ? "come through" : "held") +
+          " · suppressed " + q.suppressedLastNight + " notices last night</span>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.quiet.open">Open Quiet & Focus rows</button>' +
+        "</div>" +
+        '<div class="pm-note" style="margin-top:8px">Test-send is explicit, masked, and rate-limited — a second test within ten seconds is refused. Delivery here is simulated.</div>'
+    });
   }
 
-  function crewConsole() {
-    var st = window.PMState.state;
-    return st.crewTemplates.map(function (c) {
-      var admitted = c.id === "crew-design" ? 2 : c.concurrency;
-      var waves = c.id === "crew-design" ? 3 : c.id === "crew-release" ? 2 : 1;
-      var members = c.members.map(function (m, i) {
-        var cls = i < admitted ? "admitted" : "queued";
-        return '<span class="dk-wave-m ' + cls + '" title="' + esc(m.role) + '">' + window.PMIcons.get("persona", 12) + "</span>";
+  function soundsManager() {
+    return M.managerShell({
+      id: "sounds", title: "Sound Library", icon: "wave",
+      health: ST.state.collections.soundLibrary.events.length + " built-in events · " + ST.state.collections.soundLibrary.uploads.length + " uploads",
+      body: M.soundLibraryPanel()
+    });
+  }
+
+  function themesManager() {
+    var custom = D.customThemes;
+    var current = document.documentElement.getAttribute("data-theme");
+    var cards = window.PMShell.themes.map(function (t) {
+      return '<div class="dk-theme-card' + (t === current ? " applied" : "") + '" data-theme-preview="' + esc(t) + '" tabindex="0" role="button" aria-label="Apply theme ' + esc(t) + '">' +
+        M.themePreviewCard(t) + "</div>";
+    }).join("");
+    var customCards = custom.themes.map(function (t) {
+      var baseId = t.base === "Friendly Dark" ? "friendly-dark" : t.base === "Basic Light" ? "basic-light" : "friendly-dark";
+      var inner = M.themePreviewCard(t);
+      if (t.state === "schema-invalid") {
+        inner += '<div class="dk-theme-diag">' + esc(t.diagnostic) + "</div>";
+      }
+      return '<div class="dk-theme-card" data-theme-preview="' + esc(baseId) + '" data-theme-custom="' + esc(t.id) + '" tabindex="0" role="button" aria-label="Preview custom theme ' + esc(t.name) + '">' +
+        inner + "</div>";
+    }).join("");
+
+    return M.managerShell({
+      id: "themes", title: "Custom Themes", icon: "sun",
+      health: window.PMShell.themes.length + " built-in · " + custom.themes.length + " custom TOML",
+      body:
+        '<div class="dk-cap-line">Eight built-in themes — hover to preview, click or press Enter to apply</div>' +
+        '<div class="dk-theme-grid">' + cards + "</div>" +
+        '<div class="dk-cap-line">Custom TOML themes</div>' +
+        '<div class="dk-theme-grid">' + customCards + "</div>" +
+        '<div class="dk-theme-actions">' +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.theme.create">' + ico("plus", 12) + " Create theme</button>" +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.theme.import">' + ico("download", 12) + " Import TOML</button>" +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.theme.export">Export</button>' +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.theme.folder">Open folder</button>' +
+        "</div>" +
+        '<div class="dk-preview-note">Live reload and startup loading are the two rows above this manager. OS following is the Theme mode control in Theme & Layout (Light / Dark / Auto). Invalid themes fall back to their base theme and surface the diagnostic — they never break the hierarchy.</div>'
+    });
+  }
+
+  function dictionariesPanel() {
+    var st = ST.state;
+    function words(kind, list) {
+      if (!list.length) return '<div class="pm-note">Empty — add words from spellcheck suggestions or below.</div>';
+      return list.map(function (w) {
+        return '<span class="dk-word">' + esc(w) +
+          '<button data-dk-act="dk.dict.remove" data-kind="' + kind + '" data-word="' + esc(w) + '" aria-label="Remove ' + esc(w) + '">' + ico("x", 10) + "</button></span>";
       }).join("");
-      return '<div class="dk-console' + ((openConsoles["c:" + c.id] !== undefined ? openConsoles["c:" + c.id] : c.id === "crew-design") ? " open" : "") + '" data-crew="' + c.id + '" data-console-key="c:' + c.id + '"><div class="dk-console-head" data-console-toggle>' +
-        '<span class="name">' + esc(c.name) + '</span><span class="pm-note">' + esc(c.purpose) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-        '<div class="dk-console-body">' +
-        '<div class="dk-wave">' + members +
-        '<span class="pm-badge pm-badge-info">Requested ' + c.requested + '</span>' +
-        '<span class="pm-badge pm-badge-warn">Admitted ' + admitted + ' concurrent</span>' +
-        '<span class="pm-badge">' + waves + " wave(s)</span>" +
-        '<span class="pm-badge">' + esc(c.routePolicy) + " routes</span></div>" +
-        '<div class="pm-note" style="margin-top:6px">' + esc(c.capacityNote) + "</div>" +
-        '<dl class="dk-kv">' +
-        "<dt>Members</dt><dd>" + c.members.map(function (m) {
-          return esc(m.role) + " — " + esc(m.persona) + ", route: " + esc(m.route) + ", candidates: " + m.candidates.map(esc).join(" / ");
-        }).join(" · ") + "</dd>" +
-        "<dt>Composition</dt><dd>requested " + c.requested + " · allowed " + esc(c.minMax) + "</dd>" +
-        "<dt>Guards</dt><dd>spend " + esc(c.guards.spend) + " · time " + esc(c.guards.time) + "</dd>" +
-        "<dt>Reserve</dt><dd>" + (c.reserve ? "Synthesis, testing, verification & repair reserved" : "Off") + "</dd>" +
-        "<dt>Worktrees</dt><dd>" + esc(c.worktree) + "</dd>" +
-        "<dt>Ports & test resources</dt><dd>" + esc(c.ports) + "</dd>" +
-        "<dt>Child spawning</dt><dd>" + esc(c.childDepth) + "</dd>" +
-        "<dt>Coordination</dt><dd>" + esc(c.board) + " · reducer: " + esc(c.reducer) + "</dd>" +
-        "<dt>Failure policy</dt><dd>" + esc(c.failure) + "</dd>" +
-        "</dl>" +
-        '<div class="dk-actions"><button class="pm-btn pm-btn-sm" data-crew-act="edit">Edit template</button><button class="pm-btn pm-btn-sm" data-crew-act="dryrun">Dry-run forecast</button></div>' +
-        "</div></div>";
-    }).join("");
-  }
-
-  function terminalConsole() {
-    var st = window.PMState.state;
-    return st.terminalProfiles.map(function (t) {
-      var line = '<div class="dk-term-preview" style="background:' + t.palette[0] + '">' +
-        '<span style="color:' + t.palette[2] + '">$ build</span> <span style="color:' + t.palette[4] + '">python3</span> <span style="color:' + t.palette[7] + '">assemble.py</span> <span style="color:' + t.palette[3] + '">--gate g3</span> <span style="color:' + t.palette[5] + ">ok</span></div>";
-      return '<div class="dk-console' + ((openConsoles["t:" + t.id] !== undefined ? openConsoles["t:" + t.id] : t.isDefault) ? " open" : "") + '" data-term="' + t.id + '" data-console-key="t:' + t.id + '"><div class="dk-console-head" data-console-toggle>' +
-        (t.isDefault ? '<span class="pm-badge pm-badge-info">Default</span>' : "") +
-        '<span class="name">' + esc(t.name) + '</span><span class="pm-note">' + esc(t.shell) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-        '<div class="dk-console-body">' +
-        '<dl class="dk-kv">' +
-        "<dt>Font</dt><dd>" + esc(t.font) + "</dd>" +
-        "<dt>Colors</dt><dd>" + esc(t.colors) + "</dd>" +
-        "<dt>Opacity</dt><dd>" + t.opacity + "%</dd>" +
-        "<dt>Cursor</dt><dd>" + esc(t.cursor) + "</dd>" +
-        "<dt>Copy on select</dt><dd>" + (t.copyOnSelect ? "On" : "Off") + "</dd>" +
-        "<dt>Working directory</dt><dd>" + esc(t.cwd) + "</dd>" +
-        "<dt>Transcript retention</dt><dd>" + esc(t.retention) + "</dd>" +
-        "<dt>Startup</dt><dd>" + esc(t.startup) + "</dd>" +
-        "</dl>" +
-        '<div class="dk-pal">' + t.palette.map(function (c) { return '<span style="background:' + c + '"></span>'; }).join("") + "</div>" +
-        line +
-        '<div class="dk-actions"><button class="pm-btn pm-btn-sm" data-term-act="edit">Edit profile</button>' +
-        (!t.isDefault ? '<button class="pm-btn pm-btn-sm" data-term-act="default">Make default</button>' : "") +
-        '<button class="pm-btn pm-btn-sm" data-term-act="diag">Startup diagnostics</button></div>' +
-        "</div></div>";
-    }).join("");
-  }
-
-  function lspConsole() {
-    var st = window.PMState.state;
-    return st.lspServers.map(function (l) {
-      var chip = l.state === "running" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Running</span>"
-        : l.state === "installed" ? '<span class="pm-badge pm-badge-info">' + led("off") + " Installed — idle</span>"
-        : '<span class="pm-badge pm-badge-warn">' + led("warn") + " Not installed</span>";
-      return '<div class="dk-console' + ((openConsoles["l:" + l.id] !== undefined ? openConsoles["l:" + l.id] : l.state === "running") ? " open" : "") + '" data-lsp="' + l.id + '" data-console-key="l:' + l.id + '"><div class="dk-console-head" data-console-toggle>' +
-        chip + '<span class="name">' + esc(l.name) + '</span><span class="pm-note">' + esc(l.executable) + " " + esc(l.version) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
-        '<div class="dk-console-body">' +
-        '<dl class="dk-kv">' +
-        "<dt>Language coverage</dt><dd>" + esc(l.coverage) + "</dd>" +
-        "<dt>Scope</dt><dd>" + esc(l.scope) + "</dd>" +
-        "<dt>Startup mode</dt><dd>" + esc(l.startup) + "</dd>" +
-        "<dt>Capabilities</dt><dd>" + esc(l.capabilities) + "</dd>" +
-        "<dt>Conflicts</dt><dd>" + esc(l.conflicts) + "</dd>" +
-        "<dt>Health</dt><dd>" + esc(l.health) + "</dd>" +
-        "<dt>Formatting</dt><dd>" + (l.state === "running" ? "Owned by LSP (see Languages & LSP settings)" : "n/a") + "</dd>" +
-        "</dl>" +
-        (l.logs.length ? '<details style="margin-top:6px"><summary class="pm-note" style="cursor:pointer">Logs</summary>' + l.logs.map(function (x) { return '<div class="at-log" style="font-family:var(--font-mono);font-size:11px;color:var(--text-2);padding:2px 0">' + esc(x) + "</div>"; }).join("") + "</details>" : "") +
-        '<div class="dk-actions">' +
-        (l.state === "running" ? '<button class="pm-btn pm-btn-sm" data-lsp-act="restart">Restart</button>' : "") +
-        (l.state === "installed" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-lsp-act="start">Start</button>' : "") +
-        (l.state === "not-installed" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-lsp-act="install">Install</button>' : "") +
-        '<button class="pm-btn pm-btn-sm" data-lsp-act="diag">Diagnostics</button>' +
-        "</div></div></div>";
-    }).join("");
-  }
-
-  function managerNote(sub) {
-    var where = MANAGER_HOME[sub.manager] || "another concept";
-    return '<div class="dk-note-card">' + window.PMIcons.get("info", 13) + " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> console is demonstrated in the " + where + " concept of this set. Deck keeps it reachable here with its surrounding settings.</div>";
-  }
-
-  function renderWork(v) {
-    var d = dest(v.category);
-    if (!d) { renderHome(); return; }
-    var st = window.PMState.state;
-    var disc = st.ui.disclosure;
-    var html = '<div class="dk-work dk-enter" id="dk-work">' +
-      '<div class="dk-strip">' +
-        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-back" id="dk-back">' + window.PMIcons.get("arrowLeft", 13) + " Deck</button>" +
-        '<span class="pm-badge" style="flex:none">' + esc(d.title) + "</span>" +
-        '<div class="dk-tabs" id="dk-tabs">' +
-        d.subcategories.map(function (s) { return '<button class="dk-tab" data-sub="' + s.id + '">' + esc(s.title) + "</button>"; }).join("") +
+    }
+    return '<div class="dk-mgr pm-mgr" data-manager="dictionaries">' +
+      '<header class="pm-mgr-head"><div class="pm-mgr-title">' + ico("book", 15) + "<b>Spellcheck dictionaries</b>" +
+      '<span class="pm-mgr-health">Personal ' + st.collections.personalDict.length + " · Project " + st.collections.projectDict.length + "</span></div></header>" +
+      '<div class="pm-mgr-body">' +
+        '<div class="dk-dict-cols">' +
+          '<div class="dk-dict-col"><h4>' + ico("persona", 13) + " Personal dictionary</h4>" + words("personal", st.collections.personalDict) + "</div>" +
+          '<div class="dk-dict-col"><h4>' + ico("grid", 13) + " Project dictionary</h4>" + words("project", st.collections.projectDict) + "</div>" +
         "</div>" +
-        '<label class="dk-search-mini">' + window.PMIcons.get("search", 13) + '<input id="dk-q2" placeholder="Search…" aria-label="Search in Settings"></label>' +
-        '<span class="pm-seg" id="dk-disc" style="flex:none">' +
-        ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '" style="padding:3px 8px;font-size:11px">' + (x === "standard" ? "Std" : x === "advanced" ? "Adv" : "All") + "</button>"; }).join("") +
-        "</span>" +
-      "</div>" +
-      '<div class="dk-doc" id="dk-doc">' +
-      d.subcategories.map(function (sub, i) {
-        var mgr = "";
-        if (sub.manager) {
-          if (sub.manager === "providers") mgr = providersConsole(v);
-          else if (sub.manager === "crew") mgr = crewConsole();
-          else if (sub.manager === "terminal") mgr = terminalConsole();
-          else if (sub.manager === "lsp") mgr = lspConsole();
-          else mgr = managerNote(sub);
-        }
-        return '<section class="dk-sub" data-sub-section="' + sub.id + '">' +
-          "<h2><span class=\"idx\">" + String(i + 1).padStart(2, "0") + "</span> " + esc(sub.title) + (sub.manager ? ' <span class="pm-badge pm-badge-muted">manager</span>' : "") + "</h2>" +
-          mgr + sub.settings.map(settingRow).join("") +
-        "</section>";
-      }).join("") +
+        '<div class="dk-dict-add">' +
+          '<input class="pm-input" type="text" data-dict-word placeholder="Add a word…">' +
+          '<select class="pm-select" data-dict-kind><option value="personal">Personal</option><option value="project">Project</option></select>' +
+          '<button class="pm-btn pm-btn-sm" data-dk-act="dk.dict.add">Add word</button>' +
+        "</div>" +
+        '<div class="pm-note" style="margin-top:8px">Dictionary source (Automatic / System only / PM local only) is the advanced row above. Thread override lives in the assistant panel overflow menu — it never changes these defaults. No autocorrect, ever.</div>' +
       "</div></div>";
+  }
+
+  function desktopManager() {
+    var dd = deckDesktop;
+    function tog(label, key, on, note, badgeHtml) {
+      return '<div class="pm-set-row dk-set-row"><div class="pm-set-main">' +
+        '<div class="pm-set-label">' + label + (badgeHtml ? " " + badgeHtml : "") + '</div><div class="pm-set-desc">' + note + "</div></div>" +
+        '<div class="pm-set-ctl"><button class="pm-toggle" role="switch" aria-pressed="' + on + '" data-dk-act="dk.desktop.toggle" data-key="' + key + '"></button></div></div>';
+    }
+    var ab = dd.activityBar.map(function (item, i) {
+      return '<div class="dk-ab-row' + (item.hidden ? " hidden-item" : "") + '">' +
+        '<span class="nm">' + esc(item.label) + "</span>" +
+        (item.hidden ? M.badge("Hidden", "muted") : M.badge("Visible", "ok")) +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.ab.up" data-ab="' + esc(item.id) + '"' + (i === 0 ? " disabled" : "") + ' aria-label="Move up">↑</button>' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.ab.down" data-ab="' + esc(item.id) + '"' + (i === dd.activityBar.length - 1 ? " disabled" : "") + ' aria-label="Move down">↓</button>' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.ab.hide" data-ab="' + esc(item.id) + '">' + (item.hidden ? "Show" : "Hide") + "</button>" +
+      "</div>";
+    }).join("");
+
+    return '<section class="dk-extra" id="dk-desktop" data-sub-anchor="desktop">' +
+      '<h2>' + ico("rail", 15) + " Desktop, Tray & Window " + M.badge("Deck demonstration", "info") + "</h2>" +
+      '<p class="dk-extra-why">Deck-demonstrated fixture rows — honest states rendered with the shared row grammar; the restart and reconnect fixtures from the packet coverage live here.</p>' +
+      tog("Minimize to tray", "minTray", dd.minTray, "Minimizing keeps Puppet Master running in the tray instead of the taskbar.") +
+      tog("Close to tray", "closeTray", dd.closeTray, "Closing the window hides to the tray; running work continues.") +
+      tog("Keep tray icon while running", "trayRunning", dd.trayRunning, "Applies after restart.", M.badge("Restart required", "warn")) +
+      '<div class="pm-set-row dk-set-row"><div class="pm-set-main"><div class="pm-set-label">Launch destination</div>' +
+        '<div class="pm-set-desc">What Puppet Master shows when it starts from the tray or a cold launch.</div></div>' +
+        '<div class="pm-set-ctl"><select class="pm-select" data-dk-select="launchDest">' +
+          ["Restore last workspace", "Start fresh", "Open a specific page"].map(function (o) { return "<option" + (o === dd.launchDest ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") +
+        "</select></div></div>" +
+      '<div class="pm-set-row dk-set-row"><div class="pm-set-main"><div class="pm-set-label">Window restore</div>' +
+        '<div class="pm-set-desc">How the main window returns after tray or restart.</div></div>' +
+        '<div class="pm-set-ctl"><span class="pm-seg" role="group" aria-label="Window restore">' +
+          ["Normal", "Maximized", "Last size"].map(function (o) { return '<button data-dk-act="dk.desktop.seg" data-key="restore" data-val="' + esc(o) + '"' + (o === dd.restore ? ' class="active"' : "") + ">" + esc(o) + "</button>"; }).join("") +
+        "</span></div></div>" +
+      tog("Crash recovery", "crashRecovery", dd.crashRecovery, "Recovered 1 session after the last unexpected exit. Recovery state is honest fixture data.") +
+      tog("Unsaved buffer protection", "bufferProtect", dd.bufferProtect, "Unsaved buffers survive restarts (recovery interval 60 s, from the File Manager fixture).") +
+      '<div class="dk-cap-line">Activity Bar — reorder or hide items</div>' +
+      '<div class="dk-ab">' + ab + "</div>" +
+      '<div class="pm-note" style="margin-top:8px">The Activity Bar controls one adjacent left side-panel slot. Hiding an item never deletes its state.</div>' +
+    "</section>";
+  }
+
+  function teacherSection() {
+    var targets = {
+      "tch-providers": { category: "models", manager: "providers" },
+      "tch-permissions": { category: "permissions", manager: "permissions" },
+      "tch-backup": { category: "system", manager: "backup" }
+    };
+    return '<section class="dk-extra" id="dk-teacher" data-sub-anchor="teacher">' +
+      '<h2>' + ico("spark", 15) + " Teacher & Help " + M.badge("Deck demonstration", "info") + "</h2>" +
+      '<p class="dk-extra-why">Guided explanations keyed to real screens. Teacher explains, then the entry transitions into the real action on that screen.</p>' +
+      D.teacherMoments.map(function (t) {
+        return '<div class="dk-teacher-card"><span class="screen">' + esc(t.screen) + "</span><br><b>" + esc(t.title) + "</b>" +
+          "<p>" + esc(t.body) + "</p>" +
+          '<div class="dk-teacher-acts">' +
+            '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="teacher.explain" data-teacher="' + esc(t.id) + '">Explain this screen</button>' +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.teacher.open" data-teacher="' + esc(t.id) + '">Go to the screen</button>' +
+          "</div></div>";
+      }).join("") +
+    "</section>";
+  }
+
+  // ---- Shared-grammar managers --------------------------------------------------
+  function actBtn(act, label, extra) { return '<button class="pm-btn pm-btn-sm" data-act="' + act + '"' + (extra || "") + ">" + label + "</button>"; }
+
+  function memoryManager() {
+    var items = ST.state.memory.map(function (m) {
+      return {
+        id: m.id, title: m.text,
+        chip: m.state === "verified" ? "verified" : "needs-setup",
+        badges: [[m.scope, "muted"], [m.kind, "muted"]].concat(m.pinned ? [["Pinned", "ok"]] : []).concat(m.halfLife === "Fading" ? [["Fading", "warn"]] : []),
+        sub: "Evidence: " + m.evidence + " · accessed " + m.accessed + " · " + m.versions + " version" + (m.versions === 1 ? "" : "s"),
+        actions:
+          (m.state === "awaiting" ? '<button class="pm-btn pm-btn-sm" data-dk-act="dk.memory.verify" data-memory="' + esc(m.id) + '">Verify</button>' : "") +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.memory.pin" data-memory="' + esc(m.id) + '">' + (m.pinned ? "Unpin" : "Pin") + "</button>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.memory.capsule" data-memory="' + esc(m.id) + '">Capsule</button>'
+      };
+    });
+    return M.managerShell({ id: "memory", title: "Assistant Memory Manager", icon: "brain", health: ST.state.memory.length + " memories · half-life changes activation, not truth", body: M.resourceList(items, { label: "Memories" }) });
+  }
+
+  function contextSourcesManager() {
+    var cs = D.contextSources;
+    var admitted = cs.admitted.map(function (a) {
+      return { id: a.name, title: a.name, badges: [[a.tokens + " tokens", "info"]], sub: a.detail,
+        actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.context.omit" data-src="' + esc(a.name) + '">Omit next request</button>' };
+    });
+    var omitted = cs.omitted.map(function (o) {
+      return { id: o.name, title: o.name, chip: "unavailable", sub: o.reason };
+    });
+    return M.managerShell({
+      id: "context-sources", title: "Context & Instruction Sources", icon: "layers",
+      health: cs.admitted.length + " admitted · " + cs.omitted.length + " omitted",
+      body: '<div class="dk-cap-line">Admitted last turn</div>' + M.resourceList(admitted, { label: "Admitted sources" }) +
+        '<div class="dk-cap-line">Omitted</div>' + M.resourceList(omitted, { label: "Omitted sources" }) +
+        '<div class="dk-cap-line">AGENTS.md chain</div>' + M.inspector(cs.chain.map(function (c) { return [c.path, c.role + (c.admitted ? " — admitted" : " — not admitted" + (c.reason ? " (" + c.reason + ")" : ""))]; })) +
+        '<div class="pm-note">Admission is receipted: each source records why it entered the request.</div>'
+    });
+  }
+
+  function crewManager() {
+    var body = ST.state.crewTemplates.map(function (c) {
+      var members = c.members.map(function (m) {
+        return { id: c.id + "-" + m.role, title: m.role + " — " + m.persona, sub: "Route: " + m.route + " · candidates: " + m.candidates.join(", "),
+          badges: [[m.persona, "muted"]] };
+      });
+      return '<div class="dk-mgr pm-mgr"><header class="pm-mgr-head"><div class="pm-mgr-title"><b>' + esc(c.name) + "</b>" +
+        '<span class="pm-mgr-health">' + esc(c.purpose) + "</span></div>" +
+        '<button class="pm-btn pm-btn-sm" data-dk-act="dk.crew.use" data-crew="' + esc(c.id) + '">Use for next Goal</button></header>' +
+        '<div class="pm-mgr-body">' +
+        M.requestedEffective([{ label: "Members", requested: String(c.requested), effective: String(c.effective), reason: c.requested !== c.effective ? "Requested members exceed eligible routes; the crew admits the effective count." : "" }]) +
+        M.resourceList(members, { label: c.name + " members" }) +
+        '<div class="pm-note" style="margin-top:6px">Waves: ' + esc(c.waves) + " · route policy " + esc(c.routePolicy) + " · min/max " + esc(c.minMax) + "</div>" +
+        "</div></div>";
+    }).join("");
+    return M.managerShell({ id: "crew", title: "Crew Template Manager", icon: "target", health: ST.state.crewTemplates.length + " templates", body: body });
+  }
+
+  function personasManager() {
+    var items = ST.state.personas.map(function (p) {
+      return { id: p.id, title: p.name + " Persona", chip: p.core ? "verified" : "detected",
+        badges: [[p.scope, "muted"]].concat(p.childOnly ? [["Child only", "warn"]] : []),
+        sub: p.description + " · capsule " + p.capsule + " · " + p.provenance + " · eligible: " + p.eligible,
+        actions: '<button class="pm-btn pm-btn-sm" data-dk-act="dk.persona.default" data-persona="' + esc(p.name) + '">Make default</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.persona.capsule" data-persona="' + esc(p.id) + '">Preview capsule</button>' };
+    });
+    return M.managerShell({
+      id: "personas", title: "Persona Manager", icon: "persona", health: ST.state.personas.length + " personas",
+      body: M.resourceList(items, { label: "Personas" }) + '<div class="pm-note" style="margin-top:6px">A Persona is behavior, not authority — it cannot grant Full Access, widen FileSafe, or force a provider.</div>'
+    });
+  }
+
+  function permissionsManager() {
+    return M.managerShell({
+      id: "permissions", title: "Permission Rules", icon: "shield",
+      health: ST.state.collections.permissionRules.length + " ordered rules · last match wins",
+      add: { act: "teacher.explain", label: "Teacher: explain this screen", data: ' data-teacher="tch-permissions"' },
+      body: M.permissionRuleEditor() +
+        '<div class="dk-cap-line">Presets</div>' +
+        M.resourceList(D.presets.map(function (p) { return { id: p.id, title: p.name, sub: p.summary, actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.preset.apply" data-preset="' + esc(p.id) + '">Apply</button>' }; }), { label: "Presets" })
+    });
+  }
+
+  function terminalManager() {
+    var items = ST.state.terminalProfiles.map(function (t) {
+      return { id: t.id, title: t.name + (t.isDefault ? " (default)" : ""), chip: t.isDefault ? "ready" : "detected",
+        sub: "Shell: " + t.shell + " · env " + t.env + " · " + t.font + " · cursor " + t.cursor + " · retention " + t.retention,
+        badges: [["Colors: " + t.colors, "muted"]],
+        actions: '<div class="dk-swatches">' + t.palette.map(function (c) { return '<span style="background:' + esc(c) + '"></span>'; }).join("") + "</div>" +
+          (t.isDefault ? "" : '<button class="pm-btn pm-btn-sm" data-dk-act="dk.term.default" data-term="' + esc(t.id) + '">Make default</button>') +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.term.session" data-term="' + esc(t.id) + '">New session</button>' };
+    });
+    return M.managerShell({ id: "terminal", title: "Terminal Manager", icon: "terminal", health: ST.state.terminalProfiles.length + " profiles", body: M.resourceList(items, { label: "Terminal profiles" }) });
+  }
+
+  function lspManager() {
+    var items = ST.state.lspServers.map(function (l) {
+      return { id: l.id, title: l.name, chip: l.state === "running" ? "running" : l.state === "installed" ? "installed" : "not-installed",
+        sub: l.executable + " · v" + l.version + " · coverage: " + l.coverage + " · " + l.health,
+        actions: '<button class="pm-btn pm-btn-sm" data-dk-act="dk.lsp.restart" data-lsp="' + esc(l.id) + '">Restart</button>' +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.lsp.logs" data-lsp="' + esc(l.id) + '">Logs</button>' };
+    });
+    return M.managerShell({
+      id: "lsp", title: "LSP Manager", icon: "code", health: ST.state.lspServers.filter(function (l) { return l.state === "running"; }).length + " running",
+      body: M.resourceList(items, { label: "Language servers" }) + M.requestedEffective([{ label: "Attachment", requested: "Auto-detect languages", effective: "2 servers attached to this workspace", reason: "Requested attachment resolves per opened file type." }])
+    });
+  }
+
+  function formattersManager() {
+    var items = ST.state.collections.formatterTable.map(function (f) {
+      return { id: f.id, title: f.name, chip: f.state, badges: [[f.kind, "muted"], ["Scope: " + f.scope, "muted"]],
+        sub: "Command: " + f.command + " · extensions: " + f.extensions + (f.version ? " · v" + f.version : "") + (f.note ? " — " + f.note : ""),
+        actions: '<button class="pm-btn pm-btn-sm" data-act="formatter.test" data-formatter="' + esc(f.id) + '">Test</button>' };
+    });
+    return M.managerShell({ id: "formatters", title: "Formatters", icon: "wand", health: "1 detected · 1 not found · 1 disabled", body: M.resourceList(items, { label: "Formatters" }) });
+  }
+
+  function commandsManager() {
+    var cmds = ST.state.collections.commandsCatalog.map(function (c) {
+      return { id: c.id, title: c.name, badges: [[c.scope, "muted"]],
+        sub: '"' + c.command + '" · parameters: ' + (c.parameters.length ? c.parameters.join(", ") : "none") + " · includes " + c.includes.length + " files · " + c.shellSafety + " · last run " + c.lastRun,
+        actions: '<button class="pm-btn pm-btn-sm" data-act="command.dryrun" data-command="' + esc(c.id) + '">Dry run</button>' };
+    });
+    var keys = ST.state.collections.shortcutBindings.map(function (b) {
+      return { id: b.id, title: b.command, chip: b.state === "conflict" ? "error" : "ready",
+        badges: [[b.binding, "muted"]].concat(b.conflictsWith ? [["Conflicts", "warn"]] : []),
+        sub: b.state === "conflict" ? "Shares a binding with another command." : "Bound and active.",
+        actions: b.state === "conflict" ? '<button class="pm-btn pm-btn-sm" data-act="shortcut.resolve" data-binding="' + esc(b.id) + '">Resolve</button>' : "" };
+    });
+    return M.managerShell({
+      id: "commands", title: "Commands & Shortcuts", icon: "zap",
+      health: cmds.length + " custom commands · " + keys.filter(function (b) { return b.state === "conflict"; }).length + " shortcut conflicts",
+      body: '<div class="dk-cap-line">Custom commands — dry run never sends work to an agent</div>' + M.resourceList(cmds, { label: "Commands" }) +
+        '<div class="dk-cap-line">Shortcut bindings</div>' + M.resourceList(keys, { label: "Shortcuts" })
+    });
+  }
+
+  function testingManager() {
+    var tm = D.testingMatrix;
+    var rows = tm.capabilities.map(function (c) {
+      return "<tr><td>" + esc(c.name) + "</td><td>" + esc(c.global) + "</td><td>" + esc(c.project) + "</td></tr>";
+    }).join("");
+    return M.managerShell({
+      id: "testing", title: "Testing & Debug Matrix", icon: "checkCircle",
+      health: "Global/Project × Auto/On/Off",
+      body: '<table class="dk-route-table"><thead><tr><th>Capability</th><th>Global</th><th>Project</th></tr></thead><tbody>' + rows + "</tbody></table>" +
+        '<div class="pm-note" style="margin-top:6px">Capture: ' + esc(tm.capture.artifacts) + " · secrets redacted: " + (tm.capture.redactSecrets ? "yes" : "no") + ". The matrix is read-only fixture state; evidence strength and repair limits are the rows above.</div>"
+    });
+  }
+
+  function filesManager() {
+    var fm = D.fileManagerCfg;
+    return M.managerShell({
+      id: "files", title: "File Manager", icon: "fileText", health: "Recovery on · 60 s interval",
+      body: M.inspector([
+        ["Tree", (fm.tree.showHidden ? "Hidden shown" : "Hidden files hidden") + " · ignore rules " + (fm.tree.respectIgnored ? "respected" : "ignored") + " · compact folders " + (fm.tree.compactFolders ? "on" : "off")],
+        ["Drag & drop", fm.dragDrop.enabled ? "Enabled — external drops confirm first" : "Disabled"],
+        ["Large files", "Over " + fm.largeFile.threshold + ": " + fm.largeFile.behavior],
+        ["Changed on disk", fm.changedOnDisk],
+        ["Recovery", fm.recovery.enabled ? "On every " + fm.recovery.interval + " — " + fm.recovery.note : "Off"],
+        ["Tabs", "Limit " + fm.tabs.limit + " · " + fm.tabs.splitGroups + " split groups"],
+        ["Worktree files", fm.transient]
+      ]) + '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-dk-act="dk.files.recovery">Reveal recovery files</button></div>'
+    });
+  }
+
+  function mcpManager() {
+    var items = ST.state.mcpServers.map(function (s) {
+      return { id: s.id, title: s.name, chip: s.state === "connected" ? "connected" : s.state === "error" ? "error" : s.state === "needs-auth" ? "needs-auth" : "disabled",
+        badges: [[s.transport, "muted"], [s.scope, "muted"], [s.toolCount + " tools", "info"]],
+        sub: "Protocol " + s.protocol + " · approval: " + s.approval + " · exposure: " + s.exposure + " · " + s.freshness,
+        actions: '<button class="pm-btn pm-btn-sm" data-dk-act="dk.mcp.logs" data-mcp="' + esc(s.id) + '">Logs</button>' +
+          (s.state === "error" ? '<button class="pm-btn pm-btn-sm" data-dk-act="dk.mcp.repair" data-mcp="' + esc(s.id) + '">Repair</button>' : "") +
+          (s.state === "needs-auth" ? '<button class="pm-btn pm-btn-sm" data-dk-act="dk.mcp.reconnect" data-mcp="' + esc(s.id) + '">Reconnect</button>' : "") };
+    });
+    return M.managerShell({ id: "mcp", title: "MCP Server Manager", icon: "plug", health: ST.state.mcpServers.filter(function (s) { return s.state === "connected"; }).length + " connected · 1 error", body: M.resourceList(items, { label: "MCP servers" }) });
+  }
+
+  function skillsManager() {
+    var items = ST.state.skills.map(function (s) {
+      return { id: s.id, title: s.name, chip: s.trust === "Trusted" ? "verified" : "needs-setup",
+        badges: [[s.scope, "muted"]].concat(s.enabled ? [["Enabled", "ok"]] : [["Disabled", "muted"]]).concat(s.update === "Update available" ? [["Update available", "warn"]] : []),
+        sub: s.permissions + " · invoked " + s.invoked + "×",
+        actions: (s.trust !== "Trusted" ? '<button class="pm-btn pm-btn-sm" data-dk-act="dk.skill.trust" data-skill="' + esc(s.id) + '">Trust</button>' : "") +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.skill.enable" data-skill="' + esc(s.id) + '">' + (s.enabled ? "Disable" : "Enable") + "</button>" };
+    });
+    return M.managerShell({ id: "skills", title: "Skills Manager", icon: "book", health: ST.state.skills.length + " skills · new skills start untrusted", body: M.resourceList(items, { label: "Skills" }) });
+  }
+
+  function pluginsManager() {
+    var items = ST.state.plugins.map(function (p) {
+      return { id: p.id, title: p.name, chip: p.state === "Enabled" ? "running" : "error",
+        badges: [[p.compatibility, p.compatibility === "Compatible" ? "ok" : "warn"], [p.channel, "muted"]],
+        sub: p.permissions,
+        actions: p.state === "Failed to load" ? '<button class="pm-btn pm-btn-sm" data-dk-act="dk.plugin.retry" data-plugin="' + esc(p.id) + '">Retry load</button>' : "" };
+    });
+    return M.managerShell({ id: "plugins", title: "Plugins Manager", icon: "puzzle", health: "1 enabled · 1 failed to load", body: M.resourceList(items, { label: "Plugins" }) });
+  }
+
+  function toolsManager() {
+    var items = ST.state.tools.map(function (t) {
+      return { id: t.name, title: t.name, chip: t.available ? "ready" : "unavailable",
+        badges: [[t.risk + " risk", t.risk === "High" ? "warn" : "muted"], ["Invoked " + t.invoked + "×", "muted"]],
+        sub: t.approval + (t.note ? " — " + t.note : "") };
+    });
+    return M.managerShell({ id: "tools", title: "Tools Inventory", icon: "sliders", health: ST.state.tools.filter(function (t) { return t.available; }).length + " available this turn", body: M.resourceList(items, { label: "Tools" }) });
+  }
+
+  function storageManager() {
+    var sh = ST.state.collections.storageHealth;
+    return M.managerShell({
+      id: "storage", title: "Storage & Retention", icon: "server", health: sh.pressure,
+      body: M.inspector([
+        ["Storage mode", sh.mode], ["Pressure", sh.pressure], ["Retention", sh.retention],
+        ["Legal hold", sh.legalHold], ["Encryption", sh.encryption], ["Quarantine", sh.quarantine]
+      ]) + '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-dk-act="dk.storage.quarantine">Open quarantine</button></div>'
+    });
+  }
+
+  function backupManager() {
+    var items = ST.state.collections.backupRuns.map(function (b) {
+      return { id: b.id, title: b.kind, chip: b.verified ? "verified" : "needs-setup",
+        badges: [[b.schedule, "muted"], ["Retention " + b.retention, "muted"]],
+        sub: "Last: " + b.last + (b.note ? " — " + b.note : ""),
+        actions: '<button class="pm-btn pm-btn-sm" data-act="backup.now" data-backup="' + esc(b.id) + '">Back up now</button>' };
+    });
+    return M.managerShell({
+      id: "backup", title: "Backup & Restore", icon: "shieldCheck",
+      health: "Settings backup " + settingsBackupAge(),
+      add: { act: "teacher.explain", label: "Teacher: explain this screen", data: ' data-teacher="tch-backup"' },
+      body: M.resourceList(items, { label: "Backup classes" }) +
+        '<div class="pm-mgr-actions">' + actBtn("backup.test-restore", "Test restore") + actBtn("backup.log", "Open backup log") + "</div>" +
+        '<div class="pm-note" style="margin-top:6px">Back Up Now is a one-shot action; the schedule is a setting; last backup is read-only status. The three never collapse into one control.</div>'
+    });
+  }
+
+  function historyManager() {
+    var items = ST.state.collections.historyRows.map(function (h) {
+      return { id: h.id, title: h.title, chip: h.deletable ? "ready" : "unavailable",
+        badges: [[h.kind, "muted"], [h.project, "muted"], [h.size, "muted"]],
+        sub: h.when + (h.note ? " — " + h.note : ""),
+        actions: h.deletable ? '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-danger" data-dk-act="dk.history.delete" data-history="' + esc(h.id) + '">Delete</button>' : "" };
+    });
+    return M.managerShell({ id: "history", title: "History & Sessions", icon: "history", health: ST.state.collections.historyRows.length + " stored · legal holds protected", body: M.resourceList(items, { label: "History" }) });
+  }
+
+  function artifactsManager() {
+    var items = ST.state.collections.artifactRows.map(function (a) {
+      return { id: a.id, title: a.name, chip: a.owner.indexOf("PM-owned") === 0 ? "ready" : "detected",
+        badges: [[a.type, "muted"], ["v" + a.version, "muted"], [a.retention, "muted"]],
+        sub: a.location + " · " + a.owner + (a.redacted ? " · redacted" : ""),
+        actions: '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.artifact.reveal" data-artifact="' + esc(a.id) + '">Reveal</button>' +
+          (a.redacted ? "" : '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dk-act="dk.artifact.redact" data-artifact="' + esc(a.id) + '">Redact</button>') };
+    });
+    return M.managerShell({ id: "artifacts", title: "Runtime Artifacts", icon: "layers", health: "PM-owned and provider-native stay distinguishable", body: M.resourceList(items, { label: "Artifacts" }) });
+  }
+
+  function sourceControlManager() {
+    var sc = D.sourceControl;
+    var gh = D.ghActions;
+    var tools = sc.tools.map(function (t) { return { id: t.name, title: t.name, chip: t.state === "detected" ? "detected" : "not-found", badges: [[t.confidence, "muted"]], sub: t.install }; });
+    var wts = sc.worktrees.map(function (w) { return { id: w.id, title: w.name, chip: w.state === "active" ? "running" : "verified", badges: [[w.branch, "muted"]], sub: w.path }; });
+    return M.managerShell({
+      id: "source-control", title: "Source Control & Worktrees", icon: "branch",
+      health: "Git detected · forge connected · " + sc.worktrees.filter(function (w) { return w.state === "active"; }).length + " active worktrees",
+      body: M.resourceList(tools, { label: "Tools" }) +
+        M.inspector([
+          ["Forge", sc.forge.name + " — " + sc.forge.state + " as " + sc.forge.identity],
+          ["SSH source", sc.forge.sshSource],
+          ["Merge policy", (sc.testBeforeMerge ? "Test before merge · " : "") + sc.pushPolicy + " · force push " + sc.forcePush.toLowerCase()],
+          ["Leases", sc.leases]
+        ]) +
+        '<div class="dk-cap-line">Worktrees</div>' + M.resourceList(wts, { label: "Worktrees" }) +
+        '<div class="dk-cap-line">GitHub Actions</div>' +
+        M.resourceList(gh.pinned.map(function (p) { return { id: p.id, title: p.name, chip: "ready", sub: p.last + " · " + p.runs + " runs" }; }), { label: "Pinned workflows" }) +
+        '<div class="pm-note" style="margin-top:6px">' + esc(gh.readiness) + " · current run " + gh.currentRun.workflow + ": " + gh.currentRun.conclusion + " — " + gh.currentRun.jobs.map(function (j) { return j.name + " " + j.conclusion; }).join(", ") + "</div>"
+    });
+  }
+
+  function containersManager() {
+    var items = D.containers.top.map(function (c) {
+      return { id: c.name, title: c.name, chip: c.state === "running" ? "running" : c.state === "detected" ? "detected" : "not-installed",
+        sub: c.detail,
+        actions: c.expanded.length ? '<div class="pm-note">' + c.expanded.map(esc).join(" · ") + "</div>" : "" };
+    });
+    return M.managerShell({ id: "containers", title: "Containers & Registries", icon: "grid", health: "Docker running · Podman absent · k8s tools detected", body: M.resourceList(items, { label: "Container tooling" }) + '<div class="pm-note" style="margin-top:6px">' + esc(D.containers.note) + "</div>" });
+  }
+
+  function webManager() {
+    var w = D.webSearchCfg;
+    return M.managerShell({
+      id: "web", title: "Web / Search / Fetch", icon: "globe", health: w.readiness,
+      body: M.inspector([
+        ["Provider priority", w.providerPriority.join(" → ")],
+        ["Limits", "search " + w.limits.search + " · fetch " + w.limits.fetch + " · crawl " + w.limits.crawl + " · map " + w.limits.map],
+        ["Extraction", w.limits.extract],
+        ["Credit guard", w.creditGuard],
+        ["Caches", w.caches],
+        ["Browser sessions", w.browserSessions],
+        ["Proxies", w.proxies],
+        ["Air-gap", w.airGap]
+      ]) + '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-dk-act="dk.web.test">Test readiness</button></div>'
+    });
+  }
+
+  function searchIndexManager() {
+    var ix = ST.state.collections.searchIndexCfg;
+    var rebuildRow = ix.rebuild.state === "running"
+      ? '<div class="dk-quietline">' + '<span class="pm-spinner" data-spinner="1"></span>' + '<span>Rebuilding — ' + esc(ix.rebuild.progress) + " (" + ix.rebuild.phases.join(" → ") + ")</span></div>"
+      : '<div class="dk-quietline">' + led("ok") + "<span>Last full rebuild " + esc(ix.rebuild.lastFull) + " · phases " + ix.rebuild.phases.join(" → ") + "</span></div>";
+    return M.managerShell({
+      id: "search-index", title: "Project Search Index", icon: "search", health: "Disk use " + ix.disk,
+      body: M.inspector([
+        ["Enabled", ix.enabled ? "Yes" : "No"],
+        ["Exclusions", ix.exclusions.join(", ")],
+        ["File size", ix.fileSize],
+        ["Symlinks", ix.symlinks],
+        ["Remote cache", ix.remoteCache]
+      ]) + rebuildRow + '<div class="pm-mgr-actions">' + actBtn("index.rebuild", ix.rebuild.state === "running" ? "Rebuilding…" : "Rebuild index") + "</div>" +
+        '<div class="pm-note" style="margin-top:6px">' + esc(ix.rebuild.note) + "</div>"
+    });
+  }
+
+  var MANAGER_BUILDERS = {
+    providers: providersManager, notifications: notificationsManager, sounds: soundsManager, themes: themesManager,
+    memory: memoryManager, "context-sources": contextSourcesManager, crew: crewManager, personas: personasManager,
+    permissions: permissionsManager, terminal: terminalManager, lsp: lspManager, formatters: formattersManager,
+    commands: commandsManager, testing: testingManager, files: filesManager, mcp: mcpManager, skills: skillsManager,
+    plugins: pluginsManager, tools: toolsManager, storage: storageManager, backup: backupManager, history: historyManager,
+    artifacts: artifactsManager, "source-control": sourceControlManager, containers: containersManager,
+    web: webManager, "search-index": searchIndexManager
+  };
+
+  // ---- WORKSPACE -----------------------------------------------------------------
+  function renderWorkspace(view) {
+    var cat = dest(view.category);
+    if (!cat) { renderHome(); return; }
+    if (spy) { spy.destroy(); spy = null; }
+
+    var strip = '<div class="dk-strip">' +
+      '<button class="pm-btn pm-btn-sm dk-back" data-dk-home>' + ico("arrowLeft", 12) + " Home</button>" +
+      '<div class="dk-tabs" role="tablist" aria-label="Settings categories">' +
+        D.destinations.map(function (d) {
+          return '<button class="dk-tab' + (d.id === cat.id ? " active" : "") + '" role="tab" aria-selected="' + (d.id === cat.id) + '" data-dk-tab="' + esc(d.id) + '">' + esc(d.title) + "</button>";
+        }).join("") +
+      "</div>" +
+      '<button class="pm-btn pm-btn-sm dk-subnav-drawer" data-dk-subnav-toggle>' + ico("list", 12) + " Sections</button>" +
+      '<button class="pm-btn pm-btn-sm dk-find" data-dk-find>' + ico("search", 12) + " Find</button>" +
+    "</div>";
+
+    var subnav = '<nav class="dk-subnav" id="dk-subnav" aria-label="' + esc(cat.title) + ' sections">' +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm dk-subnav-close" data-dk-subnav-close>' + ico("x", 13) + " Close sections</button>" +
+      cat.subcategories.map(function (s, i) {
+        return '<button class="dk-subnav-item" data-subnav="' + esc(s.id) + '">' + (i + 1) + ". " + esc(s.title) + "</button>";
+      }).join("") +
+      (cat.id === "general" ? '<button class="dk-subnav-item" data-subnav="desktop">Desktop & Tray</button><button class="dk-subnav-item" data-subnav="teacher">Teacher & Help</button>' : "") +
+    "</nav>";
+
+    var docHead = '<div class="dk-doc-head"><div class="dk-kicker">SETTINGS WORKSPACE // ' + MODEL + '</div>' +
+      "<h1>" + ico(cat.icon, 18) + " " + esc(cat.title) + ' <span class="pm-badge pm-badge-' + (cat.status.kind === "ok" ? "ok" : cat.status.kind === "warn" ? "warn" : "danger") + '">' +
+      led(destKindLed(cat.status.kind)) + " " + esc(cat.status.summary) + "</span></h1>" +
+      "<p>" + esc(cat.purpose) + "</p></div>";
+
+    var sections = cat.subcategories.map(function (sub, i) {
+      var rows = sub.settings.map(function (s) { return M.settingRow(ST.state.settings[s.id] || s); }).join("");
+      var mgrSlot = "";
+      if (sub.manager) mgrSlot = '<div class="dk-mgr-slot" data-manager-slot="' + esc(sub.manager) + '"></div>';
+      var extra = "";
+      if (cat.id === "general" && sub.id === "language") extra = dictionariesPanel();
+      return '<section class="dk-sub" id="dk-sub-' + esc(sub.id) + '" data-sub-id="' + esc(sub.id) + '">' +
+        "<h2><span class=\"idx\">" + String(i + 1).padStart(2, "0") + "</span> " + esc(sub.title) + (sub.manager ? ' <span class="pm-badge pm-badge-muted">Manager</span>' : "") + "</h2>" +
+        rows + mgrSlot + extra +
+      "</section>";
+    }).join("");
+
+    var extras = cat.id === "general" ? desktopManager() + teacherSection() : "";
+
+    var html = '<div class="dk-work dk-enter">' + strip +
+      '<div class="dk-work-body">' + subnav + '<div class="dk-doc">' + docHead + sections + extras + "</div></div>" +
+    "</div>";
+
+    var scrollerEl = content.querySelector(".dk-work");
+    var keepScroll = scrollerEl ? scrollerEl.scrollTop : 0;
+    var sameCat = scrollerEl && scrollerEl.getAttribute("data-cat") === cat.id;
     content.innerHTML = html;
-    bindWork(v, d);
+    var scroller = content.querySelector(".dk-work");
+    scroller.setAttribute("data-cat", cat.id);
+    if (sameCat) scroller.scrollTop = keepScroll;
+
+    hydrateManagers(cat);
+    setupScrollspy(cat, scroller);
+    centerActiveTab();
+    applyDeepLink(view);
   }
 
-  function bindWork(v, d) {
-    var scroller = document.getElementById("dk-work");
-    var doc = document.getElementById("dk-doc");
-    var tabs = content.querySelectorAll(".dk-tab");
-    document.getElementById("dk-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+  function hydrateManagers(cat) {
+    cat.subcategories.forEach(function (sub) {
+      if (!sub.manager) return;
+      var slot = content.querySelector('[data-manager-slot="' + sub.manager + '"]');
+      if (!slot) return;
+      var build = MANAGER_BUILDERS[sub.manager];
+      if (!build) return;
+      window.PMCore.hydrateManager(slot, function (container) {
+        container.innerHTML = build();
+        applyDeepLink(ST.state.view);
+      });
+    });
+  }
 
+  function setupScrollspy(cat, scroller) {
+    var ids = cat.subcategories.map(function (s) { return s.id; });
+    if (cat.id === "general") ids = ids.concat(["desktop", "teacher"]);
     spy = window.PMCore.scrollspy(scroller, function () {
-      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
-    }, function (id) {
-      tabs.forEach(function (b) {
-        var on = b.getAttribute("data-sub") === id;
-        b.classList.toggle("active", on);
-        if (on) b.scrollIntoView({ inline: "center", block: "nearest", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+      return ids.map(function (id) {
+        var el = content.querySelector('[data-sub-id="' + id + '"], [data-sub-anchor="' + id + '"]');
+        return { id: id, el: el };
+      }).filter(function (s) { return s.el; });
+    }, function (activeId) {
+      content.querySelectorAll("[data-subnav]").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-subnav") === activeId);
       });
-    }, { offset: 70 });
-
-    tabs.forEach(function (b) { b.addEventListener("click", function () { spy.jumpTo(b.getAttribute("data-sub")); }); });
-
-    document.getElementById("dk-disc").querySelectorAll("[data-disc]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
-        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
-          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
-          row.setAttribute("data-hidden", window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard");
-        });
-        content.querySelectorAll("#dk-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
-        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " rows.", "info");
-        if (spy) spy.refresh();
-      });
-    });
-
-    document.getElementById("dk-q2").addEventListener("keydown", function (e) {
-      if (e.key !== "Enter") return;
-      var hits = window.PMCore.search(e.target.value, INDEX);
-      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found.", "info"); return; }
-      var t = Object.assign({}, hits[0].target);
-      t.focusSetting = t.setting || null;
-      window.PMState.navigate(t);
-    });
-
-    doc.addEventListener("click", function (e) {
-      var toggle = e.target.closest("[data-console-toggle]");
-      if (toggle) {
-        var consoleEl = toggle.closest(".dk-console");
-        consoleEl.classList.toggle("open");
-        var key = consoleEl.getAttribute("data-console-key");
-        if (key) openConsoles[key] = consoleEl.classList.contains("open");
-      }
-      var row = e.target.closest("[data-setting-id]");
-      var btn = e.target.closest("button, select");
-      if (row && btn) {
-        var id = row.getAttribute("data-setting-id");
-        var s = window.PMState.getSetting(id);
-        if (btn.matches("[data-ctl].pm-toggle")) { window.PMState.setSettingValue(id, !(s.value === true)); patchRow(id); return; }
-        if (btn.matches("[data-seg]")) { window.PMState.setSettingValue(id, btn.getAttribute("data-seg")); patchRow(id); return; }
-        if (btn.matches("[data-reset]")) { window.PMState.resetSetting(id); patchRow(id); return; }
-        if (btn.matches("[data-details]")) { row.classList.toggle("open"); btn.setAttribute("aria-expanded", row.classList.contains("open")); return; }
-        if (btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
-          if (s.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
-          window.PMState.receipt(s.actionLabel || "Opened", s.label + ": honest simulated result.", "sim");
-          return;
-        }
-      }
-      mgrClick(e);
-    });
-    doc.addEventListener("change", function (e) {
-      var row = e.target.closest("[data-setting-id]");
-      if (row && e.target.matches("[data-ctl]")) {
-        var id = row.getAttribute("data-setting-id");
-        window.PMState.setSettingValue(id, e.target.value);
-        patchRow(id);
-      }
-      if (e.target.matches("[data-continuation]")) window.PMState.receipt("Continuation saved", "Anthropic Max: " + e.target.value + " — future requests only.", "ok");
-      if (e.target.matches("[data-effort-sel]")) window.PMState.receipt("Effort preference saved", "Applies when supported by the model.", "ok");
-    });
-
-    function mgrClick(e) {
-      var t;
-      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
-      var pc = e.target.closest("[data-provider]");
-      if (pc) {
-        var pid = pc.getAttribute("data-provider");
-        var acctEl = e.target.closest("[data-account]");
-        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
-        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); rerender("providers"); return; }
-        if (aid && (t = e.target.closest("[data-nickname]"))) {
-          var acc = window.PMState.accountById(pid, aid);
-          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
-          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); rerender("providers"); }
-          return;
-        }
-        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); rerender("providers"); return; }
-        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); rerender("providers"); return; }
-        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); rerender("providers"); return; }
-        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); rerender("providers"); return; }
-        if ((t = e.target.closest("[data-pa]"))) {
-          var act = t.getAttribute("data-pa");
-          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral setup: account, key, scopes, caveats, back to the model row. Simulated.", "sim"); return; }
-          window.PMState.providerAction(pid, act); return;
-        }
-        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured state. Simulated navigation.", "info"); return; }
-        var ml = e.target.closest("[data-model]");
-        if (ml) {
-          var mid = ml.getAttribute("data-model");
-          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); rerender("providers"); return; }
-          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); rerender("providers"); return; }
-          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); rerender("providers"); return; }
-          if ((t = e.target.closest("[data-alias]"))) {
-            var p = window.PMState.providerById(pid);
-            var m = p.models.filter(function (x) { return x.id === mid; })[0];
-            var next = prompt("Alias for " + m.name + ":", m.alias || "");
-            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); rerender("providers"); }
-            return;
-          }
-          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); rerender("providers"); return; }
-          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " requested when genuinely supported.", "ok"); return; }
-        }
-      }
-      var crew = e.target.closest("[data-crew]");
-      if (crew && (t = e.target.closest("[data-crew-act]"))) {
-        var c = window.PMState.state.crewTemplates.filter(function (x) { return x.id === crew.getAttribute("data-crew"); })[0];
-        if (t.getAttribute("data-crew-act") === "dryrun") window.PMState.receipt("Dry-run forecast", c.name + ": " + c.capacityNote + " Sourced from Usage; the runtime decides admission.", "info");
-        else window.PMState.receipt("Edit template", c.name + ": composition editor is simulated here.", "sim");
-        return;
-      }
-      var lsp = e.target.closest("[data-lsp]");
-      if (lsp && (t = e.target.closest("[data-lsp-act]"))) {
-        var lv = window.PMState.state.lspServers.filter(function (x) { return x.id === lsp.getAttribute("data-lsp"); })[0];
-        var la = t.getAttribute("data-lsp-act");
-        if (la === "restart") window.PMState.receipt("Restart queued", lv.name + " language server will restart. Simulated.", "sim");
-        if (la === "start") window.PMState.receipt("Start queued", lv.name + " server starts on the first matching file. Simulated.", "sim");
-        if (la === "install") window.PMState.receipt("Install started", lv.executable + " installation is simulated in this concept.", "sim");
-        if (la === "diag") window.PMState.receipt("Diagnostics", lv.name + ": " + lv.health + ". Simulated report.", "info");
-        return;
-      }
-      var term = e.target.closest("[data-term]");
-      if (term && (t = e.target.closest("[data-term-act]"))) {
-        var tp = window.PMState.state.terminalProfiles.filter(function (x) { return x.id === term.getAttribute("data-term"); })[0];
-        var a = t.getAttribute("data-term-act");
-        if (a === "default") { window.PMState.state.terminalProfiles.forEach(function (x) { x.isDefault = x.id === tp.id; }); window.PMState.receipt("Default profile changed", tp.name + " is now the default for new terminals.", "ok"); rerender("terminal"); }
-        else if (a === "diag") window.PMState.receipt("Startup diagnostics", tp.name + ": shell resolved, font fallbacks ok. Simulated.", "sim");
-        else window.PMState.receipt("Edit profile", tp.name + ": profile editor is simulated here.", "sim");
-        return;
-      }
-    }
-
-    function patchRow(id) {
-      var s = window.PMState.getSetting(id);
-      var el = content.querySelector('[data-setting-id="' + id + '"]');
-      if (!el) return;
-      var tmp = document.createElement("div");
-      tmp.innerHTML = settingRow(s);
-      var fresh = tmp.firstChild;
-      fresh.classList.toggle("open", el.classList.contains("open"));
-      el.replaceWith(fresh);
-    }
-    function rerender(which) {
-      var subId = which === "providers" ? "providers" : which === "crew" ? "crew" : "terminal";
-      var section = content.querySelector('[data-sub-section="' + subId + '"]');
-      if (!section) return;
-      var h2 = section.querySelector("h2");
-      var rows = section.querySelectorAll(":scope > .dk-row");
-      section.innerHTML = "";
-      section.appendChild(h2);
-      var tmp = document.createElement("div");
-      tmp.innerHTML = which === "providers" ? providersConsole(window.PMState.state.view) : which === "crew" ? crewConsole() : terminalConsole();
-      while (tmp.firstChild) section.appendChild(tmp.firstChild);
-      rows.forEach(function (r) { section.appendChild(r); });
-      if (spy) spy.refresh();
-    }
-    window._deckPatch = { patchRow: patchRow, rerender: rerender };
-
-    if (v.subcategory) spy.jumpTo(v.subcategory, function () { focusV(v); });
-    else if (v.manager) {
-      var subForMgr = null;
-      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
-      if (subForMgr) { spy.jumpTo(subForMgr, function () { focusV(v); }); return; }
-      focusV(v);
-    } else { scroller.scrollTop = 0; focusV(v); }
+    }, { offset: 108 });
   }
 
-  function focusV(v) {
-    if (v.focusSetting) {
-      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
-      if (el) { el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(el); }
-    } else if (v.provider) {
-      var card = content.querySelector('[data-provider="' + v.provider + '"]');
-      if (card) { card.classList.add("open"); card.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(card); }
+  function centerActiveTab() {
+    var tab = content.querySelector(".dk-tab.active");
+    var strip = content.querySelector(".dk-tabs");
+    if (!tab || !strip) return;
+    strip.scrollTo({ left: Math.max(0, tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2), behavior: reduced() ? "auto" : "smooth" });
+  }
+
+  function waitFor(sel, fn, tries) {
+    var el = content.querySelector(sel);
+    if (el) { fn(el); return; }
+    if (tries > 0) setTimeout(function () { waitFor(sel, fn, tries - 1); }, 120);
+  }
+
+  function flash(el) {
+    if (!el) return;
+    el.scrollIntoView({ block: "center", behavior: reduced() ? "auto" : "smooth" });
+    window.PMCore.focusFlash(el);
+  }
+
+  function openProviderPane(cardId, pane) {
+    var card = content.querySelector('[data-provider-card="' + cardId + '"]');
+    if (!card) return;
+    card.querySelectorAll("[data-ptab]").forEach(function (b) {
+      var on = b.getAttribute("data-ptab") === pane;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    card.querySelectorAll(".pm-provider-pane").forEach(function (p) {
+      p.hidden = p.getAttribute("data-pane") !== pane;
+    });
+  }
+
+  function applyDeepLink(view) {
+    if (view.provider) {
+      waitFor('[data-provider-card="' + view.provider + '"]', function (card) {
+        openPanes[view.provider] = openPanes[view.provider] || "install";
+        openProviderPane(view.provider, openPanes[view.provider]);
+        flash(card);
+      }, 20);
+    } else if (view.setting) {
+      waitFor('[data-setting-row="' + view.setting + '"]', flash, 8);
+    } else if (view.manager) {
+      waitFor('[data-manager="' + view.manager + '"]', flash, 20);
+    } else if (view.subcategory) {
+      var el = content.querySelector('[data-sub-id="' + view.subcategory + '"]');
+      if (el && spy) spy.jumpTo(view.subcategory);
     }
   }
 
-  window.PMState.subscribe(function (kind) {
-    if (kind === "navigate") { route(); return; }
-    if (kind === "scenario") { route(); return; }
-    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._deckPatch) window._deckPatch.rerender("providers");
+  // ---- Render dispatch ------------------------------------------------------------
+  function render(view) {
+    if (spy) { spy.destroy(); spy = null; }
+    if (view && view.name === "workspace") renderWorkspace(view);
+    else renderHome();
+    refreshInbox();
+  }
+
+  ST.subscribe(function (kind, payload) {
+    if (kind === "navigate") { render(ST.state.view); return; }
+    if (kind === "receipt") return;
+    if (kind === "teacher") {
+      var targets = {
+        "tch-providers": { category: "models", manager: "providers" },
+        "tch-permissions": { category: "permissions", manager: "permissions" },
+        "tch-backup": { category: "system", manager: "backup" }
+      };
+      var t = targets[payload.id];
+      if (t) { ST.navigate(wsView(t)); return; }
+    }
+    render(ST.state.view);
   });
 
-  route();
+  // ---- Concept-local interactions ---------------------------------------------------
+
+  // Record provider tab choices so re-renders keep them.
+  content.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-ptab]") : null;
+    if (!t) return;
+    var card = t.closest("[data-provider-card]");
+    if (card) openPanes[card.getAttribute("data-provider-card")] = t.getAttribute("data-ptab");
+  });
+
+  // Theme hover preview + apply (delegated).
+  var previewOrigin = null;
+  content.addEventListener("mouseover", function (e) {
+    var card = e.target.closest ? e.target.closest("[data-theme-preview]") : null;
+    if (!card || card.contains(e.relatedTarget)) return;
+    if (previewOrigin === null) previewOrigin = document.documentElement.getAttribute("data-theme");
+    document.documentElement.setAttribute("data-theme", card.getAttribute("data-theme-preview"));
+  });
+  content.addEventListener("mouseout", function (e) {
+    var card = e.target.closest ? e.target.closest("[data-theme-preview]") : null;
+    if (!card || card.contains(e.relatedTarget)) return;
+    if (previewOrigin !== null) {
+      document.documentElement.setAttribute("data-theme", previewOrigin);
+      previewOrigin = null;
+    }
+  });
+
+  function findCustomTheme(id) {
+    var out = null;
+    D.customThemes.themes.forEach(function (t) { if (t.id === id) out = t; });
+    return out;
+  }
+
+  content.addEventListener("click", function (e) {
+    // Theme cards: apply on click/Enter.
+    var card = e.target.closest ? e.target.closest("[data-theme-preview]") : null;
+    if (card) {
+      var customId = card.getAttribute("data-theme-custom");
+      if (customId) {
+        var ct = findCustomTheme(customId);
+        if (ct && ct.state === "schema-invalid") {
+          previewOrigin = null;
+          document.documentElement.setAttribute("data-theme", card.getAttribute("data-theme-preview"));
+          ST.receipt("Cannot apply " + ct.name, "Schema-invalid TOML — PM renders the base theme (" + ct.base + ") and shows the diagnostic instead. Simulated.", "blocked");
+          return;
+        }
+        if (ct) {
+          previewOrigin = null;
+          document.documentElement.setAttribute("data-theme", card.getAttribute("data-theme-preview"));
+          ST.receipt(ct.name + " applied", "Custom TOML over its base theme " + ct.base + " — " + ct.inherited + ". Simulated custom tokens.", "ok");
+          return;
+        }
+      }
+      var name = card.getAttribute("data-theme-preview");
+      previewOrigin = null;
+      document.documentElement.setAttribute("data-theme", name);
+      ST.receipt("Theme applied", name.split("-").map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(" ") + " is now active across the shell.", "ok");
+      render(ST.state.view);
+      return;
+    }
+
+    var actEl = e.target.closest ? e.target.closest("[data-dk-act]") : null;
+    if (!actEl) {
+      // Home + workspace generic bindings
+      var home = e.target.closest ? e.target.closest("[data-open]") : null;
+      if (home) { ST.navigate(wsView({ category: home.getAttribute("data-open") })); return; }
+      var recent = e.target.closest ? e.target.closest("[data-recent]") : null;
+      if (recent) {
+        var r = null;
+        ST.state.recents.forEach(function (x) { if (x.id === recent.getAttribute("data-recent")) r = x; });
+        if (r) ST.navigate(wsView(r.target));
+        return;
+      }
+      var nGo = e.target.closest ? e.target.closest("[data-notice-go]") : null;
+      if (nGo) {
+        var n1 = null;
+        ST.state.notices.forEach(function (x) { if (x.id === nGo.getAttribute("data-notice-go")) n1 = x; });
+        if (n1) noticePrimary(n1);
+        return;
+      }
+      var nGo2 = e.target.closest ? e.target.closest("[data-notice-go2]") : null;
+      if (nGo2) {
+        var n2 = null;
+        ST.state.notices.forEach(function (x) { if (x.id === nGo2.getAttribute("data-notice-go2")) n2 = x; });
+        if (n2) noticeSecondary(n2);
+        return;
+      }
+      var tab = e.target.closest ? e.target.closest("[data-dk-tab]") : null;
+      if (tab) { ST.navigate(wsView({ category: tab.getAttribute("data-dk-tab") })); return; }
+      var subnavBtn = e.target.closest ? e.target.closest("[data-subnav]") : null;
+      if (subnavBtn && spy) { spy.jumpTo(subnavBtn.getAttribute("data-subnav")); var snOpen = content.querySelector("#dk-subnav.open"); if (snOpen) snOpen.classList.remove("open"); return; }
+      var backBtn = e.target.closest ? e.target.closest("[data-dk-home]") : null;
+      var subnavToggle = e.target.closest ? e.target.closest("[data-dk-subnav-toggle]") : null;
+      if (subnavToggle) {
+        var sn = content.querySelector("#dk-subnav");
+        if (sn) sn.classList.toggle("open");
+        return;
+      }
+      var subnavClose = e.target.closest ? e.target.closest("[data-dk-subnav-close]") : null;
+      if (subnavClose) {
+        var sn2 = content.querySelector("#dk-subnav");
+        if (sn2) sn2.classList.remove("open");
+        return;
+      }
+      if (backBtn) { ST.navigate({ name: "home" }); return; }
+      var findBtn = e.target.closest ? e.target.closest("[data-dk-find]") : null;
+      if (findBtn) {
+        ST.navigate({ name: "home" });
+        setTimeout(function () { var q = document.getElementById("dk-q"); if (q) q.focus(); }, reduced() ? 60 : 380);
+        return;
+      }
+      return;
+    }
+
+    var act = actEl.getAttribute("data-dk-act");
+    switch (act) {
+      case "dk.inbox.flash": {
+        inbox.querySelector("[data-inbox-btn]").classList.add("pm-focus-wash");
+        setTimeout(function () { inbox.querySelector("[data-inbox-btn]").classList.remove("pm-focus-wash"); }, 1300);
+        ST.receipt("Title-bar inbox", "That chip is the only in-app notification surface. Simulated highlight.", "info");
+        break;
+      }
+      case "dk.quiet.open": { if (spy) spy.jumpTo("quiet"); break; }
+      case "dk.dest.edit": {
+        var id = actEl.getAttribute("data-dest");
+        var d = null;
+        ST.state.collections.notificationDestinations.forEach(function (x) { if (x.id === id) d = x; });
+        if (!d) break;
+        window.PMCore.promptDialog("Edit destination — " + d.name, d.channel, function (v) {
+          if (v) ST.updateDestination(id, { channel: v });
+        });
+        break;
+      }
+      case "dk.dict.add": {
+        var scope = actEl.closest(".dk-mgr-body") || content;
+        var wordEl = scope.querySelector("[data-dict-word]");
+        var kindEl = scope.querySelector("[data-dict-kind]");
+        var w = (wordEl.value || "").trim();
+        if (!w) { ST.receipt("Word needed", "Type a word to add to the dictionary.", "blocked"); break; }
+        ST.addToDictionary(kindEl.value, w.toLowerCase());
+        wordEl.value = "";
+        break;
+      }
+      case "dk.dict.remove": ST.removeFromDictionary(actEl.getAttribute("data-kind"), actEl.getAttribute("data-word")); break;
+      case "dk.theme.create": {
+        window.PMCore.promptDialog("New custom theme name (TOML)", "my-theme.toml", function (v) {
+          if (v) ST.receipt("Custom theme created", v + " scaffolded with base-theme inheritance — only overridden tokens are stored. Simulated.", "ok");
+        });
+        break;
+      }
+      case "dk.theme.import": ST.receipt("Theme imported", "TOML parsed, schema validated, base-theme inheritance resolved. Simulated file.", "sim"); break;
+      case "dk.theme.export": ST.receipt("Theme exported", "Custom theme written as TOML with source disclosure. Simulated.", "sim"); break;
+      case "dk.theme.folder": ST.receipt("Theme folder opened", "themes/ revealed in the file manager. Simulated.", "sim"); break;
+      case "dk.desktop.toggle": {
+        var key = actEl.getAttribute("data-key");
+        deckDesktop[key] = !deckDesktop[key];
+        ST.receipt("Deck fixture updated", key + " is now " + (deckDesktop[key] ? "On" : "Off") + ". Simulated desktop fixture.", "ok");
+        ST.emit("collections", { name: "deckDesktop" });
+        break;
+      }
+      case "dk.desktop.seg": {
+        deckDesktop[actEl.getAttribute("data-key")] = actEl.getAttribute("data-val");
+        ST.receipt("Deck fixture updated", "Window restore set to " + actEl.getAttribute("data-val") + ". Simulated.", "ok");
+        ST.emit("collections", { name: "deckDesktop" });
+        break;
+      }
+      case "dk.ab.up":
+      case "dk.ab.down": {
+        var abid = actEl.getAttribute("data-ab");
+        var list = deckDesktop.activityBar;
+        var idx = -1;
+        list.forEach(function (x, i) { if (x.id === abid) idx = i; });
+        var swap = idx + (act === "dk.ab.up" ? -1 : 1);
+        if (idx >= 0 && swap >= 0 && swap < list.length) {
+          var tmp = list[idx]; list[idx] = list[swap]; list[swap] = tmp;
+          ST.receipt("Activity Bar reordered", tmp.label + " moved. Layout state persists. Simulated.", "ok");
+          ST.emit("collections", { name: "deckDesktop" });
+        }
+        break;
+      }
+      case "dk.ab.hide": {
+        var hid = actEl.getAttribute("data-ab");
+        deckDesktop.activityBar.forEach(function (x) {
+          if (x.id === hid) {
+            x.hidden = !x.hidden;
+            ST.receipt(x.hidden ? "Activity Bar item hidden" : "Activity Bar item shown", x.label + (x.hidden ? " is hidden; its state is kept." : " is visible again.") + " Simulated.", "ok");
+          }
+        });
+        ST.emit("collections", { name: "deckDesktop" });
+        break;
+      }
+      case "dk.teacher.open": {
+        var tm = null;
+        D.teacherMoments.forEach(function (t) { if (t.id === actEl.getAttribute("data-teacher")) tm = t; });
+        var ttargets = {
+          "tch-providers": { category: "models", manager: "providers" },
+          "tch-permissions": { category: "permissions", manager: "permissions" },
+          "tch-backup": { category: "system", manager: "backup" }
+        };
+        if (tm && ttargets[tm.id]) ST.navigate(wsView(ttargets[tm.id]));
+        break;
+      }
+      case "dk.memory.verify": {
+        ST.state.memory.forEach(function (m) { if (m.id === actEl.getAttribute("data-memory")) { m.state = "verified"; ST.receipt("Memory verified", "Evidence checked; the memory is fully trusted now. Simulated.", "ok"); } });
+        ST.emit("collections", { name: "memory" });
+        break;
+      }
+      case "dk.memory.pin": {
+        ST.state.memory.forEach(function (m) { if (m.id === actEl.getAttribute("data-memory")) { m.pinned = !m.pinned; ST.receipt(m.pinned ? "Memory pinned" : "Memory unpinned", m.pinned ? "Pinned memories resist half-life fading." : "The memory follows normal activation again.", "ok"); } });
+        ST.emit("collections", { name: "memory" });
+        break;
+      }
+      case "dk.memory.capsule": {
+        var mem = null;
+        ST.state.memory.forEach(function (m) { if (m.id === actEl.getAttribute("data-memory")) mem = m; });
+        if (mem) ST.receipt("Capsule preview", mem.kind + " · scope " + mem.scope + " · half-life " + mem.halfLife + " · evidence: " + mem.evidence, "info");
+        break;
+      }
+      case "dk.context.omit": ST.receipt("Source omitted next request", actEl.getAttribute("data-src") + " will be skipped on the next assembly. Admission stays receipted. Simulated.", "ok"); break;
+      case "dk.crew.use": ST.receipt("Crew selected", "This crew applies to the current thread or Goal — never globally. Simulated.", "ok"); break;
+      case "dk.persona.default": {
+        var nm = actEl.getAttribute("data-persona");
+        ST.setSettingValue("behavior.personas.default", nm);
+        break;
+      }
+      case "dk.persona.capsule": {
+        var pe = null;
+        ST.state.personas.forEach(function (p) { if (p.id === actEl.getAttribute("data-persona")) pe = p; });
+        if (pe) ST.receipt("Capsule: " + pe.name, pe.capsule + " bounded capsule — provenance " + pe.provenance + ", eligible for " + pe.eligible + ". Behavior, not authority.", "info");
+        break;
+      }
+      case "dk.preset.apply": ST.receipt("Preset staged", "Preset rules would be appended below existing rules — last match wins, so order is confirmed before apply. Simulated.", "info"); break;
+      case "dk.term.default": {
+        ST.state.terminalProfiles.forEach(function (t) { t.isDefault = t.id === actEl.getAttribute("data-term"); });
+        ST.receipt("Default terminal changed", "New sessions use this profile. Simulated.", "ok");
+        ST.emit("collections", { name: "terminalProfiles" });
+        break;
+      }
+      case "dk.term.session": ST.receipt("Terminal session", "A new session would open with this profile's shell, env, and palette. Simulated.", "sim"); break;
+      case "dk.lsp.restart": ST.receipt("LSP restart queued", "The server restarts without losing editor state; attachment re-resolves. Simulated.", "sim"); break;
+      case "dk.lsp.logs": {
+        var ls = null;
+        ST.state.lspServers.forEach(function (l) { if (l.id === actEl.getAttribute("data-lsp")) ls = l; });
+        if (ls) M.modal("Logs — " + ls.name, ls.logs.length ? ls.logs.map(function (line) { return '<div class="pm-log">' + esc(line) + "</div>"; }).join("") : '<div class="pm-empty">No log entries this session.</div>');
+        break;
+      }
+      case "dk.mcp.logs": {
+        var sv = null;
+        ST.state.mcpServers.forEach(function (s) { if (s.id === actEl.getAttribute("data-mcp")) sv = s; });
+        if (sv) M.modal("Logs — " + sv.name, sv.logs.map(function (line) { return '<div class="pm-log">' + esc(line) + "</div>"; }).join(""));
+        break;
+      }
+      case "dk.mcp.repair": ST.receipt("Repair queued", "Transport spawn will be retried with diagnostics attached. Simulated.", "sim"); break;
+      case "dk.mcp.reconnect": ST.receipt("Reconnect requested", "Authorization will be requested through the server's own flow. Simulated.", "sim"); break;
+      case "dk.skill.trust": {
+        ST.state.skills.forEach(function (s) { if (s.id === actEl.getAttribute("data-skill")) { s.trust = "Trusted"; ST.receipt("Skill trusted", s.name + " is trusted for this scope. Trust is revocable. Simulated.", "ok"); } });
+        ST.emit("collections", { name: "skills" });
+        break;
+      }
+      case "dk.skill.enable": {
+        ST.state.skills.forEach(function (s) { if (s.id === actEl.getAttribute("data-skill")) { s.enabled = !s.enabled; ST.receipt(s.enabled ? "Skill enabled" : "Skill disabled", s.name + (s.enabled ? " can be selected again." : " stays installed but cannot be selected.") + " Simulated.", "ok"); } });
+        ST.emit("collections", { name: "skills" });
+        break;
+      }
+      case "dk.plugin.retry": ST.receipt("Load retried", "The plugin host re-attempted loading and recorded the failure reason — incompatible with this build. Simulated.", "blocked"); break;
+      case "dk.storage.quarantine": ST.receipt("Quarantine", "2 quarantined artifacts await review. Deletion requires an explicit decision per item. Simulated.", "info"); break;
+      case "dk.history.delete": {
+        var hid2 = actEl.getAttribute("data-history");
+        ST.state.collections.historyRows = ST.state.collections.historyRows.filter(function (h) { return h.id !== hid2; });
+        ST.receipt("History deleted", "The thread and its transcripts were removed per the deletion policy. Simulated.", "ok");
+        ST.emit("collections", { name: "historyRows" });
+        break;
+      }
+      case "dk.artifact.reveal": ST.receipt("Artifact revealed", "The file's location opens in the file manager with provenance intact. Simulated.", "sim"); break;
+      case "dk.artifact.redact": ST.receipt("Artifact redacted", "Likely secrets scrubbed; the redaction is recorded in the receipt trail. Simulated.", "ok"); break;
+      case "dk.web.test": ST.receipt("Web readiness", "Built-in provider responding; credit guard and limits verified. Simulated.", "ok"); break;
+      case "dk.files.recovery": ST.receipt("Recovery files", "Unsaved buffers from the last exit are listed; each can be restored or discarded. Simulated.", "info"); break;
+    }
+  });
+
+  // Deck-local select: launch destination fixture.
+  content.addEventListener("change", function (e) {
+    var el = e.target;
+    var key = el.getAttribute && el.getAttribute("data-dk-select");
+    if (!key) return;
+    deckDesktop[key] = el.value;
+    ST.receipt("Deck fixture updated", "Launch destination set to " + el.value + ". Simulated.", "ok");
+  });
+
+  // Theme cards: keyboard apply.
+  content.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+    var card = e.target.closest ? e.target.closest("[data-theme-preview]") : null;
+    if (card) { e.preventDefault(); card.click(); }
+  });
+
+  // ---- Boot ------------------------------------------------------------------------
+  var initial = window.PMCore.startRouter();
+  render(initial);
+  window.__conceptReady = true;
 })();
 </script>
 </body>

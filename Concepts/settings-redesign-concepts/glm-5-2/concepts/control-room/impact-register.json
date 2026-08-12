@@ -1,0 +1,659 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-01-control-room",
+  "model": "GLM-5.2",
+  "concept_thesis": "Settings as mission control. One dominant search is the primary verb; destinations are large editorial panels (title + purpose + live status), never filter chips. Workspace is a book-TOC: left vertical category index plus a continuous document with portable scrollspy and deep links. Owns the C1 manager families end-to-end and demonstrates the core surface every concept shares.",
+  "plan_owner_impacts": [
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "impact": "Establishes a search-centric Settings Home (F3-432..442 range) where a dominant omni-search bar is the primary verb and destinations render as large editorial panels with title, purpose, and live status — not category pills. Introduces a book-TOC workspace: left vertical category index + continuous document. Demands that destination panels, notices, and search-result rows be first-class shell primitives rather than ad-hoc Home widgets.",
+      "gui_related": true,
+      "evidence_ref": "concept-01-control-room.html .cr-home, .cr-dest, .cr-toc, .cr-doc"
+    },
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "impact": "Scrollspy and deep-link semantics become canonical: the left TOC highlights the active subcategory by scroll position without oscillation, and selecting a TOC entry or search result jumps to the owning section with a stable offset. This must be expressed as a portable primitive, not an IntersectionObserver-only DOM behavior.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/settings_inventory.json",
+      "impact": "Exercises the full setting-row grammar across the C1 families and the core provider/persona/memory rows: every value state (Default, Recommended, Inherited, Auto, Not-configured, Managed, Custom, Unavailable, Effective-differs) must be representable. Flags that several inventory values in the context/memory/persona buckets need a source/scope/effective triple rather than a bare scalar, and that exposure level (Standard/Advanced/Expert-or-risky/Managed/Diagnostic/Unavailable) is mandatory metadata, not a render-time guess.",
+      "gui_related": false
+    },
+    {
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "impact": "Memory manager demonstrates evidence-backed degrading Assistant Gists: half-life changes retrieval activation only (fade, not delete), verified/unverified provenance, pin, version history + restore, capsule preview/token estimate, rebuild/dedupe/summarize/archive/redact. Requires the manager to read half-life and active-context status from the memory owner, not invent it. Automated systems use explicit thread/ledger/Goal/artifact retrieval, not hidden Gists.",
+      "gui_related": true,
+      "evidence_ref": "assets/demo-data.js memory gists; managers.js memory renderer"
+    },
+    {
+      "owner_doc": "Plans/Personas.md",
+      "impact": "Persona manager demonstrates behavior-not-authority: a Persona cannot grant Full Access, widen FileSafe, force a provider, or eagerly load all skills. Shows mission/use boundary, model-facing capsule preview, source/version/provenance, eligible skills, requested capabilities, and import diff with trust/secret/prompt-injection scan. Corrects stale ask/plan/regular/yolo coupling: conversation mode and access profile are separate axes.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "impact": "Goal settings own defaults and ceilings only (Goal defaults, pause/resume/checkpoint policy, verification strength, sustainable fan-out, capacity reserve, worker/reviewer route classes, worktree/testing defaults) — never live run state. Runtime/Orchestrator admits actual work and reports current capacity; Settings must project requested vs effective routes without mutating live Goal state.",
+      "gui_related": false
+    },
+    {
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "impact": "Crew manager demonstrates Orchestrator-owned templates with requested vs effective members + concurrency and waves. A Crew template configures purpose, member roles, persona/capability requirements, allowed provider/account/model candidates, min/max members, adaptive sizing/waves, usage/cost/time reserve, write/worktree policy, board topology, diversity/corroboration, reducer/synthesis, and failure/stop behavior. Crew is not a Persona, mode, provider, permission grant, or hidden memory.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/Permissions_System.md",
+      "impact": "Permissions manager demonstrates ordered last-match-wins rules, per-tool overrides, presets, read-only/full matrices, external-directory allowlist, doom-loop threshold/action, and per-Persona profiles across Global/Project/Package/Seam/Lane scope with requested/effective/origin. Requires reorder, wildcard help, and ELI5 + Expert views. Plan and Review modes remain effect-limited, not tool-free (safe read, browser, research, testing, diagnostic operations allowed).",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/FileSafe.md",
+      "impact": "FileSafe remains the non-bypassable floor. The manager exposes health, effective boundary, protected scopes, and repair guidance without ever encouraging or offering bypass. FileSafe status is projected as a health summary, not a toggle.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/Models_System.md",
+      "impact": "Provider/Account/Model/Installation manager renders the full object model (Provider family -> Account/Profile -> Connection -> Product/Entitlement -> Models/capabilities; Host/Environment -> Provider installation) with the 7 installation-lifecycle fixtures, requested/effective model routes, Free Models wrapper with underlying-setup flow, and catalog freshness/last-known-good fallback. Capability evidence (Fast/Normal, effort, modalities) must not be inferred from model names.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/Multi-Account.md",
+      "impact": "Multi-account rows show nickname, discovered identity, auth source, profile/config root, enabled state, priority, sticky-session preference, usage/quota, last successful connection/generation, health, and model visibility/favorites. Must not pretend a CLI supports simultaneous profiles when it does not; supported strategies (native profile, isolated home, auth-only profile, credential pool, PM-managed direct, single-active-login) are surfaced honestly.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "impact": "Respects the CLI-owned OAuth boundary: Claude CLI and Antigravity CLI OAuth are CLI-owned (PM isolates profiles and launches the native flow; no PM-direct OAuth). PM-direct OAuth may be used for OpenAI/Codex, GitHub, GitHub Copilot. API connections remain separate from subscription/CLI products. The provider manager must not present a PM-direct OAuth control for CLI-owned routes.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/agent-rules-context.md",
+      "impact": "Context & Instructions manager shows effective instruction sources, AGENTS.md precedence chain, source hashes + lightness warnings, last request included/omitted blocks, persona footprint, selected vs installed tools, compaction strategy, cache compatibility, retrieval caps, and a context admission receipt. The registry must not be injected into prompts merely because Settings exposes it.",
+      "gui_related": true
+    },
+    {
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "impact": "Installation resolution confidence (Proven/Strongly-identified/Probable/Ambiguous/Unknown) and update states (Ready/Update-available-Ask-first/Scheduled-when-idle/Rolled-back/Could-not-identify-method/Verifying/Needs-repair/Managed-externally) are projected from the BinaryLocator owner. Unknown/ambiguous ownership is manual-only; the manager never guesses npm/Homebrew from a bare command or path shape.",
+      "gui_related": false
+    },
+    {
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "impact": "Provisional settings/provider/memory/persona/crew/permission command families need adjudication against existing catalog.* and UCC-* IDs before minting canon. Retire cmd.settings.bloom.open (old chip/bloom architecture). Existing catalog.* IDs (catalog.install, catalog.update, catalog.remove, catalog.install_item, catalog.update_item, catalog.remove_item) and account/provider/usage rows must be reused rather than duplicated.",
+      "gui_related": false
+    },
+    {
+      "owner_doc": "Plans/DRY_Rules.md",
+      "impact": "Establishes DRY component families exercised by this concept: SettingsDestination (editorial panel), SettingsNotice, SettingsWorkspaceShell, SettingsSearch, CategoryNavigation, SubcategoryScrollspy, SettingRow, ValueSourceBadge, AvailabilityReason, RequestedEffectiveInspector, ManagerShell, ResourceList, HealthSummary, SecretField, MemoryRow, PersonaCard, CrewTemplate, PermissionRuleEditor. Names are candidate design roles pending the audit agent.",
+      "gui_related": true
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "setting_id": "memory.retention.half-life-by-kind",
+      "name": "How Fast Memories Fade",
+      "impact": "Rendered as a Memory manager control; half-life modulates retrieval activation only (fade), never truth or deletion. Must display per-kind half-life with an effective retrieval-activation badge and distinguish fade from delete in help text.",
+      "family": "Memory",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "memory.retention.auto-save-unverified",
+      "name": "Save Unconfirmed Notes",
+      "impact": "Ties to the verified/unverified provenance axis. Changing this affects whether unverified Gists are persisted; the row must show the effective verify-without-evidence policy.",
+      "family": "Memory",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "memory.retention.pinned-unverified-injection",
+      "name": "Use Pinned Unconfirmed Notes",
+      "impact": "Pinned Gists may still be unverified; this row governs whether pinned-unverified Gists enter the active context. Must carry a managed-warning when FileSafe/provenance policy overrides it.",
+      "family": "Memory",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "memory.retention.maintenance",
+      "name": "Memory Cleanup Tools",
+      "impact": "Entrypoint to rebuild/dedupe/summarize/archive/redact. These are one-shot actions (ObservableWork), not persistent values; must not render as a bare toggle. Receipt + source disclosure required.",
+      "family": "Memory",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "memory.assembly.integrity-tracking",
+      "name": "Track Instruction Sources",
+      "impact": "Feeds the Context manager's source-hash + lightness-warning display. Must surface AGENTS.md precedence-chain provenance, not just a boolean.",
+      "family": "Context & Instructions",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "memory.assembly.history-admission-gate",
+      "name": "Quarantine Broken Turns",
+      "impact": "Governs the context admission receipt (included/omitted blocks). Requires an AvailabilityReason row when a turn is quarantined.",
+      "family": "Context & Instructions",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "personas.library.selection-mode",
+      "name": "Who Picks the Persona",
+      "impact": "Must not couple to access profile or conversation mode. Behavior-not-authority: the row's help must state a Persona cannot widen FileSafe, force a provider, or grant Full Access.",
+      "family": "Personas",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "personas.library.custom-scope",
+      "name": "Where New Personas Live",
+      "impact": "Scope must be one of thread/project/global (and child-only flag where applicable). Import-trust/secret/injection scan is triggered on import, not on this setting.",
+      "family": "Personas",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "ai.models.goal-worker-model",
+      "name": "Goal Mode Worker Model",
+      "impact": "Settings owns the requested route; effective route is projected from runtime. Must render requested/effective with a fallback reason when they differ.",
+      "family": "Goals & Automation",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "ai.models.goal-verifier-model",
+      "name": "Goal Mode Checker Model",
+      "impact": "Reviewer route class; same requested/effective treatment as the worker model. Part of the defaults+ceilings surface, not live run state.",
+      "family": "Goals & Automation",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "planning.verification.goal-checkpoint-cadence",
+      "name": "How Often To Save Progress",
+      "impact": "Checkpoint/compact policy default. Runtime performs the actual checkpoint; Settings only configures the default cadence and ceiling.",
+      "family": "Goals & Automation",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "branching.crew.crew-enabled",
+      "name": "Work as a Crew",
+      "impact": "Gate for the Crew manager. Enabling Crew must not grant authority; templates remain Orchestrator-owned with requested vs effective members + concurrency.",
+      "family": "Crew",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "branching.crew.max-agents-per-crew",
+      "name": "Agents per Crew",
+      "impact": "Ceiling only; effective concurrency is projected from the Orchestrator at runtime. Must show requested/effective.",
+      "family": "Crew",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "safety.rules.rule-editor",
+      "name": "Custom Permission Rules",
+      "impact": "Ordered last-match-wins rules with reorder and per-tool overrides. Must support per-Persona profiles and the doom-loop threshold/action.",
+      "family": "Permissions & FileSafe",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "safety.protection.filesafe-integration",
+      "name": "File Protection System",
+      "impact": "Projects FileSafe as a non-bypassable floor with health/effective-boundary/protected-scopes. Must never render as a disable control.",
+      "family": "Permissions & FileSafe",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "safety.rules.default-tool-permission",
+      "name": "Default Answer for New Tools",
+      "impact": "Wildcard default for the ordered rule set. Must be explained with last-match-wins semantics and wildcard help.",
+      "family": "Permissions & FileSafe",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "general.interaction.provider-disclosure",
+      "name": "Show Actual Model Used",
+      "impact": "Core surface: requested/effective model disclosure in chat. Ties to the requested/effective model route projection.",
+      "family": "Core",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "ai.accounts.auth-mode",
+      "name": "Sign-in Method Per Provider",
+      "impact": "Must reflect the CLI-owned vs PM-direct OAuth boundary. Claude/Antigravity CLI rows must not offer PM-direct OAuth.",
+      "family": "Core",
+      "classification": "demonstrated"
+    },
+    {
+      "setting_id": "ai.accounts.requested-account-id",
+      "name": "Requested Account for This Run",
+      "impact": "Requested axis; effective account is projected at runtime with a fallback reason.",
+      "family": "Core",
+      "classification": "demonstrated"
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "area": "value-state model",
+      "impact": "Settings must model 9 explicit value states (Default, Recommended, Inherited, Auto, Not-configured, Managed, Custom, Unavailable, Effective-differs). Auto/Inherit/Not-configured/Disabled must never be represented as an unexplained empty string. Every row carries default/source, scope, availability, restart/reconnect requirement, and validation/error.",
+      "affected_owners": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"]
+    },
+    {
+      "area": "scope vocabulary",
+      "impact": "Scope registry must represent turn/thread/Goal/PlanningRun/Crew/project/global/host/environment/installation/device/workspace-worktree/account/provider/Persona. Concepts show scope only when it helps the user; the full internal vocabulary belongs in Details.",
+      "affected_owners": ["Plans/settings_inventory.json"]
+    },
+    {
+      "area": "requested/effective/origin triple",
+      "impact": "Memory, Persona, Goal, Crew, Permissions, and provider/model rows need a requested/effective/origin triple rather than a scalar value. Origin records whether the effective value came from default, inheritance, managed policy, or runtime fallback.",
+      "affected_owners": ["Plans/settings_inventory.json", "Plans/assistant-memory-subsystem.md", "Plans/Goal_Runtime_System.md", "Plans/orchestrator-subagent-integration.md"]
+    },
+    {
+      "area": "secret-value taxonomy",
+      "impact": "Credentials are not ordinary text fields. Schema must distinguish PM-owned secret input, secure vault/reference selector, CLI-owned authentication, PM-owned OAuth, environment-backed secret, command-helper/vault-backed secret, and non-secret text. Reveal/copy/persist/test semantics differ by type; normal UI never exposes raw tokens.",
+      "affected_owners": ["Plans/settings_inventory.json", "Plans/CLI_Bridged_Providers.md", "Plans/Multi-Account.md"]
+    },
+    {
+      "area": "action-vs-value separation",
+      "impact": "One-shot actions (Back Up Now, Squeeze Context Now, Rebuild Memory, Verify Gist, Reconnect, Catalog Refresh), status projections (Last backup, Provider Health), diagnostics (Open backup log), persistent settings (Backup schedule, half-life), and manager routes (Backup & Restore, Memory) cannot all render as equivalent form rows. Schema must tag each row kind.",
+      "affected_owners": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"]
+    },
+    {
+      "area": "exposure level",
+      "impact": "Every row carries exposure: Standard/Advanced/Expert-or-risky/Managed-read-only/Diagnostic/Unavailable. Search can find all levels; ordinary navigation does not invite users to change dangerous internals casually.",
+      "affected_owners": ["Plans/settings_inventory.json"]
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "candidate_family": "navigation",
+      "note": "cmd.settings.open / cmd.settings.navigate / cmd.settings.search.focus / cmd.settings.search.select_result / cmd.settings.category.select / cmd.settings.subcategory.select / cmd.settings.setting.focus / cmd.settings.manager.open are provisional. They must be adjudicated against existing shell_view/navigation_wrapper IDs and the panel-context vocabulary before minting canon.",
+      "existing_canon_overlap": ["UCC-* navigation wrappers", "cmd.panel.switch", "cmd.project.open (route-targeting precedent)"],
+      "disposition_note": "Prefer reuse of the route/open + panel-context contract over a broad cmd.nav.* family."
+    },
+    {
+      "candidate_family": "values",
+      "note": "cmd.settings.value.set / cmd.settings.default.restore / cmd.settings.scope.inspect. Must distinguish persistent setting mutation from one-shot action.",
+      "existing_canon_overlap": ["catalog.* item mutators", "Wiring_Matrix.production.json setting rows"],
+      "disposition_note": "value.set is a new_candidate family pending census; scope.inspect is read-only and likely reuse."
+    },
+    {
+      "candidate_family": "providers",
+      "note": "cmd.provider.installation.* (scan/select/install/update/repair/rollback/verify), cmd.provider.connection.* (add/authenticate/reconnect), cmd.provider.catalog.refresh, cmd.model.favorite.set / alias.set / priority.set / visibility.set. Must not duplicate account/Usage/auth/install actions.",
+      "existing_canon_overlap": ["catalog.install", "catalog.update", "catalog.remove", "catalog.install_item", "catalog.update_item", "catalog.remove_item", "cmd.account.select_profile", "cmd.provider.switch_route", "cmd.usage.refresh", "cmd.usage.export", "cmd.github.connect"],
+      "disposition_note": "Reuse catalog.install/update/remove_* for generic lifecycle; alias or supersede provider.installation.* against the CLI_Bridged_Providers owner. catalog.refresh is a new_candidate."
+    },
+    {
+      "candidate_family": "memory_persona_crew",
+      "note": "cmd.memory.* (open/verify/edit/delete/restore), cmd.persona.manage, cmd.crew.template.* (create/update/delete). memory.gist and memory.gist.* are flagged as un-cataloged owner signals that must resolve to stable command/event/storage rows or be retired.",
+      "existing_canon_overlap": ["memory.gist (uncataloged owner signal — must resolve)", "requested_persona_id / effective_persona_id (RETIRED — must not reappear)"],
+      "disposition_note": "Persona identity payloads must NOT use requested_persona_id/effective_persona_id (retired aliases). Crew templates are new_candidate under orchestrator-subagent-integration ownership."
+    },
+    {
+      "candidate_family": "permissions",
+      "note": "cmd.permissions.rule.* (add/update/reorder/delete/test). Per-tool overrides and per-Persona profiles ride on the Permissions_System owner.",
+      "existing_canon_overlap": ["permissions.toml", "/permission/config (uncataloged owner signal)", "/tool/permission (uncataloged owner signal)"],
+      "disposition_note": "new_candidate family; must resolve /permission/config and /tool/permission registration obligations."
+    },
+    {
+      "candidate_id": "cmd.settings.bloom.open",
+      "disposition": "supersede",
+      "evidence": "Old Settings chip/bloom architecture; REFERENCE_SUPERSESSIONS retires chip/bloom/no-sidebar language. Preserve a compatibility alias only if an active consumer is found; otherwise retire outright.",
+      "distinguishes": "navigation (legacy) — replaced by cmd.settings.open / cmd.settings.navigate."
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "action": "Open Settings manager (Memory/Persona/Crew/Permissions)",
+      "impact": "Every manager open must trace ui_source -> command -> canonical_owner -> validation/permission -> state_mutation_or_operation -> event/receipt/ObservableWork -> ui_projection -> usage/diagnostic_attribution -> recovery/deep_link. Manager loading must NOT block the entire Settings workspace (progressive hydration).",
+      "canonical_owner_hint": "ManagerShell component over owner docs (assistant-memory-subsystem / Personas / orchestrator-subagent-integration / Permissions_System)."
+    },
+    {
+      "action": "Scrollspy + deep-link jump",
+      "impact": "Selecting a TOC entry or search result must jump to the owning section with a stable offset and update the URL/route deep-link. The scrollspy highlight must be derived from a portable position model, not raw DOM geometry that becomes semantic state.",
+      "canonical_owner_hint": "SubcategoryScrollspy + route/open contract."
+    },
+    {
+      "action": "Memory Gist verify / edit",
+      "impact": "Verify is a one-shot action producing an ObservableWork receipt + provenance update; edit mutates Gist content with version history. Both attribute to the memory owner and emit durable events; no concept-only local state may masquerade as wiring.",
+      "canonical_owner_hint": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "action": "Permission rule add/reorder/test",
+      "impact": "Reorder mutates ordered last-match-wins rule list (revision/idempotency required); test is a one-shot dry-run returning an effective-permission projection for a sample request. FileSafe floor must remain non-bypassable across all mutations.",
+      "canonical_owner_hint": "Plans/Permissions_System.md + Plans/FileSafe.md"
+    },
+    {
+      "action": "Provider catalog refresh / reconnect",
+      "impact": "Refresh preserves last-known-good rows during loading and falls back on failure; reconnect returns a visible simulated/real result via the CLI-owned or PM-direct OAuth path. Both are ObservableWork with usage/diagnostic attribution.",
+      "canonical_owner_hint": "Plans/CLI_Bridged_Providers.md / Plans/Provider_OpenCode.md"
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "component": "SettingsDestination",
+      "impact": "In this concept the destination is a large editorial panel (title + purpose + live status + open affordance), proving it must carry a live status chip and purpose text, not be a bare link.",
+      "used_by": ["Settings Home", "every manager entry"]
+    },
+    {
+      "component": "SubcategoryScrollspy",
+      "impact": "Book-TOC workspace exercises a left vertical index synced to a continuous document. Must be portable (no DOM measurement as semantic state) and oscillation-free.",
+      "used_by": ["Settings Workspace (all categories)"]
+    },
+    {
+      "component": "RequestedEffectiveInspector",
+      "impact": "Exercised by provider/model routes, Goal worker/reviewer, Crew members+concurrency, Persona capabilities, and Permissions effective result. One shared inspector shape prevents per-manager divergence.",
+      "used_by": ["Provider/Account/Model", "Goals & Automation", "Crew", "Personas", "Permissions"]
+    },
+    {
+      "component": "MemoryRow",
+      "impact": "Carries half-life/fade indicator, verified/unverified provenance badge, pin, version-history entry, and capsule token estimate. Distinct from a generic resource row.",
+      "used_by": ["Memory"]
+    },
+    {
+      "component": "PermissionRuleEditor",
+      "impact": "Ordered last-match-wins list with reorder, per-tool overrides, per-Persona profiles, wildcard help, and a test/dry-run result.",
+      "used_by": ["Permissions & FileSafe"]
+    },
+    {
+      "component": "SecretField",
+      "impact": "Distinguishes CLI-owned auth, PM-direct OAuth, API-key, vault reference, and non-secret text. Reveal/copy/persist/test differ by type; never exposes raw tokens in normal UI.",
+      "used_by": ["Provider/Account/Model", "Permissions & FileSafe"]
+    },
+    {
+      "component": "HealthSummary",
+      "impact": "FileSafe floor health, provider installation health, and memory rebuild status all project through one health summary shape.",
+      "used_by": ["Permissions & FileSafe", "Provider/Account/Model", "Memory"]
+    }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "area": "memory events",
+      "impact": "Memory verify/edit/pin/rebuild must emit durable events with provenance, half-life, and version. The uncataloged memory.gist / memory.gist.* signals must resolve to stable event rows or be retired. Half-life change is a retrieval-activation event, not a deletion event.",
+      "constraint": "SQLite prohibited."
+    },
+    {
+      "area": "permission events",
+      "impact": "Rule add/reorder/delete/test and per-Persona profile changes must emit auditable events with revision and effective-result disclosure. FileSafe floor violations are never silently downgraded.",
+      "constraint": "non-bypassable floor recorded."
+    },
+    {
+      "area": "provider lifecycle events",
+      "impact": "Installation scan/install/update/rollback/verify and catalog refresh must emit events with confidence, update-state, last-known-good fallback, and account/identity binding. Reconnect emits an auth-boundary-respecting event (CLI-owned vs PM-direct).",
+      "constraint": "no PM-direct OAuth for Claude/Antigravity CLI."
+    },
+    {
+      "area": "settings mutation events",
+      "impact": "Persistent setting mutations emit revision/idempotency-bearing events with scope and origin. One-shot actions emit ObservableWork receipts; the two must not share a payload shape.",
+      "constraint": "actions vs values separated at the storage boundary."
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "retire": "cmd.settings.bloom.open",
+      "reason": "Old Settings chip/bloom/no-sidebar architecture. Superseded by search-centric Home + book-TOC workspace. Compatibility alias only if an active consumer is found.",
+      "evidence_ref": "REFERENCE_SUPERSESSIONS.md; SHARED_PROCESS_RULES.md"
+    },
+    {
+      "retire": "stale regular/yolo mode coupling",
+      "reason": "Conversation mode and access profile are separate axes. ask/plan/regular/yolo coupling is superseded; access choices are Ask-for-approval / Auto-accept-edits / Auto / Full Access, with Plan and Review effect-limited not tool-free.",
+      "evidence_ref": "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md; REFERENCE_SUPERSESSIONS.md"
+    },
+    {
+      "retire": "stale right-panel / no-sidebar Settings language",
+      "reason": "Settings now has a left Activity Bar canon and a full workspace. Right-panel-only and chip-only Settings language is superseded.",
+      "evidence_ref": "SOURCE_AND_PRECEDENCE_MAP.md #5; REFERENCE_SUPERSESSIONS.md"
+    },
+    {
+      "invalidate": "inventory values represented as bare scalars for requested/effective domains",
+      "reason": "Provider/model/Goal/Crew/Permission/Memory rows must carry requested/effective/origin. Bare-scalar inventory entries in these families are invalid and must migrate to the triple.",
+      "evidence_ref": "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md"
+    },
+    {
+      "retire": "requested_persona_id / effective_persona_id as command payload fields",
+      "reason": "Retired persona/runtime identity aliases. Must not reappear as canonical command payload fields; resolve to the live persona/runtime identity contract.",
+      "evidence_ref": "Plans/UI_Command_Catalog.md stale-canon notice"
+    },
+    {
+      "retire": "Playwright terminology / PM-owned Playwright packages",
+      "reason": "PM-native Browser Program only. No Playwright runtime, facade, compatibility vocabulary, package, port, MCP, command, or capture.",
+      "evidence_ref": "SHARED_PROCESS_RULES.md; SOURCE_AND_PRECEDENCE_MAP.md #3"
+    }
+  ],
+  "slint_port_impacts": [
+    {
+      "risk": "DOM measurement as semantic state",
+      "impact": "Scrollspy active-section highlight must NOT be derived from raw DOM geometry that becomes semantic state. Slint has no IntersectionObserver; the position model must be portable (e.g., model-driven section index + viewport offset).",
+      "mitigation": "Compute active subcategory from a shared section-index model, not getBoundingClientRect."
+    },
+    {
+      "risk": "Memory Gist list virtualization",
+      "impact": "Gist lists can grow large; the half-life/fade/provenance badges per row must virtualize. Slint needs a model-backed virtual list rather than DOM recycling.",
+      "mitigation": "Back MemoryRow list by a Rust model with lazy binding; avoid CSS-only infinite scroll."
+    },
+    {
+      "risk": "Portable scrollspy without oscillation",
+      "impact": "Jump-to-section must settle without oscillation. CSS scroll-behavior and IntersectionObserver thresholds are not portable to Slint 1.17.1.",
+      "mitigation": "Use a single scroll driver with a debounced active-index update and a stable jump offset (PM.jumpOffset pattern)."
+    },
+    {
+      "risk": "Editorial cinematic motion",
+      "impact": "Staggered destination/notice reveals and search-result cascades use CSS animations + nth-child delays. Must translate to Slint property animations driven by a motion reducer (respects reduced-motion).",
+      "mitigation": "motion.js install() pattern maps to a Slint motion module toggled by reduced-motion."
+    },
+    {
+      "risk": "Glass backdrop",
+      "impact": "One backdrop blur over a pre-baked wallpaper (PMConcept7 technique). Nested backdrop-filter stacks and SVG filters are not Slint-portable.",
+      "mitigation": "Single pre-baked wallpaper layer; no nested blur."
+    }
+  ],
+  "test_fixtures": [
+    {
+      "id": "prov-01",
+      "name": "CLI found, authenticated, ready",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-02",
+      "name": "CLI found, not signed in",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-03",
+      "name": "Multiple installations; one selected, one shadowed",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-04",
+      "name": "Unknown installation owner, manual-only",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "Confidence Unknown/Ambiguous -> manual-only; never guess npm/Homebrew from path shape."
+    },
+    {
+      "id": "prov-05",
+      "name": "Explicit Install from official source",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "No baseline bundling/pre-seeding; explicit user-triggered."
+    },
+    {
+      "id": "prov-06",
+      "name": "Update available; Ask first",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-07",
+      "name": "Update scheduled when idle",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "Requires proven ownership, compatible target, no active requests, resource preflight, reliable rollback."
+    },
+    {
+      "id": "prov-08",
+      "name": "Verification failed and rollback succeeded",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-09",
+      "name": "Claude CLI OAuth profile (CLI-owned)",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "PM isolates profiles and launches native flow; no PM-direct OAuth."
+    },
+    {
+      "id": "prov-10",
+      "name": "OpenAI PM-direct OAuth",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-11",
+      "name": "API key connection",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "Separate from subscription/CLI products."
+    },
+    {
+      "id": "prov-12",
+      "name": "OpenCode external server",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-13",
+      "name": "Free Models row requiring underlying setup",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "Wrapper over underlying routes; never owns credentials/quota/switching/Usage."
+    },
+    {
+      "id": "prov-14",
+      "name": "Usage details unavailable but provider ready",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-15",
+      "name": "Catalog refresh with last-known-good state",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-16",
+      "name": "Account priority/fallback and requested/effective difference",
+      "family": "Provider",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "prov-17",
+      "name": "Fast/Normal and effort capability variation",
+      "family": "Provider",
+      "classification": "demonstrated",
+      "note": "Capability evidence; do not infer Fast mode or modalities from names."
+    },
+    {
+      "id": "gen-default",
+      "name": "Default value state row",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-inherited",
+      "name": "Inherited value state row",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-managed",
+      "name": "Managed/read-only row",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-unavailable",
+      "name": "Unavailable row with reason",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-validation",
+      "name": "Validation error row",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-restart",
+      "name": "Restart required",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-reconnect",
+      "name": "Reconnect required",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-elsewhere",
+      "name": "Setting changed elsewhere (effective-differs)",
+      "family": "General",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-no-results",
+      "name": "Search no results",
+      "family": "Search",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-typo",
+      "name": "Search typo suggestion",
+      "family": "Search",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-deeplink",
+      "name": "Deep-linked setting",
+      "family": "Navigation",
+      "classification": "demonstrated"
+    },
+    {
+      "id": "gen-narrow",
+      "name": "Narrow/squeezed layout (760px)",
+      "family": "Layout",
+      "classification": "demonstrated",
+      "note": "TOC collapses to drawer; no clipping."
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "family": "Future Server Module Shell",
+      "named_owner": "Plans/storage-plan.md / Plans/Runtime_Artifacts_Panel.md (Project Home Server + physical Project Vault backbone)",
+      "insertion_contract": "The Server/Project Sync shell is reachable in this concept via shared grammar (a destination panel + manager promo) but its full surface is owned by the server-first backbone work. Insertion point: a SettingsDestination whose open affordance routes to the Server module shell once the server-first backbone ships. Until then it renders an honest unavailable state with a deep-link to the owner doc, never a fake no-op.",
+      "classification": "deferred_named_owner"
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question": "Should the book-TOC scrollspy active-index be owned by the route/open contract or by a dedicated SubcategoryScrollspy component? Affects whether deep-links are URL-first or state-first.",
+      "blocking": false,
+      "owner_hint": "Plans/FinalGUISpec.md + Plans/UI_Command_Catalog.md route/open owner"
+    },
+    {
+      "question": "Does an existing canonical command cover 'manager open' (cmd.settings.manager.open), or must it be a new navigation_wrapper over route/open? Census must check cmd.project.open as the route-targeting precedent.",
+      "blocking": true,
+      "owner_hint": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "question": "How should the requested/effective/origin triple be stored for Memory Gists whose half-life changes retrieval activation but not truth? Need a storage owner decision before the audit agent can finalize.",
+      "blocking": false,
+      "owner_hint": "Plans/assistant-memory-subsystem.md"
+    },
+    {
+      "question": "Permission rule reorder requires revision/idempotency semantics; does Permissions_System.md already define a rule-list revision contract, or is this new?",
+      "blocking": false,
+      "owner_hint": "Plans/Permissions_System.md"
+    },
+    {
+      "question": "Crew template create/update/delete — are these Orchestrator-owned commands already (cmd.orchestrator.*) or genuinely new under orchestrator-subagent-integration?",
+      "blocking": false,
+      "owner_hint": "Plans/orchestrator-subagent-integration.md"
+    }
+  ]
+}

@@ -380,7 +380,7 @@ window.PMChatThreadKit = (() => {
       const s = st();
       const open = s.expandedActivity.includes(ag.id);
       const stages = ag.stages.map(stg => {
-        const ico = { thought: "sparkle", exploration: "search", import: "layers", edit: "edit", asset: "wand", completion: "check" }[stg.kind] || "activity";
+        const ico = { thought: "sparkle", exploration: "search", import: "layers", edit: "edit", asset: "wand", completion: "check", read: "file", search: "search", web: "globe", test: "flask", verify: "check", fetch: "globe", browser: "globe", generate: "wand" }[stg.kind] || "activity";
         let extra = "";
         if (stg.kind === "edit" && stg.added != null) extra = '<span class="pmq-ag-add">+' + stg.added + '</span><span class="pmq-ag-del">−' + stg.removed + "</span>";
         else if (stg.count != null) extra = '<span class="pmq-ag-count">' + stg.count + (stg.kind === "asset" ? " items" : "") + "</span>";
@@ -1071,7 +1071,7 @@ window.PMChatThreadKit = (() => {
           const el = document.createElement("div");
           el.className = "pmq-surface pmq-browser";
           el.dataset.surface = "browser";
-          el.innerHTML = '<div class="pmq-surface-head pmq-surface-head-static"><i data-ico="globe"></i><span class="pmq-surface-title">' + esc(bs.title) + "</span>" +
+          el.innerHTML = '<div class="pmq-surface-head pmq-surface-head-static"><i data-ico="globe"></i><span class="pmq-surface-title">' + esc(bs.title) + '</span><span class="pmq-chip">Browser Program</span>' +
             '<span class="pmq-chip pmq-chip-accent">' + esc(bs.status.charAt(0).toUpperCase() + bs.status.slice(1)) + "</span></div>" +
             '<div class="pmq-art-body"><div class="pmq-art-row"><i data-ico="globe"></i>' +
             '<span class="pmq-art-main"><b>' + esc(bs.currentPage) + '</b><span class="pmq-art-path">' + bs.pagesVisited + " pages visited · " + bs.screenshots + " screenshots</span></span>" +
@@ -1140,9 +1140,12 @@ window.PMChatThreadKit = (() => {
           gridWrap(open, '<div class="pmq-ap-details">' + (details || '<div class="pmq-mi-row"><span>Scope</span><b>Workspace only</b></div>') + '<div class="pmq-ap-safer">Safer alternative: ' + esc(a.safer || "run sandboxed with the same arguments") + "</div></div>", "pmq-ap-wrap", "ap-" + a.id);
         window.PMIcons.hydrate(el);
         el.querySelectorAll("[data-apact]").forEach(b => b.addEventListener("click", () => store.approvalResolve(key, a.id, b.dataset.apact)));
-        el.querySelector("[data-apdetails]").addEventListener("click", () => toggleSurface("ap-" + a.id, () => store.mutate(() => {
-          s.expandedByIds["ap:" + a.id] = !open;
-        })));
+        el.querySelector("[data-apdetails]").addEventListener("click", () => {
+          store.approvalDetails(key, a.id);
+          toggleSurface("ap-" + a.id, () => store.mutate(() => {
+            s.expandedByIds["ap:" + a.id] = !open;
+          }));
+        });
         return el;
       }).concat((s.approvals || []).filter(a => a.resolved && a.resolved !== "details-open").map(a => {
         const el = document.createElement("div");
@@ -1156,7 +1159,7 @@ window.PMChatThreadKit = (() => {
 
     function warningCards(key) {
       const s = store.thread(key);
-      return (s.warnings || []).filter(w => !w.resolved).map(w => {
+      return (s.warnings || []).filter(w => !w.resolved && w.kind !== "cross-project" && !(w.kind === "capacity" && w.forecast)).map(w => {
         const el = document.createElement("div");
         el.className = "pmq-surface pmq-warning pmq-warning-" + (w.tier || "confirm");
         el.dataset.surface = "warning";
@@ -1194,8 +1197,19 @@ window.PMChatThreadKit = (() => {
         return;
       }
       if (w.kind === "attachment" && w.pendingAttach) {
-        if (action === "Consent once") store.attachSetRoute(key, w.pendingAttach, "Alternate model", true);
-        store.warningResolve(key, w.id, action === "Consent once" ? "consented" : "cancelled");
+        if (action === "Consent once") {
+          store.attachSetRoute(key, w.pendingAttach, "alternate", true);
+          store.attachResolve(w.pendingAttach, "alternate");
+          store.attachConsentAlternate(w.pendingAttach, w.pendingTarget || "Gemini");
+        } else if (action === "Extract in PM") {
+          store.attachResolve(w.pendingAttach, "pm-transformed");
+          store.attachStartJob(key, w.pendingAttach, "Transcript and frames extracted by PM");
+        } else if (action === "Use Gemini") {
+          store.warningInject(key, { tier: "confirm", kind: "attachment", text: "Route the original to an alternate model?", detail: "Consent is required once; PM keeps the lineage from the original attachment.", pendingAttach: w.pendingAttach, pendingTarget: "Gemini", choices: ["Cancel", "Consent once"] });
+          store.warningResolve(key, w.id, "consent-requested");
+          return;
+        }
+        store.warningResolve(key, w.id, action === "Consent once" ? "consented" : action === "Extract in PM" ? "extracted" : "cancelled");
         return;
       }
       if (action === "Open Settings") { env.hostApi.toast("Settings is owned by the full application"); store.warningResolve(key, w.id, "settings"); return; }
@@ -1227,12 +1241,239 @@ window.PMChatThreadKit = (() => {
       return el;
     }
 
+    /* ---- v3 surfaces: grant, capacity forecast, BSD, operational, attachment
+       resolution, and durable event receipts ---- */
+
+    function grantCard(key) {
+      const s = store.thread(key);
+      const w = (s.warnings || []).find(x => x.kind === "cross-project" && !x.resolved);
+      if (!w) return null;
+      const el = document.createElement("div");
+      el.className = "pmq-surface pmq-grant";
+      el.dataset.surface = "grant";
+      el.innerHTML = '<div class="pmq-grant-head"><i data-ico="shield"></i><span class="pmq-surface-title">Cross-project access</span></div>' +
+        '<div class="pmq-grant-text">' + esc(w.text) + "</div>" +
+        '<div class="pmq-grant-rw"><span class="pmq-grant-r"><i data-ico="eye"></i>Read · ' + esc(w.projectRead || "another project") + '</span>' +
+        '<span class="pmq-grant-w"><i data-ico="edit"></i>Modify · ' + esc(w.projectWrite || "target project") + "</span></div>" +
+        '<div class="pmq-grant-note">One-time scopes never persist; the choice resets after the run.</div>' +
+        '<div class="pmq-grant-actions">' +
+        '<button class="pmq-btn" type="button" data-grant="Cancel">Cancel</button>' +
+        '<button class="pmq-btn" type="button" data-grant="Allow once">Allow once</button>' +
+        '<button class="pmq-btn pmq-btn-primary" type="button" data-grant="Allow for this Goal">Allow for this Goal</button>' +
+        '<button class="pmq-btn" type="button" data-grant="Open Settings">Open Settings</button>' +
+        "</div>";
+      window.PMIcons.hydrate(el);
+      el.querySelectorAll("[data-grant]").forEach(b => b.addEventListener("click", () => warningAction(key, w, b.dataset.grant)));
+      return el;
+    }
+
+    function capacityCards(key) {
+      const s = store.thread(key);
+      return (s.warnings || []).filter(w => w.kind === "capacity" && w.forecast && !w.resolved).map(w => {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-capacity";
+        el.dataset.surface = "capacity";
+        const f = w.forecast;
+        el.innerHTML = '<div class="pmq-cap-head"><i data-ico="agents"></i><span class="pmq-surface-title">Capacity forecast</span><span class="pmq-chip">forecast · not guarantee</span></div>' +
+          '<div class="pmq-cap-row"><span>Requested specialists</span><b>' + f.requested + "</b></div>" +
+          '<div class="pmq-cap-row"><span>Recommended concurrent</span><b>' + f.recommended + "</b></div>" +
+          '<div class="pmq-cap-row"><span>Waves</span><b>' + f.waves + "</b></div>" +
+          '<div class="pmq-cap-reason">Reason: ' + esc(f.reason) + "</div>" +
+          '<div class="pmq-cap-note">Required independent roles cannot be dropped.</div>' +
+          '<div class="pmq-cap-actions"><button class="pmq-btn pmq-btn-primary" type="button" data-cap="Start waves">Start waves</button>' +
+          '<button class="pmq-btn" type="button" data-cap="Cancel">Cancel</button></div>';
+        window.PMIcons.hydrate(el);
+        el.querySelectorAll("[data-cap]").forEach(b => b.addEventListener("click", () => warningAction(key, w, b.dataset.cap)));
+        return el;
+      });
+    }
+
+    function bsdCards(key) {
+      const s = store.thread(key);
+      const t = store.demoThread(key) || {};
+      const els = [];
+      if (s.bsdAdvice) {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-bsd-advice";
+        el.dataset.surface = "bsd";
+        el.innerHTML = '<div class="pmq-bsd-head"><i data-ico="sparkle"></i><span class="pmq-surface-title">Back Seat Driver suggestion</span></div>' +
+          '<div class="pmq-bsd-text">' + esc(s.bsdAdvice.text) + "</div>" +
+          '<div class="pmq-bsd-actions"><button class="pmq-btn" type="button" data-bsdact="dismiss">Dismiss</button>' +
+          '<button class="pmq-btn pmq-btn-primary" type="button" data-bsdact="apply">Apply to next turn</button></div>';
+        window.PMIcons.hydrate(el);
+        el.querySelector('[data-bsdact="dismiss"]').addEventListener("click", () => store.bsdAdviceDismiss(key));
+        el.querySelector('[data-bsdact="apply"]').addEventListener("click", () => { store.bsdAdviceDismiss(key); env.hostApi.toast("Suggestion will shape the next turn"); });
+        els.push(el);
+      }
+      const bsd = store.bsdEffective(key);
+      if (bsd.state === "timeout" || bsd.state === "unavailable") {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-bsd-note";
+        el.dataset.surface = "bsd";
+        el.innerHTML = '<div class="pmq-bsd-note-row"><i data-ico="info"></i><span>' +
+          (bsd.state === "timeout" ? "BSD timed out — primary turn unaffected." : "BSD unavailable — the primary turn is never blocked.") +
+          "</span></div>";
+        window.PMIcons.hydrate(el);
+        els.push(el);
+      }
+      (t.bsdEvents || []).forEach(ev => {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-bsd-event";
+        el.dataset.surface = "bsd";
+        el.innerHTML = '<div class="pmq-bsd-note-row"><i data-ico="sparkle"></i><span>BSD ' + esc(ev.mode === "on" ? "On" : "Auto") + " · " + esc(ev.result) + " — " + esc(ev.note) + "</span></div>";
+        window.PMIcons.hydrate(el);
+        els.push(el);
+      });
+      return els;
+    }
+
+    const WORKTREE_STATE_LABELS = { isolated: "Isolated", "waiting-writer": "Waiting for writer", conflict: "Conflict", "patch-preserved": "Patch preserved", "cleanup-pending": "Cleanup pending" };
+    function opsCards(key) {
+      const ops = store.operationalOf(key);
+      if (!ops || (!ops.ports.length && !ops.worktrees.length && !ops.sessions.length)) return [];
+      const els = [];
+      ops.ports.filter(p => p.state === "conflict").forEach(p => {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-port";
+        el.dataset.surface = "ops";
+        el.innerHTML = '<div class="pmq-port-head"><i data-ico="warn"></i><span class="pmq-surface-title">Port ' + p.port + " is owned by " + esc(p.owner) + "</span></div>" +
+          '<div class="pmq-port-detail">Safe alternative is port ' + p.suggestion + "; taking it does not disturb the other worktree.</div>" +
+          '<div class="pmq-port-actions"><button class="pmq-btn pmq-btn-primary" type="button" data-portuse="' + p.suggestion + '">Use ' + p.suggestion + "</button>" +
+          '<button class="pmq-btn" type="button" data-portcancel>Cancel</button></div>';
+        window.PMIcons.hydrate(el);
+        el.querySelector("[data-portuse]").addEventListener("click", () => store.portResolve(key, p.port, p.suggestion));
+        el.querySelector("[data-portcancel]").addEventListener("click", () => store.portResolve(key, p.port, null));
+        els.push(el);
+      });
+      if (ops.worktrees.length) {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-worktrees";
+        el.dataset.surface = "ops";
+        el.innerHTML = '<div class="pmq-port-head"><i data-ico="branch"></i><span class="pmq-surface-title">Worktrees</span></div>' +
+          ops.worktrees.map(w2 => '<div class="pmq-wt-row"><span class="pmq-wt-name">' + esc(w2.name) + "</span>" +
+            '<span class="pmq-wt-state" data-wtst="' + esc(w2.state) + '">' + esc(WORKTREE_STATE_LABELS[w2.state] || w2.state) + "</span>" +
+            (w2.owner ? '<span class="pmq-wt-owner">' + esc(w2.owner) + "</span>" : "") + "</div>").join("");
+        window.PMIcons.hydrate(el);
+        els.push(el);
+      }
+      if (ops.sessions.length) {
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-opsessions";
+        el.dataset.surface = "ops";
+        el.innerHTML = '<div class="pmq-port-head"><i data-ico="activity"></i><span class="pmq-surface-title">Testing · debug · backups</span></div>' +
+          ops.sessions.map(ss => '<div class="pmq-opsess-row"><span class="pmq-opsess-kind">' + esc(ss.kind) + '</span><span class="pmq-opsess-label">' + esc(ss.label) + '</span><span class="pmq-opsess-state">' + esc(ss.state || "") + "</span></div>").join("");
+        window.PMIcons.hydrate(el);
+        els.push(el);
+      }
+      return els;
+    }
+
+    const ROUTE_BADGES = { native: "Native", "pm-transformed": "PM transformed", pm: "PM transformed", alternate: "Alternate model", "Alternate model": "Alternate model", unsupported: "Unsupported", "native-or-pm": "Native or PM", "pm-or-alternate": "PM or alternate" };
+    function attachmentResolutionCards(key) {
+      const s = store.thread(key);
+      /* Union of live draft attachments and attachment-route keys, so
+         trigger-created routes (attachment.unsupported) render their resolver
+         card on ANY thread, not just fixture-seeded draftState ones. */
+      const seen = new Set();
+      const seeds = [];
+      s.draft.attachments.forEach(a => {
+        const id = typeof a === "string" ? a : a.id;
+        if (!seen.has(id)) { seen.add(id); seeds.push(a); }
+      });
+      Object.keys(s.attachRoutes).forEach(id => {
+        if (!seen.has(id)) { seen.add(id); seeds.push(id); }
+      });
+      store.messages(key).forEach(m => {
+        (m.attachments || []).forEach(a => {
+          const id = typeof a === "string" ? a : a.id;
+          if (!seen.has(id)) { seen.add(id); seeds.push(a); }
+        });
+      });
+      const els = [];
+      seeds.forEach(a => {
+        const id = typeof a === "string" ? a : a.id;
+        const label = typeof a === "string" ? a : (a.name || a.id);
+        const r = s.attachRoutes[id];
+        if (!r) return; // ordinary attachment without an explicit route
+        const el = document.createElement("div");
+        el.className = "pmq-surface pmq-attachres";
+        el.dataset.surface = "attachment";
+        const badge = ROUTE_BADGES[r.route] || r.route;
+        const jobLine = r.job ? (r.job.state === "running" ? '<div class="pmq-ar-job">Transforming…</div>' : '<div class="pmq-ar-job pmq-done">Done · ' + esc(r.job.output || "extracted") + "</div>") : "";
+        el.innerHTML = '<div class="pmq-ar-head"><i data-ico="attach"></i><span class="pmq-ar-name">' + esc(label) + '</span><span class="pmq-ar-badge" data-route="' + esc(r.route) + '">' + esc(badge) + "</span></div>" +
+          '<div class="pmq-ar-lineage">from ' + esc(r.lineage || id) + "</div>" + jobLine +
+          (r.route === "unsupported"
+            ? '<div class="pmq-ar-actions"><button class="pmq-btn" type="button" data-aract="cancel">Cancel</button>' +
+              '<button class="pmq-btn" type="button" data-aract="extract">Extract in PM</button>' +
+              '<button class="pmq-btn pmq-btn-primary" type="button" data-aract="alternate">Use Gemini</button></div>'
+            : "");
+        window.PMIcons.hydrate(el);
+        const cancel = el.querySelector('[data-aract="cancel"]');
+        const extract = el.querySelector('[data-aract="extract"]');
+        const alt = el.querySelector('[data-aract="alternate"]');
+        if (cancel) cancel.addEventListener("click", () => {
+          /* Cancel removes the attachment entirely; an unsupported video never
+             silently becomes a native route. */
+          store.mutate(() => {
+            const arr = s.draft.attachments;
+            const i = arr.findIndex(x => (typeof x === "string" ? x : x.id) === id);
+            if (i >= 0) arr.splice(i, 1);
+            delete s.attachRoutes[id];
+          });
+        });
+        if (extract) extract.addEventListener("click", () => { store.attachResolve(id, "pm-transformed"); store.attachStartJob(key, id, "Transcript and frames extracted by PM"); });
+        if (alt) alt.addEventListener("click", () => {
+          /* Initial selection only opens the consent warning; the alternate-route
+             command fires from "Consent once" in warningAction. */
+          store.warningInject(key, { tier: "confirm", kind: "attachment", text: "Route the original to an alternate model?", detail: "Consent is required once; PM keeps the lineage from the original attachment.", pendingAttach: id, pendingTarget: "Gemini", choices: ["Cancel", "Consent once"] });
+        });
+        els.push(el);
+      });
+      return els;
+    }
+
+    function receiptCards(key) {
+      const s = store.thread(key);
+      const msgs = store.messages(key);
+      const els = [];
+      const row = (icon, text, cls) => {
+        const el = document.createElement("div");
+        el.className = "pmq-receipt" + (cls ? " " + cls : "");
+        el.innerHTML = '<i data-ico="' + icon + '"></i><span>' + text + "</span>";
+        window.PMIcons.hydrate(el);
+        return el;
+      };
+      msgs.filter(m => m.queuedReplay).forEach(m => els.push(row("history", "Replayed from outbox · " + esc((m.body || "").slice(0, 48)), "pmq-rx-outbox")));
+      (s.restorePoints || []).forEach(rp => els.push(row("pin", "Restore point created · " + window.PMFmt.ago(rp.at), "pmq-rx-rp")));
+      if (s.redirectNote) els.push(row("rewind", "Turn redirected · " + esc(s.redirectNote), "pmq-rx-redirect"));
+      (s.warnings || []).forEach(w => {
+        if (w.kind === "cross-project" && w.resolved) els.push(row("shield", "Cross-project grant · " + esc(w.resolved), "pmq-rx-grant"));
+        if (w.kind === "capacity" && w.forecast && w.resolved) els.push(row("agents", "Capacity forecast resolved · " + esc(w.resolved), "pmq-rx-cap"));
+      });
+      (store.operationalOf(key).ports || []).forEach(p => {
+        if (p.state === "resolved") els.push(row("check", "Port " + p.port + " resolved" + (p.resolvedTo ? " · using " + p.resolvedTo : ""), "pmq-rx-port"));
+      });
+      return els;
+    }
+
+    /* Durable v3 receipts always render, whatever the work composition shows.
+       Same dedupe-guard pattern as appendRecords. */
+    function appendReceipts(container, key) {
+      if (container.querySelector(".pmq-v3receipts")) return;
+      const recs = receiptCards(key);
+      if (!recs.length) return;
+      const wrap = document.createElement("div");
+      wrap.className = "pmq-surfaces pmq-v3receipts";
+      recs.forEach(el => wrap.appendChild(el));
+      container.appendChild(wrap);
+    }
+
     function activityLiveCard(key) {
       const live = store.activityLive(key);
       if (!live) return null;
       const s = store.thread(key);
       const open = s.expandedActivity.includes("live");
-      const icoFor = { thought: "sparkle", exploration: "search", read: "file", fetch: "globe", browser: "globe", test: "flask", edit: "edit", generate: "wand", completion: "check" };
+      const icoFor = { thought: "sparkle", exploration: "search", read: "file", fetch: "globe", browser: "globe", test: "flask", edit: "edit", generate: "wand", completion: "check", search: "search", web: "globe", verify: "check" };
       const el = document.createElement("div");
       el.className = "pmq-agroup pmq-agroup-live" + (open ? " pmq-open" : "");
       el.dataset.ag = "live";
@@ -1309,6 +1550,10 @@ window.PMChatThreadKit = (() => {
       }));
       let adds = 0, dels = 0, files = 0;
       diffs.forEach(g => g.files.forEach(f => { adds += f.added || 0; dels += f.removed || 0; files++; }));
+      const ops = store.operationalOf(key);
+      const t = store.demoThread(key) || {};
+      const attachCount = ((t.draftState && t.draftState.attachments) || []).filter(a => s.attachRoutes[typeof a === "string" ? a : a.id]).length;
+      const bsd = store.bsdEffective(key);
       return {
         goalStatus: store.goalEffectiveStatus(key),
         goalPhase: store.goalPhases(key) ? store.goalPhases(key)[Math.min(store.goalPhaseIdx(key), (store.goalPhases(key) || []).length - 1)] : null,
@@ -1320,7 +1565,13 @@ window.PMChatThreadKit = (() => {
         diffAdds: adds, diffDels: dels, diffFiles: files,
         live: store.activityLive(key),
         approvals: (s.approvals || []).filter(a => !a.resolved).length,
-        warnings: (s.warnings || []).filter(w => !w.resolved).length
+        warnings: (s.warnings || []).filter(w => !w.resolved && w.kind !== "cross-project" && !(w.kind === "capacity" && w.forecast)).length,
+        grant: !!(s.warnings || []).find(w => w.kind === "cross-project" && !w.resolved),
+        capacity: (s.warnings || []).filter(w => w.kind === "capacity" && w.forecast && !w.resolved).length,
+        ops: ops.ports.filter(p => p.state === "conflict").length + ops.worktrees.length + ops.sessions.length,
+        ports: ops.ports.filter(p => p.state === "conflict").length,
+        bsd: (s.bsdAdvice ? 1 : 0) + (bsd.state === "timeout" || bsd.state === "unavailable" ? 1 : 0) + (t.bsdEvents || []).length,
+        attach: attachCount
       };
     }
 
@@ -1332,7 +1583,13 @@ window.PMChatThreadKit = (() => {
       if (todo) els.push(todo);
       els.push(...subagentCards(key));
       els.push(...approvalCards(key));
+      const grant = grantCard(key);
+      if (grant) els.push(grant);
+      els.push(...capacityCards(key));
       els.push(...warningCards(key));
+      els.push(...bsdCards(key));
+      els.push(...opsCards(key));
+      els.push(...attachmentResolutionCards(key));
       const liveCard = activityLiveCard(key);
       if (liveCard) els.push(liveCard);
       els.push(...diffCards(key));
@@ -1342,6 +1599,7 @@ window.PMChatThreadKit = (() => {
       els.push(...threadRequestCards(key));
       els.push(...compactReceipts(key));
       els.push(...questRecordCards(key));
+      els.push(...receiptCards(key));
       return els;
     }
 
@@ -1349,7 +1607,7 @@ window.PMChatThreadKit = (() => {
       return {
         env, store, A, esc, fmt, gridWrap, toggleSurface, expandSurface, collapseSurface,
         data: workData(key),
-        builders: { goalCard, todoCard, subagentCards, diffCards, artifactCards, activityLiveCard, approvalCards, warningCards, crewCard, questRecordCards, stateGlyph, orbitHtml, checkSvg },
+        builders: { goalCard, todoCard, subagentCards, diffCards, artifactCards, activityLiveCard, approvalCards, warningCards, crewCard, questRecordCards, grantCard, capacityCards, bsdCards, opsCards, attachmentResolutionCards, receiptCards, stateGlyph, orbitHtml, checkSvg },
         surfaceList: surfaceList(key),
         justOpened, numChanged
       };
@@ -1371,6 +1629,7 @@ window.PMChatThreadKit = (() => {
       if (typeof opts.workRender === "function") {
         try { opts.workRender(container, key, workApi(key)); } catch (e) { console.error(e); }
         appendRecords(container, key);
+        appendReceipts(container, key);
         return;
       }
       const wrap = document.createElement("div");
@@ -1385,6 +1644,7 @@ window.PMChatThreadKit = (() => {
       if (typeof opts.workRender === "function") {
         try { opts.workRender(bandEl, key, workApi(key)); } catch (e) { console.error(e); }
         appendRecords(bandEl, key);
+        appendReceipts(bandEl, key);
       } else {
         surfaceList(key).forEach(el => bandEl.appendChild(el));
       }
@@ -1718,7 +1978,7 @@ window.PMChatThreadKit = (() => {
         '<button class="pmq-sendstop" type="button" data-sendstop aria-label="Send"><i data-ico="send"></i></button>' +
         "</div>" +
         '<div class="pmq-composer-hint"><span class="pmq-hint-draft" hidden>Draft saved · crash-safe</span>' +
-        '<span class="pmq-hint-spell" hidden></span></div>' +
+        '<span class="pmq-hint-spell" hidden></span><span class="pmq-hint-offline" hidden>Offline · sends queue and replay once on reconnect</span></div>' +
         "</div>";
       window.PMIcons.hydrate(container);
       const ta = container.querySelector("textarea");
@@ -1768,9 +2028,10 @@ window.PMChatThreadKit = (() => {
         attachRow.hidden = false;
         const key = activeKey();
         attachRow.innerHTML = s.draft.attachments.map((a, i) => {
-          const forced = s.attachRoutes[a];
-          return '<span class="pmq-attach-chip"><i data-ico="file"></i>' + esc(a) +
-            '<button class="pmq-attach-route" type="button" data-route="' + i + '" title="Attachment route">' + esc(forced ? forced.route : attachRouteLabel(key, a)) + "</button>" +
+          const norm = typeof a === "string" ? { id: a, label: a, kind: attachKind(a) } : { id: a.id, label: a.name || a.id, kind: a.kind || attachKind(a.name || a.id) };
+          const forced = s.attachRoutes[norm.id];
+          return '<span class="pmq-attach-chip" data-attachid="' + esc(norm.id) + '"><i data-ico="file"></i>' + esc(norm.label) +
+            '<button class="pmq-attach-route" type="button" data-route="' + i + '" title="Attachment route">' + esc(forced ? forced.route : attachRouteLabel(key, norm.id)) + "</button>" +
             (forced && forced.reeval ? '<span class="pmq-attach-reeval" title="Model changed · route re-evaluated">re-check</span>' : "") +
             '<button type="button" data-unattach="' + i + '" aria-label="Remove attachment"><i data-ico="close"></i></button></span>';
         }).join("");
@@ -1820,9 +2081,25 @@ window.PMChatThreadKit = (() => {
         const running = store.isRunning(activeKey());
         const hasText = ta.value.trim().length > 0;
         const showStop = running && !hasText;
+        const conn = store.state.connection.status;
+        const offline = conn === "offline" || conn === "cached";
+        const eff = store.effectiveSettings(activeKey());
+        const grp = store.catalog().find(p => p.provider === eff.provider);
+        const setupBlocked = !!(grp && grp.setupState === "install-required");
         sendBtn.classList.toggle("pmq-is-stop", showStop);
-        sendBtn.innerHTML = '<i data-ico="' + (showStop ? "stop" : "send") + '"></i>';
-        sendBtn.setAttribute("aria-label", showStop ? "Stop" : "Send");
+        sendBtn.classList.toggle("pmq-is-queue", offline && hasText);
+        sendBtn.disabled = setupBlocked;
+        if (setupBlocked) {
+          sendBtn.setAttribute("title", "Send disabled · Install required — open Provider Settings");
+          sendBtn.setAttribute("aria-label", "Send disabled · install required");
+          sendBtn.innerHTML = '<i data-ico="warn"></i>';
+        } else {
+          sendBtn.removeAttribute("title");
+          sendBtn.setAttribute("aria-label", showStop ? "Stop" : offline ? "Queue message" : "Send");
+          sendBtn.innerHTML = '<i data-ico="' + (showStop ? "stop" : "send") + '"></i>';
+        }
+        const offHint = container.querySelector(".pmq-hint-offline");
+        if (offHint) offHint.hidden = !offline;
         window.PMIcons.hydrate(sendBtn);
       }
 
@@ -1875,7 +2152,7 @@ window.PMChatThreadKit = (() => {
           { label: "screenshots/draft-recovery-two.png", icon: "file", onpick: () => addAttach("screenshots/draft-recovery-two.png") },
           { label: "recordings/provider-flow.mov", icon: "play", sub: "Selected model lacks video · PM can extract", onpick: () => addAttach("recordings/provider-flow.mov") },
           { label: "exports/provider-matrix.zip", icon: "folder", sub: "PM inspects and extracts", onpick: () => addAttach("exports/provider-matrix.zip") },
-          { label: "Browser capture · current page", icon: "globe", onpick: () => addAttach("browser-capture-current-page.png") }
+          { label: "Browser Program capture · current page", icon: "globe", onpick: () => addAttach("browser-capture-current-page.png") }
         ], { title: "Attach", width: 300 });
       });
 

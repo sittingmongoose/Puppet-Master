@@ -391,6 +391,42 @@
         });
       }
 
+      // Final cumulative packet overlay (merged AFTER the augment; same
+      // mechanics plus whole-thread appends, catalogs, and store seeds).
+      var pkt = (typeof window !== 'undefined') && window.K3_DEMO_PACKET;
+      if (pkt) {
+        arr(pkt.messagePatches).forEach(applyPatch);
+        arr(pkt.messageInserts).forEach(applyInsert);
+        arr(pkt.threadAppends).forEach(function (t) {
+          if (!t || !t.id || threadsById[t.id]) return;
+          var copy = JSON.parse(JSON.stringify(t));
+          DATA.threads.push(copy);
+          threadsById[copy.id] = copy;
+          reindexThread(copy);
+        });
+        if (isObj(pkt.catalogs)) {
+          DATA.catalogs = JSON.parse(JSON.stringify(pkt.catalogs));
+        }
+        if (isObj(pkt.storeSeeds)) {
+          Object.keys(pkt.storeSeeds).forEach(function (key) {
+            var seedVal = pkt.storeSeeds[key];
+            var cur = storeGet(key, null);
+            if (isObj(seedVal) && !Array.isArray(seedVal)) {
+              // blankSemantic ships empty objects for these keys, so merge
+              // missing subkeys instead of testing the top-level for null.
+              var merged = isObj(cur) ? cur : {};
+              var changed = false;
+              Object.keys(seedVal).forEach(function (sub) {
+                if (merged[sub] == null) { merged[sub] = JSON.parse(JSON.stringify(seedVal[sub])); changed = true; }
+              });
+              if (changed) storeSet(key, merged);
+            } else if (cur == null) {
+              storeSet(key, JSON.parse(JSON.stringify(seedVal)));
+            }
+          });
+        }
+      }
+
       seedDraftsFromDataset();
       seedLensFromAugment();
       K3Data.ready = true;
@@ -503,9 +539,17 @@
     },
 
     // --- composer / scripted replies -----------------------------------------
-    send: function (threadId, text) {
+    // opts: {opId, queued, noReply}. opId fences idempotent offline replay:
+    // a second send carrying an already-applied opId is skipped (returns null).
+    send: function (threadId, text, opts) {
       var thread = threadsById[threadId];
       if (!thread) return null;
+      var opId = opts && typeof opts.opId === 'string' ? opts.opId : null;
+      var applied = null;
+      if (opId) {
+        applied = storeGet('appliedOps', {}) || {};
+        if (applied[opId]) return null; // already applied — skipped
+      }
       var message = {
         id: uid('msg'),
         role: 'user',
@@ -515,10 +559,32 @@
         eligibleForEdit: true,
         collapsedByDefault: false
       };
+      if (opId) message.opId = opId;
+      if (opts && opts.queued) message.queued = true; // "Queued to send" badge
       appendMessage(thread, message);
+      if (opId) {
+        applied[opId] = true;
+        storeSet('appliedOps', applied);
+      }
+      if (opts && opts.noReply) return message;
       if (working[threadId]) return message; // steering: never restart or stop
       startScriptedReply(thread);
       return message;
+    },
+
+    // Clear the offline "Queued to send" badge after a successful replay.
+    markMessageSent: function (threadId, opId) {
+      var thread = threadsById[threadId];
+      if (!thread) return false;
+      var msgs = arr(thread.messages);
+      for (var i = 0; i < msgs.length; i++) {
+        if (msgs[i].opId === opId && msgs[i].queued) {
+          msgs[i].queued = false;
+          emit({ type: 'outbox-changed', threadId: threadId });
+          return true;
+        }
+      }
+      return false;
     },
 
     stop: function (threadId) {
@@ -878,6 +944,158 @@
       appendQuestionnaireRecord(t, mq, 'cancelled');
       emit({ type: 'questionnaire-resolved', threadId: threadId, questionnaireId: qid, status: 'cancelled' });
       return { status: 'cancelled' };
+    },
+
+    // --- final cumulative packet: routes, thread-local state, catalogs --------
+    // Resolved per-thread settings: threadLocal fields win over project
+    // defaults (routeDefaults / legacy selectors slice). Null = inherit.
+    effective: function (threadId) {
+      var tl = storeGet('threadLocal.' + threadId, null) || {};
+      var defaults = storeGet('routeDefaults', {}) || {};
+      var selectors = storeGet('selectors', {}) || {};
+      var defaultKey = defaults.providerId && defaults.modelId
+        ? defaults.providerId + '/' + (defaults.accountId || '') + '/' + defaults.modelId
+        : null;
+      var routeKey = tl.route != null ? tl.route : defaultKey;
+      var route = routeKey ? K3Data.routeByKey(routeKey) : null;
+      var rawBsd = storeGet('bsdState.' + threadId, null) || {};
+      return {
+        route: route,
+        routeKey: route ? route.key : null,
+        access: tl.access != null ? tl.access : 'ask',
+        bsd: {
+          mode: rawBsd.mode != null ? rawBsd.mode : 'auto',
+          scope: rawBsd.scope != null ? rawBsd.scope : 'thread',
+          autoActive: rawBsd.autoActive === true,
+          lastResult: rawBsd.lastResult != null ? rawBsd.lastResult : null
+        },
+        persona: tl.persona != null ? tl.persona : (selectors.persona != null ? selectors.persona : null),
+        mode: tl.mode != null ? tl.mode : (selectors.mode != null ? selectors.mode : null),
+        effort: tl.effort != null ? tl.effort : (defaults.effort != null ? defaults.effort : (selectors.effort != null ? selectors.effort : null)),
+        speed: tl.speed != null ? tl.speed : (defaults.speed != null ? defaults.speed : null),
+        worktree: tl.worktree != null ? tl.worktree : (selectors.worktree != null ? selectors.worktree : null),
+        crew: tl.crew != null ? tl.crew : null,
+        // which fields carry a "This thread" override (scope chips)
+        overrides: {
+          route: tl.route != null,
+          access: tl.access != null,
+          bsd: storeGet('bsdState.' + threadId, null) != null,
+          persona: tl.persona != null,
+          mode: tl.mode != null,
+          effort: tl.effort != null,
+          speed: tl.speed != null,
+          worktree: tl.worktree != null,
+          crew: tl.crew != null
+        }
+      };
+    },
+    setThreadLocal: function (threadId, patch) {
+      var cur = storeGet('threadLocal.' + threadId, null) || {};
+      Object.keys(patch || {}).forEach(function (k) { cur[k] = patch[k]; });
+      storeSet('threadLocal.' + threadId, cur);
+      return cur;
+    },
+    clearThreadLocal: function (threadId, field) {
+      var cur = storeGet('threadLocal.' + threadId, null);
+      if (!cur) return;
+      if (field) delete cur[field]; else cur = {};
+      storeSet('threadLocal.' + threadId, cur);
+    },
+    // Explicit bulk apply: snapshot the current project route default onto the
+    // listed threads (confirmation dialog lives in the route controller).
+    applyDefaultsToThreads: function (threadIds) {
+      var defaults = storeGet('routeDefaults', {}) || {};
+      var key = defaults.providerId && defaults.modelId
+        ? defaults.providerId + '/' + (defaults.accountId || '') + '/' + defaults.modelId
+        : null;
+      arr(threadIds).forEach(function (tid) {
+        if (!threadsById[tid] || !key) return;
+        K3Data.setThreadLocal(tid, { route: key, effort: defaults.effort != null ? defaults.effort : null, speed: defaults.speed != null ? defaults.speed : null });
+      });
+    },
+
+    providerCatalog: function () {
+      return arr(DATA && DATA.catalogs && DATA.catalogs.providers);
+    },
+    routeByKey: function (routeKey) {
+      if (typeof routeKey !== 'string') return null;
+      var parts = routeKey.split('/');
+      if (parts.length < 3) return null;
+      var pid = parts[0], aid = parts[1], mid = parts.slice(2).join('/');
+      var providers = K3Data.providerCatalog();
+      for (var i = 0; i < providers.length; i++) {
+        var p = providers[i];
+        if (p.id !== pid) continue;
+        var account = null, model = null;
+        arr(p.accounts).forEach(function (a) { if (a.id === aid) account = a; });
+        arr(p.models).forEach(function (m) { if (m.id === mid) model = m; });
+        if (!account || !model) return null;
+        var conn = account.connection || {};
+        var status = 'ok', reason = null;
+        if (model.status && model.status !== 'ok') { status = model.status; reason = model.unavailableReason || null; }
+        else if (conn.status && conn.status !== 'ok') { status = conn.status; reason = conn.note || null; }
+        else if (p.status && p.status !== 'ok') { status = p.status; reason = p.note || null; }
+        return {
+          key: pid + '/' + aid + '/' + mid,
+          providerId: pid, accountId: aid, modelId: mid,
+          providerName: p.name || pid,
+          providerIcon: p.icon || ('provider-' + pid),
+          accountLabel: account.label || aid,
+          connectionKind: conn.kind || null,
+          connectionLabel: conn.label || conn.kind || '',
+          modelLabel: model.label || mid,
+          modelShort: model.short || model.label || mid,
+          capabilities: model.capabilities || {},
+          priceTier: model.priceTier || null,
+          status: status,
+          unavailableReason: reason
+        };
+      }
+      return null;
+    },
+    threadRequests: function (threadId) {
+      var t = threadsById[threadId];
+      return t ? arr(t.threadRequests) : [];
+    },
+    worktrees: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.worktrees); },
+    portLeases: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.portLeases); },
+    crewTemplates: function () { return arr(DATA && DATA.catalogs && DATA.catalogs.crewTemplates); },
+    connectionInfo: function () {
+      var p = (DATA && DATA.catalogs && DATA.catalogs.syncProfile) || {};
+      var tid = storeGet('activeThreadId', null);
+      var eff = tid ? K3Data.effective(tid) : null;
+      return {
+        homeServer: p.homeServer || 'Home TrueNAS',
+        executionHost: p.executionHost || 'This Windows computer',
+        environment: p.environment || 'Windows 11 Pro',
+        route: eff && eff.route
+          ? eff.route.providerName + ' · ' + eff.route.accountLabel + ' · ' + eff.route.modelLabel
+          : 'Not configured'
+      };
+    },
+
+    // Controllers append transcript record messages (cards, receipts, markers)
+    // through here so indexing, runtime, and events stay consistent.
+    appendRecord: function (threadId, fields) {
+      var thread = threadsById[threadId];
+      if (!thread) return null;
+      var message = Object.assign({
+        id: uid('msg'),
+        role: 'assistant',
+        body: '',
+        sentAt: nowIso(),
+        runtime: runtimeTemplate(thread),
+        eligibleForEdit: false,
+        collapsedByDefault: false
+      }, fields || {});
+      appendMessage(thread, message);
+      return message;
+    },
+    // Generic re-render nudge after a controller mutates a thread record.
+    touchThread: function (threadId, eventType) {
+      var t = threadsById[threadId];
+      if (t) t.updatedAt = nowIso();
+      emit({ type: eventType || 'threads-changed', threadId: threadId });
     },
 
     // --- restart simulation -----------------------------------------------------

@@ -17,11 +17,6 @@
 (function () {
   "use strict";
 
-  var MANAGER_IDS = [
-    "providers", "memory", "personas", "crew", "context", "mcp", "lsp",
-    "skills", "tools", "commands", "terminal", "media", "usage", "spellcheck"
-  ];
-
   function target(t) {
     return {
       category: t.category || null,
@@ -30,6 +25,10 @@
       manager: t.manager || null,
       tab: t.tab || null
     };
+  }
+
+  function kindFromMeta(meta) {
+    return (meta && meta.resultKind) || "manager";
   }
 
   function buildIndex(demo) {
@@ -67,22 +66,77 @@
       });
     });
 
-    MANAGER_IDS.forEach(function (managerId) {
-      var meta = (demo.managerMeta || {})[managerId] || {};
+    var managerMeta = demo.managerMeta || {};
+    Object.keys(managerMeta).forEach(function (managerId) {
+      var meta = managerMeta[managerId] || {};
       index.push({
         id: "manager:" + managerId,
-        kind: "manager",
+        kind: kindFromMeta(meta),
         title: meta.title || managerId,
-        subtitle: "Managers",
-        terms: (meta.purpose || "") + " " + managerId,
-        target: target({ manager: managerId, tab: "overview" })
+        subtitle: meta.subtitle || "Managers",
+        terms: [meta.purpose, meta.search, managerId, (meta.tags || []).join(" ")].filter(Boolean).join(" "),
+        target: target({ manager: managerId, tab: meta.defaultTab || "overview" })
       });
+      (meta.aliases || []).forEach(function (alias, ai) {
+        index.push({
+          id: "manager:" + managerId + ":alias:" + ai,
+          kind: "manager",
+          title: alias,
+          subtitle: meta.subtitle || "Managers",
+          terms: [meta.title, meta.purpose, meta.search, managerId].filter(Boolean).join(" "),
+          target: target({ manager: managerId, tab: meta.defaultTab || "overview" })
+        });
+      });
+    });
+
+    function pushTyped(kind, id, title, subtitle, terms, tgt) {
+      index.push({
+        id: kind + ":" + id,
+        kind: kind,
+        title: title,
+        subtitle: subtitle || kind,
+        terms: terms || "",
+        target: target(tgt || {})
+      });
+    }
+
+    (function () {
+      var notif = demo.notifications;
+      var list = Array.isArray(notif) ? notif : ((notif && (notif.destinations || notif.items)) || []);
+      list.forEach(function (n) {
+        pushTyped("status", "notif-" + n.id, n.title || n.name || n.id, "Notifications",
+          [n.channel, n.health, n.search, n.kind].filter(Boolean).join(" "),
+          { manager: "notifications", tab: n.id });
+      });
+    })();
+    var soundItems = (demo.soundLibrary && demo.soundLibrary.items) || demo.soundLibrary || [];
+    if (Array.isArray(soundItems)) {
+      soundItems.forEach(function (s) {
+        if (!s || !s.id) return;
+        pushTyped("diagnostic", "sound-" + s.id, s.title || s.id, "Sound library",
+          [s.pack, s.state, s.search].filter(Boolean).join(" "),
+          { manager: "soundLibrary", tab: s.id });
+      });
+    }
+    (function () {
+      var shell = demo.serverShell;
+      var cards = Array.isArray(shell) ? shell : ((shell && shell.deferredModules) || []);
+      cards.forEach(function (card) {
+        pushTyped("unavailable", "server-" + card.id, card.title || card.name || card.id, "Future server shell",
+          [card.namedOwner || card.owner, card.insertionContract || card.contract, "deferred"].filter(Boolean).join(" "),
+          { manager: "serverShell", tab: card.id });
+      });
+    })();
+    (demo.setupFixtures || []).forEach(function (fx) {
+      pushTyped("setup", fx.id, fx.title, "Setup", fx.terms || "", fx.target || {});
     });
 
     [
       { id: "reset-demo", title: "Reset demo data", terms: "restore seed sample content" },
       { id: "open-home", title: "Open Settings Home", terms: "start landing overview" },
-      { id: "refresh-catalog", title: "Refresh provider catalog", terms: "models.dev update check", target: { manager: "providers" } }
+      { id: "refresh-catalog", title: "Refresh provider catalog", terms: "models.dev update check", target: { manager: "providers" } },
+      { id: "import-preview", title: "Preview settings import", terms: "lifecycle conflict rollback", target: { manager: "settingsLifecycle" } },
+      { id: "sound-preview", title: "Preview notification sound", terms: "PeonPing OpenPeon pack", target: { manager: "soundLibrary" } }
     ].forEach(function (action) {
       index.push({
         id: "action:" + action.id,
@@ -141,6 +195,7 @@
     var results = [];
     for (var i = 0; i < index.length; i++) {
       var entry = index[i];
+      var titleLc = String(entry.title || "").toLowerCase();
       var onTitle = fuzzy(entry.title, q);
       var onTerms = fuzzy(entry.terms, q);
       var onSubtitle = fuzzy(entry.subtitle, q);
@@ -150,13 +205,30 @@
       if (onTerms && onTerms.score * 2 > best) { best = onTerms.score * 2; matchedOnTitle = false; }
       if (onSubtitle && onSubtitle.score > best) { best = onSubtitle.score; matchedOnTitle = false; }
       if (!best) continue;
+
+      var score = best + Math.max(0, 12 - entry.title.length) * 0.25;
+      /* Prefer intentional manager destinations over broad category landings
+         when the query is really naming that manager. */
+      if (matchedOnTitle) {
+        if (titleLc === q) score += 28;
+        else if (titleLc.indexOf(q) === 0) score += 16;
+        else if ((" " + titleLc + " ").indexOf(" " + q + " ") !== -1) score += 12;
+      }
+      if (entry.kind === "manager") {
+        if (matchedOnTitle) score += 22;
+        else if (onTerms) score += 14;
+      }
+      if (entry.kind === "setup" && entry.target && entry.target.manager && matchedOnTitle) score += 10;
+      if (entry.kind === "category" && matchedOnTitle) score -= 6;
+      if (entry.kind === "subcategory" && matchedOnTitle) score -= 4;
+
       results.push({
         id: entry.id,
         kind: entry.kind,
         title: entry.title,
         subtitle: entry.subtitle,
         target: entry.target,
-        score: best + Math.max(0, 12 - entry.title.length) * 0.25,
+        score: score,
         ranges: matchedOnTitle ? mergeRanges(onTitle.idx) : []
       });
     }
