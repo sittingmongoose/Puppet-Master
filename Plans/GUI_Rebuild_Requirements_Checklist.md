@@ -1929,20 +1929,6 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
 - model-first Pointer Events movement/resize with U10 cues, cancellation-safe
   restoration, reduced motion, shared resizer glow/recovery, four-edge scroll
   dissolve, and exactly one command/persist at semantic commit;
-- direct-manipulation movement from one top-left grab handle per eligible surface,
-  with live neighbour reflow and an in-flow placeholder during the gesture, no
-  target-picker rail, keyboard pick-up/move/drop on the same handle announced through
-  a polite live region, and the per-surface Move or dock menu rows retired;
-- resize endpoints on the boundary the gesture moves, proven by changed rendered
-  geometry rather than by a dispatch count;
-- a bottom-terminal collapse chevron that both collapses and expands, staying visible
-  and hit-testable on the collapsed strip;
-- Open in Panel rendering a real buffer and tab in all four editor panels;
-- the width-aware overflow chip present in every open editor panel, editor tab
-  drag-reorder that survives a re-render, and the contact-aware active-tab silhouette
-  with independent left/right contact corners;
-- dashboard widget reorder and grid-snap resize on the shared direct-manipulation
-  vocabulary, still persisted under the widget layout contract;
 - project/workspace persistence, corruption/migration/off-screen recovery, all eight
   themes, Light/Dark/Auto, inline SVG only, no emoji, and zero page/console errors.
 - one source-hashed zero-omission control census, byte-identical dual pipeline

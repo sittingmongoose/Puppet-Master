@@ -104,18 +104,19 @@ class Pnc019CurrentnessTests(unittest.TestCase):
         self.assertIs(pm_harness.REQUIRED_PNC019_SOURCE_HASH_PATHS, required)
 
     @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
-    def test_all_current_hashes_clear_denominator_and_depth_after_ea_cert(self) -> None:
+    def test_all_current_hashes_still_fail_closed_on_denominator_and_depth(self) -> None:
         self.write_receipt(self.current_hashes)
 
         plan_status = self.plan_status()
         plan_errors = {failure.get("error") for failure in plan_status["failures"]}
-        self.assertNotIn("event_denominator_unresolved", plan_errors)
-        self.assertNotIn("event_family_contract_depth_unresolved", plan_errors)
+        self.assertFalse(plan_status["complete"])
+        self.assertIn("event_denominator_unresolved", plan_errors)
+        self.assertIn("event_family_contract_depth_unresolved", plan_errors)
 
         readiness_failures = self.readiness_failures()
         readiness_errors = {failure.get("error") for failure in readiness_failures}
-        self.assertNotIn("event_denominator_unresolved", readiness_errors)
-        self.assertNotIn("event_family_contract_depth_unresolved", readiness_errors)
+        self.assertIn("event_denominator_unresolved", readiness_errors)
+        self.assertIn("event_family_contract_depth_unresolved", readiness_errors)
 
         blockers = [
             pm_readiness.fixture_blocker(family, index, status="closed")
