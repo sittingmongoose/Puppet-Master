@@ -1,0 +1,462 @@
+/* Fable — Puppet Master Assistant Chat bakeoff
+   Theme tokens for all eight Puppet Master themes.
+   Portability rule: every value here is a precomputed constant. No runtime color
+   mixing, no backdrop-filter dependencies. Glass surfaces are opaque plates whose
+   "material" quality comes from precomputed gradients layered on known grounds. */
+
+:root {
+  /* Geometry shared across themes (Retro overrides radii to 0) */
+  --radius-xs: 4px;
+  --radius-sm: 7px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --font-ui: "Inter", "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+  --font-prose: "Inter", "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  --hub-chat-width: 750px;
+
+  /* Motion durations — concepts define their own rhythm on top of these bases */
+  --dur-fast: 130ms;
+  --dur-base: 210ms;
+  --dur-slow: 340ms;
+  --ease-settle: cubic-bezier(0.22, 0.9, 0.28, 1);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --ease-overshoot: cubic-bezier(0.3, 1.28, 0.5, 1);
+}
+
+/* ============ FRIENDLY DARK (default) ============ */
+:root,
+[data-theme="friendly-dark"] {
+  --bg-app: #10151c;
+  --bg-shell: #0c1117;
+  --bg-panel: #151b24;
+  --bg-surface: #1a212c;
+  --bg-raised: #202936;
+  --bg-plate: #232d3c;           /* opaque popup/portal plate */
+  --bg-inset: #0e1319;
+  --bg-hover: #253041;
+  --bg-active: #2b3950;
+
+  --text-primary: #e8edf4;
+  --text-secondary: #9fb0c3;
+  --text-faint: #64748b;
+  --text-inverse: #0c1117;
+
+  --accent: #57c4b8;
+  --accent-strong: #6fdccf;
+  --accent-soft: #1d3a3c;        /* precomputed accent-on-ground */
+  --accent-text: #0a2523;
+
+  --user-ink: #cfe9e5;
+  --user-ground: #1c313a;        /* user message ground, precomputed */
+
+  --ok: #6fce93;
+  --warn: #e3b34f;
+  --danger: #e07a6f;
+  --info: #6da8e8;
+  --ok-soft: #17301f;
+  --warn-soft: #37301a;
+  --danger-soft: #38211e;
+  --info-soft: #1a2a3d;
+
+  --edge: #2a3441;
+  --edge-strong: #3a4757;
+  --edge-faint: #1f2833;
+
+  --shadow-1: 0 1px 3px rgba(2, 6, 12, 0.5);
+  --shadow-2: 0 4px 14px rgba(2, 6, 12, 0.5);
+  --shadow-3: 0 10px 32px rgba(2, 6, 12, 0.62);
+
+  --glow-bsd: 0 0 0 1px #2c5a55, 0 0 12px 2px rgba(87, 196, 184, 0.35);
+
+  --scroll-thumb: #334052;
+  --scroll-thumb-hover: #465671;
+  color-scheme: dark;
+}
+
+/* ============ FRIENDLY LIGHT ============ */
+[data-theme="friendly-light"] {
+  --bg-app: #f4f6f9;
+  --bg-shell: #e9edf2;
+  --bg-panel: #ffffff;
+  --bg-surface: #f7f9fb;
+  --bg-raised: #ffffff;
+  --bg-plate: #ffffff;
+  --bg-inset: #eceff4;
+  --bg-hover: #e8eef5;
+  --bg-active: #dbe6f1;
+
+  --text-primary: #1c2733;
+  --text-secondary: #4d6076;
+  --text-faint: #8595a8;
+  --text-inverse: #ffffff;
+
+  --accent: #1d9c8f;
+  --accent-strong: #12857a;
+  --accent-soft: #d7efec;
+  --accent-text: #ffffff;
+
+  --user-ink: #123f39;
+  --user-ground: #ddf0ed;
+
+  --ok: #278a4c;
+  --warn: #a8741a;
+  --danger: #bf4a3e;
+  --info: #2f6cb3;
+  --ok-soft: #ddf1e4;
+  --warn-soft: #f6ecd6;
+  --danger-soft: #f8e2df;
+  --info-soft: #dfeafa;
+
+  --edge: #d5dde6;
+  --edge-strong: #b9c5d3;
+  --edge-faint: #e4eaf1;
+
+  --shadow-1: 0 1px 3px rgba(24, 39, 56, 0.12);
+  --shadow-2: 0 4px 14px rgba(24, 39, 56, 0.13);
+  --shadow-3: 0 10px 32px rgba(24, 39, 56, 0.18);
+
+  --glow-bsd: 0 0 0 1px #9edcd5, 0 0 12px 2px rgba(29, 156, 143, 0.3);
+
+  --scroll-thumb: #c3cedb;
+  --scroll-thumb-hover: #a5b4c6;
+  color-scheme: light;
+}
+
+/* ============ RETRO DARK ============ */
+[data-theme="retro-dark"] {
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
+
+  --font-ui: "IBM Plex Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-prose: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+
+  --bg-app: #101208;
+  --bg-shell: #0b0d05;
+  --bg-panel: #161910;
+  --bg-surface: #1b1f13;
+  --bg-raised: #232818;
+  --bg-plate: #262c1a;
+  --bg-inset: #0e1108;
+  --bg-hover: #2a3020;
+  --bg-active: #333a26;
+
+  --text-primary: #d8e8b0;
+  --text-secondary: #a4b581;
+  --text-faint: #6d7a55;
+  --text-inverse: #101208;
+
+  --accent: #b3d945;
+  --accent-strong: #c8ee5b;
+  --accent-soft: #2c3a12;
+  --accent-text: #1a2205;
+
+  --user-ink: #e3edc4;
+  --user-ground: #262e15;
+
+  --ok: #9ccf62;
+  --warn: #d9b84a;
+  --danger: #d97e5a;
+  --info: #7fbf9e;
+  --ok-soft: #24310f;
+  --warn-soft: #363012;
+  --danger-soft: #372014;
+  --info-soft: #16301f;
+
+  --edge: #3a4227;
+  --edge-strong: #545f38;
+  --edge-faint: #262d17;
+
+  --shadow-1: 0 0 0 1px #2c3319;
+  --shadow-2: 0 0 0 1px #3a4227, 4px 4px 0 rgba(6, 8, 2, 0.65);
+  --shadow-3: 0 0 0 1px #545f38, 6px 6px 0 rgba(6, 8, 2, 0.75);
+
+  --glow-bsd: 0 0 0 1px #5b722a, 0 0 10px 1px rgba(179, 217, 69, 0.4);
+
+  --scroll-thumb: #3e4728;
+  --scroll-thumb-hover: #576439;
+  color-scheme: dark;
+}
+
+/* ============ RETRO LIGHT ============ */
+[data-theme="retro-light"] {
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
+
+  --font-ui: "IBM Plex Mono", "Cascadia Code", ui-monospace, monospace;
+  --font-prose: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+
+  --bg-app: #f2efe2;
+  --bg-shell: #e7e3d0;
+  --bg-panel: #faf8ee;
+  --bg-surface: #f4f1e2;
+  --bg-raised: #fcfaf1;
+  --bg-plate: #fcfaf1;
+  --bg-inset: #e9e5d2;
+  --bg-hover: #eae5ce;
+  --bg-active: #ddd7ba;
+
+  --text-primary: #34381f;
+  --text-secondary: #62684a;
+  --text-faint: #8f9377;
+  --text-inverse: #faf8ee;
+
+  --accent: #5c7a1e;
+  --accent-strong: #48620f;
+  --accent-soft: #e2ecc5;
+  --accent-text: #f8fbe8;
+
+  --user-ink: #3d451e;
+  --user-ground: #e8edcd;
+
+  --ok: #4a7d2a;
+  --warn: #96741d;
+  --danger: #ab4d33;
+  --info: #3d6e5a;
+  --ok-soft: #e2eed3;
+  --warn-soft: #f1e8c8;
+  --danger-soft: #f3ded4;
+  --info-soft: #daeae2;
+
+  --edge: #c9c4a4;
+  --edge-strong: #a8a37f;
+  --edge-faint: #dcd8bd;
+
+  --shadow-1: 0 0 0 1px #d4cfae;
+  --shadow-2: 0 0 0 1px #c9c4a4, 4px 4px 0 rgba(84, 80, 50, 0.18);
+  --shadow-3: 0 0 0 1px #a8a37f, 6px 6px 0 rgba(84, 80, 50, 0.22);
+
+  --glow-bsd: 0 0 0 1px #a9c26a, 0 0 10px 1px rgba(92, 122, 30, 0.3);
+
+  --scroll-thumb: #c6c1a0;
+  --scroll-thumb-hover: #a9a37e;
+  color-scheme: light;
+}
+
+/* ============ BASIC DARK ============ */
+[data-theme="basic-dark"] {
+  --bg-app: #17181a;
+  --bg-shell: #121315;
+  --bg-panel: #1c1e21;
+  --bg-surface: #212428;
+  --bg-raised: #282b30;
+  --bg-plate: #2b2f35;
+  --bg-inset: #141517;
+  --bg-hover: #2d3137;
+  --bg-active: #363b42;
+
+  --text-primary: #e6e8eb;
+  --text-secondary: #a3aab4;
+  --text-faint: #6b7280;
+  --text-inverse: #121315;
+
+  --accent: #6c9fd8;
+  --accent-strong: #86b4e8;
+  --accent-soft: #21303f;
+  --accent-text: #0c1826;
+
+  --user-ink: #d7e4f2;
+  --user-ground: #253140;
+
+  --ok: #7dc98e;
+  --warn: #d9b45c;
+  --danger: #d8837a;
+  --info: #6c9fd8;
+  --ok-soft: #1e2f22;
+  --warn-soft: #322b18;
+  --danger-soft: #34211f;
+  --info-soft: #1e2a38;
+
+  --edge: #33373d;
+  --edge-strong: #464c55;
+  --edge-faint: #26292e;
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 10px 30px rgba(0, 0, 0, 0.58);
+
+  --glow-bsd: 0 0 0 1px #3d5a7a, 0 0 12px 2px rgba(108, 159, 216, 0.32);
+
+  --scroll-thumb: #3a3f46;
+  --scroll-thumb-hover: #4d545e;
+  color-scheme: dark;
+}
+
+/* ============ BASIC LIGHT ============ */
+[data-theme="basic-light"] {
+  --bg-app: #f5f5f6;
+  --bg-shell: #ebebed;
+  --bg-panel: #ffffff;
+  --bg-surface: #f8f8f9;
+  --bg-raised: #ffffff;
+  --bg-plate: #ffffff;
+  --bg-inset: #ededef;
+  --bg-hover: #ececee;
+  --bg-active: #e0e1e4;
+
+  --text-primary: #1f2328;
+  --text-secondary: #57606a;
+  --text-faint: #8b949e;
+  --text-inverse: #ffffff;
+
+  --accent: #3a6ea5;
+  --accent-strong: #2c5a8c;
+  --accent-soft: #dce8f5;
+  --accent-text: #ffffff;
+
+  --user-ink: #1e3a5c;
+  --user-ground: #e3edf8;
+
+  --ok: #2e844c;
+  --warn: #9a6d13;
+  --danger: #b3453a;
+  --info: #3a6ea5;
+  --ok-soft: #def0e4;
+  --warn-soft: #f5ecd3;
+  --danger-soft: #f7e1de;
+  --info-soft: #e0eaf6;
+
+  --edge: #d6d9dd;
+  --edge-strong: #b8bec6;
+  --edge-faint: #e5e7ea;
+
+  --shadow-1: 0 1px 3px rgba(31, 35, 40, 0.1);
+  --shadow-2: 0 4px 14px rgba(31, 35, 40, 0.12);
+  --shadow-3: 0 10px 30px rgba(31, 35, 40, 0.16);
+
+  --glow-bsd: 0 0 0 1px #a9c8e8, 0 0 12px 2px rgba(58, 110, 165, 0.25);
+
+  --scroll-thumb: #c8ccd1;
+  --scroll-thumb-hover: #aab0b8;
+  color-scheme: light;
+}
+
+/* ============ GLASS DARK ============ */
+/* Material comes from precomputed vertical gradients on a known deep ground.
+   All plates remain opaque — Slint maps these to solid brushes. */
+[data-theme="glass-dark"] {
+  --bg-app: #171a24;
+  --bg-shell: #12141d;
+  --bg-panel: #1d2130;
+  --bg-surface: #222739;
+  --bg-raised: #293045;
+  --bg-plate: #2d3450;
+  --bg-inset: #141722;
+  --bg-hover: #2f3854;
+  --bg-active: #394465;
+
+  --text-primary: #eceef8;
+  --text-secondary: #a6afce;
+  --text-faint: #6a7394;
+  --text-inverse: #12141d;
+
+  --accent: #8f9ff2;
+  --accent-strong: #a8b6fa;
+  --accent-soft: #272e52;
+  --accent-text: #101430;
+
+  --user-ink: #dde2fa;
+  --user-ground: #2a3153;
+
+  --ok: #82cfa4;
+  --warn: #dfc06b;
+  --danger: #e2897f;
+  --info: #7fb3ef;
+  --ok-soft: #1c3229;
+  --warn-soft: #363019;
+  --danger-soft: #392324;
+  --info-soft: #1e2c44;
+
+  --edge: #333b58;
+  --edge-strong: #48527a;
+  --edge-faint: #262d45;
+
+  --shadow-1: 0 1px 4px rgba(4, 6, 16, 0.5);
+  --shadow-2: 0 6px 18px rgba(4, 6, 16, 0.55);
+  --shadow-3: 0 14px 40px rgba(4, 6, 16, 0.66);
+
+  --glow-bsd: 0 0 0 1px #4a5590, 0 0 14px 2px rgba(143, 159, 242, 0.4);
+
+  --scroll-thumb: #383f5e;
+  --scroll-thumb-hover: #4c557f;
+
+  --plate-sheen: linear-gradient(178deg, #333b5c 0%, #2d3450 38%, #292f4a 100%);
+  --panel-sheen: linear-gradient(178deg, #222741 0%, #1d2130 46%, #1b1e2d 100%);
+  color-scheme: dark;
+}
+
+/* ============ GLASS LIGHT ============ */
+[data-theme="glass-light"] {
+  --bg-app: #eef0f8;
+  --bg-shell: #e3e6f2;
+  --bg-panel: #f9fafd;
+  --bg-surface: #f2f4fa;
+  --bg-raised: #fdfdff;
+  --bg-plate: #fbfcff;
+  --bg-inset: #e7eaf4;
+  --bg-hover: #e9edf8;
+  --bg-active: #dbe2f4;
+
+  --text-primary: #23283e;
+  --text-secondary: #565e80;
+  --text-faint: #8b92ad;
+  --text-inverse: #ffffff;
+
+  --accent: #5865cf;
+  --accent-strong: #4451ba;
+  --accent-soft: #e2e5f9;
+  --accent-text: #ffffff;
+
+  --user-ink: #2c3465;
+  --user-ground: #e5e8fa;
+
+  --ok: #2f8a58;
+  --warn: #9c7620;
+  --danger: #bd4f45;
+  --info: #3c6fc0;
+  --ok-soft: #ddf0e5;
+  --warn-soft: #f5edd4;
+  --danger-soft: #f8e3e0;
+  --info-soft: #e1eafb;
+
+  --edge: #d3d8ec;
+  --edge-strong: #b3bad9;
+  --edge-faint: #e2e6f4;
+
+  --shadow-1: 0 1px 4px rgba(38, 44, 82, 0.1);
+  --shadow-2: 0 6px 18px rgba(38, 44, 82, 0.13);
+  --shadow-3: 0 14px 40px rgba(38, 44, 82, 0.18);
+
+  --glow-bsd: 0 0 0 1px #b2baf0, 0 0 14px 2px rgba(88, 101, 207, 0.28);
+
+  --scroll-thumb: #c5cbe4;
+  --scroll-thumb-hover: #a6aed2;
+
+  --plate-sheen: linear-gradient(178deg, #ffffff 0%, #fbfcff 40%, #f3f5fc 100%);
+  --panel-sheen: linear-gradient(178deg, #fdfdff 0%, #f9fafd 46%, #f2f4fb 100%);
+  color-scheme: light;
+}
+
+/* Glass plate application — other themes fall back to flat plate color */
+[data-theme="glass-dark"] .pm-plate,
+[data-theme="glass-light"] .pm-plate { background: var(--plate-sheen); }
+[data-theme="glass-dark"] .pm-panel-material,
+[data-theme="glass-light"] .pm-panel-material { background: var(--panel-sheen); }
+.pm-plate { background: var(--bg-plate); }
+.pm-panel-material { background: var(--bg-panel); }

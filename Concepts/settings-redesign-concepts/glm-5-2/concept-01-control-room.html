@@ -228,6 +228,7 @@
                 '<button class="btn sm" data-go-workspace>Browse all areas</button>',
                 PM.shared.themePicker(),
               '</div>',
+              PM.shared.recentWork(),
               PM.shared.ownedStrip("c1"),
               '<div class="cr-dests-label">All areas</div>',
               '<div class="cr-notices">' + notices.join("") + '</div>',
@@ -248,10 +249,10 @@
           if (!q.trim() || !results.length) { res.classList.add("hidden"); res.innerHTML = ""; return; }
           res.classList.remove("hidden");
           res.innerHTML = results.map(function (r, i) {
-            var kindLabel = ({ setting:"Setting", category:"Area", subcategory:"Section", manager:"Manager", destination:"Area" })[r.kind];
+            var km = PM.shared.searchKindMeta(r.kind);
             var sub = r.expl ? '<span class="muted"> — ' + r.expl.slice(0,60) + (r.expl.length>60?"…":"") + '</span>' : "";
             var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="cr-result ' + (i===0?"focus":"") + '" ' + target + ' tabindex="0"><span class="cr-rkind">' + kindLabel + '</span><div class="col"><strong>' + r.label + '</strong>' + sub + '</div></div>';
+            return '<div class="cr-result ' + (i===0?"focus":"") + '" ' + target + ' tabindex="0"><span class="cr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong>' + sub + '</div></div>';
           }).join("");
           // C2 motion: search results cascade in (editorial cinematic, 30ms stagger)
           PM.motion.staggerIn(res, ".cr-result", { step: 28, duration: 260, axis: "y" });
@@ -293,6 +294,7 @@
           PM.openCategory("general"); render();
         });
         PM.shared.wireThemePicker();
+        PM.shared.wireRecentWork();
         PM.shared.wireOwnedStrip(document.querySelector("[data-stage]"));
         PM.shared.wireShell();
       }

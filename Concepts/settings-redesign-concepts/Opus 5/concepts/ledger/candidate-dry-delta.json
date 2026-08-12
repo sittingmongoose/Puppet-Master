@@ -1,0 +1,200 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "ledger",
+  "concept_title": "Opus 5 \u2014 Ledger",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "note": "Names are candidate design roles from PACKET/10, not final component IDs. Each row states where the role is actually implemented in this build.",
+  "roles": [
+    {
+      "role": "SettingRow",
+      "responsibility": "Every ordinary setting row: label, explanation, current value, source, scope, effect, restart requirement.",
+      "implemented_at": "shared/pm-data.js state grammar + per-concept row renderer (lg-row / lg-record)"
+    },
+    {
+      "role": "ValueControl",
+      "responsibility": "Toggle, select, number, text, chips and ordered chips.",
+      "implemented_at": "editableRow() in concepts/ledger/concept.js, one implementation per concept, driven by ManagerSpec field kinds"
+    },
+    {
+      "role": "StateBadge",
+      "responsibility": "default / recommended / inherited / auto / notConfigured / managed / custom / unavailable.",
+      "implemented_at": "shared/pm-semantics.js owns the words; .pm-status / .pm-chip in shared/pm-shell.css own the paint"
+    },
+    {
+      "role": "ScopeChip",
+      "responsibility": "global / project / thread scope disclosure.",
+      "implemented_at": "shared/pm-semantics.js scopeLabel + row meta line"
+    },
+    {
+      "role": "EffectivePolicyNote",
+      "responsibility": "Requested vs effective, and why they differ.",
+      "implemented_at": "shared/pm-manager-kit.js routeLine()/reasonLine() + PMData.routeDifferences"
+    },
+    {
+      "role": "RestartRequirement",
+      "responsibility": "Restart or reconnect needed before a value takes effect.",
+      "implemented_at": "setting.state.restart consumed by every row renderer"
+    },
+    {
+      "role": "SearchResult",
+      "responsibility": "One result across categories, settings, managers, actions and statuses.",
+      "implemented_at": "shared/pm-search.js buildIndex/search/resolveTarget (416 records, 9 kinds)"
+    },
+    {
+      "role": "HealthSummary",
+      "responsibility": "Manager health line: status, statusWord, headline, detail, counts.",
+      "implemented_at": "ManagerSpec.health in shared/pm-manager-kit.js"
+    },
+    {
+      "role": "ReceiptView",
+      "responsibility": "The receipt every simulated operation returns.",
+      "implemented_at": "shared/pm-sim.js + the shell notification inbox bridge"
+    },
+    {
+      "role": "EmptyState",
+      "responsibility": "Nothing here yet, and what to do about it.",
+      "implemented_at": "PMManagerKit.emptyFor(section)"
+    },
+    {
+      "role": "SecretField/SecretReference",
+      "responsibility": "PM-held secret vs a credential the CLI owns.",
+      "implemented_at": "ManagerSpec field.secretKind: pmSecret reveals, cliOwned never does and offers the tool's own login"
+    },
+    {
+      "role": "ProviderFamilyCard",
+      "responsibility": "A provider family with its accounts, connections and models.",
+      "implemented_at": "bespoke per concept \u2014 the surface the four designs disagree about"
+    },
+    {
+      "role": "AccountConnectionRow",
+      "responsibility": "One account or API connection with its own billing and health.",
+      "implemented_at": "PMData.providers[].accounts + provider surface"
+    },
+    {
+      "role": "InstallationCard",
+      "responsibility": "A detected installation: path, version, owner, update state.",
+      "implemented_at": "shared/pm-data-install.js (7 installations, 2 update attempts)"
+    },
+    {
+      "role": "ModelRow",
+      "responsibility": "One model with capabilities, context, availability and evidence.",
+      "implemented_at": "PMData.providers[].models + provider surface"
+    },
+    {
+      "role": "CapabilityEvidence",
+      "responsibility": "Where a capability claim came from and how fresh it is.",
+      "implemented_at": "model.capabilities[].evidence/when"
+    },
+    {
+      "role": "UsagePlanSummary",
+      "responsibility": "Included balance, reset, pressure, provider-reported note.",
+      "implemented_at": "manager-usage boundary card, built in every concept"
+    },
+    {
+      "role": "MemoryRow",
+      "responsibility": "A note with provenance, half-life, recall and pin state.",
+      "implemented_at": "shared/pm-data-agents.js manager-memory builder"
+    },
+    {
+      "role": "PersonaCard",
+      "responsibility": "A persona with scope, route and capsule.",
+      "implemented_at": "shared/pm-data-agents.js manager-personas builder"
+    },
+    {
+      "role": "CrewTemplate",
+      "responsibility": "A crew template with members and concurrency.",
+      "implemented_at": "shared/pm-data-agents.js manager-crew builder"
+    },
+    {
+      "role": "PermissionRuleEditor",
+      "responsibility": "Ordered rules with pattern, verdict and test.",
+      "implemented_at": "shared/pm-data-agents.js manager-filesafe builder (11 sections)"
+    },
+    {
+      "role": "NotificationDestination",
+      "responsibility": "A destination with transport, health and test-send.",
+      "implemented_at": "shared/pm-data-desktop.js manager-notifications builder"
+    },
+    {
+      "role": "SoundLibraryItem",
+      "responsibility": "An uploaded sound or imported pack with licence and hash.",
+      "implemented_at": "shared/pm-data-desktop.js manager-sounds builder"
+    },
+    {
+      "role": "ThemePreview",
+      "responsibility": "Theme preview, apply and fallback.",
+      "implemented_at": "shared/pm-data-desktop.js manager-appearance builder + the shell theme control"
+    },
+    {
+      "role": "CommandEditor",
+      "responsibility": "A custom command with a dry run.",
+      "implemented_at": "shared/pm-data-dev.js manager-commands builder"
+    },
+    {
+      "role": "ShortcutRecorder",
+      "responsibility": "Bind, conflict, reset.",
+      "implemented_at": "shared/pm-data-dev.js manager-commands builder"
+    },
+    {
+      "role": "Lsp/Formatter/ToolResource",
+      "responsibility": "A resource with lifecycle, health and logs.",
+      "implemented_at": "shared/pm-data-dev.js manager-lsp / manager-formatters / manager-tools builders"
+    },
+    {
+      "role": "StorageHealth",
+      "responsibility": "Volumes, retention and restore points.",
+      "implemented_at": "shared/pm-data-system.js manager-storage / manager-backup builders"
+    },
+    {
+      "role": "ArtifactRow",
+      "responsibility": "A produced artifact with size, age and reveal.",
+      "implemented_at": "shared/pm-data-system.js manager-artifacts builder"
+    }
+  ],
+  "shared_layer_files": [
+    "concept-hub-bridge.js",
+    "pm-data-agents.js",
+    "pm-data-desktop.js",
+    "pm-data-dev.js",
+    "pm-data-install.js",
+    "pm-data-seal.js",
+    "pm-data-system.js",
+    "pm-data-taxonomy.js",
+    "pm-data.js",
+    "pm-icons.js",
+    "pm-manager-kit.js",
+    "pm-route.js",
+    "pm-search.js",
+    "pm-sections.js",
+    "pm-semantics.js",
+    "pm-shell.css",
+    "pm-shell.js",
+    "pm-sim.js",
+    "pm-spellcheck.js",
+    "pm-store.js",
+    "pm-themes.css"
+  ],
+  "duplication_findings": [
+    {
+      "finding": "One ManagerSpec renderer per concept, not one per manager",
+      "detail": "Four concepts times thirty-eight managers would be one hundred and fifty-two hand-written screens. Each concept implements renderManager() once; every assigned manager renders through it.",
+      "risk_if_ignored": "Semantics drift on the second screen and the four concepts stop being comparable."
+    },
+    {
+      "finding": "The provider manager is deliberately not shared",
+      "detail": "It is the one surface the four designs are supposed to disagree about, so it stays bespoke in every concept while everything else is normalised.",
+      "risk_if_ignored": "Sharing it would erase the difference the bakeoff exists to show."
+    },
+    {
+      "finding": "Status vocabulary is owned by one file",
+      "detail": "shared/pm-semantics.js owns the words; the theme owns the paint. Colour is never the only carrier \u2014 every status is icon plus word.",
+      "risk_if_ignored": "Eight themes times six statuses is where accessibility regressions hide."
+    },
+    {
+      "finding": "Usage is a boundary card, not a manager",
+      "detail": "manager-usage exists in every concept precisely so no concept quietly reimplements Usage inside Settings.",
+      "risk_if_ignored": "Two owners for one balance."
+    }
+  ]
+}

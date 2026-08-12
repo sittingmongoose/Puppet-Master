@@ -212,5 +212,5 @@
 .w1-dock-pane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .w1-dock-pane[hidden] { display: none; }
 .w1-dock-artifacts { overflow: auto; }
-.w1-dock-artifacts .k3aw-surface, .w1-dock-artifacts [class*="k3aw"] { flex: 1 1 auto; min-height: 0; }
+.w1-dock-artifacts > .k3aw-surface { flex: 1 1 auto; min-height: 0; }
 html[data-motion="reduced"] .w1-dock-tab { transition: none; }

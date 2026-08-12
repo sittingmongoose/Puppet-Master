@@ -1,0 +1,154 @@
+{
+  "schema_id": "pm.sidecar_package_registry.summary.v1",
+  "artifact": "out/SideCarPackageRegistry/SUMMARY.json",
+  "generated_at_utc": "2026-08-12T03:52:15Z",
+  "assignment": "SS-004",
+  "intent": "Side-car producer package registry under Plans for veto-before-append tracking; does not admit families into event_family_registry.",
+  "artifacts": {
+    "schema": {
+      "path": "Plans/event_authority_package_registry.schema.json",
+      "exists": true,
+      "sha256": "789d13a4d65a4a3ea599710ad1716400e3c52c66fb91caadf39ccb20e45323b3",
+      "bytes": 2363,
+      "schema_id_const": "pm.event_authority_package_registry.v1",
+      "schema_version_const": "1.0.0",
+      "package_required_fields": [
+        "package_id",
+        "event_types",
+        "veto_status",
+        "registry_append_authorized",
+        "state"
+      ],
+      "package_property_keys": [
+        "created_at_utc",
+        "event_types",
+        "evidence_label",
+        "family_count",
+        "notes",
+        "package_id",
+        "priority",
+        "registry_append_authorized",
+        "retention_policy_refs",
+        "state",
+        "updated_at_utc",
+        "veto_status",
+        "worksheet_digest_sha256"
+      ]
+    },
+    "registry": {
+      "path": "Plans/event_authority_package_registry.json",
+      "exists": true,
+      "sha256": "bb46bca5d49982b809c051d0658fae00c2e0fed7db364078efb614c4f6f4f9ac",
+      "bytes": 2228,
+      "schema_id": "pm.event_authority_package_registry.v1",
+      "schema_version": "1.0.0",
+      "registry_revision": "2026-08-12.1",
+      "package_count": 3,
+      "package_ids": [
+        "PKG-EA-001",
+        "PKG-EA-002",
+        "PKG-EA-003"
+      ]
+    },
+    "family_registry_untouched": {
+      "path": "Plans/event_family_registry.json",
+      "sha256_before_verify": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad",
+      "sha256_after_verify": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad",
+      "mutated": false
+    }
+  },
+  "seed_verification": {
+    "expected_package_ids": [
+      "PKG-EA-001",
+      "PKG-EA-002",
+      "PKG-EA-003"
+    ],
+    "observed_package_ids": [
+      "PKG-EA-001",
+      "PKG-EA-002",
+      "PKG-EA-003"
+    ],
+    "ids_match": true,
+    "per_package": {
+      "PKG-EA-001": {
+        "state": "DRAFT_AWAITING_SHARED_SPINE",
+        "veto_status": "PENDING_PARENT_VETO",
+        "registry_append_authorized": false,
+        "event_types": [
+          "format.applied"
+        ],
+        "evidence_label": "Formatter engine producer; Formatter system"
+      },
+      "PKG-EA-002": {
+        "state": "DRAFT_AWAITING_SHARED_SPINE",
+        "veto_status": "PENDING_PARENT_VETO",
+        "registry_append_authorized": false,
+        "event_types": [
+          "worktree.created"
+        ],
+        "evidence_label": "Source Control / lane allocator"
+      },
+      "PKG-EA-003": {
+        "state": "DRAFT_AWAITING_SHARED_SPINE",
+        "veto_status": "PENDING_PARENT_VETO",
+        "registry_append_authorized": false,
+        "event_types": [
+          "worktree.deleted"
+        ],
+        "evidence_label": "Source Control cleanup owner"
+      }
+    },
+    "all_registry_append_authorized_false": true,
+    "all_in_draft_or_pending_veto": true
+  },
+  "assignment_field_coverage": {
+    "package_id": {
+      "present_as": "package_id",
+      "all_packages": true
+    },
+    "event_types": {
+      "present_as": "event_types",
+      "all_packages": true
+    },
+    "evidence_label": {
+      "present_as": "evidence_label",
+      "all_packages": true
+    },
+    "veto_status": {
+      "present_as": "veto_status",
+      "all_packages": true
+    },
+    "worksheet_digest": {
+      "present_as": "worksheet_digest_sha256",
+      "all_packages": true
+    },
+    "created_at": {
+      "present_as": "created_at_utc",
+      "all_packages": true
+    },
+    "notes": {
+      "present_as": "notes",
+      "all_packages": true
+    }
+  },
+  "schema_notes": {
+    "draft_2020_12": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties_false_at_root": true,
+    "additionalProperties_false_on_package": true,
+    "naming_delta_vs_assignment_wording": {
+      "worksheet_digest": "implemented as worksheet_digest_sha256 (nullable sha256 digest)",
+      "created_at": "implemented as created_at_utc",
+      "state_and_veto": "state=DRAFT_AWAITING_SHARED_SPINE; veto_status=PENDING_PARENT_VETO (satisfies DRAFT/PENDING_VETO intent)"
+    },
+    "defects_found": []
+  },
+  "acceptance": {
+    "schema_exists": true,
+    "registry_exists": true,
+    "three_seeded_packages": true,
+    "no_family_registry_mutation": true,
+    "registry_append_authorized_false": true,
+    "pass": true
+  },
+  "action_taken": "Verified parent-seeded Plans/event_authority_package_registry.{schema.json,json}; did not overwrite. Wrote this SUMMARY only."
+}

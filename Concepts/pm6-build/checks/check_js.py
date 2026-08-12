@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """check_js.py — extract every <script> body from the assembled HTML and run
 `node --check` on each. Exit 0 = all parse."""
+import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
-NODE = "/usr/local/bin/node"
+# Resolve node from PATH rather than a hard-coded macOS location. The literal
+# stays as the last fallback so a Mac with an unusual PATH behaves as before.
+NODE = os.environ.get("PM6_NODE") or shutil.which("node") or "/usr/local/bin/node"
 HERE = Path(__file__).resolve().parent
 BUILD = HERE.parent
 

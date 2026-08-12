@@ -204,8 +204,11 @@
   border-top: 1px solid var(--border);
   background: var(--surface);
 }
-[data-pmx-window="w1"] .w1-shelf:empty,
-[data-pmx-window="w1"] .w1-shelf[data-empty="1"] {
+/* The shelf's collapsed form is driven by data-open, written by syncShelf(). An earlier
+ * `:empty` / `[data-empty="1"]` pair sat here and could never match: .w1-shelf always contains
+ * its bar and body elements, and nothing ever wrote data-empty. Two dead selectors implying a
+ * mechanism that does not exist is worse than none, so they are gone. */
+[data-pmx-window="w1"] .w1-shelf[data-open="0"] {
   border-top: none;
   max-height: 0;
   overflow: hidden;
@@ -381,4 +384,106 @@
   [data-pmx-window="w1"] .w1-shelf {
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: the 56px spine
+ *
+ * The differentiator for this concept. `pinned-full` is a 280px ledger column; `pinned-compact` is
+ * a 56px STATUS SPINE — one glyph row per thread, no titles at all. The point is that a ledger's
+ * compact form is still a register: you can see at a glance which of twelve threads is working,
+ * blocked or waiting, and you give up only the names to get it.
+ *
+ * Without this rule the compact density inherited `flex: 0 0 clamp(200px, 24%, 280px)` from the
+ * full form, so choosing "compact" changed the row rendering and kept the full column width — the
+ * user asked for space back and got none. */
+[data-pmx-window="w1"] .w1-shell[data-w1-pin-active="1"] .w1-drawer[data-density="compact"] {
+  flex: 0 0 56px;
+  min-width: 56px;
+}
+/* No head text in the spine: a 56px column cannot hold "THREADS" plus two controls, and a clipped
+ * label is worse than none. The pin and close buttons stack instead of sitting in a row. */
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .w1-drawer-head {
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sm) 0;
+}
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .w1-drawer-title { display: none; }
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .w1-drawer-close { margin-left: 0; }
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .w1-drawer-note { display: none; }
+
+/* One glyph per row, centred, everything else gone. These rules target the shared history
+ * module's own classes from inside this window's scope, which is what CONTRACT §7 requires:
+ * the module renders identically everywhere and each window decides how much of it to show. */
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .pmx-chrome-hrow-body,
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .pmx-chrome-hmore,
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .pmx-chrome-hsearch {
+  display: none;
+}
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .pmx-chrome-hrow-main {
+  justify-content: center;
+  padding: 6px 0;
+}
+[data-pmx-window="w1"] .w1-drawer[data-density="compact"] .pmx-chrome-hlist {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------------------------------------------------------------- artifact column
+ *
+ * Order inside .w1-main is `artifact │ history │ transcript`, so the produced work sits furthest
+ * from the conversation and the navigation sits between them — a ledger reads left to right from
+ * evidence to record to discussion. The bottom shelf is a sibling of .w1-main and therefore spans
+ * under all three, which is why work surfaces stay legible while an artifact is open. */
+[data-pmx-window="w1"] .w1-artifact-host {
+  order: -2;
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+[data-pmx-window="w1"] .w1-shell[data-w1-artifact="0"] .w1-artifact-host { flex-basis: 0; width: 0; }
+[data-pmx-window="w1"] .w1-shell[data-w1-artifact="1"] .w1-artifact-host {
+  flex: 0 0 clamp(260px, 34%, 420px);
+}
+/* Narrow fallback: below a readable chat the artifact takes the DRAWER's slot instead of adding a
+ * third column, and the history demotes to its compact spine. Two overlapping columns in a 520px
+ * chat is not a layout, it is a collision. */
+[data-pmx-window="w1"] .w1-shell[data-w1-artifact="1"][data-w1-narrow="1"] .w1-artifact-host {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 5;
+  flex: 0 0 auto;
+  width: min(360px, 92%);
+}
+[data-pmx-window="w1"] .w1-shell[data-w1-artifact="1"][data-w1-narrow="1"] .w1-drawer { display: none; }
+
+/* The switcher is a ledger row list at the artifact head — the same row idiom as the register
+ * itself, so the concept has one list vocabulary rather than two. */
+[data-pmx-window="w1"] .w1-artifact-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--sm);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+[data-pmx-window="w1"] .w1-artifact-switch-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-window="w1"] .w1-artifact-switch-row:hover { background: var(--surface-elevated); color: var(--text-primary); }
+[data-pmx-window="w1"] .w1-artifact-switch-row[aria-current="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  color: var(--text-primary);
+  font-weight: 600;
 }

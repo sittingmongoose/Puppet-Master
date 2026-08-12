@@ -289,7 +289,16 @@
       if (!rows) outSec.appendChild(el('div', 'k3n-empty', 'Outbox is empty'));
       popEl.appendChild(outSec);
 
-      var notes = rawSync().domainNotes || [];
+      // merge store notes with catalog fixture notes (dedupe by name); store
+      // entries reflect runtime failDomain() writes, catalogs carry fixtures.
+      var notes = (rawSync().domainNotes || []).slice();
+      var seen = {};
+      notes.forEach(function (n) { if (n) seen[n.name] = true; });
+      if (window.K3Data && typeof window.K3Data.domainNotes === 'function') {
+        window.K3Data.domainNotes().forEach(function (n) {
+          if (n && !seen[n.name]) notes.push(n);
+        });
+      }
       if (notes.length) {
         var domSec = el('div', 'k3n-sec k3n-sec-domains');
         domSec.appendChild(el('div', 'k3n-sec-title', 'Domain sync'));

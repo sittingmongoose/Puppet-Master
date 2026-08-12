@@ -45,6 +45,12 @@
 
     this.transcript = u.el('div', { class: 'w6-transcript pmx-scroll', data: { pmxRegion: 'transcript' } });
     this.shell.appendChild(this.transcript);
+    /* Artifact workspace: a left docked column at >=980px, and a `full`-detent SHEET below it —
+     * the only concept where the artifact becomes a sheet, because sheets are this concept's
+     * entire vocabulary. Switcher is the existing .w6-tabs sheet tab row. */
+    this.artifactBody = u.el('div', { class: 'w6-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w6-artifact-host' }, [this.artifactBody]);
+    this.shell.appendChild(this.artifactHost);
 
     this.questionHost = u.el('div', { class: 'w6-question', data: { pmxRegion: 'questionHost' } });
     this.shell.appendChild(this.questionHost);
@@ -96,6 +102,13 @@
 
     this.overlay = u.el('div', { class: 'w6-overlay', data: { pmxWindow: 'w6', pmxRegion: 'overlayRoot' } });
     this.root.appendChild(this.overlay);
+
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
 
     this.wireDrag();
     this.sync();
@@ -156,7 +169,6 @@
   /* Docked Sheets thinks in detents, so its compact pinned form is a detent too: a 64px rail
    * rather than the 300px side panel. Its minStageForFull stays lower than the other concepts'
    * because a sheet promotes to a reserved grid track at 980px, not a borrowed column. */
-  var W6_FLOORS = { minChat: 400, fullColumn: 300, compactColumn: 64, minStageForFull: 760 };
 
   /* The sheet is absolutely positioned, so it has to be told where the bottom of the
    * conversation actually is. Both the composer and the question host grow with content. */
@@ -169,7 +181,8 @@
 
   W6Window.prototype.sync = function () {
     var TH = global.PMXThreadHistory;
-    var r = TH.resolve(this.ctx, this.historyHost, W6_FLOORS);
+    var r = TH.applyTo(this.historyHost, TH.resolve(this.ctx, this.historyHost, TH.floorsFor('w6')));
+    TH.reasonNode(this.historyHost, r);
     var pinActive = r.effective === 'pinned-full' || r.effective === 'pinned-compact';
 
     if (pinActive) {
@@ -185,6 +198,18 @@
     this.shell.setAttribute('data-w6-history', r.effective);
     TH.syncPinButton(this.pinBtn, r);
     this.syncReserve();
+
+    /* The sheet is absolutely positioned, so it only knows where the bottom of the conversation is
+     * because syncReserve() measures it. Both the composer and the question host GROW with content,
+     * and nothing re-measured on growth: a three-line draft pushed the composer up under a sheet
+     * that stayed put, so the sheet covered the field being typed into. A ResizeObserver on both
+     * hosts is the only signal that fires for content-driven growth. */
+    if (global.ResizeObserver) {
+      var self6 = this;
+      this._ro = new global.ResizeObserver(function () { self6.syncReserve(); });
+      if (this.composerHost) this._ro.observe(this.composerHost);
+      if (this.questionHost) this._ro.observe(this.questionHost);
+    }
     var histRoot = this.historyHost.querySelector('.pmx-chrome-history');
     if (histRoot) {
       histRoot.setAttribute('data-pmx-docked', pinActive ? '1' : '0');
@@ -235,7 +260,39 @@
     }
   };
 
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W6Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w6-artifact', open ? '1' : '0');
+
+    /* The existing sheet tab row is the switcher. Reusing .w6-tabs is the point: an artifact is
+     * another sheet in this concept, so it is switched the way sheets are switched. */
+    if (!this.tabs) return;
+    var u = U();
+    var existing = this.tabs.querySelector('.w6-artifact-tabs');
+    if (existing) this.tabs.removeChild(existing);
+    if (!open) return;
+    var holder = u.el('span', { class: 'w6-artifact-tabs' });
+    var self = this;
+    A.list().forEach(function (a) {
+      var b = u.el('button', {
+        class: 'w6-tab', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false' }
+      }, [u.el('span', { text: a.title })]);
+      u.on(b, 'click', function () { A.switchTo(a.id); });
+      holder.appendChild(b);
+    });
+    this.tabs.appendChild(holder);
+  };
+
   W6Window.prototype.destroy = function () {
+    if (this._ro) { try { this._ro.disconnect(); } catch (e) {} this._ro = null; }
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
@@ -245,7 +302,7 @@
   global.PMX.window.register('w6', {
     name: 'Docked Sheets',
     blurb: 'Every secondary surface arrives as a bottom sheet with peek, half, and full snap points, so the transcript is never permanently divided and the concept reads as a phone at narrow width and a desktop when wide.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W6Window(root, ctx);
       return {
@@ -256,7 +313,8 @@
           overlayRoot: inst.overlay,
           threadHistory: inst.historyHost,
           workSurfaceHost: inst.workHost,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (o) { inst.setRail(o); },

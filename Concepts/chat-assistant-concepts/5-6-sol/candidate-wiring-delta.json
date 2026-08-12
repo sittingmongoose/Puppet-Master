@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.chat.5_6_sol.candidate_wiring_delta.v1",
+  "model": "5.6 Sol",
+  "status": "provisional_no_runtime_mutation",
+  "invariant": "Every production interaction must close UI source to typed command or event, canonical owner, validation, durable state, receipt, projection, and recovery. The prototype reducer is deterministic evidence only.",
+  "flows": [
+    {
+      "id": "WIRE-SOL-001",
+      "ui_source": "Composer Send",
+      "command_or_event": "cmd.chat.send",
+      "owner": "Thread Service and active-turn runtime",
+      "payload_and_idempotency": "thread_id, project_id?, message_id, content_ref, attachment_refs, model_request_ref?, idempotency_key",
+      "validation": "projection current, route available, attachment resolution accepted, Permissions/FileSafe and size limits",
+      "durable_state": "message, assistant turn/run, outbox envelope when offline",
+      "receipt": "chat.message.submitted or explicit refusal",
+      "projection": "transcript, composer, active work, Usage, diagnostics",
+      "cancel_retry_restore": "stop, active-turn redirect, retry, reconnect/replay, snapshot catch-up"
+    },
+    {
+      "id": "WIRE-SOL-002",
+      "ui_source": "Empty active composer Stop",
+      "command_or_event": "cmd.chat.stop",
+      "owner": "active-turn runtime",
+      "payload_and_idempotency": "thread_id, run_id?, assistant_turn_id?, stop_reason_code, idempotency_key",
+      "validation": "active run identity and current projection",
+      "durable_state": "stopped episode and retained partial evidence",
+      "receipt": "chat.response_stop_requested",
+      "projection": "composer returns to Send; work summary becomes stopped/resumable",
+      "cancel_retry_restore": "resume or fresh attempt only when owner allows"
+    },
+    {
+      "id": "WIRE-SOL-003",
+      "ui_source": "Offline Send, Reconnect, Replay queued commands, Snapshot catch-up",
+      "command_or_event": "canonical command envelope plus environment connection events",
+      "owner": "Project Home Server, outbox, environment connection supervision",
+      "payload_and_idempotency": "stable operation_id, client cursor, snapshot cursor, authenticated client and thread identity",
+      "validation": "dedupe by operation identity; cursor monotonicity; target thread remains valid",
+      "durable_state": "outbox item, replay result, delivered message, cursor checkpoint",
+      "receipt": "queued, reconnecting, replayed once or zero-op replay, snapshot applied",
+      "projection": "transport, domain, continuing server work, per-item delivery state",
+      "cancel_retry_restore": "retained queue, retry reconnect, replay, fetch snapshot; never duplicate send"
+    },
+    {
+      "id": "WIRE-SOL-004",
+      "ui_source": "Search bar scope, result, and exact jump",
+      "command_or_event": "cmd.chat.search plus cmd.chat.open_thread or cmd.chat.switch_thread",
+      "owner": "Chat history search and Thread Service",
+      "payload_and_idempotency": "scope, query, thread_id, message_id, result cursor, projection revision",
+      "validation": "message remains visible under retention/permissions; unloaded range is fetchable",
+      "durable_state": "no transcript mutation; optional thread-local search/view state",
+      "receipt": "exact range loaded and target focus restored",
+      "projection": "one-bar current/all results, highlighted excerpt, selected message",
+      "cancel_retry_restore": "clear query, change scope, retry range fetch, return to latest anchor"
+    },
+    {
+      "id": "WIRE-SOL-005",
+      "ui_source": "Context Ring, message Context action, mode buttons, Subcompact, Compact Now",
+      "command_or_event": "cmd.chat.context_lens.* and cmd.chat.compact_context",
+      "owner": "Prompt Pipeline and Context Admission",
+      "payload_and_idempotency": "thread/message ids, mode, selected range, source refs, expected context revision, idempotency key for material compaction",
+      "validation": "eligible canonical refs, explicit Subcompact confirmation, context budget, no secret/raw prompt disclosure",
+      "durable_state": "admission receipt, summary artifact and rehydration refs; view selection as scoped state",
+      "receipt": "included/omitted sources, compact status, source and cache provenance",
+      "projection": "Ring percent, Lens modes, memory/cache detail, message selection",
+      "cancel_retry_restore": "turn off, clear, revert Subcompact, retry failed compaction"
+    },
+    {
+      "id": "WIRE-SOL-006",
+      "ui_source": "Question answer, Back, Next, Skip, Cancel questionnaire, Submit",
+      "command_or_event": "candidate cmd.chat.question.* mapped to the live question tool owner",
+      "owner": "shared question flow and requesting parent runtime",
+      "payload_and_idempotency": "questionnaire_id, question_id, queue index, answer value/ref, explicit skip, expected revision, idempotency key on submit",
+      "validation": "required answer or explicit skip, input type, parent/child ownership, queue revision",
+      "durable_state": "ordered queue, draft answers, skips, cancellation record, immutable submission receipt",
+      "receipt": "preparing/open/validation/submitting/submitted/cancelled and parent-return identity",
+      "projection": "eight concept-specific question grammars over one lifecycle",
+      "cancel_retry_restore": "cancel restores ordinary draft; reopen retains answers; failed submit remains reviewable"
+    },
+    {
+      "id": "WIRE-SOL-007",
+      "ui_source": "Goal and Todo controls",
+      "command_or_event": "cmd.chat.goal.start/update plus adjudicated Goal Runtime actions",
+      "owner": "Goal Runtime",
+      "payload_and_idempotency": "thread_id, goal_id/revision, objective/update, action, checkpoint/evidence refs, reason, idempotency key",
+      "validation": "current Goal revision, allowed transition, evidence and blocker authority",
+      "durable_state": "objective, phase, tasks, cursor, checkpoint, children, evidence, replan/terminal record",
+      "receipt": "Goal/task event and blocked/recovery evidence",
+      "projection": "Goal, Todo, progress, blocked evidence, completion report in every thread grammar",
+      "cancel_retry_restore": "pause/resume, replan, recover, stop, clear projection without erasing canonical record"
+    },
+    {
+      "id": "WIRE-SOL-008",
+      "ui_source": "Subagent, Crew, request, await, spawn, and handoff controls",
+      "command_or_event": "candidate thread-request/spawn wrappers plus Orchestrator actions",
+      "owner": "Orchestrator and Thread Service",
+      "payload_and_idempotency": "parent/source/target thread, Plan/Goal ids, bounded passage refs, role, provider/account/model route, worktree, permits, operation key",
+      "validation": "admission, capacity, permissions, route, worktree and provider permits, nesting ceiling",
+      "durable_state": "child identity, queue/wave, state, parent link, attributable result and synthesis receipt",
+      "receipt": "requested/awaiting/spawned/running/blocked/fallback/complete and return evidence",
+      "projection": "distinct child rows, relay zones, strands, staves, and parent synthesis",
+      "cancel_retry_restore": "cancel/retry/fallback/resume while preserving failed handoff and partial evidence"
+    },
+    {
+      "id": "WIRE-SOL-009",
+      "ui_source": "Provider/account/model/favorite/effort/Normal-Fast selector",
+      "command_or_event": "cmd.account.select_profile, cmd.provider.switch_route, cmd.chat.model, cmd.chat.effort, cmd.chat.mode, cmd.chat.platform, speed candidate",
+      "owner": "Models, Multi-Account, provider routing, and Settings",
+      "payload_and_idempotency": "provider/account/connection/model/capability/catalog revision and requested settings",
+      "validation": "authentication, entitlement, availability, policy, capability, host/environment, allowance",
+      "durable_state": "requested and effective route snapshots; favorite/default in Settings only when persistent",
+      "receipt": "route selected or disabled reason; cache/context/tool/attachment re-evaluation",
+      "projection": "compact current route, requested/effective difference, material warning, setup deep link",
+      "cancel_retry_restore": "cancel change, branch with new route, retry setup/refresh, verified rollback in shared manager"
+    },
+    {
+      "id": "WIRE-SOL-010",
+      "ui_source": "Access and BSD pickers",
+      "command_or_event": "candidate cmd.chat.access.set and cmd.chat.bsd.set",
+      "owner": "Permissions/FileSafe and BSD runtime/settings",
+      "payload_and_idempotency": "thread id, requested value, expected policy revision, requested scope, idempotency key when persistent",
+      "validation": "mode ceiling, policy, protected effect, scope confirmation",
+      "durable_state": "thread-local request/effective snapshot; project/global default only in Settings",
+      "receipt": "effective limitation, BSD trigger/result/advice/suppression/timeout/unavailable",
+      "projection": "exact human labels and compact state",
+      "cancel_retry_restore": "revert current thread value, retry unavailable review, open Settings for broader scope"
+    },
+    {
+      "id": "WIRE-SOL-011",
+      "ui_source": "Approval and material route warning cards",
+      "command_or_event": "cmd.runtime.approve / cmd.runtime.decline and provider route branch/cancel action",
+      "owner": "runtime approval, Permissions, FileSafe, provider routing",
+      "payload_and_idempotency": "blocked episode and attempt identity, policy snapshot, route delta, privacy/cache/cost evidence, operation key",
+      "validation": "decision still current, actor authorized, exact effect scope, no approval laundering",
+      "durable_state": "approval or route-decision receipt",
+      "receipt": "approved once, declined, continued, branched, cancelled, stale decision",
+      "projection": "compact inline card plus canonical title-bar notification for app-wide outcome",
+      "cancel_retry_restore": "reopen detail, request again, choose safer branch, no silent destructive action"
+    },
+    {
+      "id": "WIRE-SOL-012",
+      "ui_source": "Artifact shortcut, tabs, retry, close, Open in editor, Reveal file",
+      "command_or_event": "Artifact Service and editor/file route commands after exact catalog resolution",
+      "owner": "Artifact Service, editor, and File Manager",
+      "payload_and_idempotency": "artifact id, version, source thread/message, lineage, path/redaction, editor target, operation id",
+      "validation": "identity/version current, retained, permitted, redacted, target available",
+      "durable_state": "artifact record and selected workspace identity",
+      "receipt": "loading/ready/updated/error/retry/open/reveal route receipt",
+      "projection": "left workspace, source shortcut, version and owner actions",
+      "cancel_retry_restore": "retry, close/reopen preserving selection, choose prior version; prototype route actions remain disabled"
+    },
+    {
+      "id": "WIRE-SOL-013",
+      "ui_source": "Branch, rewind, create restore point, redirect",
+      "command_or_event": "cmd.chat.rewind, cmd.chat.create_restore_point, cmd.chat.branch_from_restore, candidate ordinary branch/redirect",
+      "owner": "Thread Service and restore-point lifecycle",
+      "payload_and_idempotency": "project/thread/source message, branch or restore identity/hash, current revision, new title?, idempotency key",
+      "validation": "source retained/current, immutable hash, permissions, in-flight/hold and lineage rules",
+      "durable_state": "conversation branch tree and restore_point_record; no workspace mutation",
+      "receipt": "rewound, restore created, branched/refused/failed, redirected with prior attempt retained",
+      "projection": "ancestry fold, source link, sibling branch, current state",
+      "cancel_retry_restore": "cancel before commit, retry exact refused action when evidence changes; no fake file rollback"
+    },
+    {
+      "id": "WIRE-SOL-014",
+      "ui_source": "Dock or pop out",
+      "command_or_event": "cmd.panel.undock / cmd.panel.redock",
+      "owner": "shared shell/window layout",
+      "payload_and_idempotency": "panel id, current host, target window/host, expected layout revision, operation id",
+      "validation": "layout current and target available",
+      "durable_state": "layout/window identity only; Chat semantic state retains stable ids",
+      "receipt": "panel.undocked or panel.redocked",
+      "projection": "same history, artifact, draft, scroll anchor, popup and selected thread after remount",
+      "cancel_retry_restore": "retry stale layout or restore prior host"
+    }
+  ],
+  "closure_gaps": [
+    "Exact production IDs for all-thread search scope, question lifecycle, Goal transitions beyond start/update, speed, access, BSD, artifact actions, attachment resolution, draft restore/clear, and thread request/await/spawn require catalog adjudication.",
+    "The prototype cannot prove production handler reverse coverage or EventRecord registration because Commands/Wiring/runtime were read-only by task boundary.",
+    "The exact notification-inbox navigation row must be resolved in the shared title-bar owner before integration."
+  ]
+}

@@ -180,7 +180,18 @@
       cur = cur[parts[i]];
     }
     var last = parts[parts.length - 1];
-    if (cur[last] === value) return;
+    /* Dedupe PRIMITIVES only.
+     *
+     * The identity check used to cover every value, which silently swallowed the most common write
+     * pattern in this codebase: read a slice, mutate it, set it back. `session.providerSetup` and
+     * `session.sync.replayed` are both written that way, and because the value was the same object
+     * reference the set became a no-op and no subscriber ever heard about it — the composer stayed in
+     * the wrong state until some unrelated change happened to tick it.
+     *
+     * Setting an object is an explicit statement that it changed, so it always announces. Primitives
+     * keep the dedupe, which is where it earns its keep (a width slider firing the same number). */
+    var isObject = value !== null && typeof value === 'object';
+    if (!isObject && cur[last] === value) return;
     cur[last] = value;
     this._emit([parts[0] + (parts.length > 1 ? '.' + parts[1] : '')]);
   };

@@ -1,181 +1,168 @@
-# Build status — Opus 5 Assistant Chat concept workspace
+# BUILD_STATUS — Opus 5 Assistant Chat concept
 
-`README.md` has always advertised this file. It did not exist until now. It records the exact
-state of the Assistant Chat Update Packet v2 repair pass, including everything not yet done.
+Written after the 2026-08-08 cumulative packet update. **Section 2 is the honest gap list.** Anything
+not listed as done is listed as outstanding, with what remains and why.
 
-**Last full suite run: 912 assertions, 912 passed, 0 failed, 0 console errors, 0 console
-warnings, 15.6 s, viewport 1900×900, pairing w1+t1.**
-
----
-
-## 1. Complete and verified
-
-### Two blocking bugs found during the audit and fixed first
-
-**`ctx.services.scroll` threw on every call.** `shared/workspace.js` bound the service to
-`global.PMXScroll`, which exports only `{ attach, resolveScroller }`; every per-container method
-lives on the `ScrollCtl` instance `attach()` returns. So `jumpTo` and `preserveAcross` threw at
-28 call sites. Because `search.js` called it inside a `setTimeout`, clicking a search result
-navigated and then silently failed to jump, while `COVERAGE.md` and `TEST_REPORT.md` both
-claimed that path passed.
-
-- 27 thread call sites now use their own `this.scrollCtl` (every thread already had one).
-- `shared/search.js` routes through `ThreadInstance.scrollToMessage()`, the contract's method
-  for a module that owns no scroll container — reached via a new `ctx.thread` back-reference
-  set by `compose.js`.
-- `PMXScroll` now carries throwing stubs for the eight instance methods, so the same mistake
-  names itself instead of disappearing into a callback.
-- Verified: a search hit navigates, renders, highlights; `setExpanded` no longer throws.
-
-**`changed.indexOf('ui')` never matched.** The store coarsens paths to at most two segments
-before notifying, so `ui.theme` arrives as `'ui.theme'` and never as `'ui'`. Three subscribers
-in `workspace.js` used exact-array matching and were dead for every real change.
-
-- Fixed with a prefix match; `compose.js` now honours `_themeLock` on update as well as on
-  mount, and calls `windowInst.setMount()`.
-- Verified: the contact sheet holds **eight distinct themes** through a theme change and a
-  width change. It previously collapsed to one the moment the Theme control was touched.
-
-### Store v4
-
-`session.threadHistory` is a four-state slice; `session.artifact`, `session.spell`,
-`session.demo` and `session.favorites` are new; `session.selectors` is gone.
-
-**Runtime selectors are now thread-local.** Canon requires provider/account/model, Persona,
-effort, Normal/Fast, mode, access profile, Crew and worktree to apply to the current thread and
-future turns only. They lived in global `session.selectors`, so choosing a model in one thread
-silently retargeted every other thread. They now live in `view[threadId].runtime`, seeded from
-`session.defaults`. Verified no-leak: `thread-01 → Sonnet 5` while `thread-02 → Opus 5`.
-
-`view.surfaces` was replaced with a shape a concept can actually use
-(`{expanded, openIds, phaseIndex}`); the previous five booleans were declared, named in
-`CONTRACT.md`, and read by nothing.
-
-### Pinned history — four states, real demotion
-
-`shared/threadhistory.js` now resolves `state` (`closed | peek | pinned`) plus `density`
-(`full | compact`) against each concept's own floors, returning an `effective` value and a
-truthful `reason`.
-
-The previous model was two booleans behind a single gate that hardcoded `chatW >= 800`
-(a 520 px transcript floor plus a 280 px column). **Pinning was therefore impossible at the 520
-and 750 presets in every concept** — half the widths this workspace exists to test — and when
-it failed the surface simply vanished while the pin button still read pressed.
-
-Measured ladder, w1 floors (`minChat 400 / full 280 / compact 56`):
-
-| chat width | asked | effective | transcript | reason surfaced |
-|---|---|---|---|---|
-| 1200 | full | `pinned-full` | 920 | — |
-| 975 | full | `pinned-full` | 695 | — |
-| 750 | full | `pinned-full` | 470 | — |
-| 520 | full | `pinned-compact` | 464 | "Not enough width for the full list. Showing the compact rail." |
-| 520 | compact | `pinned-compact` | 464 | — |
-| 420 | compact | `peek` | 420 | "Not enough width to keep history pinned. It opens over the conversation instead." |
-
-Also fixed here: `setDocked()` is called rather than bypassed; the pin resolves on width change
-(it previously went stale until an unrelated session mutation); density is reachable by
-Alt-click and secondary click.
-
-### Artifact workspace, left of Chat
-
-New `shared/artifacts.js` (state machine), `shared/artifactpanel.js` (body renderer),
-`shared/artifact.css`. `artifactHost` is a new optional region; the shell provides a fallback
-host as a **sibling immediately before the chat host in flex order**, so the surface is
-genuinely left of Chat and outside the message/composer rectangle.
-
-Measured at 750 px chat: panel `[373, +460]`, chat `[833, +750]` — panel right edge meets chat
-left edge exactly; `intersectsComposer: false`.
-
-Verified states: `loading → ready`; `switch` without remounting the panel; `error → retry →
-loading → ready` on the designated failing artifact; `update → ready` with the diff going from
-3 rows to 4 in place. Transcript scroll and composer draft both preserved across opening.
-
-Five artifacts cover every category the packet names: multi-file diff, source file, image/test
-screenshot (inline SVG, no binary asset), test report, structured document.
-
-**Coexistence verified at 1200 px**: artifact `[113, 573]`, history `[574, 853]`, chat
-`[573, 1773]` — left-to-right `artifact | history | chat`, no overlap between any pair.
-
-`editorHost.openArtifact` was a registry that only fired a toast; it is now re-pointed at the
-artifact workspace, so the seven existing call sites in `headertools.js` and t1–t4 do something.
-
-### Demo harness
-
-New `shared/demo.js` (`PMXDemo`) plus a **Director drawer** in the workspace chrome — outside
-the fake product shell, collapsed by default, labelled as a review control. The packet forbids
-demo triggers becoming permanent Chat toolbar buttons; nothing was added to the chat chrome.
-
-27 triggers across `history`, `artifact`, `goal`, `decision`, `system`. **All 27 fire; zero
-failures.** `system.reset` restores one known state (history closed/full, thread-01, artifact
-closed, no pending decisions), verified. Also reachable as `PMXDemo.fire()` for probes and as
-`#demo=family.event` for captures.
-
-The harness injects questions, approvals, warnings and collisions but deliberately cannot
-answer them — resolving one happens through the concept's own UI, which is the thing under
-review.
-
-### Windows migrated
-
-- **w1 Ledger** — peek (scrimmed drawer) / pinned-full (docked column) / pinned-compact
-  (56 px spine), suspend note, width resync, peek-only dismissal on thread switch.
-- **w6 Docked Sheets** — migrated, plus a new `rail` detent for the compact pin, plus two real
-  geometry fixes: the sheet was `bottom: 0` and therefore **overlapped the composer at every
-  snap including the 56 px peek** (the overlap assertion missed it because the closed sheet is
-  `height: 0`), and its thread-switch branch was unreachable dead code because
-  `'session.activeThreadId'.indexOf('session') === 0` made the generic branch return first.
-
-### Workspace hazard fixed
-
-All four pages carried a frozen cache-buster (`?v=1785719893`), so edited modules were served
-from cache and a page could silently run a mix of old and new code. Bumped, and a bump script
-is the working practice until a build step replaces it.
+Verification numbers in this file come from runs recorded in `interaction-test-report.json` and
+`demo-trigger-report.json`, both generated from live runs rather than written by hand.
 
 ---
 
-## 2. Not done
+## 1. What is built and verified
 
-The majority of the packet remains. Nothing below is started; none of it is half-built.
+### Foundations
 
-- **Compact pinned tier for w2, w3, w4, w5, w7, w8.** These six still use the compatibility
-  shim, which reports `active` only for `pinned-full`. That is deliberate: an unmigrated window
-  has no compact rendering, so reporting a compact resolution would make it draw a 280 px column
-  into a 520 px chat. They behave exactly as they did before this pass.
-- **Per-window artifact placement and switcher.** All eight currently share the fallback host.
-  The eight distinct placements and switchers in the plan are not built.
-- **Concept-specific question renderers.** Still eight hand-copied `_renderQuestionBody`
-  implementations with ~5 % real variation, and `shared/reveal.js` still owns all entry/exit
-  motion. The questionnaire service repairs (preparing/submitting phases, skip-on-last,
-  `unskip`/`prev`/`goTo`, per-question validation, durable receipts) are not done.
-- **Compact Goal/Todo/subagent/activity/diff compositions.** t5–t8 work surfaces are still
-  inert `<div>`s; blocker detail is still unreachable in four of eight concepts; there is still
-  no activity grouping, no in-place count morphing, and `motion.condense` is still unwired.
-- **Demo content.** `thread-01` has not been rebuilt to the 18-event spine; the extension still
-  adds no approvals, collisions, cross-thread requests or Crew records. The harness injects
-  these onto the view slice at runtime instead.
-- **Selectors, access, approvals, warnings, attachments.** Provider/account/model rework,
-  favorites, Normal/Fast, the four access profiles, compact approval cards and the warning
-  severity ladder are not built. `decision.*` triggers currently push records that no concept
-  renders yet.
-- **Context Lens routing, Compact Now, branch, rewind, cross-thread, Crew, capacity.**
-  `Branch from here` and `Compact now` are still toast-only.
-- **Passive spellcheck.** `autocorrect="on"` is still set in `shared/composer.js`.
-- **New test suites, evidence capture, `concept-hub.json`, `IMPACT_REGISTER.json`,** and the
-  documentation drift corrections listed in the plan's §A12.
+- **Store v5** (`shared/store.js`). `pmx.opus5.state` version 5; `rehydrate()` rejects a version
+  mismatch so the stale v4 snapshot is discarded with no migration code. New session slices:
+  `recents`, `providerSetup`, `sync`, `ops`, `notify`, and `spell.{source,language}`. New per-thread
+  view slices: `bsd`, `decisions`, `context`, `threadOps`, `attachments`, `crew`, `capacity`.
+  `attachData()` lets `view()` seed authored fixture state exactly once per thread.
+  **`set` now dedupes primitives only** — an object write always announces, because read-mutate-set is
+  the common pattern here and reference equality was silently swallowing it (the composer stayed in a
+  stale state until an unrelated change ticked it).
+- **Icons** (`shared/icons.js`). 36 packet glyphs added, 80 total. Provider marks are neutral
+  geometry, not vendor logos. Retrieval is exact-key; an unknown name warns, and the suite fails on
+  any console warning, so a typo cannot ship quietly.
+- **ObservableWork** (`shared/observable.js`). The only progress system. Ops live in module state and
+  announce through `store.touchView('observable')`.
+- **ConceptHub compliance.** `concept-hub.json` (hybrid: workspace plus stage, contact and runner
+  entries), `shared/hubbridge.js` carrying both validator literals, `data-concept-model="Opus 5"` on
+  all four pages, and the visible `Opus 5` label in the workspace chrome.
+  `py Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/opus-5` → **passed**.
+
+### Domain services — 13 new modules, 4 extended
+
+`route`, `access`, `bsd`, `approvals`, `contextadmit`, `threadops`, `opsawareness`, `attach`, `sync`,
+`spell`, `notify`, `observable`, `hubbridge`; extensions to `surfaces` (Goal projection, capacity,
+Crew, todo/agent/activity verbs), `questionnaire` (phases, receipts, validation, terminal index),
+`threadhistory` (floors registry, attribute contract, row shells, real row actions),
+`artifacts` (`forceReady`, per-window `frame`, two new catalog records), `motion` (thirteen helpers).
+
+All 23 shared modules load clean in a node harness against the real corpus and in the browser.
+
+### Shared chrome
+
+- **Selectors.** Peer set is Persona, Route, Mode, Access, BSD, plus Worktree and Crew where they
+  apply. Effort and Normal/Fast are submenus of the model row using the real `openSubmenu` stack, so
+  the catalog stays open while they are chosen. Verified in a browser: three-deep popup stack, base
+  still open, collapsed label reads `Sonnet 5 · Medium · Fast`.
+- **Header tools.** Search, Prior chats, Context Lens, Context ring, Environment, Sync state, More
+  options, then the selector host. `Compact now` runs a real operation and shows its receipt. `More
+  details` opens `artifact-context` (the `context-detail` fall-through is gone). Eleven More-options
+  items, each with a real target.
+- **Composer.** Ten states on `data-pmx-cstate`, all reached in the suite. Platform spellcheck,
+  autocorrect and autocapitalize are OFF; PM draws its own passive underline. The question state
+  keeps the composer usable and the draft intact. Redirect replaces per-message Stop. Attachments go
+  through the resolver — the fabricated `screenshots/attachment-N.png` path is deleted.
+- **Shell.** Title bar with the notification inbox and a compact server chip; four rail items that
+  have no concept surface render `aria-disabled` with the reason `Not part of this concept study.`,
+  and the other three open real surfaces.
+- **Director.** 16 families, 93 events, every one returning `{ok:true}` in a live run.
+
+### Windows
+
+All eight migrated to `PMXThreadHistory.resolve` with registered floors; the `pinState` shim is
+**deleted** and no callsite remains. All eight provide `artifactHost` with their own placement and
+switcher idiom. All four history states resolve in all eight. 64 pairings mount with zero console
+errors and zero warnings.
+
+Per-window defects fixed: w1 compact column and two dead rules; w2 duplicate scan and a contradictory
+duplicate CSS rule; w3 stale header and gutter rail; w4 `secondary` growth at every width; w5 command
+row handler disposal and pin-rail flow; w6 `ResizeObserver` driving the sheet reserve and the rail
+detent in the wide track; w7 the unreachable active-thread branch (the specific key is now tested
+before the generic prefix); w8 stale header, a real 12px header-capsule recovery target, and a
+measured artifact clearance so the capsule never covers the composer.
+
+### Fixture
+
+`demo/demoData.json` remains byte-frozen at **349,661 bytes** with an unchanged checksum. The
+generator was extended and regenerates **byte-identically** across runs. Measured counts: 18 threads,
+1,053 messages, `todoMax: 8`, `agentRoutes: 6`, activity kinds `browser read search test verify web`,
+question kinds `freeform / multi select / single select`, goal phases
+`start pause resume replan blocked complete`, 1 conflict, 3 decisions, 2 BSD modes, 1 outbox entry,
+4 thread-operation records, 1 verification message.
+
+### Tests and evidence
+
+`tests/assert.js`, `tests/suites.js`, `tests/runner.html`. 22 suites, **236 assertions, 236 passed, 0
+failed, 0 console errors, 0 console warnings** at 1920×1000. Matrix sweep: **128 pairing/width runs,
+512 assertions, 0 failed**. The runner refuses to run below 1900×900 and prints the required size,
+rather than reporting popup-anchor failures that describe the window instead of the product.
+14 captures in `evidence/`.
+
+### Reports
+
+All seven required outputs exist at the folder root: `impact-register.json` (21 plan owners audited,
+every array key populated), `candidate-command-delta.json` (33 adjudicated rows with catalog line
+evidence), `candidate-wiring-delta.json` (24 full chains with idempotency keys),
+`candidate-dry-delta.json` (24 DRY roles mapped to modules and runtime owners), `plan-owner-delta.md`,
+`demo-trigger-report.json`, `interaction-test-report.json`.
 
 ---
 
-## 3. Known limitations of the verification
+## 2. Outstanding — the honest gap list
 
-- The existing 912-assertion suite is green, but **no new assertions were added for the new
-  surfaces**. The artifact, history-ladder, thread-local-runtime and Director results in §1 were
-  verified by direct measurement in the browser, not by a committed assertion. They will regress
-  silently until the suites in the plan's §10 exist.
-- The suite still runs one pairing per invocation. 56 of 64 pairings continue to receive only
-  the mount smoke assertion.
-- **The suite needs a viewport at least as large as the stage it measures.** At 439×431 the
-  eight popup-anchor assertions fail with "no open popup to measure" — not a product bug, but
-  the popup service correctly refusing to place against an off-viewport anchor. At 1900×900 they
-  pass. Worth an explicit guard in the runner.
-- `evidence/motion/` is still an empty generated-output folder and no capture set has been
-  produced.
+### 2.1 Thread concepts keep their existing question and work surfaces (largest gap)
+
+The plan assigns each of the eight thread concepts its **own** question system, compact work cluster,
+BSD advice surface and artifact handoff card, and the packet makes it a hard failure if all concepts
+reuse one solution. **That per-thread work is not done.** What exists today:
+
+- The shared `PMXQuestionnaire` controller is repaired and complete (phases, validation, terminal
+  index, receipts), and the eight threads render it through their existing per-concept
+  `_renderQuestionBody`, which already differ in DOM and class names.
+- The `distinctness` suite asserts the eight question roots and the eight work-cluster roots are
+  distinct, and it passes — so no two concepts are literally the same DOM.
+- What is missing is the **choreography and semantics** the matrix specifies per concept: the margin
+  interview (t1), the composer capsule morph (t2), the spine stepper (t3), the unfolding digest (t4),
+  the lane dialogue (t5), the monospace field form (t6), the card deck (t7), the prose footnote (t8),
+  and the eight named compact-work forms with their condensation and reopen behaviour.
+- `shared/reveal.js` still owns `question(spec)` and `afterRender(...)`, which the plan requires to be
+  deleted so each thread composes primitives in its own order. Deleting them before the eight local
+  choreographies exist would leave every thread with no entry or exit behaviour at all, so they stay
+  until the replacements are written.
+
+### 2.2 BSD advice surfaces and artifact handoff cards per thread
+
+`PMXBsd` produces the ten visual states and read-only advice, and the selector renders the state.
+The eight **per-thread advice surfaces** (margin annotation, chip sheet, spine side node, digest line,
+lane note, exec row, status-card link, gutter dot) and the eight **handoff cards** are not built.
+
+### 2.3 Motion helpers are defined but not composed per concept
+
+`shared/motion.js` exposes all thirteen named helpers and the reduced-motion path is centralised.
+The eight concepts have not yet been rewritten to compose them; they still use their existing local
+timings. `condense` remains unwired at the concept level, which is the same gap as 2.1.
+
+### 2.4 Visual capture is partial
+
+`evidence/` holds four contact sheets (520/750/975/1200), eight per-window compact-history captures,
+one artifact-and-history capture and one reduced-motion capture. The full matrix in the plan
+(history × artifact × rail × mount × reduced motion) is exercised **functionally** by
+`runMatrix` but not captured visually.
+
+### 2.5 Known narrow-width limitation
+
+`w8`'s artifact is a floating capsule and deliberately overlays the transcript; only the composer is
+guaranteed clear. Every other concept keeps the artifact out of the transcript rectangle. This is
+recorded as an open question in `impact-register.json` rather than settled inside a concept study.
+
+---
+
+## 3. How to re-verify
+
+```
+# fixture determinism and the frozen source
+node demo/build-demo-bundles.mjs && sha256sum demo/demoData.json demo/demoData*.js
+node demo/build-demo-bundles.mjs && sha256sum demo/demoData.json demo/demoData*.js   # identical
+
+# serve on an OS-assigned port, never a fixed one
+py -m http.server 0 --bind 127.0.0.1
+
+# suites at a viewport of at least 1900x900
+open http://127.0.0.1:<port>/tests/runner.html?run=1
+# then window.__pmxTestExit, and the Run matrix button for window.__pmxMatrixExit
+
+# hub validation, from the repository root
+py Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/opus-5
+```

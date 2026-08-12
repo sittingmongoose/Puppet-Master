@@ -287,3 +287,15 @@
   border-radius: var(--radius-xs, 2px);
 }
 [data-k3-thread="t5"] .k3t-shortcut-more { border-radius: var(--radius-xs, 2px); }
+
+/* narrowest layouts: keep the hover row fully inside the scroller content box
+   (w2's 170px rail squeezes t5 to ~350px; the ghost row could poke 3-6px into
+   the reserved scrollbar gutter) */
+[data-k3-thread="t5"] .k3t-msg-hover { margin-right: 8px; }
+
+/* packet fix: the hover row can never exceed its grid cell (long mono meta
+   in tightest rails) — row clips with the meta's own ellipsis */
+[data-k3-thread="t5"] .k3t-msg-hover {
+  max-width: 100%;
+  overflow: hidden;
+}

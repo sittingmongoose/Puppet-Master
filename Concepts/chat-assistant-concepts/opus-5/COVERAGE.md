@@ -185,11 +185,48 @@ in-workspace toggle are honored, and animation/transition **delays** are zeroed 
 
 Stated plainly rather than implied.
 
-- **No headless browser matrix.** Playwright is installed nowhere on this machine and no network
-  install was performed. All verification ran in a real Chromium through the in-app browser.
+- **Headless matrix now runs, visual matrix does not.** The functional sweep executed in a real
+  Chromium: 128 pairing/width runs, 512 assertions, zero failures, recorded in
+  `interaction-test-report.json`. What is still not captured is the full VISUAL matrix
+  (history x artifact x rail x mount x reduced motion); `evidence/` holds 14 targeted captures
+  rather than the complete grid.
 - **No 28 × 32 exhaustive image set.** See section 3.
 - **Full manual visual review of all 64 pairings was not done** — the contract does not require it, and
   the 64 pairings received the automated mount smoke test instead.
 - **Accessibility beyond reduced motion** was not audited. Reduced motion is the stated accessibility
   focus for this exercise; production keyboard, focus, and screen-reader obligations are untouched by
   this prototype and remain owned by the Plans.
+
+## Measured fixture counts
+
+Printed by `node demo/build-demo-bundles.mjs`. Measured from the merged corpus, not restated from
+the generator source, so a record that fails to land shows up as a number rather than as a claim.
+
+| Key | Value |
+|---|---|
+| `threads` | 18 |
+| `messages` | 1053 |
+| `longestThread` | 700 |
+| `over1200` | 9 |
+| `over2500` | 0 |
+| `over5000` | 0 |
+| `medianLen` | 98 |
+| `archivedThreads` | 1 |
+| `deletedDiffFiles` | 1 |
+| `divergingRuntime` | 47 |
+| `todoMax` | 8 |
+| `agentRoutes` | 6 |
+| `agentStates` | blocked, completed, queued, retried, running, stopped, None |
+| `activityKinds` | browser, read, search, test, verify, web |
+| `conflicts` | 1 |
+| `decisions` | 3 |
+| `attachmentClasses` | unsupported |
+| `bsdStates` | auto, on |
+| `outboxEntries` | 1 |
+| `threadOpRecords` | 4 |
+| `questionKinds` | freeform, multi select, single select |
+| `goalPhases` | start, pause, resume, replan, blocked, complete |
+| `verificationMessages` | 1 |
+
+`demo/demoData.json` is byte-frozen at 349,661 bytes and is only ever read. Regeneration is
+byte-identical across runs, verified by checksum before and after a second run.

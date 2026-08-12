@@ -1,0 +1,170 @@
+/* Window 07 "Mosaic" — a board of dockable tiles with a shared gap rhythm and
+   a tray of filed tiles. Reflow choreography on flex tracks. */
+
+.fw7-root {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-shell);
+  overflow: hidden;
+}
+
+.fw7-board {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  min-width: 0;
+  position: relative;
+}
+
+/* ---------- tiles ---------- */
+.fw7-tile {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: flex-basis var(--dur-slow) var(--ease-settle), width var(--dur-slow) var(--ease-settle);
+}
+.fw7-tile-history { flex: none; width: 0; border-width: 0; }
+.fw7-root[data-history="pinned-full"] .fw7-tile-history { width: 240px; border-width: 1px; }
+.fw7-root[data-history="pinned-compact"] .fw7-tile-history { width: 58px; border-width: 1px; }
+.fw7-root[data-history="peek"] .fw7-tile-history {
+  position: absolute;
+  left: 10px; top: 10px; bottom: 10px;
+  width: 244px;
+  border-width: 1px;
+  z-index: 50;
+  box-shadow: var(--shadow-3);
+  animation: fw7-lift var(--dur-base) var(--ease-overshoot);
+}
+@keyframes fw7-lift {
+  from { transform: translateY(8px) scale(0.98); opacity: 0.5; }
+  to   { transform: none; opacity: 1; }
+}
+.fw7-tile-artifact { flex: none; width: 0; border-width: 0; }
+.fw7-root[data-artifact="true"] .fw7-tile-artifact { width: clamp(290px, 31vw, 440px); border-width: 1px; }
+.fw7-tile-chat { flex: 1; min-width: 0; align-items: center; }
+
+.fw7-tile-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--edge-faint);
+  background: var(--bg-surface);
+  min-width: 0;
+  flex: none;
+}
+.fw7-handle { color: var(--text-faint); display: inline-flex; transform: rotate(90deg); cursor: grab; flex: none; }
+.fw7-tile-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 640;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw7-tile-status { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.fw7-tile-status[data-status="loading"] { background: var(--warn); }
+.fw7-tile-status[data-status="error"] { background: var(--danger); }
+.fw7-tile-status[data-status="updated"] { background: var(--info); }
+
+.fw7-tile-body { flex: 1; min-height: 0; padding: 6px; display: flex; flex-direction: column; gap: 3px; }
+.fw7-tile-body-flat { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.fw7-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-md);
+  text-align: left;
+  min-width: 0;
+}
+.fw7-cell:hover { background: var(--bg-hover); }
+.fw7-cell[data-active="true"] { background: var(--bg-active); }
+.fw7-cell-glyph { flex: none; color: var(--text-faint); display: grid; place-items: center; }
+.fw7-cell[data-active="true"] .fw7-cell-glyph { color: var(--accent); }
+.fw7-cell-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.fw7-cell-title { font-size: 12.5px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw7-cell-meta { font-size: 10px; color: var(--text-faint); }
+.fw7-tile-foot {
+  display: flex;
+  gap: 5px;
+  padding: 7px 9px;
+  border-top: 1px solid var(--edge-faint);
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: none;
+}
+.fw7-tile-foot::-webkit-scrollbar { display: none; }
+.fw7-foot-chip {
+  flex: none;
+  font-size: 10.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--edge);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.fw7-foot-chip:hover { background: var(--bg-hover); }
+.fw7-foot-chip[data-active="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+
+/* chat tile */
+.fw7-chat-head { justify-content: space-between; }
+.fw7-head-left, .fw7-head-right { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.fw7-head-right { flex: none; }
+.fw7-head-right .pmc-search { width: 170px; }
+.fw7-thread-slot {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--fw-chat-width, 750px);
+  display: flex;
+  flex-direction: column;
+  transition: max-width var(--dur-slow) var(--ease-settle);
+}
+
+/* ---------- tray ---------- */
+.fw7-tray {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 8px;
+  min-height: 0;
+}
+.fw7-tray[data-empty="true"] { padding: 0; }
+.fw7-tray-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-pill);
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+  font-size: 11px;
+  box-shadow: var(--shadow-1);
+  animation: fw7-file var(--dur-base) var(--ease-settle);
+}
+@keyframes fw7-file {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.fw7-tray-chip:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+@media (max-width: 980px) { .fw7-head-right .pmc-search { width: 110px; } }
+
+[data-reduced-motion="1"] .fw7-root [class*="fw7-"],
+[data-motion="reduced"] .fw7-root [class*="fw7-"] { animation: none !important; }

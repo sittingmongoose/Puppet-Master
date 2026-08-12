@@ -1,5 +1,23 @@
 # HANDOFF — Kimi K3 Assistant Chat Concept Workspace (continuation brief)
 
+> **STATUS UPDATE 2026-08-12 — supersedes everything below where they conflict.**
+> The build described below as "remaining" is **complete**, twice over: the Revision 2 set
+> (2026-07-31) and the **final cumulative packet update** (2026-08-12: route picker, access
+> profiles, BSD variants, offline/outbox sync, attachments, spellcheck, typed thread ops,
+> Goal/capacity/crew/ops work surfaces, artifact workspace, packet fixtures, full harness).
+> - Workspace now lives at `P:\Concepts\chat-assistant-concepts\kimi-k3\` (Windows); the
+>   macOS paths below are historical.
+> - Verification harness is `harness/` (zero-dependency CDP driver), NOT `verification/`;
+>   run steps in `harness/commands.md`; results in `TEST_REPORT.md` + `interaction-test-report.json`.
+> - Current truth: `README.md`, `TEST_REPORT.md`, `SPEC_GAPS.md`, `impact-register.json`,
+>   `demo-trigger-report.json`, `plan-owner-delta.md`, `candidate-*-delta.json`.
+> - All 16 concept modules, `_shared/states.js` (71 driver keys), and all reports exist and pass:
+>   1408/1408 matrix, 4544/4544 feature-states, 304/304 packet probes, validate.py exit 0.
+> The §4 "Current state" table and remaining-work specs below are kept as historical context only.
+
+---
+
+
 **For:** any coding agent (any platform) continuing this build. You need zero prior context — this file plus the cited sources are the whole brief.
 **Written:** 2026-07-30, mid-build, after the shared foundation + kits + engines were completed and verified. Concept modules, the state driver, verification, and reports remain.
 

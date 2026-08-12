@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.chat.5_6_sol.schema_event_storage_delta.v1",
+  "model": "5.6 Sol",
+  "status": "provisional_owner_routing_not_canon",
+  "records": [
+    {
+      "id": "DATA-SOL-001",
+      "subject": "message_lifecycle_projection",
+      "owner": "Thread Service and runtime event owners",
+      "fields": ["message_id", "thread_id", "sent_at", "assistant_turn_id?", "start_at?", "first_visible_at?", "terminal_at?", "worked_seconds?", "total_elapsed_seconds?", "wait_reasons[]", "provider_attempt_ref?", "delivery_state"],
+      "events": ["chat.message.submitted", "chat.response_stop_requested", "owner-registered stream/terminal events"],
+      "persistence": "canonical thread record and runtime evidence; message expansion remains view state",
+      "privacy": "No raw helper payload, credential, or hidden reasoning."
+    },
+    {
+      "id": "DATA-SOL-002",
+      "subject": "message_supersession_and_branch_lineage",
+      "owner": "Thread Service",
+      "fields": ["message_id", "edited_from_message_id?", "superseded_by_message_id?", "source_thread_id", "branch_id", "parent_branch_id?", "source_message_id?", "restore_point_id?"],
+      "events": ["thread branch owner event", "restore_point.created", "restore_point.applied"],
+      "persistence": "project-scoped thread/branch tree and restore_point_record",
+      "privacy": "Immutable source refs; no reconstruction from content-free tombstones."
+    },
+    {
+      "id": "DATA-SOL-003",
+      "subject": "requested_effective_route_snapshot",
+      "owner": "Models, Multi-Account and provider routing",
+      "fields": ["provider_id", "account_id", "connection_id", "product_or_entitlement_id?", "model_id", "requested_effort?", "effective_effort?", "requested_speed?", "effective_speed?", "requested_mode?", "effective_mode?", "requested_platform?", "effective_platform?", "catalog_revision", "fallback_reason?", "cache_reuse_state", "attachment_capabilities[]"],
+      "events": ["account_switch_event", "provider route owner event", "model catalog refresh event", "explicit route decision receipt"],
+      "persistence": "thread request snapshot and shared account/model registries; favorites/defaults belong in Settings",
+      "privacy": "Human labels only; no tokens, OAuth codes, or credential paths."
+    },
+    {
+      "id": "DATA-SOL-004",
+      "subject": "thread_local_view_state",
+      "owner": "Assistant Chat presentation persistence",
+      "fields": ["thread_id", "scroll_anchor_message_id", "following_latest", "long_expanded_message_ids[]", "work_expanded_ids[]", "search_query?", "search_scope?", "selected_result_message_id?", "context_selected_message_ids[]", "history_geometry?", "artifact_selection_id?"],
+      "events": ["local view-state change receipt only when diagnostics require it"],
+      "persistence": "thread-local client state; explicit product decision needed before cross-client sync",
+      "privacy": "Do not store message bodies redundantly."
+    },
+    {
+      "id": "DATA-SOL-005",
+      "subject": "draft_revision_history",
+      "owner": "Thread Service or canonical draft persistence owner",
+      "fields": ["thread_id", "draft_revision_id", "text_ref_or_encrypted_body", "attachment_refs[]", "saved_at", "state", "restored_from_revision_id?", "spellcheck_language?"],
+      "events": ["draft revision saved", "draft revision restored", "draft current cleared"],
+      "persistence": "durable per-thread draft and bounded revision history; never leaks between threads",
+      "privacy": "Local spellcheck is passive; code, paths, URLs, hashes, and known identifiers are excluded from correction."
+    },
+    {
+      "id": "DATA-SOL-006",
+      "subject": "questionnaire_lifecycle",
+      "owner": "shared question tool and requesting parent runtime",
+      "fields": ["questionnaire_id", "parent_thread_id", "requesting_child_id?", "queue_index", "questions[]", "answers_by_question_id", "explicit_skips_by_question_id", "phase", "validation", "draft_revision", "cancel_receipt_ref?", "submission_receipt_ref?", "sibling_answer_branch_id?"],
+      "events": ["questionnaire.preparing", "questionnaire.opened", "questionnaire.cancelled", "questionnaire.submitted", "parent clarification return event"],
+      "persistence": "durable queue, answers, skips, cancellation and submission history; no passive expiry",
+      "privacy": "Only the parent-facing bounded question/answer record is shared with children."
+    },
+    {
+      "id": "DATA-SOL-007",
+      "subject": "context_admission_and_subcompact",
+      "owner": "Prompt Pipeline and Context Admission",
+      "fields": ["thread_id", "context_revision", "mode", "selected_message_ids[]", "included_source_refs[]", "omitted_source_refs[]", "admitted_token_count", "context_limit", "summary_artifact_ref?", "rehydration_refs[]", "memory_gist_refs[]", "cache_freshness?", "receipt_ref"],
+      "events": ["context.compaction.started", "context.compaction.completed", "context.compaction.failed", "context selection/mode projection events"],
+      "persistence": "owner receipt and summary artifact; local transient selection unless canon promotes it",
+      "privacy": "No whole AGENTS files, whole tool catalogs, raw system prompt, or hidden reasoning."
+    },
+    {
+      "id": "DATA-SOL-008",
+      "subject": "goal_work_projection",
+      "owner": "Goal Runtime",
+      "fields": ["goal_id", "goal_revision", "thread_id", "objective", "phase", "progress", "state", "task_ids[]", "checkpoint_refs[]", "child_ids[]", "evidence_refs[]", "blocked_reason?", "attempted_recovery?", "next_safe_action?", "completion_report_ref?"],
+      "events": ["Goal Runtime owner events and allowed-action receipts"],
+      "persistence": "canonical Goal state on the Project Home Server",
+      "privacy": "Chat consumes evidence refs and human summaries rather than raw private payloads."
+    },
+    {
+      "id": "DATA-SOL-009",
+      "subject": "child_and_crew_projection",
+      "owner": "Orchestrator",
+      "fields": ["child_id", "parent_thread_id", "role", "route_snapshot_ref", "state", "elapsed", "wait_reason?", "worktree_id?", "wave_id?", "capacity_state", "fallback_ref?", "result_ref?", "synthesis_receipt_ref?"],
+      "events": ["child admission/state/terminal events", "scheduler wave/capacity events", "thread request/return events"],
+      "persistence": "Orchestrator and server-owned execution lineage",
+      "privacy": "Assistant memory is not automatically copied into children."
+    },
+    {
+      "id": "DATA-SOL-010",
+      "subject": "artifact_workspace_projection",
+      "owner": "Artifact Service",
+      "fields": ["artifact_id", "version_id", "source_thread_id", "source_message_id?", "producer_ref?", "path_ref?", "mime_or_kind", "lineage_refs[]", "redaction_state", "retention_state", "load_state", "editor_target?", "updated_at"],
+      "events": ["artifact loading/ready/updated/error/open route receipts"],
+      "persistence": "Artifact Service; selected workspace identity may be thread-local view state",
+      "privacy": "Redaction and protected paths are enforced by owners before projection."
+    },
+    {
+      "id": "DATA-SOL-011",
+      "subject": "attachment_resolution",
+      "owner": "FileSafe, media capability, model routing and artifact owners",
+      "fields": ["attachment_id", "source_ref", "resolution_kind", "derived_artifact_ref?", "alternate_route_snapshot_ref?", "consent_receipt_ref?", "privacy_delta?", "cost_delta?", "capability_reason?", "terminal_state"],
+      "events": ["attachment accepted/transformed/rerouted/refused events"],
+      "persistence": "thread attachment refs and derived artifact lineage",
+      "privacy": "Alternate-provider routing requires explicit consent when the boundary changes."
+    },
+    {
+      "id": "DATA-SOL-012",
+      "subject": "outbox_replay_snapshot",
+      "owner": "Project Home Server and environment connection supervision",
+      "fields": ["operation_id", "command_id", "thread_id", "message_id?", "queued_at", "state", "attempt_count", "last_cursor", "snapshot_cursor", "replay_result_ref?", "server_work_state"],
+      "events": ["outbox.queued", "connection.reconnecting", "command replay receipt", "snapshot applied event"],
+      "persistence": "durable server/client outbox contract with exactly-once command identity",
+      "privacy": "Queued payload follows the same permission and redaction policy as live dispatch."
+    },
+    {
+      "id": "DATA-SOL-013",
+      "subject": "bsd_projection",
+      "owner": "BSD runtime and Settings",
+      "fields": ["thread_id", "mode", "scope", "trigger_reason?", "state", "advice_ref?", "suppression_reason?", "timeout_ms?", "route_snapshot_ref?", "receipt_ref?"],
+      "events": ["BSD evaluation started/terminal/advice/suppressed/timeout/unavailable owner events"],
+      "persistence": "thread-local value; broader default only through Settings",
+      "privacy": "Read-only review; cannot mutate or become an authority channel."
+    },
+    {
+      "id": "DATA-SOL-014",
+      "subject": "resource_and_usage_projection",
+      "owner": "RuntimeResourceGovernor, worktree/test/browser/debug owners, ObservableWork and Usage",
+      "fields": ["resource_kind", "resource_id", "host_or_environment_id?", "state", "wait_or_conflict_reason?", "action_ids[]", "evidence_refs[]", "attempt_id?", "provider_usage_ref?", "forecast", "source_quality", "projection_freshness"],
+      "events": ["owner resource events", "ObservableWork projection events", "Usage records"],
+      "persistence": "canonical owner records; Chat keeps only refs and view state",
+      "privacy": "Logs and raw provider payloads are opened through owner surfaces with redaction."
+    },
+    {
+      "id": "DATA-SOL-015",
+      "subject": "notification_and_decision_receipts",
+      "owner": "canonical notification owner plus runtime/permission/route decision owners",
+      "fields": ["notification_id?", "source_ref", "scope", "decision_id?", "decision_revision?", "actor_ref?", "outcome", "receipt_ref", "inline_projection_state", "titlebar_projection_state"],
+      "events": ["owner decision event", "notification projection event"],
+      "persistence": "owner receipt and title-bar notification record; Chat inline projection is not a second inbox",
+      "privacy": "No secret or protected authentication content in notifications."
+    }
+  ],
+  "event_registry_gaps": [
+    "Questionnaire lifecycle and thread request/await/spawn event names need exact owner registration before production wiring.",
+    "Local view-state changes should not be promoted to durable EventRecord traffic without a cross-client persistence requirement.",
+    "Do not fabricate generic command_applied events; every command uses an owner event or explicit dispatch receipt.",
+    "All-thread search and exact unloaded-range navigation need an explicit result/currentness contract if cmd.chat.search does not already accept scope."
+  ]
+}

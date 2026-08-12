@@ -490,12 +490,15 @@
   display: flex; align-items: flex-start; gap: var(--pm-space-4);
   padding: var(--pm-space-5) var(--pm-space-6) var(--pm-space-4);
   border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  flex-wrap: wrap;
 }
 .co-mode-titles { flex: 1 1 auto; min-width: 0; }
 .co-mode-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--pm-text-3); }
 .co-mode-title { font-size: 26px; font-weight: var(--pm-title-weight); letter-spacing: -.02em; margin: 4px 0 5px; }
 .co-mode-purpose { font-size: 13px; color: var(--pm-text-3); max-width: 74ch; }
-.co-mode-tools { display: flex; gap: var(--pm-space-2); flex-wrap: wrap; justify-content: flex-end; flex: none; }
+/* The tool cluster shrinks and wraps before the mode head can push the page
+ * sideways: a manager never scrolls horizontally. */
+.co-mode-tools { display: flex; gap: var(--pm-space-2); flex-wrap: wrap; justify-content: flex-end; flex: 0 1 auto; min-width: 0; }
 .co-mode-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: var(--pm-space-5) var(--pm-space-6) var(--pm-space-7); }
 
 .co-split { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: var(--pm-space-5); align-items: start; }
@@ -671,3 +674,169 @@
 .co-index-narrow summary::-webkit-details-marker { display: none; }
 .co-index-narrow[open] summary { border-bottom: var(--pm-border-w) solid var(--pm-border-1); }
 .co-index-narrow .co-index-item { padding: 8px var(--pm-space-3); }
+
+
+/* ======================================== MANAGER SPEC SURFACE (movements) */
+/* Console reads a manager the way it reads a category: numbered movements in
+ * reading order, hairlines instead of boxes, the margin index travelling with
+ * them. Every assigned manager is rendered through this one path. */
+
+.co-movement {
+  margin: 0 0 var(--pm-space-6);
+  scroll-margin-top: var(--pm-space-6);
+}
+.co-movement-head {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--pm-space-3);
+  padding-bottom: 8px;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  margin-bottom: var(--pm-space-4);
+}
+.co-movement-ord {
+  font-family: var(--pm-font-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--pm-text-3);
+}
+.co-movement-title {
+  grid-column: 2;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -.01em;
+  color: var(--pm-text-1);
+}
+.co-movement-head .co-btn { grid-column: 3; grid-row: 1; }
+.co-movement-head .co-block-line { grid-column: 2; margin: 4px 0 0; }
+
+.co-block-line { margin: 0 0 6px; font-size: 13px; line-height: 1.55; color: var(--pm-text-2); max-width: 66ch; }
+.co-prose { margin: 0 0 8px 40px; font-size: 13px; line-height: 1.6; color: var(--pm-text-2); max-width: 68ch; }
+
+/* ---------------------------------------------------------------- tables */
+
+.co-spec-table { width: calc(100% - 40px); margin-left: 40px; border-collapse: collapse; }
+.co-spec-table th {
+  text-align: left;
+  padding: 5px var(--pm-space-3) 5px 0;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.co-spec-table td {
+  padding: 10px var(--pm-space-3) 10px 0;
+  font-size: 13px;
+  color: var(--pm-text-1);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  vertical-align: top;
+}
+.co-spec-table th.is-num, .co-spec-table td.is-num { text-align: right; font-variant-numeric: tabular-nums; }
+.co-item-extra td { padding-top: 0; border-bottom-color: var(--pm-border-2); }
+
+/* ------------------------------------------------------------ item cards */
+
+.co-item {
+  margin: 0 0 var(--pm-space-4) 40px;
+  padding-bottom: var(--pm-space-4);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.co-item:last-child { border-bottom: none; padding-bottom: 0; }
+.co-item-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--pm-space-3); }
+.co-item-name { font-size: 13.5px; font-weight: 600; color: var(--pm-text-1); }
+.co-item-sub { margin-top: 2px; font-size: 12px; color: var(--pm-text-3); }
+.co-item-value { margin-top: 6px; font-size: 13px; color: var(--pm-text-1); }
+.co-item-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.co-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  font-size: 11px;
+  color: var(--pm-text-2);
+}
+.co-badge[data-kind="warning"] { color: var(--pm-attention); border-color: var(--pm-attention); }
+.co-badge[data-kind="managed"] { color: var(--pm-managed); border-color: var(--pm-managed); }
+
+.co-fields { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; }
+.co-field { display: flex; gap: 6px; align-items: baseline; font-size: 12px; }
+.co-field-k { color: var(--pm-text-3); }
+.co-field-v { color: var(--pm-text-1); font-variant-numeric: tabular-nums; }
+
+.co-counts { display: flex; flex-wrap: wrap; gap: var(--pm-space-5); margin-top: var(--pm-space-3); }
+.co-count { display: flex; flex-direction: column; gap: 2px; }
+.co-count-v { font-size: 20px; font-weight: 300; color: var(--pm-text-1); font-variant-numeric: tabular-nums; }
+.co-count-l { font-size: 11px; letter-spacing: .04em; color: var(--pm-text-3); }
+
+.co-item-controls { display: flex; flex-direction: column; gap: 10px; margin-top: var(--pm-space-3); }
+.co-item-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.co-details { padding-top: 6px; }
+.co-details summary { cursor: pointer; font-size: 12px; color: var(--pm-text-2); list-style: none; }
+.co-details summary::-webkit-details-marker { display: none; }
+.co-details summary::before { content: "— "; color: var(--pm-text-3); }
+.co-details[open] summary::before { content: "\2014 "; }
+
+/* -------------------------------------------------------------- controls */
+
+.co-edit { display: flex; flex-direction: column; gap: 6px; max-width: 460px; }
+.co-edit-label { font-size: 12px; color: var(--pm-text-2); }
+.co-input, .co-toggle {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+}
+.co-input:focus-visible, .co-toggle:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.co-secret { display: flex; align-items: center; gap: 10px; font-family: var(--pm-font-mono); font-size: 12.5px; }
+
+.co-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.co-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 10px;
+  border-radius: 999px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  font-size: 12px;
+  color: var(--pm-text-1);
+}
+.co-chip.is-add { cursor: pointer; color: var(--pm-accent); border-style: dashed; padding-right: 10px; }
+.co-chip-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; padding: 0;
+  border: none; border-radius: 999px;
+  background: transparent; color: var(--pm-text-3); cursor: pointer;
+}
+.co-chip-btn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+
+.co-receipts { display: flex; flex-direction: column; gap: 6px; margin-top: var(--pm-space-5); }
+
+.pm-app[data-width="squeezed"] .co-movement-head { grid-template-columns: 28px minmax(0, 1fr); }
+.pm-app[data-width="squeezed"] .co-movement-head .co-btn { grid-column: 2; grid-row: auto; justify-self: start; }
+.pm-app[data-width="squeezed"] .co-item,
+.pm-app[data-width="squeezed"] .co-prose { margin-left: 0; }
+.pm-app[data-width="squeezed"] .co-spec-table { margin-left: 0; width: 100%; }
+.pm-app[data-width="squeezed"] .co-item-head { flex-direction: column; }
+
+/* A well-formed link that names nothing here: stated in the reading column. */
+.co-badroute {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 var(--pm-space-4);
+  padding: 9px 0;
+  border-bottom: var(--pm-border-w) solid var(--pm-attention);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--pm-text-1);
+}
+.co-badroute svg { color: var(--pm-attention); flex: none; margin-top: 2px; }
+.co-badroute code { font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-text-2); }

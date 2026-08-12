@@ -1,0 +1,574 @@
+{
+ "schema_id": "pm.chat_demo_trigger_report.v1",
+ "concept_id": "kimi-k3",
+ "model": "Kimi K3",
+ "warning": "Triggers are harness/review surfaces (dev drawer, URL state keys, index broadcast). They are NOT production commands and are never wired to canon.",
+ "invocation_surfaces": [
+  "?state=<key> query param",
+  "dev drawer (?demo=1)",
+  "index.html Demo triggers menu -> k3-demo-trigger postMessage",
+  "K3Demo.* direct calls (harness)"
+ ],
+ "trigger_count": 43,
+ "triggers": [
+  {
+   "key": "route-picker",
+   "family": "route",
+   "invocation": [
+    "?state=route-picker",
+    "K3States.apply(\"route-picker\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "selector-row route button -> picker popover",
+   "expected_state": "see states.js DRIVERS.route-picker",
+   "probe_ref": "routePicker"
+  },
+  {
+   "key": "route-submenu",
+   "family": "route",
+   "invocation": [
+    "?state=route-submenu",
+    "K3States.apply(\"route-submenu\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "picker model row -> effort/speed submenu stack",
+   "expected_state": "see states.js DRIVERS.route-submenu",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "route-warning",
+   "family": "route",
+   "invocation": [
+    "?state=route-warning",
+    "K3States.apply(\"route-warning\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "select a material route -> transcript warning card",
+   "expected_state": "see states.js DRIVERS.route-warning",
+   "probe_ref": "routeWarningFlow"
+  },
+  {
+   "key": "route-effective",
+   "family": "route",
+   "invocation": [
+    "?state=route-effective",
+    "K3States.apply(\"route-effective\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "picker effort step (requested != effective line)",
+   "expected_state": "see states.js DRIVERS.route-effective",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "provider-setup",
+   "family": "route",
+   "invocation": [
+    "?state=provider-setup",
+    "K3States.apply(\"provider-setup\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "picker setup row -> Open Provider Settings",
+   "expected_state": "see states.js DRIVERS.provider-setup",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "provider-update",
+   "family": "route",
+   "invocation": [
+    "?state=provider-update",
+    "K3States.apply(\"provider-update\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "picker update-available status line",
+   "expected_state": "see states.js DRIVERS.provider-update",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "access-limited",
+   "family": "access",
+   "invocation": [
+    "?state=access-limited",
+    "K3States.apply(\"access-limited\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "access menu footer note",
+   "expected_state": "see states.js DRIVERS.access-limited",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "approval-card",
+   "family": "access",
+   "invocation": [
+    "?state=approval-card",
+    "K3States.apply(\"approval-card\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "thread-16 transcript approval card",
+   "expected_state": "see states.js DRIVERS.approval-card",
+   "probe_ref": "approvalFlow"
+  },
+  {
+   "key": "bsd-auto-glow",
+   "family": "bsd",
+   "invocation": [
+    "?state=bsd-auto-glow",
+    "K3States.apply(\"bsd-auto-glow\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "selector-row BSD control while evaluating",
+   "expected_state": "see states.js DRIVERS.bsd-auto-glow",
+   "probe_ref": "bsdStates"
+  },
+  {
+   "key": "bsd-manual-on",
+   "family": "bsd",
+   "invocation": [
+    "?state=bsd-manual-on",
+    "K3States.apply(\"bsd-manual-on\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "BSD detail Off/Auto/On radio",
+   "expected_state": "see states.js DRIVERS.bsd-manual-on",
+   "probe_ref": "bsdStates"
+  },
+  {
+   "key": "bsd-advice",
+   "family": "bsd",
+   "invocation": [
+    "?state=bsd-advice",
+    "K3States.apply(\"bsd-advice\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "BSD result chip -> advice popover",
+   "expected_state": "see states.js DRIVERS.bsd-advice",
+   "probe_ref": "bsdStates"
+  },
+  {
+   "key": "bsd-unavailable",
+   "family": "bsd",
+   "invocation": [
+    "?state=bsd-unavailable",
+    "K3States.apply(\"bsd-unavailable\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "BSD result chip state",
+   "expected_state": "see states.js DRIVERS.bsd-unavailable",
+   "probe_ref": "bsdStates"
+  },
+  {
+   "key": "lens-receipt",
+   "family": "context",
+   "invocation": [
+    "?state=lens-receipt",
+    "K3States.apply(\"lens-receipt\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "lens menu -> View admission receipt",
+   "expected_state": "see states.js DRIVERS.lens-receipt",
+   "probe_ref": "lensReceipt"
+  },
+  {
+   "key": "compact-now",
+   "family": "context",
+   "invocation": [
+    "?state=compact-now",
+    "K3States.apply(\"compact-now\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "context ring popover -> Compact now",
+   "expected_state": "see states.js DRIVERS.compact-now",
+   "probe_ref": "compactNowReceipt"
+  },
+  {
+   "key": "prior-chat-search",
+   "family": "context",
+   "invocation": [
+    "?state=prior-chat-search",
+    "K3States.apply(\"prior-chat-search\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "search result row more menu",
+   "expected_state": "see states.js DRIVERS.prior-chat-search",
+   "probe_ref": "searchActions"
+  },
+  {
+   "key": "thread-request",
+   "family": "threads",
+   "invocation": [
+    "?state=thread-request",
+    "K3States.apply(\"thread-request\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "thread-18 request card -> Await",
+   "expected_state": "see states.js DRIVERS.thread-request",
+   "probe_ref": "threadOpsFlow"
+  },
+  {
+   "key": "thread-spawn",
+   "family": "threads",
+   "invocation": [
+    "?state=thread-spawn",
+    "K3States.apply(\"thread-spawn\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "hover menu -> Branch/Spawn",
+   "expected_state": "see states.js DRIVERS.thread-spawn",
+   "probe_ref": "threadOpsFlow"
+  },
+  {
+   "key": "branch-menu",
+   "family": "threads",
+   "invocation": [
+    "?state=branch-menu",
+    "K3States.apply(\"branch-menu\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "message hover More menu",
+   "expected_state": "see states.js DRIVERS.branch-menu",
+   "probe_ref": "threadOpsFlow"
+  },
+  {
+   "key": "restore-point",
+   "family": "threads",
+   "invocation": [
+    "?state=restore-point",
+    "K3States.apply(\"restore-point\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "hover menu -> Create restore point",
+   "expected_state": "see states.js DRIVERS.restore-point",
+   "probe_ref": "threadOpsFlow"
+  },
+  {
+   "key": "rewind",
+   "family": "threads",
+   "invocation": [
+    "?state=rewind",
+    "K3States.apply(\"rewind\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "hover menu -> Rewind to here",
+   "expected_state": "see states.js DRIVERS.rewind",
+   "probe_ref": "threadOpsFlow"
+  },
+  {
+   "key": "redirect-active",
+   "family": "threads",
+   "invocation": [
+    "?state=redirect-active",
+    "K3States.apply(\"redirect-active\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "composer Redirect while a turn is active",
+   "expected_state": "see states.js DRIVERS.redirect-active",
+   "probe_ref": "redirectFlow"
+  },
+  {
+   "key": "goal-replan",
+   "family": "goal",
+   "invocation": [
+    "?state=goal-replan",
+    "K3States.apply(\"goal-replan\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "goal surface Edit -> replan flow",
+   "expected_state": "see states.js DRIVERS.goal-replan",
+   "probe_ref": "goalLifecycle"
+  },
+  {
+   "key": "goal-complete",
+   "family": "goal",
+   "invocation": [
+    "?state=goal-complete",
+    "K3States.apply(\"goal-complete\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "goal completion receipt",
+   "expected_state": "see states.js DRIVERS.goal-complete",
+   "probe_ref": "goalLifecycle"
+  },
+  {
+   "key": "goal-blocked",
+   "family": "goal",
+   "invocation": [
+    "?state=goal-blocked",
+    "K3States.apply(\"goal-blocked\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "goal surface blocked card",
+   "expected_state": "see states.js DRIVERS.goal-blocked",
+   "probe_ref": "goalLifecycle"
+  },
+  {
+   "key": "capacity-forecast",
+   "family": "capacity",
+   "invocation": [
+    "?state=capacity-forecast",
+    "K3States.apply(\"capacity-forecast\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "capacity surface (thread-19)",
+   "expected_state": "see states.js DRIVERS.capacity-forecast",
+   "probe_ref": "compactWork"
+  },
+  {
+   "key": "crew-board",
+   "family": "capacity",
+   "invocation": [
+    "?state=crew-board",
+    "K3States.apply(\"crew-board\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "crew surface (thread-19)",
+   "expected_state": "see states.js DRIVERS.crew-board",
+   "probe_ref": "compactWork"
+  },
+  {
+   "key": "ops-conflict-port",
+   "family": "ops",
+   "invocation": [
+    "?state=ops-conflict-port",
+    "K3States.apply(\"ops-conflict-port\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "ops surface port-3000 card",
+   "expected_state": "see states.js DRIVERS.ops-conflict-port",
+   "probe_ref": "compactWork"
+  },
+  {
+   "key": "worktree-states",
+   "family": "ops",
+   "invocation": [
+    "?state=worktree-states",
+    "K3States.apply(\"worktree-states\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "ops surface Details popover",
+   "expected_state": "see states.js DRIVERS.worktree-states",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "cross-project-grant",
+   "family": "access",
+   "invocation": [
+    "?state=cross-project-grant",
+    "K3States.apply(\"cross-project-grant\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "thread-17 grant card",
+   "expected_state": "see states.js DRIVERS.cross-project-grant",
+   "probe_ref": "feature-states sweep"
+  },
+  {
+   "key": "artifact-left-code",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-left-code",
+    "K3States.apply(\"artifact-left-code\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "artifact shortcut click -> workspace",
+   "expected_state": "see states.js DRIVERS.artifact-left-code",
+   "probe_ref": "artifactLeftOfChat"
+  },
+  {
+   "key": "artifact-left-diff",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-left-diff",
+    "K3States.apply(\"artifact-left-diff\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "artifact switcher",
+   "expected_state": "see states.js DRIVERS.artifact-left-diff",
+   "probe_ref": "artifactLeftOfChat"
+  },
+  {
+   "key": "artifact-left-image",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-left-image",
+    "K3States.apply(\"artifact-left-image\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "artifact switcher",
+   "expected_state": "see states.js DRIVERS.artifact-left-image",
+   "probe_ref": "artifactLeftOfChat"
+  },
+  {
+   "key": "artifact-left-report",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-left-report",
+    "K3States.apply(\"artifact-left-report\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "artifact switcher",
+   "expected_state": "see states.js DRIVERS.artifact-left-report",
+   "probe_ref": "artifactLeftOfChat"
+  },
+  {
+   "key": "artifact-loading",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-loading",
+    "K3States.apply(\"artifact-loading\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "K3Demo artifactLoading",
+   "expected_state": "see states.js DRIVERS.artifact-loading",
+   "probe_ref": "artifactStates"
+  },
+  {
+   "key": "artifact-error-retry",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-error-retry",
+    "K3States.apply(\"artifact-error-retry\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "error state -> Retry button",
+   "expected_state": "see states.js DRIVERS.artifact-error-retry",
+   "probe_ref": "artifactStates"
+  },
+  {
+   "key": "artifact-plus-pinned",
+   "family": "artifact",
+   "invocation": [
+    "?state=artifact-plus-pinned",
+    "K3States.apply(\"artifact-plus-pinned\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "artifact open while history pinned",
+   "expected_state": "see states.js DRIVERS.artifact-plus-pinned",
+   "probe_ref": "artifactLeftOfChat+pinnedGeometry"
+  },
+  {
+   "key": "attachment-native",
+   "family": "attachment",
+   "invocation": [
+    "?state=attachment-native",
+    "K3States.apply(\"attachment-native\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "composer attach -> resolve",
+   "expected_state": "see states.js DRIVERS.attachment-native",
+   "probe_ref": "spellcheckMenu-adjacent (composer attach)"
+  },
+  {
+   "key": "attachment-transformed",
+   "family": "attachment",
+   "invocation": [
+    "?state=attachment-transformed",
+    "K3States.apply(\"attachment-transformed\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "attachment card derived chips",
+   "expected_state": "see states.js DRIVERS.attachment-transformed",
+   "probe_ref": "routeWarningFlow(reevaluate)"
+  },
+  {
+   "key": "attachment-alternate",
+   "family": "attachment",
+   "invocation": [
+    "?state=attachment-alternate",
+    "K3States.apply(\"attachment-alternate\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "consent card -> Use Gemini",
+   "expected_state": "see states.js DRIVERS.attachment-alternate",
+   "probe_ref": "routeWarningFlow"
+  },
+  {
+   "key": "attachment-unsupported",
+   "family": "attachment",
+   "invocation": [
+    "?state=attachment-unsupported",
+    "K3States.apply(\"attachment-unsupported\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "attachment card unsupported state",
+   "expected_state": "see states.js DRIVERS.attachment-unsupported",
+   "probe_ref": "attachment card render"
+  },
+  {
+   "key": "offline-queue",
+   "family": "sync",
+   "invocation": [
+    "?state=offline-queue",
+    "K3States.apply(\"offline-queue\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "composer Send while offline",
+   "expected_state": "see states.js DRIVERS.offline-queue",
+   "probe_ref": "offlineIdempotency"
+  },
+  {
+   "key": "offline-reconnect",
+   "family": "sync",
+   "invocation": [
+    "?state=offline-reconnect",
+    "K3States.apply(\"offline-reconnect\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "sync pill -> Reconnect",
+   "expected_state": "see states.js DRIVERS.offline-reconnect",
+   "probe_ref": "offlineIdempotency"
+  },
+  {
+   "key": "notify-approval",
+   "family": "notifications",
+   "invocation": [
+    "?state=notify-approval",
+    "K3States.apply(\"notify-approval\")",
+    "dev drawer button (?demo=1)",
+    "index.html Demo triggers menu (k3-demo-trigger broadcast)"
+   ],
+   "product_ui_reachability": "title-bar stack -> inbox",
+   "expected_state": "see states.js DRIVERS.notify-approval",
+   "probe_ref": "notificationInbox"
+  }
+ ]
+}

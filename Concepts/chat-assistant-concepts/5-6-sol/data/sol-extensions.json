@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.chat.5_6_sol.fixture_extensions.v1",
+  "model_label": "5.6 Sol",
+  "primary_thread_id": "thread-11",
+  "threads": [
+    {
+      "id": "thread-16",
+      "title": "Crew synthesis across provider routes",
+      "project": "Puppet Master",
+      "pinned": false,
+      "archived": false,
+      "threadState": "server work continuing",
+      "updatedAt": "2026-08-10T22:18:00Z",
+      "initialVisibleMessageCount": 24,
+      "tags": ["Crew", "cross-thread", "capacity"],
+      "messages": [
+        {"id":"t16-m0001","role":"user","body":"Ask three qualified agents to review the Assistant Chat integration seams. Keep the parent synthesis here and show me why any member is queued.","sentAt":"2026-08-10T21:30:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t16-m0002","role":"assistant","body":"I will request canon, interaction, and resilience specialists. Sustainable capacity is two concurrent members, so the resilience review will wait for a slot while verification capacity remains reserved.","sentAt":"2026-08-10T21:30:14Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":14,"totalElapsedSeconds":14},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t16-m0003","role":"assistant","body":"The canon review completed with two owner-routing cautions. The interaction review is verifying questionnaire persistence. The queued resilience member now has an admitted slot.","sentAt":"2026-08-10T21:43:12Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":193,"totalElapsedSeconds":792},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t16-m0004","role":"user","body":"Send the questionnaire persistence finding to the planning thread, but include only the bounded passage and its evidence link.","sentAt":"2026-08-10T21:45:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t16-m0005","role":"assistant","body":"The typed request is awaiting the planning thread. It carries the source thread, target thread, selected passage, scope, timeout, and idempotency key; no transcript was copied.","sentAt":"2026-08-10T21:45:07Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":7,"totalElapsedSeconds":7},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t16-m0006","role":"assistant","body":"The planning thread returned a bounded acknowledgement and one owner question. I added the passage to this turn's context without changing either thread's canonical history.","sentAt":"2026-08-10T21:58:40Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":61,"totalElapsedSeconds":813},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t16-m0007","role":"user","body":"Finish the synthesis after the resilience reviewer reports. Do not silently replace a required role if its route is unavailable.","sentAt":"2026-08-10T22:01:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t16-m0008","role":"assistant","body":"The resilience route is temporarily cooling down. The role remains queued with a visible forecast; server work continues and the parent synthesis is intentionally incomplete.","sentAt":"2026-08-10T22:18:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Systems designer","mode":"Agent","effort":"High","workedSeconds":38,"totalElapsedSeconds":1020},"eligibleForEdit":false,"collapsedByDefault":false}
+      ],
+      "scriptedReplyIds": ["reply-18"],
+      "scriptedReplyCursor": 0,
+      "activeGoal": null,
+      "todo": [],
+      "questionnaires": [],
+      "subagentGroups": [],
+      "diffGroups": [],
+      "artifacts": [],
+      "browserSessions": [],
+      "draftState": null
+    },
+    {
+      "id": "thread-17",
+      "title": "Offline outbox and replay recovery",
+      "project": "Puppet Master",
+      "pinned": true,
+      "archived": false,
+      "threadState": "offline",
+      "updatedAt": "2026-08-10T20:44:00Z",
+      "initialVisibleMessageCount": 24,
+      "tags": ["offline", "outbox", "snapshot"],
+      "messages": [
+        {"id":"t17-m0001","role":"user","body":"The client lost its connection while the host was still running tests. Show what continues remotely and what is only cached here.","sentAt":"2026-08-10T20:10:00Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t17-m0002","role":"assistant","body":"The approved test run continues on Build Host East. This client has a cached transcript through event 4,281 and is waiting to reconnect; the Goal was not stopped.","sentAt":"2026-08-10T20:10:11Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":11,"totalElapsedSeconds":11},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t17-m0003","role":"user","body":"Queue this correction: inspect the narrow layout before accepting the test result.","sentAt":"2026-08-10T20:15:00Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false,"deliveryState":"queued to send"},
+        {"id":"t17-m0004","role":"assistant","body":"The correction is in the local outbox with one client operation ID. Reconnect will replay it once after live events are buffered and the snapshot cursor is reconciled.","sentAt":"2026-08-10T20:15:03Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":3,"totalElapsedSeconds":3},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t17-m0005","role":"user","body":"What if the acknowledgement arrives twice after snapshot catch-up?","sentAt":"2026-08-10T20:19:00Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t17-m0006","role":"assistant","body":"Both acknowledgements resolve to the same operation and message identity. The transcript receives one canonical send and the scripted reply cursor advances once.","sentAt":"2026-08-10T20:19:09Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":9,"totalElapsedSeconds":9},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t17-m0007","role":"assistant","body":"Transport is live again, but artifact synchronization is still catching up. The queued correction was admitted once; the test domain remains marked Synchronizing.","sentAt":"2026-08-10T20:33:40Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":21,"totalElapsedSeconds":880},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t17-m0008","role":"assistant","body":"Snapshot catch-up completed. The remote test result is retained as provisional because the requested narrow visual inspection has not completed.","sentAt":"2026-08-10T20:44:00Z","runtime":{"provider":"Anthropic","model":"Opus 5","persona":"Reliability reviewer","mode":"Agent","effort":"High","workedSeconds":41,"totalElapsedSeconds":2040},"eligibleForEdit":false,"collapsedByDefault":false}
+      ],
+      "scriptedReplyIds": ["reply-19"],
+      "scriptedReplyCursor": 0,
+      "activeGoal": null,
+      "todo": [],
+      "questionnaires": [],
+      "subagentGroups": [],
+      "diffGroups": [],
+      "artifacts": [],
+      "browserSessions": [],
+      "draftState": {"text":"Confirm the replay receipt before closing this thread.","attachments":[],"savedAt":"2026-08-10T20:43:00Z"}
+    },
+    {
+      "id": "thread-18",
+      "title": "Provider repair and allowance forecast",
+      "project": "Puppet Master",
+      "pinned": false,
+      "archived": true,
+      "threadState": "completed with artifact",
+      "updatedAt": "2026-08-09T18:06:00Z",
+      "initialVisibleMessageCount": 24,
+      "tags": ["provider", "repair", "usage"],
+      "messages": [
+        {"id":"t18-m0001","role":"user","body":"The preferred route says setup needed. Explain the exact problem without turning Chat into Provider Settings.","sentAt":"2026-08-09T17:10:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t18-m0002","role":"assistant","body":"The selected account is signed in, but its model catalog is stale after a CLI update. Chat can preserve this route and open the exact repair location in Provider Settings.","sentAt":"2026-08-09T17:10:18Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":18,"totalElapsedSeconds":18},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t18-m0003","role":"user","body":"Do not install or sign in silently. Show whether the repair changes privacy, billing, or the execution host.","sentAt":"2026-08-09T17:14:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t18-m0004","role":"assistant","body":"Repair is user-triggered and stays on Studio Workstation. It refreshes the official CLI catalog, does not change account or billing identity, and requires no alternate provider route.","sentAt":"2026-08-09T17:14:12Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":12,"totalElapsedSeconds":12},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t18-m0005","role":"assistant","body":"Verification completed and the requested model is available again. Provider allowance is currently unknown; the Usage forecast shows no fabricated zero and names the missing source.","sentAt":"2026-08-09T17:40:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":87,"totalElapsedSeconds":1548},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t18-m0006","role":"user","body":"Export the repair receipt and archive this thread.","sentAt":"2026-08-09T17:44:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":0,"totalElapsedSeconds":0},"eligibleForEdit":true,"collapsedByDefault":false},
+        {"id":"t18-m0007","role":"assistant","body":"The repair receipt is stored as a Project-backed report artifact with route, host, verification, and unknown-allowance provenance. Archiving does not remove it.","sentAt":"2026-08-09T17:44:14Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":14,"totalElapsedSeconds":14},"eligibleForEdit":false,"collapsedByDefault":false},
+        {"id":"t18-m0008","role":"assistant","body":"Thread archived. The report remains searchable and can be opened in the editor workspace.","sentAt":"2026-08-09T18:06:00Z","runtime":{"provider":"OpenAI","model":"5.6 Sol","persona":"Provider specialist","mode":"Agent","effort":"Medium","workedSeconds":5,"totalElapsedSeconds":1320},"eligibleForEdit":false,"collapsedByDefault":false}
+      ],
+      "scriptedReplyIds": [],
+      "scriptedReplyCursor": 0,
+      "activeGoal": null,
+      "todo": [],
+      "questionnaires": [],
+      "subagentGroups": [],
+      "diffGroups": [],
+      "artifacts": ["artifact-provider-repair-report"],
+      "browserSessions": [],
+      "draftState": null
+    }
+  ],
+  "route_catalog": [
+    {"provider":"OpenAI","icon":"openai","accounts":[{"id":"openai-team","label":"Team subscription","connection":"Studio Workstation","models":[{"id":"5.6-sol","label":"5.6 Sol","available":true,"efforts":["Low","Medium","High","Extra high"],"speeds":["Normal","Fast"]},{"id":"5.6-terra","label":"5.6 Terra","available":true,"efforts":["Low","Medium","High"],"speeds":["Normal"]}]},{"id":"openai-api","label":"API project","connection":"Build Host East","models":[{"id":"5.6-sol-api","label":"5.6 Sol","available":true,"efforts":["Medium","High"],"speeds":["Normal","Fast"]}]}]},
+    {"provider":"Anthropic","icon":"anthropic","accounts":[{"id":"anthropic-cli","label":"Claude CLI profile","connection":"Studio Workstation","models":[{"id":"opus-5","label":"Opus 5","available":true,"efforts":["Medium","High"],"speeds":["Normal"]},{"id":"sonnet-5","label":"Sonnet 5","available":false,"reason":"Account model unavailable","efforts":[],"speeds":[]}]}]},
+    {"provider":"Google","icon":"google","accounts":[{"id":"antigravity-cli","label":"Antigravity CLI profile","connection":"Build Host East","models":[{"id":"ag-pro","label":"Antigravity Pro","available":false,"reason":"Sign-in needed","efforts":[],"speeds":[]}]}]},
+    {"provider":"Free Models","icon":"gift","accounts":[{"id":"free-source","label":"Source-attributed routes","connection":"Provider catalog","models":[{"id":"qwen-free","label":"Qwen 3.8 via Alibaba","available":true,"reason":"Free until provider reset","efforts":["Medium"],"speeds":["Normal"]},{"id":"cooldown-route","label":"Kimi K3 via Moonshot","available":false,"reason":"Cooling down until 18:20","efforts":[],"speeds":[]}]}]}
+  ],
+  "artifacts": [
+    {"id":"artifact-code","kind":"code file","title":"assistant_chat_state.rs","version":"v7","state":"ready","summary":"Typed state projection with thread-local route and outbox identity.","owner":"Artifact Service"},
+    {"id":"artifact-diff","kind":"multi-file diff","title":"Assistant Chat integration — 3 files","version":"v3","state":"updated","summary":"128 additions, 31 deletions across state, projection, and tests.","owner":"Artifact Service"},
+    {"id":"artifact-visual","kind":"test screenshot","title":"520 px pressure-state capture","version":"v2","state":"ready","summary":"Pinned history, open artifact, active question, and readable Chat floor.","owner":"Artifact Service"},
+    {"id":"artifact-report","kind":"report document","title":"Interaction and resilience findings","version":"v4","state":"ready","summary":"Focus, persistence, reconnect, and route-warning evidence.","owner":"Artifact Service"},
+    {"id":"artifact-provider-repair-report","kind":"report document","title":"Provider repair receipt","version":"v1","state":"ready","summary":"Official-source refresh verified; allowance remains unknown.","owner":"Artifact Service"}
+  ],
+  "questionnaires": [
+    {"id":"q-sol-primary","title":"Resolve the interaction contract","state":"open","activeIndex":0,"questions":[{"id":"q1","kind":"single select","prompt":"Where should the pinned history yield first under pressure?","required":true,"options":["Use spare host space","Convert to compact pin","Close the artifact workspace"]},{"id":"q2","kind":"multi select","prompt":"Which states need a durable receipt?","required":true,"options":["Route warning decision","Question submission","Reconnect replay","Transient history peek"]},{"id":"q3","kind":"freeform","prompt":"Name the minimum readable Chat floor and why.","required":false,"options":[]}]},
+    {"id":"q-sol-queued","title":"Choose the provider fallback posture","state":"queued","activeIndex":0,"questions":[{"id":"q4","kind":"single select","prompt":"If the preferred account is unavailable, what should happen?","required":true,"options":["Wait for reset","Offer another qualified route","Cancel the turn"]}]}
+  ],
+  "operational_fixture": {
+    "goal":{"state":"running","objective":"Create and verify the 5.6 Sol Assistant Chat concept family","phase":"Interactive architecture","progress":42,"blockedReason":"","attemptedRecovery":"","nextSafeAction":"Continue the deterministic implementation sequence"},
+    "todos":[{"id":"todo-1","label":"Freeze semantic host contract","state":"complete"},{"id":"todo-2","label":"Implement window geometries","state":"running"},{"id":"todo-3","label":"Implement thread compositions","state":"pending"},{"id":"todo-4","label":"Verify all 64 pairings","state":"pending"},{"id":"todo-5","label":"Inspect reduced motion","state":"pending"},{"id":"todo-6","label":"Run ConceptHub validation","state":"pending"},{"id":"todo-7","label":"Write impact reports","state":"pending"},{"id":"todo-8","label":"Retain known gaps","state":"pending"}],
+    "subagents":[{"id":"agent-canon","role":"Canon inventory","route":"OpenAI team · 5.6 Sol","state":"complete","elapsed":"4m 12s","summary":"Owner and supersession inventory returned"},{"id":"agent-video","role":"Motion inventory","route":"Anthropic CLI · Opus 5","state":"complete","elapsed":"3m 48s","summary":"Four causal motion principles returned"},{"id":"agent-tests","role":"Resilience tests","route":"OpenAI API · 5.6 Sol","state":"queued","elapsed":"Waiting","summary":"Capacity reserved for verification"}],
+    "crew":{"state":"wave 1 of 3","capacity":"2 concurrent of 6 required","reserve":"1 verification slot retained","members":6},
+    "activity":[{"domain":"Files","state":"complete","summary":"12 sources indexed"},{"domain":"BrowserWorkspace","state":"running","summary":"Inspecting 520 px pressure state"},{"domain":"Tests","state":"waiting","summary":"Waiting for visual frame"},{"domain":"Edits","state":"complete","summary":"3 files changed"},{"domain":"Verification","state":"pending","summary":"Pairing gate not started"}],
+    "diff":{"state":"updated","files":3,"additions":128,"deletions":31},
+    "resources":[{"kind":"Worktree","state":"conflict","summary":"Requested branch already leased by another task","action":"Use isolated worktree"},{"kind":"Port","state":"resolved","summary":"4177 occupied by an existing server","action":"Use OS-assigned port"},{"kind":"Tests","state":"running","summary":"14 of 64 pairing probes complete","action":"Watch"},{"kind":"Debug","state":"paused","summary":"Breakpoint at outbox replay reducer","action":"Open debug session"},{"kind":"Backups","state":"ready","summary":"Last snapshot 12 minutes ago","action":"Details"}],
+    "usage":{"state":"forecast","summary":"Two high-quality routes available; one route resets in 42 minutes","quality":"provider-reported plus local estimate"}
+  },
+  "deterministic_clock_start": "2026-08-10T22:30:00Z"
+}

@@ -429,3 +429,320 @@
 [data-motion="reduced"] .w1-drawer-pin, [data-motion="reduced"] .w2-strip-pin,
 [data-motion="reduced"] .w4-pane-pin, [data-motion="reduced"] .w6-sheet-pin,
 [data-motion="reduced"] .w7-col-pin { transition: none !important; }
+
+/* ================================================================= packet chrome
+ * Styles for the rebuilt selector row, header tools and composer. Everything here is
+ * unprefixed shared CSS, which CONTRACT §7 permits only for shared/*.css.
+ */
+
+/* ---------------------------------------------------------------- route popup */
+
+/* A horizontal rail of neutral provider marks. It FILTERS; it does not select, so the pressed
+ * state is a toggle and not a radio — two providers are never both "current". */
+.pmx-route-rail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 2px 6px;
+  border-bottom: var(--border-width, 1px) solid var(--border);
+}
+.pmx-route-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 24px;
+  border: var(--border-width, 1px) solid transparent;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.pmx-route-mark:hover { color: var(--text-primary); background: var(--surface-elevated); }
+.pmx-route-mark[data-on="1"] {
+  color: var(--text-primary);
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+}
+
+/* The account header is what makes two routes to the same model distinguishable, so the
+ * connection form and the setup state are part of it rather than a tooltip. */
+.pmx-route-acct {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 6px 3px;
+  font-size: var(--fs-2xs);
+}
+.pmx-route-acct-label { color: var(--text-primary); font-weight: 600; }
+.pmx-route-acct-conn { color: var(--text-muted); }
+.pmx-route-acct-state {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-warn, var(--text-muted)) 18%, transparent);
+  color: var(--text-primary);
+}
+
+.pmx-route-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 5px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  text-align: left;
+  cursor: pointer;
+}
+.pmx-route-row:hover { background: var(--surface-elevated); }
+.pmx-route-name { flex: 0 0 auto; }
+
+/* Three facts, no more. The cap is enforced in PMXRoute, and the flex layout here would make a
+ * fourth visibly wrong rather than quietly wrapping into a badge wall. */
+.pmx-route-facts { display: inline-flex; gap: 4px; min-width: 0; overflow: hidden; }
+.pmx-route-fact {
+  padding: 0 5px;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  white-space: nowrap;
+}
+.pmx-route-suffix { color: var(--text-muted); font-size: var(--fs-2xs); }
+
+/* An unavailable row is not activatable and states its reason inline. Opacity alone would look
+ * like a rendering accident. */
+.pmx-route-row[data-available="0"] { cursor: default; color: var(--text-muted); }
+.pmx-route-row[data-available="0"]:hover { background: transparent; }
+.pmx-route-reason { margin-left: auto; color: var(--text-muted); font-size: var(--fs-2xs); text-align: right; }
+
+.pmx-route-star {
+  margin-left: auto;
+  display: inline-flex;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.pmx-route-star[aria-pressed="true"] { color: var(--text-primary); }
+.pmx-route-foot { border-top: var(--border-width, 1px) solid var(--border); padding-top: 4px; }
+.pmx-route-settings {
+  width: 100%;
+  padding: 5px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  text-align: left;
+  cursor: pointer;
+}
+.pmx-route-settings:hover { background: var(--surface-elevated); }
+
+/* Every per-thread popup states its scope in the same place, so "does this change my other
+ * threads?" never needs a guess. */
+.pmx-popup-foot { border-top: var(--border-width, 1px) solid var(--border); margin-top: 4px; padding-top: 4px; }
+.pmx-popup-foot-line { font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-scope { font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-note { padding: 4px 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-hint { padding: 2px 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-effective {
+  padding: 6px;
+  margin-top: 4px;
+  border-top: var(--border-width, 1px) solid var(--border);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+}
+.pmx-popup-disclosure { padding: 4px 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-disclosure > summary { cursor: pointer; color: var(--text-primary); }
+.pmx-popup-tools { margin: 4px 0 0 14px; display: flex; flex-direction: column; gap: 2px; }
+
+/* ---------------------------------------------------------------- BSD treatment
+ *
+ * `auto-active` is the ONLY glow, it is theme-aware because it is built from the theme's own
+ * accent, and it animates only while a live PMXObservable operation is bound to the element via
+ * data-pmx-op. Manual `on` is a FILLED background instead — a distinct, static treatment, so
+ * "the system is currently reviewing" and "I turned this on" can never be confused. */
+.pmx-chrome-sel[data-pmx-bsd="on"] {
+  background: color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  color: var(--text-primary);
+}
+.pmx-chrome-sel[data-pmx-bsd="auto-active"][data-pmx-op] {
+  animation: pmx-bsd-glow 1.6s ease-in-out infinite;
+}
+@keyframes pmx-bsd-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+  50% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+}
+.pmx-chrome-sel[data-pmx-bsd="unavailable"],
+.pmx-chrome-sel[data-pmx-bsd="quota-limited"],
+.pmx-chrome-sel[data-pmx-bsd="timeout"] { color: var(--text-muted); }
+
+/* The route selector says so when the effective route is not the requested one. */
+.pmx-chrome-sel[data-pmx-differs="1"] .pmx-chrome-sel-value { color: var(--text-primary); font-style: italic; }
+
+/* Conditional peers cost no space when they do not apply. */
+.pmx-chrome-selrow[data-pmx-worktree="0"] .pmx-chrome-sel[data-kind="worktree"] { display: none; }
+.pmx-chrome-selrow[data-pmx-crew="0"] .pmx-chrome-sel[data-kind="crew"] { display: none; }
+
+/* ---------------------------------------------------------------- header tools */
+
+/* The fold is declarative: three chips leave the header and reappear at the top of the More
+ * popup. They stay in the DOM so the popup can anchor them at the same button. */
+.pmx-chrome-header[data-pmx-folded="1"] .pmx-chrome-btn[aria-label="Prior chats"],
+.pmx-chrome-header[data-pmx-folded="1"] .pmx-chrome-btn[aria-label="Environment"],
+.pmx-chrome-header[data-pmx-folded="1"] .pmx-chrome-btn[aria-label="Sync state"] { display: none; }
+
+/* A chip claims attention only when something is actionable. */
+.pmx-chrome-btn[data-pmx-conflicts]:not([data-pmx-conflicts=""])::after,
+.pmx-chrome-btn[data-pmx-queued]:not([data-pmx-queued=""])::after {
+  content: attr(data-pmx-conflicts) attr(data-pmx-queued);
+  margin-left: 3px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-primary) 24%, transparent);
+  color: var(--text-primary);
+  font-size: var(--fs-2xs);
+}
+.pmx-chrome-btn[data-pmx-transport="offline"],
+.pmx-chrome-btn[data-pmx-transport="reconnecting"] { color: var(--text-primary); }
+
+.pmx-ctx-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-muted) 22%, transparent);
+  overflow: hidden;
+}
+.pmx-ctx-bar-fill { height: 100%; background: var(--accent-primary); }
+.pmx-ctx-pressure { margin-top: 4px; font-size: var(--fs-2xs); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.pmx-ctx-cache { font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-ctx-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 2px;
+  font-size: var(--fs-2xs);
+}
+.pmx-ctx-row-label { color: var(--text-primary); }
+.pmx-ctx-row-prov { color: var(--text-muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-ctx-row[data-omitted="1"] .pmx-ctx-row-label { color: var(--text-muted); }
+.pmx-ctx-remove {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+.pmx-ctx-remove:hover { color: var(--text-primary); text-decoration: underline; }
+.pmx-ctx-receipt { margin-top: 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+.pmx-env-row { display: flex; justify-content: space-between; gap: 8px; padding: 2px 2px; font-size: var(--fs-2xs); }
+.pmx-env-key { color: var(--text-muted); }
+.pmx-env-val { color: var(--text-primary); text-align: right; min-width: 0; }
+.pmx-env-none { padding: 2px; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+.pmx-prior-row { padding: 6px 2px; border-bottom: var(--border-width, 1px) solid var(--border); }
+.pmx-prior-title { font-size: var(--fs-xs); color: var(--text-primary); font-weight: 600; }
+.pmx-prior-passage { font-size: var(--fs-2xs); color: var(--text-muted); margin: 2px 0 4px; }
+.pmx-prior-acts { display: flex; flex-wrap: wrap; gap: 4px; }
+.pmx-prior-act {
+  padding: 2px 7px;
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+.pmx-prior-act:hover { background: var(--surface-elevated); }
+
+/* ---------------------------------------------------------------- composer */
+
+/* The spell layer and the textarea share one box. The layer is behind, the textarea in front
+ * with a transparent background, so the caret and selection stay native while PM draws the
+ * decoration. Both must use identical typography or the underline drifts a pixel per word. */
+.pmx-composer-fieldwrap { position: relative; display: block; }
+.pmx-spell-layer,
+.pmx-composer-field {
+  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.pmx-spell-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  color: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+.pmx-composer-field { position: relative; z-index: 1; background: transparent; }
+
+/* A wavy underline, drawn under the run itself so it tracks wrapping for free. */
+.pmx-spell-hit {
+  text-decoration: underline wavy color-mix(in srgb, var(--accent-error, #c0392b) 70%, transparent);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 2px;
+}
+
+/* One always-truthful line. It is hidden only when there is genuinely nothing to say. */
+.pmx-composer-reason {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 2px 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.pmx-composer-link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: var(--text-primary);
+  font-size: var(--fs-2xs);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pmx-composer-send-label { margin-left: 4px; font-size: var(--fs-2xs); }
+.pmx-composer-chip-rep { color: var(--text-muted); font-size: var(--fs-2xs); }
+.pmx-composer-chip[data-cls="unsupported"] { border-color: color-mix(in srgb, var(--accent-error, #c0392b) 45%, var(--border)); }
+.pmx-composer-chip[data-queued="1"] { font-variant-numeric: tabular-nums; }
+
+/* A long draft scrolls inside its own ceiling rather than pushing the transcript away. */
+.pmx-composer[data-pmx-cstate="long"] .pmx-composer-field { overflow-y: auto; }
+/* The question state keeps the composer fully usable — the draft survives and typing continues.
+ * Only the hint line is added. */
+.pmx-composer[data-pmx-cstate="question"] .pmx-composer-reason { color: var(--text-primary); }
+.pmx-composer[data-pmx-cstate="setup-required"] .pmx-composer-send,
+.pmx-composer[data-pmx-cstate="disabled"] .pmx-composer-send { opacity: .5; cursor: default; }
+
+/* A suspended pin states why, in place. Hidden when there is nothing to say, so it costs no
+ * height in the ordinary case. */
+.pmx-chrome-hreason {
+  padding: 4px 8px;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  border-bottom: var(--border-width, 1px) solid var(--border);
+}
+.pmx-chrome-hreason[data-show="0"] { display: none; }
+
+/* An indefinite animation runs ONLY while a live operation backs the element. A status glyph whose
+ * thread is merely recorded as running in the corpus keeps its shape and loses its motion — the
+ * animation is a claim about right now, and without an operation there is nothing to claim. */
+.pmx-chrome-hstatus[data-pmx-static="1"] .pmx-arc-spin,
+.pmx-chrome-hstatus[data-pmx-static="1"] .pmx-core-pulse {
+  animation: none !important;
+}

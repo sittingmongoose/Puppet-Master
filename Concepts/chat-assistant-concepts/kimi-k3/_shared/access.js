@@ -275,6 +275,8 @@
             selected: p.id === c.id,
             action: function () {
               if (!c.tid) return;
+              if (window.K3Work && typeof window.K3Work.guardRouteChange === 'function' &&
+                  window.K3Work.guardRouteChange(ctx, c.tid)) return; // Goal frozen — Update-Goal first
               ctx.data.setThreadLocal(c.tid, { access: p.id });
               ctx.emit('data', { type: 'access-changed', threadId: c.tid, access: p.id });
             }

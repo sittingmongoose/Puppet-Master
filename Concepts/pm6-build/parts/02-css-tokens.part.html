@@ -50,6 +50,13 @@
       --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
       --ease-smooth:cubic-bezier(.4,0,.2,1); --ease-snap:cubic-bezier(.2,0,0,1);
       --ease-default:var(--ease-smooth); --sheen-dur:.6s;
+      /* Direct-manipulation motion (u11-prism vocabulary): pickup lift, drop
+         settle, and the neighbour-reflow FLIP shared by the dashboard widget
+         board and the Home surface drag. */
+      --mo-widget-pickup-dur:120ms; --mo-widget-pickup-ease:var(--ease-out);
+      --mo-widget-drop-dur:220ms; --mo-widget-drop-ease:var(--ease-snap);
+      --mo-widget-reflow-dur:240ms; --mo-widget-reflow-ease:cubic-bezier(.45,0,.4,1);
+      --mo-pulse:1.8s;
       --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
       --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
       --activity-bar-w:72px; --files-panel-w:280px; --chat-panel-w:550px; --chat-sidebar-w:200px;

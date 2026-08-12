@@ -118,13 +118,21 @@
       button.setAttribute("aria-expanded", String(!panel.hidden));
     };
     var close = function () { panel.hidden = true; sync(); };
-    button.addEventListener("click", function (ev) {
-      ev.stopPropagation();
+    button.addEventListener("click", function () {
       panel.hidden = !panel.hidden;
       sync();
     });
-    panel.addEventListener("click", function (ev) { ev.stopPropagation(); });
-    document.addEventListener("click", function () { if (!panel.hidden) close(); });
+    /* Outside-click close uses containment, not stopPropagation, so clicks
+       on inbox rows still bubble to the concept's document-level
+       data-notice-act / data-notice-dismiss delegation. */
+    document.addEventListener("click", function (ev) {
+      if (panel.hidden) return;
+      /* A row action may re-render the list mid-dispatch; a detached target
+         means the click began inside the panel — not an outside click. */
+      if (!document.documentElement.contains(ev.target)) return;
+      if (panel.contains(ev.target) || button.contains(ev.target)) return;
+      close();
+    });
     document.addEventListener("keydown", function (ev) {
       if (ev.key === "Escape" && !panel.hidden) { close(); button.focus(); }
     });

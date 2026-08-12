@@ -80,5 +80,5 @@ window.PM_ICONS = {
   github:     '<circle cx="12" cy="12" r="9"/><path d="M9 19c-2 0-2-2-2-3v-1.6M15 19c2 0 2-2 2-3v-1.6M9 19v-2a3 3 0 0 1 .9-2.2"/>',
   container:  '<rect x="3" y="8" width="18" height="9" rx="1"/><path d="M7 8v9M11 8v9M15 8v9"/>',
   searchindex:'<path d="M4 6h7M4 10h7M4 14h5"/><circle cx="16" cy="14.5" r="3"/><path d="m21 19.5-2.6-2.6"/>',
-  broom:      '<path d="M19 4 12 11"/><path d="M10.5 12.5l-5.5 5.5c-1 1-1 2.2 0 3.2l.8.8c1 1 2.2 1 3.2 0l5.5-5.5"/><path d="M9 13l4 4"/>'
-};
+  broom:      '<path d="M19 4 12 11"/><path d="M10.5 12.5l-5.5 5.5c-1 1-1 2.2 0 3.2l.8.8c1 1 2.2 1 3.2 0l5.5-5.5"/><path d="M9 13l4 4"/>',
+  eye:        '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>'

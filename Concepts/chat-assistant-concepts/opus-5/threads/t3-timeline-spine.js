@@ -550,29 +550,69 @@
 
   /* ---------------------------------------------------------------- questionnaire */
 
+  /* ---------------------------------------------------------------- question: the spine stepper
+   *
+   * This concept's whole vocabulary is a vertical spine with square markers, so a question is not a
+   * card dropped beside the spine — it is a RUN OF NODES ON the spine. Each question is one square
+   * node; the active node holds the option list; answered nodes fill solid and skipped nodes stay
+   * hollow. That means the progress indicator is not a separate label at all: **the filled-node run
+   * IS the progress**, which is why there is no `2 of 3` text anywhere in this concept.
+   *
+   * Cancel replaces the whole run with a single `Questions cancelled` node rather than removing it,
+   * because the spine is a chronology and a gap in it would be a lie about what happened.
+   */
   T3Thread.prototype.renderQuestion = function () {
-    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update()
-     * and therefore this function, mid-render. The inner pass appends a card, the outer
-     * pass then appends a second one into a host it already emptied — two identical
-     * questionnaires on screen. */
+    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update() and
+     * therefore this function, mid-render. The inner pass appends nodes, the outer pass then
+     * appends a second run into a host it already emptied. */
     if (this._inRenderQuestion) return;
 
-    /* Measure the outgoing card BEFORE the rebuild empties the host, so an
-     * advance between questions has a height to spring from. The reveal call
-     * sits outside the guard because the guard's whole job is to suppress the
-     * re-entrant inner pass, and the choreography must run once, on the outer. */
-    var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-    var pmxFrom = global.PMXReveal ? global.PMXReveal.measure(pmxHost && pmxHost.firstElementChild) : undefined;
+    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var from = global.PMXReveal ? global.PMXReveal.measure(host && host.firstElementChild) : undefined;
+    var prevKey = this._qkey || '';
 
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
 
-    if (global.PMXReveal) {
-      global.PMXReveal.afterRender(pmxHost, this.ctx.services, this.tid(), pmxFrom);
-    }
+    this._choreographQuestion(host, from, prevKey);
   };
 
-T3Thread.prototype._renderQuestionBody = function () {
+  /* The concept's OWN choreography, composed from primitives. The shared afterRender that used to
+   * live here decided the entrance, advance and collapse for all eight concepts identically; the
+   * packet makes that a hard failure, so each concept now spends its own primitives in its own
+   * order. This one travels VERTICALLY along the spine and never springs a box height, because a
+   * spine node is a fixed-size marker and growing it would break the rhythm of the column. */
+  T3Thread.prototype._choreographQuestion = function (host, from, prevKey) {
+    var R = global.PMXReveal;
+    if (!R || !host) return;
+
+    var key = R.keyFor(this.ctx.services, this.tid());
+    this._qkey = key;
+
+    /* Same question, one more keystroke: stay completely silent. A freeform textarea re-renders on
+     * every character because typing writes a draft and the draft notifies the store, so animating
+     * on append would replay the entrance per character. */
+    if (prevKey === key) return;
+    if (R.reduced(host)) return;
+
+    var run = host.querySelector('.t3-qrun');
+    if (!run) return;
+
+    var nodes = Array.prototype.slice.call(run.querySelectorAll('.t3-qnode'));
+    if (!prevKey && key) {
+      /* ENTRANCE: the run arrives as a cascade down the spine, so it reads as the column being
+       * extended rather than a panel appearing beside it. */
+      R.stagger(run, nodes);
+      global.setTimeout(function () { R.clearStagger(run, nodes); }, 900);
+      return;
+    }
+
+    /* ADVANCE: vertical travel. The newly active node gets the one-shot beat; nothing springs. */
+    var active = run.querySelector('.t3-qnode[data-state="active"]');
+    if (active) R.oneShot(active, 't3-qnode-travel', 420);
+  };
+
+  T3Thread.prototype._renderQuestionBody = function () {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
@@ -581,63 +621,187 @@ T3Thread.prototype._renderQuestionBody = function () {
     U().empty(host);
 
     var q = svc.questionnaire ? svc.questionnaire.activeFor(this.tid()) : null;
-    if (!q) return;
-
-    if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(this.tid(), true);
-
-    var idx = svc.questionnaire.currentIndex ? svc.questionnaire.currentIndex(q.id) : (q.currentQuestionIndex || 0);
-    var question = (q.questions || [])[idx];
-    if (!question) return;
-
-    var card = u.el('div', { class: 't3-question' });
-    card.appendChild(u.el('div', { class: 't3-question-head' }, [
-      u.el('span', { class: 't3-question-count', text: (idx + 1) + ' of ' + (q.questions || []).length }),
-      u.el('span', { class: 't3-question-req', text: question.required ? 'Required' : 'Optional' })
-    ]));
-    card.appendChild(u.el('p', { class: 't3-question-prompt', text: question.prompt }));
-
-    if (question.options && question.options.length) {
-      var opts = u.el('div', { class: 't3-question-opts' });
-      question.options.forEach(function (opt) {
-        var selected = (question.selected || []).indexOf(opt) >= 0;
-        var b = u.el('button', { class: 't3-opt', text: opt, aria: { pressed: selected ? 'true' : 'false' } });
-        self._on(b, 'click', function (ev) {
-          if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
-          svc.questionnaire.answer(q.id, question.id, opt);
-          self.renderQuestion();
-        });
-        opts.appendChild(b);
-      });
-      card.appendChild(opts);
-    } else {
-      var ta = u.el('textarea', { class: 't3-question-free pmx-scroll', aria: { label: question.prompt } });
-      ta.setAttribute('spellcheck', 'true');
-      ta.value = question.draft || '';
-      this._on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
-      card.appendChild(ta);
+    if (!q) {
+      /* A resolved flow leaves its receipt on the spine. The receipt is durable state, so it is
+       * rendered from history rather than remembered in a module local. */
+      this._renderQuestionReceipt(host);
+      return;
     }
 
-    var acts = u.el('div', { class: 't3-question-acts' });
-    var skip = u.el('button', { class: 't3-act', text: 'Skip' });
-    this._on(skip, 'click', function () { svc.questionnaire.skip(q.id, question.id); self.renderQuestion(); });
-    acts.appendChild(skip);
+    /* An active question takes priority; the work surfaces yield space but keep their state and
+     * come back untouched when it resolves. */
+    if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(this.tid(), true);
 
-    var isLast = idx === (q.questions || []).length - 1;
-    var primary = u.el('button', { class: 't3-act t3-act-primary', text: isLast ? 'Submit' : 'Next' });
+    var questions = q.questions || [];
+    var idx = svc.questionnaire.currentIndex(q.id);
+    var atEnd = svc.questionnaire.atEnd ? svc.questionnaire.atEnd(q.id) : false;
+
+    var run = u.el('div', { class: 't3-qrun', data: { phase: q.status || 'active' } });
+
+    /* The preparing beat is a single hollow node with the capsule material inside it, so the
+     * surface that becomes the question is already on the spine before the question exists. */
+    if (q.status === 'preparing') {
+      var prep = u.el('div', { class: 't3-qnode', data: { state: 'preparing' } });
+      prep.appendChild(u.el('span', { class: 't3-qmark' }));
+      prep.appendChild(global.PMXReveal.capsule('Preparing questions', this.ctx));
+      run.appendChild(prep);
+      host.appendChild(run);
+      return;
+    }
+
+    questions.forEach(function (question, i) {
+      var answered = question.kind === 'freeform'
+        ? !!(question.draft && String(question.draft).trim())
+        : !!(question.selected && question.selected.length);
+      var skipped = self._isSkipped(q, question.id);
+      var isActive = i === idx && !atEnd;
+
+      /* Four node states, and they are mutually exclusive by construction: a skipped node is
+       * hollow even if it carries a stale draft, because the user's last instruction was skip. */
+      var state = skipped ? 'skipped' : (isActive ? 'active' : (answered ? 'answered' : 'pending'));
+
+      var node = u.el('div', { class: 't3-qnode', data: { state: state, q: question.id } });
+
+      var mark = u.el('button', {
+        class: 't3-qmark', type: 'button',
+        aria: { label: 'Question ' + (i + 1) + ', ' + state }
+      });
+      /* The marker is the navigation. goTo is the service's own affordance and no concept exposed
+       * it; on a spine it is the obvious gesture, so it is wired here. */
+      self._on(mark, 'click', function () {
+        svc.questionnaire.goTo(q.id, i);
+        self.renderQuestion();
+      });
+      node.appendChild(mark);
+
+      var body = u.el('div', { class: 't3-qbody' });
+      body.appendChild(u.el('p', { class: 't3-qprompt', text: question.prompt }));
+
+      if (isActive) {
+        if (question.options && question.options.length) {
+          var opts = u.el('div', { class: 't3-qopts' });
+          question.options.forEach(function (opt) {
+            var sel = (question.selected || []).indexOf(opt) >= 0;
+            var b = u.el('button', { class: 't3-opt', text: opt, aria: { pressed: sel ? 'true' : 'false' } });
+            self._on(b, 'click', function (ev) {
+              if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
+              svc.questionnaire.answer(q.id, question.id, opt);
+              self.renderQuestion();
+            });
+            opts.appendChild(b);
+          });
+          body.appendChild(opts);
+        } else {
+          var ta = u.el('textarea', { class: 't3-qfree pmx-scroll', aria: { label: question.prompt } });
+          ta.setAttribute('spellcheck', 'false');
+          ta.value = question.draft || '';
+          self._on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
+          body.appendChild(ta);
+        }
+
+        /* The validation reason renders AT the field that caused it. A toast above the card would
+         * separate the complaint from the thing it is about, which is the whole reason the service
+         * returns a per-question reason rather than a single boolean. */
+        var reason = u.el('p', { class: 't3-qreason', data: { show: '0' } });
+        body.appendChild(reason);
+        node._reasonEl = reason;
+
+        body.appendChild(self._buildQuestionActions(q, question, i, reason));
+      } else if (skipped) {
+        /* Unskip is reachable, which it was not anywhere before: the service has always had it and
+         * no concept surfaced it, so a skip was effectively permanent. */
+        var un = u.el('button', { class: 't3-qmini', type: 'button', text: 'Unskip' });
+        self._on(un, 'click', function () {
+          svc.questionnaire.unskip(q.id, question.id);
+          svc.questionnaire.goTo(q.id, i);
+          self.renderQuestion();
+        });
+        body.appendChild(un);
+      }
+
+      node.appendChild(body);
+      run.appendChild(node);
+    });
+
+    if (atEnd) {
+      /* A terminal node, not a floating button: the spine has to show that the run is complete and
+       * waiting on one decision. */
+      var end = u.el('div', { class: 't3-qnode', data: { state: 'ready' } });
+      end.appendChild(u.el('span', { class: 't3-qmark' }));
+      var endBody = u.el('div', { class: 't3-qbody' }, [
+        u.el('p', { class: 't3-qprompt', text: 'Every question has been visited.' })
+      ]);
+      endBody.appendChild(this._buildQuestionActions(q, null, idx, null));
+      end.appendChild(endBody);
+      run.appendChild(end);
+    }
+
+    host.appendChild(run);
+  };
+
+  /* Skip state lives in the service's own map, keyed by questionnaire id plus question id, and is
+   * never written onto the question object. Reading it through one helper keeps that detail in one
+   * place instead of four call sites. */
+  T3Thread.prototype._isSkipped = function (q, questionId) {
+    var v = this.ctx.store.view(this.tid());
+    var slice = v.questionnaire;
+    if (!slice || !slice.skipped) return false;
+    return !!slice.skipped[q.id + '' + questionId];
+  };
+
+  T3Thread.prototype._buildQuestionActions = function (q, question, idx, reasonEl) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+    var acts = u.el('div', { class: 't3-qacts' });
+
+    function showReason(text) {
+      if (!reasonEl) { if (svc.toast) svc.toast.show(text); return; }
+      reasonEl.textContent = text;
+      reasonEl.setAttribute('data-show', '1');
+      if (global.PMXReveal) global.PMXReveal.reject(reasonEl);
+    }
+
+    if (idx > 0) {
+      /* Back was unreachable before this build. A three-question flow you cannot walk backwards is
+       * a form, not a conversation. */
+      var back = u.el('button', { class: 't3-qact', type: 'button', text: 'Back' });
+      this._on(back, 'click', function () { svc.questionnaire.prev(q.id); self.renderQuestion(); });
+      acts.appendChild(back);
+    }
+
+    if (question) {
+      var skip = u.el('button', { class: 't3-qact', type: 'button', text: 'Skip' });
+      this._on(skip, 'click', function () {
+        svc.questionnaire.skip(q.id, question.id);
+        self.renderQuestion();
+      });
+      acts.appendChild(skip);
+    }
+
+    var atEnd = svc.questionnaire.atEnd ? svc.questionnaire.atEnd(q.id) : false;
+    var primary = u.el('button', {
+      class: 't3-qact t3-qact-primary', type: 'button',
+      text: atEnd ? 'Submit' : 'Next'
+    });
     this._on(primary, 'click', function () {
-      if (isLast) {
-        var can = svc.questionnaire.canSubmit(q.id);
-        if (!can.ok) { if (global.PMXReveal) global.PMXReveal.reject(this); svc.toast.show('Answer the required questions first'); return; }
-        svc.questionnaire.submit(q.id);
+      if (atEnd) {
+        var res = svc.questionnaire.submit(q.id);
+        if (!res.ok) { showReason(res.reason || 'Answer the required questions first.'); return; }
+        /* Settle the submitting beat so the receipt exists at the end of this interaction rather
+         * than 700 ms later, which is also what makes the probe deterministic. */
+        svc.questionnaire.finishSubmit(q.id);
       } else {
-        svc.questionnaire.next(q.id);
+        var adv = svc.questionnaire.next(q.id);
+        /* next() validates, and returns the refusal rather than throwing. */
+        if (adv && adv.ok === false) { showReason(adv.reason); return; }
       }
       self.renderQuestion();
       self.renderSurfaces();
     });
     acts.appendChild(primary);
 
-    var cancel = u.el('button', { class: 't3-act', text: 'Cancel' });
+    var cancel = u.el('button', { class: 't3-qact', type: 'button', text: 'Cancel' });
     this._on(cancel, 'click', function () {
       svc.questionnaire.cancel(q.id);
       if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(self.tid(), false);
@@ -646,8 +810,62 @@ T3Thread.prototype._renderQuestionBody = function () {
     });
     acts.appendChild(cancel);
 
-    card.appendChild(acts);
-    host.appendChild(card);
+    return acts;
+  };
+
+  /* The receipt node. Submitted and cancelled both leave one, because "what happened to those
+   * questions" must be answerable from the transcript alone. */
+  T3Thread.prototype._renderQuestionReceipt = function (host) {
+    var u = U();
+    var svc = this.ctx.services;
+    var slice = this.ctx.store.view(this.tid()).questionnaire;
+    var history = (slice && slice.history) || [];
+    if (!history.length) return;
+
+    var last = history[history.length - 1];
+    if (!last.receipt) return;
+
+    var cancelled = last.receipt.status === 'cancelled';
+    var node = u.el('div', {
+      class: 't3-qnode t3-qreceipt',
+      data: { state: cancelled ? 'cancelled' : 'answered' }
+    });
+    node.appendChild(u.el('span', { class: 't3-qmark' }));
+
+    var answered = 0;
+    for (var k in last.receipt.answers) if (Object.prototype.hasOwnProperty.call(last.receipt.answers, k)) answered++;
+    var skippedCount = (last.receipt.skipped || []).length;
+
+    /* Cancel collapses the WHOLE run to one node. The matrix is explicit about it, and it is the
+     * right shape: a cancelled run has one fact, not three. */
+    var text = cancelled
+      ? 'Questions cancelled'
+      : (answered + ' answered' + (skippedCount ? ', ' + skippedCount + ' skipped' : ''));
+
+    var body = u.el('div', { class: 't3-qbody' }, [u.el('p', { class: 't3-qprompt', text: text })]);
+    var open = u.el('button', { class: 't3-qmini', type: 'button', text: 'Show answers' });
+    this._on(open, 'click', function () {
+      svc.popup.open({
+        anchorEl: open, kind: 'panel', width: 300,
+        build: function (h) {
+          h.appendChild(u.el('div', { class: 'pmx-pop-title', text: 'Question receipt' }));
+          (last.questions || []).forEach(function (question) {
+            var val = last.receipt.answers[question.id];
+            var wasSkipped = (last.receipt.skipped || []).indexOf(question.id) >= 0;
+            h.appendChild(u.el('div', { class: 't3-qreceipt-row' }, [
+              u.el('span', { class: 't3-qreceipt-q', text: question.prompt }),
+              u.el('span', {
+                class: 't3-qreceipt-a',
+                text: wasSkipped ? 'Skipped' : (val == null ? 'No answer' : [].concat(val).join(', '))
+              })
+            ]));
+          });
+        }
+      });
+    });
+    body.appendChild(open);
+    node.appendChild(body);
+    host.appendChild(node);
   };
 
   /* ---------------------------------------------------------------- live status */

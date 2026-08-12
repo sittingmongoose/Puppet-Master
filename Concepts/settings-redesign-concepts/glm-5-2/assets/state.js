@@ -203,6 +203,14 @@
       if (d.title.toLowerCase().indexOf(q) > -1 || d.purpose.toLowerCase().indexOf(q) > -1)
         out.push({ kind: "destination", cat: d.target.split(".")[0], sub: d.target.split(".")[1], label: d.title, expl: d.purpose });
     });
+    // packet-01 extra result types: action / status / diagnostic / workflow / unavailable-capability
+    (PM_DEMO.searchExtra || []).forEach(function (e) {
+      var hay = (e.label + " " + e.expl + " " + (e.kw || "")).toLowerCase();
+      if (hay.indexOf(q) > -1) {
+        var r = e.route || {};
+        out.push({ kind: e.kind, label: e.label, expl: e.expl, manager: r.manager, cat: r.cat, sub: r.sub });
+      }
+    });
     return out.slice(0, 24);
   };
 

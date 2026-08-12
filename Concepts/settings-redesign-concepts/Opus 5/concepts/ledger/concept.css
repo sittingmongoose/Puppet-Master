@@ -50,6 +50,10 @@
   border-bottom: var(--pm-border-w) solid var(--pm-border-2);
   background: var(--pm-surface-1);
   min-width: 0;
+  /* The instrument bar folds onto a second line rather than driving a
+   * horizontal scrollbar through the whole record. */
+  flex-wrap: wrap;
+  row-gap: 8px;
 }
 .lg-bar-home {
   display: inline-flex; align-items: center; gap: 6px;
@@ -549,3 +553,117 @@
 }
 .lg-toc.is-drawer.is-open { transform: none; }
 [data-reduced-motion="1"] .lg-toc.is-drawer { transition: none; }
+
+
+/* ===================================== MANAGER SPEC SURFACE (record blocks) */
+/* A manager is a ledger of its own: numbered blocks of records, each carrying a
+ * value, a source and a state. Every assigned manager uses this one path. */
+
+.lg-block-ord {
+  font-family: var(--pm-font-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--pm-text-3);
+  margin-right: 10px;
+}
+.lg-prose { margin: 0 0 8px; font-size: 13px; line-height: 1.55; color: var(--pm-text-2); max-width: 68ch; }
+
+.lg-rec-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--pm-space-3); }
+.lg-rec-name { font-size: 13px; font-weight: 600; color: var(--pm-text-1); }
+.lg-rec-sub { margin-top: 2px; font-size: 11.5px; color: var(--pm-text-3); font-family: var(--pm-font-mono); }
+.lg-rec-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.lg-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  background: var(--pm-surface-2);
+  font-family: var(--pm-font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--pm-text-2);
+}
+.lg-badge[data-kind="warning"] { color: var(--pm-attention); background: var(--pm-attention-bg); border-color: transparent; }
+.lg-badge[data-kind="managed"] { color: var(--pm-managed); background: var(--pm-managed-bg); border-color: transparent; }
+
+.lg-rec-controls { display: flex; flex-direction: column; gap: 10px; margin-top: var(--pm-space-3); }
+.lg-rec-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.lg-rec-extra td { padding-top: 0; }
+
+.lg-field { display: flex; gap: 8px; align-items: baseline; font-size: 12px; padding: 3px 0; }
+.lg-field-k { min-width: 140px; color: var(--pm-text-3); }
+.lg-field-v { color: var(--pm-text-1); font-family: var(--pm-font-mono); font-variant-numeric: tabular-nums; }
+
+.lg-details { border-top: var(--pm-border-w) solid var(--pm-border-1); padding-top: 8px; }
+.lg-details summary { cursor: pointer; font-size: 12px; color: var(--pm-text-2); list-style: none; }
+.lg-details summary::-webkit-details-marker { display: none; }
+.lg-details summary::before { content: "+ "; font-family: var(--pm-font-mono); color: var(--pm-text-3); }
+.lg-details[open] summary::before { content: "- "; }
+
+.lg-edit { display: flex; flex-direction: column; gap: 6px; max-width: 460px; }
+.lg-edit-label { font-size: 12px; color: var(--pm-text-2); }
+.lg-input, .lg-toggle {
+  font: inherit;
+  font-family: var(--pm-font-mono);
+  font-size: 12.5px;
+  padding: 6px 9px;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+}
+.lg-toggle { width: fit-content; min-width: 60px; cursor: pointer; text-align: left; }
+.lg-toggle[aria-pressed="true"] { background: var(--pm-accent-soft); border-color: var(--pm-accent); color: var(--pm-accent-text); }
+.lg-input:focus-visible, .lg-toggle:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.lg-secret { display: flex; align-items: center; gap: 10px; font-family: var(--pm-font-mono); font-size: 12.5px; }
+
+.lg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px 3px 8px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  background: var(--pm-surface-2);
+  font-family: var(--pm-font-mono);
+  font-size: 11.5px;
+  color: var(--pm-text-1);
+}
+.lg-chip.is-add { cursor: pointer; color: var(--pm-accent); border-style: dashed; padding-right: 8px; }
+.lg-chip-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 17px; height: 17px; padding: 0;
+  border: none; background: transparent; color: var(--pm-text-3); cursor: pointer;
+}
+.lg-chip-btn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+
+.lg-receipts { display: flex; flex-direction: column; gap: 6px; }
+
+.pm-app[data-width="squeezed"] .lg-rec-head { flex-direction: column; }
+.pm-app[data-width="squeezed"] .lg-field { flex-direction: column; gap: 2px; }
+.pm-app[data-width="squeezed"] .lg-field-k { min-width: 0; }
+
+.lg-rec {
+  padding: 10px var(--pm-space-2);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  scroll-margin-top: 56px;
+}
+.lg-rec:last-child { border-bottom: none; }
+.lg-rec-controls { min-width: 0; }
+.lg-rec-actions { min-width: 0; }
+
+/* A well-formed link that names nothing here, entered into the record. */
+.lg-badroute {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px var(--pm-space-4);
+  border-bottom: var(--pm-border-w) solid var(--pm-attention);
+  background: var(--pm-attention-bg);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--pm-text-1);
+}
+.lg-badroute svg { color: var(--pm-attention); flex: none; margin-top: 2px; }
+.lg-badroute code { font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-text-2); }

@@ -43,7 +43,7 @@ import dead_selectors  # noqa: E402  (frozen human-reviewed dead list)
 import home_workspace_source as home_source  # noqa: E402  (authored T20 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
-BASE_SHA = "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2"
+BASE_SHA = "45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401"
 
 # Segmentation census measured on the pinned base (design memo said 28
 # blocks; actual scan of the pinned base finds 29 -- recorded adaptation).
@@ -1873,7 +1873,7 @@ def t20_home_workspace(doc, notes):
     replacement = (
         "\n        // PM7 T20: surface DnD is Pointer Events/model-first; "
         "editor-tab DnD remains local.\n"
-        "        // Setup Drag & Drop for editor tabs"
+        "        " + home_source.LEGACY_SURFACE_DND_ANCHOR
     )
     doc = legacy_re.sub(replacement, doc, count=1)
     need("draggedPaneId" not in doc,

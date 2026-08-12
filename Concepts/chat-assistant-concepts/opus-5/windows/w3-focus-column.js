@@ -8,15 +8,13 @@
  * window. Below ~640px both gutters disappear entirely (not relocated, not doubled up
  * anywhere else) and the column simply takes the full width.
  *
- * Deliberately does NOT provide `threadHistory`. Per CONTRACT.md section 2, that region is
- * "OPTIONAL — null means the window renders history itself," and that is exactly the case
- * here — this is the concept in the set that proves a thread module degrades correctly when
- * the region is absent. Thread switching instead lives in a command-style overlay this window
- * builds and owns directly (title, filter, list), reading straight from ctx.data / ctx.store
- * the same way the shared PMXThreadHistory module does, and opened through ctx.services.popup
- * like every other popup in the workspace.
- *
- * Contract: ../CONTRACT.md sections 1, 2, 4, 7, 8, 9. Services: ../shared/SERVICES.md.
+ * Provides `threadHistory` AND owns a command-style overlay. The header used to claim it did
+ * NOT provide the region at all — a leftover from an earlier revision — which made the file
+ * read as the set's absent-region case when in fact w8 is that case. Both are true here and
+ * they are not in conflict: the shared module renders the pinned rail in the left gutter, and
+ * the command overlay is the transient switcher this concept builds itself (title, filter,
+ * list) and opens through ctx.services.popup. The rail is the persistent surface; the overlay
+ * is the fast path.
  */
 (function (global) {
   'use strict';
@@ -156,6 +154,14 @@
     main.appendChild(gutterRight);
 
     shell.appendChild(main);
+    /* Artifact workspace: a column OUTSIDE .w3-main, sized so --w3-measure stays centred in the
+     * remainder. Pinned history owns the left gutter, so the artifact takes the outer column and
+     * the two never contend. Switcher is a vertical marker list in the artifact's own gutter,
+     * matching the jump-marker idiom this concept already uses. */
+    this.artifactSwitch = u.el('div', { class: 'w3-artifact-markers' });
+    this.artifactBody = u.el('div', { class: 'w3-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w3-artifact-host' }, [this.artifactSwitch, this.artifactBody]);
+    shell.insertBefore(this.artifactHost, main);
 
     /* ---------------------------------------------------------------- composer */
     this.composerHost = u.el('div', { class: 'w3-composer', data: { pmxRegion: 'composerHost' } });
@@ -171,6 +177,13 @@
       data: { pmxWindow: 'w3', pmxRegion: 'overlayRoot' }
     });
     this.root.appendChild(this.overlay);
+
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
 
     /* ---------------------------------------------------------------- wiring */
     this._on(this.jumpTopBtn, 'click', function () { self.jumpTo(0); });
@@ -334,7 +347,13 @@
 
   W3Window.prototype.syncPin = function () {
     var TH = global.PMXThreadHistory;
-    var pin = TH.pinState(this.ctx, this.pinRailBody, 900);
+    /* minChat is 440 here, higher than every other concept, because this one protects a 68ch
+     * measure: below 440 it is the measure that breaks first, not the history. */
+    var r = TH.applyTo(this.pinRailBody, TH.resolve(this.ctx, this.pinRailBody, TH.floorsFor('w3')));
+    TH.reasonNode(this.pinRailBody, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
+    if (this.shell) this.shell.setAttribute('data-w3-history', r.effective);
     this.pinRail.setAttribute('data-w3-pinned', pin.active ? '1' : '0');
     if (this.shell) this.shell.setAttribute('data-w3-pinned', pin.active ? '1' : '0');
     TH.syncPinButton(this.pinBtn, pin.asked);
@@ -370,7 +389,36 @@
      * step through its own MutationObserver rather than through store updates. */
   };
 
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W3Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w3-artifact', open ? '1' : '0');
+
+    /* A vertical marker list, the same square-marker idiom as the transcript's jump markers. Titles
+     * live in the title attribute: a 28px gutter cannot hold text, and a clipped label is worse than
+     * a marker with a tooltip. */
+    var u = U();
+    u.empty(this.artifactSwitch);
+    if (!open) return;
+    var self = this;
+    A.list().forEach(function (a) {
+      var m = u.el('button', {
+        class: 'w3-artifact-marker', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false', label: a.title }
+      });
+      m.title = a.title;
+      u.on(m, 'click', function () { A.switchTo(a.id); });
+      self.artifactSwitch.appendChild(m);
+    });
+  };
+
   W3Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this._mo) { try { this._mo.disconnect(); } catch (e) {} this._mo = null; }
@@ -383,7 +431,7 @@
   global.PMX.window.register('w3', {
     name: 'Focus Column',
     blurb: 'A centred transcript column capped at a comfortable reading width, flanked by slim symmetric gutters for jump markers and a scroll-position indicator, with thread switching as a command-style overlay the window builds itself.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W3Window(root, ctx);
       return {
@@ -394,7 +442,8 @@
           overlayRoot: inst.overlay,
           workSurfaceHost: inst.surfaceHost,
           threadHistory: inst.pinRailBody,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (open) { inst.setRail(open); },

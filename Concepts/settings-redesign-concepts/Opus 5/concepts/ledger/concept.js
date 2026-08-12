@@ -160,11 +160,23 @@
 
   /* ============================================================== RENDER */
 
+  /* A well-formed link naming nothing here is a renamed id or a stale bookmark.
+   * The record says so and quotes the link rather than showing an empty page. */
+  function badRouteNotice(hash) {
+    var n = el("div", "lg-badroute");
+    n.setAttribute("role", "status");
+    n.innerHTML = I("alert", 14) +
+      "<span><strong>That link points at something this concept does not contain.</strong> " +
+      "<code>" + E(hash) + "</code> — the id may have been renamed, or it may live in another concept.</span>";
+    return n;
+  }
+
   function render() {
     closePop();
     var s = store.get();
     var surface = el("div", "lg-surface");
     surface.appendChild(buildBar());
+    if (s.badRoute) surface.appendChild(badRouteNotice(s.badRoute));
 
     if (s.query.trim() || s.tokens.length) {
       surface.appendChild(buildResults());
@@ -1389,7 +1401,9 @@
   }
 
   function itemRecord(it, ctx) {
-    var r = el("div", "lg-record");
+    /* A spec item is a record, but not a setting row: it does not carry the
+     * value/source/scope columns, so it must not borrow that grid. */
+    var r = el("div", "lg-rec");
     r.setAttribute("data-item", it.id);
     var head = el("div", "lg-rec-head");
     head.innerHTML = '<div><div class="lg-rec-name">' + E(it.name) + "</div>" +
@@ -1519,8 +1533,7 @@
       control = el("button", "lg-toggle");
       control.type = "button";
       control.id = id;
-      control.setAttribute("role", "switch");
-      control.setAttribute("aria-checked", String(current === true));
+      control.setAttribute("aria-pressed", String(current === true));
       control.textContent = current ? "On" : "Off";
       control.addEventListener("click", function () { commit(current === true ? false : true); });
     } else if (field.kind === "select") {
@@ -1623,16 +1636,104 @@
 
   /* ========================================================== NAVIGATION */
 
+  /* ------------------------------------------------------------- routing */
+
+  function currentRoute() {
+    var s = store.get();
+    var demo = s.demoState === "normal" ? null : s.demoState;
+    if (s.view === "manager" && s.managerId) {
+      return { kind: "manager", managerId: s.managerId, sectionId: s.managerSectionId,
+        itemId: s.managerItemId, demo: demo };
+    }
+    if (s.query && s.query.trim()) return { kind: "search", query: s.query.trim(), demo: demo };
+    if (s.view === "workspace" && s.categoryId) {
+      return { kind: "category", categoryId: s.categoryId, subcategoryId: s.activeSub || null,
+        settingId: null, demo: demo };
+    }
+    return { kind: "home", demo: demo };
+  }
+
+  function writeRoute(replace) {
+    var r = currentRoute();
+    store.set({ route: r });
+    window.PMRoute.write(r, replace === true);
+  }
+
+  function routeExists(route) {
+    if (route.kind === "manager") return K.has(route.managerId);
+    if (route.kind === "category") {
+      var cat = S.findCategory(D, route.categoryId);
+      if (!cat) return false;
+      if (route.subcategoryId) {
+        var hit = cat.subcategories.filter(function (x) { return x.id === route.subcategoryId; })[0];
+        if (!hit) return false;
+        if (route.settingId && !S.findSetting(D, route.settingId)) return false;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function applyRoute(route) {
+    if (route.demo) {
+      store.set({ demoState: route.demo, catalogueRefreshing: route.demo === "loading" });
+      if (shell) shell.setDemoState(route.demo);
+    }
+    if (routeExists(route) === false) {
+      store.set({ view: "home", categoryId: null, managerId: null, query: "", tokens: [],
+        managerSectionId: null, managerItemId: null, badRoute: window.PMRoute.format(route) });
+      render();
+      return;
+    }
+    store.set({ badRoute: null });
+
+    if (route.kind === "manager") {
+      store.set({ view: "manager", managerId: route.managerId, query: "", tokens: [],
+        categoryId: store.get().categoryId || "agents",
+        managerSectionId: route.sectionId, managerItemId: route.itemId });
+      render();
+      return;
+    }
+    if (route.kind === "search") {
+      store.set({ view: "home", query: route.query, managerId: null });
+      render();
+      return;
+    }
+    if (route.kind === "category") {
+      store.set({ view: "workspace", categoryId: route.categoryId, managerId: null, query: "", tokens: [],
+        managerSectionId: null, managerItemId: null, activeSub: route.subcategoryId || null });
+      render();
+      if (route.subcategoryId && spy) {
+        window.PMSections.afterLayout(function () {
+          var focusEl = route.settingId && docEl ? docEl.querySelector('[data-setting="' + route.settingId + '"]') : null;
+          spy.jump(route.subcategoryId, { focusEl: focusEl });
+        });
+      }
+      return;
+    }
+    store.set({ view: "home", categoryId: null, managerId: null, query: "", tokens: [],
+      managerSectionId: null, managerItemId: null });
+    render();
+  }
+
   function goTo(t) {
     closePop();
     closeDrawer();
     if (t.managerId && (t.kind === "manager" || t.kind === "provider" || t.kind === "model")) {
-      store.set({ query: "", tokens: [], view: "manager", managerId: t.managerId, categoryId: t.categoryId || "agents" });
+      store.set({ query: "", tokens: [], view: "manager", managerId: t.managerId,
+        categoryId: t.categoryId || "agents", managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
       render();
       announce("Opened " + ((D.managers[t.managerId] || {}).title || "manager") + ".");
       return;
     }
-    if (!t.categoryId) { store.set({ query: "", tokens: [], view: "home", categoryId: null, managerId: null }); render(); return; }
+    if (!t.categoryId) {
+      store.set({ query: "", tokens: [], view: "home", categoryId: null, managerId: null,
+        managerSectionId: null, managerItemId: null, badRoute: null });
+      writeRoute();
+      render();
+      return;
+    }
     if (t.targetId) {
       var f = S.findSetting(D, t.targetId);
       if (f) {
@@ -1657,35 +1758,29 @@
 
   /* =============================================================== MOUNT */
 
-  var demo = document.createElement("select");
-  demo.setAttribute("aria-label", "Demo state");
-  D.demoStates.forEach(function (d) {
-    var o = document.createElement("option");
-    o.value = d.id; o.textContent = d.label;
-    demo.appendChild(o);
-  });
-  var wrap = document.createElement("span");
-  wrap.style.cssText = "display:inline-flex;align-items:center;gap:6px";
-  var lbl = document.createElement("span");
-  lbl.className = "pm-review-label"; lbl.textContent = "Demo state";
-  wrap.appendChild(lbl); wrap.appendChild(demo);
-
+  /* The shell owns the Demo state select and the Reset button now. */
   shell = window.PMShell.mount({
     rootId: "pm-root",
-    concept: "Ledger · Settings as a record",
-    conceptId: "ledger",
-    theme: "retro-dark",
-    extraControls: wrap,
+    concept: "Ledger \u00b7 Settings as a record",
+    conceptId: CONCEPT_ID,
+    theme: store.get().theme || "retro-dark",
+    demoState: store.get().demoState,
+    onDemoState: function (id) {
+      store.set({ demoState: id, catalogueRefreshing: id === "loading" });
+      writeRoute();
+      render();
+      announce("Demo state: " + id + ".");
+    },
+    onReceiptAction: function (r) { showReceipt(r); },
     onLayout: function () { if (spy) spy.measure(); },
-    onWidthMode: function (mode) { if (mode !== "squeezed") closeDrawer(); if (spy) spy.measure(); }
+    onWidthMode: function () { if (spy) spy.measure(); }
   });
   mainEl = shell.main;
 
-  demo.addEventListener("change", function () {
-    store.set({ demoState: demo.value, catalogueRefreshing: demo.value === "loading" });
-    render();
-    announce("Demo state: " + demo.options[demo.selectedIndex].text);
-  });
+  window.PMStore.persist(CONCEPT_ID, store, window.PMStore.PERSIST_KEYS);
+
+  /* Back and forward are native hashchange events. */
+  window.PMRoute.onChange(function (route) { applyRoute(route); });
 
   window.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -1695,5 +1790,13 @@
     }
   });
 
-  render();
+  /* The hash wins on load; a saved route is restored with replace. */
+  if ((window.location.hash || "") !== "") {
+    applyRoute(window.PMRoute.parse());
+  } else if (store.get().route) {
+    applyRoute(store.get().route);
+    writeRoute(true);
+  } else {
+    render();
+  }
 })();

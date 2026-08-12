@@ -28,10 +28,16 @@
   var MAX_W = 1200;
   var ROLES = ['primary', 'secondary', 'collapsed'];
 
+  /* The artifact is a FOURTH PANE, not a column. This is the only concept where that is the right
+   * answer: the accordion already owns "one thing expanded at a time", so an artifact column would
+   * introduce a second, contradictory space model inside the same window. As a pane it inherits the
+   * promotion rules for free — opening it makes it `primary` and drops History to a collapsed
+   * strip, which is exactly the coexistence rule the matrix specifies. */
   var PANE_DEFS = [
     { key: 'conversation', label: 'Conversation', icon: 'layers' },
     { key: 'work', label: 'Work', icon: 'terminal' },
-    { key: 'history', label: 'History', icon: 'thread' }
+    { key: 'history', label: 'History', icon: 'thread' },
+    { key: 'artifact', label: 'Artifact', icon: 'artifact' }
   ];
 
   function W4Window(root, ctx) {
@@ -43,7 +49,9 @@
      * secondary (expanded only when the container is wide enough for two), index 2 is
      * collapsed. Local instance state, not store state — this is window chrome, like w1's
      * drawer-open flag, and every mount starts from the same sensible default. */
-    this.order = ['conversation', 'work', 'history'];
+    /* The artifact starts last: it has nothing in it until something is produced, and a pane that
+     * opens empty teaches the reader that panes are decoration. */
+    this.order = ['conversation', 'work', 'history', 'artifact'];
     this.build();
   }
 
@@ -105,11 +113,48 @@
     this.questionHost = this.panes.work.questionHost;
     this.surfaceHost = this.panes.work.surfaceHost;
     this.threadHistory = this.panes.history.historyHost;
+    this.artifactHost = this.panes.artifact.artifactHost;
+
+    /* Opening an artifact promotes its pane and, by the accordion's own rules, drops History to a
+     * collapsed strip. That is the coexistence rule for this concept: one expanded surface, no new
+     * space model. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
 
     this.applyRoles();
     this.syncStatus();
 
     this.offs.push(svc.runtime.onTick(function () { self.syncStatus(); }));
+  };
+
+  /* The segmented control is rebuilt from the catalog rather than stored, so a new artifact record
+   * appears without this window knowing anything about artifact kinds. */
+  W4Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A || !this.artifactSeg) return;
+    var self = this;
+    var u = U();
+    var open = A.isOpen();
+    var activeId = A.activeId();
+
+    this.shell.setAttribute('data-w4-artifact', open ? '1' : '0');
+    var pane = this.panes.artifact;
+    if (pane) pane.el.setAttribute('data-has-content', open ? '1' : '0');
+
+    if (open && this.order[0] !== 'artifact') this.promote('artifact');
+
+    u.empty(this.artifactSeg);
+    if (!open) return;
+    A.list().forEach(function (a) {
+      var seg = u.el('button', {
+        class: 'w4-artifact-seg-btn', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false' }
+      }, [u.el('span', { text: a.title })]);
+      u.on(seg, 'click', function () { A.switchTo(a.id); });
+      self.artifactSeg.appendChild(seg);
+    });
   };
 
   W4Window.prototype.buildPane = function (def) {
@@ -133,7 +178,7 @@
     this._on(head, 'click', function () { self.promote(def.key); });
     el.appendChild(head);
 
-    var body, questionHost = null, surfaceHost = null, historyHost = null;
+    var body, questionHost = null, surfaceHost = null, historyHost = null, artifactHost = null;
 
     if (def.key === 'conversation') {
       body = u.el('div', {
@@ -146,6 +191,15 @@
       surfaceHost = u.el('div', { class: 'w4-surface-host', data: { pmxRegion: 'workSurfaceHost' } });
       body.appendChild(questionHost);
       body.appendChild(surfaceHost);
+    } else if (def.key === 'artifact') {
+      body = u.el('div', { class: 'w4-pane-body w4-artifact-body-wrap pmx-scroll' });
+      /* Sub-header segmented control, per the matrix. It sits inside the pane body rather than the
+       * head because the head is a single button that promotes the pane — putting segments in it
+       * would nest interactive controls inside a control. */
+      this.artifactSeg = u.el('div', { class: 'w4-artifact-seg' });
+      artifactHost = u.el('div', { class: 'w4-artifact-body', data: { pmxRegion: 'artifactHost' } });
+      body.appendChild(this.artifactSeg);
+      body.appendChild(artifactHost);
     } else {
       body = u.el('div', { class: 'w4-pane-body w4-history-body' });
       historyHost = u.el('div', { class: 'w4-history-host', data: { pmxRegion: 'threadHistory' } });
@@ -163,7 +217,8 @@
 
     return {
       key: def.key, el: el, head: head, status: status, chevron: chevron, body: body,
-      questionHost: questionHost, surfaceHost: surfaceHost, historyHost: historyHost
+      questionHost: questionHost, surfaceHost: surfaceHost, historyHost: historyHost,
+      artifactHost: artifactHost
     };
   };
 
@@ -182,9 +237,15 @@
   W4Window.prototype.applyRoles = function () {
     var TH = global.PMXThreadHistory;
     var histPane = this.panes.history;
-    var pin = (TH && TH.pinState && histPane)
-      ? TH.pinState(this.ctx, histPane.el, 900)
-      : { asked: false, active: false };
+    /* fullColumn and minStageForFull are both 0 for this concept: history is a PANE in the
+     * existing accordion and never takes width, so a width floor would gate a pin that costs
+     * nothing. */
+    var r = (TH && histPane)
+      ? TH.applyTo(histPane.historyHost, TH.resolve(this.ctx, histPane.el, TH.floorsFor('w4')))
+      : { state: 'closed', effective: 'closed', reason: null };
+    if (histPane) TH.reasonNode(histPane.historyHost, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
 
     /* A pinned pane never collapses. It is lifted to SECONDARY rather than primary
      * on purpose: the conversation keeps the primary slot, because pinning history
@@ -276,6 +337,7 @@
   };
 
   W4Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
@@ -285,7 +347,7 @@
   global.PMX.window.register('w4', {
     name: 'Stacked Panes',
     blurb: 'Conversation, Work, and History share one vertical accordion instead of splitting the width — exactly one expanded at a narrow chat, two side by side once there is room, and the rest as slim headers that keep their live status visible.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W4Window(root, ctx);
       return {
@@ -296,7 +358,8 @@
           overlayRoot: inst.overlay,
           threadHistory: inst.threadHistory,
           workSurfaceHost: inst.surfaceHost,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactHost
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (open) { inst.setRail(open); },

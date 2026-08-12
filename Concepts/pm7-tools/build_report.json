@@ -1,16 +1,16 @@
 {
-  "generated": "2026-08-05 10:55:45",
-  "base": "/Users/jaredsmacbookair/Documents/PuppetMaster/Concepts/pm7-tools/base/PM7-base.html",
-  "base_sha256": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2",
-  "base_sha_pinned": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2",
+  "generated": "2026-08-12 12:20:53",
+  "base": "/mnt/Cursor/PuppetMaster/Concepts/pm7-tools/base/PM7-base.html",
+  "base_sha256": "45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401",
+  "base_sha_pinned": "45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401",
   "base_pin_ok": true,
-  "base_bytes": 3142754,
+  "base_bytes": 3180947,
   "transforms": [
     {
       "name": "T01_dead_css_selectors",
       "status": "ok",
-      "bytes_before": 3142754,
-      "bytes_after": 3089807,
+      "bytes_before": 3180947,
+      "bytes_after": 3128000,
       "bytes_delta": -52947,
       "notes": {
         "selectors_frozen": 399,
@@ -34,8 +34,8 @@
     {
       "name": "T02_shimmer_guard",
       "status": "ok",
-      "bytes_before": 3089807,
-      "bytes_after": 3089679,
+      "bytes_before": 3128000,
+      "bytes_after": 3127872,
       "bytes_delta": -128,
       "notes": {
         "removed": "guard comment + display:none rule"
@@ -44,8 +44,8 @@
     {
       "name": "T03_pm_sheen_killer",
       "status": "ok",
-      "bytes_before": 3089679,
-      "bytes_after": 3089521,
+      "bytes_before": 3127872,
+      "bytes_after": 3127714,
       "bytes_delta": -158,
       "notes": {
         "removed": "content:none ::before killer; comment rewritten"
@@ -54,8 +54,8 @@
     {
       "name": "T04_breadcrumb_stub",
       "status": "ok",
-      "bytes_before": 3089521,
-      "bytes_after": 3089521,
+      "bytes_before": 3127714,
+      "bytes_after": 3127714,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (already applied upstream in pm6 parts)",
@@ -65,8 +65,8 @@
     {
       "name": "T05_chat_suggestions_field",
       "status": "ok",
-      "bytes_before": 3089521,
-      "bytes_after": 3089521,
+      "bytes_before": 3127714,
+      "bytes_after": 3127714,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (already applied upstream in pm6 parts)",
@@ -76,8 +76,8 @@
     {
       "name": "T06_terminal_dead_interval",
       "status": "ok",
-      "bytes_before": 3089521,
-      "bytes_after": 3089435,
+      "bytes_before": 3127714,
+      "bytes_after": 3127628,
       "bytes_delta": -86,
       "notes": {
         "removed": "clockTick state field + 1s counter interval (never read)"
@@ -86,8 +86,8 @@
     {
       "name": "T07_merge_pointermove",
       "status": "ok",
-      "bytes_before": 3089435,
-      "bytes_after": 3090474,
+      "bytes_before": 3127628,
+      "bytes_after": 3128667,
       "bytes_delta": 1039,
       "notes": {
         "adaptation": "post-assert adapted: 1 UNCONDITIONAL document registration (dispatcher) + 1 guarded fallback occurrence; runtime listener count == 1 verified by Playwright probe"
@@ -96,8 +96,8 @@
     {
       "name": "T08_cooldown_dom_gating",
       "status": "ok",
-      "bytes_before": 3090474,
-      "bytes_after": 3091886,
+      "bytes_before": 3128667,
+      "bytes_after": 3130079,
       "bytes_delta": 1412,
       "notes": {
         "scope": "usage: tickCooldown + setCooldown writes gated (local ticker stands down after engine sync; setCooldown is the live writer); dashboard: 1s interval write gated; both flush via page.changed"
@@ -106,8 +106,8 @@
     {
       "name": "T09_terminal_feed_gating",
       "status": "ok",
-      "bytes_before": 3091886,
-      "bytes_after": 3093008,
+      "bytes_before": 3130079,
+      "bytes_after": 3131201,
       "bytes_delta": 1122,
       "notes": {
         "verified_buffer_model": "p.lines state append (cap 400) + renderTranscript(body, p.lines) rebuild confirmed on base before gating"
@@ -116,8 +116,8 @@
     {
       "name": "T10_snapshot_handler_gating",
       "status": "ok",
-      "bytes_before": 3093008,
-      "bytes_after": 3094303,
+      "bytes_before": 3131201,
+      "bytes_after": 3132496,
       "bytes_delta": 1295,
       "notes": {
         "wrapped": [
@@ -138,8 +138,8 @@
     {
       "name": "T11_settings_data_defer",
       "status": "ok",
-      "bytes_before": 3094303,
-      "bytes_after": 3095278,
+      "bytes_before": 3132496,
+      "bytes_after": 3133471,
       "bytes_delta": 975,
       "notes": {
         "literal_bytes": 342033,
@@ -149,8 +149,8 @@
     {
       "name": "T12_chat_data_defer",
       "status": "ok",
-      "bytes_before": 3095278,
-      "bytes_after": 3095278,
+      "bytes_before": 3133471,
+      "bytes_after": 3133471,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (per design default)",
@@ -160,8 +160,8 @@
     {
       "name": "T13_demo_files_defer",
       "status": "ok",
-      "bytes_before": 3095278,
-      "bytes_after": 3095278,
+      "bytes_before": 3133471,
+      "bytes_after": 3133471,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (per design default)",
@@ -171,8 +171,8 @@
     {
       "name": "T14_page_init_defer",
       "status": "ok",
-      "bytes_before": 3095278,
-      "bytes_after": 3095278,
+      "bytes_before": 3133471,
+      "bytes_after": 3133471,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP -- all three candidates fail the eligibility audit",
@@ -187,12 +187,12 @@
     {
       "name": "T15_static_colormix_precompute",
       "status": "ok",
-      "bytes_before": 3095278,
-      "bytes_after": 3095278,
+      "bytes_before": 3133471,
+      "bytes_after": 3133471,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (measured yield below design threshold)",
-        "colormix_total": 711,
+        "colormix_total": 721,
         "colormix_zero_var": 2,
         "zero_var_sites": [
           "color-mix(in srgb, #fff 16%, transparent)",
@@ -204,12 +204,12 @@
     {
       "name": "T16_glass_wallpaper_prebake",
       "status": "ok",
-      "bytes_before": 3095278,
-      "bytes_after": 3267964,
+      "bytes_before": 3133471,
+      "bytes_after": 3306157,
       "bytes_delta": 172686,
       "notes": {
         "assets": {
-          "file": "/Users/jaredsmacbookair/Documents/PuppetMaster/Concepts/pm7-tools/baked_wallpaper.json",
+          "file": "/mnt/Cursor/PuppetMaster/Concepts/pm7-tools/baked_wallpaper.json",
           "tier": 5,
           "viewport": {
             "width": 1120,
@@ -247,8 +247,8 @@
     {
       "name": "T17_slint_clarity_layer",
       "status": "ok",
-      "bytes_before": 3267964,
-      "bytes_after": 3278877,
+      "bytes_before": 3306157,
+      "bytes_after": 3317070,
       "bytes_delta": 10913,
       "notes": {
         "readme_bytes": 6274,
@@ -259,8 +259,8 @@
     {
       "name": "T18_pm7_visual_cleanup",
       "status": "ok",
-      "bytes_before": 3278877,
-      "bytes_after": 3277044,
+      "bytes_before": 3317070,
+      "bytes_after": 3315237,
       "bytes_delta": -1833,
       "notes": {
         "search_result_hover": "transparent layout rail retained; colored rail removed",
@@ -273,8 +273,8 @@
     {
       "name": "T19_pm7_preview_fit",
       "status": "ok",
-      "bytes_before": 3277044,
-      "bytes_after": 3277227,
+      "bytes_before": 3315237,
+      "bytes_after": 3315420,
       "bytes_delta": 183,
       "notes": {
         "preview_header_inset": "1px inline inset preserves the document border edge"
@@ -283,14 +283,14 @@
     {
       "name": "T20_home_workspace",
       "status": "ok",
-      "bytes_before": 3277227,
-      "bytes_after": 3424764,
-      "bytes_delta": 147537,
+      "bytes_before": 3315420,
+      "bytes_after": 3502307,
+      "bytes_delta": 186887,
       "notes": {
         "marker": "PM7 T20: Home workspace model-first transform",
-        "markup_bytes": 5565,
-        "style_bytes": 12043,
-        "script_bytes": 130668,
+        "markup_bytes": 5122,
+        "style_bytes": 20179,
+        "script_bytes": 162302,
         "legacy_surface_dnd_removed": true,
         "legacy_surface_swap_token_absent": true,
         "topbar_menu_actions": [
@@ -380,7 +380,7 @@
           "balanced": true
         },
         {
-          "block": "style@1487749",
+          "block": "style@1506518",
           "balanced": true
         }
       ]
@@ -400,15 +400,15 @@
           "pass": true
         },
         {
-          "block": "script@1527929",
+          "block": "script@1546698",
           "pass": true
         },
         {
-          "block": "script@1636771",
+          "block": "script@1655540",
           "pass": true
         },
         {
-          "block": "script@1795400",
+          "block": "script@1816368",
           "pass": true
         },
         {
@@ -477,7 +477,7 @@
     {
       "name": "no_emoji",
       "pass": true,
-      "stdout": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [8999, 42267, 42268])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [214, 214, 214, 214, 1804, 1804, 1804, 1804]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [22578])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [25372, 25372, 25372, 25372, 25372, 25372, 25372, 25372]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [25368])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)\n",
+      "stdout": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [9008, 43871, 43872])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [221, 221, 221, 221, 1811, 1811, 1811, 1811]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [22940])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [25768, 25768, 25768, 25768, 25768, 25768, 25768, 25768]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [25764])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)\n",
       "stderr": ""
     }
   ],
@@ -487,8 +487,8 @@
     "script": 18
   },
   "output": "Concepts/PMConcept7.html",
-  "output_bytes": 3424764,
-  "output_sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
-  "total_bytes_removed": -282010,
+  "output_bytes": 3502307,
+  "output_sha256": "bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2",
+  "total_bytes_removed": -321360,
   "gates_all_pass": true
 }

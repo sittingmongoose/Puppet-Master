@@ -1,6 +1,44 @@
 # TEST_REPORT.md — Kimi K3 Assistant Chat concept
 
-Headless verification + visual audit results. Generated 2026-07-31. Harness: vendored `playwright-core` + system Chrome (no install). See `verification/commands.md` for run steps and `SPEC_GAPS.md` for gaps.
+Headless verification + visual audit results. Harness: `harness/` (zero-dependency CDP driver; `playwright-core` optional) + system Chrome headless. See `harness/commands.md` for run steps and `SPEC_GAPS.md` for gaps. Results/screenshots write to OS temp (`%TMP%/k3h-<pid>/`) — the Hub validator bans them from the model folder.
+
+## Final cumulative packet run (2026-08-12)
+
+| Sweep | Configs | Passed | Result file (OS temp) |
+|---|---|---|---|
+| Boot smoke (dataset + controller contract) | 7 checks | 7/7 | stdout |
+| Pair smoke — all 64 pairings | 64 | 64/64 | pair-smoke/results.json |
+| Matrix — 8 themes × 4 widths × rail × 22 pairings | 1408 | 1408/1408 | matrix/results.json |
+| Feature states — 71 keys (28 legacy + 43 packet) × 64 pairings | 4544 | 4544/4544 | feature-states/results.json |
+| Reduced motion parity | 112 | 112/112 | reduced-motion/results.json |
+| Mounts (remount/switch/restart) | 64 | 64/64 | mounts/results.json |
+| Packet behavioral probes — 19 probes × 16 configs | 304 | 304/304 | packet-probes/results.json |
+| Terminology (PM-native browser vocab; no yolo) | source+rendered | clean | terminology/results.json |
+| ConceptHub validation | validate.py | exit 0 | stdout |
+
+**All suites green.** New-behavior spot proofs (offline replay fence, material route warning + branch, BSD glow/On/scope-revert, artifact geometry + draft/scroll preservation, spellcheck menu/skips, thread request/await + cycle rejection, redirect 3-state, notification inbox) are named cases in `interaction-test-report.json`.
+
+### Defects fixed during this update
+- `host.html` never recorded `__k3.stateApplied` on initial boot (states applied before the hooks object existed) — hoisted.
+- storeSeeds merge skipped `bsdState` entirely (blankSemantic ships `{}`, not null) — subkey merge.
+- store.js header wrongly claimed drafts persist under `k3.drafts.<sess>` — corrected.
+- w4 Chats card unreachable when unpinned with no work — persistent collapsed chip repair.
+- w7 null `activeThreadId` wrote `surfaceView.null.*` — guarded (also w3/w5/w6/w8 pin handlers).
+- w8 no-op `actions.addEventListener('click', function () {})` — removed.
+- Header sync pill was wiped on every title render (`chipHolder.innerHTML=''`) — persistent chrome.
+- Goal route changes silently retargeted running Goals — guard wired through route/access/persona/mode.
+- t5 ledger hover row and t6 parked margin meta could exceed the transcript content box at tight widths — clamped.
+- `lens.js` receipt view shipped with an undefined `pop` reference (crashed on open) — fixed.
+- Artifact was editor-tab handoff only — real left workspace per window idiom.
+
+### Known residuals (honest)
+- w7 artifact workspace is an in-flow band (stack), not literal left — documented deviation (packet allows a stack); fallback exists if the auditor rejects it.
+- w6 narrow artifact viewing is a deliberate focused overlay; w8's persistent form is the docked strip.
+- Hub `tests/test_catalog.py` static card count 91→92 — Hub owner fixture bump (not edited here).
+- Hub `server.py` needs the documented `os.getuid` shim on Windows (not edited here).
+
+## Revision 2 run (2026-07-31, historical)
+
 
 ## Coverage summary
 

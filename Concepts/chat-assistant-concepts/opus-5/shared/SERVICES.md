@@ -160,3 +160,228 @@ esc(text) / uid(prefix) / clamp(n, lo, hi) / fmtBytes
 ```
 `el()` sets textContent for strings — never innerHTML with data. This is how the no-emoji and
 no-underscore policies stay enforceable.
+
+---
+
+# Packet services (added by the 2026-08-08 cumulative update)
+
+Every module below is a `(function (global) { … })(window)` IIFE exposing one global, bound once by
+`PMXWorkspace.boot()` and reached by concepts through `ctx.services.<key>`. None of them touches the
+DOM; they return data and the concepts render it. The three exceptions are noted where they occur.
+
+## PMXObservable  (`shared/observable.js`) — `ctx.services.observable`
+
+The single truthful projection of in-flight work. `SHARED_PROCESS_RULES.md` forbids a second progress
+system, so Compact Now, artifact loading, outbox replay, provider install, worktree requests, thread
+awaits, exports, live runs and the Back Seat Driver glow all route through it.
+
+```
+bind(store)
+start({ id, kind, label, determinate, total }) -> op
+step(id, done, label) -> boolean          // morphs the label IN PLACE
+block(id, reason) / resume(id, label) -> boolean
+finish(id, receipt) / fail(id, reason) / cancel(id) -> boolean
+get(id) / active() / all() / byKind(kind) -> op | op[]
+isRunning(id) -> boolean                  // the motion contract's gate
+elapsedMs(id) -> number                   // frozen once the op is terminal
+subscribe(fn) -> unsubscribe
+clear()
+```
+
+Op record: `{ id, kind, label, state, determinate, progress:{done,total}|null, startedAt, endedAt,
+receipt|null, reason|null }` with `state ∈ queued | running | blocked | complete | failed | cancelled`.
+Ops live in module state, not the store, and announce through `store.touchView('observable')`.
+
+**An indefinite animation is legal only while `isRunning(el.dataset.pmxOp)` is true.** The `motion`
+suite finds every element with `animation-iteration-count: infinite` and fails any that has no
+running op behind it.
+
+## PMXRoute  (`shared/route.js`) — `ctx.services.route`
+
+Provider, account and model catalog plus thread-local route state. A route is the **(account, model)
+pair**, never a model name: `Opus 5` exists under two Anthropic accounts with different connections
+and different setup states.
+
+```
+bind(store, data)
+providers() / accounts() / models(accountId)
+routeOf(threadId) / setRoute(threadId, patch) -> { ok, warning }
+effort(modelId) -> ['High','Medium','Low'] | null      // null means the axis does not exist
+supportsFast(modelId) -> boolean                        // declared, never name-inferred
+effective(threadId) -> { requested, effective, differs, reason }
+favorites() / toggleFavorite(kind, id) / recents() / noteUse(threadId)
+setupStateOf(accountId) / setSetupState(accountId, literal) / setupReason(literal)
+settingsTarget(accountId) -> { label, destination, reason, returnContext }
+SETUP_STATES / FAST_UNAVAILABLE_LINE
+```
+
+## PMXAccess  (`shared/access.js`) — `ctx.services.access`
+
+```
+PROFILES  // ask | auto_edits | auto | full, with verbatim labels
+bind(store) / get(threadId) / set(threadId, id)
+effective(threadId) -> { profile, label, narrowedBy, line }
+toolsFor(mode) -> string[]
+```
+
+`effective().line` is `'<Profile label>'` or `'<Profile label> · Limited by <Mode> mode'`. The visible
+string is `Full Access`; `Yolo` appears nowhere. `Plan` and `Review` return the same ten tool families
+because they are not blind modes.
+
+## PMXBsd  (`shared/bsd.js`) — `ctx.services.bsd`
+
+```
+bind(store) / mode(threadId) / scope(threadId) / set(threadId, mode, scope)
+visualState(threadId)   // off | auto-idle | auto-active | on | silent | advice
+                        //  | duplicate-suppressed | timeout | unavailable | quota-limited
+advice(threadId) / dismiss(threadId, adviceId) / evaluate(threadId, outcome)
+opId(threadId)          // non-null ONLY while the evaluation op is running
+noteTurnEnd(threadId)   // reverts a 'turn' scope deterministically
+```
+
+Three invariants are code, not prose: every advice record is `readOnly`, there is no write path into
+`view[tid].runtime.access`, and `unavailable`/`timeout`/`quota-limited` never touch `PMXRuntime`.
+
+## PMXApprovals  (`shared/approvals.js`) — `ctx.services.approvals`
+
+One compact-decision object for four kinds, because they share the "one line plus expandable
+evidence" contract.
+
+```
+bind(store) / pending(threadId) / raise(threadId, rec) -> id
+decide(threadId, id, actionId) -> { ok, applied, reason }
+detailsOf(threadId, id) / clear(threadId)
+```
+
+`kind ∈ approval | warning | grant | conflict`. `cls` is closed to nine values. A multi-class raise
+keeps every class in `details.receipts` but shows ONE consequence, ranked. `Allow once` never writes
+into `session.ops.grants`; only `Allow for session` and `Allow for this Goal` do.
+
+## PMXContextAdmit  (`shared/contextadmit.js`) — `ctx.services.contextAdmit`
+
+Extends `PMXLens`, never replaces it.
+
+```
+bind(store, data) / receipt(threadId) / removeAdmitted(threadId, id)
+compactNow(threadId) -> observable op id / compactReceipt(threadId)
+priorChats(query) / addPassage(threadId, hit)
+```
+
+Two closed kind lists. No label may leak a secret, a policy body, a system prompt or a registry dump.
+Compaction leaves stored messages and Usage untouched.
+
+## PMXThreadOps  (`shared/threadops.js`) — `ctx.services.threadOps`
+
+```
+bind(store, data) / related(threadId) / readRange(threadId, from, to)
+request(spec) / awaitRequest(reqId) -> op id / respond(reqId, resultRefs) / resume(threadId)
+spawn({ parentThreadId, relation, task }) / branch({ threadId, messageId, … })
+rewind(threadId, messageId) -> { ok, restorePointId }
+createRestorePoint(threadId, messageId) / restore(restorePointId)
+redirect(threadId, text)
+MAX_DEPTH = 3 / MAX_FANOUT = 4 / MAX_RANGE = 40
+```
+
+`related()` returns shells with no `messages`. `readRange` throws past `MAX_RANGE`. Refusals are typed
+(`refused_cycle`, `refused_fanout`). `branch` never copies raw messages. `rewind` always creates the
+restore point first.
+
+## PMXCapacity and PMXCrew  (`shared/surfaces.js`) — `ctx.services.capacity`, `ctx.services.crew`
+
+```
+PMXCapacity.forecast(threadId) -> { requested, recommendedConcurrent, waves, reason,
+                                    requiredRoles, droppedRoles }
+PMXCrew.templates() / of(threadId) / start(threadId, templateId) / stop(threadId)
+```
+
+`droppedRoles` is always empty: a required independent role becomes a `queued` subagent rather than a
+silent drop. `PMXCrew.start` writes only `view[threadId].crew`.
+
+`PMXSurfaces.act` also gained the todo, subagent and activity verbs (`todo_*`, `agent_*`,
+`activity_*`), each dispatched before the goal gate because they do not touch the goal.
+
+## PMXOps  (`shared/opsawareness.js`) — `ctx.services.ops`
+
+```
+bind(store, data) / conflicts(threadId) / resolve(threadId, conflictId, actionId)
+worktrees() / ports() / sessions() / pressure() / allowance() / recovery()
+requestWorktree(threadId, spec) -> op id
+```
+
+Conflict kinds are `port | worktree | file | test | device`. Worktree states are the five
+human-readable strings. A worktree conflict offers `Wait for writer`, `Open owner thread`,
+`Request new worktree` — never `Remove`.
+
+## PMXAttach  (`shared/attach.js`) — `ctx.services.attach`
+
+```
+bind(store, data) / resolve(threadId, spec) / route(threadId, resolutionId, actionId)
+reevaluate(threadId) -> changed ids / of(threadId) / remove(threadId, id)
+```
+
+`class ∈ native | transformed | alternate | unsupported`. Derived material always keeps
+`lineage.originalId`. The alternate route raises a `privacy_hosting_change` decision.
+
+## PMXSync  (`shared/sync.js`) — `ctx.services.sync`
+
+```
+bind(store) / transport() / domain() / setTransport(s) / setDomain(s)
+enqueue(cmd) / outbox() / remove(entryId) / replayed(entryId)
+reconnect() -> op id / serverWork() / addServerWork(rec) / route() / snapshot()
+```
+
+Transport and domain are independent axes. **`reconnect` marks `replayed[id]` BEFORE dispatch**, so a
+second call sends nothing. `route()` returns four compact tokens, never a host banner.
+
+## PMXSpell  (`shared/spell.js`) — `ctx.services.spell`
+
+```
+bind(store, data) / check(text, threadId) / replaceOnce(threadId, hit, suggestion)
+ignoreOnce / ignoreForDraft / addPersonal / addProject / canAddProject
+setSource(src) / enabledFor(threadId) / setEnabledFor(threadId, on)
+skipRanges(text) -> [[start, end]]
+```
+
+`skipRanges` excludes ten categories and returns a sorted, non-overlapping list. `replaceOnce` is the
+only function that returns modified text, and nothing replaces text on its own.
+
+## PMXNotify  (`shared/notify.js`) — `ctx.services.notify`
+
+```
+bind(store) / push({ kind, title, body, threadId, actions }) -> id
+items() / unread() / markRead(id) / open(on) / isOpen() / MAX_ITEMS
+```
+
+Renders **only** into the title-bar host in `shared/shell.js`. Chat has no notification panel, no
+bottom-right stack and no rail item. A local outcome belonging to the current task stays a `PMXToast`
+or an in-transcript row.
+
+## PMXHubBridge  (`shared/hubbridge.js`)
+
+Not a `ctx.services` member; installed once by `boot()`. Contains the literal strings
+`pm-concept-ready` and `pm-concept-state` that `Concepts/ConceptHub/validate.py` greps for, posts the
+ready message to `parent` and `opener`, and applies `theme`, `reducedMotion`, `testWidth` and
+`pm-chat-width` to the store.
+
+---
+
+## Members added to existing services
+
+- **PMXThreadHistory** — `registerFloors(windowId, floors)`, `floorsFor(windowId)`,
+  `applyTo(hostEl, resolved)`, `reasonNode(hostEl, resolved)`, `shellOf(t)`, `shellsOf(threads)`,
+  `SHELL_FIELDS`. The `pinState` compatibility shim is **deleted**; every window calls `resolve`.
+- **PMXQuestionnaire** — `prepare`, `settlePhase`, `finishSubmit`, `currentIndex`, `atEnd`,
+  `validate`, `PREPARE_MS`, `SUBMIT_MS`, `REASON_REQUIRED`, `REASON_CHOOSE_ONE`, `REASON_GONE`.
+  `prev` and `unskip` are now public.
+- **PMXArtifacts** — `forceReady(id)`, `frame(windowId)`, and the `artifact-context` and
+  `artifact-crew` catalog records.
+- **PMXMotion** — the thirteen named helpers (`arrive`, `questionPhase`, `condense`, `phaseStep`,
+  `agentState`, `handoff`, `dockShift`, `panelSwap`, `submenu`, `stateFlip`, `consequence`,
+  `catchUp`, `lineage`), plus `swapTextInstant`, `afterTransition`, `reduced`.
+- **PMXStore** — `attachData(data)`, `setRuntimeQuiet`, and v5 slices. `set` now dedupes **primitives
+  only**: an object write always announces, because read-mutate-set is the common pattern and
+  reference equality was silently swallowing it.
+- **PMXPopup** — `closeAll`, `openSubmenu`; the portalled popup now looks up `data-pmx-window`
+  separately because that attribute lives on the chat host rather than the stage.
+- **PMXData** — `fmt.dateTime`, `fmt.cost`, `fmt.relative`.
+- **PMXIcons** — `has(name)`, `names()`, the six `status-*` glyphs, and the 36 packet glyphs.

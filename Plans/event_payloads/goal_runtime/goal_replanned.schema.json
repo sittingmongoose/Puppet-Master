@@ -1,5 +1,5 @@
 {
-  "$comment": "CANDIDATE DRAFT ONLY. Held for EA-OC-010; not canon, authority, materialization, validation evidence, runtime proof, or certification. Source obligation EA-UND-0010-GOAL. The closed schema encodes Draft-2020-12-decidable structure. EA-OC-009 requires behavioral equality, transition, replay, side-effect, currentness, referenced-record, and authority predicates to remain owner/test prose; event-local comments preserve that boundary without pretending to execute those predicates. For non-created rows, goal_revision = expected_goal_revision + 1 and expected_goal_revision = current.goal_revision remain owner/runtime equality predicates because standard Draft 2020-12 has no cross-instance data-equality keyword.",
+  "$comment": "AUTHORITATIVE for live Known37 Event Authority registration (Plans/event_family_registry.json revision 2026-08-04.1). Owner answer SS-001 (2026-08-12) lifted the prior candidate-draft hold (historical EA-OC-010). Closed payload fields unchanged. Executable oracle harness results remain required for contract_depth_complete (SS-003); this lift does not certify runtime or PNC-019.",
   "$defs": {
     "artifact_hash": {
       "additionalProperties": false,

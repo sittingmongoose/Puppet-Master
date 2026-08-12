@@ -1,0 +1,221 @@
+/* Window 03 "Instrument Deck" — labeled instrument cells above a calm bay;
+   film-strip history; auxiliary artifact monitor. Mechanical, indexed motion. */
+
+.fw3-root {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-app);
+  overflow: hidden;
+}
+
+/* ---------- deck ---------- */
+.fw3-deck {
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 6px 12px;
+  border-bottom: 2px solid var(--edge-strong);
+  background: var(--bg-panel);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.fw3-deck-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+.fw3-deck-left .pmc-search { width: 180px; }
+.fw3-instruments { display: flex; align-items: stretch; gap: 8px; flex: none; flex-wrap: wrap; }
+.fw3-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  padding: 3px 10px;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  min-width: 0;
+}
+.fw3-cell-label {
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.fw3-cell-value { font-size: 12px; color: var(--text-primary); display: flex; align-items: center; }
+.fw3-cell-button:hover { background: var(--bg-hover); cursor: pointer; }
+.fw3-cell-tools { flex-direction: row; align-items: center; gap: 2px; border: none; background: none; padding: 0 2px; }
+.fw3-art-count { font-variant-numeric: tabular-nums; justify-content: center; }
+.fw3-cell-selectors .pmc-selectors { flex-wrap: nowrap; }
+
+/* ---------- bay ---------- */
+.fw3-bay { flex: 1; min-height: 0; display: flex; min-width: 0; }
+
+/* film-strip */
+.fw3-strip {
+  flex: none;
+  width: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--edge);
+  background: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--dur-fast) steps(4, end);
+}
+.fw3-root[data-history="peek"] .fw3-strip,
+.fw3-root[data-history="pinned-full"] .fw3-strip { width: 224px; }
+.fw3-root[data-history="pinned-compact"] .fw3-strip { width: 52px; }
+.fw3-root[data-history="peek"] .fw3-strip {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  z-index: 40;
+  box-shadow: var(--shadow-2);
+}
+.fw3-bay { position: relative; }
+.fw3-strip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 4px;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.fw3-frames {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* sprocket-hole texture on the strip margins (structural, not status color) */
+.fw3-frames {
+  background-image: radial-gradient(circle at 3px 10px, var(--edge-faint) 1.6px, transparent 2px);
+  background-size: 8px 20px;
+  background-repeat: repeat-y;
+  background-position: 1px 0;
+}
+.fw3-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-xs);
+  background: var(--bg-surface);
+  padding: 7px 9px;
+  min-width: 0;
+  transition: transform var(--dur-fast) steps(3, end), border-color var(--dur-fast) var(--ease-out);
+}
+.fw3-frame:hover { border-color: var(--edge-strong); transform: translateX(2px); }
+.fw3-frame[data-active="true"] { border-color: var(--accent); background: var(--bg-active); }
+.fw3-frame[data-state="blocked"] .fw3-frame-meta { color: var(--danger); }
+.fw3-frame[data-state="running"] .fw3-frame-meta { color: var(--accent); }
+.fw3-frame-title {
+  font-size: 11.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fw3-frame-meta { font-size: 9.5px; color: var(--text-faint); }
+.fw3-frame-glyph { display: grid; place-items: center; color: var(--text-secondary); }
+
+/* ---------- artifact monitor ---------- */
+.fw3-monitor {
+  flex: none;
+  width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--edge);
+  transition: width var(--dur-fast) steps(4, end);
+}
+.fw3-root[data-artifact="true"] .fw3-monitor { width: clamp(290px, 30vw, 430px); }
+.fw3-monitor-bezel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--bg-raised);
+  border-bottom: 2px solid var(--edge-strong);
+  min-width: 0;
+}
+.fw3-monitor-id {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent-text);
+  background: var(--accent);
+  border-radius: var(--radius-xs);
+  padding: 1px 6px;
+  flex: none;
+}
+.fw3-monitor-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fw3-monitor-status { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.fw3-monitor-status[data-status="loading"] { background: var(--warn); }
+.fw3-monitor-status[data-status="error"] { background: var(--danger); }
+.fw3-monitor-status[data-status="updated"] { background: var(--info); }
+.fw3-monitor-screen { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--bg-inset); }
+.fw3-monitor-channels {
+  display: flex;
+  gap: 5px;
+  padding: 7px 10px;
+  border-top: 1px solid var(--edge);
+  flex: none;
+}
+.fw3-channel {
+  width: 24px; height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-xs);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.fw3-channel:hover { border-color: var(--edge-strong); }
+.fw3-channel[data-active="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+
+/* ---------- chat column ---------- */
+.fw3-chatcol {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  background: var(--bg-app);
+}
+.fw3-thread-slot {
+  flex: 1;
+  min-height: 0;
+  max-width: var(--fw-chat-width, 750px);
+  display: flex;
+  flex-direction: column;
+  transition: max-width var(--dur-fast) steps(4, end);
+}
+
+@media (max-width: 1000px) {
+  .fw3-deck-left .pmc-search { width: 130px; }
+  .fw3-cell-label { display: none; }
+}

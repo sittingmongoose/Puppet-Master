@@ -316,3 +316,69 @@
 }
 
 [data-motion="reduced"][data-pmx-window="w5"] .w5-pinrail { transition: none !important; }
+
+/* ---------------------------------------------------------------- artifact column, no header
+ *
+ * The artifact has NO header of its own: every control in this concept fuses into the bottom band,
+ * so the panel is pure content and its switcher lives in .w5-toolrow. Giving it a header would
+ * contradict the one rule the concept exists to demonstrate. */
+[data-pmx-window="w5"] .w5-artifact-host {
+  display: none;
+  min-width: 0;
+  min-height: 0;
+  border-right: var(--border-width, 1px) solid var(--border);
+  background: var(--surface);
+}
+[data-pmx-window="w5"] .w5-shell[data-w5-artifact="1"] .w5-artifact-host {
+  display: block;
+  flex: 0 0 clamp(260px, 32%, 420px);
+}
+[data-pmx-window="w5"] .w5-artifact-body { height: 100%; overflow: hidden; }
+
+/* The switcher segment sits FIRST in the band, before the recents strip, so the band reads
+ * artifact-then-history and the two never reorder under each other. */
+[data-pmx-window="w5"] .w5-artifact-seg { display: flex; gap: 2px; order: -1; }
+[data-pmx-window="w5"] .w5-artifact-seg-btn {
+  padding: 2px 8px;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-window="w5"] .w5-artifact-seg-btn[aria-pressed="true"] {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+}
+
+/* Narrow fallback: a full-window layer over the transcript, with the band still visible — the band
+ * is the concept's spine and must never be covered. */
+@container pmx-chat (max-width: 749px) {
+  [data-pmx-window="w5"] .w5-shell[data-w5-artifact="1"] .w5-artifact-host {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 7;
+    height: calc(100% - var(--w5-band-h, 96px));
+  }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: recents strip
+ *
+ * History collapses INTO the command band as a horizontal recents strip. The band already owns
+ * every control in this concept, so the compact form costs no width and no new surface. */
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] {
+  flex-direction: row;
+  width: auto;
+  max-width: 100%;
+  overflow-x: auto;
+}
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] .pmx-chrome-hlist { flex-direction: row; }
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] .pmx-chrome-hrow { flex: 0 0 auto; }
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] .pmx-chrome-htime,
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] .pmx-chrome-hmarks,
+[data-pmx-window="w5"] .w5-pinrail[data-density="compact"] .pmx-chrome-hmore { display: none; }
+
+/* The pin rail must not occupy a row above the edge-to-edge transcript. It is a band member, so it
+ * lives in the band's own flow rather than in the column flow above it. */
+[data-pmx-window="w5"] .w5-pinrail { order: 2; }

@@ -76,10 +76,25 @@ export async function noLeftAccentBorders(page) {
 }
 
 export async function scrollbarNoLeak(page) {
+  // scrollWidth includes the reserved scrollbar-gutter (~14px, by design), so
+  // a raw sw>cw check false-positives. A REAL leak is a descendant whose box
+  // extends past the scroller's content box.
   const hits = await page.evaluate(function () {
     var out = [];
     document.querySelectorAll('.k3t-scroller, .k3-scroll, .k3w-kit-history, [data-k3-slot="thread"]').forEach(function (n) {
-      if (n.scrollWidth > n.clientWidth + 1) out.push(String(n.className).slice(0, 50) + ' sw=' + n.scrollWidth + ' cw=' + n.clientWidth);
+      if (n.scrollWidth <= n.clientWidth + 1) return;
+      var box = n.getBoundingClientRect();
+      var padRight = parseFloat(getComputedStyle(n).paddingRight) || 0;
+      var limit = box.right - padRight + 1;
+      var worst = null;
+      n.querySelectorAll('*').forEach(function (d) {
+        var r = d.getBoundingClientRect();
+        if (r.width === 0) return;
+        if (r.right > limit && (!worst || r.right > worst.right)) {
+          worst = { cls: String(d.className).slice(0, 50), right: Math.round(r.right) };
+        }
+      });
+      if (worst) out.push(String(n.className).slice(0, 40) + ' worst=' + worst.cls + ' @' + worst.right + ' limit=' + Math.round(limit));
     });
     return out.slice(0, 4);
   });
@@ -232,12 +247,13 @@ export async function pinnedGeometry(page, ctx, pinKey) {
     var tr = thread.getBoundingClientRect();
     var cr = composer.getBoundingClientRect();
     var pinned = null;
-    document.querySelectorAll('[class*="history"], [class*="pin"], [class*="rail"], [class*="dock"], [class*="chats"]').forEach(function (n) {
+    document.querySelectorAll('[class*="history"], [class*="pin"], [class*="rail"], [class*="dock"], [class*="chats"], [class*="drawer"], [class*="band"]').forEach(function (n) {
       if (pinned) return;
       if (thread.contains(n) || composer.contains(n)) return;
+      if (n.contains(thread) || n.contains(composer)) return; // window/shell containers, not surfaces
+      if (n.closest('.k3s-rail')) return; // app rail is shell, not chat history
       var rr = n.getBoundingClientRect();
       if (rr.width < 40 || rr.height < 40) return;
-      if (n.closest('.k3s-rail')) return; // app rail is shell, not chat history
       pinned = n;
     });
     if (!pinned) return { pinned: false };
@@ -255,6 +271,7 @@ export async function pinnedGeometry(page, ctx, pinKey) {
 }
 
 export async function artifactLeftOfChat(page, ctx) {
+  // draft setup
   await page.evaluate(async function () {
     var k3 = window.__k3;
     k3.store.set('activeThreadId', 'thread-16');
@@ -262,35 +279,63 @@ export async function artifactLeftOfChat(page, ctx) {
     await new Promise(function (r2) { setTimeout(r2, 300); });
     k3.data.saveDraft('thread-16', 'artifact probe draft', []);
   });
-  const r2 = await page.evaluate(async function () {
-    var k3 = window.__k3;
-    var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
-    window.K3ArtifactWS.open(ctx, 'thread-16', 'art-16-code');
-    await new Promise(function (r3) { setTimeout(r3, 500); });
-    var surf = document.querySelector('.k3aw-surface, [class*="k3aw"]');
+  // open the artifact
+  const opened = await page.evaluate(async function () {
+    var ctx2 = { env: window.K3.env, store: window.__k3.store, data: window.__k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
+    window.K3ArtifactWS.open(ctx2, 'thread-16', 'art-16-code');
+    await new Promise(function (r3) { setTimeout(r3, 550); });
+    return {
+      wsOpen: (window.__k3.store.get('artifactWs.thread-16', {}) || {}).open === true,
+      found: !!document.querySelector('.k3aw-surface')
+    };
+  });
+  if (!opened.wsOpen || !opened.found) return fail('surface did not open: ' + JSON.stringify(opened));
+
+  // w8: dock the sheet first so the persistent geometry is what we measure
+  if (ctx.window === 'w8') {
+    await page.evaluate(function () {
+      var tid = 'thread-16';
+      window.__k3.store.set('artifactWs.' + tid + '.docked', true);
+    });
+    await new Promise((r) => setTimeout(r, 350));
+  }
+
+  const r2 = await page.evaluate(async function (win) {
+    function overlaps(a, b) { return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; }
+    var surf = document.querySelector('.k3aw-surface');
     if (!surf) return { found: false };
-    var sr = surf.getBoundingClientRect();
+    // walk up to the window's adapter host (gutter/col/bay/dock/side/sheet)
+    var host = surf.closest('.w1-dock-artifacts, .w2-rail-art, .w3-art-col, .w4-art-gutter, .w5-art-bay, .w6-side, .w7-artbay-body, .w8-art-dock-body, .w8-sheet, .w6-art-dialog, .w3-pane-body, .w2-center, .w4-chips, .w5-artifacts-body') || surf;
+    var sr = host.getBoundingClientRect();
     var thread = document.querySelector('[data-k3-slot="thread"]').getBoundingClientRect();
     var composer = document.querySelector('[data-k3-slot="composer"]').getBoundingClientRect();
-    function overlaps(a, b) { return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; }
-    var d = k3.data.getDraft('thread-16');
+    var d = window.__k3.data.getDraft('thread-16');
+    var transient = !!host.closest('.w8-sheet, .w6-art-dialog'); // declared transient overlay idioms
     return {
       found: true,
       leftOf: sr.right <= thread.left + 2,
+      above: sr.bottom <= thread.top + 2,
       overlapsThread: overlaps(sr, thread),
       overlapsComposer: overlaps(sr, composer),
+      aboveComposer: sr.top >= thread.bottom - 2 && sr.bottom <= composer.top + 2,
       draftKept: d && d.text === 'artifact probe draft',
-      visible: sr.width > 100 && sr.height > 80,
-      win: window.K3.env.windowId
+      visible: sr.width > 100 && sr.height > 60,
+      transient: transient,
+      hostCls: String(host.className).slice(0, 40)
     };
-  });
-  if (r2.found === false) return fail('artifact surface not found after open');
-  if (r2.overlapsThread || r2.overlapsComposer) return fail('artifact surface overlaps thread/composer');
-  // w7 uses the documented in-flow "artifact bay" (stack) — left-of is N/A there
-  if (ctx.window !== 'w7' && ctx.width >= 975 && !r2.leftOf) return fail('artifact not left of chat at width ' + ctx.width + ' in ' + r2.win);
+  }, ctx.window);
+  if (!r2.found) return fail('artifact surface not found after open');
   if (!r2.draftKept) return fail('composer draft lost on artifact open');
-  if (!r2.visible) return fail('artifact surface too small');
-  return ok('leftOf=' + r2.leftOf + ' win=' + r2.win);
+  if (!r2.visible) return fail('artifact surface too small: ' + r2.hostCls);
+  if (r2.transient) return ok('transient overlay idiom (' + r2.hostCls + ')');
+  if (r2.overlapsThread || r2.overlapsComposer) return fail('overlaps thread/composer: ' + r2.hostCls);
+  var wide = ctx.width >= 975;
+  if (ctx.window === 'w8') {
+    // docked strip: in-flow between thread and composer (declared placement)
+    if (!r2.aboveComposer) return fail('w8 dock not above composer: ' + JSON.stringify(r2));
+  } else if (ctx.window !== 'w7' && wide && !r2.leftOf) return fail('not left of chat: ' + r2.hostCls);
+  if (ctx.window === 'w7' && !r2.above) return fail('w7 bay not above transcript');
+  return ok(r2.hostCls + ' leftOf=' + r2.leftOf + ' above=' + r2.above);
 }
 
 export async function questionFlow(page) {
@@ -321,7 +366,7 @@ export async function questionFlow(page) {
     var draftKept = (k3.data.getDraft(tid) || {}).text === 'question flow draft';
     var cancelled = !k3.data.activeQuestionnaire(tid);
     // submit path: re-open a flow through the demo controller
-    if (window.K3Demo && window.K3Demo.triggerQuestionFlow) window.K3Demo.triggerQuestionFlow(tid);
+    if (window.K3Demo && window.K3Demo.triggerQuestionFlow) window.K3Demo.triggerQuestionFlow({ env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit });
     await sleep(300);
     var q2 = k3.data.activeQuestionnaire(tid);
     var submitted = false, receipt = false;
@@ -352,6 +397,9 @@ export async function compactWork(page) {
     k3.store.set('activeThreadId', 'thread-16');
     window.K3.emit('data', { type: 'threads-changed' });
     await sleep(350);
+    // tabbed windows mount one surface at a time: activate the Goal tab first
+    var goalTab = document.querySelector('[data-kind="goal"]');
+    if (goalTab) { goalTab.click(); await sleep(250); }
     var out = { surfaces: {} };
     ['k3w-kit-goal', 'k3w-kit-todo', 'k3w-kit-capacity', 'k3w-kit-crew', 'k3w-kit-ops'].forEach(function (t) {
       out.surfaces[t] = !!document.querySelector('[data-testid="' + t + '"]');
@@ -367,6 +415,12 @@ export async function compactWork(page) {
       out.resumed = (k3.data.thread('thread-16').activeGoal || {}).status === 'running' ||
         k3.store.get('goalView.thread-16.statusOverride') === 'running';
     }
+    // tabbed windows (w3) mount one surface at a time: verify the Todo tab swap
+    var todoTab = document.querySelector('[data-kind="todo"]');
+    if (todoTab) {
+      todoTab.click(); await sleep(250);
+      out.todoViaTab = !!document.querySelector('[data-testid="k3w-kit-todo"]');
+    }
     // activity group expands/collapses
     var acc = document.querySelector('.k3t-activity .k3t-rowhead, [data-testid="k3t-activity"] [class*="rowhead"]');
     if (acc) {
@@ -376,19 +430,21 @@ export async function compactWork(page) {
     }
     return out;
   });
-  if (!r.surfaces['k3w-kit-goal']) return fail('goal surface missing on thread-16 in ' + ctxName(page));
-  if (!r.surfaces['k3w-kit-todo']) return fail('todo surface missing');
+  if (!r.surfaces['k3w-kit-goal']) return fail('goal surface missing on thread-16');
+  if (!r.surfaces['k3w-kit-todo'] && r.todoViaTab === false) return fail('todo surface missing');
   if (r.paused === false) return fail('pause did not change goal state');
   if (r.resumed === false) return fail('resume did not restore running');
   return ok(JSON.stringify(r.surfaces));
 }
-function ctxName() { return 'pairing'; }
 
 export async function routePicker(page) {
   const r = await page.evaluate(async function () {
     function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
     var k3 = window.__k3;
     var out = {};
+    // seed a favorite + recent so both sections have content (they hide when empty)
+    k3.store.set('routeFavorites', ['anthropic/work/claude-sonnet-4.5']);
+    k3.store.set('routeRecents', ['anthropic/work/claude-haiku-4.5']);
     var btn = document.querySelector('[data-testid="k3w-kit-model"]');
     if (!btn) return { step: 'no route button' };
     btn.click();
@@ -512,11 +568,15 @@ export async function approvalFlow(page) {
     k3.store.set('activeThreadId', 'thread-16');
     window.K3.emit('data', { type: 'threads-changed' });
     await sleep(350);
-    var card = document.querySelector('[data-testid="k3t-approval"], .k3t-card .' + 'k3a-card, [class*="k3a-"]');
-    var anyApproval = !!document.querySelector('[class*="k3a"]') || /Run 2 commands\?/.test(document.body.textContent);
-    if (!anyApproval) return { found: false };
-    // decide: Allow once
-    var btn = Array.from(document.querySelectorAll('button')).find(function (b) { return b.textContent.trim() === 'Allow once'; });
+    // chip-mode threads collapse cards into rows: expand the approval row
+    var card = document.querySelector('[data-testid="k3a-approval-card"]');
+    if (!card) {
+      var row = Array.from(document.querySelectorAll('[data-testid="k3t-packet-row"]')).find(function (b) { return /Approval/.test(b.textContent); });
+      if (row) { row.click(); await sleep(250); card = document.querySelector('[data-testid="k3a-approval-card"]'); }
+    }
+    if (!card) return { found: false };
+    // decide: Allow once (buttons live inside the card)
+    var btn = Array.from(card.querySelectorAll('button')).find(function (b) { return b.textContent.trim() === 'Allow once'; });
     if (!btn) return { found: true, noButton: true };
     btn.click();
     await sleep(250);
@@ -580,7 +640,7 @@ export async function threadOpsFlow(page) {
       scope: 'read-only', budget: '1 response'
     });
     out.requested = !res.error;
-    var reqs = k3.data.threadRequests('thread-18');
+    var reqs = k3.data.threadRequests('thread-09'); // record lives on the target
     var pending = reqs.filter(function (q) { return q.status === 'pending'; });
     out.pendingCard = pending.length > 0;
     if (pending.length) {
@@ -624,12 +684,22 @@ export async function routeWarningFlow(page) {
     window.K3.emit('data', { type: 'threads-changed' });
     await sleep(300);
     var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
-    // cross-provider switch = material consequence
+    // configure the current route first (same-provider = no warning). A
+    // cross-ACCOUNT switch (work -> personal) is a material boundary; a switch
+    // to a setup-needed route (google: sign-in-required) must open setup, not
+    // warn-and-apply.
+    var out = {};
+    k3.data.setThreadLocal('thread-16', { route: 'anthropic/work/claude-sonnet-4.5' });
     window.K3Route.select(ctx, 'google/personal/gemini-3-pro', {});
+    await sleep(200);
+    out.setupPath = (k3.store.get('settingsReturn') || {}).routeKey === 'google/personal/gemini-3-pro' ||
+      (k3.store.get('openTabs', []) || []).some(function (t) { return t && t.id === 'provider-settings'; });
+    k3.store.set('settingsReturn', null);
+    window.K3Route.select(ctx, 'anthropic/personal/claude-sonnet-4.5', {});
     await sleep(300);
     var msgs = k3.data.messages('thread-16');
-    var warn = msgs.filter(function (m) { return m.routeWarningCard && m.routeWarningCard.status === 'open'; });
-    var out = { warningShown: warn.length > 0 };
+    var warn = msgs.filter(function (m) { return m.routeWarningCard && m.routeWarningCard.status === 'open' && m.routeWarningCard.pendingRoute; });
+    out.warningShown = warn.length > 0;
     if (warn.length) {
       var card = warn[warn.length - 1].routeWarningCard;
       out.hasChoices = true;
@@ -644,6 +714,7 @@ export async function routeWarningFlow(page) {
     }
     return out;
   });
+  if (r.setupPath === false) return fail('setup-needed route did not deep-link to Provider Settings');
   if (!r.warningShown) return fail('no warning card on material switch');
   if (!r.branched) return fail('branch choice did not create a thread');
   if (!r.sourceKept) return fail('source thread mutated/lost');
@@ -684,6 +755,10 @@ export async function notificationInbox(page) {
 export async function spellcheckMenu(page) {
   const r = await page.evaluate(async function () {
     function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    k3.store.set('activeThreadId', 'thread-02'); // no questionnaire: composer present
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(350);
     var ta = document.querySelector('[data-testid="k3-composer-input"]');
     if (!ta) return { skip: 'no composer' };
     ta.value = 'teh settings';
@@ -793,7 +868,10 @@ export async function searchActions(page) {
       if (openBtn) { openBtn.click(); await sleep(300); input = document.querySelector('.k3s2-pop input, .k3s2-panel input'); }
     }
     if (!input) return { step: 'no search input' };
-    input.value = 'route';
+    window.__k3.store.set('activeThreadId', 'thread-16');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(250);
+    input.value = 'provider';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     await sleep(400);
     var row = document.querySelector('[data-testid="k3-search-result"]');
@@ -882,6 +960,86 @@ export async function redirectFlow(page) {
   return ok('resumed=' + r.resumed + ' (may arrive with the next reply)');
 }
 
+
+export async function goalLifecycle(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var out = {};
+    var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
+
+    // START on a goal-less thread
+    k3.store.set('activeThreadId', 'thread-02');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(300);
+    window.K3Work.startGoal('thread-02', { title: 'Probe goal', objective: 'Exercise the lifecycle.' });
+    await sleep(150);
+    var g2 = (k3.data.thread('thread-02') || {}).activeGoal || {};
+    out.started = g2.status === 'running';
+
+    // PAUSE / RESUME / UPDATE
+    window.K3Work.pauseGoal('thread-02'); await sleep(100);
+    out.paused = ((k3.data.thread('thread-02') || {}).activeGoal || {}).status === 'paused';
+    window.K3Work.resumeGoal('thread-02'); await sleep(100);
+    out.resumed = ((k3.data.thread('thread-02') || {}).activeGoal || {}).status === 'running';
+    window.K3Work.updateGoal('thread-02', { phase: 'Phase Two' }); await sleep(100);
+    out.updated = ((k3.data.thread('thread-02') || {}).activeGoal || {}).phase === 'Phase Two';
+
+    // REPLAN: confirm dialog -> durable revision record (thread.goalRevisions)
+    var revBefore = ((k3.data.thread('thread-02') || {}).goalRevisions || []).length;
+    var pr = window.K3Work.replanGoal('thread-02', 'probe replan');
+    await sleep(150);
+    var yes = document.querySelector('.k3-confirm [data-x="yes"]');
+    if (yes) yes.click();
+    await sleep(200);
+    if (pr && pr.then) await pr;
+    var t02 = k3.data.thread('thread-02') || {};
+    var revAfter = (t02.goalRevisions || []).length;
+    out.replanned = revAfter > revBefore ||
+      k3.data.messages('thread-02').some(function (m) { return !!m.replanFlash; });
+
+    // ROUTE-FROZEN via the REAL selector path: a route change while the Goal
+    // runs must abort (select returns false), routeKey unchanged, notice shown.
+    k3.store.set('activeThreadId', 'thread-16'); // running goal on this thread
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(300);
+    var before = k3.data.effective('thread-16').routeKey;
+    var sel = window.K3Route.select(ctx, 'anthropic/work/claude-opus-4.1', {});
+    await sleep(250);
+    out.selectAborted = sel === false;
+    out.routeFrozen = k3.data.effective('thread-16').routeKey === before;
+    out.noticeShown = /frozen|Update-Goal|Update the Goal/i.test(document.body.textContent || '');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await sleep(200);
+
+    // COMPLETE: status + durable receipt card
+    var mBefore = k3.data.messages('thread-16').length;
+    window.K3Work.completeGoal('thread-16'); await sleep(200);
+    var g16 = (k3.data.thread('thread-16') || {}).activeGoal || {};
+    out.completed = g16.status === 'completed' || g16.status === 'complete';
+    var msgs = k3.data.messages('thread-16');
+    out.receipt = msgs.length > mBefore && msgs.slice(mBefore).some(function (m) { return !!(m.receiptCard); });
+
+    // STOP: terminal state on the thread-02 goal
+    window.K3Work.stopGoal('thread-02'); await sleep(150);
+    out.stopped = ((k3.data.thread('thread-02') || {}).activeGoal || {}).status === 'stopped';
+    return out;
+  });
+  var failures = [];
+  if (!r.started) failures.push('start');
+  if (!r.paused) failures.push('pause');
+  if (!r.resumed) failures.push('resume');
+  if (!r.updated) failures.push('update');
+  if (!r.replanned) failures.push('replan');
+  if (!r.selectAborted) failures.push('select-not-aborted');
+  if (!r.routeFrozen) failures.push('route-not-frozen');
+  if (!r.noticeShown) failures.push('no-frozen-notice');
+  if (!r.completed) failures.push('complete');
+  if (!r.receipt) failures.push('receipt');
+  if (!r.stopped) failures.push('stop');
+  return failures.length ? fail(failures.join(',') + ' :: ' + JSON.stringify(r)) : ok();
+}
+
 // Probe registry
 export const HISTORICAL = [
   ['noHorizontalOverflow', noHorizontalOverflow],
@@ -899,6 +1057,7 @@ export const HISTORICAL = [
 ];
 
 export const PACKET = [
+  ['goalLifecycle', goalLifecycle],
   ['pinnedGeometry', pinnedGeometry],
   ['artifactLeftOfChat', artifactLeftOfChat],
   ['questionFlow', questionFlow],

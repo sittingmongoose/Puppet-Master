@@ -1,0 +1,602 @@
+{
+  "generatedFrom": "live run in stage.html at 1920x1000; system.reset before every trigger so each is measured from one known state",
+  "generatedAt": "2026-08-12T12:53:55.409Z",
+  "families": {
+    "system": [
+      {
+        "event": "reduced_motion_on",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "reduced_motion_off",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "port_collision",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "worktree_collision",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "test_collision",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "cross_project_grant",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "reset",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      }
+    ],
+    "history": [
+      {
+        "event": "peek",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "pin_full",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "pin_compact",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "unpin",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "switch_thread",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "artifact": [
+      {
+        "event": "loading",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "ready",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "switch",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "error",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "retry",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "update",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "close",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      }
+    ],
+    "question": [
+      {
+        "event": "prepare",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "open",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "next",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "skip",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "cancel",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "submit",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "goal": [
+      {
+        "event": "start",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "pause",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "resume",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "update",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "replan",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "blocked",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "complete",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "stop",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "clear",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "todo": [
+      {
+        "event": "add",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "complete",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "reopen",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "agent": [
+      {
+        "event": "spawn",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "advance",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "queue",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "block",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "complete",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "fail",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "stop",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "retry",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "activity": [
+      {
+        "event": "advance",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "condense",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "reopen",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "diff": [
+      {
+        "event": "create",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "update",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "open",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "decision": [
+      {
+        "event": "approval_open",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "warning_route",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "warning_privacy",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "warning_cache",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "attachment_incompatible",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "capacity",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "clear",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      }
+    ],
+    "bsd": [
+      {
+        "event": "auto_active",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "advice",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "silent",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "duplicate",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "timeout",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "unavailable",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "quota",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "manual_on",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "off",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "context": [
+      {
+        "event": "compact_now",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "lens_open",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "source_remove",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "prior_chat_search",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "thread": [
+      {
+        "event": "request",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "respond",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "spawn",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "branch",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "rewind",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "restore_point",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "redirect",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "sync": [
+      {
+        "event": "offline",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "queue_send",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "reconnect",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "replay",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "snapshot",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "server_work",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ],
+    "crew": [
+      {
+        "event": "start",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "wave",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "synthesize",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      },
+      {
+        "event": "stop",
+        "ok": true,
+        "reason": null,
+        "storeEffect": false
+      }
+    ],
+    "provider": [
+      {
+        "event": "install_required",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "update_available",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "verifying",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "update_failed",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      },
+      {
+        "event": "needs_repair",
+        "ok": true,
+        "reason": null,
+        "storeEffect": true
+      }
+    ]
+  },
+  "totals": {
+    "triggers": 93,
+    "ok": 93,
+    "failed": 0,
+    "noStoreEffect": 18
+  }
+}

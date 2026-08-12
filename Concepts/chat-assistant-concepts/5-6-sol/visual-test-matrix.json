@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.chat.5_6_sol.visual_test_matrix.v2",
+  "model": "5.6 Sol",
+  "generated_at": "2026-08-12T07:47:30Z",
+  "prototype_visual_gate": "pass",
+  "production_readiness_claimed": false,
+  "winner_recommendation": null,
+  "source_receipts": [
+    "evidence/browser-acceptance-firefox.json",
+    "evidence/browser-acceptance-chromium.json"
+  ],
+  "contact_sheet": "evidence/contact-sheet.html",
+  "canonical_frame_root": "evidence/frames",
+  "chromium_frame_root": "evidence/chromium-frames",
+  "automated_matrix_per_engine": {
+    "theme_width": {
+      "status": "pass",
+      "themes": [
+        "friendly-dark",
+        "friendly-light",
+        "retro-dark",
+        "retro-light",
+        "basic-dark",
+        "basic-light",
+        "glass-dark",
+        "glass-light"
+      ],
+      "widths": [520, 750, 975, 1200],
+      "cells": 32,
+      "screenshots": 32,
+      "settle_gate": "Every animated concept root must reach at least 0.99 opacity after a 700 ms authored-motion settle before capture."
+    },
+    "legibility": {
+      "status": "pass",
+      "calculation": "8 themes x 8 thread concepts",
+      "cells": 64,
+      "body_copy_floor_px": 16,
+      "metadata_and_action_floor_px": 11,
+      "dense_work_row_floor_px": 12,
+      "minimum_metadata_contrast": "6:1 on base and raised surfaces",
+      "dense_header_overlap_cells": 0,
+      "clipped_dense_headers": 0
+    },
+    "baseline": {
+      "status": "pass",
+      "calculation": "8 concepts x 8 themes x 4 widths x 2 rail states",
+      "cells": 512,
+      "assertions": [
+        "exact Chat width",
+        "usable transcript height",
+        "no clipped prose",
+        "no root overflow",
+        "correct rail geometry",
+        "correct window/thread mount"
+      ]
+    },
+    "feature_states": {
+      "status": "pass",
+      "calculation": "28 feature states x 8 themes x 4 widths",
+      "cells": 896,
+      "host": "window-05 x thread-02",
+      "host_role": "coverage-only; no rank, preference, or winner recommendation"
+    },
+    "history_artifact": {
+      "status": "pass",
+      "calculation": "8 windows x 4 history modes x 5 artifact states",
+      "cells": 160,
+      "history_modes": ["closed", "peek", "pinned compact", "pinned full"],
+      "artifact_states": ["closed", "loading", "ready", "updated", "error"]
+    },
+    "same_model_pairings": {
+      "status": "pass",
+      "calculation": "8 window concepts x 8 thread concepts",
+      "cells": 64
+    },
+    "continuous_resize": {
+      "status": "pass",
+      "range_px": [520, 1200],
+      "sample_count": 53
+    },
+    "motion_reduction": {
+      "status": "pass",
+      "window_families": 8,
+      "thread_message_families": 8,
+      "thread_question_families": 8,
+      "thread_work_families": 8,
+      "popup_families": 1,
+      "continuous_progress_families": 1,
+      "authored_families": 34,
+      "reduced_counterparts": 34
+    }
+  },
+  "curated_frames_per_engine": {
+    "total": 55,
+    "theme_width_frames": 32,
+    "focused_frames": 23,
+    "focused_sets": {
+      "question_grammars": 8,
+      "work_grammars": 8,
+      "stress_states": 7
+    }
+  },
+  "direct_visual_inspection": {
+    "status": "pass",
+    "inspected_frame_count": 55,
+    "expected_frame_count": 55,
+    "receipt": "evidence/direct-visual-inspection.json",
+    "method": "Direct original-resolution review of every settled canonical PNG; automated matrices remain separate from visual judgment.",
+    "chromium_parity_spot_check": {
+      "frame_count": 12,
+      "coverage": "four narrow dark themes, four wide light themes, one dense questionnaire, one work system, one route popup, and one pop-out context state",
+      "claim_boundary": "Representative parity review only; the full 55-frame direct-inspection claim applies to the canonical Firefox set."
+    },
+    "review_findings": [
+      "All eight diagonal window/thread compositions retain distinct spatial and reading grammars rather than palette-only variation.",
+      "The 520 px Chat measure preserves readable prose and visible metadata while artifact and pinned-history regions yield outside the Chat measure.",
+      "All eight question grammars and all eight work grammars were directly inspected; dense questionnaire commit controls remain visible above the held composer.",
+      "Route, decision, warning, artifact-error, offline, durable-composer, pop-out, and demo-controller states remain legible and spatially recoverable.",
+      "No concept is designated or implied as the winner."
+    ]
+  },
+  "known_residuals": [
+    "The 512 baseline and 896 feature cells are automated state and geometry coverage, not 1,408 individual human image reviews.",
+    "Firefox completed over loopback HTTP; Chromium completed over a file URL because this host's Chromium renderer fails before requesting even a trivial loopback page. Chromium-over-HTTP is not claimed.",
+    "Native Slint rendering, detached-window DPI, platform font metrics, IME, assistive-technology validation, and live services remain production work."
+  ],
+  "residual_detail": "known-gaps.md"
+}

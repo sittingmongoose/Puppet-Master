@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "topic": "chat-assistant",
+  "model": "Fable",
+  "presentation": "hybrid",
+  "order": 40,
+  "workspace": {
+    "id": "workspace",
+    "title": "Fable \u2014 comparison workspace",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "standard"
+  },
+  "entries": [
+    {
+      "id": "window-01",
+      "title": "W1 \u00b7 Proscenium",
+      "path": "concepts/window-01.html",
+      "openPath": "concepts/window-01.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 10
+    },
+    {
+      "id": "window-02",
+      "title": "W2 \u00b7 Bindery",
+      "path": "concepts/window-02.html",
+      "openPath": "concepts/window-02.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 11
+    },
+    {
+      "id": "window-03",
+      "title": "W3 \u00b7 Instrument Deck",
+      "path": "concepts/window-03.html",
+      "openPath": "concepts/window-03.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 12
+    },
+    {
+      "id": "window-04",
+      "title": "W4 \u00b7 Depth Field",
+      "path": "concepts/window-04.html",
+      "openPath": "concepts/window-04.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 13
+    },
+    {
+      "id": "window-05",
+      "title": "W5 \u00b7 Workbench",
+      "path": "concepts/window-05.html",
+      "openPath": "concepts/window-05.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 14
+    },
+    {
+      "id": "window-06",
+      "title": "W6 \u00b7 Reading Room",
+      "path": "concepts/window-06.html",
+      "openPath": "concepts/window-06.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 15
+    },
+    {
+      "id": "window-07",
+      "title": "W7 \u00b7 Mosaic",
+      "path": "concepts/window-07.html",
+      "openPath": "concepts/window-07.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 16
+    },
+    {
+      "id": "window-08",
+      "title": "W8 \u00b7 Periscope",
+      "path": "concepts/window-08.html",
+      "openPath": "concepts/window-08.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "window concept"
+      ],
+      "order": 17
+    },
+    {
+      "id": "thread-c01",
+      "title": "T1 \u00b7 Screenplay",
+      "path": "concepts/thread-c01.html",
+      "openPath": "concepts/thread-c01.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 30
+    },
+    {
+      "id": "thread-c02",
+      "title": "T2 \u00b7 Courier",
+      "path": "concepts/thread-c02.html",
+      "openPath": "concepts/thread-c02.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 31
+    },
+    {
+      "id": "thread-c03",
+      "title": "T3 \u00b7 Ledgerline",
+      "path": "concepts/thread-c03.html",
+      "openPath": "concepts/thread-c03.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 32
+    },
+    {
+      "id": "thread-c04",
+      "title": "T4 \u00b7 Dossier",
+      "path": "concepts/thread-c04.html",
+      "openPath": "concepts/thread-c04.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 33
+    },
+    {
+      "id": "thread-c05",
+      "title": "T5 \u00b7 Longhand",
+      "path": "concepts/thread-c05.html",
+      "openPath": "concepts/thread-c05.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 34
+    },
+    {
+      "id": "thread-c06",
+      "title": "T6 \u00b7 Counterweight",
+      "path": "concepts/thread-c06.html",
+      "openPath": "concepts/thread-c06.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 35
+    },
+    {
+      "id": "thread-c07",
+      "title": "T7 \u00b7 Teletype",
+      "path": "concepts/thread-c07.html",
+      "openPath": "concepts/thread-c07.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 36
+    },
+    {
+      "id": "thread-c08",
+      "title": "T8 \u00b7 Choreograph",
+      "path": "concepts/thread-c08.html",
+      "openPath": "concepts/thread-c08.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "thread concept"
+      ],
+      "order": 37
+    }
+  ]
+}

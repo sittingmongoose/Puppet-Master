@@ -1235,7 +1235,12 @@
        the pane. Pin the actions span to the strip's right edge so the close
        button never leaves the pane; the overflow chip (JS) collapses extra
        tabs to keep the visible tabs underneath it. --- */
-    .editor-tabs { position: relative; flex-wrap: nowrap; min-width: 0; padding-right: 28px; }
+    /* The right-hand reserve tracks the MEASURED width of the pinned actions
+       cluster (--pm6-ed-actions-w, written by the tab fitter). A hard-coded
+       28px was correct only while that cluster held one close button; PM7's
+       Home layer adds a surface-options button to the same span, and the last
+       tab plus the "+N more" chip then slid underneath it. */
+    .editor-tabs { position: relative; flex-wrap: nowrap; min-width: 0; padding-right: var(--pm6-ed-actions-w, 28px); }
     .editor-tabs .pane-tabbar-actions {
       position: absolute;
       right: 4px;
@@ -1250,6 +1255,159 @@
       padding: 2px;
       opacity: 0.9;
     }
+
+    /* ==================================================================
+       Contact-aware active editor-tab silhouette.
+
+       The active tab and the code canvas below it are ONE continuous
+       surface: same fill, no border between them, joined by concave
+       shoulders. The rail behind them is darker. This replaces the old
+       "active tab tinted + 2px accent underline" treatment.
+
+       Geometry is driven from JS (PM6_EDTAB_SHAPE) as custom properties:
+         --ed-shape-x / --ed-shape-w   the active tab's box in the rail
+         --ed-shape-lrx / --ed-shape-rrx   shoulder horizontal radii
+         --ed-canvas-lrx / --ed-canvas-rrx canvas exposed corner radii
+       Each horizontal radius collapses to 0 as the tab approaches that
+       side of the rail, so a flush edge has no decorative notch. The
+       VERTICAL radius stays at full height throughout, so a corner
+       flattens sideways instead of shrinking into a circular dimple.
+       ================================================================== */
+    .editor-pane {
+      --ed-canvas-bg: var(--surface);
+      /* Derive the rail from the CANVAS fill, never from --bg: several themes set
+         --surface == --bg, which collapses the mix back to the canvas colour and
+         leaves no rail/canvas separation at all (retro light and dark, basic
+         light), and glass-dark inverted it so the rail came out LIGHTER than the
+         surface. Mixing toward black is monotonic, so the rail is darker by
+         construction in every theme. Dark themes take a larger factor because the
+         same proportional step is a much smaller absolute one down there. */
+      --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      /* Opaque ground that the rail, the silhouette and the canvas are all
+         composited over. Without it the glass themes break the central promise:
+         --surface is translucent there, so the silhouette (over the rail) and the
+         canvas (over the wallpaper) resolve to DIFFERENT colours and stop reading
+         as one surface. A shared opaque ground makes the fills identical by
+         construction, in all eight themes. */
+      --ed-solid-base: var(--bg);
+      --ed-corner-ry: 10px;      /* canvas exposed corner, vertical radius */
+      --ed-shoulder-ry: 8px;     /* tab shoulder cutout, vertical radius */
+      --ed-top-radius: 11px;
+      --ed-shape-x: 0px;
+      --ed-shape-w: 0px;
+      --ed-shape-lrx: 0px;
+      --ed-shape-rrx: 0px;
+      --ed-canvas-lrx: 0px;
+      --ed-canvas-rrx: 0px;
+    }
+    [data-theme$="-dark"] .editor-pane { --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
+    /* Glass reads the code surface as its near-opaque plate; adopt that as the
+       shared fill so the silhouette and the canvas stay identical AND glass keeps
+       its own material. */
+    [data-theme^="glass"] .editor-pane { --ed-canvas-bg: var(--pm6-glass-plate); }
+    .editor-tabs.ed-shape-on {
+      background: linear-gradient(var(--ed-rail-bg), var(--ed-rail-bg)), var(--ed-solid-base);
+      border-bottom: 0;
+      align-items: flex-end;
+      /* No left inset: the first tab must be able to sit FLUSH against the
+         canvas's left boundary, which is the contact case the smart-corner
+         rule exists for. A padded rail would mean the flush state is
+         unreachable and the morph never demonstrates. */
+      padding-left: 0;
+      padding-bottom: 0;
+      overflow: visible;
+    }
+    /* `!important` is load-bearing here, not laziness: glass paints the code
+       surface through `[data-theme^="glass"] #editorPane1 .editor-area`, whose id
+       specificity outranks any class selector. If the canvas keeps that rule and
+       the silhouette does not, the two composite differently and the "one
+       continuous surface" promise fails on exactly the glass themes. Glass keeps
+       its own plate colour below via --ed-canvas-bg. */
+    .editor-pane:has(.editor-tabs.ed-shape-on) .editor-area {
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base) !important;
+      border-top-left-radius: var(--ed-canvas-lrx) var(--ed-corner-ry);
+      border-top-right-radius: var(--ed-canvas-rrx) var(--ed-corner-ry);
+    }
+    /* the travelling surface itself */
+    .ed-tab-shape {
+      position: absolute;
+      left: var(--ed-shape-x);
+      width: var(--ed-shape-w);
+      top: var(--xs, 4px);
+      bottom: -1px;               /* overlap the join so no hairline shows */
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @supports (corner-shape: squircle) {
+      .ed-tab-shape { corner-shape: squircle squircle flat flat; }
+    }
+    /* concave shoulders: a quarter-ellipse of rail punched out of a block of
+       canvas fill, so the tab flares outward into the canvas rather than
+       sitting on top of it. An external join like this cannot be produced by
+       border-radius alone. */
+    .ed-tab-shape::before,
+    .ed-tab-shape::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: var(--ed-shoulder-ry);
+      pointer-events: none;
+    }
+    .ed-tab-shape::before {
+      left: calc(-1 * var(--ed-shape-lrx));
+      width: var(--ed-shape-lrx);
+      background:
+        radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
+        var(--ed-solid-base);
+    }
+    .ed-tab-shape::after {
+      right: calc(-1 * var(--ed-shape-rrx));
+      width: var(--ed-shape-rrx);
+      background:
+        radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
+        var(--ed-solid-base);
+    }
+    /* Labels ride ABOVE the silhouette; the tab element itself paints nothing.
+       Per-theme active-tab fills, glows and underlines are all cleared here --
+       the silhouette IS the active-tab treatment now, and a theme halo around
+       it would read as a floating pill rather than a joined surface. */
+    .editor-tabs.ed-shape-on .tab {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .editor-tabs.ed-shape-on .tab.active,
+    .editor-tabs.ed-shape-on .tab.tab-focused,
+    .editor-tabs.ed-shape-on .tab:hover {
+      background: transparent;
+      box-shadow: none;
+      filter: none;
+    }
+    .editor-tabs.ed-shape-on .tab:not(.active) {
+      background: color-mix(in srgb, var(--ed-canvas-bg) 26%, transparent);
+      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
+      color: var(--text-secondary);
+    }
+    .editor-tabs.ed-shape-on .tab:not(.active):hover {
+      background: color-mix(in srgb, var(--ed-canvas-bg) 42%, transparent);
+      color: var(--text-primary);
+    }
+    .editor-tabs.ed-shape-on .tab.active { color: var(--text-primary); }
+    .editor-tabs.ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+    .editor-tabs.ed-shape-on .tab.active::after,
+    .editor-tabs.ed-shape-on .tab.active::before { display: none; }
+    .editor-tabs.ed-shape-on .pm-ed-overflow,
+    .editor-tabs.ed-shape-on .pane-tabbar-actions { position: relative; z-index: 2; }
+    /* Reduced motion keeps the state change, drops the spring travel; the JS
+       reads this flag too and snaps instead of animating. */
+    @media (prefers-reduced-motion: reduce) { .ed-tab-shape { transition: none; } }
+    [data-motion="reduced"] .ed-tab-shape { transition: none; }
 
     /* --- Issue 5: context-details rendered inside an editor pane tab. The
        .cdp-* classes come from the frozen context-detail markup (part 14);

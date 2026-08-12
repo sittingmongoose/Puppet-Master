@@ -1,0 +1,357 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage_result.v1",
+  "concept_id": "ledger",
+  "concept_title": "Opus 5 \u2014 Ledger",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "matrix_source": "PACKET/MANAGER_COVERAGE_MATRIX.json",
+  "assignment_group": "concept_4",
+  "summary": {
+    "families_required": 17,
+    "demonstrated": 13,
+    "shared_grammar": 4,
+    "deferred_named_owner": 0,
+    "missing": 0
+  },
+  "families": [
+    {
+      "family": "Settings Home",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Concept home screen \u2014 shared/pm-sections.js + concept home renderer"
+    },
+    {
+      "family": "Settings Search",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "shared/pm-search.js fuzzy index (416 records, 5 result kinds) surfaced by each concept"
+    },
+    {
+      "family": "Settings Workspace",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Category workspace: shared/pm-sections.js scrollspy + per-concept doc column"
+    },
+    {
+      "family": "Provider/Account/Model/Installation",
+      "group": "core",
+      "manager_id": "manager-providers",
+      "classification": "demonstrated",
+      "evidence": "Bespoke provider/account/model/installation surface in concepts/ledger/concept.js \u2014 the one manager every concept builds in its own idiom"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "group": "core",
+      "manager_id": null,
+      "classification": "shared_grammar",
+      "evidence": "Ordinary setting rows from window.PMData through each concept's row renderer"
+    },
+    {
+      "family": "Storage & Retention",
+      "group": "concept_4",
+      "manager_id": "manager-storage",
+      "classification": "demonstrated",
+      "evidence": "4 sections, 10 items, 4 ordinary setting rows; route #/m/manager-storage"
+    },
+    {
+      "family": "Backup & Restore",
+      "group": "concept_4",
+      "manager_id": "manager-backup",
+      "classification": "demonstrated",
+      "evidence": "3 sections, 7 items, 5 ordinary setting rows; route #/m/manager-backup"
+    },
+    {
+      "family": "Settings Lifecycle",
+      "group": "concept_4",
+      "manager_id": "manager-settings-lifecycle",
+      "classification": "demonstrated",
+      "evidence": "6 sections, 19 items, 0 ordinary setting rows; route #/m/manager-settings-lifecycle"
+    },
+    {
+      "family": "History & Sessions",
+      "group": "concept_4",
+      "manager_id": "manager-history",
+      "classification": "demonstrated",
+      "evidence": "4 sections, 7 items, 4 ordinary setting rows; route #/m/manager-history"
+    },
+    {
+      "family": "Runtime Artifacts",
+      "group": "concept_4",
+      "manager_id": "manager-artifacts",
+      "classification": "demonstrated",
+      "evidence": "3 sections, 5 items, 4 ordinary setting rows; route #/m/manager-artifacts"
+    },
+    {
+      "family": "Source Control/Worktrees",
+      "group": "concept_4",
+      "manager_id": "manager-sourcecontrol",
+      "classification": "demonstrated",
+      "evidence": "5 sections, 10 items, 1 ordinary setting rows; route #/m/manager-sourcecontrol"
+    },
+    {
+      "family": "GitHub Actions",
+      "group": "concept_4",
+      "manager_id": "manager-gh-actions",
+      "classification": "demonstrated",
+      "evidence": "4 sections, 7 items, 4 ordinary setting rows; route #/m/manager-gh-actions"
+    },
+    {
+      "family": "Containers & Registries",
+      "group": "concept_4",
+      "manager_id": "manager-containers",
+      "classification": "demonstrated",
+      "evidence": "4 sections, 7 items, 5 ordinary setting rows; route #/m/manager-containers"
+    },
+    {
+      "family": "Web/Search/Fetch",
+      "group": "concept_4",
+      "manager_id": "manager-web",
+      "classification": "demonstrated",
+      "evidence": "4 sections, 7 items, 1 ordinary setting rows; route #/m/manager-web"
+    },
+    {
+      "family": "Project Search Index",
+      "group": "concept_4",
+      "manager_id": "manager-index",
+      "classification": "demonstrated",
+      "evidence": "5 sections, 7 items, 4 ordinary setting rows; route #/m/manager-index"
+    },
+    {
+      "family": "Workspace Cleanup",
+      "group": "concept_4",
+      "manager_id": "manager-cleanup",
+      "classification": "demonstrated",
+      "evidence": "3 sections, 7 items, 4 ordinary setting rows; route #/m/manager-cleanup"
+    },
+    {
+      "family": "Future Server Module Shell",
+      "group": "concept_4",
+      "manager_id": "manager-server",
+      "classification": "demonstrated",
+      "evidence": "5 sections, 23 items, 4 ordinary setting rows; route #/m/manager-server"
+    }
+  ],
+  "managers_rendered_here": [
+    {
+      "manager_id": "manager-providers",
+      "title": "Providers, accounts and models",
+      "sections": null,
+      "items": null,
+      "setting_rows": null,
+      "section_kinds": [
+        "bespoke"
+      ],
+      "route": "#/m/manager-providers"
+    },
+    {
+      "manager_id": "manager-storage",
+      "title": "Storage, retention and recovery",
+      "sections": 4,
+      "items": 10,
+      "setting_rows": 4,
+      "section_kinds": [
+        "table",
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-storage"
+    },
+    {
+      "manager_id": "manager-backup",
+      "title": "Backup and restore",
+      "sections": 3,
+      "items": 7,
+      "setting_rows": 5,
+      "section_kinds": [
+        "table",
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-backup"
+    },
+    {
+      "manager_id": "manager-settings-lifecycle",
+      "title": "Export, import, copy and reset settings",
+      "sections": 6,
+      "items": 19,
+      "setting_rows": 0,
+      "section_kinds": [
+        "list",
+        "table"
+      ],
+      "route": "#/m/manager-settings-lifecycle"
+    },
+    {
+      "manager_id": "manager-history",
+      "title": "Threads, sessions and archives",
+      "sections": 4,
+      "items": 7,
+      "setting_rows": 4,
+      "section_kinds": [
+        "list",
+        "table",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-history"
+    },
+    {
+      "manager_id": "manager-artifacts",
+      "title": "Artifacts, receipts and outputs",
+      "sections": 3,
+      "items": 5,
+      "setting_rows": 4,
+      "section_kinds": [
+        "table",
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-artifacts"
+    },
+    {
+      "manager_id": "manager-sourcecontrol",
+      "title": "Source control, worktrees and forges",
+      "sections": 5,
+      "items": 10,
+      "setting_rows": 1,
+      "section_kinds": [
+        "list",
+        "table",
+        "rows"
+      ],
+      "route": "#/m/manager-sourcecontrol"
+    },
+    {
+      "manager_id": "manager-gh-actions",
+      "title": "Workflows, runs and readiness",
+      "sections": 4,
+      "items": 7,
+      "setting_rows": 4,
+      "section_kinds": [
+        "list",
+        "table",
+        "rows"
+      ],
+      "route": "#/m/manager-gh-actions"
+    },
+    {
+      "manager_id": "manager-containers",
+      "title": "Docker, Podman and Kubernetes tools",
+      "sections": 4,
+      "items": 7,
+      "setting_rows": 5,
+      "section_kinds": [
+        "cards",
+        "table",
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-containers"
+    },
+    {
+      "manager_id": "manager-web",
+      "title": "Web, search and fetch",
+      "sections": 4,
+      "items": 7,
+      "setting_rows": 1,
+      "section_kinds": [
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-web"
+    },
+    {
+      "manager_id": "manager-index",
+      "title": "Index health, exclusions and rebuild",
+      "sections": 5,
+      "items": 7,
+      "setting_rows": 4,
+      "section_kinds": [
+        "list",
+        "rows"
+      ],
+      "route": "#/m/manager-index"
+    },
+    {
+      "manager_id": "manager-cleanup",
+      "title": "Cleanup scopes, dry run and receipts",
+      "sections": 3,
+      "items": 7,
+      "setting_rows": 4,
+      "section_kinds": [
+        "table",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-cleanup"
+    },
+    {
+      "manager_id": "manager-server",
+      "title": "Servers, hosts, clients and reserved modules",
+      "sections": 5,
+      "items": 23,
+      "setting_rows": 4,
+      "section_kinds": [
+        "cards",
+        "list",
+        "prose",
+        "rows"
+      ],
+      "route": "#/m/manager-server"
+    },
+    {
+      "manager_id": "manager-media",
+      "title": "Media generation and capabilities",
+      "sections": 2,
+      "items": 6,
+      "setting_rows": 0,
+      "section_kinds": [
+        "list",
+        "prose"
+      ],
+      "route": "#/m/manager-media"
+    },
+    {
+      "manager_id": "manager-usage",
+      "title": "Usage",
+      "sections": 2,
+      "items": 6,
+      "setting_rows": 0,
+      "section_kinds": [
+        "list",
+        "prose"
+      ],
+      "route": "#/m/manager-usage"
+    }
+  ],
+  "deferred_named_owners": [
+    {
+      "family": "Project Sync / Project Move",
+      "canonical_owner": "Project Sync owner (SERVER_BACKBONE_SETTINGS_RETURN.md)",
+      "insertion_contract": "A manager module registered through PMManagerKit.register(id, builder) returning the same ManagerSpec shape; Settings hosts it at #/m/manager-project-sync and links it from Server & hosts. Settings never implements the sync state machine.",
+      "why_deferred": "PACKET/07 forbids concept agents from modelling Project Sync state machines."
+    },
+    {
+      "family": "Browser Runtime / Browser Program / Expert Browser",
+      "canonical_owner": "PM-native Browser owner (PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md)",
+      "insertion_contract": "Registers as manager-browser with sections for workspaces, programs and the human-only AuthBrowser session; Settings shows profile and permission rows only, never DOM or capture surfaces.",
+      "why_deferred": "PACKET/07 marks the AuthBrowser session human-only and inspection-free; a Settings concept cannot demonstrate it honestly."
+    },
+    {
+      "family": "RuntimeResourceGovernor policy editor",
+      "canonical_owner": "Performance owner (PERFORMANCE_SETTINGS_RETURN.md)",
+      "insertion_contract": "One policy manager registered as manager-performance; Settings surfaces the single governor policy and its observed phases, and must not add a second concurrency control anywhere else.",
+      "why_deferred": "PACKET/SOURCE_AND_PRECEDENCE_MAP requires exactly one governor policy owner; four concepts inventing editors would create four."
+    },
+    {
+      "family": "Release / update supply chain",
+      "canonical_owner": "Release/updates owner (Release_Supply_Chain.md, BinaryLocator_Spec.md)",
+      "insertion_contract": "Provider installation rows already carry updateAttempt evidence; the release owner registers manager-updates and Settings links installation rows to it rather than duplicating rollback policy.",
+      "why_deferred": "Update/repair/rollback policy is highest-precedence canon in PROVIDER_CLI_FINAL_ADJUDICATION.md."
+    }
+  ],
+  "rule_check": "missing is a failure; this concept reports 0 missing"
+}

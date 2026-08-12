@@ -332,7 +332,7 @@ T8Thread.prototype._renderQuestionBody = function () {
       card.appendChild(opts);
     } else {
       var ta = u.el('textarea', { class: 't8-question-free pmx-scroll' });
-      ta.setAttribute('spellcheck', 'true');
+      ta.setAttribute('spellcheck', 'false');
       ta.value = question.draft || '';
       u.on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
       card.appendChild(ta);
@@ -373,6 +373,17 @@ T8Thread.prototype._renderQuestionBody = function () {
         u.el('span', { class: 't8-live-time' })
       ]);
       this.list.appendChild(this.liveEl);
+    }
+    /* The dot pulses indefinitely, so it must name the operation it is reporting. `syncLive` only
+     * runs while PMXRuntime holds a live run for this thread, and that run registers itself with
+     * ObservableWork as `run-<threadId>` — so the binding is exact rather than decorative, and the
+     * motion suite can prove it. */
+    var opId = 'run-' + this.tid();
+    var obs = global.PMXObservable;
+    var dot = this.liveEl.querySelector('.t8-live-dot');
+    if (dot) {
+      if (obs && obs.isRunning && obs.isRunning(opId)) dot.setAttribute('data-pmx-op', opId);
+      else dot.removeAttribute('data-pmx-op');
     }
     this.ctx.services.motion.swapTextInstant(this.liveEl.querySelector('.t8-live-text'), s.text || '');
     this.ctx.services.motion.swapTextInstant(this.liveEl.querySelector('.t8-live-time'),

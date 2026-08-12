@@ -127,7 +127,9 @@
   border: none;
 }
 .pmx-composer-field:focus { outline: none; }
-/* Platform spellcheck stays enabled; only the surrounding treatment is ours. */
+/* Platform spellcheck is OFF. PM draws its own passive underline in .pmx-spell-layer,
+ * because the packet's menu items (Ignore for this draft, Add to project dictionary) and
+ * its skip rules cannot exist in the native menu, and the platform would autocorrect. */
 .pmx-composer-field::placeholder { color: var(--text-muted); }
 
 /* Inside the box, not beneath it. No divider rule: a border here would split

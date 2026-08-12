@@ -79,6 +79,14 @@
     this.transcript = u.el('div', { class: 'w1-transcript pmx-scroll', data: { pmxRegion: 'transcript' } });
     main.appendChild(this.transcript);
 
+    /* The artifact workspace is a column INSIDE .w1-main, ordered before both the history drawer
+     * and the transcript by CSS `order`. It is a sibling of the transcript, not a panel within it,
+     * so the transcript keeps its own scroll and the bottom shelf still spans the full width. */
+    this.artifactSwitch = u.el('div', { class: 'w1-artifact-switch' });
+    this.artifactBody = u.el('div', { class: 'w1-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w1-artifact-host' }, [this.artifactSwitch, this.artifactBody]);
+    main.appendChild(this.artifactHost);
+
     this.scrim = u.el('div', { class: 'w1-drawer-scrim', data: { open: '0' } });
     main.appendChild(this.scrim);
 
@@ -199,9 +207,16 @@
     this._mo.observe(this.shelfBody, { childList: true, subtree: true });
 
     this.syncDrawer();
+    this.syncArtifact();
+
+    /* One subscription for the artifact service, because its state lives outside the store's
+     * per-thread view and a store change key alone would not report it. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
   };
 
-  W1Window.prototype.syncShelf = function () {
+W1Window.prototype.syncShelf = function () {
     var svc = this.ctx.services;
     var shouldOpen = this.questionHost.childNodes.length > 0 || this.surfaceHost.childNodes.length > 0;
     if (shouldOpen === this.shelfOpen) return;
@@ -210,16 +225,19 @@
     svc.motion.collapseTo(this.shelf, shouldOpen, { collapsedHeight: 0, duration: 260 });
   };
 
-  /* The Ledger's floors. A 280px column beside a 400px transcript is a real ledger; the same
-   * column beside a 240px one is a list wider than the conversation it exists to navigate.
-   * The compact form is a 56px ruled spine, which costs little enough that it still fits
-   * beside a readable transcript at the 520px minimum — which is the whole point of having
-   * a compact tier rather than simply suspending the pin. */
-  var W1_FLOORS = { minChat: 400, fullColumn: 280, compactColumn: 56, minStageForFull: 900 };
+  /* The Ledger's floors now live in PMXThreadHistory.floorsFor('w1') with the other seven, so the
+   * eight-row matrix is auditable in one place instead of as eight literals in eight files. The
+   * reasoning is unchanged: a 280px column beside a 400px transcript is a real ledger; the same
+   * column beside a 240px one is a list wider than the conversation it exists to navigate. The
+   * compact form is a 56px ruled spine, which still fits beside a readable transcript at the 520px
+   * minimum — the whole point of having a compact tier rather than simply suspending the pin. */
 
   W1Window.prototype.syncDrawer = function () {
     var TH = global.PMXThreadHistory;
-    var r = TH.resolve(this.ctx, this.shell, W1_FLOORS);
+    /* applyTo stamps the shared attribute contract on the region itself, so every window
+     * reports its effective state through one marker. This window also keeps its own
+     * concept-specific attributes below — the two are complementary, not duplicates. */
+    var r = TH.applyTo(this.drawerBody, TH.resolve(this.ctx, this.shell, TH.floorsFor('w1')));
 
     var open = r.effective !== 'closed';
     var pinnedFull = r.effective === 'pinned-full';
@@ -259,6 +277,51 @@
     this._suspendNote.setAttribute('data-show', r.reason ? '1' : '0');
   };
 
+  /* ---------------------------------------------------------------- artifact frame
+   *
+   * The BODY of an artifact is rendered by the shared panel — it draws data kinds, not identity.
+   * What this window owns is the FRAME: where the column sits, which switcher idiom it uses, what
+   * happens when the chat is too narrow for three columns, and how it coexists with pinned history.
+   *
+   * Placement here is `artifact │ history │ transcript` inside .w1-main, with the bottom shelf
+   * spanning underneath all three. Reading order runs from produced evidence, through the register
+   * that indexes it, to the conversation about it.
+   */
+  W1Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+
+    this.shell.setAttribute('data-w1-artifact', open ? '1' : '0');
+    /* Narrow is measured against the same chat width the history floors use, so the two
+     * fallbacks agree instead of triggering at different points. */
+    var chatW = this.shell.getBoundingClientRect().width;
+    this.shell.setAttribute('data-w1-narrow', chatW < 750 ? '1' : '0');
+
+    if (!open) { U().empty(this.artifactSwitch); return; }
+
+    /* The switcher is the concept's own row-list idiom, driven by the frame descriptor rather
+     * than hard-coded, so a change to the matrix moves one string. */
+    var frame = A.frame ? A.frame('w1') : { switcher: 'rows' };
+    if (frame.switcher !== 'rows') return;
+
+    var u = U();
+    var self = this;
+    u.empty(this.artifactSwitch);
+    A.list().forEach(function (a) {
+      var row = u.el('button', {
+        class: 'w1-artifact-switch-row', type: 'button',
+        aria: { current: a.id === activeId ? 'true' : 'false' }
+      }, [
+        self.ctx.services.icons.get(a.id === activeId ? 'check' : 'artifact', 12),
+        u.el('span', { text: a.title })
+      ]);
+      u.on(row, 'click', function () { A.switchTo(a.id); });
+      self.artifactSwitch.appendChild(row);
+    });
+  };
+
   /* ---------------------------------------------------------------- WindowInstance API */
 
   W1Window.prototype.setWidth = function (px) {
@@ -269,6 +332,10 @@
      * threshold left the drawer, the scrim and the pin button reporting the previous tier
      * until some unrelated session mutation happened to refresh them. */
     if (this.drawer) this.syncDrawer();
+    /* The artifact's narrow fallback resolves against the same chat width, so it moves on the
+     * same event. Leaving it out was how the drawer and the artifact column could disagree about
+     * whether there was room for three columns. */
+    if (this.artifactHost) this.syncArtifact();
   };
 
   W1Window.prototype.setRail = function (open) {
@@ -301,6 +368,7 @@
       }
     }
     this.syncDrawer();
+    this.syncArtifact();
   };
 
   W1Window.prototype.destroy = function () {
@@ -309,6 +377,7 @@
     }
     this.offs = [];
     if (this._mo) { try { this._mo.disconnect(); } catch (e) {} this._mo = null; }
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
     if (this.overlay && this.overlay.parentNode) this.overlay.parentNode.removeChild(this.overlay);
   };
@@ -316,7 +385,7 @@
   global.PMX.window.register('w1', {
     name: 'Ledger',
     blurb: 'Thread history slides in as a drawer so the transcript always keeps full chat width, while work surfaces gather in a bottom shelf that only takes space when something is active.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W1Window(root, ctx);
       return {
@@ -327,7 +396,8 @@
           overlayRoot: inst.overlay,
           threadHistory: inst.drawerBody,
           workSurfaceHost: inst.surfaceHost,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (open) { inst.setRail(open); },

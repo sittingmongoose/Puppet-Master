@@ -51,29 +51,39 @@ Every window can keep the thread list visible alongside the chat (so you can mon
 - A mode flip (docked ↔ pop-out) unmounts and remounts in the other root; semantic state (store) survives.
 - `index.html` is the comparison workspace: embeds `host.html` iframes and broadcasts `{k3:true,type:'k3-env',env}` (theme/width/rail/reduced-motion/pairing) via `K3Bridge`.
 
+## Packet decision layer (2026-08-08 cumulative update)
+
+On top of the Revision-2 set, every window now carries: provider/account/model **route picker** (icon rail, favorites, recents, explicit account/connection line, effort + Normal/Fast submenu stack, setup states, material route warnings), **access profiles** (Ask for approval / Auto accept edits / Auto / Full Access), **BSD** (Off/Auto/On, turn/thread scope, truthful auto glow, distinct manual On), compact **approval cards**, **Context Lens admission receipt** + real **Compact Now**, prior-chat **search actions**, typed **thread request/await/spawn** + branch/rewind/restore points + active-turn **redirect**, **Goal lifecycle** with route-frozen guard and completion receipts, **capacity forecast / Crew / Ops** surfaces, **left artifact workspace** (per-window idiom), **offline outbox** with idempotent replay, **attachment resolver** (native/PM-transformed/alternate/unsupported), passive **spellcheck**, and the title-bar **notification inbox**. Fixture: 19 threads (16 showcase / 17 attachments+grant / 18 sync+thread-ops / 19 crew+capacity), 5 providers, 8-Todo goal, 3 subagent routes, port-3000 collision, 4 artifacts, BSD Auto+On seeds.
+
 ## How to run
 
 The workspace needs an `http://` origin (file:// iframes/localStorage are unreliable):
 
 ```bash
 cd Concepts/chat-assistant-concepts/kimi-k3
-node verification/serve.mjs
-# → comparison workspace: http://127.0.0.1:8765/index.html
-#   single pairing:       http://127.0.0.1:8765/host.html?window=w1&thread=t1
+node harness/serve.mjs            # prints K3H-URL http://127.0.0.1:<os-assigned>/
+# → comparison workspace: <url>index.html
+#   single pairing:       <url>host.html?window=w1&thread=t1
+#   dev demo drawer:      <url>host.html?window=w1&thread=t1&demo=1
 ```
 
-The demo data ships as JS (`_shared/demo-data.js`) so it works offline; no fetch anywhere. Google Fonts `<link>` is a preview convenience (same as PMConcept7) and falls back to system fonts offline.
+The demo data ships as JS (`_shared/demo-data.js` + `demo-augment.js` + `demo-packet.js`) so it works offline; no fetch anywhere. Google Fonts `<link>` is a preview convenience (same as PMConcept7) and falls back to system fonts offline.
 
 ## Verification
 
-See `verification/commands.md` for every command. Headless harness uses vendored `playwright-core` + system Chrome (no install). See `TEST_REPORT.md` for results and `SPEC_GAPS.md` for the gap registry.
+Harness scripts live in `harness/` (the Hub validator bans `verification/` and any screenshot/results artifacts inside the model folder, so results + shots write to OS temp `%TMP%/k3h-<pid>/`). See `harness/commands.md` for every command and flag. Drivers: zero-dependency CDP (default) or `playwright-core` against system Chrome (`npm i --prefix harness playwright-core`). See `TEST_REPORT.md` for results and `SPEC_GAPS.md` for the gap registry.
 
 ```bash
-node verification/run-pair-smoke.mjs     # all 64 pairings
-node verification/run-matrix.mjs         # 8 themes × 4 widths × rail × hosts
-node verification/run-feature-states.mjs # 28 states × 32 configs
-node verification/run-reduced-motion.mjs # final-state parity
-node verification/run-mounts.mjs         # remount + behavior probes
+node harness/run-boot-smoke.mjs        # dataset + controller boot contract
+node harness/run-pair-smoke.mjs        # all 64 pairings
+node harness/run-matrix.mjs            # 8 themes × 4 widths × rail × 22 pairings
+node harness/run-feature-states.mjs    # 71 state keys × 64 pairings
+node harness/run-reduced-motion.mjs    # final-state parity
+node harness/run-mounts.mjs            # remount + restart cycles
+node harness/run-packet-probes.mjs     # 19 behavioral probes × 16 configs
+node harness/run-terminology.mjs       # PM-native browser vocabulary gate
+node harness/capture-shots.mjs         # state-gallery frames to OS temp
+python ../../ConceptHub/validate.py .  # ConceptHub validation
 ```
 
 ## Isolation

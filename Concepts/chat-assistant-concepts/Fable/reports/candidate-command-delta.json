@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.chat_candidate_command_delta.v1",
+  "model": "Fable",
+  "note": "Candidate IDs are provisional until the later catalog and wiring audit. Reuse-first: canonical Goal, account/profile, provider-route, worktree, browser, test, artifact, Settings, approval, and notification commands are never re-minted. The packet's machine register (Aug 9) is two days stale against 08 (Aug 11); the six ids marked register_missing come from 08 and are exercised by this concept system.",
+  "exercised_candidates": [
+    { "id": "cmd.chat.thread.create", "surface": "spawn child thread (kebab), Start new chat (route warning)" },
+    { "id": "cmd.chat.thread.request", "surface": "kebab → Request from another thread" },
+    { "id": "cmd.chat.thread.await", "surface": "await receipt pair on request" },
+    { "id": "cmd.chat.thread.branch", "surface": "message ops → Branch from here; history row menu; warning action Branch with new model" },
+    { "id": "cmd.chat.thread.rewind", "surface": "message ops → Rewind to here" },
+    { "id": "cmd.chat.restore_point.create", "surface": "kebab + message ops → Create restore point", "alias_conflict": "canon: cmd.chat.create_restore_point" },
+    { "id": "cmd.chat.history.pin", "surface": "history toggle / pin buttons in all eight windows" },
+    { "id": "cmd.chat.history.unpin", "surface": "close/unpin controls in all eight windows" },
+    { "id": "cmd.chat.artifact.open", "surface": "artifact shortcuts, diff rows, tray chips, lenses" },
+    { "id": "cmd.chat.artifact.close", "surface": "close controls in all eight artifact regions" },
+    { "id": "cmd.chat.artifact.switch", "surface": "tabs/plates/channels/stack/shelf/chips/lenses per window", "register_missing": true },
+    { "id": "cmd.chat.question.answer", "surface": "eight question compositions" },
+    { "id": "cmd.chat.question.skip", "surface": "skip/pass-over/abstain per concept voice; reversible before submit" },
+    { "id": "cmd.chat.question.navigate", "surface": "back/next/dots/pages/lines/fan", "register_missing": true },
+    { "id": "cmd.chat.question.cancel", "surface": "cancel/abandon/withdraw per concept; leaves historical record" },
+    { "id": "cmd.chat.question.submit", "surface": "submit/post/cast/set/send per concept; required gate" },
+    { "id": "cmd.chat.goal.start", "surface": "goal.start trigger; scripted turn narrative" },
+    { "id": "cmd.chat.goal.pause", "surface": "goal controls in all eight work compositions", "reuse": "projects canonical Goal command" },
+    { "id": "cmd.chat.goal.resume", "surface": "same", "reuse": "projects canonical Goal command" },
+    { "id": "cmd.chat.goal.stop", "surface": "same", "reuse": "projects canonical Goal command" },
+    { "id": "cmd.chat.goal.update", "surface": "Edit → visible impact analysis → Apply replan" },
+    { "id": "cmd.chat.goal.replan", "surface": "replan confirmation flow" },
+    { "id": "cmd.chat.goal.clear", "surface": "Clear control, enabled only in terminal states", "register_missing": true },
+    { "id": "cmd.chat.context.compact_now", "surface": "Context Ring → Compact Now", "alias_conflict": "canon: cmd.chat.compact_context" },
+    { "id": "cmd.chat.context.source.add", "surface": "cross-thread result action Add passage to context (receipt-level in prototype)" },
+    { "id": "cmd.chat.context.source.remove", "surface": "Lens Turn Off on retrieved excerpts" },
+    { "id": "cmd.chat.route.select", "surface": "model picker (favorites/recents/rail/search/accounts)", "reuse": "wraps cmd.provider.switch_route + cmd.account.select_profile" },
+    { "id": "cmd.chat.access.set", "surface": "access selector with effective-limit display" },
+    { "id": "cmd.chat.bsd.set", "surface": "BSD selector with scope stage (This turn / Current thread)" },
+    { "id": "cmd.chat.redirect", "surface": "send-while-active steer; turn.redirect trigger" },
+    { "id": "cmd.chat.attachment.resolve", "surface": "attach menu — four resolution classes" },
+    { "id": "cmd.chat.attachment.route", "surface": "alternate-route consent via material warning" },
+    { "id": "cmd.chat.crew.start", "surface": "crew fixture (thread-17) + crew.waves trigger" },
+    { "id": "cmd.chat.cross_project.request", "surface": "cross_project.grant trigger → scoped approval card" },
+    { "id": "cmd.chat.draft.history.open", "surface": "composer draft-history button", "register_missing": true },
+    { "id": "cmd.chat.draft.history.restore", "surface": "revision row click (snapshots current first)", "register_missing": true },
+    { "id": "cmd.chat.draft.history.clear", "surface": "Clear draft row", "register_missing": true }
+  ],
+  "reused_canonical": [
+    "canonical Goal commands (pause/resume/stop projected)",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "canonical worktree/browser/test/artifact/settings commands (receipt-level projections)",
+    "canonical approval and notification commands (title-bar stack only)"
+  ],
+  "retired_not_revived": [
+    "cmd.questionnaire.expire — no passive expiry exists anywhere in this system",
+    "Resend — absent from every action row",
+    "message-level Stop — Stop lives only in the composer"
+  ],
+  "conflicts_for_adjudication": [
+    "cmd.chat.restore_point.create vs cmd.chat.create_restore_point (canon)",
+    "cmd.chat.context.compact_now vs cmd.chat.compact_context (canon)",
+    "ACD-410's cmd.chat.focus_thread_usage vs ACD-434's retirement of it"
+  ]
+}

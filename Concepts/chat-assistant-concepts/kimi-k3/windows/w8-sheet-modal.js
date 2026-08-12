@@ -281,9 +281,9 @@
         if (p.ops) { var o = kit.opsSurface(ctx, currentTid); if (o) { workNodes.push(o); wb.appendChild(o); } }
         if (p.goal) { var g = kit.goalSurface(ctx, currentTid); if (g) { workNodes.push(g); wb.appendChild(g); } }
         if (p.todo) { var td = kit.todoSurface(ctx, currentTid); if (td) { workNodes.push(td); wb.appendChild(td); } }
-        if (p.chips) { var c = kit.workChips(ctx, currentTid); if (c) { workNodes.push(c); wb.appendChild(c); } }
         if (p.capacity) { var cp = kit.capacitySurface(ctx, currentTid); if (cp) { workNodes.push(cp); wb.appendChild(cp); } }
         if (p.crew) { var cr = kit.crewSurface(ctx, currentTid); if (cr) { workNodes.push(cr); wb.appendChild(cr); } }
+        if (p.chips) { var c = kit.workChips(ctx, currentTid); if (c) { workNodes.push(c); wb.appendChild(c); } }
       }
 
       /* ---- artifacts sheet / dock ---------------------------------------- */

@@ -218,3 +218,50 @@
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------- artifact column outside the rail
+ *
+ * A persistent left column OUTSIDE the 44px inner rail, which grows a third icon for it. Rail icons
+ * are mutually exclusive: opening the artifact leaves pinned history in its compact 72px rail
+ * rather than both borrowing the same column, which is what made the previous arrangement flicker. */
+[data-pmx-window="w7"] .w7-artifact-host {
+  display: none;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface);
+  border-right: var(--border-width, 1px) solid var(--border);
+}
+[data-pmx-window="w7"] .w7-shell[data-w7-artifact="1"] .w7-artifact-host {
+  display: block;
+  flex: 0 0 clamp(250px, 30%, 400px);
+  order: -1;
+}
+[data-pmx-window="w7"] .w7-artifact-body { height: 100%; overflow: hidden; }
+
+/* At the narrowest tier the column goes absolute from left:44px, matching the existing rule for the
+ * borrowed history column so both side surfaces behave identically under pressure. */
+@container pmx-chat (max-width: 700px) {
+  [data-pmx-window="w7"] .w7-shell[data-w7-artifact="1"] .w7-artifact-host {
+    position: absolute;
+    inset: 0 auto 0 44px;
+    z-index: 7;
+    width: min(320px, calc(100% - 44px));
+  }
+}
+
+/* ---------------------------------------------------------------- pinned-compact: the rail grows
+ *
+ * The differentiator: the 44px inner rail itself grows to 72px and shows status glyph rows. The rail
+ * IS the compact history here — there is no separate column at all, which is why the floor is 72px. */
+[data-pmx-window="w7"] .w7-shell[data-w7-history="pinned-compact"] .w7-rail {
+  width: 72px;
+  min-width: 72px;
+}
+[data-pmx-window="w7"] .w7-shell[data-w7-history="pinned-compact"] .w7-rail-history-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 0;
+  border-top: var(--border-width, 1px) solid var(--border);
+}
+[data-pmx-window="w7"] .w7-shell[data-w7-history="pinned-compact"] .w7-column { display: none; }

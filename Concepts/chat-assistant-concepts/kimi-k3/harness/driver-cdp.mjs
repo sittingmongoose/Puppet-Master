@@ -139,8 +139,13 @@ function makePage(cdp, sessionId, targetId) {
     if (e.level === 'error' && !/favicon|fonts\.|net::ERR_INTERNET|net::ERR_NAME|404/.test(e.text || '')) errors.push(e.text);
   });
 
-  async function evaluate(expr) {
-    const expression = typeof expr === 'function' ? '(' + expr.toString() + ')()' : String(expr);
+  async function evaluate(expr, ...args) {
+    let expression;
+    if (typeof expr === 'function') {
+      expression = '(' + expr.toString() + ')(' + args.map((a) => JSON.stringify(a)).join(',') + ')';
+    } else {
+      expression = String(expr);
+    }
     const r = await cdp.send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true }, sessionId);
     if (r.exceptionDetails) throw new Error('evaluate failed: ' + (r.exceptionDetails.text || '') + ' ' + ((r.exceptionDetails.exception && r.exceptionDetails.exception.description) || ''));
     return r.result ? r.result.value : undefined;

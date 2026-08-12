@@ -697,6 +697,9 @@
   padding: var(--pm-space-4) var(--pm-space-5);
   border-bottom: var(--pm-border-w) solid var(--pm-border-1);
   background: var(--pm-surface-1);
+  /* The tool cluster wraps under the title before it can push the room wider
+   * than the window: a room never scrolls sideways. */
+  flex-wrap: wrap;
 }
 .at-room-back {
   display: inline-flex; align-items: center; gap: 6px;
@@ -708,7 +711,7 @@
 .at-room-titles { min-width: 0; flex: 1 1 auto; }
 .at-room-title { font-size: 18px; font-weight: var(--pm-title-weight); }
 .at-room-purpose { font-size: 12.5px; color: var(--pm-text-3); margin-top: 2px; }
-.at-room-tools { display: flex; align-items: center; gap: var(--pm-space-2); flex: none; flex-wrap: wrap; justify-content: flex-end; }
+.at-room-tools { display: flex; align-items: center; gap: var(--pm-space-2); flex: 0 1 auto; min-width: 0; flex-wrap: wrap; justify-content: flex-end; }
 
 .at-room-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: var(--pm-space-5); }
 
@@ -935,3 +938,189 @@
 .pm-app[data-width="squeezed"] .at-prov-head .at-prov-status { display: none; }
 .pm-app[data-width="squeezed"] .at-model { grid-template-columns: 22px minmax(0, 1fr) auto; }
 .pm-app[data-width="squeezed"] .at-model-caps { display: none; }
+
+
+/* ============================================ MANAGER SPEC SURFACE (bays) */
+/* A room is divided into bays. A bay is a numbered part of the room you can
+ * stand in; the ordinal is architectural signage, not decoration. Every
+ * assigned manager is rendered through this one path. */
+
+.at-bay {
+  margin: 0 0 var(--pm-space-5);
+  padding: 0 0 var(--pm-space-4);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.at-bay:last-of-type { border-bottom: none; padding-bottom: 0; }
+.at-bay-head {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--pm-space-3);
+  margin: 0 0 var(--pm-space-3);
+}
+.at-bay-ord {
+  font-family: var(--pm-font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--pm-text-3);
+}
+.at-bay-title {
+  grid-column: 2;
+  margin: 0;
+  font-size: 15px;
+  font-weight: var(--pm-title-weight);
+  color: var(--pm-text-1);
+}
+.at-bay-head .at-btn { grid-column: 3; grid-row: 1; }
+.at-bay-line {
+  grid-column: 2;
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--pm-text-2);
+  max-width: 62ch;
+}
+.at-prose { margin: 0 0 8px 34px; max-width: 68ch; font-size: 13px; color: var(--pm-text-2); }
+
+.at-bay-table { width: 100%; border-collapse: collapse; margin-left: 34px; width: calc(100% - 34px); }
+.at-bay-table th {
+  text-align: left;
+  padding: 6px var(--pm-space-3) 6px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.at-bay-table td {
+  padding: 9px var(--pm-space-3) 9px 0;
+  font-size: 13px;
+  color: var(--pm-text-1);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  vertical-align: top;
+}
+.at-bay-table th.is-num, .at-bay-table td.is-num { text-align: right; font-variant-numeric: tabular-nums; }
+.at-item-extra td { padding-top: 0; }
+
+/* ------------------------------------------------------------- item card */
+
+.at-item {
+  margin: 0 0 var(--pm-space-3) 34px;
+  padding: var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+}
+.at-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pm-space-3);
+}
+.at-item-name { font-size: 13.5px; font-weight: 600; color: var(--pm-text-1); }
+.at-item-sub { margin-top: 2px; font-size: 12px; color: var(--pm-text-3); }
+.at-item-value { margin-top: 6px; font-size: 13px; color: var(--pm-text-1); }
+.at-item-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.at-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--pm-radius-1);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+  font-size: 11px;
+  color: var(--pm-text-2);
+}
+.at-badge[data-kind="capability"] { border-color: var(--pm-border-2); }
+.at-badge[data-kind="warning"] { color: var(--pm-attention); background: var(--pm-attention-bg); border-color: transparent; }
+.at-badge[data-kind="managed"] { color: var(--pm-managed); background: var(--pm-managed-bg); border-color: transparent; }
+
+.at-fields { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; }
+.at-field { display: flex; gap: 6px; align-items: baseline; font-size: 12px; }
+.at-field-k { color: var(--pm-text-3); }
+.at-field-v { color: var(--pm-text-1); font-variant-numeric: tabular-nums; }
+
+.at-counts { display: flex; flex-wrap: wrap; gap: var(--pm-space-4); margin-top: var(--pm-space-3); }
+.at-count { display: flex; flex-direction: column; gap: 2px; }
+.at-count-v { font-size: 18px; font-weight: 700; color: var(--pm-text-1); font-variant-numeric: tabular-nums; }
+.at-count-l { font-size: 11px; color: var(--pm-text-3); }
+
+.at-item-controls { display: flex; flex-direction: column; gap: 10px; margin-top: var(--pm-space-3); }
+.at-item-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.at-details { border-top: var(--pm-border-w) solid var(--pm-border-1); padding-top: 8px; }
+.at-details summary { cursor: pointer; font-size: 12px; color: var(--pm-text-2); list-style: none; }
+.at-details summary::-webkit-details-marker { display: none; }
+.at-details summary::before { content: "▸ "; color: var(--pm-text-3); }
+.at-details[open] summary::before { content: "▾ "; }
+
+/* ------------------------------------------------------------- controls */
+
+.at-edit { display: flex; flex-direction: column; gap: 6px; max-width: 460px; }
+.at-edit-label { font-size: 12px; color: var(--pm-text-2); }
+.at-input, .at-toggle {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+}
+.at-toggle { width: fit-content; min-width: 64px; cursor: pointer; text-align: left; }
+.at-toggle[aria-pressed="true"] { background: var(--pm-accent-soft); border-color: var(--pm-accent); color: var(--pm-accent-text); }
+.at-input:focus-visible, .at-toggle:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+
+.at-secret { display: flex; align-items: center; gap: 10px; font-family: var(--pm-font-mono); font-size: 12.5px; }
+
+.at-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.at-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 9px;
+  border-radius: var(--pm-radius-1);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  background: var(--pm-surface-2);
+  font-size: 12px;
+  color: var(--pm-text-1);
+}
+.at-chip.is-add { cursor: pointer; color: var(--pm-accent); border-style: dashed; padding-right: 9px; }
+.at-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: var(--pm-radius-1);
+  background: transparent;
+  color: var(--pm-text-3);
+  cursor: pointer;
+}
+.at-chip-btn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+
+.at-answer-n { margin-top: 8px; font-size: 12px; color: var(--pm-text-3); max-width: 60ch; }
+
+.pm-app[data-width="squeezed"] .at-bay-head { grid-template-columns: 26px minmax(0, 1fr); }
+.pm-app[data-width="squeezed"] .at-bay-head .at-btn { grid-column: 2; grid-row: auto; justify-self: start; }
+.pm-app[data-width="squeezed"] .at-item,
+.pm-app[data-width="squeezed"] .at-prose { margin-left: 0; }
+.pm-app[data-width="squeezed"] .at-bay-table { margin-left: 0; width: 100%; }
+.pm-app[data-width="squeezed"] .at-item-head { flex-direction: column; }
+
+/* A well-formed link that names nothing here. Architectural signage, not an error dialog. */
+.at-badroute {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 var(--pm-space-4);
+  padding: 10px var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-attention);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-attention-bg);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--pm-text-1);
+}
+.at-badroute svg { color: var(--pm-attention); flex: none; margin-top: 2px; }
+.at-badroute code { font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-text-2); }

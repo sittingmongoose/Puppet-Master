@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.chat.5_6_sol.direct_visual_inspection.v1",
+  "model": "5.6 Sol",
+  "generated_at": "2026-08-12T07:47:30Z",
+  "status": "pass",
+  "winner_recommendation": null,
+  "frame_root": "evidence/frames",
+  "frame_count": 55,
+  "inspection_method": "Direct creative-director review of every final PNG at original pixel resolution after the authored entrance choreography settled. This is visual judgment, separate from automated geometry and state assertions.",
+  "inspection_batches": [
+    {
+      "category": "theme and width",
+      "frame_count": 32,
+      "frames": [
+        "friendly-dark-520.png",
+        "friendly-dark-750.png",
+        "friendly-dark-975.png",
+        "friendly-dark-1200.png",
+        "friendly-light-520.png",
+        "friendly-light-750.png",
+        "friendly-light-975.png",
+        "friendly-light-1200.png",
+        "retro-dark-520.png",
+        "retro-dark-750.png",
+        "retro-dark-975.png",
+        "retro-dark-1200.png",
+        "retro-light-520.png",
+        "retro-light-750.png",
+        "retro-light-975.png",
+        "retro-light-1200.png",
+        "basic-dark-520.png",
+        "basic-dark-750.png",
+        "basic-dark-975.png",
+        "basic-dark-1200.png",
+        "basic-light-520.png",
+        "basic-light-750.png",
+        "basic-light-975.png",
+        "basic-light-1200.png",
+        "glass-dark-520.png",
+        "glass-dark-750.png",
+        "glass-dark-975.png",
+        "glass-dark-1200.png",
+        "glass-light-520.png",
+        "glass-light-750.png",
+        "glass-light-975.png",
+        "glass-light-1200.png"
+      ],
+      "findings": [
+        "All eight diagonal concept pairings retain distinct spatial and reading grammars at 520, 750, 975, and 1200 px.",
+        "Body copy remains readable and metadata remains visible in friendly, retro, basic, and glass treatments; dark and retro surfaces no longer lose secondary text.",
+        "No settled frame contains a mid-entrance opacity state, clipped prose, dense-header collision, or root overflow.",
+        "Pinned history and left artifact regions yield outside the requested Chat measure instead of compressing the transcript below usability."
+      ]
+    },
+    {
+      "category": "questionnaire grammars",
+      "frame_count": 8,
+      "frames": [
+        "question-thread-01.png",
+        "question-thread-02.png",
+        "question-thread-03.png",
+        "question-thread-04.png",
+        "question-thread-05.png",
+        "question-thread-06.png",
+        "question-thread-07.png",
+        "question-thread-08.png"
+      ],
+      "findings": [
+        "Each questionnaire has a concept-specific composition, progress language, and motion origin rather than a shared renderer with a visual skin.",
+        "Dialogue Score, Branchbook, and Workshop were compacted after inspection so choices and bottom commit controls remain fully visible above the held-composer panel.",
+        "Question prompt, options, progress, cancel, skip, back, and forward actions are legible and spatially stable in all eight final frames."
+      ]
+    },
+    {
+      "category": "work systems",
+      "frame_count": 8,
+      "frames": [
+        "work-thread-01.png",
+        "work-thread-02.png",
+        "work-thread-03.png",
+        "work-thread-04.png",
+        "work-thread-05.png",
+        "work-thread-06.png",
+        "work-thread-07.png",
+        "work-thread-08.png"
+      ],
+      "findings": [
+        "The eight work compositions remain structurally distinct: publication notes, score, time bands, revision layers, instrument bench, strands, relay zones, and quiet register.",
+        "Dialogue Score and Workshop headers separate label, active summary, time, and state without collision; dense rows retain readable type and status contrast.",
+        "Persistent composers, work controls, progress, and scroll boundaries remain coherent without obscuring active content."
+      ]
+    },
+    {
+      "category": "stress states",
+      "frame_count": 7,
+      "frames": [
+        "state-artifact-error.png",
+        "state-decisions-offline.png",
+        "state-deterministic-controller.png",
+        "state-durable-composer-520.png",
+        "state-popout-context.png",
+        "state-route-picker-520.png",
+        "state-search-all-520.png"
+      ],
+      "findings": [
+        "Artifact error, compact approval, material route warning, offline state, durable draft, route selection, all-thread search, Context Ring, pop-out, and deterministic-controller surfaces remain distinguishable and readable.",
+        "The 520 px route/search/context popups remain within the viewport and do not collide with their origin controls or hide their close action.",
+        "Prototype-only controller framing is explicit and does not visually impersonate the proposed production Chat surface."
+      ]
+    }
+  ],
+  "cross_engine_spot_check": {
+    "engine": "Chromium 151.0.7922.34 / Blink",
+    "frame_root": "evidence/chromium-frames",
+    "frame_count": 12,
+    "scope": "Representative parity review only; this is not a claim that all 55 Chromium frames received direct visual inspection.",
+    "frames": [
+      "friendly-dark-520.png",
+      "retro-dark-520.png",
+      "basic-dark-520.png",
+      "glass-dark-520.png",
+      "friendly-light-1200.png",
+      "retro-light-1200.png",
+      "basic-light-1200.png",
+      "glass-light-1200.png",
+      "question-thread-02.png",
+      "work-thread-05.png",
+      "state-route-picker-520.png",
+      "state-popout-context.png"
+    ],
+    "findings": [
+      "Sampled Chromium frames preserve the Firefox layout geometry, type hierarchy, surface contrast, and settled authored state across all four theme families.",
+      "The repaired Dialogue Score questionnaire keeps all choices and commit controls above the held composer in Blink.",
+      "Workshop workbench, narrow route picker, and pop-out Context Ring remain readable and collision-free in Blink."
+    ]
+  },
+  "global_findings": [
+    "All 55 final evidence frames were directly inspected; none is counted from an automated assertion alone.",
+    "The larger 512-cell baseline and 896-cell feature matrices remain automated geometry and state coverage and are not represented as human visual reviews.",
+    "No concept is ranked, selected, or implied as the winner."
+  ],
+  "residual_boundary": "This receipt covers the browser concept evidence only. Native Slint, detached-window DPI, platform font metrics, IME, assistive technology, and live-service behavior remain production validation work."
+}

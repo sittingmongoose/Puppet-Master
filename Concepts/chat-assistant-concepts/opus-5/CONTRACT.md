@@ -51,7 +51,8 @@ PMX.thread.register('t1', {
                        //            clipping or transformed ancestor.
     threadHistory,     // OPTIONAL — null means the window renders history itself.
     workSurfaceHost,   // OPTIONAL — null means the thread renders work surfaces inline.
-    questionHost       // OPTIONAL — null means the thread renders the questionnaire inline.
+    questionHost,      // OPTIONAL — null means the thread renders the questionnaire inline.
+    artifactHost       // OPTIONAL — null means the shell's sibling fallback host is used.
   },
   setWidth(px),                    // 520..1200, continuous
   setRail(open),                   // fake application rail open/closed. Independent of width.
@@ -62,6 +63,13 @@ PMX.thread.register('t1', {
 ```
 
 **Required regions must never be null.** `compose.js` throws if one is missing — that is a mount smoke-test failure.
+
+`data-pmx-window="wN"` is written on the **chat host**, not on the stage. Two things depend on that:
+`PMXThreadHistory.resolve()` measures the chat width with `closest('[data-pmx-window]')`, which
+measured the whole stage while the attribute sat there; and the application rail, dashboard and title
+bar are shell scenery rather than part of the window concept, so the notification boundary
+(title bar only) is only structurally assertable once they fall outside the attribute's subtree.
+Window CSS is unaffected: every `wN-` element lives inside the chat host.
 
 ---
 
@@ -94,7 +102,11 @@ No module reaches into globals. Everything arrives through `ctx`.
   capabilities,              // { threadHistory:bool, workSurfaceHost:bool, questionHost:bool }
   services: {
     popup, scroll, search, lens, questionnaire, drafts,
-    runtime, activity, goals, surfaces, editorHost, motion, icons, toast
+    runtime, activity, goals, surfaces, editorHost, motion, icons, toast, listwindow,
+    artifacts, threadHistory,
+    // packet services — see shared/SERVICES.md
+    observable, route, access, bsd, approvals, contextAdmit, threadOps, ops,
+    capacity, crew, attach, sync, spell, notify
   }
 }
 ```
@@ -179,6 +191,10 @@ Every module obeys these. Each is an automated assertion.
 10. **All popups go through `ctx.services.popup`** — single-overlay, corner-origin, click-activated.
 11. **Every rAF/JS animation checks `ctx.services.motion.reduced()` and jumps to the final state.**
     The CSS `.01ms` override cannot stop a rAF loop.
+12. **An indefinite animation is legal only while a live operation backs it.** The element carries
+    `data-pmx-op="<id>"` and `ctx.services.observable.isRunning(id)` must be true. A pulse with no
+    operation is a claim that something is happening with nothing behind it; the `motion` suite finds
+    every infinitely animated element and fails any that is unbacked.
 
 ---
 

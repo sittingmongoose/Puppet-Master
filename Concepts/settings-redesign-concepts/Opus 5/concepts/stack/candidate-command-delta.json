@@ -1,0 +1,736 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "stack",
+  "concept_title": "Opus 5 \u2014 Stack",
+  "model": "Opus 5",
+  "generated": "2026-08-12",
+  "source_register": "PACKET/CANDIDATE_COMMAND_ID_REGISTER.json",
+  "discipline_note": "Candidate IDs are provisional. This delta is a census of what the concept actually invokes, adjudicated against the packet's candidate families. No canon is minted here.",
+  "summary": {
+    "actions_in_scope": 70,
+    "adjudicated_against_candidates": 31,
+    "needing_new_ids": 29,
+    "read_only_diagnostics": 10,
+    "by_verdict": {
+      "reuse": 15,
+      "alias": 13,
+      "supersede": 0,
+      "conflict": 3
+    }
+  },
+  "preserve_or_reuse_checked": [
+    {
+      "id": "cmd.account.select_profile",
+      "status": "reused",
+      "evidence": "Account rows in the provider surface switch the active profile without re-authenticating."
+    },
+    {
+      "id": "cmd.provider.switch_route",
+      "status": "reused",
+      "evidence": "Route differences show requested vs effective and offer the switch back."
+    },
+    {
+      "id": "cmd.usage.refresh",
+      "status": "conflict",
+      "evidence": "Usage is a boundary card here (manager-usage): Settings shows balances and links out. Whether refresh belongs to Settings or to the Usage owner is unresolved."
+    },
+    {
+      "id": "cmd.usage.export",
+      "status": "not exercised",
+      "evidence": "No concept exports usage; the Usage owner keeps that command."
+    }
+  ],
+  "retire_or_alias_checked": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "status": "superseded",
+      "evidence": "No concept in this folder contains a chip/bloom surface; the string does not appear in any source file. A compatibility alias is only needed if the old command is still bound in the shipped catalog."
+    }
+  ],
+  "adjudicated": [
+    {
+      "concept_action_id": "act-backup-now",
+      "label": "Back up now",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.storage.backup.open",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    },
+    {
+      "concept_action_id": "act-copy-settings-from",
+      "label": "Copy settings from another project",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.copy_from_project.preview",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-export-settings",
+      "label": "Export settings",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.export",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-format-test",
+      "label": "Test a formatter",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.formatter.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-settings",
+      "label": "Import settings",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.import.preview",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-sound-pack",
+      "label": "Import a sound pack",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.sound.import_pack",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-import-theme",
+      "label": "Import a custom theme",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.theme.import",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-rebuild-memory",
+      "label": "Rebuild the memory index",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.memory.open",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    },
+    {
+      "concept_action_id": "act-reconnect-mcp",
+      "label": "Reconnect the postgres MCP server",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.mcp.server.restart",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-refresh-catalogues",
+      "label": "Refresh model catalogues",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.catalog.refresh",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "act-rescan-installations",
+      "label": "Rescan provider installations",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.installation.scan",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-reset-section",
+      "label": "Reset a section to defaults",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.settings.reset.apply",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-signin-claude",
+      "label": "Sign in to the Claude personal profile",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.provider.connection.authenticate",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-test-destination",
+      "label": "Send a test notification",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.destination.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "act-test-slack",
+      "label": "Send a test notification to Slack",
+      "managers": [
+        "__data"
+      ],
+      "candidate_id": "cmd.notifications.destination.test",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "commands.create",
+      "label": "Create a command",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.commands.custom.create",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.delete",
+      "label": "Delete",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.commands.custom.delete",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.dry_run",
+      "label": "Dry run",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.commands.custom.dry_run",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.edit",
+      "label": "Edit",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.commands.custom.update",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.export_bindings",
+      "label": "Export bindings",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.shortcuts.export",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.import_bindings",
+      "label": "Import bindings",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.shortcuts.import",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.record",
+      "label": "Record a new chord",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.shortcuts.bind",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "commands.reset_all",
+      "label": "Reset every binding",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.shortcuts.reset",
+      "verdict": "alias",
+      "evidence": "Second entry point for the same operation; must resolve to one canonical ID with an alias."
+    },
+    {
+      "concept_action_id": "commands.reset_binding",
+      "label": "Reset",
+      "managers": [
+        "manager-commands"
+      ],
+      "candidate_id": "cmd.shortcuts.reset",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "formatters.add",
+      "label": "Add a formatter",
+      "managers": [
+        "manager-formatters"
+      ],
+      "candidate_id": "cmd.formatter.add",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "formatters.test",
+      "label": "Test on a sample",
+      "managers": [
+        "manager-formatters"
+      ],
+      "candidate_id": "cmd.formatter.test",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "lsp.add",
+      "label": "Add a server",
+      "managers": [
+        "manager-lsp"
+      ],
+      "candidate_id": "cmd.lsp.server.add",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "lsp.restart",
+      "label": "Restart",
+      "managers": [
+        "manager-lsp"
+      ],
+      "candidate_id": "cmd.lsp.server.restart",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "mcp.add",
+      "label": "Add a server",
+      "managers": [
+        "manager-mcp"
+      ],
+      "candidate_id": "cmd.mcp.server.add",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "mcp.reconnect",
+      "label": "Reconnect",
+      "managers": [
+        "manager-mcp"
+      ],
+      "candidate_id": "cmd.mcp.server.restart",
+      "verdict": "reuse",
+      "evidence": "Same operation and same effect as the candidate family entry."
+    },
+    {
+      "concept_action_id": "usage-open",
+      "label": "Open Usage",
+      "managers": [
+        "manager-usage"
+      ],
+      "candidate_id": "cmd.usage.refresh",
+      "verdict": "conflict",
+      "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    }
+  ],
+  "needing_new_ids": [
+    {
+      "concept_action_id": "act-cleanup-dry-run",
+      "label": "Preview a workspace cleanup",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-diagnostic",
+      "label": "Create a diagnostic report",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-explain-screen",
+      "label": "Explain this screen",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-open-server-map",
+      "label": "Open the server and host map",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-prune-snapshots",
+      "label": "Prune old restore points",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "act-rebuild-index",
+      "label": "Rebuild the project search index",
+      "managers": [
+        "__data"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.manager",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "commands.cheatsheet",
+      "label": "Open the cheat sheet",
+      "managers": [
+        "manager-commands"
+      ],
+      "verdict": "new",
+      "proposed_family": "commands",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "files.compare",
+      "label": "Compare both versions",
+      "managers": [
+        "manager-files"
+      ],
+      "verdict": "new",
+      "proposed_family": "files",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "files.open_journal",
+      "label": "Show what is held",
+      "managers": [
+        "manager-files"
+      ],
+      "verdict": "new",
+      "proposed_family": "files",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "files.reload",
+      "label": "Reload from disk",
+      "managers": [
+        "manager-files"
+      ],
+      "verdict": "new",
+      "proposed_family": "files",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "files.save",
+      "label": "Save",
+      "managers": [
+        "manager-files"
+      ],
+      "verdict": "new",
+      "proposed_family": "files",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "formatters.remove",
+      "label": "Remove",
+      "managers": [
+        "manager-formatters"
+      ],
+      "verdict": "new",
+      "proposed_family": "formatters",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "formatters.reset",
+      "label": "Reset to shipped defaults",
+      "managers": [
+        "manager-formatters"
+      ],
+      "verdict": "new",
+      "proposed_family": "formatters",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "lsp.remove",
+      "label": "Remove",
+      "managers": [
+        "manager-lsp"
+      ],
+      "verdict": "new",
+      "proposed_family": "lsp",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "lsp.verify",
+      "label": "Verify attachment",
+      "managers": [
+        "manager-lsp"
+      ],
+      "verdict": "new",
+      "proposed_family": "lsp",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "mcp.open_logs",
+      "label": "Open logs",
+      "managers": [
+        "manager-mcp"
+      ],
+      "verdict": "new",
+      "proposed_family": "mcp",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "mcp.remove",
+      "label": "Remove",
+      "managers": [
+        "manager-mcp"
+      ],
+      "verdict": "new",
+      "proposed_family": "mcp",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "plugins.inspect",
+      "label": "What it may reach",
+      "managers": [
+        "manager-plugins"
+      ],
+      "verdict": "new",
+      "proposed_family": "plugins",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "plugins.install",
+      "label": "Install a plugin",
+      "managers": [
+        "manager-plugins"
+      ],
+      "verdict": "new",
+      "proposed_family": "plugins",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "plugins.reload",
+      "label": "Reload",
+      "managers": [
+        "manager-plugins"
+      ],
+      "verdict": "new",
+      "proposed_family": "plugins",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "plugins.remove",
+      "label": "Remove",
+      "managers": [
+        "manager-plugins"
+      ],
+      "verdict": "new",
+      "proposed_family": "plugins",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "skills.inspect",
+      "label": "What it may reach",
+      "managers": [
+        "manager-skills"
+      ],
+      "verdict": "new",
+      "proposed_family": "skills",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "skills.install",
+      "label": "Install a skill",
+      "managers": [
+        "manager-skills"
+      ],
+      "verdict": "new",
+      "proposed_family": "skills",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "skills.remove",
+      "label": "Remove",
+      "managers": [
+        "manager-skills"
+      ],
+      "verdict": "new",
+      "proposed_family": "skills",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "skills.update",
+      "label": "Update to 1.9.2",
+      "managers": [
+        "manager-skills"
+      ],
+      "verdict": "new",
+      "proposed_family": "skills",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "terminal.add",
+      "label": "Add a profile",
+      "managers": [
+        "manager-terminal"
+      ],
+      "verdict": "new",
+      "proposed_family": "terminal",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "terminal.duplicate",
+      "label": "Duplicate",
+      "managers": [
+        "manager-terminal"
+      ],
+      "verdict": "new",
+      "proposed_family": "terminal",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "terminal.locate",
+      "label": "Choose the executable",
+      "managers": [
+        "manager-terminal"
+      ],
+      "verdict": "new",
+      "proposed_family": "terminal",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "terminal.make_default",
+      "label": "Make default",
+      "managers": [
+        "manager-terminal"
+      ],
+      "verdict": "new",
+      "proposed_family": "terminal",
+      "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    }
+  ],
+  "read_only_diagnostics": [
+    {
+      "id": "diag-commands-log",
+      "label": "Open the command run log",
+      "managers": [
+        "manager-commands"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-files-journal",
+      "label": "Open the crash journal",
+      "managers": [
+        "manager-files"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-formatter-output",
+      "label": "Open formatter output",
+      "managers": [
+        "manager-formatters"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-lsp-log",
+      "label": "Open the server log",
+      "managers": [
+        "manager-lsp"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-mcp-log",
+      "label": "Open the MCP log",
+      "managers": [
+        "manager-mcp"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-plugins-log",
+      "label": "Open the plugin load log",
+      "managers": [
+        "manager-plugins"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-skills-log",
+      "label": "Open the skill invocation log",
+      "managers": [
+        "manager-skills"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-terminal-log",
+      "label": "Open the shell resolution log",
+      "managers": [
+        "manager-terminal"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-testing-log",
+      "label": "Open the last test run log",
+      "managers": [
+        "manager-testing"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    },
+    {
+      "id": "diag-tools-log",
+      "label": "Open the tool invocation log",
+      "managers": [
+        "manager-tools"
+      ],
+      "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
+    }
+  ]
+}

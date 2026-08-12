@@ -411,8 +411,13 @@
           action: function () {
             // Persona is thread-local by default (packet: thread-local state);
             // "project default" is an explicit secondary choice.
-            if (tid) ctx.data.setThreadLocal(tid, { persona: p });
-            else store.set('selectors.persona', p);
+            if (tid) {
+              // Goal route-frozen rule: model/Persona/access changes while a
+              // Goal runs require an explicit Update-Goal first.
+              if (window.K3Work && window.K3Work.guardRouteChange &&
+                  window.K3Work.guardRouteChange(ctx, tid)) return;
+              ctx.data.setThreadLocal(tid, { persona: p });
+            } else store.set('selectors.persona', p);
           }
         };
       });
@@ -439,8 +444,11 @@
           label: m,
           selected: m === cur,
           action: function () {
-            if (tid) ctx.data.setThreadLocal(tid, { mode: m });
-            else store.set('selectors.mode', m);
+            if (tid) {
+              if (window.K3Work && window.K3Work.guardRouteChange &&
+                  window.K3Work.guardRouteChange(ctx, tid)) return;
+              ctx.data.setThreadLocal(tid, { mode: m });
+            } else store.set('selectors.mode', m);
           }
         };
       });
@@ -824,9 +832,11 @@
       var t = tid ? ctx.data.thread(tid) : null;
       title.textContent = t ? (t.title || tid) : 'No thread selected';
       title.title = t ? (t.title || tid) : '';
-      chipHolder.innerHTML = '';
+      // rebuild only the state chip; the sync pill is persistent chrome
+      chipHolder.querySelectorAll('.k3w-kit-state').forEach(function (n) { n.remove(); });
       var st = t ? normStateKey(t.threadState || 'idle') : 'idle';
       if (st !== 'idle') chipHolder.appendChild(stateChip(st));
+      if (syncPill && syncPill.parentNode !== chipHolder) chipHolder.appendChild(syncPill);
     }
     var unsubActive = ctx.store.subscribe('activeThreadId', renderTitle);
     function onData() { renderTitle(); }
@@ -839,6 +849,7 @@
       if (sel.unmount) sel.unmount();
       if (searchEl && searchEl.unmount) searchEl.unmount();
       if (ring.unmount) ring.unmount();
+      if (syncPill && syncPill.unmount) syncPill.unmount();
     };
     return root;
   }

@@ -1161,8 +1161,7 @@
       control = el("button", "st-toggle");
       control.type = "button";
       control.id = id;
-      control.setAttribute("role", "switch");
-      control.setAttribute("aria-checked", String(!!current));
+      control.setAttribute("aria-pressed", String(current === true));
       control.textContent = current ? "On" : "Off";
       control.addEventListener("click", function () { commit(!current); });
     } else if (field.kind === "select") {

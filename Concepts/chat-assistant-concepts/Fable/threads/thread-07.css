@@ -1,0 +1,251 @@
+/* Thread 07 "Teletype" — monospaced wire feed: transmission headers, one
+   rewriting status line, boxed form. Stepped carriage motion, cursor block. */
+
+.ft7-root { background: var(--bg-app); }
+.ft7-scroll { padding: 16px 0 8px; }
+.ft7-wire {
+  padding: 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-mono);
+}
+
+/* ---------- transmissions ---------- */
+.ft7-tx {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  animation: ft7-feed var(--dur-fast) steps(3, end);
+}
+@keyframes ft7-feed {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.ft7-tx-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+.ft7-tx-party { font-weight: 700; color: var(--text-secondary); flex: none; }
+.ft7-tx[data-role="user"] .ft7-tx-party { color: var(--accent); }
+.ft7-tx-rule { flex: 1; border-top: 1px dashed var(--edge); }
+.ft7-tx-time { font-variant-numeric: tabular-nums; flex: none; }
+.ft7-tx-body {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.66;
+  color: var(--text-primary);
+  max-width: 76ch;
+}
+.ft7-tx[data-role="user"] .ft7-tx-body { color: var(--user-ink); }
+.ft7-tx-body p { margin: 0 0 7px; }
+.ft7-tx-body p:last-child { margin: 0; }
+.ft7-tx-body code { background: var(--bg-inset); border-radius: var(--radius-xs); padding: 1px 5px; font-size: 11.5px; }
+.ft7-fold { align-self: flex-start; font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); }
+.ft7-fold:hover { text-decoration: underline; }
+
+.ft7-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity var(--dur-fast) steps(2, end);
+  flex-wrap: wrap;
+}
+.ft7-tx:hover .ft7-actions, .ft7-actions:focus-within { opacity: 1; }
+.ft7-actions button { font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary); }
+.ft7-actions button:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft7-meta { white-space: nowrap; }
+.ft7-ops { margin-left: auto; }
+
+/* rollups */
+.ft7-rollup { border-left: none; }
+.ft7-rollup-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.ft7-rollup-head:hover { color: var(--text-primary); }
+.ft7-rollup-mark { color: var(--accent); }
+.ft7-rollup-sheet { padding: 5px 0 2px; display: flex; flex-direction: column; }
+.ft7-roll-line, .ft7-panel-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  min-width: 0;
+  text-align: left;
+}
+.ft7-roll-num { color: var(--text-faint); flex: none; }
+.ft7-roll-kind { color: var(--text-faint); min-width: 52px; flex: none; text-transform: lowercase; }
+.ft7-roll-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.ft7-roll-side { flex: none; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+
+/* ---------- status band ---------- */
+.ft7-statusband {
+  flex: none;
+  border-top: 1px solid var(--edge-strong);
+  background: var(--bg-inset);
+  padding: 0 22px;
+  font-family: var(--font-mono);
+}
+.ft7-statusline {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-align: left;
+}
+.ft7-statusline:hover { color: var(--text-primary); }
+.ft7-status-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ft7-status-toggle { color: var(--accent); flex: none; }
+.ft7-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  background: var(--accent);
+  animation: ft7-blink 1s steps(2, start) infinite;
+  flex: none;
+}
+@keyframes ft7-blink { to { visibility: hidden; } }
+[data-reduced-motion="1"] .ft7-cursor, [data-motion="reduced"] .ft7-cursor { animation: none; opacity: 0.6; }
+.ft7-statuspanel {
+  border-top: 1px dashed var(--edge);
+  padding: 6px 0 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}
+.ft7-statuspanel::-webkit-scrollbar { width: 9px; }
+.ft7-statuspanel::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: var(--radius-pill); border: 2px solid transparent; background-clip: content-box; }
+.ft7-panel-ctrl { display: inline-flex; gap: 6px; flex: none; }
+.ft7-panel-ctrl button, .ft7-form-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+}
+.ft7-panel-ctrl button:hover:not(:disabled), .ft7-form-key:hover:not(:disabled) { text-decoration: underline; }
+.ft7-panel-ctrl button:disabled, .ft7-form-key:disabled { color: var(--text-faint); }
+.ft7-panel-blocked .ft7-roll-text { color: var(--danger); }
+.ft7-panel-line[data-tstate="complete"] .ft7-roll-text { color: var(--text-faint); }
+.ft7-panel-line[data-astate="blocked"] .ft7-roll-text { color: var(--danger); }
+.ft7-panel-diff:hover .ft7-roll-text { color: var(--accent); text-decoration: underline; cursor: pointer; }
+
+/* ---------- boxed form ---------- */
+.ft7-form { font-family: var(--font-mono); }
+.ft7-form-band {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  padding: 8px 0;
+}
+.ft7-form-frame {
+  border: 1.5px solid var(--edge-strong);
+  background: var(--bg-surface);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ft7-form-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  border-bottom: 1px dashed var(--edge);
+  padding-bottom: 7px;
+}
+.ft7-form-count { color: var(--text-faint); }
+.ft7-form-stage { min-height: 140px; display: flex; flex-direction: column; gap: 4px; }
+.ft7-form-prompt { margin: 0 0 5px; font-size: 12.5px; line-height: 1.6; color: var(--text-primary); }
+.ft7-form-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  text-align: left;
+}
+.ft7-form-opt:hover { background: var(--bg-hover); }
+.ft7-form-opt[data-selected="true"] { color: var(--accent); }
+.ft7-opt-key {
+  width: 16px; height: 16px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--edge-strong);
+  font-size: 9.5px;
+  color: var(--text-faint);
+  flex: none;
+}
+.ft7-opt-box {
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--edge-strong);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  flex: none;
+}
+.ft7-form-opt[data-selected="true"] .ft7-opt-box { border-color: var(--accent); }
+.ft7-form-freeform {
+  border: 1px solid var(--edge-strong);
+  background: var(--bg-inset);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  padding: 8px 10px;
+  min-height: 70px;
+  resize: vertical;
+  outline: none;
+}
+.ft7-form-skipped { display: flex; gap: 10px; font-size: 10.5px; letter-spacing: 0.08em; color: var(--warn); padding-top: 4px; }
+.ft7-form-skipped button { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); }
+.ft7-form-error { font-size: 10.5px; letter-spacing: 0.05em; color: var(--danger); padding-bottom: 4px; }
+.ft7-form-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px dashed var(--edge);
+  padding-top: 8px;
+}
+.ft7-key-cancel { color: var(--danger); }
+.ft7-key-primary { margin-left: auto; font-weight: 700; }
+
+.ft7-composer-region { border-top: 1px solid var(--edge-strong); background: var(--bg-inset); }
+.ft7-composer .pmc-composer-frame {
+  border-radius: 0;
+  border: 1.5px solid var(--edge-strong);
+  background: var(--bg-panel);
+}
+.ft7-composer .pmc-composer-input { font-family: var(--font-mono); font-size: 12.5px; }
+.ft7-composer .pmc-send { border-radius: 0; }
+
+[data-reduced-motion="1"] .ft7-tx, [data-motion="reduced"] .ft7-tx { animation: none; }

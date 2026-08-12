@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.chat_candidate_dry_delta.v1",
+  "concept_id": "opus-5",
+  "model": "Opus 5",
+  "runtime_owners": [
+    "Thread service",
+    "Goal Runtime",
+    "Orchestrator",
+    "Provider routing",
+    "Context Admission",
+    "Outbox",
+    "RuntimeResourceGovernor",
+    "ObservableWork",
+    "FileSafe",
+    "Permissions",
+    "Usage",
+    "Artifact service",
+    "Worktree Manager",
+    "Notifications"
+  ],
+  "rows": [
+    {
+      "role": "Thread history resolution",
+      "module": "shared/threadhistory.js resolve + floorsFor + applyTo",
+      "runtime_owner": "Thread service",
+      "why": "Eight windows adopt one four-state model and one attribute contract; the per-window floors live in one table."
+    },
+    {
+      "role": "Row shell projection",
+      "module": "shared/threadhistory.js shellOf",
+      "runtime_owner": "Thread service",
+      "why": "Exactly seven identity fields. The subscription weight rule is enforced by the projection rather than by review."
+    },
+    {
+      "role": "Provider, account and model catalog",
+      "module": "shared/route.js",
+      "runtime_owner": "Provider routing",
+      "why": "A route is the (account, model) pair. One catalog, so the same model under two accounts is two identities everywhere."
+    },
+    {
+      "role": "Access profile ladder and mode narrowing",
+      "module": "shared/access.js",
+      "runtime_owner": "Permissions",
+      "why": "One narrowing table and one effective line, so the composer and the selector cannot disagree."
+    },
+    {
+      "role": "Compact decision surface",
+      "module": "shared/approvals.js",
+      "runtime_owner": "Permissions",
+      "why": "Approvals, material warnings, cross-project grants and operational conflicts share one record shape and one renderer contract."
+    },
+    {
+      "role": "Consequence ranking",
+      "module": "shared/approvals.js ranking array",
+      "runtime_owner": "Permissions",
+      "why": "First view shows one consequence; the rest stay as evidence. One ranked list rather than per-callsite judgement."
+    },
+    {
+      "role": "Context admission receipt",
+      "module": "shared/contextadmit.js",
+      "runtime_owner": "Context Admission",
+      "why": "Extends the Lens rather than replacing it. Two closed kind lists, so a new row type is a deliberate change."
+    },
+    {
+      "role": "Compaction",
+      "module": "shared/contextadmit.js compactNow",
+      "runtime_owner": "Context Admission",
+      "why": "One operation, one receipt, and no rewrite of stored history or Usage."
+    },
+    {
+      "role": "Typed thread operations",
+      "module": "shared/threadops.js",
+      "runtime_owner": "Thread service",
+      "why": "Request, spawn, branch, rewind, restore and redirect in one module with typed refusals."
+    },
+    {
+      "role": "Bounded cross-thread reads",
+      "module": "shared/threadops.js readRange with MAX_RANGE",
+      "runtime_owner": "Thread service",
+      "why": "The only reader that can cross a thread boundary, and it throws rather than truncating."
+    },
+    {
+      "role": "Goal projection",
+      "module": "shared/surfaces.js phaseOf + completionReceipt",
+      "runtime_owner": "Goal Runtime",
+      "why": "A projection of the Goal Runtime, never a second Goal system."
+    },
+    {
+      "role": "Goal action gate",
+      "module": "shared/surfaces.js canAct + act",
+      "runtime_owner": "Goal Runtime",
+      "why": "One gate before one switch. An unimplemented verb returns false instead of showing a toast."
+    },
+    {
+      "role": "Capacity forecast",
+      "module": "shared/surfaces.js PMXCapacity",
+      "runtime_owner": "RuntimeResourceGovernor",
+      "why": "A compact forecast, not a guarantee, and a required role can never be silently dropped."
+    },
+    {
+      "role": "Crew",
+      "module": "shared/surfaces.js PMXCrew",
+      "runtime_owner": "Orchestrator",
+      "why": "Thread-local by construction; members carry routes so Usage can attribute them."
+    },
+    {
+      "role": "Operational awareness",
+      "module": "shared/opsawareness.js",
+      "runtime_owner": "RuntimeResourceGovernor",
+      "why": "One Environment surface with six compact groups. No host banner anywhere in Chat."
+    },
+    {
+      "role": "Worktree lifecycle vocabulary",
+      "module": "shared/opsawareness.js worktrees",
+      "runtime_owner": "Worktree Manager",
+      "why": "Five human-readable states in one place, so no concept invents a sixth or shows an underscored enum."
+    },
+    {
+      "role": "Attachment resolution",
+      "module": "shared/attach.js",
+      "runtime_owner": "Artifact service",
+      "why": "One transform table and one lineage rule; derived material always keeps its origin."
+    },
+    {
+      "role": "Offline outbox and replay",
+      "module": "shared/sync.js",
+      "runtime_owner": "Outbox",
+      "why": "Mark before dispatch. The idempotency property lives in one function."
+    },
+    {
+      "role": "Transport and domain separation",
+      "module": "shared/sync.js",
+      "runtime_owner": "Outbox",
+      "why": "Two axes that never derive from each other, so a network blink is not reported as a failed run."
+    },
+    {
+      "role": "Observable work",
+      "module": "shared/observable.js",
+      "runtime_owner": "ObservableWork",
+      "why": "The only progress system. Every indefinite animation names a running op through data-pmx-op."
+    },
+    {
+      "role": "Passive spellcheck and skip rules",
+      "module": "shared/spell.js skipRanges",
+      "runtime_owner": "Thread service",
+      "why": "Ten skip categories exported as one function so each is directly assertable, and no text is ever replaced automatically."
+    },
+    {
+      "role": "Notification boundary",
+      "module": "shared/notify.js",
+      "runtime_owner": "Notifications",
+      "why": "Title bar only. The module states the correct alternative so nobody reaches for it for a local outcome."
+    },
+    {
+      "role": "Motion vocabulary",
+      "module": "shared/motion.js thirteen helpers",
+      "runtime_owner": "ObservableWork",
+      "why": "Reduced motion handled in one place; the eight concepts compose named helpers instead of hand-rolled timings."
+    },
+    {
+      "role": "Artifact state machine and frames",
+      "module": "shared/artifacts.js",
+      "runtime_owner": "Artifact service",
+      "why": "One state machine and one frame descriptor per window; the body renderer knows data kinds, not placement."
+    }
+  ]
+}

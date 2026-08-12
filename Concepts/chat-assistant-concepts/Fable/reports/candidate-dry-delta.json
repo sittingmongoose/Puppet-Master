@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.chat.fable.candidate_dry_delta.v1",
+  "model": "Fable",
+  "note": "Shared owners render owner state and never hold a second truth. Consumers are the concept surfaces that mount each owner. window-01..08 and thread-c01..08 are the sixteen concepts; 'all' means every pairing.",
+  "entries": [
+    { "shared_owner": "Composer (shared/components.js createComposer)", "consumers": ["thread-c01..c08"], "duplication_risk": "a thread concept re-implementing the send/stop state machine or draft persistence", "contract_ref": "FPB-5; F3-423" },
+    { "shared_owner": "SelectorRow / ModelRoutePicker / AccessPicker / BSDPicker (createSelectorRow)", "consumers": ["thread-c01..c08 (composer region)", "window-03 (deck slot)"], "duplication_risk": "a window drawing its own route chips instead of hosting the shared instance", "contract_ref": "CTD-4/5/6; ACD-437..444" },
+    { "shared_owner": "ContextRing projection (ring button + menu)", "consumers": ["all (via selector row)"], "duplication_risk": "a concept computing its own context percentages — forbidden; Usage owns internals", "contract_ref": "FPB-7; ACD-089/090/434" },
+    { "shared_owner": "ContextLens ops (openMessageOps + store.lens*)", "consumers": ["thread-c01..c08 message action rows"], "duplication_risk": "per-concept lens semantics; only flags' visual form varies", "contract_ref": "FPB-7; ACD-192..195" },
+    { "shared_owner": "QuestionFlow state (store questionnaire queue)", "consumers": ["eight distinct per-concept renderers"], "duplication_risk": "renderer skinning is prohibited the other way around — shared STATE, distinct COMPOSITION is the required split", "contract_ref": "FPB-12; CTD-3; CHAT-010" },
+    { "shared_owner": "GoalSummary / TodoGroup / SubagentGroup / DiffSummary state (store + workCluster)", "consumers": ["eight distinct work compositions"], "duplication_risk": "a concept mutating goal/todo state locally instead of dispatching store commands", "contract_ref": "FPB-8/9; GRS-002; ACD-416..420" },
+    { "shared_owner": "ActivityGroup records (fixture activityGroup/thoughtSegments + turn engine)", "consumers": ["all thread concepts"], "duplication_risk": "appending per-step cards instead of in-place rewrite", "contract_ref": "FPB-10; ACD-100..108" },
+    { "shared_owner": "PinnedHistorySurface state machine (createHistoryController)", "consumers": ["window-01..08 with distinct geometry renderers"], "duplication_risk": "a window bypassing the floor/degrade rules", "contract_ref": "CTD-1; CHAT-008/017" },
+    { "shared_owner": "ArtifactWorkspace content renderer (renderArtifactContent)", "consumers": ["window-01..08 frames"], "duplication_risk": "a window parsing artifact bodies itself", "contract_ref": "CTD-2; CHAT-009" },
+    { "shared_owner": "ApprovalCard / RouteImpactCard (createDecisionStack)", "consumers": ["thread-c01..c08 composer regions"], "duplication_risk": "concept-local approval flows", "contract_ref": "CTD-5/7; CHAT-005/006" },
+    { "shared_owner": "AttachmentResolutionCard (composer chips + ATTACHMENTS fixture)", "consumers": ["all"], "duplication_risk": "class taxonomy drift", "contract_ref": "CTD-14; CHAT-007" },
+    { "shared_owner": "OfflineOutboxState (store.sync + createSyncBadge)", "consumers": ["workspace status bar; composer notes"], "duplication_risk": "per-concept connection banners (forbidden)", "contract_ref": "CTD-16; CHAT-016/019" },
+    { "shared_owner": "ObservableOperation projection (turn engine + turn-tick)", "consumers": ["all work compositions"], "duplication_risk": "concept-local timers diverging from the turn record", "contract_ref": "PRM-020" },
+    { "shared_owner": "ReceiptLink (store.receipts + ticker + receipts record)", "consumers": ["all"], "duplication_risk": "a second notification surface — receipts are inline outcomes, app-wide events stay in the title-bar stack", "contract_ref": "CTD-19; MGR-003" },
+    { "shared_owner": "Popup family (shared/popup.js)", "consumers": ["every menu, search result list, More Info, message ops, kebab, ring, spell menu"], "duplication_risk": "any second overlay system; one transient overlay is enforced in code", "contract_ref": "FPB-1; ACD-437..444; F3-424" },
+    { "shared_owner": "PM scrollbar (.pm-scroll)", "consumers": ["every scrollable surface incl. popup bodies and nested panels"], "duplication_risk": "native scrollbar leakage", "contract_ref": "FPB-1; legacy §9" },
+    { "shared_owner": "Search index + jump (shared/search.js)", "consumers": ["window header search bars"], "duplication_risk": "per-concept search grammars; scope semantics must stay canonical", "contract_ref": "FPB-6; ACD-061..070" },
+    { "shared_owner": "MessageMetaRow content contract (labels + More Info fields)", "consumers": ["eight visually distinct action rows"], "duplication_risk": "adding Resend or message-level Stop; dropping mandated labels", "contract_ref": "FPB-3; ACD-012" },
+    { "shared_owner": "Theme tokens (shared/tokens.css)", "consumers": ["everything"], "duplication_risk": "inline colors or runtime mixing", "contract_ref": "FPB-2; VIS-002/004" },
+    { "shared_owner": "Strings (shared/strings.js)", "consumers": ["everything"], "duplication_risk": "retyped canon strings drifting from mandated wording", "contract_ref": "canon verbatim-string inventory" }
+  ],
+  "no_parallel_systems": "No second manager, auth, usage, notification, progress, or install system exists anywhere in the folder (PROC-007)."
+}

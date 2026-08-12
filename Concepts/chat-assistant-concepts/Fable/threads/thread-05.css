@@ -1,0 +1,211 @@
+/* Thread 05 "Longhand" — continuous manuscript: alternating indented prose,
+   asterism separators, typographic rules for system events, inline interview. */
+
+.ft5-root { background: var(--bg-app); }
+.ft5-scroll { padding: 26px 0 10px; }
+.ft5-page {
+  max-width: 66ch;
+  margin: 0 auto;
+  padding: 0 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- passages ---------- */
+.ft5-passage {
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ft5-passage[data-role="user"] { padding-left: 2.2ch; }
+.ft5-flags { display: flex; gap: 6px; }
+.ft5-prose {
+  font-family: var(--font-prose);
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: var(--text-primary);
+}
+.ft5-passage[data-role="user"] .ft5-prose {
+  color: var(--user-ink);
+  font-style: italic;
+}
+.ft5-prose p { margin: 0 0 9px; }
+.ft5-prose p:last-child { margin: 0; }
+.ft5-prose code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-style: normal;
+  background: var(--bg-inset);
+  border-radius: var(--radius-xs);
+  padding: 1px 5px;
+}
+.ft5-fold { align-self: flex-start; font-size: 12px; font-style: italic; color: var(--accent); }
+.ft5-fold:hover { text-decoration: underline; }
+
+.ft5-asterism {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  color: var(--text-faint);
+  font-size: 13px;
+  padding: 8px 0;
+  user-select: none;
+}
+
+.ft5-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+  flex-wrap: wrap;
+}
+.ft5-passage:hover .ft5-actions, .ft5-actions:focus-within { opacity: 1; }
+.ft5-actions button { font-size: 10.5px; color: var(--text-secondary); font-style: italic; }
+.ft5-actions button:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft5-meta { white-space: nowrap; }
+.ft5-ops { margin-left: auto; }
+
+/* ---------- rules ---------- */
+.ft5-rule-line {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+}
+.ft5-rule { flex: 1; border-top: 1px solid var(--edge); }
+.ft5-rule-text {
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 75%;
+}
+button.ft5-rule-line:hover .ft5-rule-text { color: var(--text-primary); }
+.ft5-rule-live .ft5-rule-text { color: var(--accent); }
+.ft5-rule-live .ft5-rule {
+  border-top-color: var(--accent);
+  animation: ft5-draw 1.8s var(--ease-out) infinite alternate;
+}
+@keyframes ft5-draw { from { opacity: 0.35; } to { opacity: 1; } }
+[data-reduced-motion="1"] .ft5-rule-live .ft5-rule, [data-motion="reduced"] .ft5-rule-live .ft5-rule { animation: none; }
+.ft5-live-time { font-variant-numeric: tabular-nums; }
+
+.ft5-record-sheet { padding: 2px 0 6px; }
+.ft5-record-line { margin: 0 0 4px; font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); }
+.ft5-record-line em { color: var(--text-faint); }
+
+/* ---------- running work set ---------- */
+.ft5-workset { padding: 2px 0 6px; display: flex; flex-direction: column; gap: 7px; }
+.ft5-work-par {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  text-align: left;
+}
+.ft5-work-par strong { font-weight: 660; }
+.ft5-work-blocked { color: var(--danger); }
+.ft5-work-ctrl { display: inline-flex; gap: 10px; margin-left: 6px; }
+.ft5-work-ctrl button { font-size: 11.5px; font-style: italic; color: var(--accent); }
+.ft5-work-ctrl button:hover:not(:disabled) { text-decoration: underline; }
+.ft5-work-ctrl button:disabled { color: var(--text-faint); }
+.ft5-task { white-space: nowrap; }
+.ft5-task sup {
+  font-size: 8.5px;
+  color: var(--text-faint);
+  margin-left: 2px;
+  letter-spacing: 0.04em;
+}
+.ft5-task[data-state="complete"] { color: var(--text-faint); }
+.ft5-task[data-state="running"] sup { color: var(--accent); }
+.ft5-task[data-state="blocked"] sup, .ft5-task[data-state="failed"] sup { color: var(--danger); }
+.ft5-hand[data-status="blocked"] { color: var(--danger); }
+.ft5-hand[data-status="complete"] { color: var(--text-faint); }
+.ft5-work-diff { color: var(--text-secondary); font-family: var(--font-mono); font-size: 11.5px; }
+.ft5-work-diff:hover { color: var(--accent); text-decoration: underline; }
+
+/* ---------- interview ---------- */
+.ft5-interview {
+  margin: 10px 0 6px;
+  border-top: 1px solid var(--edge-strong);
+  border-bottom: 1px solid var(--edge-strong);
+  padding: 12px 4px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ft5-interview-head { display: flex; align-items: baseline; justify-content: space-between; }
+.ft5-interview-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.ft5-interview-count { font-size: 11px; font-style: italic; color: var(--text-faint); }
+.ft5-interview-stage { min-height: 132px; display: flex; flex-direction: column; gap: 6px; }
+.ft5-interview-q {
+  margin: 0;
+  font-size: 14.5px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.ft5-interview-answers { display: flex; flex-direction: column; gap: 2px; padding-left: 1.6ch; }
+.ft5-interview-a {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: 4px 6px;
+  border-radius: var(--radius-xs);
+}
+.ft5-interview-a:hover { color: var(--text-primary); background: var(--bg-hover); }
+.ft5-interview-a[data-selected="true"] { color: var(--accent); font-weight: 620; }
+.ft5-a-dash { color: var(--text-faint); flex: none; }
+.ft5-interview-a[data-selected="true"] .ft5-a-dash { color: var(--accent); }
+.ft5-interview-freeform {
+  border: none;
+  border-bottom: 1px solid var(--edge-strong);
+  background: none;
+  font-family: var(--font-prose);
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-primary);
+  padding: 4px 2px;
+  min-height: 64px;
+  resize: vertical;
+  outline: none;
+  margin-left: 1.6ch;
+}
+.ft5-interview-freeform:focus { border-bottom-color: var(--accent); }
+.ft5-interview-skipped { margin: 0; font-size: 12px; color: var(--warn); }
+.ft5-interview-skipped button { font-size: 12px; font-style: italic; color: var(--accent); }
+.ft5-interview-error { margin: 0; font-size: 12px; color: var(--danger); font-style: italic; }
+.ft5-interview-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;
+}
+.ft5-interview-nav button {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+.ft5-interview-nav button:hover:not(:disabled) { color: var(--text-primary); text-decoration: underline; }
+.ft5-interview-nav button:disabled { color: var(--text-faint); }
+.ft5-interview-cancel { color: var(--danger); }
+.ft5-interview-primary { margin-left: auto; color: var(--accent); font-weight: 640; }
+
+.ft5-composer-region { border-top: 1px solid var(--edge-faint); }
+.ft5-composer-region .pmc-composer-frame { border-radius: var(--radius-sm); }

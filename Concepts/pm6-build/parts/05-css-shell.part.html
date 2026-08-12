@@ -97,9 +97,11 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      /* Sit just after page tabs with a modest nudge — not ml:auto (rev 9.4
-         parked it in the far-right search/theme cluster). */
-      margin: 0 var(--xs, 2px) 0 24px;
+      /* Sits in the right-hand cluster, centred in the gap between the search
+         box and the theme/settings control, with equal clearance on both
+         sides. (Supersedes the rev-9.4 placement immediately after the page
+         tabs, which read as crowded against them.) */
+      margin: 0 var(--lg, 16px);
       z-index: 45;
     }
     .title-bar .page-tabs {

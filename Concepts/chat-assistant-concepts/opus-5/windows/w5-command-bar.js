@@ -37,6 +37,12 @@
     /* Rises above the bar only when something is actually active. */
     this.surfaceHost = u.el('div', { class: 'w5-surfaces pmx-scroll', data: { pmxRegion: 'workSurfaceHost' } });
     this.shell.appendChild(this.surfaceHost);
+    /* Artifact workspace: a left column with NO header of its own — this concept's thesis is that
+     * every control fuses into the bottom band, so the artifact's switcher lives there too and the
+     * panel itself is pure content. */
+    this.artifactBody = u.el('div', { class: 'w5-artifact-body', data: { pmxRegion: 'artifactHost' } });
+    this.artifactHost = u.el('div', { class: 'w5-artifact-host' }, [this.artifactBody]);
+    this.shell.appendChild(this.artifactHost);
 
     this.questionHost = u.el('div', { class: 'w5-question', data: { pmxRegion: 'questionHost' } });
     this.shell.appendChild(this.questionHost);
@@ -102,6 +108,13 @@
     this.overlay = u.el('div', { class: 'w5-overlay', data: { pmxWindow: 'w5', pmxRegion: 'overlayRoot' } });
     this.root.appendChild(this.overlay);
 
+    /* The artifact service keeps its state outside the store's per-thread view, so it needs
+     * its own subscription rather than a store change key. */
+    if (global.PMXArtifacts && global.PMXArtifacts.subscribe) {
+      this._artOff = global.PMXArtifacts.subscribe(function () { self.syncArtifact(); });
+    }
+    this.syncArtifact();
+
     /* The command overlay, built here because this window owns thread history itself. */
     this.cmdLayer = u.el('div', { class: 'w5-cmdlayer', data: { open: '0' } });
     this.cmdPanel = u.el('div', { class: 'w5-cmdpanel' });
@@ -146,6 +159,18 @@
     var u = U();
     var q = this.cmdInput.value.trim().toLowerCase();
     var active = this.ctx.store.get('session.activeThreadId');
+
+    /* Dispose the PREVIOUS render's row handlers before rebuilding. Every keystroke in the command
+     * filter re-renders this list, and each row registered a click handler into this.offs — which is
+     * only drained on destroy(). Typing eight characters left eight generations of handlers bound to
+     * detached nodes, all of them still holding this instance alive. Row handlers therefore get
+     * their own list with its own lifetime. */
+    if (this._cmdOffs) {
+      for (var d = 0; d < this._cmdOffs.length; d++) { try { this._cmdOffs[d](); } catch (e) {} }
+    }
+    this._cmdOffs = [];
+    var rowOn = function (el, ev, fn) { self._cmdOffs.push(u.on(el, ev, fn)); };
+
     U().empty(this.cmdList);
 
     var threads = this.ctx.data.threads.slice().sort(function (a, b) {
@@ -162,7 +187,7 @@
       if (t.threadState && t.threadState !== 'idle') {
         row.appendChild(u.el('span', { class: 'w5-cmdrow-state', text: global.PMXData.fmt.label(t.threadState) }));
       }
-      self._on(row, 'click', function () {
+      rowOn(row, 'click', function () {
         self.ctx.store.set('session.activeThreadId', t.id);
         self.closeCommand();
       });
@@ -177,7 +202,13 @@
 
   W5Window.prototype.syncPin = function () {
     var TH = global.PMXThreadHistory;
-    var pin = TH.pinState(this.ctx, this.pinRailBody, 900);
+    /* `compactColumn: 0`: the compact form collapses into the command band as a horizontal
+     * recents strip, so it costs height inside a band that already exists. */
+    var r = TH.applyTo(this.pinRailBody, TH.resolve(this.ctx, this.pinRailBody, TH.floorsFor('w5')));
+    TH.reasonNode(this.pinRailBody, r);
+    var pin = { asked: r.state === 'pinned', active: r.effective === 'pinned-full',
+                compact: r.effective === 'pinned-compact', effective: r.effective };
+    if (this.shell) this.shell.setAttribute('data-w5-history', r.effective);
     this.pinRail.setAttribute('data-w5-pinned', pin.active ? '1' : '0');
     if (this.shell) this.shell.setAttribute('data-w5-pinned', pin.active ? '1' : '0');
     TH.syncPinButton(this.pinBtn, pin.asked);
@@ -198,22 +229,55 @@
     this.shell.setAttribute('data-w5-mount', form === 'popout' ? 'popout' : 'docked');
   };
 
+  /* One scan, as in w2: two loops asking the same question of the same array cannot disagree. */
   W5Window.prototype.update = function (state, changed) {
-    for (var pk = 0; pk < changed.length; pk++) {
-      if (changed[pk].indexOf('session') === 0) {
-        if (this.syncPin) this.syncPin();
-        break;
-      }
-    }
+    var touched = false;
     for (var i = 0; i < changed.length; i++) {
-      if (changed[i].indexOf('session') === 0) {
-        if (this.cmdLayer.getAttribute('data-open') === '1') this.renderCommand();
-        return;
-      }
+      if (String(changed[i]).indexOf('session') === 0) { touched = true; break; }
     }
+    if (!touched) return;
+    if (this.syncPin) this.syncPin();
+    if (this.cmdLayer.getAttribute('data-open') === '1') this.renderCommand();
+  };
+
+
+  /* ---------------------------------------------------------------- artifact frame
+   * The window owns PLACEMENT and the SWITCHER; the shared panel renders the body. */
+  W5Window.prototype.syncArtifact = function () {
+    var A = global.PMXArtifacts;
+    if (!A) return;
+    var open = A.isOpen();
+    var activeId = A.activeId();
+    this.shell.setAttribute('data-w5-artifact', open ? '1' : '0');
+
+    /* The switcher lives in the bottom command band, not on the artifact. The artifact segment is
+     * ordered FIRST so the band always reads artifact-then-history and the controls never reorder
+     * under the user's cursor. */
+    var u = U();
+    if (!this.artifactSeg) {
+      this.artifactSeg = u.el('div', { class: 'w5-artifact-seg' });
+      if (this.toolrow) this.toolrow.insertBefore(this.artifactSeg, this.toolrow.firstChild);
+      else if (this.bar) this.bar.appendChild(this.artifactSeg);
+    }
+    u.empty(this.artifactSeg);
+    if (!open) return;
+    var self = this;
+    A.list().forEach(function (a) {
+      var b = u.el('button', {
+        class: 'w5-artifact-seg-btn', type: 'button',
+        aria: { pressed: a.id === activeId ? 'true' : 'false' }
+      }, [u.el('span', { text: a.title })]);
+      u.on(b, 'click', function () { A.switchTo(a.id); });
+      self.artifactSeg.appendChild(b);
+    });
   };
 
   W5Window.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
+    if (this._cmdOffs) {
+      for (var c = 0; c < this._cmdOffs.length; c++) { try { this._cmdOffs[c](); } catch (e) {} }
+      this._cmdOffs = [];
+    }
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this.shell && this.shell.parentNode) this.shell.parentNode.removeChild(this.shell);
@@ -223,7 +287,7 @@
   global.PMX.window.register('w5', {
     name: 'Command Bar',
     blurb: 'Every control fuses into one bottom band shared with the composer, leaving the transcript edge to edge with no header, and thread history opens as a command overlay that costs no space until summoned.',
-    provides: ['threadHistory', 'workSurfaceHost', 'questionHost'],
+    provides: ['threadHistory', 'workSurfaceHost', 'questionHost', 'artifactHost'],
     mount: function (root, ctx) {
       var inst = new W5Window(root, ctx);
       return {
@@ -234,7 +298,8 @@
           overlayRoot: inst.overlay,
           workSurfaceHost: inst.surfaceHost,
           threadHistory: inst.pinRailBody,
-          questionHost: inst.questionHost
+          questionHost: inst.questionHost,
+          artifactHost: inst.artifactBody
         },
         setWidth: function (px) { inst.setWidth(px); },
         setRail: function (o) { inst.setRail(o); },

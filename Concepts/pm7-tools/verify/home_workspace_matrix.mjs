@@ -198,16 +198,16 @@ async function configureLayout(page, layoutName) {
   if (layoutName === 'default') return;
   if (layoutName === 'edge-docked') {
     await ensureAllOpen(page);
-    await surfaceAction(page, 'dashboard', 'move-surface', 'dock_left');
-    await surfaceAction(page, 'editor_panel_2', 'move-surface', 'dock_right');
-    await surfaceAction(page, 'terminal_section:terminal_section_1', 'move-surface', 'dock_top');
+    await moveSurfaceTo(page, 'dashboard', 'dock_left');
+    await moveSurfaceTo(page, 'editor_panel_2', 'dock_right');
+    await moveSurfaceTo(page, 'terminal_section:terminal_section_1', 'dock_top');
     return;
   }
   if (layoutName === 'floating') {
     await ensureAllOpen(page);
-    await surfaceAction(page, 'editor_panel_1', 'move-surface', 'floating');
-    await surfaceAction(page, 'dashboard', 'move-surface', 'floating');
-    await surfaceAction(page, 'chat', 'move-surface', 'floating');
+    await moveSurfaceTo(page, 'editor_panel_1', 'floating');
+    await moveSurfaceTo(page, 'dashboard', 'floating');
+    await moveSurfaceTo(page, 'chat', 'floating');
     return;
   }
   if (layoutName === 'terminal-max') {
@@ -245,18 +245,72 @@ async function pointerGesture(page, selector, target, finish = 'up') {
   await page.waitForTimeout(130);
 }
 
+/* Drag onto the LIVE layout. The centre-screen drop-target rail is retired --
+   it sat on top of the canvas and swallowed the hit-test that positional drops
+   depend on -- so a drop target is now a real point in the workspace: the edge
+   band for a dock, the middle for home_main, outside the window for floating. */
+async function dropPointForHost(page, host) {
+  const bounds = await page.evaluate(() => {
+    const r = document.getElementById('pm-home-workspace').getBoundingClientRect();
+    return { x: r.left, y: r.top, w: r.width, h: r.height };
+  });
+  const edge = 10; // inside the 28px dock band, well clear of positional drops
+  if (host === 'dock_left') return { x: bounds.x + edge, y: bounds.y + bounds.h / 2 };
+  if (host === 'dock_right') return { x: bounds.x + bounds.w - edge, y: bounds.y + bounds.h / 2 };
+  if (host === 'dock_top') return { x: bounds.x + bounds.w / 2, y: bounds.y + edge };
+  if (host === 'dock_bottom') return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h - edge };
+  if (host === 'floating') return { x: bounds.x + bounds.w / 2, y: -20 };
+  return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 };
+}
+
 async function pointerGestureToDropTarget(page, selector, host) {
   const box = await page.locator(selector).first().boundingBox();
   if (!box) throw new Error('missing pointer target ' + selector);
   const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  const drop = await dropPointForHost(page, host);
   await page.mouse.move(start.x, start.y);
   await page.mouse.down();
   await page.mouse.move(start.x + 2, start.y + 2);
-  const drop = page.locator('[data-pm-home-drop-host="' + host + '"]');
-  await drop.waitFor({ state: 'visible' });
-  const dropBox = await drop.boundingBox();
-  await page.mouse.move(dropBox.x + dropBox.width / 2, dropBox.y + dropBox.height / 2, { steps: 10 });
+  await page.mouse.move(drop.x, drop.y, { steps: 10 });
+  await page.waitForTimeout(60);
   await page.mouse.up();
+  await page.waitForTimeout(150);
+}
+
+/* Deterministic layout setup drives the grip's KEYBOARD path. That path is now
+   the accessible movement contract (the per-host "Move or dock" menu rows are
+   retired), so using it here keeps setup reproducible and exercises the
+   contract at the same time. */
+async function moveSurfaceTo(page, surfaceId, host) {
+  const grip = page.locator('[data-pm-home-handle][data-pm-home-surface-id="' + surfaceId + '"]').first();
+  await grip.scrollIntoViewIfNeeded();
+  await grip.focus();
+  await grip.press('Enter');
+  await page.waitForTimeout(70);
+  const hostOf = () => page.evaluate(id => {
+    const layout = window.PM_HOME_WORKSPACE.draft_layout || window.PM_HOME_WORKSPACE.layout;
+    const surface = layout.surfaces.find(s => s.surface_instance_id === id);
+    return surface ? surface.host : null;
+  }, surfaceId);
+  if (host === 'floating') {
+    await grip.press('f');
+  } else {
+    /* Keyboard host adjacency is dock <-> home_main, so a dock-to-dock move is
+       two hops: back to main first, then out to the target dock. */
+    const TOWARDS = { dock_left: 'ArrowLeft', dock_right: 'ArrowRight', dock_top: 'ArrowUp', dock_bottom: 'ArrowDown' };
+    const BACK_TO_MAIN = { dock_left: 'ArrowRight', dock_right: 'ArrowLeft', dock_top: 'ArrowDown', dock_bottom: 'ArrowUp', floating: 'ArrowRight' };
+    for (let step = 0; step < 24; step += 1) {
+      const current = await hostOf();
+      if (current === host) break;
+      let key;
+      if (host === 'home_main') key = BACK_TO_MAIN[current] || 'ArrowRight';
+      else if (current === 'home_main') key = TOWARDS[host];
+      else key = BACK_TO_MAIN[current] || 'ArrowRight';
+      await grip.press(key);
+      await page.waitForTimeout(60);
+    }
+  }
+  await grip.press('Enter');
   await page.waitForTimeout(130);
 }
 
@@ -446,12 +500,26 @@ await runInteraction('file_manager_open_in_panel_visible_submenu_all_four', asyn
     await page.waitForTimeout(80);
     const after = await state(page);
     const opened = await page.evaluate(() => window.PM_HOME_LAST_OPEN_FILE || null);
+    /* The old revision stopped at window.PM_HOME_LAST_OPEN_FILE, which is why a
+       panel that only wrote a debug string into .editor-code (and panels that
+       never opened a tab at all) passed. Assert the RENDERED buffer. */
+    const rendered = await page.evaluate(n => {
+      const el = document.querySelector('[data-pm-home-surface="editor_panel_' + n + '"]');
+      const code = el && el.querySelector('.editor-code');
+      const text = code ? (code.textContent || '') : '';
+      return {
+        code_lines: code ? code.querySelectorAll('.code-line').length : 0,
+        debug_placeholder: /^OpenFile /.test(text.trim()),
+        tab_present: Boolean(el && el.querySelector('.editor-tabs .tab[data-file]'))
+      };
+    }, panel);
     targets.push({
       panel,
       submenu_count: count,
       command_delta: after.metrics.commandCount - before.metrics.commandCount,
       command_id: after.commands.at(-1) && after.commands.at(-1).command_id,
-      opened
+      opened,
+      rendered
     });
   }
   const finalState = await state(page);
@@ -462,25 +530,33 @@ await runInteraction('file_manager_open_in_panel_visible_submenu_all_four', asyn
     pass: Boolean(path) && targets.every(item => item.submenu_count === 4 && item.command_delta === 1 &&
       item.command_id === 'cmd.file.open' &&
       item.opened.target_editor_panel_id === 'editor_panel_' + item.panel &&
-      item.opened.target_editor_group_id === 'editor_group_' + item.panel) && ownerStateExcluded,
+      item.opened.target_editor_group_id === 'editor_group_' + item.panel &&
+      item.rendered.code_lines > 3 && !item.rendered.debug_placeholder && item.rendered.tab_present) && ownerStateExcluded,
     path,
     targets,
     home_record_excludes_editor_owner_state: ownerStateExcluded
   };
 });
 
-await runInteraction('surface_move_dock_float_inventory_and_commands', async page => {
+/* Movement is direct manipulation only. The per-host "Move or dock" menu rows
+   are retired, so this case proves two things instead: every eligible surface
+   exposes exactly one grab handle carrying the keyboard-move contract, and
+   every host is reachable through it with one command and one persist. */
+await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
   await ensureAllOpen(page);
   const ids = ['editor_panel_1', 'editor_panel_2', 'editor_panel_3', 'editor_panel_4', 'dashboard', 'chat', 'terminal_section:terminal_section_1'];
   const inventory = [];
   for (const id of ids) {
-    const options = page.locator('[data-pm-home-surface-options="' + id + '"]');
-    await options.scrollIntoViewIfNeeded();
-    await options.click();
-    await page.waitForTimeout(360);
-    const rows = await page.locator('#pm-home-surface-menu [data-pm-home-action="move-surface"]').allTextContents();
-    inventory.push({ id, rows: rows.map(value => value.trim()) });
-    await page.keyboard.press('Escape');
+    const grip = page.locator('[data-pm-home-handle][data-pm-home-surface-id="' + id + '"]');
+    const count = await grip.count();
+    const menuMoveRows = await page.locator('#pm-home-surface-menu [data-pm-home-action="move-surface"]').count();
+    inventory.push({
+      id,
+      grips: count,
+      accessible_name: count ? await grip.first().getAttribute('aria-label') : null,
+      grabbed: count ? await grip.first().getAttribute('aria-grabbed') : null,
+      retired_menu_rows: menuMoveRows
+    });
   }
   const routeTargets = [
     ['editor_panel_1', 'dock_left'],
@@ -494,7 +570,7 @@ await runInteraction('surface_move_dock_float_inventory_and_commands', async pag
   const routes = [];
   for (const [id, host] of routeTargets) {
     const before = await state(page);
-    await surfaceAction(page, id, 'move-surface', host);
+    await moveSurfaceTo(page, id, host);
     const after = await state(page);
     routes.push({
       id,
@@ -505,13 +581,15 @@ await runInteraction('surface_move_dock_float_inventory_and_commands', async pag
       command_id: after.commands.at(-1) && after.commands.at(-1).command_id
     });
   }
-  const expectedRows = ['Main', 'Dock Left', 'Dock Right', 'Dock Top', 'Dock Bottom', 'Float'];
+  const announced = await page.locator('#pm-home-live-region').count();
   return {
-    pass: inventory.every(item => same(item.rows, expectedRows)) &&
+    pass: inventory.every(item => item.grips === 1 && item.accessible_name && item.retired_menu_rows === 0) &&
       routes.every(item => item.actual === item.host && item.command_delta === 1 && item.persist_delta === 1) &&
+      announced === 1 &&
       (await state(page)).identity_integrity.ok,
     inventory,
-    routes
+    routes,
+    live_region_present: announced === 1
   };
 });
 
@@ -526,6 +604,60 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     preview_delta: afterMove.metrics.previewFrameCount - beforeMove.metrics.previewFrameCount,
     host: afterMove.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard').host
   };
+  /* The load-bearing evidence the old harness lacked: mid-drag the board must
+     actually reflow. A clone is lifted, the vacated slot becomes a real
+     in-flow placeholder inside the target host, and a neighbour's LAYOUT
+     position (offsetLeft/offsetTop, transform-free) changes before any drop. */
+  const reflow = await (async () => {
+    const box = await page.locator(handle).first().boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 + 3, box.y + box.height / 2 + 3);
+    // Measure EVERY surface, not one chosen panel: a drop at the middle of a
+    // host inserts after the leading surfaces, so those legitimately do not
+    // move. The board reflowing is the claim; which surface moves is not.
+    const readAll = () => page.evaluate(() => {
+      const out = {};
+      document.querySelectorAll('[data-pm-home-surface]').forEach(el => {
+        out[el.getAttribute('data-pm-home-surface')] = { left: el.offsetLeft, top: el.offsetTop };
+      });
+      return out;
+    });
+    const neighbourBefore = await readAll();
+    const drop = await dropPointForHost(page, 'home_main');
+    await page.mouse.move(drop.x, drop.y, { steps: 10 });
+    await page.waitForTimeout(120);
+    const during = await page.evaluate(() => {
+      const ph = document.getElementById('pm-home-drop-placeholder');
+      const positions = {};
+      let flipped = false;
+      document.querySelectorAll('[data-pm-home-surface]').forEach(el => {
+        positions[el.getAttribute('data-pm-home-surface')] = { left: el.offsetLeft, top: el.offsetTop };
+        if (getComputedStyle(el).transform !== 'none') flipped = true;
+      });
+      return {
+        lifted: document.querySelectorAll('.pm-home-lifted').length,
+        placeholder_in_host: Boolean(ph && ph.parentElement && ph.parentElement.hasAttribute('data-pm-home-host')),
+        neighbour: positions,
+        flip_transform: flipped
+      };
+    });
+    await page.keyboard.press('Escape');
+    await page.mouse.up();
+    await page.waitForTimeout(150);
+    return {
+      lifted: during.lifted,
+      placeholder_in_host: during.placeholder_in_host,
+      flip_transform: during.flip_transform,
+      neighbour_before: neighbourBefore,
+      neighbour_during: during.neighbour,
+      neighbour_reflowed: Object.keys(during.neighbour || {}).some(id => {
+        const a = neighbourBefore[id], b = during.neighbour[id];
+        return a && b && (a.left !== b.left || a.top !== b.top);
+      })
+    };
+  })();
+
   const beforeUnchanged = await state(page);
   await pointerGestureToDropTarget(page, handle, 'dock_left');
   const afterUnchanged = await state(page);
@@ -542,8 +674,12 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     command_delta: afterInvalid.metrics.commandCount - beforeInvalid.metrics.commandCount,
     persist_delta: afterInvalid.metrics.persistCount - beforeInvalid.metrics.persistCount
   };
+  /* `lostcapture` is deliberately NOT a cancellation vector any more: live
+     neighbour reflow re-parents nodes mid-drag, which drops pointer capture, so
+     treating capture loss as a cancel killed every drag on its first frame.
+     Escape / pointercancel / window blur remain the cancellation contract. */
   const cancellations = [];
-  for (const kind of ['escape', 'pointercancel', 'lostcapture', 'blur']) {
+  for (const kind of ['escape', 'pointercancel', 'blur']) {
     const before = await state(page);
     await pointerGesture(page, handle, { x: 1240, y: 90 }, kind);
     const after = await state(page);
@@ -556,17 +692,21 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     });
   }
   const classesClear = await page.evaluate(() => !document.body.classList.contains('pm-home-dragging') && !document.body.classList.contains('pm-resizing'));
+  const residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
   return {
     pass: moveProof.host === 'dock_left' && moveProof.command_delta === 1 && moveProof.persist_delta === 1 && moveProof.preview_delta > 0 &&
+      reflow.lifted === 1 && reflow.placeholder_in_host && reflow.neighbour_reflowed &&
       unchangedDrop.exact_layout && unchangedDrop.command_delta === 0 && unchangedDrop.persist_delta === 0 &&
       invalidTarget.exact_layout && invalidTarget.command_delta === 0 && invalidTarget.persist_delta === 0 &&
       cancellations.every(item => item.exact_layout && item.command_delta === 0 && item.persist_delta === 0 && item.cancel_delta === 1) &&
-      classesClear,
+      classesClear && residue === 0,
     move: moveProof,
+    live_reflow: reflow,
     unchanged_drop: unchangedDrop,
     invalid_target: invalidTarget,
     cancellations,
-    gesture_classes_clear: classesClear
+    gesture_classes_clear: classesClear,
+    drag_residue: residue
   };
 }, { recordVideo: true });
 
@@ -582,17 +722,52 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
     await page.locator(selector).first().scrollIntoViewIfNeeded();
     const box = await page.locator(selector).first().boundingBox();
     const before = await state(page);
+    /* Geometry, not just dispatch. The previous revision asserted one
+       resize_surface command per drag and nothing else, which is exactly how a
+       regression that committed a new basis while moving zero pixels shipped
+       green. Measure the surface box on both sides of the gesture. */
+    const geomBefore = await page.evaluate(id => {
+      const el = document.querySelector('[data-pm-home-surface="' + id + '"]');
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { w: Math.round(r.width), h: Math.round(r.height) };
+    }, item.surface_id);
     const target = item.orientation === 'horizontal'
-      ? { x: box.x + box.width / 2, y: Math.max(20, box.y - 24) }
-      : { x: Math.max(20, box.x - 24), y: box.y + box.height / 2 };
+      ? { x: box.x + box.width / 2, y: Math.max(20, box.y - 64) }
+      : { x: Math.max(20, box.x - 64), y: box.y + box.height / 2 };
     await pointerGesture(page, selector, target, 'up');
+    await page.waitForTimeout(120);
+    const geomAfter = await page.evaluate(id => {
+      const el = document.querySelector('[data-pm-home-surface="' + id + '"]');
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { w: Math.round(r.width), h: Math.round(r.height) };
+    }, item.surface_id);
     const after = await state(page);
+    const moved = Boolean(geomBefore && geomAfter &&
+      (Math.abs(geomAfter.w - geomBefore.w) > 4 || Math.abs(geomAfter.h - geomBefore.h) > 4));
+    /* A surface already clamped to its minimum cannot move, and the model is
+       right to record the intent anyway (it applies once room returns). Such a
+       surface is excused, but at least one surface must demonstrate real
+       movement or the case has proved nothing. */
+    const atFloor = await page.evaluate(id => {
+      const el = document.querySelector('[data-pm-home-surface="' + id + '"]');
+      if (!el || !el.parentElement) return false;
+      const host = el.parentElement;
+      /* An over-subscribed host has no free space to redistribute, so nothing in
+         it can grow or shrink no matter what the model records. */
+      return host.scrollWidth > host.clientWidth + 2 || host.scrollHeight > host.clientHeight + 2;
+    }, item.surface_id);
     checks.push({
       surface_id: item.surface_id,
       orientation: item.orientation,
       command_delta: after.metrics.commandCount - before.metrics.commandCount,
       persist_delta: after.metrics.persistCount - before.metrics.persistCount,
-      last_command: after.commands.at(-1) && after.commands.at(-1).command_id
+      last_command: after.commands.at(-1) && after.commands.at(-1).command_id,
+      geometry_before: geomBefore,
+      geometry_after: geomAfter,
+      geometry_changed: moved,
+      clamped_at_minimum: atFloor
     });
   }
   const firstSelector = selectors.length ? '[data-pm-home-resizer][data-pm-home-surface-id="' + selectors[0].surface_id + '"]' : null;
@@ -611,7 +786,10 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
   const glowCleanup = await page.evaluate(() => !document.body.classList.contains('pm-resizing') && document.querySelectorAll('.resizer-glow, .is-glowing').length === 0);
   return {
     pass: selectors.length >= 4 &&
-      checks.every(item => item.command_delta === 1 && item.persist_delta === 1 && item.last_command === 'cmd.workspace_layout.resize_surface') &&
+      checks.every(item => item.command_delta === 1 && item.persist_delta === 1 &&
+        item.last_command === 'cmd.workspace_layout.resize_surface' &&
+        (item.geometry_changed || item.clamped_at_minimum)) &&
+      checks.some(item => item.geometry_changed) &&
       cancellation && cancellation.exact_layout && cancellation.command_delta === 0 && cancellation.persist_delta === 0 && glowCleanup,
     enrolled: selectors,
     changed_resize_checks: checks,
@@ -667,7 +845,7 @@ await runInteraction('transactional_persistence_failure_exact_rollback', async p
   const before = await state(page);
   const beforeStored = await page.evaluate(key => localStorage.getItem(key), before.storage_key);
   await page.evaluate(() => window.PM_HOME_WORKSPACE.failNextPersistenceWrite());
-  await surfaceAction(page, 'dashboard', 'move-surface', 'dock_left');
+  await moveSurfaceTo(page, 'dashboard', 'dock_left');
   const after = await state(page);
   const afterStored = await page.evaluate(key => localStorage.getItem(key), after.storage_key);
   const latestReceipt = after.receipts.at(-1);
@@ -769,27 +947,64 @@ await runInteraction('legacy_storage_key_copy_forward_migration', async page => 
   };
 });
 
-await runInteraction('collapse_bottom_terminal_disabled_reason_and_no_expand_alias', async page => {
+await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle', async page => {
+  const panelHeight = () => page.evaluate(() => {
+    const el = document.getElementById('bottomPanel');
+    return el ? Math.round(el.getBoundingClientRect().height) : null;
+  });
+  const heightOpen = await panelHeight();
+
+  /* The top-bar MENU row remains one-way and never relabels to Expand. */
   await page.locator('#pm-home-more-btn').click();
   const collapse = page.locator('#pm-home-more-menu [data-pm-home-action="collapse-terminal"]');
   const labelBefore = (await collapse.textContent()).trim();
   const before = await state(page);
   await collapse.click();
+  await page.waitForTimeout(160);
   const after = await state(page);
+  const heightCollapsed = await panelHeight();
   await page.locator('#pm-home-more-btn').click();
   const disabled = await collapse.isDisabled();
   const reason = await collapse.getAttribute('data-disabled-reason');
   const labelAfter = (await collapse.textContent()).trim();
+  await page.keyboard.press('Escape');
+
+  /* The terminal's own chevron IS the way back: it stays visible on the
+     collapsed strip, is an inline SVG, and reports POST-commit state. */
+  const chevron = page.locator('#collapseBottom, [data-pm-home-collapse-toggle]').first();
+  const chevronVisibleWhileCollapsed = await chevron.isVisible();
+  const ariaCollapsed = await chevron.getAttribute('aria-expanded');
+  const isInlineSvg = await chevron.evaluate(el => Boolean(el.querySelector('svg')) && !/[\u2190-\u2BFF]/.test(el.textContent || ''));
+  const beforeExpand = await state(page);
+  await chevron.click();
+  await page.waitForTimeout(180);
+  const afterExpand = await state(page);
+  const heightExpanded = await panelHeight();
+  const ariaExpanded = await chevron.getAttribute('aria-expanded');
+  const collapsedFlag = id => afterExpand.layout.surfaces.find(s => s.surface_kind === 'terminal_section').collapsed;
+
   return {
     pass: labelBefore === 'Collapse Bottom Terminal' && labelAfter === 'Collapse Bottom Terminal' &&
       after.metrics.commandCount === before.metrics.commandCount + 1 &&
       after.metrics.persistCount === before.metrics.persistCount + 1 &&
       after.layout.surfaces.find(surface => surface.surface_kind === 'terminal_section').collapsed === true &&
-      disabled && reason === 'Bottom terminal is already collapsed',
+      disabled && reason === 'Bottom terminal is already collapsed' &&
+      heightCollapsed !== null && heightOpen !== null && heightCollapsed < heightOpen - 40 &&
+      chevronVisibleWhileCollapsed && isInlineSvg && ariaCollapsed === 'false' &&
+      afterExpand.metrics.commandCount === beforeExpand.metrics.commandCount + 1 &&
+      collapsedFlag() === false && ariaExpanded === 'true' &&
+      heightExpanded > heightCollapsed + 40,
     label_before: labelBefore,
     label_after: labelAfter,
-    disabled,
-    reason,
+    menu_disabled_after_collapse: disabled,
+    menu_reason: reason,
+    height_open: heightOpen,
+    height_collapsed: heightCollapsed,
+    height_expanded: heightExpanded,
+    chevron_visible_while_collapsed: chevronVisibleWhileCollapsed,
+    chevron_is_inline_svg: isInlineSvg,
+    aria_collapsed: ariaCollapsed,
+    aria_expanded: ariaExpanded,
     command: after.commands.at(-1)
   };
 });
@@ -814,7 +1029,7 @@ await runInteraction('popup_blocked_honest_in_canvas_fallback', async page => {
 }, { recordVideo: true });
 
 await runInteraction('settings_reset_visible_location_and_identity_preservation', async page => {
-  await surfaceAction(page, 'dashboard', 'move-surface', 'dock_left');
+  await moveSurfaceTo(page, 'dashboard', 'dock_left');
   const beforeReset = await state(page);
   await page.locator('#tab-settings').click();
   await page.waitForTimeout(180);

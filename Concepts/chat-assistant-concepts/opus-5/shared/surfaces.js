@@ -82,13 +82,21 @@
     switch (action) {
       /* A goal is started exactly once. Offering Start on anything but an idle goal is what
        * let the demo path fake a resumption (D12). */
-      case 'start': return goal.canStart !== false && goal.status === 'idle';
+      /* Start is allowed from idle AND from a terminal state, because re-running a finished goal is
+       * a legitimate action and refusing it would leave the control dead on every completed thread.
+       * What it must never do is masquerade as `resume` on a goal that never ran — that distinction
+       * is the defect this gate exists for. */
+      case 'start': return goal.canStart !== false &&
+        (goal.status === 'idle' || goal.status === 'complete' || goal.status === 'stopped');
       case 'pause': return goal.canPause !== false && goal.status === 'running';
       case 'resume': return goal.canResume !== false && (goal.status === 'paused' || goal.status === 'blocked');
       case 'stop': return goal.canStop !== false && goal.status !== 'complete';
       /* Clear is a distinct operation from Stop and stays available on a terminal goal. */
       case 'clear': return goal.canClear !== false;
       case 'edit': return goal.canEdit !== false;
+      case 'replan': return goal.status === 'running' || goal.status === 'paused' || goal.status === 'blocked';
+      case 'block': return goal.status === 'running';
+      case 'complete': return goal.status === 'running' || goal.status === 'replanning';
       /* Expand and collapse are presentation and are never gated; the permissive default
        * covers them. An UNKNOWN verb is refused in act(), not here, because canAct answers
        * "is this allowed", not "does this exist". */
@@ -96,7 +104,155 @@
     }
   }
 
+  /* ---- Todo, subagent and activity actions -------------------------------------------------
+   *
+   * These are separate from the goal verbs above because they mutate DIFFERENT records: the goal
+   * switch owns the goal's lifecycle, and these own the task list, the subagent group and the
+   * activity run. They live in this module rather than in the demo director for the same reason the
+   * goal verbs do — the records belong to the surfaces service, and a director that reached in and
+   * mutated them directly would be a second writer with no gate.
+   *
+   * Each returns false when there is nothing to act on, so a control bound to one of them can report
+   * honestly instead of appearing to work.
+   */
+  function todoAct(threadId, action) {
+    var t = threadOf(threadId);
+    var todo = t && t.todo;
+    if (!todo || !todo.items || !todo.items.length) return false;
+    var items = todo.items;
+    var i;
+
+    if (action === 'todo_add') {
+      items.push({
+        id: 'g' + (items.length + 1),
+        text: 'Confirm the change against the settings screen',
+        state: 'pending'
+      });
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
+    if (action === 'todo_complete') {
+      /* Complete the first item that is not already done, preferring the active one. A blocked item
+       * is deliberately skipped: completing it would erase the reason it is blocked. */
+      for (i = 0; i < items.length; i++) {
+        if (items[i].state === 'active') { items[i].state = 'done'; break; }
+      }
+      if (i === items.length) {
+        for (i = 0; i < items.length; i++) {
+          if (items[i].state === 'pending') { items[i].state = 'done'; break; }
+        }
+      }
+      if (i === items.length) return false;
+      /* The next pending item becomes active, so the list always shows where work is. */
+      for (var j = 0; j < items.length; j++) {
+        if (items[j].state === 'pending') { items[j].state = 'active'; break; }
+      }
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
+    if (action === 'todo_reopen') {
+      for (i = items.length - 1; i >= 0; i--) {
+        if (items[i].state === 'done') { items[i].state = 'active'; if (store) store.touchView('surfaces'); return true; }
+      }
+      return false;
+    }
+    return false;
+  }
+
+  var AGENT_NEXT = {
+    agent_advance: { from: ['queued'], to: 'running' },
+    agent_queue: { from: ['running'], to: 'queued' },
+    agent_block: { from: ['running', 'queued'], to: 'blocked' },
+    agent_complete: { from: ['running'], to: 'completed' },
+    agent_fail: { from: ['running'], to: 'failed' },
+    agent_stop: { from: ['running', 'queued'], to: 'stopped' },
+    agent_retry: { from: ['failed', 'stopped'], to: 'running' }
+  };
+
+  function agentAct(threadId, action) {
+    var t = threadOf(threadId);
+    var groups = (t && t.subagentGroups) || [];
+    if (!groups.length) return false;
+    var group = groups[0];
+    group.agents = group.agents || [];
+
+    if (action === 'agent_spawn') {
+      var n = group.agents.length + 1;
+      group.agents.push({
+        id: 'ag-' + n,
+        name: 'Specialist ' + n,
+        role: 'Reader',
+        state: 'queued',
+        /* A spawned agent carries its route from the moment it exists: an agent whose route is
+         * unknown cannot be reasoned about, and the capacity forecast is expressed in routes. */
+        route: (store ? store.runtime(threadId, 'account') + ' \u00b7 ' + store.runtime(threadId, 'model') : 'unknown'),
+        workedSeconds: 0,
+        resultRef: null
+      });
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
+    var rule = AGENT_NEXT[action];
+    if (!rule) return false;
+    for (var i = 0; i < group.agents.length; i++) {
+      var a = group.agents[i];
+      if (rule.from.indexOf(a.state) < 0) continue;
+      a.state = rule.to;
+      if (action === 'agent_block') a.blockedReason = 'Waiting on the port change in the test configuration.';
+      if (action === 'agent_retry') a.attempts = (a.attempts || 1) + 1;
+      if (action === 'agent_complete') a.resultRef = a.resultRef || 'Finished and handed back its findings.';
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+    /* No agent was in a state this verb applies to. Refusing is the honest answer — the previous
+     * behaviour would have reported success for a transition that never happened. */
+    return false;
+  }
+
+  function activityAct(threadId, action) {
+    var t = threadOf(threadId);
+    if (!t) return false;
+    var stages = t.activityStages || [];
+    if (!stages.length) return false;
+    var v = store ? store.view(threadId) : null;
+    if (!v) return false;
+    v.surfaces = v.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+
+    if (action === 'activity_advance') {
+      var next = (v.surfaces.phaseIndex == null ? 0 : v.surfaces.phaseIndex + 1);
+      if (next >= stages.length) next = stages.length - 1;
+      v.surfaces.phaseIndex = next;
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+    if (action === 'activity_condense') {
+      /* Condensing is what turns a finished run into a durable index. The phase pointer is cleared
+       * because a condensed group has no current phase — reopening chooses one again. */
+      v.surfaces.phaseIndex = null;
+      v.surfacesYielded = true;
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+    if (action === 'activity_reopen') {
+      v.surfacesYielded = false;
+      v.surfaces.phaseIndex = 0;
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+    return false;
+  }
+
   function act(threadId, action) {
+    /* Todo, subagent and activity verbs are dispatched FIRST. They do not touch the goal, so
+     * requiring a goal to exist — or passing them through canAct, which only knows goal
+     * lifecycle — would refuse them for a reason that has nothing to do with them. */
+    if (action.indexOf('todo_') === 0) return todoAct(threadId, action);
+    if (action.indexOf('agent_') === 0) return agentAct(threadId, action);
+    if (action.indexOf('activity_') === 0) return activityAct(threadId, action);
+
     var goal = goalFor(threadId);
     if (!goal) return false;
     /* D12: every branch below MUTATES the goal, so the gate has to run before the switch and
@@ -146,6 +302,37 @@
           goal.status = 'running';
           if (store) store.touchView('surfaces');
         }, 2600);
+        break;
+      case 'replan':
+        /* Distinct from `edit`: a replan is the runtime reconsidering its own plan, not the user
+         * changing the objective. Both pause scheduling, and only one of them names the user. */
+        goal.status = 'replanning';
+        goal.replan = {
+          reason: 'The runtime replanned after the port conflict.',
+          impact: 'Scheduling is paused while the task list is reconciled.',
+          pausedScheduling: true
+        };
+        if (toast) toast.show('Replanning. Scheduling paused while tasks are reconciled.');
+        break;
+      case 'block':
+        goal.status = 'blocked';
+        goal.canPause = false; goal.canResume = true;
+        goal.blockedReason = 'The test configuration still names port 3000.';
+        if (toast) toast.show('Goal blocked. The reason is recorded on the goal.');
+        break;
+      case 'complete':
+        goal.status = 'complete';
+        goal.canPause = false; goal.canResume = false; goal.canStop = false;
+        /* A completion with no receipt leaves nothing durable behind, which is the whole point of
+         * completionReceipt() existing. */
+        goal.completionReceipt = goal.completionReceipt || {
+          at: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
+          verified: true,
+          artifacts: ['artifact-diff'],
+          elapsedSeconds: goal.totalElapsedSeconds || 0,
+          workedSeconds: goal.workedSeconds || 0
+        };
+        if (toast) toast.show('Goal complete');
         break;
       case 'expand': goal.expanded = true; break;
       case 'collapse': goal.expanded = false; break;

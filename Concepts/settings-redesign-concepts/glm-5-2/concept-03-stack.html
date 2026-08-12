@@ -192,6 +192,7 @@
             '</div>',
             '<div class="st-body" data-scroller>',
               '<div class="st-stack">',
+                PM.shared.recentWork(),
                 PM.shared.ownedStrip("c3"),
                 notices.join(""),
                 items,
@@ -229,9 +230,9 @@
           if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
           res.classList.remove("hidden");
           resInner.innerHTML = results.map(function (r) {
-            var kindLabel = ({ setting:"Setting", category:"Area", subcategory:"Section", manager:"Manager", destination:"Area" })[r.kind];
+            var km = PM.shared.searchKindMeta(r.kind);
             var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="st-result" ' + target + '><span class="st-rkind">' + kindLabel + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
+            return '<div class="st-result" ' + target + '><span class="st-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
           }).join("");
         });
         resInner.addEventListener("click", function (e) {
@@ -313,6 +314,7 @@
         });
         PM.shared.wireSettings(document.querySelector(".st-stack"));
         PM.shared.wireThemePicker();
+        PM.shared.wireRecentWork();
         PM.shared.wireOwnedStrip(document.querySelector("[data-stage]"));
         // search results stagger (C2 motion moment #2)
         var resInner2 = document.querySelector(".st-results-inner");

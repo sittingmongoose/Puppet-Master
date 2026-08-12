@@ -124,16 +124,61 @@
 .pm6-dash-card:hover .pm6-dash-iconbtn, .pm6-dash-iconbtn:focus-visible { opacity: 1; }
 .pm6-dash-iconbtn:hover { color: var(--text-primary); background: var(--accent-soft); }
 
-/* crosshatch drag handle (top-left) */
+/* Drag handle, top-left. Matches the Home surface grip so the two movable
+   things in the shell share one affordance: always visible, grab cursor,
+   touch-action:none so the grip drags instead of scrolling the board. */
 .pm6-dash-drag {
   width: 14px; height: 14px; flex: none; cursor: grab; border-radius: 3px;
   background-image:
     repeating-linear-gradient(45deg, var(--text-muted) 0 1px, transparent 1px 4px),
     repeating-linear-gradient(-45deg, var(--text-muted) 0 1px, transparent 1px 4px);
-  opacity: .35; transition: opacity var(--motion-fast) var(--ease-default);
+  opacity: .55; touch-action: none;
+  transition: opacity var(--motion-fast) var(--ease-default);
 }
-.pm6-dash-card:hover .pm6-dash-drag { opacity: .8; }
+.pm6-dash-card:hover .pm6-dash-drag { opacity: .9; }
 .pm6-dash-drag:active { cursor: grabbing; }
+.pm6-dash-drag:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+/* ---------- lifted clone + landing placeholder (u11-prism vocabulary) ----- */
+.pm6-dash-lifted {
+  position: fixed;
+  z-index: 600;
+  margin: 0;
+  pointer-events: none;
+  cursor: grabbing;
+  transform-origin: top left;
+  will-change: left, top, transform;
+  box-shadow: var(--elev-2);
+  transition: transform var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, cubic-bezier(.22,1,.36,1)),
+              box-shadow var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, cubic-bezier(.22,1,.36,1));
+}
+.pm6-dash-lifted.is-lifted {
+  transform: scale(1.03) rotate(.4deg);
+  box-shadow: 0 20px 44px color-mix(in srgb, var(--accent-primary) 20%, transparent), var(--elev-3);
+}
+.pm6-dash-card.pm6-dash-placeholder {
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--accent-primary) 6%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  box-shadow: none;
+  animation: pm6DashPhBreath var(--mo-pulse, 1.8s) ease-in-out infinite;
+}
+.pm6-dash-card.pm6-dash-placeholder > * { display: none; }
+@keyframes pm6DashPhBreath {
+  0%, 100% { background-color: color-mix(in srgb, var(--accent-primary) 5%, transparent); }
+  50% { background-color: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+}
+html.pm6-dash-dragging, html.pm6-dash-dragging * { cursor: grabbing !important; }
+html.pm6-dash-dragging { -webkit-user-select: none; user-select: none; }
+html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pm6-dash-lifted { transition: none; }
+  .pm6-dash-lifted.is-lifted { transform: none; }
+  .pm6-dash-card.pm6-dash-placeholder { animation: none; background-color: color-mix(in srgb, var(--accent-primary) 8%, transparent); }
+}
+[data-motion="reduced"] .pm6-dash-lifted { transition: none; }
+[data-motion="reduced"] .pm6-dash-lifted.is-lifted { transform: none; }
+[data-motion="reduced"] .pm6-dash-card.pm6-dash-placeholder { animation: none; }
 
 /* edge-resize grip (bottom-right) */
 .pm6-dash-resize {

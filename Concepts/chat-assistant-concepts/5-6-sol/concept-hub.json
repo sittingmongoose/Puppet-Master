@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "topic": "Assistant Chat",
+  "model": "5.6 Sol",
+  "presentation": "hybrid",
+  "order": 560,
+  "widthControl": {
+    "enabled": true,
+    "label": "Chat width",
+    "role": "chat",
+    "min": 520,
+    "max": 1200,
+    "step": 5,
+    "default": 975,
+    "presets": [520, 750, 975, 1200],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "title": "5.6 Sol Pairing Workspace",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "standard",
+    "previewWidth": "test"
+  },
+  "entries": [
+    {"id":"window-01","title":"Window 01 — Atlas Folio","path":"window-01.html","openPath":"window-01.html","openActions":"both","controlMode":"standard","tags":["window","history-gutter","artifact-foldout"],"order":10},
+    {"id":"window-02","title":"Window 02 — Stage Bay","path":"window-02.html","openPath":"window-02.html","openActions":"both","controlMode":"standard","tags":["window","cue-stack","artifact-scene"],"order":20},
+    {"id":"window-03","title":"Window 03 — Signal House","path":"window-03.html","openPath":"window-03.html","openActions":"both","controlMode":"standard","tags":["window","switchboard","history-track"],"order":30},
+    {"id":"window-04","title":"Window 04 — Lens Chamber","path":"window-04.html","openPath":"window-04.html","openActions":"both","controlMode":"standard","tags":["window","perimeter-history","focus-aperture"],"order":40},
+    {"id":"window-05","title":"Window 05 — Field Desk","path":"window-05.html","openPath":"window-05.html","openActions":"both","controlMode":"standard","tags":["window","drafting-table","history-drawer"],"order":50},
+    {"id":"window-06","title":"Window 06 — Tidal Shelf","path":"window-06.html","openPath":"window-06.html","openActions":"both","controlMode":"standard","tags":["window","organic-channel","history-reservoir"],"order":60},
+    {"id":"window-07","title":"Window 07 — Concourse","path":"window-07.html","openPath":"window-07.html","openActions":"both","controlMode":"standard","tags":["window","mezzanine-history","directional-space"],"order":70},
+    {"id":"window-08","title":"Window 08 — Quiet Frame","path":"window-08.html","openPath":"window-08.html","openActions":"both","controlMode":"standard","tags":["window","brutal-minimal","measurement-gutter"],"order":80},
+    {"id":"thread-01","title":"Thread 01 — Edition","path":"thread-01.html","openPath":"thread-01.html","openActions":"both","controlMode":"standard","tags":["thread","editorial","work-footnotes"],"order":110},
+    {"id":"thread-02","title":"Thread 02 — Dialogue Score","path":"thread-02.html","openPath":"thread-02.html","openActions":"both","controlMode":"standard","tags":["thread","score","activity-bands"],"order":120},
+    {"id":"thread-03","title":"Thread 03 — Timefield","path":"thread-03.html","openPath":"thread-03.html","openActions":"both","controlMode":"standard","tags":["thread","chronology","time-bands"],"order":130},
+    {"id":"thread-04","title":"Thread 04 — Branchbook","path":"thread-04.html","openPath":"thread-04.html","openActions":"both","controlMode":"standard","tags":["thread","branching","revision-layers"],"order":140},
+    {"id":"thread-05","title":"Thread 05 — Workshop","path":"thread-05.html","openPath":"thread-05.html","openActions":"both","controlMode":"standard","tags":["thread","workbench","tool-drawers"],"order":150},
+    {"id":"thread-06","title":"Thread 06 — Braided","path":"thread-06.html","openPath":"thread-06.html","openActions":"both","controlMode":"standard","tags":["thread","strands","woven-work"],"order":160},
+    {"id":"thread-07","title":"Thread 07 — Relay","path":"thread-07.html","openPath":"thread-07.html","openActions":"both","controlMode":"standard","tags":["thread","handoff","crew-lanes"],"order":170},
+    {"id":"thread-08","title":"Thread 08 — Quiet Current","path":"thread-08.html","openPath":"thread-08.html","openActions":"both","controlMode":"standard","tags":["thread","minimal-reading","calm-index"],"order":180}
+  ]
+}

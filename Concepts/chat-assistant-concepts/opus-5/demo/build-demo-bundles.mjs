@@ -352,6 +352,361 @@ for (const id of ['thread-02', 'thread-04', 'thread-13', 'thread-15']) {
   patchThreads.push({ id, completed: true });
 }
 
+/* ---------------------------------------------------------------- packet fixture layer
+ *
+ * Every record below closes a specific census gap measured against the cumulative packet. The
+ * supplied demoData.json is never modified — these are additive patches, and where a supplied field
+ * already exists with a different shape a NEW SIBLING field is added rather than mutating it.
+ *
+ * The states are authored here rather than injected by the Director because a state that only exists
+ * after a script runs cannot be reviewed by opening the workspace, and cannot be asserted by a probe
+ * that has not run the script. The store folds these into `view[threadId]` on first access.
+ */
+
+/* Eight Todos. The largest supplied list is seven, so the "8 Todos" requirement had no data behind
+ * it. The state mix is deliberate: four done, one active, two pending and one BLOCKED, because a
+ * blocked item is the one that makes the completion count interesting. */
+const T01_TODO = {
+  id: 'todo-provider-settings',
+  title: 'Provider settings refresh',
+  items: [
+    { id: 'g1', text: 'Read the current provider settings screen', state: 'done' },
+    { id: 'g2', text: 'List every account and its connection form', state: 'done' },
+    { id: 'g3', text: 'Map the setup states to visible copy', state: 'done' },
+    { id: 'g4', text: 'Draft the account group header', state: 'done' },
+    { id: 'g5', text: 'Rework the model rows to three facts', state: 'active' },
+    { id: 'g6', text: 'Wire the effort and speed submenus', state: 'pending' },
+    { id: 'g7', text: 'Write the route-change consequence copy', state: 'pending' },
+    { id: 'g8', text: 'Confirm the port change in the test config', state: 'blocked' }
+  ]
+};
+
+/* Three subagents on three DIFFERENT routes, which is what makes "different routes" demonstrable
+ * rather than a claim. Every agent record gains a `route` string of the form
+ * `<Account label> · <Model>`; the group covers running, queued, blocked, completed, stopped and
+ * retried so a work cluster has every state to render. */
+const T01_AGENTS = {
+  id: 'sg-research',
+  title: 'Provider research',
+  agents: [
+    { id: 'ag-1', name: 'Settings reader', role: 'Reader', state: 'completed',
+      route: 'Anthropic — Work · Opus 5', workedSeconds: 240,
+      resultRef: 'Read all six account records and their connection forms.' },
+    { id: 'ag-2', name: 'Adapter surveyor', role: 'Surveyor', state: 'running',
+      route: 'OpenAI — Team · GPT-5.6 Pro', workedSeconds: 132,
+      resultRef: null },
+    { id: 'ag-3', name: 'Copy reviewer', role: 'Reviewer', state: 'queued',
+      route: 'Anthropic — Personal · Sonnet 5', workedSeconds: 0,
+      resultRef: null },
+    { id: 'ag-4', name: 'Config verifier', role: 'Verifier', state: 'blocked',
+      route: 'Anthropic — Work · Haiku 4.5', workedSeconds: 44,
+      blockedReason: 'The test configuration still names port 3000.', resultRef: null },
+    { id: 'ag-5', name: 'Screenshot pass', role: 'Capture', state: 'stopped',
+      route: 'Google — Lab · Gemini 3 Ultra', workedSeconds: 18,
+      resultRef: null },
+    { id: 'ag-6', name: 'Allowance checker', role: 'Reader', state: 'retried',
+      route: 'Alibaba — Cloud · Qwen 3.8', workedSeconds: 96, attempts: 2,
+      resultRef: 'Usage endpoint answered on the second attempt.' }
+  ]
+};
+
+/* A three-question flow whose kinds are single select, multi select and freeform, so every input
+ * type in the questionnaire controller is exercised from authored data. */
+const T01_QUESTIONNAIRE = {
+  id: 'qn-thread01-settings',
+  createdAt: '2026-08-07T09:12:00Z',
+  currentQuestionIndex: 0,
+  questions: [
+    { id: 'p1', prompt: 'Which account should the settings screen open on?', kind: 'single select',
+      required: true, options: ['The account in use', 'The first ready account', 'The last account opened'] },
+    { id: 'p2', prompt: 'Which setup states must the screen show inline?', kind: 'multi select',
+      required: false, options: ['Sign-in required', 'Command line tool missing', 'Update available', 'Usage unavailable'] },
+    { id: 'p3', prompt: 'Anything the screen must never do?', kind: 'freeform', required: false }
+  ]
+};
+
+/* An ordered Goal lifecycle. The supplied goals carry a status but no transition history, so
+ * "start, pause, resume, replan, blocked, complete" could not be shown as a sequence. */
+const T01_GOAL = {
+  id: 'goal-provider-settings',
+  title: 'Refresh the provider settings screen',
+  objective: 'Make every account state visible and every route change consequence explicit.',
+  status: 'complete',
+  workedSeconds: 4210,
+  totalElapsedSeconds: 5640,
+  canEdit: true, canPause: false, canResume: false, canStop: false, canClear: true,
+  expanded: false,
+  phase: { index: 5, total: 5, label: 'Verification' },
+  events: [
+    { at: '2026-08-07T09:20:00Z', phase: 'start' },
+    { at: '2026-08-07T09:54:00Z', phase: 'pause' },
+    { at: '2026-08-07T10:06:00Z', phase: 'resume' },
+    { at: '2026-08-07T10:41:00Z', phase: 'replan' },
+    { at: '2026-08-07T11:12:00Z', phase: 'blocked' },
+    { at: '2026-08-07T12:34:00Z', phase: 'complete' }
+  ],
+  completionReceipt: {
+    at: '2026-08-07T12:34:00Z',
+    verified: true,
+    artifacts: ['artifact-diff', 'artifact-test-report', 'artifact-context'],
+    elapsedSeconds: 5640,
+    workedSeconds: 4210
+  }
+};
+
+/* Six activity kinds with no supplied coverage. The browser-related labels use PM-native
+ * vocabulary — BrowserWorkspace, Browser Action, BrowserPage, TestCapture — because the packet's
+ * terminology correction forbids third-party test-runner names in PM-owned surfaces. */
+const T01_ACTIVITY_STAGES = [
+  { id: 'st-read', kind: 'read', label: 'Read 7 files', detail: 'shared/route.js, shared/access.js and five more', durationMs: 2400 },
+  { id: 'st-search', kind: 'search', label: 'Searched the repository for account labels', detail: '31 matches across 9 files', durationMs: 1600 },
+  { id: 'st-web', kind: 'web', label: 'Fetched the provider status page', detail: 'One page, cached for the run', durationMs: 3100 },
+  { id: 'st-browser', kind: 'browser', label: 'Opened a BrowserPage in the BrowserWorkspace', detail: 'Browser Action: inspect the settings route', durationMs: 5200 },
+  { id: 'st-test', kind: 'test', label: 'Ran the interaction suite', detail: 'TestCapture retained for the failing case', durationMs: 8800 },
+  { id: 'st-verify', kind: 'verify', label: 'Verified the rendered settings screen', detail: 'Matched the account list against the catalog', durationMs: 2700 }
+];
+
+/* The port collision, verbatim. */
+const T01_CONFLICTS = [
+  {
+    id: 'conf-port-3000',
+    kind: 'port',
+    port: 3000,
+    summary: 'Port 3000 is used by the checkout redesign in another worktree. Use 3001 instead?',
+    owner: { threadId: 'thread-07', threadTitle: 'Checkout redesign', worktree: 'feature/checkout' },
+    suggestedAlternative: 3001,
+    actions: [
+      { id: 'use-3001', label: 'Use 3001', primary: true },
+      { id: 'details', label: 'Details' },
+      { id: 'cancel', label: 'Cancel' }
+    ]
+  }
+];
+
+/* Material warnings and a cross-project grant, with the packet's verbatim copy. */
+const T01_DECISIONS = [
+  {
+    id: 'dec-provider-boundary',
+    kind: 'warning', severity: 'material',
+    cls: 'provider_boundary',
+    question: 'Switch to Claude API?',
+    scopeLine: 'This will resend the conversation through a different provider and restart the prompt cache.',
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'branch', label: 'Branch' },
+      { id: 'switch', label: 'Switch', primary: true },
+      { id: 'details', label: 'Details' }
+    ],
+    details: {
+      commands: [], files: [], servers: [], domains: ['Anthropic'],
+      persistence: 'This thread and its future turns',
+      saferAlternative: 'Branch the thread so the current conversation keeps its cache',
+      receipts: ['provider_boundary', 'cache_loss']
+    },
+    status: 'pending', decidedAction: null
+  },
+  {
+    id: 'dec-price-allowance',
+    kind: 'warning', severity: 'material',
+    cls: 'price_allowance_change',
+    question: 'Continue on a paid allowance?',
+    scopeLine: 'The included allowance for this account is spent · Further turns are billed',
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'once', label: 'Allow once' },
+      { id: 'session', label: 'Allow for session' },
+      { id: 'details', label: 'Details' }
+    ],
+    details: {
+      commands: [], files: [], servers: [], domains: [],
+      persistence: 'Until the allowance resets',
+      saferAlternative: 'Switch to an account with allowance remaining',
+      receipts: ['price_allowance_change']
+    },
+    status: 'pending', decidedAction: null
+  },
+  {
+    id: 'dec-cross-project',
+    kind: 'grant', severity: 'material',
+    cls: null,
+    question: 'This task will read Project A and modify Project B.',
+    scopeLine: 'Cross-project access · Read one project, write another',
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'once', label: 'Allow once' },
+      { id: 'goal', label: 'Allow for this Goal' },
+      { id: 'settings', label: 'Open Settings' }
+    ],
+    details: {
+      commands: [], files: ['Project A (read)', 'Project B (write)'], servers: [], domains: [],
+      persistence: 'Allow for this Goal ends when the Goal ends',
+      saferAlternative: 'Copy the needed file into Project B first',
+      receipts: []
+    },
+    status: 'pending', decidedAction: null
+  }
+];
+
+/* The unsupported attachment that drives the alternate-route offer. */
+const T01_ATTACHMENTS = [
+  { name: 'walkthrough.mov', mime: 'video/quicktime', bytes: 48210944 }
+];
+
+/* Back Seat Driver: Auto with real advice on thread-01, and a manual On elsewhere so both
+ * treatments are visible without firing a trigger. */
+const T01_BSD = {
+  mode: 'auto',
+  scope: 'thread',
+  advice: [
+    {
+      id: 'adv-port-config',
+      at: '2026-08-07T11:14:00Z',
+      severity: 'caution',
+      text: 'The port change was not reflected in the test config.',
+      evidenceRefs: ['config/worktrees.json'],
+      readOnly: true
+    }
+  ]
+};
+
+/* Offline queue plus the transport that explains it. The entry id IS the idempotency key, which is
+ * what makes "replayed exactly once" checkable from the fixture. */
+const T01_OUTBOX = [
+  {
+    id: 'obx-seed-0001',
+    commandId: 'cmd.chat.send',
+    payload: { threadId: 'thread-01', body: 'Confirm the port change landed in the test configuration.' },
+    createdAt: '2026-08-07T11:20:00Z',
+    attempts: 0,
+    status: 'queued'
+  }
+];
+
+/* Thread operations with no supplied coverage: an awaiting cross-thread request, a spawned child, a
+ * branch and a restore point. */
+const T01_THREADOPS = {
+  requests: [
+    {
+      id: 'req-0001',
+      sourceThreadId: 'thread-01',
+      targetThreadId: 'thread-11',
+      sender: 'Product designer',
+      task: 'Confirm whether the checkout worktree still needs port 3000.',
+      evidenceRefs: ['config/worktrees.json'],
+      scope: 'read-only',
+      budget: { turns: 2, seconds: 120 },
+      createdAt: '2026-08-07T11:22:00Z',
+      updatedAt: '2026-08-07T11:22:00Z',
+      status: 'awaiting',
+      resultRefs: []
+    }
+  ],
+  spawned: [
+    {
+      id: 'spawn-0001',
+      threadId: 'thread-01-child-1',
+      relation: 'child',
+      task: 'Survey every provider adapter for a Fast tier.',
+      createdAt: '2026-08-07T10:44:00Z',
+      state: 'running'
+    }
+  ],
+  branches: [
+    {
+      id: 'branch-0001',
+      threadId: 'thread-01-branch-1',
+      branchedFrom: { threadId: 'thread-01', messageId: 't01-m0014' },
+      inheritedRefs: [{ kind: 'artifact', id: 'artifact-diff', label: 'Assistant Chat change set' }],
+      createdAt: '2026-08-07T10:58:00Z'
+    }
+  ],
+  restorePoints: [
+    {
+      id: 'rp-0001',
+      threadId: 'thread-01',
+      messageId: 't01-m0014',
+      createdAt: '2026-08-07T10:57:00Z',
+      label: 'Before the scope change'
+    }
+  ],
+  rewoundTo: null,
+  redirect: null
+};
+
+/* The final verification message. The supplied corpus has no message carrying a verification
+ * result with both elapsed and worked time, so the "final verification + elapsed" requirement had
+ * nothing to render. */
+const T01_FINAL = {
+  id: 't01-m9001',
+  role: 'assistant',
+  body: `The provider settings screen is updated and verified.
+
+Every account now shows its connection form and its setup state inline, and the model rows carry at most three facts each. The route change consequence copy is in place, including the provider boundary case which restarts the prompt cache.
+
+One item is still blocked: the test configuration names port 3000, which the checkout redesign owns in another worktree. I left it blocked rather than editing a config another thread is using.`,
+  sentAt: '2026-08-07T12:34:00Z',
+  runtime: {
+    provider: 'Anthropic', model: 'Opus 5', persona: 'Product designer',
+    mode: 'Agent', effort: 'High',
+    workedSeconds: 4210, totalElapsedSeconds: 5640,
+    tokenCount: 6400, contextUsed: 7620, contextLimit: 128000,
+    estimatedCost: 0.34,
+    terminalAt: '2026-08-07T12:34:00Z', terminalReason: 'completed'
+  },
+  verification: {
+    result: 'passed',
+    note: 'Updated provider settings screen renders correctly',
+    elapsedSeconds: 5640,
+    workedSeconds: 4210
+  },
+  eligibleForEdit: false,
+  collapsedByDefault: false
+};
+
+patchThreads.push({
+  id: 'thread-01',
+  todo: T01_TODO,
+  subagentGroups: [T01_AGENTS],
+  questionnaires: [T01_QUESTIONNAIRE],
+  activeGoal: T01_GOAL,
+  activityStages: T01_ACTIVITY_STAGES,
+  conflicts: T01_CONFLICTS,
+  decisions: T01_DECISIONS,
+  attachments: T01_ATTACHMENTS,
+  bsd: T01_BSD,
+  outboxSeed: T01_OUTBOX,
+  syncSeed: { transport: 'offline', domain: 'live' },
+  threadOps: T01_THREADOPS,
+  capacitySeed: {
+    requested: 6, recommendedConcurrent: 2, waves: 3,
+    reason: 'provider allowance and verification reserve',
+    requiredRoles: ['Reader', 'Surveyor', 'Reviewer', 'Verifier', 'Capture', 'Reader'],
+    droppedRoles: []
+  },
+  appendAt: null,
+  appendMessages: [T01_FINAL]
+});
+
+/* A second thread demonstrating manual Back Seat Driver On, so both the glow-free static treatment
+ * and the Auto treatment are visible side by side in the gallery. */
+patchThreads.push({
+  id: 'thread-03',
+  bsd: {
+    mode: 'on',
+    scope: 'thread',
+    advice: [
+      {
+        id: 'adv-lantern-copy',
+        at: '2026-08-06T15:02:00Z',
+        severity: 'note',
+        text: 'The lantern copy still says "workspace" where the rest of the screen says "project".',
+        evidenceRefs: [],
+        readOnly: true
+      }
+    ]
+  }
+});
+
 const extension = {
   schemaVersion: 1,
   note: 'Additive layer over the supplied demoData.json. The supplied file is never modified.',
@@ -385,6 +740,29 @@ for (const p of patchThreads) {
 merged.threads.push(...newThreads);
 const all = merged.threads.flatMap((t) => t.messages);
 const over = (n) => all.filter((m) => m.body.length > n).length;
+/* The packet keys are MEASURED from the merged corpus, not restated from the source above, so a
+ * record that fails to land shows up as a number rather than as a passing claim. */
+const patchById = Object.fromEntries(patchThreads.filter((p) => p.id).map((p) => [p.id, p]));
+for (const [id, p] of Object.entries(patchById)) {
+  const t = byId[id];
+  if (!t) continue;
+  for (const [k, v] of Object.entries(p)) {
+    if (k === 'id' || k === 'appendMessages' || k === 'appendAt' || k === 'replaceMessageBody') continue;
+    t[k] = v;
+  }
+}
+const agentRecords = merged.threads.flatMap((t) => (t.subagentGroups || []).flatMap((sg) => sg.agents || []));
+const activityKinds = [...new Set(merged.threads.flatMap((t) => (t.activityStages || []).map((s) => s.kind)))].sort();
+const attachmentClasses = (() => {
+  const seen = new Set();
+  for (const t of merged.threads) for (const a of (t.attachments || [])) {
+    if (/\.(mov|mp4)$/i.test(a.name)) seen.add('unsupported');
+    else if (/\.(zip|pdf|m4a|xlsx)$/i.test(a.name)) seen.add('transformed');
+    else seen.add('native');
+  }
+  return [...seen].sort();
+})();
+
 console.log(JSON.stringify({
   threads: merged.threads.length,
   messages: all.length,
@@ -393,5 +771,22 @@ console.log(JSON.stringify({
   medianLen: all.map((m) => m.body.length).sort((a, b) => a - b)[Math.floor(all.length / 2)],
   archivedThreads: merged.threads.filter((t) => t.archived).length,
   deletedDiffFiles: merged.threads.flatMap((t) => t.diffGroups || []).flatMap((g) => g.files).filter((f) => f.status === 'deleted').length,
-  divergingRuntime: all.filter((m) => m.runtime && m.runtime.totalElapsedSeconds !== m.runtime.workedSeconds).length
+  divergingRuntime: all.filter((m) => m.runtime && m.runtime.totalElapsedSeconds !== m.runtime.workedSeconds).length,
+
+  todoMax: Math.max(...merged.threads.map((t) => (t.todo && t.todo.items ? t.todo.items.length : 0))),
+  agentRoutes: new Set(agentRecords.map((a) => a.route).filter(Boolean)).size,
+  agentStates: [...new Set(agentRecords.map((a) => a.state))].sort(),
+  activityKinds,
+  conflicts: merged.threads.flatMap((t) => t.conflicts || []).length,
+  decisions: merged.threads.flatMap((t) => t.decisions || []).length,
+  attachmentClasses,
+  bsdStates: [...new Set(merged.threads.map((t) => t.bsd && t.bsd.mode).filter(Boolean))].sort(),
+  outboxEntries: merged.threads.flatMap((t) => t.outboxSeed || []).length,
+  threadOpRecords: merged.threads.reduce((n, t) => {
+    const o = t.threadOps || {};
+    return n + (o.requests || []).length + (o.spawned || []).length + (o.branches || []).length + (o.restorePoints || []).length;
+  }, 0),
+  questionKinds: [...new Set(merged.threads.flatMap((t) => (t.questionnaires || []).flatMap((q) => (q.questions || []).map((x) => x.kind))))].sort(),
+  goalPhases: [...new Set(merged.threads.flatMap((t) => ((t.activeGoal && t.activeGoal.events) || []).map((e) => e.phase)))],
+  verificationMessages: all.filter((m) => m.verification).length
 }, null, 2));

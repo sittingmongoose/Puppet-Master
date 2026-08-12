@@ -209,6 +209,7 @@
                   '<div class="sr-results hidden" data-results><div class="sr-results-inner"></div></div>',
                   '<div class="sr-config">' + PM.shared.themePicker() + '</div>',
                 '</div>',
+                PM.shared.recentWork(),
                 PM.shared.ownedStrip("c4"),
                 '<div class="sr-beat">' + beat.join("") + '</div>',
                 sections,
@@ -241,9 +242,9 @@
           if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
           res.classList.remove("hidden");
           resInner.innerHTML = results.map(function (r) {
-            var kindLabel = ({ setting:"Setting", category:"Section", subcategory:"Channel", manager:"Manager", destination:"Section" })[r.kind];
+            var km = PM.shared.searchKindMeta(r.kind);
             var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="sr-result" ' + target + '><span class="sr-rkind">' + kindLabel + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
+            return '<div class="sr-result" ' + target + '><span class="sr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
           }).join("");
         });
         resInner.addEventListener("click", function (e) {
@@ -323,6 +324,7 @@
           });
         });
         PM.shared.wireThemePicker();
+        PM.shared.wireRecentWork();
         PM.shared.wireOwnedStrip(document.querySelector("[data-stage]"));
         PM.shared.wireShell();
       }

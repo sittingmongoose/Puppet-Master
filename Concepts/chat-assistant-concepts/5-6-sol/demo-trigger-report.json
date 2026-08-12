@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.chat.5_6_sol.demo_trigger_report.v1",
+  "model": "5.6 Sol",
+  "status": "implemented_and_automated",
+  "fixture": "data/extended_demo_scenario.json plus data/sol-extensions.json",
+  "controller": "Prototype-only deterministic controller; outside proposed production Chat",
+  "receipt_evidence": [
+    "evidence/browser-acceptance-firefox.json#matrices.deterministic_triggers",
+    "evidence/browser-acceptance-chromium.json#matrices.deterministic_triggers"
+  ],
+  "clock": "2026-08-10T14:30:00.000Z deterministic start",
+  "trigger_count_including_reset": 65,
+  "implemented_outcome_count_excluding_reset": 64,
+  "categories": [
+    {
+      "category": "history",
+      "triggers": ["history.closed", "history.peek", "history.pinned_full", "history.pinned_compact"],
+      "outcome": "Changes real host geometry and leaves a stable receipt."
+    },
+    {
+      "category": "artifact",
+      "triggers": ["artifact.loading", "artifact.ready", "artifact.updated", "artifact.error", "artifact.retry"],
+      "outcome": "Changes the left artifact workspace while preserving selection and recovery."
+    },
+    {
+      "category": "question",
+      "triggers": ["question.preparing", "question.open", "question.answer", "question.skip", "question.cancel", "question.submit"],
+      "outcome": "Advances one durable questionnaire lifecycle; cancel restores the ordinary composer and retains answers."
+    },
+    {
+      "category": "goal",
+      "triggers": ["goal.start", "goal.pause", "goal.resume", "goal.replan", "goal.block", "goal.recover", "goal.stop", "goal.complete"],
+      "outcome": "Mutates visible Goal state and blocked/recovery evidence across every thread work grammar."
+    },
+    {
+      "category": "work",
+      "triggers": ["todo.all_states", "subagent.all_states", "crew.waves", "activity.advance", "diff.create", "diff.update"],
+      "outcome": "Exercises dense Todo, child, Crew, activity and diff states with human labels."
+    },
+    {
+      "category": "decisions",
+      "triggers": ["approval.request", "route.warning"],
+      "outcome": "Shows compact approval and material privacy/cache/route warning cards with actionable outcomes."
+    },
+    {
+      "category": "attachments",
+      "triggers": ["attachment.native", "attachment.transformed", "attachment.alternate", "attachment.unsupported"],
+      "outcome": "Shows native, derived-artifact, alternate-provider and truthful unsupported resolution."
+    },
+    {
+      "category": "context",
+      "triggers": ["context.lens", "context.compact_now"],
+      "outcome": "Opens Focus-mode Context Lens and produces a compaction receipt without changing canonical history."
+    },
+    {
+      "category": "thread_and_branch",
+      "triggers": ["thread.request", "thread.await", "thread.spawn", "thread.branch", "thread.rewind", "thread.restore", "turn.redirect"],
+      "outcome": "Preserves parent/source/target intent and differentiates redirect, conversation rewind and sibling restore."
+    },
+    {
+      "category": "security_scope",
+      "triggers": ["cross_project.grant"],
+      "outcome": "Creates one bounded read-only grant with explicit Once scope."
+    },
+    {
+      "category": "resources",
+      "triggers": ["resource.port_collision", "resource.worktree_collision", "resource.test_debug_state"],
+      "outcome": "Projects OS-assigned-port recovery, isolated worktree recovery, tests, debug and retained logs."
+    },
+    {
+      "category": "bsd",
+      "triggers": ["bsd.off", "bsd.auto_idle", "bsd.auto_active", "bsd.on", "bsd.silent", "bsd.advice", "bsd.timeout", "bsd.unavailable"],
+      "outcome": "Exercises exact modes and idle/evaluating/silent/advice/timeout/unavailable states without granting authority."
+    },
+    {
+      "category": "provider_management",
+      "triggers": ["provider.setup", "provider.update", "provider.rollback"],
+      "outcome": "Shows shared-manager setup, user-action update and verified rollback notices; Chat does not install providers."
+    },
+    {
+      "category": "network",
+      "triggers": ["network.offline", "network.reconnect", "network.replay", "network.snapshot"],
+      "outcome": "Separates transport/domain state, retains server work and exercises exactly-once replay and snapshot catch-up."
+    },
+    {
+      "category": "notification",
+      "triggers": ["notification.inline_outcome"],
+      "outcome": "Shows an inline task outcome and routes app-wide copy to the canonical title-bar inbox."
+    },
+    {
+      "category": "reset",
+      "triggers": ["scenario.reset"],
+      "outcome": "Restores the deterministic seed, clears receipts and leaves no claimed production side effect."
+    }
+  ],
+  "test_assertions": [
+    "Every non-reset trigger creates its own newest receipt.",
+    "No showcased trigger returns a truthfully-unavailable placeholder.",
+    "scenario.reset clears all trigger receipts.",
+    "Trigger outcomes are deterministic and require no network or live provider."
+  ]
+}
