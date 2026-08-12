@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.chat_candidate_command_delta.v1",
+  "note": "Candidate IDs; audit existing catalog before canon.",
+  "candidate_families": {
+    "threads": [
+      "cmd.chat.thread.create",
+      "cmd.chat.thread.request",
+      "cmd.chat.thread.await",
+      "cmd.chat.thread.branch",
+      "cmd.chat.thread.rewind",
+      "cmd.chat.restore_point.create"
+    ],
+    "history_artifacts": [
+      "cmd.chat.history.pin",
+      "cmd.chat.history.unpin",
+      "cmd.chat.artifact.open",
+      "cmd.chat.artifact.close"
+    ],
+    "questions": [
+      "cmd.chat.question.answer",
+      "cmd.chat.question.skip",
+      "cmd.chat.question.cancel",
+      "cmd.chat.question.submit"
+    ],
+    "goal": [
+      "cmd.chat.goal.start",
+      "cmd.chat.goal.pause",
+      "cmd.chat.goal.resume",
+      "cmd.chat.goal.stop",
+      "cmd.chat.goal.update",
+      "cmd.chat.goal.replan"
+    ],
+    "context": [
+      "cmd.chat.context.compact_now",
+      "cmd.chat.context.source.add",
+      "cmd.chat.context.source.remove"
+    ],
+    "route_access": [
+      "cmd.chat.route.select",
+      "cmd.chat.access.set",
+      "cmd.chat.bsd.set",
+      "cmd.chat.redirect"
+    ],
+    "attachments": [
+      "cmd.chat.attachment.resolve",
+      "cmd.chat.attachment.route"
+    ],
+    "crew_cross_project": [
+      "cmd.chat.crew.start",
+      "cmd.chat.cross_project.request"
+    ]
+  },
+  "reuse_required": [
+    "canonical Goal commands",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "canonical worktree/browser/test/artifact/settings commands"
+  ]
+}

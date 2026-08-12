@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.chat.5_6_sol.impact_register.v1",
+  "concept_or_shared_id": "",
+  "requirement_ids": [],
+  "plan_owner_impacts": [
+    {
+      "owner": "",
+      "contract_or_planunit": "",
+      "change_kind": "add|clarify|supersede|retire",
+      "evidence": ""
+    }
+  ],
+  "command_impacts": [
+    {
+      "visible_action": "",
+      "existing_id": "",
+      "candidate_id": "",
+      "reuse_alias_conflict": "",
+      "payload_result_error_cancel_restore": ""
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "ui_source": "",
+      "command_or_event": "",
+      "owner": "",
+      "validation": "",
+      "durable_state": "",
+      "event_receipt": "",
+      "projection": "",
+      "recovery": ""
+    }
+  ],
+  "dry_impacts": [
+    {
+      "shared_owner": "",
+      "consumers": [],
+      "duplication_risk": "",
+      "contract_ref": ""
+    }
+  ],
+  "schema_event_storage_impacts": [],
+  "usage_impacts": [],
+  "provider_runtime_impacts": [],
+  "server_sync_impacts": [],
+  "slint_port_impacts": [],
+  "test_fixtures": [],
+  "provisional_assumptions": [],
+  "true_open_decisions": []
+}
