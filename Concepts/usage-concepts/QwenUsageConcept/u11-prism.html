@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="_shared/base.css">
 <link rel="stylesheet" href="_shared/usage-shared.css">
 <link rel="stylesheet" href="_shared/usage-widgets.css">
-<link rel="stylesheet" href="u11-widgets.css?v=20260811a">
+<link rel="stylesheet" href="u11-widgets.css?v=20260811c">
 <link rel="stylesheet" href="u11-rundetail.css?v=20260811a">
 <link rel="stylesheet" href="u11-context.css?v=20260811a">
 <style>
@@ -58,21 +58,20 @@
   transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out),
     border-color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
 }
-.u11-item:hover { background: rgba(128,128,128,.07); background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-primary); transform: translateX(2px); }
+.u11-item:hover { background: rgba(128,128,128,.07); background: color-mix(in srgb, var(--text-primary) 5%, transparent); color: var(--text-primary); }
 .u11-item.active { color: var(--text-primary); }
-.u11-iico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm);
+.u11-iico { width: 26px; height: 26px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px;
   background: rgba(128,128,128,.08); background: color-mix(in srgb, var(--text-primary) 6%, transparent); color: var(--text-muted);
   transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
-.u11-iico svg { width: 12px; height: 12px; }
+.u11-iico svg { width: 13px; height: 13px; }
 .u11-item:hover .u11-iico { color: var(--text-primary); }
-.u11-item.active .u11-iico { background: var(--accent-primary); color: var(--surface-elevated);
-  box-shadow: 0 0 0 3px rgba(120,120,255,.24); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 24%, transparent); }
+.u11-item.active .u11-iico { background: var(--accent-primary); color: var(--surface-elevated); }
 :is([data-theme^="basic"], [data-theme^="retro"]) .u11-item.active .u11-iico { box-shadow: none; }
 .u11-itxt { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .u11-ilbl { display: flex; align-items: center; gap: 6px; min-width: 0;
-  font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  font-family: var(--display-font); font-size: 12px; font-weight: 600; letter-spacing: .01em; }
 .u11-ilbl-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.u11-imeta { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+.u11-imeta { font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .01em; }
 .u11-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--tone-mute);
   transition: background-color var(--mo-settle-dur) var(--mo-settle-ease), box-shadow var(--mo-settle-dur) var(--mo-settle-ease); }
 .u11-dot.ok { background: var(--tone-ok); } .u11-dot.warn { background: var(--tone-warn); }
@@ -136,11 +135,12 @@
 
 /* kicker */
 .u11-kick { display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: none; }
-.u11-kn { flex: none; font-family: var(--num-font); font-size: var(--fs-md); font-weight: 800; line-height: 1.35;
-  letter-spacing: .5px; color: var(--accent-primary); font-variant-numeric: tabular-nums; }
+.u11-kn { flex: none; font-family: var(--mono-font); font-size: 11px; font-weight: 700; line-height: 1.6;
+  letter-spacing: .08em; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .u11-kmain { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.u11-kt { margin: 0; font-family: var(--num-font); font-size: var(--fs-2xl); font-weight: 800; letter-spacing: .2px; line-height: 1.12; color: var(--text-primary); }
-.u11-kd { margin: 0; font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); max-width: 74ch; }
+.u11-kt { margin: 0; font-family: var(--num-font); font-size: 20px; font-weight: 700; letter-spacing: .1px; line-height: 1.2; color: var(--text-primary); }
+.u11-kd { margin: 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; max-width: 88ch;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .u11-kmeta { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 3px; min-width: 0; max-width: 34%; }
 .u11-km { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .u11-scope { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--radius-pill);
@@ -153,11 +153,38 @@
 .u11-scope.pm-hidden { display: none; }
 
 /* canvases: deterministic grid — NO dense flow (Slint portability) */
-.u11 .uw-canvas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.u11 .uw-canvas { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 1020px) { .u11 .uw-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .u11 .uw-canvas { grid-template-columns: minmax(0, 1fr); } }
 @media (min-width: 2000px) { .u11 .uw-canvas { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 .u11 .uw-addbar { margin-bottom: 0; }
+
+/* ---------- KPI strip (video top row) ---------- */
+.u11-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; flex: none; }
+@media (max-width: 1280px) { .u11-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .u11-kpis { grid-template-columns: minmax(0, 1fr); } }
+.u11-kpi { display: flex; align-items: center; gap: 11px; min-width: 0; padding: 12px 13px;
+  border-radius: 14px; border: 1px solid var(--border-light);
+  background: var(--surface-elevated); background: color-mix(in srgb, var(--surface-elevated) 82%, transparent); }
+[data-theme^="glass"] .u11-kpi { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); border-color: var(--glass-hairline); }
+.u11-kpi-ico { flex: none; width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; }
+.u11-kpi-ico svg { width: 14px; height: 14px; }
+.u11-kpi-ico.h-blue { background: rgba(76,141,255,.14); color: var(--accent-blue, #4c8dff); }
+.u11-kpi-ico.h-pink { background: rgba(255,77,109,.14); color: #ff4d6d; }
+.u11-kpi-ico.h-teal { background: rgba(45,212,191,.14); color: #2dd4bf; }
+.u11-kpi-ico.h-lime { background: rgba(163,230,53,.13); color: #a3e635; }
+.u11-kpi-ico.h-orange { background: rgba(255,140,58,.14); color: #ff8c3a; }
+.u11-kpi-ico.h-purple { background: rgba(167,139,250,.15); color: #a78bfa; }
+.u11-kpi-ico.h-mute { background: rgba(128,128,128,.12); color: var(--text-muted); }
+.u11-kpi-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.u11-kpi-val { display: flex; align-items: baseline; gap: 3px; }
+.u11-kpi-val .u11w-num { font-size: 16px; font-weight: 800; }
+.u11-kpi-lab { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11-kpi-vis { flex: none; display: flex; align-items: center; }
+.u11-kpi-vis .u11w-track { width: 64px; }
+.u11-kpi-vis .u11w-grad { width: 64px; margin: 0; }
+@keyframes u11KpiIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.u11-kpi { animation: u11KpiIn var(--mo-reveal-dur, 320ms) var(--mo-reveal-ease, ease-out) backwards; }
 
 /* data-quality banner strip */
 .u11-banner { display: flex; align-items: center; gap: 9px; padding: 8px 12px; border-radius: var(--radius-md);
@@ -327,7 +354,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       <div class="us-head-acts">
         <button class="us-hbtn" id="u11Settings" title="Usage settings" aria-label="Usage settings"><i data-ico="cog" class="pm-ico"></i></button>
         <button class="us-hbtn" id="u11Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
-        <button class="us-hbtn primary" id="u11Export" title="Export usage" aria-label="Export usage"><i data-ico="exportIc" class="pm-ico"></i></button>
+        <button class="us-hbtn" id="u11Export" title="Export usage" aria-label="Export usage"><i data-ico="exportIc" class="pm-ico"></i></button>
       </div>
     </header>
 
@@ -372,6 +399,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
               <p class="u11-kd">The short version — plans under pressure, what happens next, and the money this month. Every room below is composed of widgets you can move, resize, configure and re-scope.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
+          <div class="u11-kpis" id="u11Kpis" aria-label="Key figures"></div>
           <div class="uw-canvas" data-u11-page="u11-overview" data-u11-types="capacity,plans,costs,attention,context,accounts"></div>
         </section>
 
@@ -586,7 +614,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     'u11-free': [{ type: 'free', c: 4, r: 11 }, { type: 'authority', c: 2, r: 8 }],
     'u11-context': [{ type: 'context', c: 2, r: 10 }, { type: 'cache', c: 2, r: 10 }],
     'u11-analytics': [{ type: 'analytics', c: 4, r: 11 }, { type: 'costs', c: 2, r: 9 }],
-    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }, { type: 'operations', c: 2, r: 10 }],
+    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }],
     'u11-attention': [{ type: 'attention', c: 3, r: 11 }],
     'u11-cache': [{ type: 'cache', c: 3, r: 11 }],
     'u11-tools': [{ type: 'tools', c: 3, r: 11 }],
@@ -1190,41 +1218,6 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
   /* ---------- export intent flow (§18) ---------- */
   var expSprout = $('u11ExportSprout');
-  /* U11 sprout lifecycle guard. The shared menu.js tracks these sprouts in
-     openMenus (openAt pushes them) and its document-level "outside click"
-     handler cannot tell sprout-internal clicks from real outside clicks —
-     so it closes the sheet/export mid-flow (packet §05 hard failure: dead
-     controls). U11-local fix, shared files untouched:
-     - a capture-phase click sets _keepOpen only for in-sprout clicks;
-     - a MutationObserver reasserts .is-open when menu.js strips it while
-       _keepOpen holds (the sprout's own target-phase handlers already ran);
-     - genuine outside clicks clear _keepOpen first and close via U11, so
-       Esc / trigger-toggle / outside-close all still work. */
-  (function () {
-    var sprouts = [sheetSprout, expSprout];
-    function isOpen(s) { return !s.hidden && s.classList.contains('is-open'); }
-    function hideSprout(s) { s.classList.remove('is-open', 'is-closing'); s.hidden = true; }
-    document.addEventListener('click', function (e) {
-      var inside = !!(e.target.closest && e.target.closest('#u11SheetSprout, #u11ExportSprout'));
-      var onTrigger = !!(e.target.closest && e.target.closest('#u11Settings, #u11Export'));
-      sprouts.forEach(function (s) {
-        if (inside && e.target.closest('#' + s.id)) { s._keepOpen = true; return; }
-        s._keepOpen = false;
-        if (!inside && !onTrigger && isOpen(s)) hideSprout(s);
-      });
-    }, true);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') sprouts.forEach(hideSprout);
-    }, true);
-    sprouts.forEach(function (s) {
-      new MutationObserver(function () {
-        if (s._keepOpen && !s.classList.contains('is-open') && s.classList.contains('is-closing')) {
-          s.classList.remove('is-closing');
-          s.classList.add('is-open');
-        }
-      }).observe(s, { attributes: true, attributeFilter: ['class'] });
-    });
-  })();
   var expState = { intent: null, fmt: null };
   function exportHTML() {
     var html = '<div class="u11-sheet">';
@@ -1352,14 +1345,73 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       $('u11Fresh').classList.remove('stale');
       headLine();
       HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
-      railStatus(); kickerMeta(); renderBanner();
+      railStatus(); kickerMeta(); renderBanner(); renderKpis();
       if (window.toast) window.toast('Usage projections refreshed (demo)');
     }, 900);
   });
 
+  /* ---------- KPI strip (video top row): icon tile + count-up value + mini-visual ---------- */
+  function kpiNum(v, f, dec, prefix) {
+    var init;
+    if (f === 'cost') init = fmt.cost(v);
+    else if (f === 'tok') init = fmt.tok(v);
+    else init = (prefix || '') + fmt.num(Math.round(v));
+    return '<b class="u11w-num" data-ucnt="' + v + '" data-ufmt="' + f + '"' +
+      (dec != null ? ' data-udec="' + dec + '"' : '') + (prefix ? ' data-uprefix="' + prefix + '"' : '') + '>' + init + '</b>';
+  }
+  function kpiRing(pct, stroke) {
+    return '<span class="u11w-ring"><svg viewBox="0 0 64 64"><circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+      '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + stroke + '" data-pct="' + pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle></svg></span>';
+  }
+  function renderKpis() {
+    var el = $('u11Kpis');
+    if (!el) return;
+    var hot = null;
+    D.meters.forEach(function (m) { if (m.usedPct != null && (!hot || m.usedPct > hot.usedPct)) hot = m; });
+    var th = D.threadById['thread:t-88'];
+    var saved = D.cacheStats.reduce(function (s, c) { return s + (c.save || 0); }, 0);
+    var ready = D.visibleAccounts().filter(function (a) { return a.state === 'ready'; }).length;
+    var total = D.visibleAccounts().length;
+    var limitPct = Math.round(D.costs.spentMonthMicro / D.costs.spendingLimitMicro * 100);
+    var cards = [];
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-blue">' + ic('wallet') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(D.costs.spentMonthMicro / 1e6, 'cost') + '</div>' +
+      '<div class="u11-kpi-lab">Spent this month</div></div>' +
+      '<span class="u11-kpi-vis"><span class="us-track u11w-track"><span class="us-fill ' + (limitPct >= 90 ? 'f-pink' : limitPct >= 70 ? 'f-orange' : 'f-lime') + '" data-fill="' + limitPct + '" style="--wf:' + limitPct + '%"></span></span></span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-pink">' + ic('dial') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(hot ? hot.usedPct : 0, 'num') + '<i class="u11w-unit">%</i></div>' +
+      '<div class="u11-kpi-lab">Hottest plan · ' + (hot ? (D.productById[hot.productId] || {}).label : '—') + '</div></div>' +
+      '<span class="u11-kpi-vis">' + kpiRing(hot ? hot.usedPct : 0, hot && hot.usedPct >= 90 ? 'var(--tone-err)' : 'var(--u11-pink, #ff4d6d)') + '</span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-teal">' + ic('inbox') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(th.context.pct, 'num') + '<i class="u11w-unit">%</i></div>' +
+      '<div class="u11-kpi-lab">Context window · ' + fmt.tok(th.context.used) + ' / ' + fmt.tok(th.context.limit) + '</div></div>' +
+      '<span class="u11-kpi-vis">' + kpiRing(th.context.pct, 'var(--u11-teal, #2dd4bf)') + '</span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-lime">' + ic('layers') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(saved, 'dec', 2, '$') + '</div>' +
+      '<div class="u11-kpi-lab">Cache saved today</div></div>' +
+      '<span class="u11-kpi-vis"><span class="u11w-spark">' + D.cacheStats.map(function (c) { return '<i class="sp-teal" data-h="' + Math.round((c.save || 0) / Math.max(saved, 0.01) * 100) + '" style="height:8%"></i>'; }).join('') + '</span></span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-orange">' + ic('users') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val"><b class="u11w-num static">' + ready + ' / ' + total + '</b></div>' +
+      '<div class="u11-kpi-lab">Accounts ready</div></div>' +
+      '<span class="u11-kpi-vis"><span class="u11w-dots">' + Array.apply(null, Array(total)).map(function (_, i) { return '<i class="' + (i < ready ? 'on h-blue' : '') + '"></i>'; }).join('') + '</span></span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-purple">' + ic('spark') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val"><b class="u11w-num static">' + D.signals.grade + '</b><i class="u11w-unit">' + D.signals.score + '/100</i></div>' +
+      '<div class="u11-kpi-lab">Efficiency signals</div></div>' +
+      '<span class="u11-kpi-vis"><span class="u11w-grad"><span class="u11w-gradmask" data-gm="' + (100 - D.signals.score) + '"></span></span></span></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-teal">' + ic('globe2') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(D.eligibleFreeModels().length, 'num') + '</div>' +
+      '<div class="u11-kpi-lab">Free routes eligible</div></div></div>');
+    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-mute">' + ic('clipboard') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(D.attempts.length, 'num') + '</div>' +
+      '<div class="u11-kpi-lab">Ledger events · immutable</div></div></div>');
+    el.innerHTML = cards.map(function (c, i) { return c.replace('class="u11-kpi"', 'class="u11-kpi" style="animation-delay:' + (i * 55) + 'ms"'); }).join('');
+    window.U11W.animateBody(el);
+  }
+
   /* ---------- boot ---------- */
   headLine();
   mountCanvases();
+  renderKpis();
   railStatus();
   kickerMeta();
   updateScopeChip();
