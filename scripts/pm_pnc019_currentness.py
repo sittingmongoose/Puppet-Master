@@ -39,19 +39,17 @@ REQUIRED_PNC019_SOURCE_HASH_PATHS = (
 EVENT_FAMILY_REGISTRY_REL_PATH = "Plans/event_family_registry.json"
 EVENT_FAMILY_REGISTRY_SCHEMA_ID = "pm.event_family_registry.v1"
 EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
-EVENT_FAMILY_REGISTRY_REVISION = "2026-08-12.1"
-EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 37
+EVENT_FAMILY_REGISTRY_REVISION = "2026-08-04.1"
+EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 39
 EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 252
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 252
-EVENT_FAMILY_UNRESOLVED_FLOOR = 0
-EVENT_FAMILY_EXCLUDED_COUNT = 94
-EVENT_FAMILY_DENOMINATOR_STATUS = "CLOSED"
+EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
+EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
+EVENT_FAMILY_UNRESOLVED_FLOOR = 40
+EVENT_FAMILY_EXCLUDED_COUNT = 68
+EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
-EVENT_FAMILY_EVIDENCE_CURRENTNESS = "event-authority-2026-08-12_independent_validator_pass"
-# Historical July Event Authority custody markers. Case L preflight requires these
-# exact SHA-256 strings to remain in this helper; they are not the live checkpoint.
-HISTORICAL_EVENT_FAMILY_EVIDENCE_REFS = [
+EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
+EVENT_FAMILY_EVIDENCE_REFS = [
     {
         "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
         "custody_root": "PuppetMaster-AssuranceLab",
@@ -61,7 +59,6 @@ HISTORICAL_EVENT_FAMILY_EVIDENCE_REFS = [
         ),
         "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
         "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
-        "superseded_by": "event-authority-2026-08-12 independent validator receipt",
     },
     {
         "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
@@ -71,29 +68,8 @@ HISTORICAL_EVENT_FAMILY_EVIDENCE_REFS = [
             "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md"
         ),
         "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
-        "superseded_by": "event-authority-2026-08-12 independent validator receipt",
     },
 ]
-EVENT_FAMILY_EVIDENCE_REFS = [
-    {
-        "artifact_id": "event_authority_validator_receipt.json",
-        "custody_root": "Plans/.audits/event-authority-2026-08-12",
-        "custody_path": "independent-validator/receipts/event_authority_validator_receipt.json",
-        "sha256": "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e",
-        "pass": True,
-        "complete_denominator_known": True,
-        "contract_depth_complete": True,
-    },
-    {
-        "artifact_id": "FRESH_CENSUS_DENOMINATOR.json",
-        "custody_root": "Plans/.audits/event-authority-2026-08-12",
-        "custody_path": "closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json",
-        "sha256": "76f50a6b43a7e42fc604e4ebfd617184e553b8bb0b87d7e375b99875d0750bc5",
-        "closed": True,
-        "admitted_event_types": 252,
-        "freeze_digest_sha256_prefix": "b93ef849",
-    },
-] + HISTORICAL_EVENT_FAMILY_EVIDENCE_REFS
 
 
 @dataclass(frozen=True)
@@ -111,8 +87,8 @@ CURRENT_EVENT_AUTHORITY_CHECKPOINT = EventAuthorityCheckpoint(
     registry_schema_version=EVENT_FAMILY_REGISTRY_SCHEMA_VERSION,
     registry_revision=EVENT_FAMILY_REGISTRY_REVISION,
     registered_kernel_rows=EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
-    complete_denominator_known=True,
-    contract_depth_complete=True,
+    complete_denominator_known=False,
+    contract_depth_complete=False,
 )
 
 

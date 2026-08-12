@@ -2,35 +2,13 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2826-L2920
+Source lines: L2826-L2897
 
-Source SHA256: `cbf113bc3497116549e38ee16407505136466fca3596837cc3acbcfddb699533`
+Source SHA256: `e31f410d13c34109b0e8f74e9a342035c71d0ced1bf04c8c8ac6a087851b96b3`
 
 ---
 
 ## PMConcept7 Home Workspace test contract — 2026-08-04
-
-Amended 2026-08-12 — the matrix must assert observable geometry, not dispatch counts. Two
-Home defects shipped green because their fixtures asserted only that one command was
-emitted, or only that a global "last opened file" marker was set. Every fixture that
-covers a visible outcome now asserts that outcome: a resize fixture asserts the rendered
-surface box changed on both sides of the gesture and treats a commit that moves zero
-pixels as a failure; a move fixture asserts a lifted item, a placeholder seated in the
-target host, and a neighbour's transform-free layout position changing before any drop;
-an open-in-panel fixture asserts the rendered buffer and the tab, in all four panels; a
-collapse fixture asserts the panel height on both sides of the toggle and that the control
-stays visible and hit-testable on the collapsed strip.
-
-Case set changes: the target-picker drop-rail cases are retired with the rail, and their
-coverage moves to drags over the live layout plus an outer-edge-band case for a dock that
-is currently empty. The per-surface `Move or dock` menu-inventory case is replaced by a
-grab-handle case that proves one handle per eligible surface, an accessible name, keyboard
-pick-up/move/drop reaching every host with one command and one persist, and the polite
-live region. Loss of pointer capture is removed as a cancellation vector; Escape, pointer
-cancellation and window blur remain. New coverage: editor tab drag-reorder surviving a
-re-render, the width-aware overflow chip in every open panel including panels opened on
-demand, the contact-aware tab silhouette's flush-contact and independent left/right corner
-states, and dashboard widget reorder and grid-snap resize.
 
 The Home Workspace live matrix is a required GUI/runtime fixture family, not a
 visual-only smoke test. It covers panel/browser/File Manager paths; movement,
@@ -74,8 +52,8 @@ split_recommended: false
 depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245]
 unblocks: []
 acceptance_criteria:
-- All four editor and Browser targets and all four File Manager targets are exercised through visible production controls, and each asserts the rendered buffer rather than a dispatch count or a global marker.
-- Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable; host routes are exercised through the grab handle by pointer and by keyboard, and resizers assert changed rendered geometry.
+- All four editor and Browser targets and all four File Manager targets are exercised through visible production controls.
+- Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable.
 - Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
 - The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
 - A fresh second pipeline build is byte-identical to Concepts/PMConcept7.html and all PM7/static/Plans/governance gates pass in disposable shadows.
@@ -100,6 +78,5 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior 15-check 34-shot Home harness is retired as certification authority.
-- "Amended 2026-08-12: fixtures that assert only command/persist counts are retired as sufficient evidence for a visible outcome; the drop-rail target fixtures and the per-surface Move or dock menu-inventory fixture are retired with the affordances they covered; loss of pointer capture is retired as a cancellation vector."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/UI_Wiring_Rules.md]
 ```

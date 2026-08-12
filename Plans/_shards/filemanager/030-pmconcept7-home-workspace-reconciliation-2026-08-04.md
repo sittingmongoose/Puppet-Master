@@ -2,21 +2,13 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4866-L4950
+Source lines: L4866-L4942
 
-Source SHA256: `75c16d913e9410c6988a1e4d67c8bd9a03bf60216e0640aea83d5c0db65109bd`
+Source SHA256: `e2ab56c877541e4bfaf3c69fab1ecfe81fa4ad96e5f0f032c68a8b309a8f3694`
 
 ---
 
 ## PMConcept7 Home Workspace reconciliation — 2026-08-04
-
-Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
-through the canonical open path so the buffer is added to the panel's open-tab model, the
-tab strip re-renders, and the file body renders into that panel's own editor surface.
-Panels that are opened on demand carry the same internal editor structure as the default
-panels; writing a placeholder string into a panel's code surface, or activating a tab that
-was never added to the open-tab model, does not satisfy this contract. Evidence must assert
-the rendered buffer, not only a global "last opened file" marker.
 
 The File Manager/editor owner adopts the Home workspace's four stable editor panel
 identities: `editor_panel_1`, `editor_panel_2`, `editor_panel_3`, and

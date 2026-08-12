@@ -253,7 +253,7 @@ def run_validator_subprocess(
 
 @contextmanager
 def subcheck_alarm(seconds: int, name: str):
-    if seconds <= 0 or not hasattr(signal, "SIGALRM") or not hasattr(signal, "setitimer"):
+    if seconds <= 0:
         yield
         return
     old_handler = signal.getsignal(signal.SIGALRM)
@@ -5941,7 +5941,6 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
         )
 
     reopened_rows: list[dict[str, Any]] = []
-    latest_by_finding_key: dict[str, tuple[int, dict[str, Any]]] = {}
     if registry.exists():
         for line_no, line in enumerate(registry.read_text(encoding="utf-8").splitlines(), start=1):
             if not line.strip():
@@ -5951,16 +5950,12 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
             except Exception as exc:  # noqa: BLE001
                 failures.append({"path": f"{rel(registry)}:{line_no}", "error": "json_parse_failed", "detail": str(exc)})
                 continue
-            finding_key = str(row.get("finding_key") or "")
-            if finding_key:
-                latest_by_finding_key[finding_key] = (line_no, row)
-        for finding_key, (line_no, row) in latest_by_finding_key.items():
             if row.get("closure_status") == "reopened":
                 reopened_rows.append(
                     {
                         "line": line_no,
                         "closure_id": row.get("closure_id"),
-                        "finding_key": finding_key,
+                        "finding_key": row.get("finding_key"),
                     }
                 )
     else:

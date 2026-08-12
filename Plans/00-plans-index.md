@@ -5288,49 +5288,6 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
-### PMConcept7 Home Workspace direct-manipulation repair wave — 2026-08-12
-
-Repairs a set of Home regressions and replaces the surface movement affordance.
-Ten reported defects were traced to the Home layer projecting over the PM6 shell
-rather than to missing features: the layer reparented shell surfaces and then
-overrode their layout wholesale, mounted its own controls where the host chrome
-already lived, and intercepted two shell controls in the capture phase. Owner-doc
-changes:
-
-- `Plans/FinalGUISpec.md` — F3-HOME-002 amended (direct manipulation with live
-  neighbour reflow and an in-flow placeholder; drop-target priority; capture loss
-  is not a cancellation vector; per-frame resize scope; keyboard movement on the
-  grab handle). F3-HOME-003 amended (one top-left grab handle per eligible
-  surface; the per-surface Move or dock rows retired; the terminal collapse
-  chevron is a toggle and the collapsed strip is the expand affordance). F3-460
-  amended (notification stack moves after the title-bar search, centred before the
-  theme/settings cluster). F3-464 scope clarified to title-bar page tabs. New
-  F3-505 — contact-aware editor tab silhouette.
-- `Plans/Wiring_Matrix.production.json` — the 42 `home.*.move.*` and 35
-  `home.*.redock.*` rows are retired (128 → 51 `home.` rows); the grab, drop
-  target, resizer and terminal-toggle rows carry the new locations and checks.
-  `cmd.workspace_layout.move_surface` keeps full catalog↔wiring closure through
-  the grab and drop-target rows.
-- `Plans/UI_Command_Catalog.md` — UCC-144 amended; no new command IDs.
-- `Plans/Widget_System.md` — dashboard widgets adopt the shared
-  direct-manipulation vocabulary while `widget_layout:v1:dashboard` keeps
-  ownership of widget layout.
-- `Plans/FileManager.md` — Open in Panel must render a real buffer in all four
-  panels.
-- `Plans/Automated_Testing_System.md` and
-  `Plans/GUI_Rebuild_Requirements_Checklist.md` — fixtures must assert observable
-  geometry and rendered content, not dispatch counts.
-- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — census 128 → 51
-  with refreshed source hashes.
-- `Plans/UI_Wiring_Rules.md` §0.1 — concept-input note re-pointed.
-
-`Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` are
-unchanged: the record shape, storage key and revision/readback rules are
-unaffected. `Concepts/PMConcept7.html` remains a generated artifact and
-illustrative source lineage only; this compile creates no WorkNodes, NodeSeeds,
-executable queues, implementation files, runtime artifacts, production build
-tasks, or governance-seal artifacts by itself.
-
 ### PMConcept7 Home Workspace implementation wave — 2026-08-04
 
 The model-driven Home workspace is routed through these canonical owners and

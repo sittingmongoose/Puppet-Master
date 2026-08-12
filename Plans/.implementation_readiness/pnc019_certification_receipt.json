@@ -39,14 +39,14 @@
       "worktree_id": null
     },
     "approved_plan_pack": {
-      "acceptance_unit_index_hash": "sha256:38eb4d88ded8bcd67b59ac23032e62fad9fdd8f8a40b552289a3cac210c6be98",
+      "acceptance_unit_index_hash": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
       "approved_plan_pack_id": "app-pnc019-0001",
       "created_at_utc": "2026-07-06T00:00:00Z",
       "created_by_actor_ref": "actor:pnc019-certifier",
       "final_audit_closure_hash": "sha256:final-audit-pnc019",
       "pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
       "pack_version": 1,
-      "plan_unit_index_hash": "sha256:95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9",
+      "plan_unit_index_hash": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0",
       "planning_run_id": "planning-run-pnc019",
       "planning_run_revision": 7,
       "project_context_snapshot_hash": "sha256:project-context-pnc019",
@@ -238,13 +238,12 @@
       "requested_account_ref": "account:certification-harness",
       "run_id": "pcr-pnc019-0001",
       "schema_id": "pm.event.v0",
-      "schema_version": "2.0.0",
-      "scope_kind": "project",
+      "schema_version": "1.0.0",
       "sequence_id": 1,
       "thread_id": "thread-pnc019"
     },
     "plan_compile_run": {
-      "acceptance_unit_index_hash": "sha256:38eb4d88ded8bcd67b59ac23032e62fad9fdd8f8a40b552289a3cac210c6be98",
+      "acceptance_unit_index_hash": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
       "approved_plan_pack_id": "app-pnc019-0001",
       "artifacts": [
         "Plans/.implementation_readiness/pnc019_certification_receipt.json"
@@ -277,10 +276,10 @@
       "schema_id": "pm.storage_value.plan_compile_run.v1",
       "schema_version": "1.0.0",
       "source_hashes": {
-        "acceptance_units": "sha256:38eb4d88ded8bcd67b59ac23032e62fad9fdd8f8a40b552289a3cac210c6be98",
-        "plan_units": "sha256:95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9"
+        "acceptance_units": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
+        "plan_units": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0"
       },
-      "source_plan_index_hash": "sha256:95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9",
+      "source_plan_index_hash": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0",
       "status": "ready_for_bootstrap_validation",
       "updated_at_utc": "2026-07-06T00:00:00Z"
     },
@@ -566,20 +565,7 @@
     },
     {
       "case_id": "invalid_event_record",
-      "details": {
-        "checks": {
-          "application_scope_project_id_rejected": true,
-          "event_type_pattern_rejected": true,
-          "missing_scope_kind_rejected": true,
-          "project_scope_null_project_id_rejected": true,
-          "redaction_profile_closed_enum_rejected": true,
-          "replay_policy_closed_enum_rejected": true,
-          "scope_kind_closed_enum_rejected": true,
-          "v1_compatibility_reader_accepts_frozen_shape": true,
-          "v1_shape_rejected_by_current_writer": true,
-          "valid_application_scope_accepted": true
-        }
-      },
+      "details": {},
       "emitted_forbidden_artifact_counts": {
         "activation_receipts": 0,
         "plan_approved_events": 0,
@@ -1026,24 +1012,18 @@
     "ordinary_product_worknodes_allowed_by_harness": false
   },
   "source_hashes": {
-    "Plans/Automated_Testing_System.md": "cbf113bc3497116549e38ee16407505136466fca3596837cc3acbcfddb699533",
-    "Plans/Executor_Protocol.md": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
-    "Plans/Goal_Runtime_System.md": "19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3",
-    "Plans/Orchestrator_Page.md": "a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a",
+    "Plans/Automated_Testing_System.md": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "Plans/Executor_Protocol.md": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+    "Plans/Goal_Runtime_System.md": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+    "Plans/Orchestrator_Page.md": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
     "Plans/Plan_To_Node_Compilation.md": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
-    "Plans/Planning_Wizard.md": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+    "Plans/Planning_Wizard.md": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
     "Plans/Progression_Gates.md": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33",
-    "Plans/UI_Command_Catalog.md": "fadca8b6579e67ee7a7c91df171fa823c2aef41d4129be8e22b873ff2673cae4",
-    "Plans/UI_Wiring_Rules.md": "a079b3c2ecfa46c779a6fd8f4516899d091a012c379c6ce3bdda5bc4b1bf67fb",
-    "Plans/Wiring_Matrix.production.json": "f9942023b0bc2bd32216652d80eaf762c38bec8d1f8ca6a166c68231fa0b5341",
-    "Plans/event_family_registry.json": "a47cc13b20839c94327fe2eec5ddbb88b1b902d4f0e154d120d11d1e442a9b2a",
-    "Plans/event_record.schema.json": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+    "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
-    "Plans/storage_recovery_contracts.schema.json": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814",
-    "Plans/storage_value_registry.json": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a",
-    "Plans/storage_value_registry.schema.json": "61a9a0ddd19ab642235848b85a254bdb19219aa1aa1b2d11b64eaf9624149c92",
-    "scripts/pm-pnc019-certification-harness.py": "b8af598c932d95ef1132c663163602215cd2a3804e6efb87d17eebeeda2cd78d",
-    "scripts/pm_pnc019_currentness.py": "126656a823586ac4947f0646cd49ee11b139a8a7d4631a912098bad09b387887"
+    "Plans/storage_value_registry.json": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "Plans/storage_value_registry.schema.json": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+    "scripts/pm-pnc019-certification-harness.py": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896"
   },
   "status": "pass",
   "storage_validation_summary": {

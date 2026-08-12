@@ -10989,17 +10989,7 @@ plan_unit_id: UCC-144
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Home disclosure controls are view-local and every selected leaf maps one-to-one to the
-  existing typed panel, Browser, file, terminal, theme, or bounded Home command family with
-  projected disabled/no-change/failure semantics and no command overload. Amended
-  2026-08-12 - the per-surface Move or dock menu leaves are retired as affordances;
-  cmd.workspace_layout.move_surface is unchanged and is dispatched from the surface grab
-  handle (pointer drag or keyboard pick-up/move/drop) and from the live drop regions, still
-  exactly one command and one persist per semantic commit.
-  cmd.workspace_layout.set_collapsed is dispatched with the negated current value by the
-  terminal collapse chevron, which is a toggle, while the top-bar Collapse Bottom Terminal
-  row remains one-way. No new command IDs are minted.
+canonical_text: Home disclosure controls are view-local and every selected leaf maps one-to-one to the existing typed panel, Browser, file, terminal, theme, or bounded Home command family with projected disabled/no-change/failure semantics and no command overload.
 gui_related: true
 gui_classification_reason: This unit owns command IDs, typed arguments, availability, disabled reasons, and results for visible Home controls.
 split_recommended: false
@@ -11008,8 +10998,6 @@ unblocks: [CV-323, F-080, SMPFS-138, UIW-010]
 acceptance_criteria:
 - cmd.file.open_with retains exactly source_editor, image_viewer, workspace_preview, detached_preview, and diff_review; Panel 1 through Panel 4 routing is only on cmd.file.open/OpenFile fields.
 - No Home surface uses cmd.widget.* and cmd.panel.switch keeps its existing side-panel vocabulary.
-- cmd.workspace_layout.move_surface is reachable by pointer drag and by keyboard from the grab handle, and carries target_slot_index, target_surface_instance_id and insertion_edge unchanged.
-- cmd.workspace_layout.set_collapsed round-trips collapse and expand from the terminal chevron with one command per activation.
 - Open/focus Browser in Panels 1 through 4 uses cmd.browser.open_workspace_preview with target_editor_panel_id and target_editor_group_id.
 - One changed drop/resize dispatches and persists exactly once; pointermove, disclosure, cancellation, unchanged drop, and disabled actions do not dispatch a changed command.
 - Every applied/no_change/failed result follows CV-323 and the exact canonical event family.

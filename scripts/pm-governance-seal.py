@@ -575,8 +575,8 @@ def sync_plan_sharding_evidence(evidence_path: Path, report_path: Path) -> dict[
         return artifact
 
     artifacts: list[dict[str, Any]] = [
-        artifact_for(str(report.get("config_path", "Plans/sharding_config.json")).replace("\\", "/")),
-        artifact_for(report_path.relative_to(ROOT).as_posix()),
+        artifact_for(str(report.get("config_path", "Plans/sharding_config.json"))),
+        artifact_for(str(report_path.relative_to(ROOT))),
     ]
     for doc in report.get("docs", []):
         source_path = doc.get("source", {}).get("path")

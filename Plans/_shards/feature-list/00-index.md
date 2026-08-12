@@ -1,6 +1,6 @@
 # Shard Index: Plans/feature-list.md
 
-Generated: 2026-08-12T13:35:56Z
+Generated: 2026-08-11T01:30:02Z
 
 Source SHA256: `6cabffb048e5b6528ece9c156ce2afe1ae4bb49a7d6f20e08a00e5dca5de9421`
 
