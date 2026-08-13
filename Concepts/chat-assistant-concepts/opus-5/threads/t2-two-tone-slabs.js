@@ -941,7 +941,7 @@
       el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Preparing questions' }));
     } else if (flow.status === 'submitting') {
       el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
-      el.appendChild(u.el('span', { class: 't2-capsule-text', text: label || 'Submitting answers' }));
+      el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Submitting answers' }));
     } else {
       this._buildCapsuleCard(el, flow);
     }
@@ -1101,7 +1101,7 @@
      * interaction, so this is the ONLY frame in which the submitting state is visible - which is exactly
      * why it must carry the right words rather than a generic transitional label. */
     el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
-    el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Submitting answers' }));
+    el.appendChild(u.el('span', { class: 't2-capsule-text', text: label || 'Submitting answers' }));
     if (from != null && R) R.springHeight(el, from);
     global.setTimeout(done, R && R.reduced(el) ? 0 : 180);
   };

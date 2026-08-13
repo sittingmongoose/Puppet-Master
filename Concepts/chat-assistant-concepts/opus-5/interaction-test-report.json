@@ -1,12 +1,12 @@
 {
   "generatedFrom": "live run in the in-app Chromium browser at 1920x1000",
   "interactionSuite": {
-    "total": 351,
-    "passed": 351,
+    "total": 407,
+    "passed": 407,
     "failed": 0,
     "consoleErrors": 0,
     "consoleWarnings": 0,
-    "elapsedMs": 4450,
+    "elapsedMs": 4031,
     "suites": 23
   },
   "matrix": {
@@ -156,5 +156,5 @@
       ]
     }
   },
-  "note": "Re-run after the post-Phase-E audit added the `forms` suite (the eight question systems, the eight work clusters, the yield rule and the PMXQFlow verb contract) and pinned the swapText contract. The audit found two defects: t2 leaked a partial chip run past the yield, and motion.swapText painted an empty frame when writing a FIRST value. Both fixed; suite and full matrix re-verified."
+  "note": "The `forms` suite now also resolves each of the eight flows through the concept\u2019s OWN controls on thread-01 and asserts the work surfaces are handed back - the class of defect thread-06 cannot catch. Writing that block found a live ReferenceError in t2 (`label` referenced outside the helper that takes it), which every earlier gate had missed because compose.js caught it as a console error."
 }
