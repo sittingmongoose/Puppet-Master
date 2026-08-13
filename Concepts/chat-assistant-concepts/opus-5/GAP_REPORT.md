@@ -327,7 +327,7 @@ concepts move identically is deleted. `shared/qflow.js` carries the verb semanti
 - **Status**: closed.
 - **Evidence**: `BUILD_STATUS.md` section "Phase E", `TEST_REPORT.md` section "Phase E re-run (final)", and
   `interaction-test-report.json`.
-- **Remaining**: the visual matrix in `evidence/` holds 14 targeted captures rather than the complete
+- **Remaining**: the visual matrix in `evidence/` holds 32 targeted captures rather than the complete
   64-pairing x 8-theme grid. That is a capture-coverage gap, not a behavioural one: the 128-run assertion
   sweep covers every pairing at both widths.
 
@@ -344,5 +344,5 @@ both halves of the contract pinned by assertions.
 
 - **Status**: closed.
 - **Remaining**: the visual matrix is 32 targeted captures rather than the full 64-pairing x 8-theme grid.
-  That is capture coverage, not behavioural coverage - the 128-run sweep and the 351-assertion suite cover
+  That is capture coverage, not behavioural coverage - the 128-run sweep and the 407-assertion suite cover
   every pairing and every form.

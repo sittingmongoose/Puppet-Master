@@ -84,11 +84,11 @@ question kinds `freeform / multi select / single select`, goal phases
 
 ### Tests and evidence
 
-`tests/assert.js`, `tests/suites.js`, `tests/runner.html`. 22 suites, **236 assertions, 236 passed, 0
+`tests/assert.js`, `tests/suites.js`, `tests/runner.html`. 23 suites, **407 assertions, 407 passed, 0
 failed, 0 console errors, 0 console warnings** at 1920×1000. Matrix sweep: **128 pairing/width runs,
 512 assertions, 0 failed**. The runner refuses to run below 1900×900 and prints the required size,
 rather than reporting popup-anchor failures that describe the window instead of the product.
-14 captures in `evidence/`.
+32 captures in `evidence/`, listed in section 2.4.
 
 ### Reports
 
@@ -102,50 +102,59 @@ evidence), `candidate-wiring-delta.json` (24 full chains with idempotency keys),
 
 ## 2. Outstanding — the honest gap list
 
-### 2.1 Thread concepts keep their existing question and work surfaces (largest gap)
+Sections 2.1 to 2.3 described the largest gap in this build for most of its life. **They are now closed by
+Phase E**, and are kept here as resolved entries rather than deleted, because the shape of what was missing is
+the best explanation of what the Phase E section below actually delivered.
 
-The plan assigns each of the eight thread concepts its **own** question system, compact work cluster,
-BSD advice surface and artifact handoff card, and the packet makes it a hard failure if all concepts
-reuse one solution. **That per-thread work is not done.** What exists today:
+### 2.1 Per-concept question systems and work clusters — CLOSED
 
-- The shared `PMXQuestionnaire` controller is repaired and complete (phases, validation, terminal
-  index, receipts), and the eight threads render it through their existing per-concept
-  `_renderQuestionBody`, which already differ in DOM and class names.
-- The `distinctness` suite asserts the eight question roots and the eight work-cluster roots are
-  distinct, and it passes — so no two concepts are literally the same DOM.
-- What is missing is the **choreography and semantics** the matrix specifies per concept: the margin
-  interview (t1), the composer capsule morph (t2), the spine stepper (t3), the unfolding digest (t4),
-  the lane dialogue (t5), the monospace field form (t6), the card deck (t7), the prose footnote (t8),
-  and the eight named compact-work forms with their condensation and reopen behaviour.
-- `shared/reveal.js` still owns `question(spec)` and `afterRender(...)`, which the plan requires to be
-  deleted so each thread composes primitives in its own order. Deleting them before the eight local
-  choreographies exist would leave every thread with no entry or exit behaviour at all, so they stay
-  until the replacements are written.
+**Was:** the eight thread concepts shared one question card and one work-surface pattern, `shared/reveal.js`
+owned `question(spec)` and `afterRender(...)`, and the matrix's per-concept forms were unbuilt. The
+`distinctness` suite passed only because the eight roots had different class names, which is not the same as
+eight different forms.
 
-### 2.2 BSD advice surfaces and artifact handoff cards per thread
+**Now:** every concept renders its assigned form — the margin interview (t1), the composer capsule morph (t2),
+the spine stepper (t3), the unfolding digest (t4), the lane dialogue (t5), the monospace field form (t6), the
+card deck (t7), the prose footnote (t8) — each with its own compact work cluster, condensation and reopen
+behaviour. `reveal.question` and `reveal.afterRender` are **deleted**; `reveal.js` is motion materials only.
+The `forms` suite asserts each concept renders its own form AND no other concept's, so a regression back to
+one shared surface fails a test rather than passing quietly. See the Phase E section below.
 
-`PMXBsd` produces the ten visual states and read-only advice, and the selector renders the state.
-The eight **per-thread advice surfaces** (margin annotation, chip sheet, spine side node, digest line,
-lane note, exec row, status-card link, gutter dot) and the eight **handoff cards** are not built.
+### 2.2 Per-thread BSD advice surfaces and artifact handoff cards — CLOSED
 
-### 2.3 Motion helpers are defined but not composed per concept
+All eight advice surfaces are built (margin annotation, chip sheet, spine side node, digest line, user-lane
+note, exec row, status-card link, gutter dot) and all eight are read-only with `Dismiss` as the only verb.
+All eight artifact handoff cards are built, each reporting `compiling` -> `ready` with a worked duration, and
+each repainting through the artifact service's own subscription rather than a store key that does not cover it.
 
-`shared/motion.js` exposes all thirteen named helpers and the reduced-motion path is centralised.
-The eight concepts have not yet been rewritten to compose them; they still use their existing local
-timings. `condense` remains unwired at the concept level, which is the same gap as 2.1.
+### 2.3 Motion composed per concept — CLOSED
 
-### 2.4 Visual capture is partial
+Each concept now composes the motion materials in its own order, and the choreographies are deliberately
+different in kind, not just in timing: a cascade down the spine (t3), a bounds interpolation on one element
+(t2), a vertical arrival with no bounds change at all (t1), the concept's own fold (t4), a lane cross-fade
+(t5), rows appending with no bounds animation (t6), translate-and-scale of deck siblings (t7), and opacity
+plus a 6 px rise and nothing else (t8). `condense` is wired where a concept's form calls for it.
 
-`evidence/` holds four contact sheets (520/750/975/1200), eight per-window compact-history captures,
-one artifact-and-history capture and one reduced-motion capture. The full matrix in the plan
-(history × artifact × rail × mount × reduced motion) is exercised **functionally** by
-`runMatrix` but not captured visually.
+### 2.4 Visual capture is partial — STILL OPEN
 
-### 2.5 Known narrow-width limitation
+`evidence/` holds 32 captures: four contact sheets (520/750/975/1200), eight per-window compact-history
+captures, an artifact-and-history capture, a reduced-motion capture, eight `question-form-t1..t8` captures,
+eight `work-cluster-t1..t8` captures, and the two `t5-lanes` widths. The full matrix in the plan
+(history × artifact × rail × mount × reduced motion, across 64 pairings and 8 themes) is exercised
+**functionally** by `runMatrix` — 128 runs, 512 assertions — but is not captured visually. This is capture
+coverage, not behavioural coverage.
+
+### 2.5 Known narrow-width limitation — STILL OPEN
 
 `w8`'s artifact is a floating capsule and deliberately overlays the transcript; only the composer is
 guaranteed clear. Every other concept keeps the artifact out of the transcript rectangle. This is
 recorded as an open question in `impact-register.json` rather than settled inside a concept study.
+
+### 2.6 The suite asserts structure and state, never appearance — STILL OPEN
+
+407 assertions cover DOM shape, computed geometry, store state and service contracts. Nothing in the suite
+would catch a form that renders correct structure and *looks* wrong; that is what the captures are for, and
+they are reviewed by eye.
 
 ---
 
@@ -315,7 +324,7 @@ closed; two of them were real defects, not documentation drift.
    drift from the code without the drift being visible in the file. 48 globals, 409 members.
 
 2. **Phase E had ZERO committed test coverage.** Every behaviour was verified by browser probes, which are
-   evidence but not regression protection: the suite's 237 assertions contained no reference to any of the
+   evidence but not regression protection: the suite's 237 assertions AT THAT POINT contained no reference to any of the
    eight question forms, the eight work clusters, or `PMXQFlow`. A refactor could have flattened all eight
    forms back into one shared card without failing a single test. The new **`forms` suite** closes that:
    it asserts each concept renders its own form AND no other concept's, the structural decision each form
@@ -344,14 +353,53 @@ that thread the work cluster is correctly always yielded. The un-yielded cluster
 thread that has work and no question - thread-06 - and the suite now uses it for exactly that one assertion,
 while every form and yield assertion still runs on thread-01 with a live question.
 
-**Verification after the audit**: suite **351 total, 351 passed, 0 failed, 0 console errors, 0 console
-warnings** (23 suites, 4,450 ms); the full matrix re-run because `shared/motion.js` changed - **128 runs,
+**Verification after the audit**: suite **407 total, 407 passed, 0 failed, 0 console errors, 0 console
+warnings** (23 suites, 4,031 ms); the full matrix re-run because `shared/motion.js` changed - **128 runs,
 512 assertions, 0 failed, 0 errors, 0 warnings**; validator passes; fixture still byte-frozen at 349,661.
+
+
+### Second audit pass: the assertion thread-06 could not make
+
+The `forms` suite proved the yield in both directions but from two different threads: the cluster hidden on
+thread-01, the cluster present on thread-06. That pairing has a hole, and it is precisely the shape of the
+worst defect this phase produced: **thread-06 never yields, so nothing there can catch a failure to RELEASE
+the yield.** For a while only Cancel released it, and a submitted flow left every work surface hidden for the
+rest of the session. A suite that reads the un-yielded state from a thread which was never yielded would pass
+against that bug.
+
+So the suite now also, for each of the eight concepts, on thread-01:
+
+1. asserts the surfaces are yielded while the question is unresolved;
+2. **resolves the flow by clicking the controls that concept actually renders** - its own option rows, its own
+   advance and submit controls, whatever they are called (`Next`/`Send answers`, `[next]`/`[submit]`, and the
+   rest) - rather than calling the service on the concept's behalf;
+3. asserts `surfacesYielded` is false, the work cluster is back, and a receipt exists.
+
+Reduced motion is set first so `condense`, the deck slide and the capsule compress fall through
+synchronously: the assertion is about state, and waiting on animation frames inside a suite would make it
+about timing instead.
+
+**Writing that block immediately found a live bug that every previous gate had missed:**
+
+> `[pmx-compose] ReferenceError: label is not defined`
+
+t2's `_renderQuestionBody` referenced `label` in its `submitting` branch, where no such variable is in scope.
+It came from a one-line "polish" edit that had been applied to the first textual match instead of the helper
+that actually takes `label` as a parameter. Every gate missed it: the suite passed 351/351 as it stood before this block was added, the 128-run matrix
+passed, the validator passed, and eight rounds of manual browser probing never rendered that exact branch,
+because the submitting phase is visible for a single frame. `compose.js` caught the throw and logged it, and
+the suite's console-error count is what finally surfaced it - one error against an otherwise clean run.
+
+Both call sites are now correct: the phase renderer carries the specified copy, and the compress helper uses
+its `label` parameter so Cancel can say `Cancelling questions`.
+
+**Final verification**: suite **407 total, 407 passed, 0 failed, 0 console errors, 0 console warnings**
+(23 suites, 4,031 ms); full matrix re-run **128 runs, 512 assertions, 0 failed, 0 errors, 0 warnings**.
 
 ### Verification runs
 
-- **Interaction suite** (`tests/runner.html?run=1`, 1920x1000): **351 total, 351 passed, 0 failed,
-  0 console errors, 0 console warnings**, 4,450 ms.
+- **Interaction suite** (`tests/runner.html?run=1`, 1920x1000): **407 total, 407 passed, 0 failed,
+  0 console errors, 0 console warnings**, 4,031 ms.
 - **Matrix sweep**, all 64 pairings at 520 px and 750 px, run in per-window slices: **128 runs,
   512 assertions, 0 failed, 0 console errors, 0 console warnings**. Every window contributed 16 runs and
   64 assertions with zero failures.
