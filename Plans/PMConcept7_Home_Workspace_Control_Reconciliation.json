@@ -117,21 +117,22 @@
       "Pointer capture, offset-preserving pickup, placeholder/reflow preview, edge-zone cues, cancellation, reduced-motion, and save-on-drop semantics are preserved from U10 vocabulary.",
       "Four-edge scroll dissolve and the shared theme-aware resizer glow/recovery remain the common systems.",
       "Web guarantees in-canvas floating and all four in-app docks; window.open is optional degraded behavior.",
-      "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, Collapse Bottom Terminal, and Reset Layout (amended 2026-08-13: the fourth row is the dual-surface reset).",
+      "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, Collapse Bottom Terminal, and Reset Layout; the Collapse row is a toggle (tweak wave 2026-08-13: runtime relabel to Expand Bottom Terminal while collapsed, one cmd.workspace_layout.set_collapsed with the negated current value per activation).",
       "Open Panel and Open Browser in Panel are view-local disclosures; only Panel 1 through Panel 4 leaves dispatch commands. Collapse Bottom Terminal is never relabeled as Expand.",
       "Reset is dual-surface (amended 2026-08-13): Settings > General & Appearance > Startup & Recovery and the top-bar Reset Layout row both dispatch cmd.workspace_layout.reset with no new command ID; the concept demo's post-reset reload is demo behavior only. Move or Dock remains retired and File Manager targeting remains File Manager-local.",
-      "Movement is direct manipulation from the top-left corner triangle grip: the held surface tracks the pointer one-to-one, the placeholder carries the pickup-time footprint at the correct flex order and re-seats only on a host or insertion-index change (one FLIP reflow wave per change, 16 ms stagger), and the remaining surfaces animate from their pre-move rects. Preview never re-renders a surface subtree. Hosts carry visible-surface caps (left/right 3, top/bottom 2, floating 4, home_main uncapped) with announced host_full refusal; normalization spills overflow to home_main and never quarantines.",
+      "Movement is direct manipulation from the top-right lines-only grip (tweak wave 2026-08-13; the corner triangle is retired): the held surface tracks the pointer one-to-one, the placeholder projects the TARGET geometry (fair share of the destination host; full width plus track thickness in row-axis docks) and re-seats only on a host or insertion-index change (one FLIP reflow wave per change, 16 ms stagger). A pickup still inside the source rect resolves to the source placement and a preview-expanded host never captures the hit-test for its preview growth. Preview never re-renders a surface subtree. Hosts carry visible-surface caps (left/right 3, top/bottom 2, floating 4, home_main uncapped) with announced host_full refusal; normalization spills overflow to home_main and never quarantines.",
       "The centre-screen drop-target rail is retired. Drop targeting resolves surface-under-pointer, then outer edge band (the only route to a currently empty, zero-sized dock), then host-under-pointer, then home_main. Amended 2026-08-13: leaving the window resolves to invalid_target — floating is explicit-only through the Pop Out rows (editor panels, Chat, Dashboard) or the keyboard float key, and boot demotes persisted floating surfaces to last_docked_host with a storage.boot_demote_floating receipt.",
       "Loss of pointer capture is not a cancellation vector: live reflow re-parents projected items and drops capture. Escape, pointer cancellation and window blur are the cancellation contract.",
-      "Resize is adjacent-pair pixel transfer (amended 2026-08-13): all visible sibling bases freeze to measured pixels at gesture start, the divider moves pixels between the adjacent pair only, non-adjacent surfaces are untouched, and commit skips the full re-render (no settle flash). Effective minimums degrade to fair share so every boundary stays reachable; dock clamp bands are unified in one host-band table (left/right 220-520, top/bottom 150-380); floating surfaces resize on both axes from the bottom-right corner handle; and a render-time no-dead-space invariant re-sums visible home_main bases to the host width so degenerate persisted layouts self-heal. A commit that moves zero pixels is a failure.",
+      "Resize is adjacent-pair pixel transfer with fair-share minimum degradation, unified host bands, a floating bottom-right corner handle, commit without a full re-render, and the render-time no-dead-space invariant; the tweak wave adds row-axis dock two-axis sizing - within-row pair width transfer on the column dividers plus a full-width track handle writing the persisted size.cross_basis_px field (host-max semantics, host-band clamped, migrated from basis_px). A commit that moves zero pixels is a failure.",
       "Keyboard movement on the grab handle is the accessible equivalent of the pointer gesture and carries the contract the retired menu rows used to hold, announced through a polite live region.",
-      "The grab handle is a 28x28 folded-corner triangle filling the surface's top-left corner: clip-path hit-testing lets the empty half fall through, z-index keeps it above surface chrome and below resizers, and the focus ring renders in-glyph; ARIA and keyboard grammar are unchanged.",
-      "The base full-screen chat overlay is retired in PM7: every non-docked chat mode routes through PM_HOME_WORKSPACE.popOutChat into the single in-canvas float system (no scrim, title bar never covered, no second chat surface)."
+      "The grab handle is a small lines-only glyph (two diagonal strokes, no filled plate) over an 18 px clip-path hit triangle at the surface's TOP-RIGHT corner; the empty half falls through, focus renders in-glyph, and ARIA plus the keyboard grammar are unchanged. The surface kebab menus carry no Placement section or hint.",
+      "The base full-screen chat overlay is retired in PM7: every non-docked chat mode routes through PM_HOME_WORKSPACE.popOutChat into the single in-canvas float system (no scrim, title bar never covered, no second chat surface).",
+      "dock_right spans the full workspace height (grid areas 'top top right' / 'left main right' / 'bottom bottom right'); top and bottom docks end at the right column. Move Workgroup to New Section reseeds the vacated source section in the same commit (guidance state at the four-pane cap), and reset reconstitutes a live workgroup."
     ],
-    "generated_artifact_sha256": "92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec"
+    "generated_artifact_sha256": "393b1016ca980b6f8f16eb38441fdbe885df2db8b2a1433e712f3bb4953c8f08"
   },
   "control_census": {
-    "semantic_production_rows": 55,
+    "semantic_production_rows": 56,
     "production_wiring_prefix": "home.",
     "production_wiring_owner": "Plans/Wiring_Matrix.production.json",
     "view_local_disclosures": [
@@ -170,7 +171,8 @@
       "#collapseBottom",
       ".s4-row[data-sid=general.startup.reset-home-layout] .s4-action",
       "[data-pm-home-top-action=\"reset-layout\"]",
-      "[data-pm-home-resizer-corner]"
+      "[data-pm-home-resizer-corner]",
+      "[data-pm-home-resizer-track]"
     ],
     "required_resolution_fields": [
       "selector",
@@ -185,9 +187,9 @@
     "repair_evidence_census": "implementation/pmconcept7-home-workspace-20260805-repair/control_census.json",
     "zero_omission_required": true,
     "source_hashes": {
-      "Concepts/pm7-tools/home_workspace_source.py": "b94563c219741257272db907ff6ae2374cc34b91610eb6bb0163a4cb30f7ba18",
-      "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "03b84d8fbd67b1bae20734bdf2e4827c0b49395144f25a0bcc88c8ad27b8b863",
-      "Plans/Wiring_Matrix.production.json": "60edde9fcdb7a85c4ccb3794eeeb98ea71f1e7e308d32e948f1e2673ae76f177",
+      "Concepts/pm7-tools/home_workspace_source.py": "c98c6c9c19b2f925c3574fddbb4e7f104a831b4bd1c6e6f2c321544e37dabae6",
+      "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "19d155323caa59fb9b0133f5fd809e89867bdd9b6308bdfd03c5bd3a559658c9",
+      "Plans/Wiring_Matrix.production.json": "386f93d8149de0d1f0c00b1ccf7db87e56a37d52a4be358596714ed58b7adc93",
       "Plans/home_workspace_layout.schema.json": "503cfcbdee9253a9c411b3e88a7f2dcb17394315f632485f1cd027604a1451b7"
     },
     "retired_rows_2026_08_12": {

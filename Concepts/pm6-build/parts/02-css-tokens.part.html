@@ -176,6 +176,8 @@
     .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
       width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
+    /* keep the code pane's custom bar out of the frosted tab-rail band */
+    .editor-code::-webkit-scrollbar-track:vertical { margin-top: var(--pm6-editor-tabs-h, 40px); }
     /* bar show/hide must not shift chat layout. Only the thumb's colour
        animates and the gutter is reserved the moment a pane overflows, so the
        newly-revealed panes cannot reflow and none of them needs this. */

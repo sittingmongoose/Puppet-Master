@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L598-L671
+Source lines: L598-L674
 
-Source SHA256: `bf3892613168036be5fb06eeabd6ecc70b205a51e3dc83214d1498a146c8e8bf`
+Source SHA256: `30576fcceb791c6261c791599360dcb898bc167c36ec351930be3719964a42e4`
 
 ---
 
@@ -48,8 +48,11 @@ canonical_text: >-
   view-only disposition, event/receipt, handler, production row, and executable test with
   zero omissions. Amended 2026-08-13 - the census additionally covers the top-bar Reset
   Layout row, the Chat and Dashboard Pop Out rows, and the floating bottom-right corner
-  resize endpoint; the grab-handle rows describe the top-left corner triangle grip, and
-  the drop-target rows carry the footprint-true change-gated hover-preview acceptance.
+  resize endpoint. Amended 2026-08-13 (tweak wave) - the grab-handle rows describe the
+  top-right lines-only grip (the corner-triangle wording is retired), the drop-target
+  rows carry the target-geometry change-gated hover-preview acceptance (the
+  pickup-footprint wording is retired), and the census adds the row-dock track-handle
+  resize endpoint (home.resizer.dock_track).
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false

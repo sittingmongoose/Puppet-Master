@@ -4,7 +4,61 @@
 
 `Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-13 (rev 14, Workspace Repair + Tab Morph)
+## Current Home Workspace implementation — 2026-08-13 (rev 15, Tweak Wave 2)
+
+Sixteen user-reported tweaks, every one reproduced live before implementation
+and re-verified live after. Base repinned (`BASE_SHA` = `b15eb20f9e4176ea7f40be24c651db85f4d57dfeb8dd1ce6a1b67ac3764aebd4`,
+byte-identical to `Concepts/PMConcept6.html`); artifact 3,552,293 bytes,
+sha256 `393b1016ca980b6f8f16eb38441fdbe885df2db8b2a1433e712f3bb4953c8f08`; build report sha256 `7288ce758395f810675c30022abedbb8d9c1d5c94e933570ed840818a0187c3b`.
+
+**Base wave:** pane close X removed (the kebab's model-aware Close Panel is
+the single close affordance); app status bar removed (frozen `.pm6-status-*`
+dead-list selectors preserved for T01); search input ellipsizes; silhouette
+REDESIGNED — 40px strip (36px dashboard), near-full-height tab, 13px squircle
+crown, 12px shoulders, JS writes contact PROGRESS (`--ed-lp/--ed-rp`) and CSS
+derives radii per theme (friendly 16px mint / glass 14px plate + edge
+highlight / retro 6px + lime), corner caps render the canvas-corner morph at
+the VISIBLE rail boundary, tabs flush at the panel's left edge; the DASHBOARD
+tab strip adopted the same system (EDSHAPE enrolls `.dashboard-tabs`; part 25's
+inline tab styling removed — inline styles beat every stylesheet); editor
+scrollbar excluded from the frosted band via scrollbar-track margin; actions
+cluster truly centred (the silhouette z-rule no longer flips it to
+`position: relative`, which turned `top: 50% + translateY(-50%)` into a +9px
+shove).
+
+**T20 wave:** kebab menus lose the Placement hint; grip is a small LINES-ONLY
+glyph at each surface's top-RIGHT corner (18px hit triangle, z 140, in-glyph
+focus ring); dock_right spans the full workspace height (chat full-height);
+row docks gained pair-width dividers AND a full-width track handle driving a
+new persisted `size.cross_basis_px` (HOST-MAX semantics: the track write
+fans out to every visible surface in the host, and the gesture starts from
+the host max, or a taller sibling pins the track and the drag looks dead);
+Collapse/Expand Bottom Terminal toggles with a runtime relabel (authored
+markup label unchanged for the build gate); panels 3/4 render real buffers
+(post-mount hydration — the old seed rendered against a DETACHED shell and
+was memoised blank; panel 4 seeds `src/routes/auth.rs`); spacing 4px + no
+page gutter under Home; New Section reseeds the vacated source section in
+the same commit (both sections usable) and reset reconstitutes a live
+workgroup; drag previews project the TARGET geometry (fair share of the
+destination host; full width + track for docks).
+
+**Post-inspection integration fixes (the re-verification pass caught both):**
+(1) the dock track write initially only touched the dragged surface while
+`syncHostGeometry` takes max() over the host — a taller sibling pinned the
+track; (2) moving the grip to the panel's top corner put POINTERDOWN inside
+the workspace's 28px top edge band, so pickup itself opened a dock preview
+whose full-width expansion then captured every later `elementsFromPoint`
+hit-test (self-sustaining preview). Fixed with a pickup-rect guard (pointer
+inside the source rect resolves to the source placement) and by excluding
+drop-active hosts from the bare-host fallback. Lesson: any preview that
+EXPANDS geometry must never participate in its own target resolution. A second
+harness cycle added (W2-D6) the floating corner handle seeded its width from
+the stale docked basis_px instead of floating_bounds.width (a shrink drag
+grew the float), and (W2-D7) `contain: layout paint` + the 20px chat radius
+clipped the top-right grip out of hit-testing -- fixed by seeding from the
+live float width and notching only that corner to var(--radius-sm).
+
+## Previous implementation — 2026-08-13 (rev 14, Workspace Repair + Tab Morph)
 
 Assemble-then-repin wave plus a T20 movement/resize overhaul. Base re-pinned:
 `BASE_SHA` = `7f0ff4e5e9a7a54928ef7aaeb48e9d13f096c315e2bd12702f64a04ed89e6f25`

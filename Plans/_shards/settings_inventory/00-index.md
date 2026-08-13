@@ -1,6 +1,6 @@
 # Shard Index: Plans/settings_inventory.json
 
-Generated: 2026-08-13T05:45:04Z
+Generated: 2026-08-13T17:12:34Z
 
 Source SHA256: `573eafd8a3d0bc0a428a57d717833d2450f03152e9ae632eb0f7b24f68b4f804`
 

@@ -6,47 +6,4 @@
       </div>
       <div id="detachedTerminalBody" style="flex:1; min-height:0; display:flex; flex-direction:column;"></div>
     </div>
-
-    <footer class="status-bar pm6-status-bar">
-      <div class="status-menu-wrap">
-        <button class="status-menu-btn" id="statusMenuBtn" title="Workspace status" onclick="event.stopPropagation(); document.getElementById('statusMenuDropdown').classList.toggle('visible')"><span class="pm6-ico" data-pm6-icon="info"></span></button>
-        <div class="status-menu-dropdown" id="statusMenuDropdown">
-          <div class="menu-section">
-            <div class="menu-section-title">Active project</div>
-            <div class="menu-section-content">tastebook &mdash; ~/projects/tastebook &middot; run #47 bound</div>
-          </div>
-          <div class="menu-section">
-            <div class="menu-section-title">MCPs</div>
-            <div class="menu-section-content">tastebook: 2 MCPs configured</div>
-          </div>
-          <div class="menu-section">
-            <div class="menu-section-title">LSPs</div>
-            <div class="menu-section-content">
-              <div class="pm6-status-lsp-row" onclick="toast('Settings > LSP > rust-analyzer')">Rust (rust-analyzer): <span class="pm6-status-ok">Ready</span> <span class="pm6-status-fineprint">(local, /, /src)</span></div>
-              <div class="pm6-status-lsp-row" onclick="toast('Settings > LSP > svelte-language-server')">Svelte (svelte-language-server): <span class="pm6-status-ok">Ready</span> <span class="pm6-status-fineprint">(local, /web)</span></div>
-              <div class="pm6-status-lsp-row" onclick="toast('Not configured yet - enable Python support from Settings > LSP to start pyright.')">Python (pyright): <span class="pm6-status-fineprint">Not Configured &mdash; enable in Settings &gt; LSP</span></div>
-            </div>
-          </div>
-          <div class="menu-section">
-            <div class="menu-section-title">Plugins</div>
-            <div class="menu-section-content">3 loaded, 1 enabled</div>
-          </div>
-        </div>
-      </div>
-      <button type="button" class="pm6-status-chip pm6-status-orch" id="pm6StatusOrch" data-demo-action="page.go" data-demo-arg="orchestrator" title="Open the Orchestrator">
-        <span class="pm6-status-dot" id="pm6StatusOrchDot"></span><span id="pm6StatusOrchText">Orchestrator: Ready</span>
-      </button>
-      <span class="pm6-status-index" id="pm6StatusIndex" title="Workspace semantic index">Indexing&hellip;</span>
-      <span class="pm6-status-right">
-        <span class="pm6-status-item pm6-status-branch" data-demo-action="demo.toast" data-demo-arg="On main - orchestrator lanes work in their own worktrees; switch branches from Source Control." title="Current branch"><span class="pm6-ico" data-pm6-icon="branch"></span><span>main</span></span>
-        <span class="pm6-status-item" id="pm6StatusSync" data-demo-action="demo.toast" data-demo-arg="Synced with origin/main - nothing to pull or push." title="Sync state with origin">Up to date</span>
-        <button type="button" class="pm6-status-item pm6-status-ports" id="pm6StatusPorts" data-demo-action="pm6.bottom.show_ports" title="Forwarded ports - open the Ports panel"><span class="pm6-ico" data-pm6-icon="plug"></span><span id="pm6StatusPortsCount">3</span></button>
-        <!-- Status-bar bell retired: title-bar stack + badge is the sole notify affordance (F3-448 role moved). -->
-        <button type="button" class="pm6-status-item pm6-status-bell" id="pm6StatusBell" hidden aria-hidden="true" tabindex="-1" title="Notifications"><span class="pm6-ico" data-pm6-icon="bell"></span><span class="pm6-status-badge" id="pm6StatusBellBadge" hidden>0</span></button>
-        <div class="pm6-status-pop pm6-status-pop-right" id="pm6StatusBellPop" hidden aria-hidden="true">
-          <div class="pm6-status-pop-title">Notifications</div>
-          <div id="pm6StatusBellList"></div>
-        </div>
-      </span>
-    </footer>
   </div>

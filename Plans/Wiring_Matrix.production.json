@@ -37278,7 +37278,7 @@
     },
     "home.more_options.collapse_bottom": {
       "ui_element_id": "home.more_options.collapse_bottom",
-      "ui_location": "Home title bar > More options > Collapse Bottom Terminal",
+      "ui_location": "Home title bar > More options > Collapse Bottom Terminal (toggle; tweak wave 2026-08-13 — runtime relabel to Expand Bottom Terminal while the terminal is collapsed; authored markup label unchanged)",
       "ui_command_id": "cmd.workspace_layout.set_collapsed",
       "handler_location": "handlers::workspace_layout::set_collapsed",
       "expected_event_types": [
@@ -37288,7 +37288,8 @@
         "cmd.workspace_layout.set_collapsed is registered with typed arguments and the owner revision/idempotency contract",
         "home.more_options.collapse_bottom reads state.home_workspace.home_more_options_collapse_bottom.availability and projects its disabled reason before dispatch",
         "home.more_options.collapse_bottom dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
-        "home.more_options.collapse_bottom returns focus deterministically and emits only its declared event/receipt set"
+        "home.more_options.collapse_bottom returns focus deterministically and emits only its declared event/receipt set",
+        "home.more_options.collapse_bottom toggles: it reads Expand Bottom Terminal at runtime while collapsed and round-trips collapse/expand with one cmd.workspace_layout.set_collapsed (negated current value) per activation; the prior one-way contract is retired."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias.",
       "state_selector": "state.home_workspace.home_more_options_collapse_bottom.availability",
@@ -38104,7 +38105,7 @@
     },
     "home.editor_panel_1.grab": {
       "ui_element_id": "home.editor_panel_1.grab",
-      "ui_location": "Home > Editor Panel 1 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 1 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38116,7 +38117,7 @@
         "home.editor_panel_1.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_1.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.editor_panel_1.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.editor_panel_1.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.editor_panel_1.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_1_grab.availability",
@@ -38168,7 +38169,7 @@
     },
     "home.editor_panel_2.grab": {
       "ui_element_id": "home.editor_panel_2.grab",
-      "ui_location": "Home > Editor Panel 2 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 2 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38180,7 +38181,7 @@
         "home.editor_panel_2.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_2.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.editor_panel_2.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.editor_panel_2.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.editor_panel_2.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_2_grab.availability",
@@ -38232,7 +38233,7 @@
     },
     "home.editor_panel_3.grab": {
       "ui_element_id": "home.editor_panel_3.grab",
-      "ui_location": "Home > Editor Panel 3 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 3 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38244,7 +38245,7 @@
         "home.editor_panel_3.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_3.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.editor_panel_3.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.editor_panel_3.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.editor_panel_3.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_3_grab.availability",
@@ -38296,7 +38297,7 @@
     },
     "home.editor_panel_4.grab": {
       "ui_element_id": "home.editor_panel_4.grab",
-      "ui_location": "Home > Editor Panel 4 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 4 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38308,7 +38309,7 @@
         "home.editor_panel_4.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_4.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.editor_panel_4.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.editor_panel_4.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.editor_panel_4.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_4_grab.availability",
@@ -38360,7 +38361,7 @@
     },
     "home.dashboard.grab": {
       "ui_element_id": "home.dashboard.grab",
-      "ui_location": "Home > Dashboard > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Dashboard > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38372,7 +38373,7 @@
         "home.dashboard.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.dashboard.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.dashboard.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.dashboard.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.dashboard.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_dashboard_grab.availability",
@@ -38424,7 +38425,7 @@
     },
     "home.chat.grab": {
       "ui_element_id": "home.chat.grab",
-      "ui_location": "Home > Chat > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Chat > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38436,7 +38437,7 @@
         "home.chat.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.chat.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.chat.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.chat.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.chat.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_chat_grab.availability",
@@ -38488,7 +38489,7 @@
     },
     "home.terminal_section.grab": {
       "ui_element_id": "home.terminal_section.grab",
-      "ui_location": "Home > Terminal section > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Terminal section > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38500,7 +38501,7 @@
         "home.terminal_section.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.terminal_section.grab returns focus deterministically and emits only its declared event/receipt set",
         "home.terminal_section.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
-        "home.terminal_section.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
+        "home.terminal_section.grab renders as the small lines-only glyph at the surface's top-right corner (no filled plate) over an 18px clip-path hit triangle whose empty half falls through to content, with in-glyph focus treatment (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity.",
       "state_selector": "state.home_workspace.home_terminal_section_grab.availability",
@@ -39785,7 +39786,7 @@
         "home.drop_target.main dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.main returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.main is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.main shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
+        "home.drop_target.main shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_main.availability",
@@ -39849,7 +39850,7 @@
         "home.drop_target.left dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.left returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.left is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.left shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
+        "home.drop_target.left shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_left.availability",
@@ -39913,7 +39914,7 @@
         "home.drop_target.right dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.right returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.right is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.right shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
+        "home.drop_target.right shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_right.availability",
@@ -39977,7 +39978,7 @@
         "home.drop_target.top dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.top returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.top is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.top shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
+        "home.drop_target.top shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_top.availability",
@@ -40041,7 +40042,7 @@
         "home.drop_target.bottom dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.bottom returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.bottom is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.bottom shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
+        "home.drop_target.bottom shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_bottom.availability",
@@ -40658,6 +40659,70 @@
       "event_test_requirements": [
         "Assert cmd.workspace_layout.resize_surface preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
         "Assert exact effects for home.resizer.floating_corner: workspace.layout_changed; no unexpected event."
+      ]
+    },
+    "home.resizer.dock_track": {
+      "ui_element_id": "home.resizer.dock_track",
+      "ui_location": "Home Workspace > row-axis dock (dock_top/dock_bottom) full-width track handle (added by the 2026-08-13 tweak wave; drives the dock's thickness by writing the persisted size.cross_basis_px field with host-max semantics, clamped by the shared host-band table; within-row column dividers keep adjacent-pair width transfer)",
+      "ui_command_id": "cmd.workspace_layout.resize_surface",
+      "handler_location": "handlers::workspace_layout::resize_surface",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.workspace_layout.resize_surface is registered with typed arguments and the owner revision/idempotency contract",
+        "home.resizer.dock_track reads state.home_workspace.home_resizer_dock_track.availability and projects its disabled reason before dispatch",
+        "home.resizer.dock_track dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
+        "home.resizer.dock_track returns focus deterministically and emits only its declared event/receipt set",
+        "home.resizer.dock_track changes the rendered surface geometry during and after the gesture; a commit that moves zero pixels is a failure, not a pass.",
+        "home.resizer.dock_track changes the dock's rendered track thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), leaves within-row widths untouched, migrates cross_basis_px from basis_px for pre-field layouts, and commits exactly once on changed pointer-up."
+      ],
+      "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel.",
+      "state_selector": "state.home_workspace.home_resizer_dock_track.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_dock_track.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "Home Workspace semantic leaf action; popup disclosure and pointer preview remain view-local.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "home.resizer.dock_track exposes a stable role and accessible name for cmd.workspace_layout.resize_surface.",
+        "keyboard_access": "home.resizer.dock_track is reachable and activatable by keyboard when visible.",
+        "focus_management": "home.resizer.dock_track restores or transfers focus according to the owner contract after applied, no-change, failed, or cancelled disposition.",
+        "disabled_announcement": "home.resizer.dock_track announces state.home_workspace.home_resizer_dock_track.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+          "evidence_kind": "event_test",
+          "requirement": "Execute the visible control and assert exact command delta, payload, event/receipt set, disabled behavior, focus, and identity continuity."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.resizer.dock_track control dispatches cmd.workspace_layout.resize_surface exactly once with the typed payload and production handler recorded by this row."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "The browser harness reads the projected availability and disabled reason for home.resizer.dock_track before attempting dispatch."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The browser harness asserts the exact receipt/event delta for home.resizer.dock_track: workspace.layout_changed."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.resizer.dock_track control is keyboard reachable, exposes its accessible name/state, and preserves or restores focus according to the Home owner contract."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.workspace_layout.resize_surface preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
+        "Assert exact effects for home.resizer.dock_track: workspace.layout_changed; no unexpected event."
       ]
     }
   }

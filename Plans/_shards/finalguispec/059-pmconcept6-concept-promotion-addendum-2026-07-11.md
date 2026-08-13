@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28360-L28539
+Source lines: L28461-L28645
 
-Source SHA256: `cb8e793fd3b46d17be00745b05ace785aadc8d791bd0d3261415c532351d2b22`
+Source SHA256: `08f4400cd12ad4bc3a881179aacffcd2c50ed22b15eed2710558f2ecea6fa097`
 
 ---
 
@@ -148,6 +148,10 @@ canonical_text: >-
   overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
   model index. The +N more chip and its picker render in the shared app portal-menu family
   (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
+  Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
+  retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
+  semantics (sibling expansion, editor empty state) are unchanged - only the affordance
+  changed.
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
@@ -184,6 +188,7 @@ compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
 stale_retired_dispositions:
 - "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
+- "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

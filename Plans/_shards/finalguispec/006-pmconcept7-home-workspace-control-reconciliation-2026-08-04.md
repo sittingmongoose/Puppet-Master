@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L262-L766
+Source lines: L262-L859
 
-Source SHA256: `cb8e793fd3b46d17be00745b05ace785aadc8d791bd0d3261415c532351d2b22`
+Source SHA256: `08f4400cd12ad4bc3a881179aacffcd2c50ed22b15eed2710558f2ecea6fa097`
 
 ---
 
@@ -34,6 +34,13 @@ Amended 2026-08-13 — floating is never a boot state. Every surface record carr
 `last_docked_host` (floating bounds preserved for a later re-float) and the
 demotion persists with a `storage.boot_demote_floating` receipt. A reload
 therefore always opens fully docked.
+
+Amended 2026-08-13 (tweak wave) — `dock_right` spans the full workspace height.
+The Home grid template is `"top top right" / "left main right" /
+"bottom bottom right"`: the right dock runs from the top of the workspace to the
+bottom (a chat docked right is full-height), while the top and bottom docks end
+where the right column begins. Host identities, caps, and persistence are
+unchanged.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
 
@@ -118,6 +125,29 @@ and window resize: visible `home_main` bases are re-summed to the host width, so
 degenerate persisted layout self-heals instead of rendering an unclaimable void,
 and any stray drop placeholder outside an active gesture is swept at render.
 
+Amended 2026-08-13 (tweak wave) — the drop preview projects the TARGET geometry,
+not the source footprint. The earlier same-day rule that the placeholder carries
+the dragged surface's pickup-time footprint is retired with this dated
+disposition: the placeholder now renders the geometry the surface would actually
+receive at the destination — its fair share of the destination host for column
+hosts, and full width plus the dock's track thickness for row-axis docks — so
+the preview is an honest picture of the commit. Two drag guards ship with it: a
+pointer pickup that never left the source surface's own rect resolves to the
+source placement (no accidental first-frame retarget), and a host whose track was
+expanded only by the preview never captures the hit-test for that expansion
+(preview growth cannot attract the drop it is previewing). Change-gating, the
+16 ms FLIP stagger, host caps, and the invalid_target window-exit rule are
+unchanged.
+
+Amended 2026-08-13 (tweak wave) — row-axis dock resize gains a second axis. The
+top and bottom docks support both within-row pair width transfer (column
+dividers between siblings, same adjacent-pair pixel mechanics) and a full-width
+track handle that drives the dock's thickness through a new persisted
+`size.cross_basis_px` field with host-max semantics (the rendered track is the
+maximum cross basis among the dock's visible surfaces), clamped by the shared
+host-band table; layouts persisted before the field existed migrate it from
+`basis_px`.
+
 ### F3-HOME-003 — Shell controls and capability envelope
 
 The Home title bar exposes one 28 by 28 inline-SVG `Home more options` button
@@ -130,8 +160,12 @@ interaction language: restrained elevation, corner-sprout opening, viewport
 flipping, hover bridge, roving keyboard focus, Enter/Right Arrow to enter a
 flyout, Left Arrow to return, Escape/outside dismissal, reduced-motion parity,
 and focus restoration to the invoker. `Collapse Bottom Terminal` is disabled
-with an accessible reason when no eligible bottom terminal exists or the eligible
-terminal is already collapsed; its label never changes into an Expand action.
+with an accessible reason when no eligible bottom terminal exists. Amended
+2026-08-13 (tweak wave) — the row is now a TOGGLE: while the bottom terminal is
+collapsed the row relabels at runtime to `Expand Bottom Terminal` and expands it
+(the authored markup label stays `Collapse Bottom Terminal`; the relabel is a
+runtime projection). The earlier one-way rule ("its label never changes into an
+Expand action") is retired with this dated disposition.
 
 File Manager, Move/Dock, pop-out, close, counts, recovery diagnostics, and
 layout revision/debug data are forbidden in this popup. Amended 2026-08-13 — the
@@ -169,12 +203,34 @@ accessible name, grabbed state, ARIA grammar, and the keyboard movement contract
 are unchanged. The 2026-08-12 head-row six-dot grip presentation is retired as
 stale with this dated disposition.
 
+Amended 2026-08-13 (tweak wave) — the grab handle is now a SMALL LINES-ONLY
+glyph at each surface's TOP-RIGHT corner: two diagonal grooves (stroked paths,
+no filled plate) over an 18 px corner hit triangle. The same-day 28 px
+folded-corner triangle filling the top-left corner is retired with this dated
+disposition. The accessible name, grabbed state, ARIA grammar, keyboard movement
+contract, in-glyph focus treatment, and clip-path hit-testing (the empty half
+still falls through) are unchanged; head-row chrome clears the grip with
+right-edge margin instead of left padding. The surface kebab menus no longer
+carry a Placement section or placement hint — the grip is the sole movement
+affordance and the menus no longer restate it.
+
 The bottom terminal's own collapse control is a toggle: an inline-SVG chevron at the
 right end of the terminal bar that collapses the section and, from the collapsed
 strip, expands it again. The collapsed strip keeps that control visible and
 hit-testable — it is the expand affordance — and the control reports post-commit
-state. This does not weaken the rule above that the top-bar menu row
-`Collapse Bottom Terminal` is one-way and never relabels to Expand.
+state. Amended 2026-08-13 (tweak wave): the top-bar menu row is now also a
+toggle (runtime relabel to `Expand Bottom Terminal` while collapsed); the prior
+sentence here that the top-bar row is one-way and never relabels is retired with
+the dated disposition above.
+
+Amended 2026-08-13 (tweak wave) — terminal workgroup movement never strands a
+section. `Move Workgroup to New Section` reseeds the vacated source section with
+a fresh workgroup in the same commit, so both sections stay usable; at the
+four-pane cap the source instead stays empty with a tidy guidance state rather
+than a broken shell. Reset reconstitutes a live workgroup: it prefers a section
+that still owns one and falls back to the pristine seed when none does. The
+move command payload records `source_reseeded`, and cancellation discards any
+reseeded workgroup with the rest of the draft.
 
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
@@ -251,6 +307,16 @@ superseded by the top-left corner triangle grip. Single-basis flex resize and th
 full re-render on resize commit are superseded by adjacent-pair pixel transfer
 with fair-share minimum degradation and the render-time no-dead-space invariant.
 
+Superseded 2026-08-13 (tweak wave): the same-day 28 px folded-corner top-left
+triangle grip is superseded by the small lines-only top-right glyph (18 px hit
+triangle); the pickup-footprint drop preview is superseded by target-geometry
+projection with the pickup-band and preview-capture guards; the one-way top-bar
+`Collapse Bottom Terminal` contract is superseded by the runtime toggle relabel;
+the kebab Placement section/hint is retired; the equal-height three-column grid
+is superseded by the full-height `dock_right` template; the dedicated editor
+pane-close glyph is retired in favour of the kebab `Close Panel` row; and the
+app status bar is removed from the PM7 shell.
+
 ### F3-501 - Home Workspace Model And Stable Identity
 
 ```yaml
@@ -298,7 +364,7 @@ plan_unit_id: F3-502
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: "The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces."
+canonical_text: "The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces. Amended 2026-08-13 (tweak wave) - the Collapse row is a toggle: it relabels at runtime to Expand Bottom Terminal while the terminal is collapsed and expands it, dispatching cmd.workspace_layout.set_collapsed with the negated current value; the authored markup label stays Collapse Bottom Terminal."
 gui_related: true
 gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
 split_recommended: false
@@ -307,7 +373,7 @@ unblocks: []
 acceptance_criteria:
 - The popup has exactly the four ordered top-level actions (Open Panel, Open Browser in Panel, Collapse Bottom Terminal, Reset Layout) and no File Manager, Move/Dock, pop-out, close, count, recovery, revision, or debug row.
 - Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
-- Collapse stays Collapse, is never an Expand alias, and exposes the canonical disabled reason.
+- The Collapse row toggles; it reads Expand Bottom Terminal at runtime while the terminal is collapsed, round-trips collapse and expand with one cmd.workspace_layout.set_collapsed per activation, and exposes the canonical disabled reason when no eligible bottom terminal exists.
 - Reset is dual-surface; the top-bar Reset Layout row and Settings -> General & Appearance -> Startup & Recovery both dispatch cmd.workspace_layout.reset, no new command ID is minted, and the concept demo's post-reset page reload is demo behavior only, not part of the typed command contract.
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
@@ -329,6 +395,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - Diagnostics, File Manager, Move/Dock, pop-out, close, count, recovery, and revision rows in the title-bar Home menu remain retired.
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
+- "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -353,6 +420,14 @@ canonical_text: >-
   bands, a floating bottom-right corner handle driving both axes, commit without a full
   re-render (no settle flash), and a render-time no-dead-space invariant that re-sums
   visible home_main bases to the host width so degenerate persisted layouts self-heal.
+  Amended 2026-08-13 (tweak wave) - the drop preview projects the TARGET geometry (fair
+  share of the destination host; full width plus track thickness for row-axis docks),
+  retiring the same-day pickup-footprint preview; a pickup that never left the source
+  surface's rect resolves to the source placement and a preview-expanded host never
+  captures the hit-test for its preview growth. Row-axis docks add a full-width track
+  handle driving the dock's thickness through the persisted size.cross_basis_px field
+  (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
+  pair width transfer on the column dividers.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -363,7 +438,8 @@ acceptance_criteria:
 - Escape, pointercancel, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event; loss of pointer capture alone is not a cancellation vector.
 - Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
-- The drag placeholder carries the dragged surface's pickup-time footprint clamped to the target host band, sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted; dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
+- The drag placeholder projects the target geometry (fair share of the destination host; full width plus the dock's track thickness in a row-axis dock), sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a host expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
+- The top and bottom docks resize on both axes; column dividers transfer width between the adjacent pair inside the row, and the full-width track handle changes the dock's rendered thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), with pre-field layouts migrating cross_basis_px from basis_px.
 - A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
 - At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
 validation_surfaces:
@@ -384,6 +460,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: single-basis flex resize (which diluted a divider drag across non-adjacent siblings) and the full re-render on resize commit (settle flash) are retired; hard fixed minimums that could make a boundary unreachable are retired in favour of fair-share degradation; drag-to-window-exit floating is retired as invalid_target (see F3-HOME-002); treating loss of pointer capture alone as a cancellation vector was retired 2026-08-12 and this unit's criteria now reflect it."
+- "Amended 2026-08-13 (tweak wave): the same-day pickup-footprint drop preview is retired in favour of target-geometry projection with the pickup-band and preview-capture guards; single-axis row-dock sizing is retired in favour of the cross_basis_px track handle plus within-row pair transfer."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -470,7 +547,21 @@ canonical_text: >-
   canvas keep the shared opaque fill; the silhouette layer mounts only after a
   successful measure and mounts as the strip's last child (slot 0 is uncontested:
   the grip moved out of the strip to the surface corner); fitters are mutation-free
-  in steady state.
+  in steady state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is
+  redesigned: the strip is 40 px tall (36 px on the dashboard) with a near-full-height
+  active tab, a 13 px squircle crown that is theme-tunable through --ed-top-radius
+  (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring
+  the 10 px canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS
+  custom properties --ed-lp and --ed-rp (0..1 per side, same 20 px threshold) and the
+  CSS derives the per-theme radii from them; corner caps render the canvas-corner
+  morph at the visible rail boundary; tabs start flush at the panel's left edge;
+  per-theme skins apply (friendly mint canvas with lime active label, glass plate
+  with edge highlight, retro sharp corners with lime). The dashboard tab strip
+  (Main/Metrics/Monitoring) enrolls in the same connected-surface system - EDSHAPE
+  syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at
+  the same alpha - while the title-bar page tabs keep their sliding ink (the F3-464
+  boundary is unchanged). The editor scrollbar is excluded from the frosted rail band
+  via a scrollbar-track margin.
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
@@ -479,7 +570,8 @@ unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal radius animates; canvasRy stays 10 px and cutoutRy stays 8 px throughout the morph."
+- "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
+- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, tabs start flush at the panel's left edge, and the editor scrollbar sits outside the frosted rail band."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
@@ -498,7 +590,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens: ["20", "10", "8", "clamp", "squircle"]
+preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
 negative_constraints:
 - "Do not render the active-editor-tab treatment as a pill or an underline sliding between labels."
 - "Do not retain a decorative notch where the tab and the canvas are flush."
@@ -509,7 +601,8 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "The prior active editor file tab treatment (surface-tinted tab plus a 2 px accent underline, with per-theme underline recolours) is retired for this surface; the silhouette is the active-tab chrome."
 - "Amended 2026-08-13: the opaque rail fill introduced with the silhouette is retired — it defeated the editor scroll-under frost; the rail is a translucent plate over backdrop blur. The ensure-before-measure mount order (which produced a dead, collapsed silhouette in the built artifact) and the strip-firstChild mount slot (which contended with the T20 grip) are retired."
+- "Amended 2026-08-13 (tweak wave): the 10 px canvas / 8 px cutout radius maxima and the JS-written per-corner radius properties are retired — the JS writes contact progress (--ed-lp/--ed-rp) and the CSS derives 12 px shoulder/canvas radii plus the theme-tunable --ed-top-radius crown; the editor-file-tabs-only scope is widened to include the dashboard tab strip."
 owner_boundary_notes:
-- "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit, which is scoped to editor file tabs only."
+- "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]
 ```

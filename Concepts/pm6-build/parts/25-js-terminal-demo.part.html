@@ -657,18 +657,18 @@
             tabsContainer.addEventListener('click', e => {
                 const tab = e.target.closest('.tab');
                 if (tab) {
+                    /* Tab visuals are stylesheet-owned now (PM7 tab
+                       silhouette): the inline color/background/border writes
+                       that used to live here outranked every .ed-shape-on
+                       rule, so the strip could never adopt the shared
+                       silhouette chrome. Only state flips remain: the
+                       active class and its mirrored aria-selected. */
                     tabsContainer.querySelectorAll('.tab').forEach(t => {
                         t.classList.remove('active');
-                        t.style.color = 'var(--text-secondary)';
-                        t.style.background = 'transparent';
-                        t.style.border = 'var(--border-width) solid transparent';
+                        t.setAttribute('aria-selected', 'false');
                     });
                     tab.classList.add('active');
-                    tab.style.color = 'var(--text-primary)';
-                    tab.style.background = 'var(--surface)';
-                    tab.style.border = 'var(--border-width) solid var(--border)';
-                    tab.style.borderBottom = 'none';
-                    tab.style.borderRadius = 'var(--border-radius) var(--border-radius) 0 0';
+                    tab.setAttribute('aria-selected', 'true');
                     
                     const tabName = tab.textContent.trim();
                     const mainGrid = document.getElementById('dashGridMain');

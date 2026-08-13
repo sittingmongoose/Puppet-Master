@@ -1,23 +1,23 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "updated_at_utc": "2026-08-05T19:28:29Z",
-  "last_event_id": "evt-0026",
+  "updated_at_utc": "2026-08-13T17:04:38Z",
+  "last_event_id": "evt-0029",
   "status": "pass",
   "summary": {
-    "events": 26,
-    "design_atoms": 63,
-    "decisions": 51,
+    "events": 29,
+    "design_atoms": 77,
+    "decisions": 61,
     "questions": 46,
-    "corrections": 13,
+    "corrections": 16,
     "blockers": 0,
-    "candidate_atoms": 2,
+    "candidate_atoms": 0,
     "ready_for_plan_compile_atoms": 0,
     "compiled_to_plan_atoms": 0,
     "not_for_plan_atoms": 0,
     "rejected_atoms": 0,
-    "superseded_atoms": 1,
-    "open_questions": 2,
+    "superseded_atoms": 3,
+    "open_questions": 0,
     "deferred_questions": 1,
     "in_progress_questions": 0,
     "open_blockers": 0,
@@ -31,18 +31,18 @@
     "last_result": "pass",
     "last_errors": [],
     "last_warnings": [],
-    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "last_validated_at_utc": "2026-08-13T17:04:38Z",
     "summary": {
-      "atoms": 63,
+      "atoms": 77,
       "compile_queue_items": 0,
-      "corrections": 13,
-      "decisions": 51,
-      "events": 26,
+      "corrections": 16,
+      "decisions": 61,
+      "events": 29,
       "plan_units_checked": 0,
       "questions": 46
     }
   },
-  "notes": "Bootstrap ledger validator passed with zero errors and zero warnings after August 5 noncanonical packet reconciliation. Sixty atoms are accepted, two are candidates, and one is superseded. q-0045/q-0046 are open; q-0022 remains deferred. Exact 8-low/2-high routes remain unfrozen; all auth/config/provider/route/model call counts remain zero; existing materials remain preregistration drafts; V4 remains invalidated; and no empirical or production-enforcement claim exists.",
+  "notes": "Bootstrap ledger validator passed with zero errors and zero warnings after corr-0016 stopped wait_threads, polling, and routine successor updates. Seventy-three atoms are accepted, one deferred, three superseded, and none are candidates; all prior testing and compile boundaries remain unchanged.",
   "checks": [
     {
       "check_id": "ledger-init-0001",
@@ -163,6 +163,21 @@
       "check_id": "ledger-turn-0024",
       "status": "pass",
       "summary": "August 5 packet source-boundary, Context Admission and PromptCapsule course correction, least-authority runtime externalization, sustainable specialist waves, relative model routing, lossless evidence migration, two candidate atoms, two open conflicts, and compact projections validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0025",
+      "status": "pass",
+      "summary": "August 8 final packet integrity and precedence-defect receipt; fixed universal profile plus diagnostic InstructionLoad; stable prefix, typed stages, transactional compaction, deterministic conditional rules, BSD default-off, tool recovery, resource projection, GUI boundary; old test-task retirement; future roster/method hold; and compact projections validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0026",
+      "status": "pass",
+      "summary": "Sol max controller with medium/easier and xhigh/harder preparation routing; testing-before-compile phase correction; active successor task custody; separately attached provider-CLI adjudication and explicit acquisition flow; and refreshed projections validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0027",
+      "status": "pass",
+      "summary": "Successor-initiated notification policy, wait_threads prohibition, no-polling and no-routine-progress constraints, and refreshed projections validated successfully with zero errors and zero warnings."
     }
   ]
 }

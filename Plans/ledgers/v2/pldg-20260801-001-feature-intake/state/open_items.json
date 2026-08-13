@@ -1,51 +1,21 @@
 {
   "schema_id": "pm.bootstrap_open_items.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "updated_at_utc": "2026-08-05T19:28:29Z",
-  "last_event_id": "evt-0026",
+  "updated_at_utc": "2026-08-13T16:55:00Z",
+  "last_event_id": "evt-0029",
   "governance_status": "not_started",
-  "open_questions": [
-    {
-      "question_id": "q-0045",
-      "status": "open",
-      "question": "Does the August 5 handoff supersede the fixed one-size-for-low-end profile and no-predicted-budget rule?",
-      "owner": "Jared",
-      "recommendation": "No. Keep one fixed conservative profile; measure InstructionLoad and tokens diagnostically without importing model-specific profiles or numeric example budgets.",
-      "linked_atom_ids": [
-        "atom-0063"
-      ],
-      "source_refs": [
-        "packet:ONE_PAGE_DELTA.md",
-        "packet:05_PROMPT_CAPSULE_AND_CONTEXT_ADMISSION_CONTRACT.md",
-        "chat:no-budgets-one-size-fits-all-low-end-profile"
-      ]
-    },
-    {
-      "question_id": "q-0046",
-      "status": "open",
-      "question": "Should the packet's at-least-three-tier test language change the exact eight-low/two-high cohort?",
-      "owner": "Jared",
-      "recommendation": "No implicit change. Keep 8-low/2-high as the primary cohort; authorize any mid-tier calibration later as a separate cohort.",
-      "linked_atom_ids": [
-        "atom-0055",
-        "atom-0062"
-      ],
-      "source_refs": [
-        "packet:08_TEST_MATRIX_V2.md",
-        "chat:local-folder-eight-low-two-high-correction"
-      ]
-    }
-  ],
+  "open_questions": [],
   "deferred_questions": [
     {
       "question_id": "q-0022",
       "status": "deferred",
-      "question": "What behavioral and model-quality test matrix should validate the completed design?",
-      "owner": "Jared for any future resume decision and exact roster authorization",
-      "thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
-      "artifact_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/tests/agent_packet_restrictions/",
-      "terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
-      "reason": "Stopped at Jared's request to finish due usage; exact 8-low/2-high roster was never supplied, authorized, or frozen; all auth/config/provider/route/model call counts are zero.",
+      "question": "What exact subject-model roster and test method should qualify the final course-corrected automated prompt system?",
+      "owner": "Jared at READY_FOR_JARED_TEST_PLAN",
+      "historical_thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
+      "successor_thread_id": "019ffbff-994a-76f0-9c06-57bab28b7ee3",
+      "artifact_root": "tests/agent_packet_restrictions/successor_20260813/",
+      "historical_terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+      "reason": "The Sol max controller and medium/easier plus xhigh/harder preparation roles are fixed, but Jared will provide the exact tested subject models and how they are tested only after deterministic preflight is ready.",
       "verified_draft_inputs": {
         "surfaces": 54,
         "blocked_production_surfaces": 51,
@@ -55,12 +25,12 @@
         "semantic_cases": 7,
         "deterministic_checks": 222
       },
-      "resume_requirements": [
-        "Jared supplies and authorizes the exact eight-low/two-high roster.",
-        "An immutable authorization receipt binds each provider/model/account/route/reasoning tuple.",
-        "A new corrected post-V4 method is frozen.",
-        "Controller, scorer, and capture qualification bind to the final matrix-inclusive freeze.",
-        "All ten exact routes pass nonsemantic canaries before semantic pilot."
+      "successor_readiness_before_user_plan": [
+        "The attached course-correction sources and provider adjudication have exact custody and precedence.",
+        "The affected automated-surface census is refreshed without compiling canonical Plans.",
+        "The active GPT-5.6 Sol max successor classifies all inherited artifacts and uses medium/easier plus xhigh/harder bounded preparation subagents.",
+        "Controller, scorer, capture, lineage, and write-boundary preflight passes deterministically with zero subject-test provider calls.",
+        "The successor then stops and asks Jared for the exact roster and method before any subject call."
       ],
       "claim_boundary": "Preregistration drafts only. No empirical model-performance, production-enforcement, readiness, weak-model-success, or high-model-success claim is supported.",
       "deferred_inputs": [
@@ -70,7 +40,7 @@
         "Cap total model-controlled evidence requests before executing any of them.",
         "Preserve zero, empty, and over-cap output as distinct terminals.",
         "Require exact started-prefix plus absorbed-suffix accounting after the first nonpass.",
-        "Require one fresh context and zero semantic retries for the assurance-derived strict case.",
+        "Evaluate fresh-context and retry policy only under Jared's future frozen method; the old zero-retry proposal is not current authority.",
         "Test duplicate or conflicting IDs and evidence joins.",
         "Preserve provider-effective model identity as an attested residual unless signed evidence exists."
       ],
@@ -80,51 +50,23 @@
         "chat:cross-system-testing-delegated-to-sol-ultra",
         "chat:local-folder-eight-low-two-high-correction",
         "corr-0013",
+        "corr-0014",
+        "corr-0015",
         "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f",
         "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f:terminal-preflight-closeout",
         "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
         "tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md",
-        "codex-client:client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8"
+        "codex-client:client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8",
+        "chat:final-course-correction-and-future-testing-plan-hold",
+        "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3",
+        "file:/home/sittingmongoose/.codex/attachments/14bc63c4-575c-43eb-ae0d-33debc653a75/PROVIDER_CLI_FINAL_ADJUDICATION.md"
       ]
     }
   ],
   "in_progress_questions": [],
   "open_blockers": [],
-  "unclassified_candidates": [
-    {
-      "atom_id": "atom-0062",
-      "status": "candidate",
-      "summary": "Future testing may compare legacy full prompts, compiled capsules with runtime services, compact prompts without services, overloaded compiled prompts, and missing-tool/source cases, but testing remains deferred and the exact method is not accepted.",
-      "gui_related": false,
-      "blocked_by": [
-        "q-0022",
-        "q-0046"
-      ]
-    },
-    {
-      "atom_id": "atom-0063",
-      "status": "candidate",
-      "summary": "The handoff's tier-calibrated thresholds and numeric examples conflict with the accepted fixed-profile/no-predicted-budget boundary and require explicit adjudication.",
-      "gui_related": false,
-      "blocked_by": [
-        "q-0045"
-      ]
-    }
-  ],
-  "unresolved_contradictions": [
-    {
-      "item_id": "q-0045",
-      "status": "open_user_adjudication",
-      "summary": "Packet tier-calibrated thresholds and example numeric budgets conflict with Jared's earlier exact one-size-for-low-end and no-predicted-budget constraints.",
-      "recommendation": "Preserve the fixed profile and treat InstructionLoad and token values as diagnostics only."
-    },
-    {
-      "item_id": "q-0046",
-      "status": "open_user_adjudication",
-      "summary": "Packet at-least-three-tier calibration language conflicts with the already specified primary cohort of exactly eight low-end and two high-end models.",
-      "recommendation": "Preserve the 8/2 primary cohort and make any mid-tier cohort separately authorized."
-    }
-  ],
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
   "resolved_contradictions": [
     {
       "item_id": "contradiction-0001",
@@ -337,10 +279,44 @@
         "atom-0054",
         "dec-0045"
       ]
+    },
+    {
+      "item_id": "q-0045",
+      "status": "resolved_in_ledger_pending_compile_reconciliation",
+      "summary": "Final packet calibration language conflicted with Jared's fixed one-size-for-low-end and no-predicted-budget constraints.",
+      "resolution": "dec-0053 preserves one universal conservative safety/structure contract while allowing actual InstructionLoad, token, adapter, and outcome measurements as diagnostics for splitting, retrieval, queueing, and escalation.",
+      "source_refs": ["q-0045", "atom-0063", "dec-0053", "evt-0027"]
+    },
+    {
+      "item_id": "q-0046",
+      "status": "resolved_in_ledger_testing_plan_deferred",
+      "summary": "The old exact 8-low/2-high cohort and packet tier proposals no longer match Jared's intended future testing.",
+      "resolution": "corr-0014 and dec-0056 supersede every model-count, tier, and method assumption. q-0022 holds the future roster and method for Jared at successor deterministic-preflight readiness.",
+      "source_refs": ["q-0046", "corr-0014", "atom-0064", "dec-0056", "evt-0027"]
+    },
+    {
+      "item_id": "corr-0015-phase-order",
+      "status": "resolved_in_ledger_testing_precedes_compile",
+      "summary": "The prior sequence required canonical Plans before successor preflight and named Sol Ultra as controller.",
+      "resolution": "corr-0015, atom-0073/0074, and dec-0058/0059 establish Sol max with bounded medium/xhigh preparation subagents and hold canonical compile until testing findings return and Jared explicitly authorizes compile.",
+      "source_refs": ["corr-0015", "atom-0064", "atom-0073", "atom-0074", "dec-0058", "dec-0059", "evt-0028"]
+    },
+    {
+      "item_id": "provider-cli-missing-source",
+      "status": "resolved_by_separate_user_attachment",
+      "summary": "The August 8 ZIP named but omitted its highest-precedence provider-CLI adjudication.",
+      "resolution": "The separate 86-line attachment at SHA-256 9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1 completes ledger source custody while the original ZIP remains unchanged and historically incomplete.",
+      "source_refs": ["atom-0075", "atom-0076", "dec-0060", "evt-0028"]
     }
   ],
-  "compile_open_items": [],
+  "compile_open_items": [
+    {
+      "item_id": "precompile-testing-prerequisite",
+      "status": "held_by_explicit_user_phase_order",
+      "summary": "Successor deterministic preflight, Jared's subject plan, authorized testing to an honest terminal, ledger reconciliation of findings, and a later explicit Jared compile request must occur before canonical Plans compilation."
+    }
+  ],
   "post_compile_pending_items": [],
   "unsealed_governance": [],
-  "notes": "The August 5 packet is reconciled as noncanonical additive source input. q-0045 and q-0046 remain open; atom-0062 and atom-0063 remain candidates. q-0022 remains deferred after delegated task `019fc3fd-4061-7d01-9c22-a3c82f34de1f` stopped before subject launch. The exact 8-low/2-high roster never froze and all subject/provider call counts are zero. Verified materials remain preregistration drafts only. V4 is invalidated by control_plane_defect-0004; four `/tmp` scratch lists remain untouched without deletion authority. No testing, canonical compile, governance, or implementation action was authorized or performed."
+  "notes": "Successor task `019ffbff-994a-76f0-9c06-57bab28b7ee3` runs independently. This task will not use wait_threads, poll it, request status, or emit routine progress updates; it will respond only to a successor-initiated boundary notification or Jared's direction. q-0022 and the compile hold remain unchanged."
 }

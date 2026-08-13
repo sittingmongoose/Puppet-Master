@@ -311,16 +311,14 @@
     /* let the ground show behind the left rail + side panel area */
     [data-theme^="friendly"] .left-panel { background: transparent; border-right-color: transparent; }
 
-    /* chrome: frosted floating title bar + status bar, softened drawer.
+    /* chrome: frosted floating title bar, softened drawer.
        Backdrop blur lives on ::before so brand/notify text stays on a sharp
        layer (filter on the same element as type softens glyphs). */
     [data-theme^="friendly"] .title-bar,
-    [data-theme^="friendly"] .status-bar,
     [data-theme^="friendly"] .bottom-panel {
       isolation: isolate;
     }
     [data-theme^="friendly"] .title-bar::before,
-    [data-theme^="friendly"] .status-bar::before,
     [data-theme^="friendly"] .bottom-panel::before {
       content: '';
       position: absolute;
@@ -341,14 +339,6 @@
       background: var(--pm6-cozy-chrome);
       border: 1px solid var(--pm6-cozy-chrome-border);
       border-radius: var(--radius-lg);
-      box-shadow: var(--elev-2);
-    }
-    [data-theme^="friendly"] .status-bar {
-      position: relative;
-      margin: 2px 12px 8px;
-      background: var(--pm6-cozy-chrome);
-      border: 1px solid var(--pm6-cozy-chrome-border);
-      border-radius: var(--radius-pill);
       box-shadow: var(--elev-2);
     }
     [data-theme^="friendly"] .bottom-panel {
@@ -1243,37 +1233,33 @@
     .editor-tabs { position: relative; flex-wrap: nowrap; min-width: 0; padding-right: var(--pm6-ed-actions-w, 28px); }
     .editor-tabs .pane-tabbar-actions {
       position: absolute;
-      right: 4px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
       flex: 0 0 auto;
       z-index: 5;
     }
-    .editor-tabs .pane-close-btn {
-      flex: 0 0 auto;
-      width: 22px; height: 22px;
-      padding: 2px;
-      opacity: 0.9;
-    }
 
     /* ==================================================================
-       Contact-aware active editor-tab silhouette.
+       Contact-aware active tab silhouette (editor panes AND the dashboard).
 
-       The active tab and the code canvas below it are ONE continuous
-       surface: same fill, no border between them, joined by concave
-       shoulders. The rail behind them is darker. This replaces the old
-       "active tab tinted + 2px accent underline" treatment.
+       The active tab and the canvas below it are ONE continuous surface:
+       same fill, no border between them, joined by concave shoulders. The
+       rail behind them is darker. This replaces the old "active tab
+       tinted + 2px accent underline" treatment on both strip families.
 
        Geometry is driven from JS (PM6_EDTAB_SHAPE) as custom properties:
          --ed-shape-x / --ed-shape-w   the active tab's box in the rail
-         --ed-shape-lrx / --ed-shape-rrx   shoulder horizontal radii
-         --ed-canvas-lrx / --ed-canvas-rrx canvas exposed corner radii
-       Each horizontal radius collapses to 0 as the tab approaches that
-       side of the rail, so a flush edge has no decorative notch. The
-       VERTICAL radius stays at full height throughout, so a corner
-       flattens sideways instead of shrinking into a circular dimple.
+         --ed-lp / --ed-rp             contact PROGRESS (0..1), per side
+       The stylesheet multiplies progress by per-theme radius maxima
+       (--ed-shoulder-rx-max / --ed-canvas-rx-max), so a theme retunes its
+       corner language without touching the controller. Each horizontal
+       radius collapses to 0 as the tab approaches that side of the rail,
+       so a flush edge has no decorative notch. The VERTICAL radius stays
+       at full height throughout, so a corner flattens sideways instead
+       of shrinking into a circular dimple.
        ================================================================== */
-    .editor-pane {
+    .editor-pane, .dashboard-view {
       --ed-canvas-bg: var(--surface);
       /* Derive the rail from the CANVAS fill, never from --bg: several themes set
          --surface == --bg, which collapses the mix back to the canvas colour and
@@ -1282,15 +1268,19 @@
          surface. Mixing toward black is monotonic, so the rail is darker by
          construction in every theme. Dark themes take a larger factor because the
          same proportional step is a much smaller absolute one down there. */
-      --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
-      /* The rail PLATE is that hue at 72% alpha -- the same alpha as the
-         original part-06 strip plate and the chat panel header. The strip
-         keeps part-06's backdrop blur, so scrolled code ghosts through the
-         rail (the scroll-under frost); an opaque rail killed that effect in
-         the shipped rev. The silhouette and the canvas stay opaque -- content
-         sliding under the ACTIVE tab reads as sliding under the canvas's own
-         top edge, which is the physical metaphor. */
-      --ed-rail-bg: color-mix(in srgb, var(--ed-rail-solid) 72%, transparent);
+      --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 88%, rgb(0, 0, 0));
+      /* The rail PLATE is that hue at --ed-rail-alpha. The strip keeps part
+         06's backdrop blur, so scrolled content ghosts through the rail (the
+         scroll-under frost); an opaque rail killed that effect in the shipped
+         rev. The silhouette and the canvas stay opaque -- content sliding
+         under the ACTIVE tab reads as sliding under the canvas's own top
+         edge, which is the physical metaphor. */
+      --ed-rail-alpha: 72%;
+      --ed-rail-bg: color-mix(in srgb, var(--ed-rail-solid) var(--ed-rail-alpha), transparent);
+      /* What the translucent rail composites to OVER the canvas fill: the
+         corner caps paint this -- the colour the eye actually sees at the
+         rail/canvas boundary -- so the wedges match it seamlessly. */
+      --ed-cap-bg: color-mix(in srgb, var(--ed-rail-solid) var(--ed-rail-alpha), var(--ed-canvas-bg));
       /* Opaque ground that the rail, the silhouette and the canvas are all
          composited over. Without it the glass themes break the central promise:
          --surface is translucent there, so the silhouette (over the rail) and the
@@ -1298,35 +1288,57 @@
          as one surface. A shared opaque ground makes the fills identical by
          construction, in all eight themes. */
       --ed-solid-base: var(--bg);
-      --ed-corner-ry: 10px;      /* canvas exposed corner, vertical radius */
-      --ed-shoulder-ry: 8px;     /* tab shoulder cutout, vertical radius */
-      --ed-top-radius: 11px;
+      --ed-strip-h: 40px;
+      --ed-tab-top: 2px;
+      --ed-top-radius: 13px;
+      --ed-corner-ry: 12px;      /* canvas exposed corner, vertical radius */
+      --ed-shoulder-ry: 12px;    /* tab shoulder cutout, vertical radius */
+      /* horizontal radius maxima -- multiplied by the JS-written progress */
+      --ed-canvas-rx-max: 12px;
+      --ed-shoulder-rx-max: 12px;
       --ed-shape-x: 0px;
       --ed-shape-w: 0px;
-      --ed-shape-lrx: 0px;
-      --ed-shape-rrx: 0px;
-      --ed-canvas-lrx: 0px;
-      --ed-canvas-rrx: 0px;
     }
-    [data-theme$="-dark"] .editor-pane { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
+    .dashboard-view { --ed-strip-h: 36px; }
+    [data-theme$="-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 66%, rgb(0, 0, 0)); }
     /* Glass reads the code surface as its near-opaque plate; adopt that as the
        shared fill so the silhouette and the canvas stay identical AND glass keeps
-       its own material. */
-    [data-theme^="glass"] .editor-pane { --ed-canvas-bg: var(--pm6-glass-plate); }
-    .editor-tabs.ed-shape-on {
+       its own material. Its rail runs less translucent: the plate is already
+       glassy, and plate-on-plate at 72% went muddy. */
+    [data-theme^="glass"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: var(--pm6-glass-plate); --ed-rail-alpha: 88%; --ed-top-radius: 14px; }
+    [data-theme^="glass"] .ed-tab-shape { box-shadow: inset 0 1px 0 var(--glass-edge); }
+    [data-theme^="friendly"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: color-mix(in srgb, var(--pm6-cozy-mint) 7%, var(--surface)); --ed-top-radius: 16px; --ed-canvas-rx-max: 14px; --ed-shoulder-rx-max: 14px; }
+    [data-theme^="friendly"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--accent-lime); }
+    [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-top-radius: 6px; --ed-corner-ry: 8px; --ed-shoulder-ry: 8px; --ed-canvas-rx-max: 8px; --ed-shoulder-rx-max: 8px; }
+    [data-theme^="retro"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--accent-lime); }
+    /* retro AFTER the generic -dark line: retro light AND dark share the 88%
+       base, then retro-dark alone deepens to 60%. */
+    [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 88%, rgb(0, 0, 0)); }
+    [data-theme="retro-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 60%, rgb(0, 0, 0)); }
+    .editor-tabs.ed-shape-on, .dashboard-tabs.ed-shape-on {
+      position: relative;
       /* single translucent layer: part 06's backdrop blur on .editor-tabs now
          has scrolled content to show through the rail */
       background: var(--ed-rail-bg);
       border-bottom: 0;
-      align-items: flex-end;
-      /* No left inset: the first tab must be able to sit FLUSH against the
-         canvas's left boundary, which is the contact case the smart-corner
-         rule exists for. A padded rail would mean the flush state is
-         unreachable and the morph never demonstrates. */
-      padding-left: 0;
-      padding-bottom: 0;
+      align-items: center;
+      height: var(--ed-strip-h, 40px);
+      /* margin/padding zeroed: the theme glow-gutter offsets (-12px/-6px)
+         would put the strip's box out of register with the rail it paints,
+         and the abs-positioned actions cluster's top:50% must centre against
+         the TRUE strip box. No left inset either: the first tab must be able
+         to sit FLUSH against the canvas's left boundary, which is the contact
+         case the smart-corner rule exists for. A padded rail would mean the
+         flush state is unreachable and the morph never demonstrates. */
+      margin: 0;
+      padding: 0;
       overflow: visible;
+      --ed-shape-lrx: calc(var(--ed-lp, 0) * var(--ed-shoulder-rx-max, 12px));
+      --ed-shape-rrx: calc(var(--ed-rp, 0) * var(--ed-shoulder-rx-max, 12px));
+      --ed-canvas-lrx: calc(var(--ed-lp, 0) * var(--ed-canvas-rx-max, 12px));
+      --ed-canvas-rrx: calc(var(--ed-rp, 0) * var(--ed-canvas-rx-max, 12px));
     }
+    .editor-tabs.ed-shape-on { padding-right: var(--pm6-ed-actions-w, 28px); }
     /* `!important` is load-bearing here, not laziness: glass paints the code
        surface through `[data-theme^="glass"] #editorPane1 .editor-area`, whose id
        specificity outranks any class selector. If the canvas keeps that rule and
@@ -1335,15 +1347,13 @@
        its own plate colour below via --ed-canvas-bg. */
     .editor-pane:has(.editor-tabs.ed-shape-on) .editor-area {
       background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base) !important;
-      border-top-left-radius: var(--ed-canvas-lrx) var(--ed-corner-ry);
-      border-top-right-radius: var(--ed-canvas-rrx) var(--ed-corner-ry);
     }
     /* the travelling surface itself */
     .ed-tab-shape {
       position: absolute;
       left: var(--ed-shape-x);
       width: var(--ed-shape-w);
-      top: var(--xs, 4px);
+      top: var(--ed-tab-top, 2px);
       bottom: -1px;               /* overlap the join so no hairline shows */
       background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
       border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
@@ -1352,6 +1362,9 @@
     }
     @supports (corner-shape: squircle) {
       .ed-tab-shape { corner-shape: squircle squircle flat flat; }
+      /* retro keeps plain circular arcs -- a squircle crown reads soft
+         against its square-cornered chrome */
+      [data-theme^="retro"] .ed-tab-shape { corner-shape: round; }
     }
     /* concave shoulders: a quarter-ellipse CUT OUT of a block of canvas fill,
        so the tab flares outward into the canvas rather than sitting on top of
@@ -1386,39 +1399,75 @@
       mask-image: radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
           transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
     }
+    /* Corner caps: the strip paints the canvas's exposed top corners itself,
+       as two masked wedges hanging just below the rail. Each cap is filled
+       with --ed-cap-bg -- the rail-over-canvas COMPOSITE colour at the
+       VISIBLE boundary -- so the wedge is indistinguishable from the real
+       translucent rail sitting on the canvas. Accepted tradeoff: no frost
+       ghosting inside the two wedges (the T16 pin forbids adding blur
+       layers), imperceptible at these radii. */
+    .editor-tabs.ed-shape-on::before,
+    .editor-tabs.ed-shape-on::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      height: var(--ed-corner-ry);
+      background: var(--ed-cap-bg);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .editor-tabs.ed-shape-on::before {
+      left: 0;
+      width: var(--ed-canvas-lrx);
+      -webkit-mask-image: radial-gradient(var(--ed-canvas-lrx) var(--ed-corner-ry) at 100% 100%,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-canvas-lrx) var(--ed-corner-ry) at 100% 100%,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+    }
+    .editor-tabs.ed-shape-on::after {
+      right: 0;
+      width: var(--ed-canvas-rrx);
+      -webkit-mask-image: radial-gradient(var(--ed-canvas-rrx) var(--ed-corner-ry) at 0 100%,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-canvas-rrx) var(--ed-corner-ry) at 0 100%,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+    }
     /* Labels ride ABOVE the silhouette; the tab element itself paints nothing.
        Per-theme active-tab fills, glows and underlines are all cleared here --
        the silhouette IS the active-tab treatment now, and a theme halo around
-       it would read as a floating pill rather than a joined surface. */
-    .editor-tabs.ed-shape-on .tab {
+       it would read as a floating pill rather than a joined surface. Inactive
+       tabs are text-only; hover gets a faint canvas-tinted ghost. */
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab {
       position: relative;
       z-index: 1;
+      height: 100%;
       background: transparent;
       box-shadow: none;
-      border-radius: 0;
+      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
     }
-    .editor-tabs.ed-shape-on .tab.active,
-    .editor-tabs.ed-shape-on .tab.tab-focused,
-    .editor-tabs.ed-shape-on .tab:hover {
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active,
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.tab-focused,
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:hover {
       background: transparent;
       box-shadow: none;
       filter: none;
     }
-    .editor-tabs.ed-shape-on .tab:not(.active) {
-      background: color-mix(in srgb, var(--ed-canvas-bg) 26%, transparent);
-      border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
       color: var(--text-secondary);
     }
-    .editor-tabs.ed-shape-on .tab:not(.active):hover {
-      background: color-mix(in srgb, var(--ed-canvas-bg) 42%, transparent);
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active):hover {
+      background: color-mix(in srgb, var(--ed-canvas-bg) 30%, transparent);
       color: var(--text-primary);
     }
-    .editor-tabs.ed-shape-on .tab.active { color: var(--text-primary); }
-    .editor-tabs.ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
-    .editor-tabs.ed-shape-on .tab.active::after,
-    .editor-tabs.ed-shape-on .tab.active::before { display: none; }
-    .editor-tabs.ed-shape-on .pm-ed-overflow,
-    .editor-tabs.ed-shape-on .pane-tabbar-actions { position: relative; z-index: 2; }
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--text-primary); }
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active::after,
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active::before { display: none; }
+    .editor-tabs.ed-shape-on .pm-ed-overflow { position: relative; z-index: 2; }
+    /* NO position override on the cluster: it must stay absolutely positioned
+       (top: 50% + translateY(-50%)) or "relative" turns that pair into a
+       +9px downward shove and the X/kebab ride below the strip's centre. */
+    .editor-tabs.ed-shape-on .pane-tabbar-actions { z-index: 2; }
     /* Reduced motion keeps the state change, drops the spring travel; the JS
        reads this flag too and snaps instead of animating. */
     @media (prefers-reduced-motion: reduce) { .ed-tab-shape { transition: none; } }
