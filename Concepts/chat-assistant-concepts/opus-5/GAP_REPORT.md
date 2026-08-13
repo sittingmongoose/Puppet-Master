@@ -316,3 +316,33 @@ both as workspace controls only. No entry is warranted.
 - **Status:** implementation-only · **Impact:** demo data is emitted as script bundles by
   `demo/build-demo-bundles.mjs` so the workspace runs from disk and over http identically.
 - **Owner:** none — a prototype-only concern. **Assumption:** no
+
+## GAP-E - Phase E closed
+
+Every row of the packet's three differentiation matrices (question systems, compact work clusters, BSD advice
+surfaces) is now built and browser-verified in all eight thread concepts, together with an artifact handoff
+card per concept. `shared/reveal.js` is primitives only; the shared question choreography that made the eight
+concepts move identically is deleted. `shared/qflow.js` carries the verb semantics that must NOT differ.
+
+- **Status**: closed.
+- **Evidence**: `BUILD_STATUS.md` section "Phase E", `TEST_REPORT.md` section "Phase E re-run (final)", and
+  `interaction-test-report.json`.
+- **Remaining**: the visual matrix in `evidence/` holds 14 targeted captures rather than the complete
+  64-pairing x 8-theme grid. That is a capture-coverage gap, not a behavioural one: the 128-run assertion
+  sweep covers every pairing at both widths.
+
+## GAP-E2 - post-Phase-E audit
+
+Asked whether the work was polished and whether anything from the packet was missing, three gaps were found
+and closed: `SERVICES.md` had been lost (never git-tracked, now regenerated from `shared/*.js`), Phase E had
+no committed test coverage (the new `forms` suite covers the eight forms, the eight clusters, the yield rule
+and the `PMXQFlow` contract), and the visual evidence predated the phase (18 fresh captures).
+
+Writing the suite found a defect the probes had missed: `motion.swapText` painted an empty frame when writing
+a first value, so every freshly mounted work line, chip and status label was blank for two frames. Fixed, with
+both halves of the contract pinned by assertions.
+
+- **Status**: closed.
+- **Remaining**: the visual matrix is 32 targeted captures rather than the full 64-pairing x 8-theme grid.
+  That is capture coverage, not behavioural coverage - the 128-run sweep and the 351-assertion suite cover
+  every pairing and every form.

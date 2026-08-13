@@ -206,3 +206,52 @@ Every module obeys these. Each is an automated assertion.
 - Import another concept's file.
 - Depend on any file outside this folder.
 - Assume it is the only instance on the page (the contact sheet mounts 8 at once).
+
+## 12. Questions: forms differ, verbs do not
+
+`shared/reveal.js` once owned the whole question choreography through `question(spec)` and
+`afterRender(host, svc, tid, from)`. Both are deleted. They are the reason every thread concept's
+questionnaire used to look and move identically, and no amount of per-concept CSS could recover the
+difference while one function decided the entrance, the advance and the collapse.
+
+What replaced them is a deliberate split:
+
+- **`shared/reveal.js` is materials only** — `stagger`, `clearStagger`, `oneShot`, `springHeight`,
+  `measure`, `reject`, `ripple`, `capsule`, `keyFor`, `reduced`, `changed`, `celebrate`. A concept composes
+  these in its own order. There is no shared entrance any more, and adding one back is a contract breach.
+- **`shared/qflow.js` -> `PMXQFlow` is the verb layer.** It renders nothing and owns no DOM.
+  `read(svc, tid)` returns one coherent snapshot per render pass; `act(svc, tid, verb, arg)` covers
+  `answer`, `answerAt`, `skip`, `unskip`, `goto`, `prev`, `next`, `submit`, `cancel` and returns
+  `{ ok, reason, offenderIndex, resolved }`.
+
+The line between them is what a concept may decide for itself:
+
+| decision | owner |
+| --- | --- |
+| What the question looks like, where progress sits, how it enters and leaves | **the thread concept** |
+| What a verb does to the store, and where a refusal belongs | **`PMXQFlow`** |
+
+Three rules a concept must follow, each of which was a real defect before it was written down:
+
+1. **Ask `PMXQFlow.pending(svc, tid)`, never `view[tid].surfacesYielded`.** Every concept's `update()`
+   renders work surfaces before the question, so the flag is one render stale at exactly the moment it is
+   read - which paints the whole cluster for a frame and appears to close whatever group the reader had open.
+2. **Render a refusal at the field named by `offenderIndex`.** `submit()` reports the first offending
+   question; showing its reason under the Submit button is the toast behaviour the packet forbids in
+   different clothes. If the offender is a different question, travel to it and carry the reason across the
+   one render that takes.
+3. **Never reconstruct service keys.** The skip map is keyed by a NUL-delimited composite; ask
+   `PMXQuestionnaire.isSkipped(qid, questionId)`. Read resolved flows through
+   `PMXQuestionnaire.historyFor(threadId)` rather than reaching into the view slice.
+
+### The yield rule
+
+A pending question hides the **work surfaces** and keeps the **artifact handoff** - the handoff is the
+work's product, not a work surface. Advice follows its host: it survives in t1, t3, t4 and t5, which each
+give it a surface of its own, and yields with the cluster in t2, t6, t7 and t8, where advice IS a member of
+the cluster (a chip in the run, a row in the exec log, a link inside the status card, a gutter dot sharing
+the quiet line). Underneath, nothing is discarded: `yieldForQuestion` only flips a flag and
+`PMXQFlow.release()` clears it on both submit and cancel, so the cluster returns with its open group intact.
+
+The `forms` suite in `tests/suites.js` asserts all of this, including that no concept renders another
+concept's question form.

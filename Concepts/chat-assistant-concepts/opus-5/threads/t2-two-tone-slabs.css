@@ -251,23 +251,6 @@
 
 /* ---------------------------------------------------------------- questionnaire */
 
-[data-pmx-thread="t2"] .t2-question {
-  padding: var(--md);
-  /* Must be OPAQUE, same reasoning as .t2-jump: a questionnaire card is a surface the
-   * user must be able to read cleanly, never a translucent tint over live content. */
-  background-color: var(--background);
-  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
-  min-width: 0;
-}
-[data-pmx-thread="t2"] .t2-question-head {
-  display: flex; align-items: baseline; gap: var(--sm);
-  font-size: var(--fs-2xs); color: var(--text-muted);
-}
-[data-pmx-thread="t2"] .t2-question-req { margin-left: auto; }
-[data-pmx-thread="t2"] .t2-question-prompt {
-  margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary);
-}
-[data-pmx-thread="t2"] .t2-question-opts { display: flex; flex-direction: column; gap: 4px; }
 [data-pmx-thread="t2"] .t2-opt {
   padding: 6px var(--md);
   border: 1px solid var(--border);
@@ -282,13 +265,6 @@
   border-color: var(--accent-primary);
   font-weight: 600;
 }
-[data-pmx-thread="t2"] .t2-question-free {
-  width: 100%; min-height: 64px; resize: vertical;
-  padding: var(--sm); font: inherit; font-size: var(--fs-xs);
-  color: var(--text-primary); background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-[data-pmx-thread="t2"] .t2-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
 
 /* ---------------------------------------------------------------- shared action + status atoms
  * Used both inline (questionnaire) and inside popup sheets (goal / agents / etc.). */
@@ -479,3 +455,307 @@
  * little extra scroll distance and leaves a small gap under the last message, which
  * is what every chat client does anyway, and the pill floats over that gap. */
 [data-motion="reduced"][data-pmx-thread="t2"] .t2-root { transition: none !important; }
+
+/* ================================================================ packet: the composer capsule, the
+ * chip run's morph states, the advice sheet and the artifact handoff.
+ *
+ * THE CENTRAL RULE HERE: `.t2-capsule` is ONE element in three appearances, switched by
+ * `data-expanded` and `data-phase`. There is deliberately no `.t2-capsule-card` class - a second class
+ * for the expanded form would invite a second element, and the whole requirement is that the capsule
+ * BECOMES the card rather than handing over to one.
+ * ---------------------------------------------------------------------------------------------- */
+
+[data-pmx-thread="t2"] .t2-capsule {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  overflow: hidden;
+  /* The height is animated by springHeight, so it must not also be transitioned here - two owners for
+     one property is how a spring turns into a stutter. Radius and padding carry the shape change. */
+  transition: border-radius var(--motion-med) var(--ease-default),
+              padding var(--motion-med) var(--ease-default),
+              background var(--motion-med) var(--ease-default);
+}
+
+/* The slim form: a strip above the composer. */
+[data-pmx-thread="t2"] .t2-capsule[data-expanded="0"] { min-height: 28px; }
+
+/* The expanded form: the SAME element, squared off and opened out. */
+[data-pmx-thread="t2"] .t2-capsule[data-expanded="1"] {
+  display: block;
+  padding: var(--md);
+  border-radius: var(--radius-md);
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 6%, var(--surface-elevated));
+}
+
+[data-pmx-thread="t2"] .t2-capsule[data-phase="preparing"] { border-style: dashed; }
+[data-pmx-thread="t2"] .t2-capsule[data-phase="submitting"] { border-color: var(--accent-lime); }
+
+[data-pmx-thread="t2"] .t2-capsule-spinner {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--accent-primary);
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-text { font-size: var(--fs-2xs); color: var(--text-secondary); }
+
+[data-pmx-thread="t2"] .t2-capsule-body { display: flex; flex-direction: column; gap: var(--sm); }
+
+[data-pmx-thread="t2"] .t2-capsule-head { display: flex; align-items: flex-start; gap: var(--sm); }
+
+[data-pmx-thread="t2"] .t2-capsule-prompt {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+/* Cancel IS the close control - one affordance in the corner, not a third button in the foot. */
+[data-pmx-thread="t2"] .t2-capsule-close {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-md);
+  line-height: 1;
+  cursor: pointer;
+}
+[data-pmx-thread="t2"] .t2-capsule-close:hover { color: var(--text-primary); border-color: var(--border); }
+
+[data-pmx-thread="t2"] .t2-capsule-req {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t2"] .t2-capsule-opts { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+[data-pmx-thread="t2"] .t2-capsule-opt {
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t2"] .t2-capsule-opt:hover { border-color: var(--accent-primary); }
+[data-pmx-thread="t2"] .t2-capsule-opt[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-free {
+  width: 100%;
+  min-height: 58px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-reason { margin: 0; font-size: var(--fs-xs); color: var(--accent-error); }
+[data-pmx-thread="t2"] .t2-capsule-reason[data-show="0"] { display: none; }
+
+/* The foot: progress BOTTOM-LEFT, the relabelling control BOTTOM-RIGHT. Both positions are specified by
+   the matrix, so they are laid out by the container rather than by source order. */
+[data-pmx-thread="t2"] .t2-capsule-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex-wrap: wrap;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-foot-left {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  margin-right: auto;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-count { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+[data-pmx-thread="t2"] .t2-capsule-skipped { font-size: var(--fs-2xs); color: var(--accent-warning); }
+
+[data-pmx-thread="t2"] .t2-capsule-quiet {
+  padding: 1px 7px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t2"] .t2-capsule-quiet:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+
+/* One control, two words. `data-verb` is what changes; the element does not. */
+[data-pmx-thread="t2"] .t2-capsule-primary {
+  padding: 3px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t2"] .t2-capsule-primary[data-verb="submit"] {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--background);
+  font-weight: 600;
+}
+
+[data-pmx-thread="t2"] .t2-capsule-next {
+  padding: 3px 12px;
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
+
+/* ---- the question receipt slab ---------------------------------------------------------------- */
+
+[data-pmx-thread="t2"] .t2-qreceipt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  padding: 5px var(--md);
+  border-left: 2px solid var(--text-muted);
+  background: var(--surface);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+[data-pmx-thread="t2"] .t2-qreceipt[data-status="cancelled"] .t2-qreceipt-text { color: var(--text-muted); }
+[data-pmx-thread="t2"] .t2-qreceipt-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t2"] .t2-qreceipt-text { flex: 1 1 auto; font-size: var(--fs-xs); color: var(--text-primary); }
+[data-pmx-thread="t2"] .t2-qreceipt-open {
+  padding: 1px 8px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+/* ---- chip run additions ----------------------------------------------------------------------- */
+
+/* The collapsed chip is the run's compact form, so it reads as a summary rather than as one more
+   domain: quieter border, same size. */
+[data-pmx-thread="t2"] .t2-chip[data-chip="collapsed"] { border-style: dashed; }
+[data-pmx-thread="t2"] .t2-chip-quiet { opacity: .75; }
+
+/* The advice chip states its severity in words; the attribute only adds weight, never meaning. */
+[data-pmx-thread="t2"] .t2-chip[data-severity="caution"] { border-color: var(--accent-error); font-weight: 600; }
+[data-pmx-thread="t2"] .t2-chip[data-severity="note"] { border-color: var(--accent-blue); }
+
+/* ---- the advice sheet ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t2"] .t2-advice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--xs) 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+[data-pmx-thread="t2"] .t2-advice[data-severity="caution"] { border-left-style: double; border-left-width: 4px; border-left-color: var(--accent-error); }
+[data-pmx-thread="t2"] .t2-advice[data-severity="note"] { border-left-color: var(--accent-blue); }
+[data-pmx-thread="t2"] .t2-advice-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t2"] .t2-advice-text { margin: 0; font-size: var(--fs-xs); line-height: 1.45; color: var(--text-primary); }
+[data-pmx-thread="t2"] .t2-advice-ev { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+[data-pmx-thread="t2"] .t2-advice-dismiss {
+  padding: 1px 7px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+/* ---- artifact handoff ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t2"] .t2-handoff {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  margin-top: var(--xs);
+  padding: 5px var(--md);
+  border-left: 2px solid var(--accent-primary);
+  background: var(--surface);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+[data-pmx-thread="t2"] .t2-handoff-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t2"] .t2-handoff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t2"] .t2-handoff-state { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t2"] .t2-handoff-worked { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* compiling versus ready, not by colour alone. */
+[data-pmx-thread="t2"] .t2-handoff[data-state="idle"],
+[data-pmx-thread="t2"] .t2-handoff[data-state="loading"] { border-left-style: dashed; }
+[data-pmx-thread="t2"] .t2-handoff[data-state="idle"] .t2-handoff-state,
+[data-pmx-thread="t2"] .t2-handoff[data-state="loading"] .t2-handoff-state { font-style: italic; }
+[data-pmx-thread="t2"] .t2-handoff[data-state="error"] .t2-handoff-state { color: var(--accent-error); }
+
+[data-pmx-thread="t2"] .t2-handoff-open {
+  margin-left: auto;
+  padding: 1px 9px;
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+[data-motion="reduced"] [data-pmx-thread="t2"] .t2-capsule { transition: none !important; }

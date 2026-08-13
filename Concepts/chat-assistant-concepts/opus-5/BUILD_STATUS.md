@@ -169,87 +169,244 @@ py Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/opus-5
 
 ## Phase E - per-concept question systems, work clusters, BSD surfaces, handoff cards
 
-Written from the runs recorded below, not from intent.
+**COMPLETE.** All eight thread concepts now carry their own assigned form. Written from the runs recorded
+at the end of this section, not from intent.
 
-### Landed and verified in a real browser
+### What E0 removed, and the distinction that replaced it
 
-- **E0 - `shared/reveal.js` is primitives only.** `question(spec)` and `afterRender(host, svc, tid, from)`
-  are gone. They were what made all eight thread concepts move identically. What remains is
-  `stagger / clearStagger / oneShot / springHeight / measure / reject / ripple / capsule / keyFor /
-  reduced / changed / celebrate` - materials, not choreography.
-- **`shared/qflow.js` -> `PMXQFlow` (new).** The ACTION layer for questionnaires. Renders nothing, owns
-  no DOM. `read()` returns one coherent snapshot per render pass; `act(svc, tid, verb, arg)` covers
-  answer / answerAt / skip / unskip / goto / prev / next / submit / cancel and returns
-  `{ ok, reason, offenderIndex, resolved }`. Registered in `index.html`, `stage.html`, `contact.html`,
-  `tests/runner.html` and in `workspace.js` `buildServices()` as `ctx.services.qflow`.
-  This is deliberately the opposite kind of sharing from what E0 deleted: a question *form* must differ
-  per concept, but "what does Skip do to the store, and where does a refusal belong" is one behaviour
-  with one right answer. Three of the four defects found while building t3 were in that plumbing.
-- **`shared/questionnaire.js` gained two read-only accessors:** `isSkipped(qid, questionId)` and
-  `historyFor(threadId)`. The skip map is keyed by a **NUL-delimited** composite (`qid + '\0' + id`);
-  eight renderers reconstructing that key is eight chances to silently match nothing, which is exactly
-  what happened on the first attempt.
-- **t3 Timeline Spine - complete.** Spine stepper (each question is a square node ON the spine; the
-  filled-node run *is* the progress, so there is no `N of M` label anywhere); spine work units where a
-  completed closed group is its **marker alone**; single-open with independent reopen; BSD advice as a
-  **side node** off the spine (read-only, Dismiss only, severity carried by border style *and* the
-  words "caution"/"note"); artifact handoff node with `compiling -> ready` and a `Worked for` line.
-- **t4 Digest - complete.** The question is one more **digest entry** using the concept's own
-  `data-open` fold, with `2/3` inside the digest line while open and a `- skipped` trail; the work
-  surfaces are ONE **work digest line** (`Phase 4 of 4 - 6/8 Todos - 3 agents - +182 -41`) condensing to
-  `Verified - 1 artifact - 22m` and opening a bounded internal-scroll ledger; advice is its own digest
-  line; handoff is a one-line card in the same register.
+`shared/reveal.js` used to own `question(spec)` and `afterRender(host, svc, tid, from)` - one function
+that decided the entrance, the advance and the collapse for all eight thread concepts. That is why every
+questionnaire in this workspace used to look and move identically. Both are gone. What remains in
+`reveal.js` is materials: `stagger / clearStagger / oneShot / springHeight / measure / reject / ripple /
+capsule / keyFor / reduced / changed / celebrate`.
 
-### Defects found by building E and fixed
+`shared/qflow.js` -> `PMXQFlow` is the deliberate opposite kind of sharing, and the distinction is the
+whole point:
 
-1. **Nothing ever released `surfacesYielded`.** Only Cancel cleared it, so a *submitted* flow left the
-   work surfaces yielded for the rest of the session and the cluster never came back. Now released by
-   `PMXQFlow` on both submit and cancel, and by the no-question render path.
-2. **The yield flag is read one render too early.** Every concept's `update()` renders work surfaces
-   *before* the question, so reading `surfacesYielded` there painted the whole cluster for one frame
-   before the question displaced it, and an open group appeared to close itself. `PMXQFlow.pending()` is
-   the authoritative answer and is what t3/t4 now ask.
-3. **A submit refusal had nowhere to land.** `submit()` names the offending question; showing its reason
-   under the Submit button is the toast behaviour the packet forbids in different clothes. The refusal
+| deleted | kept |
+| --- | --- |
+| `reveal.afterRender()` decided WHAT THE QUESTION LOOKED LIKE | `qflow.act()` decides WHAT A VERB MEANS |
+
+A question form is a design decision that must differ per concept. "What does Skip do to the store, and
+where does a refusal belong" is not: it is one behaviour with one right answer, and eight copies of it is
+eight chances to get it subtly wrong. `PMXQFlow` renders nothing and owns no DOM - `read()` returns one
+coherent snapshot per render pass, `act(svc, tid, verb, arg)` covers answer / answerAt / skip / unskip /
+goto / prev / next / submit / cancel and returns `{ ok, reason, offenderIndex, resolved }`.
+
+Registered in `index.html`, `stage.html`, `contact.html`, `tests/runner.html`, and in `workspace.js`
+`buildServices()` as `ctx.services.qflow`.
+
+`shared/questionnaire.js` gained two read-only accessors: `isSkipped(qid, questionId)` and
+`historyFor(threadId)`.
+
+### The eight forms
+
+| concept | question system | compact work cluster | BSD surface |
+| --- | --- | --- | --- |
+| t1 Speaker Turns | **margin interview** - a real speaker turn labelled `Puppet Master asks`; options are hanging-indent rows at the prose measure; `1 of 3` in the margin; submit condenses the turn to a one-line receipt turn | **two-row work strip** - a phase glyph index over ONE morphing label; groups reopen independently | **margin annotation** beside the turn |
+| t2 Two-Tone Slabs | **composer capsule morph** - ONE bounds-interpolated element from slim capsule to card and back; `Question 2 of 3` bottom-left; the bottom-right control relabels `Skip` -> `Submit`; Cancel is the card's close control | **chip run** with counts morphing INSIDE each chip; collapses to a single `13 tools used` chip that reopens the run | a **`bsd` chip** opening a sheet |
+| t3 Timeline Spine | **spine stepper** - each question is a square node ON the spine; the filled-node run IS the progress, so there is no `N of M` label anywhere | **spine units** - a completed closed group is its MARKER ALONE; single-open with independent reopen | a **side node** hanging off the spine |
+| t4 Digest | **digest that unfolds** - one more digest entry using the concept's own `data-open` fold; `2/3` inside the digest line while open; a `- skipped` trail | **one work digest line** condensing to `Verified - 1 artifact - 22m`, opening a bounded internal-scroll ledger | its own **digest line** |
+| t5 Paired Columns | **lane dialogue** - prompt in the assistant lane, form in the user lane, folding to a stacked stepper below 900px; lanes cross-fade | **third work rail** right of the assistant lane at 900px+, each row opening its detail IN THE USER LANE; condenses to a three-row summary | a **note in the user lane** |
+| t6 Work Interleave | **monospace field form** - `Q1/3` prefix rows, NO CARD at all, options keyboard-numbered 1-9 (the digits are live), answers echoing as `-> answer` rows | **exec log** with fixed `kind / label / duration` columns and counts morphing in place; condenses to one `+N steps` row | a **`bsd` exec row** in the monospace register |
+| t7 Cards with Air | **card deck** - up to three level-one cards offset behind each other by translate+scale; dot rank plus `2 of 3`; answering slides the top card off; cancel fans the deck out | **status card with a segmented phase bar** - the bar greys and the head reads `Complete - 22m`; segments are buttons opening SHEETS, never nested cards | a **flat link** inside the status card |
+| t8 Reading Mode | **prose footnote** - a numbered `<ol>` at the reading measure, a gutter dot marking it, resolving to a footnote receipt; opacity plus a 6px rise ONLY | **micro-gutter dots plus one quiet line** - the dots stay and the line reads `Show work`; the global toggle reveals lines in place; each dot opens its own popup | **gutter dot plus one quiet line** |
+
+### The yield rule, and the one place it is deliberately different
+
+A pending question takes the space the work cluster occupies. What it takes and what it leaves is a
+decision, not an accident, so it is recorded here:
+
+| surface | behaviour when a question is pending | why |
+| --- | --- | --- |
+| Work surfaces (goal, todo, agents, activity, diff, verification) | **hidden** | The question is the thing being asked; the work continues underneath and returns intact, including which group was open. |
+| Artifact handoff card | **stays** | It is the work's *product*, not a work surface. Hiding a finished artifact because a new question arrived would misreport what exists. |
+| BSD advice | **stays** in t1, t3, t4, t5 | Advice is a *comment on* the work rather than part of it, and in those four concepts it has its own host (margin annotation, spine side node, digest line, user-lane note) that can outlive the cluster. |
+| BSD advice | **hides with the cluster** in t2, t6, t7, t8 | In those four the advice IS a member of the cluster by design - a chip in the run, a row in the exec log, a link inside the status card, a gutter dot sharing the quiet line. Keeping it while its container hid would require inventing a second surface for it, which is a worse answer than yielding it. |
+
+Underneath, the state is untouched in every case: `surfaces.yieldForQuestion` only flips a flag, and
+`PMXQFlow.release()` clears it on both submit and cancel, so nothing is discarded and nothing has to be
+rebuilt from scratch afterwards.
+
+**Measured.** Each concept was loaded fresh with cleared persistence so the fixture's questionnaire is
+genuinely pending, counted, resolved through its own controls, then counted again:
+
+| concept | work cluster while pending | advice while pending | work after resolve | advice after resolve |
+| --- | --- | --- | --- | --- |
+| t1 | 0 | 1 | 1 | 1 |
+| t2 | 0 | 0 | 2 | 0 (in the run) |
+| t3 | 0 | 1 | 7 | 1 |
+| t4 | 0 | 1 | 1 | 1 |
+| t5 | 0 | 1 | 1 | 1 |
+| t6 | 0 | 0 | 1 | 0 (in the condensed log) |
+| t7 | 0 | 0 | 1 | 1 |
+| t8 | 0 | 0 | 1 | 1 |
+
+The handoff card counted 1 in every cell of that run - pending and resolved, all eight concepts. Zero console
+errors and zero console warnings across the eight reloads.
+
+Two readings in that table would look like leaks and are not, which is worth recording so a later reviewer
+does not chase them:
+
+- **t2 shows one `.t2-chip` on screen while a question is pending.** It is a PER-TURN transcript chip
+  belonging to a message (`activity`), not a member of the thread work cluster: measured inside the
+  transcript, and the work-surface host contains zero chips. The cluster yields completely. The per-turn
+  chips stay for the same reason the message bodies do - they are part of the conversation, not the cluster.
+- **t6 shows no `bsd` row after resolving.** The log is condensed to its single `+N steps` row at that point;
+  expanding it renders twelve rows, the last of which is `bsd`. The advice is in the log, not missing from it.
+
+The mechanism matters as much as the rule. Concepts ask `PMXQFlow.pending(svc, tid)`, **not**
+`view[tid].surfacesYielded`. The flag is written by the question renderer, but every concept's `update()`
+renders its work surfaces FIRST, so a concept that reads the flag paints its whole cluster for one frame
+before the question displaces it - and any group the reader had open appears to close itself. Four concepts
+additionally read activity, verification and advice straight off the thread rather than through
+`surfaces.activeFor`, so those reads survived the flag entirely and left a partial cluster sitting beside
+the question until that was gated too.
+
+### Defects found by building Phase E, and fixed
+
+1. **Six concepts were calling a function that no longer existed.** t1, t2, t5, t6, t7 and t8 still called
+   `PMXReveal.afterRender(...)` after E0 removed it - a latent `TypeError` on every question render.
+2. **Nothing ever released `surfacesYielded`.** Only Cancel cleared it, so a SUBMITTED flow left the work
+   surfaces yielded for the rest of the session and the cluster never came back. `PMXQFlow` releases it on
+   both submit and cancel, and on the no-question render path.
+3. **The yield flag was read one render too early.** Every concept's `update()` renders work surfaces
+   BEFORE the question, so reading `surfacesYielded` there painted the whole cluster for one frame before
+   the question displaced it, and any group the user had open appeared to close itself. `PMXQFlow.pending()`
+   is the authoritative answer.
+4. **A submit refusal had nowhere to land.** `submit()` names the offending question; showing its reason
+   under the Submit button is the toast behaviour the packet forbids wearing different clothes. The refusal
    now travels to the offending question and renders at that field.
-4. **`skipped` outranked `active`.** Travelling back to a skipped question rendered it as an inert
-   marker with no field, so the run looked frozen. Active now outranks skipped, and the skip rides
-   along as its own attribute so the cue is not lost.
-5. **Diff counters read the wrong fixture keys** (`additions`/`deletions` instead of `added`/`removed`),
-   which rendered every change set as `+0 -0`.
-6. **Six concepts were calling a function that no longer exists.** t1, t2, t5, t6, t7 and t8 still
-   called `PMXReveal.afterRender(...)` after E0 removed it - a latent `TypeError` on every question
-   render. Those call sites and their now-unused `measure()` results are removed.
+5. **`skipped` outranked `active`** in t3's node state, so travelling back to a skipped question rendered an
+   inert marker with no field and the run looked frozen.
+6. **Diff counters read the wrong fixture keys** (`additions`/`deletions` instead of `added`/`removed`), so
+   every change set rendered `+0 -0`.
+7. **The skip map is keyed by a NUL-delimited composite** (`qid + '\0' + questionId`). A hand-rolled key in
+   a renderer matched nothing, silently. Hence the `isSkipped` accessor.
+8. **`activityGroupFor(lastMessage())` asks the wrong question.** The newest turn frequently carries no
+   activity group, so the completed/condensed form was unreachable in t1 and t2. Both now read
+   `activeFor().activity`, which walks back to the latest group.
+9. **Thread-level reads survived the yield.** Activity, verification and advice are read straight off the
+   thread rather than through `activeFor`, so t5, t6, t7 and t8 left a partial cluster beside the question.
+   The work surfaces now yield as one thing.
+10. **A latent closure bug in t7.** `var entry` is function-scoped, so every click handler on the top card
+    read whatever the loop left in it - correct today only by accident of iteration order.
+11. **Four concepts had no artifact subscription,** so their handoff cards said `compiling` forever:
+    `artifacts.open()` writes session state, which no `view*` change key covers.
+12. **Class-name collisions and unscoped rules.** t3's new work cluster collided with the transcript's own
+    `.t3-unit`, and its first CSS pass was unscoped - which on the contact sheet, where all eight thread
+    concepts are siblings in one document, would have styled its neighbours. Every new rule is now scoped
+    `[data-pmx-thread="tN"]`, and 60 orphaned rules from the replaced question cards were deleted.
+13. **t5's container query matched nothing.** The lanes queried `pmx-thread`, declared on the thread's own
+    root, but the question and work regions are provided by the WINDOW and live inside its shell, which
+    declares `pmx-chat`. Both containers are now addressed. The lanes also needed `grid-row: 1`, without
+    which auto-flow put the user half in row 2 and the dialogue still read as a stack.
 
-### Outstanding - honest list
 
-- **t1, t2, t5, t6, t7, t8 keep their PRE-EXISTING question card.** It renders, advances, and throws
-  nothing (verified: all eight pairings, zero console errors), but it is *not* the form the packet
-  assigns them: the margin interview (t1), the composer-capsule morph (t2), the lane dialogue (t5), the
-  monospace field form (t6), the card deck (t7) and the prose footnote (t8) are all unbuilt. Those six
-  currently have **no** entrance/advance choreography at all, which is honest rather than borrowed.
-- **The same six keep their existing work surfaces.** The two-row work strip (t1), chip run (t2), third
-  work rail (t5), exec log (t6), segmented phase bar (t7) and micro-gutter dots (t8) are unbuilt, as are
-  their six BSD advice surfaces and six handoff cards.
-- **Reports are stale for Phase E.** `TEST_REPORT.md`, `COVERAGE.md`, `GAP_REPORT.md` and
-  `VISUAL_AUDIT.md` describe the state before this phase.
+### Post-Phase-E audit (asked: is this polished, is anything missing)
 
-### Verification runs recorded this phase
+Three gaps were found by auditing the tree against the packet rather than against memory. All three are
+closed; two of them were real defects, not documentation drift.
 
-- Interaction suite, `tests/runner.html?run=1` at 1920x1000: **237 total, 237 passed, 0 failed,
-  0 console errors, 0 console warnings** (2,855 ms).
-- All eight `w1+tN` pairings mounted through `PMXWorkspace.setPairing`: each renders its own question
-  DOM (`t1-question`, `t2-question`, `t3-qrun`, `t4-qdigest`, `t5-question`, `t6-question`,
-  `t7-question`, `t8-question`), each advances on Next/Submit, **zero** console errors or warnings.
-- t3 behavioural probes: refusal travels and renders `This question is required.` at the field with
-  zero toasts; skip leaves a hollow dashed node with Unskip reachable; submit yields a `3 answered`
-  receipt whose popup lists three rows; cancel collapses the whole run to one `Questions cancelled`
-  node; `todo.complete` fired twice morphs `4/8 -> 5/8 -> 6/8` with the row count fixed at 7;
-  advice dismiss removes the node; handoff walks `idle/compiling -> loading/compiling -> ready/ready`
-  and an open work group survives an artifact tick; under reduced motion 10 rendered nodes report zero
-  running animations.
-- t4 behavioural probes: the question digest carries `1/3` inside its line, folds to `data-open="0"`
-  with the counter and body gone, unfolds back, and a skip writes a `- skipped` trail row with Unskip
-  reachable while the counter advances to `2/3`.
-- **The 64-pairing matrix sweep was NOT re-run to completion this phase.** The probe driving it hit a
-  CDP protocol timeout mid-run; that is a harness timeout, not a failure, and no result is claimed.
+1. **`SERVICES.md` had been lost.** It was never git-tracked, so there was nothing to restore. Nineteen
+   references to it survive across thirteen shared modules, two windows, `CONTRACT.md` and `README.md`, so it
+   is load-bearing. It has been **regenerated from `shared/*.js` itself** - every global, every
+   `ctx.services` key and every exported member is read out of the modules, so the inventory can no longer
+   drift from the code without the drift being visible in the file. 48 globals, 409 members.
+
+2. **Phase E had ZERO committed test coverage.** Every behaviour was verified by browser probes, which are
+   evidence but not regression protection: the suite's 237 assertions contained no reference to any of the
+   eight question forms, the eight work clusters, or `PMXQFlow`. A refactor could have flattened all eight
+   forms back into one shared card without failing a single test. The new **`forms` suite** closes that:
+   it asserts each concept renders its own form AND no other concept's, the structural decision each form
+   rests on (t1 asks as a real turn; t2 expands the SAME element; t3 shows no `N of M` anywhere; t6 has no
+   border, no background and no radius; t7 never nests a card; t8 uses a real `<ol>` and a `<sup>` marker),
+   the yield rule per concept, the `PMXQFlow` refusal contract, and that resolving releases the surfaces.
+
+3. **The visual evidence was stale.** The captures predated Phase E, so they showed the question cards the
+   phase replaced. Eighteen new captures were taken: `question-form-t1..t8-1200.png`,
+   `work-cluster-t1..t8-1200.png` (on thread-06, which has live work and no queued question), and
+   `t5-lanes-520.png` / `t5-lanes-1200.png` for the one form whose geometry is width-dependent.
+
+Writing the `forms` suite immediately paid for itself by failing 16 assertions on its first run, which
+exposed a defect the browser probes had not:
+
+- **`motion.swapText` painted an empty frame when writing a FIRST value.** It cross-faded unconditionally -
+  opacity to 0, then the text on the second animation frame - so every freshly mounted work line, chip and
+  status label appeared blank for two frames. A first write has nothing to fade from; it is an entrance, not
+  a morph. `swapText` now writes immediately when the element is empty and still cross-fades a replacement.
+  Both halves of that contract are pinned by assertions in the `motion` suite so the distinction cannot be
+  "simplified" away later.
+
+The other eight first-run failures were the test's fault, not the product's, and are worth recording because
+the same trap caught an earlier probe: **thread-01 always has a questionnaire queued after a reset**, so on
+that thread the work cluster is correctly always yielded. The un-yielded cluster can only be observed on a
+thread that has work and no question - thread-06 - and the suite now uses it for exactly that one assertion,
+while every form and yield assertion still runs on thread-01 with a live question.
+
+**Verification after the audit**: suite **351 total, 351 passed, 0 failed, 0 console errors, 0 console
+warnings** (23 suites, 4,450 ms); the full matrix re-run because `shared/motion.js` changed - **128 runs,
+512 assertions, 0 failed, 0 errors, 0 warnings**; validator passes; fixture still byte-frozen at 349,661.
+
+### Verification runs
+
+- **Interaction suite** (`tests/runner.html?run=1`, 1920x1000): **351 total, 351 passed, 0 failed,
+  0 console errors, 0 console warnings**, 4,450 ms.
+- **Matrix sweep**, all 64 pairings at 520 px and 750 px, run in per-window slices: **128 runs,
+  512 assertions, 0 failed, 0 console errors, 0 console warnings**. Every window contributed 16 runs and
+  64 assertions with zero failures.
+- **Director sweep**: 16 families, **93 events, 93 ok, 0 failed**. This run fired the events in sequence
+  WITHOUT resetting between them, so it measures only that every declared event acts; it is not the
+  per-event measurement in `TEST_REPORT.md`, which resets before each trigger and therefore correctly
+  records 18 with no store effect of their own (a sequence step fired without its predecessor, an
+  idempotent trigger fired twice, or a co-dependent pair).
+- **Host pages**: `index.html` (16 gallery cards), `stage.html`, `contact.html` (8 theme stages) and
+  `tests/runner.html` all reach `data-pmx-ready="1"` with **zero** console errors or warnings.
+- **ConceptHub validator**: `Concept validation passed: Concepts\chat-assistant-concepts\opus-5`.
+- **Syntax**: `node --check` passes on every `.js` in the concept.
+- **Policy**: zero references to third-party browser-automation tooling anywhere in the folder.
+
+### Per-concept behavioural probes (all driven in the browser)
+
+- **t1**: the question renders as a real turn labelled `Puppet Master asks` with `1 of 3` in the margin and
+  hanging-indent option rows (20px marker track); skip leaves `1 skipped` in the margin; `Send answers`
+  condenses to a `2 answers sent, 1 skipped` receipt turn whose popup lists three rows; cancel leaves
+  `Questions cancelled`; the strip's glyph index opens groups independently (1 -> 2 -> 3 panels, closing one
+  leaves the rest); `todo.complete` twice morphs the single line `4/8 -> 5/8 -> 6/8` with the strip's child
+  count fixed at 4; the handoff walks `idle/compiling -> loading/compiling -> ready/ready`; under reduced
+  motion three rendered nodes report zero running animations.
+- **t2**: one stamped capsule node carried all four questions and the at-end state with `count: 1`
+  throughout and heights interpolating 122 -> 102 -> 69; the bottom-right control relabelled `Skip` ->
+  `Submit`; a synchronous frame capture caught the SAME node at `data-expanded="0"`,
+  `data-phase="submitting"`, reading `Submitting answers`; the todo chip morphed `4/8 -> 5/8` on the same
+  element with the chip count unchanged; the run collapses to one chip reading exactly `13 tools used`,
+  which reopens the run and offers `Collapse`.
+- **t3**: the refusal travels and renders `This question is required.` at the field with zero toasts; skip
+  leaves a hollow dashed node with Unskip reachable; submit yields a `3 answered` receipt; cancel collapses
+  the whole run to one `Questions cancelled` node; six completed groups render as markers alone with the
+  fact still reachable by title; an open group survives an artifact tick.
+- **t4**: the question digest carries `1/3` inside its line, folds to `data-open="0"` with the counter and
+  body gone, unfolds back, and a skip writes a `- skipped` trail row with Unskip reachable.
+- **t5**: at a 1200 px chat the question host is a two-track grid (415 px user / 726 px assistant) with the
+  user lane LEFT and both halves on one row; at 520 px they stack with the same left edge; the rail is the
+  third column at x=829 and a rail row opens its detail at x=392 - left of the rail, same row; the
+  condensed rail is three rows reading `13 tools used`, `1 artifact`, `1m 34s`; cancel collapses both lanes
+  to one receipt row.
+- **t6**: the form has border `0px none`, transparent background, radius `0px` and a monospace face - no
+  card anywhere; `Q1/3`, `Q2/3`, `Q3/3` rows are all on screen; pressing `2` selects the second option and
+  echoes `-> The first ready account`; `Enter` advances; `Escape` cancels to `-> cancelled`; the log's three
+  tracks measure `52.73px 621.25px 41.02px`; `todo.complete` twice morphs `4/8 -> 5/8 -> 6/8` on the SAME
+  row element with the row count fixed at 13; the condensed form is one `+12 steps` row that expands the
+  log and offers `- collapse`.
+- **t7**: the deck renders three sibling cards (ranks 2/1/0) with the two behind absolutely positioned at
+  `scale(.964) translateY(20px)` and `scale(.982) translateY(10px)`, no nesting; the dot rank advances
+  `current -> done`; answering applies `t7-qcard-off` and promotes the next card; cancel fans the deck
+  (rotate transforms) then collapses to a `Cancelled` summary card that keeps the dot rank; the status head
+  reads `Complete - 1m 34s` with `13 tools used` beneath, all six segments are buttons and the bar greys on
+  completion; a segment opens a popup sheet and no card appears inside the status card.
+- **t8**: the marker is a `<sup>` reading `1 of 3`, the options are a real `<ol>` with `decimal` numbering
+  at a 531 px (68ch) measure inside an 18px gutter grid, and the block has border `0px` on a transparent
+  background; the `t8-qnote-rise` keyframes are exactly `opacity: 0; transform: translateY(6px)` ->
+  `opacity: 1; transform: none` with no `height` anywhere; the cluster yields entirely while a question is
+  up; the resolved footnote reads `3 answers sent.` behind a `†` mark; condensed, seven dots stay and the
+  line reads exactly `Show work`; the toggle reveals seven rows in place; the `bsd` dot opens its own popup.

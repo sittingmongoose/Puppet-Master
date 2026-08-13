@@ -261,9 +261,6 @@
   font: inherit; font-size: var(--fs-2xs); cursor: pointer;
 }
 [data-pmx-thread="t1"] .t1-act:hover { background: var(--surface-elevated); color: var(--text-primary); }
-[data-pmx-thread="t1"] .t1-act-primary {
-  background: var(--accent-primary); border-color: var(--accent-primary); color: var(--background); font-weight: 600;
-}
 
 [data-pmx-thread="t1"] .t1-blocker,
 [data-pmx-thread="t1"] .t1-replan { margin-top: 6px; display: flex; flex-direction: column; gap: 3px; }
@@ -314,46 +311,7 @@
 
 /* ---------------------------------------------------------------- questionnaire */
 
-[data-pmx-thread="t1"] .t1-question {
-  padding: var(--md);
-  border-top: 1px solid var(--border);
-  /* Must be OPAQUE, same reasoning as .t1-jump: a questionnaire card is a surface the
-   * user must be able to read cleanly, never a translucent tint over live content. */
-  background-color: var(--background);
-  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
-  min-width: 0;
-}
-[data-pmx-thread="t1"] .t1-question-head {
-  display: flex; align-items: baseline; gap: var(--sm);
-  font-size: var(--fs-2xs); color: var(--text-muted);
-}
-[data-pmx-thread="t1"] .t1-question-req { margin-left: auto; }
-[data-pmx-thread="t1"] .t1-question-prompt {
-  margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary);
-}
-[data-pmx-thread="t1"] .t1-question-opts { display: flex; flex-direction: column; gap: 4px; }
-[data-pmx-thread="t1"] .t1-opt {
-  padding: 6px var(--md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  color: var(--text-primary);
-  font: inherit; font-size: var(--fs-xs); text-align: left; cursor: pointer;
-}
-[data-pmx-thread="t1"] .t1-opt:hover { border-color: var(--accent-primary); }
 /* Chosen state is a fill plus weight, never a left accent bar. */
-[data-pmx-thread="t1"] .t1-opt[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
-  border-color: var(--accent-primary);
-  font-weight: 600;
-}
-[data-pmx-thread="t1"] .t1-question-free {
-  width: 100%; min-height: 64px; resize: vertical;
-  padding: var(--sm); font: inherit; font-size: var(--fs-xs);
-  color: var(--text-primary); background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-[data-pmx-thread="t1"] .t1-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
 
 /* ---------------------------------------------------------------- popup sheets */
 
@@ -475,3 +433,321 @@
  * little extra scroll distance and leaves a small gap under the last message, which
  * is what every chat client does anyway, and the pill floats over that gap. */
 [data-motion="reduced"][data-pmx-thread="t1"] .t1-root { transition: none !important; }
+
+/* ================================================================ packet: margin interview, two-row
+ * work strip, margin annotations, artifact handoff.
+ *
+ * Every selector is scoped to this concept: the contact sheet renders all eight thread concepts as
+ * siblings in ONE document, so an unscoped `.t1-...` rule would style its neighbours.
+ *
+ * The hanging-margin grid below is the concept's existing geometry, reused deliberately - the whole
+ * premise of these surfaces is that they are rows in the same conversation, not panels beside it.
+ * `.t1-sheet-*` is NOT restyled here: those rules already exist and the receipt popup reuses them.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* ---- the two-row work strip -------------------------------------------------------------------- */
+
+[data-pmx-thread="t1"] .t1-wstrip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sm) 0;
+}
+
+/* Row one: the phase glyph index. Fixed-size marks in a row, so the strip's height never depends on
+   how many groups are live. */
+[data-pmx-thread="t1"] .t1-wstrip-index {
+  display: flex;
+  align-items: center;
+  gap: var(--xs);
+  min-height: 20px;
+}
+
+[data-pmx-thread="t1"] .t1-wstrip-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default);
+}
+
+[data-pmx-thread="t1"] .t1-wstrip-glyph:hover { color: var(--text-primary); border-color: var(--border); }
+
+/* An open group's mark is filled, so row one doubles as the index AND the open-set indicator. There is
+   no separate "which is open" affordance, because a second one would be a second source of truth. */
+[data-pmx-thread="t1"] .t1-wstrip-glyph[data-open="1"] {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+}
+
+/* Row two: ONE line for the whole strip. Tabular figures so a morphing count cannot reflow the row. */
+[data-pmx-thread="t1"] .t1-wstrip-line {
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The completed sentence is a different statement, not a shorter one, so it reads at full contrast. */
+[data-pmx-thread="t1"] .t1-wstrip[data-complete="1"] .t1-wstrip-line { color: var(--text-primary); }
+
+[data-pmx-thread="t1"] .t1-wstrip-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--xs) 0 var(--sm) 0;
+}
+
+[data-pmx-thread="t1"] .t1-wstrip-panel-title {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t1"] .t1-wstrip-note { margin: 0; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* ---- activity stages -------------------------------------------------------------------------- */
+
+[data-pmx-thread="t1"] .t1-stage { display: flex; align-items: baseline; gap: var(--xs); flex-wrap: wrap; }
+
+[data-pmx-thread="t1"] .t1-stage-kind {
+  flex: 0 0 auto;
+  min-width: 56px;
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-stage-label { font-size: var(--fs-2xs); color: var(--text-primary); }
+[data-pmx-thread="t1"] .t1-stage-detail { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t1"] .t1-stage-dur { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* ---- BSD: annotations in the hanging margin --------------------------------------------------- */
+
+/* Same two-column grid as a turn: label hangs left, prose sits on the measure. That is what makes an
+   annotation read as marginalia rather than as an inserted panel. */
+/* This concept's "margin" is the HANGING LABEL SLOT above the prose, not a left gutter: `.t1-turn` is a
+   single column and `.t1-speaker` is a stacked label with 3px beneath it. An annotation therefore takes
+   the same shape - label slot, then prose on the measure - so it aligns with every turn around it. A
+   two-column grid here would invent a gutter the transcript does not have. */
+[data-pmx-thread="t1"] .t1-annot {
+  display: flex;
+  flex-direction: column;
+  padding: var(--xs) 0;
+}
+
+[data-pmx-thread="t1"] .t1-annot-margin { display: flex; align-items: baseline; gap: var(--sm); margin-bottom: 3px; }
+
+[data-pmx-thread="t1"] .t1-annot-kind {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Severity is carried by the margin WORD ("Caution"/"Note") and by the rule weight - never by colour
+   alone, so it survives a monochrome render and a screen reader. */
+[data-pmx-thread="t1"] .t1-annot[data-severity="caution"] .t1-annot-kind { color: var(--accent-error); font-weight: 600; }
+[data-pmx-thread="t1"] .t1-annot[data-severity="caution"] .t1-annot-body { border-left-width: 3px; border-left-style: double; border-left-color: var(--accent-error); }
+[data-pmx-thread="t1"] .t1-annot[data-severity="note"] .t1-annot-body { border-left-color: var(--accent-blue); }
+
+[data-pmx-thread="t1"] .t1-annot-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-left: var(--sm);
+  border-left: 1px solid var(--text-muted);
+  max-width: 62ch;
+}
+
+[data-pmx-thread="t1"] .t1-annot-text { margin: 0; font-size: var(--fs-xs); line-height: 1.5; color: var(--text-primary); }
+[data-pmx-thread="t1"] .t1-annot-ev { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+
+[data-pmx-thread="t1"] .t1-annot-dismiss {
+  padding: 1px 7px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-annot-dismiss:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+
+/* ---- artifact handoff ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t1"] .t1-handoff {
+  display: flex;
+  flex-direction: column;
+  padding: var(--xs) 0;
+}
+
+[data-pmx-thread="t1"] .t1-handoff-body {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  max-width: 62ch;
+}
+
+[data-pmx-thread="t1"] .t1-handoff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t1"] .t1-handoff-state { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t1"] .t1-handoff-worked { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* compiling versus ready without colour as the only cue. */
+[data-pmx-thread="t1"] .t1-handoff[data-state="idle"] .t1-handoff-state,
+[data-pmx-thread="t1"] .t1-handoff[data-state="loading"] .t1-handoff-state { font-style: italic; }
+[data-pmx-thread="t1"] .t1-handoff[data-state="error"] .t1-handoff-state { color: var(--accent-error); }
+
+[data-pmx-thread="t1"] .t1-handoff-open {
+  padding: 1px 9px;
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-handoff-open:hover { background: color-mix(in srgb, var(--accent-primary) 14%, transparent); }
+
+/* ---- the margin interview --------------------------------------------------------------------- */
+
+/* It is a TURN. It inherits `.t1-turn`'s grid; everything below only adds what a question needs. */
+[data-pmx-thread="t1"] .t1-qturn[data-phase="preparing"] .t1-speaker-label,
+[data-pmx-thread="t1"] .t1-qturn[data-phase="submitting"] .t1-speaker-label { opacity: .7; }
+
+/* The margin stack: speaker label, then the progress, then the skip tally. This is why the progress is
+   not in a card head - this concept has a margin for exactly this kind of fact. */
+/* The margin stack sits where the speaker label sits, and the progress sits BESIDE the label rather
+   than under it - one line of metadata above the prose, which is this concept's existing habit. */
+[data-pmx-thread="t1"] .t1-qmargin { display: flex; align-items: baseline; gap: var(--sm); flex-wrap: wrap; }
+
+[data-pmx-thread="t1"] .t1-qcount {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t1"] .t1-qskipmark { font-size: var(--fs-2xs); color: var(--accent-warning); }
+
+[data-pmx-thread="t1"] .t1-qprompt { margin: 0 0 var(--xs) 0; }
+
+[data-pmx-thread="t1"] .t1-qreq {
+  display: block;
+  margin-bottom: var(--xs);
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Options as HANGING-INDENT ROWS. The marker sits in the indent and the text starts on the prose
+   measure, so a wrapped option lines up under itself rather than under its number - which is the whole
+   reason this is a hanging indent and not a button grid. */
+[data-pmx-thread="t1"] .t1-qrows { display: flex; flex-direction: column; gap: 1px; margin-bottom: var(--xs); max-width: 68ch; }
+
+[data-pmx-thread="t1"] .t1-qrow {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: var(--xs);
+  width: 100%;
+  padding: 3px 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  text-align: left;
+  cursor: pointer;
+}
+
+[data-pmx-thread="t1"] .t1-qrow:hover { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+
+[data-pmx-thread="t1"] .t1-qrow-mark {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  line-height: 1.5;
+}
+
+[data-pmx-thread="t1"] .t1-qrow-text { line-height: 1.5; }
+
+/* A chosen option is marked in the indent and by weight - the row itself never becomes a filled chip,
+   because a filled chip is a control and this is a line of prose you picked. */
+[data-pmx-thread="t1"] .t1-qrow[aria-pressed="true"] .t1-qrow-mark { color: var(--accent-primary); }
+[data-pmx-thread="t1"] .t1-qrow[aria-pressed="true"] .t1-qrow-text { color: var(--text-primary); font-weight: 600; }
+[data-pmx-thread="t1"] .t1-qrow[aria-pressed="true"] .t1-qrow-mark::after { content: ' \2022'; }
+
+[data-pmx-thread="t1"] .t1-qfree {
+  width: 100%;
+  max-width: 68ch;
+  min-height: 56px;
+  margin-bottom: var(--xs);
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+[data-pmx-thread="t1"] .t1-qreason { margin: 0 0 var(--xs) 0; font-size: var(--fs-xs); color: var(--accent-error); }
+[data-pmx-thread="t1"] .t1-qreason[data-show="0"] { display: none; }
+
+[data-pmx-thread="t1"] .t1-qacts { display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; }
+
+[data-pmx-thread="t1"] .t1-qact {
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t1"] .t1-qact:hover { border-color: var(--accent-primary); }
+
+[data-pmx-thread="t1"] .t1-qact-primary {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--background);
+  font-weight: 600;
+}
+
+/* The receipt turn: one line, still a turn, permanently in the transcript. */
+[data-pmx-thread="t1"] .t1-qreceipt-line { margin: 0 0 var(--xs) 0; color: var(--text-secondary); }
+[data-pmx-thread="t1"] .t1-qreceipt[data-status="cancelled"] .t1-qreceipt-line { color: var(--text-muted); }
+
+/* ---- this concept's own choreography ----------------------------------------------------------- */
+
+/* A turn ARRIVES. It does not inflate: no height spring anywhere here, because a bounded box springing
+   open is card vocabulary and this concept has no cards. */
+@keyframes t1-qturn-arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-pmx-thread="t1"] .t1-qturn-arrive { animation: t1-qturn-arrive var(--motion-med) var(--ease-out) both; }
+
+[data-motion="reduced"] [data-pmx-thread="t1"] .t1-qturn-arrive { animation: none !important; }
+[data-motion="reduced"] [data-pmx-thread="t1"] .t1-wstrip-glyph { transition: none !important; }

@@ -120,6 +120,15 @@
     this.renderSurfaces();
     this.renderQuestion();
     this.syncLive();
+    /* Artifact state lives OUTSIDE the store - the service keeps its own subscribers - so its ticks
+     * arrive here and nowhere else. Without this the handoff card renders `compiling` and stays there
+     * forever, because `artifacts.open()` writes session state and no `view*` key covers it. */
+    var selfArt = this;
+    if (this.ctx.services.artifacts && this.ctx.services.artifacts.subscribe && !this._artOff) {
+      this._artOff = this.ctx.services.artifacts.subscribe(function () {
+        if (selfArt._handoffHost) selfArt._renderHandoff(selfArt._handoffHost);
+      });
+    }
   };
 
   T1Thread.prototype.buildOlderNotice = function (hidden) {
@@ -335,29 +344,331 @@
       : this.inlineSurfaces;
   };
 
+  /* ---------------------------------------------------------------- work: the two-row strip
+   *
+   * The matrix assigns this concept a TWO-ROW WORK STRIP: row one is a phase glyph index, row two is
+   * ONE label that morphs in place. Not one block per surface - one strip for all of them.
+   *
+   * Why that shape belongs here: this concept is hanging labels and prose measure with no containers
+   * anywhere. A stack of bordered surface cards (what this function used to build) is the one thing the
+   * concept promises not to do. A glyph index plus a single sentence carries the same information in the
+   * register the transcript already reads in.
+   *
+   * Groups reopen INDEPENDENTLY, so the open set lives in `view[tid].surfaces.openIds` - the per-record
+   * map the store carries for exactly this - rather than the single `expanded` slot used by concepts
+   * that promise single-detail behaviour.
+   */
   T1Thread.prototype.renderSurfaces = function () {
+    var self = this;
     var u = U();
     var svc = this.ctx.services;
     var host = this.surfaceHost();
     if (!host) return;
     U().empty(host);
 
-    var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
-    if (!active) return;
+    /* Ask the flow, not `surfacesYielded`: that flag is written by renderQuestion, which runs AFTER
+     * this on every pass, so reading it here paints the strip for one frame before the question
+     * displaces it. */
+    var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
 
-    /* Nothing reserves permanent space: absent surfaces render nothing at all.
-     * activeFor may hand back either a single group or an array of them, so normalise
-     * rather than assuming one shape. */
-    function each(v) { return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]); }
+    this._bsdHost = u.el('div', { class: 't1-bsd-host' });
+    this._handoffHost = u.el('div', { class: 't1-handoff-host' });
 
-    if (active.goal) host.appendChild(this.buildGoal(active.goal));
-    if (active.todo) host.appendChild(this.buildTodo(active.todo));
-    var self = this;
-    each(active.subagents).forEach(function (g) { host.appendChild(self.buildSubagents(g)); });
-    each(active.diffs).forEach(function (g) { host.appendChild(self.buildDiff(g)); });
+    if (!pendingQuestion) {
+      var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+      var thread = this.ctx.data.threadById(this.tid());
+      var v = this.ctx.store.view(this.tid());
+      var openIds = (v.surfaces && v.surfaces.openIds) || {};
+
+      function each(val) { return val == null ? [] : (Object.prototype.toString.call(val) === '[object Array]' ? val : [val]); }
+      function glyph(name) { return (svc.icons && svc.icons.has && svc.icons.has(name)) ? name : 'dot'; }
+
+      var groups = [];
+
+      if (active && active.goal) {
+        var phase = svc.goals && svc.goals.phaseOf ? svc.goals.phaseOf(active.goal) : null;
+        groups.push({
+          key: 'goal', icon: glyph('gauge'),
+          /* The phase index leads the strip: on one line, "where are we" outranks everything else. */
+          short: phase ? ('Phase ' + phase.index + ' of ' + phase.total) : F().label(active.goal.status),
+          title: active.goal.title || active.goal.objective,
+          build: function (h) { h.appendChild(self.buildGoal(active.goal)); }
+        });
+      }
+
+      if (active && active.todo) {
+        var items = active.todo.items || [];
+        var done = items.filter(function (i) { return i.state === 'complete' || i.state === 'done'; }).length;
+        var blocked = items.filter(function (i) { return i.state === 'blocked'; }).length;
+        groups.push({
+          key: 'todo', icon: glyph('check'),
+          short: done + '/' + items.length + ' Todos' + (blocked ? ', ' + blocked + ' blocked' : ''),
+          title: 'Tasks',
+          build: function (h) { h.appendChild(self.buildTodo(active.todo)); }
+        });
+      }
+
+      each(active && active.subagents).forEach(function (g, n) {
+        groups.push({
+          key: 'agents' + (n || ''), icon: glyph('crew'),
+          /* subagentSummary returns '' when every count is zero, and an empty segment renders as a
+           * hollow `· ·` gap in the one-line strip. State the absence instead. */
+          short: (svc.surfaces.subagentSummary && svc.surfaces.subagentSummary(g)) || 'No agents active',
+          title: g.label || 'Agents',
+          build: function (h) { h.appendChild(self.buildSubagents(g)); }
+        });
+      });
+
+      /* Activity carries the six kinds the packet wants visible: read, search, web, browser, test,
+       * verify. Without it the strip cannot report what the run actually did. */
+      var stages = (thread && thread.activityStages) || [];
+      if (stages.length) {
+        groups.push({
+          key: 'activity', icon: glyph('beaker'),
+          short: self._activityShort(stages),
+          title: 'Activity',
+          build: function (h) { self.buildStagesDetail(h, stages); }
+        });
+      }
+
+      each(active && active.diffs).forEach(function (g, n) {
+        var fs = g.files || [];
+        var add = 0, rem = 0;
+        fs.forEach(function (f) { add += f.added || 0; rem += f.removed || 0; });
+        groups.push({
+          key: 'diff' + (n || ''), icon: glyph('diff'),
+          short: fs.length + (fs.length === 1 ? ' file' : ' files') + ', +' + add + ' \u2212' + rem,
+          title: g.label || 'Changes',
+          build: function (h) { h.appendChild(self.buildDiff(g)); }
+        });
+      });
+
+      var verified = this._verificationRecord();
+      if (verified) {
+        groups.push({
+          key: 'verify', icon: glyph('shield'),
+          short: 'Verified',
+          title: 'Verification',
+          build: function (h) {
+            h.appendChild(u.el('p', { class: 't1-wstrip-note', text: verified.note }));
+            h.appendChild(u.el('p', { class: 't1-wstrip-note', text: 'Worked for ' + F().duration(verified.workedSeconds) }));
+          }
+        });
+      }
+
+      if (groups.length) host.appendChild(this._buildWorkStripRows(groups, openIds));
+    }
+
+    host.appendChild(this._bsdHost);
+    host.appendChild(this._handoffHost);
+    this._renderBsdMargin(this._bsdHost);
+    this._renderHandoff(this._handoffHost);
   };
 
-  T1Thread.prototype.buildGoal = function (goal) {
+  T1Thread.prototype._activityShort = function (stages) {
+    var kinds = {};
+    stages.forEach(function (st) { kinds[st.kind] = (kinds[st.kind] || 0) + 1; });
+    var words = { read: 'read', search: 'searched', web: 'fetched', browser: 'inspected', test: 'tested', verify: 'verified' };
+    var parts = [];
+    for (var k in kinds) {
+      if (!Object.prototype.hasOwnProperty.call(kinds, k)) continue;
+      parts.push(kinds[k] + ' ' + (words[k] || F().label(k).toLowerCase()));
+    }
+    return parts.join(', ');
+  };
+
+  /* The strip. Two rows, and row two is ONE element for the whole strip - which is what makes the count
+   * morph a morph rather than an append: `motion.swapText` replaces the text of a row that was already
+   * there, so a live run never grows the transcript by a line per tick. */
+  T1Thread.prototype._buildWorkStripRows = function (groups, openIds) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+
+    /* The LATEST activity group in the thread, not the newest message's - the newest turn frequently
+     * carries none, which left the completed sentence unreachable. */
+    var activeNow = this.ctx.services.surfaces ? this.ctx.services.surfaces.activeFor(this.tid()) : null;
+    var group = activeNow ? activeNow.activity : null;
+    var complete = !!(group && group.status === 'complete');
+
+    var strip = u.el('div', { class: 't1-wstrip', data: { complete: complete ? '1' : '0' } });
+
+    /* ---- row 1: the phase glyph index */
+    var index = u.el('div', { class: 't1-wstrip-index' });
+    groups.forEach(function (g) {
+      var on = !!openIds[g.key];
+      var btn = u.el('button', {
+        class: 't1-wstrip-glyph', type: 'button',
+        data: { kind: g.key, open: on ? '1' : '0' },
+        aria: { expanded: on ? 'true' : 'false', label: g.title + ', ' + g.short }
+      });
+      btn.title = g.title + ' \u2014 ' + g.short;
+      if (svc.icons) btn.appendChild(svc.icons.get(g.icon, 14));
+      self._on(btn, 'click', function () {
+        var v = self.ctx.store.view(self.tid());
+        v.surfaces = v.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+        v.surfaces.openIds = v.surfaces.openIds || {};
+        /* Independent: opening one group says nothing about the others, and each keeps its own state
+         * across a remount because it lives in the store rather than in a module local. */
+        if (v.surfaces.openIds[g.key]) delete v.surfaces.openIds[g.key];
+        else v.surfaces.openIds[g.key] = true;
+        self.ctx.store.touchView('surfaces');
+      });
+      index.appendChild(btn);
+    });
+    strip.appendChild(index);
+
+    /* ---- row 2: one label, morphed in place */
+    var line = u.el('div', { class: 't1-wstrip-line' });
+    var text;
+    if (complete) {
+      /* The completed form is a different sentence, exactly as the matrix specifies. */
+      var toolCount = svc.surfaces.condenseLabel ? svc.surfaces.condenseLabel(group) : ((group.stages || []).length + ' steps');
+      text = toolCount + (group.workedSeconds != null ? ' \u00b7 Worked for ' + F().duration(group.workedSeconds) : '');
+    } else {
+      text = groups.map(function (g) { return g.short; })
+        .filter(function (part) { return part && String(part).length; })
+        .join(' \u00b7 ');
+    }
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(line, text);
+    else line.textContent = text;
+    strip.appendChild(line);
+
+    /* ---- expanded groups, beneath the strip, in index order */
+    groups.forEach(function (g) {
+      if (!openIds[g.key]) return;
+      var panel = u.el('div', { class: 't1-wstrip-panel', data: { kind: g.key } });
+      panel.appendChild(u.el('div', { class: 't1-wstrip-panel-title', text: g.title }));
+      g.build(panel);
+      strip.appendChild(panel);
+    });
+
+    return strip;
+  };
+
+  T1Thread.prototype.buildStagesDetail = function (host, stages) {
+    var u = U();
+    stages.forEach(function (st) {
+      var row = u.el('div', { class: 't1-stage', data: { kind: st.kind } });
+      row.appendChild(u.el('span', { class: 't1-stage-kind', text: F().label(st.kind) }));
+      row.appendChild(u.el('span', { class: 't1-stage-label', text: st.label }));
+      if (st.detail) row.appendChild(u.el('span', { class: 't1-stage-detail', text: st.detail }));
+      if (st.durationMs != null) row.appendChild(u.el('span', { class: 't1-stage-dur', text: F().duration(Math.round(st.durationMs / 1000)) }));
+      host.appendChild(row);
+    });
+  };
+
+  T1Thread.prototype._verificationRecord = function () {
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].verification) return msgs[i].verification;
+    return null;
+  };
+
+  /* ---------------------------------------------------------------- BSD: a margin annotation
+   *
+   * The matrix places advice in the MARGIN beside the turn it concerns - the same margin the speaker
+   * labels hang in. That is the honest position for it in this concept: advice is not part of the
+   * conversation, it is written alongside it, the way a reader annotates a page.
+   */
+  T1Thread.prototype._renderBsdMargin = function (host) {
+    var self = this;
+    var u = U();
+    U().empty(host);
+    var bsd = this.ctx.services.bsd;
+    if (!bsd || !bsd.advice) return;
+
+    var list = bsd.advice(this.tid()) || [];
+    if (!list.length) return;
+
+    list.forEach(function (adv) {
+      var note = u.el('div', { class: 't1-annot', data: { severity: adv.severity } });
+
+      /* The margin carries the severity IN WORDS, in the same slot a speaker label occupies, so the
+       * distinction never rests on colour alone. */
+      note.appendChild(u.el('div', { class: 't1-annot-margin' }, [
+        u.el('span', { class: 't1-annot-kind', text: adv.severity === 'caution' ? 'Caution' : 'Note' })
+      ]));
+
+      var body = u.el('div', { class: 't1-annot-body' });
+      body.appendChild(u.el('p', { class: 't1-annot-text', text: adv.text }));
+      if (adv.evidenceRefs && adv.evidenceRefs.length) {
+        body.appendChild(u.el('span', { class: 't1-annot-ev', text: adv.evidenceRefs.join(', ') }));
+      }
+      /* Dismiss and nothing else. Advice is read-only by construction: there is no API to apply it and
+       * there must not be one - an advisor that can write is not an advisor. */
+      var dis = u.el('button', { class: 't1-annot-dismiss', type: 'button', text: 'Dismiss' });
+      self._on(dis, 'click', function () { bsd.dismiss(self.tid(), adv.id); });
+      body.appendChild(dis);
+
+      note.appendChild(body);
+      host.appendChild(note);
+    });
+  };
+
+  /* ---------------------------------------------------------------- artifact handoff */
+
+  T1Thread.prototype._renderHandoff = function (host) {
+    var self = this;
+    var u = U();
+    U().empty(host);
+    var svc = this.ctx.services;
+    var A = svc.artifacts;
+    if (!A) return;
+
+    var thread = this.ctx.data.threadById(this.tid());
+    var refs = (thread && thread.artifacts) || [];
+    if (!refs.length) return;
+
+    var ref = refs[refs.length - 1];
+    if (!ref.id) return;
+    var state = A.stateOf ? A.stateOf(ref.id) : 'idle';
+
+    /* Compact and CONNECTED to the work: it sits directly under the strip that produced it, and hangs
+     * its kind in the margin like every other row in this concept. */
+    var card = u.el('div', { class: 't1-handoff', data: { state: state } });
+    card.appendChild(u.el('div', { class: 't1-annot-margin' }, [
+      u.el('span', { class: 't1-annot-kind', text: 'Artifact' })
+    ]));
+
+    var body = u.el('div', { class: 't1-handoff-body' });
+    body.appendChild(u.el('span', { class: 't1-handoff-title', text: ref.title }));
+
+    var stateEl = u.el('span', { class: 't1-handoff-state' });
+    var label = (state === 'loading' || state === 'idle') ? 'compiling' : (state === 'error' ? 'could not be read' : 'ready');
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(stateEl, label);
+    else stateEl.textContent = label;
+    body.appendChild(stateEl);
+
+    var worked = this._handoffWorkedSeconds();
+    if (worked != null) body.appendChild(u.el('span', { class: 't1-handoff-worked', text: 'Worked for ' + F().duration(worked) }));
+
+    var open = u.el('button', { class: 't1-handoff-open', type: 'button', text: 'Open' });
+    this._on(open, 'click', function () {
+      A.open(ref.id);
+      /* Settle the simulated transport in the same interaction. The card repaints through the artifact
+       * subscription, not from here: `open` writes session state, which no `view*` key covers. */
+      if (A.forceReady) A.forceReady(ref.id);
+      if (svc.motion && svc.motion.handoff) svc.motion.handoff(card);
+    });
+    body.appendChild(open);
+
+    card.appendChild(body);
+    host.appendChild(card);
+  };
+
+  T1Thread.prototype._handoffWorkedSeconds = function () {
+    var svc = this.ctx.services;
+    var active = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+    if (active && active.goal && svc.goals && svc.goals.completionReceipt) {
+      var r = svc.goals.completionReceipt(active.goal);
+      if (r && r.workedSeconds != null) return r.workedSeconds;
+    }
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
+    return null;
+  };
+
+    T1Thread.prototype.buildGoal = function (goal) {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
@@ -496,24 +807,73 @@
 
   /* ---------------------------------------------------------------- questionnaire */
 
+  /* ---------------------------------------------------------------- question: the margin interview
+   *
+   * This concept has no containers: turns are hanging labels beside prose at a reading measure. So a
+   * questionnaire here is NOT a card dropped into the transcript - it is A REAL SPEAKER TURN, labelled
+   * `Puppet Master asks` in the same margin every other speaker label hangs in.
+   *
+   * Everything follows from that one decision:
+   *   - the options are hanging-indent rows inside the prose measure, not a button grid;
+   *   - the progress reads `1 of 3` IN THE MARGIN, under the speaker label, because that is where this
+   *     concept puts metadata about a turn;
+   *   - submitting CONDENSES the turn into a one-line receipt turn, the same way a long turn collapses,
+   *     so the transcript keeps reading as a conversation with one more thing said in it;
+   *   - cancelling condenses to `Questions cancelled` rather than removing the turn, because a
+   *     conversation does not un-say things.
+   */
   T1Thread.prototype.renderQuestion = function () {
-    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update()
-     * and therefore this function, mid-render. The inner pass appends a card, the outer
-     * pass then appends a second one into a host it already emptied — two identical
-     * questionnaires on screen. */
+    /* Re-entrancy guard. Claiming the work surfaces notifies the store, which re-enters update() and
+     * therefore this function mid-render: the inner pass appends the turn and the outer pass appends a
+     * second one into a host it already emptied - two identical interviews on screen. */
     if (this._inRenderQuestion) return;
 
-    /* NO CHOREOGRAPHY YET. The shared entrance/advance this concept used to call was deleted in
-     * Phase E0 because it made all eight thread concepts move identically; this concept's own form is
-     * still outstanding, and a no-op is the honest interim - not a borrowed animation. */
-    var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var prevKey = this._qkey || '';
 
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
 
+    this._choreographInterview(host, prevKey);
   };
 
-T1Thread.prototype._renderQuestionBody = function () {
+  /* This concept's OWN choreography, composed from primitives.
+   *
+   * A turn ARRIVES - it does not inflate. So the entrance is the cascade this concept already uses for
+   * appended prose (opacity plus a small rise, staggered down the option rows), and an advance between
+   * questions is a text swap inside a turn that stays exactly where it is. Nothing springs a height,
+   * because a bounded box springing open is the vocabulary of a card, and this concept has none. */
+  T1Thread.prototype._choreographInterview = function (host, prevKey) {
+    var R = global.PMXReveal;
+    if (!R || !host) return;
+
+    var svc = this.ctx.services;
+    var key = R.keyFor(svc, this.tid());
+    this._qkey = key;
+
+    /* Same question, one more keystroke: silence. A freeform answer re-renders per character because
+     * typing writes a draft and the draft notifies the store. */
+    if (prevKey === key) return;
+
+    var turn = host.querySelector('.t1-qturn');
+    if (!turn || R.reduced(turn)) return;
+
+    var rows = Array.prototype.slice.call(turn.querySelectorAll('.t1-qrow'));
+
+    if (!prevKey) {
+      /* ENTRANCE: the turn arrives, and its option rows cascade down the measure. */
+      R.oneShot(turn, 't1-qturn-arrive', 420);
+      R.stagger(turn, rows);
+      global.setTimeout(function () { R.clearStagger(turn, rows); }, 900);
+      return;
+    }
+
+    /* ADVANCE: the same turn now says something else. Only the rows move. */
+    R.stagger(turn, rows);
+    global.setTimeout(function () { R.clearStagger(turn, rows); }, 700);
+  };
+
+  T1Thread.prototype._renderQuestionBody = function () {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
@@ -521,84 +881,217 @@ T1Thread.prototype._renderQuestionBody = function () {
     if (!host) return;
     U().empty(host);
 
-    var q = svc.questionnaire ? svc.questionnaire.activeFor(this.tid()) : null;
-    if (!q) return;
+    var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
+    if (!flow) return;
 
-    /* An active question takes priority; the work surfaces yield space but keep their state
-     * and come back untouched when it resolves. */
-    if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(this.tid(), true);
-
-    var idx = svc.questionnaire.currentIndex ? svc.questionnaire.currentIndex(q.id) : (q.currentQuestionIndex || 0);
-    var question = (q.questions || [])[idx];
-    if (!question) return;
-
-    var card = u.el('div', { class: 't1-question' });
-    card.appendChild(u.el('div', { class: 't1-question-head' }, [
-      u.el('span', { class: 't1-question-count', text: (idx + 1) + ' of ' + (q.questions || []).length }),
-      u.el('span', { class: 't1-question-req', text: question.required ? 'Required' : 'Optional' })
-    ]));
-    card.appendChild(u.el('p', { class: 't1-question-prompt', text: question.prompt }));
-
-    if (question.options && question.options.length) {
-      var opts = u.el('div', { class: 't1-question-opts' });
-      question.options.forEach(function (opt) {
-        var selected = (question.selected || []).indexOf(opt) >= 0;
-        var b = u.el('button', {
-          class: 't1-opt', text: opt,
-          aria: { pressed: selected ? 'true' : 'false' }
-        });
-        self._on(b, 'click', function (ev) {
-          if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
-          svc.questionnaire.answer(q.id, question.id, opt);
-          self.renderQuestion();
-        });
-        opts.appendChild(b);
-      });
-      card.appendChild(opts);
-    } else {
-      var ta = u.el('textarea', { class: 't1-question-free pmx-scroll', aria: { label: question.prompt } });
-      ta.setAttribute('spellcheck', 'false');
-      ta.value = question.draft || '';
-      this._on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
-      card.appendChild(ta);
+    if (!flow.record) {
+      this._renderInterviewReceipt(host, flow.receipt);
+      return;
     }
 
-    var acts = u.el('div', { class: 't1-question-acts' });
-    var skip = u.el('button', { class: 't1-act', text: 'Skip' });
-    this._on(skip, 'click', function () { svc.questionnaire.skip(q.id, question.id); self.renderQuestion(); });
-    acts.appendChild(skip);
+    svc.qflow.claim(svc, this.tid());
 
-    var isLast = idx === (q.questions || []).length - 1;
-    var primary = u.el('button', { class: 't1-act t1-act-primary', text: isLast ? 'Submit' : 'Next' });
-    this._on(primary, 'click', function () {
-      if (isLast) {
-        var can = svc.questionnaire.canSubmit(q.id);
-        if (!can.ok) { if (global.PMXReveal) global.PMXReveal.reject(this); svc.toast.show('Answer the required questions first'); return; }
-        svc.questionnaire.submit(q.id);
+    var turn = u.el('div', { class: 't1-turn t1-qturn', data: { pmxRole: 'assistant', phase: flow.status } });
+    turn.classList.add('pmx-msg');
+    turn.setAttribute('data-turn-start', '1');
+
+    /* ---- the hanging margin: speaker label, then the progress beneath it */
+    var margin = u.el('div', { class: 't1-speaker t1-qmargin' });
+    margin.appendChild(u.el('span', { class: 't1-speaker-label', text: 'Puppet Master asks' }));
+    if (flow.status !== 'preparing' && flow.total) {
+      /* `1 of 3` lives HERE, in the margin - not in a card head, because there is no card. */
+      margin.appendChild(u.el('span', { class: 't1-qcount', text: flow.position + ' of ' + flow.total }));
+    }
+    if (flow.skippedCount) {
+      /* A skip stays visible after you move past it. Without this the margin would claim a clean run. */
+      margin.appendChild(u.el('span', {
+        class: 't1-qskipmark',
+        text: flow.skippedCount === 1 ? '1 skipped' : flow.skippedCount + ' skipped'
+      }));
+    }
+    turn.appendChild(margin);
+
+    var body = u.el('div', { class: 't1-body pmx-msg-body' });
+
+    if (flow.status === 'preparing') {
+      body.appendChild(global.PMXReveal.capsule('Preparing questions', this.ctx));
+      turn.appendChild(body);
+      host.appendChild(turn);
+      return;
+    }
+    if (flow.status === 'submitting') {
+      body.appendChild(global.PMXReveal.capsule('Submitting answers', this.ctx));
+      turn.appendChild(body);
+      host.appendChild(turn);
+      return;
+    }
+
+    var q = flow.question;
+
+    /* ---- the prompt, as prose at the reading measure */
+    if (flow.atEnd) {
+      body.appendChild(u.el('p', { class: 't1-prose t1-qprompt', text: 'That is every question. Send the answers when you are ready.' }));
+    } else if (q) {
+      body.appendChild(u.el('p', { class: 't1-prose t1-qprompt', text: q.prompt }));
+      if (q.required) body.appendChild(u.el('span', { class: 't1-qreq', text: 'An answer is required' }));
+    }
+
+    /* ---- options as HANGING-INDENT ROWS inside the measure */
+    if (q && !flow.atEnd) {
+      if (q.options && q.options.length) {
+        var list = u.el('div', { class: 't1-qrows' });
+        q.options.forEach(function (opt, n) {
+          var sel = (q.selected || []).indexOf(opt) >= 0;
+          var row = u.el('button', {
+            class: 't1-qrow', type: 'button',
+            aria: { pressed: sel ? 'true' : 'false' }
+          });
+          /* The hanging marker sits in the indent, so the option text starts on the prose measure and
+           * wraps under itself rather than under the marker. */
+          row.appendChild(u.el('span', { class: 't1-qrow-mark', text: String(n + 1) }));
+          row.appendChild(u.el('span', { class: 't1-qrow-text', text: opt }));
+          self._on(row, 'click', function (ev) {
+            if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
+            svc.qflow.act(svc, self.tid(), 'answer', opt);
+            self.renderQuestion();
+          });
+          list.appendChild(row);
+        });
+        body.appendChild(list);
       } else {
-        svc.questionnaire.next(q.id);
+        var ta = u.el('textarea', { class: 't1-qfree pmx-scroll', aria: { label: q.prompt } });
+        ta.setAttribute('spellcheck', 'false');
+        ta.value = q.draft || '';
+        this._on(ta, 'input', function () { svc.qflow.act(svc, self.tid(), 'answer', ta.value); });
+        body.appendChild(ta);
+      }
+    }
+
+    /* The refusal renders at the field. `_pendingReason` carries a submit refusal across the one render
+     * it takes to travel to the offending question, then is consumed. */
+    var reason = u.el('p', { class: 't1-qreason', data: { show: this._pendingReason ? '1' : '0' } });
+    if (this._pendingReason) { reason.textContent = this._pendingReason; this._pendingReason = null; }
+    body.appendChild(reason);
+
+    /* ---- actions, as a quiet row at the end of the prose */
+    var acts = u.el('div', { class: 't1-qacts' });
+
+    function refuse(res, fallback) {
+      var text = res.reason || fallback;
+      if (res.offenderIndex != null && res.offenderIndex !== flow.index) {
+        self._pendingReason = text;
+        self.renderQuestion();
+        return;
+      }
+      reason.textContent = text;
+      reason.setAttribute('data-show', '1');
+      if (global.PMXReveal) global.PMXReveal.reject(reason);
+    }
+
+    if (flow.index > 0) {
+      var back = u.el('button', { class: 't1-qact', type: 'button', text: 'Back' });
+      this._on(back, 'click', function () { svc.qflow.act(svc, self.tid(), 'prev'); self.renderQuestion(); });
+      acts.appendChild(back);
+    }
+
+    if (q && !flow.atEnd) {
+      var skip = u.el('button', { class: 't1-qact', type: 'button', text: 'Skip' });
+      this._on(skip, 'click', function () { svc.qflow.act(svc, self.tid(), 'skip'); self.renderQuestion(); });
+      acts.appendChild(skip);
+    }
+
+    if (q && flow.isSkipped(q)) {
+      var un = u.el('button', { class: 't1-qact', type: 'button', text: 'Unskip' });
+      this._on(un, 'click', function () { svc.qflow.act(svc, self.tid(), 'unskip', flow.index); self.renderQuestion(); });
+      acts.appendChild(un);
+    }
+
+    var primary = u.el('button', { class: 't1-qact t1-qact-primary', type: 'button', text: flow.atEnd ? 'Send answers' : 'Next' });
+    this._on(primary, 'click', function () {
+      var wasEnd = flow.atEnd;
+      var res = svc.qflow.act(svc, self.tid(), wasEnd ? 'submit' : 'next');
+      if (!res.ok) { refuse(res, 'Answer the required questions first.'); return; }
+      if (res.resolved) {
+        /* CONDENSE the turn into its receipt. `motion.condense` measures the live height, swaps the
+         * content and animates to the new one, which is exactly the long-turn collapse this concept
+         * already uses - so the interview leaves the transcript the same way a long answer does. */
+        self._condenseInterview(turn, function () { self.renderQuestion(); self.renderSurfaces(); });
+        return;
       }
       self.renderQuestion();
       self.renderSurfaces();
     });
     acts.appendChild(primary);
 
-    var cancel = u.el('button', { class: 't1-act', text: 'Cancel' });
+    var cancel = u.el('button', { class: 't1-qact', type: 'button', text: 'Cancel' });
     this._on(cancel, 'click', function () {
-      svc.questionnaire.cancel(q.id);
-      if (svc.surfaces && svc.surfaces.yieldForQuestion) svc.surfaces.yieldForQuestion(self.tid(), false);
-      self.renderQuestion();
-      self.renderSurfaces();
+      svc.qflow.act(svc, self.tid(), 'cancel');
+      self._condenseInterview(turn, function () { self.renderQuestion(); self.renderSurfaces(); });
     });
     acts.appendChild(cancel);
 
-    card.appendChild(acts);
-    host.appendChild(card);
+    body.appendChild(acts);
+    turn.appendChild(body);
+    host.appendChild(turn);
   };
 
-  /* ---------------------------------------------------------------- live status */
+  /* The collapse into a one-line receipt turn. Falls straight through when motion is reduced or absent -
+   * the receipt still lands, it simply lands without travel. */
+  T1Thread.prototype._condenseInterview = function (turn, done) {
+    var svc = this.ctx.services;
+    if (!turn || !svc.motion || !svc.motion.condense) { done(); return; }
+    svc.motion.condense(turn, function (hostEl) {
+      /* The summary is drawn by the caller's next render; this is only the transitional content, so it
+       * must not claim a fact of its own. */
+      hostEl.appendChild(U().el('span', { class: 't1-qreceipt-line', text: 'Questions closed' }));
+    }, { duration: 240, onDone: done });
+  };
 
-  T1Thread.prototype.syncLive = function () {
+  /* The receipt turn: one line, in the margin register, durable. */
+  T1Thread.prototype._renderInterviewReceipt = function (host, receipt) {
+    var self = this;
+    var u = U();
+    if (!receipt) return;
+
+    var turn = u.el('div', { class: 't1-turn t1-qreceipt', data: { pmxRole: 'assistant', status: receipt.status } });
+    turn.classList.add('pmx-msg');
+
+    var margin = u.el('div', { class: 't1-speaker t1-qmargin' });
+    margin.appendChild(u.el('span', { class: 't1-speaker-label', text: 'Puppet Master asked' }));
+    turn.appendChild(margin);
+
+    var body = u.el('div', { class: 't1-body pmx-msg-body' });
+    var text = receipt.cancelled
+      ? 'Questions cancelled'
+      : (receipt.answered + (receipt.answered === 1 ? ' answer sent' : ' answers sent') +
+         (receipt.skipped ? ', ' + receipt.skipped + ' skipped' : ''));
+    var lineEl = u.el('p', { class: 't1-prose t1-qreceipt-line', text: text });
+    body.appendChild(lineEl);
+
+    var show = u.el('button', { class: 't1-qact', type: 'button', text: 'Show answers' });
+    this._on(show, 'click', function (ev) {
+      self.ctx.services.popup.open({
+        anchorEl: ev.currentTarget, kind: 'panel', width: 320,
+        build: function (h) {
+          h.appendChild(u.el('div', { class: 't1-sheet-title', text: receipt.cancelled ? 'Cancelled questions' : 'Answers sent' }));
+          (receipt.questions || []).forEach(function (question) {
+            var val = receipt.answers[question.id];
+            var wasSkipped = (receipt.record.receipt.skipped || []).indexOf(question.id) >= 0;
+            h.appendChild(u.el('div', { class: 't1-sheet-row' }, [
+              u.el('span', { class: 't1-sheet-kind', text: wasSkipped ? 'skipped' : 'answered' }),
+              u.el('span', { class: 't1-sheet-label', text: question.prompt + (val == null ? '' : ' \u2014 ' + [].concat(val).join(', ')) })
+            ]));
+          });
+        }
+      });
+    });
+    body.appendChild(show);
+
+    turn.appendChild(body);
+    host.appendChild(turn);
+  };
+
+    T1Thread.prototype.syncLive = function () {
     var u = U();
     var svc = this.ctx.services;
     var status = svc.runtime.liveStatus(this.tid());
@@ -697,6 +1190,7 @@ T1Thread.prototype._renderQuestionBody = function () {
   };
 
   T1Thread.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window
      * survives would otherwise leave a second questionnaire card behind. Clear what it

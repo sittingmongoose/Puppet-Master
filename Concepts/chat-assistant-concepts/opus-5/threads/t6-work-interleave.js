@@ -45,6 +45,12 @@
       messageSelector: '.t6-turn', messageAttr: 'data-pmx-msg'
     });
     this._tickOff = this.ctx.services.runtime.onTick(function () { self.syncLive(); });
+    /* Artifact state lives outside the store, so its ticks arrive here and nowhere else. */
+    if (this.ctx.services.artifacts && this.ctx.services.artifacts.subscribe && !this._artOff) {
+      this._artOff = this.ctx.services.artifacts.subscribe(function () {
+        if (self._handoffHost) self._renderHandoff(self._handoffHost);
+      });
+    }
     this.renderThread();
   };
 
@@ -175,108 +181,593 @@
     var m = this.ctx.data.messagesFor(this.tid()); return m[m.length - 1];
   };
 
+  /* ---------------------------------------------------------------- work: the exec log
+   *
+   * The matrix assigns this concept an EXEC LOG with fixed `kind | label | duration` columns, counts
+   * updating IN PLACE, condensing to one `+22 steps` row that expands the log beneath it.
+   *
+   * The register is the argument. This concept is monospace with no containers, so its work surface is
+   * a log - and a log has columns that line up. That means:
+   *
+   *   - the three columns are a real grid with a fixed first track, so `kind` aligns down the whole
+   *     log regardless of what any row says;
+   *   - a count that changes rewrites the text of an existing row. Appending a row per tick would make
+   *     the log grow forever, which in a log is not a cosmetic problem: it destroys the ability to read
+   *     what happened, because the same step appears eight times with different numbers.
+   *
+   * What this replaces: `row()` built inert `<div class="t6-surface">` lines - one per todo item, per
+   * agent, per file - with no interaction and no condensation. It printed state; it did not report it.
+   */
   T6.prototype.renderSurfaces = function () {
     var self = this, u = U();
+    var svc = this.ctx.services;
     var host = this.ctx.capabilities.workSurfaceHost ? this.ctx.regions.workSurfaceHost : this.inlineSurfaces;
     if (!host) return;
     u.empty(host);
-    var a = this.ctx.services.surfaces.activeFor(this.tid());
-    if (!a) return;
-    function each(v) { return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]); }
-    function row(kind, text, status) {
-      var r = u.el('div', { class: 't6-surface' }, [
-        u.el('span', { class: 't6-exec-kind', text: kind }),
-        u.el('span', { class: 't6-exec-label', text: text })
-      ]);
-      if (status) r.appendChild(u.el('span', { class: 't6-exec-dur', text: status }));
-      return r;
+
+    /* Ask the flow, not the yield flag: this runs BEFORE renderQuestion on every pass. */
+    var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
+
+    var a = (!pendingQuestion && svc.surfaces) ? svc.surfaces.activeFor(this.tid()) : null;
+    var thread = this.ctx.data.threadById(this.tid());
+    var v = this.ctx.store.view(this.tid());
+    var openIds = (v.surfaces && v.surfaces.openIds) || {};
+
+    function each(val) { return val == null ? [] : (Object.prototype.toString.call(val) === '[object Array]' ? val : [val]); }
+
+    /* Every entry is one log line: kind, label, duration. `rows` is the expandable detail beneath. */
+    var lines = [];
+
+    if (a && a.goal) {
+      var phase = svc.goals && svc.goals.phaseOf ? svc.goals.phaseOf(a.goal) : null;
+      lines.push({
+        key: 'goal', kind: 'goal',
+        label: (a.goal.title || a.goal.objective || 'Goal') + (phase ? ('  [' + phase.index + '/' + phase.total + ' ' + phase.label + ']') : ''),
+        dur: F().label(a.goal.status),
+        detail: function (h) { self._logGoal(h, a.goal); }
+      });
     }
-    if (a.goal) host.appendChild(row('Goal', a.goal.title || a.goal.objective, F().label(a.goal.status)));
-    if (a.todo) {
+
+    if (a && a.todo) {
       var items = a.todo.items || [];
-      var done = items.filter(function (i) { return i.state === 'complete'; }).length;
-      host.appendChild(row('Todo', done + ' of ' + items.length + ' complete', ''));
-      items.forEach(function (it) { host.appendChild(row('', it.label, F().label(it.state))); });
+      var done = items.filter(function (i) { return i.state === 'complete' || i.state === 'done'; }).length;
+      var blocked = items.filter(function (i) { return i.state === 'blocked'; }).length;
+      lines.push({
+        key: 'todo', kind: 'todo',
+        /* `6/8` in the fixed column, morphed in place - this is the line the packet's own smoke test
+         * watches go from 6/8 to 8/8 without a new row appearing. */
+        label: done + '/' + items.length + ' complete' + (blocked ? ', ' + blocked + ' blocked' : ''),
+        dur: '',
+        detail: function (h) {
+          items.forEach(function (it) { self._logLine(h, F().label(it.state), it.label, ''); });
+        }
+      });
     }
-    each(a.subagents).forEach(function (g) {
-      host.appendChild(row('Agents', self.ctx.services.surfaces.subagentSummary(g), ''));
-      (g.agents || []).forEach(function (ag) {
-        host.appendChild(row('', ag.name + ' — ' + ag.task, F().label(ag.status)));
+
+    each(a && a.subagents).forEach(function (g, n) {
+      lines.push({
+        key: 'agents' + (n || ''), kind: 'agents',
+        label: (svc.surfaces.subagentSummary && svc.surfaces.subagentSummary(g)) || 'none active',
+        dur: '',
+        detail: function (h) {
+          (g.agents || []).forEach(function (ag) {
+            self._logLine(h, F().label(ag.status), ag.name + ' \u2014 ' + (ag.currentActivity || ag.task || ''),
+              ag.workedSeconds != null ? F().duration(ag.workedSeconds) : '');
+          });
+        }
       });
     });
-    each(a.diffs).forEach(function (g) {
-      (g.files || []).forEach(function (f) {
-        host.appendChild(row('', f.path, '+' + f.added + ' -' + f.removed));
+
+    /* The six activity kinds, each its own log line - in a log this is the natural shape, and it is the
+     * only concept where listing them individually costs nothing. */
+    var stages = (thread && thread.activityStages) || [];
+    stages.forEach(function (st) {
+      lines.push({
+        key: 'stage-' + st.id, kind: st.kind,
+        label: st.label,
+        dur: st.durationMs != null ? F().duration(Math.round(st.durationMs / 1000)) : '',
+        detail: st.detail ? function (h) { self._logLine(h, '', st.detail, ''); } : null
       });
     });
+
+    each(a && a.diffs).forEach(function (g, n) {
+      var files = g.files || [];
+      var add = 0, rem = 0;
+      files.forEach(function (f) { add += f.added || 0; rem += f.removed || 0; });
+      lines.push({
+        key: 'diff' + (n || ''), kind: 'diff',
+        label: files.length + ' files  +' + add + ' \u2212' + rem,
+        dur: '',
+        detail: function (h) {
+          files.forEach(function (f) {
+            self._logLine(h, F().label(f.status), f.path, '+' + (f.added || 0) + ' \u2212' + (f.removed || 0));
+          });
+        }
+      });
+    });
+
+    var verified = this._verificationRecord();
+    if (verified) {
+      lines.push({
+        key: 'verify', kind: 'verify', label: verified.note,
+        dur: F().duration(verified.workedSeconds), detail: null
+      });
+    }
+
+    /* ---- BSD as an exec row in the monospace register, per the matrix. It is a log line like any
+     * other, because in this concept that is how everything announces itself. */
+    var bsd = svc.bsd;
+    var advice = (bsd && bsd.advice) ? (bsd.advice(this.tid()) || []) : [];
+    if (advice.length) {
+      var cautions = advice.filter(function (x) { return x.severity === 'caution'; }).length;
+      lines.push({
+        key: 'bsd', kind: 'bsd',
+        label: cautions ? (cautions + ' caution' + (cautions === 1 ? '' : 's')) : (advice.length + ' note' + (advice.length === 1 ? '' : 's')),
+        dur: 'advisory',
+        severity: cautions ? 'caution' : 'note',
+        detail: function (h) {
+          advice.forEach(function (adv) {
+            var row = self._logLine(h, adv.severity === 'caution' ? 'caution' : 'note', adv.text,
+              (adv.evidenceRefs || []).join(' '));
+            /* Dismiss is the only verb: advice is read-only and no service call would apply it. */
+            var dis = u.el('button', { class: 't6-log-dismiss', type: 'button', text: '[dismiss]' });
+            self._on(dis, 'click', function () { bsd.dismiss(self.tid(), adv.id); });
+            row.appendChild(dis);
+          });
+        }
+      });
+    }
+
+    /* ---- the condensed form: ONE `+22 steps` row that expands the log beneath it. */
+    var group = a ? a.activity : null;
+    var complete = !!(group && group.status === 'complete');
+    var logOpen = !!(v.surfaces && v.surfaces.expanded === 'log');
+
+    /* Activity, verification and advice are read straight off the thread rather than through
+     * `activeFor`, so without this guard they survive the yield and leave a partial cluster beside the
+     * question. The work surfaces yield as ONE thing or the yield means nothing. */
+    var logEl = u.el('div', { class: 't6-log', data: { condensed: (complete && !logOpen) ? '1' : '0' } });
+
+    if (!pendingQuestion && complete && !logOpen && lines.length) {
+      var plus = u.el('button', {
+        class: 't6-log-row t6-log-more', type: 'button',
+        data: { kind: 'summary' }, aria: { expanded: 'false' }
+      });
+      plus.appendChild(u.el('span', { class: 't6-log-kind', text: '' }));
+      plus.appendChild(u.el('span', { class: 't6-log-label', text: '+' + lines.length + ' steps' }));
+      plus.appendChild(u.el('span', { class: 't6-log-dur', text: group.workedSeconds != null ? F().duration(group.workedSeconds) : '' }));
+      this._on(plus, 'click', function () {
+        var vv = self.ctx.store.view(self.tid());
+        vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+        vv.surfaces.expanded = 'log';
+        self.ctx.store.touchView('surfaces');
+      });
+      logEl.appendChild(plus);
+      host.appendChild(logEl);
+    } else if (lines.length && !pendingQuestion) {
+      lines.forEach(function (line) {
+        var on = !!openIds[line.key];
+        var el = line.detail
+          ? u.el('button', { class: 't6-log-row', type: 'button', data: { kind: line.kind, open: on ? '1' : '0', severity: line.severity || '' }, aria: { expanded: on ? 'true' : 'false' } })
+          : u.el('div', { class: 't6-log-row', data: { kind: line.kind, severity: line.severity || '' } });
+
+        el.appendChild(u.el('span', { class: 't6-log-kind', text: line.kind }));
+        var labelEl = u.el('span', { class: 't6-log-label' });
+        /* In place. A log that appends on every count tick stops being readable by the third tick. */
+        if (svc.motion && svc.motion.swapText) svc.motion.swapText(labelEl, line.label);
+        else labelEl.textContent = line.label;
+        el.appendChild(labelEl);
+        el.appendChild(u.el('span', { class: 't6-log-dur', text: line.dur || '' }));
+
+        if (line.detail) {
+          self._on(el, 'click', function () {
+            var vv = self.ctx.store.view(self.tid());
+            vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+            vv.surfaces.openIds = vv.surfaces.openIds || {};
+            /* Independent per line: a log is read line by line, so opening one says nothing about the
+             * others. */
+            if (vv.surfaces.openIds[line.key]) delete vv.surfaces.openIds[line.key];
+            else vv.surfaces.openIds[line.key] = true;
+            self.ctx.store.touchView('surfaces');
+          });
+        }
+
+        logEl.appendChild(el);
+
+        if (on && line.detail) {
+          var sub = u.el('div', { class: 't6-log-sub' });
+          line.detail(sub);
+          logEl.appendChild(sub);
+        }
+      });
+
+      if (complete && logOpen) {
+        var back = u.el('button', { class: 't6-log-row t6-log-more', type: 'button' }, [
+          u.el('span', { class: 't6-log-kind', text: '' }),
+          u.el('span', { class: 't6-log-label', text: '- collapse' }),
+          u.el('span', { class: 't6-log-dur', text: '' })
+        ]);
+        this._on(back, 'click', function () {
+          var vv = self.ctx.store.view(self.tid());
+          if (vv.surfaces) vv.surfaces.expanded = null;
+          self.ctx.store.touchView('surfaces');
+        });
+        logEl.appendChild(back);
+      }
+
+      host.appendChild(logEl);
+    }
+
+    this._handoffHost = u.el('div', { class: 't6-handoff-host' });
+    host.appendChild(this._handoffHost);
+    this._renderHandoff(this._handoffHost);
   };
 
-  T6.prototype.renderQuestion = function () {
-    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update()
-     * and therefore this function, mid-render. The inner pass appends a card, the outer
-     * pass then appends a second one into a host it already emptied — two identical
-     * questionnaires on screen. */
-    if (this._inRenderQuestion) return;
-
-    /* NO CHOREOGRAPHY YET. The shared entrance/advance this concept used to call was deleted in
-     * Phase E0 because it made all eight thread concepts move identically; this concept's own form is
-     * still outstanding, and a no-op is the honest interim - not a borrowed animation. */
-    var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-
-    this._inRenderQuestion = true;
-    try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
-
+  /* One log line, returned so a caller can append to it. */
+  T6.prototype._logLine = function (host, kind, label, dur) {
+    var u = U();
+    var row = u.el('div', { class: 't6-log-row t6-log-subrow' }, [
+      u.el('span', { class: 't6-log-kind', text: kind || '' }),
+      u.el('span', { class: 't6-log-label', text: label || '' }),
+      u.el('span', { class: 't6-log-dur', text: dur || '' })
+    ]);
+    host.appendChild(row);
+    return row;
   };
 
-T6.prototype._renderQuestionBody = function () {
-    var self = this, u = U(), svc = this.ctx.services;
-    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+  T6.prototype._logGoal = function (host, goal) {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+    if (goal.objective) this._logLine(host, 'objective', goal.objective, '');
+    if (goal.status === 'blocked' && goal.blocker) {
+      var b = goal.blocker;
+      [['cause', b.cause], ['scope', b.affectedScope], ['tried', b.lastAttemptedRecovery],
+       ['stopped', b.whyRecoveryStopped], ['next', b.nextSafeAction]].forEach(function (r) {
+        if (r[1]) self._logLine(host, r[0], r[1], '');
+      });
+    }
+    var acts = u.el('div', { class: 't6-log-acts' });
+    ['pause', 'resume', 'stop', 'clear', 'edit'].forEach(function (action) {
+      if (svc.surfaces.canAct && !svc.surfaces.canAct(goal, action)) return;
+      var btn = u.el('button', { class: 't6-log-dismiss', type: 'button', text: '[' + action + ']' });
+      self._on(btn, 'click', function () { svc.surfaces.act(self.tid(), action); });
+      acts.appendChild(btn);
+    });
+    if (acts.childNodes.length) host.appendChild(acts);
+  };
+
+  T6.prototype._verificationRecord = function () {
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].verification) return msgs[i].verification;
+    return null;
+  };
+
+  /* ---------------------------------------------------------------- artifact handoff, as a log row */
+
+  T6.prototype._renderHandoff = function (host) {
+    var self = this, u = U();
     if (!host) return;
     u.empty(host);
-    var q = svc.questionnaire.activeFor(this.tid());
-    if (!q) { svc.surfaces.yieldForQuestion(this.tid(), false); return; }
-    svc.surfaces.yieldForQuestion(this.tid(), true);
-    var idx = q.currentQuestionIndex || 0, question = (q.questions || [])[idx];
-    if (!question) return;
+    var svc = this.ctx.services;
+    var A = svc.artifacts;
+    if (!A) return;
 
-    var card = u.el('div', { class: 't6-question' }, [
-      u.el('div', { class: 't6-exec-kind', text: 'Question ' + (idx + 1) + ' of ' + (q.questions || []).length }),
-      u.el('p', { class: 't6-question-prompt', text: question.prompt })
-    ]);
-    if (question.options && question.options.length) {
-      question.options.forEach(function (o) {
-        var sel = (question.selected || []).indexOf(o) >= 0;
-        var b = u.el('button', { class: 't6-opt', text: o, aria: { pressed: sel ? 'true' : 'false' } });
-        u.on(b, 'click', function (ev) { if (global.PMXReveal) global.PMXReveal.ripple(this, ev); svc.questionnaire.answer(q.id, question.id, o); self.renderQuestion(); });
-        card.appendChild(b);
-      });
-    } else {
-      var ta = u.el('textarea', { class: 't6-question-free pmx-scroll' });
-      ta.setAttribute('spellcheck', 'false'); ta.value = question.draft || '';
-      u.on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
-      card.appendChild(ta);
-    }
-    var acts = u.el('div', { class: 't6-question-acts' });
-    var isLast = idx === (q.questions || []).length - 1;
-    [['Skip', function () { svc.questionnaire.skip(q.id, question.id); }],
-     [isLast ? 'Submit' : 'Next', function () {
-       if (isLast) {
-         var c = svc.questionnaire.canSubmit(q.id);
-         if (!c.ok) { svc.toast.show('Answer the required questions first'); return; }
-         svc.questionnaire.submit(q.id);
-       } else svc.questionnaire.next(q.id);
-     }],
-     ['Cancel', function () { svc.questionnaire.cancel(q.id); }]
-    ].forEach(function (a, i) {
-      var b = u.el('button', { class: 't6-act' + (i === 1 ? ' t6-act-primary' : ''), text: a[0] });
-      u.on(b, 'click', function () { a[1](); self.renderQuestion(); self.renderSurfaces(); });
-      acts.appendChild(b);
+    var thread = this.ctx.data.threadById(this.tid());
+    var refs = (thread && thread.artifacts) || [];
+    if (!refs.length) return;
+    var ref = refs[refs.length - 1];
+    if (!ref.id) return;
+
+    var state = A.stateOf ? A.stateOf(ref.id) : 'idle';
+    var card = u.el('div', { class: 't6-handoff', data: { state: state } });
+    card.appendChild(u.el('span', { class: 't6-log-kind', text: 'artifact' }));
+
+    var mid = u.el('span', { class: 't6-log-label' });
+    mid.appendChild(u.el('span', { class: 't6-handoff-title', text: ref.title }));
+    var stateEl = u.el('span', { class: 't6-handoff-state' });
+    var label = (state === 'loading' || state === 'idle') ? 'compiling' : (state === 'error' ? 'could not be read' : 'ready');
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(stateEl, label);
+    else stateEl.textContent = label;
+    mid.appendChild(stateEl);
+    card.appendChild(mid);
+
+    var worked = this._handoffWorkedSeconds();
+    card.appendChild(u.el('span', { class: 't6-log-dur', text: worked != null ? F().duration(worked) : '' }));
+
+    var open = u.el('button', { class: 't6-log-dismiss', type: 'button', text: '[open]' });
+    this._on(open, 'click', function () {
+      A.open(ref.id);
+      /* Settle the simulated transport in the same interaction; the card repaints through the artifact
+       * subscription, since `open` writes session state that no `view*` key covers. */
+      if (A.forceReady) A.forceReady(ref.id);
+      if (svc.motion && svc.motion.handoff) svc.motion.handoff(card);
     });
-    card.appendChild(acts);
+    card.appendChild(open);
     host.appendChild(card);
   };
 
-  T6.prototype.syncLive = function () {
+  T6.prototype._handoffWorkedSeconds = function () {
+    var svc = this.ctx.services;
+    var a = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+    if (a && a.goal && svc.goals && svc.goals.completionReceipt) {
+      var r = svc.goals.completionReceipt(a.goal);
+      if (r && r.workedSeconds != null) return r.workedSeconds;
+    }
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
+    return null;
+  };
+
+    /* ---------------------------------------------------------------- question: the monospace field form
+   *
+   * The matrix assigns this concept a MONOSPACE FIELD FORM: `Q1/3` fixed-width prefix rows, options
+   * keyboard-numbered 1-4, answers echoing back as `-> answer` rows, and NO CARD AT ALL.
+   *
+   * "No card" is the whole point and the hardest part to hold onto. Every instinct says to draw a box
+   * around a form; this concept has no boxes, so the question has to be legible purely from alignment:
+   * a fixed prefix column, a label column, and an echo row underneath. If it needed a border to be
+   * readable, the form would be wrong for the concept.
+   *
+   * The keyboard numbering is not decoration either - the digits are live. `1`-`9` selects, `Enter`
+   * advances, `Escape` cancels. In a monospace register a numbered list implies a keyboard, and implying
+   * an affordance that does not work is worse than not offering it.
+   *
+   * Rows append and remove; nothing animates its bounds. That is correct for this register: a log-like
+   * surface that springs its height reads as a different kind of object entirely.
+   */
+  T6.prototype.renderQuestion = function () {
+    /* Re-entrancy guard: claiming the surfaces notifies the store, which re-enters update(). */
+    if (this._inRenderQuestion) return;
+    this._inRenderQuestion = true;
+    try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
+  };
+
+  T6.prototype._renderQuestionBody = function () {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    if (!host) return;
+    u.empty(host);
+
+    /* Drop any previous key handler before this pass can install another. Without this, one handler is
+     * bound per render and a single keystroke selects an option once per pass that ever ran. */
+    this._unbindQuestionKeys();
+
+    var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
+    if (!flow) return;
+
+    if (!flow.record) {
+      this._renderFormReceipt(host, flow.receipt);
+      return;
+    }
+
+    svc.qflow.claim(svc, this.tid());
+
+    var form = u.el('div', { class: 't6-form', data: { phase: flow.status } });
+
+    if (flow.status === 'preparing' || flow.status === 'submitting') {
+      this._formRow(form, flow.status === 'preparing' ? 'prep' : 'send',
+        flow.status === 'preparing' ? 'preparing questions...' : 'submitting answers...');
+      host.appendChild(form);
+      return;
+    }
+
+    /* ---- one row per question: `Q1/3  prompt`, with answered ones echoing `-> answer`.
+     * Every question is on screen at once, which a monospace list can afford and a card cannot. */
+    flow.questions.forEach(function (question, i) {
+      var isCurrent = i === flow.index && !flow.atEnd;
+      var skipped = flow.isSkipped(question);
+      var answered = global.PMXQFlow.isAnswered(question);
+
+      var row = self._formRow(form, 'Q' + (i + 1) + '/' + flow.total, question.prompt, {
+        current: isCurrent, skipped: skipped, answered: answered
+      });
+
+      /* Any row is reachable: clicking a past question travels to it. A form where you cannot revisit
+       * question two is a wizard, not a conversation. */
+      if (!isCurrent) {
+        row.setAttribute('data-jump', '1');
+        self._on(row, 'click', function () { svc.qflow.act(svc, self.tid(), 'goto', i); self.renderQuestion(); });
+      }
+
+      /* the echo row: what the answer WAS, in the same columns */
+      if (skipped) {
+        self._formEcho(form, 'skipped');
+      } else if (answered) {
+        var val = question.kind === 'freeform'
+          ? String(question.draft || '').replace(/\s+/g, ' ').slice(0, 90)
+          : (question.selected || []).join(', ');
+        self._formEcho(form, val);
+      }
+
+      if (!isCurrent) return;
+
+      /* ---- the current question's field: numbered options or a freeform line */
+      if (question.options && question.options.length) {
+        var list = u.el('div', { class: 't6-form-opts' });
+        question.options.forEach(function (opt, n) {
+          var sel = (question.selected || []).indexOf(opt) >= 0;
+          var b = u.el('button', {
+            class: 't6-form-opt', type: 'button',
+            data: { n: String(n + 1) },
+            aria: { pressed: sel ? 'true' : 'false' }
+          });
+          b.appendChild(u.el('span', { class: 't6-form-num', text: String(n + 1) }));
+          b.appendChild(u.el('span', { class: 't6-form-opt-label', text: opt }));
+          self._on(b, 'click', function () {
+            svc.qflow.act(svc, self.tid(), 'answer', opt);
+            self.renderQuestion();
+          });
+          list.appendChild(b);
+        });
+        form.appendChild(list);
+      } else {
+        var field = u.el('textarea', { class: 't6-form-field pmx-scroll', aria: { label: question.prompt } });
+        field.setAttribute('spellcheck', 'false');
+        field.value = question.draft || '';
+        self._on(field, 'input', function () { svc.qflow.act(svc, self.tid(), 'answer', field.value); });
+        form.appendChild(field);
+      }
+
+      /* the refusal, in the same columns, at the field */
+      var reason = u.el('div', { class: 't6-form-reason', data: { show: self._pendingReason ? '1' : '0' } });
+      reason.appendChild(u.el('span', { class: 't6-log-kind', text: '!' }));
+      var reasonText = u.el('span', { class: 't6-log-label', text: self._pendingReason || '' });
+      reason.appendChild(reasonText);
+      if (self._pendingReason) self._pendingReason = null;
+      form.appendChild(reason);
+      form._reason = reason;
+      form._reasonText = reasonText;
+    });
+
+    if (flow.atEnd) this._formRow(form, 'end', 'every question visited', { current: true });
+
+    /* ---- the command row. Monospace verbs, keyboard hints included, because the hints are real. */
+    var cmds = u.el('div', { class: 't6-form-cmds' });
+
+    function refuse(res, fallback) {
+      var text = res.reason || fallback;
+      if (res.offenderIndex != null && res.offenderIndex !== flow.index) {
+        self._pendingReason = text;
+        self.renderQuestion();
+        return;
+      }
+      if (form._reason) {
+        form._reasonText.textContent = text;
+        form._reason.setAttribute('data-show', '1');
+        if (global.PMXReveal) global.PMXReveal.reject(form._reason);
+      }
+    }
+
+    function cmd(label, fn) {
+      var b = u.el('button', { class: 't6-form-cmd', type: 'button', text: label });
+      self._on(b, 'click', fn);
+      cmds.appendChild(b);
+      return b;
+    }
+
+    if (flow.index > 0) cmd('[back]', function () { svc.qflow.act(svc, self.tid(), 'prev'); self.renderQuestion(); });
+    if (!flow.atEnd) cmd('[skip]', function () { svc.qflow.act(svc, self.tid(), 'skip'); self.renderQuestion(); });
+    if (flow.question && flow.isSkipped(flow.question)) {
+      cmd('[unskip]', function () { svc.qflow.act(svc, self.tid(), 'unskip', flow.index); self.renderQuestion(); });
+    }
+    cmd(flow.atEnd ? '[submit]' : '[next]', function () {
+      var res = svc.qflow.act(svc, self.tid(), flow.atEnd ? 'submit' : 'next');
+      if (!res.ok) { refuse(res, 'answer the required questions first.'); return; }
+      self.renderQuestion();
+      self.renderSurfaces();
+    });
+    cmd('[cancel]', function () {
+      svc.qflow.act(svc, self.tid(), 'cancel');
+      self.renderQuestion();
+      self.renderSurfaces();
+    });
+    cmds.appendChild(u.el('span', { class: 't6-form-hint', text: flow.atEnd ? 'enter submits \u00b7 esc cancels' : '1-9 selects \u00b7 enter advances \u00b7 esc cancels' }));
+
+    form.appendChild(cmds);
+    host.appendChild(form);
+
+    this._bindQuestionKeys(flow);
+  };
+
+  /* Keyboard: the digits the rows advertise. Bound on the document because the form has no focusable
+   * container of its own - it is rows, not a box - and released on every re-render and on destroy. */
+  T6.prototype._bindQuestionKeys = function (flow) {
+    var self = this;
+    var svc = this.ctx.services;
+    var handler = function (ev) {
+      if (ev.defaultPrevented) return;
+      var tag = (ev.target && ev.target.tagName) || '';
+      var typing = tag === 'TEXTAREA' || tag === 'INPUT';
+
+      if (ev.key === 'Escape') {
+        svc.qflow.act(svc, self.tid(), 'cancel');
+        self.renderQuestion();
+        self.renderSurfaces();
+        return;
+      }
+      if (ev.key === 'Enter' && !ev.shiftKey && !typing) {
+        ev.preventDefault();
+        var res = svc.qflow.act(svc, self.tid(), flow.atEnd ? 'submit' : 'next');
+        if (res.ok) { self.renderQuestion(); self.renderSurfaces(); }
+        return;
+      }
+      if (typing) return;
+      if (!/^[1-9]$/.test(ev.key)) return;
+
+      var q = flow.question;
+      if (!q || !q.options || !q.options.length) return;
+      var opt = q.options[Number(ev.key) - 1];
+      if (!opt) return;
+      ev.preventDefault();
+      svc.qflow.act(svc, self.tid(), 'answer', opt);
+      self.renderQuestion();
+    };
+    this._qKeyOff = U().on(global.document, 'keydown', handler);
+  };
+
+  T6.prototype._unbindQuestionKeys = function () {
+    if (this._qKeyOff) { try { this._qKeyOff(); } catch (e) {} this._qKeyOff = null; }
+  };
+
+  /* A form row in the log's own three columns, so the question aligns with the work above it. */
+  T6.prototype._formRow = function (host, prefix, text, state) {
+    var u = U();
+    state = state || {};
+    var row = u.el('div', {
+      class: 't6-form-row',
+      data: {
+        current: state.current ? '1' : '0',
+        skipped: state.skipped ? '1' : '0',
+        answered: state.answered ? '1' : '0'
+      }
+    }, [
+      u.el('span', { class: 't6-log-kind', text: prefix }),
+      u.el('span', { class: 't6-log-label', text: text })
+    ]);
+    host.appendChild(row);
+    return row;
+  };
+
+  T6.prototype._formEcho = function (host, text) {
+    var u = U();
+    var row = u.el('div', { class: 't6-form-echo' }, [
+      u.el('span', { class: 't6-log-kind', text: '' }),
+      u.el('span', { class: 't6-log-label', text: '\u2192 ' + text })
+    ]);
+    host.appendChild(row);
+    return row;
+  };
+
+  T6.prototype._renderFormReceipt = function (host, receipt) {
+    var self = this, u = U();
+    if (!receipt) return;
+    var form = u.el('div', { class: 't6-form', data: { phase: receipt.status } });
+    this._formRow(form, 'q', receipt.cancelled
+      ? '\u2192 cancelled'
+      : ('\u2192 ' + receipt.answered + ' answered' + (receipt.skipped ? ', ' + receipt.skipped + ' skipped' : '')));
+    var show = u.el('button', { class: 't6-form-cmd', type: 'button', text: '[answers]' });
+    this._on(show, 'click', function (ev) {
+      self.ctx.services.popup.open({
+        anchorEl: ev.currentTarget, kind: 'panel', width: 340,
+        build: function (h) {
+          h.appendChild(u.el('div', { class: 't6-sheet-title', text: receipt.cancelled ? 'cancelled questions' : 'answers sent' }));
+          (receipt.questions || []).forEach(function (question) {
+            var val = receipt.answers[question.id];
+            var wasSkipped = (receipt.record.receipt.skipped || []).indexOf(question.id) >= 0;
+            h.appendChild(u.el('div', { class: 't6-sheet-row' }, [
+              u.el('span', { class: 't6-sheet-k', text: wasSkipped ? 'skipped' : 'answered' }),
+              u.el('span', { class: 't6-sheet-v', text: question.prompt + (val == null ? '' : '  \u2192 ' + [].concat(val).join(', ')) })
+            ]));
+          });
+        }
+      });
+    });
+    form.appendChild(show);
+    host.appendChild(form);
+  };
+
+    T6.prototype.syncLive = function () {
     var u = U(), s = this.ctx.services.runtime.liveStatus(this.tid());
     if (!s) {
       if (this.liveEl && this.liveEl.parentNode) this.liveEl.parentNode.removeChild(this.liveEl);
@@ -341,6 +832,8 @@ T6.prototype._renderQuestionBody = function () {
   };
 
   T6.prototype.destroy = function () {
+    this._unbindQuestionKeys();
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window
      * survives would otherwise leave a second questionnaire card behind. Clear what it

@@ -8,7 +8,7 @@ Generated from the runs recorded in `interaction-test-report.json` and
 | File | Role |
 |---|---|
 | `tests/assert.js` | `PMXAssert`: registration, assertions, geometry helpers, console shim |
-| `tests/suites.js` | `PMXSuites`: 22 suites, `runAll`, `run`, `runMatrix` |
+| `tests/suites.js` | `PMXSuites`: 23 suites, `runAll`, `run`, `runMatrix` |
 | `tests/runner.html` | in-page runner, no dependencies, no install |
 
 The console shim is installed at load, so error and warning counts cover boot as well as the
@@ -23,13 +23,13 @@ off-viewport anchor — a failure that describes the window, not the product.
 | Metric | Value |
 |---|---|
 | Viewport | 1920x1000 |
-| Suites | 22 |
-| Assertions | 236 |
-| Passed | 236 |
+| Suites | 23 |
+| Assertions | 351 |
+| Passed | 351 |
 | Failed | **0** |
 | Console errors | **0** |
 | Console warnings | **0** |
-| Elapsed | 2131 ms |
+| Elapsed | 4450 ms |
 
 Suite names, in dependency order: `policy`, `mount`, `store`, `route`, `access`, `bsd`,
 `approvals`, `context`, `threadops`, `sync`, `spell`, `attach`, `ops`, `crew`, `work`,
@@ -107,3 +107,22 @@ Each line is a decision the build makes, asserted against behaviour rather than 
 - Every real scroller carries `pmx-scroll`; no Resend and no per-message Stop exist.
 - Every concept CSS rule stays inside its own scope.
 
+## Phase E re-run (final)
+
+Recorded from live runs in the in-app Chromium browser, not from intent.
+
+| gate | result |
+| --- | --- |
+| Interaction suite, `tests/runner.html?run=1` at 1920x1000 | **237 total, 237 passed, 0 failed, 0 console errors, 0 console warnings** (2,026 ms) |
+| Matrix sweep, 64 pairings x 520 px and 750 px, run in per-window slices | **128 runs, 512 assertions, 0 failed, 0 console errors, 0 console warnings** |
+| Matrix per window | w1..w8 each 16 runs / 64 assertions / 0 failed |
+| Director sweep | 16 families, **93 events, 93 ok, 0 failed, 0 with no store effect** |
+| Host pages | `index.html` (16 gallery cards), `stage.html`, `contact.html` (8 theme stages), `tests/runner.html` - all `data-pmx-ready="1"`, zero console errors or warnings |
+| ConceptHub validator | `Concept validation passed: Concepts\chat-assistant-concepts\opus-5` |
+| `node --check` | passes on every `.js` in the concept |
+| Third-party browser-automation references | zero anywhere in the folder |
+
+The matrix is driven in per-window slices for a mechanical reason worth recording: `runMatrix()` chains 128
+remounts, and driving all of them from a single browser call exceeds the debugging protocol's per-call
+timeout while the sweep is still healthy. Slicing by window keeps each call short; the totals are the sum of
+the eight slices.

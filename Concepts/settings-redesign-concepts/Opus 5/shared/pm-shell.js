@@ -367,6 +367,12 @@
         app.style.setProperty("--pm-app-width", value + "px");
       }
       widthSel.value = String(value);
+      /* An explicit width change is a resize checkpoint in its own right. Do not
+       * wait for the ResizeObserver to notice: RO delivery is tied to the
+       * rendering lifecycle, so a backgrounded or headless tab can leave the app
+       * sized 900px while it is still classified "normal", and the narrow rules
+       * never apply. */
+      scheduleResize();
       notifyLayout("width");
     }
 
