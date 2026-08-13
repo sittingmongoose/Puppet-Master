@@ -76,7 +76,7 @@
 /* notification sprout (title-bar; sole in-app surface) */
 .pm-sprout { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: 1px solid transparent; border-radius: var(--r-sm); color: var(--ink-2); cursor: pointer; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
 .pm-sprout:hover { background: var(--surface-2); color: var(--ink); }
-.pm-sprut[aria-expanded="true"], .pm-sprout[aria-expanded="true"] { background: var(--surface-2); color: var(--ink); }
+.pm-sprout[aria-expanded="true"] { background: var(--surface-2); color: var(--ink); }
 .pm-sprout.warn { color: var(--warn); }
 .pm-sprout-count { position: absolute; top: -3px; right: -3px; min-width: 15px; height: 15px; padding: 0 3px; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-ink); font-size: 9px; font-weight: 800; display: grid; place-items: center; }
 .pm-sprout.warn .pm-sprout-count { background: var(--bad); color: #fff; }

@@ -183,7 +183,7 @@
       title: "Provider / Agent / Model", icon: "pam",
       addLabel: "Add connection", health: health,
       summary: "Providers, accounts, connections, models, and agent role assignments.",
-      toolbar: [{id:"refresh",label:"Refresh all",icon:"refresh"}]
+      toolbar: [{id:"refresh",label:"Refresh all",icon:"refresh"}, {id:"fail",label:"Simulate failure"}]
     }, catalog + rows + roles + M.installations() + M.secretsSection());
   };
 
@@ -846,7 +846,7 @@
     var title = opts.copyFrom ? "Copy Settings From (one-time transactional)" : "Import settings — preview";
     var modal = PM.el("div", "import-modal", { "data-popover": "", role: "dialog", "aria-label": title },
       '<div class="setup-modal-head"><strong>' + title + '</strong><button class="btn sm ghost icon" data-imp-close>' + PM.svg("close", 14) + "</button></div>" +
-      '<div class="mgr-note info small">Restore point created automatically. Atomic apply. Rollback to snapshot if verification fails. Receipt + source disclosed.</div>" +
+      '<div class="mgr-note info small">Restore point created automatically. Atomic apply. Rollback to snapshot if verification fails. Receipt + source disclosed.</div>' +
       (opts.copyFrom ? '<div class="imp-section-label">Sources</div><div class="imp-src-list">' + sources + "</div>" : "") +
       '<div class="imp-section-label">Conflicts (' + conflicts.length + ')</div><div class="imp-list">' + rows + "</div>" +
       '<div class="setup-modal-foot">' +
@@ -880,6 +880,15 @@
   /* ---------- MANAGER INTERACTIONS (functional, simulated) ---------- */
   M.wire = function (root) {
     if (!root) return;
+    // loading state (packet 08): brief hydration indicator on first open
+    var body = root.querySelector(".mgr-body");
+    if (body && !root.dataset.loadingShown) {
+      root.dataset.loadingShown = "1";
+      var loadBlock = PM.el("div", "mgr-loading-overlay", {},
+        PM.shared.stateBlock("loading", "Loading…", "Hydrating manager…"));
+      body.insertBefore(loadBlock, body.firstChild);
+      setTimeout(function () { if (loadBlock.parentNode) loadBlock.remove(); }, 250);
+    }
     // search filter
     root.querySelectorAll('[data-manager-search]').forEach(function (inp) {
       inp.addEventListener("input", function () {
@@ -911,6 +920,24 @@
           overlay.remove();
           PM.toast("Catalog refreshed · last-known-good preserved");
         }, 900);
+      });
+    });
+    // simulate failure → error state block (packet 08)
+    root.querySelectorAll('[data-manager-toolbar="fail"]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
+      btn.addEventListener("click", function () {
+        var mgrBody = root.querySelector(".mgr-body");
+        if (!mgrBody) return;
+        var existing = mgrBody.querySelector(".mgr-error-overlay");
+        if (existing) { existing.remove(); return; }
+        var errBlock = PM.el("div", "mgr-error-overlay", {},
+          PM.shared.stateBlock("error", "Failed to load", "Simulated hydration error — retry or go back.") +
+          '<div style="margin-top:10px"><button class="btn sm primary" data-err-retry>Retry</button></div>');
+        mgrBody.insertBefore(errBlock, mgrBody.firstChild);
+        errBlock.querySelector("[data-err-retry]").addEventListener("click", function () {
+          errBlock.remove();
+          PM.toast("Retried · manager hydrated");
+        });
       });
     });
     // reconnect returns a visible simulated result (smoke #8)
@@ -1079,6 +1106,8 @@
         else { PM.toast(act.charAt(0).toUpperCase() + act.slice(1) + " — simulated"); }
       });
     });
+    // secret field actions (reveal/copy/test/vault/cli-launch/pm-authorize, packet 02)
+    PM.shared.wireSecretFields(root);
   };
 
   /* ---------- free-model setup stepper (A8) ---------- */

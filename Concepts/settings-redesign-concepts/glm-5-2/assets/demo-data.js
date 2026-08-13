@@ -1074,7 +1074,6 @@
       };
     });
   })();
-})();
 
   /* ----- EXTENDED PRIMARY DESTINATIONS (cover all families; curated areas) ----- */
   var extraDest = [

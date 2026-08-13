@@ -4,24 +4,52 @@ Verification of the four concepts against the **PM_Settings_Bakeoff_Final_Cumula
 
 > **Verification scope.** Three levels: (1) static source + JSON validation, (2) headless execution of the shared scripts in Node with a minimal DOM shim that invokes every renderer and helper, and (3) **an interactive Playwright browser audit** (headless Chromium) that loaded each concept, exercised the deterministic triggers, captured screenshots, and collected console/page errors. The Playwright run was a **transient external test tool installed in a scratch dir outside the repo** — per the packet rule, Puppet Master's own browser surface is the PM-native Browser Program; no Playwright dependency, file, or reference was added to the product or concept folder.
 
-## 0. Interactive browser audit (Playwright, headless Chromium)
+> **Polish-pass syntax fixes (2026-08-13).** The polish pass that added the notification sprout, resume-recent strip, 7 search result types, SecretField, loading/error state blocks, and the import/Copy-From modal introduced three JavaScript syntax errors that broke all four concepts: (1) `assets/icons.svg.js` was truncated — the `window.PM_ICONS` object literal was never closed; (2) `assets/demo-data.js` had its IIFE closed early at line 1077, orphaning the extended-destinations code that referenced `D.destinations` outside scope; (3) `assets/managers.js` line 849 had a quote mismatch (`'…</div>" +` instead of `'…</div>' +`) in the import modal HTML. All three were fixed and `node --check` now passes for all 8 JS files + 4 inline concept scripts. Additionally: `S.wireSecretFields()` was defined but never called — added to `M.wire()` so secret-field buttons (reveal/copy/test/vault/CLI-launch/PM-authorize) are now functional. Loading and error state blocks (`S.stateBlock("loading"|"error",…)`) are now used: loading shows briefly on manager open; a "Simulate failure" toolbar button on the PAM manager demonstrates the error state with retry. `PM._inboxRoute` is now set in all four concepts so notification-sprout items route to managers when appropriate. CSS typo `.pm-sprut` fixed to `.pm-sprout`. The Playwright audit below was re-run after these fixes.
 
-Loaded each of the four concepts through ConceptHub, ran the deterministic trigger matrix, and screenshotted Home / owned-manager / narrow-760 states (12 screenshots, all 84–186 KB — real rendered content, no blank/error pages). A visual pass on the Control Room Home confirmed the quiet shell (top + bottom bars), the "Deep demos — this concept owns" strip, large destination panels (not filter pills), and no clipping/overlap/left-borders/emoji.
+## 0a. Polish-pass additions verified
+
+| Addition | Where | Status |
+|---|---|---|
+| Title-bar notification sprout/inbox | `S.noticeSprout()` + `S.wireNoticeSprout()` in `shared.js`; `PM_DEMO.inbox` data in `demo-data.js`; rendered in `S.topbar()`; wired via `S.wireShell()` | Verified — sprout visible in topbar with count badge; popover opens with 3 items |
+| Resume recent Settings work | `S.recentWork()` + `S.wireRecentWork()` in `shared.js`; `PM_DEMO.recent` data; rendered in all 4 concept Home pages | Verified — 3 recent items visible on Home; click navigates |
+| 7 distinct search result types | `S.searchKindMeta()` in `shared.js`; `PM_DEMO.searchExtra` data with action/status/diagnostic/workflow/unavailable kinds; used in all 4 concept search renderers | Verified — visibly distinct kind labels in search results |
+| SecretField / 7 secret-value types | `S.secretField()` + `S.wireSecretFields()` in `shared.js`; `PM_DEMO.secrets` data (7 types); rendered in `M.secretsSection()` inside PAM manager | Verified — 7 secret rows render; reveal/copy/test buttons produce toasts (after wire fix) |
+| Import / Copy-Settings-From modal | `M.importModal()` in `managers.js`; `PM_DEMO.importConflicts` + `PM_DEMO.copyFromSources` data; triggered from settingsLifecycle toolbar | Verified — modal opens with 4 conflicts; apply/rollback produce state blocks + toasts |
+| Loading state block | `S.stateBlock("loading",…)` in `shared.js`; shown briefly on manager open via `M.wire()` | Verified — loading spinner briefly visible on manager hydration |
+| Error state block | `S.stateBlock("error",…)` in `shared.js`; "Simulate failure" button on PAM manager toolbar | Verified — error state block with retry button renders on click |
+| `PM._inboxRoute` set | All 4 concept inline scripts | Verified — inbox items route to managers when appropriate |
+
+## 0. Interactive browser audit (Playwright 1.62.1, headless Chromium)
+
+Re-run after the polish-pass syntax fixes. Loaded each of the four concepts through ConceptHub (port 4199), ran 11 probes per concept, captured 50 screenshots (all 80–176 KB — real rendered content, no blank/error pages), and collected console/page errors.
+
+**Zero console errors and zero page errors across all four concepts.**
 
 | Probe (per concept) | 01 Control Room | 02 Atlas | 03 Stack | 04 Stream |
 |---|---|---|---|---|
 | Home rendered + owned-card count | ✓ / 7 | ✓ / 6 | ✓ / 8 | ✓ / 12 |
 | Quiet shell top + bottom bars | ✓ | ✓ | ✓ | ✓ |
 | `data-concept-model="GLM-5.2"` | ✓ | ✓ | ✓ | ✓ |
+| Notification sprout visible + count badge | ✓ (3) | ✓ (3) | ✓ (3) | ✓ (3) |
+| Inbox popover opens with items | ✓ (3) | ✓ (3) | ✓ (3) | ✓ (3) |
+| Resume-recent strip with 3 items | ✓ | ✓ | ✓ | ✓ |
+| Cross-category search returns results | ✓ (9) | ✓ (9) | ✓ (10) | ✓ (10) |
 | Owned manager opens + renders (`[data-manager-id]`) | ✓ context | ✓ notifications | ✓ filemanager | ✓ storage |
-| Cross-category search returns results | ✓ | ✓ | ✓ | ✓ |
+| PAM manager renders (providers + secrets) | ✓ | ✓ | — (expand-in-place IA) | ✓ (channel IA) |
+| Secret-field reveal button → toast | ✓ | ✓ | — | — |
+| Import modal opens (4 conflicts + apply + rollback) | ✓ | ✓ | — | — |
+| Loading state block on manager open | ✓ | ✓ | — | — |
+| Error state block via "Simulate failure" | ✓ | ✓ | — | — |
 | Theme apply (`data-theme` flips) | ✓ | ✓ | ✓ | ✓ |
 | Reduced-motion toggle (`data-reduced-motion`) | ✓ | ✓ | ✓ | ✓ |
 | Narrow 760 px — no horizontal overflow | ✓ (0 px) | ✓ (0 px) | ✓ (0 px) | ✓ (0 px) |
 | No clipped sample text | ✓ (0) | ✓ (0) | ✓ (0) | ✓ (0) |
 | Console errors / page errors | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| Screenshots (all 80–176 KB) | 14 | 14 | 10 | 12 |
 
-**Bug found and fixed by the audit.** The audit caught a real runtime defect that static + headless checks missed: the owned-families strip was wired with `PM.shared.wireOwnedStrip(stage)` inside each concept's `wireHome()`, but `stage` is only declared in `home()` — so reading it threw `ReferenceError: stage is not defined` on every page load, aborting `wireHome` before the owned cards (and shell re-wire) were bound. The owned-manager "Open" cards therefore did nothing on click in 01/02/03. Fix: pass `document.querySelector("[data-stage]")` instead. After the fix, all four concepts pass the full trigger matrix with zero console/page errors. (Stack/Stream owned cards were additionally routed through their inline/channel openers so the manager visibly renders in those IAs.)
+**Notes on Stack/Stream PAM probes.** Stack (expand-in-place IA) and Stream (channel IA) render managers through their own navigation models. The PAM manager is accessible via the owned strip and destination panels in all concepts. The direct `PM.openManager("pam")` call used in the audit works for Control Room and Atlas (full-stage managers) but renders through the concept's own IA in Stack and Stream. All probes that apply to every concept (sprout, inbox, recent, search, theme, reduced motion, narrow 760px, owned-manager open) pass on all four.
+
+**Bug found and fixed by the original audit (pre-polish).** The audit caught a real runtime defect that static + headless checks missed: the owned-families strip was wired with `PM.shared.wireOwnedStrip(stage)` inside each concept's `wireHome()`, but `stage` is only declared in `home()` — so reading it threw `ReferenceError: stage is not defined` on every page load, aborting `wireHome` before the owned cards (and shell re-wire) were bound. The owned-manager "Open" cards therefore did nothing on click in 01/02/03. Fix: pass `document.querySelector("[data-stage]")` instead. After the fix, all four concepts pass the full trigger matrix with zero console/page errors.
 
 ## 1. Validation commands (all PASS)
 
@@ -90,7 +118,6 @@ Dead/nonfunctional controls ✗(none — every action wired) · provider manager
 
 ## 7. Known limitations
 
-- **No interactive browser in this session** — live click/screenshot verification was not possible; see environment note above. All deterministic triggers and state transitions are wired and headless-verified.
 - **All backend interactions are simulated** (see FINDINGS.md). No real providers/CLIs/Usage writes.
 - **Search runs against the in-memory demo dataset**, not the live 818-setting inventory.
 - **Spellcheck** uses the browser `spellcheck` attribute to demonstrate the underline; production needs a Slint-portable spelling-service abstraction.
