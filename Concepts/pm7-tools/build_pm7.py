@@ -43,7 +43,7 @@ import dead_selectors  # noqa: E402  (frozen human-reviewed dead list)
 import home_workspace_source as home_source  # noqa: E402  (authored T20 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
-BASE_SHA = "45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401"
+BASE_SHA = "7f0ff4e5e9a7a54928ef7aaeb48e9d13f096c315e2bd12702f64a04ed89e6f25"
 
 # Segmentation census measured on the pinned base (design memo said 28
 # blocks; actual scan of the pinned base finds 29 -- recorded adaptation).
@@ -1914,14 +1914,16 @@ def t20_home_workspace(doc, notes):
     topbar_markup = home_source.HOME_MARKUP.split(
         '<div id="pm-home-more-menu"', 1)[1].split(
             '<div id="pm-home-open-panel-flyout"', 1)[0]
-    need(topbar_markup.count("data-pm-home-top-action=") == 3,
-         "T20: Home top-bar menu must contain exactly three actions")
+    # 2026-08-13 wave: the menu gained a fourth row, Reset Layout (dual-surface
+    # with the Settings row; both route cmd.workspace_layout.reset).
+    need(topbar_markup.count("data-pm-home-top-action=") == 4,
+         "T20: Home top-bar menu must contain exactly four actions")
     for label in ("Open Panel", "Open Browser in Panel",
-                  "Collapse Bottom Terminal"):
+                  "Collapse Bottom Terminal", "Reset Layout"):
         need(topbar_markup.count(label) == 1,
              "T20: Home top-bar menu label is missing or duplicated: %s" %
              label)
-    for forbidden in ("Reset layout", "Reset Home Layout", "File Manager",
+    for forbidden in ("File Manager",
                       "Move or dock", "Pop Out", "Close Panel",
                       "Terminal sections", "Layout revision", "Recovery status",
                       "Diagnostics"):
@@ -1948,6 +1950,32 @@ def t20_home_workspace(doc, notes):
     doc = doc.replace(resizer_blur_anchor, resizer_bridge + resizer_blur_anchor, 1)
     need(doc.count("window.PM_CANCEL_RESIZER = function()") == 1,
          "T20: shared resizer cancellation bridge is not unique")
+
+    # 2026-08-13 wave: retire the base chat overlay/detached window modes in
+    # PM7. The guard routes every non-docked layout request into the Home
+    # float layer (PM_HOME_WORKSPACE.popOutChat), so chat pops out INSIDE the
+    # workspace instead of covering it with a fixed, scrimmed window -- and a
+    # T20 re-render can no longer resurrect the docked chat alongside the
+    # overlay (the two-chats defect). The scrim CSS becomes dead code and is
+    # deliberately left in place (block census unchanged).
+    chat_layout_anchor = "    LAYOUT = mode;"
+    need(doc.count(chat_layout_anchor) == 1,
+         "T20: chat applyLayout assignment anchor is not unique")
+    chat_layout_guard = (
+        "    /* PM7 T20: overlay/detached chat is retired; chat pops out into\n"
+        "       the Home float layer instead of covering the workspace. */\n"
+        "    if (mode !== 'docked' && window.PM_HOME_WORKSPACE &&\n"
+        "        window.PM_HOME_WORKSPACE.popOutChat) {\n"
+        "      var pm7FloatChat = document.getElementById('floatingChat');\n"
+        "      if (pm7FloatChat) pm7FloatChat.style.display = 'none';\n"
+        "      window.PM_HOME_WORKSPACE.popOutChat();\n"
+        "      return;\n"
+        "    }\n"
+    )
+    doc = doc.replace(chat_layout_anchor,
+                      chat_layout_guard + chat_layout_anchor, 1)
+    need(doc.count("PM7 T20: overlay/detached chat is retired") == 1,
+         "T20: chat overlay retirement guard is not unique")
     notes.update({
         "marker": marker,
         "markup_bytes": len(home_source.HOME_MARKUP.encode("utf-8")),
@@ -1958,9 +1986,10 @@ def t20_home_workspace(doc, notes):
         "topbar_menu_actions": [
             "Open Panel",
             "Open Browser in Panel",
-            "Collapse Bottom Terminal"
+            "Collapse Bottom Terminal",
+            "Reset Layout"
         ],
-        "topbar_menu_action_count": 3,
+        "topbar_menu_action_count": 4,
         "settings_reset_id": "general.startup.reset-home-layout",
         "injection_blocks": ["pm6-css-dashboard", "pm6-js-dashboard"],
         "model_identity": [

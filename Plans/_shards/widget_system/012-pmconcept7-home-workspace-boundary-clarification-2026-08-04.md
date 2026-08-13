@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1093-L1120
+Source lines: L1093-L1127
 
-Source SHA256: `4c3b870ad93bb8af380bcc86e47e6857f8f71946e59e620c00b51dc0d66d44ad`
+Source SHA256: `d3ebb1ef76a687818a386485104c8a6fb62dd408448e3a67564eab2b880b2823`
 
 ---
 
@@ -20,6 +20,13 @@ contract. Sharing that vocabulary is a presentation decision and does not merge 
 Home layout continues to own surface placement under `home_workspace_layout.v1`, while
 widget layout continues to own widget placement under `widget_layout:v1:dashboard`. A
 widget drag never writes the Home record and a surface drag never writes the widget record.
+
+Amended 2026-08-13 — grab-handle presentation update on the Home side: the Home surface
+grab handle is now a 28 by 28 folded-corner triangle filling the surface's top-left corner
+(clip-path hit-testing lets the empty half fall through; the focus ring renders in-glyph;
+ARIA and keyboard grammar unchanged). "Top-left grab handle" in the shared vocabulary
+above means position, not glyph — widgets keep their own handle glyph, and this
+presentation note changes no ownership boundary.
 
 Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
 sections) are shell presentation surfaces, not Dashboard widgets. The Home layout

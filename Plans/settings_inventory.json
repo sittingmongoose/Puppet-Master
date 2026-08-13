@@ -1947,7 +1947,7 @@
   {
    "id": "general.startup.reset-home-layout",
    "label": "Reset Home Layout",
-   "desc": "Returns Home panels, docks, terminal placement, and floating bounds to the safe default without closing editor buffers, terminal sessions, Browser state, Dashboard widgets, or chat history.",
+   "desc": "Returns Home panels, docks, terminal placement, and floating bounds to the safe default without closing editor buffers, terminal sessions, Browser state, Dashboard widgets, or chat history. Dual-surface since 2026-08-13: the top-bar Home menu carries a matching Reset Layout row, and both routes run the same layout reset command.",
    "type": "action",
    "default": "Reset",
    "scope": [
@@ -1958,9 +1958,11 @@
    "search": [
     "home layout",
     "workspace layout",
+    "reset layout",
     "reset panels",
     "recover docks",
-    "startup recovery"
+    "startup recovery",
+    "home menu"
    ],
    "related_features": [
     "editor",

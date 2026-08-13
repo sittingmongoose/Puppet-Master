@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2826-L2920
+Source lines: L2826-L2922
 
-Source SHA256: `cbf113bc3497116549e38ee16407505136466fca3596837cc3acbcfddb699533`
+Source SHA256: `d24307d69857bf939e2d9e3514d15fa7a4af41e225633e2f19eb40aeba10012c`
 
 ---
 
@@ -78,6 +78,7 @@ acceptance_criteria:
 - Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable; host routes are exercised through the grab handle by pointer and by keyboard, and resizers assert changed rendered geometry.
 - Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
 - The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
+- "Amended 2026-08-13: the live matrix additionally carries the topbar_reset_layout_row, chat_popout_stays_in_canvas, grip_corner_hit_target_and_zorder, boot_never_floating, and dead_space_self_heal fixtures; the compact-menu fixture asserts four rows including Reset Layout; the drag fixture asserts the placeholder follows the pointer at the pickup-time footprint without jitter; and the resize fixture asserts adjacent-pair symmetry, post-commit stability, and floating height via the corner handle. The 72-case visual matrix is structurally unchanged."
 - A fresh second pipeline build is byte-identical to Concepts/PMConcept7.html and all PM7/static/Plans/governance gates pass in disposable shadows.
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
@@ -101,5 +102,6 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior 15-check 34-shot Home harness is retired as certification authority.
 - "Amended 2026-08-12: fixtures that assert only command/persist counts are retired as sufficient evidence for a visible outcome; the drop-rail target fixtures and the per-surface Move or dock menu-inventory fixture are retired with the affordances they covered; loss of pointer capture is retired as a cancellation vector."
+- "Amended 2026-08-13: the window-exit-floats drag fixture branch is retired with the behavior it covered (window exit is now invalid_target); the three-row compact-menu assertion and the reset-forbidden regex are retired with the four-row menu; any fixture that accepts a floating surface at boot is retired (boot demotes floating to last_docked_host)."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/UI_Wiring_Rules.md]
 ```

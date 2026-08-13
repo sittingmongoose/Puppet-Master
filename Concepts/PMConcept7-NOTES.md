@@ -4,18 +4,119 @@
 
 `Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-12 (rev 13, Direct-Manipulation repair)
+## Current Home Workspace implementation — 2026-08-13 (rev 14, Workspace Repair + Tab Morph)
+
+Assemble-then-repin wave plus a T20 movement/resize overhaul. Base re-pinned:
+`BASE_SHA` = `7f0ff4e5e9a7a54928ef7aaeb48e9d13f096c315e2bd12702f64a04ed89e6f25`
+(byte-identical to `Concepts/PMConcept6.html`). The generated artifact measures
+3,537,228 bytes with sha256
+`92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec`; the
+checked-in build report sha256 is
+`804ee7940b3861d070a0bf10f997c0a564ae5358590ee1887ce68d3da0b16b5a`.
+
+**Base wave (parts):** notification stack re-centered BETWEEN page tabs and
+search (two auto margins on `.notify-slot`; deliberate revert of the rev-13
+right-cluster placement — the density engine now counts the search wrap's
+padding and every child's non-auto margins). Tab drag-reorder persists on all
+four panes (pane 1 via `S.files.openTabs`; panes 2-4 via strip-owned order
+lists that every fitter reasserts, mirrored to the overlay's `buffer_ids`
+through a `pm6:ed-tab-order` CustomEvent). Overflow chip + menu joined the
+portal-menu family (values-only restyle; sprout-in via double-rAF `.is-open`).
+EDSHAPE lifecycle rehardened: chrome only after a successful measure, the
+shape layer mounts as the strip's LAST child, `paint()` refuses degenerate
+widths, and the three fitters are mutation-free in steady state (chip reused
+via display toggles; label writes guarded) — this also broke the fitter/
+chromeWatch childList observer ping-pong. Scroll-under frost restored:
+`--ed-rail-bg` split into opaque `--ed-rail-solid` + a 72%-alpha plate the
+part-06 backdrop blur shows through; the silhouette shoulders became MASKED
+cutouts (radial-gradient mask, `rgb(0,0,0)` stops — check_css bans raw hex)
+so the frosted rail shows through the concave curve; active tab + canvas keep
+the shared opaque fill.
+
+**T20 wave:** drag rebuilt — change-gated preview (draft/registry/FLIP run only
+when the resolved (host, slot) target changes; per-event work is clone-follow
+only, coalesced to one hit-test per rAF), transform-subtracted `layoutRect`
+midlines (a mid-FLIP `getBoundingClientRect` flapped the resolved index every
+frame — the "placeholder never follows the pointer" defect), placeholder
+carries the PICKUP-TIME footprint and a flex `order` matching its slot
+(surfaces render by `order: slot_index`, so DOM position alone places
+nothing), empty dock targets open their grid track to the incoming footprint,
+window-exit no longer floats (floating is explicit-only: Pop Out rows on
+editor panels/chat/dashboard, keyboard F; boot demotes persisted floats to
+`last_docked_host` with a `storage.boot_demote_floating` receipt). Resize
+rebuilt — home_main dividers do adjacent-PAIR px transfer with every sibling's
+basis frozen to measured px at gesture start (the single-basis write was
+diluted across every sibling's flex-grow: a 200px drag moved ~133px and
+dragged the far dashboard along), effective minimums degrade to the host's
+fair share, commit passes `skip_render` (no settle flash), floating surfaces
+gained a bottom-right both-axis corner handle, dock bands unified in
+`HOST_BANDS`. No-dead-space invariant: `normalizeMainRowBases` re-sums visible
+bases to the host width at render/boot/window-resize, and any stray drop
+placeholder outside a gesture is swept at render (a stranded one was an
+unclaimable void — the user's Safari screenshot). Grip is now a 28px
+folded-corner TRIANGLE filling each surface's top-left corner (clip-path
+hit-testing lets the empty half fall through; in-glyph focus ring because
+outlines are clipped; mounted on the SURFACE, not any head row — the base
+comment about slot 0 of `.editor-tabs` belonging to the grip is now moot, the
+strip's slot 0 is simply its first tab). The base chat overlay/detached modes
+are retired via a T20-anchored guard on `applyLayout` (anchor
+`    LAYOUT = mode;`): all non-docked chat routes to
+`PM_HOME_WORKSPACE.popOutChat()` — in-canvas float, no scrim, no two-chat
+desync. Top-bar menu gained row 4, `Reset Layout` (dual-surface with the
+Settings row; both commit `cmd.workspace_layout.reset`; the top-bar row also
+hides `#floatingChat` and reloads after a fade — PM_DEMO keeps no persistent
+state, so reload is the only honest demo reset). Boot renders once (250ms/1s
+catch-ups deleted; chromeWatch owns late PM6 rebuilds). Motion: staggered
+16ms FLIP reflow wave, pickup lift + shadow bloom, low-bounce drop settle
+with clone pre-seating (element seated at the placeholder before commit so
+the post-commit render is geometrically idempotent), corner-origin float
+sprout, pre-reload reset fade; all `reducedMotion()`-gated.
+
+**Post-verification fix round (same wave):** the adversarial harness run
+caught four defects the hands-on pass missed, all fixed and re-shipped:
+(D1) the fitter's second scheduled pass landed a snap-sync after `lastActive`
+was consumed and CANCELLED the in-flight selection spring one frame in — the
+snap branch now preserves a spring whose target box is unchanged (<0.5px);
+(D2) the full-cover float layer sat in every `elementsFromPoint` stack, so a
+drop into an inter-surface gap — or onto the previewed slot itself — resolved
+to `floating` and silently undocked; `dropHostAt` now skips the floating host
+entirely; (D3) host caps were pointer-only — the keyboard step now announces
+"<dock> is full." and stays, and `normalizeLayout` spills beyond-cap surfaces
+to `home_main` (`host_capacity_spill:<id>` warning); (D4) a dock's full-width
+row resize handle covered the grip corner — grip z-index raised to 110 (the
+triangle clip returns everything right of the hypotenuse to the handle). Also
+`applySurfaceFlex` floors at 80px instead of re-clamping to 220 — minimum
+POLICY lives in the resize/normalize layers (fair-share degradation), and the
+two systems used to disagree. A second verification cycle then caught (D5):
+a pointer drag begun on a FOCUSED grip cancelled instantly — hiding the
+dragged surface blurs the grip, and the init-time capture-phase window blur
+listener treated that element blur as a window blur; it now returns early
+unless `event.target === window`. Final verification: 27/27 matrix checks,
+72/72 captures, frame-step spring 3/3 themes (first-step ratio 0.144,
+26-28 moving frames, keyboard identical, reduced-motion snaps), pixel-sample
+24/24 join crops seam-free, scroll-under 8/8 themes.
+
+**Measurement notes (rev 14):** the placeholder-order defect was invisible to
+DOM-position assertions — the draft, DOM index, and commit were all correct
+while the RENDERED position was wrong (flex `order` overrides DOM order).
+Assert rendered geometry, never insertion index. And when probing the spring,
+sample the inline var each rAF and compare consecutive values — a filtered
+probe that dropped equal frames misread a healthy 14-frame spring as a
+one-frame teleport.
+
+## Previous implementation — 2026-08-12 (rev 13, Direct-Manipulation repair)
 
 The active lineage is the assertion-guarded `T20_home_workspace` transform in
 `Concepts/pm7-tools/build_pm7.py`, sourced from
 `Concepts/pm7-tools/home_workspace_source.py`, over a base re-pinned from the
 `Concepts/pm6-build` parts pipeline. `BASE_SHA` (and the raw base sha — they are
-the same bytes now) is `77192126a80137da29a97d902a87613857eb593c2d3180fe300ebbd554546ddc`.
-`Concepts/PMConcept6.html` carries the same sha `45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401`.
+the same bytes now) was `45645380dd94a29259961c3ca571f162b4ffc0ca6a4bf0968d68cadc67482401`
+(an earlier revision of this entry mis-recorded it as `77192126…`), matching
+the then-current `Concepts/PMConcept6.html`.
 The generated artifact measures 3,502,307 bytes with sha256
 `bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2`.
 The checked-in build report sha256 is
-`51cffff8ea9c4b5c138d7e7845226df83bc22ed1b7a440f9d67498d8716218e7`.
+`804ee7940b3861d070a0bf10f997c0a564ae5358590ee1887ce68d3da0b16b5a`.
 T20 owns the four-panel Home model, six hosts, Pointer Events move/resize
 transactions, terminal workgroup identity, project/workspace persistence,
 safe recovery, inline-SVG controls, and the web/native floating boundary.

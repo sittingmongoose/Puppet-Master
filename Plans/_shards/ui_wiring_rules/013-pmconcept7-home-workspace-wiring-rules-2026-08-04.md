@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L598-L662
+Source lines: L598-L671
 
-Source SHA256: `a079b3c2ecfa46c779a6fd8f4516899d091a012c379c6ce3bdda5bc4b1bf67fb`
+Source SHA256: `bf3892613168036be5fb06eeabd6ecc70b205a51e3dc83214d1498a146c8e8bf`
 
 ---
 
@@ -18,7 +18,9 @@ the typed command and persists the committed layout once.
 
 Popup/flyout disclosure controls are explicitly view-local and are recorded in the
 control census with a `view_only` disposition rather than fabricated command rows.
-The compact Home popup has exactly three top-level rows; its Panel 1 through Panel 4
+The compact Home popup has exactly four top-level rows (amended 2026-08-13: Open
+Panel, Open Browser in Panel, Collapse Bottom Terminal, and Reset Layout); its
+Panel 1 through Panel 4
 leaf targets, each surface menu leaf, File Manager target leaf, terminal add/split
 leaf, drop endpoint, and committed resizer endpoint resolve to one typed production
 row and one executable test. Disabled rows project the owner-provided reason and
@@ -40,7 +42,14 @@ plan_unit_id: UIW-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every Home control, submenu leaf, grab handle, drop target, resizer, and disabled state is source-hashed and resolves to a selector, state selector, canonical command or view-only disposition, event/receipt, handler, production row, and executable test with zero omissions.
+canonical_text: >-
+  Every Home control, submenu leaf, grab handle, drop target, resizer, and disabled state
+  is source-hashed and resolves to a selector, state selector, canonical command or
+  view-only disposition, event/receipt, handler, production row, and executable test with
+  zero omissions. Amended 2026-08-13 - the census additionally covers the top-bar Reset
+  Layout row, the Chat and Dashboard Pop Out rows, and the floating bottom-right corner
+  resize endpoint; the grab-handle rows describe the top-left corner triangle grip, and
+  the drop-target rows carry the footprint-true change-gated hover-preview acceptance.
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false

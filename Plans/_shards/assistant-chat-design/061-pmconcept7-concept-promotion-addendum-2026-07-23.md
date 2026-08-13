@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24039-L24392
+Source lines: L24039-L24405
 
-Source SHA256: `22a536be201afa59dbfb36d2f5c8a08b5c69a0fb9a7b6c45f93d3b1aacc9de9c`
+Source SHA256: `78559cba7f65191775f78a5486fe67b910942780eec61eb9aa98641b82b5a959`
 
 ---
 
@@ -179,6 +179,19 @@ owner_boundary_notes:
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
+
+#### PM7 floating-mount clarification — 2026-08-13
+
+The PMConcept7 base full-screen chat overlay mount (fixed panel plus viewport
+scrim) is retired; every non-docked chat mode routes to the single in-canvas Home
+float-layer surface (no scrim, never covers the title bar, no docked/floating
+double-render). The "floating chat mount" referenced by ACD-440 and ACD-441 is
+that in-canvas float surface, and the ACD-439 corner-origin sprout family still
+animates the pop-out. The ACD-440/ACD-441 behavior contracts are unchanged —
+docked and floating mounts stay behaviorally identical; only the mount for the
+floating case is re-pointed. This note creates no WorkNodes, NodeSeeds, executable
+queues, implementation files, runtime artifacts, generated wiring rows, production
+build tasks, final manifests, or PNC-019 receipts.
 
 ### ACD-442 - Header Chrome Menu Sprouts And Theme-Matched Popout Chrome
 

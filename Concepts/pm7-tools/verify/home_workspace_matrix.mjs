@@ -8,6 +8,13 @@
  *   node home_workspace_matrix.mjs --file PMConcept7.html \
  *     --outdir <evidence-dir> --modules <dir-with-playwright-core> \
  *     --server http://127.0.0.1:8765/
+ *
+ * The default transport is an http server, but --server also accepts a
+ * file:// base (e.g. --server file:///abs/path/to/Concepts) for sandboxes
+ * where Chromium's network service cannot run. Optional launch overrides:
+ *   --chromium <path>   explicit Chromium executable; when given, the
+ *                       sandbox-safe flags (--no-sandbox --disable-gpu
+ *                       --disable-dev-shm-usage) are passed automatically.
  */
 
 import { createRequire } from 'node:module';
@@ -67,7 +74,12 @@ function safeName(value) {
   return String(value).replace(/[^a-z0-9_-]+/gi, '-').toLowerCase();
 }
 
-const browser = await chromium.launch({ headless: true });
+const launchOptions = { headless: true };
+if (args.chromium) {
+  launchOptions.executablePath = args.chromium;
+  launchOptions.args = ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'];
+}
+const browser = await chromium.launch(launchOptions);
 
 async function newCase(name, options = {}) {
   const contextErrors = [];
@@ -247,8 +259,11 @@ async function pointerGesture(page, selector, target, finish = 'up') {
 
 /* Drag onto the LIVE layout. The centre-screen drop-target rail is retired --
    it sat on top of the canvas and swallowed the hit-test that positional drops
-   depend on -- so a drop target is now a real point in the workspace: the edge
-   band for a dock, the middle for home_main, outside the window for floating. */
+   depend on -- so a drop target is a real point in the workspace: the edge
+   band for a dock, the middle for home_main. There is NO pointer route to
+   floating any more (leaving the window is an invalid target, not a float);
+   floating is an explicit action only -- the keyboard F path used by
+   moveSurfaceTo/configureLayout, or the surface menu's Pop Out row. */
 async function dropPointForHost(page, host) {
   const bounds = await page.evaluate(() => {
     const r = document.getElementById('pm-home-workspace').getBoundingClientRect();
@@ -259,7 +274,7 @@ async function dropPointForHost(page, host) {
   if (host === 'dock_right') return { x: bounds.x + bounds.w - edge, y: bounds.y + bounds.h / 2 };
   if (host === 'dock_top') return { x: bounds.x + bounds.w / 2, y: bounds.y + edge };
   if (host === 'dock_bottom') return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h - edge };
-  if (host === 'floating') return { x: bounds.x + bounds.w / 2, y: -20 };
+  if (host === 'floating') throw new Error('floating has no pointer drop point; use the keyboard F path (moveSurfaceTo) or the Pop Out menu row');
   return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 };
 }
 
@@ -354,7 +369,9 @@ await runInteraction('compact_menu_exact_inventory_and_geometry', async page => 
   const menuBox = await menu.boundingBox();
   const rows = await menu.locator(':scope > [data-pm-home-top-action]').allTextContents();
   const separators = await menu.locator(':scope > [role="separator"]').count();
-  const forbidden = await menu.getByText(/Reset|File Manager|Move|Dock|Pop Out|Close|Revision|Recovery|Count/i).count();
+  /* "Reset" left the forbidden list on purpose: the 2026-08-13 wave added the
+     Reset Layout row (user decision 3 -- clear layout + reload). */
+  const forbidden = await menu.getByText(/File Manager|Move|Dock|Pop Out|Close|Revision|Recovery|Count/i).count();
   const attrs = await trigger.evaluate(element => ({
     aria_label: element.getAttribute('aria-label'),
     aria_haspopup: element.getAttribute('aria-haspopup'),
@@ -364,9 +381,9 @@ await runInteraction('compact_menu_exact_inventory_and_geometry', async page => 
   return {
     pass: Math.round(triggerBox.width) === 28 && Math.round(triggerBox.height) === 28 &&
       triggerRight <= themeBox.x + 1 && themeBox.x - triggerRight <= 12.1 &&
-      menuBox.width <= 300 && menuBox.height <= 180 &&
-      same(rows.map(row => row.trim()), ['Open Panel', 'Open Browser in Panel', 'Collapse Bottom Terminal']) &&
-      separators === 1 && forbidden === 0 &&
+      menuBox.width <= 300 && menuBox.height <= 230 &&
+      same(rows.map(row => row.trim()), ['Open Panel', 'Open Browser in Panel', 'Collapse Bottom Terminal', 'Reset Layout']) &&
+      separators === 2 && forbidden === 0 &&
       attrs.aria_label === 'Home more options' && attrs.aria_haspopup === 'menu' && attrs.aria_controls === 'pm-home-more-menu',
     trigger_box: triggerBox,
     theme_box: themeBox,
@@ -582,13 +599,100 @@ await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
     });
   }
   const announced = await page.locator('#pm-home-live-region').count();
+  /* -- Cap refusal. Docks cap VISIBLE surfaces at 3/3/2/2 and home_main is
+     the uncapped spill host. Fill dock_top to its cap of two, then probe all
+     three movement routes against the full dock: keyboard (must announce and
+     stay), pointer (host_full disposition, refused drop), and the raw API
+     (normalization must spill the overflow to home_main, never overfill). */
+  await moveSurfaceTo(page, 'dashboard', 'dock_top');
+  const topCount = () => page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces.filter(s => s.host === 'dock_top' && s.visible).length);
+  const capBaseline = await topCount();
+  const chatGrip = page.locator('[data-pm-home-handle][data-pm-home-surface-id="chat"]').first();
+  const kbBefore = await state(page);
+  await chatGrip.focus();
+  await chatGrip.press('Enter');
+  await page.waitForTimeout(70);
+  await chatGrip.press('ArrowUp');
+  await page.waitForTimeout(70);
+  const kbAnnouncement = await page.evaluate(() => document.getElementById('pm-home-live-region').textContent);
+  await chatGrip.press('Enter');
+  await page.waitForTimeout(140);
+  const kbAfter = await state(page);
+  const keyboardRefusal = {
+    announcement: kbAnnouncement,
+    chat_host: kbAfter.layout.surfaces.find(s => s.surface_instance_id === 'chat').host,
+    dock_top_visible: await topCount(),
+    layout_unchanged: same(kbBefore.layout, kbAfter.layout)
+  };
+  /* keep the probes independent: if the keyboard route wrongly landed chat in
+     the full dock, put it back before probing the pointer route */
+  await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    const chat = home.layout.surfaces.find(s => s.surface_instance_id === 'chat');
+    if (chat.host === 'dock_top') home.moveSurface('chat', 'home_main');
+  });
+  await page.waitForTimeout(120);
+  /* The grip legitimately still holds keyboard focus here -- the drag case's
+     focused-grip subcheck guards the blur-cancellation regression, so this
+     probe runs against reality. */
+  await page.waitForTimeout(120);
+  const ptrBefore = await state(page);
+  const chatBox = await chatGrip.boundingBox();
+  const topHostBox = await page.locator('[data-pm-home-host="dock_top"]').boundingBox();
+  /* press INSIDE the triangle: the box centre (14,14) sits exactly on the
+     clip-path hypotenuse, and whether that boundary pixel belongs to the grip
+     is subpixel-alignment dependent */
+  await page.mouse.move(chatBox.x + 8, chatBox.y + 8);
+  await page.mouse.down();
+  await page.mouse.move(chatBox.x + 11, chatBox.y + 11);
+  await page.mouse.move(topHostBox.x + topHostBox.width / 2, topHostBox.y + topHostBox.height / 2, { steps: 8 });
+  /* the disposition attribute is written by the rAF-throttled drag pipeline;
+     poll rather than racing it with a single read */
+  let ptrDisposition = null;
+  let ptrDragging = false;
+  for (let attempt = 0; attempt < 12 && !ptrDisposition; attempt += 1) {
+    const sample = await page.evaluate(() => ({
+      disposition: document.getElementById('pm-home-workspace').getAttribute('data-pm-home-drop-disposition'),
+      dragging: document.body.classList.contains('pm-home-dragging')
+    }));
+    ptrDisposition = sample.disposition;
+    ptrDragging = ptrDragging || sample.dragging;
+    if (!ptrDisposition) await page.waitForTimeout(50);
+  }
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const ptrAfter = await state(page);
+  const pointerRefusal = {
+    gesture_engaged: ptrDragging,
+    mid_drag_disposition: ptrDisposition,
+    chat_host: ptrAfter.layout.surfaces.find(s => s.surface_instance_id === 'chat').host,
+    dock_top_visible: await topCount(),
+    layout_unchanged: same(ptrBefore.layout, ptrAfter.layout)
+  };
+  const apiNormalization = await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    home.moveSurface('editor_panel_2', 'dock_top');
+    const moved = home.layout.surfaces.find(s => s.surface_instance_id === 'editor_panel_2');
+    return { host: moved.host, dock_top_visible: home.layout.surfaces.filter(s => s.host === 'dock_top' && s.visible).length };
+  });
+  const capRefusal = {
+    dock_top_filled_to_cap: capBaseline,
+    keyboard: keyboardRefusal,
+    pointer: pointerRefusal,
+    api_normalization: apiNormalization
+  };
+  const capPass = capBaseline === 2 &&
+    keyboardRefusal.chat_host !== 'dock_top' && keyboardRefusal.dock_top_visible === 2 &&
+    pointerRefusal.gesture_engaged && pointerRefusal.mid_drag_disposition === 'host_full' && pointerRefusal.layout_unchanged &&
+    apiNormalization.host === 'home_main' && apiNormalization.dock_top_visible <= 2;
   return {
     pass: inventory.every(item => item.grips === 1 && item.accessible_name && item.retired_menu_rows === 0) &&
       routes.every(item => item.actual === item.host && item.command_delta === 1 && item.persist_delta === 1) &&
-      announced === 1 &&
+      announced === 1 && capPass &&
       (await state(page)).identity_integrity.ok,
     inventory,
     routes,
+    cap_refusal: capRefusal,
     live_region_present: announced === 1
   };
 });
@@ -642,6 +746,99 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
         flip_transform: flipped
       };
     });
+    /* Placeholder FOLLOWS the pointer: crossing sibling midlines re-slots the
+       placeholder, so its bounding x must move with the pointer. The probe
+       points are derived from the LIVE sibling rects -- squarely over the
+       first sibling's leading quarter (resolves before-first) and the last
+       sibling's trailing quarter (resolves after-last) -- because arbitrary
+       workspace fractions can legally resolve to the same slot, and a point
+       in the 8px inter-surface gap does not resolve positionally at all.
+       (The pre-rebuild defect: pointer at x=1500, placeholder parked at
+       x=299.) */
+    const followPoints = await page.evaluate(() => {
+      const rects = [];
+      document.querySelectorAll('[data-pm-home-host="home_main"] > [data-pm-home-surface]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.width > 0) rects.push(r);
+      });
+      rects.sort((a, b) => a.left - b.left);
+      const first = rects[0];
+      const last = rects[rects.length - 1];
+      return {
+        before_first: { x: first.left + first.width * 0.2, y: first.top + first.height / 2 },
+        after_last: { x: last.left + last.width * 0.85, y: last.top + last.height / 2 }
+      };
+    });
+    const placeholderRect = () => page.evaluate(() => {
+      const ph = document.getElementById('pm-home-drop-placeholder');
+      return ph ? { x: ph.getBoundingClientRect().x } : null;
+    });
+    await page.mouse.move(followPoints.after_last.x, followPoints.after_last.y, { steps: 6 });
+    await page.waitForTimeout(140);
+    const placeholderRight = await placeholderRect();
+    await page.mouse.move(followPoints.before_first.x, followPoints.before_first.y, { steps: 6 });
+    await page.waitForTimeout(140);
+    const placeholderLeft = await placeholderRect();
+    const placeholderFollow = {
+      right_of_travel: placeholderRight,
+      left_of_travel: placeholderLeft,
+      followed: Boolean(placeholderRight && placeholderLeft && placeholderLeft.x < placeholderRight.x - 40)
+    };
+    /* Floating is explicit-action only (Pop Out row / keyboard F): NO pointer
+       position may preview a float. The 8px inter-surface gap is the trap --
+       with no surface under the pointer, a stack walk that accepts the first
+       [data-pm-home-host] finds the float layer overlaying the grid. */
+    const gapPoint = await page.evaluate(() => {
+      const rects = [];
+      document.querySelectorAll('[data-pm-home-host="home_main"] > [data-pm-home-surface]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.width > 5) rects.push(r);
+      });
+      rects.sort((a, b) => a.left - b.left);
+      return rects.length >= 2
+        ? { x: (rects[0].right + rects[1].left) / 2, y: rects[0].top + rects[0].height / 2 }
+        : null;
+    });
+    let gapNeverFloats = null;
+    if (gapPoint) {
+      await page.mouse.move(gapPoint.x, gapPoint.y, { steps: 4 });
+      await page.waitForTimeout(140);
+      gapNeverFloats = await page.evaluate(() => {
+        const draft = window.PM_HOME_WORKSPACE.draft_layout;
+        const surface = draft && draft.surfaces.find(s => s.surface_instance_id === 'dashboard');
+        const ph = document.getElementById('pm-home-drop-placeholder');
+        return {
+          draft_host: surface ? surface.host : null,
+          placeholder_host: ph && ph.parentElement ? ph.parentElement.getAttribute('data-pm-home-host') : null,
+          ok: !surface || surface.host !== 'floating'
+        };
+      });
+      /* return to a positional point before the jitter probe */
+      await page.mouse.move(followPoints.before_first.x, followPoints.before_first.y, { steps: 4 });
+      await page.waitForTimeout(140);
+    }
+    /* No-jitter: the preview is change-gated, so pointermoves that resolve to
+       the SAME (host, slot) must not touch the host's child list at all. The
+       pre-rebuild defect restarted every neighbour's FLIP per pointermove.
+       Let the reposition from the gap probe fully settle first, or its own
+       placeholder re-seat lands inside the observation window. */
+    await page.waitForTimeout(350);
+    await page.evaluate(() => {
+      const ph = document.getElementById('pm-home-drop-placeholder');
+      const host = ph && ph.parentElement;
+      window.__pmJitterRecords = 0;
+      window.__pmJitterObserver = new MutationObserver(records => { window.__pmJitterRecords += records.length; });
+      if (host) window.__pmJitterObserver.observe(host, { childList: true });
+    });
+    const still = followPoints.before_first;
+    await page.mouse.move(still.x, still.y);
+    await page.mouse.move(still.x, still.y);
+    await page.waitForTimeout(160);
+    const jitterMutations = await page.evaluate(() => {
+      const total = window.__pmJitterRecords;
+      if (window.__pmJitterObserver) window.__pmJitterObserver.disconnect();
+      return total;
+    });
     await page.keyboard.press('Escape');
     await page.mouse.up();
     await page.waitForTimeout(150);
@@ -654,7 +851,10 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       neighbour_reflowed: Object.keys(during.neighbour || {}).some(id => {
         const a = neighbourBefore[id], b = during.neighbour[id];
         return a && b && (a.left !== b.left || a.top !== b.top);
-      })
+      }),
+      placeholder_follow: placeholderFollow,
+      gap_never_floats: gapNeverFloats,
+      same_point_childlist_mutations: jitterMutations
     };
   })();
 
@@ -691,11 +891,53 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       cancel_delta: after.metrics.cancelledGestureCount - before.metrics.cancelledGestureCount
     });
   }
+  /* D5 regression guard (2026-08-13): a pointer drag begun on a grip that IS
+     the focused element must survive. The broken build hid the dragged
+     surface, the focused grip became unfocusable, and the relocation blur hit
+     the drag's blur-cancellation vector -- the gesture died immediately or
+     within ~250ms. The fix scopes that vector to event.target === window. */
+  const focusedGrip = page.locator(handle).first();
+  await focusedGrip.focus();
+  const gripFocused = await page.evaluate(() => Boolean(document.activeElement && document.activeElement.hasAttribute('data-pm-home-handle')));
+  const focusedBefore = await state(page);
+  const focusedBox = await focusedGrip.boundingBox();
+  await page.mouse.move(focusedBox.x + 8, focusedBox.y + 8);
+  await page.mouse.down();
+  await page.mouse.move(focusedBox.x + 24, focusedBox.y + 24, { steps: 3 });
+  const holdSamples = [];
+  for (let sample = 0; sample < 5; sample += 1) {
+    await page.waitForTimeout(100);
+    holdSamples.push(await page.evaluate(() => document.body.classList.contains('pm-home-dragging')));
+  }
+  const focusedDuring = await state(page);
+  const focusedDropAt = await dropPointForHost(page, 'home_main');
+  await page.mouse.move(focusedDropAt.x, focusedDropAt.y, { steps: 8 });
+  await page.waitForTimeout(120);
+  await page.mouse.up();
+  await page.waitForTimeout(200);
+  const focusedAfter = await state(page);
+  const focusedDrag = {
+    grip_focused: gripFocused,
+    hold_samples: holdSamples,
+    survived_400ms: holdSamples.every(Boolean),
+    cancel_delta_during_hold: focusedDuring.metrics.cancelledGestureCount - focusedBefore.metrics.cancelledGestureCount,
+    total_cancel_delta: focusedAfter.metrics.cancelledGestureCount - focusedBefore.metrics.cancelledGestureCount,
+    committed_host: focusedAfter.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard').host,
+    command_delta: focusedAfter.metrics.commandCount - focusedBefore.metrics.commandCount,
+    command_id: focusedAfter.commands.at(-1) && focusedAfter.commands.at(-1).command_id
+  };
+  const focusedDragPass = focusedDrag.grip_focused && focusedDrag.survived_400ms &&
+    focusedDrag.cancel_delta_during_hold === 0 && focusedDrag.total_cancel_delta === 0 &&
+    focusedDrag.committed_host === 'home_main' && focusedDrag.command_delta === 1 &&
+    focusedDrag.command_id === 'cmd.workspace_layout.move_surface';
   const classesClear = await page.evaluate(() => !document.body.classList.contains('pm-home-dragging') && !document.body.classList.contains('pm-resizing'));
   const residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
   return {
     pass: moveProof.host === 'dock_left' && moveProof.command_delta === 1 && moveProof.persist_delta === 1 && moveProof.preview_delta > 0 &&
+      focusedDragPass &&
       reflow.lifted === 1 && reflow.placeholder_in_host && reflow.neighbour_reflowed &&
+      reflow.placeholder_follow.followed && (!reflow.gap_never_floats || reflow.gap_never_floats.ok) &&
+      reflow.same_point_childlist_mutations === 0 &&
       unchangedDrop.exact_layout && unchangedDrop.command_delta === 0 && unchangedDrop.persist_delta === 0 &&
       invalidTarget.exact_layout && invalidTarget.command_delta === 0 && invalidTarget.persist_delta === 0 &&
       cancellations.every(item => item.exact_layout && item.command_delta === 0 && item.persist_delta === 0 && item.cancel_delta === 1) &&
@@ -705,12 +947,59 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     unchanged_drop: unchangedDrop,
     invalid_target: invalidTarget,
     cancellations,
+    focused_grip_drag: focusedDrag,
     gesture_classes_clear: classesClear,
     drag_residue: residue
   };
 }, { recordVideo: true });
 
 await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async page => {
+  /* -- Adjacent-PAIR pixel transfer, on the roomy default layout (three
+     home_main surfaces). Dragging the divider between A and B by +200px must
+     move exactly that pair (+200/-200), leave the non-adjacent surface where
+     it was, and commit ONE skip_render resize naming BOTH pair members. The
+     pre-rebuild defect diluted the same drag across every flex sibling
+     (+133/-67 with the far dashboard dragged along). */
+  const mainWidths = () => page.evaluate(() => {
+    const out = {};
+    document.querySelectorAll('[data-pm-home-host="home_main"] > [data-pm-home-surface][data-pm-home-visible="true"]').forEach(el => {
+      out[el.getAttribute('data-pm-home-surface')] = el.getBoundingClientRect().width;
+    });
+    return out;
+  });
+  const pairBefore = await mainWidths();
+  const pairState = await state(page);
+  const divider = page.locator('[data-pm-home-resizer="editor_panel_1"]:not([data-pm-home-resizer-corner])');
+  const dividerBox = await divider.boundingBox();
+  await page.mouse.move(dividerBox.x + dividerBox.width / 2, dividerBox.y + dividerBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(dividerBox.x + dividerBox.width / 2 + 200, dividerBox.y + dividerBox.height / 2, { steps: 10 });
+  await page.mouse.up();
+  const pairAtMouseup = await mainWidths();
+  /* skip_render commit: geometry at mouseup must ALREADY be final -- a settle
+     flash shows up as movement inside the next 200ms. */
+  await page.waitForTimeout(200);
+  const pairSettled = await mainWidths();
+  const pairAfterState = await state(page);
+  const pairCommand = pairAfterState.commands.at(-1);
+  const pairCheck = {
+    before: pairBefore,
+    at_mouseup: pairAtMouseup,
+    settled: pairSettled,
+    delta_a: pairAtMouseup.editor_panel_1 - pairBefore.editor_panel_1,
+    delta_b: pairAtMouseup.editor_panel_2 - pairBefore.editor_panel_2,
+    delta_other: pairAtMouseup.dashboard - pairBefore.dashboard,
+    command_delta: pairAfterState.metrics.commandCount - pairState.metrics.commandCount,
+    command_id: pairCommand && pairCommand.command_id,
+    command_affected: pairCommand && pairCommand.affected_surface_instance_ids,
+    settle_drift: Math.max(...Object.keys(pairAtMouseup).map(id => Math.abs(pairSettled[id] - pairAtMouseup[id])))
+  };
+  const pairPass = Math.abs(pairCheck.delta_a - 200) <= 2 && Math.abs(pairCheck.delta_b + 200) <= 2 &&
+    Math.abs(pairCheck.delta_other) <= 2 && pairCheck.settle_drift <= 1 &&
+    pairCheck.command_delta === 1 && pairCheck.command_id === 'cmd.workspace_layout.resize_surface' &&
+    Array.isArray(pairCheck.command_affected) &&
+    pairCheck.command_affected.includes('editor_panel_1') && pairCheck.command_affected.includes('editor_panel_2');
+
   await ensureAllOpen(page);
   const selectors = await page.locator('[data-pm-home-resizer]:visible').evaluateAll(elements => elements.map(element => ({
     surface_id: element.getAttribute('data-pm-home-surface-id'),
@@ -783,20 +1072,320 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
       persist_delta: after.metrics.persistCount - before.metrics.persistCount
     };
   }
+  /* -- Floating corner handle drives BOTH axes. Float a surface through the
+     explicit keyboard path, then drag its bottom-right corner handle. */
+  await moveSurfaceTo(page, 'dashboard', 'floating');
+  const cornerCount = await page.locator('[data-pm-home-resizer-corner]').count();
+  const cornerHandle = page.locator('[data-pm-home-resizer-corner="dashboard"]');
+  const floatRect = () => page.evaluate(() => {
+    const el = document.querySelector('[data-pm-home-surface="dashboard"]');
+    const r = el.getBoundingClientRect();
+    return { w: Math.round(r.width), h: Math.round(r.height) };
+  });
+  const cornerBefore = await floatRect();
+  const cornerStateBefore = await state(page);
+  const cornerBox = await cornerHandle.boundingBox();
+  await page.mouse.move(cornerBox.x + cornerBox.width / 2, cornerBox.y + cornerBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(cornerBox.x + cornerBox.width / 2 - 120, cornerBox.y + cornerBox.height / 2 - 90, { steps: 8 });
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const cornerAfter = await floatRect();
+  const cornerStateAfter = await state(page);
+  const cornerCheck = {
+    corner_handle_count: cornerCount,
+    before: cornerBefore,
+    after: cornerAfter,
+    width_changed: Math.abs(cornerAfter.w - cornerBefore.w) > 40,
+    height_changed: Math.abs(cornerAfter.h - cornerBefore.h) > 30,
+    command_delta: cornerStateAfter.metrics.commandCount - cornerStateBefore.metrics.commandCount,
+    command_id: cornerStateAfter.commands.at(-1) && cornerStateAfter.commands.at(-1).command_id
+  };
+  const cornerPass = cornerCheck.corner_handle_count === 1 && cornerCheck.width_changed && cornerCheck.height_changed &&
+    cornerCheck.command_delta === 1 && cornerCheck.command_id === 'cmd.workspace_layout.resize_surface';
   const glowCleanup = await page.evaluate(() => !document.body.classList.contains('pm-resizing') && document.querySelectorAll('.resizer-glow, .is-glowing').length === 0);
   return {
-    pass: selectors.length >= 4 &&
+    pass: pairPass && selectors.length >= 4 &&
       checks.every(item => item.command_delta === 1 && item.persist_delta === 1 &&
         item.last_command === 'cmd.workspace_layout.resize_surface' &&
         (item.geometry_changed || item.clamped_at_minimum)) &&
       checks.some(item => item.geometry_changed) &&
-      cancellation && cancellation.exact_layout && cancellation.command_delta === 0 && cancellation.persist_delta === 0 && glowCleanup,
+      cancellation && cancellation.exact_layout && cancellation.command_delta === 0 && cancellation.persist_delta === 0 &&
+      cornerPass && glowCleanup,
+    adjacent_pair_transfer: pairCheck,
     enrolled: selectors,
     changed_resize_checks: checks,
     cancellation,
+    floating_corner: cornerCheck,
     glow_cleanup: glowCleanup
   };
+}, { recordVideo: true, viewport: { width: 2200, height: 1200 } });
+
+/* 2026-08-13 wave: the top-bar more menu gained a Reset Layout row. It commits
+   cmd.workspace_layout.reset through the normal command path, persists the
+   default layout, then reloads the page (~180ms) -- the only honest demo reset
+   (PM_DEMO state is closure-private and unpersisted). */
+await runInteraction('topbar_reset_layout_row', async page => {
+  await moveSurfaceTo(page, 'dashboard', 'dock_left');
+  const beforeReset = await state(page);
+  await page.locator('#pm-home-more-btn').click();
+  await page.waitForTimeout(360);
+  const row = page.locator('#pm-home-more-menu [data-pm-home-top-action="reset-layout"]');
+  const rowCount = await row.count();
+  const rowLabel = rowCount ? (await row.textContent()).trim() : null;
+  /* The reload timer is ~180ms out, so reading the command log after the
+     click races navigation. The workspace broadcasts every dispatch as a
+     pm:command-dispatch CustomEvent -- bridge it through sessionStorage,
+     which survives the reload. */
+  await page.evaluate(() => {
+    window.__pm_pre_reset = true;
+    sessionStorage.removeItem('__pm_reset_case_cmd');
+    window.addEventListener('pm:command-dispatch', event => {
+      try {
+        if (event.detail && event.detail.command_id === 'cmd.workspace_layout.reset') {
+          sessionStorage.setItem('__pm_reset_case_cmd', event.detail.command_id);
+        }
+      } catch (error) {}
+    });
+  });
+  await row.click();
+  await page.waitForFunction(() => !window.__pm_pre_reset && Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 20000 });
+  await page.waitForTimeout(350);
+  const preReload = await page.evaluate(() => ({
+    last_command_id: sessionStorage.getItem('__pm_reset_case_cmd')
+  }));
+  const after = await state(page);
+  const dashboardAfter = after.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard');
+  const floatingChatHidden = await page.evaluate(() => {
+    const overlay = document.getElementById('floatingChat');
+    return !overlay || getComputedStyle(overlay).display === 'none';
+  });
+  const rowStillPresent = await page.locator('#pm-home-more-menu [data-pm-home-top-action="reset-layout"]').count();
+  return {
+    pass: rowCount === 1 && rowLabel === 'Reset Layout' &&
+      preReload && preReload.last_command_id === 'cmd.workspace_layout.reset' &&
+      dashboardAfter.host === 'home_main' &&
+      after.layout.surfaces.every(surface => surface.host !== 'floating') &&
+      after.layout.validation.status === 'valid' &&
+      floatingChatHidden && rowStillPresent === 1,
+    row_count: rowCount,
+    row_label: rowLabel,
+    dashboard_before: beforeReset.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard').host,
+    pre_reload: preReload,
+    dashboard_after_reload: dashboardAfter.host,
+    floating_chat_hidden: floatingChatHidden
+  };
 }, { recordVideo: true });
+
+/* 2026-08-13 wave: the base full-screen chat overlay is retired. The docked
+   chat kebab's Pop Out row must float chat INSIDE the workspace float layer;
+   #floatingChat never displays and a re-render never resurrects a second
+   chat. */
+await runInteraction('chat_popout_stays_in_canvas', async page => {
+  const chatVisible = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces.find(surface => surface.surface_instance_id === 'chat').visible);
+  if (!chatVisible) {
+    await page.locator('.activity-bar .icon[title="Chat"]').click();
+    await page.waitForTimeout(250);
+  }
+  await page.locator('[data-pm-home-surface="chat"] .pm6-chat-more-btn').click();
+  await page.waitForTimeout(300);
+  const before = await state(page);
+  await page.locator('.pm6-chat-more-menu .popOutBtn').click();
+  await page.waitForTimeout(400);
+  const after = await state(page);
+  const domAfterPopout = await page.evaluate(() => {
+    const chat = document.querySelector('[data-pm-home-surface="chat"]');
+    const overlay = document.getElementById('floatingChat');
+    const workspace = document.getElementById('pm-home-workspace').getBoundingClientRect();
+    const rect = chat.getBoundingClientRect();
+    return {
+      parent_is_float_layer: Boolean(chat.parentElement && chat.parentElement.classList.contains('pm-home-float-layer')),
+      floating_chat_display: overlay ? getComputedStyle(overlay).display : 'absent',
+      overlay_scrim_visible: Boolean(document.querySelector('.pm6-chat-overlay') && document.querySelector('.pm6-chat-overlay').offsetParent),
+      chat_nodes: document.querySelectorAll('[data-pm-home-surface="chat"]').length,
+      inside_workspace: rect.top >= workspace.top - 1 && rect.left >= workspace.left - 1 && rect.bottom <= workspace.bottom + 1
+    };
+  });
+  /* a workspace re-render must not resurrect the docked chat next to the
+     floated one -- force one through a normal command */
+  await openPanel(page, 3);
+  const domAfterRerender = await page.evaluate(() => ({
+    chat_nodes: document.querySelectorAll('[data-pm-home-surface="chat"]').length,
+    floating_chat_display: document.getElementById('floatingChat') ? getComputedStyle(document.getElementById('floatingChat')).display : 'absent',
+    parent_is_float_layer: Boolean(document.querySelector('[data-pm-home-surface="chat"]').parentElement.classList.contains('pm-home-float-layer'))
+  }));
+  const chatSurface = after.layout.surfaces.find(surface => surface.surface_instance_id === 'chat');
+  return {
+    pass: chatSurface.host === 'floating' &&
+      after.commands.at(-1) && after.commands.at(-1).command_id === 'cmd.panel.undock' &&
+      after.metrics.commandCount - before.metrics.commandCount === 1 &&
+      domAfterPopout.parent_is_float_layer && domAfterPopout.floating_chat_display === 'none' &&
+      !domAfterPopout.overlay_scrim_visible && domAfterPopout.chat_nodes === 1 && domAfterPopout.inside_workspace &&
+      domAfterRerender.chat_nodes === 1 && domAfterRerender.floating_chat_display === 'none' && domAfterRerender.parent_is_float_layer,
+    chat_surface: chatSurface,
+    dom_after_popout: domAfterPopout,
+    dom_after_rerender: domAfterRerender,
+    command: after.commands.at(-1)
+  };
+}, { recordVideo: true });
+
+/* 2026-08-13 wave: the grip is a 28x28 clip-path triangle seated as the
+   surface element's first child at its exact top-left corner, z-index 40.
+   A point 6px inside the corner must hit-test to the grip on EVERY visible
+   surface, chat included. */
+await runInteraction('grip_corner_hit_target_and_zorder', async page => {
+  await ensureAllOpen(page);
+  const surfaces = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll('[data-pm-home-surface][data-pm-home-visible="true"]')).map(element => {
+      const id = element.getAttribute('data-pm-home-surface');
+      /* the home_main row legitimately overflows into a scrollport when its
+         minimums exceed the container -- a surface scrolled out of view has
+         no hittable corner, so bring each one in before testing */
+      element.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' });
+      const rect = element.getBoundingClientRect();
+      const hit = document.elementFromPoint(rect.left + 6, rect.top + 6);
+      const hitGrip = hit && hit.closest ? hit.closest('[data-pm-home-handle]') : null;
+      const grip = element.querySelector('[data-pm-home-handle="' + id + '"]');
+      const gripRect = grip ? grip.getBoundingClientRect() : null;
+      const gripStyle = grip ? getComputedStyle(grip) : null;
+      return {
+        id,
+        grip_present: Boolean(grip),
+        grip_is_first_child: Boolean(grip && element.firstElementChild === grip),
+        hit_resolves_to_own_grip: Boolean(hitGrip && hitGrip.getAttribute('data-pm-home-handle') === id),
+        hit_tag: hit ? hit.tagName + (hit.className && typeof hit.className === 'string' ? '.' + hit.className.split(' ')[0] : '') : null,
+        grip_size: gripRect ? { w: Math.round(gripRect.width), h: Math.round(gripRect.height) } : null,
+        grip_at_corner: gripRect ? Math.abs(gripRect.left - rect.left) <= 1.5 && Math.abs(gripRect.top - rect.top) <= 1.5 : false,
+        z_index: gripStyle ? gripStyle.zIndex : null,
+        clip_path_triangle: gripStyle ? gripStyle.clipPath.indexOf('polygon') === 0 : false
+      };
+    });
+  });
+  const ids = surfaces.map(item => item.id);
+  /* z-index floor, not an exact pin: the corner hit-test is the substantive
+     assertion. The 2026-08-13 fix wave raised the grip from 40 to 110 so it
+     wins over the full-width row resize handles (z 100) at dock_top/bottom
+     surfaces' corners; any value that keeps the grip on top satisfies the
+     contract. */
+  return {
+    pass: surfaces.length >= 7 && ids.includes('chat') &&
+      surfaces.every(item => item.grip_present && item.grip_is_first_child && item.hit_resolves_to_own_grip &&
+        item.grip_size && Math.abs(item.grip_size.w - 28) <= 1 && Math.abs(item.grip_size.h - 28) <= 1 &&
+        item.grip_at_corner && Number.parseInt(item.z_index, 10) >= 40 && item.clip_path_triangle),
+    surfaces
+  };
+});
+
+/* 2026-08-13 wave: floating is a within-session state, never a boot state.
+   Persisted floating surfaces demote to their last docked host at boot with a
+   storage.boot_demote_floating receipt, and boot renders once -- no 250ms /
+   1000ms catch-up renders reparenting surfaces after first paint. */
+await runInteraction('boot_never_floating', async page => {
+  await moveSurfaceTo(page, 'editor_panel_1', 'floating');
+  await moveSurfaceTo(page, 'dashboard', 'floating');
+  const persistedBefore = await page.evaluate(() => {
+    const record = JSON.parse(localStorage.getItem(window.PM_HOME_WORKSPACE.storage_key));
+    return record.surfaces.filter(surface => surface.host === 'floating').map(surface => surface.surface_instance_id);
+  });
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  await page.waitForTimeout(350);
+  const after = await state(page);
+  const demoteReceipt = after.receipts.find(record => record.command_id === 'storage.boot_demote_floating');
+  const persistedAfter = await page.evaluate(() => {
+    const record = JSON.parse(localStorage.getItem(window.PM_HOME_WORKSPACE.storage_key));
+    return record.surfaces.filter(surface => surface.host === 'floating').map(surface => surface.surface_instance_id);
+  });
+  const floatLayerChildren = await page.evaluate(() => document.querySelectorAll('.pm-home-float-layer [data-pm-home-surface]').length);
+  /* Render-once probe: watch the HOST containers' direct child lists over the
+     window where the retired 250ms/1000ms catch-up renders used to fire. A
+     late renderLayout reparents surface elements between hosts; content
+     engines (terminal ticks, chat) only mutate INSIDE surfaces, so host-level
+     childList records isolate layout churn. */
+  await page.evaluate(() => {
+    window.__pmBootChurn = 0;
+    window.__pmBootObserver = new MutationObserver(records => { window.__pmBootChurn += records.length; });
+    document.querySelectorAll('[data-pm-home-host]').forEach(host => {
+      window.__pmBootObserver.observe(host, { childList: true });
+    });
+  });
+  await page.waitForTimeout(1100);
+  const lateChurn = await page.evaluate(() => {
+    window.__pmBootObserver.disconnect();
+    return window.__pmBootChurn;
+  });
+  return {
+    pass: persistedBefore.length === 2 &&
+      after.layout.surfaces.every(surface => surface.host !== 'floating') &&
+      Boolean(demoteReceipt) && demoteReceipt.outcome === 'applied' &&
+      same(demoteReceipt.details.demoted_surface_instance_ids.slice().sort(), persistedBefore.slice().sort()) &&
+      persistedAfter.length === 0 && floatLayerChildren === 0 && lateChurn === 0,
+    persisted_floating_before_reload: persistedBefore,
+    demote_receipt: demoteReceipt || null,
+    persisted_floating_after_reload: persistedAfter,
+    float_layer_children: floatLayerChildren,
+    late_boot_host_childlist_mutations: lateChurn
+  };
+});
+
+/* 2026-08-13 wave: no dead space. A stray placeholder outside a gesture is
+   swept by any render, and normalizeMainRowBases re-sums a degenerate
+   persisted layout (tiny committed bases) to the container at boot -- the row
+   self-heals instead of rendering an unclaimable void. */
+await runInteraction('dead_space_self_heal', async page => {
+  await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    const record = JSON.parse(localStorage.getItem(home.storage_key)) || home.layout;
+    record.surfaces.forEach(surface => {
+      if (surface.host === 'home_main') surface.size.basis_px = 60;
+    });
+    localStorage.setItem(home.storage_key, JSON.stringify(record));
+  });
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  await page.waitForTimeout(350);
+  const geometry = await page.evaluate(() => {
+    const host = document.querySelector('[data-pm-home-host="home_main"]');
+    const hostStyle = getComputedStyle(host);
+    /* clientWidth includes the host's own padding (4px each side); the row
+       can only ever fill the CONTENT box */
+    const contentWidth = host.clientWidth - parseFloat(hostStyle.paddingLeft) - parseFloat(hostStyle.paddingRight);
+    const surfaces = Array.from(host.querySelectorAll(':scope > [data-pm-home-surface][data-pm-home-visible="true"]'))
+      .filter(element => !element.hasAttribute('data-pm-home-collapsed') || element.getAttribute('data-pm-home-collapsed') !== 'true');
+    const widths = surfaces.map(element => element.getBoundingClientRect().width);
+    const gaps = 8 * Math.max(0, surfaces.length - 1);
+    const sum = widths.reduce((total, width) => total + width, 0) + gaps;
+    return {
+      host_client_width: host.clientWidth,
+      host_content_width: Math.round(contentWidth),
+      surface_count: surfaces.length,
+      widths: widths.map(width => Math.round(width)),
+      sum_with_gaps: Math.round(sum),
+      dead_space: Math.round(contentWidth - sum)
+    };
+  });
+  const validation = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.validation.status);
+  /* stray-placeholder sweep: plant one outside any gesture, then trigger a
+     normal render through a real command */
+  await page.evaluate(() => {
+    const stray = document.createElement('div');
+    stray.id = 'pm-home-drop-placeholder';
+    stray.className = 'pm-home-drop-placeholder';
+    document.querySelector('[data-pm-home-host="home_main"]').appendChild(stray);
+  });
+  const strayPlanted = await page.evaluate(() => Boolean(document.getElementById('pm-home-drop-placeholder')));
+  await openPanel(page, 3);
+  const straySwept = await page.evaluate(() => !document.getElementById('pm-home-drop-placeholder'));
+  return {
+    pass: geometry.surface_count >= 3 && Math.abs(geometry.dead_space) <= 4 &&
+      geometry.widths.every(width => width >= 80) &&
+      validation === 'valid' && strayPlanted && straySwept,
+    geometry,
+    validation_status: validation,
+    stray_planted: strayPlanted,
+    stray_swept_by_render: straySwept
+  };
+});
 
 await runInteraction('terminal_four_section_four_pane_caps_and_identity', async page => {
   const initial = await state(page);

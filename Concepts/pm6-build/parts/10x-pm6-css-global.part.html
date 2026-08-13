@@ -1282,7 +1282,15 @@
          surface. Mixing toward black is monotonic, so the rail is darker by
          construction in every theme. Dark themes take a larger factor because the
          same proportional step is a much smaller absolute one down there. */
-      --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      /* The rail PLATE is that hue at 72% alpha -- the same alpha as the
+         original part-06 strip plate and the chat panel header. The strip
+         keeps part-06's backdrop blur, so scrolled code ghosts through the
+         rail (the scroll-under frost); an opaque rail killed that effect in
+         the shipped rev. The silhouette and the canvas stay opaque -- content
+         sliding under the ACTIVE tab reads as sliding under the canvas's own
+         top edge, which is the physical metaphor. */
+      --ed-rail-bg: color-mix(in srgb, var(--ed-rail-solid) 72%, transparent);
       /* Opaque ground that the rail, the silhouette and the canvas are all
          composited over. Without it the glass themes break the central promise:
          --surface is translucent there, so the silhouette (over the rail) and the
@@ -1300,13 +1308,15 @@
       --ed-canvas-lrx: 0px;
       --ed-canvas-rrx: 0px;
     }
-    [data-theme$="-dark"] .editor-pane { --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
+    [data-theme$="-dark"] .editor-pane { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
     /* Glass reads the code surface as its near-opaque plate; adopt that as the
        shared fill so the silhouette and the canvas stay identical AND glass keeps
        its own material. */
     [data-theme^="glass"] .editor-pane { --ed-canvas-bg: var(--pm6-glass-plate); }
     .editor-tabs.ed-shape-on {
-      background: linear-gradient(var(--ed-rail-bg), var(--ed-rail-bg)), var(--ed-solid-base);
+      /* single translucent layer: part 06's backdrop blur on .editor-tabs now
+         has scrolled content to show through the rail */
+      background: var(--ed-rail-bg);
       border-bottom: 0;
       align-items: flex-end;
       /* No left inset: the first tab must be able to sit FLUSH against the
@@ -1343,10 +1353,14 @@
     @supports (corner-shape: squircle) {
       .ed-tab-shape { corner-shape: squircle squircle flat flat; }
     }
-    /* concave shoulders: a quarter-ellipse of rail punched out of a block of
-       canvas fill, so the tab flares outward into the canvas rather than
-       sitting on top of it. An external join like this cannot be produced by
-       border-radius alone. */
+    /* concave shoulders: a quarter-ellipse CUT OUT of a block of canvas fill,
+       so the tab flares outward into the canvas rather than sitting on top of
+       it. An external join like this cannot be produced by border-radius
+       alone. The cutout is a mask (not a painted rail gradient) so whatever
+       the rail is -- now a translucent, blurred plate -- shows through the
+       hole; a painted shoulder would leave opaque patches on the frost.
+       (Masks on pseudo-elements are safe re: the fixed-position containing
+       block hazard -- pseudos host no descendants.) */
     .ed-tab-shape::before,
     .ed-tab-shape::after {
       content: '';
@@ -1354,22 +1368,23 @@
       bottom: 0;
       height: var(--ed-shoulder-ry);
       pointer-events: none;
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
     }
     .ed-tab-shape::before {
       left: calc(-1 * var(--ed-shape-lrx));
       width: var(--ed-shape-lrx);
-      background:
-        radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
-          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
-        var(--ed-solid-base);
+      -webkit-mask-image: radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
     }
     .ed-tab-shape::after {
       right: calc(-1 * var(--ed-shape-rrx));
       width: var(--ed-shape-rrx);
-      background:
-        radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
-          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
-        var(--ed-solid-base);
+      -webkit-mask-image: radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
     }
     /* Labels ride ABOVE the silhouette; the tab element itself paints nothing.
        Per-theme active-tab fills, glows and underlines are all cleared here --

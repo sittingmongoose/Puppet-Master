@@ -97,11 +97,14 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      /* Sits in the right-hand cluster, centred in the gap between the search
-         box and the theme/settings control, with equal clearance on both
-         sides. (Supersedes the rev-9.4 placement immediately after the page
-         tabs, which read as crowded against them.) */
-      margin: 0 var(--lg, 16px);
+      /* Centred in the free space between the page tabs and the search box:
+         these are the only two auto margins in the row, so the slot sits at
+         the exact midpoint of that gap at every width, and its right auto
+         margin is what pins the search + theme cluster to the right edge.
+         (2026-08-13 wave: deliberately reverts the right-cluster placement,
+         which crowded search/theme and left the tab-search gap dead.) */
+      margin-left: auto;
+      margin-right: auto;
       z-index: 45;
     }
     .title-bar .page-tabs {
@@ -113,6 +116,13 @@
       flex: 0 0 auto;
       min-width: max-content;
       position: relative;
+    }
+    /* Min-gap guard: keep the centred notify slot clear of the tabs when its
+       auto margins collapse under pressure. nav specificity on purpose — the
+       per-system glow-gutter override (.title-bar .page-tabs, margin-inline:
+       -6px in 10x-pm6-css-global) would otherwise zero this longhand. */
+    .title-bar nav.page-tabs {
+      margin-right: var(--md);
     }
     .title-bar .page-tabs .page-tab.is-overflow {
       display: none !important;
@@ -169,12 +179,15 @@
       color: var(--surface);
       border-color: transparent;
     }
-    /* Search wrap: ml:auto so search|theme stay right; width via --tb-search-w */
+    /* Search wrap: notify slot's mr:auto pins search|theme right (ml is 0 so
+       the row has exactly two auto margins); pl guards the gap to the slot;
+       width via --tb-search-w */
     .title-bar .pm6-tb-search-wrap {
       --tb-search-w: 170px;
       position: relative;
       flex: 0 0 auto;
-      margin-left: auto;
+      margin-left: 0;
+      padding-left: var(--md);
       display: flex;
       align-items: center;
       z-index: 46;

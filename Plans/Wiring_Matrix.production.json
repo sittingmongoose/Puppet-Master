@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_id": "pm.wiring_matrix.v0",
-  "generated_at": "2026-08-12T00:00:00Z",
+  "generated_at": "2026-08-13T00:00:00Z",
   "entries": {
     "catalog.actions_cancel": {
       "ui_element_id": "catalog.actions_cancel",
@@ -37213,6 +37213,69 @@
         "Assert exact effects for home.settings.reset_layout: workspace.layout_changed; no unexpected event."
       ]
     },
+    "home.more_options.reset_layout": {
+      "ui_element_id": "home.more_options.reset_layout",
+      "ui_location": "Home title bar > Home more options menu > Reset Layout (fourth top-level row, data-pm-home-top-action=\"reset-layout\"; amended 2026-08-13 dual-surface with Settings > General & Appearance > Startup & Recovery > Reset Home Layout)",
+      "ui_command_id": "cmd.workspace_layout.reset",
+      "handler_location": "handlers::workspace_layout::reset",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.workspace_layout.reset is registered with typed arguments and the owner revision/idempotency contract",
+        "home.more_options.reset_layout reads state.home_workspace.home_more_options_reset_layout.availability and projects its disabled reason before dispatch",
+        "home.more_options.reset_layout dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
+        "home.more_options.reset_layout returns focus deterministically and emits only its declared event/receipt set",
+        "home.more_options.reset_layout dispatches the same cmd.workspace_layout.reset as home.settings.reset_layout with no new command ID; the concept demo's post-reset chat-overlay cleanup and page reload are demo-flow behavior only and are not observable on the command bus."
+      ],
+      "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row.",
+      "state_selector": "state.home_workspace.home_more_options_reset_layout.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_reset_layout.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "Home Workspace semantic leaf action; popup disclosure and pointer preview remain view-local.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "home.more_options.reset_layout exposes a stable role and accessible name for cmd.workspace_layout.reset.",
+        "keyboard_access": "home.more_options.reset_layout is reachable and activatable by keyboard when visible.",
+        "focus_management": "home.more_options.reset_layout restores or transfers focus according to the owner contract after applied, no-change, failed, or cancelled disposition.",
+        "disabled_announcement": "home.more_options.reset_layout announces state.home_workspace.home_more_options_reset_layout.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row",
+          "evidence_kind": "event_test",
+          "requirement": "Execute the visible control and assert exact command delta, payload, event/receipt set, disabled behavior, focus, and identity continuity."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row:dispatcher_fixture",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.more_options.reset_layout control dispatches cmd.workspace_layout.reset exactly once with the typed payload and production handler recorded by this row."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row:state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "The browser harness reads the projected availability and disabled reason for home.more_options.reset_layout before attempting dispatch."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row:receipt_or_event_assertion",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The browser harness asserts the exact receipt/event delta for home.more_options.reset_layout: workspace.layout_changed."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#topbar_reset_layout_row:accessibility_regression",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.more_options.reset_layout control is keyboard reachable, exposes its accessible name/state, and preserves or restores focus according to the Home owner contract."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.workspace_layout.reset preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
+        "Assert exact effects for home.more_options.reset_layout: workspace.layout_changed; no unexpected event."
+      ]
+    },
     "home.more_options.collapse_bottom": {
       "ui_element_id": "home.more_options.collapse_bottom",
       "ui_location": "Home title bar > More options > Collapse Bottom Terminal",
@@ -38041,7 +38104,7 @@
     },
     "home.editor_panel_1.grab": {
       "ui_element_id": "home.editor_panel_1.grab",
-      "ui_location": "Home > Editor Panel 1 > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 1 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38052,7 +38115,8 @@
         "home.editor_panel_1.grab reads state.home_workspace.home_editor_panel_1_grab.availability and projects its disabled reason before dispatch",
         "home.editor_panel_1.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_1.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.editor_panel_1.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.editor_panel_1.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.editor_panel_1.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_1_grab.availability",
@@ -38104,7 +38168,7 @@
     },
     "home.editor_panel_2.grab": {
       "ui_element_id": "home.editor_panel_2.grab",
-      "ui_location": "Home > Editor Panel 2 > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 2 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38115,7 +38179,8 @@
         "home.editor_panel_2.grab reads state.home_workspace.home_editor_panel_2_grab.availability and projects its disabled reason before dispatch",
         "home.editor_panel_2.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_2.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.editor_panel_2.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.editor_panel_2.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.editor_panel_2.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_2_grab.availability",
@@ -38167,7 +38232,7 @@
     },
     "home.editor_panel_3.grab": {
       "ui_element_id": "home.editor_panel_3.grab",
-      "ui_location": "Home > Editor Panel 3 > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 3 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38178,7 +38243,8 @@
         "home.editor_panel_3.grab reads state.home_workspace.home_editor_panel_3_grab.availability and projects its disabled reason before dispatch",
         "home.editor_panel_3.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_3.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.editor_panel_3.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.editor_panel_3.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.editor_panel_3.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_3_grab.availability",
@@ -38230,7 +38296,7 @@
     },
     "home.editor_panel_4.grab": {
       "ui_element_id": "home.editor_panel_4.grab",
-      "ui_location": "Home > Editor Panel 4 > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 4 > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38241,7 +38307,8 @@
         "home.editor_panel_4.grab reads state.home_workspace.home_editor_panel_4_grab.availability and projects its disabled reason before dispatch",
         "home.editor_panel_4.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.editor_panel_4.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.editor_panel_4.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.editor_panel_4.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.editor_panel_4.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_editor_panel_4_grab.availability",
@@ -38293,7 +38360,7 @@
     },
     "home.dashboard.grab": {
       "ui_element_id": "home.dashboard.grab",
-      "ui_location": "Home > Dashboard > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Dashboard > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38304,7 +38371,8 @@
         "home.dashboard.grab reads state.home_workspace.home_dashboard_grab.availability and projects its disabled reason before dispatch",
         "home.dashboard.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.dashboard.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.dashboard.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.dashboard.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.dashboard.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_dashboard_grab.availability",
@@ -38356,7 +38424,7 @@
     },
     "home.chat.grab": {
       "ui_element_id": "home.chat.grab",
-      "ui_location": "Home > Chat > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Chat > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38367,7 +38435,8 @@
         "home.chat.grab reads state.home_workspace.home_chat_grab.availability and projects its disabled reason before dispatch",
         "home.chat.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.chat.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.chat.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.chat.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.chat.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_chat_grab.availability",
@@ -38419,7 +38488,7 @@
     },
     "home.terminal_section.grab": {
       "ui_element_id": "home.terminal_section.grab",
-      "ui_location": "Home > Terminal Section > top-left grab handle (pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Terminal section > top-left corner triangle grip (28x28 folded-corner triangle filling the surface corner; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -38430,7 +38499,8 @@
         "home.terminal_section.grab reads state.home_workspace.home_terminal_section_grab.availability and projects its disabled reason before dispatch",
         "home.terminal_section.grab dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.terminal_section.grab returns focus deterministically and emits only its declared event/receipt set",
-        "home.terminal_section.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture."
+        "home.terminal_section.grab moves the surface with pointer drag AND with keyboard alone, each producing one command and one persist, with live neighbour reflow during the gesture.",
+        "home.terminal_section.grab renders as the 28x28 corner triangle whose empty half falls through to the content beneath (clip-path hit test), sits above surface chrome and below the resizers in z-order, and shows its focus ring in-glyph (grip_corner_hit_target_and_zorder)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity.",
       "state_selector": "state.home_workspace.home_terminal_section_grab.availability",
@@ -38549,7 +38619,7 @@
     },
     "home.editor_panel_1.pop_out": {
       "ui_element_id": "home.editor_panel_1.pop_out",
-      "ui_location": "Home > Editor Panel 1 > options > Pop Out",
+      "ui_location": "Home > Editor Panel 1 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -38560,7 +38630,8 @@
         "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
         "home.editor_panel_1.pop_out reads state.home_workspace.home_editor_panel_1_pop_out.availability and projects its disabled reason before dispatch",
         "home.editor_panel_1.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
-        "home.editor_panel_1.pop_out returns focus deterministically and emits only its declared event/receipt set"
+        "home.editor_panel_1.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.editor_panel_1.pop_out floats the panel in-canvas in the Home float layer with no full-viewport scrim and never covers the title bar; boot demotes any persisted floating state to last_docked_host (storage.boot_demote_floating)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback.",
       "state_selector": "state.home_workspace.home_editor_panel_1_pop_out.availability",
@@ -38742,7 +38813,7 @@
     },
     "home.editor_panel_2.pop_out": {
       "ui_element_id": "home.editor_panel_2.pop_out",
-      "ui_location": "Home > Editor Panel 2 > options > Pop Out",
+      "ui_location": "Home > Editor Panel 2 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -38753,7 +38824,8 @@
         "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
         "home.editor_panel_2.pop_out reads state.home_workspace.home_editor_panel_2_pop_out.availability and projects its disabled reason before dispatch",
         "home.editor_panel_2.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
-        "home.editor_panel_2.pop_out returns focus deterministically and emits only its declared event/receipt set"
+        "home.editor_panel_2.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.editor_panel_2.pop_out floats the panel in-canvas in the Home float layer with no full-viewport scrim and never covers the title bar; boot demotes any persisted floating state to last_docked_host (storage.boot_demote_floating)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback.",
       "state_selector": "state.home_workspace.home_editor_panel_2_pop_out.availability",
@@ -38935,7 +39007,7 @@
     },
     "home.editor_panel_3.pop_out": {
       "ui_element_id": "home.editor_panel_3.pop_out",
-      "ui_location": "Home > Editor Panel 3 > options > Pop Out",
+      "ui_location": "Home > Editor Panel 3 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -38946,7 +39018,8 @@
         "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
         "home.editor_panel_3.pop_out reads state.home_workspace.home_editor_panel_3_pop_out.availability and projects its disabled reason before dispatch",
         "home.editor_panel_3.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
-        "home.editor_panel_3.pop_out returns focus deterministically and emits only its declared event/receipt set"
+        "home.editor_panel_3.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.editor_panel_3.pop_out floats the panel in-canvas in the Home float layer with no full-viewport scrim and never covers the title bar; boot demotes any persisted floating state to last_docked_host (storage.boot_demote_floating)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback.",
       "state_selector": "state.home_workspace.home_editor_panel_3_pop_out.availability",
@@ -39128,7 +39201,7 @@
     },
     "home.editor_panel_4.pop_out": {
       "ui_element_id": "home.editor_panel_4.pop_out",
-      "ui_location": "Home > Editor Panel 4 > options > Pop Out",
+      "ui_location": "Home > Editor Panel 4 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -39139,7 +39212,8 @@
         "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
         "home.editor_panel_4.pop_out reads state.home_workspace.home_editor_panel_4_pop_out.availability and projects its disabled reason before dispatch",
         "home.editor_panel_4.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
-        "home.editor_panel_4.pop_out returns focus deterministically and emits only its declared event/receipt set"
+        "home.editor_panel_4.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.editor_panel_4.pop_out floats the panel in-canvas in the Home float layer with no full-viewport scrim and never covers the title bar; boot demotes any persisted floating state to last_docked_host (storage.boot_demote_floating)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback.",
       "state_selector": "state.home_workspace.home_editor_panel_4_pop_out.availability",
@@ -39250,6 +39324,136 @@
       "event_test_requirements": [
         "Assert cmd.editor.close_panel preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
         "Assert exact effects for home.editor_panel_4.close: workspace.layout_changed; no unexpected event."
+      ]
+    },
+    "home.chat.pop_out": {
+      "ui_element_id": "home.chat.pop_out",
+      "ui_location": "Home > Chat > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_command_id": "cmd.panel.undock",
+      "handler_location": "handlers::panel::undock",
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "acceptance_checks": [
+        "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
+        "home.chat.pop_out reads state.home_workspace.home_chat_pop_out.availability and projects its disabled reason before dispatch",
+        "home.chat.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
+        "home.chat.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.chat.pop_out routes through PM_HOME_WORKSPACE.popOutChat into the in-canvas float layer: the retired base full-screen overlay never displays, no re-render yields a second chat surface, the title bar stays visible, and boot demotes persisted floating chat to last_docked_host (storage.boot_demote_floating)."
+      ],
+      "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas.",
+      "state_selector": "state.home_workspace.home_chat_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_pop_out.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "Home Workspace semantic leaf action; popup disclosure and pointer preview remain view-local.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "panel.undocked"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "home.chat.pop_out exposes a stable role and accessible name for cmd.panel.undock.",
+        "keyboard_access": "home.chat.pop_out is reachable and activatable by keyboard when visible.",
+        "focus_management": "home.chat.pop_out restores or transfers focus according to the owner contract after applied, no-change, failed, or cancelled disposition.",
+        "disabled_announcement": "home.chat.pop_out announces state.home_workspace.home_chat_pop_out.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas",
+          "evidence_kind": "event_test",
+          "requirement": "Execute the visible control and assert exact command delta, payload, event/receipt set, disabled behavior, focus, and identity continuity."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas:dispatcher_fixture",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.chat.pop_out control dispatches cmd.panel.undock exactly once with the typed payload and production handler recorded by this row."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas:state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "The browser harness reads the projected availability and disabled reason for home.chat.pop_out before attempting dispatch."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas:receipt_or_event_assertion",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The browser harness asserts the exact receipt/event delta for home.chat.pop_out: workspace.layout_changed, panel.undocked."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#chat_popout_stays_in_canvas:accessibility_regression",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.chat.pop_out control is keyboard reachable, exposes its accessible name/state, and preserves or restores focus according to the Home owner contract."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel.undock preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
+        "Assert exact effects for home.chat.pop_out: workspace.layout_changed, panel.undocked; no unexpected event."
+      ]
+    },
+    "home.dashboard.pop_out": {
+      "ui_element_id": "home.dashboard.pop_out",
+      "ui_location": "Home > Dashboard > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_command_id": "cmd.panel.undock",
+      "handler_location": "handlers::panel::undock",
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "acceptance_checks": [
+        "cmd.panel.undock is registered with typed arguments and the owner revision/idempotency contract",
+        "home.dashboard.pop_out reads state.home_workspace.home_dashboard_pop_out.availability and projects its disabled reason before dispatch",
+        "home.dashboard.pop_out dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
+        "home.dashboard.pop_out returns focus deterministically and emits only its declared event/receipt set",
+        "home.dashboard.pop_out floats the dashboard in-canvas in the Home float layer with no full-viewport scrim and never covers the title bar; boot demotes any persisted floating state to last_docked_host (storage.boot_demote_floating)."
+      ],
+      "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback.",
+      "state_selector": "state.home_workspace.home_dashboard_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_pop_out.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "Home Workspace semantic leaf action; popup disclosure and pointer preview remain view-local.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "panel.undocked"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "home.dashboard.pop_out exposes a stable role and accessible name for cmd.panel.undock.",
+        "keyboard_access": "home.dashboard.pop_out is reachable and activatable by keyboard when visible.",
+        "focus_management": "home.dashboard.pop_out restores or transfers focus according to the owner contract after applied, no-change, failed, or cancelled disposition.",
+        "disabled_announcement": "home.dashboard.pop_out announces state.home_workspace.home_dashboard_pop_out.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback",
+          "evidence_kind": "event_test",
+          "requirement": "Execute the visible control and assert exact command delta, payload, event/receipt set, disabled behavior, focus, and identity continuity."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:dispatcher_fixture",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.dashboard.pop_out control dispatches cmd.panel.undock exactly once with the typed payload and production handler recorded by this row."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "The browser harness reads the projected availability and disabled reason for home.dashboard.pop_out before attempting dispatch."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:receipt_or_event_assertion",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The browser harness asserts the exact receipt/event delta for home.dashboard.pop_out: workspace.layout_changed, panel.undocked."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:accessibility_regression",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.dashboard.pop_out control is keyboard reachable, exposes its accessible name/state, and preserves or restores focus according to the Home owner contract."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel.undock preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
+        "Assert exact effects for home.dashboard.pop_out: workspace.layout_changed, panel.undocked; no unexpected event."
       ]
     },
     "home.chat.activity_toggle": {
@@ -39580,7 +39784,8 @@
         "home.drop_target.main reads state.home_workspace.home_drop_target_main.availability and projects its disabled reason before dispatch",
         "home.drop_target.main dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.main returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.main is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.main is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.main shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_main.availability",
@@ -39643,7 +39848,8 @@
         "home.drop_target.left reads state.home_workspace.home_drop_target_left.availability and projects its disabled reason before dispatch",
         "home.drop_target.left dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.left returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.left is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.left is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.left shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_left.availability",
@@ -39706,7 +39912,8 @@
         "home.drop_target.right reads state.home_workspace.home_drop_target_right.availability and projects its disabled reason before dispatch",
         "home.drop_target.right dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.right returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.right is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.right is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.right shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_right.availability",
@@ -39769,7 +39976,8 @@
         "home.drop_target.top reads state.home_workspace.home_drop_target_top.availability and projects its disabled reason before dispatch",
         "home.drop_target.top dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.top returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.top is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.top is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.top shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_top.availability",
@@ -39832,7 +40040,8 @@
         "home.drop_target.bottom reads state.home_workspace.home_drop_target_bottom.availability and projects its disabled reason before dispatch",
         "home.drop_target.bottom dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.bottom returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.bottom is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.bottom is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.bottom shows a footprint-true change-gated hover preview: the placeholder carries the dragged surface's pickup-time footprint clamped to the host band at the correct flex order and re-seats only when the resolved host or insertion index changes; an empty dock's track opens to the incoming footprint while targeted, and a full host refuses with an announced host_full disposition."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_bottom.availability",
@@ -39884,7 +40093,7 @@
     },
     "home.drop_target.floating": {
       "ui_element_id": "home.drop_target.floating",
-      "ui_location": "Home Workspace > live floating canvas drop region (resolved by hit-testing the layout during a drag, with an outer edge band for a dock that is currently empty; the centre-screen drop-target rail is retired)",
+      "ui_location": "Home Workspace > floating host (explicit-action only; amended 2026-08-13: reached through the Pop Out menu rows on editor panels, Chat, and Dashboard, or the keyboard float key on the grab handle; pointer window-exit resolves to invalid_target and is retired as a float route)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -39895,7 +40104,8 @@
         "home.drop_target.floating reads state.home_workspace.home_drop_target_floating.availability and projects its disabled reason before dispatch",
         "home.drop_target.floating dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.floating returns focus deterministically and emits only its declared event/receipt set",
-        "home.drop_target.floating is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band."
+        "home.drop_target.floating is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
+        "home.drop_target.floating is never resolved by dragging past the window edge (window exit shows the invalid_target no-drop state and dispatches nothing), and no floating surface survives boot: persisted floating demotes to last_docked_host with a storage.boot_demote_floating receipt (boot_never_floating)."
       ],
       "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths.",
       "state_selector": "state.home_workspace.home_drop_target_floating.availability",
@@ -40384,6 +40594,70 @@
       "event_test_requirements": [
         "Assert cmd.workspace_layout.resize_surface preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
         "Assert exact effects for home.resizer.terminal_section: workspace.layout_changed; no unexpected event."
+      ]
+    },
+    "home.resizer.floating_corner": {
+      "ui_element_id": "home.resizer.floating_corner",
+      "ui_location": "Home Workspace > floating surface bottom-right corner handle ([data-pm-home-resizer-corner]; added 2026-08-13, drives width and height in one gesture through clampBounds)",
+      "ui_command_id": "cmd.workspace_layout.resize_surface",
+      "handler_location": "handlers::workspace_layout::resize_surface",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.workspace_layout.resize_surface is registered with typed arguments and the owner revision/idempotency contract",
+        "home.resizer.floating_corner reads state.home_workspace.home_resizer_floating_corner.availability and projects its disabled reason before dispatch",
+        "home.resizer.floating_corner dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
+        "home.resizer.floating_corner returns focus deterministically and emits only its declared event/receipt set",
+        "home.resizer.floating_corner changes the rendered surface geometry during and after the gesture; a commit that moves zero pixels is a failure, not a pass.",
+        "home.resizer.floating_corner changes both rendered width and rendered height of the floating surface in one gesture, clamped to the floating bounds contract, and commits exactly once on changed pointer-up."
+      ],
+      "evidence_required": "Executable visible-control proof in Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel.",
+      "state_selector": "state.home_workspace.home_resizer_floating_corner.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_floating_corner.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "Home Workspace semantic leaf action; popup disclosure and pointer preview remain view-local.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "home.resizer.floating_corner exposes a stable role and accessible name for cmd.workspace_layout.resize_surface.",
+        "keyboard_access": "home.resizer.floating_corner is reachable and activatable by keyboard when visible.",
+        "focus_management": "home.resizer.floating_corner restores or transfers focus according to the owner contract after applied, no-change, failed, or cancelled disposition.",
+        "disabled_announcement": "home.resizer.floating_corner announces state.home_workspace.home_resizer_floating_corner.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+          "evidence_kind": "event_test",
+          "requirement": "Execute the visible control and assert exact command delta, payload, event/receipt set, disabled behavior, focus, and identity continuity."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.resizer.floating_corner control dispatches cmd.workspace_layout.resize_surface exactly once with the typed payload and production handler recorded by this row."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "The browser harness reads the projected availability and disabled reason for home.resizer.floating_corner before attempting dispatch."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "The browser harness asserts the exact receipt/event delta for home.resizer.floating_corner: workspace.layout_changed."
+        },
+        {
+          "test_id": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.resizer.floating_corner control is keyboard reachable, exposes its accessible name/state, and preserves or restores focus according to the Home owner contract."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.workspace_layout.resize_surface preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
+        "Assert exact effects for home.resizer.floating_corner: workspace.layout_changed; no unexpected event."
       ]
     }
   }

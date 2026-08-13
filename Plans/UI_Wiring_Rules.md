@@ -21,7 +21,7 @@ ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 0.1 GUI concept reconciliation input
 
-When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, the contact-aware editor tab silhouette, and the title-bar notification placement after the search field. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
 
 `Concepts/PuppetMasterDashComp.html` and `Concepts/PMConcept.html` are prior concept inputs retained as historical concept lineage when cited by a transfer source; the path tokens `/PuppetMasterDashComp.html` and `/PMConcept.html` remain evidence lineage for reconciliation targeting of their own packets and MUST NOT be copied verbatim into canon or treated as live owner paths.
 
@@ -605,7 +605,9 @@ the typed command and persists the committed layout once.
 
 Popup/flyout disclosure controls are explicitly view-local and are recorded in the
 control census with a `view_only` disposition rather than fabricated command rows.
-The compact Home popup has exactly three top-level rows; its Panel 1 through Panel 4
+The compact Home popup has exactly four top-level rows (amended 2026-08-13: Open
+Panel, Open Browser in Panel, Collapse Bottom Terminal, and Reset Layout); its
+Panel 1 through Panel 4
 leaf targets, each surface menu leaf, File Manager target leaf, terminal add/split
 leaf, drop endpoint, and committed resizer endpoint resolve to one typed production
 row and one executable test. Disabled rows project the owner-provided reason and
@@ -627,7 +629,14 @@ plan_unit_id: UIW-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every Home control, submenu leaf, grab handle, drop target, resizer, and disabled state is source-hashed and resolves to a selector, state selector, canonical command or view-only disposition, event/receipt, handler, production row, and executable test with zero omissions.
+canonical_text: >-
+  Every Home control, submenu leaf, grab handle, drop target, resizer, and disabled state
+  is source-hashed and resolves to a selector, state selector, canonical command or
+  view-only disposition, event/receipt, handler, production row, and executable test with
+  zero omissions. Amended 2026-08-13 - the census additionally covers the top-bar Reset
+  Layout row, the Chat and Dashboard Pop Out rows, and the floating bottom-right corner
+  resize endpoint; the grab-handle rows describe the top-left corner triangle grip, and
+  the drop-target rows carry the footprint-true change-gated hover-preview acceptance.
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false

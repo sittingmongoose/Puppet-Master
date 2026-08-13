@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28241-L28412
+Source lines: L28360-L28539
 
-Source SHA256: `dc51354b20dad6d8cf56051b7dcb649ab91d723ecfcf4a9dbbb2ab8a74341032`
+Source SHA256: `cb8e793fd3b46d17be00745b05ace785aadc8d791bd0d3261415c532351d2b22`
 
 ---
 
@@ -142,7 +142,12 @@ canonical_text: >-
   visible. When the tab strip overflows its width, a width-aware "+N more" overflow chip
   collects non-active tabs into a picker with per-item close, keeping the active tab visible.
   Non-file tabs, including thread context detail tabs and browser preview tabs, participate in
-  the same close and overflow behavior.
+  the same close and overflow behavior. Amended 2026-08-13 - tab drag-reorder is canonical
+  and persists on all four editor panes: pane 1 through the open-tab model, panes 2 through 4
+  through strip-owned order lists reasserted by every fitter and mirrored to the Home
+  overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
+  model index. The +N more chip and its picker render in the shared app portal-menu family
+  (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
@@ -153,6 +158,8 @@ acceptance_criteria:
 - "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
 - "A width-aware +N more overflow chip exposes hidden tabs through a picker with per-item close while the active tab stays visible."
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
+- "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
+- "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -175,7 +182,8 @@ negative_constraints:
 - "Closing the last visible editor pane must not leave a dead surface; it must show the editor empty state or yield to the underlying view."
 compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

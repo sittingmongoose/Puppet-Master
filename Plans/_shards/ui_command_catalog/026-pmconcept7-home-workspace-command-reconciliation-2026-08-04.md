@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L10933-L11038
+Source lines: L10933-L11047
 
-Source SHA256: `fadca8b6579e67ee7a7c91df171fa823c2aef41d4129be8e22b873ff2673cae4`
+Source SHA256: `fef0868f7da38b681f9c712a396c6e6017c55441019bf5c4621e2896c5a26fd4`
 
 ---
 
@@ -77,7 +77,14 @@ canonical_text: >-
   exactly one command and one persist per semantic commit.
   cmd.workspace_layout.set_collapsed is dispatched with the negated current value by the
   terminal collapse chevron, which is a toggle, while the top-bar Collapse Bottom Terminal
-  row remains one-way. No new command IDs are minted.
+  row remains one-way. No new command IDs are minted. Amended 2026-08-13 - Reset Layout is
+  dual-surface: the top-bar Home menu Reset Layout row and the Settings Startup & Recovery
+  row both dispatch the same cmd.workspace_layout.reset; the concept demo's page reload
+  after the top-bar reset is demo-flow behavior only and is not part of the typed command
+  contract. Pop Out generalizes: the editor panel, Chat, and Dashboard Pop Out rows all
+  dispatch cmd.panel.undock into the single in-canvas float system, and cmd.panel.undock
+  and cmd.panel.redock are unchanged. Dragging a surface past the window edge is
+  invalid_target and dispatches nothing. Still no new command IDs.
 gui_related: true
 gui_classification_reason: This unit owns command IDs, typed arguments, availability, disabled reasons, and results for visible Home controls.
 split_recommended: false
@@ -89,7 +96,9 @@ acceptance_criteria:
 - cmd.workspace_layout.move_surface is reachable by pointer drag and by keyboard from the grab handle, and carries target_slot_index, target_surface_instance_id and insertion_edge unchanged.
 - cmd.workspace_layout.set_collapsed round-trips collapse and expand from the terminal chevron with one command per activation.
 - Open/focus Browser in Panels 1 through 4 uses cmd.browser.open_workspace_preview with target_editor_panel_id and target_editor_group_id.
-- One changed drop/resize dispatches and persists exactly once; pointermove, disclosure, cancellation, unchanged drop, and disabled actions do not dispatch a changed command.
+- One changed drop/resize dispatches and persists exactly once; pointermove, disclosure, cancellation, unchanged drop, window-exit during a drag, and disabled actions do not dispatch a changed command.
+- cmd.workspace_layout.reset is dispatched identically from the top-bar Reset Layout row and from the Settings Startup & Recovery row; neither surface mints a new command ID and the concept demo's post-reset reload is not observable on the command bus.
+- cmd.panel.undock is dispatched from the Pop Out row on editor panels, Chat, and Dashboard, each routing into the in-canvas float layer.
 - Every applied/no_change/failed result follows CV-323 and the exact canonical event family.
 validation_surfaces:
 - python3 scripts/pm-validate-wiring-matrix.py
