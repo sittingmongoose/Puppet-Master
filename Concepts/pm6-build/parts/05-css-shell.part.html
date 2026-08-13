@@ -205,7 +205,11 @@
       color: var(--text-primary);
       flex: 0 0 auto;
       box-sizing: border-box;
+      text-overflow: ellipsis;
       transition: width 160ms var(--ease-out, ease);
+    }
+    .title-bar .pm6-tb-search-wrap .search-bar::placeholder {
+      text-overflow: ellipsis;
     }
     .title-bar .pm6-tb-search-wrap[data-mode="icon"] .search-bar {
       display: none;

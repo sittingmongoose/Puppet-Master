@@ -79,7 +79,7 @@ HOME_STYLE = r'''
    <body>, outside #pm-home-workspace, so it cannot inherit from the root. */
 :root {
   --pm-home-collapsed-h: 34px;
-  --pm-home-gap: 8px;
+  --pm-home-gap: 4px;
   --pm-home-pickup-dur: 120ms;
   --pm-home-pickup-ease: cubic-bezier(.22, 1, .36, 1);
   --pm-home-drop-dur: 220ms;
@@ -92,6 +92,10 @@ HOME_STYLE = r'''
   overflow: hidden;
   min-height: 0;
 }
+/* Home owns its own gutter (#pm-home-workspace pads by --pm-home-gap); the
+   page shell's .primary-content padding would DOUBLE it, so the shell gutter
+   is zeroed while the Home tab is the active panel -- and only then. */
+.primary-content:has(> #panel-dashboard.pm-home-owned.active) { padding: 0; }
 #pm-home-workspace {
   position: absolute;
   inset: 0;
@@ -112,11 +116,17 @@ HOME_STYLE = r'''
   display: grid;
   grid-template-columns: var(--pm-home-left-w) minmax(0, 1fr) var(--pm-home-right-w);
   grid-template-rows: var(--pm-home-top-h) minmax(0, 1fr) var(--pm-home-bottom-h);
+  /* the RIGHT column (chat's default dock) spans all three rows so a docked
+     chat runs the full workspace height; top/bottom docks span the remaining
+     two columns */
   grid-template-areas:
-    "top top top"
+    "top top right"
     "left main right"
-    "bottom bottom bottom";
-  gap: var(--pm-home-gap);
+    "bottom bottom right";
+  /* no grid gap: an EMPTY dock has a 0px track, but grid `gap` would still
+     hold a dead strip open beside it -- occupied docks carry their own margin
+     toward main instead (see the :not(.pm-home-host-empty) rules below) */
+  gap: 0;
   width: 100%;
   height: 100%;
   min-width: 0;
@@ -147,6 +157,17 @@ HOME_STYLE = r'''
 .pm-home-host[data-pm-home-host="dock_right"] { grid-area: right; flex-direction: column; }
 .pm-home-host[data-pm-home-host="dock_bottom"] { grid-area: bottom; flex-direction: row; }
 .pm-home-host.pm-home-host-empty { overflow: hidden; pointer-events: none; }
+/* The inter-track gap exists only where a dock actually holds (or is about to
+   receive) a surface: each occupied or drop-previewed dock margins toward
+   main. Empty docks collapse to a true 0px with no dead strip. */
+.pm-home-host[data-pm-home-host="dock_top"]:not(.pm-home-host-empty),
+.pm-home-host[data-pm-home-host="dock_top"].pm-home-drop-active { margin-bottom: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_bottom"]:not(.pm-home-host-empty),
+.pm-home-host[data-pm-home-host="dock_bottom"].pm-home-drop-active { margin-top: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_left"]:not(.pm-home-host-empty),
+.pm-home-host[data-pm-home-host="dock_left"].pm-home-drop-active { margin-right: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty),
+.pm-home-host[data-pm-home-host="dock_right"].pm-home-drop-active { margin-left: var(--pm-home-gap); }
 .pm-home-float-layer {
   position: absolute;
   inset: 0;
@@ -264,18 +285,35 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   flex-direction: column;
   color: var(--text-secondary);
 }
+/* Generated terminal-shell chrome mirrors the BASE terminal strip: in the
+   built base, .bottom-panel paints `background: var(--surface)` and the
+   .bottom-tabs strip draws only `border-bottom: var(--border-width) solid
+   var(--border)` with no background of its own -- restate exactly those
+   tokens here at ~30px so a generated section reads as the same family. */
 .pm-home-terminal-head {
   display: flex;
   align-items: center;
   gap: 5px;
+  height: 30px;
   min-height: 30px;
+  box-sizing: border-box;
   padding: 3px 7px;
-  border-bottom: 1px solid var(--border-light);
-  background: var(--surface-elevated);
+  border-bottom: var(--border-width, 1px) solid var(--border);
+  background: var(--surface);
   font-size: 10px;
 }
 .pm-home-terminal-head strong { color: var(--text-primary); }
 .pm-home-terminal-head .pm-home-terminal-spacer { flex: 1; }
+/* the workgroup handle reads as the same pill vocabulary as the base's
+   center workgroup tabs */
+.pm-home-terminal-head button[data-pm-home-workgroup-handle] {
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  padding: 2px 10px;
+  cursor: grab;
+}
 .pm-home-terminal-head button {
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xs);
@@ -313,6 +351,21 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   font: 600 10px/1.45 var(--body-font);
   text-align: center;
 }
+/* The base's bottom strip swaps tab panes as SIBLINGS inside
+   #bottomTabsContent (.bottom-host-panel.active shows one at a time); the
+   empty-section note must obey the same switch, so it only shows while the
+   Terminal pane is the active tab -- never underneath Problems/Output. */
+#bottomTabsContent > .pm-home-terminal-empty-state { display: none; }
+#bottomTerminalHost.active ~ .pm-home-terminal-empty-state { display: block; }
+/* contain: layout paint on #chatPanel clips descendant hit-testing to the
+   rounded border box; at a 20px radius the top-right corner arc swallowed
+   nearly the whole 18px grip triangle. Notch just that corner so the grip
+   is clickable; the other three corners keep the chat radius. */
+#chatPanel.pm-home-surface { border-top-right-radius: var(--radius-sm, 6px); }
+/* the runtime host may have been REPARENTED into a generated section, in
+   which case no sibling selector can match it here -- show the guidance
+   whenever the terminal host is absent and no other bottom panel is active */
+#bottomTabsContent:not(:has(#bottomTerminalHost)):not(:has(.bottom-host-panel.active)) > .pm-home-terminal-empty-state { display: block; }
 #bottomPanel.pm-home-surface #pmBottomTermChrome { display: none !important; }
 .pm-home-terminal-body {
   flex: 1;
@@ -320,41 +373,43 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   overflow: auto;
   padding: 9px 11px;
   font-family: var(--mono-font);
-  font-size: 10px;
+  /* matches the base .terminal-pane type size */
+  font-size: var(--terminal-font-size, 11px);
   line-height: 1.55;
 }
 .pm-home-terminal-empty { color: var(--text-muted); }
-/* Folded-corner triangle grip filling the surface's TOP-LEFT corner. The
-   clip-path participates in hit-testing, so the empty lower-right half of the
-   28px box falls through to whatever sits beneath it; both catheti are 28px
-   (hit area comfortably above the old 18px square). z-index 40 clears chat's
-   stacked header (25) and the surface kebab (26); the resize handles (100)
-   start 40px down and never occupy the corner. */
+/* Lines-only grip in the surface's TOP-RIGHT corner. The clip-path
+   participates in hit-testing, so only the upper-right triangle of the 18px
+   box steals hits -- the lower-left half falls through to whatever sits
+   beneath it. z-index 140 sits above the pinned actions cluster (130), chat's
+   stacked header (25) and the surface kebab (26). */
 .pm-home-surface-grip {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  /* above the resize handles (100): a dock's full-width ROW handle spans the
-     surface's whole top edge including this corner. The triangle clip means
-     only its upper-left half steals hits, so the row handle keeps everything
-     right of the hypotenuse. */
-  z-index: 110;
+  right: 0;
+  left: auto;
+  width: 18px;
+  height: 18px;
+  /* above the pinned actions cluster (130) and the resize handles (100): a
+     dock's full-width ROW handle can span the surface's whole top edge
+     including this corner. The triangle clip means only the upper-right half
+     steals hits, so everything left of the hypotenuse passes through. */
+  z-index: 140;
   display: block;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  color: color-mix(in srgb, var(--text-muted) 55%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  color: color-mix(in srgb, var(--text-secondary) 78%, transparent);
   cursor: grab;
   touch-action: none;
   transition: color 120ms var(--ease-out);
 }
+[data-theme^="glass"] .pm-home-surface-grip { color: color-mix(in srgb, var(--text-primary) 62%, transparent); }
 .pm-home-surface-grip svg { display: block; width: 100%; height: 100%; pointer-events: none; }
-.pm-home-surface-grip .pm-home-grip-groove { stroke: var(--surface, rgb(20, 20, 24)); opacity: .8; }
+.pm-home-surface-grip .pm-home-grip-groove { stroke: currentColor; opacity: 1; }
 .pm-home-surface-grip .pm-home-grip-ring { stroke: var(--accent-primary); opacity: 0; }
 .pm-home-surface-grip:hover,
 .pm-home-surface-grip.pm-home-handle-active,
@@ -364,12 +419,13 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 .pm-home-surface-grip:focus-visible { outline: none; color: var(--accent-primary); }
 .pm-home-surface-grip:focus-visible .pm-home-grip-ring { opacity: 1; }
 .pm-home-surface-grip:active { cursor: grabbing; }
-/* clearance so head-row chrome does not sit under the triangle's hypotenuse */
-.pm-home-surface > .editor-tabs,
-.pm-home-surface .dashboard-tabs,
-.pm-home-surface .bottom-tabs-left,
-.pm-home-surface .pm-home-terminal-head { padding-left: 22px; }
-.pm-home-surface .chat-panel-header-stacked > :first-child { padding-left: 22px; }
+/* clearance so pinned right-edge chrome does not sit under the grip's
+   hypotenuse (the 18px triangle in the top-right corner) */
+.pm-home-surface .editor-tabs .pane-tabbar-actions { right: 30px; }
+.pm-home-surface .pm6-dash-actions { margin-right: 20px; }
+.pm-home-surface .pm-home-terminal-head { padding-right: 26px; }
+.pm-home-surface .bottom-tabs-right { padding-right: 22px; }
+.pm-home-surface .chat-panel-header-stacked > :first-child { padding-right: 26px; }
 /* Keyboard-move announcer (the menu Move/Dock rows are retired, so the grip is
    the only movement affordance and must carry a non-pointer path). */
 .pm-home-live-region {
@@ -425,8 +481,9 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   touch-action: none;
 }
 /* starts BELOW the head row: at top:5px the 9px column sat over the pinned
-   actions cluster and swallowed clicks on the surface options button */
-.pm-home-resize-handle.resizer-col { top: 40px; bottom: 5px; right: 0; height: auto; }
+   actions cluster and swallowed clicks on the surface options button; 44px
+   also clears the 18px top-right grip with margin to spare */
+.pm-home-resize-handle.resizer-col { top: 44px; bottom: 5px; right: 0; height: auto; }
 .pm-home-surface .pane-tabbar-actions,
 .pm-home-surface .bottom-tabs-right,
 .pm-home-surface-options { z-index: 130; }
@@ -504,22 +561,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 .pm-home-menu-row[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 .pm-home-menu-row svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .pm-home-menu-separator { height: 1px; margin: 4px 0; background: var(--border-light); }
-.pm-home-menu-section {
-  padding: 6px 11px 3px;
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .11em;
-  text-transform: uppercase;
-}
 .pm-home-menu-danger { color: var(--accent-error); }
-.pm-home-menu-hint {
-  margin: 0;
-  padding: 2px 11px 7px;
-  color: var(--text-muted);
-  font: 600 10px/1.45 var(--body-font);
-  white-space: normal;
-}
 /* Direct-manipulation move (u11-prism vocabulary). The held surface is a fixed
    clone tracking the pointer 1:1; the slot it left becomes a real in-flow
    placeholder inside the target host, and every neighbour FLIPs to its new
@@ -649,6 +691,9 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   }
 }
 @media (max-width: 1080px) {
+  /* NOTE: this is a COMPLETE stacked template of its own -- the right dock
+     deliberately re-joins the row flow here, so the desktop full-height
+     right column above does not (and must not) apply at this width. */
   .pm-home-host-grid {
     grid-template-columns: min(var(--pm-home-left-w), 30vw) minmax(0, 1fr);
     grid-template-rows: var(--pm-home-top-h) minmax(0, 1fr) minmax(0, min(var(--pm-home-right-w), 220px)) var(--pm-home-bottom-h);
@@ -657,6 +702,8 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   .pm-home-host[data-pm-home-host="dock_right"] { flex-direction: row; }
 }
 @media (max-width: 760px) {
+  /* NOTE: complete stacked restatement, same deal as the 1080px template --
+     every host becomes a full-width row; no full-height right column here. */
   .pm-home-host-grid { grid-template-columns: minmax(0,1fr); grid-template-rows: var(--pm-home-top-h) minmax(0, 180px) minmax(0,1fr) minmax(0, 180px) var(--pm-home-bottom-h); grid-template-areas: "top" "left" "main" "right" "bottom"; }
   .pm-home-host[data-pm-home-host="dock_left"],
   .pm-home-host[data-pm-home-host="dock_right"] { position: relative; inset: auto; width: auto; box-shadow: none; }
@@ -741,7 +788,7 @@ HOME_SCRIPT = r'''
     editor_panel_1: { editor_panel_id: "editor_panel_1", editor_group_id: "editor_group_1", worktree_id: "worktree:main", active_buffer_id: "buffer:src/main.rs", buffer_ids: ["buffer:src/main.rs", "buffer:src/routes/recipes.rs", "buffer:web/src/routes/+page.svelte", "buffer:Cargo.toml"], dirty_buffer_ids: ["buffer:src/routes/recipes.rs"] },
     editor_panel_2: { editor_panel_id: "editor_panel_2", editor_group_id: "editor_group_2", worktree_id: "worktree:main", active_buffer_id: "buffer:src/models/recipe.rs", buffer_ids: ["buffer:src/models/recipe.rs", "buffer:docker-compose.yml", "buffer:Dockerfile"], dirty_buffer_ids: [] },
     editor_panel_3: { editor_panel_id: "editor_panel_3", editor_group_id: "editor_group_3", worktree_id: "worktree:main", active_buffer_id: "buffer:README.md", buffer_ids: ["buffer:README.md"], dirty_buffer_ids: [] },
-    editor_panel_4: { editor_panel_id: "editor_panel_4", editor_group_id: "editor_group_4", worktree_id: "worktree:main", active_buffer_id: "buffer:src/lib.rs", buffer_ids: ["buffer:src/lib.rs"], dirty_buffer_ids: [] }
+    editor_panel_4: { editor_panel_id: "editor_panel_4", editor_group_id: "editor_group_4", worktree_id: "worktree:main", active_buffer_id: "buffer:src/routes/auth.rs", buffer_ids: ["buffer:src/routes/auth.rs"], dirty_buffer_ids: [] }
   };
   var buffersByPath = {
     "src/main.rs": "buffer:src/main.rs",
@@ -752,7 +799,7 @@ HOME_SCRIPT = r'''
     "docker-compose.yml": "buffer:docker-compose.yml",
     "Dockerfile": "buffer:Dockerfile",
     "README.md": "buffer:README.md",
-    "src/lib.rs": "buffer:src/lib.rs"
+    "src/routes/auth.rs": "buffer:src/routes/auth.rs"
   };
   var browserOwner = {
     browser_session_id: "br-sess-0472",
@@ -761,13 +808,18 @@ HOME_SCRIPT = r'''
     target_panels: {},
     created_event_emitted: false
   };
+  /* Pristine seed for terminal section 1. Kept as a top-level constant so
+     defaultLayout can rebuild a WORKING terminal even after the live record
+     has been blanked by a workgroup move (makeSurface reads this whenever no
+     section anywhere still owns a workgroup). */
+  var PRISTINE_TERMINAL_SECTION = {
+    terminal_section_id: "terminal_section_1",
+    terminal_workgroup_id: "terminal_workgroup_build",
+    pane_ids: ["tp-a", "tp-b"],
+    terminal_session_ids: ["ts-sess-alpha", "ts-sess-delta"]
+  };
   var terminalSections = {
-    "terminal_section:terminal_section_1": {
-      terminal_section_id: "terminal_section_1",
-      terminal_workgroup_id: "terminal_workgroup_build",
-      pane_ids: ["tp-a", "tp-b"],
-      terminal_session_ids: ["ts-sess-alpha", "ts-sess-delta"]
-    }
+    "terminal_section:terminal_section_1": clone(PRISTINE_TERMINAL_SECTION)
   };
   var activeTerminalSectionId = "terminal_section:terminal_section_1";
   var terminalRuntimeHome = null;
@@ -824,6 +876,15 @@ HOME_SCRIPT = r'''
     if (kind === "chat") ref.chat_surface_id = "chat";
     if (kind === "terminal_section") {
       var section = terminalSections[id] || null;
+      /* Section 1 must never seed from a live-but-BLANKED record: if no
+         section anywhere still owns a workgroup, fall back to the pristine
+         literal so defaultLayout/reset always rebuilds a working terminal. */
+      if (id === "terminal_section:terminal_section_1") {
+        var anyLiveWorkgroup = Object.keys(terminalSections).some(function (key) {
+          return Boolean(terminalSections[key] && terminalSections[key].terminal_workgroup_id);
+        });
+        if (!anyLiveWorkgroup) section = clone(PRISTINE_TERMINAL_SECTION);
+      }
       ref.terminal_section_id = id.split(":")[1];
       ref.terminal_workgroup_id = section ? section.terminal_workgroup_id : null;
       ref.pane_ids = section ? csv(section.pane_ids) : "";
@@ -836,7 +897,10 @@ HOME_SCRIPT = r'''
       host: host,
       slot_index: slot,
       split_path: "root/" + slot,
-      size: { basis_px: kind === "terminal_section" ? 260 : 360, flex_weight: 1, min_width_px: 220, min_height_px: 120 },
+      /* basis_px is the MAIN-axis size (width in a row host, dock-track width
+         in a column dock); cross_basis_px is the row-dock TRACK size (height
+         of dock_top/dock_bottom), driven by the full-width track handle. */
+      size: { basis_px: kind === "terminal_section" ? 260 : 360, cross_basis_px: kind === "terminal_section" ? 260 : 360, flex_weight: 1, min_width_px: 220, min_height_px: 120 },
       visible: visible,
       collapsed: false,
       floating_bounds: null,
@@ -1054,6 +1118,9 @@ HOME_SCRIPT = r'''
       next.visible = Boolean(next.visible);
       next.collapsed = Boolean(next.collapsed);
       next.size = Object.assign({ basis_px: 360, flex_weight: 1, min_width_px: 220, min_height_px: 120 }, next.size || {});
+      /* migration: layouts persisted before cross_basis_px existed inherit
+         their main-axis basis as the row-dock track size */
+      next.size.cross_basis_px = Number(next.size.cross_basis_px) || Number(next.size.basis_px) || 360;
       if (next.host === "floating") {
         var raw = next.floating_bounds;
         var clamped = clampBounds(raw);
@@ -1440,12 +1507,12 @@ HOME_SCRIPT = r'''
     if (existing) return existing;
     var owner = editorOwners[surfaceId];
     var prefix = editorPrefixFor(surfaceId) || ("pane" + index);
-    var seed = index === 3 ? "README.md" : "src/lib.rs";
+    var seed = index === 3 ? "README.md" : "src/routes/auth.rs";
     var panel = document.createElement("section");
     panel.id = "pmHomeEditor_" + safe;
     panel.className = "editor-pane pm-home-editor-shell";
     panel.innerHTML = '<div class="editor-tabs" role="tablist" aria-label="Panel ' + index + ' tabs">' +
-      '<span class="tab active" role="tab" tabindex="0" data-file="' + seed + '">' + (index === 3 ? 'README.md' : 'lib.rs') + '</span>' +
+      '<span class="tab active" role="tab" tabindex="0" data-file="' + seed + '">' + (index === 3 ? 'README.md' : 'auth.rs') + '</span>' +
       '<span class="pane-tabbar-actions"></span></div>' +
       '<div class="editor-area">' +
       '<div class="editor-gutter" id="' + prefix + 'Gutter"></div>' +
@@ -1551,21 +1618,21 @@ HOME_SCRIPT = r'''
     element.style.removeProperty("--pm-home-float-z");
   }
 
-  /* Folded-corner triangle filling the surface's top-left corner: the fill
-     path, two groove strokes for drag affordance, and an inset ring path the
-     CSS reveals on :focus-visible (an outline would be clipped away by the
-     triangular clip-path). */
-  var GRIP_SVG = '<svg aria-hidden="true" viewBox="0 0 24 24">' +
-    '<path d="M0 3 Q0 0 3 0 L24 0 L0 24 Z" fill="currentColor"/>' +
-    '<path class="pm-home-grip-groove" d="M10.5 4.5 L4.5 10.5 M15.5 4.5 L4.5 15.5" fill="none" stroke-width="1.5" stroke-linecap="round"/>' +
-    '<path class="pm-home-grip-ring" d="M2 18.5 L2 4 Q2 2 4 2 L18.5 2 Z" fill="none" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  /* Lines-only grip glyph for the surface's top-right corner: two groove
+     strokes for drag affordance (no fill triangle -- the corner stays open)
+     and an inset ring path the CSS reveals on :focus-visible (an outline
+     would be clipped away by the triangular clip-path). */
+  var GRIP_SVG = '<svg aria-hidden="true" viewBox="0 0 20 20">' +
+    '<path class="pm-home-grip-groove" d="M9.5 4.5 L15.5 10.5 M4.5 4.5 L15.5 15.5" fill="none" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<path class="pm-home-grip-ring" d="M1.5 2 L16 2 Q18 2 18 4 L18 18.5 Z" fill="none" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
   /* The grip is the surface element's own absolutely-positioned first child,
-     shaped as a triangle filling the top-left corner. It sits at z-index 110 --
-     above chat's stacked header (25), the surface kebab (26), and the resize
-     handles (100): a dock's full-width row handle spans the top edge
-     including this corner, and the triangle clip returns everything right of
-     the hypotenuse to it.
+     an 18px lines-only triangle in the TOP-RIGHT corner. It sits at z-index
+     140 -- above the pinned actions cluster (130), chat's stacked header (25),
+     the surface kebab (26) and the resize handles (100). Only the upper-right
+     triangle of its box steals hits (clip-path polygon(0 0, 100% 0,
+     100% 100%)); everything left of the hypotenuse passes through to the
+     chrome beneath.
      (The old in-row grip lived inside `.editor-tabs`, where it fought the tab
      silhouette layer for slot 0 on every chrome reseat.) */
 
@@ -1608,16 +1675,33 @@ HOME_SCRIPT = r'''
       var optionsHost = element.querySelector(".pane-tabbar-actions, .dashboard-tabs, .panel-actions, .pm-home-terminal-head") || element;
       optionsHost.appendChild(options);
     }
-    var resizer = element.querySelector('[data-pm-home-resizer="' + surface.surface_instance_id + '"]');
-    var resizeClass = (surface.host === "dock_top" || surface.host === "dock_bottom") ? "resizer-row" : "resizer-col";
+    /* Per-surface divider: ALWAYS a column handle now -- it transfers WIDTH
+       between the adjacent pair in every row-axis host. In a row dock
+       (dock_top/dock_bottom) the divider is emitted on every visible surface
+       EXCEPT the last (a pair transfer needs a right-hand partner; the last
+       sibling gets none), and dock HEIGHT moves to the separate full-width
+       track handle created below. home_main/dock_left/dock_right keep their
+       existing per-surface divider behavior. */
+    var resizer = element.querySelector('[data-pm-home-resizer="' + surface.surface_instance_id + '"]:not([data-pm-home-resizer-corner]):not([data-pm-home-resizer-track])');
+    var resizeClass = "resizer-col";
+    var rowDock = surface.host === "dock_top" || surface.host === "dock_bottom";
+    var captured = gesture && gesture.kind === "resize" && gesture.surfaceId === surface.surface_instance_id;
+    var wantsDivider = true;
+    if (rowDock) {
+      var rowRef = (gesture && gesture.draft) || committed;
+      var rowVisibleIds = (hostRegistries[surface.host] || []).filter(function (id) {
+        var sibling = rowRef && surfaceById(rowRef, id);
+        return Boolean(sibling && sibling.visible);
+      });
+      wantsDivider = rowVisibleIds.length > 0 && rowVisibleIds[rowVisibleIds.length - 1] !== surface.surface_instance_id;
+    }
     /* Never destroy the element that currently holds pointer capture: removing
        it mid-drag fires lostpointercapture and the gesture dies on frame one. */
-    if (resizer && resizer.getAttribute("data-pm-home-resize-orientation") !== resizeClass &&
-        !(gesture && gesture.kind === "resize" && gesture.surfaceId === surface.surface_instance_id)) {
+    if (resizer && (resizer.getAttribute("data-pm-home-resize-orientation") !== resizeClass || !wantsDivider) && !captured) {
       resizer.remove();
       resizer = null;
     }
-    if (!resizer) {
+    if (!resizer && wantsDivider) {
       resizer = document.createElement("div");
       resizer.setAttribute("data-pm-home-resizer", surface.surface_instance_id);
       resizer.setAttribute("data-pm-home-surface-id", surface.surface_instance_id);
@@ -1625,20 +1709,48 @@ HOME_SCRIPT = r'''
       resizer.setAttribute("role", "separator");
       resizer.setAttribute("tabindex", "0");
       resizer.setAttribute("aria-label", "Resize " + surface.surface_instance_id);
-      resizer.setAttribute("aria-orientation", resizeClass === "resizer-row" ? "horizontal" : "vertical");
+      resizer.setAttribute("aria-orientation", "vertical");
       resizer.className = "pm-home-resize-handle " + resizeClass;
       element.appendChild(resizer);
       bindResizer(resizer, surface.surface_instance_id);
     }
-    /* Rewrite the orientation class WITHOUT dropping state classes the shared
-       resizer controller owns (`.resizing` drives the grab-glow); the old
-       unconditional className assignment wiped it on every render frame. */
-    resizer.classList.add("pm-home-resize-handle");
-    resizer.classList.toggle("resizer-col", resizeClass === "resizer-col");
-    resizer.classList.toggle("resizer-row", resizeClass === "resizer-row");
-    resizer.setAttribute("data-pm-home-resize-orientation", resizeClass);
-    resizer.setAttribute("aria-orientation", resizeClass === "resizer-row" ? "horizontal" : "vertical");
-    if (resizer.parentNode !== element) element.appendChild(resizer);
+    if (resizer) {
+      /* Rewrite the orientation class WITHOUT dropping state classes the
+         shared resizer controller owns (`.resizing` drives the grab-glow); the
+         old unconditional className assignment wiped it on every render
+         frame. */
+      resizer.classList.add("pm-home-resize-handle");
+      resizer.classList.toggle("resizer-col", resizeClass === "resizer-col");
+      resizer.classList.toggle("resizer-row", resizeClass === "resizer-row");
+      resizer.setAttribute("data-pm-home-resize-orientation", resizeClass);
+      resizer.setAttribute("aria-orientation", "vertical");
+      if (resizer.parentNode !== element) element.appendChild(resizer);
+    }
+    /* Row-dock TRACK handle: a full-width row handle on the dock's outer edge
+       that drives the dock's cross-axis track (cross_basis_px). Follows the
+       floating corner handle's create/remove pattern; surfaces docked
+       anywhere else must not carry it. */
+    var track = element.querySelector('[data-pm-home-resizer-track="' + surface.surface_instance_id + '"]');
+    if (rowDock) {
+      if (!track) {
+        track = document.createElement("div");
+        track.setAttribute("data-pm-home-resizer-track", surface.surface_instance_id);
+        track.setAttribute("data-pm-home-resizer", surface.surface_instance_id);
+        track.setAttribute("data-pm-home-surface-id", surface.surface_instance_id);
+        track.setAttribute("data-pm-home-resize-orientation", "resizer-track");
+        track.setAttribute("role", "separator");
+        track.setAttribute("tabindex", "0");
+        track.setAttribute("aria-label", "Resize " + surface.surface_instance_id + " (dock height)");
+        track.setAttribute("aria-orientation", "horizontal");
+        track.className = "pm-home-resize-handle resizer-row";
+        element.appendChild(track);
+        bindResizer(track, surface.surface_instance_id, { track: true });
+      } else if (track.parentNode !== element) {
+        element.appendChild(track);
+      }
+    } else if (track && !captured) {
+      track.remove();
+    }
     /* Floating surfaces additionally get a bottom-right corner handle that
        drives BOTH axes; docked surfaces must not carry it. */
     var corner = element.querySelector('[data-pm-home-resizer-corner="' + surface.surface_instance_id + '"]');
@@ -1767,7 +1879,7 @@ HOME_SCRIPT = r'''
       if (!oldEmpty) {
         oldEmpty = document.createElement("div");
         oldEmpty.className = "pm-home-terminal-empty-state";
-        oldEmpty.textContent = "Empty terminal section. Move a workgroup here to reuse it.";
+        oldEmpty.textContent = "This terminal section is empty. Drag the workgroup pill here to bring it back, or use Reset Layout in the Home menu.";
         if (originalParent) originalParent.appendChild(oldEmpty);
       }
     }
@@ -1841,6 +1953,17 @@ HOME_SCRIPT = r'''
       element.style.setProperty("height", bounds.height + "px", "important");
       element.style.setProperty("--pm-home-float-z", String(Math.max(1, surface.last_focus_seq || 1)));
     }
+    /* Panels 3/4 hydrate lazily: a generated editor shell whose .editor-code
+       has never drawn a buffer (PM6_RENDER_FILE was not up yet when the shell
+       was built) renders its owner's active buffer the moment it is seated
+       visible in a host. */
+    if (element.classList.contains("pm-home-editor-shell")) {
+      var shellCode = element.querySelector(".editor-code");
+      var shellOwner = editorOwners[surface.surface_instance_id];
+      if (shellCode && shellCode.childElementCount === 0 && shellOwner && shellOwner.active_buffer_id) {
+        try { renderFileIntoPanel(surface.surface_instance_id, String(shellOwner.active_buffer_id).replace(/^buffer:/, "")); } catch (error) {}
+      }
+    }
     attachSurfaceControls(surface);
     syncCollapseControl(surface, element);
     if (surface.surface_kind === "terminal_section") renderTerminal(surface, element);
@@ -1860,7 +1983,8 @@ HOME_SCRIPT = r'''
       return surface.visible && surface.host === "home_main" && !surface.collapsed;
     });
     if (!row.length) return;
-    var gaps = 8 * Math.max(0, row.length - 1);
+    /* keep in lockstep with --pm-home-gap */
+    var gaps = 4 * Math.max(0, row.length - 1);
     var avail = Math.max(120 * row.length, hostEl.clientWidth - gaps);
     var sum = 0;
     row.forEach(function (surface) { sum += Math.max(80, Number(surface.size.basis_px) || 360); });
@@ -1881,7 +2005,15 @@ HOME_SCRIPT = r'''
          height instead of holding its full track open over empty space. */
       var live = surfaces.filter(function (surface) { return !surface.collapsed; });
       if (!live.length) return COLLAPSED_STRIP_PX + "px";
-      var raw = Math.max.apply(null, live.map(function (surface) { return Number(surface.size.basis_px) || fallback; }));
+      /* Row docks (top/bottom) size their TRACK from cross_basis_px -- the
+         per-surface basis_px is the surface's main-axis WIDTH there, owned by
+         the pair-transfer dividers. Column docks keep basis_px as the track
+         width. */
+      var rowAxisTrack = host === "dock_top" || host === "dock_bottom";
+      var raw = Math.max.apply(null, live.map(function (surface) {
+        if (rowAxisTrack) return Number(surface.size.cross_basis_px) || Number(surface.size.basis_px) || fallback;
+        return Number(surface.size.basis_px) || fallback;
+      }));
       var band = HOST_BANDS[host];
       return Math.max(band.min, Math.min(raw, band.max)) + "px";
     }
@@ -1928,13 +2060,20 @@ HOME_SCRIPT = r'''
     var terminal = eligibleBottomTerminal(layout);
     var collapse = document.querySelector('#pm-home-more-menu [data-pm-home-action="collapse-terminal"]');
     if (collapse) {
-      var disabled = !terminal || terminal.collapsed;
-      var disabledReason = !terminal ? "No terminal is docked at the bottom" : (terminal.collapsed ? "Bottom terminal is already collapsed" : "");
+      /* The AUTHORED HOME_MARKUP label must stay exactly "Collapse Bottom
+         Terminal" -- a T20 build gate asserts that byte string in the menu
+         markup. The toggle relabel below is RUNTIME-only, applied to the live
+         DOM after the menu is in the document. */
+      var disabled = !terminal;
+      var disabledReason = disabled ? "No terminal is docked at the bottom" : "";
+      var collapseLabel = terminal && terminal.collapsed ? "Expand Bottom Terminal" : "Collapse Bottom Terminal";
       collapse.disabled = disabled;
       collapse.setAttribute("aria-disabled", String(disabled));
       collapse.setAttribute("data-disabled-reason", disabledReason);
-      collapse.setAttribute("aria-description", disabledReason || "Collapse bottom terminal");
-      collapse.title = disabledReason || "Collapse bottom terminal";
+      var collapseSpan = collapse.querySelector("span");
+      if (collapseSpan) collapseSpan.textContent = collapseLabel;
+      collapse.setAttribute("aria-description", disabledReason || collapseLabel);
+      collapse.title = disabledReason || collapseLabel;
       collapse.setAttribute("data-pm-home-surface-id", terminal ? terminal.surface_instance_id : "");
     }
   }
@@ -2111,9 +2250,12 @@ HOME_SCRIPT = r'''
     return commitLayout(next, collapsed ? "collapse" : "expand", "cmd.workspace_layout.set_collapsed", { affected_surface_instance_ids: [surfaceId], source_host: current.host, target_host: current.host, command_payload: { surface_instance_id: surfaceId, collapsed: collapsed } });
   }
 
-  /* The TOP-BAR MENU row stays one-way ("Collapse Bottom Terminal" never
-     relabels to Expand, per the Home shell contract) -- but the terminal's own
-     chevron is a toggle and the collapsed strip is the way back. */
+  /* The top-bar menu row is a TOGGLE now: handleAction routes it through
+     toggleBottomTerminalCollapsed, and updateMenuAvailability relabels the
+     row "Expand Bottom Terminal" at runtime while the terminal is collapsed
+     (the authored markup keeps the "Collapse Bottom Terminal" byte string a
+     build gate asserts). collapseBottomTerminal stays as the one-way entry
+     point for callers that must never expand. */
   function collapseBottomTerminal() {
     var terminal = eligibleBottomTerminal(committed);
     if (!terminal) return { ok: false, reason: "no_bottom_terminal" };
@@ -2181,9 +2323,18 @@ HOME_SCRIPT = r'''
       var fresh = surfaceById(next, id);
       if (old && fresh) fresh.domain_ref = clone(old.domain_ref);
     });
-    committed.surfaces.filter(function (surface) { return surface.surface_kind === "terminal_section"; }).slice(0, 1).forEach(function (old) {
-      surfaceById(next, "terminal_section:terminal_section_1").domain_ref = clone(old.domain_ref);
-    });
+    /* Carry the LIVE workgroup into the reset section 1, not blindly the
+       first terminal surface: after a workgroup move the first section's ref
+       is blanked, and cloning that blank left reset with no terminal. */
+    var terminalCarriers = committed.surfaces.filter(function (surface) { return surface.surface_kind === "terminal_section"; });
+    var liveCarrier = terminalCarriers.filter(function (surface) {
+      return surface.domain_ref && surface.domain_ref.terminal_workgroup_id;
+    })[0] || terminalCarriers[0];
+    if (liveCarrier) {
+      var carrierRef = clone(liveCarrier.domain_ref);
+      carrierRef.terminal_section_id = "terminal_section_1";
+      surfaceById(next, "terminal_section:terminal_section_1").domain_ref = carrierRef;
+    }
     return commitLayout(next, "reset", "cmd.workspace_layout.reset", { affected_surface_instance_ids: next.surfaces.map(function (surface) { return surface.surface_instance_id; }), command_payload: {} });
   }
 
@@ -2502,6 +2653,28 @@ HOME_SCRIPT = r'''
     terminalSections[targetSectionId] = clone(sourceSnapshot);
     terminalSections[targetSectionId].terminal_section_id = targetSectionId.split(":")[1];
     terminalSections[sourceId] = { terminal_section_id: sourceId.split(":")[1], terminal_workgroup_id: null, pane_ids: [], terminal_session_ids: [] };
+    /* Move-and-reseed: "New Section" (forceCreate) should not strand an empty
+       source. While the pane budget allows, seed the vacated source with a
+       fresh one-pane workgroup IN THE SAME COMMIT, allocating ids with the
+       same numbering scan splitTerminalPane uses. At the pane cap the source
+       stays empty (today's behavior). */
+    var sourceReseeded = false;
+    var seededWorkgroup = null;
+    if (forceCreate === true && totalTerminalPanes() < 4) {
+      var seedPanes = Object.keys(terminalSections).reduce(function (values, id) { return values.concat(terminalSections[id].pane_ids || []); }, []);
+      var seedSessions = Object.keys(terminalSections).reduce(function (values, id) { return values.concat(terminalSections[id].terminal_session_ids || []); }, []);
+      var seedWorkgroups = Object.keys(terminalSections).map(function (id) { return terminalSections[id].terminal_workgroup_id; });
+      var seedNumber = 1;
+      while (seedPanes.indexOf("tp-" + seedNumber) !== -1 || seedSessions.indexOf("ts-sess-" + seedNumber) !== -1 || seedWorkgroups.indexOf("terminal_workgroup_" + seedNumber) !== -1) seedNumber += 1;
+      seededWorkgroup = {
+        terminal_section_id: sourceId.split(":")[1],
+        terminal_workgroup_id: "terminal_workgroup_" + seedNumber,
+        pane_ids: ["tp-" + seedNumber],
+        terminal_session_ids: ["ts-sess-" + seedNumber]
+      };
+      terminalSections[sourceId] = seededWorkgroup;
+      sourceReseeded = true;
+    }
     var targetSurface = surfaceById(next, targetSectionId);
     targetSurface.host = hostIsValid(host) ? host : targetSurface.host;
     targetSurface.visible = true;
@@ -2512,13 +2685,24 @@ HOME_SCRIPT = r'''
     var workgroupAffected = changedSurfaceIds(committed, normalizeLayout(next, null));
     var result = commitLayout(next, "move_workgroup", "cmd.terminal.move_workgroup", {
       affected_surface_instance_ids: workgroupAffected, source_host: surfaceById(committed, sourceId).host, target_host: targetSurface.host, target_slot_index: targetSurface.slot_index,
-      command_payload: { terminal_workgroup_id: sourceSnapshot.terminal_workgroup_id, source_terminal_section_id: sourceId.split(":")[1], target_terminal_section_id: targetSectionId.split(":")[1], create_target_section: sectionCreated, target_workspace_host: targetSurface.host, target_slot_index: targetSurface.slot_index, preserve_session_identity: true }
+      command_payload: { terminal_workgroup_id: sourceSnapshot.terminal_workgroup_id, source_terminal_section_id: sourceId.split(":")[1], target_terminal_section_id: targetSectionId.split(":")[1], create_target_section: sectionCreated, target_workspace_host: targetSurface.host, target_slot_index: targetSurface.slot_index, preserve_session_identity: true, source_reseeded: sourceReseeded }
     });
     if (!result.ok) {
+      /* rollback restores BOTH sections' prior refs: the source snapshot
+         also discards any reseeded workgroup written above */
       terminalSections[sourceId] = sourceSnapshot;
       if (targetOwner) terminalSections[targetSectionId] = targetOwner;
       else delete terminalSections[targetSectionId];
       return result;
+    }
+    if (sourceReseeded && seededWorkgroup) {
+      receipt("cmd.terminal.move_workgroup", "projected", {
+        source_reseeded: true,
+        source_terminal_section_id: sourceId.split(":")[1],
+        seeded_terminal_workgroup_id: seededWorkgroup.terminal_workgroup_id,
+        seeded_pane_ids: seededWorkgroup.pane_ids.slice(),
+        seeded_session_ids: seededWorkgroup.terminal_session_ids.slice()
+      }, result.command);
     }
     activeTerminalSectionId = targetSectionId;
     emit("terminal.workgroup_moved", {
@@ -2707,18 +2891,20 @@ HOME_SCRIPT = r'''
 
   function surfaceMenuMarkup(surface) {
     var html = "";
-    if (surface.surface_kind === "editor_panel") html += '<button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="open-browser" data-pm-home-surface-id="' + surface.surface_instance_id + '">Open Browser</button><div class="pm-home-menu-separator" role="separator"></div>';
-    /* Movement is direct manipulation only: drag the top-left grip, or focus it
-       and press Enter to move with the arrow keys. The per-host target-picker
-       rows that used to live here are retired. */
-    html += '<div class="pm-home-menu-section">Placement</div>';
-    html += '<p class="pm-home-menu-hint">Currently in ' + hostLabel(surface.host) + '. Drag the grip in this surface’s header to move it, or focus the grip and press Enter to move it with the arrow keys.</p>';
+    /* Movement is direct manipulation only (drag the top-right grip, or focus
+       it and press Enter for the keyboard path); the menu carries ACTIONS, no
+       placement copy. Separators are emitted only between groups that both
+       exist, so no menu ever opens on, closes on, or doubles a separator. */
+    function separator() {
+      if (html) html += '<div class="pm-home-menu-separator" role="separator"></div>';
+    }
+    if (surface.surface_kind === "editor_panel") html += '<button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="open-browser" data-pm-home-surface-id="' + surface.surface_instance_id + '">Open Browser</button>';
     /* Pop Out is the ONLY route to floating (drag can no longer float), so
        every non-terminal surface offers it; a floating surface offers the
        reverse. Close stays editor-only. */
     var canFloat = surface.surface_kind === "editor_panel" || surface.surface_kind === "chat" || surface.surface_kind === "dashboard";
-    if (canFloat && surface.host !== "floating") html += '<div class="pm-home-menu-separator" role="separator"></div><button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="popout-panel" data-pm-home-surface-id="' + surface.surface_instance_id + '">Pop Out</button>';
-    if (surface.host === "floating") html += '<div class="pm-home-menu-separator" role="separator"></div><button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="redock-surface" data-pm-home-surface-id="' + surface.surface_instance_id + '">Dock Back</button>';
+    if (canFloat && surface.host !== "floating") { separator(); html += '<button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="popout-panel" data-pm-home-surface-id="' + surface.surface_instance_id + '">Pop Out</button>'; }
+    if (surface.host === "floating") { separator(); html += '<button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="redock-surface" data-pm-home-surface-id="' + surface.surface_instance_id + '">Dock Back</button>'; }
     if (surface.surface_kind === "editor_panel") html += '<button type="button" class="pm-home-menu-row pm-home-menu-danger" role="menuitem" data-pm-home-action="close-panel" data-pm-home-surface-id="' + surface.surface_instance_id + '">Close Panel</button>';
     if (surface.surface_kind === "terminal_section") {
       var section = terminalSections[surface.surface_instance_id];
@@ -2726,7 +2912,8 @@ HOME_SCRIPT = r'''
       var sectionDisabled = !section || !section.terminal_workgroup_id || terminalSurfaceCount() >= 4;
       var splitReason = !section || !section.terminal_workgroup_id ? "Move a workgroup here first" : "Maximum four visible terminal panes";
       var sectionReason = !section || !section.terminal_workgroup_id ? "Move a workgroup here first" : "Maximum four terminal sections";
-      html += '<div class="pm-home-menu-separator" role="separator"></div><button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="split-terminal-pane" data-pm-home-surface-id="' + surface.surface_instance_id + '"' + (splitDisabled ? ' disabled aria-disabled="true" aria-description="' + splitReason + '" data-disabled-reason="' + splitReason + '" title="' + splitReason + '"' : '') + '>Split Pane</button><button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="move-workgroup-new-section" data-pm-home-surface-id="' + surface.surface_instance_id + '"' + (sectionDisabled ? ' disabled aria-disabled="true" aria-description="' + sectionReason + '" data-disabled-reason="' + sectionReason + '" title="' + sectionReason + '"' : '') + '>Move Workgroup to New Section</button>';
+      separator();
+      html += '<button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="split-terminal-pane" data-pm-home-surface-id="' + surface.surface_instance_id + '"' + (splitDisabled ? ' disabled aria-disabled="true" aria-description="' + splitReason + '" data-disabled-reason="' + splitReason + '" title="' + splitReason + '"' : '') + '>Split Pane</button><button type="button" class="pm-home-menu-row" role="menuitem" data-pm-home-action="move-workgroup-new-section" data-pm-home-surface-id="' + surface.surface_instance_id + '"' + (sectionDisabled ? ' disabled aria-disabled="true" aria-description="' + sectionReason + '" data-disabled-reason="' + sectionReason + '" title="' + sectionReason + '"' : '') + '>Move Workgroup to New Section</button>';
     }
     return html;
   }
@@ -2756,7 +2943,7 @@ HOME_SCRIPT = r'''
     var result = null;
     if (action === "open-panel") result = openPanel(surfaceId);
     else if (action === "open-browser") result = openBrowser(surfaceId);
-    else if (action === "collapse-terminal") result = collapseBottomTerminal();
+    else if (action === "collapse-terminal") result = toggleBottomTerminalCollapsed();
     else if (action === "close-panel") result = closePanel(surfaceId);
     else if (action === "popout-panel") result = popOutPanel(surfaceId);
     else if (action === "redock-surface") {
@@ -2851,15 +3038,30 @@ HOME_SCRIPT = r'''
     if (clientX < 0 || clientX > window.innerWidth || clientY < 0 || clientY > window.innerHeight) return null;
     var bounds = root.getBoundingClientRect();
     if (clientX < bounds.left || clientX > bounds.right || clientY < bounds.top || clientY > bounds.bottom) return null;
+    /* While the pointer is still inside the dragged surface's own PICKUP
+       rect, the gesture has not really left home -- resolve to the source
+       placement. The grip sits on the panel's top corner, which is also the
+       workspace's edge band whenever the panel touches that edge; without
+       this guard, pickup itself opened a dock preview whose expansion then
+       captured every later hit-test. */
+    var pickupRect = gesture && gesture.sourceRect;
+    if (pickupRect &&
+        clientX >= pickupRect.left && clientX <= pickupRect.left + pickupRect.width &&
+        clientY >= pickupRect.top && clientY <= pickupRect.top + pickupRect.height) {
+      return gesture.sourceHost;
+    }
     /* The edge band is deliberately NARROW and is tested FIRST. Wide bands
        swallow ordinary positional drops (you cannot insert before the first
        surface in home_main); testing surfaces first instead makes a dock
        unreachable, because home_main's first surface already covers the edge. */
     var edge = DRAG_DOCK_EDGE_PX;
+    /* RIGHT is tested FIRST: the right column (chat's full-height dock) spans
+       all three grid rows, so the top-right and bottom-right corners belong
+       to dock_right, not to the top/bottom docks. */
+    if (clientX >= bounds.right - edge) return "dock_right";
     if (clientY <= bounds.top + edge) return "dock_top";
     if (clientY >= bounds.bottom - edge) return "dock_bottom";
     if (clientX <= bounds.left + edge) return "dock_left";
-    if (clientX >= bounds.right - edge) return "dock_right";
     var stack = document.elementsFromPoint ? document.elementsFromPoint(clientX, clientY) : [];
     var hostUnderPointer = null;
     for (var i = 0; i < stack.length; i += 1) {
@@ -2878,8 +3080,17 @@ HOME_SCRIPT = r'''
            elementsFromPoint stack (gaps, the placeholder itself) -- and
            floating is never a pointer-drag target anyway (explicit action
            only). Skipping it here is what keeps a drop into a gap, or onto
-           the previewed slot itself, from silently undocking the surface. */
-        if (hostName && hostName !== "floating") hostUnderPointer = hostName;
+           the previewed slot itself, from silently undocking the surface.
+           A host that is only under the pointer because its own drop
+           preview EXPANDED it (drop-active, no real surface hit above) is
+           skipped too: resolving it would make the preview self-sustaining
+           -- the expansion moves the boundary under the pointer and the
+           target can never change again. Such hosts stay reachable via
+           their edge bands and their real surfaces. */
+        if (hostName && hostName !== "floating" &&
+            !(host.classList && host.classList.contains("pm-home-drop-active"))) {
+          hostUnderPointer = hostName;
+        }
       }
     }
     return hostUnderPointer || "home_main";
@@ -2949,30 +3160,16 @@ HOME_SCRIPT = r'''
   }
 
   /* ---- placeholder ---- */
-  function ensurePlaceholder(sourceElement) {
+  /* Creation only: the placeholder's SIZE is projected per-target inside
+     syncDragPreview (post-drop fair share of the target host), not the
+     surface's pickup-time footprint. */
+  function ensurePlaceholder() {
     var placeholder = document.getElementById("pm-home-drop-placeholder");
     if (!placeholder) {
       placeholder = document.createElement("div");
       placeholder.id = "pm-home-drop-placeholder";
       placeholder.className = "pm-home-drop-placeholder pm-home-surface";
       placeholder.setAttribute("aria-hidden", "true");
-    }
-    if (sourceElement && gesture) {
-      /* measure from the PICKUP-TIME rect: the source element is display:none
-         for the whole drag, so a live measure collapses to the 120px floor
-         and the vacated slot reads as a sliver instead of the surface's
-         real footprint */
-      var rect = gesture.sourceRect || sourceElement.getBoundingClientRect();
-      var vertical = hostAxisIsVertical(gesture.targetHost || gesture.sourceHost);
-      /* the vacated slot must hold the SAME footprint the surface had, or the
-         neighbours barely move and the reflow reads as broken */
-      if (vertical) {
-        placeholder.style.setProperty("flex", "0 0 " + Math.max(60, Math.round(rect.height)) + "px", "important");
-        placeholder.style.removeProperty("min-height");
-      } else {
-        placeholder.style.setProperty("flex", "0 0 " + Math.max(120, Math.round(rect.width)) + "px", "important");
-        placeholder.style.setProperty("min-height", Math.max(60, Math.round(rect.height)) + "px");
-      }
     }
     return placeholder;
   }
@@ -2991,13 +3188,43 @@ HOME_SCRIPT = r'''
   function syncDragPreview(host, insertion) {
     if (!gesture || !root) return;
     var previous = captureSurfaceRects();
-    var placeholder = ensurePlaceholder(gesture.element);
+    var placeholder = ensurePlaceholder();
     var hostEl = hostElement(host);
     if (!hostEl) { clearPlaceholder(); return; }
     var siblings = (hostRegistries[host] || []).filter(function (id) {
       var surface = surfaceById(gesture.draft, id);
       return id !== gesture.surfaceId && surface && surface.visible;
     });
+    /* Track sizing runs FIRST: an EMPTY dock has a zero-size track, so the
+       placeholder fair-share math below must read the host's geometry with
+       the track already opened to the incoming surface's band-clamped
+       footprint. */
+    if (gesture.previewTrack) { syncHostGeometry(gesture.draft); gesture.previewTrack = null; }
+    var dockBand = HOST_BANDS[host];
+    var trackPx = null;
+    if (grid && dockBand) {
+      var trackVar = host === "dock_left" ? "--pm-home-left-w" : host === "dock_right" ? "--pm-home-right-w" : host === "dock_top" ? "--pm-home-top-h" : "--pm-home-bottom-h";
+      var sourceRect = gesture.sourceRect || {};
+      var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
+      trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
+      grid.style.setProperty(trackVar, trackPx + "px");
+      gesture.previewTrack = trackVar;
+    }
+    /* PROJECTED placeholder: preview the surface's POST-DROP footprint (the
+       target host's fair share among its future occupants), never its
+       pickup-time size -- dropping a wide main panel into a crowded dock now
+       previews the sliver it will actually get. */
+    var gapPx = 4; /* keep in lockstep with --pm-home-gap */
+    if (hostAxisIsVertical(host)) {
+      var mainPxV = Math.max(60, Math.round((hostEl.clientHeight - gapPx * siblings.length) / (siblings.length + 1)));
+      placeholder.style.setProperty("flex", "0 0 " + mainPxV + "px", "important");
+      /* no min-height: the column dock fills the width for it */
+      placeholder.style.removeProperty("min-height");
+    } else {
+      var mainPx = Math.max(120, Math.round((hostEl.clientWidth - gapPx * siblings.length) / (siblings.length + 1)));
+      placeholder.style.setProperty("flex", "0 0 " + mainPx + "px", "important");
+      placeholder.style.setProperty("min-height", (trackPx !== null ? trackPx : hostEl.clientHeight) + "px");
+    }
     var beforeId = insertion && insertion.insertion_edge === "before" ? insertion.target_surface_instance_id : null;
     if (!beforeId && insertion && typeof insertion.index === "number" && insertion.index < siblings.length) {
       beforeId = siblings[insertion.index];
@@ -3025,19 +3252,6 @@ HOME_SCRIPT = r'''
     Array.prototype.forEach.call(hosts, function (node) {
       node.classList.toggle("pm-home-drop-active", node.getAttribute("data-pm-home-host") === host);
     });
-    /* an EMPTY dock has a zero-width track, which would render the landing
-       preview as a sliver -- open the track to the incoming surface's
-       footprint (band-clamped) while it is the target */
-    if (gesture.previewTrack) { syncHostGeometry(gesture.draft); gesture.previewTrack = null; }
-    var dockBand = HOST_BANDS[host];
-    if (grid && dockBand) {
-      var trackVar = host === "dock_left" ? "--pm-home-left-w" : host === "dock_right" ? "--pm-home-right-w" : host === "dock_top" ? "--pm-home-top-h" : "--pm-home-bottom-h";
-      var sourceRect = gesture.sourceRect || {};
-      var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
-      var trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
-      grid.style.setProperty(trackVar, trackPx + "px");
-      gesture.previewTrack = trackVar;
-    }
     flipSurfaces(previous);
   }
 
@@ -3515,16 +3729,30 @@ HOME_SCRIPT = r'''
     if (gesture) return;
     var surface = surfaceById(committed, surfaceId);
     if (!surface) return;
-    gesture = { kind: "resize", surfaceId: surfaceId, snapshot: clone(committed), draft: clone(committed), startX: event && event.clientX || 0, startY: event && event.clientY || 0, startBasis: Number(surface.size.basis_px) || 360, changed: false, cancelled: false, pair: null, corner: Boolean(options && options.corner), startHeight: surface.floating_bounds ? surface.floating_bounds.height : null };
-    /* home_main dividers transfer pixels between the ADJACENT PAIR. Freeze
-       every visible sibling's rendered width as its flex basis first: with one
-       shared free-space pool, a single-basis write was diluted across every
-       sibling's flex-grow, so a 200px drag moved the pair ~130px and dragged
-       the far dashboard along with it. Constant pair sum + px bases on all
-       siblings makes the divider px-exact and strictly local. */
+    gesture = { kind: "resize", surfaceId: surfaceId, snapshot: clone(committed), draft: clone(committed), startX: event && event.clientX || 0, startY: event && event.clientY || 0, startBasis: Number(surface.size.basis_px) || 360, changed: false, cancelled: false, pair: null, corner: Boolean(options && options.corner), track: Boolean(options && options.track), startCross: Number(surface.size.cross_basis_px) || Number(surface.size.basis_px) || 360, startHeight: surface.floating_bounds ? surface.floating_bounds.height : null, startWidth: surface.floating_bounds ? surface.floating_bounds.width : null };
+    /* Row-host dividers transfer pixels between the ADJACENT PAIR -- this now
+       covers home_main AND the row docks (dock_top/dock_bottom); a TRACK
+       gesture (the row dock's full-width handle) never pairs, it drives
+       cross_basis_px instead. Freeze every visible sibling's rendered width
+       as its flex basis first: with one shared free-space pool, a
+       single-basis write was diluted across every sibling's flex-grow, so a
+       200px drag moved the pair ~130px and dragged the far dashboard along
+       with it. Constant pair sum + px bases on all siblings makes the divider
+       px-exact and strictly local. */
     var draftSurface = surfaceById(gesture.draft, surfaceId);
-    if (draftSurface && draftSurface.host === "home_main") {
-      var rowIds = (hostRegistries.home_main || []).filter(function (id) {
+    /* a TRACK gesture starts from the dock's CURRENT rendered thickness (the
+       max over its surfaces), not the grabbed surface's own value -- else
+       grabbing a shorter sibling's handle snaps the dock on the first move */
+    if (gesture.track && draftSurface) {
+      var startMax = 0;
+      (hostRegistries[draftSurface.host] || []).forEach(function (peerId) {
+        var peer = surfaceById(gesture.draft, peerId);
+        if (peer && peer.visible) startMax = Math.max(startMax, Number(peer.size.cross_basis_px) || Number(peer.size.basis_px) || 0);
+      });
+      if (startMax) gesture.startCross = startMax;
+    }
+    if (draftSurface && !hostAxisIsVertical(draftSurface.host) && draftSurface.host !== "floating" && !(options && options.track)) {
+      var rowIds = (hostRegistries[draftSurface.host] || []).filter(function (id) {
         var rowSurface = surfaceById(gesture.draft, id);
         return rowSurface && rowSurface.visible && !rowSurface.collapsed;
       });
@@ -3580,18 +3808,41 @@ HOME_SCRIPT = r'''
     if (grid) {
       if (surface.host === "dock_left") grid.style.setProperty("--pm-home-left-w", surface.size.basis_px + "px");
       if (surface.host === "dock_right") grid.style.setProperty("--pm-home-right-w", surface.size.basis_px + "px");
-      if (surface.host === "dock_top") grid.style.setProperty("--pm-home-top-h", surface.size.basis_px + "px");
-      if (surface.host === "dock_bottom") grid.style.setProperty("--pm-home-bottom-h", surface.size.basis_px + "px");
+      /* row docks preview their TRACK from cross_basis_px */
+      if (surface.host === "dock_top") grid.style.setProperty("--pm-home-top-h", (Number(surface.size.cross_basis_px) || surface.size.basis_px) + "px");
+      if (surface.host === "dock_bottom") grid.style.setProperty("--pm-home-bottom-h", (Number(surface.size.cross_basis_px) || surface.size.basis_px) + "px");
     }
   }
 
   function updateResize(surfaceId, event) {
     if (!gesture || gesture.kind !== "resize" || gesture.surfaceId !== surfaceId) return;
     var surface = surfaceById(gesture.draft, surfaceId);
-    if (gesture.pair && surface.host === "home_main") {
+    /* Row-dock TRACK gesture: vertical drag moves the dock's cross-axis
+       track (cross_basis_px), band-clamped; the per-surface widths are
+       untouched. */
+    if (gesture.track) {
+      var rawT = (event.clientY - gesture.startY) * resizeSignFor(surface.host);
+      var bandT = HOST_BANDS[surface.host];
+      if (bandT) {
+        var trackPxNext = Math.max(bandT.min, Math.min(bandT.max, Math.round(gesture.startCross + rawT)));
+        /* the dock TRACK is a host-level dimension; syncHostGeometry takes
+           max(cross_basis_px) over the dock, so every visible surface in the
+           host must carry the new value or a taller sibling silently pins
+           the track and the drag looks dead */
+        (hostRegistries[surface.host] || []).forEach(function (siblingId) {
+          var sibling = surfaceById(gesture.draft, siblingId);
+          if (sibling && sibling.visible) sibling.size.cross_basis_px = trackPxNext;
+        });
+        gesture.changed = trackPxNext !== gesture.startCross;
+        metrics.previewFrameCount += 1;
+        previewResize(gesture.draft, surfaceId);
+      }
+      return;
+    }
+    if (gesture.pair && !hostAxisIsVertical(surface.host) && surface.host !== "floating") {
       var rawA = event.clientX - gesture.startX;
-      var minA = effectiveMinPx("home_main", surfaceId);
-      var minB = effectiveMinPx("home_main", gesture.pair.nextId);
+      var minA = effectiveMinPx(surface.host, surfaceId);
+      var minB = effectiveMinPx(surface.host, gesture.pair.nextId);
       var total = gesture.pair.startA + gesture.pair.startB;
       var sizeA = Math.max(minA, Math.min(total - minB, gesture.pair.startA + rawA));
       var sizeB = total - sizeA;
@@ -3613,7 +3864,10 @@ HOME_SCRIPT = r'''
     surface.size.basis_px = Math.max(band.min, Math.min(band.max, gesture.startBasis + delta));
     if (surface.host === "floating") {
       var bounds = clone(surface.floating_bounds || { x: 24, y: 24, width: gesture.startBasis, height: 300 });
-      bounds.width = Math.max(240, Math.min(rootBounds().width - bounds.x - 8, gesture.startBasis + delta));
+      /* seed from the CURRENT floating width: basis_px carries the docked
+         row basis (rewritten by home_main normalization), so using it here
+         made a shrink drag GROW a float whose rendered width differed */
+      bounds.width = Math.max(240, Math.min(rootBounds().width - bounds.x - 8, (gesture.startWidth || gesture.startBasis) + delta));
       /* the corner handle drives BOTH axes; the edge handle stays width-only */
       if (gesture.corner) {
         var rawY = event.clientY - gesture.startY;
@@ -3638,7 +3892,7 @@ HOME_SCRIPT = r'''
     commitLayout(active.draft, "resize_commit", "cmd.workspace_layout.resize_surface", {
       skip_render: true,
       affected_surface_instance_ids: active.pair ? [active.surfaceId, active.pair.nextId] : [active.surfaceId], source_host: before.host, target_host: after.host,
-      command_payload: { surface_instance_id: active.surfaceId, width_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.width : after.size.basis_px, height_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.height : null, flex_weight: after.size.flex_weight }
+      command_payload: { surface_instance_id: active.surfaceId, width_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.width : after.size.basis_px, height_px: after.host === "floating" && after.floating_bounds ? after.floating_bounds.height : ((after.host === "dock_top" || after.host === "dock_bottom") ? (Number(after.size.cross_basis_px) || null) : null), flex_weight: after.size.flex_weight }
     });
   }
 
@@ -3787,6 +4041,18 @@ HOME_SCRIPT = r'''
           var content = document.getElementById("browserTabContent");
           if (content) content.style.display = "none";
           surfaceEl.querySelectorAll(".editor-area").forEach(function (area) { area.style.display = "flex"; });
+        }
+        /* Generated shells (panels 3/4) have no PM6 tab controller of their
+           own: activate the clicked tab and render its buffer here. */
+        if (surfaceId && surfaceEl.classList.contains("pm-home-editor-shell")) {
+          var clickedFile = codeTab.getAttribute("data-file");
+          if (clickedFile) {
+            renderFileIntoPanel(surfaceId, clickedFile);
+            Array.prototype.forEach.call(codeTab.parentNode.querySelectorAll(".tab"), function (tab) {
+              tab.classList.toggle("active", tab === codeTab);
+            });
+            if (editorOwners[surfaceId] && buffersByPath[clickedFile]) editorOwners[surfaceId].active_buffer_id = buffersByPath[clickedFile];
+          }
         }
       }
     }, true);

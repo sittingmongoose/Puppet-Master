@@ -3,19 +3,19 @@
     {
       "canonical_plan_targets": [],
       "created_at_utc": "2026-08-01T04:32:40Z",
-      "last_event_id": "evt-0026",
-      "last_updated_at": "2026-08-05T19:28:29Z",
-      "last_updated_at_utc": "2026-08-05T19:28:29Z",
+      "last_event_id": "evt-0029",
+      "last_updated_at": "2026-08-13T17:04:38Z",
+      "last_updated_at_utc": "2026-08-13T17:04:38Z",
       "ledger_id": "pldg-20260801-001-feature-intake",
-      "notes": "The August 5 handoff was reconciled as noncanonical additive source input. Six architecture/migration atoms are accepted; two testing/profile atoms and q-0045/q-0046 remain open. The packet validation receipt is stale/inconsistent. Delegated testing remains STOPPED_BEFORE_SUBJECT_LAUNCH: the exact 8-low/2-high roster never froze and all route/pilot/fleet/provider/model calls are zero. Existing preregistration drafts and V4 invalidation evidence remain preserved. No tests, canonical compile, governance, or implementation changes occurred.",
-      "phase": "course_correction_reconciliation_open",
+      "notes": "The Sol max successor continues independently. This ledger task does not use wait_threads, poll it, request status, or emit routine progress updates; it awaits the successor's own boundary notification. Subject models and method remain unfrozen, testing precedes compile, and no canonical or subject-test action occurred.",
+      "phase": "successor_preflight_active_plans_compile_held",
       "primary_goal": "Define a machine-enforced agent-input and work-packet system that prevents agents from silently ignoring portions of long or obligation-dense prompts, while preserving bounded coverage and strong verification.",
       "resume_file": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
       "status": "active",
       "title": "Agent Prompt and Work-Packet Hardening Planning",
       "validation_state": {
         "bootstrap_ledger_validator": "pass",
-        "last_validated_at_utc": "2026-08-05T19:28:29Z",
+        "last_validated_at_utc": "2026-08-13T17:04:38Z",
         "ledger_health": "pass",
         "no_executable_queues_created": true,
         "no_implementation_files_created": true,
@@ -1359,5 +1359,5 @@
       "updated_at_utc": "2026-07-04T00:47:25Z"
     }
   ],
-  "updated_at_utc": "2026-08-05T19:28:29Z"
+  "updated_at_utc": "2026-08-13T17:04:38Z"
 }

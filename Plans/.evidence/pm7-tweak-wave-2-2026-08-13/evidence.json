@@ -1,0 +1,271 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-2-2026-08-13",
+  "created_at_utc": "2026-08-13T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Same-day tweak wave over the 2026-08-13 PM7 workspace repair, reversing several of that wave's decisions with explicit dated dispositions: top-right lines-only grip (corner triangle retired, kebab Placement hint retired), toggling top-bar Collapse/Expand Bottom Terminal row (one-way contract retired), full-height dock_right grid, target-geometry drop previews with the pickup-band and preview-capture guards (pickup-footprint preview retired), row-dock cross_basis_px track handle (host-max semantics, migrated from basis_px), progress-driven silhouette redesign extended to the dashboard tab strip (F3-464 page-tab boundary unchanged), retired pane-close glyph, removed app status bar, 4 px spacing, panels 3/4 rendering real buffers, and move-workgroup source reseed with reset reconstitution. Artifact rebuilt at sha256 92265569 on the repinned base b15eb20f. The wave includes two post-inspection integration fixes: dock-track host-max semantics and the pickup-band/preview-capture drag guards. No new command IDs; the only storage-shape change is the additive size.cross_basis_px field with its basis_px migration; census 55 to 56 home rows.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against b15eb20f9e4176; gates_all_pass; output sha256 92265569256b1cfe5e24809a5a6a8ac1e199275cf2ed225caa2069edfb9423ea (receipt generated 2026-08-13 17:02:21)"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 95 docs, 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate && python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; plan_unit_count 5775"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; failures [] at 56 home rows"
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "shard artifact rows rebuilt (2075 artifacts)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (W2-D6/W2-D7 defect-fix rebuild, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against b15eb20f; gates_all_pass; output sha256 393b1016ca980b6f8f16eb38441fdbe885df2db8b2a1433e712f3bb4953c8f08 (receipt generated 2026-08-13 18:11:54)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 22,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated tweak-wave dispositions over the same-day canon; YAML PlanUnit structure preserved."
+    },
+    {
+      "tool_id": "wiring-matrix-mutator",
+      "count": 1,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "55 -> 56 home rows: home.resizer.dock_track added; grab/drop-target/collapse rows re-worded."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 3,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Spec_Lock refresh (3 pinned docs), one auto_decisions row, this bundle."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-13-pm7-tweak-wave-2",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-2:2026-08-13",
+        "note": "Jared directed the same-day tweak set (grip glyph and position, collapse toggle, dock geometry, preview projection, silhouette redesign, pane-close, status bar, spacing, terminal reseed) reversing parts of the morning canon."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20 (base repinned b15eb20f)."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "canonical_ssot_hashes refreshed for the three edited pinned docs via the spec-lock update protocol."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-13-pm7-tweak-wave-2."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-001",
+    "PlanUnit:F3-HOME-002",
+    "PlanUnit:F3-HOME-003",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-502",
+    "PlanUnit:F3-503",
+    "PlanUnit:F3-505",
+    "PlanUnit:UCC-144",
+    "PlanUnit:UIW-010",
+    "ContractName:Plans/FinalGUISpec.md",
+    "ContractName:Plans/UI_Command_Catalog.md",
+    "ContractName:Plans/UI_Wiring_Rules.md",
+    "ContractName:Plans/Wiring_Matrix.production.json",
+    "ContractName:Plans/Widget_System.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (b15eb20f), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Authored T20 source: top-right lines grip, collapse toggle, full-height dock_right, cross_basis_px track resize, target-geometry preview with drag guards, workgroup reseed.",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "c98c6c9c19b2f925c3574fddbb4e7f104a831b4bd1c6e6f2c321544e37dabae6"
+    },
+    {
+      "note": "Transform driver with the re-pinned BASE_SHA b15eb20f.",
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "sha256": "84a2b9bd0de6bc54aa7af3afbe6e14e6907c952696b8fe48686701308a73ad17"
+    },
+    {
+      "note": "Live matrix as pinned at seal time (harness wave in progress; hash current at this seal).",
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "sha256": "19d155323caa59fb9b0133f5fd809e89867bdd9b6308bdfd03c5bd3a559658c9"
+    },
+    {
+      "note": "Generated concept artifact (never hand-edited).",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "393b1016ca980b6f8f16eb38441fdbe885df2db8b2a1433e712f3bb4953c8f08"
+    },
+    {
+      "note": "Transform/gate receipt (base_pin_ok, 20/20 transforms, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "7288ce758395f810675c30022abedbb8d9c1d5c94e933570ed840818a0187c3b"
+    },
+    {
+      "note": "Production wiring at 56 home rows (home.resizer.dock_track added).",
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "386f93d8149de0d1f0c00b1ccf7db87e56a37d52a4be358596714ed58b7adc93"
+    },
+    {
+      "note": "Reconciliation with census 56 and refreshed hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "22f66d3b5b1f2f05163d87a4fffbd40ed4674da5074135bbe2fc6ac863d83656"
+    },
+    {
+      "note": "GUI owner carrying the tweak-wave amendments and dated re-dispositions.",
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "08f4400cd12ad4bc3a881179aacffcd2c50ed22b15eed2710558f2ecea6fa097"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Concepts/pm7-tools/build_report.json records base_pin_ok against b15eb20f, 20/20 transforms ok, and gates_all_pass for output sha256 92265569."
+    },
+    {
+      "name": "plan-sharding-check",
+      "result": "PASS",
+      "details": "--generate and --check pass across 95 docs and 1,788 shards after the amendments."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "generate and validate pass with 5,775 PlanUnits; no units added or removed."
+    },
+    {
+      "name": "catalog-wiring-closure",
+      "result": "PASS",
+      "details": "validate-wiring-matrix passes at 56 home rows; home.resizer.dock_track reuses cmd.workspace_layout.resize_surface, so closure holds with no new command IDs."
+    },
+    {
+      "name": "spec-lock-protocol-followed",
+      "result": "PASS",
+      "details": "canonical_ssot_hashes recomputed for every pinned file; exactly the three edited pinned docs changed (FinalGUISpec.md, UI_Command_Catalog.md, 00-plans-index.md); one auto_decisions row appended; this bundle completes the Decision_Policy 5.2 sequence."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Every same-day reversal carries an explicit dated tweak-wave disposition: corner-triangle grip retired (F3-HOME-003, Widget_System), pickup-footprint preview retired (F3-HOME-002, F3-503), one-way collapse contract retired (F3-HOME-003, F3-502, UCC-144), 10/8 silhouette maxima retired (F3-505), pane-close glyph retired (F3-421), status bar removed from the PM7 shell (section 3 dated notes with F3-448 ownership preserved)."
+    },
+    {
+      "name": "post-inspection-integration-fixes",
+      "result": "PASS",
+      "details": "The wave includes two post-inspection integration fixes, verified present in the shipped source: dock-track host-max semantics (the rendered row-dock track is the max cross_basis_px among visible surfaces, migrated from basis_px) and the pickup-band/preview-capture drag guards (a pickup inside the source rect resolves to the source placement; a preview-expanded host does not capture the hit-test). Two further harness-found defects were fixed and rebuilt within the wave: W2-D6 floating-corner width seed (the bottom-right corner handle now seeds its gesture from the floating surface's rendered width) and W2-D7 chat grip hit-clip (#chatPanel's contain:layout paint clipped the corner grip's hit target; fixed with a top-right radius notch on #chatPanel, verified at the border-top-right-radius rule in the shipped T20 source). Final rebuild receipt: base_pin_ok against b15eb20f, 20/20 transforms, gates_all_pass, output sha256 393b1016ca980b6f8f16eb38441fdbe885df2db8b2a1433e712f3bb4953c8f08 (generated 2026-08-13 18:11:54)."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "storage-shape-change-scoped",
+      "result": "PASS",
+      "details": "The only storage-shape change is the additive size.cross_basis_px field with a deterministic migration from basis_px; Plans/home_workspace_layout.schema.json remains the record owner and its hash is tracked in the reconciliation source_hashes."
+    }
+  ]
+}

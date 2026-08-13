@@ -1104,11 +1104,15 @@ widget layout continues to own widget placement under `widget_layout:v1:dashboar
 widget drag never writes the Home record and a surface drag never writes the widget record.
 
 Amended 2026-08-13 — grab-handle presentation update on the Home side: the Home surface
-grab handle is now a 28 by 28 folded-corner triangle filling the surface's top-left corner
-(clip-path hit-testing lets the empty half fall through; the focus ring renders in-glyph;
-ARIA and keyboard grammar unchanged). "Top-left grab handle" in the shared vocabulary
-above means position, not glyph — widgets keep their own handle glyph, and this
-presentation note changes no ownership boundary.
+grab handle became a 28 by 28 folded-corner triangle filling the surface's top-left corner.
+Re-amended 2026-08-13 (tweak wave): that triangle is itself retired — the Home surface grip
+is now a small lines-only glyph (two diagonal strokes, no filled plate) over an 18 px hit
+triangle at the surface's TOP-RIGHT corner (clip-path hit-testing still lets the empty half
+fall through; in-glyph focus treatment; ARIA and keyboard grammar unchanged). The
+"top-left grab handle" in the shared vocabulary above continues to describe Dashboard
+WIDGETS, whose handle position and glyph are unchanged; the Home surface grip's position
+and glyph are owned by F3-HOME-003, and this presentation note changes no ownership
+boundary.
 
 Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
 sections) are shell presentation surfaces, not Dashboard widgets. The Home layout

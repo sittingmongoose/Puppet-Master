@@ -42,11 +42,11 @@
    down, so content stays sharp until it crosses the header's lower
    boundary. z stays under the catalog overlay (z 60) and the pane drag
    handle (z 50). */
-.dashboard-view { --pm6-dash-head-h: 27px; }
+.dashboard-view { --pm6-dash-head-h: 36px; }
 .page-dashboard .dashboard-header {
   position: relative;
   z-index: 5;
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  background: var(--ed-rail-bg);
   -webkit-backdrop-filter: blur(11px) saturate(140%);
   backdrop-filter: blur(11px) saturate(140%);
 }
@@ -54,7 +54,7 @@
 [data-theme^="glass"] .page-dashboard .dashboard-header {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: var(--ed-rail-bg);
 }
 .page-dashboard .pm6-dash-scroll {
   margin-top: calc(-1 * var(--pm6-dash-head-h));
@@ -456,4 +456,78 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
 }
 [data-motion="reduced"] .pm6-dash-card, [data-motion="reduced"] .pm6-dash-cta,
 [data-motion="reduced"] .pm6-dash-catalog-panel, [data-motion="reduced"] .pm6-dash-row.pm6-row-new { animation: none; }
+
+/* ============================================================
+   PM7 tab-silhouette adoption (Main/Metrics/Monitoring strip).
+   The strip itself is dressed by the shared 10x-global rules once
+   PM6_EDTAB_SHAPE enrols it (.ed-shape-on); everything here is the
+   HEADER-level counterpart: the header becomes the rail, its own
+   corner caps paint the canvas's exposed top corners (the strip does
+   not span the full header width, so strip-level caps cannot), and
+   the scroll surface adopts the shared opaque canvas composite.
+   ============================================================ */
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on) {
+  padding: 0 var(--sm) 0 0;
+  border-bottom: 0;
+  align-items: stretch;   /* strip must fill the rail's full height */
+  overflow: visible;      /* caps hang below the header's box */
+}
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on) .pm6-dash-actions { align-self: center; }
+.page-dashboard .dashboard-tabs.ed-shape-on {
+  height: var(--ed-strip-h, 36px);
+  padding: 0;
+  gap: 2px;
+}
+/* Neutralize the part-06 glass pills: their [data-theme] + !important
+   rules outrank any class selector, so matching force is required for
+   the silhouette to own the tab boxes. */
+.page-dashboard .dashboard-tabs.ed-shape-on .tab,
+.page-dashboard .dashboard-tabs.ed-shape-on .tab.active {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0 !important;
+  height: 100%;
+}
+/* Header-level corner caps: same masked-wedge construction as the
+   editor strip's caps in 10x-global, fed by the progress vars the
+   controller writes onto the header (the strip's parent). Painted in
+   --ed-cap-bg, the rail-over-canvas composite at the visible boundary;
+   accepted tradeoff as in 10x-global: no frost ghosting inside the
+   wedges (the T16 pin forbids adding blur layers). The header is
+   already position:relative (frosted-header rule above). */
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on)::before,
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on)::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  height: var(--ed-corner-ry);
+  background: var(--ed-cap-bg);
+  pointer-events: none;
+  z-index: 2;
+}
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on)::before {
+  left: 0;
+  width: calc(var(--ed-lp, 0) * var(--ed-canvas-rx-max, 12px));
+  -webkit-mask-image: radial-gradient(calc(var(--ed-lp, 0) * var(--ed-canvas-rx-max, 12px)) var(--ed-corner-ry) at 100% 100%,
+      transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+  mask-image: radial-gradient(calc(var(--ed-lp, 0) * var(--ed-canvas-rx-max, 12px)) var(--ed-corner-ry) at 100% 100%,
+      transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+}
+.page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on)::after {
+  right: 0;
+  width: calc(var(--ed-rp, 0) * var(--ed-canvas-rx-max, 12px));
+  -webkit-mask-image: radial-gradient(calc(var(--ed-rp, 0) * var(--ed-canvas-rx-max, 12px)) var(--ed-corner-ry) at 0 100%,
+      transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+  mask-image: radial-gradient(calc(var(--ed-rp, 0) * var(--ed-canvas-rx-max, 12px)) var(--ed-corner-ry) at 0 100%,
+      transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+}
+/* The canvas below the rail: same opaque composite as the editor's
+   .editor-area, so silhouette and scroll surface are one colour by
+   construction in all eight themes. */
+.dashboard-view:has(.dashboard-tabs.ed-shape-on) .pm6-dash-scroll {
+  background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+}
+/* Keep the custom scrollbar's track out of the frosted rail band (the
+   scroller is lifted under the header by the negative margin above). */
+.pm6-dash-scroll::-webkit-scrollbar-track:vertical { margin-top: var(--pm6-dash-head-h, 36px); }
 </style>

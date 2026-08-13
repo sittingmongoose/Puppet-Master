@@ -11006,7 +11006,15 @@ canonical_text: >-
   contract. Pop Out generalizes: the editor panel, Chat, and Dashboard Pop Out rows all
   dispatch cmd.panel.undock into the single in-canvas float system, and cmd.panel.undock
   and cmd.panel.redock are unchanged. Dragging a surface past the window edge is
-  invalid_target and dispatches nothing. Still no new command IDs.
+  invalid_target and dispatches nothing. Still no new command IDs. Amended 2026-08-13
+  (tweak wave) - the top-bar Collapse Bottom Terminal row is now also a toggle: it
+  dispatches cmd.workspace_layout.set_collapsed with the negated current value and
+  relabels to Expand Bottom Terminal at runtime while collapsed, retiring the earlier
+  clause that the top-bar row remains one-way. The row-dock track handle and the within-row
+  dividers both dispatch the existing cmd.workspace_layout.resize_surface (the track writes
+  the persisted cross_basis_px field); the retired per-pane close glyph dispatched nothing
+  itself - cmd.editor.close_panel remains reachable from the kebab Close Panel row. No new
+  command IDs are minted by the tweak wave.
 gui_related: true
 gui_classification_reason: This unit owns command IDs, typed arguments, availability, disabled reasons, and results for visible Home controls.
 split_recommended: false
@@ -11016,7 +11024,7 @@ acceptance_criteria:
 - cmd.file.open_with retains exactly source_editor, image_viewer, workspace_preview, detached_preview, and diff_review; Panel 1 through Panel 4 routing is only on cmd.file.open/OpenFile fields.
 - No Home surface uses cmd.widget.* and cmd.panel.switch keeps its existing side-panel vocabulary.
 - cmd.workspace_layout.move_surface is reachable by pointer drag and by keyboard from the grab handle, and carries target_slot_index, target_surface_instance_id and insertion_edge unchanged.
-- cmd.workspace_layout.set_collapsed round-trips collapse and expand from the terminal chevron with one command per activation.
+- cmd.workspace_layout.set_collapsed round-trips collapse and expand from the terminal chevron AND from the top-bar Collapse/Expand Bottom Terminal toggle row with one command per activation (tweak wave 2026-08-13).
 - Open/focus Browser in Panels 1 through 4 uses cmd.browser.open_workspace_preview with target_editor_panel_id and target_editor_group_id.
 - One changed drop/resize dispatches and persists exactly once; pointermove, disclosure, cancellation, unchanged drop, window-exit during a drag, and disabled actions do not dispatch a changed command.
 - cmd.workspace_layout.reset is dispatched identically from the top-bar Reset Layout row and from the Settings Startup & Recovery row; neither surface mints a new command ID and the concept demo's post-reset reload is not observable on the command bus.

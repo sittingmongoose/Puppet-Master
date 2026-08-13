@@ -94,7 +94,6 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `#prd-mock-content` | byId | 16-page-wizard | 26-js-prd-annotations | 18709 | MUST-EXIST |
 | `#resubmitBtn` | byId | (runtime-created / not in static HTML) | 26-js-prd-annotations | 18952, 18973 | DYNAMIC/unresolved |
 | `#sidePanelSlot` | byId | 11-html-shell-open | 25-js-terminal-demo | 18378 | MUST-EXIST |
-| `#statusMenuDropdown` | byId | 22-html-status-toast | 25-js-terminal-demo | 18223 | MUST-EXIST |
 | `#themeSelect` | byId | 11-html-shell-open | 25-js-terminal-demo | 18669 | MUST-EXIST |
 | `#tplThreadTerminalDemo` | byId | 23-html-floating-chat | 25-js-terminal-demo | 16828 | MUST-EXIST |
 | `#wtCreateModal` | byId | (runtime-created / not in static HTML) | 25-js-terminal-demo | 17740, 17761 | DYNAMIC/unresolved |
@@ -238,7 +237,6 @@ Every one of these function names is a **MUST-EXIST global symbol**: if an HTML 
 | `#ghSettings` | 16-page-wizard | 16-page-wizard | internal |
 | `#pmCardRich` | 23-html-floating-chat | 23-html-floating-chat | internal |
 | `#projectSettingsModal` | 15-page-projects | 15-page-projects | internal |
-| `#statusMenuDropdown` | 22-html-status-toast | 22-html-status-toast | internal |
 
 ## E. Baseline duplicate ids (pre-existing in PMConcept4 — check_ids.py baseline)
 

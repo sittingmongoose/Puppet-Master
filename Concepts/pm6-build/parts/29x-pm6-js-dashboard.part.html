@@ -1275,7 +1275,8 @@
   }
 
   /* ==================================================================
-     Contact-aware active-tab silhouette controller.
+     Contact-aware active-tab silhouette controller (editor strips AND
+     the dashboard's Main/Metrics/Monitoring strip).
 
      One shared shape travels between tabs. Its corner geometry is derived
      from GEOMETRIC CONTACT with the rail's edges, recomputed in the same
@@ -1284,14 +1285,16 @@
 
        leftProgress  = clamp(leftGap  / MORPH, 0, 1)
        rightProgress = clamp(rightGap / MORPH, 0, 1)
-       canvasLeftRx  = leftProgress  * CANVAS_MAX     (ry stays CANVAS_MAX)
-       cutoutLeftRx  = leftProgress  * SHOULDER_MAX   (ry stays SHOULDER_MAX)
 
-     Only the HORIZONTAL radius animates: the corner flattens sideways
-     instead of shrinking uniformly into a circular dimple.
+     JS writes ONLY position (--ed-shape-x/--ed-shape-w) and unitless
+     progress (--ed-lp/--ed-rp); the 10x-global stylesheet multiplies
+     progress by the per-theme radius maxima (--ed-*-rx-max), so themes
+     retune corner language without touching this controller. Only the
+     HORIZONTAL radius animates: the corner flattens sideways instead of
+     shrinking uniformly into a circular dimple.
      ================================================================== */
   var EDSHAPE = (function () {
-    var MORPH = 20, CANVAS_MAX = 10, SHOULDER_MAX = 8;
+    var MORPH = 20;
     var STIFF = 520, DAMP = 42;            /* firm, low-bounce */
     var shapes = typeof WeakMap === 'function' ? new WeakMap() : null;
 
@@ -1309,11 +1312,11 @@
     }
 
     /* Chrome contract with the Home overlay (attachSurfaceControls in
-       pm7-tools/home_workspace_source.py): slot 0 of `.editor-tabs` belongs to
-       the T20 move grip, and the overlay re-asserts that on every chrome
-       reseat. The shape layer is absolutely positioned, so flex order is
-       irrelevant to it -- mount it LAST and never insert at firstChild, or the
-       two layers fight for slot 0 on every reseat and churn the strip's DOM. */
+       pm7-tools/home_workspace_source.py): the T20 move grip now lives at the
+       surface's top-RIGHT corner, not in this strip, but the operative rule
+       is unchanged -- the shape layer is absolutely positioned, so flex order
+       is irrelevant to it: mount it LAST and never insert at firstChild, so
+       overlay chrome reseats never fight this layer for the leading slot. */
     function ensure(strip) {
       var el = strip.querySelector(':scope > .ed-tab-shape');
       if (!el) {
@@ -1328,10 +1331,12 @@
 
     /* Target box for the active tab, in rail-local coordinates, plus the TAB
        TRACK the contact test is measured against. The track excludes the
-       rail's leading chrome (the Home move grip) and trailing chrome (the
-       pinned actions cluster and the "+N more" chip): those are rail
-       furniture, not part of the surface the tab can travel across, and
-       measuring past them would make the flush state unreachable. */
+       rail's trailing chrome (the pinned actions cluster and the "+N more"
+       chip): that is rail furniture, not part of the surface the tab can
+       travel across, and measuring past it would make the flush state
+       unreachable. (The Home move grip is no longer strip chrome -- it sits
+       at the surface's top-right corner now, so there is no leading chrome
+       to exclude.) */
     function target(strip) {
       var active = strip.querySelector('.tab.active');
       if (!active || active.style.display === 'none') return null;
@@ -1347,9 +1352,14 @@
       return { x: ar.left - sr.left, w: ar.width, trackLeft: trackLeft, trackRight: trackRight };
     }
 
-    /* Write position AND corner geometry together. Corner values are a pure
+    /* Write position AND contact progress together. Progress is a pure
        function of the position passed in, so an animated frame and a dragged
-       frame produce exactly the same shape for the same x. */
+       frame produce exactly the same shape for the same x. Radii themselves
+       are stylesheet-owned: writing per-side px here would be an inline
+       style, which beats the 10x-global calc() and freezes theme retunes.
+       Progress goes on the strip (for the shape/shoulders/caps) AND on its
+       parent -- the dashboard header's own corner caps and anything else at
+       host level read it from there. */
     function paint(strip, x, w, track) {
       if (!(w > 0)) return; /* never persist a degenerate (collapsed) shape */
       var leftGap = Math.max(0, x - (track ? track.left : 0));
@@ -1358,12 +1368,12 @@
       var rp = Math.max(0, Math.min(1, rightGap / MORPH));
       strip.style.setProperty('--ed-shape-x', x.toFixed(2) + 'px');
       strip.style.setProperty('--ed-shape-w', w.toFixed(2) + 'px');
-      strip.style.setProperty('--ed-shape-lrx', (lp * SHOULDER_MAX).toFixed(2) + 'px');
-      strip.style.setProperty('--ed-shape-rrx', (rp * SHOULDER_MAX).toFixed(2) + 'px');
-      var pane = strip.closest('.editor-pane');
-      if (pane) {
-        pane.style.setProperty('--ed-canvas-lrx', (lp * CANVAS_MAX).toFixed(2) + 'px');
-        pane.style.setProperty('--ed-canvas-rrx', (rp * CANVAS_MAX).toFixed(2) + 'px');
+      strip.style.setProperty('--ed-lp', lp.toFixed(3));
+      strip.style.setProperty('--ed-rp', rp.toFixed(3));
+      var host = strip.parentElement;
+      if (host) {
+        host.style.setProperty('--ed-lp', lp.toFixed(3));
+        host.style.setProperty('--ed-rp', rp.toFixed(3));
       }
     }
 
@@ -1430,21 +1440,21 @@
     }
 
     function syncAll(animate) {
-      document.querySelectorAll('.editor-tabs').forEach(function (strip) { sync(strip, animate); });
+      document.querySelectorAll('.editor-tabs, .dashboard-tabs').forEach(function (strip) { sync(strip, animate); });
     }
 
     /* pointer AND keyboard selection produce the same transition */
     document.addEventListener('click', function (e) {
-      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab, .dashboard-tabs .tab') : null;
       if (!tab) return;
-      var strip = tab.closest('.editor-tabs');
+      var strip = tab.closest('.editor-tabs, .dashboard-tabs');
       setTimeout(function () { sync(strip, true); }, 0);
     }, true);
     document.addEventListener('keyup', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ' && e.key.indexOf('Arrow') !== 0) return;
-      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
+      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab, .dashboard-tabs .tab') : null;
       if (!tab) return;
-      sync(tab.closest('.editor-tabs'), true);
+      sync(tab.closest('.editor-tabs, .dashboard-tabs'), true);
     }, true);
     /* dragging is one-to-one: snap every frame, no independent easing */
     document.addEventListener('dragover', function (e) {
@@ -1470,7 +1480,7 @@
     var actions = strip.querySelector('.pane-tabbar-actions');
     if (!actions) return;
     var w = Math.ceil(actions.getBoundingClientRect().width);
-    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 10 : 28) + 'px');
+    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 14 : 28) + 'px');
   }
 
   /* ---------- generic per-strip overflow fitter ---------------------------
@@ -1673,6 +1683,30 @@
         try { new ResizeObserver(function () { edFitStrip(strip); }).observe(strip); } catch (e) {}
       }
       edFitStrip(strip);
+    });
+    edEnrolDashStrips();
+  }
+
+  /* Dashboard strips adopt the same silhouette but NOT the editor's
+     overflow fitter: three fixed tabs never overflow, and edFitStrip's
+     model bookkeeping (hidden-tab promotion, +N chip) has nothing to do
+     here. Enrolment = ARIA tab semantics + a resize re-sync + first sync.
+     Called from edEnrolStrips' tail, so the body MutationObserver and the
+     boot timeouts that already re-run enrolment cover these strips too. */
+  var edDashStripObserved = typeof WeakSet === 'function' ? new WeakSet() : null;
+  function edEnrolDashStrips() {
+    document.querySelectorAll('.dashboard-tabs').forEach(function (strip) {
+      if (edDashStripObserved && edDashStripObserved.has(strip)) return;
+      if (edDashStripObserved) edDashStripObserved.add(strip);
+      strip.querySelectorAll('.tab').forEach(function (t) {
+        t.setAttribute('role', 'tab');
+        t.setAttribute('tabindex', '0');
+        t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
+      });
+      if (typeof ResizeObserver !== 'undefined') {
+        try { new ResizeObserver(function () { EDSHAPE.sync(strip, false); }).observe(strip); } catch (e) {}
+      }
+      EDSHAPE.sync(strip, false);
     });
   }
   window.PM6_ENROL_EDITOR_TABS = edEnrolStrips;

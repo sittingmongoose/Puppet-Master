@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.bootstrap_compile_queue.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "status": "course_correction_reconciliation_open",
+  "status": "successor_preflight_active_plans_compile_held",
   "governance_status": "not_started",
-  "updated_at_utc": "2026-08-05T19:28:29Z",
-  "last_event_id": "evt-0026",
+  "updated_at_utc": "2026-08-13T16:55:00Z",
+  "last_event_id": "evt-0029",
   "terminal_ledger_event_id": "",
   "items": [],
   "canonical_plan_targets": [],
@@ -26,16 +26,15 @@
     "contradiction-0010",
     "contradiction-0011",
     "contradiction-0012",
-    "contradiction-0013"
-  ],
-  "unresolved_contradictions": [
+    "contradiction-0013",
     "q-0045",
     "q-0046"
   ],
-  "notes": "No compile request has been made. The August 5 packet is noncanonical additive source input; q-0045/q-0046 and candidate atoms atom-0062/atom-0063 remain open. Delegated testing is still terminal at STOPPED_BEFORE_SUBJECT_LAUNCH: the exact 8-low/2-high roster did not freeze; route canary, pilot, fleet, and total model/provider calls are all zero; and q-0022 is deferred. Verified materials remain preregistration drafts, V4 remains invalidated by control_plane_defect-0004, and no empirical, production-enforcement, canonical, governance, or build claim exists.",
+  "unresolved_contradictions": [],
+  "notes": "Canonical compile remains held. Successor task 019ffbff-994a-76f0-9c06-57bab28b7ee3 continues independently; this ledger task will not poll it and will await its own boundary notification. All other compile prerequisites and claim boundaries remain unchanged.",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "last_validated_at_utc": "2026-08-13T17:04:38Z",
     "governance_status": "not_started",
     "no_worknodes_created": true,
     "no_nodeseeds_created": true,

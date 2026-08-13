@@ -232,10 +232,19 @@ async function configureLayout(page, layoutName) {
   }
 }
 
+/* Start pointer gestures in the upper-right quadrant of the handle: the grip
+   is an 18px top-RIGHT triangle (clip polygon(0 0,100% 0,100% 100%)) whose
+   bounding-box centre sits on the hypotenuse, and clip-path participates in
+   hit-testing. (72%,28%) is safely inside the triangle and equally valid for
+   rectangular resizer strips. */
+function handleStartPoint(box) {
+  return { x: box.x + box.width * 0.72, y: box.y + box.height * 0.28 };
+}
+
 async function pointerGesture(page, selector, target, finish = 'up') {
   const box = await page.locator(selector).first().boundingBox();
   if (!box) throw new Error('missing pointer target ' + selector);
-  const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  const start = handleStartPoint(box);
   await page.mouse.move(start.x, start.y);
   await page.mouse.down();
   await page.mouse.move(target.x, target.y, { steps: 8 });
@@ -281,7 +290,7 @@ async function dropPointForHost(page, host) {
 async function pointerGestureToDropTarget(page, selector, host) {
   const box = await page.locator(selector).first().boundingBox();
   if (!box) throw new Error('missing pointer target ' + selector);
-  const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  const start = handleStartPoint(box);
   const drop = await dropPointForHost(page, host);
   await page.mouse.move(start.x, start.y);
   await page.mouse.down();
@@ -632,19 +641,25 @@ await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
     if (chat.host === 'dock_top') home.moveSurface('chat', 'home_main');
   });
   await page.waitForTimeout(120);
-  /* The grip legitimately still holds keyboard focus here -- the drag case's
-     focused-grip subcheck guards the blur-cancellation regression, so this
-     probe runs against reality. */
+  /* Pointer route, probed with editor_panel_4 (docked at dock_bottom by the
+     route matrix above). NOT chat: #chatPanel's contain:layout-paint plus its
+     20px border-radius clips descendant hit-testing to the rounded border
+     box, leaving only a ~2px sliver of chat's top-right grip triangle
+     clickable -- reported as a product defect; the pointer cap contract is
+     surface-agnostic. */
+  await page.evaluate(() => {
+    const surface = document.querySelector('[data-pm-home-surface="editor_panel_4"]');
+    if (surface) surface.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'end' });
+  });
   await page.waitForTimeout(120);
+  const ptrGrip = page.locator('[data-pm-home-handle][data-pm-home-surface-id="editor_panel_4"]').first();
   const ptrBefore = await state(page);
-  const chatBox = await chatGrip.boundingBox();
+  const ptrBox = await ptrGrip.boundingBox();
   const topHostBox = await page.locator('[data-pm-home-host="dock_top"]').boundingBox();
-  /* press INSIDE the triangle: the box centre (14,14) sits exactly on the
-     clip-path hypotenuse, and whether that boundary pixel belongs to the grip
-     is subpixel-alignment dependent */
-  await page.mouse.move(chatBox.x + 8, chatBox.y + 8);
+  const ptrPick = handleStartPoint(ptrBox);
+  await page.mouse.move(ptrPick.x, ptrPick.y);
   await page.mouse.down();
-  await page.mouse.move(chatBox.x + 11, chatBox.y + 11);
+  await page.mouse.move(ptrPick.x + 3, ptrPick.y + 3);
   await page.mouse.move(topHostBox.x + topHostBox.width / 2, topHostBox.y + topHostBox.height / 2, { steps: 8 });
   /* the disposition attribute is written by the rAF-throttled drag pipeline;
      poll rather than racing it with a single read */
@@ -665,7 +680,7 @@ await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
   const pointerRefusal = {
     gesture_engaged: ptrDragging,
     mid_drag_disposition: ptrDisposition,
-    chat_host: ptrAfter.layout.surfaces.find(s => s.surface_instance_id === 'chat').host,
+    dragged_surface_host: ptrAfter.layout.surfaces.find(s => s.surface_instance_id === 'editor_panel_4').host,
     dock_top_visible: await topCount(),
     layout_unchanged: same(ptrBefore.layout, ptrAfter.layout)
   };
@@ -714,9 +729,10 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
      position (offsetLeft/offsetTop, transform-free) changes before any drop. */
   const reflow = await (async () => {
     const box = await page.locator(handle).first().boundingBox();
-    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    const pick = handleStartPoint(box);
+    await page.mouse.move(pick.x, pick.y);
     await page.mouse.down();
-    await page.mouse.move(box.x + box.width / 2 + 3, box.y + box.height / 2 + 3);
+    await page.mouse.move(pick.x + 3, pick.y + 3);
     // Measure EVERY surface, not one chosen panel: a drop at the middle of a
     // host inserts after the leading surfaces, so those legitimately do not
     // move. The board reflowing is the claim; which surface moves is not.
@@ -901,9 +917,10 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
   const gripFocused = await page.evaluate(() => Boolean(document.activeElement && document.activeElement.hasAttribute('data-pm-home-handle')));
   const focusedBefore = await state(page);
   const focusedBox = await focusedGrip.boundingBox();
-  await page.mouse.move(focusedBox.x + 8, focusedBox.y + 8);
+  const focusedPick = handleStartPoint(focusedBox);
+  await page.mouse.move(focusedPick.x, focusedPick.y);
   await page.mouse.down();
-  await page.mouse.move(focusedBox.x + 24, focusedBox.y + 24, { steps: 3 });
+  await page.mouse.move(focusedPick.x + 24, focusedPick.y + 24, { steps: 3 });
   const holdSamples = [];
   for (let sample = 0; sample < 5; sample += 1) {
     await page.waitForTimeout(100);
@@ -912,10 +929,26 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
   const focusedDuring = await state(page);
   const focusedDropAt = await dropPointForHost(page, 'home_main');
   await page.mouse.move(focusedDropAt.x, focusedDropAt.y, { steps: 8 });
-  await page.waitForTimeout(120);
+  await page.waitForTimeout(160);
+  /* 2026-08-13 tweak wave 2: the placeholder previews the PROJECTED target
+     geometry (fair share of the target host), so the surface must land where
+     the placeholder stood */
+  const placeholderPreview = await page.evaluate(() => {
+    const ph = document.getElementById('pm-home-drop-placeholder');
+    if (!ph) return null;
+    const r = ph.getBoundingClientRect();
+    return { x: r.x, y: r.y, w: r.width, h: r.height };
+  });
   await page.mouse.up();
   await page.waitForTimeout(200);
   const focusedAfter = await state(page);
+  const landedRect = await page.evaluate(() => {
+    const r = document.querySelector('[data-pm-home-surface="dashboard"]').getBoundingClientRect();
+    return { x: r.x, y: r.y, w: r.width, h: r.height };
+  });
+  const projectionDelta = placeholderPreview ? Math.max(
+    Math.abs(placeholderPreview.x - landedRect.x), Math.abs(placeholderPreview.y - landedRect.y),
+    Math.abs(placeholderPreview.w - landedRect.w), Math.abs(placeholderPreview.h - landedRect.h)) : null;
   const focusedDrag = {
     grip_focused: gripFocused,
     hold_samples: holdSamples,
@@ -924,12 +957,16 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     total_cancel_delta: focusedAfter.metrics.cancelledGestureCount - focusedBefore.metrics.cancelledGestureCount,
     committed_host: focusedAfter.layout.surfaces.find(surface => surface.surface_instance_id === 'dashboard').host,
     command_delta: focusedAfter.metrics.commandCount - focusedBefore.metrics.commandCount,
-    command_id: focusedAfter.commands.at(-1) && focusedAfter.commands.at(-1).command_id
+    command_id: focusedAfter.commands.at(-1) && focusedAfter.commands.at(-1).command_id,
+    placeholder_preview: placeholderPreview,
+    landed_rect: landedRect,
+    projection_max_delta_px: projectionDelta === null ? null : Math.round(projectionDelta)
   };
   const focusedDragPass = focusedDrag.grip_focused && focusedDrag.survived_400ms &&
     focusedDrag.cancel_delta_during_hold === 0 && focusedDrag.total_cancel_delta === 0 &&
     focusedDrag.committed_host === 'home_main' && focusedDrag.command_delta === 1 &&
-    focusedDrag.command_id === 'cmd.workspace_layout.move_surface';
+    focusedDrag.command_id === 'cmd.workspace_layout.move_surface' &&
+    projectionDelta !== null && projectionDelta <= 24;
   const classesClear = await page.evaluate(() => !document.body.classList.contains('pm-home-dragging') && !document.body.classList.contains('pm-resizing'));
   const residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
   return {
@@ -1072,6 +1109,72 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
       persist_delta: after.metrics.persistCount - before.metrics.persistCount
     };
   }
+  /* -- Row-dock handles (tweak wave 2): dock_top/dock_bottom surfaces carry
+     BOTH a col divider (pair width transfer between dock siblings, sum
+     conserved) and a [data-pm-home-resizer-track] row handle that drives the
+     DOCK track height for every surface in the host (persisted via
+     size.cross_basis_px). */
+  await moveSurfaceTo(page, 'editor_panel_3', 'dock_top');
+  await moveSurfaceTo(page, 'editor_panel_4', 'dock_top');
+  const dockRects = () => page.evaluate(() => {
+    const out = {};
+    document.querySelectorAll('[data-pm-home-host="dock_top"] > [data-pm-home-surface][data-pm-home-visible="true"]').forEach(el => {
+      const r = el.getBoundingClientRect();
+      out[el.getAttribute('data-pm-home-surface')] = { w: r.width, h: r.height };
+    });
+    return out;
+  });
+  const dockBefore = await dockRects();
+  const dockDivider = page.locator('[data-pm-home-host="dock_top"] [data-pm-home-resizer]:not([data-pm-home-resizer-track]):not([data-pm-home-resizer-corner])').first();
+  const dockDividerId = await dockDivider.getAttribute('data-pm-home-surface-id');
+  const dockDividerBox = await dockDivider.boundingBox();
+  const dockStateBefore = await state(page);
+  await page.mouse.move(dockDividerBox.x + dockDividerBox.width / 2, dockDividerBox.y + dockDividerBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(dockDividerBox.x + dockDividerBox.width / 2 + 80, dockDividerBox.y + dockDividerBox.height / 2, { steps: 6 });
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const dockMid = await dockRects();
+  const dockIds = Object.keys(dockBefore);
+  const dividerDeltas = dockIds.map(id => dockMid[id].w - dockBefore[id].w);
+  const dockDividerCheck = {
+    divider_surface_id: dockDividerId,
+    ids: dockIds,
+    width_deltas: dividerDeltas.map(delta => Math.round(delta)),
+    sum_conserved: Math.abs(dividerDeltas.reduce((total, delta) => total + delta, 0)) <= 2,
+    moved: dividerDeltas.some(delta => Math.abs(delta) >= 60)
+  };
+  const crossBefore = await page.evaluate(() => {
+    const record = JSON.parse(localStorage.getItem(window.PM_HOME_WORKSPACE.storage_key));
+    return record.surfaces.find(surface => surface.surface_instance_id === 'editor_panel_3').size.cross_basis_px;
+  });
+  const trackHandle = page.locator('[data-pm-home-host="dock_top"] [data-pm-home-resizer-track]').first();
+  const trackBox = await trackHandle.boundingBox();
+  await page.mouse.move(trackBox.x + trackBox.width / 2, trackBox.y + trackBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(trackBox.x + trackBox.width / 2, trackBox.y + trackBox.height / 2 - 60, { steps: 6 });
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const dockAfter = await dockRects();
+  const dockStateAfter = await state(page);
+  const heightDeltas = dockIds.map(id => dockAfter[id].h - dockMid[id].h);
+  const crossAfter = await page.evaluate(() => {
+    const record = JSON.parse(localStorage.getItem(window.PM_HOME_WORKSPACE.storage_key));
+    return record.surfaces.find(surface => surface.surface_instance_id === 'editor_panel_3').size.cross_basis_px;
+  });
+  const dockTrackCheck = {
+    height_deltas: heightDeltas.map(delta => Math.round(delta)),
+    all_surfaces_track: Math.abs(heightDeltas[0] - heightDeltas[1]) <= 2,
+    track_moved: heightDeltas.every(delta => Math.abs(delta) >= 30),
+    cross_basis_before: crossBefore,
+    cross_basis_after: crossAfter,
+    cross_basis_persisted: Math.abs((crossAfter - crossBefore) - heightDeltas[0]) <= 4,
+    commands: dockStateAfter.metrics.commandCount - dockStateBefore.metrics.commandCount
+  };
+  const dockHandlesPass = dockDividerCheck.sum_conserved && dockDividerCheck.moved &&
+    dockTrackCheck.all_surfaces_track && dockTrackCheck.track_moved && dockTrackCheck.cross_basis_persisted &&
+    dockTrackCheck.commands === 2;
+
   /* -- Floating corner handle drives BOTH axes. Float a surface through the
      explicit keyboard path, then drag its bottom-right corner handle. */
   await moveSurfaceTo(page, 'dashboard', 'floating');
@@ -1111,11 +1214,13 @@ await runInteraction('shared_resizers_one_commit_changed_only_and_cancel', async
         (item.geometry_changed || item.clamped_at_minimum)) &&
       checks.some(item => item.geometry_changed) &&
       cancellation && cancellation.exact_layout && cancellation.command_delta === 0 && cancellation.persist_delta === 0 &&
-      cornerPass && glowCleanup,
+      dockHandlesPass && cornerPass && glowCleanup,
     adjacent_pair_transfer: pairCheck,
     enrolled: selectors,
     changed_resize_checks: checks,
     cancellation,
+    dock_divider: dockDividerCheck,
+    dock_track: dockTrackCheck,
     floating_corner: cornerCheck,
     glow_cleanup: glowCleanup
   };
@@ -1229,10 +1334,11 @@ await runInteraction('chat_popout_stays_in_canvas', async page => {
   };
 }, { recordVideo: true });
 
-/* 2026-08-13 wave: the grip is a 28x28 clip-path triangle seated as the
-   surface element's first child at its exact top-left corner, z-index 40.
-   A point 6px inside the corner must hit-test to the grip on EVERY visible
-   surface, chat included. */
+/* 2026-08-13 tweak wave 2: the grip is an 18px lines-only clip-path triangle
+   (polygon(0 0,100% 0,100% 100%)) seated as the surface element's first child
+   at its exact top-RIGHT corner, above the resize handles. A point 6px inside
+   that corner must hit-test to the grip on EVERY visible surface, chat
+   included. */
 await runInteraction('grip_corner_hit_target_and_zorder', async page => {
   await ensureAllOpen(page);
   const surfaces = await page.evaluate(() => {
@@ -1241,9 +1347,11 @@ await runInteraction('grip_corner_hit_target_and_zorder', async page => {
       /* the home_main row legitimately overflows into a scrollport when its
          minimums exceed the container -- a surface scrolled out of view has
          no hittable corner, so bring each one in before testing */
-      element.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' });
+      /* inline:'end' -- the grip sits at the top-RIGHT corner now, so the
+         RIGHT edge is what must be inside the scrollport */
+      element.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'end' });
       const rect = element.getBoundingClientRect();
-      const hit = document.elementFromPoint(rect.left + 6, rect.top + 6);
+      const hit = document.elementFromPoint(rect.right - 6, rect.top + 6);
       const hitGrip = hit && hit.closest ? hit.closest('[data-pm-home-handle]') : null;
       const grip = element.querySelector('[data-pm-home-handle="' + id + '"]');
       const gripRect = grip ? grip.getBoundingClientRect() : null;
@@ -1255,13 +1363,41 @@ await runInteraction('grip_corner_hit_target_and_zorder', async page => {
         hit_resolves_to_own_grip: Boolean(hitGrip && hitGrip.getAttribute('data-pm-home-handle') === id),
         hit_tag: hit ? hit.tagName + (hit.className && typeof hit.className === 'string' ? '.' + hit.className.split(' ')[0] : '') : null,
         grip_size: gripRect ? { w: Math.round(gripRect.width), h: Math.round(gripRect.height) } : null,
-        grip_at_corner: gripRect ? Math.abs(gripRect.left - rect.left) <= 1.5 && Math.abs(gripRect.top - rect.top) <= 1.5 : false,
+        grip_at_corner: gripRect ? Math.abs(gripRect.right - rect.right) <= 1.5 && Math.abs(gripRect.top - rect.top) <= 1.5 : false,
         z_index: gripStyle ? gripStyle.zIndex : null,
         clip_path_triangle: gripStyle ? gripStyle.clipPath.indexOf('polygon') === 0 : false
       };
     });
   });
   const ids = surfaces.map(item => item.id);
+  /* Chat pointer-drag ENGAGE probe (regression guard for the corner-arc
+     clipping defect): #chatPanel used to carry a 20px top-right radius under
+     contain:layout-paint, which clipped all but a ~2px sliver of the grip's
+     hit region; with the radius reduced the standard pickup point must begin
+     a real drag. Escape cancels it -- no layout change. */
+  await page.evaluate(() => {
+    const chat = document.querySelector('[data-pm-home-surface="chat"]');
+    if (chat) chat.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'end' });
+  });
+  await page.waitForTimeout(100);
+  const chatGripEl = page.locator('[data-pm-home-handle][data-pm-home-surface-id="chat"]').first();
+  const chatGripBox = await chatGripEl.boundingBox();
+  const chatPick = handleStartPoint(chatGripBox);
+  const engageBefore = await state(page);
+  await page.mouse.move(chatPick.x, chatPick.y);
+  await page.mouse.down();
+  await page.mouse.move(chatPick.x + 6, chatPick.y + 6, { steps: 2 });
+  await page.waitForTimeout(120);
+  const chatEngaged = await page.evaluate(() => document.body.classList.contains('pm-home-dragging'));
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  await page.waitForTimeout(150);
+  const engageAfter = await state(page);
+  const chatDragProbe = {
+    engaged: chatEngaged,
+    layout_unchanged: same(engageBefore.layout, engageAfter.layout),
+    cancel_delta: engageAfter.metrics.cancelledGestureCount - engageBefore.metrics.cancelledGestureCount
+  };
   /* z-index floor, not an exact pin: the corner hit-test is the substantive
      assertion. The 2026-08-13 fix wave raised the grip from 40 to 110 so it
      wins over the full-width row resize handles (z 100) at dock_top/bottom
@@ -1270,9 +1406,11 @@ await runInteraction('grip_corner_hit_target_and_zorder', async page => {
   return {
     pass: surfaces.length >= 7 && ids.includes('chat') &&
       surfaces.every(item => item.grip_present && item.grip_is_first_child && item.hit_resolves_to_own_grip &&
-        item.grip_size && Math.abs(item.grip_size.w - 28) <= 1 && Math.abs(item.grip_size.h - 28) <= 1 &&
-        item.grip_at_corner && Number.parseInt(item.z_index, 10) >= 40 && item.clip_path_triangle),
-    surfaces
+        item.grip_size && Math.abs(item.grip_size.w - 18) <= 1 && Math.abs(item.grip_size.h - 18) <= 1 &&
+        item.grip_at_corner && Number.parseInt(item.z_index, 10) >= 40 && item.clip_path_triangle) &&
+      chatDragProbe.engaged && chatDragProbe.layout_unchanged && chatDragProbe.cancel_delta === 1,
+    surfaces,
+    chat_pointer_drag: chatDragProbe
   };
 });
 
@@ -1353,7 +1491,10 @@ await runInteraction('dead_space_self_heal', async page => {
     const surfaces = Array.from(host.querySelectorAll(':scope > [data-pm-home-surface][data-pm-home-visible="true"]'))
       .filter(element => !element.hasAttribute('data-pm-home-collapsed') || element.getAttribute('data-pm-home-collapsed') !== 'true');
     const widths = surfaces.map(element => element.getBoundingClientRect().width);
-    const gaps = 8 * Math.max(0, surfaces.length - 1);
+    /* --pm-home-gap is 4px as of tweak wave 2; read it live so the fixture
+       tracks the token */
+    const gapPx = parseFloat(hostStyle.gap) || 4;
+    const gaps = gapPx * Math.max(0, surfaces.length - 1);
     const sum = widths.reduce((total, width) => total + width, 0) + gaps;
     return {
       host_client_width: host.clientWidth,
@@ -1387,6 +1528,109 @@ await runInteraction('dead_space_self_heal', async page => {
   };
 });
 
+/* 2026-08-13 tweak wave 2: chat's dock_right spans the full workspace height
+   (grid areas "top top right" / "left main right" / "bottom bottom right");
+   the top and bottom docks end left of the right column. */
+await runInteraction('chat_full_height', async page => {
+  const chatVisible = await page.evaluate(() => window.PM_HOME_WORKSPACE.layout.surfaces.find(surface => surface.surface_instance_id === 'chat').visible);
+  if (!chatVisible) {
+    await page.locator('.activity-bar .icon[title="Chat"]').click();
+    await page.waitForTimeout(250);
+  }
+  await moveSurfaceTo(page, 'editor_panel_2', 'dock_top');
+  const geometry = await page.evaluate(() => {
+    const ws = document.getElementById('pm-home-workspace').getBoundingClientRect();
+    const chat = document.querySelector('[data-pm-home-surface="chat"]').getBoundingClientRect();
+    const right = document.querySelector('[data-pm-home-host="dock_right"]').getBoundingClientRect();
+    const top = document.querySelector('[data-pm-home-host="dock_top"]').getBoundingClientRect();
+    const bottom = document.querySelector('[data-pm-home-host="dock_bottom"]').getBoundingClientRect();
+    return {
+      ws: { top: ws.top, bottom: ws.bottom },
+      chat: { top: chat.top, bottom: chat.bottom },
+      top_dock_right_edge: top.right,
+      bottom_dock_right_edge: bottom.right,
+      right_col_left: right.left
+    };
+  });
+  return {
+    pass: geometry.chat.top <= geometry.ws.top + 12 && geometry.chat.bottom >= geometry.ws.bottom - 12 &&
+      geometry.top_dock_right_edge <= geometry.right_col_left + 1 &&
+      geometry.bottom_dock_right_edge <= geometry.right_col_left + 1,
+    geometry
+  };
+});
+
+/* 2026-08-13 tweak wave 2: panels opened from the top-bar menu render REAL
+   code (the shipped rev could leave a panel empty), and clicking a file tab
+   switches the rendered buffer. */
+await runInteraction('panel34_open_renders_content', async page => {
+  await openPanel(page, 3);
+  await openPanel(page, 4);
+  const panels = await page.evaluate(() => [3, 4].map(number => {
+    const element = document.querySelector('[data-pm-home-surface="editor_panel_' + number + '"]');
+    const code = element && element.querySelector('.editor-code');
+    return {
+      panel: number,
+      code_children: code ? code.childElementCount : 0,
+      tabs: element ? Array.from(element.querySelectorAll('.editor-tabs .tab[data-file]')).map(tab => tab.getAttribute('data-file')) : [],
+      active_tab: element && element.querySelector('.editor-tabs .tab.active') ? element.querySelector('.editor-tabs .tab.active').getAttribute('data-file') : null
+    };
+  }));
+  /* tab switch on a multi-tab panel: rendered buffer must change */
+  const beforeSwitch = await page.evaluate(() => {
+    const pane = document.querySelector('#editorPane1');
+    const active = pane.querySelector('.editor-tabs .tab.active');
+    return { file: active && active.getAttribute('data-file'), text: (pane.querySelector('.editor-code') || {}).textContent ? pane.querySelector('.editor-code').textContent.slice(0, 120) : '' };
+  });
+  await page.evaluate(() => {
+    const pane = document.querySelector('#editorPane1');
+    const target = Array.from(pane.querySelectorAll('.editor-tabs .tab[data-file]')).find(tab => !tab.classList.contains('active') && tab.getBoundingClientRect().width > 0);
+    target.click();
+  });
+  await page.waitForTimeout(300);
+  const afterSwitch = await page.evaluate(() => {
+    const pane = document.querySelector('#editorPane1');
+    const active = pane.querySelector('.editor-tabs .tab.active');
+    return { file: active && active.getAttribute('data-file'), text: (pane.querySelector('.editor-code') || {}).textContent ? pane.querySelector('.editor-code').textContent.slice(0, 120) : '' };
+  });
+  return {
+    pass: panels.every(item => item.code_children > 3) &&
+      panels.find(item => item.panel === 4).active_tab === 'src/routes/auth.rs' &&
+      afterSwitch.file !== beforeSwitch.file && afterSwitch.text !== beforeSwitch.text,
+    panels,
+    tab_switch: { before: beforeSwitch, after: afterSwitch }
+  };
+});
+
+/* 2026-08-13 tweak wave 2: "New Section" is move-and-reseed -- the source
+   section keeps a live workgroup instead of stranding an EMPTY strip -- and a
+   layout reset recovers to exactly one live section that still renders. */
+await runInteraction('terminal_new_section_recoverable', async page => {
+  const before = await page.evaluate(() => Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null));
+  await page.locator('[data-pm-home-action="move-workgroup-new-section"]:visible').first().click();
+  await page.waitForTimeout(350);
+  const after = await page.evaluate(() => ({
+    workgroups: Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null),
+    sections: window.PM_HOME_WORKSPACE.layout.surfaces.filter(surface => surface.surface_kind === 'terminal_section' && surface.visible).length
+  }));
+  await page.evaluate(() => window.PM_HOME_WORKSPACE.reset());
+  await page.waitForTimeout(350);
+  const recovered = await page.evaluate(() => ({
+    workgroups: Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null),
+    live: Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).filter(owner => owner.terminal_workgroup_id).length,
+    host_rendering: Boolean(document.querySelector('#bottomTerminalHost .terminal-pane')),
+    validation: window.PM_HOME_WORKSPACE.layout.validation.status
+  }));
+  return {
+    pass: before.length === 1 && Boolean(before[0]) &&
+      after.workgroups.length === 2 && after.workgroups.every(Boolean) && after.sections === 2 &&
+      recovered.live === 1 && recovered.host_rendering && recovered.validation === 'valid',
+    before,
+    after_new_section: after,
+    after_reset: recovered
+  };
+});
+
 await runInteraction('terminal_four_section_four_pane_caps_and_identity', async page => {
   const initial = await state(page);
   await clickTerminalAction(page, 'split-terminal-pane');
@@ -1414,6 +1658,11 @@ await runInteraction('terminal_four_section_four_pane_caps_and_identity', async 
       atPaneCap.identities.terminals.reduce((sum, owner) => sum + owner.pane_ids.length, 0) === 4 &&
       paneDisabled && paneReason === 'Maximum four visible terminal panes' &&
       same(beforeFifthPane.layout, afterFifthPane.layout) && beforeFifthPane.metrics.commandCount === afterFifthPane.metrics.commandCount &&
+      /* tweak wave 2: New Section is move-and-RESEED, but the reseed is pane
+         -budget gated ("At the pane cap the source stays empty") -- this case
+         runs at the 4-pane cap, so every vacated source legitimately stays
+         empty and exactly one live workgroup remains. The budget-allowing
+         path is covered by terminal_new_section_recoverable. */
       sections.length === 4 && nonempty.length === 1 &&
       sectionDisabled && sectionReason === 'Maximum four terminal sections' &&
       same(beforeFifthSection.layout, afterFifthSection.layout) && beforeFifthSection.metrics.commandCount === afterFifthSection.metrics.commandCount &&
@@ -1536,65 +1785,98 @@ await runInteraction('legacy_storage_key_copy_forward_migration', async page => 
   };
 });
 
+/* 2026-08-13 tweak wave 2: the top-bar menu row TOGGLES -- after a collapse it
+   relabels at runtime to "Expand Bottom Terminal" and stays enabled; it is
+   disabled only when no terminal is docked at the bottom. The terminal's own
+   chevron toggles too. */
 await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle', async page => {
   const panelHeight = () => page.evaluate(() => {
     const el = document.getElementById('bottomPanel');
     return el ? Math.round(el.getBoundingClientRect().height) : null;
   });
   const heightOpen = await panelHeight();
-
-  /* The top-bar MENU row remains one-way and never relabels to Expand. */
-  await page.locator('#pm-home-more-btn').click();
   const collapse = page.locator('#pm-home-more-menu [data-pm-home-action="collapse-terminal"]');
+
+  /* menu collapse */
+  await page.locator('#pm-home-more-btn').click();
+  await page.waitForTimeout(300);
   const labelBefore = (await collapse.textContent()).trim();
   const before = await state(page);
   await collapse.click();
   await page.waitForTimeout(160);
   const after = await state(page);
   const heightCollapsed = await panelHeight();
-  await page.locator('#pm-home-more-btn').click();
-  const disabled = await collapse.isDisabled();
-  const reason = await collapse.getAttribute('data-disabled-reason');
-  const labelAfter = (await collapse.textContent()).trim();
-  await page.keyboard.press('Escape');
 
-  /* The terminal's own chevron IS the way back: it stays visible on the
-     collapsed strip, is an inline SVG, and reports POST-commit state. */
+  /* menu row now reads Expand and stays ENABLED */
+  await page.locator('#pm-home-more-btn').click();
+  await page.waitForTimeout(300);
+  const labelCollapsed = (await collapse.textContent()).trim();
+  const disabledCollapsed = await collapse.isDisabled();
+  const beforeMenuExpand = await state(page);
+  await collapse.click();
+  await page.waitForTimeout(160);
+  const afterMenuExpand = await state(page);
+  const heightMenuExpanded = await panelHeight();
+  await page.locator('#pm-home-more-btn').click();
+  await page.waitForTimeout(300);
+  const labelReset = (await collapse.textContent()).trim();
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(120);
+
+  /* the terminal's own chevron toggles both ways: inline SVG, POST-commit
+     aria state, visible on the collapsed strip */
   const chevron = page.locator('#collapseBottom, [data-pm-home-collapse-toggle]').first();
-  const chevronVisibleWhileCollapsed = await chevron.isVisible();
-  const ariaCollapsed = await chevron.getAttribute('aria-expanded');
   const isInlineSvg = await chevron.evaluate(el => Boolean(el.querySelector('svg')) && !/[\u2190-\u2BFF]/.test(el.textContent || ''));
-  const beforeExpand = await state(page);
+  const beforeChevron = await state(page);
   await chevron.click();
   await page.waitForTimeout(180);
-  const afterExpand = await state(page);
-  const heightExpanded = await panelHeight();
+  const afterChevronCollapse = await state(page);
+  const heightChevronCollapsed = await panelHeight();
+  const chevronVisibleWhileCollapsed = await chevron.isVisible();
+  const ariaCollapsed = await chevron.getAttribute('aria-expanded');
+  await chevron.click();
+  await page.waitForTimeout(180);
+  const afterChevronExpand = await state(page);
+  const heightChevronExpanded = await panelHeight();
   const ariaExpanded = await chevron.getAttribute('aria-expanded');
-  const collapsedFlag = id => afterExpand.layout.surfaces.find(s => s.surface_kind === 'terminal_section').collapsed;
 
+  /* disabled ONLY when no bottom terminal: move the terminal out and check */
+  await moveSurfaceTo(page, 'terminal_section:terminal_section_1', 'dock_left');
+  await page.locator('#pm-home-more-btn').click();
+  await page.waitForTimeout(300);
+  const disabledNoTerminal = await collapse.isDisabled();
+  const reasonNoTerminal = await collapse.getAttribute('data-disabled-reason');
+  await page.keyboard.press('Escape');
+
+  const collapsedOf = snapshot => snapshot.layout.surfaces.find(surface => surface.surface_kind === 'terminal_section').collapsed;
   return {
-    pass: labelBefore === 'Collapse Bottom Terminal' && labelAfter === 'Collapse Bottom Terminal' &&
+    pass: labelBefore === 'Collapse Bottom Terminal' &&
       after.metrics.commandCount === before.metrics.commandCount + 1 &&
       after.metrics.persistCount === before.metrics.persistCount + 1 &&
-      after.layout.surfaces.find(surface => surface.surface_kind === 'terminal_section').collapsed === true &&
-      disabled && reason === 'Bottom terminal is already collapsed' &&
+      collapsedOf(after) === true &&
       heightCollapsed !== null && heightOpen !== null && heightCollapsed < heightOpen - 40 &&
-      chevronVisibleWhileCollapsed && isInlineSvg && ariaCollapsed === 'false' &&
-      afterExpand.metrics.commandCount === beforeExpand.metrics.commandCount + 1 &&
-      collapsedFlag() === false && ariaExpanded === 'true' &&
-      heightExpanded > heightCollapsed + 40,
+      labelCollapsed === 'Expand Bottom Terminal' && !disabledCollapsed &&
+      afterMenuExpand.metrics.commandCount === beforeMenuExpand.metrics.commandCount + 1 &&
+      collapsedOf(afterMenuExpand) === false && heightMenuExpanded > heightCollapsed + 40 &&
+      labelReset === 'Collapse Bottom Terminal' &&
+      isInlineSvg &&
+      afterChevronCollapse.metrics.commandCount === beforeChevron.metrics.commandCount + 1 &&
+      collapsedOf(afterChevronCollapse) === true && heightChevronCollapsed < heightMenuExpanded - 40 &&
+      chevronVisibleWhileCollapsed && ariaCollapsed === 'false' &&
+      collapsedOf(afterChevronExpand) === false && ariaExpanded === 'true' &&
+      heightChevronExpanded > heightChevronCollapsed + 40 &&
+      disabledNoTerminal && reasonNoTerminal === 'No terminal is docked at the bottom',
     label_before: labelBefore,
-    label_after: labelAfter,
-    menu_disabled_after_collapse: disabled,
-    menu_reason: reason,
-    height_open: heightOpen,
-    height_collapsed: heightCollapsed,
-    height_expanded: heightExpanded,
+    label_collapsed: labelCollapsed,
+    label_after_expand: labelReset,
+    menu_enabled_while_collapsed: !disabledCollapsed,
+    heights: { open: heightOpen, collapsed: heightCollapsed, menu_expanded: heightMenuExpanded, chevron_collapsed: heightChevronCollapsed, chevron_expanded: heightChevronExpanded },
     chevron_visible_while_collapsed: chevronVisibleWhileCollapsed,
     chevron_is_inline_svg: isInlineSvg,
     aria_collapsed: ariaCollapsed,
     aria_expanded: ariaExpanded,
-    command: after.commands.at(-1)
+    disabled_when_no_bottom_terminal: disabledNoTerminal,
+    no_terminal_reason: reasonNoTerminal
   };
 });
 
@@ -1667,7 +1949,9 @@ await runInteraction('theme_auto_reduced_motion_and_four_edge_dissolve', async p
     stored_slug: localStorage.getItem('pm.theme')
   }));
   await page.emulateMedia({ reducedMotion: 'no-preference', colorScheme: 'light' });
-  await page.waitForTimeout(80);
+  /* the auto-mode flip reliably lands but takes 100-400ms after this case's
+     manual data-theme writes -- poll for it instead of racing a fixed wait */
+  await page.waitForFunction(() => (document.documentElement.getAttribute('data-theme') || '').endsWith('-light'), null, { timeout: 5000 }).catch(() => {});
   const autoLight = await page.evaluate(() => ({
     mode: window.PM_THEME.getMode(),
     theme: document.documentElement.getAttribute('data-theme')

@@ -5288,6 +5288,59 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
+### PMConcept7 tweak wave 2 — 2026-08-13 (same-day follow-up)
+
+Same-day follow-up to the workspace repair below; several of that wave's canon
+decisions are REVERSED with explicit dated tweak-wave dispositions. Owner-doc
+changes:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-003 + F3-502: the grab handle becomes a
+  small lines-only glyph (two diagonal strokes, 18 px hit triangle) at the
+  surface's TOP-RIGHT corner, retiring the same-day 28 px top-left corner
+  triangle; the kebab Placement section/hint is retired; the top-bar Collapse
+  row becomes a TOGGLE with a runtime Expand Bottom Terminal relabel, retiring
+  the one-way contract. F3-HOME-001: dock_right spans the full workspace height
+  ("top top right" / "left main right" / "bottom bottom right"). F3-HOME-002 +
+  F3-503: the drop preview projects TARGET geometry (retiring the same-day
+  pickup-footprint preview) with pickup-band and preview-capture guards, and
+  row-axis docks gain a full-width track handle writing the new persisted
+  size.cross_basis_px field (host-max semantics, host-band clamped, migrated
+  from basis_px) alongside within-row pair transfer. F3-505: progress-driven
+  silhouette redesign (JS writes --ed-lp/--ed-rp, CSS derives radii; 13 px
+  theme-tunable crown, 12 px shoulder/canvas radii retiring the 10/8 maxima;
+  40/36 px strips; flush-left tabs; corner caps; per-theme skins) and the
+  dashboard tab strip enrolls in the same connected-surface system (F3-464
+  page-tab boundary unchanged; editor scrollbar excluded from the frosted
+  band). F3-421: the dedicated pane-close glyph is retired (kebab Close Panel
+  is the single close affordance). §3.1/§3.2: the app status bar is removed
+  from the PM7 shell (F3-448 remains the chip-inventory owner); 4 px spacing.
+  F3-HOME-003 also records the move-workgroup source reseed and reset
+  reconstitution semantics.
+- `Plans/UI_Command_Catalog.md` — UCC-144: top-bar collapse row toggles on
+  cmd.workspace_layout.set_collapsed; track handle reuses
+  cmd.workspace_layout.resize_surface; no new command IDs.
+- `Plans/UI_Wiring_Rules.md` — §0.1 re-pointed; UIW-010 census scope re-worded
+  (top-right lines grip, target-geometry preview, home.resizer.dock_track).
+- `Plans/Wiring_Matrix.production.json` — 55 → 56 home rows: new
+  home.resizer.dock_track; grab rows re-worded to the lines-only grip;
+  drop-target rows carry the target-geometry preview acceptance; the collapse
+  row records the toggle. No dedicated pane-close rows existed to retire (the
+  retired glyph was view chrome; home.editor_panel_N.close remains the kebab
+  Close Panel row).
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — census 56,
+  interaction rules re-amended, artifact and source hashes recomputed.
+- `Plans/Widget_System.md` — grab-handle note re-amended (widgets keep their
+  top-left handle; the Home grip is top-right lines-only, owned by F3-HOME-003).
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — grip, preview, dock-track,
+  pane-close, collapse-toggle, panels-3/4-real-buffers, and reseed rows updated.
+
+Governance: seal row `dec-2026-08-13-pm7-tweak-wave-2`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-2-2026-08-13/` (records the two
+post-inspection integration fixes: dock-track host-max semantics and the
+pickup-band/preview-capture drag guards). This wave creates no WorkNodes,
+NodeSeeds, executable queues, implementation files, runtime artifacts, or
+production build tasks.
+
 ### PMConcept7 workspace repair and tab-morph wave — 2026-08-13
 
 Rebuilds the PM7 Home movement, resize, grip, pop-out, reset, and editor-tab
