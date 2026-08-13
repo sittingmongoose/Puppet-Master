@@ -343,6 +343,7 @@
               actions: [
                 { id: "settings.import.preview", label: "Preview the diff", kind: "primary" },
                 { id: "settings.import.apply", label: "Apply", kind: "risky" },
+                { id: "settings.import.cancel", label: "Cancel this import", kind: "quiet" },
                 { id: "settings.import.rollback", label: "Roll back", kind: "quiet" }
               ] },
             { id: "imp-file", name: "Choose a file", secondary: "Any exported .json bundle", status: "ok", statusWord: "Ready",
@@ -374,6 +375,7 @@
           }),
           actions: [
             { id: "settings.import.apply", label: "Apply", kind: "risky" },
+            { id: "settings.import.cancel", label: "Cancel this import", kind: "quiet" },
             { id: "settings.import.rollback", label: "Roll back", kind: "quiet" }
           ],
           empty: { headline: "Nothing to compare", detail: "Choose a bundle first.", action: null }

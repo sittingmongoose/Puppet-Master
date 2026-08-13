@@ -664,7 +664,8 @@
               status: "ok", statusWord: "Ready",
               badges: [{ kind: "source", text: "Built in", title: "Ships with Puppet Master" }],
               fields: { "Theme id": t.id, Family: t.family, Mode: t.mode },
-              actions: [{ id: "appearance.apply", label: "Use this theme", kind: "primary" }]
+              actions: [{ id: "appearance.preview", label: "Preview", kind: "quiet" },
+                { id: "appearance.apply", label: "Use this theme", kind: "primary" }]
             };
           })
         },

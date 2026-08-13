@@ -7,9 +7,9 @@
   "source_register": "PACKET/CANDIDATE_COMMAND_ID_REGISTER.json",
   "discipline_note": "Candidate IDs are provisional. This delta is a census of what the concept actually invokes, adjudicated against the packet's candidate families. No canon is minted here.",
   "summary": {
-    "actions_in_scope": 90,
+    "actions_in_scope": 91,
     "adjudicated_against_candidates": 33,
-    "needing_new_ids": 43,
+    "needing_new_ids": 44,
     "read_only_diagnostics": 14,
     "by_verdict": {
       "reuse": 14,
@@ -809,6 +809,16 @@
       "verdict": "new",
       "proposed_family": "web",
       "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "settings.import.cancel",
+      "label": "Cancel this import",
+      "managers": [
+        "manager-settings-lifecycle"
+      ],
+      "verdict": "new",
+      "proposed_family": "settings.import",
+      "note": "The candidate lifecycle family has preview/apply/rollback but no cancel. Abandoning a staged import before Apply is a distinct operation from rolling back an applied one."
     }
   ],
   "read_only_diagnostics": [

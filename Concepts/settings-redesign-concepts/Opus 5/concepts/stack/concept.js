@@ -1873,11 +1873,23 @@
 
   /* The shell owns the Demo state select and the Reset button now, so the
    * concept passes its state in and reacts, rather than building a second one. */
+  /* Subscribe before mounting. persist() only subscribes and snapshots at flush
+   * time, so every store write mount makes -- including a theme corrected from a
+   * poisoned stored value -- is captured by the first flush instead of lingering
+   * in storage until the next user change. */
+  window.PMStore.persist(CONCEPT_ID, store, window.PMStore.PERSIST_KEYS);
+
   shell = window.PMShell.mount({
     rootId: "pm-root",
     concept: "Stack · Settings as a route",
     conceptId: CONCEPT_ID,
     theme: store.get().theme || "basic-dark",
+    defaultTheme: "basic-dark",
+    widthChoice: store.get().widthChoice,
+    railOpen: store.get().railOpen,
+    panelOpen: store.get().panelOpen,
+    reducedMotion: store.get().reducedMotion,
+    onShellState: function (patch) { store.set(patch); },
     demoState: store.get().demoState,
     onDemoState: function (id) {
       store.set({ demoState: id, catalogueRefreshing: id === "loading" });
@@ -1891,7 +1903,6 @@
   });
   mainEl = shell.main;
 
-  window.PMStore.persist(CONCEPT_ID, store, window.PMStore.PERSIST_KEYS);
 
   /* Back and forward are native hashchange events, so the browser's own history
    * is the single source of truth for where the user has been. */

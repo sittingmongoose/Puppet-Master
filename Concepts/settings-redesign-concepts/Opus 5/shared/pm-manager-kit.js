@@ -372,6 +372,32 @@
    * packet's "sound cannot be the only indication" rule structurally true
    * rather than a claim in a document.
    */
+  /* Local, honest side effects. Keyed by action id so a concept never has to
+   * special-case one manager's buttons.
+   *
+   * Preview and Apply differ in exactly one way, which is the difference the
+   * packet asks for: preview paints the theme without recording a choice, apply
+   * goes through the shell so the choice is remembered. */
+  function liveEffect(a, payload) {
+    if (a.id !== "appearance.preview" && a.id !== "appearance.apply") return;
+    if (!window.PMShell) return;
+
+    /* The row id is "theme-<themeId>"; the raw id must never reach the DOM,
+     * because an unknown data-theme leaves the page with no theme at all. */
+    var raw = String((payload && payload.id) || "");
+    var themeId = raw.indexOf("theme-") === 0 ? raw.slice(6) : raw;
+    var known = (window.PMShell.THEMES || []).some(function (t) { return t.id === themeId; });
+    if (!known) return;
+
+    if (a.id === "appearance.apply") {
+      var shell = typeof window.PMShell.currentShell === "function" ? window.PMShell.currentShell() : null;
+      if (shell && shell.setTheme) shell.setTheme(themeId);
+      return;
+    }
+    document.documentElement.setAttribute("data-theme", themeId);
+    document.documentElement.style.colorScheme = /-dark$/.test(themeId) ? "dark" : "light";
+  }
+
   function act(ctx, action, payload) {
     var a = typeof action === "string" ? { id: action, label: action } : (action || {});
     var op = OPERATION[a.id] || null;
@@ -388,6 +414,12 @@
         detail: (op && op.detail) || "This operation only exists inside the real application."
       });
     }
+
+    /* A few operations genuinely CAN happen inside a standalone page. Those are
+     * performed for real rather than simulated, because a control that claims to
+     * preview a theme and then does nothing is a dead control. Everything that
+     * would touch a network, a filesystem or a provider stays simulated. */
+    liveEffect(a, payload);
 
     /* act() deliberately does not post to the inbox: two paths would mean two
      * entries for one operation. The shell bridge owns that. */

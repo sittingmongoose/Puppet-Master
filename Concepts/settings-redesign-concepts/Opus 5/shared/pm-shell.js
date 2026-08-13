@@ -11,6 +11,11 @@
 (function () {
   "use strict";
 
+  /* The one mounted shell on this page. Shared modules that need a real local
+   * effect (a theme preview, for instance) reach it through here instead of
+   * every concept passing its shell handle down. */
+  var mounted = null;
+
   var THEMES = [
     { id: "friendly-dark", label: "Friendly Dark" },
     { id: "friendly-light", label: "Friendly Light" },
@@ -353,10 +358,26 @@
 
     /* ------------------------------------------------------------ wiring */
 
+    /* One channel for review-strip state. The concept owns persistence; the shell
+     * owns the controls. Without this the persisted keys are written once at
+     * startup and never updated, which is worse than not persisting them. */
+    function reportShellState(patch) {
+      if (cfg.onShellState) cfg.onShellState(patch);
+    }
+
     function setTheme(id) {
+      /* A persisted or injected value is not trusted: an unknown data-theme
+       * matches no rules and leaves the page with no theme at all, which is a
+       * worse failure than quietly falling back. */
+      function valid(x) { return THEMES.some(function (t) { return t.id === x; }); }
+      /* Fall back to the concept's own identity theme, never to whatever happens
+       * to be first in the list: cfg.theme may itself be the poisoned value we
+       * are rejecting. */
+      if (!valid(id)) id = valid(cfg.defaultTheme) ? cfg.defaultTheme : (valid(cfg.theme) ? cfg.theme : THEMES[0].id);
       document.documentElement.setAttribute("data-theme", id);
       document.documentElement.style.colorScheme = /-dark$/.test(id) ? "dark" : "light";
       themeSel.value = id;
+      reportShellState({ theme: id });
       notifyLayout("theme");
     }
 
@@ -367,6 +388,7 @@
         app.style.setProperty("--pm-app-width", value + "px");
       }
       widthSel.value = String(value);
+      reportShellState({ widthChoice: String(value) });
       /* An explicit width change is a resize checkpoint in its own right. Do not
        * wait for the ResizeObserver to notice: RO delivery is tied to the
        * rendering lifecycle, so a backgrounded or headless tab can leave the app
@@ -378,6 +400,7 @@
 
     function setRail(open) {
       app.setAttribute("data-rail", open ? "open" : "closed");
+      reportShellState({ railOpen: open === true });
       railBtn.setAttribute("aria-pressed", String(open));
       tbRail.setAttribute("aria-pressed", String(open));
       notifyLayout("rail");
@@ -385,6 +408,7 @@
 
     function setPanel(open) {
       app.setAttribute("data-panel", open ? "open" : "closed");
+      reportShellState({ panelOpen: open === true });
       panelBtn.setAttribute("aria-pressed", String(open));
       tbPanel.setAttribute("aria-pressed", String(open));
       notifyLayout("panel");
@@ -393,6 +417,7 @@
     function setReducedMotion(on) {
       document.documentElement.setAttribute("data-reduced-motion", on ? "1" : "0");
       motionBtn.setAttribute("aria-pressed", String(on));
+      reportShellState({ reducedMotion: on === true });
       notifyLayout("motion");
     }
 
@@ -458,9 +483,13 @@
       notifyLayout("hub");
     });
 
+    /* Restore what the concept persisted; fall back to the concept's defaults.
+     * A reviewer who reloads keeps the exact screen they were looking at. */
     setTheme(cfg.theme || "friendly-dark");
-    setWidth(1280);
-    setReducedMotion(false);
+    setWidth(cfg.widthChoice || 1280);
+    setReducedMotion(cfg.reducedMotion === true);
+    setRail(cfg.railOpen !== false);
+    setPanel(cfg.panelOpen === true);
     // Evaluate once the first layout has actually happened — without assuming a
     // frame will ever be painted.
     if (window.requestAnimationFrame) {
@@ -498,7 +527,7 @@
       window.location.reload();
     });
 
-    return {
+    var instance = {
       app: app,
       main: main,
       panel: panel,
@@ -519,6 +548,9 @@
       setDemoState: function (id) { if (id) demoSel.value = id; },
       demoState: function () { return demoSel.value; }
     };
+
+    mounted = instance;
+    return instance;
   }
 
   function escapeHtml(s) {
@@ -545,6 +577,7 @@
 
   window.PMShell = {
     mount: mount, THEMES: THEMES, WIDTHS: WIDTHS,
+    currentShell: function () { return mounted; },
     escapeHtml: escapeHtml, el: el, icon: icon, entrance: entrance
   };
 })();
