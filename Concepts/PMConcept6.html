@@ -2006,11 +2006,14 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      /* Sits in the right-hand cluster, centred in the gap between the search
-         box and the theme/settings control, with equal clearance on both
-         sides. (Supersedes the rev-9.4 placement immediately after the page
-         tabs, which read as crowded against them.) */
-      margin: 0 var(--lg, 16px);
+      /* Centred in the free space between the page tabs and the search box:
+         these are the only two auto margins in the row, so the slot sits at
+         the exact midpoint of that gap at every width, and its right auto
+         margin is what pins the search + theme cluster to the right edge.
+         (2026-08-13 wave: deliberately reverts the right-cluster placement,
+         which crowded search/theme and left the tab-search gap dead.) */
+      margin-left: auto;
+      margin-right: auto;
       z-index: 45;
     }
     .title-bar .page-tabs {
@@ -2022,6 +2025,13 @@
       flex: 0 0 auto;
       min-width: max-content;
       position: relative;
+    }
+    /* Min-gap guard: keep the centred notify slot clear of the tabs when its
+       auto margins collapse under pressure. nav specificity on purpose — the
+       per-system glow-gutter override (.title-bar .page-tabs, margin-inline:
+       -6px in 10x-pm6-css-global) would otherwise zero this longhand. */
+    .title-bar nav.page-tabs {
+      margin-right: var(--md);
     }
     .title-bar .page-tabs .page-tab.is-overflow {
       display: none !important;
@@ -2078,12 +2088,15 @@
       color: var(--surface);
       border-color: transparent;
     }
-    /* Search wrap: ml:auto so search|theme stay right; width via --tb-search-w */
+    /* Search wrap: notify slot's mr:auto pins search|theme right (ml is 0 so
+       the row has exactly two auto margins); pl guards the gap to the slot;
+       width via --tb-search-w */
     .title-bar .pm6-tb-search-wrap {
       --tb-search-w: 170px;
       position: relative;
       flex: 0 0 auto;
-      margin-left: auto;
+      margin-left: 0;
+      padding-left: var(--md);
       display: flex;
       align-items: center;
       z-index: 46;
@@ -4943,47 +4956,65 @@
       opacity: 1;
     }
     .pm-ed-overflow {
-      padding: 2px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border-light);
-      background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
-      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface-elevated);
+      font-size: 11px;
       cursor: pointer;
       color: var(--text-secondary);
       flex-shrink: 0;
     }
+    .pm-ed-overflow:hover { color: var(--text-primary); }
+    /* Expanded chip: same neutral treatment as .pm6-tb-search-btn[aria-expanded="true"] */
     .pm-ed-overflow.active {
-      border-color: var(--accent-lime);
-      box-shadow: 0 0 10px color-mix(in srgb, var(--accent-lime) 25%, transparent);
+      color: var(--text-primary);
+      background: var(--accent-soft, var(--surface));
     }
     .pm-ed-overflow-menu {
       position: fixed;
       z-index: 12000;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      padding: 6px;
-      min-width: 160px;
+      padding: var(--xs) 0;
+      min-width: 210px;
       max-width: 280px;
       background: var(--surface-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow, 0 8px 24px rgba(0, 0, 0, 0.25));
+      border-radius: var(--radius-md);
+      box-shadow: var(--elev-3);
+      /* Sprout-in: body-appended fixed menu starts hidden; the builders add
+         .is-open one rAF after append so the transition reliably runs */
+      opacity: 0;
+      transform: translateY(-4px) scale(0.98);
+      transform-origin: top left;
+      transition: opacity 140ms ease, transform 180ms cubic-bezier(.2, .9, .3, 1.05);
     }
+    .pm-ed-overflow-menu.is-open {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pm-ed-overflow-menu { transition: none; }
+    }
+    [data-motion="reduced"] .pm-ed-overflow-menu { transition: none; }
     .pm-ed-overflow-menu button {
       text-align: left;
-      padding: 6px 8px;
+      padding: 6px 12px;
       border: none;
       background: transparent;
-      color: var(--text-primary);
+      color: var(--text-secondary);
       cursor: pointer;
-      border-radius: 4px;
-      font-size: 11px;
+      border-radius: 0;
+      font-size: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .pm-ed-overflow-menu button:hover { background: var(--border-light); }
+    .pm-ed-overflow-menu button:hover {
+      background: var(--accent-soft);
+      color: var(--text-primary);
+    }
     .pm-ed-overflow-menu .pm-ed-overflow-label {
       flex: 1;
       min-width: 0;
@@ -10996,7 +11027,15 @@
          surface. Mixing toward black is monotonic, so the rail is darker by
          construction in every theme. Dark themes take a larger factor because the
          same proportional step is a much smaller absolute one down there. */
-      --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 92%, rgb(0, 0, 0));
+      /* The rail PLATE is that hue at 72% alpha -- the same alpha as the
+         original part-06 strip plate and the chat panel header. The strip
+         keeps part-06's backdrop blur, so scrolled code ghosts through the
+         rail (the scroll-under frost); an opaque rail killed that effect in
+         the shipped rev. The silhouette and the canvas stay opaque -- content
+         sliding under the ACTIVE tab reads as sliding under the canvas's own
+         top edge, which is the physical metaphor. */
+      --ed-rail-bg: color-mix(in srgb, var(--ed-rail-solid) 72%, transparent);
       /* Opaque ground that the rail, the silhouette and the canvas are all
          composited over. Without it the glass themes break the central promise:
          --surface is translucent there, so the silhouette (over the rail) and the
@@ -11014,13 +11053,15 @@
       --ed-canvas-lrx: 0px;
       --ed-canvas-rrx: 0px;
     }
-    [data-theme$="-dark"] .editor-pane { --ed-rail-bg: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
+    [data-theme$="-dark"] .editor-pane { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 74%, rgb(0, 0, 0)); }
     /* Glass reads the code surface as its near-opaque plate; adopt that as the
        shared fill so the silhouette and the canvas stay identical AND glass keeps
        its own material. */
     [data-theme^="glass"] .editor-pane { --ed-canvas-bg: var(--pm6-glass-plate); }
     .editor-tabs.ed-shape-on {
-      background: linear-gradient(var(--ed-rail-bg), var(--ed-rail-bg)), var(--ed-solid-base);
+      /* single translucent layer: part 06's backdrop blur on .editor-tabs now
+         has scrolled content to show through the rail */
+      background: var(--ed-rail-bg);
       border-bottom: 0;
       align-items: flex-end;
       /* No left inset: the first tab must be able to sit FLUSH against the
@@ -11057,10 +11098,14 @@
     @supports (corner-shape: squircle) {
       .ed-tab-shape { corner-shape: squircle squircle flat flat; }
     }
-    /* concave shoulders: a quarter-ellipse of rail punched out of a block of
-       canvas fill, so the tab flares outward into the canvas rather than
-       sitting on top of it. An external join like this cannot be produced by
-       border-radius alone. */
+    /* concave shoulders: a quarter-ellipse CUT OUT of a block of canvas fill,
+       so the tab flares outward into the canvas rather than sitting on top of
+       it. An external join like this cannot be produced by border-radius
+       alone. The cutout is a mask (not a painted rail gradient) so whatever
+       the rail is -- now a translucent, blurred plate -- shows through the
+       hole; a painted shoulder would leave opaque patches on the frost.
+       (Masks on pseudo-elements are safe re: the fixed-position containing
+       block hazard -- pseudos host no descendants.) */
     .ed-tab-shape::before,
     .ed-tab-shape::after {
       content: '';
@@ -11068,22 +11113,23 @@
       bottom: 0;
       height: var(--ed-shoulder-ry);
       pointer-events: none;
+      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
     }
     .ed-tab-shape::before {
       left: calc(-1 * var(--ed-shape-lrx));
       width: var(--ed-shape-lrx);
-      background:
-        radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
-          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
-        var(--ed-solid-base);
+      -webkit-mask-image: radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-shape-lrx) var(--ed-shoulder-ry) at 0 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
     }
     .ed-tab-shape::after {
       right: calc(-1 * var(--ed-shape-rrx));
       width: var(--ed-shape-rrx);
-      background:
-        radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
-          var(--ed-rail-bg) calc(100% - 0.5px), var(--ed-canvas-bg) calc(100% + 0.5px)),
-        var(--ed-solid-base);
+      -webkit-mask-image: radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
+      mask-image: radial-gradient(var(--ed-shape-rrx) var(--ed-shoulder-ry) at 100% 0,
+          transparent calc(100% - 0.5px), rgb(0, 0, 0) calc(100% + 0.5px));
     }
     /* Labels ride ABOVE the silhouette; the tab element itself paints nothing.
        Per-theme active-tab fills, glows and underlines are all cleared here --
@@ -18972,16 +19018,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
           <div class="pm6-tb-menu" id="pageTabsMoreMenu" role="menu" aria-label="More pages"></div>
         </div>
       </nav>
-      <div class="pm6-tb-search-wrap" id="tbSearchWrap" data-mode="full">
-        <input type="text" class="search-bar" id="tbSearchInput" placeholder="Search files, commands, settings...">
-        <button type="button" class="pm6-tb-search-btn" id="tbSearchBtn"
-          aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
-          <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
-        </div>
-      </div>
       <div class="notify-slot" id="notifySlot">
         <div class="rs-host">
           <div class="rs-stack empty" id="rsStack" title="Notifications" role="button" aria-label="Notifications" tabindex="0">
@@ -19002,6 +19038,16 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
               <div class="rs-panel-list" id="rsList"></div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="pm6-tb-search-wrap" id="tbSearchWrap" data-mode="full">
+        <input type="text" class="search-bar" id="tbSearchInput" placeholder="Search files, commands, settings...">
+        <button type="button" class="pm6-tb-search-btn" id="tbSearchBtn"
+          aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="tbSearchPop" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <div class="pm6-tb-search-pop" id="tbSearchPop" role="dialog" aria-label="Search">
+          <input type="text" class="pm6-tb-search-pop-input" id="tbSearchPopInput" placeholder="Search files, commands, settings...">
         </div>
       </div>
       <div class="pm6-tb-menu-wrap" id="themeMenuWrap" data-mode="full">
@@ -35821,9 +35867,12 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     if (!strip) return;
     edMeasureActions(strip);
     edMakeTabsFocusable(strip);
+    /* Reuse the chip via display toggles instead of remove/recreate: childList
+       mutations here ping-pong with the Home overlay's chrome MutationObserver
+       (every fit re-triggered a reseat re-triggered a fit ...). Style and
+       hidden-text writes below do not fire childList observers. */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip) strip.removeChild(chip);
-    chip = null;
+    if (chip) chip.style.display = 'none';
     edHidden = [];
     var all = strip.querySelectorAll('.tab');
     var i;
@@ -35852,9 +35901,11 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
         chip.onclick = edToggleOverflowMenu;
         strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
       }
-      chip.textContent = '+' + edHidden.length + ' more';
+      chip.style.display = '';
+      var label = '+' + edHidden.length + ' more';
+      if (chip.textContent !== label) chip.textContent = label;
     }
-    if (chip && !edHidden.length) strip.removeChild(chip);
+    if (chip && !edHidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function edScheduleFit() {
@@ -35922,6 +35973,10 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     menu.style.left = left + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     edMenuEl = menu;
     document.addEventListener('click', edMenuOutside, true);
   }
@@ -36106,8 +36161,13 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     if (!strip) return;
     edMeasureActions(strip);
     edMakeTabsFocusable(strip);
+    edReassertOrder(strip); /* strips that keep order in the DOM re-apply the
+                               persisted drag order before every fit, so any
+                               re-render source is self-healing */
+    /* Reuse the chip via display toggles instead of remove/recreate: childList
+       mutations here ping-pong with the Home overlay's chrome observer. */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip) { chip.parentNode && chip.parentNode.removeChild(chip); chip = null; }
+    if (chip) chip.style.display = 'none';
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
        clear display on tabs hidden for other reasons (e.g. the static
        [auto] automation tab, which is conditionally shown by
@@ -36150,9 +36210,11 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
         var actions = strip.querySelector('.pane-tabbar-actions');
         strip.insertBefore(chip, actions);
       }
-      chip.textContent = '+' + ed2Hidden.length + ' more';
+      chip.style.display = '';
+      var label2 = '+' + ed2Hidden.length + ' more';
+      if (chip.textContent !== label2) chip.textContent = label2;
     }
-    if (chip && !ed2Hidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (chip && !ed2Hidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function ed2ScheduleFit() {
@@ -36203,6 +36265,10 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     ed2MenuEl = menu;
     document.addEventListener('click', ed2MenuOutside, true);
   }
@@ -36261,13 +36327,19 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       return s;
     }
 
+    /* Chrome contract with the Home overlay (attachSurfaceControls in
+       pm7-tools/home_workspace_source.py): slot 0 of `.editor-tabs` belongs to
+       the T20 move grip, and the overlay re-asserts that on every chrome
+       reseat. The shape layer is absolutely positioned, so flex order is
+       irrelevant to it -- mount it LAST and never insert at firstChild, or the
+       two layers fight for slot 0 on every reseat and churn the strip's DOM. */
     function ensure(strip) {
       var el = strip.querySelector(':scope > .ed-tab-shape');
       if (!el) {
         el = document.createElement('span');
         el.className = 'ed-tab-shape';
         el.setAttribute('aria-hidden', 'true');
-        strip.insertBefore(el, strip.firstChild);
+        strip.appendChild(el);
       }
       strip.classList.add('ed-shape-on');
       return el;
@@ -36298,6 +36370,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
        function of the position passed in, so an animated frame and a dragged
        frame produce exactly the same shape for the same x. */
     function paint(strip, x, w, track) {
+      if (!(w > 0)) return; /* never persist a degenerate (collapsed) shape */
       var leftGap = Math.max(0, x - (track ? track.left : 0));
       var rightGap = Math.max(0, (track ? track.right : x + w) - (x + w));
       var lp = Math.max(0, Math.min(1, leftGap / MORPH));
@@ -36337,9 +36410,15 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
        (resize, fonts, theme, drag frames) still snap. */
     function sync(strip, animate) {
       if (!strip || !strip.isConnected) return;
-      ensure(strip);
       var t = target(strip);
+      /* Unmeasurable (hidden page / mid-reparent / zero-size): apply NO chrome
+         and write NO geometry -- a half-dressed strip (class on, vars dead) is
+         exactly the failure the shipped rev exhibited. Retry ownership sits
+         with edEnrolStrips' per-strip ResizeObserver and the body
+         MutationObserver: the next measurable frame re-runs the owning
+         fitter, whose tail re-syncs us. */
       if (!t) return;
+      ensure(strip);
       var s = state(strip);
       var activeEl = strip.querySelector('.tab.active');
       var activeKey = activeEl ? (activeEl.getAttribute('data-file') || (activeEl.textContent || '').trim()) : null;
@@ -36347,8 +36426,20 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       s.lastActive = activeKey;
       var track = { left: t.trackLeft, right: t.trackRight };
       if (!s) { paint(strip, t.x, t.w, track); return; }
+      var springInFlight = Boolean(s.raf);
+      var previousTx = s.tx, previousTw = s.tw;
       s.tx = t.x; s.tw = t.w; s.track = track;
       if (!animate || reduced() || s.x === null) {
+        /* A layout-driven snap must NOT kill an in-flight selection spring
+           whose target box is unchanged: selecting a tab re-renders the strip
+           and the fitter's second scheduled pass lands a snap-sync AFTER
+           lastActive was consumed, which used to cancel the spring one frame
+           in -- the shape teleported between tabs (the rev-13 lesson,
+           regressed via the double-pass; caught by the frame-step harness). */
+        if (springInFlight && !reduced() && s.x !== null &&
+            Math.abs(previousTx - t.x) < 0.5 && Math.abs(previousTw - t.w) < 0.5) {
+          return;
+        }
         if (s.raf) { cancelAnimationFrame(s.raf); s.raf = 0; }
         s.x = t.x; s.w = t.w; s.vx = 0; s.vw = 0;
         paint(strip, s.x, s.w, s.track);
@@ -36457,6 +36548,10 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     setTimeout(function () {
       document.addEventListener('click', function once(ev) {
         if (menu.contains(ev.target) || (ev.target.closest && ev.target.closest('.pm-ed-overflow'))) return;
@@ -36487,9 +36582,10 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       else ed2ScheduleFit();
       return;
     }
+    edReassertOrder(strip); /* DOM-owned strips re-apply persisted drag order */
+    /* chip reuse via display toggles: see edFitOverflow for why */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip && chip.parentNode) chip.parentNode.removeChild(chip);
-    chip = null;
+    if (chip) chip.style.display = 'none';
     strip._pmEdHidden = [];
     var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
     all.forEach(function (t) { t.style.display = ''; });
@@ -36515,16 +36611,50 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
         chip.onclick = function (ev) { if (ev) ev.stopPropagation(); edGenericOpenMenu(strip, chip); };
         strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
       }
-      chip.textContent = '+' + strip._pmEdHidden.length + ' more';
+      chip.style.display = '';
+      var labelG = '+' + strip._pmEdHidden.length + ' more';
+      if (chip.textContent !== labelG) chip.textContent = labelG;
     }
-    if (chip && !strip._pmEdHidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (chip && !strip._pmEdHidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   window.PM6_FIT_EDITOR_TABS = edFitStrip;
 
+  /* Identity key for a tab in a strip whose order lives in the DOM: the file
+     path when there is one, else the trimmed label text. Must be computed the
+     same way at persist time and at reassert time. */
+  function edTabKey(tab) {
+    return tab.getAttribute('data-file') || (tab.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  /* Re-apply a strip's persisted drag order (strip._pmEdOrder) to its DOM.
+     Unknown tabs (opened after the last drag) keep their DOM position at the
+     end of the known run. Touches the DOM only when the order differs, so
+     steady-state fits stay mutation-free. */
+  function edReassertOrder(strip) {
+    var order = strip._pmEdOrder;
+    if (!order || order.length < 2) return;
+    var tabs = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
+    if (tabs.length < 2) return;
+    var known = [], unknown = [];
+    tabs.forEach(function (t) {
+      (order.indexOf(edTabKey(t)) === -1 ? unknown : known).push(t);
+    });
+    known.sort(function (a, b) { return order.indexOf(edTabKey(a)) - order.indexOf(edTabKey(b)); });
+    var seq = known.concat(unknown);
+    var differs = false;
+    for (var i = 0; i < tabs.length; i++) { if (seq[i] !== tabs[i]) { differs = true; break; } }
+    if (!differs) return;
+    var ref = tabs[tabs.length - 1].nextSibling; /* stays left of chip/actions */
+    seq.forEach(function (t) { strip.insertBefore(t, ref); });
+  }
+
   /* Write a strip's DOM order back into the model that owns it, so a later
-     re-render does not undo a drag-reorder. Panes 3/4 keep their order in the
-     DOM itself, so only pane 1 needs a model write. */
+     re-render does not undo a drag-reorder. Pane 1's order lives in
+     S.files.openTabs; every other strip owns its order in the DOM, so persist
+     it on the strip and let the fitters reassert it after any re-render. The
+     pm6:ed-tab-order event lets the Home overlay mirror the order into its
+     own per-panel model (buffer_ids) for panes 3/4. */
   function edPersistTabOrder(strip) {
     if (!strip) return;
     if (strip.closest('#editorPane1')) {
@@ -36537,6 +36667,16 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       order.forEach(function (p) { st.openTabs.push(p); });
       var active = strip.querySelector('.tab.active[data-file]');
       if (active) st.activeTab = active.getAttribute('data-file');
+    } else {
+      strip._pmEdOrder = Array.prototype.map.call(strip.querySelectorAll('.tab'), edTabKey);
+      var pane = strip.closest('.editor-pane');
+      if (pane && pane.id) {
+        try {
+          document.dispatchEvent(new CustomEvent('pm6:ed-tab-order', {
+            detail: { pane_id: pane.id, order: strip._pmEdOrder.slice() }
+          }));
+        } catch (e) {}
+      }
     }
     edFitStrip(strip);
   }
@@ -46584,7 +46724,8 @@ policies for tenant isolation, and add migration script.</textarea>
       function hMargins(el) {
         try {
           var m = window.getComputedStyle(el);
-          /* auto margins (search ml:auto spacer) must not count as needed width */
+          /* auto margins (the notify slot's centering spacers) must not count
+             as needed width */
           var ml = m.marginLeft;
           var mr = m.marginRight;
           var left = (ml === 'auto') ? 0 : (parseFloat(ml) || 0);
@@ -46601,6 +46742,12 @@ policies for tenant isolation, and add migration script.</textarea>
           var mode = wrap.getAttribute('data-mode');
           if (mode === 'icon') w = 32;
           else w = parseFloat(wrap.style.getPropertyValue('--tb-search-w')) || SEARCH_MAX;
+          /* the wrap's own horizontal padding (min-gap guard against the
+             centered notify slot) is real width on top of --tb-search-w */
+          try {
+            var wcs = window.getComputedStyle(wrap);
+            w += (parseFloat(wcs.paddingLeft) || 0) + (parseFloat(wcs.paddingRight) || 0);
+          } catch (e3) {}
         } else if (el === notify) {
           w = parseFloat(notify.style.getPropertyValue('--rs-stack-w')) || NOTIFY_MAX;
         } else if (el === themeWrap) {
@@ -46625,9 +46772,9 @@ policies for tenant isolation, and add migration script.</textarea>
           w = Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
         }
         sum += w;
-        /* search wrap uses margin-left:auto as a free-space absorber;
-           getComputedStyle resolves it to px — never count it as needed width */
-        if (el !== wrap) sum += hMargins(el);
+        /* the notify slot owns both auto margins (free-space absorbers for
+           centering); hMargins zeroes autos, so every child counts safely */
+        sum += hMargins(el);
       });
       /* clientWidth includes padding; flex kids live in content box */
       return sum - (bar.clientWidth - pad);

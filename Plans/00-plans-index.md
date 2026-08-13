@@ -5288,6 +5288,62 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
+### PMConcept7 workspace repair and tab-morph wave — 2026-08-13
+
+Rebuilds the PM7 Home movement, resize, grip, pop-out, reset, and editor-tab
+systems (assemble-then-repin base refresh plus the T20 overhaul) and reverts the
+notification placement. Owner-doc changes:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-001 amended (floating is never a boot state;
+  `storage.boot_demote_floating`). F3-HOME-002 amended (window exit is
+  `invalid_target` and floating is explicit-only, dated retirement of the
+  2026-08-12 window-exit-floats sentence; footprint-true change-gated drop
+  preview; host caps with home_main spill; adjacent-pair pixel resize with
+  fair-share minimums, unified host bands, floating corner handle, no settle
+  flash, and the no-dead-space invariant). F3-HOME-003 amended (four-row top-bar
+  menu including the dual-surface Reset Layout row, dated retirement of the reset
+  prohibition; the grab handle is a 28x28 top-left corner triangle). F3-502,
+  F3-503, F3-504 (chat overlay retired in PM7; single in-canvas float system) and
+  F3-505 (frosted translucent rail, masked shoulder cutouts, ensure-after-measure
+  lifecycle, last-child mount) amended. F3-421 amended (tab drag-reorder persists
+  on all four panes; portal-family overflow chip). F3-460 re-amended — the
+  notification stack returns between the page tabs and the search, exactly
+  centred by two auto margins; the 2026-08-12 after-search placement is retired
+  with a dated disposition. §3.1/§3.2/§3.4 refreshed to match.
+- `Plans/Wiring_Matrix.production.json` — 51 → 55 `home.` rows: new
+  `home.more_options.reset_layout` (dual-surface reset), `home.chat.pop_out`,
+  `home.dashboard.pop_out`, and `home.resizer.floating_corner`; the grab rows
+  describe the corner triangle grip, the drop-target rows carry the hover-preview
+  acceptance, and the floating drop target is explicit-action-only.
+- `Plans/UI_Command_Catalog.md` — UCC-144 amended (dual-surface reset on
+  `cmd.workspace_layout.reset`; Pop Out generalized to Chat and Dashboard on
+  `cmd.panel.undock`; window exit dispatches nothing); no new command IDs.
+- `Plans/UI_Wiring_Rules.md` — §0.1 concept-input note re-pointed; UIW-010
+  census scope amended; the compact-popup prose is four rows.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — census 51 → 55,
+  interaction rules refreshed, source and artifact hashes recomputed.
+- `Plans/Widget_System.md` — grab-handle wording (position, not glyph).
+- `Plans/Automated_Testing_System.md` — ATS-029 amended (new fixtures
+  `topbar_reset_layout_row`, `chat_popout_stays_in_canvas`,
+  `grip_corner_hit_target_and_zorder`, `boot_never_floating`,
+  `dead_space_self_heal`; window-exit-floats fixture branch retired; 72-case
+  visual matrix structurally unchanged).
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — Home checklist rows updated to
+  the explicit-float, dual-surface-reset, corner-grip, adjacent-pair-resize, and
+  frosted-rail canon.
+- `Plans/settings_inventory.json` — the Reset Home Layout row records the
+  dual-surface route.
+- `Plans/assistant-chat-design.md` — PM7 floating-mount clarification (ACD-440/
+  ACD-441 mounts re-pointed to the in-canvas float surface; overlay retired).
+
+`Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` are
+unchanged. `Concepts/PMConcept7.html` remains a generated artifact and
+illustrative source lineage only; this wave creates no WorkNodes, NodeSeeds,
+executable queues, implementation files, runtime artifacts, or production build
+tasks. The governance seal for this wave is
+`dec-2026-08-13-pm7-workspace-repair-tab-morph` with evidence bundle
+`Plans/.evidence/pm7-workspace-repair-2026-08-13/`.
+
 ### PMConcept7 Home Workspace direct-manipulation repair wave — 2026-08-12
 
 Repairs a set of Home regressions and replaces the surface movement affordance.

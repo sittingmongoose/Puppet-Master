@@ -821,7 +821,8 @@
       function hMargins(el) {
         try {
           var m = window.getComputedStyle(el);
-          /* auto margins (search ml:auto spacer) must not count as needed width */
+          /* auto margins (the notify slot's centering spacers) must not count
+             as needed width */
           var ml = m.marginLeft;
           var mr = m.marginRight;
           var left = (ml === 'auto') ? 0 : (parseFloat(ml) || 0);
@@ -838,6 +839,12 @@
           var mode = wrap.getAttribute('data-mode');
           if (mode === 'icon') w = 32;
           else w = parseFloat(wrap.style.getPropertyValue('--tb-search-w')) || SEARCH_MAX;
+          /* the wrap's own horizontal padding (min-gap guard against the
+             centered notify slot) is real width on top of --tb-search-w */
+          try {
+            var wcs = window.getComputedStyle(wrap);
+            w += (parseFloat(wcs.paddingLeft) || 0) + (parseFloat(wcs.paddingRight) || 0);
+          } catch (e3) {}
         } else if (el === notify) {
           w = parseFloat(notify.style.getPropertyValue('--rs-stack-w')) || NOTIFY_MAX;
         } else if (el === themeWrap) {
@@ -862,9 +869,9 @@
           w = Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
         }
         sum += w;
-        /* search wrap uses margin-left:auto as a free-space absorber;
-           getComputedStyle resolves it to px — never count it as needed width */
-        if (el !== wrap) sum += hMargins(el);
+        /* the notify slot owns both auto margins (free-space absorbers for
+           centering); hMargins zeroes autos, so every child counts safely */
+        sum += hMargins(el);
       });
       /* clientWidth includes padding; flex kids live in content box */
       return sum - (bar.clientWidth - pad);

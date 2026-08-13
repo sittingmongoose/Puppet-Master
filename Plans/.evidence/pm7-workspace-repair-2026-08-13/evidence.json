@@ -1,0 +1,356 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-workspace-repair-2026-08-13",
+  "created_at_utc": "2026-08-13T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Plan-document update wave and governance seal for the 2026-08-13 PMConcept7 workspace repair. The rebuilt artifact (assemble-then-repin base de297808 plus the T20 overhaul, output sha256 28f69e75) makes floating explicit-only (window exit is invalid_target; Pop Out rows on editor panels, Chat and Dashboard; boot demotes persisted floating to last_docked_host with a storage.boot_demote_floating receipt), retires the base full-screen chat overlay for a single in-canvas float system, adds footprint-true change-gated drop previews with host caps, adjacent-pair pixel resize with fair-share minimums and a render-time no-dead-space invariant, the 28x28 top-left corner triangle grip, the dual-surface Reset Layout row, all-pane editor tab reorder persistence with the portal-family overflow chip, the frosted translucent tab rail with masked shoulder cutouts, and returns the title-bar notification stack between the page tabs and the search (deliberate dated revert of the 2026-08-12 placement). Owner docs were amended with explicit dated stale/retired dispositions wherever prior canon was reversed (F3-460 placement, F3-502/F3-HOME-003 reset prohibition, F3-HOME-002 window-exit floating); the production census grew 51 to 55 home rows. Command, event, receipt, schema and storage contracts are unchanged and no new command IDs were minted. Post-verification addendum: the verification harness surfaced four defects, fixed in Concepts/pm7-tools/home_workspace_source.py and Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html, followed by a full assemble-then-repin rebuild (new base sha256 7f0ff4e5, final artifact sha256 92e3da8c after the D5 blur-guard fix); this bundle's artifact hashes pin the post-fix state and the canon amendments above already describe the intended behaviors these fixes implement.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok; gates_all_pass (brace_balance, css_vars, node --check, no_emoji); output sha256 28f69e75332f15365e37f896fc1b2bc3f69691f71dfb0a865f863df641b4e496 (receipt: Concepts/pm7-tools/build_report.json)"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 95 docs, 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 1788 shards checked across 95 docs"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; plan_unit_count 5775"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; coverage_status pass; plan_unit_count 5775"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; failures []"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; batch report sha256_after re-baselined for the docs edited by this wave"
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "shard artifact rows rebuilt from the regenerated shard report (settings_inventory tail shard renamed 19094 -> 19096 lines)"
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py refresh --evidence <11 historical bundles and the 2026-08-12 wave bundle>",
+      "exit_code": 0,
+      "stdout_excerpt": "mechanical artifact-hash refresh of the governance bundles that pin Spec_Lock.json, auto_decisions.jsonl, plan-index outputs, the migration batch report, and the PM7 pipeline artifacts"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence && python3 scripts/pm-plans-verify.py validate-plan-graph && python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0,
+      "stdout_excerpt": "all three: status pass; failures []"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "24/26 pass - the 2 failures are the pre-existing validate_audit_closure and validate_implementation_readiness; verify_spec_lock, validate_auto_decisions and validate_evidence PASS"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (post-verification defect-fix rebuild)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 7f0ff4e5; gates_all_pass; output sha256 23229618220f71eed4bcd13c30adddcd559fd8b16bb894195e0e5aaa235eff23 (receipt: Concepts/pm7-tools/build_report.json, generated 2026-08-13 06:45:54)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (D5 blur-guard rebuild, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 7f0ff4e5; gates_all_pass; output sha256 92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec (receipt generated 2026-08-13 07:41:10)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 30,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Surgical owner-doc amendments with dated stale/retired dispositions; YAML PlanUnit structure preserved."
+    },
+    {
+      "tool_id": "wiring-matrix-mutator",
+      "count": 1,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Byte-stable JSON rewrite adding home.more_options.reset_layout, home.chat.pop_out, home.dashboard.pop_out and home.resizer.floating_corner, and amending the grab/drop-target/pop_out rows (51 -> 55 home rows)."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 3,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Spec_Lock canonical_ssot_hashes refresh (5 pinned docs), one auto_decisions row, this evidence bundle."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-13-pm7-workspace-repair-tab-morph",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Workspace-Repair:2026-08-13",
+        "note": "Jared reported nine workspace defects, directed the movement/resize/grip/pop-out/reset rebuild and the contact-aware tab morph, and explicitly authorized the full governance seal."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/settings_inventory.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/05-css-shell.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/06-css-components-a.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/11-html-shell-open.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20 (assemble-then-repin base de297808 plus the T20 overhaul)."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "canonical_ssot_hashes refreshed for the five edited pinned docs via the spec-lock update protocol."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-13-pm7-workspace-repair-tab-morph."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-001",
+    "PlanUnit:F3-HOME-002",
+    "PlanUnit:F3-HOME-003",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-460",
+    "PlanUnit:F3-502",
+    "PlanUnit:F3-503",
+    "PlanUnit:F3-504",
+    "PlanUnit:F3-505",
+    "PlanUnit:UCC-144",
+    "PlanUnit:UIW-010",
+    "PlanUnit:ATS-029",
+    "ContractName:Plans/FinalGUISpec.md",
+    "ContractName:Plans/UI_Command_Catalog.md",
+    "ContractName:Plans/UI_Wiring_Rules.md",
+    "ContractName:Plans/Wiring_Matrix.production.json",
+    "ContractName:Plans/Widget_System.md",
+    "ContractName:Plans/Automated_Testing_System.md",
+    "ContractName:Plans/assistant-chat-design.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Concepts/PMConcept7.html is content-addressed by the base pin plus the authored T20 source; rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (de297808), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Authored T20 Home Workspace source: explicit-float-only movement, adjacent-pair resize, corner triangle grip, dual-surface reset, boot demotion, chat float routing.",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "b94563c219741257272db907ff6ae2374cc34b91610eb6bb0163a4cb30f7ba18"
+    },
+    {
+      "note": "Transform driver with the re-pinned BASE_SHA and the four-action top-bar menu gate (Reset Layout no longer forbidden).",
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "sha256": "f47a3db56a8f0afadcdd7f4034f9b8897cd581f4140f2e4ae5706215b41ee433"
+    },
+    {
+      "note": "Live matrix carrying the topbar_reset_layout_row, chat_popout_stays_in_canvas, grip_corner_hit_target_and_zorder, boot_never_floating and dead_space_self_heal fixtures.",
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "sha256": "03b84d8fbd67b1bae20734bdf2e4827c0b49395144f25a0bcc88c8ad27b8b863"
+    },
+    {
+      "note": "Generated concept artifact (never hand-edited).",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec"
+    },
+    {
+      "note": "Transform/gate receipt for the generated artifact (20/20 transforms ok, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "804ee7940b3861d070a0bf10f997c0a564ae5358590ee1887ce68d3da0b16b5a"
+    },
+    {
+      "note": "Production wiring after the 2026-08-13 wave (51 -> 55 home. rows; pop_out generalized, dual-surface reset, corner-grip wording, hover-preview acceptance, floating corner resizer).",
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "60edde9fcdb7a85c4ccb3794eeeb98ea71f1e7e308d32e948f1e2673ae76f177"
+    },
+    {
+      "note": "Control reconciliation with the refreshed census, interaction rules and source hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "ca749a33ac4736284a2b45d4c9bde4fa21e9efafa8cb8bad3fbaf2972935539f"
+    },
+    {
+      "note": "GUI owner document carrying the amended F3-HOME-001/002/003, F3-421, F3-460, F3-502..F3-505 and the refreshed section 3 layout prose.",
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "cb8e793fd3b46d17be00745b05ace785aadc8d791bd0d3261415c532351d2b22"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Concepts/pm7-tools/build_report.json records base_pin_ok against de297808, 20/20 assertion-guarded transforms ok, and gates_all_pass (brace balance, css-vars baseline, node --check, no-emoji) for output sha256 28f69e75."
+    },
+    {
+      "name": "plan-sharding-check",
+      "result": "PASS",
+      "details": "scripts/pm-shard-plans.py --generate and --check pass across 95 source documents and 1,788 shards after the amendments."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "scripts/pm-plan-index.py generate and validate pass with 5,775 PlanUnits; no units were added or removed by this wave."
+    },
+    {
+      "name": "catalog-wiring-closure",
+      "result": "PASS",
+      "details": "scripts/pm-plans-verify.py validate-wiring-matrix passes with zero failures after the 51 -> 55 home-row census: the new rows reuse cmd.workspace_layout.reset, cmd.panel.undock and cmd.workspace_layout.resize_surface, so closure holds with no new command IDs."
+    },
+    {
+      "name": "spec-lock-protocol-followed",
+      "result": "PASS",
+      "details": "canonical_ssot_hashes recomputed for every pinned file; exactly the five edited pinned docs changed (00-plans-index.md, Automated_Testing_System.md, UI_Command_Catalog.md, FinalGUISpec.md, assistant-chat-design.md); one auto_decisions row appended; this bundle completes the Decision_Policy 5.2 sequence."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Every reversal of prior canon carries an explicit dated stale/retired disposition: F3-460 placement (2026-08-12 after-search retired, between-tabs un-retired), F3-502/F3-HOME-003 reset prohibition retired, F3-HOME-002 window-exit floating retired as invalid_target, F3-503 single-basis resize retired, F3-505 opaque rail retired, F3-421 pane-1-only persistence retired, ATS-029 window-exit fixture branch retired."
+    },
+    {
+      "name": "harness-fixture-registration",
+      "result": "PASS",
+      "details": "The five new fixture anchors (topbar_reset_layout_row, chat_popout_stays_in_canvas, grip_corner_hit_target_and_zorder, boot_never_floating, dead_space_self_heal) exist in Concepts/pm7-tools/verify/home_workspace_matrix.mjs and are the anchors cited by the amended wiring rows and ATS-029. This plan-doc seal records their registration; harness run results are the implementation wave's evidence, not this bundle's claim."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "storage-and-schema-unchanged",
+      "result": "PASS",
+      "details": "Plans/home_workspace_layout.schema.json (sha256 503cfcbd, unchanged) and Plans/storage-plan.md are untouched: the record shape, storage key and revision/readback rules are unaffected; boot demotion persists through the existing record fields plus the existing receipt vocabulary."
+    },
+    {
+      "name": "post-verification-defect-fix-rebuild",
+      "result": "PASS",
+      "details": "Four harness-surfaced defects were fixed and the artifact rebuilt within this wave, with no canon change required (the amendments already specify the intended behaviors): D1 spring preservation (a re-render no longer replaces the silhouette's selection spring with a snap), D2 float-layer hijack exclusion (float-layer surfaces are excluded from the base layer's geometry hijack paths), D3 host caps enforced on the keyboard and API move paths with normalization spilling overflow to home_main, and D4 grip z-order raised over row handles so the corner triangle wins the hit test. A final D5 fix followed: the capture-phase window blur listener cancelled a drag begun on a focused grip (the grip's element blur passed through capture phase); it is now guarded with event.target !== window so only a true window blur cancels. Final rebuild receipt: Concepts/pm7-tools/build_report.json (base_pin_ok against 7f0ff4e5, 20/20 transforms, gates_all_pass, output sha256 92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec). Verification wave final run (evidence dir matrix-d5): 27/27 live matrix checks, 72/72 deterministic captures, frame-step 3/3 themes (first_step_ratio 0.144), scroll-under 8/8 themes."
+    }
+  ]
+}

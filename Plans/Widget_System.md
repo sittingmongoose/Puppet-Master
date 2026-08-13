@@ -1103,6 +1103,13 @@ Home layout continues to own surface placement under `home_workspace_layout.v1`,
 widget layout continues to own widget placement under `widget_layout:v1:dashboard`. A
 widget drag never writes the Home record and a surface drag never writes the widget record.
 
+Amended 2026-08-13 — grab-handle presentation update on the Home side: the Home surface
+grab handle is now a 28 by 28 folded-corner triangle filling the surface's top-left corner
+(clip-path hit-testing lets the empty half fall through; the focus ring renders in-glyph;
+ARIA and keyboard grammar unchanged). "Top-left grab handle" in the shared vocabulary
+above means position, not glyph — widgets keep their own handle glyph, and this
+presentation note changes no ownership boundary.
+
 Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
 sections) are shell presentation surfaces, not Dashboard widgets. The Home layout
 may reuse U10 interaction semantics such as lift, placeholder, reflow, edge zones,

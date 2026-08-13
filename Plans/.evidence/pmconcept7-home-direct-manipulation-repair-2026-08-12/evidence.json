@@ -251,42 +251,42 @@
     {
       "note": "Authored T20 Home Workspace source (direct-manipulation move, repaired resize/collapse/open-in-panel).",
       "path": "Concepts/pm7-tools/home_workspace_source.py",
-      "sha256": "f407621e56cb9f5f7482711d1c812ed88a2c944cca921a894ac181b48e4e1c3f"
+      "sha256": "b94563c219741257272db907ff6ae2374cc34b91610eb6bb0163a4cb30f7ba18"
     },
     {
       "note": "Transform driver with the re-pinned BASE_SHA and the re-anchored legacy DnD band.",
       "path": "Concepts/pm7-tools/build_pm7.py",
-      "sha256": "e6105cf741477b35cec6e69550cfe994118f8b7899e71cf0a25c8f62c809fc01"
+      "sha256": "f47a3db56a8f0afadcdd7f4034f9b8897cd581f4140f2e4ae5706215b41ee433"
     },
     {
       "note": "Live matrix updated to assert observable geometry and rendered content rather than dispatch counts.",
       "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-      "sha256": "c9d87685bbce94e4548d3bb529485c1a243bc8cce9957a754db9a3c4a1f611c7"
+      "sha256": "03b84d8fbd67b1bae20734bdf2e4827c0b49395144f25a0bcc88c8ad27b8b863"
     },
     {
       "note": "Generated concept artifact (never hand-edited).",
       "path": "Concepts/PMConcept7.html",
-      "sha256": "bf3d5a406853ae3173514ca39e05d3c3399018193338da4161d08f79cefacbc2"
+      "sha256": "92e3da8cd1f5561b07c3f1b4a443e71f3007667b2b80be37fba3b33f845051ec"
     },
     {
       "note": "Transform/gate receipt for the generated artifact.",
       "path": "Concepts/pm7-tools/build_report.json",
-      "sha256": "51cffff8ea9c4b5c138d7e7845226df83bc22ed1b7a440f9d67498d8716218e7"
+      "sha256": "804ee7940b3861d070a0bf10f997c0a564ae5358590ee1887ce68d3da0b16b5a"
     },
     {
       "note": "Production wiring after retiring the 77 move/redock rows (128 -> 51 home. rows).",
       "path": "Plans/Wiring_Matrix.production.json",
-      "sha256": "a116ae8934761039674286d35f272b964e99e27b634b68e8d07f8fdf7ed25686"
+      "sha256": "60edde9fcdb7a85c4ccb3794eeeb98ea71f1e7e308d32e948f1e2673ae76f177"
     },
     {
       "note": "Control reconciliation with the refreshed census and source hashes.",
       "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
-      "sha256": "e7cb17ccd43b85ab05892f35bef5247f8aea7e35940dcee9527077d38ef14fb2"
+      "sha256": "ca749a33ac4736284a2b45d4c9bde4fa21e9efafa8cb8bad3fbaf2972935539f"
     },
     {
       "note": "GUI owner document carrying the amended F3-HOME-002/003, F3-460 and the new F3-505.",
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "dc51354b20dad6d8cf56051b7dcb649ab91d723ecfcf4a9dbbb2ab8a74341032"
+      "sha256": "cb8e793fd3b46d17be00745b05ace785aadc8d791bd0d3261415c532351d2b22"
     }
   ],
   "checks": [

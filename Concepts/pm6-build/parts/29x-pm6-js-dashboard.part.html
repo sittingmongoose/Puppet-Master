@@ -848,9 +848,12 @@
     if (!strip) return;
     edMeasureActions(strip);
     edMakeTabsFocusable(strip);
+    /* Reuse the chip via display toggles instead of remove/recreate: childList
+       mutations here ping-pong with the Home overlay's chrome MutationObserver
+       (every fit re-triggered a reseat re-triggered a fit ...). Style and
+       hidden-text writes below do not fire childList observers. */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip) strip.removeChild(chip);
-    chip = null;
+    if (chip) chip.style.display = 'none';
     edHidden = [];
     var all = strip.querySelectorAll('.tab');
     var i;
@@ -879,9 +882,11 @@
         chip.onclick = edToggleOverflowMenu;
         strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
       }
-      chip.textContent = '+' + edHidden.length + ' more';
+      chip.style.display = '';
+      var label = '+' + edHidden.length + ' more';
+      if (chip.textContent !== label) chip.textContent = label;
     }
-    if (chip && !edHidden.length) strip.removeChild(chip);
+    if (chip && !edHidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function edScheduleFit() {
@@ -949,6 +954,10 @@
     menu.style.left = left + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     edMenuEl = menu;
     document.addEventListener('click', edMenuOutside, true);
   }
@@ -1133,8 +1142,13 @@
     if (!strip) return;
     edMeasureActions(strip);
     edMakeTabsFocusable(strip);
+    edReassertOrder(strip); /* strips that keep order in the DOM re-apply the
+                               persisted drag order before every fit, so any
+                               re-render source is self-healing */
+    /* Reuse the chip via display toggles instead of remove/recreate: childList
+       mutations here ping-pong with the Home overlay's chrome observer. */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip) { chip.parentNode && chip.parentNode.removeChild(chip); chip = null; }
+    if (chip) chip.style.display = 'none';
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
        clear display on tabs hidden for other reasons (e.g. the static
        [auto] automation tab, which is conditionally shown by
@@ -1177,9 +1191,11 @@
         var actions = strip.querySelector('.pane-tabbar-actions');
         strip.insertBefore(chip, actions);
       }
-      chip.textContent = '+' + ed2Hidden.length + ' more';
+      chip.style.display = '';
+      var label2 = '+' + ed2Hidden.length + ' more';
+      if (chip.textContent !== label2) chip.textContent = label2;
     }
-    if (chip && !ed2Hidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (chip && !ed2Hidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   function ed2ScheduleFit() {
@@ -1230,6 +1246,10 @@
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     ed2MenuEl = menu;
     document.addEventListener('click', ed2MenuOutside, true);
   }
@@ -1288,13 +1308,19 @@
       return s;
     }
 
+    /* Chrome contract with the Home overlay (attachSurfaceControls in
+       pm7-tools/home_workspace_source.py): slot 0 of `.editor-tabs` belongs to
+       the T20 move grip, and the overlay re-asserts that on every chrome
+       reseat. The shape layer is absolutely positioned, so flex order is
+       irrelevant to it -- mount it LAST and never insert at firstChild, or the
+       two layers fight for slot 0 on every reseat and churn the strip's DOM. */
     function ensure(strip) {
       var el = strip.querySelector(':scope > .ed-tab-shape');
       if (!el) {
         el = document.createElement('span');
         el.className = 'ed-tab-shape';
         el.setAttribute('aria-hidden', 'true');
-        strip.insertBefore(el, strip.firstChild);
+        strip.appendChild(el);
       }
       strip.classList.add('ed-shape-on');
       return el;
@@ -1325,6 +1351,7 @@
        function of the position passed in, so an animated frame and a dragged
        frame produce exactly the same shape for the same x. */
     function paint(strip, x, w, track) {
+      if (!(w > 0)) return; /* never persist a degenerate (collapsed) shape */
       var leftGap = Math.max(0, x - (track ? track.left : 0));
       var rightGap = Math.max(0, (track ? track.right : x + w) - (x + w));
       var lp = Math.max(0, Math.min(1, leftGap / MORPH));
@@ -1364,9 +1391,15 @@
        (resize, fonts, theme, drag frames) still snap. */
     function sync(strip, animate) {
       if (!strip || !strip.isConnected) return;
-      ensure(strip);
       var t = target(strip);
+      /* Unmeasurable (hidden page / mid-reparent / zero-size): apply NO chrome
+         and write NO geometry -- a half-dressed strip (class on, vars dead) is
+         exactly the failure the shipped rev exhibited. Retry ownership sits
+         with edEnrolStrips' per-strip ResizeObserver and the body
+         MutationObserver: the next measurable frame re-runs the owning
+         fitter, whose tail re-syncs us. */
       if (!t) return;
+      ensure(strip);
       var s = state(strip);
       var activeEl = strip.querySelector('.tab.active');
       var activeKey = activeEl ? (activeEl.getAttribute('data-file') || (activeEl.textContent || '').trim()) : null;
@@ -1374,8 +1407,20 @@
       s.lastActive = activeKey;
       var track = { left: t.trackLeft, right: t.trackRight };
       if (!s) { paint(strip, t.x, t.w, track); return; }
+      var springInFlight = Boolean(s.raf);
+      var previousTx = s.tx, previousTw = s.tw;
       s.tx = t.x; s.tw = t.w; s.track = track;
       if (!animate || reduced() || s.x === null) {
+        /* A layout-driven snap must NOT kill an in-flight selection spring
+           whose target box is unchanged: selecting a tab re-renders the strip
+           and the fitter's second scheduled pass lands a snap-sync AFTER
+           lastActive was consumed, which used to cancel the spring one frame
+           in -- the shape teleported between tabs (the rev-13 lesson,
+           regressed via the double-pass; caught by the frame-step harness). */
+        if (springInFlight && !reduced() && s.x !== null &&
+            Math.abs(previousTx - t.x) < 0.5 && Math.abs(previousTw - t.w) < 0.5) {
+          return;
+        }
         if (s.raf) { cancelAnimationFrame(s.raf); s.raf = 0; }
         s.x = t.x; s.w = t.w; s.vx = 0; s.vw = 0;
         paint(strip, s.x, s.w, s.track);
@@ -1484,6 +1529,10 @@
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4) + 'px';
     chip.classList.add('active');
+    /* sprout-in: let the hidden initial styles paint before opening */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { menu.classList.add('is-open'); });
+    });
     setTimeout(function () {
       document.addEventListener('click', function once(ev) {
         if (menu.contains(ev.target) || (ev.target.closest && ev.target.closest('.pm-ed-overflow'))) return;
@@ -1514,9 +1563,10 @@
       else ed2ScheduleFit();
       return;
     }
+    edReassertOrder(strip); /* DOM-owned strips re-apply persisted drag order */
+    /* chip reuse via display toggles: see edFitOverflow for why */
     var chip = strip.querySelector('.pm-ed-overflow');
-    if (chip && chip.parentNode) chip.parentNode.removeChild(chip);
-    chip = null;
+    if (chip) chip.style.display = 'none';
     strip._pmEdHidden = [];
     var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
     all.forEach(function (t) { t.style.display = ''; });
@@ -1542,16 +1592,50 @@
         chip.onclick = function (ev) { if (ev) ev.stopPropagation(); edGenericOpenMenu(strip, chip); };
         strip.insertBefore(chip, strip.querySelector('.pane-tabbar-actions'));
       }
-      chip.textContent = '+' + strip._pmEdHidden.length + ' more';
+      chip.style.display = '';
+      var labelG = '+' + strip._pmEdHidden.length + ' more';
+      if (chip.textContent !== labelG) chip.textContent = labelG;
     }
-    if (chip && !strip._pmEdHidden.length && chip.parentNode) chip.parentNode.removeChild(chip);
+    if (chip && !strip._pmEdHidden.length) chip.style.display = 'none';
     if (window.PM6_EDTAB_SHAPE) window.PM6_EDTAB_SHAPE.sync(strip, false);
   }
   window.PM6_FIT_EDITOR_TABS = edFitStrip;
 
+  /* Identity key for a tab in a strip whose order lives in the DOM: the file
+     path when there is one, else the trimmed label text. Must be computed the
+     same way at persist time and at reassert time. */
+  function edTabKey(tab) {
+    return tab.getAttribute('data-file') || (tab.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  /* Re-apply a strip's persisted drag order (strip._pmEdOrder) to its DOM.
+     Unknown tabs (opened after the last drag) keep their DOM position at the
+     end of the known run. Touches the DOM only when the order differs, so
+     steady-state fits stay mutation-free. */
+  function edReassertOrder(strip) {
+    var order = strip._pmEdOrder;
+    if (!order || order.length < 2) return;
+    var tabs = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
+    if (tabs.length < 2) return;
+    var known = [], unknown = [];
+    tabs.forEach(function (t) {
+      (order.indexOf(edTabKey(t)) === -1 ? unknown : known).push(t);
+    });
+    known.sort(function (a, b) { return order.indexOf(edTabKey(a)) - order.indexOf(edTabKey(b)); });
+    var seq = known.concat(unknown);
+    var differs = false;
+    for (var i = 0; i < tabs.length; i++) { if (seq[i] !== tabs[i]) { differs = true; break; } }
+    if (!differs) return;
+    var ref = tabs[tabs.length - 1].nextSibling; /* stays left of chip/actions */
+    seq.forEach(function (t) { strip.insertBefore(t, ref); });
+  }
+
   /* Write a strip's DOM order back into the model that owns it, so a later
-     re-render does not undo a drag-reorder. Panes 3/4 keep their order in the
-     DOM itself, so only pane 1 needs a model write. */
+     re-render does not undo a drag-reorder. Pane 1's order lives in
+     S.files.openTabs; every other strip owns its order in the DOM, so persist
+     it on the strip and let the fitters reassert it after any re-render. The
+     pm6:ed-tab-order event lets the Home overlay mirror the order into its
+     own per-panel model (buffer_ids) for panes 3/4. */
   function edPersistTabOrder(strip) {
     if (!strip) return;
     if (strip.closest('#editorPane1')) {
@@ -1564,6 +1648,16 @@
       order.forEach(function (p) { st.openTabs.push(p); });
       var active = strip.querySelector('.tab.active[data-file]');
       if (active) st.activeTab = active.getAttribute('data-file');
+    } else {
+      strip._pmEdOrder = Array.prototype.map.call(strip.querySelectorAll('.tab'), edTabKey);
+      var pane = strip.closest('.editor-pane');
+      if (pane && pane.id) {
+        try {
+          document.dispatchEvent(new CustomEvent('pm6:ed-tab-order', {
+            detail: { pane_id: pane.id, order: strip._pmEdOrder.slice() }
+          }));
+        } catch (e) {}
+      }
     }
     edFitStrip(strip);
   }
