@@ -124,19 +124,19 @@ navigation and an operation, and `cmd.usage.refresh` has unresolved ownership.
 
 ## 9. The command catalog needs adjudication before anything is minted
 
-220 distinct action ids were exercised. Against the packet's candidate families, counted per concept
+222 distinct action ids were exercised. Against the packet's candidate families, counted per concept
 scope (an id assigned to two concepts is counted in both):
 
 | Verdict | Count |
 |---|---|
-| Maps cleanly onto a candidate (`reuse`) | 50 |
+| Maps cleanly onto a candidate (`reuse`) | 51 |
 | Second entry point for the same operation (`alias`) | 57 |
 | Candidate too narrow (`supersede`) | 1 |
 | Names collide but operations differ (`conflict`) | 13 |
-| No candidate family covers it (`new`) | 119 |
+| No candidate family covers it (`new`) | 120 |
 | Read-only diagnostic projections that must **not** mint commands | 46 distinct |
 
-73 distinct concept action ids map onto the packet's candidate families; 101 distinct ids need new
+74 distinct concept action ids map onto the packet's candidate families; 102 distinct ids need new
 names. The three headline conflicts are recorded in `IMPACT_REGISTER.json`. The 46 diagnostics matter:
 they open an existing log or receipt, and minting a command for each would double the catalog for no
 capability.
@@ -172,6 +172,43 @@ it is "is any interactive control outside the app box, at every width, in every 
 The shell and the row renderers used `aria-pressed`; the first manager-spec renderers used
 `role="switch"` with `aria-checked`. Both are valid ARIA and both were on the same screen. They are now
 uniformly `aria-pressed`. Two correct grammars in one page is still a defect.
+
+---
+
+## 13. The tests you skip are where the bugs are
+
+A second audit pass ran the packet's full probe list rather than the subset the first pass covered. The
+first pass ran 6 of the 17 required probes and never swept the shell-state axis at all. The 11 it skipped
+found three real defects that 2,352 layout cells had not:
+
+1. **Width mode could go stale.** `setWidth()` changed `--pm-app-width` and left reclassification to a
+   `ResizeObserver`. RO delivery is tied to the rendering lifecycle, so a backgrounded tab could sit at
+   900px still classified `normal` — normal-mode rules on a narrow box, and 40 clipped controls in Stack.
+   An explicit width change is a resize checkpoint in its own right; it now schedules the evaluation
+   directly. This had also been quietly corrupting the layout sweeps all along.
+2. **Four persisted keys were dead.** `widthChoice`, `railOpen`, `panelOpen` and `reducedMotion` were
+   declared in every concept's store, written once at startup, never updated and never restored — while
+   the wiring delta documented them as persisted. The shell now reports every review-strip change through
+   one `onShellState` channel and restores all five controls at mount.
+3. **Two concepts booted the wrong identity theme.** Console and Ledger fell back to `friendly-light`
+   instead of `glass-dark` and `retro-dark`, contradicting the folder index and the README.
+
+**The finding for the plan:** a probe list is a contract. Running the cheap two-thirds of it and calling
+the result "verified" is how a build acquires defects that no amount of re-running the *same* checks will
+surface.
+
+## 14. A preview that does not preview is a dead control
+
+The packet asks for theme *preview* and *apply* as distinct transitions, and for an import *cancel*
+alongside preview/apply/rollback. Neither existed. Adding buttons that only emit a receipt would have
+satisfied the letter and violated the rule about dead controls, so preview and apply are now genuinely
+different operations: preview paints the theme without recording a choice, apply goes through the shell
+so the choice is remembered and survives a reload.
+
+Building it surfaced its own bug: the first version passed the row id (`theme-friendly-dark`) where a
+theme id (`friendly-dark`) was required, setting a `data-theme` that matches no rules — a page with no
+theme at all — and persisting it. `setTheme()` now rejects unknown ids and falls back, so a poisoned or
+hand-edited stored value can no longer strand the page.
 
 ---
 

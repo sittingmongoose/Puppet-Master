@@ -132,6 +132,7 @@ Width mode is driven through the shell's own width control and the probe waits f
 | 4 routes × 4 concepts × 8 themes × 6 widths | **768** | **0** |
 | 5 routes (incl. search and the bad-route notice) × 4 concepts × 8 themes × 6 widths | **960** | **0** |
 | **Total after fixes** | **2352** | **0** |
+| Second audit pass (see V8) | **1440** | **0** |
 
 Checked per cell: no horizontal scroll on `.pm-app`, top bar present, bottom bar present, and no
 interactive control clipped outside the app box.
@@ -218,6 +219,77 @@ Loaded headless in Node with no DOM, asserting the contract every concept depend
 | Search index records | 416 |
 | Missing setting ids referenced by a spec | **0** |
 | Route grammar cases (26 parse + 8 round-trip) | **34/34** |
+
+---
+
+## V8 — Second audit pass: the packet's full probe list
+
+The first pass ran 6 of the 17 probes `PACKET/09` requires and never swept the surrounding-shell axis.
+This pass ran all of them.
+
+| Probe (PACKET/09) | Result |
+|---|---|
+| Search and typo result | PASS — `notifcations` → 8 results, 4 kinds |
+| Destination open | PASS |
+| Deep link | PASS — 34/34 grammar cases |
+| Subcategory jump | PASS — target section lands at y≈282–323 inside the 117–977 viewport in all four |
+| Scrollspy | PASS — 4 distinct active sections across a full scroll in all four |
+| Back/forward | PASS |
+| Provider refresh | PASS |
+| Account/installation expansion | PASS — 8–15 expandable controls per concept, DOM changes on toggle |
+| Import preview/cancel/apply/rollback | PASS **after fix** — `cancel` did not exist |
+| Sound upload/preview/test fixtures | PASS — upload, preview and pack import present; receipt reaches the inbox |
+| Theme preview/apply/fallback | PASS **after fix** — `preview` did not exist |
+| Keyboard focus | PASS — 25 tab stops reach a control with a visible ring, inside the viewport |
+| No clipped/overlapping text | PASS — 0 text nodes overflow a hidden box |
+| No pointer-blocking overlay | PASS — 3 sample points per concept hit real content |
+| No stuck resizer | PASS — no resizer surface exists to stick |
+| No permanent spinner | PASS — 0 spinners in the `loading` demo state; refresh spinner clears within 4s |
+| Manager lazy hydration | PASS — hydration counter is 0 on a category, 1 after opening one manager |
+
+### Surrounding-shell matrix
+
+`PACKET/09` requires the shell states as a test axis. Rail × panel × 6 widths × 4 concepts:
+
+| Sweep | Cells | Failures |
+|---|---|---|
+| rail(open/closed) × panel(open/closed) × 6 widths × 4 concepts | **96** | **0** |
+
+### Defects this pass found and fixed
+
+1. **Width mode could go stale.** `setWidth()` left reclassification to a `ResizeObserver`, whose delivery
+   is tied to the rendering lifecycle. A backgrounded tab could sit at 900px still classified `normal`,
+   applying normal-mode rules to a narrow box — observed as **40 clipped controls in Stack**. `setWidth()`
+   now schedules the evaluation directly. Classification is deterministic at 124–227ms.
+2. **Four persisted keys were dead.** `widthChoice`, `railOpen`, `panelOpen` and `reducedMotion` were
+   declared in every concept's store, never written and never restored, while the wiring delta documented
+   them as persisted. The shell now reports every review-strip change through one `onShellState` channel
+   and restores all five controls at mount. Verified: change all five, reload, all five survive.
+3. **Console and Ledger booted the wrong identity theme** (`friendly-light` instead of `glass-dark` /
+   `retro-dark`), contradicting the folder index and README. Fixed in the store default, the mount
+   fallback and the page's first-paint `data-theme`.
+4. **Theme preview and import cancel did not exist.** Both are required probes. Added as real operations:
+   preview paints the theme without recording a choice, apply goes through the shell so the choice
+   persists.
+5. **The first preview implementation poisoned persisted state** — it passed the row id
+   (`theme-friendly-dark`) where a theme id was required, producing a `data-theme` that matches no rules
+   and storing it. `setTheme()` now rejects unknown ids and falls back to the concept's identity theme.
+   Verified by writing `theme-nonsense` into localStorage: all four recover to their own theme.
+   Persistence now subscribes *before* the shell mounts, so the corrected theme is captured by the first
+   flush rather than left stale in storage: `persist()` only subscribes, and `flush()` snapshots at timer
+   fire (250ms), so every write mount makes -- `onShellState` and the restored route alike -- coalesces
+   into one payload.
+
+### Regression after the fixes
+
+| Check | Result |
+|---|---|
+| Identity theme on a clean profile | 4/4 correct |
+| Identity theme after a poisoned stored value | 4/4 recover |
+| First-paint `data-theme` matches the concept | 4/4 |
+| Manager routes render | **44/44** |
+| Layout cells (themes × widths × routes, re-run) | **960 + 384**, **0 failures** |
+| Page errors across the whole pass | **0** |
 
 ---
 

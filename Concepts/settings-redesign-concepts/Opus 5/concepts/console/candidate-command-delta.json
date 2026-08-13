@@ -7,12 +7,12 @@
   "source_register": "PACKET/CANDIDATE_COMMAND_ID_REGISTER.json",
   "discipline_note": "Candidate IDs are provisional. This delta is a census of what the concept actually invokes, adjudicated against the packet's candidate families. No canon is minted here.",
   "summary": {
-    "actions_in_scope": 61,
-    "adjudicated_against_candidates": 27,
+    "actions_in_scope": 62,
+    "adjudicated_against_candidates": 28,
     "needing_new_ids": 25,
     "read_only_diagnostics": 9,
     "by_verdict": {
-      "reuse": 10,
+      "reuse": 11,
       "alias": 14,
       "supersede": 0,
       "conflict": 3
@@ -317,6 +317,16 @@
       "candidate_id": "cmd.usage.refresh",
       "verdict": "conflict",
       "evidence": "Names collide but the operations differ; the audit agent must split or rename before either is minted."
+    },
+    {
+      "concept_action_id": "appearance.preview",
+      "label": "Preview",
+      "managers": [
+        "manager-appearance"
+      ],
+      "candidate_id": "cmd.theme.preview",
+      "verdict": "reuse",
+      "evidence": "Same operation as the candidate family entry. Implemented as a real local effect: it paints the theme without recording a choice, which is the difference between preview and apply."
     }
   ],
   "needing_new_ids": [

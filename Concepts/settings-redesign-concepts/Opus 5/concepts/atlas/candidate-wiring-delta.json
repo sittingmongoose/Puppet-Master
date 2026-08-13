@@ -39,7 +39,9 @@
       "reducedMotion"
     ],
     "persistence_scope": "localStorage, namespaced per concept id (atlas)",
-    "restore_rule": "The hash wins on load. With no hash, the saved route is restored with replace."
+    "restore_rule": "The hash wins on load. With no hash, the saved route is restored with replace. Review-strip state (theme, width, rail, panel, reduced motion) is restored at mount, so a reviewer who reloads keeps the exact screen.",
+    "shell_state_channel": "PMShell.mount({ onShellState }) \u2014 the shell owns the controls, the concept owns persistence. Every theme/width/rail/panel/motion change reports through this one callback; without it the keys would be written once at startup and never updated.",
+    "untrusted_input_rule": "A persisted theme is not trusted: setTheme() rejects an id that is not one of the eight built-ins and falls back to the concept's declared identity theme, because an unknown data-theme matches no rules and leaves the page with no theme at all."
   },
   "receipt_wiring": {
     "simulation": "shared/pm-sim.js \u2014 seeded, not random; every operation returns a dated receipt naming the production call it would make",
@@ -92,6 +94,6 @@
       "notification inbox",
       "live region"
     ],
-    "width_modes": "squeezed <820, narrow <1100, normal \u2014 evaluated at explicit checkpoints and debounced, never per frame"
+    "width_modes": "squeezed <820, narrow <1100, normal. Evaluated at explicit checkpoints: mount, an observed resize, and every setWidth() call. It never depends on ResizeObserver delivery alone, because RO is tied to the rendering lifecycle and a backgrounded tab can otherwise sit at 900px still classified normal."
   }
 }
