@@ -395,6 +395,10 @@
       }
 
       PM.render = render;
+      PM._inboxRoute = function (t) {
+        if (PM.managers[t]) { PM.openManager(t); } else { PM.openCategory(t.split(".")[0], t.split(".")[1]); }
+        PM.render();
+      };
       PM.init();
       PM.motion.install();
       shell();
