@@ -38,13 +38,6 @@
 /* ---------------------------------------------------------------- level one */
 
 [data-pmx-thread="t7"] .t7-turn,
-[data-pmx-thread="t7"] .t7-surface {
-  min-width: 0;
-  padding: var(--md);
-  background: var(--surface-elevated);
-  border: var(--border-width, 1px) solid var(--border);
-  border-radius: var(--radius-md);
-}
 [data-pmx-thread="t7"] .t7-turn[data-pmx-role="user"] {
   background: color-mix(in srgb, var(--surface-elevated) 55%, transparent);
 }
@@ -52,12 +45,6 @@
 /* THE GUARD. Nothing inside a card may itself become a card. Buttons keep their own
  * affordance styling below, which is re-applied deliberately after this reset. */
 [data-pmx-thread="t7"] .t7-turn *,
-[data-pmx-thread="t7"] .t7-surface * {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-}
 
 [data-pmx-thread="t7"] .t7-role {
   display: block; margin-bottom: 4px;
@@ -111,19 +98,6 @@
   display: flex; flex-direction: column; gap: var(--sm);
   padding: var(--sm) var(--md);
 }
-[data-pmx-thread="t7"] .t7-surface {
-  display: flex; align-items: baseline; gap: var(--sm);
-  padding: var(--sm) var(--md); font-size: var(--fs-2xs);
-}
-[data-pmx-thread="t7"] .t7-surface-kind {
-  flex: 0 0 auto; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--text-muted);
-}
-[data-pmx-thread="t7"] .t7-surface-text {
-  flex: 1 1 auto; min-width: 0; color: var(--text-secondary);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-[data-pmx-thread="t7"] .t7-surface-status { flex: 0 0 auto; color: var(--text-muted); }
 
 [data-pmx-thread="t7"] .t7-older-wrap { display: flex; justify-content: center; }
 [data-pmx-thread="t7"] .t7-older {
@@ -149,23 +123,6 @@
 
 /* ---------------------------------------------------------------- questionnaire */
 
-[data-pmx-thread="t7"] .t7-question {
-  margin: var(--sm) var(--md);
-  padding: var(--md);
-  /* Must be OPAQUE: a questionnaire card is a surface the user must be able to read
-   * cleanly, never a translucent tint over live content. In the glass themes
-   * `--surface-elevated` alone is translucent, so paint it over an opaque base. This is
-   * still one surface, so the one-nesting-level guard for this concept is untouched. */
-  background-color: var(--background);
-  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
-  border: var(--border-width, 1px) solid var(--accent-primary);
-  border-radius: var(--radius-md);
-  min-width: 0;
-}
-[data-pmx-thread="t7"] .t7-question-head { display: flex; gap: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
-[data-pmx-thread="t7"] .t7-question-req { margin-left: auto; }
-[data-pmx-thread="t7"] .t7-question-prompt { margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary); }
-[data-pmx-thread="t7"] .t7-question-opts { display: flex; flex-direction: column; gap: 4px; }
 [data-pmx-thread="t7"] .t7-opt {
   padding: 6px var(--md);
   border: 1px solid var(--border) !important;
@@ -179,12 +136,6 @@
   background: color-mix(in srgb, var(--accent-primary) 14%, transparent) !important;
   font-weight: 600;
 }
-[data-pmx-thread="t7"] .t7-question-free {
-  width: 100%; min-height: 62px; resize: vertical; padding: var(--sm);
-  font: inherit; font-size: var(--fs-xs); color: var(--text-primary);
-  border: 1px solid var(--border) !important; border-radius: var(--radius-sm) !important;
-}
-[data-pmx-thread="t7"] .t7-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
 [data-pmx-thread="t7"] .t7-act {
   padding: 3px var(--sm);
   border: 1px solid var(--border) !important; border-radius: var(--radius-sm) !important;
@@ -275,16 +226,6 @@
 [data-pmx-thread="t7"] .t7-turn {
   animation: pmx-t7-lift var(--motion-med) var(--ease-spring-real) both;
 }
-[data-pmx-thread="t7"] .t7-surface {
-  animation: pmx-t7-lift var(--motion-med) var(--ease-spring-real) both;
-  transition:
-    transform var(--motion-fast) var(--ease-default),
-    box-shadow var(--motion-fast) var(--ease-default);
-}
-[data-pmx-thread="t7"] .t7-surface:hover {
-  transform: translateY(var(--pmx-lift));
-  box-shadow: var(--elev-hover);
-}
 [data-pmx-thread="t7"] .t7-act {
   transition: transform var(--motion-fast) var(--ease-default);
 }
@@ -300,3 +241,284 @@
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
 }
+
+/* ================================================================ packet: the card deck, the status
+ * card with its segmented phase bar, the flat advice link, and the artifact handoff.
+ *
+ * ONE NESTING LEVEL, everywhere. The deck's cards are SIBLINGS in a positioned stack - they overlap, they
+ * do not nest - and every segment opens a popup sheet rather than a card inside the card. That rule is
+ * what this concept trades its density for, so nothing here may quietly break it.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* ---- the deck --------------------------------------------------------------------------------- */
+
+/* A positioned stack: the top card is in flow and sets the height, the ones behind are absolute so their
+   offsets cannot push the transcript around. */
+[data-pmx-thread="t7"] .t7-deck {
+  position: relative;
+  display: block;
+  padding: var(--sm) 0 var(--lg);
+}
+
+[data-pmx-thread="t7"] .t7-qcard {
+  box-sizing: border-box;
+  padding: var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  transition: transform var(--motion-med) var(--ease-spring-real),
+              opacity var(--motion-med) var(--ease-default);
+}
+
+/* Depth by transform, which is also what the advance animates - one property, one story. */
+[data-pmx-thread="t7"] .t7-qcard[data-top="0"] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--sm);
+  z-index: 0;
+  overflow: hidden;
+}
+[data-pmx-thread="t7"] .t7-qcard[data-rank="1"] { transform: translateY(10px) scale(.982); opacity: .9; }
+[data-pmx-thread="t7"] .t7-qcard[data-rank="2"] { transform: translateY(20px) scale(.964); opacity: .75; }
+
+[data-pmx-thread="t7"] .t7-qcard[data-top="1"] { position: relative; z-index: 2; }
+
+/* A card behind shows one line: its edge. Anything more would be text nobody can act on. */
+[data-pmx-thread="t7"] .t7-qcard-edge {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t7"] .t7-qcard-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  margin-bottom: var(--sm);
+}
+
+/* The DOT RANK: one dot per question, so the true count survives the three-card cap. */
+[data-pmx-thread="t7"] .t7-qdots { display: inline-flex; align-items: center; gap: 4px; }
+
+[data-pmx-thread="t7"] .t7-qdot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--text-muted);
+  background: transparent;
+}
+[data-pmx-thread="t7"] .t7-qdot[data-state="done"] { background: var(--accent-primary); border-color: var(--accent-primary); }
+[data-pmx-thread="t7"] .t7-qdot[data-state="current"] {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
+/* Skipped is hollow AND dashed: it must not read as merely "not yet reached". */
+[data-pmx-thread="t7"] .t7-qdot[data-state="skipped"] { border-style: dashed; border-color: var(--accent-warning); }
+
+[data-pmx-thread="t7"] .t7-qcount {
+  margin-left: auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t7"] .t7-qcard-body { display: flex; flex-direction: column; gap: var(--sm); }
+
+[data-pmx-thread="t7"] .t7-qprompt { margin: 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary); }
+
+[data-pmx-thread="t7"] .t7-qreq {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t7"] .t7-qopts { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+[data-pmx-thread="t7"] .t7-qfree {
+  width: 100%;
+  min-height: 58px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+[data-pmx-thread="t7"] .t7-qreason { margin: 0; font-size: var(--fs-xs); color: var(--accent-error); }
+[data-pmx-thread="t7"] .t7-qreason[data-show="0"] { display: none; }
+
+[data-pmx-thread="t7"] .t7-qcard-foot { display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; margin-top: var(--sm); }
+
+/* Answering or skipping slides the TOP card off; the ones behind step forward through their own
+   transitions, so the promotion needs no separate animation. */
+[data-pmx-thread="t7"] .t7-qcard-off {
+  transform: translateX(-14%) translateY(-6px) scale(.97);
+  opacity: 0;
+}
+
+/* Cancel FANS the deck out before it goes. */
+[data-pmx-thread="t7"] .t7-deck[data-fan="1"] .t7-qcard[data-rank="1"] { transform: translateY(10px) translateX(7%) rotate(1.6deg); }
+[data-pmx-thread="t7"] .t7-deck[data-fan="1"] .t7-qcard[data-rank="2"] { transform: translateY(20px) translateX(14%) rotate(3.2deg); }
+[data-pmx-thread="t7"] .t7-deck[data-fan="1"] .t7-qcard[data-top="1"] { transform: translateX(-6%) rotate(-1.6deg); opacity: .85; }
+
+@keyframes t7-deck-enter {
+  from { opacity: 0; transform: translateY(8px) scale(.99); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes t7-deck-advance {
+  from { transform: translateY(3px); }
+  to   { transform: none; }
+}
+[data-pmx-thread="t7"] .t7-deck-enter { animation: t7-deck-enter var(--motion-med) var(--ease-spring-real) both; }
+[data-pmx-thread="t7"] .t7-deck-advance { animation: t7-deck-advance var(--motion-fast) var(--ease-out) both; }
+
+/* ---- the collapsed summary card ---------------------------------------------------------------- */
+
+[data-pmx-thread="t7"] .t7-qsummary {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  padding: var(--sm) var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+[data-pmx-thread="t7"] .t7-qsummary-text { flex: 1 1 auto; font-size: var(--fs-xs); color: var(--text-primary); }
+[data-pmx-thread="t7"] .t7-qsummary[data-status="cancelled"] .t7-qsummary-text { color: var(--text-muted); }
+
+/* ---- the status card and its segmented phase bar ----------------------------------------------- */
+
+[data-pmx-thread="t7"] .t7-status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+  padding: var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+}
+
+[data-pmx-thread="t7"] .t7-status-head { display: flex; align-items: baseline; gap: var(--sm); }
+[data-pmx-thread="t7"] .t7-status-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t7"] .t7-status-sub { font-size: var(--fs-2xs); color: var(--text-muted); }
+
+[data-pmx-thread="t7"] .t7-bar { display: flex; gap: 2px; }
+
+[data-pmx-thread="t7"] .t7-seg {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px var(--xs);
+  border: 0;
+  border-top: 2px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t7"] .t7-seg:hover { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+
+/* The segment's top rule carries its state - the bar reads as a bar because the rules are contiguous. */
+[data-pmx-thread="t7"] .t7-seg[data-state="working"] { border-top-color: var(--accent-blue); }
+[data-pmx-thread="t7"] .t7-seg[data-state="blocked"] { border-top-color: var(--accent-error); }
+[data-pmx-thread="t7"] .t7-seg[data-state="complete"] { border-top-color: var(--accent-lime); }
+
+[data-pmx-thread="t7"] .t7-seg-label {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-pmx-thread="t7"] .t7-seg-value { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+
+/* Complete: the bar GREYS. Every segment rule goes muted at once, which is what makes it read as one
+   finished bar rather than five independent states. */
+[data-pmx-thread="t7"] .t7-status[data-complete="1"] .t7-seg { border-top-color: var(--border); }
+[data-pmx-thread="t7"] .t7-status[data-complete="1"] .t7-seg-value { color: var(--text-secondary); }
+
+/* BSD is a FLAT LINK: no border, no background, no card. */
+[data-pmx-thread="t7"] .t7-status-link {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t7"] .t7-status-link:hover .t7-status-link-text { text-decoration: underline; }
+/* Severity in the link's own words plus weight - never colour alone. */
+[data-pmx-thread="t7"] .t7-status-link[data-severity="caution"] { color: var(--accent-error); font-weight: 600; }
+
+/* ---- the advice sheet ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t7"] .t7-advice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--xs) 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+[data-pmx-thread="t7"] .t7-advice[data-severity="caution"] { border-left-style: double; border-left-width: 4px; border-left-color: var(--accent-error); }
+[data-pmx-thread="t7"] .t7-advice[data-severity="note"] { border-left-color: var(--accent-blue); }
+[data-pmx-thread="t7"] .t7-advice-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t7"] .t7-advice-text { margin: 0; font-size: var(--fs-xs); line-height: 1.45; color: var(--text-primary); }
+[data-pmx-thread="t7"] .t7-advice-ev { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+
+/* ---- artifact handoff: a level-one card, sibling of the status card ---------------------------- */
+
+[data-pmx-thread="t7"] .t7-handoff {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  margin-top: var(--sm);
+  padding: var(--sm) var(--md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+[data-pmx-thread="t7"] .t7-handoff-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t7"] .t7-handoff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t7"] .t7-handoff-state { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t7"] .t7-handoff-worked { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+[data-pmx-thread="t7"] .t7-handoff-open { margin-left: auto; }
+[data-pmx-thread="t7"] .t7-handoff[data-state="idle"],
+[data-pmx-thread="t7"] .t7-handoff[data-state="loading"] { border-style: dashed; }
+[data-pmx-thread="t7"] .t7-handoff[data-state="idle"] .t7-handoff-state,
+[data-pmx-thread="t7"] .t7-handoff[data-state="loading"] .t7-handoff-state { font-style: italic; }
+[data-pmx-thread="t7"] .t7-handoff[data-state="error"] .t7-handoff-state { color: var(--accent-error); }
+
+[data-motion="reduced"] [data-pmx-thread="t7"] .t7-qcard,
+[data-motion="reduced"] [data-pmx-thread="t7"] .t7-deck-enter,
+[data-motion="reduced"] [data-pmx-thread="t7"] .t7-deck-advance { transition: none !important; animation: none !important; }

@@ -1,829 +1,160 @@
 {
-  "schema": "pm.chat_interaction_test_report.v1",
-  "concept_id": "opus-5",
-  "model": "Opus 5",
-  "generated_at": "2026-08-12T12:56:27.439Z",
-  "harness": {
-    "assert": "tests/assert.js",
-    "suites": "tests/suites.js",
-    "runner": "tests/runner.html"
+  "generatedFrom": "live run in the in-app Chromium browser at 1920x1000",
+  "interactionSuite": {
+    "total": 351,
+    "passed": 351,
+    "failed": 0,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "elapsedMs": 4450,
+    "suites": 23
   },
-  "viewport": {
-    "width": 1920,
-    "height": 1000
-  },
-  "minimum_viewport": {
-    "width": 1900,
-    "height": 900,
-    "why": "eight popup-anchor assertions fail below it because the popup service correctly refuses an off-viewport anchor; the runner refuses to run rather than reporting a false failure"
-  },
-  "suite_run": {
-    "suites": 22,
-    "assertions_total": 237,
-    "assertions_passed": 237,
-    "assertions_failed": 0,
-    "console_errors": 0,
-    "console_warnings": 0,
-    "elapsed_ms": 2195,
-    "failures": []
-  },
-  "matrix_run": {
-    "description": "mount suite across all 64 pairings at 520 and 750 chat width",
-    "pairing_width_runs": 128,
-    "assertions_total": 512,
-    "assertions_failed": 0,
-    "console_errors": 0,
-    "console_warnings": 0,
-    "per_pairing": [
-      {
-        "pairing": "w1+t1",
-        "width": 520,
-        "total": 4,
+  "matrix": {
+    "pairings": 64,
+    "widths": [
+      520,
+      750
+    ],
+    "runs": 128,
+    "assertions": 512,
+    "failed": 0,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "byWindow": {
+      "w1": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t1",
-        "width": 750,
-        "total": 4,
+      "w2": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t2",
-        "width": 520,
-        "total": 4,
+      "w3": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t2",
-        "width": 750,
-        "total": 4,
+      "w4": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t3",
-        "width": 520,
-        "total": 4,
+      "w5": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t3",
-        "width": 750,
-        "total": 4,
+      "w6": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t4",
-        "width": 520,
-        "total": 4,
+      "w7": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       },
-      {
-        "pairing": "w1+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w1+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w2+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w3+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w4+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w5+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w6+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w7+t8",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t1",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t1",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t2",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t2",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t3",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t3",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t4",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t4",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t5",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t5",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t6",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t6",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t7",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t7",
-        "width": 750,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t8",
-        "width": 520,
-        "total": 4,
-        "failed": 0
-      },
-      {
-        "pairing": "w8+t8",
-        "width": 750,
-        "total": 4,
+      "w8": {
+        "runs": 16,
+        "assertions": 64,
         "failed": 0
       }
-    ]
+    }
   },
-  "host_pages": {
-    "gallery": {
-      "cards": 16,
-      "label": "Opus 5",
-      "model": "Opus 5"
+  "director": {
+    "families": 16,
+    "events": 93,
+    "ok": 93,
+    "failed": 0,
+    "method": "fired in sequence without an intervening system.reset; measures that every declared event acts",
+    "seeTestReportFor": "per-event measurement after system.reset, which records 18 events with no store effect of their own"
+  },
+  "hostPages": [
+    {
+      "page": "index.html",
+      "ready": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0
     },
-    "contact": {
-      "stages": 8,
-      "distinctThemes": 8,
-      "themes": [
-        "friendly-dark",
-        "friendly-light",
-        "retro-dark",
-        "retro-light",
-        "basic-light",
-        "basic-dark",
-        "glass-dark",
-        "glass-light"
+    {
+      "page": "stage.html",
+      "ready": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0
+    },
+    {
+      "page": "contact.html",
+      "ready": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0
+    },
+    {
+      "page": "tests/runner.html",
+      "ready": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0
+    }
+  ],
+  "validator": "Concept validation passed: Concepts\\chat-assistant-concepts\\opus-5",
+  "yieldRule": {
+    "mechanism": "concepts ask PMXQFlow.pending(svc, tid), never view[tid].surfacesYielded, because update() renders work surfaces before the question",
+    "workSurfaces": "hidden while a question is pending; state continues underneath and returns intact including the open group",
+    "artifactHandoff": "stays - it is the work's product, not a work surface",
+    "bsdAdviceStays": [
+      "t1",
+      "t3",
+      "t4",
+      "t5"
+    ],
+    "bsdAdviceHidesWithCluster": [
+      "t2",
+      "t6",
+      "t7",
+      "t8"
+    ],
+    "bsdAdviceReason": "in t2/t6/t7/t8 advice is a member of the cluster by design (chip, exec row, status-card link, gutter dot), so it cannot outlive its container without inventing a second surface",
+    "release": "PMXQFlow.release() clears the flag on both submit and cancel",
+    "measured": {
+      "method": "each concept loaded fresh with cleared persistence, counted while the fixture questionnaire was pending, resolved through its own controls, counted again",
+      "workClusterWhilePending": {
+        "t1": 0,
+        "t2": 0,
+        "t3": 0,
+        "t4": 0,
+        "t5": 0,
+        "t6": 0,
+        "t7": 0,
+        "t8": 0
+      },
+      "adviceWhilePending": {
+        "t1": 1,
+        "t2": 0,
+        "t3": 1,
+        "t4": 1,
+        "t5": 1,
+        "t6": 0,
+        "t7": 0,
+        "t8": 0
+      },
+      "handoffWhilePending": {
+        "t1": 1,
+        "t2": 1,
+        "t3": 1,
+        "t4": 1,
+        "t5": 1,
+        "t6": 1,
+        "t7": 1,
+        "t8": 1
+      },
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "notLeaks": [
+        "t2 keeps one per-turn transcript chip (activity) which belongs to a message, not the cluster; the work-surface host holds zero chips while pending",
+        "t6 shows no bsd row after resolving because the log is condensed to its +N steps row; expanding it renders twelve rows ending in bsd"
       ]
     }
-  }
+  },
+  "note": "Re-run after the post-Phase-E audit added the `forms` suite (the eight question systems, the eight work clusters, the yield rule and the PMXQFlow verb contract) and pinned the swapText contract. The audit found two defects: t2 leaked a partial chip run past the yield, and motion.swapText painted an empty frame when writing a FIRST value. Both fixed; suite and full matrix re-verified."
 }

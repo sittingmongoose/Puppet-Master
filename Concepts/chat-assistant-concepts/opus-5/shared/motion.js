@@ -364,6 +364,10 @@
   function swapText(el, text) {
     if (!el) return;
     if (reduced(el)) { el.textContent = text; return; }
+    /* Nothing to cross-fade FROM. An empty element is having its first value written, which is an
+     * entrance rather than a morph - and deferring it to the second frame paints an empty slot first,
+     * so a freshly mounted work line, chip or status label appears blank for two frames. */
+    if (!String(el.textContent || '').length) { el.textContent = text; return; }
     el.style.transition = 'opacity 110ms ease';
     el.style.opacity = '0';
     global.requestAnimationFrame(function () {

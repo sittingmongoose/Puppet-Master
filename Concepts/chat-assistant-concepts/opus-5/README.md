@@ -151,3 +151,13 @@ Context Lens, artifact, and runtime detail stay available and truthful?
 
 They are not ranked. Each makes a different bet, and the workspace exists so those bets can be compared
 side by side rather than argued about in the abstract.
+
+## Questions and work surfaces
+
+Each of the eight thread concepts renders its own question system and its own compact work cluster; there is
+no shared question card and no shared choreography. `shared/reveal.js` provides motion *materials* only, and
+`shared/qflow.js` (`PMXQFlow`) provides the verb semantics that must not differ - what Skip does to the
+store, and where a refusal belongs. `CONTRACT.md` section 12 states the rules; the `forms` suite in
+`tests/suites.js` asserts them, including that no concept renders another concept's question form.
+
+`SERVICES.md` is generated from `shared/*.js`, so the service inventory cannot drift from the code silently.

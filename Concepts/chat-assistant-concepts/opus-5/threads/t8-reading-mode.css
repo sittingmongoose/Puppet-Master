@@ -159,40 +159,9 @@
 [data-pmx-thread="t8"] .t8-inline-surfaces:empty,
 [data-pmx-thread="t8"] .t8-inline-question:empty { display: none; }
 
-[data-pmx-thread="t8"] .t8-surface {
-  display: flex; align-items: baseline; gap: var(--sm);
-  padding: 4px var(--md); min-width: 0;
-  border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-  font-size: var(--fs-2xs);
-}
-[data-pmx-thread="t8"] .t8-surface-kind {
-  flex: 0 0 auto; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--text-muted);
-}
-[data-pmx-thread="t8"] .t8-surface-text {
-  flex: 1 1 auto; min-width: 0; color: var(--text-secondary);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-[data-pmx-thread="t8"] .t8-surface-status {
-  flex: 0 0 auto; padding: 0 6px; border-radius: var(--radius-pill);
-  background: var(--surface-elevated); color: var(--text-secondary);
-}
 
 /* ---------------------------------------------------------------- questionnaire */
 
-[data-pmx-thread="t8"] .t8-question {
-  padding: var(--md); border-top: 1px solid var(--border);
-  /* Must be OPAQUE: a questionnaire card is a surface the user must be able to read
-   * cleanly, never a translucent tint over live content. In the glass themes
-   * `--surface-elevated` alone is translucent, so paint it over an opaque base. */
-  background-color: var(--background);
-  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
-  min-width: 0;
-}
-[data-pmx-thread="t8"] .t8-question-head { display: flex; gap: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
-[data-pmx-thread="t8"] .t8-question-req { margin-left: auto; }
-[data-pmx-thread="t8"] .t8-question-prompt { margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary); }
-[data-pmx-thread="t8"] .t8-question-opts { display: flex; flex-direction: column; gap: 4px; }
 [data-pmx-thread="t8"] .t8-opt {
   padding: 6px var(--md); border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: var(--surface); color: var(--text-primary);
@@ -203,12 +172,6 @@
   background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
   border-color: var(--accent-primary); font-weight: 600;
 }
-[data-pmx-thread="t8"] .t8-question-free {
-  width: 100%; min-height: 62px; resize: vertical; padding: var(--sm);
-  font: inherit; font-size: var(--fs-xs); color: var(--text-primary);
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-[data-pmx-thread="t8"] .t8-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
 [data-pmx-thread="t8"] .t8-act {
   padding: 3px var(--sm); border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: transparent; color: var(--text-secondary);
@@ -321,3 +284,257 @@
   [data-pmx-thread="t8"] .t8-gutter,
   [data-pmx-thread="t8"] .t8-workbtn { opacity: 1 !important; }
 }
+
+/* ================================================================ packet: the prose footnote, the
+ * micro-gutter cluster, the advice sheet and the artifact footnote.
+ *
+ * ONE geometry governs all of it: a narrow gutter column plus the reading measure, which is the same
+ * two-column shape the transcript's own turns use. Nothing here is a panel, nothing has a shadow, and
+ * nothing animates its height - a reading column that reflows while you are reading it is the single
+ * worst thing this concept could do.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* ---- the work cluster: dots plus one quiet line ------------------------------------------------ */
+
+[data-pmx-thread="t8"] .t8-cluster {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--sm);
+  align-items: start;
+  padding: var(--xs) 0;
+}
+
+[data-pmx-thread="t8"] .t8-cluster-gutter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-top: 3px;
+}
+
+[data-pmx-thread="t8"] .t8-cluster-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t8"] .t8-cluster-dot:hover { color: var(--accent-primary); }
+/* Severity is a shape change on the dot plus the word in its title and aria-label - never colour only. */
+[data-pmx-thread="t8"] .t8-cluster-dot[data-severity="caution"] { color: var(--accent-error); outline: 1px dashed currentColor; outline-offset: 1px; }
+[data-pmx-thread="t8"] .t8-cluster-dot[data-severity="note"] { color: var(--accent-blue); }
+
+[data-pmx-thread="t8"] .t8-cluster-line { min-width: 0; }
+
+/* The one quiet line. Muted, at the reading measure, and it is the global work toggle. */
+[data-pmx-thread="t8"] .t8-cluster-text {
+  max-width: 68ch;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-cluster-text:hover { color: var(--text-secondary); }
+[data-pmx-thread="t8"] .t8-cluster-text[aria-pressed="true"] { color: var(--text-secondary); }
+
+/* Revealed in place by the global toggle: one line per entry, still at the measure. */
+[data-pmx-thread="t8"] .t8-cluster-lines { display: flex; flex-direction: column; gap: 1px; padding-top: var(--xs); }
+
+[data-pmx-thread="t8"] .t8-cluster-row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: var(--sm);
+  width: 100%;
+  max-width: 68ch;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-cluster-row:hover .t8-cluster-row-text { color: var(--text-primary); }
+[data-pmx-thread="t8"] .t8-cluster-row-kind { color: var(--text-muted); }
+
+/* ---- the question footnote --------------------------------------------------------------------- */
+
+[data-pmx-thread="t8"] .t8-qnote {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--sm);
+  align-items: start;
+  padding: var(--sm) 0;
+}
+
+[data-pmx-thread="t8"] .t8-qnote-gutter { display: flex; justify-content: center; padding-top: 4px; color: var(--accent-primary); }
+[data-pmx-thread="t8"] .t8-qnote-dot { display: inline-flex; }
+[data-pmx-thread="t8"] .t8-qnote-mark { font-size: var(--fs-2xs); color: var(--text-muted); }
+
+[data-pmx-thread="t8"] .t8-qnote-body { min-width: 0; max-width: 68ch; }
+
+[data-pmx-thread="t8"] .t8-qnote-head {
+  margin: 0 0 var(--xs) 0;
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+/* `2 of 3` as a footnote marker: superscript weight, tabular, muted. Not a widget. */
+[data-pmx-thread="t8"] .t8-qnote-num {
+  margin-right: 6px;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t8"] .t8-qnote-req { display: block; margin-bottom: var(--xs); font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-qnote-status { margin: 0; font-size: var(--fs-xs); color: var(--text-muted); font-style: italic; }
+
+/* A real ordered list: the numbering is the browser's, and the semantics come free. */
+[data-pmx-thread="t8"] .t8-qlist {
+  margin: 0 0 var(--xs) 0;
+  padding-left: 2.2ch;
+  list-style: decimal;
+}
+[data-pmx-thread="t8"] .t8-qlist-item { padding: 1px 0; color: var(--text-muted); }
+
+[data-pmx-thread="t8"] .t8-qlist-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-qlist-btn:hover { color: var(--accent-primary); }
+/* A chosen option is marked in the text itself, so the list still reads as a list. */
+[data-pmx-thread="t8"] .t8-qlist-btn[aria-pressed="true"] { font-weight: 600; }
+[data-pmx-thread="t8"] .t8-qlist-btn[aria-pressed="true"]::after { content: ' \2014 chosen'; font-weight: 400; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+[data-pmx-thread="t8"] .t8-qfree {
+  width: 100%;
+  min-height: 56px;
+  margin-bottom: var(--xs);
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+[data-pmx-thread="t8"] .t8-qnote-reason { margin: 0 0 var(--xs) 0; font-size: var(--fs-xs); color: var(--accent-error); }
+[data-pmx-thread="t8"] .t8-qnote-reason[data-show="0"] { display: none; }
+
+[data-pmx-thread="t8"] .t8-qnote-acts { display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; }
+[data-pmx-thread="t8"] .t8-qnote-skipped { font-size: var(--fs-2xs); color: var(--accent-warning); }
+
+/* the resolved footnote line */
+[data-pmx-thread="t8"] .t8-qnote-footnote {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  margin: 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+[data-pmx-thread="t8"] .t8-qnote-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-qnote-link:hover { text-decoration: underline; }
+
+/* The resolved block is quieter than the live one and its cancelled form quieter still - the marker in
+   the gutter changes from a dot to a dagger, so the state is legible without colour. */
+[data-pmx-thread="t8"] .t8-qnote-done { padding: var(--xs) 0; }
+[data-pmx-thread="t8"] .t8-qnote-done[data-status="cancelled"] .t8-qnote-footnote-text { font-style: italic; }
+[data-pmx-thread="t8"] .t8-qnote-footnote-text { color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-qnote-prompt { color: var(--text-primary); }
+
+/* ---- the advice sheet ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t8"] .t8-advice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--xs) 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+[data-pmx-thread="t8"] .t8-advice[data-severity="caution"] { border-left-style: double; border-left-width: 4px; border-left-color: var(--accent-error); }
+[data-pmx-thread="t8"] .t8-advice[data-severity="note"] { border-left-color: var(--accent-blue); }
+[data-pmx-thread="t8"] .t8-advice-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t8"] .t8-advice-text { margin: 0; font-size: var(--fs-xs); line-height: 1.5; color: var(--text-primary); }
+[data-pmx-thread="t8"] .t8-advice-ev { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+
+/* ---- the artifact footnote --------------------------------------------------------------------- */
+
+[data-pmx-thread="t8"] .t8-handoff {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--sm);
+  align-items: baseline;
+  padding: var(--xs) 0;
+  max-width: calc(68ch + 18px + var(--sm));
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+[data-pmx-thread="t8"] .t8-handoff-mark { text-align: center; color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-handoff-title { color: var(--text-primary); }
+[data-pmx-thread="t8"] .t8-handoff-state { margin-left: var(--sm); }
+[data-pmx-thread="t8"] .t8-handoff-worked { margin-left: var(--sm); font-variant-numeric: tabular-nums; }
+[data-pmx-thread="t8"] .t8-handoff[data-state="idle"] .t8-handoff-state,
+[data-pmx-thread="t8"] .t8-handoff[data-state="loading"] .t8-handoff-state { font-style: italic; }
+[data-pmx-thread="t8"] .t8-handoff[data-state="error"] .t8-handoff-state { color: var(--accent-error); }
+[data-pmx-thread="t8"] .t8-handoff-open {
+  margin-left: var(--sm);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+[data-pmx-thread="t8"] .t8-handoff-open:hover { text-decoration: underline; }
+
+/* ---- this concept's own choreography: opacity plus a 6px rise, and nothing else ---------------- */
+
+@keyframes t8-qnote-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-pmx-thread="t8"] .t8-qnote-rise { animation: t8-qnote-rise var(--motion-med) var(--ease-out) both; }
+
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-qnote-rise { animation: none !important; }
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-cluster-dot { transition: none !important; }

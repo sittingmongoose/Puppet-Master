@@ -45,6 +45,13 @@
       messageSelector: '.t5-turn', messageAttr: 'data-pmx-msg'
     });
     this._tickOff = this.ctx.services.runtime.onTick(function () { self.syncLive(); });
+    /* Artifact state lives outside the store - the service keeps its own subscribers - so its ticks
+     * arrive here and nowhere else. Without this the handoff card says `compiling` forever. */
+    if (this.ctx.services.artifacts && this.ctx.services.artifacts.subscribe && !this._artOff) {
+      this._artOff = this.ctx.services.artifacts.subscribe(function () {
+        if (self._handoffHost) self._renderHandoff(self._handoffHost);
+      });
+    }
     this.renderThread();
   };
 
@@ -172,110 +179,597 @@
 
   T5.prototype.lastMessage = function () { var m = this.ctx.data.messagesFor(this.tid()); return m[m.length - 1]; };
 
+  /* ---------------------------------------------------------------- work: the third rail
+   *
+   * The matrix assigns this concept a THIRD WORK RAIL right of the assistant lane at 900px and up,
+   * folding under the turn below that width, with each rail row opening its detail IN THE USER LANE.
+   *
+   * Two things make that different from every other concept's cluster, and both are deliberate:
+   *
+   *   1. The rail is a THIRD COLUMN, not a block inside a lane. The paired-columns grid grows from
+   *      two tracks to three at 900px, so work sits beside the conversation rather than interrupting
+   *      it. Below 900px the same rows fold under the turn, because a third column at 520px would be
+   *      three unreadable measures.
+   *   2. Detail opens in the USER LANE. Not a popup, not an inline expansion under the row - the lane
+   *      that is otherwise the user's side of the dialogue becomes the reading surface for whatever the
+   *      rail is asked about. That is only coherent in a concept that HAS lanes, which is exactly why
+   *      it is this concept's assignment.
+   *
+   * What this replaces: five inert `<div class="t5-surface">` rows that could not be clicked and had no
+   * detail to open. They looked like a work surface and did nothing.
+   */
   T5.prototype.renderSurfaces = function () {
     var self = this, u = U();
+    var svc = this.ctx.services;
     var host = this.ctx.capabilities.workSurfaceHost ? this.ctx.regions.workSurfaceHost : this.inlineSurfaces;
     if (!host) return;
     u.empty(host);
-    var a = this.ctx.services.surfaces.activeFor(this.tid());
-    if (!a) return;
-    function each(v) { return v == null ? [] : (Object.prototype.toString.call(v) === '[object Array]' ? v : [v]); }
-    function row(kind, text, status) {
-      var r = u.el('div', { class: 't5-surface' }, [
-        u.el('span', { class: 't5-surface-kind', text: kind }),
-        u.el('span', { class: 't5-surface-text', text: text })
-      ]);
-      if (status) r.appendChild(u.el('span', { class: 't5-surface-status', text: status }));
-      return r;
+
+    /* Ask the flow, not the yield flag: this runs BEFORE renderQuestion on every pass, so reading
+     * `surfacesYielded` paints the rail for one frame before the dialogue takes the lanes. */
+    var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
+
+    var a = (!pendingQuestion && svc.surfaces) ? svc.surfaces.activeFor(this.tid()) : null;
+    var thread = this.ctx.data.threadById(this.tid());
+    var v = this.ctx.store.view(this.tid());
+    var openKind = (v.surfaces && v.surfaces.expanded) || null;
+
+    function each(val) { return val == null ? [] : (Object.prototype.toString.call(val) === '[object Array]' ? val : [val]); }
+
+    var rows = [];
+
+    if (a && a.goal) {
+      var phase = svc.goals && svc.goals.phaseOf ? svc.goals.phaseOf(a.goal) : null;
+      rows.push({
+        kind: 'goal', label: 'Goal',
+        text: phase ? ('Phase ' + phase.index + ' of ' + phase.total) : F().label(a.goal.status),
+        status: F().label(a.goal.status),
+        build: function (h) { self._detailGoal(h, a.goal); }
+      });
     }
-    if (a.goal) host.appendChild(row('Goal', a.goal.title || a.goal.objective, F().label(a.goal.status)));
-    if (a.todo) {
+
+    if (a && a.todo) {
       var items = a.todo.items || [];
-      var done = items.filter(function (i) { return i.state === 'complete'; }).length;
-      host.appendChild(row('Todo', done + ' of ' + items.length + ' complete', ''));
+      var done = items.filter(function (i) { return i.state === 'complete' || i.state === 'done'; }).length;
+      var blocked = items.filter(function (i) { return i.state === 'blocked'; }).length;
+      rows.push({
+        kind: 'todo', label: 'Todo',
+        text: done + '/' + items.length + (blocked ? ' \u00b7 ' + blocked + ' blocked' : ''),
+        build: function (h) { self._detailTodo(h, a.todo); }
+      });
     }
-    each(a.subagents).forEach(function (g) {
-      host.appendChild(row('Agents', self.ctx.services.surfaces.subagentSummary(g), ''));
+
+    each(a && a.subagents).forEach(function (g, n) {
+      rows.push({
+        kind: 'agents' + (n || ''), label: 'Agents',
+        text: (svc.surfaces.subagentSummary && svc.surfaces.subagentSummary(g)) || 'None active',
+        build: function (h) { self._detailAgents(h, g); }
+      });
     });
-    each(a.diffs).forEach(function (g) {
+
+    /* Activity carries the six kinds the packet requires be visible. */
+    var stages = (thread && thread.activityStages) || [];
+    if (stages.length) {
+      rows.push({
+        kind: 'activity', label: 'Activity',
+        text: stages.length + (stages.length === 1 ? ' step' : ' steps'),
+        build: function (h) { self._detailStages(h, stages); }
+      });
+    }
+
+    each(a && a.diffs).forEach(function (g, n) {
       var files = g.files || [];
-      var add = files.reduce(function (x, f) { return x + (f.added || 0); }, 0);
-      var rem = files.reduce(function (x, f) { return x + (f.removed || 0); }, 0);
-      host.appendChild(row('Changes', files.length + ' files, ' + add + ' added, ' + rem + ' removed', ''));
+      var add = 0, rem = 0;
+      files.forEach(function (f) { add += f.added || 0; rem += f.removed || 0; });
+      rows.push({
+        kind: 'diff' + (n || ''), label: 'Changes',
+        text: files.length + (files.length === 1 ? ' file' : ' files') + ' \u00b7 +' + add + ' \u2212' + rem,
+        build: function (h) { self._detailDiff(h, g); }
+      });
+    });
+
+    var verified = this._verificationRecord();
+    if (verified) {
+      rows.push({
+        kind: 'verify', label: 'Verified',
+        text: F().duration(verified.workedSeconds),
+        build: function (h) {
+          h.appendChild(u.el('p', { class: 't5-detail-p', text: verified.note }));
+        }
+      });
+    }
+
+    /* ---- the CONDENSED form: the matrix says the rail becomes a THREE-ROW summary block.
+     * Three rows, not one: this concept has vertical room in a rail that a chip strip does not, and the
+     * three facts a finished run leaves behind are what it did, what came out, and how long it took. */
+    var group = a ? a.activity : null;
+    var complete = !!(group && group.status === 'complete');
+    var railRows = rows;
+    if (complete && rows.length) {
+      var arts = (thread && thread.artifacts) || [];
+      railRows = [
+        { kind: 'sum-work', label: 'Work', text: (svc.surfaces.condenseLabel ? svc.surfaces.condenseLabel(group) : ((group.stages || []).length + ' steps')),
+          build: function (h) { self._detailStages(h, (group.stages || [])); } },
+        { kind: 'sum-out', label: 'Output', text: arts.length + (arts.length === 1 ? ' artifact' : ' artifacts'),
+          build: function (h) { self._detailArtifacts(h, arts); } },
+        { kind: 'sum-time', label: 'Elapsed', text: group.workedSeconds != null ? F().duration(group.workedSeconds) : '\u2014',
+          build: function (h) { h.appendChild(u.el('p', { class: 't5-detail-p', text: 'Worked for ' + F().duration(group.workedSeconds || 0) + '.' })); } }
+      ];
+    }
+
+    /* Activity, verification and advice are read straight off the thread rather than through
+     * `activeFor`, so without this guard they survive the yield and leave a partial cluster beside the
+     * question. The work surfaces yield as ONE thing or the yield means nothing. */
+    if (railRows.length && !pendingQuestion) {
+      var rail = u.el('div', { class: 't5-rail', data: { condensed: complete ? '1' : '0' } });
+      railRows.forEach(function (r) {
+        var on = openKind === r.kind;
+        var btn = u.el('button', {
+          class: 't5-rail-row', type: 'button',
+          data: { kind: r.kind, open: on ? '1' : '0' },
+          aria: { expanded: on ? 'true' : 'false' }
+        });
+        btn.appendChild(u.el('span', { class: 't5-rail-kind', text: r.label }));
+        var textEl = u.el('span', { class: 't5-rail-text' });
+        /* In-place morph: a rail row that appends on every count tick would grow the rail past the
+         * conversation beside it. */
+        if (svc.motion && svc.motion.swapText) svc.motion.swapText(textEl, r.text);
+        else textEl.textContent = r.text;
+        btn.appendChild(textEl);
+        self._on(btn, 'click', function () {
+          var vv = self.ctx.store.view(self.tid());
+          vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+          vv.surfaces.expanded = (vv.surfaces.expanded === r.kind) ? null : r.kind;
+          self.ctx.store.touchView('surfaces');
+        });
+        rail.appendChild(btn);
+      });
+      host.appendChild(rail);
+
+      /* ---- the detail, rendered into the USER LANE.
+       * It is a sibling of the rail with `data-lane="user"`, which the grid places in column 1 at 900px
+       * and stacks below at narrow widths - the same fold the turns use, so nothing needs a second
+       * breakpoint. */
+      var open = null;
+      for (var i = 0; i < railRows.length; i++) if (railRows[i].kind === openKind) { open = railRows[i]; break; }
+      if (open) {
+        var pane = u.el('div', { class: 't5-lane-detail', data: { lane: 'user', kind: open.kind } });
+        var head = u.el('div', { class: 't5-lane-detail-head' });
+        head.appendChild(u.el('span', { class: 't5-rail-kind', text: open.label }));
+        var close = u.el('button', { class: 't5-lane-close', type: 'button', text: 'Close', aria: { label: 'Close this detail' } });
+        this._on(close, 'click', function () {
+          var vv = self.ctx.store.view(self.tid());
+          if (vv.surfaces) vv.surfaces.expanded = null;
+          self.ctx.store.touchView('surfaces');
+        });
+        head.appendChild(close);
+        pane.appendChild(head);
+        var bodyEl = u.el('div', { class: 't5-lane-detail-body pmx-scroll' });
+        open.build(bodyEl);
+        pane.appendChild(bodyEl);
+        host.appendChild(pane);
+      }
+    }
+
+    /* Advice is a NOTE IN THE USER LANE per the matrix, and the handoff sits under the rail; both get
+     * their own hosts so an artifact tick repaints the card without rebuilding the rail. */
+    this._bsdHost = u.el('div', { class: 't5-bsd-host' });
+    this._handoffHost = u.el('div', { class: 't5-handoff-host' });
+    host.appendChild(this._bsdHost);
+    host.appendChild(this._handoffHost);
+    this._renderBsdNote(this._bsdHost);
+    this._renderHandoff(this._handoffHost);
+  };
+
+  T5.prototype._verificationRecord = function () {
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].verification) return msgs[i].verification;
+    return null;
+  };
+
+  /* ---- detail builders. They render into the user lane, so they are prose-width, not sheet-width. */
+
+  T5.prototype._detailGoal = function (host, goal) {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+    host.appendChild(u.el('p', { class: 't5-detail-p', text: goal.title || goal.objective || 'Goal' }));
+    if (goal.objective && goal.title) host.appendChild(u.el('p', { class: 't5-detail-p', text: goal.objective }));
+
+    if (goal.status === 'blocked' && goal.blocker) {
+      var b = goal.blocker;
+      [['Cause', b.cause], ['Affected', b.affectedScope], ['Tried', b.lastAttemptedRecovery],
+       ['Stopped because', b.whyRecoveryStopped], ['Next safe action', b.nextSafeAction]].forEach(function (r) {
+        if (!r[1]) return;
+        host.appendChild(u.el('div', { class: 't5-detail-row' }, [
+          u.el('span', { class: 't5-sheet-k', text: r[0] }),
+          u.el('span', { class: 't5-sheet-v', text: r[1] })
+        ]));
+      });
+    }
+
+    var acts = u.el('div', { class: 't5-detail-acts' });
+    ['pause', 'resume', 'stop', 'clear', 'edit'].forEach(function (action) {
+      if (svc.surfaces.canAct && !svc.surfaces.canAct(goal, action)) return;
+      var btn = u.el('button', { class: 't5-act', type: 'button', text: action.charAt(0).toUpperCase() + action.slice(1) });
+      self._on(btn, 'click', function () { svc.surfaces.act(self.tid(), action); });
+      acts.appendChild(btn);
+    });
+    if (acts.childNodes.length) host.appendChild(acts);
+  };
+
+  T5.prototype._detailTodo = function (host, todo) {
+    var u = U();
+    (todo.items || []).forEach(function (it) {
+      host.appendChild(u.el('div', { class: 't5-detail-row' }, [
+        u.el('span', { class: 't5-sheet-k', text: F().label(it.state) }),
+        u.el('span', { class: 't5-sheet-v', text: it.label })
+      ]));
     });
   };
 
+  T5.prototype._detailAgents = function (host, group) {
+    var u = U();
+    (group.agents || []).forEach(function (ag) {
+      host.appendChild(u.el('div', { class: 't5-detail-row' }, [
+        u.el('span', { class: 't5-sheet-k', text: F().label(ag.status) }),
+        u.el('span', { class: 't5-sheet-v', text: ag.name + ' \u2014 ' + (ag.currentActivity || ag.task || '') }),
+        u.el('span', { class: 't5-sheet-k', text: ag.workedSeconds != null ? F().duration(ag.workedSeconds) : '' })
+      ]));
+    });
+  };
+
+  T5.prototype._detailStages = function (host, stages) {
+    var u = U();
+    stages.forEach(function (st) {
+      host.appendChild(u.el('div', { class: 't5-detail-row' }, [
+        u.el('span', { class: 't5-sheet-k', text: F().label(st.kind) }),
+        u.el('span', { class: 't5-sheet-v', text: st.label + (st.detail ? ' \u2014 ' + st.detail : '') }),
+        u.el('span', { class: 't5-sheet-k', text: st.durationMs != null ? F().duration(Math.round(st.durationMs / 1000)) : (st.durationSeconds != null ? F().duration(st.durationSeconds) : '') })
+      ]));
+    });
+  };
+
+  T5.prototype._detailDiff = function (host, group) {
+    var self = this, u = U();
+    (group.files || []).forEach(function (f) {
+      var row = u.el('button', { class: 't5-detail-row t5-detail-file', type: 'button' }, [
+        u.el('span', { class: 't5-sheet-k', text: F().label(f.status) }),
+        u.el('span', { class: 't5-sheet-v', text: f.path }),
+        u.el('span', { class: 't5-sheet-k', text: '+' + (f.added || 0) + ' \u2212' + (f.removed || 0) })
+      ]);
+      self._on(row, 'click', function () {
+        self.ctx.services.editorHost.openArtifact(
+          { id: 'file-' + f.path, title: f.path, kind: 'file', projectPath: f.path }, self.ctx);
+      });
+      host.appendChild(row);
+    });
+    if (group.hiddenFileCount) host.appendChild(u.el('p', { class: 't5-detail-p', text: group.hiddenFileCount + ' more files' }));
+  };
+
+  T5.prototype._detailArtifacts = function (host, artifacts) {
+    var self = this, u = U();
+    var A = this.ctx.services.artifacts;
+    artifacts.forEach(function (art) {
+      var row = u.el('button', { class: 't5-detail-row t5-detail-file', type: 'button' }, [
+        u.el('span', { class: 't5-sheet-k', text: F().label(art.kind || 'artifact') }),
+        u.el('span', { class: 't5-sheet-v', text: art.title })
+      ]);
+      self._on(row, 'click', function () {
+        A.open(art.id);
+        if (A.forceReady) A.forceReady(art.id);
+      });
+      host.appendChild(row);
+    });
+  };
+
+  /* ---------------------------------------------------------------- BSD: a note in the user lane
+   *
+   * The user lane is the reader's own side of the dialogue, which is the right place for a comment
+   * addressed TO them about the work. It is a note, not a row in the rail: the rail reports what the
+   * run is doing, and advice is not something the run is doing.
+   */
+  T5.prototype._renderBsdNote = function (host) {
+    var self = this, u = U();
+    u.empty(host);
+    var bsd = this.ctx.services.bsd;
+    if (!bsd || !bsd.advice) return;
+    var list = bsd.advice(this.tid()) || [];
+    if (!list.length) return;
+
+    list.forEach(function (adv) {
+      var note = u.el('div', { class: 't5-note', data: { lane: 'user', severity: adv.severity } });
+      note.appendChild(u.el('span', {
+        class: 't5-note-kind',
+        text: adv.severity === 'caution' ? 'Back Seat Driver \u00b7 caution' : 'Back Seat Driver \u00b7 note'
+      }));
+      note.appendChild(u.el('p', { class: 't5-note-text', text: adv.text }));
+      if (adv.evidenceRefs && adv.evidenceRefs.length) {
+        note.appendChild(u.el('span', { class: 't5-note-ev', text: adv.evidenceRefs.join(', ') }));
+      }
+      /* Dismiss only: advice is read-only, and there is no service call that would apply it. */
+      var dis = u.el('button', { class: 't5-note-dismiss', type: 'button', text: 'Dismiss' });
+      self._on(dis, 'click', function () { bsd.dismiss(self.tid(), adv.id); });
+      note.appendChild(dis);
+      host.appendChild(note);
+    });
+  };
+
+  /* ---------------------------------------------------------------- artifact handoff */
+
+  T5.prototype._renderHandoff = function (host) {
+    var self = this, u = U();
+    if (!host) return;
+    u.empty(host);
+    var svc = this.ctx.services;
+    var A = svc.artifacts;
+    if (!A) return;
+
+    var thread = this.ctx.data.threadById(this.tid());
+    var refs = (thread && thread.artifacts) || [];
+    if (!refs.length) return;
+    var ref = refs[refs.length - 1];
+    if (!ref.id) return;
+
+    var state = A.stateOf ? A.stateOf(ref.id) : 'idle';
+    var card = u.el('div', { class: 't5-handoff', data: { state: state } });
+    card.appendChild(u.el('span', { class: 't5-rail-kind', text: 'Artifact' }));
+    card.appendChild(u.el('span', { class: 't5-handoff-title', text: ref.title }));
+
+    var stateEl = u.el('span', { class: 't5-handoff-state' });
+    var label = (state === 'loading' || state === 'idle') ? 'compiling' : (state === 'error' ? 'could not be read' : 'ready');
+    if (svc.motion && svc.motion.swapText) svc.motion.swapText(stateEl, label);
+    else stateEl.textContent = label;
+    card.appendChild(stateEl);
+
+    var worked = this._handoffWorkedSeconds();
+    if (worked != null) card.appendChild(u.el('span', { class: 't5-handoff-worked', text: 'Worked for ' + F().duration(worked) }));
+
+    var open = u.el('button', { class: 't5-act t5-handoff-open', type: 'button', text: 'Open' });
+    this._on(open, 'click', function () {
+      A.open(ref.id);
+      /* Settle the simulated transport in the same interaction; the card repaints through the artifact
+       * subscription, since `open` writes session state that no `view*` key covers. */
+      if (A.forceReady) A.forceReady(ref.id);
+      if (svc.motion && svc.motion.handoff) svc.motion.handoff(card);
+    });
+    card.appendChild(open);
+    host.appendChild(card);
+  };
+
+  T5.prototype._handoffWorkedSeconds = function () {
+    var svc = this.ctx.services;
+    var a = svc.surfaces ? svc.surfaces.activeFor(this.tid()) : null;
+    if (a && a.goal && svc.goals && svc.goals.completionReceipt) {
+      var r = svc.goals.completionReceipt(a.goal);
+      if (r && r.workedSeconds != null) return r.workedSeconds;
+    }
+    var msgs = this.ctx.data.messagesFor(this.tid()) || [];
+    for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
+    return null;
+  };
+
+    /* ---------------------------------------------------------------- question: the lane dialogue
+   *
+   * The matrix assigns this concept a LANE DIALOGUE: the prompt renders in the ASSISTANT lane and the
+   * answer form in the USER lane, and below 900px the two fold into a stacked stepper.
+   *
+   * That is the only question form in the eight that uses position to say who is speaking. The prompt is
+   * something the assistant said, so it sits where assistant turns sit; the answer is something the
+   * reader is composing, so it sits where their turns sit. Nothing labels the two halves - the lanes
+   * already do, which is why this concept can afford a question with no head, no card and no chrome.
+   *
+   * The fold is free: both halves carry `data-lane`, and the same container query that pairs the turns
+   * assigns the columns. There is no second breakpoint and no JavaScript measurement anywhere.
+   */
   T5.prototype.renderQuestion = function () {
-    /* Re-entrancy guard. yieldForQuestion notifies the store, which re-enters update()
-     * and therefore this function, mid-render. The inner pass appends a card, the outer
-     * pass then appends a second one into a host it already emptied — two identical
-     * questionnaires on screen. */
+    /* Re-entrancy guard: claiming the surfaces notifies the store, which re-enters update() and
+     * therefore this function mid-render. */
     if (this._inRenderQuestion) return;
 
-    /* NO CHOREOGRAPHY YET. The shared entrance/advance this concept used to call was deleted in
-     * Phase E0 because it made all eight thread concepts move identically; this concept's own form is
-     * still outstanding, and a no-op is the honest interim - not a borrowed animation. */
-    var pmxHost = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
+    var prevKey = this._qkey || '';
 
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
 
+    this._choreographLanes(host, prevKey);
   };
 
-T5.prototype._renderQuestionBody = function () {
-    var self = this, u = U(), svc = this.ctx.services;
+  /* This concept's OWN choreography: the lanes CROSS-FADE, per the matrix.
+   *
+   * Not a height spring - the two halves sit side by side at full width, so springing a height would
+   * move the conversation above them. A cross-fade changes what the lanes say without moving anything,
+   * which is the only motion that respects a two-column reading surface. */
+  T5.prototype._choreographLanes = function (host, prevKey) {
+    var R = global.PMXReveal;
+    if (!R || !host) return;
+
+    var svc = this.ctx.services;
+    var key = R.keyFor(svc, this.tid());
+    this._qkey = key;
+
+    /* Same question, one more keystroke: silence. */
+    if (prevKey === key) return;
+
+    var halves = Array.prototype.slice.call(host.querySelectorAll('.t5-qlane'));
+    if (!halves.length || R.reduced(host)) return;
+    halves.forEach(function (el) { R.oneShot(el, 't5-qlane-fade', 320); });
+  };
+
+  T5.prototype._renderQuestionBody = function () {
+    var self = this, u = U();
+    var svc = this.ctx.services;
     var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
     if (!host) return;
     u.empty(host);
-    var q = svc.questionnaire.activeFor(this.tid());
-    if (!q) { svc.surfaces.yieldForQuestion(this.tid(), false); return; }
-    svc.surfaces.yieldForQuestion(this.tid(), true);
-    var idx = q.currentQuestionIndex || 0, question = (q.questions || [])[idx];
-    if (!question) return;
 
-    var card = u.el('div', { class: 't5-question' }, [
-      u.el('div', { class: 't5-question-head' }, [
-        u.el('span', { text: (idx + 1) + ' of ' + (q.questions || []).length }),
-        u.el('span', { class: 't5-question-req', text: question.required ? 'Required' : 'Optional' })
-      ]),
-      u.el('p', { class: 't5-question-prompt', text: question.prompt })
-    ]);
-    if (question.options && question.options.length) {
-      var opts = u.el('div', { class: 't5-question-opts' });
-      question.options.forEach(function (o) {
-        var sel = (question.selected || []).indexOf(o) >= 0;
-        var b = u.el('button', { class: 't5-opt', text: o, aria: { pressed: sel ? 'true' : 'false' } });
-        u.on(b, 'click', function (ev) { if (global.PMXReveal) global.PMXReveal.ripple(this, ev); svc.questionnaire.answer(q.id, question.id, o); self.renderQuestion(); });
-        opts.appendChild(b);
-      });
-      card.appendChild(opts);
-    } else {
-      var ta = u.el('textarea', { class: 't5-question-free pmx-scroll' });
-      ta.setAttribute('spellcheck', 'false'); ta.value = question.draft || '';
-      u.on(ta, 'input', function () { svc.questionnaire.answer(q.id, question.id, ta.value); });
-      card.appendChild(ta);
+    var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
+    if (!flow) return;
+
+    if (!flow.record) {
+      this._renderLaneReceipt(host, flow.receipt);
+      return;
     }
-    var acts = u.el('div', { class: 't5-question-acts' });
-    var isLast = idx === (q.questions || []).length - 1;
-    [['Skip', function () { svc.questionnaire.skip(q.id, question.id); }],
-     [isLast ? 'Submit' : 'Next', function () {
-       if (isLast) {
-         var c = svc.questionnaire.canSubmit(q.id);
-         if (!c.ok) { svc.toast.show('Answer the required questions first'); return; }
-         svc.questionnaire.submit(q.id);
-       } else svc.questionnaire.next(q.id);
-     }],
-     ['Cancel', function () { svc.questionnaire.cancel(q.id); }]
-    ].forEach(function (a, i) {
-      var b = u.el('button', { class: 't5-act' + (i === 1 ? ' t5-act-primary' : ''), text: a[0] });
-      u.on(b, 'click', function () { a[1](); self.renderQuestion(); self.renderSurfaces(); });
-      acts.appendChild(b);
+
+    svc.qflow.claim(svc, this.tid());
+
+    var q = flow.question;
+
+    /* ---- the assistant lane: the prompt, and nothing else. It is a thing that was said. */
+    var said = u.el('div', { class: 't5-qlane', data: { lane: 'assistant', phase: flow.status } });
+
+    if (flow.status === 'preparing' || flow.status === 'submitting') {
+      said.appendChild(global.PMXReveal.capsule(
+        flow.status === 'preparing' ? 'Preparing questions' : 'Submitting answers', this.ctx));
+      host.appendChild(said);
+      return;
+    }
+
+    said.appendChild(u.el('p', {
+      class: 't5-qprompt',
+      text: flow.atEnd ? 'That is every question.' : (q ? q.prompt : '')
+    }));
+    if (q && q.required && !flow.atEnd) said.appendChild(u.el('span', { class: 't5-qreq', text: 'Required' }));
+    host.appendChild(said);
+
+    /* ---- the user lane: the form. `Question 2 of 3` sits ABOVE it, per the matrix. */
+    var mine = u.el('div', { class: 't5-qlane', data: { lane: 'user' } });
+
+    mine.appendChild(u.el('span', {
+      class: 't5-qcount',
+      text: 'Question ' + flow.position + ' of ' + flow.total
+    }));
+
+    if (q && !flow.atEnd) {
+      if (q.options && q.options.length) {
+        var opts = u.el('div', { class: 't5-qopts' });
+        q.options.forEach(function (opt) {
+          var sel = (q.selected || []).indexOf(opt) >= 0;
+          var b = u.el('button', { class: 't5-opt', type: 'button', text: opt, aria: { pressed: sel ? 'true' : 'false' } });
+          self._on(b, 'click', function (ev) {
+            if (global.PMXReveal) global.PMXReveal.ripple(this, ev);
+            svc.qflow.act(svc, self.tid(), 'answer', opt);
+            self.renderQuestion();
+          });
+          opts.appendChild(b);
+        });
+        mine.appendChild(opts);
+      } else {
+        var ta = u.el('textarea', { class: 't5-qfree pmx-scroll', aria: { label: q.prompt } });
+        ta.setAttribute('spellcheck', 'false');
+        ta.value = q.draft || '';
+        this._on(ta, 'input', function () { svc.qflow.act(svc, self.tid(), 'answer', ta.value); });
+        mine.appendChild(ta);
+      }
+    }
+
+    /* The refusal renders in the USER lane at the field, because that is where the thing it complains
+     * about lives. */
+    var reason = u.el('p', { class: 't5-qreason', data: { show: this._pendingReason ? '1' : '0' } });
+    if (this._pendingReason) { reason.textContent = this._pendingReason; this._pendingReason = null; }
+    mine.appendChild(reason);
+
+    var acts = u.el('div', { class: 't5-qacts' });
+
+    function refuse(res, fallback) {
+      var text = res.reason || fallback;
+      if (res.offenderIndex != null && res.offenderIndex !== flow.index) {
+        self._pendingReason = text;
+        self.renderQuestion();
+        return;
+      }
+      reason.textContent = text;
+      reason.setAttribute('data-show', '1');
+      if (global.PMXReveal) global.PMXReveal.reject(reason);
+    }
+
+    if (flow.index > 0) {
+      var back = u.el('button', { class: 't5-act', type: 'button', text: 'Back' });
+      this._on(back, 'click', function () { svc.qflow.act(svc, self.tid(), 'prev'); self.renderQuestion(); });
+      acts.appendChild(back);
+    }
+
+    /* Skip lives in the USER lane: skipping is the reader's decision, so it belongs on the reader's
+     * side. The matrix says so explicitly and it is the right instinct. */
+    if (q && !flow.atEnd) {
+      var skip = u.el('button', { class: 't5-act', type: 'button', text: 'Skip' });
+      this._on(skip, 'click', function () { svc.qflow.act(svc, self.tid(), 'skip'); self.renderQuestion(); });
+      acts.appendChild(skip);
+    }
+
+    if (q && flow.isSkipped(q)) {
+      var un = u.el('button', { class: 't5-act', type: 'button', text: 'Unskip' });
+      this._on(un, 'click', function () { svc.qflow.act(svc, self.tid(), 'unskip', flow.index); self.renderQuestion(); });
+      acts.appendChild(un);
+    }
+
+    var primary = u.el('button', { class: 't5-act t5-act-primary', type: 'button', text: flow.atEnd ? 'Send' : 'Next' });
+    this._on(primary, 'click', function () {
+      var res = svc.qflow.act(svc, self.tid(), flow.atEnd ? 'submit' : 'next');
+      if (!res.ok) { refuse(res, 'Answer the required questions first.'); return; }
+      self.renderQuestion();
+      self.renderSurfaces();
     });
-    card.appendChild(acts);
-    host.appendChild(card);
+    acts.appendChild(primary);
+
+    /* Cancel collapses BOTH lanes to one receipt row - the matrix's exact requirement, and the reason
+     * the receipt is a single full-width row rather than a pair of lanes. */
+    var cancel = u.el('button', { class: 't5-act', type: 'button', text: 'Cancel' });
+    this._on(cancel, 'click', function () {
+      svc.qflow.act(svc, self.tid(), 'cancel');
+      self.renderQuestion();
+      self.renderSurfaces();
+    });
+    acts.appendChild(cancel);
+
+    if (flow.skippedCount) {
+      acts.appendChild(u.el('span', {
+        class: 't5-qskipped',
+        text: flow.skippedCount === 1 ? '1 skipped' : flow.skippedCount + ' skipped'
+      }));
+    }
+
+    mine.appendChild(acts);
+    host.appendChild(mine);
   };
 
-  T5.prototype.syncLive = function () {
+  /* One receipt row spanning both lanes. */
+  T5.prototype._renderLaneReceipt = function (host, receipt) {
+    var self = this, u = U();
+    if (!receipt) return;
+
+    var row = u.el('div', { class: 't5-qreceipt', data: { status: receipt.status } });
+    row.appendChild(u.el('span', { class: 't5-rail-kind', text: 'Questions' }));
+    row.appendChild(u.el('span', {
+      class: 't5-qreceipt-text',
+      text: receipt.cancelled
+        ? 'Cancelled'
+        : (receipt.answered + (receipt.answered === 1 ? ' answer sent' : ' answers sent') +
+           (receipt.skipped ? ', ' + receipt.skipped + ' skipped' : ''))
+    }));
+
+    var show = u.el('button', { class: 't5-act', type: 'button', text: 'Show answers' });
+    this._on(show, 'click', function (ev) {
+      self.ctx.services.popup.open({
+        anchorEl: ev.currentTarget, kind: 'panel', width: 340,
+        build: function (h) {
+          h.appendChild(u.el('div', { class: 't5-sheet-title', text: receipt.cancelled ? 'Cancelled questions' : 'Answers sent' }));
+          (receipt.questions || []).forEach(function (question) {
+            var val = receipt.answers[question.id];
+            var wasSkipped = (receipt.record.receipt.skipped || []).indexOf(question.id) >= 0;
+            h.appendChild(u.el('div', { class: 't5-sheet-row' }, [
+              u.el('span', { class: 't5-sheet-k', text: wasSkipped ? 'skipped' : 'answered' }),
+              u.el('span', { class: 't5-sheet-v', text: question.prompt + (val == null ? '' : ' \u2014 ' + [].concat(val).join(', ')) })
+            ]));
+          });
+        }
+      });
+    });
+    row.appendChild(show);
+    host.appendChild(row);
+  };
+
+    T5.prototype.syncLive = function () {
     var u = U(), s = this.ctx.services.runtime.liveStatus(this.tid());
     if (!s) {
       if (this.liveEl && this.liveEl.parentNode) this.liveEl.parentNode.removeChild(this.liveEl);
@@ -340,6 +834,7 @@ T5.prototype._renderQuestionBody = function () {
   };
 
   T5.prototype.destroy = function () {
+    if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window
      * survives would otherwise leave a second questionnaire card behind. Clear what it

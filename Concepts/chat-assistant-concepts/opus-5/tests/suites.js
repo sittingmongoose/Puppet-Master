@@ -689,6 +689,266 @@
 
   /* ------------------------------------------------------------------ distinctness */
 
+  /* ------------------------------------------------------------------ forms
+   *
+   * The eight question systems, the eight work clusters, and the yield rule between them.
+   *
+   * The `question` suite above asserts the SERVICE: phases, validation, receipts. This suite asserts the
+   * eight FORMS the packet requires those services to be rendered as - which is the part a refactor can
+   * silently flatten back into one shared card without failing anything else.
+   *
+   * Each assertion names a decision, not an implementation detail. "t3 shows no `N of M` anywhere" is a
+   * decision: its filled-node run IS the progress indicator, so a counter would be a second one. "t6's
+   * form has no border and no background" is a decision: that concept has no containers, and a form that
+   * needed a box to be legible would not belong in it.
+   */
+  var FORMS = [
+    { id: 't1', question: '.t1-qturn', work: '.t1-wstrip', handoff: '.t1-handoff',
+      cluster: '.t1-wstrip', advicePersists: true },
+    { id: 't2', question: '.t2-capsule', work: '.t2-chips-host .t2-chip', handoff: '.t2-handoff',
+      cluster: '.t2-chips-host .t2-chip', advicePersists: false },
+    { id: 't3', question: '.t3-qrun', work: '.t3-wunit', handoff: '.t3-handoff',
+      cluster: '.t3-wunit', advicePersists: true },
+    { id: 't4', question: '.t4-qdigest', work: '.t4-work', handoff: '.t4-handoff',
+      cluster: '.t4-work', advicePersists: true },
+    { id: 't5', question: '.t5-qlane', work: '.t5-rail', handoff: '.t5-handoff',
+      cluster: '.t5-rail', advicePersists: true },
+    { id: 't6', question: '.t6-form', work: '.t6-log', handoff: '.t6-handoff',
+      cluster: '.t6-log', advicePersists: false },
+    { id: 't7', question: '.t7-deck', work: '.t7-status', handoff: '.t7-handoff',
+      cluster: '.t7-status', advicePersists: false },
+    { id: 't8', question: '.t8-qnote', work: '.t8-cluster', handoff: '.t8-handoff',
+      cluster: '.t8-cluster', advicePersists: false }
+  ];
+
+  A.suite('forms', function (t) {
+    /* ---- 1. every concept renders ITS OWN question form, and only its own.
+     * This is the assertion that fails if the shared choreography is ever reintroduced: eight concepts
+     * rendering one shared surface would satisfy every other suite in this file. */
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      fire('question', 'open');
+
+      t.ok(q(f.question), f.id + ' renders its own question form (' + f.question + ')');
+
+      var foreign = FORMS.filter(function (o) { return o.id !== f.id; })
+        .filter(function (o) { return !!q(o.question); })
+        .map(function (o) { return o.question; });
+      t.eq(foreign.length, 0, f.id + ' renders no other concept\u2019s question form');
+    });
+
+    /* ---- 2. the structural decision each form is built on */
+
+    reset(); setPairing('w1', 't1'); fire('question', 'open');
+    var t1q = q('.t1-qturn');
+    t.ok(t1q && t1q.classList.contains('t1-turn'),
+      't1 asks as a real speaker turn, not a card dropped beside the transcript');
+    t.ok(q('.t1-qmargin .t1-qcount'), 't1 puts the progress in the hanging margin');
+    t.ok(q('.t1-qrows .t1-qrow .t1-qrow-mark'),
+      't1 options are hanging-indent rows, so wrapped text aligns under itself');
+
+    reset(); setPairing('w1', 't2'); fire('question', 'prepare');
+    var cap = q('.t2-capsule');
+    t.ok(cap, 't2 opens as a slim capsule above the composer');
+    t.eq(cap && cap.getAttribute('data-expanded'), '0', 't2 starts compressed');
+    /* Identity across the phase change is the whole requirement: the capsule must BECOME the card. */
+    if (cap) cap.setAttribute('data-pmx-probe', 'capsule-1');
+    fire('question', 'open');
+    var cap2 = q('.t2-capsule');
+    t.eq(cap2 && cap2.getAttribute('data-pmx-probe'), 'capsule-1',
+      't2 expands the SAME element rather than swapping in a different one');
+    t.eq(cap2 && cap2.getAttribute('data-expanded'), '1', 't2 marks the expanded state on that element');
+    t.eq(qa('.t2-capsule').length, 1, 't2 never has two capsules at once');
+    t.ok(q('.t2-capsule-foot .t2-capsule-count'), 't2 puts the counter in the card foot');
+    t.ok(q('.t2-capsule-close'), 't2 makes Cancel the card\u2019s close control');
+
+    reset(); setPairing('w1', 't3'); fire('question', 'open');
+    var run = q('.t3-qrun');
+    t.ok(run, 't3 renders the question as a run of nodes on the spine');
+    t.ok(qa('.t3-qnode').length >= 2, 't3 shows every question as its own node');
+    /* The filled-node run IS the progress, so a counter would be a second indicator for one fact. */
+    t.notOk(/\b\d+\s+of\s+\d+\b/.test(run ? run.textContent : ''),
+      't3 shows no "N of M" anywhere \u2014 the filled-node run is the progress');
+
+    reset(); setPairing('w1', 't4'); fire('question', 'open');
+    t.ok(q('.t4-qdigest'), 't4 asks as one more digest entry');
+    t.ok(q('.t4-qdigest-line .t4-qdigest-count'), 't4 keeps the counter inside the digest line');
+    t.eq(q('.t4-qdigest') && q('.t4-qdigest').getAttribute('data-open'), '1',
+      't4 uses the concept\u2019s own open/close attribute');
+
+    reset(); setPairing('w1', 't5'); fire('question', 'open');
+    t.ok(q('.t5-qlane[data-lane="assistant"]'), 't5 puts the prompt in the assistant lane');
+    t.ok(q('.t5-qlane[data-lane="user"]'), 't5 puts the answer form in the user lane');
+    t.ok(q('.t5-qlane[data-lane="user"] .t5-qcount'), 't5 puts the counter above the user-lane form');
+
+    reset(); setPairing('w1', 't6'); fire('question', 'open');
+    var form = q('.t6-form');
+    t.ok(form, 't6 renders a monospace field form');
+    if (form) {
+      var cs = getComputedStyle(form);
+      /* No card: this concept has no containers, and a form that needed a box would not belong in it. */
+      t.eq(parseFloat(cs.borderTopWidth) || 0, 0, 't6 draws no border around the form');
+      t.ok(/rgba\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor), 't6 gives the form no background');
+      t.eq(parseFloat(cs.borderTopLeftRadius) || 0, 0, 't6 gives the form no corner radius');
+    }
+    t.ok(/^Q1\/\d+$/.test((q('.t6-form-row .t6-log-kind') || {}).textContent || ''),
+      't6 prefixes each question with a fixed-width Q1/N');
+    t.ok(q('.t6-form-opt .t6-form-num'), 't6 numbers its options for the keyboard');
+    t.ok(qa('.t6-form-row').length >= 2, 't6 shows every question at once, which a list can afford');
+
+    reset(); setPairing('w1', 't7'); fire('question', 'open');
+    var deck = q('.t7-deck');
+    t.ok(deck, 't7 renders a deck');
+    var cards = qa('.t7-qcard');
+    t.ok(cards.length >= 2 && cards.length <= 3, 't7 shows at most three cards, however many questions remain');
+    t.eq(cards.filter(function (c) { return c.querySelector('.t7-qcard'); }).length, 0,
+      't7 keeps the deck\u2019s cards as siblings \u2014 one nesting level, never a card inside a card');
+    t.ok(q('.t7-qcard[data-top="1"] .t7-qdots .t7-qdot'),
+      't7 carries the true question count as a dot rank, which is what lets the deck cap at three');
+
+    reset(); setPairing('w1', 't8'); fire('question', 'open');
+    t.ok(q('.t8-qnote'), 't8 asks as a prose footnote');
+    var ol = q('.t8-qlist');
+    t.eq(ol && ol.tagName, 'OL', 't8 uses a real ordered list, so the numbering is the browser\u2019s');
+    var sup = q('.t8-qnote-num');
+    t.eq(sup && sup.tagName, 'SUP', 't8 marks progress as a footnote reference, not a widget');
+    t.ok(q('.t8-qnote-gutter'), 't8 marks the question in the micro-gutter');
+
+    /* ---- 3. the yield rule.
+     * A pending question hides the work surfaces and keeps the artifact handoff, because the handoff is
+     * the work's product rather than a work surface. Advice follows its host: where a concept gives it
+     * one of its own it survives, and where advice IS a member of the cluster it yields with it. */
+    /* thread-06 carries a live goal and todo and NO authored questionnaire, which is the only way to
+     * observe the un-yielded cluster without the harness resolving a question on the concept's behalf -
+     * thread-01 always has one queued, so on that thread the cluster is correctly always yielded. */
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      store().set('session.activeThreadId', 'thread-06');
+      fire('bsd', 'advice');
+
+      t.notOk(global.PMXQuestionnaire.activeFor(tid()), f.id + ': thread-06 has no question pending');
+      t.ok(qa(f.cluster).length > 0, f.id + ' renders a work cluster when no question is pending');
+
+      store().set('session.activeThreadId', 'thread-01');
+      fire('question', 'open');
+      t.eq(qa(f.cluster).length, 0, f.id + ' yields its work cluster to a pending question');
+      t.ok(q(f.handoff), f.id + ' keeps the artifact handoff \u2014 it is the work\u2019s product, not a work surface');
+    });
+
+    /* ---- 3b. resolving THROUGH THE CONCEPT'S OWN UI hands the work surfaces back.
+     *
+     * This is the assertion that would have caught the worst defect this phase produced: for a while only
+     * Cancel released `surfacesYielded`, so a SUBMITTED flow left every work surface hidden for the rest of
+     * the session. thread-06 cannot catch that class of bug at all - nothing yields there - and driving the
+     * store directly cannot catch it either, because the release is wired to the concept's own controls.
+     * So this drives each of the eight forms by clicking the controls it actually renders.
+     *
+     * Reduced motion is set first so condense, the deck slide and the capsule compress all fall through
+     * synchronously: the assertion is about state, and waiting on animation frames inside a suite makes it
+     * about timing instead. */
+    var DRIVE = {
+      t1: { opt: '.t1-qrow', free: '.t1-qfree', cmd: '.t1-qact', next: 'Next', send: 'Send answers' },
+      t2: { opt: '.t2-capsule-opt', free: '.t2-capsule-free', cmd: '.t2-capsule-next, .t2-capsule-primary', next: 'Next', send: 'Submit' },
+      t3: { opt: '.t3-opt', free: '.t3-qfree', cmd: '.t3-qact', next: 'Next', send: 'Submit' },
+      t4: { opt: '.t4-qopt', free: '.t4-qfree', cmd: '.t4-act', next: 'Next', send: 'Submit' },
+      t5: { opt: '.t5-opt', free: '.t5-qfree', cmd: '.t5-act', next: 'Next', send: 'Send' },
+      t6: { opt: '.t6-form-opt', free: '.t6-form-field', cmd: '.t6-form-cmd', next: '[next]', send: '[submit]' },
+      t7: { opt: '.t7-opt', free: '.t7-qfree', cmd: '.t7-act', next: 'Next', send: 'Send' },
+      t8: { opt: '.t8-qlist-btn', free: '.t8-qfree', cmd: '.t8-act', next: 'Next', send: 'Send' }
+    };
+
+    FORMS.forEach(function (f) {
+      var d = DRIVE[f.id];
+      reset();
+      store().set('ui.reducedMotion', true);
+      setPairing('w1', f.id);
+      fire('question', 'open');
+
+      var host = q('[data-pmx-region="questionHost"]');
+      t.ok(host && host.firstElementChild, f.id + ': a question is on screen to resolve');
+      t.ok(store().view(tid()).surfacesYielded, f.id + ' yields while its question is unresolved');
+
+      /* Answer and advance using only what this concept renders. */
+      var sent = false;
+      for (var step = 0; step < 8 && !sent; step++) {
+        if (!host || !host.firstElementChild) break;
+        var opt = host.querySelector(d.opt);
+        if (opt) opt.click();
+        var free = host.querySelector(d.free);
+        if (free) { free.value = 'an answer typed into the field'; free.dispatchEvent(new Event('input', { bubbles: true })); }
+
+        var btns = qa(d.cmd).filter(function (b) { return host.contains(b); });
+        var advance = btns.filter(function (b) { return (b.textContent || '').trim() === d.next; })[0];
+        if (advance) { advance.click(); continue; }
+        var submit = btns.filter(function (b) { return (b.textContent || '').trim() === d.send; })[0];
+        if (submit) { submit.click(); sent = true; }
+        else break;
+      }
+
+      t.ok(sent, f.id + ' offers a submit control once every question is answered');
+      t.notOk(global.PMXQuestionnaire.activeFor(tid()), f.id + ': the flow is resolved through its own UI');
+      /* The release, which is the whole point of this block. */
+      t.notOk(store().view(tid()).surfacesYielded, f.id + ' releases the work surfaces when its own UI resolves the flow');
+      t.ok(qa(f.cluster).length > 0, f.id + ' brings its work cluster back after resolving');
+      t.ok(global.PMXQFlow.read({ questionnaire: global.PMXQuestionnaire, surfaces: global.PMXSurfaces }, tid()).receipt,
+        f.id + ' leaves a receipt its transcript can render');
+
+      store().set('ui.reducedMotion', false);
+    });
+
+    /* ---- 4. PMXQFlow: the verb layer that must NOT differ per concept. */
+    var QF = global.PMXQFlow;
+    t.ok(QF, 'the question action layer is reachable');
+    reset(); setPairing('w1', 't1'); fire('question', 'open');
+    var svc = { questionnaire: global.PMXQuestionnaire, surfaces: global.PMXSurfaces };
+    var id = tid();
+
+    var flow = QF.read(svc, id);
+    t.ok(flow && flow.record, 'read() reports the live flow');
+    t.eq(flow.position, 1, 'read() counts visited questions, so the first question is 1');
+    t.eq(flow.total, flow.questions.length, 'read() reports the true question count');
+    t.ok(QF.pending(svc, id), 'pending() is true while a question is live');
+
+    /* A refusal must name the offending question, so a renderer can put the reason at that field
+     * instead of under the button that was pressed. */
+    var refusal = QF.act(svc, id, 'submit');
+    t.notOk(refusal.ok, 'submitting an unanswered required flow is refused');
+    t.ok(typeof refusal.reason === 'string' && refusal.reason.length, 'the refusal carries verbatim words');
+    t.eq(typeof refusal.offenderIndex, 'number', 'the refusal names WHICH question refused');
+
+    /* Resolving must hand the work surfaces back. Before this existed, a submitted flow left them
+     * yielded for the rest of the session. */
+    var rec = global.PMXQuestionnaire.activeFor(id);
+    (rec.questions || []).forEach(function (question, i) {
+      global.PMXQuestionnaire.goTo(rec.id, i);
+      global.PMXQuestionnaire.answer(rec.id, question.id,
+        (question.options && question.options.length) ? question.options[0] : 'an answer');
+    });
+    global.PMXQuestionnaire.goTo(rec.id, (rec.questions || []).length);
+    var done = QF.act(svc, id, 'submit');
+    t.ok(done.ok && done.resolved, 'a satisfied flow submits and resolves in one interaction');
+    t.notOk(store().view(id).surfacesYielded, 'resolving releases the work surfaces');
+    t.notOk(QF.pending(svc, id), 'pending() is false once the flow resolves');
+
+    var receipt = QF.read(svc, id).receipt;
+    t.ok(receipt, 'a resolved flow leaves a receipt every concept can render');
+    t.eq(receipt.status, 'submitted', 'the receipt records the outcome');
+
+    /* ---- 5. the handoff card reports the transport it actually has. */
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      var card = q(f.handoff);
+      t.ok(card, f.id + ' renders an artifact handoff card');
+      if (!card) return;
+      var stateEl = card.querySelector('[class$="-handoff-state"]');
+      t.ok(stateEl && /compiling|ready/.test(stateEl.textContent),
+        f.id + ' states whether the artifact is compiling or ready');
+    });
+  });
+
   A.suite('distinctness', function (t) {
     /* 07_...:93 makes it a hard failure if all concepts reuse the same question or activity
      * solution. This asserts the ROOT CLASS NAMES differ, which is the automatable half of it. */
@@ -718,6 +978,19 @@
   /* ------------------------------------------------------------------ motion */
 
   A.suite('motion', function (t) {
+
+    /* swapText has two jobs and they are not the same job. A morph cross-fades one value into another; a
+     * FIRST write has nothing to fade from, and deferring it to the second frame paints an empty slot -
+     * which is what a freshly mounted work line, chip or status label used to do. Pinned here so the
+     * distinction survives a later "simplification". */
+    var fresh = document.createElement('span');
+    document.body.appendChild(fresh);
+    global.PMXMotion.swapText(fresh, 'first value');
+    t.eq(fresh.textContent, 'first value', 'swapText writes a first value immediately, with no empty frame');
+    global.PMXMotion.swapText(fresh, 'second value');
+    t.eq(fresh.textContent, 'first value', 'swapText defers a REPLACEMENT so the two values can cross-fade');
+    t.eq(fresh.style.opacity, '0', 'the outgoing value fades before it is replaced');
+    fresh.parentNode.removeChild(fresh);
     var M = global.PMXMotion;
     ['arrive', 'questionPhase', 'condense', 'phaseStep', 'agentState', 'handoff', 'dockShift',
      'panelSwap', 'submenu', 'stateFlip', 'consequence', 'catchUp', 'lineage'].forEach(function (k) {

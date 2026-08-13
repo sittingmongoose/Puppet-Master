@@ -129,39 +129,9 @@
 [data-pmx-thread="t5"] .t5-inline-surfaces:empty,
 [data-pmx-thread="t5"] .t5-inline-question:empty { display: none; }
 
-[data-pmx-thread="t5"] .t5-surface {
-  display: flex; align-items: baseline; gap: var(--sm);
-  padding: 4px var(--md); min-width: 0; font-size: var(--fs-2xs);
-  border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-}
-[data-pmx-thread="t5"] .t5-surface-kind {
-  flex: 0 0 auto; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--text-muted);
-}
-[data-pmx-thread="t5"] .t5-surface-text {
-  flex: 1 1 auto; min-width: 0; color: var(--text-secondary);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-[data-pmx-thread="t5"] .t5-surface-status {
-  flex: 0 0 auto; padding: 0 6px; border-radius: var(--radius-pill);
-  background: var(--surface-elevated); color: var(--text-secondary);
-}
 
 /* ---------------------------------------------------------------- questionnaire */
 
-[data-pmx-thread="t5"] .t5-question {
-  padding: var(--md); border-top: 1px solid var(--border);
-  /* Must be OPAQUE: a questionnaire card is a surface the user must be able to read
-   * cleanly, never a translucent tint over live content. In the glass themes
-   * `--surface-elevated` alone is translucent, so paint it over an opaque base. */
-  background-color: var(--background);
-  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
-  min-width: 0;
-}
-[data-pmx-thread="t5"] .t5-question-head { display: flex; gap: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
-[data-pmx-thread="t5"] .t5-question-req { margin-left: auto; }
-[data-pmx-thread="t5"] .t5-question-prompt { margin: 5px 0 var(--sm); font-size: var(--fs-sm); line-height: 1.5; color: var(--text-primary); }
-[data-pmx-thread="t5"] .t5-question-opts { display: flex; flex-direction: column; gap: 4px; }
 [data-pmx-thread="t5"] .t5-opt {
   padding: 6px var(--md); border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: var(--surface); color: var(--text-primary);
@@ -172,12 +142,6 @@
   background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
   border-color: var(--accent-primary); font-weight: 600;
 }
-[data-pmx-thread="t5"] .t5-question-free {
-  width: 100%; min-height: 62px; resize: vertical; padding: var(--sm);
-  font: inherit; font-size: var(--fs-xs); color: var(--text-primary);
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-[data-pmx-thread="t5"] .t5-question-acts { display: flex; gap: 5px; margin-top: var(--sm); }
 [data-pmx-thread="t5"] .t5-act {
   padding: 3px var(--sm); border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: transparent; color: var(--text-secondary);
@@ -250,10 +214,6 @@
   animation: pmx-t5-settle var(--motion-med) var(--ease-spring-real) both;
 }
 /* The paired side lands after the prose it belongs to, never before. */
-[data-pmx-thread="t5"] .t5-surface {
-  animation: pmx-t5-settle var(--motion-med) var(--ease-spring-real) both;
-  animation-delay: 80ms;
-}
 [data-pmx-thread="t5"] .t5-strip-btn {
   transition: transform var(--motion-fast) var(--ease-default);
 }
@@ -270,4 +230,308 @@
   [data-pmx-thread="t5"] .t5-surface {
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
+}
+
+/* ================================================================ packet: the lane dialogue, the third
+ * work rail, the user-lane note and the artifact handoff.
+ *
+ * The lanes are the concept, so both new surfaces are laid out by the SAME container query that pairs
+ * the turns - one breakpoint for the whole concept, at 900px, and no JavaScript measurement anywhere.
+ * Everything is scoped: the contact sheet renders all eight thread concepts as siblings in one document.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* ---- the question, folded (below 900px): a stacked stepper -------------------------------------
+ * This is the DEFAULT, because a narrow window is the harder case and the one that must be right first.
+ * The two lanes become two stacked blocks, and the user half is marked so it still reads as the
+ * reader's side once the columns are gone. */
+
+[data-pmx-thread="t5"] .t5-qlane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  padding: var(--sm) 0;
+}
+
+[data-pmx-thread="t5"] .t5-qlane[data-lane="assistant"] {
+  border-left: 2px solid var(--accent-primary);
+  padding-left: var(--sm);
+}
+
+[data-pmx-thread="t5"] .t5-qlane[data-lane="assistant"][data-phase="preparing"] { border-left-style: dashed; }
+
+[data-pmx-thread="t5"] .t5-qlane[data-lane="user"] {
+  border-left: 2px solid var(--border);
+  padding-left: var(--sm);
+}
+
+[data-pmx-thread="t5"] .t5-qprompt {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+[data-pmx-thread="t5"] .t5-qreq {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* `Question 2 of 3` sits ABOVE the form, in the user lane. */
+[data-pmx-thread="t5"] .t5-qcount {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t5"] .t5-qopts { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+[data-pmx-thread="t5"] .t5-qfree {
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  resize: vertical;
+}
+
+[data-pmx-thread="t5"] .t5-qreason { margin: 0; font-size: var(--fs-xs); color: var(--accent-error); }
+[data-pmx-thread="t5"] .t5-qreason[data-show="0"] { display: none; }
+
+[data-pmx-thread="t5"] .t5-qacts { display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; }
+[data-pmx-thread="t5"] .t5-qskipped { font-size: var(--fs-2xs); color: var(--accent-warning); }
+
+/* Cancel collapses both lanes to ONE row, so the receipt is full width in every layout. */
+[data-pmx-thread="t5"] .t5-qreceipt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  padding: var(--xs) 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+}
+[data-pmx-thread="t5"] .t5-qreceipt-text { flex: 1 1 auto; font-size: var(--fs-xs); color: var(--text-primary); }
+[data-pmx-thread="t5"] .t5-qreceipt[data-status="cancelled"] .t5-qreceipt-text { color: var(--text-muted); }
+
+/* ---- the work rail, folded (below 900px): rows under the turn ---------------------------------- */
+
+[data-pmx-thread="t5"] .t5-rail { display: flex; flex-direction: column; gap: 1px; padding: var(--xs) 0; }
+
+[data-pmx-thread="t5"] .t5-rail-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  width: 100%;
+  padding: 3px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 35%, transparent);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+[data-pmx-thread="t5"] .t5-rail-row:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+[data-pmx-thread="t5"] .t5-rail-row[data-open="1"] { border-bottom-color: var(--accent-primary); }
+
+[data-pmx-thread="t5"] .t5-rail-kind {
+  flex: 0 0 auto;
+  min-width: 58px;
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t5"] .t5-rail-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The condensed rail is a three-row summary block, not a shortened list: a finished run leaves three
+   facts - what it did, what came out, how long it took. */
+[data-pmx-thread="t5"] .t5-rail[data-condensed="1"] .t5-rail-text { color: var(--text-primary); }
+
+/* ---- rail detail, rendered in the USER lane ---------------------------------------------------- */
+
+[data-pmx-thread="t5"] .t5-lane-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  padding: var(--xs) 0 var(--sm) var(--sm);
+  border-left: 2px solid var(--accent-primary);
+}
+
+[data-pmx-thread="t5"] .t5-lane-detail-head { display: flex; align-items: baseline; gap: var(--sm); }
+
+[data-pmx-thread="t5"] .t5-lane-close {
+  margin-left: auto;
+  padding: 0 7px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+/* Bounded so the detail can never outgrow the lane it borrowed. */
+[data-pmx-thread="t5"] .t5-lane-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+[data-pmx-thread="t5"] .t5-detail-row {
+  display: flex;
+  gap: var(--sm);
+  width: 100%;
+  padding: 3px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  text-align: left;
+}
+[data-pmx-thread="t5"] .t5-detail-file { cursor: pointer; }
+[data-pmx-thread="t5"] .t5-detail-file:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+[data-pmx-thread="t5"] .t5-detail-p { margin: 0; font-size: var(--fs-xs); line-height: 1.5; color: var(--text-secondary); }
+[data-pmx-thread="t5"] .t5-detail-acts { display: flex; flex-wrap: wrap; gap: var(--xs); padding-top: var(--xs); }
+
+/* ---- BSD: a note in the user lane -------------------------------------------------------------- */
+
+[data-pmx-thread="t5"] .t5-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: var(--xs) 0;
+  padding: var(--xs) var(--sm);
+  border-left: 2px solid var(--text-muted);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+}
+
+/* Severity is carried by the rule weight AND by the words in the kind label, never colour alone. */
+[data-pmx-thread="t5"] .t5-note[data-severity="caution"] { border-left-style: double; border-left-width: 4px; border-left-color: var(--accent-error); }
+[data-pmx-thread="t5"] .t5-note[data-severity="note"] { border-left-color: var(--accent-blue); }
+
+[data-pmx-thread="t5"] .t5-note-kind {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t5"] .t5-note-text { margin: 0; font-size: var(--fs-xs); line-height: 1.5; color: var(--text-primary); }
+[data-pmx-thread="t5"] .t5-note-ev { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+[data-pmx-thread="t5"] .t5-note-dismiss {
+  padding: 1px 7px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+
+/* ---- artifact handoff ------------------------------------------------------------------------- */
+
+[data-pmx-thread="t5"] .t5-handoff {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  flex-wrap: wrap;
+  padding: var(--xs) 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--accent-primary);
+}
+[data-pmx-thread="t5"] .t5-handoff-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+[data-pmx-thread="t5"] .t5-handoff-state { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t5"] .t5-handoff-worked { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+[data-pmx-thread="t5"] .t5-handoff-open { margin-left: auto; }
+[data-pmx-thread="t5"] .t5-handoff[data-state="idle"],
+[data-pmx-thread="t5"] .t5-handoff[data-state="loading"] { border-left-style: dashed; }
+[data-pmx-thread="t5"] .t5-handoff[data-state="idle"] .t5-handoff-state,
+[data-pmx-thread="t5"] .t5-handoff[data-state="loading"] .t5-handoff-state { font-style: italic; }
+[data-pmx-thread="t5"] .t5-handoff[data-state="error"] .t5-handoff-state { color: var(--accent-error); }
+
+/* ---- this concept's own choreography: the lanes CROSS-FADE ------------------------------------- */
+
+/* No height spring: the halves sit side by side at full width, so springing a height would shove the
+   conversation above them. A cross-fade changes what the lanes say without moving anything. */
+@keyframes t5-qlane-fade {
+  from { opacity: .25; }
+  to   { opacity: 1; }
+}
+[data-pmx-thread="t5"] .t5-qlane-fade { animation: t5-qlane-fade var(--motion-med) var(--ease-default) both; }
+
+[data-motion="reduced"] [data-pmx-thread="t5"] .t5-qlane-fade { animation: none !important; }
+
+/* ================================================================ 900px and up: three real columns
+ *
+ * TWO container queries, because the surfaces live in two different containers and there is no single
+ * ancestor that covers both:
+ *
+ *   - the INLINE hosts sit inside `.t5-root`, which declares `container-name: pmx-thread`;
+ *   - the WINDOW regions (questionHost, workSurfaceHost) sit inside the window's shell, which declares
+ *     `container-name: pmx-chat` - the shared convention every window follows.
+ *
+ * Querying only `pmx-thread` - which is what this did first - silently did nothing whenever a window
+ * provided the regions, which is the common case: the rules matched no ancestor, so the lanes stacked at
+ * every width and the rail was never a third column. Both names, same proportions, one breakpoint.
+ * ---------------------------------------------------------------------------------------------- */
+
+@container pmx-chat (min-width: 900px) {
+  [data-pmx-thread="t5"] [data-pmx-region="questionHost"],
+  [data-pmx-thread="t5"] [data-pmx-region="workSurfaceHost"] {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    column-gap: var(--xl);
+    align-items: start;
+  }
+  /* User half LEFT, assistant half RIGHT - the same sides the turns use, so the dialogue reads as a
+     continuation of the conversation rather than a form that happens to be nearby. */
+  /* Both halves are pinned to ROW 1. Without the row, auto-flow placed the assistant half in row 1 and
+     pushed the user half to row 2 - the columns were right and the dialogue still read as a stack. */
+  [data-pmx-thread="t5"] .t5-qlane[data-lane="user"] { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-qlane[data-lane="assistant"] { grid-column: 2; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-qreceipt { grid-column: 1 / -1; }
+
+  /* The rail is the third column: right of the assistant lane, beside the conversation. Its detail
+     borrows the user lane, on the same row, so the two read as one exchange. */
+  [data-pmx-thread="t5"] .t5-rail { grid-column: 2; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-lane-detail { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-bsd-host { grid-column: 1; }
+  [data-pmx-thread="t5"] .t5-handoff-host { grid-column: 2; }
+}
+
+@container pmx-thread (min-width: 900px) {
+  [data-pmx-thread="t5"] .t5-inline-question,
+  [data-pmx-thread="t5"] .t5-inline-surfaces {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    column-gap: var(--xl);
+    align-items: start;
+  }
+  [data-pmx-thread="t5"] .t5-inline-question .t5-qlane[data-lane="user"] { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-question .t5-qlane[data-lane="assistant"] { grid-column: 2; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-question .t5-qreceipt { grid-column: 1 / -1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-rail { grid-column: 2; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-lane-detail { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-bsd-host { grid-column: 1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-handoff-host { grid-column: 2; }
 }
