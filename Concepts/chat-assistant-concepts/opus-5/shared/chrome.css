@@ -530,6 +530,31 @@
 }
 .pmx-route-star[aria-pressed="true"] { color: var(--text-primary); }
 .pmx-route-foot { border-top: var(--border-width, 1px) solid var(--border); padding-top: 4px; }
+/* Acquisition policy inside the Route popup footer: a stack of short sentences, each on its own
+ * line so none of them can be skimmed past as a clause of another. */
+.pmx-route-acq {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 0 8px;
+}
+
+.pmx-route-acq-head {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pmx-route-acq-line {
+  margin: 0;
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
 .pmx-route-settings {
   width: 100%;
   padding: 5px 6px;
@@ -707,6 +732,14 @@
   font-size: var(--fs-2xs);
   color: var(--text-muted);
 }
+/* The provider acquisition policy sentences sit beside the diagnosis in the composer's reason row.
+ * They are quieter than the diagnosis and quieter than the action, because they are the standing
+ * rule rather than the thing that just happened or the thing you are about to do. */
+.pmx-composer-policy {
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+}
+
 .pmx-composer-link {
   border: none;
   background: transparent;

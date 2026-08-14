@@ -300,22 +300,61 @@
     /* Activity, verification and advice are read straight off the thread rather than through
      * `activeFor`, so without this guard they survive the yield and leave a partial cluster beside the
      * question. The work surfaces yield as ONE thing or the yield means nothing. */
-    if (railRows.length && !pendingQuestion) {
+    /* ---- the operation ledger, appended to the same rail. These rows report what the run RAN rather
+     * than what it is DOING, so they survive the condensed swap above: a finished run still has to
+     * answer for every operation it performed. */
+    var opRows = pendingQuestion ? [] : this._opRailRows();
+    var allRows = railRows.concat(opRows);
+
+    function swap(node, text) {
+      /* In-place morph: a rail row that appended on every count tick would grow the rail past the
+       * conversation beside it. */
+      if (svc.motion && svc.motion.swapText) svc.motion.swapText(node, text);
+      else node.textContent = text;
+    }
+
+    if (allRows.length && !pendingQuestion) {
       var rail = u.el('div', { class: 't5-rail', data: { condensed: complete ? '1' : '0' } });
-      railRows.forEach(function (r) {
+      allRows.forEach(function (r, idx) {
+        /* One heading, exactly where the surfaces end and the operations begin. */
+        if (r.op && (idx === 0 || !allRows[idx - 1].op)) {
+          rail.appendChild(u.el('div', { class: 't5-rail-head', text: 'Operations' }));
+        }
+
         var on = openKind === r.kind;
+        var data = { kind: r.kind, open: on ? '1' : '0' };
+        var countText = '';
+        if (r.op) {
+          /* Status is the ROW'S OWN STATE, not a badge beside its text: the compact form has room for a
+           * headline and a count and nothing else. The statusLabel itself is printed in the detail, and
+           * on the row's accessible name, so the compact form never withholds it. */
+          data.op = '1';
+          data.status = r.op.status;
+          if (r.op.count != null) countText = r.op.count + (r.op.unit ? ' ' + r.op.unit : '');
+        }
+
         var btn = u.el('button', {
-          class: 't5-rail-row', type: 'button',
-          data: { kind: r.kind, open: on ? '1' : '0' },
+          class: 't5-rail-row', type: 'button', data: data,
           aria: { expanded: on ? 'true' : 'false' }
         });
-        btn.appendChild(u.el('span', { class: 't5-rail-kind', text: r.label }));
-        var textEl = u.el('span', { class: 't5-rail-text' });
-        /* In-place morph: a rail row that appends on every count tick would grow the rail past the
-         * conversation beside it. */
-        if (svc.motion && svc.motion.swapText) svc.motion.swapText(textEl, r.text);
-        else textEl.textContent = r.text;
-        btn.appendChild(textEl);
+
+        if (r.op) {
+          btn.setAttribute('aria-label', r.op.headline + ' \u2014 ' + r.op.statusLabel +
+            (countText ? ' \u2014 ' + countText : ''));
+          var headEl = u.el('span', { class: 't5-rail-op-head' });
+          var cntEl = u.el('span', { class: 't5-rail-op-count' });
+          /* The headline changes tense and the count grows on every tick; both morph rather than reflow. */
+          swap(headEl, r.op.headline);
+          swap(cntEl, countText);
+          btn.appendChild(headEl);
+          btn.appendChild(cntEl);
+        } else {
+          btn.appendChild(u.el('span', { class: 't5-rail-kind', text: r.label }));
+          var textEl = u.el('span', { class: 't5-rail-text' });
+          swap(textEl, r.text);
+          btn.appendChild(textEl);
+        }
+
         self._on(btn, 'click', function () {
           var vv = self.ctx.store.view(self.tid());
           vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
@@ -323,32 +362,15 @@
           self.ctx.store.touchView('surfaces');
         });
         rail.appendChild(btn);
+
+        /* ---- the detail, rendered into the USER LANE - the lane OPPOSITE the rail.
+         * It is appended as the open row's NEXT SIBLING and pulled into column 1 by the same container
+         * query that pairs the turns, so ONE element serves both layouts: the user lane at 900px and up,
+         * and directly beneath its own row once the lanes have folded into a stepper and there is no
+         * opposite lane left to borrow. */
+        if (on) rail.appendChild(self._laneDetail(r));
       });
       host.appendChild(rail);
-
-      /* ---- the detail, rendered into the USER LANE.
-       * It is a sibling of the rail with `data-lane="user"`, which the grid places in column 1 at 900px
-       * and stacks below at narrow widths - the same fold the turns use, so nothing needs a second
-       * breakpoint. */
-      var open = null;
-      for (var i = 0; i < railRows.length; i++) if (railRows[i].kind === openKind) { open = railRows[i]; break; }
-      if (open) {
-        var pane = u.el('div', { class: 't5-lane-detail', data: { lane: 'user', kind: open.kind } });
-        var head = u.el('div', { class: 't5-lane-detail-head' });
-        head.appendChild(u.el('span', { class: 't5-rail-kind', text: open.label }));
-        var close = u.el('button', { class: 't5-lane-close', type: 'button', text: 'Close', aria: { label: 'Close this detail' } });
-        this._on(close, 'click', function () {
-          var vv = self.ctx.store.view(self.tid());
-          if (vv.surfaces) vv.surfaces.expanded = null;
-          self.ctx.store.touchView('surfaces');
-        });
-        head.appendChild(close);
-        pane.appendChild(head);
-        var bodyEl = u.el('div', { class: 't5-lane-detail-body pmx-scroll' });
-        open.build(bodyEl);
-        pane.appendChild(bodyEl);
-        host.appendChild(pane);
-      }
     }
 
     /* Advice is a NOTE IN THE USER LANE per the matrix, and the handoff sits under the rail; both get
@@ -365,6 +387,120 @@
     var msgs = this.ctx.data.messagesFor(this.tid()) || [];
     for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].verification) return msgs[i].verification;
     return null;
+  };
+
+  /* The cross-lane pane. ONE element, built once per open row: the layout decides whether it reads as
+   * the user lane or as the step under its own rail row, and nothing here knows which. */
+  T5.prototype._laneDetail = function (r) {
+    var self = this, u = U();
+    var pane = u.el('div', { class: 't5-lane-detail', data: { lane: 'user', kind: r.kind } });
+
+    var head = u.el('div', { class: 't5-lane-detail-head' });
+    head.appendChild(u.el('span', { class: 't5-rail-kind', text: r.label }));
+    /* The compact row carries status as a state attribute; the pane is where the WORD is printed. */
+    if (r.op) {
+      head.appendChild(u.el('span', {
+        class: 't5-op-status', data: { status: r.op.status }, text: r.op.statusLabel
+      }));
+    }
+    var close = u.el('button', { class: 't5-lane-close', type: 'button', text: 'Close', aria: { label: 'Close this detail' } });
+    this._on(close, 'click', function () {
+      var vv = self.ctx.store.view(self.tid());
+      if (vv.surfaces) vv.surfaces.expanded = null;
+      self.ctx.store.touchView('surfaces');
+    });
+    head.appendChild(close);
+    pane.appendChild(head);
+
+    var bodyEl = u.el('div', { class: 't5-lane-detail-body pmx-scroll' });
+    r.build(bodyEl);
+    pane.appendChild(bodyEl);
+    return pane;
+  };
+
+  /* ---------------------------------------------------------------- the operation card
+   *
+   * `reference/screenshots/pm7_popout.png` renders one unit of tool work far denser than a one-line
+   * "Read file" row: a headline, a status, the reason it ran, six named fields, its per-file deltas and
+   * its chips. This concept reads that card ACROSS THE LANES.
+   *
+   * The rail says WHAT ran - one compact row per operation, headline and count, status carried by the
+   * row's own state attribute. The OPPOSITE lane says HOW - the six fields as a two-column key/value
+   * block in the user lane, under the reason the operation ran at all. No other concept can do this,
+   * because no other concept has a lane on the far side of its work rail to answer in.
+   *
+   * Nothing here recomputes a fact the record already settled: `headline` carries the tense rule and
+   * `count` grows while the operation runs, so both are printed exactly as handed over.
+   */
+  T5.prototype._opRailRows = function () {
+    var self = this, svc = this.ctx.services;
+    if (!svc.opcard || !svc.opcard.forThread) return [];
+    var recs = svc.opcard.forThread(this.ctx, this.tid()) || [];
+    var out = [];
+    function rowFor(rec) {
+      return {
+        kind: 'op:' + rec.id,
+        op: rec,
+        label: F().label(rec.kind),
+        build: function (h) { self._detailOp(h, rec); }
+      };
+    }
+    for (var i = 0; i < recs.length; i++) out.push(rowFor(recs[i]));
+    return out;
+  };
+
+  T5.prototype._detailOp = function (host, rec) {
+    var self = this, u = U();
+    var A = this.ctx.services.artifacts;
+
+    /* The why line HEADS the detail. The lane answers `how` only after it has said why the run reached
+     * for this operation at all. */
+    if (rec.why) host.appendChild(u.el('p', { class: 't5-detail-p t5-op-why', text: rec.why }));
+
+    /* All six fields, in the order the record hands them over, as a real two-column grid: keys in the
+     * first track and values in the second, so every value starts on the same vertical line however
+     * long its key is. A flex row per field could not promise that. */
+    var fields = u.el('div', { class: 't5-op-fields' });
+    rec.fields.forEach(function (f) {
+      fields.appendChild(u.el('span', { class: 't5-op-k', text: f.key }));
+      fields.appendChild(u.el('span', { class: 't5-op-v', text: f.value }));
+    });
+    host.appendChild(fields);
+
+    /* `verb target +added \u2212removed`, one line per file the operation touched. */
+    if (rec.rows && rec.rows.length) {
+      var rowsEl = u.el('div', { class: 't5-op-rows' });
+      rec.rows.forEach(function (row) {
+        rowsEl.appendChild(u.el('div', { class: 't5-op-row' }, [
+          u.el('span', { class: 't5-op-row-what', text: row.verb + ' ' + row.target }),
+          u.el('span', { class: 't5-op-row-delta', text: '+' + (row.added || 0) + ' \u2212' + (row.removed || 0) })
+        ]));
+      });
+      host.appendChild(rowsEl);
+    }
+
+    if (!rec.chips || !rec.chips.length) return;
+    var chips = u.el('div', { class: 't5-op-chips' });
+    rec.chips.forEach(function (chip) {
+      /* `/sources` is a count, not a destination: there is no service call behind it, so it is a plain
+       * token. Only the artifact chip is a button, and it opens the artifact it names. */
+      if (chip.kind !== 'artifact') {
+        chips.appendChild(u.el('span', { class: 't5-op-chip', data: { kind: chip.kind }, text: chip.label }));
+        return;
+      }
+      var btn = u.el('button', { class: 't5-op-chip', type: 'button', data: { kind: 'artifact' } }, [
+        chip.label,
+        u.el('span', { class: 't5-op-chip-id', text: chip.artifactId })
+      ]);
+      self._on(btn, 'click', function () {
+        if (!A) return;
+        A.open(chip.artifactId);
+        /* Settle the simulated transport in the same interaction, exactly as the handoff card does. */
+        if (A.forceReady) A.forceReady(chip.artifactId);
+      });
+      chips.appendChild(btn);
+    });
+    host.appendChild(chips);
   };
 
   /* ---- detail builders. They render into the user lane, so they are prose-width, not sheet-width. */

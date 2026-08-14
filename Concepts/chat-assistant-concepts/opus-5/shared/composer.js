@@ -629,11 +629,29 @@
       for (var k = 0; k < accts.length; k++) {
         if (accts[k].label !== acct2) continue;
         var target = r2.settingsTarget(accts[k].id);
-        var link = U().el('button', { class: 'pmx-composer-link', type: 'button', text: target.label });
+        /* The acquisition policy sentence goes IN the composer's reason row, next to the diagnosis.
+         * PROVIDER_CLI_FINAL_ADJUDICATION.md governs where a provider tool comes from the first time,
+         * and this is the surface a user reads immediately before choosing to start setup — offering
+         * the link without it would collect consent from someone who was not told that Puppet Master
+         * fetches the tool from the provider's official source and does not bundle it. */
+        if (target.acquisition) {
+          this.reason.appendChild(U().el('span', {
+            class: 'pmx-composer-policy', text: ' ' + target.acquisition.oneLine
+          }));
+          /* Installation and authentication being separate is the second governing clause, and it is
+           * the one users are most likely to assume the opposite of. */
+          this.reason.appendChild(U().el('span', {
+            class: 'pmx-composer-policy', text: ' ' + target.acquisition.separation
+          }));
+        }
+        var link = U().el('button', {
+          class: 'pmx-composer-link', type: 'button',
+          text: target.acquisition ? (target.acquisition.action + ' \u00b7 ' + target.label) : target.label
+        });
         var self = this;
         U().on(link, 'click', function () {
           var toast = self.svc('toast', 'PMXToast');
-          if (toast) toast.show(target.destination + ' · ' + target.returnContext.returnLabel);
+          if (toast) toast.show(target.destination + ' \u00b7 ' + target.returnContext.returnLabel);
         });
         this.reason.appendChild(link);
       }

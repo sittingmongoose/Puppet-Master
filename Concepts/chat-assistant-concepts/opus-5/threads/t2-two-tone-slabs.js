@@ -25,6 +25,18 @@
   var COLLAPSE_ELIGIBLE_CHARS = 850;
   var PREVIEW_LINES = 7;
 
+  /* Operations in the chip run. Four loose chips is the point at which the run stops reading as a
+   * row of facts and starts reading as a wall, so past it the settled operations fold into the one
+   * count chip this concept already uses for a tool run. */
+  var OPS_CHIP_MAX = 4;
+
+  /* A decorative glyph per operation kind. The chip's own words carry the meaning (contract 8.1);
+   * every name here is checked against the icon set before use and falls back to `dot`. */
+  var OP_GLYPH = {
+    thought: 'layers', read: 'file', search: 'search', web: 'globe', browser: 'browser',
+    test: 'beaker', edit: 'edit', generate: 'sparkle', verify: 'check'
+  };
+
   function T2Thread(host, ctx) {
     this.host = host;
     this.ctx = ctx;
@@ -421,16 +433,42 @@
       });
     });
 
-    /* Activity carries the six kinds the packet wants visible: read, search, web, browser, test,
-     * verify. One chip, six counts, morphed in place. */
-    var stages = (thread && thread.activityStages) || [];
-    if (stages.length) {
-      specs.push({
-        kind: 'activity', icon: glyph('beaker'),
-        label: stages.length + (stages.length === 1 ? ' step' : ' steps'),
-        width: 360,
-        build: function (host) { self.buildStagesDetail(host, stages); }
+    /* ---- the operations.
+     *
+     * One operation, one chip. The chip says what the record says - `headline`, which already carries
+     * the tense rule, plus the count when the wording does not spell it out - and opens the operation
+     * card in this concept's popup sheet. Nothing about an operation is ever printed into the
+     * transcript: a chip run under the slab is the whole vocabulary here, and a card growing inline
+     * would be the nested block this concept exists to avoid.
+     *
+     * Nine chips would swamp a run that already carries goal, todo, agents, diffs, artifacts and
+     * advice, so past OPS_CHIP_MAX they fold into the same count chip the run already uses for a tool
+     * run, and that chip's sheet becomes an index over all nine. A RUNNING operation keeps its own
+     * chip regardless: what is happening right now is the one fact a compact run must not fold away,
+     * and the fold is a display choice, so the count chip still stands for the whole set. */
+    var ops = (svc.opcard && svc.opcard.forThread) ? svc.opcard.forThread(this.ctx, this.tid()) : [];
+    if (ops.length) {
+      var loose = ops;
+      if (ops.length > OPS_CHIP_MAX) {
+        loose = ops.filter(function (op) { return op.running; });
+      }
+      loose.forEach(function (op) {
+        specs.push({
+          kind: 'op-' + op.id, icon: glyph(OP_GLYPH[op.kind] || 'dot'),
+          label: self.opChipLabel(op),
+          running: op.running,
+          width: 360,
+          build: function (host, api) { self.buildOpDetail(host, api, op, null); }
+        });
       });
+      if (loose.length < ops.length) {
+        specs.push({
+          kind: 'ops', icon: glyph('beaker'),
+          label: ops.length + (ops.length === 1 ? ' operation' : ' operations'),
+          width: 360,
+          build: function (host, api) { self.buildOpsIndex(host, api, ops); }
+        });
+      }
     }
 
     each(active && active.diffs).forEach(function (g, n) {
@@ -563,7 +601,7 @@
       if (!rec) {
         var btn = u.el('button', {
           class: 't2-chip', type: 'button',
-          data: { chip: spec.kind, severity: spec.severity || '' }
+          data: { chip: spec.kind, severity: spec.severity || '', running: spec.running ? '1' : '' }
         });
         if (svc.icons) btn.appendChild(svc.icons.get(spec.icon, 13));
         var label = u.el('span', { class: 't2-chip-label', text: spec.label });
@@ -594,6 +632,9 @@
       /* survivor: keep the element, morph the text */
       rec.spec = spec;
       rec.btn.setAttribute('data-severity', spec.severity || '');
+      /* An operation settling is a state change on the SAME chip, so the attribute is rewritten in
+       * place next to the text morph rather than the chip being rebuilt in its settled form. */
+      rec.btn.setAttribute('data-running', spec.running ? '1' : '');
       if (rec.text !== spec.label) {
         if (svc.motion && svc.motion.swapText) svc.motion.swapText(rec.label, spec.label);
         else rec.label.textContent = spec.label;
@@ -627,17 +668,127 @@
     }
   };
 
-  T2Thread.prototype.buildStagesDetail = function (host, stages) {
+  /* ---------------------------------------------------------------- the operation card
+   *
+   * The card only ever exists inside a popup sheet. That is not a shortcut: this concept demoted
+   * every piece of machinery to a chip precisely so a long conversation cannot accumulate nested
+   * blocks, and an operation card is the densest block in the packet.
+   *
+   * The sheet is the SAME popup a chip has always opened - `ctx.services.popup`, one overlay, no
+   * second mechanism. The index and the card are two contents of one sheet rather than two sheets,
+   * so drilling in and stepping back never stacks overlays; `_swapSheet` rewrites the host in place
+   * and asks the popup to remeasure. */
+
+  /* The chip's words. `headline` already carries the tense rule, and it usually already spells the
+   * count out ("Read 7 files"), so the count is appended only when the record's own wording does
+   * not contain it - the count is printed, never recomputed, and never printed twice. */
+  T2Thread.prototype.opChipLabel = function (op) {
+    var label = op.headline || '';
+    if (op.count == null) return label;
+    var n = String(op.count);
+    if (label.indexOf(n) >= 0) return label;
+    return label + ' \u00b7 ' + n + (op.unit ? ' ' + op.unit : '');
+  };
+
+  T2Thread.prototype._swapSheet = function (host, api, build) {
+    U().empty(host);
+    build(host, api);
+    if (api && api.resize) api.resize();
+  };
+
+  /* The index the folded count chip opens: every operation on the thread, each row drilling into its
+   * own card inside this same sheet. */
+  T2Thread.prototype.buildOpsIndex = function (host, api, ops) {
+    var self = this;
     var u = U();
-    host.appendChild(u.el('div', { class: 't2-sheet-title', text: 'Activity' }));
-    stages.forEach(function (st) {
-      var row = u.el('div', { class: 't2-sheet-row' }, [
-        u.el('span', { class: 't2-sheet-kind', text: F().label(st.kind) }),
-        u.el('span', { class: 't2-sheet-label', text: st.label + (st.detail ? ' \u2014 ' + st.detail : '') })
+    host.appendChild(u.el('div', { class: 't2-sheet-title', text: 'Operations' }));
+    var list = u.el('div', { class: 't2-sheet-list pmx-scroll' });
+    ops.forEach(function (op) {
+      var row = u.el('button', { class: 't2-sheet-row t2-op-pick', type: 'button', data: { running: op.running ? '1' : '' } }, [
+        u.el('span', { class: 't2-sheet-kind', text: op.statusLabel }),
+        u.el('span', { class: 't2-sheet-label', text: self.opChipLabel(op) }),
+        u.el('span', { class: 't2-sheet-dur', text: op.durationMs != null ? F().duration(Math.round(op.durationMs / 1000)) : '' })
       ]);
-      if (st.durationMs != null) row.appendChild(u.el('span', { class: 't2-sheet-kind', text: F().duration(Math.round(st.durationMs / 1000)) }));
-      host.appendChild(row);
+      self._on(row, 'click', function () {
+        self._swapSheet(host, api, function (h, a) { self.buildOpDetail(h, a, op, ops); });
+      });
+      list.appendChild(row);
     });
+    host.appendChild(list);
+  };
+
+  /* One operation card. `backTo` is the operation list to step back to, and is null when the chip
+   * that opened the sheet was the operation's own - there is nothing behind it to return to. */
+  T2Thread.prototype.buildOpDetail = function (host, api, op, backTo) {
+    var self = this;
+    var u = U();
+    var card = u.el('div', { class: 't2-op', data: { running: op.running ? '1' : '' } });
+
+    /* Title, with the status as its suffix - the same fact the chip is wearing. */
+    var head = u.el('div', { class: 't2-op-head' }, [
+      u.el('span', { class: 't2-op-title', text: op.headline }),
+      u.el('span', { class: 't2-status', text: op.statusLabel })
+    ]);
+    card.appendChild(head);
+
+    if (op.why) card.appendChild(u.el('p', { class: 't2-op-why', text: op.why }));
+
+    /* The six fields, two columns, keys in small caps. */
+    var grid = u.el('div', { class: 't2-op-grid' });
+    (op.fields || []).forEach(function (f) {
+      grid.appendChild(u.el('span', { class: 't2-op-k', text: f.key }));
+      grid.appendChild(u.el('span', { class: 't2-op-v', text: f.value }));
+    });
+    card.appendChild(grid);
+
+    var chips = op.chips || [];
+    if (chips.length) {
+      var chipRow = u.el('div', { class: 't2-op-chips' });
+      chips.forEach(function (chip) {
+        /* `/sources · 5` is a count, not a destination - there is no sources surface to open - so it
+         * is rendered as a label. Only the artifact chip is a button, and it goes somewhere. */
+        var isArtifact = chip.kind === 'artifact' && !!chip.artifactId;
+        var b = u.el(isArtifact ? 'button' : 'span', {
+          class: 't2-op-chip', data: { kind: chip.kind }, text: chip.label
+        });
+        if (isArtifact) {
+          b.setAttribute('type', 'button');
+          self._on(b, 'click', function () {
+            self.ctx.services.artifacts.open(chip.artifactId);
+            /* The artifact takes over the surface it opens into, so the sheet that sent the user
+             * there must not be left hanging in front of it. */
+            if (api && api.close) api.close();
+            else self.ctx.services.popup.closeAll(null);
+          });
+        }
+        chipRow.appendChild(b);
+      });
+      card.appendChild(chipRow);
+    }
+
+    var rows = op.rows || [];
+    if (rows.length) {
+      var rowsEl = u.el('div', { class: 't2-op-rows' });
+      rows.forEach(function (r) {
+        rowsEl.appendChild(u.el('div', { class: 't2-op-row' }, [
+          u.el('span', { class: 't2-op-verb', text: r.verb }),
+          u.el('span', { class: 't2-op-target', text: r.target }),
+          u.el('span', { class: 't2-op-add', text: '+' + (r.added || 0) }),
+          u.el('span', { class: 't2-op-rem', text: '\u2212' + (r.removed || 0) })
+        ]));
+      });
+      card.appendChild(rowsEl);
+    }
+
+    host.appendChild(card);
+
+    if (backTo && backTo.length > 1) {
+      var back = u.el('button', { class: 't2-act t2-op-back', type: 'button', text: '\u2190 All operations' });
+      this._on(back, 'click', function () {
+        self._swapSheet(host, api, function (h, a) { self.buildOpsIndex(h, a, backTo); });
+      });
+      host.appendChild(back);
+    }
   };
 
   /* The advice sheet. Read-only: Dismiss is the only verb, because there is no API to apply advice and

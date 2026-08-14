@@ -424,7 +424,23 @@
            * would train the reader to ignore it. */
           if (anyUnready) {
             var target = route.settingsTarget(accounts.filter(function (a) { return a.state !== 'ready'; })[0].id);
-            var btn = u.el('button', { class: 'pmx-route-settings', type: 'button', text: target.label });
+            /* The footer is where a reader decides to leave Chat and start provider setup, so the
+             * governing acquisition rule is stated here in full rather than summarised. Four separate
+             * sentences because the adjudication makes four separate promises — official source, no
+             * bundling, separate authentication, exact Host/Environment — and collapsing them into one
+             * line is how a policy quietly loses the half nobody reads. */
+            if (target.acquisition) {
+              var acq = u.el('div', { class: 'pmx-route-acq' }, [
+                u.el('div', { class: 'pmx-route-acq-head', text: target.acquisition.headline }),
+                u.el('p', { class: 'pmx-route-acq-line', text: target.acquisition.source }),
+                u.el('p', { class: 'pmx-route-acq-line', text: target.acquisition.separation }),
+                u.el('p', { class: 'pmx-route-acq-line', text: target.acquisition.host }),
+                u.el('p', { class: 'pmx-route-acq-line', text: target.acquisition.consent })
+              ]);
+              footHost.appendChild(acq);
+            }
+            var btn = u.el('button', { class: 'pmx-route-settings', type: 'button',
+              text: target.acquisition ? (target.acquisition.action + ' \u00b7 ' + target.label) : target.label });
             u.on(btn, 'click', function () {
               var toast = svc(self.ctx, 'toast', 'PMXToast');
               if (toast) toast.show(target.destination + ' · ' + target.returnContext.returnLabel);

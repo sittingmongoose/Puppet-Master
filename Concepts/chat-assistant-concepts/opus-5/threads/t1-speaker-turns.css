@@ -751,3 +751,116 @@
 
 [data-motion="reduced"] [data-pmx-thread="t1"] .t1-qturn-arrive { animation: none !important; }
 [data-motion="reduced"] [data-pmx-thread="t1"] .t1-wstrip-glyph { transition: none !important; }
+
+/* ================================================================ packet: the operation ledger
+ *
+ * PMConcept7's operation card, in this concept's own hand: a MARGIN ANNOTATION LEDGER. Nine records
+ * sit under the work strip as marginalia - a small-caps margin label, an italic gloss, and a hanging
+ * definition list whose keys occupy the same column as every `.t1-speaker-label` above them.
+ *
+ * What is deliberately absent is the point: no pill for status, no chip boxes, no card border, no
+ * ruled body. `.t1-annot-body`'s marginal rule is not reused here because nine ruled blocks would read
+ * as nine panels, and this concept draws none. Everything else is borrowed rather than reinvented:
+ * `.t1-annot`, `.t1-annot-margin`, `.t1-annot-kind`, `.t1-annot-text`, `.t1-annot-ev`, `.t1-more`,
+ * `.t1-strip-btn` and `.t1-strip-sep` all do the jobs they already do elsewhere in this sheet.
+ * ---------------------------------------------------------------------------------------------- */
+
+[data-pmx-thread="t1"] .t1-ops { display: flex; flex-direction: column; padding-top: var(--xs); }
+
+/* An operation IS an annotation, so it takes `.t1-annot`'s shape and adds only what a record needs. */
+[data-pmx-thread="t1"] .t1-op { padding: var(--xs) 0 6px; }
+[data-pmx-thread="t1"] .t1-op .t1-annot-margin { flex-wrap: wrap; gap: var(--xs) var(--sm); margin-bottom: 2px; }
+
+/* Small caps, muted: a margin LABEL, not a title. The headline is printed exactly as the record states
+   it - present participle while running, past tense once settled - so the label changes tense without
+   this sheet knowing the rule. */
+[data-pmx-thread="t1"] .t1-op-label {
+  font-size: var(--fs-xs);
+  font-variant-caps: all-small-caps;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-op[data-op-status="running"] .t1-op-label { color: var(--text-secondary); }
+
+/* Status is a word after the headline. Running is carried by the italic as well as by the word, so the
+   distinction survives a monochrome render. */
+[data-pmx-thread="t1"] .t1-op-status {
+  font-size: var(--fs-2xs);
+  letter-spacing: .08em;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-op[data-op-status="running"] .t1-op-status { font-style: italic; color: var(--accent-primary); }
+
+/* count/unit, duration, and the plain `/sources` count: quiet facts, tabular so a growing count cannot
+   reflow the line it sits on. */
+[data-pmx-thread="t1"] .t1-op-meta {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The reason reads as prose on the measure, in the italic a marginal gloss uses. */
+[data-pmx-thread="t1"] .t1-op-why {
+  font-style: italic;
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+
+[data-pmx-thread="t1"] .t1-op[data-expanded="0"] .t1-op-detail { display: none; }
+
+/* The hanging definition list. Keys sit at the block's left edge - where every speaker label in the
+   transcript sits - and values start on the measure to their right. The value's flex-basis is what
+   makes this fluid without a width query: below roughly 57ch the value drops to its own line and the
+   list stacks, which is the only honest behaviour at 520px. */
+[data-pmx-thread="t1"] .t1-op-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 3px 0 0;
+  max-width: 80ch;
+}
+[data-pmx-thread="t1"] .t1-op-field { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--sm); min-width: 0; }
+
+[data-pmx-thread="t1"] .t1-op-key {
+  flex: 0 0 15ch;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t1"] .t1-op-val {
+  flex: 1 1 42ch;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-2xs);
+  line-height: 1.55;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* The two fields that carry literal machine text read as machine text. */
+[data-pmx-thread="t1"] .t1-op-val[data-key="COMMAND"],
+[data-pmx-thread="t1"] .t1-op-val[data-key="OPERATION_INPUT"] { font-family: var(--mono-font); }
+
+/* Per-file deltas: one line each, on the value measure. */
+[data-pmx-thread="t1"] .t1-op-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--xs) var(--sm); }
+[data-pmx-thread="t1"] .t1-op-row-verb { color: var(--text-secondary); }
+[data-pmx-thread="t1"] .t1-op-row-delta { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* Links, not chips: a line of text at the end of the block. */
+[data-pmx-thread="t1"] .t1-op-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--xs) var(--sm);
+  margin-top: 5px;
+  font-size: var(--fs-2xs);
+}
+
+/* `.t1-annot` stretches its children, which would centre the borrowed `.t1-more` across the block. */
+[data-pmx-thread="t1"] .t1-op .t1-more { align-self: flex-start; }
+
+/* The transcript raises `.t1-more` on turn hover; an operation is not a turn, so it raises its own. */
+[data-pmx-thread="t1"] .t1-op:hover .t1-more,
+[data-pmx-thread="t1"] .t1-op:focus-within .t1-more { opacity: 1 !important; }

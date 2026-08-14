@@ -16,6 +16,15 @@
   function F() { return global.PMXData.fmt; }
   var ELIGIBLE = 850;
 
+  /* Zero-padded to the widest number in the SAME operation, so `+92 \u221218` and `+61 \u221200` put
+   * their digits in the same character cells. Right-aligning the token alone would only line up its
+   * last digit; in a monospace log the pairs have to line up column for column. */
+  function pad(n, width) {
+    var s = String(n);
+    while (s.length < width) s = '0' + s;
+    return s;
+  }
+
   function T6(host, ctx) {
     this.host = host; this.ctx = ctx; this.offs = []; this.rendered = {}; this.lastTid = null;
     this.build();
@@ -205,6 +214,10 @@
     if (!host) return;
     u.empty(host);
 
+    /* Digits are rebound per pass, exactly as the question form does it: one handler per render would
+     * otherwise expand an operation once per pass that ever ran. */
+    this._unbindOpKeys();
+
     /* Ask the flow, not the yield flag: this runs BEFORE renderQuestion on every pass. */
     var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
 
@@ -258,15 +271,52 @@
       });
     });
 
-    /* The six activity kinds, each its own log line - in a log this is the natural shape, and it is the
-     * only concept where listing them individually costs nothing. */
+    /* ---- the nine operations, each an exec-log row with its own record's rows beneath it.
+     *
+     * `opcard.forThread` is the one contract and this concept's reading of it is ALIGNED COLUMNS. The
+     * six fields are not a card face here, they are six more log rows in the grid that the operation
+     * row itself uses: key in the kind column, value in the label column, count in the duration
+     * column. That is also why the field rows are appended to the log ITSELF rather than into a
+     * `t6-log-sub` wrapper - an indented sub-block would break the one property this form exists to
+     * demonstrate, which is that every key and every value sits in the same character cell.
+     *
+     * The kind column widens to 18ch for these rows because `OPERATION_INPUT` is fifteen characters
+     * and the key is printed whole. Ellipsising a field key in a log that is ABOUT alignment would be
+     * the one unreadable outcome.
+     */
+    var ops = (svc.opcard && svc.opcard.forThread) ? svc.opcard.forThread(this.ctx, this.tid()) : [];
+    var opById = {};
+    for (var oi = 0; oi < ops.length; oi++) opById[ops[oi].id] = ops[oi];
+
+    /* digit -> line key, rebuilt every pass so the printed numbers always name what is on screen. */
+    this._opKeys = {};
+    var opCount = 0;
+
     var stages = (thread && thread.activityStages) || [];
     stages.forEach(function (st) {
+      var rec = opById[st.id];
+      /* A stage with no operation facts is still a step; it just has nothing to expand. */
+      if (!rec) {
+        lines.push({
+          key: 'stage-' + st.id, kind: st.kind,
+          label: st.label,
+          dur: st.durationMs != null ? F().duration(Math.round(st.durationMs / 1000)) : '',
+          detail: st.detail ? function (h) { self._logLine(h, '', st.detail, ''); } : null
+        });
+        return;
+      }
+      opCount++;
+      var key = 'op-' + rec.id;
+      /* This concept numbers whatever it expects a keyboard to reach, and 1-9 is what one keystroke
+       * can name. The number is printed, so the promise is visible rather than folklore. */
+      if (opCount <= 9) self._opKeys[String(opCount)] = key;
       lines.push({
-        key: 'stage-' + st.id, kind: st.kind,
-        label: st.label,
-        dur: st.durationMs != null ? F().duration(Math.round(st.durationMs / 1000)) : '',
-        detail: st.detail ? function (h) { self._logLine(h, '', st.detail, ''); } : null
+        key: key, kind: rec.kind, op: true, flat: true,
+        num: opCount <= 9 ? opCount : null,
+        /* headline and statusLabel verbatim: the record owns the tense and the count. The status is a
+         * token in the row's own duration column - there are no pills anywhere in this concept. */
+        label: rec.headline, dur: rec.statusLabel, status: rec.status,
+        detail: function (h) { self._logOpRows(h, rec); }
       });
     });
 
@@ -347,39 +397,53 @@
     } else if (lines.length && !pendingQuestion) {
       lines.forEach(function (line) {
         var on = !!openIds[line.key];
+        var cls = 't6-log-row' + (line.op ? ' t6-op' : '');
         var el = line.detail
-          ? u.el('button', { class: 't6-log-row', type: 'button', data: { kind: line.kind, open: on ? '1' : '0', severity: line.severity || '' }, aria: { expanded: on ? 'true' : 'false' } })
-          : u.el('div', { class: 't6-log-row', data: { kind: line.kind, severity: line.severity || '' } });
+          ? u.el('button', { class: cls, type: 'button', data: { kind: line.kind, open: on ? '1' : '0', severity: line.severity || '', status: line.status || '' }, aria: { expanded: on ? 'true' : 'false' } })
+          : u.el('div', { class: cls, data: { kind: line.kind, severity: line.severity || '', status: line.status || '' } });
 
         el.appendChild(u.el('span', { class: 't6-log-kind', text: line.kind }));
         var labelEl = u.el('span', { class: 't6-log-label' });
+        var textEl = labelEl;
+        if (line.num != null) {
+          /* The keyboard number, in the same glyph the question form uses for the same promise. */
+          labelEl.appendChild(u.el('span', { class: 't6-form-num', text: String(line.num) }));
+          textEl = u.el('span', { class: 't6-op-head' });
+          labelEl.appendChild(textEl);
+        }
         /* In place. A log that appends on every count tick stops being readable by the third tick. */
-        if (svc.motion && svc.motion.swapText) svc.motion.swapText(labelEl, line.label);
-        else labelEl.textContent = line.label;
+        if (svc.motion && svc.motion.swapText) svc.motion.swapText(textEl, line.label);
+        else textEl.textContent = line.label;
         el.appendChild(labelEl);
         el.appendChild(u.el('span', { class: 't6-log-dur', text: line.dur || '' }));
 
-        if (line.detail) {
-          self._on(el, 'click', function () {
-            var vv = self.ctx.store.view(self.tid());
-            vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
-            vv.surfaces.openIds = vv.surfaces.openIds || {};
-            /* Independent per line: a log is read line by line, so opening one says nothing about the
-             * others. */
-            if (vv.surfaces.openIds[line.key]) delete vv.surfaces.openIds[line.key];
-            else vv.surfaces.openIds[line.key] = true;
-            self.ctx.store.touchView('surfaces');
-          });
-        }
+        if (line.detail) self._on(el, 'click', function () { self._toggleLine(line.key); });
 
         logEl.appendChild(el);
 
+        /* An operation's rows are SIBLINGS in the log, not children of an indented block: the columns
+         * line up only while every row shares the log's own grid. Everything else keeps the indented
+         * sub-block, which is right for detail that is a list rather than a continuation. */
         if (on && line.detail) {
-          var sub = u.el('div', { class: 't6-log-sub' });
-          line.detail(sub);
-          logEl.appendChild(sub);
+          if (line.flat) {
+            line.detail(logEl);
+          } else {
+            var sub = u.el('div', { class: 't6-log-sub' });
+            line.detail(sub);
+            logEl.appendChild(sub);
+          }
         }
       });
+
+      /* The digits are live, so they are advertised once - in the same columns as everything else. */
+      if (opCount) {
+        logEl.appendChild(u.el('div', { class: 't6-log-row t6-op-hint' }, [
+          u.el('span', { class: 't6-log-kind', text: 'keys' }),
+          u.el('span', { class: 't6-log-label', text: '1\u2013' + Math.min(opCount, 9) + ' expands an operation \u00b7 enter toggles the focused row' }),
+          u.el('span', { class: 't6-log-dur', text: '' })
+        ]));
+        this._bindOpKeys();
+      }
 
       if (complete && logOpen) {
         var back = u.el('button', { class: 't6-log-row t6-log-more', type: 'button' }, [
@@ -413,6 +477,119 @@
     ]);
     host.appendChild(row);
     return row;
+  };
+
+  /* One line's disclosure, shared by the pointer and the keyboard so both do the same single thing. */
+  T6.prototype._toggleLine = function (key) {
+    var vv = this.ctx.store.view(this.tid());
+    vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+    vv.surfaces.openIds = vv.surfaces.openIds || {};
+    /* Independent per line: a log is read line by line, so opening one says nothing about the others. */
+    if (vv.surfaces.openIds[key]) delete vv.surfaces.openIds[key];
+    else vv.surfaces.openIds[key] = true;
+    this.ctx.store.touchView('surfaces');
+  };
+
+  /* ---------------------------------------------------------------- one operation, as aligned rows
+   *
+   * Reference `pm7_popout.png` prints an operation as a header, a reason, six labelled facts, its
+   * per-file deltas and a chip row. In this register those are nine log rows in one column grid: no
+   * card, no pill, no second typeface. The only thing carrying the structure is the column stops.
+   */
+  T6.prototype._logOpRows = function (host, rec) {
+    var self = this, u = U();
+    var A = this.ctx.services.artifacts;
+
+    /* The reason, marked the way this concept already marks commentary, spanning to the last column
+     * because a sentence has no business being cropped to the width of a value. */
+    if (rec.why) {
+      host.appendChild(u.el('div', { class: 't6-log-row t6-op-why' }, [
+        u.el('span', { class: 't6-log-kind', text: '' }),
+        u.el('span', { class: 't6-log-label', text: '\u2192 ' + rec.why })
+      ]));
+    }
+
+    /* All six fields, in the record's order, printed whole. */
+    rec.fields.forEach(function (f) {
+      /* The duration column carries the operation's own tally beside the command that produced it,
+       * verbatim from the record - the count is the record's to grow, not this renderer's to derive. */
+      var tally = (f.key === 'COMMAND' && rec.count != null)
+        ? (rec.count + (rec.unit ? ' ' + rec.unit : '')) : '';
+      host.appendChild(u.el('div', { class: 't6-log-row t6-op-field' }, [
+        u.el('span', { class: 't6-log-kind', text: f.key }),
+        u.el('span', { class: 't6-log-label', text: f.value }),
+        u.el('span', { class: 't6-log-dur', text: tally })
+      ]));
+    });
+
+    /* Per-file deltas, right-aligned in the duration column and padded to the widest number in this
+     * operation, so the digits stack across files instead of merely ending together. */
+    var rows = rec.rows || [];
+    if (rows.length) {
+      var wAdd = 1, wRem = 1, i;
+      for (i = 0; i < rows.length; i++) {
+        wAdd = Math.max(wAdd, String(rows[i].added || 0).length);
+        wRem = Math.max(wRem, String(rows[i].removed || 0).length);
+      }
+      rows.forEach(function (r) {
+        host.appendChild(u.el('div', { class: 't6-log-row t6-op-file' }, [
+          u.el('span', { class: 't6-log-kind', text: r.verb || '' }),
+          u.el('span', { class: 't6-log-label', text: r.target || '' }),
+          u.el('span', {
+            class: 't6-log-dur',
+            text: '+' + pad(r.added || 0, wAdd) + ' \u2212' + pad(r.removed || 0, wRem)
+          })
+        ]));
+      });
+    }
+
+    /* The closing row: bracketed tokens in the label column, elapsed in the duration column. */
+    var chips = rec.chips || [];
+    var elapsed = rec.durationMs != null ? F().duration(Math.round(rec.durationMs / 1000)) : '';
+    if (!chips.length && !elapsed) return;
+
+    var foot = u.el('div', { class: 't6-log-row t6-op-foot' });
+    foot.appendChild(u.el('span', { class: 't6-log-kind', text: '' }));
+    var cell = u.el('span', { class: 't6-log-label' });
+    chips.forEach(function (chip) {
+      /* The artifact token is a real button in the same brackets every command in this concept wears.
+       * A token that looks live and opens nothing is worse than printing no token at all. */
+      if (chip.kind === 'artifact' && chip.artifactId && A && A.open) {
+        var b = u.el('button', { class: 't6-log-dismiss', type: 'button', text: '[' + chip.label + ']' });
+        self._on(b, 'click', function () { self.ctx.services.artifacts.open(chip.artifactId); });
+        cell.appendChild(b);
+        return;
+      }
+      cell.appendChild(u.el('span', { class: 't6-op-chip', text: '[' + chip.label + ']' }));
+    });
+    foot.appendChild(cell);
+    foot.appendChild(u.el('span', { class: 't6-log-dur', text: elapsed }));
+    host.appendChild(foot);
+  };
+
+  /* The operation digits. Bound on the document because the log has no focusable container of its own
+   * - it is rows, not a box - and released on every re-render and on destroy through the same
+   * `PMXUtil.on` disposer the question keys use. */
+  T6.prototype._bindOpKeys = function () {
+    var self = this;
+    var handler = function (ev) {
+      if (ev.defaultPrevented || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+      var tag = (ev.target && ev.target.tagName) || '';
+      if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') return;
+      if (!/^[1-9]$/.test(ev.key)) return;
+      var svc = self.ctx.services;
+      /* While a question is open the form owns the digits, and the log is not on screen to take them. */
+      if (svc.qflow && svc.qflow.pending(svc, self.tid())) return;
+      var key = self._opKeys ? self._opKeys[ev.key] : null;
+      if (!key) return;
+      ev.preventDefault();
+      self._toggleLine(key);
+    };
+    this._opKeyOff = U().on(global.document, 'keydown', handler);
+  };
+
+  T6.prototype._unbindOpKeys = function () {
+    if (this._opKeyOff) { try { this._opKeyOff(); } catch (e) {} this._opKeyOff = null; }
   };
 
   T6.prototype._logGoal = function (host, goal) {
@@ -833,6 +1010,7 @@
 
   T6.prototype.destroy = function () {
     this._unbindQuestionKeys();
+    this._unbindOpKeys();
     if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window

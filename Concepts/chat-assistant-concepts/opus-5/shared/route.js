@@ -299,6 +299,98 @@
     return SETUP_REASONS[stateLiteral] || SETUP_REASONS.needs_repair;
   }
 
+  /* ---- provider acquisition policy copy ------------------------------------------------------
+   *
+   * PROVIDER_CLI_FINAL_ADJUDICATION.md was omitted from the original packet, and its absence shows:
+   * before this block the word "official" appeared in NO file in this workspace, so the one rule the
+   * adjudication actually governs — where a provider command line tool comes from the FIRST time —
+   * was nowhere in the product copy. `SETUP_REASONS` above diagnoses a state in one sentence; that is
+   * not the same as telling the user what acquiring it will and will not do.
+   *
+   * The adjudication's direct decision, in its own terms: not bundled in core, not in the default
+   * execution baseline, not pre-seeded as a PM-distributed package, never silently installed by
+   * Project/model/provider/Goal/Plan/WorkNode/agent or by Auto/On; acquired from the official
+   * provider or package source, for the exact selected Host/Environment, on an explicit user action —
+   * and installation and authentication remain separate steps.
+   *
+   * WHY THE SPLIT MATTERS HERE: `firstAcquisition` states are the ones that need consent copy.
+   * `lifecycle` states (update available, verifying, repair) are POST-CONSENT management of an
+   * installation the user already authorized, and the adjudication explicitly permits automatic
+   * policy there. Printing the consent sentence on an update would misdescribe what is happening;
+   * printing the lifecycle sentence on a first install would imply consent that was never given. */
+  var ACQUISITION_KIND = {
+    cli_missing: 'first',
+    install_required: 'first',
+    key_required: 'auth',
+    signin_required: 'auth',
+    update_required: 'lifecycle',
+    update_available: 'lifecycle',
+    update_scheduled: 'lifecycle',
+    waiting_for_work: 'lifecycle',
+    verifying: 'lifecycle',
+    update_failed: 'lifecycle',
+    needs_repair: 'lifecycle',
+    usage_unavailable: 'none',
+    model_unavailable: 'none',
+    ready: 'none'
+  };
+
+  var ACQUISITION_COPY = {
+    first: {
+      headline: 'Install from the official source',
+      /* The negative half is as load-bearing as the positive half: the adjudication supersedes an
+       * earlier bundle that permitted "Included with this Server" phrasing, so the copy has to deny
+       * it in words rather than merely omit it. */
+      source: 'Puppet Master does not bundle provider command line tools and does not include them in a server baseline. Installing fetches this provider from its official source.',
+      separation: 'Installing does not sign you in. Authentication is a separate step you take afterwards.',
+      host: 'The installation is made for the exact Host and Environment selected for this conversation.',
+      consent: 'Nothing is installed until you start it here. Auto and On maintain an installation you have already approved; they are not consent to acquire one.',
+      action: 'Install'
+    },
+    auth: {
+      headline: 'Sign in to this account',
+      source: 'The provider tool is already installed. This step only authenticates the account.',
+      separation: 'Installation and authentication are tracked separately, so signing in here does not reinstall anything.',
+      host: 'Credentials are bound to the account, not to the Host or Environment.',
+      consent: 'Signing in is an explicit action; Puppet Master does not renew credentials on your behalf without it.',
+      action: 'Sign in'
+    },
+    lifecycle: {
+      headline: 'Manage the installed provider',
+      source: 'This provider was already acquired and bound, so later generations are staged, verified, activated and rolled back under your update policy.',
+      separation: 'Updating does not change the account credentials.',
+      host: 'The update applies to the Host and Environment this installation belongs to.',
+      consent: 'Automatic update policy applies because the installation was explicitly acquired; it never performs a first acquisition.',
+      action: 'Open update'
+    }
+  };
+
+  /* acquisitionFor(accountId) -> null when the account needs no acquisition copy at all, otherwise
+   * one record. Returning null rather than an empty husk lets a renderer omit the block entirely
+   * instead of printing a heading over nothing. */
+  function acquisitionFor(accountId) {
+    var stateLiteral = setupStateOf(accountId);
+    var kind = ACQUISITION_KIND[stateLiteral] || 'lifecycle';
+    if (kind === 'none') return null;
+    var copy = ACQUISITION_COPY[kind];
+    var a = accountRecord(accountId);
+    return {
+      state: stateLiteral,
+      kind: kind,
+      headline: copy.headline,
+      reason: setupReason(stateLiteral),
+      source: copy.source,
+      separation: copy.separation,
+      host: copy.host,
+      consent: copy.consent,
+      action: copy.action,
+      account: a ? a.label : null,
+      /* The line a one-line surface prints when it has room for exactly one sentence. The source
+       * sentence is chosen because it is the one carrying the governing decision. */
+      oneLine: copy.source
+    };
+  }
+
   function modelRecord(accountId, name) {
     for (var i = 0; i < MODELS.length; i++) {
       if (MODELS[i].accountId === accountId && MODELS[i].name === name) return MODELS[i];
@@ -545,6 +637,9 @@
       label: 'Open Provider Settings',
       destination: a ? ('Provider settings · ' + a.label) : 'Provider settings',
       reason: setupReason(stateLiteral),
+      /* The acquisition policy travels WITH the deep link. A row that offers to open setup has to be
+       * able to say what starting setup will do, or the consent it collects is uninformed. */
+      acquisition: acquisitionFor(accountId),
       returnContext: {
         surface: 'chat',
         accountId: a ? a.id : null,
@@ -576,6 +671,8 @@
     setSetupState: setSetupState,
     settingsTarget: settingsTarget,
     setupReason: setupReason,
+    acquisitionFor: acquisitionFor,
+    ACQUISITION_KIND: ACQUISITION_KIND,
     SETUP_STATES: (function () { var k = []; for (var n in SETUP_REASONS) if (Object.prototype.hasOwnProperty.call(SETUP_REASONS, n)) k.push(n); return k; })(),
     FAST_UNAVAILABLE_LINE: FAST_UNAVAILABLE_LINE
   };

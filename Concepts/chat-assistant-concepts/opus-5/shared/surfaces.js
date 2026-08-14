@@ -97,6 +97,11 @@
       case 'replan': return goal.status === 'running' || goal.status === 'paused' || goal.status === 'blocked';
       case 'block': return goal.status === 'running';
       case 'complete': return goal.status === 'running' || goal.status === 'replanning';
+      /* Progress walks the authored phase ladder. It is only meaningful while the run is live, and
+       * only when the goal actually declares phases — a goal with no ladder has nothing to advance
+       * through, and inventing one here would fabricate structure the record never claimed. */
+      case 'progress': return (goal.status === 'running' || goal.status === 'replanning') &&
+        Boolean(goal.phases && goal.phases.length);
       /* Expand and collapse are presentation and are never gated; the permissive default
        * covers them. An UNKNOWN verb is refused in act(), not here, because canAct answers
        * "is this allowed", not "does this exist". */
@@ -148,6 +153,20 @@
       for (var j = 0; j < items.length; j++) {
         if (items[j].state === 'pending') { items[j].state = 'active'; break; }
       }
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
+    if (action === 'todo_block') {
+      /* Block the item work is currently on, falling back to the next pending one. A done item is
+       * never blocked: it already finished, so blocking it would describe a state it left. */
+      for (i = 0; i < items.length; i++) if (items[i].state === 'active') break;
+      if (i === items.length) {
+        for (i = 0; i < items.length; i++) if (items[i].state === 'pending') break;
+      }
+      if (i === items.length) return false;
+      items[i].state = 'blocked';
+      items[i].blockedReason = 'Waiting on the port change in the test configuration.';
       if (store) store.touchView('surfaces');
       return true;
     }
@@ -212,7 +231,7 @@
     return false;
   }
 
-  function activityAct(threadId, action) {
+  function activityAct(threadId, action, payload) {
     var t = threadOf(threadId);
     if (!t) return false;
     var stages = t.activityStages || [];
@@ -228,6 +247,55 @@
       if (store) store.touchView('surfaces');
       return true;
     }
+    if (action === 'activity_kind') {
+      /* Reference 03_compact_execution_activity.mov: each phase announces itself with its own verb
+       * and a count that is REWRITTEN IN PLACE as rows accrue (Exploring 5 files -> 7 files), and the
+       * group that is running reads as a present participle until it finishes. None of that was
+       * reachable before, because the only activity verbs were advance/condense/reopen — which move
+       * a pointer through the stage list but never say which KIND is running, and never grow a count.
+       *
+       * Firing the same kind twice grows its count toward the authored total rather than restarting
+       * it, which is what makes the count morph observable without inventing data. */
+      var wantKind = payload && payload.kind;
+      if (!wantKind) return false;
+      var at = -1;
+      for (var si = 0; si < stages.length; si++) {
+        if (stages[si].kind === wantKind) { at = si; break; }
+      }
+      if (at < 0) return false;
+      var stage = stages[at];
+      v.surfaces.phaseIndex = at;
+      v.surfaces.runningId = stage.id;
+      v.surfaces.counts = v.surfaces.counts || {};
+      var target = typeof stage.count === 'number' ? stage.count : 1;
+      var seen = v.surfaces.counts[stage.id];
+      /* First fire shows the stage part-way through when it has room to grow, so the next fire has
+       * somewhere to go. A single-unit stage lands on its total immediately — there is nothing to
+       * animate and pretending otherwise would be a fake progression. */
+      if (seen == null) seen = target > 2 ? Math.max(1, target - 2) : target;
+      else seen = Math.min(target, seen + 1);
+      v.surfaces.counts[stage.id] = seen;
+      v.surfacesYielded = false;
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
+    if (action === 'activity_settle') {
+      /* The other half of the tense rule: the running group finishes, so its label switches to the
+       * past form and its count lands on the authored total. */
+      if (!v.surfaces.runningId) return false;
+      for (var qi = 0; qi < stages.length; qi++) {
+        if (stages[qi].id === v.surfaces.runningId) {
+          v.surfaces.counts = v.surfaces.counts || {};
+          v.surfaces.counts[stages[qi].id] = typeof stages[qi].count === 'number' ? stages[qi].count : 1;
+          break;
+        }
+      }
+      v.surfaces.runningId = null;
+      if (store) store.touchView('surfaces');
+      return true;
+    }
+
     if (action === 'activity_condense') {
       /* Condensing is what turns a finished run into a durable index. The phase pointer is cleared
        * because a condensed group has no current phase — reopening chooses one again. */
@@ -245,13 +313,13 @@
     return false;
   }
 
-  function act(threadId, action) {
+  function act(threadId, action, payload) {
     /* Todo, subagent and activity verbs are dispatched FIRST. They do not touch the goal, so
      * requiring a goal to exist — or passing them through canAct, which only knows goal
      * lifecycle — would refuse them for a reason that has nothing to do with them. */
     if (action.indexOf('todo_') === 0) return todoAct(threadId, action);
     if (action.indexOf('agent_') === 0) return agentAct(threadId, action);
-    if (action.indexOf('activity_') === 0) return activityAct(threadId, action);
+    if (action.indexOf('activity_') === 0) return activityAct(threadId, action, payload);
 
     var goal = goalFor(threadId);
     if (!goal) return false;
@@ -267,8 +335,35 @@
         /* Only reachable while status is 'idle' (see canAct). This branch is the honest
          * replacement for the old demo path that reached for 'resume'. */
         goal.status = 'running'; goal.canStart = false; goal.canPause = true; goal.canResume = false;
+        /* A started run begins at its FIRST phase. Without this, a re-started goal kept the phase
+         * pointer from its previous life, so the ladder claimed Handoff while the run had just begun. */
+        if (goal.phases && goal.phases.length) {
+          goal.phaseIndex = 0;
+          for (var pi = 0; pi < goal.phases.length; pi++) {
+            if (goal.phases[pi] && typeof goal.phases[pi] === 'object') {
+              goal.phases[pi].state = pi === 0 ? 'current' : 'pending';
+            }
+          }
+        }
         if (toast) toast.show('Goal started');
         break;
+      case 'progress': {
+        /* One step along the authored ladder. Refusing at the end is deliberate: the last phase is
+         * not a treadmill, and wrapping would describe a second run that never happened. */
+        var plist = goal.phases;
+        var pidx = typeof goal.phaseIndex === 'number' ? goal.phaseIndex : 0;
+        if (pidx >= plist.length - 1) return false;
+        if (plist[pidx] && typeof plist[pidx] === 'object') plist[pidx].state = 'done';
+        goal.phaseIndex = pidx + 1;
+        if (plist[pidx + 1] && typeof plist[pidx + 1] === 'object') plist[pidx + 1].state = 'current';
+        goal.workedSeconds = (goal.workedSeconds || 0) + 180;
+        if (toast) {
+          var pnow = plist[goal.phaseIndex];
+          toast.show('Phase ' + (goal.phaseIndex + 1) + ' of ' + plist.length + ' \u00b7 ' +
+            (typeof pnow === 'string' ? pnow : (pnow && pnow.label) || ''));
+        }
+        break;
+      }
       case 'pause':
         goal.status = 'paused'; goal.canPause = false; goal.canResume = true;
         if (toast) toast.show('Goal paused');

@@ -188,6 +188,48 @@
       });
       q.submit(qid);
       q.finishSubmit(qid);
+    },
+    /* `select` answers the CURRENT question with a named option, defaulting to the first. The
+     * harness header used to say it must never answer a question; that was already untrue of
+     * `next` and `submit`, both of which fill required answers before advancing. The honest rule
+     * is narrower: the harness may reach a state, but the interaction suite still drives the
+     * concept's own controls, so a passing test never depends on this path. */
+    select: function (payload) {
+      var q = svc('PMXQuestionnaire');
+      var qid = activeQid();
+      if (!q || !qid) return;
+      var rec = q.activeFor(tid());
+      var cur = (rec.questions || [])[q.currentIndex(qid)];
+      if (!cur) return;
+      var opts = cur.options || [];
+      var want = payload && payload.option;
+      var choice = want && opts.indexOf(want) >= 0 ? want : opts[0];
+      if (cur.kind === 'freeform') q.answer(qid, cur.id, (payload && payload.text) || 'No third selector.');
+      else if (choice) q.answer(qid, cur.id, choice);
+    },
+    /* Stand the flow on a REQUIRED question with its answer removed, then ask to advance. The
+     * refusal is what the concept renders; reference 02_stable_paged_questionnaire.mov shows the
+     * durable half of this state as an advance control that will not fire, not as a message that
+     * appears and then disappears. */
+    validation_error: function () {
+      var q = svc('PMXQuestionnaire');
+      var f = global.PMXQFlow;
+      var qid = activeQid();
+      if (!q || !qid) return;
+      var rec = q.activeFor(tid());
+      var questions = rec.questions || [];
+      var at = -1;
+      for (var i = 0; i < questions.length; i++) {
+        if (questions[i].required) { at = i; break; }
+      }
+      if (at < 0) return;
+      q.goTo(qid, at);
+      /* Remove any answer so validation genuinely fails rather than being asserted to fail. */
+      questions[at].selected = [];
+      questions[at].draft = '';
+      if (q.isSkipped(qid, questions[at].id) && q.unskip) q.unskip(qid, questions[at].id);
+      if (f) f.act({ questionnaire: q }, tid(), 'next');
+      else q.next(qid);
     }
   };
 
@@ -200,9 +242,11 @@
     return s && s.goalFor ? s.goalFor(tid()) : null;
   }
 
-  function act(action) {
+  function act(action, payload) {
     var s = global.PMXSurfaces;
-    if (s && s.act) return s.act(tid(), action);
+    /* The payload is forwarded: the per-kind activity verbs carry which kind to run, and dropping
+     * the second argument here made all eight of them silent no-ops that still reported success. */
+    if (s && s.act) return s.act(tid(), action, payload);
     return false;
   }
 
@@ -210,6 +254,9 @@
     /* `start` is its own action now. It used to call act('resume'), which moved a goal that was
      * never paused into running — the record said "resumed" about a run that had not begun. */
     start: function () { act('start'); },
+    /* One step along the goal's authored phase ladder. Absent until now, so a six-phase Goal could
+     * only ever be captured at whichever phase the fixture froze it on. */
+    progress: function () { act('progress'); },
     pause: function () { act('pause'); },
     resume: function () { act('resume'); },
     update: function () { act('edit'); },
@@ -223,7 +270,8 @@
   var todo = {
     add: function () { act('todo_add'); },
     complete: function () { act('todo_complete'); },
-    reopen: function () { act('todo_reopen'); }
+    reopen: function () { act('todo_reopen'); },
+    block: function () { act('todo_block'); }
   };
 
   var agent = {
@@ -237,11 +285,35 @@
     retry: function () { act('agent_retry'); }
   };
 
+  /* Per-kind activity. `advance`/`condense`/`reopen` move through the stage list without ever saying
+   * WHICH kind is running, so the eight kinds the contract names had no trigger at all and the
+   * count-rewriting behaviour in 03_compact_execution_activity.mov had nothing to drive it.
+   *
+   * `fetch` maps onto our `web` stage kind and `thinking_summary` onto `thought`: the contract names
+   * the semantic event, the fixture names the stage, and this is the one place they are reconciled. */
+  var ACTIVITY_KIND = {
+    thinking_summary: 'thought',
+    search: 'search',
+    read: 'read',
+    fetch: 'web',
+    browser: 'browser',
+    test: 'test',
+    edit: 'edit',
+    generate: 'generate'
+  };
+
   var activity = {
     advance: function () { act('activity_advance'); },
     condense: function () { act('activity_condense'); },
-    reopen: function () { act('activity_reopen'); }
+    reopen: function () { act('activity_reopen'); },
+    /* Landing the running group on its total is what flips its label from the present participle to
+     * the past tense, so the pair of verbs is what makes the tense rule observable. */
+    settle: function () { act('activity_settle'); }
   };
+
+  Object.keys(ACTIVITY_KIND).forEach(function (event) {
+    activity[event] = function () { act('activity_kind', { kind: ACTIVITY_KIND[event] }); };
+  });
 
   var diff = {
     create: function () { global.PMXArtifacts.open('artifact-diff'); global.PMXArtifacts.forceReady('artifact-diff'); },
@@ -251,7 +323,51 @@
 
   /* ---- decisions: approvals, warnings, grants, conflicts ----------------------------- */
 
+  /* Resolving a decision. `approval_open` and the warning triggers only ever RAISED one, so an
+   * approval could be captured open but never approved, denied, expanded or branched — four of the
+   * contract's five decision events had no implementation. Each routes through PMXApprovals.decide,
+   * the same call the concepts' own buttons make, so no second decision path exists. */
+  function topDecision() {
+    var ap = svc('PMXApprovals');
+    if (!ap || !ap.pending) return null;
+    var list = ap.pending(tid()) || [];
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i] || list[i].status === 'decided') continue;
+      return list[i];
+    }
+    return null;
+  }
+
+  function chooseAction(match) {
+    var ap = svc('PMXApprovals');
+    var rec = topDecision();
+    if (!ap || !rec) return false;
+    var actions = rec.actions || [];
+    for (var i = 0; i < actions.length; i++) {
+      if (match(actions[i])) return ap.decide(tid(), rec.id, actions[i].id).ok;
+    }
+    /* Refusing beats picking a different button: a decision that does not offer Branch must not be
+     * silently switched instead. */
+    return false;
+  }
+
   var decision = {
+    details: function () {
+      /* Non-deciding by contract: the record stays pending and the evidence half opens. */
+      chooseAction(function (a) { return a.id === 'details'; });
+    },
+    approve: function () {
+      /* The affirmative action, whatever this decision calls it: an approval offers Allow once,
+       * a route warning offers Switch. Both are the primary. */
+      chooseAction(function (a) { return a.primary === true; }) ||
+        chooseAction(function (a) { return a.id === 'allow_once' || a.id === 'switch'; });
+    },
+    deny: function () {
+      chooseAction(function (a) { return a.id === 'deny' || a.id === 'cancel'; });
+    },
+    branch: function () {
+      chooseAction(function (a) { return a.id === 'branch'; });
+    },
     approval_open: function () {
       raise({
         kind: 'approval', severity: 'material',
@@ -660,6 +776,21 @@
     }
   };
 
+  /* ---- contract aliases -------------------------------------------------------------------
+   *
+   * DEMO_TRIGGER_CONTRACT.json v2 names five events that this harness already implemented under
+   * different words. Aliasing rather than renaming keeps every existing call site, hash link and
+   * capture script working while making the contract's own vocabulary resolve, so
+   * `PMXDemo.fire('subagent','progress')` and `PMXDemo.fire('thread','send_request')` both land on
+   * the one implementation instead of a second copy that could drift from it.
+   *
+   * The contract calls the family `subagent`; this file has always called it `agent`. Both names
+   * now reach the same object, so neither vocabulary is wrong. */
+  agent.progress = agent.advance;
+  thread.send_request = thread.request;
+  thread.receive_response = thread.respond;
+  thread.spawn_related = thread.spawn;
+
   var FAMILIES = {
     system: system,
     history: history,
@@ -668,6 +799,8 @@
     goal: goal,
     todo: todo,
     agent: agent,
+    /* contract vocabulary; same object, so families() lists it and fire() resolves it */
+    subagent: agent,
     activity: activity,
     diff: diff,
     decision: decision,

@@ -301,6 +301,11 @@
 
       if (text) {
         host.appendChild(this._workDigest(text, condensed, detail));
+        /* `scrollTop` only takes effect once the element is in the document, so the ledger's offset is
+         * restored AFTER the append. Without it, unfolding an operation low in the ledger - which
+         * rebuilds the whole surface from the store - threw the ledger back to the top, and an unfold
+         * that moves the thing you were reading is not happening "in place". */
+        if (this._ledgerEl && this._ledgerScroll) this._ledgerEl.scrollTop = this._ledgerScroll;
       }
     }
 
@@ -318,6 +323,7 @@
     var u = U();
     var v = this.ctx.store.view(this.tid());
     var open = !!(v.surfaces && v.surfaces.expanded === 'work');
+    this._ledgerEl = null;
 
     var wrap = u.el('div', { class: 't4-work', data: { open: open ? '1' : '0', condensed: condensed ? '1' : '0' } });
 
@@ -348,6 +354,8 @@
       /* The bounded ledger. `pmx-scroll` is the shared scrollbar treatment and the max-height lives in
        * CSS, so the ledger can never grow the transcript past the digest register. */
       var ledger = u.el('div', { class: 't4-ledger pmx-scroll' });
+      this._ledgerEl = ledger;
+      this._on(ledger, 'scroll', function () { self._ledgerScroll = ledger.scrollTop; });
       detail.forEach(function (d) {
         var section = u.el('div', { class: 't4-ledger-section' });
         section.appendChild(u.el('div', { class: 't4-ledger-kind', text: d.kind }));
@@ -362,14 +370,146 @@
     return wrap;
   };
 
+  /* ---------------------------------------------------------------- operations: the digest unfolds
+   *
+   * `reference/screenshots/pm7_popout.png` renders one unit of tool work as a headline, a why line,
+   * six labelled fields, per-file deltas and two chips. Nine of those blocks is roughly two hundred
+   * lines of detail, which is the exact wall this concept exists to refuse: a digest that prints a
+   * card per step has stopped being a digest.
+   *
+   * So the card FOLDS INTO ONE SENTENCE per operation - the three facts that decide whether you need
+   * to look further, in the order you would say them out loud:
+   *
+   *     COMPLETED  Searched web: schema.org Recipe markup coverage 2026 · cmd.chat.web.search · cache miss
+   *
+   * and unfolding writes the rest as MORE SENTENCES in the same register: the `why` first, because it
+   * is the only line that says whether the operation should have run at all, then the four fields the
+   * line could not carry with their key as a lead-in word rather than a column, then one line per
+   * changed file, then the chips. The unfold only ever adds lines - no box, no grid, no card - which
+   * is why it can happen in place inside the ledger without changing what kind of surface this is.
+   *
+   * Every value is printed as the record states it. The tense in `headline`, the count in it, and the
+   * status word all come from `opcard`; re-deriving any of them here is how two surfaces start
+   * disagreeing about the same operation.
+   */
   T4Thread.prototype.activityDetail = function (host, stages) {
+    var self = this;
     var u = U();
+    var svc = this.ctx.services;
+    var recs = svc.opcard ? svc.opcard.forThread(this.ctx, this.tid()) : [];
+    var byId = {};
+    for (var i = 0; i < recs.length; i++) byId[recs[i].id] = recs[i];
+
     stages.forEach(function (st) {
+      var rec = byId[st.id];
+      if (rec) { host.appendChild(self._opDigest(rec)); return; }
+      /* A stage carrying no operation facts stays the plain ledger row it always was. Printing an
+       * operation sentence for it would claim a command and a cache result that do not exist. */
       host.appendChild(u.el('div', { class: 't4-sheet-row' }, [
         u.el('span', { class: 't4-sheet-k', text: F().label(st.kind) }),
         u.el('span', { class: 't4-sheet-v', text: st.label + (st.detail ? ' \u2014 ' + st.detail : '') })
       ]));
     });
+  };
+
+  T4Thread.prototype._opField = function (rec, key) {
+    for (var i = 0; i < rec.fields.length; i++) {
+      if (rec.fields[i].key === key) return rec.fields[i].value;
+    }
+    return '';
+  };
+
+  T4Thread.prototype._opDigest = function (rec) {
+    var self = this;
+    var u = U();
+    var v = this.ctx.store.view(this.tid());
+    var open = !!(v.surfaces && v.surfaces.openIds && v.surfaces.openIds[rec.id]);
+
+    var entry = u.el('div', { class: 't4-op-entry', data: { open: open ? '1' : '0', status: rec.status } });
+
+    var cmd = this._opField(rec, 'COMMAND');
+    /* `cache` is a LEAD-IN, not a value: the record says `miss`, and `· miss` alone in a sentence
+     * names nothing. The word that makes it readable is added; the value is printed verbatim. */
+    var cache = 'cache ' + this._opField(rec, 'CACHE');
+
+    /* ONE LINE, and deliberately not a flex row of cells: a single run of inline text, so the CSS
+     * ellipsis truncates the SENTENCE at its end instead of clipping four independent columns. */
+    var line = u.el('button', {
+      class: 't4-op-line', type: 'button',
+      title: rec.statusLabel + ' \u00b7 ' + rec.headline + ' \u00b7 ' + cmd + ' \u00b7 ' + cache,
+      aria: { expanded: open ? 'true' : 'false' }
+    });
+    line.appendChild(u.el('span', { class: 't4-op-status', text: rec.statusLabel }));
+    line.appendChild(u.el('span', { class: 't4-op-head', text: rec.headline }));
+    line.appendChild(u.el('span', { class: 't4-op-sep', text: '\u00b7' }));
+    line.appendChild(u.el('span', { class: 't4-op-cmd', text: cmd }));
+    line.appendChild(u.el('span', { class: 't4-op-sep', text: '\u00b7' }));
+    line.appendChild(u.el('span', { class: 't4-op-cache', text: cache }));
+
+    this._on(line, 'click', function () {
+      var vv = self.ctx.store.view(self.tid());
+      vv.surfaces = vv.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+      vv.surfaces.openIds = vv.surfaces.openIds || {};
+      /* `openIds` is the store's per-record open SET, which is what this needs: unfolding one
+       * operation must not fold the one you were comparing it against. `expanded` stays the single
+       * key that says which SURFACE is open, so no second disclosure mechanism appears. */
+      if (vv.surfaces.openIds[rec.id]) delete vv.surfaces.openIds[rec.id];
+      else vv.surfaces.openIds[rec.id] = true;
+      self.ctx.store.touchView('surfaces');
+    });
+    entry.appendChild(line);
+
+    /* The fold mark is a SIBLING of the line, not a child of it: inside the button the ellipsis would
+     * eat it whenever the sentence overflowed. It never takes the pointer, so the whole line stays
+     * one control. */
+    entry.appendChild(u.el('span', { class: 't4-op-mark', text: open ? '\u2212' : '+', aria: { hidden: 'true' } }));
+
+    if (!open) return entry;
+
+    var fold = u.el('div', { class: 't4-op-unfold' });
+
+    if (rec.why) fold.appendChild(u.el('div', { class: 't4-op-why', text: rec.why }));
+
+    rec.fields.forEach(function (f) {
+      /* COMMAND and CACHE are already in the line above. Repeating them here would turn the unfold
+       * into a table of the sentence it came out of. */
+      if (f.key === 'COMMAND' || f.key === 'CACHE') return;
+      fold.appendChild(u.el('div', { class: 't4-op-sub', title: f.value, data: { key: f.key } }, [
+        u.el('span', { class: 't4-op-lead', text: f.key.toLowerCase().replace(/_/g, ' ') }),
+        u.el('span', { class: 't4-op-val', text: f.value })
+      ]));
+    });
+
+    /* One line per file, the shape the reference prints: `Edited shared/selectors.js +92 −18`. */
+    (rec.rows || []).forEach(function (r) {
+      fold.appendChild(u.el('div', { class: 't4-op-file' }, [
+        u.el('span', { class: 't4-op-lead', text: r.verb }),
+        u.el('span', { class: 't4-op-path', text: r.target }),
+        u.el('span', { class: 't4-op-delta', text: '+' + r.added + ' \u2212' + r.removed })
+      ]));
+    });
+
+    if (rec.chips.length) {
+      var chips = u.el('div', { class: 't4-op-chips' });
+      rec.chips.forEach(function (chip) {
+        if (chip.kind === 'artifact') {
+          var btn = u.el('button', {
+            class: 't4-op-chip', type: 'button', data: { kind: 'artifact' },
+            title: 'Opens ' + chip.artifactId, text: chip.label
+          });
+          self._on(btn, 'click', function () { self.ctx.services.artifacts.open(chip.artifactId); });
+          chips.appendChild(btn);
+          return;
+        }
+        /* `/sources · 5` is a count, not a destination - there is nothing to open - so it renders as
+         * a quiet tag. A chip that looks pressable and does nothing is worse than no chip. */
+        chips.appendChild(u.el('span', { class: 't4-op-chip', data: { kind: chip.kind }, text: chip.label }));
+      });
+      fold.appendChild(chips);
+    }
+
+    entry.appendChild(fold);
+    return entry;
   };
 
   T4Thread.prototype._verificationRecord = function () {
