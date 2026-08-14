@@ -36,6 +36,7 @@
 - 2026-07-07: Registered platform_specs retirement and provider/model capability authority repair: `Plans/Models_System.md` owns active context-window, max-token, fallback-chain, capability provenance, and requested/effective model capability fields; `Plans/Contracts_V0.md` carries only the cross-surface capability snapshot reference envelope; `Plans/assistant-chat-design.md` and `Plans/Provider_OpenCode.md` consume those owners. Legacy `platform_specs` / `platform_specs.rs` references are source-lineage only and cannot be used as active `context_window` or `fallback_model_ids` authority.
 - 2026-07-23: Registered the PMConcept7 concept promotion (ChatGuiUpdates2 workstreams, revs 4-9.2). Title-bar notifications: the rightward notification stack + count badge + sprout inbox is the sole in-app notification affordance, replacing the bottom-right toast stack, the status-bar bell, and the Notifications side-panel affordance (F3-447/F3-448/F3-453 amended in place with stale dispositions; F3-460/F3-461 added; shared alert store and ack/snooze lifecycle semantics unchanged). Status-bar mode/platform/model/context chips and the activity-bar Settings/Usage/Notifications/Orchestrator/Run Graph/Planning Wizard shortcuts are retired with successor owners on the assistant chat surface, the chat context ring, and the title-bar page tabs. `Plans/FinalGUISpec.md` adds F3-462..F3-470 (Projects-like page headers, orchestrator tab-strip theme presentation, page-tab sliding ink + directional transitions, magnet + spotlight hover superseding the F3-446 jiggle, friendly editor file tabs, friendly pill field end clearance, boot paint first-paint gate, chats rail presentation and resize collapse, planning wizard runhead one-liner). `Plans/assistant-chat-design.md` adds ACD-439..ACD-444 (corner-origin sprout popout motion, effort/thoroughness option-count resize in place, context ring click sprout, header chrome menu sprouts and theme-matched popout chrome, chat more-options kebab, chats rail cleanup) and re-anchors requested-platform registration to the chat surface per amended ACD-437/ACD-009. `Plans/usage-feature.md` adds UF-089 (usage page head presentation). `Plans/UI_Command_Catalog.md` re-anchors `cmd.chat.platform` and records icon-only `cmd.usage.refresh`/`cmd.usage.export` affordances. `Plans/UI_Wiring_Rules.md` §0.1 names `Concepts/PMConcept7.html` + `Concepts/ChatGuiUpdates2.md` as the current concept reconciliation input, and `Plans/Wiring_Matrix.production.json` updates the affected rows' ui_location and accessibility contracts. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only; this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance-seal artifacts by itself.
 - 2026-07-28: Registered the Run & Debug revival spec wave and the PMConcept7 Cozy Shelves integration wave. Run & Debug revival: `Plans/Commands_System.md` adds §7.2/§7.3/§7.4 + CS-063..CS-065 (the `cmd.run_debug.*` classical DAP dispatch family, the `cmd.run.*` orchestrator run-control trio, and the investigation verification/cleanup pair closing the §1.0B phase-model holes); `Plans/UI_Command_Catalog.md` adds the Run & Debug reconciliation + registration tables + UCC-139..UCC-142; `Plans/FinalGUISpec.md` adds F3-482..F3-496 (Debug & Run panel identity and layout, debug session state machine, F3-484 multi-session policy superseding the F3-259 one-session cap via stale disposition, unified Variables & Watch shelf, Call Stack shelf, Breakpoint canon, Launch Profile schema, bottom Debug tab canon, panel-to-tab handoff contract, debug hotkey bindings, accessibility contract, adapter registry and portability, terminology boundary, demo fixture description); `Plans/Wiring_Matrix.production.json` adds 44 rows (`catalog.run_debug_*`, `catalog.run_*`, `catalog.debug_record_verification`, `catalog.debug_run_cleanup`) and re-homes the ten `catalog.debug_*` rows to the assistant Debug Mode investigation surface; `Plans/storage-plan.md` adds SP-244 (debug persistence keys); `Plans/Runtime_Artifacts_Panel.md` adds RAP-053 (debug adapter model deferral closure); `Plans/Orchestrator_Page.md` adds OP-034 (run-control trio semantics); `Plans/settings_inventory.json` upgrades `code.execution.debug-configurations` to reference the F3-489 schema. PMConcept7 integration: `Plans/FinalGUISpec.md` adds F3-497..F3-500 (Cozy Shelves panel integration with c2 id canon, F3-471 width envelope applied to the PM7 shell, activity-bar Debug entry, retired panel-unraid/pm6-panel-notify removals); `Plans/FileManager.md` adds F-079 (Cozy Shelves File Manager PM7 integration incl. F2-205 trash-first surfacing); `Plans/UI_Command_Catalog.md` adds UCC-143 (`cmd.chat.open` adjudicated as a compatibility alias of `cmd.chat.open_thread`, exclusions-registered); `Plans/UI_Wiring_Rules.md` §0.1 records the integrated PMConcept7 as concept input; the July 2026 PM7 integrated Cozy control census is deferred pending a current source-hashed recensus, and no Cozy census artifact is registered in this branch. The PM7 build pipeline re-derived `Concepts/pm7-tools/dead_selectors.py` (400 frozen selectors, human-review flag recorded in-file) and `Concepts/pm7-tools/build_pm7.py` census constants for the 31-block base. `Concepts/rail-concepts/**` and `Concepts/pm6-build/**` remain illustrative source-lineage only; this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production build tasks, or governance-seal artifacts by itself.
+- 2026-08-13: Registered `Plans/Shared_Integration_Runtime.md` as the sole canonical owner for the shared service primitives in the 21 approved `adopt_here` rows of `Plans/runtime_integration_disposition.json`; the other 142 rows retain their named subsystem owners. The register is routing evidence rather than product prose or implementation proof. This registration does not create WorkNodes, NodeSeeds, executable queues, runtime launches, production build tasks, or governance-seal artifacts and does not lift PNC-019.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -411,6 +412,18 @@ Debug packetization must keep `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
+### Shared Integration Runtime ownership map (2026-08-13)
+
+`Plans/Shared_Integration_Runtime.md` is the sole product owner for the shared lifecycle primitives in `PROV-004`, `PROV-005`, `PROV-007`, `PROV-009`, `PROV-010`, `PROV-012`, `PROV-023`, `PROV-024`, `CTX-020`, `AGT-014`, `AGT-016`, `AGT-020`, `PRM-010`, `PRM-011`, `PRM-012`, `PRM-016`, `PRM-017`, `PRM-018`, `PRM-019`, `PRM-020`, and `PRM-022`.
+
+Its scope is limited to shared installation resolution and post-consent lifecycle mechanics; conditional-rule and BSD execution; operational-awareness and lease coordination; shared DebugSession/EvalSession records; provider-request admission; environment supervision; durable command outbox, replay/snapshot/live buffering, and stream coalescing; host-local `RuntimeResourceGovernor`; truthful `ObservableWork`; and compact Server-first execution identity/projection.
+
+Existing domain docs retain their semantics: BinaryLocator owns candidate discovery; CLI Bridged Providers and Release Supply Chain own explicit provider acquisition and provenance policy; Models/Multi-Account own route/account/auth; Prompt Pipeline owns prompt assembly; Assistant Chat owns visible thread/BSD controls; Goal Runtime, Run Modes, and Orchestrator own their policy; LSP/DAP/Eval/Tools/MCP/Browser owners retain protocol and tool behavior; Contracts owns shared envelopes; storage owns persistence/retention/migration; Permissions/FileSafe own authority and mutation gates; GUI/Commands/Wiring own presentation and dispatch; Usage owns accounting.
+
+The deterministic BSD default for this implementation wave is `Off`, while `Auto` and `On` remain supported. BSD is always read-only; mode changes frequency only and cannot grant tools or authority. Initial provider-CLI acquisition remains explicit, official-source, and exact-Host/Environment; non-provider Auto/On/Off provisioning cannot override that exception. Shared runtime binds authoritative topology inputs but does not own Project Vault content, Project Sync, move, or source-control semantics. `storage-plan.md` retains persistence only for `RuntimeResourceGovernor` and `ObservableWork` records rather than behavior ownership.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/runtime_integration_disposition.json, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
 | Plan | Primary scope | Notes / canonical intent |
 |------|--------------|--------------------------|
 | `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
@@ -450,6 +463,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `Orchestrator_Page.md` | Orchestrator single-page seven-tab structure | Canonical for tab layout (`Progress` / `Plan Compile` / `Seams` / `Node Graph` / `Evidence` / `History` / `Ledger`). `Progress` is the only widget-composed Orchestrator tab. `Node Graph` references `Run_Graph_View.md`; `Plan Compile` references design-only plans-to-code projection contracts. Terminal widgets, prose summaries, and data source documentation remain consumers of this shell. |
 | `GUI_Rebuild_Requirements_Checklist.md` | Auditable summary checklist for 2026-02-23 GUI rebuild handoff requirements | `Plans/GUI_Rebuild_Requirements_Checklist.md` is the single verification table confirming coverage for widget system, Usage page, chat context enhancements, Dashboard widget grid migration, Orchestrator seven-tab structure with `Plan Compile`, and Node Graph image-backed spec. |
 | `Executor_Protocol.md` | Deterministic overseer flow and lifecycle semantics | Canonical for Builder/Verifier/Overseer roles, next-ready selection, verifier-driven auto completion to `done`, and the versioned `execution_unit_context` contract in `Plans/execution_unit_context.schema.json`. |
+| `Shared_Integration_Runtime.md` | Shared cross-domain runtime coordination | Sole canonical owner for the 21 approved shared-runtime lifecycle primitives. Consumes existing provider, prompt, chat, mode, protocol/tool, contract, storage, permission, host, GUI, command, and wiring owners without re-owning their domain semantics. |
 | `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |
 | `Provider_Stream_Mapping_External_Reference_A2A.md` | Upstream external-framework + A2A bridge → V0 stream mapping | Canonical mapping of upstream native events and A2A bridge concepts to V0 normalized stream events. Diagnostic instrumentation categories, deterministic rules, and Overseer audit protocol instrumentation. Cross-refs: CLI_Bridged_Providers.md, Architecture_Invariants.md#INV-001, Glossary.md, Executor_Protocol.md. |
 | `Provider_OpenCode.md` | OpenCode server-bridged provider integration | Optional provider; user installs OpenCode locally; Puppet Master connects via HTTP REST + SSE. See also CLI_Bridged_Providers.md (extended for HTTP transport). |
@@ -5287,6 +5301,106 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/usage-feature.md
 ```
+
+### 0PI-067 - Shared Integration Runtime Owner Routing
+
+```yaml
+plan_unit_id: 0PI-067
+unit_type: owner_map
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: Shared Integration Runtime is the sole owner for the 21 approved adopt-here shared-service rows; the remaining 142 rows retain their existing owners, domain semantics are not transferred, and the disposition register is routing evidence rather than product canon or implementation proof.
+gui_related: false
+gui_classification_reason: Index owner-routing metadata is not direct GUI behavior.
+depends_on: [PDS-003, PNC-001, SIR-001]
+unblocks: []
+acceptance_criteria:
+  - All 21 adopt-here rows route to Plans/Shared_Integration_Runtime.md as primary owner.
+  - Former primary owners remain supporting domain owners or consumers.
+  - The 142 non-adopted rows retain their approved owners and dispositions.
+  - BSD, provider-first-acquisition, server-topology, and RuntimeResourceGovernor boundaries remain explicit.
+  - This routing creates no WorkNodes, NodeSeeds, queues, runtime/code/build artifacts, or governance seal.
+validation_surfaces: [runtime integration disposition validation, plan owner-routing audit]
+risk_class: owner_map_drift
+reasoning_tier: high
+context_scope: remaining_runtime_integration_owner_map
+implementation_surfaces: [Plans/00-plans-index.md, Plans/Shared_Integration_Runtime.md, Plans/runtime_integration_disposition.json]
+node_compile_hint: {mode: shared_integration_runtime_owner_map, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/runtime_integration_disposition.json, PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13]
+```
+
+### PMConcept7 tweak wave 4 — 2026-08-13 (fourth same-day wave)
+
+Three user-reported defects fixed, live-reproduced before and re-verified after;
+sealed with dated wave-4 dispositions. Owner-doc changes:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-001: browser-in-panel deactivation is
+  model-first (`deactivateBrowserProjection` clears the persisted
+  browser-active domain ref; root cause recorded: restoreOwnerRefs resurrected
+  the stale flag on every commit, making cmd.terminal.split_pane appear to have
+  editor side-effects; mountActiveBrowser enforces a single active tab and
+  un-hides a chip-collapsed browser tab). F3-503: host targeting is latch-based
+  and purely geometric (buildDockLatch entry/exit bands frozen at pickup, 44 px
+  exit slack; elementsFromPoint retired from drop-target resolution with the
+  measured starvation loop recorded — ~9 Hz dock flapping reduced to one host
+  transition and one track opening per approach; the wave-3 two-frame
+  hysteresis stays for slot flapping). F3-421: HTML5 DnD tab reorder retired
+  (with the wave-3 attached-ghost Safari shim) for a pointer-capture gesture —
+  gesture-scoped window listeners, 4 px threshold, 1:1 translateX glide,
+  220 ms neighbour FLIP, 200 ms low-bounce settle, model re-render at
+  settle-end; Safari root causes and the lostpointercapture-on-reparent trap
+  recorded; .tab.dragging at .92 opacity / z 40; T07 pointermove pin untouched.
+- `Plans/UI_Wiring_Rules.md` — §0.1 concept-input note extended.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — interaction
+  rules re-amended; artifact and source hashes recomputed (census unchanged at
+  56 home rows).
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — reorder/targeting/browser
+  rows updated.
+
+Governance: seal row `dec-2026-08-13-pm7-tweak-wave-4`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-4-2026-08-13/`. No new command IDs, no wiring
+row changes, no storage shape changes; this wave creates no WorkNodes,
+NodeSeeds, executable queues, implementation files, runtime artifacts, or
+production build tasks.
+
+### PMConcept7 tweak wave 3 — 2026-08-13 (third same-day wave)
+
+Third same-day wave over the tweak-wave-2 canon, with dated wave-3
+dispositions. Owner-doc changes:
+
+- `Plans/FinalGUISpec.md` — F3-421: the overflow chip always sits immediately
+  left of the actions cluster, fitting is live on tab add/remove, a newly
+  opened overflowing tab stays visible (displacing the chip-adjacent
+  non-active tab into the picker), and tab drag-reorder is animated
+  (suppressed native ghost, transform-only pointer tracking, ~140 ms neighbour
+  FLIP, reduced-motion instant, silhouette glued to the insertion slot).
+  F3-505: theme skin tokens (--ed-shape-outline, --ed-shape-crown/-h,
+  --ed-tab-inactive-ring/+radius; retro hard outline with square inactive
+  rings, basic 2 px accent-blue crown at 9 px radius, glass three-edge bevel
+  with rail alpha re-tuned 88 → 84), and the editor minimap becomes the only
+  code-pane scrollbar (native bars suppressed, margin-aligned band; the wave-2
+  scrollbar-track-margin exclusion is retired). F3-HOME-002 + F3-503: two-frame
+  drop-target hysteresis, mid-FLIP hit-test exclusion (data-pm-home-flip),
+  movement-gated auto-scroll, proportional-projected-width placeholder
+  (mirroring normalizeMainRowBases), and PM_EDGE deferral widened to all Home
+  gestures. F3-HOME-003: the kebab is a vertical-dots 16 by 20 control at the
+  surface's right edge below the grip (out of the head rows; stray terminal
+  control strip removed); spacing re-tuned to 2 px vertical via
+  --pm-home-pad-y/--pm-home-gap-y with 4 px sides; terminal empty-section
+  guidance truth-gated by data-pm-term-empty and restoreOwnerRefs never drops
+  section records.
+- `Plans/Wiring_Matrix.production.json` — the 14 kebab-anchored option rows
+  carry the new kebab location/geometry; census unchanged at 56 home rows.
+- `Plans/UI_Wiring_Rules.md` — §0.1 concept-input note extended.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — interaction
+  rules re-amended; artifact and source hashes recomputed.
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — chip/reorder/minimap/kebab/
+  spacing/terminal rows updated.
+
+Governance: seal row `dec-2026-08-13-pm7-tweak-wave-3`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-3-2026-08-13/`. No new command IDs, no storage
+shape changes; this wave creates no WorkNodes, NodeSeeds, executable queues,
+implementation files, runtime artifacts, or production build tasks.
 
 ### PMConcept7 tweak wave 2 — 2026-08-13 (same-day follow-up)
 

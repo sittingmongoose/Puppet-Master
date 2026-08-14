@@ -1971,11 +1971,29 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   pristine seed otherwise);
 - Open in Panel rendering a real buffer and tab in all four editor panels;
 - the width-aware overflow chip present in every open editor panel styled in the
-  app portal-menu family, editor tab
-  drag-reorder that persists on all four panes and survives a re-render, and the
+  app portal-menu family, sitting immediately left of the actions cluster with
+  live fitting on tab add/remove (a newly opened overflowing tab stays visible,
+  displacing the chip-adjacent non-active tab into the picker); editor tab
+  drag-reorder that persists on all four panes, survives a re-render, and
+  animates as a pointer-capture gesture (wave 4: HTML5 DnD retired; 4 px
+  threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce
+  settle, model re-render at settle-end, Safari-identical, first re-slot never
+  ends the gesture, reduced-motion instant, silhouette glued to the insertion
+  slot); latch-based drop targeting (one host transition and one track opening
+  per approach into an occupied dock, no painted-stack resolution); model-first
+  browser-in-panel deactivation (no resurrectable DOM-only flag); and the
   contact-aware active-tab silhouette
-  with independent left/right contact corners, masked shoulder cutouts, and the
-  translucent frosted rail that ghosts scrolled code beneath the strip;
+  with independent left/right contact corners, masked shoulder cutouts, the
+  translucent frosted rail that ghosts scrolled code beneath the strip,
+  per-theme skin tokens (retro hard outline, basic accent-blue crown, glass
+  bevel at 84 percent rail alpha), and the minimap as the only code-pane
+  scrollbar (native bars suppressed, margin-aligned band);
+- the surface kebab as a vertical-dots 16 by 20 control at the surface's right
+  edge directly below the grip on every surface (no head-row kebab, no stray
+  terminal control strip), 2 px vertical workspace padding via
+  --pm-home-pad-y/--pm-home-gap-y with 4 px sides, and the terminal
+  empty-section guidance truth-gated by data-pm-term-empty with
+  restoreOwnerRefs never dropping section records;
 - dashboard widget reorder and grid-snap resize on the shared direct-manipulation
   vocabulary, still persisted under the widget layout contract;
 - project/workspace persistence, corruption/migration/off-screen recovery, all eight
@@ -1987,3 +2005,66 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
 Each row requires a `test_id`, validator or harness command, evidence reference,
 owner-document reference, and status. An unchecked or screenshot-only row is not
 PASS evidence.
+
+## Shared Runtime GUI Projection Verification Addendum - 2026-08-13
+
+These rows verify that the rebuilt GUI consumes canonical shared-runtime and
+domain-owner projections. They do not authorize a GUI-local state machine,
+command, event family, receipt, schema, or persistence record. `NOT_RUN` remains
+failure to prove the row; a plan validator or screenshot alone cannot turn it
+into `PASS`.
+
+| Test ID | Required GUI behavior | Canonical owners | Validator or harness | Evidence ref | Status |
+|---|---|---|---|---|---|
+| `GUI-SRT-001` | Thread rail uses `ThreadShell`, bounded pinned `PinnedSummary`, and focused-only `ThreadDetail`; a many-thread fixture proves no full-detail fanout. | `Plans/assistant-chat-design.md` ACD-445; `Plans/FinalGUISpec.md` F3-506 | future GUI thread shell/detail subscription census | pending | `NOT_RUN` |
+| `GUI-SRT-002` | Offline outbox and reconnect show queued/waiting/cancelled/rejected-stale/accepted truth, server continuation, epoch-fenced replay or snapshot plus buffered live convergence, and no duplicate effect or idempotency-bypassing resend. | `Plans/Shared_Integration_Runtime.md` §§6-7; `Plans/FinalGUISpec.md` F3-506 | future GUI offline/restart/reconnect race matrix | pending | `NOT_RUN` |
+| `GUI-SRT-003` | Coalescing preserves order and immediately presents approval, tool transition, failure, cancellation, completion, security, and lease-loss changes while freshness remains visible. | `Plans/Shared_Integration_Runtime.md` §7.2; `Plans/FinalGUISpec.md` F3-506 | future GUI stream pressure and immediate-transition matrix | pending | `NOT_RUN` |
+| `GUI-SRT-004` | `ObservableWork` phase, wait reason, reevaluation, cancellation, and outcome are distinct from spinner/dispatch state; exact Host/Environment/Source and requested/effective capacity remain visible. | `Plans/Shared_Integration_Runtime.md` §§3 and 8; `Plans/FinalGUISpec.md` F3-507 | future GUI work/resource/old-hardware matrix | pending | `NOT_RUN` |
+| `GUI-SRT-005` | Discovery, installation, provider first-acquisition consent and official source, authentication, route/account readiness, and Usage are separate axes; unknown or partial proof never renders ready. | `Plans/Shared_Integration_Runtime.md` §4; provider owners; `Plans/FinalGUISpec.md` F3-507 | future GUI installation/auth/readiness/update/rollback matrix | pending | `NOT_RUN` |
+| `GUI-SRT-006` | Lease collision, stale generation/holder, cleanup pending, resource pressure, and awareness `current`/`partial`/`stale`/`unavailable`/`conflicted` show owner reasons and canonical receipt/log/artifact routes without granting action authority. | `Plans/Shared_Integration_Runtime.md` §9; `Plans/FinalGUISpec.md` F3-507 | future GUI lease/awareness race and drill-through matrix | pending | `NOT_RUN` |
+| `GUI-SRT-007` | BSD renders `Off`/`Auto`/`On` with effective default `Off`; silent/duplicate outcomes add no transcript note, material advice is attributable, and failures never block primary work or resemble mutation/safety authority. | `Plans/Run_Modes.md` RM-050; `Plans/assistant-chat-design.md` ACD-446; `Plans/FinalGUISpec.md` F3-508 | future GUI BSD mode/silence/failure/authority matrix | pending | `NOT_RUN` |
+| `GUI-SRT-008` | DebugSession and EvalSession retain distinct target, lease, generation, wait, output, artifact, restart, and cleanup projections; persistent Eval never appears as DAP frame state or a hidden global kernel. | `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-139/140; `Plans/FinalGUISpec.md` F3-509 | future GUI DAP immediate-event and Eval persistence/cleanup matrix | pending | `NOT_RUN` |
+| `GUI-SRT-009` | MCP exposes requested/effective availability and independent transport/init/capability/auth/epoch/retry/subscription/rollback state without fabricating readiness. | `Plans/MCP_Integration.md`; `Plans/FinalGUISpec.md` F3-509 | future GUI MCP reconnect/retry/subscription rollback matrix | pending | `NOT_RUN` |
+| `GUI-SRT-010` | Ordinary browser views are PM-native and show controller lease, observer state, and `PageGeneration`; protected `AuthBrowserSession` content and controls exist only in the human-only foreground surface, with every agent/tool/BSD/awareness/capture consumer denied visibility. | `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-142 through SMPFS-145; `Plans/FinalGUISpec.md` F3-509 | future GUI Browser controller-race and protected-session negative matrix | pending | `NOT_RUN` |
+| `GUI-SRT-011` | Every runtime mutation control has canonical Commands and production Wiring coverage or is disabled/omitted with owner reason; the GUI invents no look-alike command, event, receipt, or state. | `Plans/Commands_System.md`; `Plans/UI_Command_Catalog.md`; `Plans/UI_Wiring_Rules.md`; `Plans/Wiring_Matrix.production.json` | future GUI command/wiring fail-closure census | pending | `NOT_RUN` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Automated_Testing_System.md
+
+### GRRC-032 - Shared Runtime GUI Projection Checklist Gate
+
+```yaml
+plan_unit_id: GRRC-032
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/GUI_Rebuild_Requirements_Checklist.md
+canonical_text: >-
+  The GUI rebuild is not shared-runtime complete until GUI-SRT-001 through GUI-SRT-011 prove bounded thread
+  shell/detail projection, durable offline/reconnect/coalescing truth, ObservableWork, separate installation/auth/readiness,
+  lease and awareness conflicts, evidence drill-through, BSD, typed Debug/Eval/MCP/Browser state, protected
+  AuthBrowserSession isolation, and command/wiring fail closure. The checklist consumes owner truth and does not
+  create lifecycle, command, event, receipt, schema, or persistence authority.
+gui_related: true
+gui_classification_reason: This unit gates user-visible runtime projections and protected-session presentation in the rebuilt GUI.
+depends_on: [F3-506, F3-507, F3-508, F3-509, ACD-445, ACD-446, ATS-030, ATS-031, ATS-032, ATS-033, ATS-034, ATS-035]
+unblocks: []
+acceptance_criteria:
+  - GUI-SRT-001 through GUI-SRT-011 each carry a harness, durable evidence ref, owner ref, and PASS before shared-runtime GUI completion is claimed.
+  - Plan validation or screenshot-only evidence cannot satisfy functional, restart, race, poor-network, pressure, or protected-boundary rows.
+  - No row treats stale projection, awareness, lease possession, authentication, process exit, or a dispatch receipt as mutation or success authority.
+  - Protected AuthBrowserSession content and controls remain human-only and absent from every prohibited consumer.
+  - Missing command or production-wiring closure leaves the related control disabled or omitted.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI-SRT executable matrix]
+risk_class: gui_shared_runtime_false_completion_or_authority_drift
+reasoning_tier: high
+context_scope: shared_runtime_gui_checklist_gate
+implementation_surfaces: [Plans/GUI_Rebuild_Requirements_Checklist.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: shared_runtime_gui_verification_gate, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+preserved_exact_tokens: [ThreadShell, ThreadDetail, ObservableWork, Off, Auto, On, DebugSession, EvalSession, AuthBrowserSession, human-only]
+negative_constraints: [Do not let the checklist become implementation authority., Do not claim PASS from plan or screenshot evidence., Do not expose protected authentication content., Do not invent commands, events, receipts, or state.]
+owner_hints: [Plans/GUI_Rebuild_Requirements_Checklist.md, Plans/FinalGUISpec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
+```

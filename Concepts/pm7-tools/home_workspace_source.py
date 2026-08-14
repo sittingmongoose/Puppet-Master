@@ -80,6 +80,10 @@ HOME_STYLE = r'''
 :root {
   --pm-home-collapsed-h: 34px;
   --pm-home-gap: 4px;
+  /* vertical rhythm is tighter than the 4px column gap: 2px workspace
+     top/bottom padding and 2px dock-to-main vertical margins */
+  --pm-home-pad-y: 2px;
+  --pm-home-gap-y: 2px;
   --pm-home-pickup-dur: 120ms;
   --pm-home-pickup-ease: cubic-bezier(.22, 1, .36, 1);
   --pm-home-drop-dur: 220ms;
@@ -92,17 +96,20 @@ HOME_STYLE = r'''
   overflow: hidden;
   min-height: 0;
 }
-/* Home owns its own gutter (#pm-home-workspace pads by --pm-home-gap); the
-   page shell's .primary-content padding would DOUBLE it, so the shell gutter
-   is zeroed while the Home tab is the active panel -- and only then. */
-.primary-content:has(> #panel-dashboard.pm-home-owned.active) { padding: 0; }
+/* Home owns its own gutter (#pm-home-workspace pads by --pm-home-pad-y /
+   --pm-home-gap); the page shell's .primary-content padding would DOUBLE it,
+   so the shell gutter is zeroed while the Home tab is the active panel -- and
+   only then. !important: the 09-bento theme asserts its own narrow-window
+   .primary-content gutter with !important, which otherwise wins over this
+   unlayered rule and reopens the double gutter. */
+.primary-content:has(> #panel-dashboard.pm-home-owned.active) { padding: 0 !important; }
 #pm-home-workspace {
   position: absolute;
   inset: 0;
   z-index: 2;
   min-width: 0;
   min-height: 0;
-  padding: var(--pm-home-gap);
+  padding: var(--pm-home-pad-y) var(--pm-home-gap);
   box-sizing: border-box;
   color: var(--text-primary);
   font-family: var(--body-font);
@@ -161,9 +168,9 @@ HOME_STYLE = r'''
    receive) a surface: each occupied or drop-previewed dock margins toward
    main. Empty docks collapse to a true 0px with no dead strip. */
 .pm-home-host[data-pm-home-host="dock_top"]:not(.pm-home-host-empty),
-.pm-home-host[data-pm-home-host="dock_top"].pm-home-drop-active { margin-bottom: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_top"].pm-home-drop-active { margin-bottom: var(--pm-home-gap-y); }
 .pm-home-host[data-pm-home-host="dock_bottom"]:not(.pm-home-host-empty),
-.pm-home-host[data-pm-home-host="dock_bottom"].pm-home-drop-active { margin-top: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_bottom"].pm-home-drop-active { margin-top: var(--pm-home-gap-y); }
 .pm-home-host[data-pm-home-host="dock_left"]:not(.pm-home-host-empty),
 .pm-home-host[data-pm-home-host="dock_left"].pm-home-drop-active { margin-right: var(--pm-home-gap); }
 .pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty),
@@ -356,7 +363,11 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    empty-section note must obey the same switch, so it only shows while the
    Terminal pane is the active tab -- never underneath Problems/Output. */
 #bottomTabsContent > .pm-home-terminal-empty-state { display: none; }
-#bottomTerminalHost.active ~ .pm-home-terminal-empty-state { display: block; }
+/* Both display:block rules are additionally gated on the MODEL's own
+   verdict: projectTerminalRuntime stamps data-pm-term-empty on #bottomPanel
+   (which contains #bottomTabsContent and therefore both elements below), so
+   a stale note can never shadow a live terminal. */
+#bottomPanel[data-pm-term-empty="true"] #bottomTerminalHost.active ~ .pm-home-terminal-empty-state { display: block; }
 /* contain: layout paint on #chatPanel clips descendant hit-testing to the
    rounded border box; at a 20px radius the top-right corner arc swallowed
    nearly the whole 18px grip triangle. Notch just that corner so the grip
@@ -365,7 +376,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* the runtime host may have been REPARENTED into a generated section, in
    which case no sibling selector can match it here -- show the guidance
    whenever the terminal host is absent and no other bottom panel is active */
-#bottomTabsContent:not(:has(#bottomTerminalHost)):not(:has(.bottom-host-panel.active)) > .pm-home-terminal-empty-state { display: block; }
+#bottomPanel[data-pm-term-empty="true"] #bottomTabsContent:not(:has(#bottomTerminalHost)):not(:has(.bottom-host-panel.active)) > .pm-home-terminal-empty-state { display: block; }
 #bottomPanel.pm-home-surface #pmBottomTermChrome { display: none !important; }
 .pm-home-terminal-body {
   flex: 1;
@@ -382,7 +393,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    participates in hit-testing, so only the upper-right triangle of the 18px
    box steals hits -- the lower-left half falls through to whatever sits
    beneath it. z-index 140 sits above the pinned actions cluster (130), chat's
-   stacked header (25) and the surface kebab (26). */
+   stacked header (25) and the surface kebab (130). */
 .pm-home-surface-grip {
   position: absolute;
   top: 0;
@@ -422,9 +433,9 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* clearance so pinned right-edge chrome does not sit under the grip's
    hypotenuse (the 18px triangle in the top-right corner) */
 .pm-home-surface .editor-tabs .pane-tabbar-actions { right: 30px; }
-.pm-home-surface .pm6-dash-actions { margin-right: 20px; }
+.pm-home-surface .pm6-dash-actions { margin-right: 22px; }
 .pm-home-surface .pm-home-terminal-head { padding-right: 26px; }
-.pm-home-surface .bottom-tabs-right { padding-right: 22px; }
+.pm-home-surface .bottom-tabs-right { padding-right: 26px; }
 .pm-home-surface .chat-panel-header-stacked > :first-child { padding-right: 26px; }
 /* Keyboard-move announcer (the menu Move/Dock rows are retired, so the grip is
    the only movement affordance and must carry a non-pointer path). */
@@ -456,7 +467,26 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   cursor: pointer;
 }
 .pm-home-titlebar-more { width: 28px !important; min-width: 28px !important; max-width: 28px; flex: 0 0 28px; }
-.pm-home-surface-options { position: relative; z-index: 26; width: 22px; min-width: 22px; height: 22px; padding: 0 !important; }
+/* The kebab sits in a right-edge column directly below the grip triangle:
+   the grip (z 140) owns the y 0-18 upper-right triangle, the kebab owns
+   y 20-40. It is absolutely positioned on the SURFACE itself (its DOM
+   parent), no longer parked inside .pane-tabbar-actions or a head row --
+   which is what left the terminal's kebab stranded in a "..." bar of its
+   own. */
+.pm-home-surface-options {
+  position: absolute;
+  top: 20px;
+  right: 2px;
+  width: 16px;
+  min-width: 16px;
+  height: 20px;
+  z-index: 130;
+  display: inline-grid !important;
+  place-items: center;
+  padding: 0 !important;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
 #chatPanel .chat-panel-header-stacked { position: relative; z-index: 25; }
 .pm-home-surface-options:hover,
 .pm-home-titlebar-more:hover,
@@ -485,8 +515,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    also clears the 18px top-right grip with margin to spare */
 .pm-home-resize-handle.resizer-col { top: 44px; bottom: 5px; right: 0; height: auto; }
 .pm-home-surface .pane-tabbar-actions,
-.pm-home-surface .bottom-tabs-right,
-.pm-home-surface-options { z-index: 130; }
+.pm-home-surface .bottom-tabs-right { z-index: 130; }
 .pm-home-resize-handle.resizer-row { left: 5px; right: 5px; bottom: 0; width: auto; }
 .pm-home-host[data-pm-home-host="dock_right"] > .pm-home-surface > .pm-home-resize-handle.resizer-col {
   right: auto;
@@ -731,6 +760,10 @@ HOME_SCRIPT = r'''
   var DRAG_EDGE_ZONE_PX = 56;
   /* border strip that resolves to a dock during a drag */
   var DRAG_DOCK_EDGE_PX = 28;
+  /* extra distance past a latched dock's OPENED preview edge the pointer must
+     travel before the dock releases -- geometric hysteresis (see
+     buildDockLatch) */
+  var DOCK_EXIT_SLACK_PX = 44;
   /* Per-host caps on VISIBLE surfaces: a gesture cannot overfill a dock into
      uselessness. home_main is uncapped -- it is the spill/fallback host. */
   var HOST_CAPS = { dock_left: 3, dock_right: 3, dock_top: 2, dock_bottom: 2, floating: 4 };
@@ -1067,7 +1100,31 @@ HOME_SCRIPT = r'''
         var ref = surface.domain_ref || {};
         var panes = splitCsv(ref.pane_ids);
         var sessions = splitCsv(ref.terminal_session_ids);
-        if (ref.terminal_workgroup_id && !panes.length) return "terminal_workgroup_empty";
+        /* Repair-then-seed, never early-continue: the old
+           `return "terminal_workgroup_empty"` skipped the terminalSections
+           write entirely, so a workgroup ref with no panes left the section
+           with NO record at all and the projection rendered the empty
+           template over a supposedly live terminal. Section 1 carrying the
+           pristine workgroup id restores the pristine pane/session lists;
+           any other paneless workgroup drops to an honest empty (null
+           workgroup). Every section ALWAYS gets a well-formed record. */
+        if (ref.terminal_workgroup_id && !panes.length) {
+          if (surface.surface_instance_id === "terminal_section:terminal_section_1" &&
+              ref.terminal_workgroup_id === PRISTINE_TERMINAL_SECTION.terminal_workgroup_id) {
+            var pristine = clone(PRISTINE_TERMINAL_SECTION);
+            panes = pristine.pane_ids;
+            sessions = pristine.terminal_session_ids;
+          } else {
+            /* Reconstitute a minimal pane rather than nulling: layouts
+               persisted by earlier builds carry live workgroup ids whose
+               pane CSVs were corrupted to "" -- nulling them re-surfaced the
+               big "this terminal section is empty" block on perfectly good
+               sections. A workgroup with an id is live by definition. */
+            var repairSuffix = surface.surface_instance_id.replace(/[^0-9]+/g, "") || "r";
+            panes = ["tp-repair-" + repairSuffix];
+            sessions = ["ts-sess-repair-" + repairSuffix];
+          }
+        }
         terminalSections[surface.surface_instance_id] = {
           terminal_section_id: ref.terminal_section_id || surface.surface_instance_id.split(":")[1],
           terminal_workgroup_id: ref.terminal_workgroup_id || null,
@@ -1076,6 +1133,29 @@ HOME_SCRIPT = r'''
         };
       }
     });
+    /* If NO section carries a live workgroup, the terminal is unusable and
+       every section shows the empty note -- a state earlier builds could
+       PERSIST (their repair nulled corrupted workgroup ids and wrote that
+       back). Reconstitute the pristine workgroup on section 1 and heal the
+       persisted ref so the terminal always boots alive. */
+    var anyLiveWorkgroup = Object.keys(terminalSections).some(function (id) {
+      return Boolean(terminalSections[id].terminal_workgroup_id);
+    });
+    var firstSection = terminalSections["terminal_section:terminal_section_1"];
+    if (!anyLiveWorkgroup && firstSection) {
+      var reseed = clone(PRISTINE_TERMINAL_SECTION);
+      firstSection.terminal_workgroup_id = reseed.terminal_workgroup_id;
+      firstSection.pane_ids = reseed.pane_ids;
+      firstSection.terminal_session_ids = reseed.terminal_session_ids;
+      var firstSurface = layout.surfaces.filter(function (surface) {
+        return surface.surface_instance_id === "terminal_section:terminal_section_1";
+      })[0];
+      if (firstSurface && firstSurface.domain_ref) {
+        firstSurface.domain_ref.terminal_workgroup_id = reseed.terminal_workgroup_id;
+        firstSurface.domain_ref.pane_ids = reseed.pane_ids.join(",");
+        firstSurface.domain_ref.terminal_session_ids = reseed.terminal_session_ids.join(",");
+      }
+    }
     var active = layout.surfaces.filter(function (surface) {
       return surface.surface_kind === "terminal_section" && terminalSections[surface.surface_instance_id] && terminalSections[surface.surface_instance_id].terminal_workgroup_id;
     }).sort(function (a, b) { return (b.last_focus_seq || 0) - (a.last_focus_seq || 0); })[0];
@@ -1564,7 +1644,9 @@ HOME_SCRIPT = r'''
       existing.setAttribute("role", "tab");
       existing.setAttribute("tabindex", "0");
       existing.innerHTML = '<svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Browser';
-      tabs.insertBefore(existing, tabs.querySelector(".pane-tabbar-actions"));
+      /* insert before the overflow chevron when the strip has one (it sits
+         before the pinned actions cluster); fall back to the cluster */
+      tabs.insertBefore(existing, tabs.querySelector(".pm-ed-overflow") || tabs.querySelector(".pane-tabbar-actions"));
     }
     existing.removeAttribute("onclick");
     existing.setAttribute("data-pm-home-browser-tab", surfaceId);
@@ -1629,7 +1711,7 @@ HOME_SCRIPT = r'''
   /* The grip is the surface element's own absolutely-positioned first child,
      an 18px lines-only triangle in the TOP-RIGHT corner. It sits at z-index
      140 -- above the pinned actions cluster (130), chat's stacked header (25),
-     the surface kebab (26) and the resize handles (100). Only the upper-right
+     the surface kebab (130) and the resize handles (100). Only the upper-right
      triangle of its box steals hits (clip-path polygon(0 0, 100% 0,
      100% 100%)); everything left of the hypotenuse passes through to the
      chrome beneath.
@@ -1671,9 +1753,17 @@ HOME_SCRIPT = r'''
       options.setAttribute("aria-expanded", "false");
       options.setAttribute("aria-label", "Options for " + surface.surface_instance_id);
       options.title = "Surface options";
-      options.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>';
-      var optionsHost = element.querySelector(".pane-tabbar-actions, .dashboard-tabs, .panel-actions, .pm-home-terminal-head") || element;
-      optionsHost.appendChild(options);
+      /* VERTICAL dots: the kebab reads as a right-edge column control, sitting
+         directly below the grip triangle (grip z 140 owns the y 0-18
+         upper-right triangle; the kebab owns y 20-40). */
+      options.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>';
+      /* the kebab is a child of the SURFACE itself, like the grip -- parking
+         it inside .pane-tabbar-actions / a head row let PM6 strip rebuilds
+         destroy it, and gave the terminal a stranded "..." bar */
+      element.appendChild(options);
+    } else if (options.parentNode !== element) {
+      /* re-seat rather than duplicate, mirroring the grip's guard */
+      element.appendChild(options);
     }
     /* Per-surface divider: ALWAYS a column handle now -- it transfers WIDTH
        between the adjacent pair in every row-axis host. In a row dock
@@ -1858,17 +1948,30 @@ HOME_SCRIPT = r'''
       originalParent.insertBefore(terminalRuntimeHome, runtime);
     }
     if (element.id === "bottomPanel") ensureBottomTerminalControls(surface.surface_instance_id, element);
+    /* Model-truth gate for the HOME_STYLE empty-state rules: both
+       display:block rules require #bottomPanel[data-pm-term-empty="true"],
+       so the guidance note can only show while the model says the section is
+       actually empty. Stamped on every bottomPanel-related pass. */
+    if (element.id === "bottomPanel") {
+      var bottomPanelEl = document.getElementById("bottomPanel");
+      if (bottomPanelEl) bottomPanelEl.setAttribute("data-pm-term-empty", String(!section.terminal_workgroup_id));
+    }
     var center = document.getElementById("pmTermCenterOuter");
     var chrome = document.getElementById("pmBottomTermChrome");
     if (chrome) chrome.style.setProperty("display", "none", "important");
-    var oldEmpty = element.querySelector(":scope > .bottom-tabs-content > .pm-home-terminal-empty-state");
+    /* Empty-state removal is hoisted ABOVE the element-branch split and looks
+       the note up at DOCUMENT level: when the runtime host is projected into
+       a generated section, `element` is that shell, so an element-scoped
+       lookup could never find (let alone remove) the note stranded inside
+       #bottomTabsContent. Any live workgroup sweeps it. */
+    var oldEmpty = document.querySelector("#bottomTabsContent > .pm-home-terminal-empty-state");
+    if (section.terminal_workgroup_id && oldEmpty) { oldEmpty.remove(); oldEmpty = null; }
     if (section.terminal_workgroup_id) {
       activeTerminalSectionId = surface.surface_instance_id;
       syncTerminalRuntime(section);
       if (element.id === "bottomPanel") {
         if (runtime && terminalRuntimeHome && terminalRuntimeHome.parentNode && runtime.parentNode !== terminalRuntimeHome.parentNode) terminalRuntimeHome.parentNode.insertBefore(runtime, terminalRuntimeHome.nextSibling);
         if (center) center.style.removeProperty("display");
-        if (oldEmpty) oldEmpty.remove();
       } else {
         var body = element.querySelector("[data-pm-home-terminal-body]");
         if (body && runtime && runtime.parentNode !== body) { body.textContent = ""; body.appendChild(runtime); }
@@ -2028,6 +2131,22 @@ HOME_SCRIPT = r'''
     });
   }
 
+  /* Projection-layer browser deactivation: clears BOTH the runtime pointer
+     AND the committed model flag. Clearing only the pointer left
+     domain_ref.browser_active stale, and restoreOwnerRefs (which runs on
+     EVERY commit) resurrected the browser into the panel on the next
+     unrelated commit -- clicking Split Pane flipped the center editor back
+     to the browser. No command, no revision bump: the cleared flag rides
+     along with the next real commit (same precedent as
+     normalizeMainRowBases). */
+  function deactivateBrowserProjection(surfaceId) {
+    browserOwner.target_editor_panel_id = null;
+    var surface = surfaceById(committed, surfaceId);
+    if (surface && surface.domain_ref) surface.domain_ref.browser_active = false;
+    var content = document.getElementById("browserTabContent");
+    if (content) content.style.display = "none";
+  }
+
   function mountActiveBrowser() {
     var content = document.getElementById("browserTabContent");
     if (!content || !browserOwner.target_editor_panel_id) return;
@@ -2040,6 +2159,18 @@ HOME_SCRIPT = r'''
       if (!element) return;
       var tab = element.querySelector('[data-pm-home-browser-tab="' + id + '"]');
       if (tab) tab.classList.toggle("active", id === browserOwner.target_editor_panel_id);
+      if (id === browserOwner.target_editor_panel_id) {
+        /* single-active invariant: the base strip manager
+           (switchEditorPane2Tab) is bypassed on this path, so without this
+           sweep the previously active FILE tab kept its highlight while the
+           content flipped to the browser -- a dual-active strip. And a
+           browser tab the overflow fitter had collapsed while inactive must
+           be revealed, or the highlight lands on a hidden element. */
+        element.querySelectorAll(".editor-tabs .tab.active").forEach(function (other) {
+          if (other !== tab) other.classList.remove("active");
+        });
+        if (tab && tab.style.display === "none") tab.style.display = "";
+      }
       element.querySelectorAll(".editor-area").forEach(function (area) { area.style.display = id === browserOwner.target_editor_panel_id ? "none" : "flex"; });
     });
     if (content.parentNode !== target) target.appendChild(content);
@@ -2460,8 +2591,9 @@ HOME_SCRIPT = r'''
       existing.textContent = String(path).split("/").pop();
       /* Insert at the buffer's model position (buffer_ids order), not always
          at the end: a shell rebuild replays the persisted drag order this
-         way. Falls back to before the actions cluster for unknown buffers. */
-      var before = strip.querySelector(".pane-tabbar-actions");
+         way. Falls back to before the overflow chevron (or the actions
+         cluster when no chevron exists) for unknown buffers. */
+      var before = strip.querySelector(".pm-ed-overflow") || strip.querySelector(".pane-tabbar-actions");
       var owner = surfaceId ? editorOwners[surfaceId] : null;
       var bufferId = owner ? buffersByPath[path] : null;
       var want = owner && bufferId ? owner.buffer_ids.indexOf(bufferId) : -1;
@@ -2517,8 +2649,19 @@ HOME_SCRIPT = r'''
     }
     ensurePanelTab(element, path, surfaceId);
     if (surfaceId === "editor_panel_2") {
-      var browserContent = document.getElementById("browserTabContent");
-      if (browserContent) browserContent.style.display = "none";
+      /* opening a file into pane 2 deactivates the browser THROUGH THE MODEL
+         when pane 2 owns it -- a DOM-only hide left browser_active stale and
+         the next commit re-mounted the browser (same bug class as the
+         code-tab click path) */
+      if (browserOwner.target_editor_panel_id === "editor_panel_2") {
+        deactivateBrowserProjection("editor_panel_2");
+      } else {
+        var browserContent = document.getElementById("browserTabContent");
+        var pane2Record = surfaceRegistry.editor_panel_2;
+        if (browserContent && pane2Record && pane2Record.element && pane2Record.element.contains(browserContent)) {
+          browserContent.style.display = "none";
+        }
+      }
       var codeArea = document.getElementById("editorPane2CodeArea");
       if (codeArea) codeArea.style.display = "";
     }
@@ -3033,6 +3176,52 @@ HOME_SCRIPT = r'''
      accidental pointer exit used to undock the surface and persist it, which
      is why a panel "opened popped-out by default". Floating is an explicit
      action now -- the Pop Out menu row or the keyboard F key). */
+  /* Frozen dock hit-bands for ONE drag gesture. Computed once at pickup from
+     committed geometry PLUS the preview expansion each dock WILL get if
+     adopted (the same clamp syncDragPreview applies), so no preview reflow,
+     FLIP marker or drop-active class can move a band mid-gesture. The old
+     resolver read PAINTED geometry (elementsFromPoint): adopting a dock
+     opened its track, the opened track starved the next hit-test (terminal
+     mid-FLIP skipped, dock drop-active skipped), resolution fell through to
+     home_main, the track collapsed, and the cycle restarted at ~4-6 frames
+     -- the violent shake. Frame-count hysteresis cannot damp that loop
+     because each alternating state is stable for more than two frames;
+     freezing the geometry severs the feedback path by construction.
+     Entry: the dock's committed rect union its narrow edge strip.
+     Exit: entry extended past the ANTICIPATED opened track, plus slack --
+     strictly wider than entry, so adoption is sticky (geometric hysteresis). */
+  function buildDockLatch(sourceRect) {
+    if (!root) return null;
+    var bounds = root.getBoundingClientRect();
+    var latch = {};
+    ["dock_right", "dock_top", "dock_bottom", "dock_left"].forEach(function (dock) {
+      var band = HOST_BANDS[dock];
+      if (!band) return;
+      var el = hostElement(dock);
+      var rect = el ? el.getBoundingClientRect() : null;
+      var occupied = Boolean(rect && rect.width > 4 && rect.height > 4);
+      var footprint = hostAxisIsVertical(dock) ? sourceRect.width : sourceRect.height;
+      var trackPx = Math.max(band.min, Math.min(band.max, Math.round(footprint || band.min)));
+      var edge = DRAG_DOCK_EDGE_PX;
+      var entry, exit;
+      if (dock === "dock_bottom") {
+        entry = occupied ? Math.min(rect.top, bounds.bottom - edge) : bounds.bottom - edge;
+        exit = Math.min(entry, bounds.bottom - trackPx) - DOCK_EXIT_SLACK_PX;
+      } else if (dock === "dock_top") {
+        entry = occupied ? Math.max(rect.bottom, bounds.top + edge) : bounds.top + edge;
+        exit = Math.max(entry, bounds.top + trackPx) + DOCK_EXIT_SLACK_PX;
+      } else if (dock === "dock_right") {
+        entry = occupied ? Math.min(rect.left, bounds.right - edge) : bounds.right - edge;
+        exit = Math.min(entry, bounds.right - trackPx) - DOCK_EXIT_SLACK_PX;
+      } else {
+        entry = occupied ? Math.max(rect.right, bounds.left + edge) : bounds.left + edge;
+        exit = Math.max(entry, bounds.left + trackPx) + DOCK_EXIT_SLACK_PX;
+      }
+      latch[dock] = { entry: entry, exit: exit, trackPx: trackPx };
+    });
+    return latch;
+  }
+
   function dropHostAt(clientX, clientY) {
     if (!root) return null;
     if (clientX < 0 || clientX > window.innerWidth || clientY < 0 || clientY > window.innerHeight) return null;
@@ -3050,50 +3239,46 @@ HOME_SCRIPT = r'''
         clientY >= pickupRect.top && clientY <= pickupRect.top + pickupRect.height) {
       return gesture.sourceHost;
     }
-    /* The edge band is deliberately NARROW and is tested FIRST. Wide bands
-       swallow ordinary positional drops (you cannot insert before the first
-       surface in home_main); testing surfaces first instead makes a dock
-       unreachable, because home_main's first surface already covers the edge. */
-    var edge = DRAG_DOCK_EDGE_PX;
-    /* RIGHT is tested FIRST: the right column (chat's full-height dock) spans
-       all three grid rows, so the top-right and bottom-right corners belong
-       to dock_right, not to the top/bottom docks. */
-    if (clientX >= bounds.right - edge) return "dock_right";
-    if (clientY <= bounds.top + edge) return "dock_top";
-    if (clientY >= bounds.bottom - edge) return "dock_bottom";
-    if (clientX <= bounds.left + edge) return "dock_left";
-    var stack = document.elementsFromPoint ? document.elementsFromPoint(clientX, clientY) : [];
-    var hostUnderPointer = null;
-    for (var i = 0; i < stack.length; i += 1) {
-      var node = stack[i];
-      if (!node || !node.closest) continue;
-      var surfaceEl = node.closest("[data-pm-home-surface]");
-      if (surfaceEl && root.contains(surfaceEl) && surfaceEl !== gesture.element) {
-        var owningHost = surfaceEl.closest("[data-pm-home-host]");
-        var owningName = owningHost && owningHost.getAttribute("data-pm-home-host");
-        if (owningName && owningName !== "floating") return owningName;
-      }
-      if (!hostUnderPointer) {
-        var host = node.closest("[data-pm-home-host]");
-        var hostName = host && root.contains(host) && host.getAttribute("data-pm-home-host");
-        /* the float layer covers the whole workspace, so it sits in EVERY
-           elementsFromPoint stack (gaps, the placeholder itself) -- and
-           floating is never a pointer-drag target anyway (explicit action
-           only). Skipping it here is what keeps a drop into a gap, or onto
-           the previewed slot itself, from silently undocking the surface.
-           A host that is only under the pointer because its own drop
-           preview EXPANDED it (drop-active, no real surface hit above) is
-           skipped too: resolving it would make the preview self-sustaining
-           -- the expansion moves the boundary under the pointer and the
-           target can never change again. Such hosts stay reachable via
-           their edge bands and their real surfaces. */
-        if (hostName && hostName !== "floating" &&
-            !(host.classList && host.classList.contains("pm-home-drop-active"))) {
-          hostUnderPointer = hostName;
-        }
-      }
+    var latch = gesture && gesture.dockLatch;
+    /* LATCHED HOLD: once a dock is adopted, only leaving its frozen EXIT band
+       releases it. The exit band already covers the opened preview track plus
+       slack, so the expansion and its FLIP wave cannot unlatch the dock. A
+       latched top/bottom dock still yields to dock_right's entry band, so the
+       right column keeps its corner precedence while latched. */
+    if (latch && gesture.latchedDock && latch[gesture.latchedDock]) {
+      var heldDock = gesture.latchedDock;
+      var hold = latch[heldDock];
+      var inHold =
+        heldDock === "dock_bottom" ? clientY >= hold.exit :
+        heldDock === "dock_top" ? clientY <= hold.exit :
+        heldDock === "dock_right" ? clientX >= hold.exit :
+        clientX <= hold.exit;
+      if (inHold && heldDock !== "dock_right" && latch.dock_right && clientX >= latch.dock_right.entry) inHold = false;
+      if (inHold) return heldDock;
     }
-    return hostUnderPointer || "home_main";
+    /* FROZEN ENTRY SCAN, replacing both the live edge bands and the painted
+       elementsFromPoint stack walk. An occupied dock's entry band covers its
+       pickup-time committed rect, so pointing at the dock's surfaces still
+       adopts the dock -- from frozen geometry. Everything outside every dock
+       band is home_main by construction (floating is never a pointer-drag
+       target), so no painted-stack resolution remains at all.
+       RIGHT is tested FIRST: the right column (chat's full-height dock) spans
+       all three grid rows, so the corners belong to dock_right. */
+    if (latch) {
+      if (latch.dock_right && clientX >= latch.dock_right.entry) return "dock_right";
+      if (latch.dock_top && clientY <= latch.dock_top.entry) return "dock_top";
+      if (latch.dock_bottom && clientY >= latch.dock_bottom.entry) return "dock_bottom";
+      if (latch.dock_left && clientX <= latch.dock_left.entry) return "dock_left";
+    } else {
+      /* no latch (defensive: keyboard-originated or degraded gesture) --
+         narrow live edge bands only */
+      var edge = DRAG_DOCK_EDGE_PX;
+      if (clientX >= bounds.right - edge) return "dock_right";
+      if (clientY <= bounds.top + edge) return "dock_top";
+      if (clientY >= bounds.bottom - edge) return "dock_bottom";
+      if (clientX <= bounds.left + edge) return "dock_left";
+    }
+    return "home_main";
   }
 
   /* ---- FLIP: neighbours animate from their pre-move rects ---- */
@@ -3131,9 +3316,16 @@ HOME_SCRIPT = r'''
       var element = entry.element;
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
+      /* Mid-flight marker for hit-testing: the inline transform is EMPTY
+         while the animation runs (the transition plays via removeProperty),
+         so a style check cannot detect a FLIP in progress -- this attribute
+         is the only reliable marker. Removed on settle and by
+         clearFlipResidue. */
+      element.setAttribute("data-pm-home-flip", "");
       var settle = function (event) {
         if (event.target !== element || event.propertyName !== "transform") return;
         element.removeEventListener("transitionend", settle);
+        element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
           element.style.removeProperty("transition-delay");
@@ -3156,6 +3348,7 @@ HOME_SCRIPT = r'''
       element.style.removeProperty("transition");
       element.style.removeProperty("transition-delay");
       element.style.removeProperty("transform");
+      element.removeAttribute("data-pm-home-flip");
     });
   }
 
@@ -3204,9 +3397,16 @@ HOME_SCRIPT = r'''
     var trackPx = null;
     if (grid && dockBand) {
       var trackVar = host === "dock_left" ? "--pm-home-left-w" : host === "dock_right" ? "--pm-home-right-w" : host === "dock_top" ? "--pm-home-top-h" : "--pm-home-bottom-h";
-      var sourceRect = gesture.sourceRect || {};
-      var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
-      trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
+      var latchedBand = gesture.dockLatch && gesture.dockLatch[host];
+      if (latchedBand && latchedBand.trackPx) {
+        /* single source with the frozen latch: the exit band and the actual
+           opened track can never disagree */
+        trackPx = latchedBand.trackPx;
+      } else {
+        var sourceRect = gesture.sourceRect || {};
+        var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
+        trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
+      }
       grid.style.setProperty(trackVar, trackPx + "px");
       gesture.previewTrack = trackVar;
     }
@@ -3214,14 +3414,27 @@ HOME_SCRIPT = r'''
        target host's fair share among its future occupants), never its
        pickup-time size -- dropping a wide main panel into a crowded dock now
        previews the sliver it will actually get. */
-    var gapPx = 4; /* keep in lockstep with --pm-home-gap */
+    /* read the gap the host actually renders (falls back to the 4px token
+       default when the computed value is unusable) */
+    var gapPx = parseFloat(getComputedStyle(hostEl).columnGap) || parseFloat(getComputedStyle(hostEl).gap) || 4;
     if (hostAxisIsVertical(host)) {
       var mainPxV = Math.max(60, Math.round((hostEl.clientHeight - gapPx * siblings.length) / (siblings.length + 1)));
       placeholder.style.setProperty("flex", "0 0 " + mainPxV + "px", "important");
       /* no min-height: the column dock fills the width for it */
       placeholder.style.removeProperty("min-height");
     } else {
-      var mainPx = Math.max(120, Math.round((hostEl.clientWidth - gapPx * siblings.length) / (siblings.length + 1)));
+      /* PROPORTIONAL projection, not an equal fair share: the placeholder
+         takes the dragged surface's committed-basis share of the row (same
+         80px floor normalizeMainRowBases applies), so the preview width is
+         the width the drop will actually commit. */
+      var dragged = surfaceById(gesture.draft, gesture.surfaceId);
+      var draggedBasis = Math.max(80, Number(dragged && dragged.size && dragged.size.basis_px) || Math.round(gesture.sourceRect ? gesture.sourceRect.width : 360));
+      var sumBases = draggedBasis;
+      siblings.forEach(function (siblingId) {
+        var siblingSurface = surfaceById(gesture.draft, siblingId);
+        sumBases += Math.max(80, Number(siblingSurface && siblingSurface.size && siblingSurface.size.basis_px) || 360);
+      });
+      var mainPx = Math.max(120, Math.round(draggedBasis / sumBases * (hostEl.clientWidth - gapPx * siblings.length)));
       placeholder.style.setProperty("flex", "0 0 " + mainPx + "px", "important");
       placeholder.style.setProperty("min-height", (trackPx !== null ? trackPx : hostEl.clientHeight) + "px");
     }
@@ -3291,9 +3504,22 @@ HOME_SCRIPT = r'''
     if (gesture.pointerY < DRAG_EDGE_ZONE_PX) delta = -Math.ceil((DRAG_EDGE_ZONE_PX - gesture.pointerY) / 6);
     else if (gesture.pointerY > height - DRAG_EDGE_ZONE_PX) delta = Math.ceil((gesture.pointerY - (height - DRAG_EDGE_ZONE_PX)) / 6);
     if (delta) {
+      /* Re-hit-test only when something actually MOVED: a scroller pinned at
+         its limit ignores scrollBy, yet the old code re-ran applyDragPoint
+         every rAF anyway -- re-resolving targets against mid-FLIP geometry
+         with a stationary pointer was the edge-zone shake. */
+      var isWindowScroller = gesture.scroller === window;
+      var beforeTop = isWindowScroller ? window.scrollY : gesture.scroller.scrollTop;
+      var beforeLeft = isWindowScroller ? window.scrollX : gesture.scroller.scrollLeft;
       gesture.scroller.scrollBy(0, delta);
-      applyDragPoint(gesture.pointerX, gesture.pointerY);
+      var afterTop = isWindowScroller ? window.scrollY : gesture.scroller.scrollTop;
+      var afterLeft = isWindowScroller ? window.scrollX : gesture.scroller.scrollLeft;
+      var scrolled = afterTop !== beforeTop || afterLeft !== beforeLeft;
+      var pointerMoved = gesture.pointerX !== gesture.lastAutoX || gesture.pointerY !== gesture.lastAutoY;
+      if (scrolled || pointerMoved) applyDragPoint(gesture.pointerX, gesture.pointerY);
     }
+    gesture.lastAutoX = gesture.pointerX;
+    gesture.lastAutoY = gesture.pointerY;
     gesture.raf = requestAnimationFrame(dragAutoScroll);
   }
 
@@ -3328,10 +3554,20 @@ HOME_SCRIPT = r'''
       pointerX: event.clientX, pointerY: event.clientY,
       changed: false, finished: false, insertion: null, handle: event.currentTarget,
       keyboard: false, scroller: findDragScroller(), raf: 0,
-      sourceRect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height }
+      sourceRect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+      dockLatch: null, latchedDock: null
     };
+    /* frozen dock bands: computed AFTER the surface is registered but BEFORE
+       any preview can perturb layout -- the element is still in place here */
+    gesture.dockLatch = buildDockLatch(gesture.sourceRect);
     element.style.setProperty("display", "none", "important");
     document.body.classList.add("pm-home-dragging");
+    /* PM_EDGE defers scrollport band geometry while body.pm-resizing is set
+       and flushes when PM_DRAGEND is invoked (PM_DRAGEND is the callable;
+       PM_ON_DRAGEND is the registrar). Pair/track resizes already get this
+       pair from the shared registerResizer; drags must opt in themselves or
+       the edge bands recompute against mid-drag geometry and blur. */
+    document.body.classList.add("pm-resizing");
     if (event.currentTarget && event.currentTarget.classList) {
       event.currentTarget.classList.add("pm-home-handle-active");
       event.currentTarget.setAttribute("aria-grabbed", "true");
@@ -3370,6 +3606,8 @@ HOME_SCRIPT = r'''
       gesture.insertion = null;
       gesture.changed = false;
       gesture.lastTargetKey = null;
+      gesture.pendingTargetKey = null;
+      gesture.latchedDock = null;
       metrics.previewFrameCount += 1;
       clearPlaceholder();
       root.setAttribute("data-pm-home-drop-disposition", disposition);
@@ -3384,7 +3622,24 @@ HOME_SCRIPT = r'''
        the board "jumped around" and never settled. */
     var targetKey = host + "|" + (insertion.insertion_edge === "before" ? insertion.target_surface_instance_id : "end" + insertion.index);
     if (host !== "floating" && gesture.lastTargetKey === targetKey) return;
+    /* 2-frame hysteresis: a NEW target key must survive two consecutive
+       passes before the board reflows to it. A single-frame phantom (a
+       mid-FLIP neighbour momentarily under the pointer, a scroll tick) can
+       no longer restart the wave -- that oscillation was the shake. The very
+       first target (lastTargetKey null) adopts immediately so pickup
+       previews without a dead frame; previewFrameCount was already
+       incremented above, so the deferred frame still counts. */
+    if (host !== "floating" && gesture.lastTargetKey != null) {
+      if (gesture.pendingTargetKey !== targetKey) {
+        gesture.pendingTargetKey = targetKey;
+        return;
+      }
+    }
+    gesture.pendingTargetKey = null;
     gesture.lastTargetKey = targetKey;
+    /* latch the adopted dock (or clear it): from here only the frozen exit
+       band in dropHostAt can release the dock */
+    gesture.latchedDock = HOST_BANDS[host] ? host : null;
     var draft = clone(gesture.snapshot);
     if (host === "floating") {
       var rootRect = root.getBoundingClientRect();
@@ -3475,6 +3730,7 @@ HOME_SCRIPT = r'''
     unlistenDrag();
     if (active.raf) cancelAnimationFrame(active.raf);
     document.body.classList.remove("pm-home-dragging");
+    document.body.classList.remove("pm-resizing");
     if (root) root.removeAttribute("data-pm-home-drop-disposition");
     if (active.handle && active.handle.classList) {
       active.handle.classList.remove("pm-home-handle-active");
@@ -3511,6 +3767,9 @@ HOME_SCRIPT = r'''
     }
     var landed = active.element && active.element.isConnected ? active.element.getBoundingClientRect() : null;
     settleClone(active.clone, landed);
+    /* flush the PM_EDGE band geometry deferred while body.pm-resizing was on
+       (PM_DRAGEND is the callable; PM_ON_DRAGEND is the registrar) */
+    if (typeof window.PM_DRAGEND === "function") { try { window.PM_DRAGEND(); } catch (error) {} }
   }
 
   /* ---- keyboard move: the grip is the only movement affordance now that the
@@ -3633,6 +3892,8 @@ HOME_SCRIPT = r'''
     if (gesture || !section || !section.terminal_workgroup_id) return;
     gesture = { kind: "workgroup", sourceId: surfaceId, pointerId: event.pointerId, snapshot: clone(committed), draft: clone(committed), targetSectionId: null, targetHost: surfaceById(committed, surfaceId).host, changed: false, handle: event.currentTarget };
     document.body.classList.add("pm-home-dragging");
+    /* same PM_EDGE defer/flush pair as beginDrag (see comment there) */
+    document.body.classList.add("pm-resizing");
     try { event.currentTarget.setPointerCapture(event.pointerId); } catch (error) {}
     event.preventDefault();
   }
@@ -3668,6 +3929,7 @@ HOME_SCRIPT = r'''
     var active = gesture;
     gesture = null;
     document.body.classList.remove("pm-home-dragging");
+    document.body.classList.remove("pm-resizing");
     if (root) root.removeAttribute("data-pm-home-drop-disposition");
     clearPlaceholder();
     if (shouldCommit && active.changed) {
@@ -3677,6 +3939,9 @@ HOME_SCRIPT = r'''
       if (!shouldCommit) metrics.cancelledGestureCount += 1;
       renderLayout(active.snapshot);
     }
+    /* flush the PM_EDGE band geometry deferred while body.pm-resizing was on
+       (PM_DRAGEND is the callable; PM_ON_DRAGEND is the registrar) */
+    if (typeof window.PM_DRAGEND === "function") { try { window.PM_DRAGEND(); } catch (error) {} }
   }
 
   function bindWorkgroupHandle(handle, surfaceId) {
@@ -4037,9 +4302,7 @@ HOME_SCRIPT = r'''
         var surfaceEl = codeTab.closest("[data-pm-home-surface]");
         var surfaceId = surfaceEl && surfaceEl.getAttribute("data-pm-home-surface");
         if (surfaceId && browserOwner.target_editor_panel_id === surfaceId) {
-          browserOwner.target_editor_panel_id = null;
-          var content = document.getElementById("browserTabContent");
-          if (content) content.style.display = "none";
+          deactivateBrowserProjection(surfaceId);
           surfaceEl.querySelectorAll(".editor-area").forEach(function (area) { area.style.display = "flex"; });
         }
         /* Generated shells (panels 3/4) have no PM6 tab controller of their

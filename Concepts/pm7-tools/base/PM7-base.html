@@ -213,7 +213,7 @@
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
     .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
-    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list,
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
@@ -241,15 +241,16 @@
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
     .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
-    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list,
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
     .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
       width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
-    /* keep the code pane's custom bar out of the frosted tab-rail band */
-    .editor-code::-webkit-scrollbar-track:vertical { margin-top: var(--pm6-editor-tabs-h, 40px); }
+    /* .editor-code left both opt-in lists and its track-margin rule is gone:
+       the minimap is the only code-pane scrollbar now, so the pane must not
+       paint a second vertical bar beside it */
     /* bar show/hide must not shift chat layout. Only the thumb's colour
        animates and the gutter is reserved the moment a pane overflows, so the
        newly-revealed panes cannot reflow and none of them needs this. */
@@ -4800,7 +4801,7 @@
     /* measured (PM_FROST -> --pm6-editor-tabs-h): the bar's height is themed —
        friendly turns the tabs into top-rounded folder tabs with their own
        padding — so a static value would misalign on theme switch */
-    .editor-pane { --pm6-editor-tabs-h: 34px; }
+    .editor-pane { --pm6-editor-tabs-h: 40px; }
     /* The lift goes on .editor-area, NOT on its children. .editor-area is
        overflow:hidden, so lifting the gutter and code from inside it just fed
        the raised strip to that clip — the rects said "under the tabs" while
@@ -4809,12 +4810,16 @@
        inside then moves together, which also keeps the gutter/code alignment
        free rather than something to maintain. */
     .editor-pane > .editor-area {
-      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 34px));
+      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 40px));
     }
     /* the minimap rides the lift too, so give it the height back or its canvas
-       starts behind the tab bar */
+       starts behind the tab bar. MARGIN, not padding: margin shrinks the
+       border box down to the visible band, so the absolutely-positioned
+       canvas/viewport children anchor to the visible area AND both
+       offsetHeight-based JS implementations read the true band height with
+       zero JS edits. */
     .editor-area > .editor-minimap {
-      padding-top: var(--pm6-editor-tabs-h, 34px);
+      margin-top: var(--pm6-editor-tabs-h, 40px);
     }
     /* glass blur budget: no nested backdrop-filter inside the pane */
     [data-theme^="glass"] .editor-tabs {
@@ -5014,7 +5019,7 @@
          out of scroll and the numbers would lag by up to a bar-height at the
          end of a file. Harmless when no bar is showing: the extra room is
          simply never reached. */
-      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
+      padding: calc(var(--pm6-editor-tabs-h, 40px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
       font-family: 'Consolas', monospace;
       font-size: 12px;
       color: var(--text-muted);
@@ -5110,7 +5115,7 @@
          the --pm6-editor-tabs-h term, which is the scroll-under lift: the code
          runs behind the frosted tab bar and both boxes re-pad by the same
          amount, so line N stays at padding-top + N*18px in each. */
-      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) var(--md) var(--sm);
+      padding: calc(var(--pm6-editor-tabs-h, 40px) + var(--sm)) var(--md) var(--sm);
       font-family: 'Consolas', 'Monaco', monospace;
       font-size: 13px;
       overflow: auto;
@@ -10973,6 +10978,13 @@
       --ed-shoulder-rx-max: 12px;
       --ed-shape-x: 0px;
       --ed-shape-w: 0px;
+      /* theme-skin hooks: outline + crown on the silhouette, hairline ring on
+         inactive tabs. Defaults are inert, so themes opt in per-token. */
+      --ed-shape-outline: transparent;
+      --ed-shape-crown: transparent;
+      --ed-shape-crown-h: 0px;
+      --ed-tab-inactive-ring: transparent;
+      --ed-tab-ring-radius: 6px;
     }
     .dashboard-view { --ed-strip-h: 36px; }
     [data-theme$="-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 66%, rgb(0, 0, 0)); }
@@ -10980,8 +10992,14 @@
        shared fill so the silhouette and the canvas stay identical AND glass keeps
        its own material. Its rail runs less translucent: the plate is already
        glassy, and plate-on-plate at 72% went muddy. */
-    [data-theme^="glass"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: var(--pm6-glass-plate); --ed-rail-alpha: 88%; --ed-top-radius: 14px; }
-    [data-theme^="glass"] .ed-tab-shape { box-shadow: inset 0 1px 0 var(--glass-edge); }
+    [data-theme^="glass"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: var(--pm6-glass-plate); --ed-rail-alpha: 84%; --ed-top-radius: 14px; }
+    /* 3-edge inner bevel: full top highlight plus faded left/right edges, so
+       the silhouette reads as a cut glass plate, not a painted slab */
+    [data-theme^="glass"] .ed-tab-shape {
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+          inset 1px 0 0 color-mix(in srgb, var(--glass-edge) 45%, transparent),
+          inset -1px 0 0 color-mix(in srgb, var(--glass-edge) 45%, transparent);
+    }
     [data-theme^="friendly"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: color-mix(in srgb, var(--pm6-cozy-mint) 7%, var(--surface)); --ed-top-radius: 16px; --ed-canvas-rx-max: 14px; --ed-shoulder-rx-max: 14px; }
     [data-theme^="friendly"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--accent-lime); }
     [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-top-radius: 6px; --ed-corner-ry: 8px; --ed-shoulder-ry: 8px; --ed-canvas-rx-max: 8px; --ed-shoulder-rx-max: 8px; }
@@ -10990,6 +11008,27 @@
        base, then retro-dark alone deepens to 60%. */
     [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 88%, rgb(0, 0, 0)); }
     [data-theme="retro-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 60%, rgb(0, 0, 0)); }
+    /* theme skins: retro draws its hard CRT outline around the silhouette and
+       square hairline rings on the idle tabs; retro-dark softens the outline
+       to pure lime-on-black. basic gets a crown accent strip and a slightly
+       tighter top radius instead of any outline. */
+    [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-tab-inactive-ring: color-mix(in srgb, var(--accent-lime) 25%, var(--border-light)); --ed-tab-ring-radius: 0px; }
+    /* Retro's hard outline lives on the ACTIVE TAB, not the travelling shape:
+       a bordered shape sliding through the inter-tab gaps read as a stray
+       bright bar mid-spring. The tab ring snaps on arrival (crisp, very
+       retro) while the unbordered fill still travels beneath it. Three inset
+       edges; the open bottom keeps the tab connected to the canvas. */
+    [data-theme^="retro"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+      box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary)),
+                  inset -1px 0 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary)),
+                  inset 0 1px 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary));
+    }
+    [data-theme="retro-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+      box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent-lime) 80%, transparent),
+                  inset -1px 0 0 color-mix(in srgb, var(--accent-lime) 80%, transparent),
+                  inset 0 1px 0 color-mix(in srgb, var(--accent-lime) 80%, transparent);
+    }
+    [data-theme^="basic"] :is(.editor-pane, .dashboard-view) { --ed-shape-crown: var(--accent-blue); --ed-shape-crown-h: 2px; --ed-top-radius: 9px; }
     .editor-tabs.ed-shape-on, .dashboard-tabs.ed-shape-on {
       position: relative;
       /* single translucent layer: part 06's backdrop blur on .editor-tabs now
@@ -11030,7 +11069,13 @@
       width: var(--ed-shape-w);
       top: var(--ed-tab-top, 2px);
       bottom: -1px;               /* overlap the join so no hairline shows */
-      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      /* crown layer first (a theme accent strip along the top edge, 0px tall
+         by default), then the canvas fill over the opaque ground */
+      background: linear-gradient(var(--ed-shape-crown), var(--ed-shape-crown)) 0 0 / 100% var(--ed-shape-crown-h) no-repeat,
+          linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      box-sizing: border-box;
+      border: 1px solid var(--ed-shape-outline);
+      border-bottom: 0;
       border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
       pointer-events: none;
       z-index: 0;
@@ -11134,6 +11179,12 @@
       background: color-mix(in srgb, var(--ed-canvas-bg) 30%, transparent);
       color: var(--text-primary);
     }
+    /* theme-skin hairline on inactive tabs; transparent by default. Placed
+       after the hover reset so the ring survives hover. */
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+      box-shadow: inset 0 0 0 1px var(--ed-tab-inactive-ring);
+      border-radius: var(--ed-tab-ring-radius);
+    }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--text-primary); }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active::after,
@@ -11143,6 +11194,11 @@
        (top: 50% + translateY(-50%)) or "relative" turns that pair into a
        +9px downward shove and the X/kebab ride below the strip's centre. */
     .editor-tabs.ed-shape-on .pane-tabbar-actions { z-index: 2; }
+    /* mid-drag: the REAL tab rides the pointer under pointer capture (part
+       25's reorder gesture) -- keep it nearly opaque and stacked above the
+       tabs it displaces; text selection must not start under the glide */
+    .editor-tabs .tab { user-select: none; -webkit-user-select: none; }
+    .editor-tabs .tab.dragging { opacity: .92; will-change: transform; position: relative; z-index: 40; }
     /* Reduced motion keeps the state change, drops the spring travel; the JS
        reads this flag too and snaps instead of animating. */
     @media (prefers-reduced-motion: reduce) { .ed-tab-shape { transition: none; } }
@@ -25326,82 +25382,265 @@ status: completed with warnings</pre>
            dashboard widget grid uses), every handler is delegated on document
            so it covers strips that do not exist yet, and the drop writes the
            new order back to the owning model before re-rendering. */
-        function getDragAfterElement(container, x) {
-            var tabs = Array.prototype.filter.call(container.querySelectorAll('.tab'), function (t) {
-                return !t.classList.contains('dragging') && t.style.display !== 'none';
-            });
-            return tabs.reduce(function(closest, child) {
-                var box = child.getBoundingClientRect();
-                var offset = x - box.left - box.width / 2;
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                }
-                return closest;
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        /* pointer-capture reorder: HTML5 DnD is retired for tab reorder.
+           WebKit made the old path invisible three ways at once: a dragover
+           stream that only ticks on native NSDragging updates (sparse), a
+           native opaque drag snapshot whenever the custom drag image is not
+           renderable (opacity:0 counts as not renderable), and macOS
+           reduce-motion gating. Pointer capture drives the same FLIP
+           machinery at full input rate with the REAL tab under the pointer:
+           no ghost bitmap, no dragover cadence, no OS drag session at all.
+           T07 note: move/up/cancel listeners ride the TAB element under
+           setPointerCapture -- document-level pointermove stays untouched. */
+        var edPD = null; /* one reorder gesture at a time */
+        function edMotionOK() {
+            return !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) &&
+                document.documentElement.getAttribute('data-motion') !== 'reduced';
+        }
+
+        function edReorderSlots(strip, dragging) {
+            /* transform-free midpoint cache -- callers guarantee every tab's
+               transform is '' at sample time, so live rects ARE layout */
+            var mids = [];
+            var tabs = strip.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                var t = tabs[i];
+                if (t === dragging || t.style.display === 'none') continue;
+                var r = t.getBoundingClientRect();
+                mids.push({ el: t, mid: r.left + r.width / 2 });
+            }
+            return mids;
+        }
+
+        function edDetachReorder() {
+            window.removeEventListener('pointermove', edReorderMove, true);
+            window.removeEventListener('pointerup', edReorderUp, true);
+            window.removeEventListener('pointercancel', edReorderCancel, true);
         }
 
         document.addEventListener('pointerdown', function (e) {
+            if (!e.isPrimary || e.button !== 0) return;
             var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
             if (!tab) return;
             if (e.target.closest('.tab-close-btn, .tab-close')) return; /* closing, not dragging */
-            tab.draggable = true;
+            var strip = tab.closest('.editor-tabs');
+            if (!strip || edPD) return;
+            edPD = { tab: tab, strip: strip, pid: e.pointerId, startX: e.clientX,
+                     grabX: 0, slotLeft: 0, slotW: 0, lastTx: 0, mids: null,
+                     motionOK: true, didDrag: false };
+            /* listeners live on WINDOW, not the tab: re-slotting the tab is
+               a DOM remove+insert, which releases pointer capture -- a
+               tab-scoped lostpointercapture would cancel the drag on the very
+               first re-slot (the same trap the workspace drag documents on
+               its grip handles). Capture is still taken as a stream nicety:
+               it suppresses hover churn and keeps events flowing while it
+               lasts; the window listeners simply do not care when it dies. */
+            window.addEventListener('pointermove', edReorderMove, true);
+            window.addEventListener('pointerup', edReorderUp, true);
+            window.addEventListener('pointercancel', edReorderCancel, true);
+            try { tab.setPointerCapture(e.pointerId); } catch (err) {}
         }, true);
 
-        document.addEventListener('dragstart', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (!tab) return;
-            tab.classList.add('dragging');
-            try {
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', tab.getAttribute('data-file') || '');
-            } catch (err) {}
-        });
-
-        document.addEventListener('dragend', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (tab) tab.classList.remove('dragging');
-        });
-
-        document.addEventListener('dragover', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
-            e.preventDefault();
-            try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-            var afterEl = getDragAfterElement(tabsContainer, e.clientX);
-            if (afterEl == null) {
-                tabsContainer.insertBefore(dragging, tabsContainer.querySelector('.pane-tabbar-actions'));
-            } else {
-                tabsContainer.insertBefore(dragging, afterEl);
+        function edReorderMove(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            if (!g.didDrag) {
+                if (Math.abs(e.clientX - g.startX) < 4) return; /* drag threshold */
+                g.didDrag = true;
+                g.motionOK = edMotionOK();
+                g.tab.classList.add('dragging');
+                var r0 = g.tab.getBoundingClientRect();
+                g.grabX = g.startX - r0.left;
+                g.slotLeft = r0.left;
+                g.slotW = r0.width;
+                g.mids = edReorderSlots(g.strip, g.tab);
+                if (window.getSelection) { try { getSelection().removeAllRanges(); } catch (err) {} }
             }
-        });
-
-        document.addEventListener('drop', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
             e.preventDefault();
-            dragging.classList.remove('dragging');
-            var filename = dragging.getAttribute('data-file');
-            var pane = tabsContainer.closest('.editor-pane');
-            tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-            dragging.classList.add('active');
-            /* persist the new order into whichever model owns this strip, so a
-               later re-render does not snap it back */
-            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
-                try { window.PM6_PERSIST_TAB_ORDER(tabsContainer); } catch (err) {}
+            /* insertion index from CACHED transform-free midpoints -- live
+               rects of mid-FLIP neighbours are transform-inclusive lies */
+            var center = e.clientX - g.grabX + g.slotW / 2;
+            var afterEl = null;
+            for (var mi = 0; mi < g.mids.length; mi++) {
+                if (center < g.mids[mi].mid) { afterEl = g.mids[mi].el; break; }
             }
+            /* end anchor: the overflow chip when present, else the pinned
+               actions cluster -- inserting before the cluster alone would
+               land the tab to the chip's RIGHT */
+            var ref = afterEl != null ? afterEl :
+                (g.strip.querySelector('.pm-ed-overflow') ||
+                 g.strip.querySelector('.pane-tabbar-actions'));
+            /* no-op guard: already directly before ref means the insert would
+               be pure churn (observer wakeups, FLIP restarts, zero layout) */
+            if (g.tab.nextElementSibling !== ref && g.tab !== ref) {
+                if (g.motionOK) {
+                    /* FLIP the displaced tabs. First rects are taken
+                       transform-INCLUSIVE so an interrupted slide continues
+                       from where it visually is instead of teleporting. */
+                    var firsts = [];
+                    var sibs = g.strip.querySelectorAll('.tab');
+                    var si, sTab, dx, lr;
+                    for (si = 0; si < sibs.length; si++) {
+                        sTab = sibs[si];
+                        if (sTab === g.tab || sTab.style.display === 'none') continue;
+                        firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                    }
+                    g.strip.insertBefore(g.tab, ref);
+                    var newMids = [];
+                    for (si = 0; si < firsts.length; si++) {
+                        sTab = firsts[si][0];
+                        sTab.style.transition = 'none';
+                        sTab.style.transform = '';
+                        lr = sTab.getBoundingClientRect();
+                        newMids.push({ el: sTab, mid: lr.left + lr.width / 2 });
+                        dx = firsts[si][1] - lr.left;
+                        if (dx >= 1 || dx <= -1) {
+                            sTab.style.transform = 'translateX(' + dx + 'px)';
+                            void sTab.offsetWidth; /* commit the offset frame */
+                            sTab.style.transition = 'transform 220ms cubic-bezier(.22,1,.36,1)';
+                            sTab.style.transform = '';
+                            sTab.addEventListener('transitionend', function onSlid(te) {
+                                if (te.propertyName !== 'transform') return;
+                                te.target.style.transition = '';
+                                te.target.style.transform = '';
+                                te.target.removeEventListener('transitionend', onSlid);
+                            });
+                        } else {
+                            sTab.style.transition = '';
+                            sTab.style.transform = '';
+                        }
+                    }
+                    newMids.sort(function (a, b) { return a.mid - b.mid; });
+                    g.mids = newMids;
+                    /* re-cache the dragged slot from its transform-free rect */
+                    var keepT = g.tab.style.transform;
+                    g.tab.style.transform = '';
+                    var dr = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr.left;
+                    g.slotW = dr.width;
+                    g.tab.style.transform = keepT;
+                } else {
+                    g.strip.insertBefore(g.tab, ref);
+                    g.mids = edReorderSlots(g.strip, g.tab);
+                    var dr2 = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr2.left;
+                    g.slotW = dr2.width;
+                }
+            }
+            if (g.motionOK) {
+                /* 1:1 glide, transform ONLY. The layout position stays at the
+                   insertion slot, so the midpoint math and EDSHAPE's per-frame
+                   snap both keep seeing the truth. Soft rubber-band past the
+                   strip edges instead of a hard clamp. */
+                var sr = g.strip.getBoundingClientRect();
+                var tx = e.clientX - g.grabX - g.slotLeft;
+                var txMin = sr.left - g.slotLeft;
+                var txMax = sr.right - g.slotW - g.slotLeft;
+                if (tx < txMin) tx = txMin + (tx - txMin) * 0.35;
+                if (tx > txMax) tx = txMax + (tx - txMax) * 0.35;
+                g.lastTx = tx;
+                g.tab.style.transform = 'translateX(' + tx + 'px)';
+            }
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(g.strip, false); } catch (err) {} }
+        }
+
+        function edReorderUp(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            try { g.tab.releasePointerCapture(g.pid); } catch (err) {}
+            if (!g.didDrag) return; /* plain click: selection runs natively */
+            /* the trailing synthetic click can leak to whatever sits under
+               the release point in some engines -- swallow clicks for a beat,
+               then stand down */
+            var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); };
+            document.addEventListener('click', swallow, true);
+            setTimeout(function () { document.removeEventListener('click', swallow, true); }, 120);
+            edReorderSettle(g);
+        }
+
+        function edReorderCancel(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            if (!g.didDrag) return;
+            /* system-cancel path (mirrors the old ESC handling): settle the
+               residue instantly and refit -- no persist, the next render may
+               snap the order back by design */
+            g.tab.style.transform = '';
+            var settle = g.strip.querySelectorAll('.tab');
+            for (var si = 0; si < settle.length; si++) {
+                settle[si].style.transition = '';
+                settle[si].style.transform = '';
+            }
+            g.tab.classList.remove('dragging');
             if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
-                try { window.PM6_FIT_EDITOR_TABS(tabsContainer); } catch (err) {}
+                try { window.PM6_FIT_EDITOR_TABS(g.strip); } catch (err) {}
             }
-            if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
-                var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
-                    (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
-                if (prefix) renderFileToPane(filename, prefix, true);
+        }
+
+        function edReorderSettle(g) {
+            var tab = g.tab, strip = g.strip;
+            /* final slot, transform-free (clear + measure + re-transform is
+               synchronous -- nothing paints in between) */
+            tab.style.transform = '';
+            var fr = tab.getBoundingClientRect();
+            var delta = g.slotLeft + g.lastTx - fr.left;
+            /* order + activation bookkeeping that reads NO layout runs now;
+               layout-reading work (fitters, model re-render) waits until the
+               settle transform is gone -- transforms poison their reads */
+            strip.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
+                try { window.PM6_PERSIST_TAB_ORDER(strip); } catch (err) {}
             }
-        });
+            /* the silhouette springs to the final slot while the tab glides
+               there -- selection-spring parity for a drag-activated tab */
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, true); } catch (err) {} }
+            var finished = false;
+            var finish = function (te) {
+                if (te && te.propertyName && te.propertyName !== 'transform') return;
+                if (finished) return;
+                finished = true;
+                tab.removeEventListener('transitionend', finish);
+                tab.style.transition = '';
+                tab.style.transform = '';
+                var residue = strip.querySelectorAll('.tab');
+                for (var ri = 0; ri < residue.length; ri++) {
+                    residue[ri].style.transition = '';
+                    residue[ri].style.transform = '';
+                }
+                tab.classList.remove('dragging');
+                var filename = tab.getAttribute('data-file');
+                var pane = strip.closest('.editor-pane');
+                if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
+                    try { window.PM6_FIT_EDITOR_TABS(strip); } catch (err) {}
+                }
+                /* model re-render LAST: for pane 1 this rebuilds the strip
+                   from state, which would tear the settling tab out of the
+                   DOM mid-animation */
+                if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
+                    var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
+                        (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
+                    if (prefix) renderFileToPane(filename, prefix, true);
+                }
+                if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, false); } catch (err) {} }
+            };
+            if (g.motionOK && (delta >= 1 || delta <= -1)) {
+                /* low-bounce settle into the slot */
+                tab.style.transition = 'none';
+                tab.style.transform = 'translateX(' + delta + 'px)';
+                void tab.offsetWidth;
+                tab.style.transition = 'transform 200ms cubic-bezier(.3,1.25,.45,1)';
+                tab.style.transform = 'translateX(0px)';
+                tab.addEventListener('transitionend', finish);
+                setTimeout(finish, 300); /* transitionend can be lost to a re-render */
+            } else {
+                finish();
+            }
+        }
 
         // init generic resizers
         setupResizer('leftPanelResizer', 'sidePanelSlot', 'editorView');
@@ -35756,6 +35995,11 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
        (every fit re-triggered a reseat re-triggered a fit ...). Style and
        hidden-text writes below do not fire childList observers. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     edHidden = [];
     var all = strip.querySelectorAll('.tab');
@@ -35763,7 +36007,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     for (i = 0; i < all.length; i++) all[i].style.display = '';
     if (!strip.clientWidth) return; /* strip not laid out — refit runs on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = 0;
       for (i = 0; i < all.length; i++) { if (all[i].style.display !== 'none') visible++; }
       if (visible <= 1) break;
@@ -36051,6 +36295,11 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     /* Reuse the chip via display toggles instead of remove/recreate: childList
        mutations here ping-pong with the Home overlay's chrome observer. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
        clear display on tabs hidden for other reasons (e.g. the static
@@ -36069,7 +36318,7 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     if (!strip.clientWidth) return;
     var i;
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       if (all.length <= 1) break;
       var pick = null;
       for (i = all.length - 1; i >= 0; i--) {
@@ -36378,12 +36627,41 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
      `.editor-tabs` reserves room on its right for the absolutely-pinned
      `.pane-tabbar-actions` cluster. That reserve was a hard-coded 28px, which
      stopped being true once anything else joined the cluster, so measure it. */
+  /* True content-extent overflow test. scrollWidth CANNOT express "content
+     reached into the reserved right padding": for non-overflowing content
+     scrollWidth === clientWidth by definition, so subtracting the reserve
+     from clientWidth made the comparison ALWAYS true and collapsed every
+     tab. Measure the right edge of the last in-flow child instead and
+     compare it against the content-box limit (strip width minus the
+     reserved actions/kebab lane). */
+  function edStripContentOverflows(strip) {
+    var reserve = parseFloat(getComputedStyle(strip).paddingRight) || 0;
+    var rect = strip.getBoundingClientRect();
+    var limit = rect.left + strip.clientWidth - reserve;
+    var kids = strip.children;
+    var right = -Infinity;
+    for (var i = 0; i < kids.length; i++) {
+      var kid = kids[i];
+      if (!kid.classList || kid.classList.contains('pane-tabbar-actions') ||
+          kid.classList.contains('ed-tab-shape')) continue;
+      if (kid.style.display === 'none') continue;
+      var edge = kid.getBoundingClientRect().right;
+      if (edge > right) right = edge;
+    }
+    return right > limit + 1;
+  }
+
   function edMeasureActions(strip) {
     if (!strip) return;
     var actions = strip.querySelector('.pane-tabbar-actions');
     if (!actions) return;
-    var w = Math.ceil(actions.getBoundingClientRect().width);
-    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 14 : 28) + 'px');
+    /* Reserve = distance from the cluster's LEFT edge to the strip's RIGHT
+       edge (+8 gap), not the cluster's width alone: the cluster is pinned
+       with a right offset, so the reserve now covers that offset too and the
+       chip can never underlap right-edge chrome. */
+    var sr = strip.getBoundingClientRect(), ar = actions.getBoundingClientRect();
+    var w = ar.width ? Math.max(44, Math.ceil(sr.right - ar.left) + 8) : 44; /* floor 44: the kebab column (right:2, 16px wide) + grip live OUTSIDE the actions span now, so an empty span must still reserve their lane */
+    strip.style.setProperty('--pm6-ed-actions-w', w + 'px');
   }
 
   /* ---------- generic per-strip overflow fitter ---------------------------
@@ -36479,13 +36757,18 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     edReassertOrder(strip); /* DOM-owned strips re-apply persisted drag order */
     /* chip reuse via display toggles: see edFitOverflow for why */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     strip._pmEdHidden = [];
     var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
     all.forEach(function (t) { t.style.display = ''; });
     if (!strip.clientWidth) return; /* not laid out yet — refit fires on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = all.filter(function (t) { return t.style.display !== 'none'; });
       if (visible.length <= 1) break;
       var pick = null;
@@ -36539,7 +36822,10 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
     var differs = false;
     for (var i = 0; i < tabs.length; i++) { if (seq[i] !== tabs[i]) { differs = true; break; } }
     if (!differs) return;
-    var ref = tabs[tabs.length - 1].nextSibling; /* stays left of chip/actions */
+    /* anchor on the chip when present: after a drag lands a tab past the chip,
+       the last tab's nextSibling is the actions cluster, and re-inserting the
+       run there would leave the chip stranded mid-run */
+    var ref = strip.querySelector('.pm-ed-overflow') || tabs[tabs.length - 1].nextSibling;
     seq.forEach(function (t) { strip.insertBefore(t, ref); });
   }
 
@@ -36584,6 +36870,39 @@ window.PM_SETTINGS_DATA = {"version":1,"generated":"2026-07-07","categories":[{"
       if (edStripObserved) edStripObserved.add(strip);
       if (typeof ResizeObserver !== 'undefined') {
         try { new ResizeObserver(function () { edFitStrip(strip); }).observe(strip); } catch (e) {}
+      }
+      /* childList companion to the RO: adding or closing a TAB does not
+         change the strip's own box, so the RO never fires and the overflow
+         chip goes stale until the next resize. Watch the strip's children for
+         tab adds/removes and refit. Chip (.pm-ed-overflow) reseats are
+         ignored -- they are fitter OUTPUT, and reacting to them would
+         ping-pong; ditto anything mid-drag (the drag's own inserts). */
+      if (typeof MutationObserver === 'function') {
+        try {
+          new MutationObserver(function (records) {
+            if (strip.querySelector('.tab.dragging')) return;
+            var hit = false;
+            for (var ri = 0; ri < records.length && !hit; ri++) {
+              var lists = [records[ri].addedNodes, records[ri].removedNodes];
+              for (var li = 0; li < 2 && !hit; li++) {
+                for (var ni = 0; ni < lists[li].length; ni++) {
+                  var n = lists[li][ni];
+                  if (n && n.nodeType === 1 && n.classList && n.classList.contains('tab')) { hit = true; break; }
+                }
+              }
+            }
+            if (!hit) return;
+            /* mirror edFitStrip's managed dispatch; the pane 1/2 schedulers
+               already rAF-coalesce, generic strips get a per-strip flag */
+            if (strip.closest('#editorPane1')) { edScheduleFit(); return; }
+            if (strip.closest('#editorPane2')) { ed2ScheduleFit(); return; }
+            if (strip._pmEdMoQueued) return;
+            strip._pmEdMoQueued = true;
+            var runMo = function () { strip._pmEdMoQueued = false; edFitStrip(strip); };
+            if (document.hidden) { setTimeout(runMo, 50); return; }
+            requestAnimationFrame(runMo);
+          }).observe(strip, { childList: true });
+        } catch (e) {}
       }
       edFitStrip(strip);
     });

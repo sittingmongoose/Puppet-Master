@@ -6,7 +6,7 @@ PM7-README (PMConcept7.html)
 
 WHAT THIS FILE IS
   A BUILD ARTIFACT derived from Concepts/PMConcept6.html (shipped Jul 15
-  2026, sha256 b15eb20f9e4176ea7f40be24c651db85f4d57dfeb8dd1ce6a1b67ac3764aebd4)
+  2026, sha256 77fadeea6bff73649c8f4c58ffe7e28044401afd4a511b3ce78d5d8a450384dd)
   by the scripted pipeline Concepts/pm7-tools/build_pm7.py (transforms
   T01-T20). REGENERATE, NEVER HAND-EDIT: if something is wrong here, fix
   the transform (or its frozen inputs) and rebuild.
@@ -267,7 +267,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        everywhere else. */
     :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }
     /* opt-in scroll panes (verified overflow:auto hosts across parts) */
-    .primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console {
+    .primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console {
       scrollbar-width: thin;
       scrollbar-color: var(--pm6-sb-ink, transparent) transparent;
     }
@@ -291,15 +291,16 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
     .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
-    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list,
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
     .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
       width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
-    /* keep the code pane's custom bar out of the frosted tab-rail band */
-    .editor-code::-webkit-scrollbar-track:vertical { margin-top: var(--pm6-editor-tabs-h, 40px); }
+    /* .editor-code left both opt-in lists and its track-margin rule is gone:
+       the minimap is the only code-pane scrollbar now, so the pane must not
+       paint a second vertical bar beside it */
     /* bar show/hide must not shift chat layout. Only the thumb's colour
        animates and the gutter is reserved the moment a pane overflows, so the
        newly-revealed panes cannot reflow and none of them needs this. */
@@ -4632,7 +4633,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
     /* measured (PM_FROST -> --pm6-editor-tabs-h): the bar's height is themed —
        friendly turns the tabs into top-rounded folder tabs with their own
        padding — so a static value would misalign on theme switch */
-    .editor-pane { --pm6-editor-tabs-h: 34px; }
+    .editor-pane { --pm6-editor-tabs-h: 40px; }
     /* The lift goes on .editor-area, NOT on its children. .editor-area is
        overflow:hidden, so lifting the gutter and code from inside it just fed
        the raised strip to that clip — the rects said "under the tabs" while
@@ -4641,12 +4642,16 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        inside then moves together, which also keeps the gutter/code alignment
        free rather than something to maintain. */
     .editor-pane > .editor-area {
-      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 34px));
+      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 40px));
     }
     /* the minimap rides the lift too, so give it the height back or its canvas
-       starts behind the tab bar */
+       starts behind the tab bar. MARGIN, not padding: margin shrinks the
+       border box down to the visible band, so the absolutely-positioned
+       canvas/viewport children anchor to the visible area AND both
+       offsetHeight-based JS implementations read the true band height with
+       zero JS edits. */
     .editor-area > .editor-minimap {
-      padding-top: var(--pm6-editor-tabs-h, 34px);
+      margin-top: var(--pm6-editor-tabs-h, 40px);
     }
     /* glass blur budget: no nested backdrop-filter inside the pane */
     [data-theme^="glass"] .editor-tabs {
@@ -4846,7 +4851,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
          out of scroll and the numbers would lag by up to a bar-height at the
          end of a file. Harmless when no bar is showing: the extra room is
          simply never reached. */
-      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
+      padding: calc(var(--pm6-editor-tabs-h, 40px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
       font-family: 'Consolas', monospace;
       font-size: 12px;
       color: var(--text-muted);
@@ -4942,7 +4947,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
          the --pm6-editor-tabs-h term, which is the scroll-under lift: the code
          runs behind the frosted tab bar and both boxes re-pad by the same
          amount, so line N stays at padding-top + N*18px in each. */
-      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) var(--md) var(--sm);
+      padding: calc(var(--pm6-editor-tabs-h, 40px) + var(--sm)) var(--md) var(--sm);
       font-family: 'Consolas', 'Monaco', monospace;
       font-size: 13px;
       overflow: auto;
@@ -10123,6 +10128,13 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       --ed-shoulder-rx-max: 12px;
       --ed-shape-x: 0px;
       --ed-shape-w: 0px;
+      /* theme-skin hooks: outline + crown on the silhouette, hairline ring on
+         inactive tabs. Defaults are inert, so themes opt in per-token. */
+      --ed-shape-outline: transparent;
+      --ed-shape-crown: transparent;
+      --ed-shape-crown-h: 0px;
+      --ed-tab-inactive-ring: transparent;
+      --ed-tab-ring-radius: 6px;
     }
     .dashboard-view { --ed-strip-h: 36px; }
     [data-theme$="-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 66%, rgb(0, 0, 0)); }
@@ -10130,8 +10142,14 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        shared fill so the silhouette and the canvas stay identical AND glass keeps
        its own material. Its rail runs less translucent: the plate is already
        glassy, and plate-on-plate at 72% went muddy. */
-    [data-theme^="glass"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: var(--pm6-glass-plate); --ed-rail-alpha: 88%; --ed-top-radius: 14px; }
-    [data-theme^="glass"] .ed-tab-shape { box-shadow: inset 0 1px 0 var(--glass-edge); }
+    [data-theme^="glass"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: var(--pm6-glass-plate); --ed-rail-alpha: 84%; --ed-top-radius: 14px; }
+    /* 3-edge inner bevel: full top highlight plus faded left/right edges, so
+       the silhouette reads as a cut glass plate, not a painted slab */
+    [data-theme^="glass"] .ed-tab-shape {
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+          inset 1px 0 0 color-mix(in srgb, var(--glass-edge) 45%, transparent),
+          inset -1px 0 0 color-mix(in srgb, var(--glass-edge) 45%, transparent);
+    }
     [data-theme^="friendly"] :is(.editor-pane, .dashboard-view) { --ed-canvas-bg: color-mix(in srgb, var(--pm6-cozy-mint) 7%, var(--surface)); --ed-top-radius: 16px; --ed-canvas-rx-max: 14px; --ed-shoulder-rx-max: 14px; }
     [data-theme^="friendly"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--accent-lime); }
     [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-top-radius: 6px; --ed-corner-ry: 8px; --ed-shoulder-ry: 8px; --ed-canvas-rx-max: 8px; --ed-shoulder-rx-max: 8px; }
@@ -10140,6 +10158,27 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        base, then retro-dark alone deepens to 60%. */
     [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 88%, rgb(0, 0, 0)); }
     [data-theme="retro-dark"] :is(.editor-pane, .dashboard-view) { --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 60%, rgb(0, 0, 0)); }
+    /* theme skins: retro draws its hard CRT outline around the silhouette and
+       square hairline rings on the idle tabs; retro-dark softens the outline
+       to pure lime-on-black. basic gets a crown accent strip and a slightly
+       tighter top radius instead of any outline. */
+    [data-theme^="retro"] :is(.editor-pane, .dashboard-view) { --ed-tab-inactive-ring: color-mix(in srgb, var(--accent-lime) 25%, var(--border-light)); --ed-tab-ring-radius: 0px; }
+    /* Retro's hard outline lives on the ACTIVE TAB, not the travelling shape:
+       a bordered shape sliding through the inter-tab gaps read as a stray
+       bright bar mid-spring. The tab ring snaps on arrival (crisp, very
+       retro) while the unbordered fill still travels beneath it. Three inset
+       edges; the open bottom keeps the tab connected to the canvas. */
+    [data-theme^="retro"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+      box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary)),
+                  inset -1px 0 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary)),
+                  inset 0 1px 0 color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary));
+    }
+    [data-theme="retro-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+      box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent-lime) 80%, transparent),
+                  inset -1px 0 0 color-mix(in srgb, var(--accent-lime) 80%, transparent),
+                  inset 0 1px 0 color-mix(in srgb, var(--accent-lime) 80%, transparent);
+    }
+    [data-theme^="basic"] :is(.editor-pane, .dashboard-view) { --ed-shape-crown: var(--accent-blue); --ed-shape-crown-h: 2px; --ed-top-radius: 9px; }
     .editor-tabs.ed-shape-on, .dashboard-tabs.ed-shape-on {
       position: relative;
       /* single translucent layer: part 06's backdrop blur on .editor-tabs now
@@ -10180,7 +10219,13 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       width: var(--ed-shape-w);
       top: var(--ed-tab-top, 2px);
       bottom: -1px;               /* overlap the join so no hairline shows */
-      background: linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      /* crown layer first (a theme accent strip along the top edge, 0px tall
+         by default), then the canvas fill over the opaque ground */
+      background: linear-gradient(var(--ed-shape-crown), var(--ed-shape-crown)) 0 0 / 100% var(--ed-shape-crown-h) no-repeat,
+          linear-gradient(var(--ed-canvas-bg), var(--ed-canvas-bg)), var(--ed-solid-base);
+      box-sizing: border-box;
+      border: 1px solid var(--ed-shape-outline);
+      border-bottom: 0;
       border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
       pointer-events: none;
       z-index: 0;
@@ -10284,6 +10329,12 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       background: color-mix(in srgb, var(--ed-canvas-bg) 30%, transparent);
       color: var(--text-primary);
     }
+    /* theme-skin hairline on inactive tabs; transparent by default. Placed
+       after the hover reset so the ring survives hover. */
+    :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+      box-shadow: inset 0 0 0 1px var(--ed-tab-inactive-ring);
+      border-radius: var(--ed-tab-ring-radius);
+    }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active { color: var(--text-primary); }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
     :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active::after,
@@ -10293,6 +10344,11 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
        (top: 50% + translateY(-50%)) or "relative" turns that pair into a
        +9px downward shove and the X/kebab ride below the strip's centre. */
     .editor-tabs.ed-shape-on .pane-tabbar-actions { z-index: 2; }
+    /* mid-drag: the REAL tab rides the pointer under pointer capture (part
+       25's reorder gesture) -- keep it nearly opaque and stacked above the
+       tabs it displaces; text selection must not start under the glide */
+    .editor-tabs .tab { user-select: none; -webkit-user-select: none; }
+    .editor-tabs .tab.dragging { opacity: .92; will-change: transform; position: relative; z-index: 40; }
     /* Reduced motion keeps the state change, drops the spring travel; the JS
        reads this flag too and snaps instead of animating. */
     @media (prefers-reduced-motion: reduce) { .ed-tab-shape { transition: none; } }
@@ -11205,6 +11261,10 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
 :root {
   --pm-home-collapsed-h: 34px;
   --pm-home-gap: 4px;
+  /* vertical rhythm is tighter than the 4px column gap: 2px workspace
+     top/bottom padding and 2px dock-to-main vertical margins */
+  --pm-home-pad-y: 2px;
+  --pm-home-gap-y: 2px;
   --pm-home-pickup-dur: 120ms;
   --pm-home-pickup-ease: cubic-bezier(.22, 1, .36, 1);
   --pm-home-drop-dur: 220ms;
@@ -11217,17 +11277,20 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
   overflow: hidden;
   min-height: 0;
 }
-/* Home owns its own gutter (#pm-home-workspace pads by --pm-home-gap); the
-   page shell's .primary-content padding would DOUBLE it, so the shell gutter
-   is zeroed while the Home tab is the active panel -- and only then. */
-.primary-content:has(> #panel-dashboard.pm-home-owned.active) { padding: 0; }
+/* Home owns its own gutter (#pm-home-workspace pads by --pm-home-pad-y /
+   --pm-home-gap); the page shell's .primary-content padding would DOUBLE it,
+   so the shell gutter is zeroed while the Home tab is the active panel -- and
+   only then. !important: the 09-bento theme asserts its own narrow-window
+   .primary-content gutter with !important, which otherwise wins over this
+   unlayered rule and reopens the double gutter. */
+.primary-content:has(> #panel-dashboard.pm-home-owned.active) { padding: 0 !important; }
 #pm-home-workspace {
   position: absolute;
   inset: 0;
   z-index: 2;
   min-width: 0;
   min-height: 0;
-  padding: var(--pm-home-gap);
+  padding: var(--pm-home-pad-y) var(--pm-home-gap);
   box-sizing: border-box;
   color: var(--text-primary);
   font-family: var(--body-font);
@@ -11286,9 +11349,9 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
    receive) a surface: each occupied or drop-previewed dock margins toward
    main. Empty docks collapse to a true 0px with no dead strip. */
 .pm-home-host[data-pm-home-host="dock_top"]:not(.pm-home-host-empty),
-.pm-home-host[data-pm-home-host="dock_top"].pm-home-drop-active { margin-bottom: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_top"].pm-home-drop-active { margin-bottom: var(--pm-home-gap-y); }
 .pm-home-host[data-pm-home-host="dock_bottom"]:not(.pm-home-host-empty),
-.pm-home-host[data-pm-home-host="dock_bottom"].pm-home-drop-active { margin-top: var(--pm-home-gap); }
+.pm-home-host[data-pm-home-host="dock_bottom"].pm-home-drop-active { margin-top: var(--pm-home-gap-y); }
 .pm-home-host[data-pm-home-host="dock_left"]:not(.pm-home-host-empty),
 .pm-home-host[data-pm-home-host="dock_left"].pm-home-drop-active { margin-right: var(--pm-home-gap); }
 .pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty),
@@ -11481,7 +11544,11 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    empty-section note must obey the same switch, so it only shows while the
    Terminal pane is the active tab -- never underneath Problems/Output. */
 #bottomTabsContent > .pm-home-terminal-empty-state { display: none; }
-#bottomTerminalHost.active ~ .pm-home-terminal-empty-state { display: block; }
+/* Both display:block rules are additionally gated on the MODEL's own
+   verdict: projectTerminalRuntime stamps data-pm-term-empty on #bottomPanel
+   (which contains #bottomTabsContent and therefore both elements below), so
+   a stale note can never shadow a live terminal. */
+#bottomPanel[data-pm-term-empty="true"] #bottomTerminalHost.active ~ .pm-home-terminal-empty-state { display: block; }
 /* contain: layout paint on #chatPanel clips descendant hit-testing to the
    rounded border box; at a 20px radius the top-right corner arc swallowed
    nearly the whole 18px grip triangle. Notch just that corner so the grip
@@ -11490,7 +11557,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* the runtime host may have been REPARENTED into a generated section, in
    which case no sibling selector can match it here -- show the guidance
    whenever the terminal host is absent and no other bottom panel is active */
-#bottomTabsContent:not(:has(#bottomTerminalHost)):not(:has(.bottom-host-panel.active)) > .pm-home-terminal-empty-state { display: block; }
+#bottomPanel[data-pm-term-empty="true"] #bottomTabsContent:not(:has(#bottomTerminalHost)):not(:has(.bottom-host-panel.active)) > .pm-home-terminal-empty-state { display: block; }
 #bottomPanel.pm-home-surface #pmBottomTermChrome { display: none !important; }
 .pm-home-terminal-body {
   flex: 1;
@@ -11507,7 +11574,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    participates in hit-testing, so only the upper-right triangle of the 18px
    box steals hits -- the lower-left half falls through to whatever sits
    beneath it. z-index 140 sits above the pinned actions cluster (130), chat's
-   stacked header (25) and the surface kebab (26). */
+   stacked header (25) and the surface kebab (130). */
 .pm-home-surface-grip {
   position: absolute;
   top: 0;
@@ -11547,9 +11614,9 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* clearance so pinned right-edge chrome does not sit under the grip's
    hypotenuse (the 18px triangle in the top-right corner) */
 .pm-home-surface .editor-tabs .pane-tabbar-actions { right: 30px; }
-.pm-home-surface .pm6-dash-actions { margin-right: 20px; }
+.pm-home-surface .pm6-dash-actions { margin-right: 22px; }
 .pm-home-surface .pm-home-terminal-head { padding-right: 26px; }
-.pm-home-surface .bottom-tabs-right { padding-right: 22px; }
+.pm-home-surface .bottom-tabs-right { padding-right: 26px; }
 .pm-home-surface .chat-panel-header-stacked > :first-child { padding-right: 26px; }
 /* Keyboard-move announcer (the menu Move/Dock rows are retired, so the grip is
    the only movement affordance and must carry a non-pointer path). */
@@ -11581,7 +11648,26 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   cursor: pointer;
 }
 .pm-home-titlebar-more { width: 28px !important; min-width: 28px !important; max-width: 28px; flex: 0 0 28px; }
-.pm-home-surface-options { position: relative; z-index: 26; width: 22px; min-width: 22px; height: 22px; padding: 0 !important; }
+/* The kebab sits in a right-edge column directly below the grip triangle:
+   the grip (z 140) owns the y 0-18 upper-right triangle, the kebab owns
+   y 20-40. It is absolutely positioned on the SURFACE itself (its DOM
+   parent), no longer parked inside .pane-tabbar-actions or a head row --
+   which is what left the terminal's kebab stranded in a "..." bar of its
+   own. */
+.pm-home-surface-options {
+  position: absolute;
+  top: 20px;
+  right: 2px;
+  width: 16px;
+  min-width: 16px;
+  height: 20px;
+  z-index: 130;
+  display: inline-grid !important;
+  place-items: center;
+  padding: 0 !important;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
 #chatPanel .chat-panel-header-stacked { position: relative; z-index: 25; }
 .pm-home-surface-options:hover,
 .pm-home-titlebar-more:hover,
@@ -11610,8 +11696,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
    also clears the 18px top-right grip with margin to spare */
 .pm-home-resize-handle.resizer-col { top: 44px; bottom: 5px; right: 0; height: auto; }
 .pm-home-surface .pane-tabbar-actions,
-.pm-home-surface .bottom-tabs-right,
-.pm-home-surface-options { z-index: 130; }
+.pm-home-surface .bottom-tabs-right { z-index: 130; }
 .pm-home-resize-handle.resizer-row { left: 5px; right: 5px; bottom: 0; width: auto; }
 .pm-home-host[data-pm-home-host="dock_right"] > .pm-home-surface > .pm-home-resize-handle.resizer-col {
   right: auto;
@@ -24835,82 +24920,265 @@ status: completed with warnings</pre>
            dashboard widget grid uses), every handler is delegated on document
            so it covers strips that do not exist yet, and the drop writes the
            new order back to the owning model before re-rendering. */
-        function getDragAfterElement(container, x) {
-            var tabs = Array.prototype.filter.call(container.querySelectorAll('.tab'), function (t) {
-                return !t.classList.contains('dragging') && t.style.display !== 'none';
-            });
-            return tabs.reduce(function(closest, child) {
-                var box = child.getBoundingClientRect();
-                var offset = x - box.left - box.width / 2;
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                }
-                return closest;
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        /* pointer-capture reorder: HTML5 DnD is retired for tab reorder.
+           WebKit made the old path invisible three ways at once: a dragover
+           stream that only ticks on native NSDragging updates (sparse), a
+           native opaque drag snapshot whenever the custom drag image is not
+           renderable (opacity:0 counts as not renderable), and macOS
+           reduce-motion gating. Pointer capture drives the same FLIP
+           machinery at full input rate with the REAL tab under the pointer:
+           no ghost bitmap, no dragover cadence, no OS drag session at all.
+           T07 note: move/up/cancel listeners ride the TAB element under
+           setPointerCapture -- document-level pointermove stays untouched. */
+        var edPD = null; /* one reorder gesture at a time */
+        function edMotionOK() {
+            return !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) &&
+                document.documentElement.getAttribute('data-motion') !== 'reduced';
+        }
+
+        function edReorderSlots(strip, dragging) {
+            /* transform-free midpoint cache -- callers guarantee every tab's
+               transform is '' at sample time, so live rects ARE layout */
+            var mids = [];
+            var tabs = strip.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                var t = tabs[i];
+                if (t === dragging || t.style.display === 'none') continue;
+                var r = t.getBoundingClientRect();
+                mids.push({ el: t, mid: r.left + r.width / 2 });
+            }
+            return mids;
+        }
+
+        function edDetachReorder() {
+            window.removeEventListener('pointermove', edReorderMove, true);
+            window.removeEventListener('pointerup', edReorderUp, true);
+            window.removeEventListener('pointercancel', edReorderCancel, true);
         }
 
         document.addEventListener('pointerdown', function (e) {
+            if (!e.isPrimary || e.button !== 0) return;
             var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
             if (!tab) return;
             if (e.target.closest('.tab-close-btn, .tab-close')) return; /* closing, not dragging */
-            tab.draggable = true;
+            var strip = tab.closest('.editor-tabs');
+            if (!strip || edPD) return;
+            edPD = { tab: tab, strip: strip, pid: e.pointerId, startX: e.clientX,
+                     grabX: 0, slotLeft: 0, slotW: 0, lastTx: 0, mids: null,
+                     motionOK: true, didDrag: false };
+            /* listeners live on WINDOW, not the tab: re-slotting the tab is
+               a DOM remove+insert, which releases pointer capture -- a
+               tab-scoped lostpointercapture would cancel the drag on the very
+               first re-slot (the same trap the workspace drag documents on
+               its grip handles). Capture is still taken as a stream nicety:
+               it suppresses hover churn and keeps events flowing while it
+               lasts; the window listeners simply do not care when it dies. */
+            window.addEventListener('pointermove', edReorderMove, true);
+            window.addEventListener('pointerup', edReorderUp, true);
+            window.addEventListener('pointercancel', edReorderCancel, true);
+            try { tab.setPointerCapture(e.pointerId); } catch (err) {}
         }, true);
 
-        document.addEventListener('dragstart', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (!tab) return;
-            tab.classList.add('dragging');
-            try {
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', tab.getAttribute('data-file') || '');
-            } catch (err) {}
-        });
-
-        document.addEventListener('dragend', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (tab) tab.classList.remove('dragging');
-        });
-
-        document.addEventListener('dragover', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
-            e.preventDefault();
-            try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-            var afterEl = getDragAfterElement(tabsContainer, e.clientX);
-            if (afterEl == null) {
-                tabsContainer.insertBefore(dragging, tabsContainer.querySelector('.pane-tabbar-actions'));
-            } else {
-                tabsContainer.insertBefore(dragging, afterEl);
+        function edReorderMove(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            if (!g.didDrag) {
+                if (Math.abs(e.clientX - g.startX) < 4) return; /* drag threshold */
+                g.didDrag = true;
+                g.motionOK = edMotionOK();
+                g.tab.classList.add('dragging');
+                var r0 = g.tab.getBoundingClientRect();
+                g.grabX = g.startX - r0.left;
+                g.slotLeft = r0.left;
+                g.slotW = r0.width;
+                g.mids = edReorderSlots(g.strip, g.tab);
+                if (window.getSelection) { try { getSelection().removeAllRanges(); } catch (err) {} }
             }
-        });
-
-        document.addEventListener('drop', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
             e.preventDefault();
-            dragging.classList.remove('dragging');
-            var filename = dragging.getAttribute('data-file');
-            var pane = tabsContainer.closest('.editor-pane');
-            tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-            dragging.classList.add('active');
-            /* persist the new order into whichever model owns this strip, so a
-               later re-render does not snap it back */
-            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
-                try { window.PM6_PERSIST_TAB_ORDER(tabsContainer); } catch (err) {}
+            /* insertion index from CACHED transform-free midpoints -- live
+               rects of mid-FLIP neighbours are transform-inclusive lies */
+            var center = e.clientX - g.grabX + g.slotW / 2;
+            var afterEl = null;
+            for (var mi = 0; mi < g.mids.length; mi++) {
+                if (center < g.mids[mi].mid) { afterEl = g.mids[mi].el; break; }
             }
+            /* end anchor: the overflow chip when present, else the pinned
+               actions cluster -- inserting before the cluster alone would
+               land the tab to the chip's RIGHT */
+            var ref = afterEl != null ? afterEl :
+                (g.strip.querySelector('.pm-ed-overflow') ||
+                 g.strip.querySelector('.pane-tabbar-actions'));
+            /* no-op guard: already directly before ref means the insert would
+               be pure churn (observer wakeups, FLIP restarts, zero layout) */
+            if (g.tab.nextElementSibling !== ref && g.tab !== ref) {
+                if (g.motionOK) {
+                    /* FLIP the displaced tabs. First rects are taken
+                       transform-INCLUSIVE so an interrupted slide continues
+                       from where it visually is instead of teleporting. */
+                    var firsts = [];
+                    var sibs = g.strip.querySelectorAll('.tab');
+                    var si, sTab, dx, lr;
+                    for (si = 0; si < sibs.length; si++) {
+                        sTab = sibs[si];
+                        if (sTab === g.tab || sTab.style.display === 'none') continue;
+                        firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                    }
+                    g.strip.insertBefore(g.tab, ref);
+                    var newMids = [];
+                    for (si = 0; si < firsts.length; si++) {
+                        sTab = firsts[si][0];
+                        sTab.style.transition = 'none';
+                        sTab.style.transform = '';
+                        lr = sTab.getBoundingClientRect();
+                        newMids.push({ el: sTab, mid: lr.left + lr.width / 2 });
+                        dx = firsts[si][1] - lr.left;
+                        if (dx >= 1 || dx <= -1) {
+                            sTab.style.transform = 'translateX(' + dx + 'px)';
+                            void sTab.offsetWidth; /* commit the offset frame */
+                            sTab.style.transition = 'transform 220ms cubic-bezier(.22,1,.36,1)';
+                            sTab.style.transform = '';
+                            sTab.addEventListener('transitionend', function onSlid(te) {
+                                if (te.propertyName !== 'transform') return;
+                                te.target.style.transition = '';
+                                te.target.style.transform = '';
+                                te.target.removeEventListener('transitionend', onSlid);
+                            });
+                        } else {
+                            sTab.style.transition = '';
+                            sTab.style.transform = '';
+                        }
+                    }
+                    newMids.sort(function (a, b) { return a.mid - b.mid; });
+                    g.mids = newMids;
+                    /* re-cache the dragged slot from its transform-free rect */
+                    var keepT = g.tab.style.transform;
+                    g.tab.style.transform = '';
+                    var dr = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr.left;
+                    g.slotW = dr.width;
+                    g.tab.style.transform = keepT;
+                } else {
+                    g.strip.insertBefore(g.tab, ref);
+                    g.mids = edReorderSlots(g.strip, g.tab);
+                    var dr2 = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr2.left;
+                    g.slotW = dr2.width;
+                }
+            }
+            if (g.motionOK) {
+                /* 1:1 glide, transform ONLY. The layout position stays at the
+                   insertion slot, so the midpoint math and EDSHAPE's per-frame
+                   snap both keep seeing the truth. Soft rubber-band past the
+                   strip edges instead of a hard clamp. */
+                var sr = g.strip.getBoundingClientRect();
+                var tx = e.clientX - g.grabX - g.slotLeft;
+                var txMin = sr.left - g.slotLeft;
+                var txMax = sr.right - g.slotW - g.slotLeft;
+                if (tx < txMin) tx = txMin + (tx - txMin) * 0.35;
+                if (tx > txMax) tx = txMax + (tx - txMax) * 0.35;
+                g.lastTx = tx;
+                g.tab.style.transform = 'translateX(' + tx + 'px)';
+            }
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(g.strip, false); } catch (err) {} }
+        }
+
+        function edReorderUp(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            try { g.tab.releasePointerCapture(g.pid); } catch (err) {}
+            if (!g.didDrag) return; /* plain click: selection runs natively */
+            /* the trailing synthetic click can leak to whatever sits under
+               the release point in some engines -- swallow clicks for a beat,
+               then stand down */
+            var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); };
+            document.addEventListener('click', swallow, true);
+            setTimeout(function () { document.removeEventListener('click', swallow, true); }, 120);
+            edReorderSettle(g);
+        }
+
+        function edReorderCancel(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            if (!g.didDrag) return;
+            /* system-cancel path (mirrors the old ESC handling): settle the
+               residue instantly and refit -- no persist, the next render may
+               snap the order back by design */
+            g.tab.style.transform = '';
+            var settle = g.strip.querySelectorAll('.tab');
+            for (var si = 0; si < settle.length; si++) {
+                settle[si].style.transition = '';
+                settle[si].style.transform = '';
+            }
+            g.tab.classList.remove('dragging');
             if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
-                try { window.PM6_FIT_EDITOR_TABS(tabsContainer); } catch (err) {}
+                try { window.PM6_FIT_EDITOR_TABS(g.strip); } catch (err) {}
             }
-            if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
-                var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
-                    (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
-                if (prefix) renderFileToPane(filename, prefix, true);
+        }
+
+        function edReorderSettle(g) {
+            var tab = g.tab, strip = g.strip;
+            /* final slot, transform-free (clear + measure + re-transform is
+               synchronous -- nothing paints in between) */
+            tab.style.transform = '';
+            var fr = tab.getBoundingClientRect();
+            var delta = g.slotLeft + g.lastTx - fr.left;
+            /* order + activation bookkeeping that reads NO layout runs now;
+               layout-reading work (fitters, model re-render) waits until the
+               settle transform is gone -- transforms poison their reads */
+            strip.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
+                try { window.PM6_PERSIST_TAB_ORDER(strip); } catch (err) {}
             }
-        });
+            /* the silhouette springs to the final slot while the tab glides
+               there -- selection-spring parity for a drag-activated tab */
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, true); } catch (err) {} }
+            var finished = false;
+            var finish = function (te) {
+                if (te && te.propertyName && te.propertyName !== 'transform') return;
+                if (finished) return;
+                finished = true;
+                tab.removeEventListener('transitionend', finish);
+                tab.style.transition = '';
+                tab.style.transform = '';
+                var residue = strip.querySelectorAll('.tab');
+                for (var ri = 0; ri < residue.length; ri++) {
+                    residue[ri].style.transition = '';
+                    residue[ri].style.transform = '';
+                }
+                tab.classList.remove('dragging');
+                var filename = tab.getAttribute('data-file');
+                var pane = strip.closest('.editor-pane');
+                if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
+                    try { window.PM6_FIT_EDITOR_TABS(strip); } catch (err) {}
+                }
+                /* model re-render LAST: for pane 1 this rebuilds the strip
+                   from state, which would tear the settling tab out of the
+                   DOM mid-animation */
+                if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
+                    var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
+                        (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
+                    if (prefix) renderFileToPane(filename, prefix, true);
+                }
+                if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, false); } catch (err) {} }
+            };
+            if (g.motionOK && (delta >= 1 || delta <= -1)) {
+                /* low-bounce settle into the slot */
+                tab.style.transition = 'none';
+                tab.style.transform = 'translateX(' + delta + 'px)';
+                void tab.offsetWidth;
+                tab.style.transition = 'transform 200ms cubic-bezier(.3,1.25,.45,1)';
+                tab.style.transform = 'translateX(0px)';
+                tab.addEventListener('transitionend', finish);
+                setTimeout(finish, 300); /* transitionend can be lost to a re-render */
+            } else {
+                finish();
+            }
+        }
 
         // init generic resizers
         setupResizer('leftPanelResizer', 'sidePanelSlot', 'editorView');
@@ -35332,6 +35600,11 @@ status: completed with warnings</pre>
        (every fit re-triggered a reseat re-triggered a fit ...). Style and
        hidden-text writes below do not fire childList observers. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     edHidden = [];
     var all = strip.querySelectorAll('.tab');
@@ -35339,7 +35612,7 @@ status: completed with warnings</pre>
     for (i = 0; i < all.length; i++) all[i].style.display = '';
     if (!strip.clientWidth) return; /* strip not laid out — refit runs on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = 0;
       for (i = 0; i < all.length; i++) { if (all[i].style.display !== 'none') visible++; }
       if (visible <= 1) break;
@@ -35627,6 +35900,11 @@ status: completed with warnings</pre>
     /* Reuse the chip via display toggles instead of remove/recreate: childList
        mutations here ping-pong with the Home overlay's chrome observer. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
        clear display on tabs hidden for other reasons (e.g. the static
@@ -35645,7 +35923,7 @@ status: completed with warnings</pre>
     if (!strip.clientWidth) return;
     var i;
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       if (all.length <= 1) break;
       var pick = null;
       for (i = all.length - 1; i >= 0; i--) {
@@ -35954,12 +36232,41 @@ status: completed with warnings</pre>
      `.editor-tabs` reserves room on its right for the absolutely-pinned
      `.pane-tabbar-actions` cluster. That reserve was a hard-coded 28px, which
      stopped being true once anything else joined the cluster, so measure it. */
+  /* True content-extent overflow test. scrollWidth CANNOT express "content
+     reached into the reserved right padding": for non-overflowing content
+     scrollWidth === clientWidth by definition, so subtracting the reserve
+     from clientWidth made the comparison ALWAYS true and collapsed every
+     tab. Measure the right edge of the last in-flow child instead and
+     compare it against the content-box limit (strip width minus the
+     reserved actions/kebab lane). */
+  function edStripContentOverflows(strip) {
+    var reserve = parseFloat(getComputedStyle(strip).paddingRight) || 0;
+    var rect = strip.getBoundingClientRect();
+    var limit = rect.left + strip.clientWidth - reserve;
+    var kids = strip.children;
+    var right = -Infinity;
+    for (var i = 0; i < kids.length; i++) {
+      var kid = kids[i];
+      if (!kid.classList || kid.classList.contains('pane-tabbar-actions') ||
+          kid.classList.contains('ed-tab-shape')) continue;
+      if (kid.style.display === 'none') continue;
+      var edge = kid.getBoundingClientRect().right;
+      if (edge > right) right = edge;
+    }
+    return right > limit + 1;
+  }
+
   function edMeasureActions(strip) {
     if (!strip) return;
     var actions = strip.querySelector('.pane-tabbar-actions');
     if (!actions) return;
-    var w = Math.ceil(actions.getBoundingClientRect().width);
-    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 14 : 28) + 'px');
+    /* Reserve = distance from the cluster's LEFT edge to the strip's RIGHT
+       edge (+8 gap), not the cluster's width alone: the cluster is pinned
+       with a right offset, so the reserve now covers that offset too and the
+       chip can never underlap right-edge chrome. */
+    var sr = strip.getBoundingClientRect(), ar = actions.getBoundingClientRect();
+    var w = ar.width ? Math.max(44, Math.ceil(sr.right - ar.left) + 8) : 44; /* floor 44: the kebab column (right:2, 16px wide) + grip live OUTSIDE the actions span now, so an empty span must still reserve their lane */
+    strip.style.setProperty('--pm6-ed-actions-w', w + 'px');
   }
 
   /* ---------- generic per-strip overflow fitter ---------------------------
@@ -36055,13 +36362,18 @@ status: completed with warnings</pre>
     edReassertOrder(strip); /* DOM-owned strips re-apply persisted drag order */
     /* chip reuse via display toggles: see edFitOverflow for why */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     strip._pmEdHidden = [];
     var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
     all.forEach(function (t) { t.style.display = ''; });
     if (!strip.clientWidth) return; /* not laid out yet — refit fires on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = all.filter(function (t) { return t.style.display !== 'none'; });
       if (visible.length <= 1) break;
       var pick = null;
@@ -36115,7 +36427,10 @@ status: completed with warnings</pre>
     var differs = false;
     for (var i = 0; i < tabs.length; i++) { if (seq[i] !== tabs[i]) { differs = true; break; } }
     if (!differs) return;
-    var ref = tabs[tabs.length - 1].nextSibling; /* stays left of chip/actions */
+    /* anchor on the chip when present: after a drag lands a tab past the chip,
+       the last tab's nextSibling is the actions cluster, and re-inserting the
+       run there would leave the chip stranded mid-run */
+    var ref = strip.querySelector('.pm-ed-overflow') || tabs[tabs.length - 1].nextSibling;
     seq.forEach(function (t) { strip.insertBefore(t, ref); });
   }
 
@@ -36160,6 +36475,39 @@ status: completed with warnings</pre>
       if (edStripObserved) edStripObserved.add(strip);
       if (typeof ResizeObserver !== 'undefined') {
         try { new ResizeObserver(function () { edFitStrip(strip); }).observe(strip); } catch (e) {}
+      }
+      /* childList companion to the RO: adding or closing a TAB does not
+         change the strip's own box, so the RO never fires and the overflow
+         chip goes stale until the next resize. Watch the strip's children for
+         tab adds/removes and refit. Chip (.pm-ed-overflow) reseats are
+         ignored -- they are fitter OUTPUT, and reacting to them would
+         ping-pong; ditto anything mid-drag (the drag's own inserts). */
+      if (typeof MutationObserver === 'function') {
+        try {
+          new MutationObserver(function (records) {
+            if (strip.querySelector('.tab.dragging')) return;
+            var hit = false;
+            for (var ri = 0; ri < records.length && !hit; ri++) {
+              var lists = [records[ri].addedNodes, records[ri].removedNodes];
+              for (var li = 0; li < 2 && !hit; li++) {
+                for (var ni = 0; ni < lists[li].length; ni++) {
+                  var n = lists[li][ni];
+                  if (n && n.nodeType === 1 && n.classList && n.classList.contains('tab')) { hit = true; break; }
+                }
+              }
+            }
+            if (!hit) return;
+            /* mirror edFitStrip's managed dispatch; the pane 1/2 schedulers
+               already rAF-coalesce, generic strips get a per-strip flag */
+            if (strip.closest('#editorPane1')) { edScheduleFit(); return; }
+            if (strip.closest('#editorPane2')) { ed2ScheduleFit(); return; }
+            if (strip._pmEdMoQueued) return;
+            strip._pmEdMoQueued = true;
+            var runMo = function () { strip._pmEdMoQueued = false; edFitStrip(strip); };
+            if (document.hidden) { setTimeout(runMo, 50); return; }
+            requestAnimationFrame(runMo);
+          }).observe(strip, { childList: true });
+        } catch (e) {}
       }
       edFitStrip(strip);
     });
@@ -37144,6 +37492,10 @@ status: completed with warnings</pre>
   var DRAG_EDGE_ZONE_PX = 56;
   /* border strip that resolves to a dock during a drag */
   var DRAG_DOCK_EDGE_PX = 28;
+  /* extra distance past a latched dock's OPENED preview edge the pointer must
+     travel before the dock releases -- geometric hysteresis (see
+     buildDockLatch) */
+  var DOCK_EXIT_SLACK_PX = 44;
   /* Per-host caps on VISIBLE surfaces: a gesture cannot overfill a dock into
      uselessness. home_main is uncapped -- it is the spill/fallback host. */
   var HOST_CAPS = { dock_left: 3, dock_right: 3, dock_top: 2, dock_bottom: 2, floating: 4 };
@@ -37480,7 +37832,31 @@ status: completed with warnings</pre>
         var ref = surface.domain_ref || {};
         var panes = splitCsv(ref.pane_ids);
         var sessions = splitCsv(ref.terminal_session_ids);
-        if (ref.terminal_workgroup_id && !panes.length) return "terminal_workgroup_empty";
+        /* Repair-then-seed, never early-continue: the old
+           `return "terminal_workgroup_empty"` skipped the terminalSections
+           write entirely, so a workgroup ref with no panes left the section
+           with NO record at all and the projection rendered the empty
+           template over a supposedly live terminal. Section 1 carrying the
+           pristine workgroup id restores the pristine pane/session lists;
+           any other paneless workgroup drops to an honest empty (null
+           workgroup). Every section ALWAYS gets a well-formed record. */
+        if (ref.terminal_workgroup_id && !panes.length) {
+          if (surface.surface_instance_id === "terminal_section:terminal_section_1" &&
+              ref.terminal_workgroup_id === PRISTINE_TERMINAL_SECTION.terminal_workgroup_id) {
+            var pristine = clone(PRISTINE_TERMINAL_SECTION);
+            panes = pristine.pane_ids;
+            sessions = pristine.terminal_session_ids;
+          } else {
+            /* Reconstitute a minimal pane rather than nulling: layouts
+               persisted by earlier builds carry live workgroup ids whose
+               pane CSVs were corrupted to "" -- nulling them re-surfaced the
+               big "this terminal section is empty" block on perfectly good
+               sections. A workgroup with an id is live by definition. */
+            var repairSuffix = surface.surface_instance_id.replace(/[^0-9]+/g, "") || "r";
+            panes = ["tp-repair-" + repairSuffix];
+            sessions = ["ts-sess-repair-" + repairSuffix];
+          }
+        }
         terminalSections[surface.surface_instance_id] = {
           terminal_section_id: ref.terminal_section_id || surface.surface_instance_id.split(":")[1],
           terminal_workgroup_id: ref.terminal_workgroup_id || null,
@@ -37489,6 +37865,29 @@ status: completed with warnings</pre>
         };
       }
     });
+    /* If NO section carries a live workgroup, the terminal is unusable and
+       every section shows the empty note -- a state earlier builds could
+       PERSIST (their repair nulled corrupted workgroup ids and wrote that
+       back). Reconstitute the pristine workgroup on section 1 and heal the
+       persisted ref so the terminal always boots alive. */
+    var anyLiveWorkgroup = Object.keys(terminalSections).some(function (id) {
+      return Boolean(terminalSections[id].terminal_workgroup_id);
+    });
+    var firstSection = terminalSections["terminal_section:terminal_section_1"];
+    if (!anyLiveWorkgroup && firstSection) {
+      var reseed = clone(PRISTINE_TERMINAL_SECTION);
+      firstSection.terminal_workgroup_id = reseed.terminal_workgroup_id;
+      firstSection.pane_ids = reseed.pane_ids;
+      firstSection.terminal_session_ids = reseed.terminal_session_ids;
+      var firstSurface = layout.surfaces.filter(function (surface) {
+        return surface.surface_instance_id === "terminal_section:terminal_section_1";
+      })[0];
+      if (firstSurface && firstSurface.domain_ref) {
+        firstSurface.domain_ref.terminal_workgroup_id = reseed.terminal_workgroup_id;
+        firstSurface.domain_ref.pane_ids = reseed.pane_ids.join(",");
+        firstSurface.domain_ref.terminal_session_ids = reseed.terminal_session_ids.join(",");
+      }
+    }
     var active = layout.surfaces.filter(function (surface) {
       return surface.surface_kind === "terminal_section" && terminalSections[surface.surface_instance_id] && terminalSections[surface.surface_instance_id].terminal_workgroup_id;
     }).sort(function (a, b) { return (b.last_focus_seq || 0) - (a.last_focus_seq || 0); })[0];
@@ -37977,7 +38376,9 @@ status: completed with warnings</pre>
       existing.setAttribute("role", "tab");
       existing.setAttribute("tabindex", "0");
       existing.innerHTML = '<svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Browser';
-      tabs.insertBefore(existing, tabs.querySelector(".pane-tabbar-actions"));
+      /* insert before the overflow chevron when the strip has one (it sits
+         before the pinned actions cluster); fall back to the cluster */
+      tabs.insertBefore(existing, tabs.querySelector(".pm-ed-overflow") || tabs.querySelector(".pane-tabbar-actions"));
     }
     existing.removeAttribute("onclick");
     existing.setAttribute("data-pm-home-browser-tab", surfaceId);
@@ -38042,7 +38443,7 @@ status: completed with warnings</pre>
   /* The grip is the surface element's own absolutely-positioned first child,
      an 18px lines-only triangle in the TOP-RIGHT corner. It sits at z-index
      140 -- above the pinned actions cluster (130), chat's stacked header (25),
-     the surface kebab (26) and the resize handles (100). Only the upper-right
+     the surface kebab (130) and the resize handles (100). Only the upper-right
      triangle of its box steals hits (clip-path polygon(0 0, 100% 0,
      100% 100%)); everything left of the hypotenuse passes through to the
      chrome beneath.
@@ -38084,9 +38485,17 @@ status: completed with warnings</pre>
       options.setAttribute("aria-expanded", "false");
       options.setAttribute("aria-label", "Options for " + surface.surface_instance_id);
       options.title = "Surface options";
-      options.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>';
-      var optionsHost = element.querySelector(".pane-tabbar-actions, .dashboard-tabs, .panel-actions, .pm-home-terminal-head") || element;
-      optionsHost.appendChild(options);
+      /* VERTICAL dots: the kebab reads as a right-edge column control, sitting
+         directly below the grip triangle (grip z 140 owns the y 0-18
+         upper-right triangle; the kebab owns y 20-40). */
+      options.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>';
+      /* the kebab is a child of the SURFACE itself, like the grip -- parking
+         it inside .pane-tabbar-actions / a head row let PM6 strip rebuilds
+         destroy it, and gave the terminal a stranded "..." bar */
+      element.appendChild(options);
+    } else if (options.parentNode !== element) {
+      /* re-seat rather than duplicate, mirroring the grip's guard */
+      element.appendChild(options);
     }
     /* Per-surface divider: ALWAYS a column handle now -- it transfers WIDTH
        between the adjacent pair in every row-axis host. In a row dock
@@ -38271,17 +38680,30 @@ status: completed with warnings</pre>
       originalParent.insertBefore(terminalRuntimeHome, runtime);
     }
     if (element.id === "bottomPanel") ensureBottomTerminalControls(surface.surface_instance_id, element);
+    /* Model-truth gate for the HOME_STYLE empty-state rules: both
+       display:block rules require #bottomPanel[data-pm-term-empty="true"],
+       so the guidance note can only show while the model says the section is
+       actually empty. Stamped on every bottomPanel-related pass. */
+    if (element.id === "bottomPanel") {
+      var bottomPanelEl = document.getElementById("bottomPanel");
+      if (bottomPanelEl) bottomPanelEl.setAttribute("data-pm-term-empty", String(!section.terminal_workgroup_id));
+    }
     var center = document.getElementById("pmTermCenterOuter");
     var chrome = document.getElementById("pmBottomTermChrome");
     if (chrome) chrome.style.setProperty("display", "none", "important");
-    var oldEmpty = element.querySelector(":scope > .bottom-tabs-content > .pm-home-terminal-empty-state");
+    /* Empty-state removal is hoisted ABOVE the element-branch split and looks
+       the note up at DOCUMENT level: when the runtime host is projected into
+       a generated section, `element` is that shell, so an element-scoped
+       lookup could never find (let alone remove) the note stranded inside
+       #bottomTabsContent. Any live workgroup sweeps it. */
+    var oldEmpty = document.querySelector("#bottomTabsContent > .pm-home-terminal-empty-state");
+    if (section.terminal_workgroup_id && oldEmpty) { oldEmpty.remove(); oldEmpty = null; }
     if (section.terminal_workgroup_id) {
       activeTerminalSectionId = surface.surface_instance_id;
       syncTerminalRuntime(section);
       if (element.id === "bottomPanel") {
         if (runtime && terminalRuntimeHome && terminalRuntimeHome.parentNode && runtime.parentNode !== terminalRuntimeHome.parentNode) terminalRuntimeHome.parentNode.insertBefore(runtime, terminalRuntimeHome.nextSibling);
         if (center) center.style.removeProperty("display");
-        if (oldEmpty) oldEmpty.remove();
       } else {
         var body = element.querySelector("[data-pm-home-terminal-body]");
         if (body && runtime && runtime.parentNode !== body) { body.textContent = ""; body.appendChild(runtime); }
@@ -38441,6 +38863,22 @@ status: completed with warnings</pre>
     });
   }
 
+  /* Projection-layer browser deactivation: clears BOTH the runtime pointer
+     AND the committed model flag. Clearing only the pointer left
+     domain_ref.browser_active stale, and restoreOwnerRefs (which runs on
+     EVERY commit) resurrected the browser into the panel on the next
+     unrelated commit -- clicking Split Pane flipped the center editor back
+     to the browser. No command, no revision bump: the cleared flag rides
+     along with the next real commit (same precedent as
+     normalizeMainRowBases). */
+  function deactivateBrowserProjection(surfaceId) {
+    browserOwner.target_editor_panel_id = null;
+    var surface = surfaceById(committed, surfaceId);
+    if (surface && surface.domain_ref) surface.domain_ref.browser_active = false;
+    var content = document.getElementById("browserTabContent");
+    if (content) content.style.display = "none";
+  }
+
   function mountActiveBrowser() {
     var content = document.getElementById("browserTabContent");
     if (!content || !browserOwner.target_editor_panel_id) return;
@@ -38453,6 +38891,18 @@ status: completed with warnings</pre>
       if (!element) return;
       var tab = element.querySelector('[data-pm-home-browser-tab="' + id + '"]');
       if (tab) tab.classList.toggle("active", id === browserOwner.target_editor_panel_id);
+      if (id === browserOwner.target_editor_panel_id) {
+        /* single-active invariant: the base strip manager
+           (switchEditorPane2Tab) is bypassed on this path, so without this
+           sweep the previously active FILE tab kept its highlight while the
+           content flipped to the browser -- a dual-active strip. And a
+           browser tab the overflow fitter had collapsed while inactive must
+           be revealed, or the highlight lands on a hidden element. */
+        element.querySelectorAll(".editor-tabs .tab.active").forEach(function (other) {
+          if (other !== tab) other.classList.remove("active");
+        });
+        if (tab && tab.style.display === "none") tab.style.display = "";
+      }
       element.querySelectorAll(".editor-area").forEach(function (area) { area.style.display = id === browserOwner.target_editor_panel_id ? "none" : "flex"; });
     });
     if (content.parentNode !== target) target.appendChild(content);
@@ -38873,8 +39323,9 @@ status: completed with warnings</pre>
       existing.textContent = String(path).split("/").pop();
       /* Insert at the buffer's model position (buffer_ids order), not always
          at the end: a shell rebuild replays the persisted drag order this
-         way. Falls back to before the actions cluster for unknown buffers. */
-      var before = strip.querySelector(".pane-tabbar-actions");
+         way. Falls back to before the overflow chevron (or the actions
+         cluster when no chevron exists) for unknown buffers. */
+      var before = strip.querySelector(".pm-ed-overflow") || strip.querySelector(".pane-tabbar-actions");
       var owner = surfaceId ? editorOwners[surfaceId] : null;
       var bufferId = owner ? buffersByPath[path] : null;
       var want = owner && bufferId ? owner.buffer_ids.indexOf(bufferId) : -1;
@@ -38930,8 +39381,19 @@ status: completed with warnings</pre>
     }
     ensurePanelTab(element, path, surfaceId);
     if (surfaceId === "editor_panel_2") {
-      var browserContent = document.getElementById("browserTabContent");
-      if (browserContent) browserContent.style.display = "none";
+      /* opening a file into pane 2 deactivates the browser THROUGH THE MODEL
+         when pane 2 owns it -- a DOM-only hide left browser_active stale and
+         the next commit re-mounted the browser (same bug class as the
+         code-tab click path) */
+      if (browserOwner.target_editor_panel_id === "editor_panel_2") {
+        deactivateBrowserProjection("editor_panel_2");
+      } else {
+        var browserContent = document.getElementById("browserTabContent");
+        var pane2Record = surfaceRegistry.editor_panel_2;
+        if (browserContent && pane2Record && pane2Record.element && pane2Record.element.contains(browserContent)) {
+          browserContent.style.display = "none";
+        }
+      }
       var codeArea = document.getElementById("editorPane2CodeArea");
       if (codeArea) codeArea.style.display = "";
     }
@@ -39446,6 +39908,52 @@ status: completed with warnings</pre>
      accidental pointer exit used to undock the surface and persist it, which
      is why a panel "opened popped-out by default". Floating is an explicit
      action now -- the Pop Out menu row or the keyboard F key). */
+  /* Frozen dock hit-bands for ONE drag gesture. Computed once at pickup from
+     committed geometry PLUS the preview expansion each dock WILL get if
+     adopted (the same clamp syncDragPreview applies), so no preview reflow,
+     FLIP marker or drop-active class can move a band mid-gesture. The old
+     resolver read PAINTED geometry (elementsFromPoint): adopting a dock
+     opened its track, the opened track starved the next hit-test (terminal
+     mid-FLIP skipped, dock drop-active skipped), resolution fell through to
+     home_main, the track collapsed, and the cycle restarted at ~4-6 frames
+     -- the violent shake. Frame-count hysteresis cannot damp that loop
+     because each alternating state is stable for more than two frames;
+     freezing the geometry severs the feedback path by construction.
+     Entry: the dock's committed rect union its narrow edge strip.
+     Exit: entry extended past the ANTICIPATED opened track, plus slack --
+     strictly wider than entry, so adoption is sticky (geometric hysteresis). */
+  function buildDockLatch(sourceRect) {
+    if (!root) return null;
+    var bounds = root.getBoundingClientRect();
+    var latch = {};
+    ["dock_right", "dock_top", "dock_bottom", "dock_left"].forEach(function (dock) {
+      var band = HOST_BANDS[dock];
+      if (!band) return;
+      var el = hostElement(dock);
+      var rect = el ? el.getBoundingClientRect() : null;
+      var occupied = Boolean(rect && rect.width > 4 && rect.height > 4);
+      var footprint = hostAxisIsVertical(dock) ? sourceRect.width : sourceRect.height;
+      var trackPx = Math.max(band.min, Math.min(band.max, Math.round(footprint || band.min)));
+      var edge = DRAG_DOCK_EDGE_PX;
+      var entry, exit;
+      if (dock === "dock_bottom") {
+        entry = occupied ? Math.min(rect.top, bounds.bottom - edge) : bounds.bottom - edge;
+        exit = Math.min(entry, bounds.bottom - trackPx) - DOCK_EXIT_SLACK_PX;
+      } else if (dock === "dock_top") {
+        entry = occupied ? Math.max(rect.bottom, bounds.top + edge) : bounds.top + edge;
+        exit = Math.max(entry, bounds.top + trackPx) + DOCK_EXIT_SLACK_PX;
+      } else if (dock === "dock_right") {
+        entry = occupied ? Math.min(rect.left, bounds.right - edge) : bounds.right - edge;
+        exit = Math.min(entry, bounds.right - trackPx) - DOCK_EXIT_SLACK_PX;
+      } else {
+        entry = occupied ? Math.max(rect.right, bounds.left + edge) : bounds.left + edge;
+        exit = Math.max(entry, bounds.left + trackPx) + DOCK_EXIT_SLACK_PX;
+      }
+      latch[dock] = { entry: entry, exit: exit, trackPx: trackPx };
+    });
+    return latch;
+  }
+
   function dropHostAt(clientX, clientY) {
     if (!root) return null;
     if (clientX < 0 || clientX > window.innerWidth || clientY < 0 || clientY > window.innerHeight) return null;
@@ -39463,50 +39971,46 @@ status: completed with warnings</pre>
         clientY >= pickupRect.top && clientY <= pickupRect.top + pickupRect.height) {
       return gesture.sourceHost;
     }
-    /* The edge band is deliberately NARROW and is tested FIRST. Wide bands
-       swallow ordinary positional drops (you cannot insert before the first
-       surface in home_main); testing surfaces first instead makes a dock
-       unreachable, because home_main's first surface already covers the edge. */
-    var edge = DRAG_DOCK_EDGE_PX;
-    /* RIGHT is tested FIRST: the right column (chat's full-height dock) spans
-       all three grid rows, so the top-right and bottom-right corners belong
-       to dock_right, not to the top/bottom docks. */
-    if (clientX >= bounds.right - edge) return "dock_right";
-    if (clientY <= bounds.top + edge) return "dock_top";
-    if (clientY >= bounds.bottom - edge) return "dock_bottom";
-    if (clientX <= bounds.left + edge) return "dock_left";
-    var stack = document.elementsFromPoint ? document.elementsFromPoint(clientX, clientY) : [];
-    var hostUnderPointer = null;
-    for (var i = 0; i < stack.length; i += 1) {
-      var node = stack[i];
-      if (!node || !node.closest) continue;
-      var surfaceEl = node.closest("[data-pm-home-surface]");
-      if (surfaceEl && root.contains(surfaceEl) && surfaceEl !== gesture.element) {
-        var owningHost = surfaceEl.closest("[data-pm-home-host]");
-        var owningName = owningHost && owningHost.getAttribute("data-pm-home-host");
-        if (owningName && owningName !== "floating") return owningName;
-      }
-      if (!hostUnderPointer) {
-        var host = node.closest("[data-pm-home-host]");
-        var hostName = host && root.contains(host) && host.getAttribute("data-pm-home-host");
-        /* the float layer covers the whole workspace, so it sits in EVERY
-           elementsFromPoint stack (gaps, the placeholder itself) -- and
-           floating is never a pointer-drag target anyway (explicit action
-           only). Skipping it here is what keeps a drop into a gap, or onto
-           the previewed slot itself, from silently undocking the surface.
-           A host that is only under the pointer because its own drop
-           preview EXPANDED it (drop-active, no real surface hit above) is
-           skipped too: resolving it would make the preview self-sustaining
-           -- the expansion moves the boundary under the pointer and the
-           target can never change again. Such hosts stay reachable via
-           their edge bands and their real surfaces. */
-        if (hostName && hostName !== "floating" &&
-            !(host.classList && host.classList.contains("pm-home-drop-active"))) {
-          hostUnderPointer = hostName;
-        }
-      }
+    var latch = gesture && gesture.dockLatch;
+    /* LATCHED HOLD: once a dock is adopted, only leaving its frozen EXIT band
+       releases it. The exit band already covers the opened preview track plus
+       slack, so the expansion and its FLIP wave cannot unlatch the dock. A
+       latched top/bottom dock still yields to dock_right's entry band, so the
+       right column keeps its corner precedence while latched. */
+    if (latch && gesture.latchedDock && latch[gesture.latchedDock]) {
+      var heldDock = gesture.latchedDock;
+      var hold = latch[heldDock];
+      var inHold =
+        heldDock === "dock_bottom" ? clientY >= hold.exit :
+        heldDock === "dock_top" ? clientY <= hold.exit :
+        heldDock === "dock_right" ? clientX >= hold.exit :
+        clientX <= hold.exit;
+      if (inHold && heldDock !== "dock_right" && latch.dock_right && clientX >= latch.dock_right.entry) inHold = false;
+      if (inHold) return heldDock;
     }
-    return hostUnderPointer || "home_main";
+    /* FROZEN ENTRY SCAN, replacing both the live edge bands and the painted
+       elementsFromPoint stack walk. An occupied dock's entry band covers its
+       pickup-time committed rect, so pointing at the dock's surfaces still
+       adopts the dock -- from frozen geometry. Everything outside every dock
+       band is home_main by construction (floating is never a pointer-drag
+       target), so no painted-stack resolution remains at all.
+       RIGHT is tested FIRST: the right column (chat's full-height dock) spans
+       all three grid rows, so the corners belong to dock_right. */
+    if (latch) {
+      if (latch.dock_right && clientX >= latch.dock_right.entry) return "dock_right";
+      if (latch.dock_top && clientY <= latch.dock_top.entry) return "dock_top";
+      if (latch.dock_bottom && clientY >= latch.dock_bottom.entry) return "dock_bottom";
+      if (latch.dock_left && clientX <= latch.dock_left.entry) return "dock_left";
+    } else {
+      /* no latch (defensive: keyboard-originated or degraded gesture) --
+         narrow live edge bands only */
+      var edge = DRAG_DOCK_EDGE_PX;
+      if (clientX >= bounds.right - edge) return "dock_right";
+      if (clientY <= bounds.top + edge) return "dock_top";
+      if (clientY >= bounds.bottom - edge) return "dock_bottom";
+      if (clientX <= bounds.left + edge) return "dock_left";
+    }
+    return "home_main";
   }
 
   /* ---- FLIP: neighbours animate from their pre-move rects ---- */
@@ -39544,9 +40048,16 @@ status: completed with warnings</pre>
       var element = entry.element;
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
+      /* Mid-flight marker for hit-testing: the inline transform is EMPTY
+         while the animation runs (the transition plays via removeProperty),
+         so a style check cannot detect a FLIP in progress -- this attribute
+         is the only reliable marker. Removed on settle and by
+         clearFlipResidue. */
+      element.setAttribute("data-pm-home-flip", "");
       var settle = function (event) {
         if (event.target !== element || event.propertyName !== "transform") return;
         element.removeEventListener("transitionend", settle);
+        element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
           element.style.removeProperty("transition-delay");
@@ -39569,6 +40080,7 @@ status: completed with warnings</pre>
       element.style.removeProperty("transition");
       element.style.removeProperty("transition-delay");
       element.style.removeProperty("transform");
+      element.removeAttribute("data-pm-home-flip");
     });
   }
 
@@ -39617,9 +40129,16 @@ status: completed with warnings</pre>
     var trackPx = null;
     if (grid && dockBand) {
       var trackVar = host === "dock_left" ? "--pm-home-left-w" : host === "dock_right" ? "--pm-home-right-w" : host === "dock_top" ? "--pm-home-top-h" : "--pm-home-bottom-h";
-      var sourceRect = gesture.sourceRect || {};
-      var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
-      trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
+      var latchedBand = gesture.dockLatch && gesture.dockLatch[host];
+      if (latchedBand && latchedBand.trackPx) {
+        /* single source with the frozen latch: the exit band and the actual
+           opened track can never disagree */
+        trackPx = latchedBand.trackPx;
+      } else {
+        var sourceRect = gesture.sourceRect || {};
+        var footprint = hostAxisIsVertical(host) ? sourceRect.width : sourceRect.height;
+        trackPx = Math.max(dockBand.min, Math.min(dockBand.max, Math.round(footprint || dockBand.min)));
+      }
       grid.style.setProperty(trackVar, trackPx + "px");
       gesture.previewTrack = trackVar;
     }
@@ -39627,14 +40146,27 @@ status: completed with warnings</pre>
        target host's fair share among its future occupants), never its
        pickup-time size -- dropping a wide main panel into a crowded dock now
        previews the sliver it will actually get. */
-    var gapPx = 4; /* keep in lockstep with --pm-home-gap */
+    /* read the gap the host actually renders (falls back to the 4px token
+       default when the computed value is unusable) */
+    var gapPx = parseFloat(getComputedStyle(hostEl).columnGap) || parseFloat(getComputedStyle(hostEl).gap) || 4;
     if (hostAxisIsVertical(host)) {
       var mainPxV = Math.max(60, Math.round((hostEl.clientHeight - gapPx * siblings.length) / (siblings.length + 1)));
       placeholder.style.setProperty("flex", "0 0 " + mainPxV + "px", "important");
       /* no min-height: the column dock fills the width for it */
       placeholder.style.removeProperty("min-height");
     } else {
-      var mainPx = Math.max(120, Math.round((hostEl.clientWidth - gapPx * siblings.length) / (siblings.length + 1)));
+      /* PROPORTIONAL projection, not an equal fair share: the placeholder
+         takes the dragged surface's committed-basis share of the row (same
+         80px floor normalizeMainRowBases applies), so the preview width is
+         the width the drop will actually commit. */
+      var dragged = surfaceById(gesture.draft, gesture.surfaceId);
+      var draggedBasis = Math.max(80, Number(dragged && dragged.size && dragged.size.basis_px) || Math.round(gesture.sourceRect ? gesture.sourceRect.width : 360));
+      var sumBases = draggedBasis;
+      siblings.forEach(function (siblingId) {
+        var siblingSurface = surfaceById(gesture.draft, siblingId);
+        sumBases += Math.max(80, Number(siblingSurface && siblingSurface.size && siblingSurface.size.basis_px) || 360);
+      });
+      var mainPx = Math.max(120, Math.round(draggedBasis / sumBases * (hostEl.clientWidth - gapPx * siblings.length)));
       placeholder.style.setProperty("flex", "0 0 " + mainPx + "px", "important");
       placeholder.style.setProperty("min-height", (trackPx !== null ? trackPx : hostEl.clientHeight) + "px");
     }
@@ -39704,9 +40236,22 @@ status: completed with warnings</pre>
     if (gesture.pointerY < DRAG_EDGE_ZONE_PX) delta = -Math.ceil((DRAG_EDGE_ZONE_PX - gesture.pointerY) / 6);
     else if (gesture.pointerY > height - DRAG_EDGE_ZONE_PX) delta = Math.ceil((gesture.pointerY - (height - DRAG_EDGE_ZONE_PX)) / 6);
     if (delta) {
+      /* Re-hit-test only when something actually MOVED: a scroller pinned at
+         its limit ignores scrollBy, yet the old code re-ran applyDragPoint
+         every rAF anyway -- re-resolving targets against mid-FLIP geometry
+         with a stationary pointer was the edge-zone shake. */
+      var isWindowScroller = gesture.scroller === window;
+      var beforeTop = isWindowScroller ? window.scrollY : gesture.scroller.scrollTop;
+      var beforeLeft = isWindowScroller ? window.scrollX : gesture.scroller.scrollLeft;
       gesture.scroller.scrollBy(0, delta);
-      applyDragPoint(gesture.pointerX, gesture.pointerY);
+      var afterTop = isWindowScroller ? window.scrollY : gesture.scroller.scrollTop;
+      var afterLeft = isWindowScroller ? window.scrollX : gesture.scroller.scrollLeft;
+      var scrolled = afterTop !== beforeTop || afterLeft !== beforeLeft;
+      var pointerMoved = gesture.pointerX !== gesture.lastAutoX || gesture.pointerY !== gesture.lastAutoY;
+      if (scrolled || pointerMoved) applyDragPoint(gesture.pointerX, gesture.pointerY);
     }
+    gesture.lastAutoX = gesture.pointerX;
+    gesture.lastAutoY = gesture.pointerY;
     gesture.raf = requestAnimationFrame(dragAutoScroll);
   }
 
@@ -39741,10 +40286,20 @@ status: completed with warnings</pre>
       pointerX: event.clientX, pointerY: event.clientY,
       changed: false, finished: false, insertion: null, handle: event.currentTarget,
       keyboard: false, scroller: findDragScroller(), raf: 0,
-      sourceRect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height }
+      sourceRect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+      dockLatch: null, latchedDock: null
     };
+    /* frozen dock bands: computed AFTER the surface is registered but BEFORE
+       any preview can perturb layout -- the element is still in place here */
+    gesture.dockLatch = buildDockLatch(gesture.sourceRect);
     element.style.setProperty("display", "none", "important");
     document.body.classList.add("pm-home-dragging");
+    /* PM_EDGE defers scrollport band geometry while body.pm-resizing is set
+       and flushes when PM_DRAGEND is invoked (PM_DRAGEND is the callable;
+       PM_ON_DRAGEND is the registrar). Pair/track resizes already get this
+       pair from the shared registerResizer; drags must opt in themselves or
+       the edge bands recompute against mid-drag geometry and blur. */
+    document.body.classList.add("pm-resizing");
     if (event.currentTarget && event.currentTarget.classList) {
       event.currentTarget.classList.add("pm-home-handle-active");
       event.currentTarget.setAttribute("aria-grabbed", "true");
@@ -39783,6 +40338,8 @@ status: completed with warnings</pre>
       gesture.insertion = null;
       gesture.changed = false;
       gesture.lastTargetKey = null;
+      gesture.pendingTargetKey = null;
+      gesture.latchedDock = null;
       metrics.previewFrameCount += 1;
       clearPlaceholder();
       root.setAttribute("data-pm-home-drop-disposition", disposition);
@@ -39797,7 +40354,24 @@ status: completed with warnings</pre>
        the board "jumped around" and never settled. */
     var targetKey = host + "|" + (insertion.insertion_edge === "before" ? insertion.target_surface_instance_id : "end" + insertion.index);
     if (host !== "floating" && gesture.lastTargetKey === targetKey) return;
+    /* 2-frame hysteresis: a NEW target key must survive two consecutive
+       passes before the board reflows to it. A single-frame phantom (a
+       mid-FLIP neighbour momentarily under the pointer, a scroll tick) can
+       no longer restart the wave -- that oscillation was the shake. The very
+       first target (lastTargetKey null) adopts immediately so pickup
+       previews without a dead frame; previewFrameCount was already
+       incremented above, so the deferred frame still counts. */
+    if (host !== "floating" && gesture.lastTargetKey != null) {
+      if (gesture.pendingTargetKey !== targetKey) {
+        gesture.pendingTargetKey = targetKey;
+        return;
+      }
+    }
+    gesture.pendingTargetKey = null;
     gesture.lastTargetKey = targetKey;
+    /* latch the adopted dock (or clear it): from here only the frozen exit
+       band in dropHostAt can release the dock */
+    gesture.latchedDock = HOST_BANDS[host] ? host : null;
     var draft = clone(gesture.snapshot);
     if (host === "floating") {
       var rootRect = root.getBoundingClientRect();
@@ -39888,6 +40462,7 @@ status: completed with warnings</pre>
     unlistenDrag();
     if (active.raf) cancelAnimationFrame(active.raf);
     document.body.classList.remove("pm-home-dragging");
+    document.body.classList.remove("pm-resizing");
     if (root) root.removeAttribute("data-pm-home-drop-disposition");
     if (active.handle && active.handle.classList) {
       active.handle.classList.remove("pm-home-handle-active");
@@ -39924,6 +40499,9 @@ status: completed with warnings</pre>
     }
     var landed = active.element && active.element.isConnected ? active.element.getBoundingClientRect() : null;
     settleClone(active.clone, landed);
+    /* flush the PM_EDGE band geometry deferred while body.pm-resizing was on
+       (PM_DRAGEND is the callable; PM_ON_DRAGEND is the registrar) */
+    if (typeof window.PM_DRAGEND === "function") { try { window.PM_DRAGEND(); } catch (error) {} }
   }
 
   /* ---- keyboard move: the grip is the only movement affordance now that the
@@ -40046,6 +40624,8 @@ status: completed with warnings</pre>
     if (gesture || !section || !section.terminal_workgroup_id) return;
     gesture = { kind: "workgroup", sourceId: surfaceId, pointerId: event.pointerId, snapshot: clone(committed), draft: clone(committed), targetSectionId: null, targetHost: surfaceById(committed, surfaceId).host, changed: false, handle: event.currentTarget };
     document.body.classList.add("pm-home-dragging");
+    /* same PM_EDGE defer/flush pair as beginDrag (see comment there) */
+    document.body.classList.add("pm-resizing");
     try { event.currentTarget.setPointerCapture(event.pointerId); } catch (error) {}
     event.preventDefault();
   }
@@ -40081,6 +40661,7 @@ status: completed with warnings</pre>
     var active = gesture;
     gesture = null;
     document.body.classList.remove("pm-home-dragging");
+    document.body.classList.remove("pm-resizing");
     if (root) root.removeAttribute("data-pm-home-drop-disposition");
     clearPlaceholder();
     if (shouldCommit && active.changed) {
@@ -40090,6 +40671,9 @@ status: completed with warnings</pre>
       if (!shouldCommit) metrics.cancelledGestureCount += 1;
       renderLayout(active.snapshot);
     }
+    /* flush the PM_EDGE band geometry deferred while body.pm-resizing was on
+       (PM_DRAGEND is the callable; PM_ON_DRAGEND is the registrar) */
+    if (typeof window.PM_DRAGEND === "function") { try { window.PM_DRAGEND(); } catch (error) {} }
   }
 
   function bindWorkgroupHandle(handle, surfaceId) {
@@ -40450,9 +41034,7 @@ status: completed with warnings</pre>
         var surfaceEl = codeTab.closest("[data-pm-home-surface]");
         var surfaceId = surfaceEl && surfaceEl.getAttribute("data-pm-home-surface");
         if (surfaceId && browserOwner.target_editor_panel_id === surfaceId) {
-          browserOwner.target_editor_panel_id = null;
-          var content = document.getElementById("browserTabContent");
-          if (content) content.style.display = "none";
+          deactivateBrowserProjection(surfaceId);
           surfaceEl.querySelectorAll(".editor-area").forEach(function (area) { area.style.display = "flex"; });
         }
         /* Generated shells (panels 3/4) have no PM6 tab controller of their

@@ -4,7 +4,121 @@
 
 `Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-13 (rev 15, Tweak Wave 2)
+## Current Home Workspace implementation — 2026-08-13 (rev 17, Wave 4)
+
+Three user-reported defects, each live-reproduced before the fix and
+re-verified after. Base repinned
+(`BASE_SHA` = `77fadeea6bff73649c8f4c58ffe7e28044401afd4a511b3ce78d5d8a450384dd`); artifact 3,586,691 bytes, sha256
+`f8aacc9f6580055855c44e4a03634feaa7310c309c0dbb385015cbd5bec71c6d`; build report `ca3ec50962c92738a439309613078dcce1f1a0d7335224ed0f3cbfb5cd0beff0`.
+
+**Split Pane flipped the center editor to the browser (T20):** clicking the
+base browser tab commits `domain_ref.browser_active=true`, but clicking a
+file tab only cleared the RUNTIME projection pointer -- and
+`restoreOwnerRefs` runs on EVERY commit, so the next commit (the split)
+resurrected the browser from the stale flag, without moving the tab
+highlight (`mountActiveBrowser` bypasses the base strip manager).
+`deactivateBrowserProjection()` now clears the committed flag from both the
+code-tab click path and `renderFileIntoPanel`; `mountActiveBrowser` enforces
+a single-active tab and un-hides a chip-collapsed browser tab when it
+legitimately mounts.
+
+**Violent shake dragging into the bottom terminal (T20):** a hit-test
+starvation loop -- adopting the dock opened its track, the FLIP-marked
+terminal and drop-active dock were both SKIPPED by the elementsFromPoint
+walk, resolution fell through to home_main, the track collapsed, re-exposing
+the terminal, re-adopting at a 4-6 frame period with 120px boundary jumps.
+Frame-count hysteresis cannot damp geometry that is stable for >2 frames per
+state. `dropHostAt` no longer reads painted geometry AT ALL: `buildDockLatch`
+freezes per-dock entry/exit bands at pickup (entry = committed rect union
+the 28px edge strip; exit = the anticipated opened track + 44px slack), and
+everything outside the bands is home_main by construction. Measured after:
+exactly 1 host transition + 1 track opening per approach, drop lands.
+
+**Reorder animations invisible (base part 25):** three WebKit killers --
+sparse dragover cadence, the native opaque drag snapshot riding the cursor
+(an opacity:0 custom drag image is "not renderable" to Safari), and macOS
+reduce-motion gating -- plus one self-inflicted: re-slotting the captured
+tab is a DOM remove+insert, which releases pointer capture; a tab-scoped
+lostpointercapture cancelled the gesture on the FIRST re-slot (the exact
+trap the workspace grip comments document). Reorder is now pointer-capture
+(HTML5 DnD retired): gesture-scoped WINDOW listeners (T07 pin untouched),
+4px threshold, unclamped 1:1 translateX glide with soft rubber-band at the
+strip edges, cached transform-free midpoint re-slotting, neighbor FLIP 220ms
+`cubic-bezier(.22,1,.36,1)`, 200ms low-bounce settle on release, and the
+model re-render deferred to settle-end so it cannot tear the animating tab
+out of the DOM. `.tab.dragging` rides at .92 opacity, z 40. The silhouette
+snap-syncs per move and springs to the final slot on release.
+
+## Previous Home Workspace implementation — 2026-08-13 (rev 16, Tweak Wave 3)
+
+Thirteen fixes, every one live-confirmed before and after, plus a two-fix
+follow-up (below). Base repinned
+(`BASE_SHA` = `5142446d25336588d09c9641e3ef638c64f23490d44937e1b181e4ccab1341d4`); artifact 3,578,248 bytes, sha256
+`aacbaaf1e56b5b9a1981e94a224cd7caea3fea386e1fd217fdd409adb465cc59`; build report `4e96ab9286b3d0e1c24934e78e6fa6ca0de7ddce471bd42e76b93596dcdfad51`.
+
+**Follow-up (same day):** the first fitter cut used
+`scrollWidth > clientWidth - paddingRight`, which is ALWAYS true for a
+non-overflowing strip (scrollWidth === clientWidth by definition), so every
+tab collapsed into the chip. All three fitters now call
+`edStripContentOverflows()` -- the rightmost in-flow child edge (skipping
+the actions cluster, the silhouette shape, and display:none children)
+measured against the content-box limit minus the padding-right reserve.
+And `restoreOwnerRefs` gained an any-live-workgroup pass: when NO terminal
+section holds a live workgroup id (a persisted-null layout), section 1
+reseeds from `PRISTINE_TERMINAL_SECTION` and the persisted domain_ref CSVs
+are healed in the same commit.
+
+**Base:** overflow chip pinned immediately left of the actions cluster via a
+positional re-seat guard in every fitter (zero mutations in steady state --
+no observer ping-pong) and a per-strip childList MutationObserver closes the
+add-path refit hole (the strip's border box never changes when tabs overflow,
+so the ResizeObserver alone was blind). Tab drag-reorder ANIMATED inside the
+existing HTML5 DnD: transparent 1x1 drag image, dragged tab at 0.4 opacity
+tracking the pointer via clamped translateX (layout stays at the insertion
+slot so midpoint math and the silhouette snap stay truthful), neighbors FLIP
+140ms with transform-inclusive capture (interrupt-safe), reduced-motion
+instant. Actions reserve = distance from cluster left edge to strip right
+edge + 8 (covers the pinned offset; kills chip underlap). Minimap fixed by
+ONE property: padding-top -> margin-top (the border box becomes the visible
+band, so both offsetHeight-based JS implementations became correct with zero
+JS edits); native code-pane scrollbars fully suppressed (removed from the
+02 opt-in lists). Theme tokens: retro hard lime-mixed outline + square
+inactive rings, basic 2px accent-blue crown + 9px radius, glass 3-edge
+bevel + rail alpha 84.
+
+**T20:** terminal empty-note truth-gated (`data-pm-term-empty` attribute +
+`restoreOwnerRefs` repairs paneless pristine workgroup refs instead of
+dropping the section record -- the note could previously appear after
+collapse/expand because a stale div was only removed in the has-workgroup
+branch). Kebab redesigned: vertical dots, 16x20, absolutely positioned at
+the surface's right edge below the grip -- uniform across all surfaces,
+which also removed the mystery "..." strip at the terminal's bottom edge
+(it was this very kebab falling through the optionsHost selector list to
+`element.appendChild`, i.e. the last flex child of #bottomPanel). Vertical
+padding split into `--pm-home-pad-y`/`--pm-home-gap-y` (2px) with 4px sides.
+Drag robustness: FLIPping surfaces carry `data-pm-home-flip` and are skipped
+by dropHostAt's surface-hit branch (inline transform is EMPTY mid-flight, so
+a style check cannot detect FLIP), 2-frame target hysteresis, auto-scroll
+re-applies only on real movement; placeholder previews the dragged surface's
+PROPORTIONAL projected width (verified 290 preview vs 289 landed); T20 move
+and workgroup gestures now set `body.pm-resizing` and fire `PM_DRAGEND` so
+PM_EDGE parks its blur bands during drags.
+
+
+**User-reported follow-up (same wave):** (1) Safari cancels HTML5 drags whose
+drag-image node is detached -- the transparent ghost canvas is now appended
+off-screen, plus a `-webkit-user-drag: element` hint on armed tabs; (2) the
+paneless-workgroup repair generalized: ANY live workgroup ref with an empty
+pane CSV reconstitutes a minimal pane (tp-repair-N) instead of nulling --
+corrupted persisted layouts never show the empty block over a live terminal;
+(3) the overflow fitters now fit against the CONTENT box (clientWidth
+includes the padding reserve, so the chip could legally rest inside the
+kebab lane without registering as overflow) and the reserve floors at 44px;
+(4) retro's hard outline moved from the travelling shape to the ACTIVE tab
+(3-edge inset ring, snaps on arrival) -- a bordered shape sliding through
+the inter-tab gaps read as a stray bright bar mid-spring.
+
+## Previous implementation — 2026-08-13 (rev 15, Tweak Wave 2)
 
 Sixteen user-reported tweaks, every one reproduced live before implementation
 and re-verified live after. Base repinned (`BASE_SHA` = `b15eb20f9e4176ea7f40be24c651db85f4d57dfeb8dd1ce6a1b67ac3764aebd4`,
