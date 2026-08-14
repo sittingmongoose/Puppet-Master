@@ -152,7 +152,49 @@
  * this bug and closed menus lingered as ~220ms ghosts because the close transition delayed
  * its opacity leg. Without these two lines the reduced-motion end state is still wrong.
  */
+/* 16. countMorph — only the digits move. The number is wrapped in its own span so the words around
+ * it keep their layout boxes; `data-dir` lets a rising count lift and a falling count settle, which
+ * is the difference between "more work happened" and "the estimate came down". */
+.pmx-count-morph {
+  display: inline-block;
+  transition: transform 200ms var(--ease-spring-real, cubic-bezier(.22,.61,.36,1)),
+              opacity 200ms linear;
+}
+
+.pmx-count-morph[data-dir="up"] {
+  transform: translateY(4px);
+  opacity: .45;
+}
+
+.pmx-count-morph[data-dir="down"] {
+  transform: translateY(-4px);
+  opacity: .45;
+}
+
+.pmx-count-morph-run {
+  transform: none;
+  opacity: 1;
+}
+
+/* 14. displace — the arriving node is deliberately given no entrance. The attribute exists so a
+ * concept can mark it for a probe, not so it can be animated. */
+[data-pmx-arrived] {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* The four causal primitives all take the reduced path in JS, but the count morph's resting
+   * transform is CSS, so it must be neutralised here or a reduced-motion reader would see the digit
+   * parked 4px low and half faded — the animation's start frame as a permanent state. */
+  .pmx-count-morph,
+  .pmx-count-morph[data-dir="up"],
+  .pmx-count-morph[data-dir="down"],
+  .pmx-count-morph-run {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;

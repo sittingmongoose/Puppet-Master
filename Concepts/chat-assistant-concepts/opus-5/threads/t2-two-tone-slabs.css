@@ -759,3 +759,153 @@
 }
 
 [data-motion="reduced"] [data-pmx-thread="t2"] .t2-capsule { transition: none !important; }
+
+/* ================================================================ the operation card
+ *
+ * An operation is a CHIP in the run and a SHEET when opened - never a block in the transcript. So
+ * there is exactly one rule below outside the popup (the chip's running state) and everything else
+ * is scoped to the sheet as well as to the concept.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* In flight is dashed-and-italic throughout this concept - the capsule while it prepares, the
+   handoff while it compiles - so an operation still running wears the same treatment rather than a
+   colour this run would have no room to explain. */
+[data-pmx-thread="t2"] .t2-chip[data-running="1"] { border-style: dashed; border-color: var(--accent-primary); }
+[data-pmx-thread="t2"] .t2-chip[data-running="1"] .t2-chip-label { font-style: italic; }
+
+.pmx-popup[data-pmx-thread="t2"] .t2-op {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--sm) var(--md) var(--xs);
+  min-width: 0;
+}
+
+/* Headline left, status pill right: the status is the title's suffix, the same word the chip wears. */
+.pmx-popup[data-pmx-thread="t2"] .t2-op-head { display: flex; align-items: baseline; gap: var(--sm); }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op[data-running="1"] .t2-status {
+  border: 1px dashed var(--accent-primary);
+  font-style: italic;
+}
+
+.pmx-popup[data-pmx-thread="t2"] .t2-op-why {
+  margin: 0;
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* The six fields. Two columns: keys in small caps in a gutter that sizes to the longest key
+   (OPERATION_INPUT), values wrapping in the rest. A grid rather than a row per field, so the values
+   share one left edge and the block scans as a table instead of six independent lines. */
+.pmx-popup[data-pmx-thread="t2"] .t2-op-grid {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  column-gap: var(--sm);
+  row-gap: 3px;
+  align-items: baseline;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-k {
+  font-size: var(--fs-2xs);
+  font-variant-caps: all-small-caps;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-v {
+  min-width: 0;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* The chips row. `/sources · 5` is a count and renders as a label; the artifact chip is the only
+   button here, and it goes somewhere. */
+.pmx-popup[data-pmx-thread="t2"] .t2-op-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  padding: 2px var(--sm);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  overflow-wrap: anywhere;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-chip[data-kind="sources"] { font-family: var(--mono-font); }
+.pmx-popup[data-pmx-thread="t2"] button.t2-op-chip {
+  cursor: pointer;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
+}
+.pmx-popup[data-pmx-thread="t2"] button.t2-op-chip:hover {
+  background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated));
+}
+
+/* Per-file deltas: `verb target +added −removed`, one line each, under a hairline. */
+.pmx-popup[data-pmx-thread="t2"] .t2-op-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 4px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  min-width: 0;
+  font-size: var(--fs-2xs);
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-verb { flex: 0 0 auto; color: var(--text-muted); }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-target {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--mono-font);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Paths matter at their tail, so the ellipsis goes on the left - the same treatment
+     `.t2-file-path` already gives a path in this concept's sheets. */
+  direction: rtl;
+  text-align: left;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-add { flex: 0 0 auto; color: var(--accent-lime); font-variant-numeric: tabular-nums; }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-rem { flex: 0 0 auto; color: var(--accent-error); font-variant-numeric: tabular-nums; }
+
+/* The index the folded count chip opens: a sheet row that is also a button, drilling into the card
+   inside the SAME sheet rather than opening a second one. */
+.pmx-popup[data-pmx-thread="t2"] .t2-op-pick {
+  width: 100%;
+  align-items: baseline;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: transparent;
+  font: inherit;
+  font-size: var(--fs-2xs);
+  text-align: left;
+  cursor: pointer;
+}
+.pmx-popup[data-pmx-thread="t2"] .t2-op-pick:hover .t2-sheet-label { color: var(--accent-primary); }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-pick[data-running="1"] .t2-sheet-label { font-style: italic; }
+.pmx-popup[data-pmx-thread="t2"] .t2-op-back { margin: 0 var(--md) var(--sm); }
+
+[data-motion="reduced"] .pmx-popup[data-pmx-thread="t2"] button.t2-op-chip { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pmx-popup[data-pmx-thread="t2"] button.t2-op-chip { transition: none !important; }
+}

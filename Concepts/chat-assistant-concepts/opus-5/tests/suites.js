@@ -936,7 +936,171 @@
     t.ok(receipt, 'a resolved flow leaves a receipt every concept can render');
     t.eq(receipt.status, 'submitted', 'the receipt records the outcome');
 
-    /* ---- 5. the handoff card reports the transport it actually has. */
+      /* ------------------------------------------------------------------ provider acquisition
+   *
+   * PROVIDER_CLI_FINAL_ADJUDICATION.md was missing from the original packet. These assertions are
+   * what stop it going missing again: they fail if the never-bundled rule, the official-source rule
+   * or the install/authenticate separation is ever softened out of the copy. */
+
+  A.suite('provider', function (t) {
+    var R = global.PMXRoute;
+
+    /* -- the forbidden half. The adjudication supersedes an earlier bundle that allowed
+     * "Included with this Server" for provider CLIs, so these phrases must not come back. */
+    var FORBIDDEN = [
+      'included with this server',
+      'bundled with',
+      'pre-seeded',
+      'ships with puppet master',
+      'included in the baseline',
+      'included execution baseline'
+    ];
+    var states = R.SETUP_STATES || [];
+    var allCopy = states.map(function (s) { return R.setupReason(s); }).join(' \u00b7 ');
+    R.accounts().forEach(function (a) {
+      var acq = R.acquisitionFor(a.id);
+      if (!acq) return;
+      allCopy += ' \u00b7 ' + [acq.headline, acq.source, acq.separation, acq.host, acq.consent].join(' ');
+    });
+    var lower = allCopy.toLowerCase();
+    var found = FORBIDDEN.filter(function (p) { return lower.indexOf(p) >= 0; });
+    t.eq(found.length, 0, 'no provider copy claims a bundled or baseline-included CLI');
+
+    /* -- the required half. A first acquisition must name the official source, deny bundling, and
+     * separate installation from authentication. */
+    var firstStates = states.filter(function (s) { return R.ACQUISITION_KIND[s] === 'first'; });
+    t.ok(firstStates.length >= 2, 'the catalog models more than one first-acquisition state');
+
+    var acctNeedingInstall = null;
+    R.accounts().forEach(function (a) {
+      var acq = R.acquisitionFor(a.id);
+      if (acq && acq.kind === 'first' && !acctNeedingInstall) acctNeedingInstall = acq;
+    });
+    if (!acctNeedingInstall) {
+      /* Derive it from the state table rather than skipping: the assertion is about the copy, and
+       * the copy exists whether or not the fixture happens to seed an account into that state. */
+      acctNeedingInstall = { kind: 'first', source: '', separation: '', host: '', consent: '' };
+      var probe = R.accounts()[0];
+      var was = R.setupStateOf(probe.id);
+      R.setSetupState(probe.id, 'install_required');
+      acctNeedingInstall = R.acquisitionFor(probe.id);
+      R.setSetupState(probe.id, was);
+    }
+    t.eq(acctNeedingInstall.kind, 'first', 'install_required is a first-acquisition state');
+    t.ok(/official/i.test(acctNeedingInstall.source),
+      'first-acquisition copy names the official source');
+    t.ok(/does not bundle/i.test(acctNeedingInstall.source),
+      'first-acquisition copy denies bundling in words, not by omission');
+    t.ok(/separate step/i.test(acctNeedingInstall.separation),
+      'installation and authentication are described as separate steps');
+    t.ok(/Host and Environment/i.test(acctNeedingInstall.host),
+      'the installation is scoped to the exact Host and Environment');
+    t.ok(/not consent/i.test(acctNeedingInstall.consent),
+      'Auto and On are explicitly not consent for a first acquisition');
+
+    /* -- post-consent lifecycle must NOT carry first-acquisition consent language, or an update
+     * would read as though it were asking permission it already has. */
+    var probe2 = R.accounts()[0];
+    var was2 = R.setupStateOf(probe2.id);
+    R.setSetupState(probe2.id, 'update_available');
+    var life = R.acquisitionFor(probe2.id);
+    t.eq(life.kind, 'lifecycle', 'update_available is post-consent lifecycle, not acquisition');
+    t.notOk(/does not bundle/i.test(life.source),
+      'a lifecycle update does not repeat the first-acquisition denial');
+    t.ok(/never performs a first acquisition/i.test(life.consent),
+      'automatic update policy states that it never performs a first acquisition');
+
+    /* -- a ready account needs no acquisition block at all. */
+    R.setSetupState(probe2.id, 'ready');
+    t.eq(R.acquisitionFor(probe2.id), null, 'a ready account renders no acquisition block');
+    R.setSetupState(probe2.id, was2);
+
+    /* -- the deep link carries the policy with it, so consent is never collected without it. */
+    var was3 = R.setupStateOf(probe2.id);
+    R.setSetupState(probe2.id, 'cli_missing');
+    var target = R.settingsTarget(probe2.id);
+    t.ok(!!target.acquisition, 'the Provider Settings deep link carries its acquisition policy');
+    t.ok(!!target.returnContext && !!target.returnContext.returnLabel,
+      'the deep link preserves a continuation back to the conversation');
+    R.setSetupState(probe2.id, was3);
+  });
+
+  /* ------------------------------------------------------------------ operation card
+   *
+   * pm7_popout.png shows COMMAND / PROVIDER / CACHE / PERMISSION / COST / OPERATION_INPUT. None of
+   * those existed here before the media was indexed. These assertions hold the derived halves to the
+   * live services, so a card can never claim a grant the access profile does not give. */
+
+  A.suite('opcard', function (t) {
+    var O = global.PMXOpCard;
+    var ctx = { store: store(), data: global.PMXData.get(), services: global.PMXWorkspace.services || {} };
+    var id = tid();
+
+    var cards = O.forThread(ctx, id);
+    t.ok(cards.length >= 9, 'every authored activity stage yields an operation record');
+    t.deepEq(O.FIELD_ORDER,
+      ['COMMAND', 'PROVIDER', 'CACHE', 'PERMISSION', 'COST', 'OPERATION_INPUT'],
+      'the field order matches the reference screenshot');
+
+    var incomplete = cards.filter(function (c) { return c.fields.length !== 6; });
+    t.eq(incomplete.length, 0, 'no operation renders a partial field set');
+    var blank = cards.filter(function (c) {
+      return c.fields.some(function (f) { return f.value == null || f.value === '' || f.value === 'unknown'; });
+    });
+    t.eq(blank.length, 0, 'no operation field resolves to blank or unknown');
+
+    /* PERMISSION is derived from the mode's tool ceiling, so narrowing the mode must narrow it. */
+    var was = store().runtime(id, 'mode');
+    var perm = function (kind) {
+      var c = O.forThread(ctx, id).filter(function (x) { return x.kind === kind; })[0];
+      return c.fields.filter(function (f) { return f.key === 'PERMISSION'; })[0].value;
+    };
+    store().setRuntime(id, 'mode', 'Ask');
+    t.ok(/not granted/.test(perm('edit')), 'Ask mode does not grant file edits to an edit operation');
+    store().setRuntime(id, 'mode', 'Agent');
+    t.ok(/\u00b7 granted/.test(perm('edit')), 'Agent mode grants file edits to the same operation');
+    t.neq(perm('edit'), perm('browser'), 'two operations consuming different tools report different permissions');
+    store().setRuntime(id, 'mode', was);
+
+    /* The tense rule from reference 03: participle while running, past tense once settled. */
+    var S = global.PMXSurfaces;
+    S.act(id, 'activity_kind', { kind: 'read' });
+    var running = O.forThread(ctx, id).filter(function (c) { return c.kind === 'read'; })[0];
+    t.ok(running.running, 'the fired kind is the running operation');
+    t.eq(running.headline, 'Reading 7 files', 'a running operation reads as a present participle');
+    var partial = running.count;
+    S.act(id, 'activity_kind', { kind: 'read' });
+    var grown = O.forThread(ctx, id).filter(function (c) { return c.kind === 'read'; })[0];
+    t.ok(grown.count > partial, 'firing the same kind again grows the count in place');
+    S.act(id, 'activity_settle');
+    var settled = O.forThread(ctx, id).filter(function (c) { return c.kind === 'read'; })[0];
+    t.eq(settled.headline, 'Read 7 files', 'a settled operation reads as past tense');
+    t.eq(settled.count, 7, 'settling lands the count on the authored total');
+    t.notOk(settled.running, 'a settled operation is no longer the running one');
+
+    /* Per-row deltas exist only where the fixture authored them. */
+    var edit = O.forThread(ctx, id).filter(function (c) { return c.kind === 'edit'; })[0];
+    t.eq(edit.rows.length, 3, 'the edit operation carries one row per touched file');
+    var totals = edit.rows.reduce(function (acc, r) {
+      return { a: acc.a + r.added, d: acc.d + r.removed };
+    }, { a: 0, d: 0 });
+    t.eq(totals.a, 184, 'the row additions sum to the change set total');
+    t.eq(totals.d, 67, 'the row deletions sum to the change set total');
+    var thought = O.forThread(ctx, id).filter(function (c) { return c.kind === 'thought'; })[0];
+    t.eq(thought.rows.length, 0, 'a reasoning summary carries no file rows');
+    t.eq(thought.fields.filter(function (f) { return f.key === 'PERMISSION'; })[0].value,
+      'no tool required', 'a reasoning summary requires no tool grant');
+
+    /* Command ids are candidates, but they must be well-formed and unique. */
+    var ids = O.commandIds();
+    var malformed = ids.filter(function (x) { return !/^cmd\.[a-z][a-z0-9_.]*$/.test(x); });
+    t.eq(malformed.length, 0, 'every minted command id follows the cmd.<noun>.<verb> shape');
+    var uniq = {};
+    ids.forEach(function (x) { uniq[x] = 1; });
+    t.eq(Object.keys(uniq).length, ids.length, 'no two operation kinds share a command id');
+  });
+
+/* ---- 5. the handoff card reports the transport it actually has. */
     FORMS.forEach(function (f) {
       reset();
       setPairing('w1', f.id);

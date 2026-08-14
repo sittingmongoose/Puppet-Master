@@ -362,6 +362,58 @@
    facts - what it did, what came out, how long it took. */
 [data-pmx-thread="t5"] .t5-rail[data-condensed="1"] .t5-rail-text { color: var(--text-primary); }
 
+/* ---- the operation ledger in the rail ----------------------------------------------------------
+ * The rail says WHAT ran and the opposite lane says HOW, so an operation row is deliberately the most
+ * compact thing in this sheet: a headline, a count, and a state. Anything more would be answering in
+ * the wrong column. */
+
+[data-pmx-thread="t5"] .t5-rail-head {
+  padding: var(--sm) 0 2px;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+[data-pmx-thread="t5"] .t5-rail-row[data-op="1"] {
+  padding-left: var(--sm);
+  border-left: 2px solid transparent;
+}
+
+/* Status lives on the ROW, not in a badge. `completed` is a settled rule, `running` an unsettled one -
+ * and the running row is also italic, so the state never rests on colour alone. */
+[data-pmx-thread="t5"] .t5-rail-row[data-status="completed"] {
+  border-left-color: color-mix(in srgb, var(--border) 75%, transparent);
+}
+[data-pmx-thread="t5"] .t5-rail-row[data-status="running"] {
+  border-left-style: dashed;
+  border-left-color: var(--accent-primary);
+}
+[data-pmx-thread="t5"] .t5-rail-row[data-status="running"] .t5-rail-op-head { font-style: italic; }
+[data-pmx-thread="t5"] .t5-rail-row[data-op="1"][data-open="1"] {
+  border-left-style: solid;
+  border-left-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+}
+
+[data-pmx-thread="t5"] .t5-rail-op-head {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-primary);
+}
+[data-pmx-thread="t5"] .t5-rail-op-count {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---- rail detail, rendered in the USER lane ---------------------------------------------------- */
 
 [data-pmx-thread="t5"] .t5-lane-detail {

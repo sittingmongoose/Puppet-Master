@@ -457,6 +457,13 @@
       }
 
       if (groups.length) host.appendChild(this._buildWorkStripRows(groups, openIds));
+
+      /* Every operation the run performed, as marginalia beneath the strip that summarised them. The
+       * strip says WHAT HAPPENED in one line; the ledger is the record, and it is the only place the
+       * command, cache, permission and operation input are readable. */
+      var opHost = u.el('div', { class: 't1-ops' });
+      this._renderOpLedger(opHost);
+      if (opHost.firstChild) host.appendChild(opHost);
     }
 
     host.appendChild(this._bsdHost);
@@ -666,6 +673,150 @@
     var msgs = this.ctx.data.messagesFor(this.tid()) || [];
     for (var i = msgs.length - 1; i >= 0; i--) if (msgs[i].runtime && msgs[i].runtime.workedSeconds != null) return msgs[i].runtime.workedSeconds;
     return null;
+  };
+
+  /* ---------------------------------------------------------------- the operation ledger
+   *
+   * `reference/screenshots/pm7_popout.png` prints one unit of tool work as a header, a reason, six
+   * named fields, its per-file deltas and two chips. This concept renders that record the only way it
+   * can without breaking its own promise: as MARGINALIA. The headline is a small-caps margin label,
+   * the reason is an italic gloss on the measure, and the six fields become a hanging definition list
+   * whose keys sit in the same column as every speaker label in the transcript - so the ledger aligns
+   * with the conversation instead of forming a table beside it.
+   *
+   * There is no card, no pill and no chip box in it. Status is a word after the headline, `/sources`
+   * is plain text, and the artifact is the same underlined text button the work strip already uses, so
+   * the transcript gains no second control vocabulary.
+   */
+  T1Thread.prototype._renderOpLedger = function (host) {
+    var u = U();
+    var svc = this.ctx.services;
+    if (!svc.opcard || !svc.opcard.forThread) return;
+
+    var recs = svc.opcard.forThread(this.ctx, this.tid());
+    if (!recs.length) return;
+
+    /* One margin label for the ledger, in the slot a speaker label occupies. */
+    host.appendChild(u.el('div', { class: 't1-annot-margin' }, [
+      u.el('span', { class: 't1-annot-kind', text: 'Operations' }),
+      u.el('span', { class: 't1-op-meta', text: recs.length + ' recorded' })
+    ]));
+
+    for (var i = 0; i < recs.length; i++) host.appendChild(this._buildOpBlock(recs[i]));
+  };
+
+  T1Thread.prototype._buildOpBlock = function (rec) {
+    var self = this;
+    var u = U();
+    /* The SAME expand map long messages use, keyed by operation id. Reusing it is what keeps a
+     * reopened thread showing the operations it was left showing, and it means this concept still has
+     * exactly one disclosure mechanism. */
+    var view = this.ctx.store.view(this.tid());
+    var key = 'op-' + rec.id;
+    var open = !!view.expanded[key];
+
+    var block = u.el('div', {
+      class: 't1-annot t1-op',
+      data: { opKind: rec.kind, opStatus: rec.status, expanded: open ? '1' : '0' }
+    });
+
+    /* ---- the margin label. Status is a WORD after the headline: a coloured capsule here would be the
+     * first pill in a transcript that has none. The count, its unit and the duration are printed as the
+     * record states them - a renderer that recomputed either would drift from the run. */
+    var margin = u.el('div', { class: 't1-annot-margin' }, [
+      u.el('span', { class: 't1-op-label', text: rec.headline }),
+      u.el('span', { class: 't1-op-status', text: '\u2014 ' + rec.statusLabel })
+    ]);
+    if (rec.count != null) {
+      margin.appendChild(u.el('span', {
+        class: 't1-op-meta',
+        text: rec.count + (rec.unit ? ' ' + rec.unit : '')
+      }));
+    }
+    if (rec.durationMs != null) {
+      margin.appendChild(u.el('span', {
+        class: 't1-op-meta',
+        text: F().duration(Math.round(rec.durationMs / 1000))
+      }));
+    }
+    block.appendChild(margin);
+
+    /* ---- why it ran, as an italic gloss directly under the label. */
+    if (rec.why) block.appendChild(u.el('p', { class: 't1-annot-text t1-op-why', text: rec.why }));
+
+    /* ---- the detail: six keys in the margin, six values on the measure. */
+    var detail = u.el('div', { class: 't1-op-detail' });
+    var fields = u.el('dl', { class: 't1-op-fields' });
+    rec.fields.forEach(function (f) {
+      fields.appendChild(u.el('div', { class: 't1-op-field' }, [
+        u.el('dt', { class: 't1-op-key', text: f.key }),
+        u.el('dd', { class: 't1-op-val', data: { key: f.key }, text: f.value })
+      ]));
+    });
+
+    /* Per-file deltas are one more term in the same list, so they read as part of the record rather
+     * than as a diff widget parked inside it. */
+    if (rec.rows && rec.rows.length) {
+      var rowsVal = u.el('dd', { class: 't1-op-val' });
+      rec.rows.forEach(function (r) {
+        rowsVal.appendChild(u.el('div', { class: 't1-op-row' }, [
+          u.el('span', { class: 't1-op-row-verb', text: r.verb }),
+          u.el('span', { class: 't1-annot-ev', text: r.target }),
+          u.el('span', { class: 't1-op-row-delta', text: '+' + r.added + ' \u2212' + r.removed })
+        ]));
+      });
+      fields.appendChild(u.el('div', { class: 't1-op-field' }, [
+        u.el('dt', { class: 't1-op-key', text: 'FILES' }),
+        rowsVal
+      ]));
+    }
+    detail.appendChild(fields);
+
+    if (rec.chips && rec.chips.length) detail.appendChild(this._buildOpLinks(rec.chips));
+    block.appendChild(detail);
+
+    /* ---- disclosure: `.t1-more`, the control this concept already uses to open a long turn.
+     * Collapsed, an operation states its headline and its reason and nothing else. */
+    var more = u.el('button', {
+      class: 't1-more', type: 'button',
+      text: open ? 'Hide operation' : 'Show operation',
+      aria: { expanded: open ? 'true' : 'false' }
+    });
+    this._on(more, 'click', function () {
+      var v = self.ctx.store.view(self.tid());
+      var now = !v.expanded[key];
+      v.expanded[key] = now;
+      block.setAttribute('data-expanded', now ? '1' : '0');
+      more.setAttribute('aria-expanded', now ? 'true' : 'false');
+      more.textContent = now ? 'Hide operation' : 'Show operation';
+    });
+    block.appendChild(more);
+
+    return block;
+  };
+
+  /* Chips as TEXT. `/sources` is a plain count because nothing in this workspace can open it, and the
+   * artifact is a real button because something can: it hands the id to the artifact service, which is
+   * the same call the handoff row makes. A link that looks live and does nothing is worse than none. */
+  T1Thread.prototype._buildOpLinks = function (chips) {
+    var self = this;
+    var u = U();
+    var links = u.el('div', { class: 't1-op-links' });
+    chips.forEach(function (chip, i) {
+      if (i) links.appendChild(u.el('span', { class: 't1-strip-sep', text: '\u00b7' }));
+      if (chip.kind === 'artifact') {
+        var btn = u.el('button', {
+          class: 't1-strip-btn', type: 'button', text: chip.label,
+          aria: { label: chip.label + ' ' + chip.artifactId }
+        });
+        self._on(btn, 'click', function () { self.ctx.services.artifacts.open(chip.artifactId); });
+        links.appendChild(btn);
+        links.appendChild(u.el('span', { class: 't1-annot-ev', text: chip.artifactId }));
+        return;
+      }
+      links.appendChild(u.el('span', { class: 't1-op-meta', text: chip.label }));
+    });
+    return links;
   };
 
     T1Thread.prototype.buildGoal = function (goal) {

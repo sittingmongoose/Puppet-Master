@@ -54,7 +54,7 @@
     ['PMXObservable', 'PMXRoute', 'PMXAccess', 'PMXBsd', 'PMXApprovals', 'PMXContextAdmit',
      'PMXThreadOps', 'PMXOps', 'PMXAttach', 'PMXSync', 'PMXSpell', 'PMXNotify', 'PMXCapacity',
      'PMXCrew', 'PMXDrafts', 'PMXLens', 'PMXSearch', 'PMXSurfaces', 'PMXRuntime',
-     'PMXQuestionnaire', 'PMXQFlow', 'PMXArtifacts', 'PMXThreadHistory', 'PMXDemo']
+     'PMXQuestionnaire', 'PMXQFlow', 'PMXArtifacts', 'PMXThreadHistory', 'PMXOpCard', 'PMXDemo']
       .forEach(function (name) {
         var svc = global[name];
         if (svc && typeof svc.bind === 'function') svc.bind(s, d);
@@ -96,7 +96,9 @@
       sync: global.PMXSync,
       spell: global.PMXSpell,
       notify: global.PMXNotify,
-      threadHistory: global.PMXThreadHistory
+      threadHistory: global.PMXThreadHistory,
+      /* One operation-record contract; each thread concept lays it out in its own idiom. */
+      opcard: global.PMXOpCard
     };
   }
 

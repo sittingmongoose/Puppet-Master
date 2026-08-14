@@ -406,7 +406,20 @@ const T01_AGENTS = {
       resultRef: null },
     { id: 'ag-6', name: 'Allowance checker', role: 'Reader', state: 'retried',
       route: 'Alibaba — Cloud · Qwen 3.8', workedSeconds: 96, attempts: 2,
-      resultRef: 'Usage endpoint answered on the second attempt.' }
+      /* The manifest's third subagent is specified as a SEQUENCE, not a single state. Recording the
+       * trail it walked is what lets a work cluster show that a failure was recovered rather than
+       * only that the agent is now fine. */
+      stateSequence: ['queued', 'running', 'failed', 'retrying', 'completed'],
+      resultRef: 'Usage endpoint answered on the second attempt.' },
+    /* `failed` and `retrying` had no representative at all: the set stopped at `retried`, which is
+     * the outcome, so neither the failure itself nor an in-flight recovery could be rendered. */
+    { id: 'ag-7', name: 'Slint port reviewer', role: 'Reviewer', state: 'failed',
+      route: 'Moonshot — Research · Kimi K3', workedSeconds: 61,
+      failedReason: 'The adapter returned no capability bag for the requested model.',
+      attempts: 1, resultRef: null },
+    { id: 'ag-8', name: 'Capture retry', role: 'Capture', state: 'retrying',
+      route: 'Google — Lab · Gemini 3 Ultra', workedSeconds: 12, attempts: 2,
+      retryOf: 'ag-7', resultRef: null }
   ]
 };
 
@@ -417,8 +430,13 @@ const T01_QUESTIONNAIRE = {
   createdAt: '2026-08-07T09:12:00Z',
   currentQuestionIndex: 0,
   questions: [
+    /* p1 carries a WRITE-IN row. Reference 02_stable_paged_questionnaire.mov makes the last option of
+     * a single-select a pencil row that becomes a text field, and the answer typed there survives
+     * paging away and back. No supplied question allowed one, so the questionnaire's write-in path
+     * was unreachable and `validate()` would have called a typed answer a stale option. */
     { id: 'p1', prompt: 'Which account should the settings screen open on?', kind: 'single select',
-      required: true, options: ['The account in use', 'The first ready account', 'The last account opened'] },
+      required: true, writeIn: true, writeInLabel: 'Something else',
+      options: ['The account in use', 'The first ready account', 'The last account opened'] },
     { id: 'p2', prompt: 'Which setup states must the screen show inline?', kind: 'multi select',
       required: false, options: ['Sign-in required', 'Command line tool missing', 'Update available', 'Usage unavailable'] },
     { id: 'p3', prompt: 'Anything the screen must never do?', kind: 'freeform', required: false }
@@ -436,7 +454,19 @@ const T01_GOAL = {
   totalElapsedSeconds: 5640,
   canEdit: true, canPause: false, canResume: false, canStop: false, canClear: true,
   expanded: false,
-  phase: { index: 5, total: 5, label: 'Verification' },
+  /* The scenario manifest names six phases. `surfaces.phaseOf()` has always preferred an
+   * authored `phases` list over the status/event fallbacks, but no supplied record carried one,
+   * so that branch was dead and every concept rendered a status-derived phase instead. Each entry
+   * carries its own state so a phase ladder can show what is done, current and not yet reached. */
+  phases: [
+    { label: 'Audit',     state: 'done' },
+    { label: 'Research',  state: 'done' },
+    { label: 'Prototype', state: 'done' },
+    { label: 'Implement', state: 'done' },
+    { label: 'Verify',    state: 'done' },
+    { label: 'Handoff',   state: 'current' }
+  ],
+  phaseIndex: 5,
   events: [
     { at: '2026-08-07T09:20:00Z', phase: 'start' },
     { at: '2026-08-07T09:54:00Z', phase: 'pause' },
@@ -458,12 +488,88 @@ const T01_GOAL = {
  * vocabulary — BrowserWorkspace, Browser Action, BrowserPage, TestCapture — because the packet's
  * terminology correction forbids third-party test-runner names in PM-owned surfaces. */
 const T01_ACTIVITY_STAGES = [
-  { id: 'st-read', kind: 'read', label: 'Read 7 files', detail: 'shared/route.js, shared/access.js and five more', durationMs: 2400 },
-  { id: 'st-search', kind: 'search', label: 'Searched the repository for account labels', detail: '31 matches across 9 files', durationMs: 1600 },
-  { id: 'st-web', kind: 'web', label: 'Fetched the provider status page', detail: 'One page, cached for the run', durationMs: 3100 },
-  { id: 'st-browser', kind: 'browser', label: 'Opened a BrowserPage in the BrowserWorkspace', detail: 'Browser Action: inspect the settings route', durationMs: 5200 },
-  { id: 'st-test', kind: 'test', label: 'Ran the interaction suite', detail: 'TestCapture retained for the failing case', durationMs: 8800 },
-  { id: 'st-verify', kind: 'verify', label: 'Verified the rendered settings screen', detail: 'Matched the account list against the catalog', durationMs: 2700 }
+  /* Each stage now carries BOTH label forms. Reference `03_compact_execution_activity.mov`
+   * (contact sheet @13s vs @30s, keyframe set c @36s) shows a group header that is a present
+   * participle while the work runs and a past tense once it finishes — `Making 1 edit` becomes
+   * `Made 1 create, 2 edits`, `Exploring 5 files` becomes `Explored 7 files`. The supplied prose
+   * described only the finished line, so every concept rendered the past tense while still running.
+   * `count`/`unit` exist so a renderer can rewrite the number in place instead of replacing the row. */
+  /* `thought` leads the list because reference 03_compact_execution_activity.mov opens on
+   * "Thinking for 4s" — reasoning is a peer group in the same stream, not a separate channel, and
+   * the contract's `activity.thinking_summary` event had no stage kind to land on. */
+  { id: 'st-thought', kind: 'thought', label: 'Thought for 4s', runningLabel: 'Thinking for 4s',
+    count: 1, unit: 'summary',
+    detail: 'Only the provider-exposed summary; no hidden reasoning is claimed.', durationMs: 4000,
+    op: { verb: 'Reasoning', target: 'summary only', cache: 'not applicable', sources: 0, runtimeArtifact: null,
+      input: '{ scope: "provider-exposed summary" }',
+      why: 'Only the summary the provider exposed is shown; no hidden reasoning is claimed.' } },
+  { id: 'st-read', kind: 'read', label: 'Read 7 files', runningLabel: 'Reading 7 files',
+    count: 7, unit: 'files',
+    detail: 'shared/route.js, shared/access.js and five more', durationMs: 2400,
+    op: { verb: 'Reading', target: '7 files', cache: 'warm', sources: 7, runtimeArtifact: null,
+      input: '{ paths: ["shared/route.js", "shared/access.js", "+5 more"] }',
+      why: 'The account rows had to be read before their states could be mapped to copy.' } },
+  { id: 'st-search', kind: 'search', label: 'Searched the repository for account labels',
+    runningLabel: 'Searching the repository for account labels',
+    count: 31, unit: 'matches',
+    detail: '31 matches across 9 files', durationMs: 1600,
+    op: { verb: 'Searching', target: 'account labels', cache: 'miss', sources: 9, runtimeArtifact: null,
+      input: '{ query: "account label", scope: "repository" }',
+      why: 'Searched the repository because the label vocabulary was not documented anywhere.' } },
+  { id: 'st-web', kind: 'web', label: 'Fetched the provider status page',
+    runningLabel: 'Fetching the provider status page',
+    count: 1, unit: 'page',
+    detail: 'One page, cached for the run', durationMs: 3100,
+    op: { verb: 'Fetching', target: 'provider status page', cache: 'miss', sources: 1, runtimeArtifact: null,
+      input: '{ url: "provider status page", freshness: "required" }',
+      why: 'Fetched the page because a cached status could not support a readiness claim.' } },
+  { id: 'st-browser', kind: 'browser', label: 'Opened a BrowserPage in the BrowserWorkspace',
+    runningLabel: 'Opening a BrowserPage in the BrowserWorkspace',
+    count: 1, unit: 'page',
+    detail: 'Browser Action: inspect the settings route', durationMs: 5200,
+    op: { verb: 'Opening', target: 'BrowserPage in the BrowserWorkspace', cache: 'not applicable', sources: 1, runtimeArtifact: 'artifact-preview',
+      input: '{ action: "inspect", route: "settings" }',
+      why: 'Opened a page because the rendered route is the only honest check of the layout.' } },
+  { id: 'st-test', kind: 'test', label: 'Ran the interaction suite',
+    runningLabel: 'Running the interaction suite',
+    count: 18, unit: 'checks',
+    detail: 'TestCapture retained for the failing case', durationMs: 8800,
+    op: { verb: 'Running', target: 'interaction suite', cache: 'not applicable', sources: 18, runtimeArtifact: 'artifact-test',
+      input: '{ suite: "interaction", widths: [520, 750, 1200] }',
+      why: 'Ran the suite because a layout claim without a run is an opinion.' } },
+  /* `edit` and `generate` had NO representative kind. The reference's densest rows are edits, and
+   * each carries its own +added/-removed pair; ours only ever had a group-level total, so a
+   * per-row delta could not be rendered by any concept. */
+  { id: 'st-edit', kind: 'edit', label: 'Made 1 create, 2 edits',
+    runningLabel: 'Making 1 create, 2 edits',
+    count: 3, unit: 'changes',
+    detail: '3 files touched', durationMs: 6400,
+    op: { verb: 'Editing', target: '3 files', cache: 'not applicable', sources: 3, runtimeArtifact: 'artifact-diff',
+      input: '{ files: 3, added: 184, removed: 67 }',
+      why: 'Edited the selector and access modules because the route change had to reach both.' },
+    rows: [
+      { verb: 'Edited', target: 'shared/selectors.js', added: 92, removed: 18 },
+      { verb: 'Created', target: 'shared/access.js', added: 61, removed: 0 },
+      { verb: 'Edited', target: 'shared/route.js', added: 31, removed: 49 }
+    ] },
+  { id: 'st-generate', kind: 'generate', label: 'Generated 2 images',
+    runningLabel: 'Generating assets',
+    count: 2, unit: 'images',
+    detail: 'Account row states, light and dark', durationMs: 4100,
+    op: { verb: 'Generating', target: '2 images', cache: 'not applicable', sources: 2, runtimeArtifact: 'artifact-preview',
+      input: '{ subjects: ["account rows light", "account rows dark"] }',
+      why: 'Generated both themes because a single-theme asset cannot prove the contrast rule.' },
+    rows: [
+      { verb: 'Generated', target: 'account-rows-light.png', added: 0, removed: 0 },
+      { verb: 'Generated', target: 'account-rows-dark.png', added: 0, removed: 0 }
+    ] },
+  { id: 'st-verify', kind: 'verify', label: 'Verified the rendered settings screen',
+    runningLabel: 'Verifying the rendered settings screen',
+    count: 1, unit: 'screen',
+    detail: 'Matched the account list against the catalog', durationMs: 2700,
+    op: { verb: 'Verifying', target: 'rendered settings screen', cache: 'not applicable', sources: 1, runtimeArtifact: 'artifact-test',
+      input: '{ against: "account catalog" }',
+      why: 'Verified against the catalog because the screen is only correct relative to it.' } }
 ];
 
 /* The port collision, verbatim. */

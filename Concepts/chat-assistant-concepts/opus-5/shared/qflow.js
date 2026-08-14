@@ -68,6 +68,17 @@
       answeredCount: countAnswered(questions),
       skippedCount: countSkipped(Q, record.id, questions),
       isSkipped: function (question) { return !!Q.isSkipped(record.id, (question && question.id) || question); },
+      /* The write-in row is part of the renderable state, not a separate lookup: a concept that had to
+       * ask the questionnaire service directly would be a second reader of the flow, which is the
+       * exact thing read() exists to prevent. Null when the question declares no write-in. */
+      writeIn: function (question) {
+        var q2 = question || questions[idx];
+        if (!q2 || !q2.writeIn) return null;
+        return {
+          label: q2.writeInLabel || 'Something else',
+          value: Q.writeInFor ? Q.writeInFor(record.id, q2.id) : null
+        };
+      },
       receipt: null
     };
   }

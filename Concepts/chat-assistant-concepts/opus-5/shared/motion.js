@@ -464,7 +464,7 @@
     return h;
   }
 
-  /* ------------------------------------------------------------------------ the thirteen families */
+  /* ------------------------------------------------------------------------ the thirteen families, then the four causal primitives */
 
   /* 1. arrive(el) — message, tool row, or activity stage arriving. */
   function arrive(el) { return beat(el, 'pmx-enter', 420); }
@@ -627,6 +627,240 @@
   };
   function lineage(el, dir) { return beat(el, LINEAGE_CLS[dir] || 'pmx-m-lineage-branch', 480); }
 
+  /* ---------------------------------------------------------------- the four causal primitives
+   *
+   * These four come from the RAW RECORDINGS, which the original packet described in prose but did not
+   * supply as indexed media. Each one is a causal rule, not a look: the reference's own easing,
+   * colour and radius are deliberately not copied.
+   *
+   * 14. displace   (01_message_arrival_spatial_continuity.mov)
+   * 15. firstVisit (02_stable_paged_questionnaire.mov)
+   * 16. countMorph (03_compact_execution_activity.mov)
+   * 17. groupReopen(03_compact_execution_activity.mov)
+   */
+
+  /* Shared mechanism for 14 and 17: measure a set of elements, let the caller mutate the DOM, then
+   * play the OLD positions forward to the new ones. Two families rather than one function because the
+   * causal meanings differ — something arriving versus something being disclosed — and a reader of a
+   * concept should see which one was meant. */
+  /* The file reaches through `global` for platform APIs everywhere else; these two keep the four
+   * primitives below reading the same way without repeating the lookup six times. */
+  function raf(fn) { return global.requestAnimationFrame(fn); }
+  function doc() { return global.document; }
+
+  function flipSet(nodes, mutate, ms) {
+    var list = [], i, r;
+    for (i = 0; i < nodes.length; i++) {
+      if (!nodes[i] || !nodes[i].getBoundingClientRect) continue;
+      r = nodes[i].getBoundingClientRect();
+      list.push({ el: nodes[i], top: r.top, left: r.left });
+    }
+    var out = null;
+    try { out = mutate(); } catch (e) { out = null; }
+    for (i = 0; i < list.length; i++) {
+      var el = list[i].el;
+      if (!el.getBoundingClientRect || !el.isConnected) continue;
+      r = el.getBoundingClientRect();
+      var dy = list[i].top - r.top;
+      var dx = list[i].left - r.left;
+      if (!dy && !dx) continue;
+      el.style.transition = 'none';
+      el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    }
+    /* Two frames: one to commit the inverted position, one to release it. A single frame lets the
+     * browser coalesce both writes and nothing moves at all. */
+    raf(function () {
+      raf(function () {
+        for (var k = 0; k < list.length; k++) {
+          var e2 = list[k].el;
+          if (!e2.style) continue;
+          e2.style.transition = 'transform ' + ms + 'ms var(--ease-spring-real, cubic-bezier(.22,.61,.36,1))';
+          e2.style.transform = '';
+        }
+      });
+    });
+    return out;
+  }
+
+  function clearFlip(nodes) {
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i] && nodes[i].style) { nodes[i].style.transition = ''; nodes[i].style.transform = ''; }
+    }
+  }
+
+  /* 14. displace(container, insert, opts) — something ARRIVES.
+   *
+   * Reference 01 conserves position: the new bubble is already at full opacity in its final place and
+   * the ROWS AROUND IT move to make room. Our `arrive()` does the opposite — it fades the new node in
+   * while everything else stays nailed down, which reads as the message materialising rather than as
+   * the conversation making space for it. `insert` must return the newly added element (or nothing).
+   * The arrival itself is deliberately NOT animated; only its neighbours are. */
+  function displace(container, insert, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    if (!container || typeof insert !== 'function') { try { insert && insert(); } catch (e) {} return h._done(); }
+    var ms = opts.duration || 320;
+    var kids = [];
+    var i;
+    for (i = 0; i < container.children.length; i++) kids.push(container.children[i]);
+
+    if (reduced(container)) {
+      try { insert(); } catch (e) {}
+      return h._done();
+    }
+
+    var added = flipSet(kids, insert, ms);
+    /* The arriving node gets no entrance class on purpose: in the reference it is simply THERE. What
+     * tells you it is new is that its neighbours just moved. */
+    if (added && added.setAttribute) added.setAttribute('data-pmx-arrived', '1');
+
+    function endNow() {
+      clearTimeout(timer);
+      clearFlip(kids);
+    }
+    var timer = setTimeout(function () { endNow(); h._done(); }, ms + 40);
+    h._end(endNow);
+    h._abort(endNow);
+    return h;
+  }
+
+  /* 15. firstVisit(el, key) -> boolean. TRUE the first time this element is asked about this key.
+   *
+   * Reference 02 is a REVIEWABLE questionnaire: paging back to question 1 shows the answer still
+   * there and the card does NOT replay its entrance. Without a guard, `questionPhase(el,'advance')`
+   * fires on every render, so navigating backwards animated as though the question were new — which
+   * tells the reader they have moved forward when they have moved back.
+   *
+   * The key is stamped on the element, so the answer survives a re-render of the surrounding tree and
+   * dies with the element itself, which is exactly the lifetime a "have I shown this yet" fact has. */
+  var VISIT_ATTR = 'data-pmx-visited';
+
+  function firstVisit(el, key) {
+    if (!el || !el.getAttribute) return true;
+    var k = String(key == null ? '' : key);
+    var seen = el.getAttribute(VISIT_ATTR);
+    if (seen === k) return false;
+    /* A DIFFERENT key means genuinely new content in the same slot, which should animate. Storing
+     * only the latest key keeps this O(1) and matches the reference, where paging away and back is
+     * still a revisit but a NEW question is an entrance. */
+    var all = el.getAttribute(VISIT_ATTR + '-all') || '';
+    var known = all ? all.split(' ') : [];
+    var already = known.indexOf(k) >= 0;
+    if (!already) { known.push(k); el.setAttribute(VISIT_ATTR + '-all', known.join(' ')); }
+    el.setAttribute(VISIT_ATTR, k);
+    return !already;
+  }
+
+  function forgetVisits(el) {
+    if (!el || !el.removeAttribute) return;
+    el.removeAttribute(VISIT_ATTR);
+    el.removeAttribute(VISIT_ATTR + '-all');
+  }
+
+  /* 16. countMorph(el, to, opts) — a NUMBER is rewritten in place.
+   *
+   * Reference 03 grows `Exploring 5 files` into `Exploring 7 files` by changing the digit and nothing
+   * else. `phaseStep` already refuses to append a new row, but it cross-fades the whole label, so a
+   * one-digit change reads as the entire line being replaced. Here only the numeric part moves: the
+   * surrounding words are never touched, which is what makes the count feel like a running tally
+   * rather than a series of different sentences.
+   *
+   * `el` is the element whose textContent contains the number. `to` is the full new string. */
+  function countMorph(el, to, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    if (!el) return h._done();
+    var next = to == null ? '' : String(to);
+    if (reduced(el)) { swapTextInstant(el, next); return h._done(); }
+
+    var prev = el.textContent || '';
+    /* Find the first run of digits that actually differs. If the words changed too, this is not a
+     * count morph and the honest answer is to hand it to the label swap instead of pretending. */
+    var pd = prev.match(/\d+/);
+    var nd = next.match(/\d+/);
+    if (!pd || !nd || prev.replace(/\d+/, '#') !== next.replace(/\d+/, '#')) {
+      swapText(el, next);
+      var t0 = setTimeout(function () { swapTextInstant(el, next); h._done(); }, 280);
+      h._end(function () { clearTimeout(t0); swapTextInstant(el, next); });
+      h._abort(function () { clearTimeout(t0); swapTextInstant(el, next); });
+      return h;
+    }
+
+    var ms = opts.duration || 220;
+    var rising = Number(nd[0]) > Number(pd[0]);
+    /* Rebuild as three text nodes so only the middle one is animated; the words either side keep
+     * their own layout boxes and never reflow. */
+    while (el.firstChild) el.removeChild(el.firstChild);
+    var head = doc().createTextNode(next.slice(0, nd.index));
+    var num = doc().createElement('span');
+    num.className = 'pmx-count-morph';
+    num.setAttribute('data-dir', rising ? 'up' : 'down');
+    num.textContent = nd[0];
+    var tail = doc().createTextNode(next.slice(nd.index + nd[0].length));
+    el.appendChild(head); el.appendChild(num); el.appendChild(tail);
+
+    function endNow() {
+      clearTimeout(timer);
+      if (num.classList) num.classList.remove('pmx-count-morph-run');
+      num.style.transition = '';
+      num.style.transform = '';
+      num.style.opacity = '';
+    }
+    raf(function () { if (num.classList) num.classList.add('pmx-count-morph-run'); });
+    var timer = setTimeout(function () { endNow(); h._done(); }, ms + 60);
+    h._end(endNow);
+    h._abort(endNow);
+    return h;
+  }
+
+  /* 17. groupReopen(el, expand, opts) — a condensed group is DISCLOSED again.
+   *
+   * Reference 03 reopens `13 tools used` into its full run, and the answer prose and artifact card
+   * BELOW it keep their positions relative to their own content while being pushed down as one block.
+   * Each group also reopens independently: opening the second does not close the first. Animating the
+   * expanding element alone makes the siblings jump, which reads as the whole transcript reflowing
+   * rather than one group unfolding.
+   *
+   * `expand` mutates the DOM to reveal the group. Siblings AFTER `el` are the ones carried. */
+  function groupReopen(el, expand, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    if (!el || typeof expand !== 'function') { try { expand && expand(); } catch (e) {} return h._done(); }
+    if (reduced(el)) { try { expand(); } catch (e) {} return h._done(); }
+
+    var ms = opts.duration || 300;
+    var after = [];
+    var n = el.nextElementSibling;
+    while (n) { after.push(n); n = n.nextElementSibling; }
+
+    var startH = el.getBoundingClientRect ? el.getBoundingClientRect().height : 0;
+    flipSet(after, function () { expand(); return null; }, ms);
+
+    /* The group's own height interpolates through collapseTo's contract so width never animates —
+     * an expanding group that also widened would rewrap every row inside it mid-flight. */
+    var endH = el.getBoundingClientRect ? el.getBoundingClientRect().height : 0;
+    if (endH > startH) {
+      el.style.overflow = 'hidden';
+      el.style.height = startH + 'px';
+      raf(function () {
+        el.style.transition = 'height ' + ms + 'ms var(--ease-spring-real, cubic-bezier(.22,.61,.36,1))';
+        el.style.height = endH + 'px';
+      });
+    }
+
+    function endNow() {
+      clearTimeout(timer);
+      clearFlip(after);
+      el.style.transition = '';
+      el.style.height = '';
+      el.style.overflow = '';
+    }
+    var timer = setTimeout(function () { endNow(); h._done(); }, ms + 60);
+    h._end(endNow);
+    h._abort(endNow);
+    return h;
+  }
+
   global.PMXMotion = {
     reduced: reduced,
     onChange: onChange,
@@ -655,6 +889,13 @@
     stateFlip: stateFlip,
     consequence: consequence,
     catchUp: catchUp,
-    lineage: lineage
+    lineage: lineage,
+
+    /* the four causal primitives taken from the raw recordings */
+    displace: displace,
+    firstVisit: firstVisit,
+    forgetVisits: forgetVisits,
+    countMorph: countMorph,
+    groupReopen: groupReopen
   };
 })(window);
