@@ -43,7 +43,7 @@ import dead_selectors  # noqa: E402  (frozen human-reviewed dead list)
 import home_workspace_source as home_source  # noqa: E402  (authored T20 source)
 
 BASE_DEFAULT = HERE / "base" / "PM7-base.html"
-BASE_SHA = "b15eb20f9e4176ea7f40be24c651db85f4d57dfeb8dd1ce6a1b67ac3764aebd4"
+BASE_SHA = "77fadeea6bff73649c8f4c58ffe7e28044401afd4a511b3ce78d5d8a450384dd"
 
 # Segmentation census measured on the pinned base (design memo said 28
 # blocks; actual scan of the pinned base finds 29 -- recorded adaptation).

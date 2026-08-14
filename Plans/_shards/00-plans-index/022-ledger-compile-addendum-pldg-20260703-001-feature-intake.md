@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5040-L5487
+Source lines: L5040-L5526
 
-Source SHA256: `2e5a08ce9c09cc8b67cb51bf43c01d72f2e7839d35769056bcaf5125e8ac7648`
+Source SHA256: `d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78`
 
 ---
 
@@ -258,6 +258,45 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/usage-feature.md
 ```
+
+### PMConcept7 tweak wave 3 — 2026-08-13 (third same-day wave)
+
+Third same-day wave over the tweak-wave-2 canon, with dated wave-3
+dispositions. Owner-doc changes:
+
+- `Plans/FinalGUISpec.md` — F3-421: the overflow chip always sits immediately
+  left of the actions cluster, fitting is live on tab add/remove, a newly
+  opened overflowing tab stays visible (displacing the chip-adjacent
+  non-active tab into the picker), and tab drag-reorder is animated
+  (suppressed native ghost, transform-only pointer tracking, ~140 ms neighbour
+  FLIP, reduced-motion instant, silhouette glued to the insertion slot).
+  F3-505: theme skin tokens (--ed-shape-outline, --ed-shape-crown/-h,
+  --ed-tab-inactive-ring/+radius; retro hard outline with square inactive
+  rings, basic 2 px accent-blue crown at 9 px radius, glass three-edge bevel
+  with rail alpha re-tuned 88 → 84), and the editor minimap becomes the only
+  code-pane scrollbar (native bars suppressed, margin-aligned band; the wave-2
+  scrollbar-track-margin exclusion is retired). F3-HOME-002 + F3-503: two-frame
+  drop-target hysteresis, mid-FLIP hit-test exclusion (data-pm-home-flip),
+  movement-gated auto-scroll, proportional-projected-width placeholder
+  (mirroring normalizeMainRowBases), and PM_EDGE deferral widened to all Home
+  gestures. F3-HOME-003: the kebab is a vertical-dots 16 by 20 control at the
+  surface's right edge below the grip (out of the head rows; stray terminal
+  control strip removed); spacing re-tuned to 2 px vertical via
+  --pm-home-pad-y/--pm-home-gap-y with 4 px sides; terminal empty-section
+  guidance truth-gated by data-pm-term-empty and restoreOwnerRefs never drops
+  section records.
+- `Plans/Wiring_Matrix.production.json` — the 14 kebab-anchored option rows
+  carry the new kebab location/geometry; census unchanged at 56 home rows.
+- `Plans/UI_Wiring_Rules.md` — §0.1 concept-input note extended.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — interaction
+  rules re-amended; artifact and source hashes recomputed.
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — chip/reorder/minimap/kebab/
+  spacing/terminal rows updated.
+
+Governance: seal row `dec-2026-08-13-pm7-tweak-wave-3`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-3-2026-08-13/`. No new command IDs, no storage
+shape changes; this wave creates no WorkNodes, NodeSeeds, executable queues,
+implementation files, runtime artifacts, or production build tasks.
 
 ### PMConcept7 tweak wave 2 — 2026-08-13 (same-day follow-up)
 

@@ -15,6 +15,9 @@
  *   --chromium <path>   explicit Chromium executable; when given, the
  *                       sandbox-safe flags (--no-sandbox --disable-gpu
  *                       --disable-dev-shm-usage) are passed automatically.
+ *   --video off         skip per-case video recording and tracing (the
+ *                       ffmpeg encoders are the largest optional memory
+ *                       consumers; use on memory-constrained runners).
  */
 
 import { createRequire } from 'node:module';
@@ -79,6 +82,7 @@ if (args.chromium) {
   launchOptions.executablePath = args.chromium;
   launchOptions.args = ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'];
 }
+const videoDisabled = args.video === 'off';
 const browser = await chromium.launch(launchOptions);
 
 async function newCase(name, options = {}) {
@@ -124,8 +128,11 @@ async function newCase(name, options = {}) {
     layout: options.layout || null,
     legacyLayout: options.legacyLayout || null
   });
-  await page.goto(url + '?pm-home-case=' + encodeURIComponent(name), { waitUntil: 'load', timeout: 60000 });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  /* 180s: the artifact loads in ~1s normally, but memory-contended runners
+     (concurrent harness runs + the long-lived driver) can stall first paint
+     far past 60s; a taller cap turns a fatal crash into a slow case */
+  await page.goto(url + '?pm-home-case=' + encodeURIComponent(name), { waitUntil: 'load', timeout: 180000 });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
   await page.waitForTimeout(350);
   return { context, page, errors: contextErrors };
 }
@@ -296,7 +303,10 @@ async function pointerGestureToDropTarget(page, selector, host) {
   await page.mouse.down();
   await page.mouse.move(start.x + 2, start.y + 2);
   await page.mouse.move(drop.x, drop.y, { steps: 10 });
-  await page.waitForTimeout(60);
+  /* wave 3: target adoption has 2-frame hysteresis -- jitter once more at the
+     target so the preview commits to it before the drop */
+  await page.mouse.move(drop.x + 1, drop.y);
+  await page.waitForTimeout(160);
   await page.mouse.up();
   await page.waitForTimeout(150);
 }
@@ -339,11 +349,12 @@ async function moveSurfaceTo(page, surfaceId, host) {
 }
 
 async function runInteraction(name, body, options = {}) {
-  const caseState = await newCase('interaction-' + name, Object.assign({ recordVideo: Boolean(options.recordVideo) }, options));
+  const wantVideo = Boolean(options.recordVideo) && !videoDisabled;
+  const caseState = await newCase('interaction-' + name, Object.assign({}, options, { recordVideo: wantVideo }));
   let pass = false;
   let evidence = null;
   let tracePath = null;
-  if (options.recordVideo) {
+  if (wantVideo) {
     tracePath = join(tracesDir, safeName(name) + '.zip');
     await caseState.context.tracing.start({ screenshots: true, snapshots: true, sources: true });
   }
@@ -661,6 +672,7 @@ await runInteraction('surface_move_all_hosts_via_grip_keyboard', async page => {
   await page.mouse.down();
   await page.mouse.move(ptrPick.x + 3, ptrPick.y + 3);
   await page.mouse.move(topHostBox.x + topHostBox.width / 2, topHostBox.y + topHostBox.height / 2, { steps: 8 });
+  await page.mouse.move(topHostBox.x + topHostBox.width / 2 + 1, topHostBox.y + topHostBox.height / 2);
   /* the disposition attribute is written by the rAF-throttled drag pipeline;
      poll rather than racing it with a single read */
   let ptrDisposition = null;
@@ -746,7 +758,8 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     const neighbourBefore = await readAll();
     const drop = await dropPointForHost(page, 'home_main');
     await page.mouse.move(drop.x, drop.y, { steps: 10 });
-    await page.waitForTimeout(120);
+    await page.mouse.move(drop.x + 1, drop.y);
+    await page.waitForTimeout(220);
     const during = await page.evaluate(() => {
       const ph = document.getElementById('pm-home-drop-placeholder');
       const positions = {};
@@ -790,10 +803,12 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       return ph ? { x: ph.getBoundingClientRect().x } : null;
     });
     await page.mouse.move(followPoints.after_last.x, followPoints.after_last.y, { steps: 6 });
-    await page.waitForTimeout(140);
+    await page.mouse.move(followPoints.after_last.x + 1, followPoints.after_last.y);
+    await page.waitForTimeout(220);
     const placeholderRight = await placeholderRect();
     await page.mouse.move(followPoints.before_first.x, followPoints.before_first.y, { steps: 6 });
-    await page.waitForTimeout(140);
+    await page.mouse.move(followPoints.before_first.x + 1, followPoints.before_first.y);
+    await page.waitForTimeout(220);
     const placeholderLeft = await placeholderRect();
     const placeholderFollow = {
       right_of_travel: placeholderRight,
@@ -818,7 +833,8 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     let gapNeverFloats = null;
     if (gapPoint) {
       await page.mouse.move(gapPoint.x, gapPoint.y, { steps: 4 });
-      await page.waitForTimeout(140);
+      await page.mouse.move(gapPoint.x + 1, gapPoint.y);
+      await page.waitForTimeout(200);
       gapNeverFloats = await page.evaluate(() => {
         const draft = window.PM_HOME_WORKSPACE.draft_layout;
         const surface = draft && draft.surfaces.find(s => s.surface_instance_id === 'dashboard');
@@ -831,7 +847,8 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
       });
       /* return to a positional point before the jitter probe */
       await page.mouse.move(followPoints.before_first.x, followPoints.before_first.y, { steps: 4 });
-      await page.waitForTimeout(140);
+      await page.mouse.move(followPoints.before_first.x + 1, followPoints.before_first.y);
+      await page.waitForTimeout(200);
     }
     /* No-jitter: the preview is change-gated, so pointermoves that resolve to
        the SAME (host, slot) must not touch the host's child list at all. The
@@ -929,7 +946,8 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
   const focusedDuring = await state(page);
   const focusedDropAt = await dropPointForHost(page, 'home_main');
   await page.mouse.move(focusedDropAt.x, focusedDropAt.y, { steps: 8 });
-  await page.waitForTimeout(160);
+  await page.mouse.move(focusedDropAt.x + 1, focusedDropAt.y);
+  await page.waitForTimeout(220);
   /* 2026-08-13 tweak wave 2: the placeholder previews the PROJECTED target
      geometry (fair share of the target host), so the surface must land where
      the placeholder stood */
@@ -968,7 +986,14 @@ await runInteraction('drag_one_commit_and_all_cancellation_paths', async page =>
     focusedDrag.command_id === 'cmd.workspace_layout.move_surface' &&
     projectionDelta !== null && projectionDelta <= 24;
   const classesClear = await page.evaluate(() => !document.body.classList.contains('pm-home-dragging') && !document.body.classList.contains('pm-resizing'));
-  const residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
+  /* wave 4: the release settle choreography keeps the lifted clone alive for
+     ~200-400ms after the drop; poll so a settle in flight is not misread as a
+     leak (a real leak still fails after 1.5s) */
+  let residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
+  for (let attempt = 0; attempt < 10 && residue > 0; attempt += 1) {
+    await page.waitForTimeout(150);
+    residue = await page.evaluate(() => document.querySelectorAll('.pm-home-lifted, #pm-home-drop-placeholder').length);
+  }
   return {
     pass: moveProof.host === 'dock_left' && moveProof.command_delta === 1 && moveProof.persist_delta === 1 && moveProof.preview_delta > 0 &&
       focusedDragPass &&
@@ -1426,7 +1451,7 @@ await runInteraction('boot_never_floating', async page => {
     return record.surfaces.filter(surface => surface.host === 'floating').map(surface => surface.surface_instance_id);
   });
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
   await page.waitForTimeout(350);
   const after = await state(page);
   const demoteReceipt = after.receipts.find(record => record.command_id === 'storage.boot_demote_floating');
@@ -1480,7 +1505,7 @@ await runInteraction('dead_space_self_heal', async page => {
     localStorage.setItem(home.storage_key, JSON.stringify(record));
   });
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
   await page.waitForTimeout(350);
   const geometry = await page.evaluate(() => {
     const host = document.querySelector('[data-pm-home-host="home_main"]');
@@ -1576,7 +1601,23 @@ await runInteraction('panel34_open_renders_content', async page => {
       active_tab: element && element.querySelector('.editor-tabs .tab.active') ? element.querySelector('.editor-tabs .tab.active').getAttribute('data-file') : null
     };
   }));
-  /* tab switch on a multi-tab panel: rendered buffer must change */
+  /* Tab switch on a multi-tab panel: rendered buffer must change. At quad
+     width the corrected fitter canonically lays ONLY the active tab plus the
+     +N chip, so widen pane 1 first (deterministic API setup) and wait for
+     real laid tabs. */
+  await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    home.setSurfaceVisible('editor_panel_2', false);
+    home.setSurfaceVisible('editor_panel_3', false);
+    home.setSurfaceVisible('editor_panel_4', false);
+    home.setSurfaceVisible('dashboard', false);
+  });
+  await page.waitForFunction(() => {
+    const pane = document.querySelector('#editorPane1');
+    if (!pane) return false;
+    const laid = Array.from(pane.querySelectorAll('.editor-tabs .tab[data-file]')).filter(tab => tab.style.display !== 'none' && tab.getBoundingClientRect().width > 0);
+    return laid.length >= 2;
+  }, null, { timeout: 10000 });
   const beforeSwitch = await page.evaluate(() => {
     const pane = document.querySelector('#editorPane1');
     const active = pane.querySelector('.editor-tabs .tab.active');
@@ -1609,10 +1650,19 @@ await runInteraction('terminal_new_section_recoverable', async page => {
   const before = await page.evaluate(() => Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null));
   await page.locator('[data-pm-home-action="move-workgroup-new-section"]:visible').first().click();
   await page.waitForTimeout(350);
+  const noteState = () => page.evaluate(() => {
+    const panel = document.getElementById('bottomPanel');
+    const notes = Array.from(document.querySelectorAll('.pm-home-terminal-empty-state'));
+    return {
+      attr: panel ? panel.getAttribute('data-pm-term-empty') : null,
+      note_visible: notes.some(el => getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().height > 0)
+    };
+  });
   const after = await page.evaluate(() => ({
     workgroups: Object.values(window.PM_HOME_WORKSPACE.terminal_workgroups).map(owner => owner.terminal_workgroup_id || null),
     sections: window.PM_HOME_WORKSPACE.layout.surfaces.filter(surface => surface.surface_kind === 'terminal_section' && surface.visible).length
   }));
+  const noteAfterNewSection = await noteState();
   await page.evaluate(() => window.PM_HOME_WORKSPACE.reset());
   await page.waitForTimeout(350);
   const recovered = await page.evaluate(() => ({
@@ -1621,13 +1671,84 @@ await runInteraction('terminal_new_section_recoverable', async page => {
     host_rendering: Boolean(document.querySelector('#bottomTerminalHost .terminal-pane')),
     validation: window.PM_HOME_WORKSPACE.layout.validation.status
   }));
+  const noteAfterReset = await noteState();
   return {
     pass: before.length === 1 && Boolean(before[0]) &&
       after.workgroups.length === 2 && after.workgroups.every(Boolean) && after.sections === 2 &&
-      recovered.live === 1 && recovered.host_rendering && recovered.validation === 'valid',
+      recovered.live === 1 && recovered.host_rendering && recovered.validation === 'valid' &&
+      /* wave 3: the truth-gated empty note never shows while a workgroup is
+         live -- neither with both sections live nor after the reset */
+      !noteAfterNewSection.note_visible && !noteAfterReset.note_visible,
     before,
     after_new_section: after,
-    after_reset: recovered
+    empty_note_after_new_section: noteAfterNewSection,
+    after_reset: recovered,
+    empty_note_after_reset: noteAfterReset
+  };
+});
+
+/* 2026-08-13 wave 3 follow-up: fitters fit against the CONTENT box with a
+   44px reserve floor, so the overflow chip must never rest inside the kebab
+   lane -- probed at the narrow (~260px) pane width the quad layout
+   produces. */
+await runInteraction('chip_clearance_narrow_pane', async page => {
+  await ensureAllOpen(page);
+  const panes = await page.evaluate(() => {
+    return [1, 2, 3, 4].map(number => {
+      const pane = document.querySelector('[data-pm-home-surface="editor_panel_' + number + '"]');
+      if (!pane) return { pane: number, present: false };
+      const chip = pane.querySelector('.pm-ed-overflow');
+      const kebab = pane.querySelector('[data-pm-home-surface-options]');
+      const chipRect = chip && chip.getBoundingClientRect().width > 0 ? chip.getBoundingClientRect() : null;
+      const kebabRect = kebab ? kebab.getBoundingClientRect() : null;
+      return {
+        pane: number,
+        present: true,
+        width: Math.round(pane.getBoundingClientRect().width),
+        chip_right: chipRect ? Math.round(chipRect.right) : null,
+        kebab_left: kebabRect ? Math.round(kebabRect.left) : null,
+        clearance: chipRect && kebabRect ? Math.round(kebabRect.left - chipRect.right) : null
+      };
+    });
+  });
+  const withChips = panes.filter(item => item.chip_right !== null && item.kebab_left !== null);
+  return {
+    pass: withChips.length >= 1 && withChips.every(item => item.chip_right + 4 <= item.kebab_left),
+    panes
+  };
+});
+
+/* 2026-08-13 wave 3 follow-up: restoreOwnerRefs reconstitutes a minimal pane
+   (tp-repair-N) for ANY paneless live-workgroup ref -- a corrupted persisted
+   layout must reload to a WORKING terminal, never the empty block. */
+await runInteraction('terminal_repair_corrupt_paneless_ref', async page => {
+  await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    const record = JSON.parse(localStorage.getItem(home.storage_key)) || home.layout;
+    const terminal = record.surfaces.find(surface => surface.surface_kind === 'terminal_section');
+    terminal.domain_ref.pane_ids = '';
+    terminal.domain_ref.terminal_session_ids = '';
+    localStorage.setItem(home.storage_key, JSON.stringify(record));
+  });
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
+  await page.waitForTimeout(400);
+  const repaired = await page.evaluate(() => {
+    const home = window.PM_HOME_WORKSPACE;
+    const owners = Object.values(home.terminal_workgroups);
+    const notes = Array.from(document.querySelectorAll('.pm-home-terminal-empty-state'));
+    return {
+      owners: owners.map(owner => ({ workgroup: owner.terminal_workgroup_id, panes: owner.pane_ids })),
+      live_with_panes: owners.filter(owner => owner.terminal_workgroup_id && owner.pane_ids.length >= 1).length,
+      host_rendering: Boolean(document.querySelector('#bottomTerminalHost .terminal-pane')),
+      note_visible: notes.some(el => getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().height > 0),
+      validation: home.layout.validation.status
+    };
+  });
+  return {
+    pass: repaired.live_with_panes >= 1 && repaired.host_rendering && !repaired.note_visible &&
+      repaired.validation === 'valid',
+    repaired
   };
 });
 
@@ -1726,14 +1847,14 @@ async function recoveryProbe(name, mutation) {
       localStorage.setItem(storageKey, JSON.stringify(value));
     }, { storageKey: key, kind: mutation });
     await page.reload({ waitUntil: 'load' });
-    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
     await page.waitForTimeout(100);
     const recovered = await state(page);
     const toastVisible = await page.locator('#pm-home-recovery-toast').isVisible();
     const quarantineKeys = await page.evaluate(() => Object.keys(localStorage).filter(keyName => keyName.indexOf('pm.homeWorkspaceLayout:quarantine:v1:') === 0));
     const persisted = await page.evaluate(storageKey => JSON.parse(localStorage.getItem(storageKey)), key);
     await page.reload({ waitUntil: 'load' });
-    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+    await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
     const clean = await state(page);
     return {
       pass: recovered.layout.schema_id === 'pm.home_workspace_layout.v1' &&
@@ -1769,7 +1890,7 @@ await runInteraction('legacy_storage_key_copy_forward_migration', async page => 
     localStorage.setItem('home_workspace_layout.v1:tastebook:home', JSON.stringify(value));
   }, legacy);
   await page.reload({ waitUntil: 'load' });
-  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 30000 });
+  await page.waitForFunction(() => Boolean(window.PM_HOME_WORKSPACE), null, { timeout: 120000 });
   const migrated = await state(page);
   const storage = await page.evaluate(() => ({
     canonical: localStorage.getItem('pm.homeWorkspaceLayout:v1:tastebook:home'),
@@ -1796,6 +1917,17 @@ await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle',
   });
   const heightOpen = await panelHeight();
   const collapse = page.locator('#pm-home-more-menu [data-pm-home-action="collapse-terminal"]');
+  /* wave 3: the terminal empty-state note is truth-gated via
+     #bottomPanel[data-pm-term-empty]; with a live workgroup it must NEVER
+     show, including through collapse/expand cycles */
+  const emptyNote = () => page.evaluate(() => {
+    const panel = document.getElementById('bottomPanel');
+    const notes = Array.from(document.querySelectorAll('.pm-home-terminal-empty-state'));
+    return {
+      attr: panel ? panel.getAttribute('data-pm-term-empty') : null,
+      note_visible: notes.some(el => getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().height > 0)
+    };
+  });
 
   /* menu collapse */
   await page.locator('#pm-home-more-btn').click();
@@ -1817,6 +1949,7 @@ await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle',
   await page.waitForTimeout(160);
   const afterMenuExpand = await state(page);
   const heightMenuExpanded = await panelHeight();
+  const noteAfterMenuExpand = await emptyNote();
   await page.locator('#pm-home-more-btn').click();
   await page.waitForTimeout(300);
   const labelReset = (await collapse.textContent()).trim();
@@ -1839,6 +1972,7 @@ await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle',
   const afterChevronExpand = await state(page);
   const heightChevronExpanded = await panelHeight();
   const ariaExpanded = await chevron.getAttribute('aria-expanded');
+  const noteAfterChevronExpand = await emptyNote();
 
   /* disabled ONLY when no bottom terminal: move the terminal out and check */
   await moveSurfaceTo(page, 'terminal_section:terminal_section_1', 'dock_left');
@@ -1865,8 +1999,11 @@ await runInteraction('collapse_bottom_terminal_menu_one_way_and_chevron_toggle',
       chevronVisibleWhileCollapsed && ariaCollapsed === 'false' &&
       collapsedOf(afterChevronExpand) === false && ariaExpanded === 'true' &&
       heightChevronExpanded > heightChevronCollapsed + 40 &&
+      !noteAfterMenuExpand.note_visible && !noteAfterChevronExpand.note_visible &&
       disabledNoTerminal && reasonNoTerminal === 'No terminal is docked at the bottom',
     label_before: labelBefore,
+    empty_note_after_menu_expand: noteAfterMenuExpand,
+    empty_note_after_chevron_expand: noteAfterChevronExpand,
     label_collapsed: labelCollapsed,
     label_after_expand: labelReset,
     menu_enabled_while_collapsed: !disabledCollapsed,

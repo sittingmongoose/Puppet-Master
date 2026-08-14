@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1914-L1989
+Source lines: L1914-L2002
 
-Source SHA256: `50d5242f1b9823eb6dde2e9e4139d12672e6dc12b74410da1042438eee457e49`
+Source SHA256: `d0879049aaf48ef2225e68247f601e362f55da4464a6bb7b5acb1a443eb4f296`
 
 ---
 
@@ -68,11 +68,24 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   pristine seed otherwise);
 - Open in Panel rendering a real buffer and tab in all four editor panels;
 - the width-aware overflow chip present in every open editor panel styled in the
-  app portal-menu family, editor tab
-  drag-reorder that persists on all four panes and survives a re-render, and the
+  app portal-menu family, sitting immediately left of the actions cluster with
+  live fitting on tab add/remove (a newly opened overflowing tab stays visible,
+  displacing the chip-adjacent non-active tab into the picker); editor tab
+  drag-reorder that persists on all four panes, survives a re-render, and
+  animates (no native ghost, transform-only pointer tracking, ~140 ms neighbour
+  FLIP, reduced-motion instant, silhouette glued to the insertion slot); and the
   contact-aware active-tab silhouette
-  with independent left/right contact corners, masked shoulder cutouts, and the
-  translucent frosted rail that ghosts scrolled code beneath the strip;
+  with independent left/right contact corners, masked shoulder cutouts, the
+  translucent frosted rail that ghosts scrolled code beneath the strip,
+  per-theme skin tokens (retro hard outline, basic accent-blue crown, glass
+  bevel at 84 percent rail alpha), and the minimap as the only code-pane
+  scrollbar (native bars suppressed, margin-aligned band);
+- the surface kebab as a vertical-dots 16 by 20 control at the surface's right
+  edge directly below the grip on every surface (no head-row kebab, no stray
+  terminal control strip), 2 px vertical workspace padding via
+  --pm-home-pad-y/--pm-home-gap-y with 4 px sides, and the terminal
+  empty-section guidance truth-gated by data-pm-term-empty with
+  restoreOwnerRefs never dropping section records;
 - dashboard widget reorder and grid-snap resize on the shared direct-manipulation
   vocabulary, still persisted under the widget layout contract;
 - project/workspace persistence, corruption/migration/off-screen recovery, all eight

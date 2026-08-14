@@ -293,6 +293,17 @@ bottom (a chat docked right is full-height), while the top and bottom docks end
 where the right column begins. Host identities, caps, and persistence are
 unchanged.
 
+Amended 2026-08-13 (wave 4) — browser-in-panel deactivation is model-first.
+Clicking a file tab on the browser-owning pane deactivates the browser THROUGH
+THE MODEL: `deactivateBrowserProjection` clears the pane's persisted
+browser-active domain reference (and the render-into-panel path's pane-2 branch
+calls it too), so no DOM-only toggle exists for a later commit to resurrect.
+Root cause recorded with this amendment: `restoreOwnerRefs` runs on every commit
+and resurrected the stale persisted flag, which made `cmd.terminal.split_pane`
+appear to have editor side-effects. `mountActiveBrowser` now enforces a single
+active tab in the owning strip (removing any stale file-tab highlight) and
+un-hides a chip-collapsed browser tab when mounting.
+
 ### F3-HOME-002 — Model-first movement and resize behavior
 
 Surface movement and resize use a committed layout plus a local draft layout. Pointer
@@ -399,6 +410,17 @@ maximum cross basis among the dock's visible surfaces), clamped by the shared
 host-band table; layouts persisted before the field existed migrate it from
 `basis_px`.
 
+Amended 2026-08-13 (wave 3) — drag stability refinements. Target adoption carries
+a two-frame hysteresis (a candidate host/index must survive two consecutive
+resolved frames before the placeholder re-seats), surfaces that are mid-FLIP are
+excluded from hit-testing via `data-pm-home-flip` (an animating surface cannot
+steal the target), and drag auto-scroll re-applies only on actual scroll or
+pointer movement. The placeholder previews the dragged surface's PROPORTIONAL
+projected width, mirroring the `normalizeMainRowBases` re-sum the commit will
+run, so the preview and the committed layout agree. The PM_EDGE band geometry
+defers during ALL Home gestures — move and workgroup drags participate in the
+`pm-resizing`/`PM_DRAGEND` deferral alongside resize.
+
 ### F3-HOME-003 — Shell controls and capability envelope
 
 The Home title bar exposes one 28 by 28 inline-SVG `Home more options` button
@@ -465,6 +487,16 @@ right-edge margin instead of left padding. The surface kebab menus no longer
 carry a Placement section or placement hint — the grip is the sole movement
 affordance and the menus no longer restate it.
 
+Amended 2026-08-13 (wave 3) — the surface options button (kebab) is a vertical
+three-dot 16 by 20 control absolutely positioned at the surface's right edge,
+directly below the grip, uniform across editor panels, Dashboard, terminal
+sections, and Chat. It no longer lives in the surfaces' head rows — moving it
+out of the terminal head row also removed the stray control strip that rendered
+at the bottom of the terminal panel. Workspace spacing re-tunes to 2 px vertical
+padding through the new `--pm-home-pad-y` and `--pm-home-gap-y` tokens with 4 px
+sides; the tweak-wave uniform 4 px value is superseded for the vertical axis
+with this dated disposition.
+
 The bottom terminal's own collapse control is a toggle: an inline-SVG chevron at the
 right end of the terminal bar that collapses the section and, from the collapsed
 strip, expands it again. The collapsed strip keeps that control visible and
@@ -481,7 +513,20 @@ four-pane cap the source instead stays empty with a tidy guidance state rather
 than a broken shell. Reset reconstitutes a live workgroup: it prefers a section
 that still owns one and falls back to the pristine seed when none does. The
 move command payload records `source_reseeded`, and cancellation discards any
-reseeded workgroup with the rest of the draft.
+reseeded workgroup with the rest of the draft. Amended 2026-08-13 (wave 3) — the
+empty-section guidance state is truth-gated: it renders only while
+`#bottomPanel[data-pm-term-empty]` is stamped by the terminal runtime
+projection, so the guidance can never cover a live workgroup, and
+`restoreOwnerRefs` repairs paneless pristine workgroup references at boot
+instead of dropping them — section records are never discarded. Wave-3
+follow-up (2026-08-13): the repair generalizes to ANY paneless live-workgroup
+reference — a live workgroup that has lost its panes reconstitutes a minimal
+pane rather than being nulled, and the empty-section block never renders over a
+live workgroup. Extended (final wave-3 build): when NO terminal section holds a
+live workgroup id at all (persisted-null corruption), `restoreOwnerRefs` reseeds
+section 1 from the pristine terminal seed and heals the persisted domain-ref
+CSVs in the same pass — the empty-guidance block never renders over a
+recoverable state.
 
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
@@ -567,6 +612,25 @@ the kebab Placement section/hint is retired; the equal-height three-column grid
 is superseded by the full-height `dock_right` template; the dedicated editor
 pane-close glyph is retired in favour of the kebab `Close Panel` row; and the
 app status bar is removed from the PM7 shell.
+
+Superseded 2026-08-13 (wave 3): the head-row kebab placement is superseded by
+the vertical-dots 16 by 20 control at the surface's right edge below the grip
+(removing the stray terminal control strip); instant single-frame drop-target
+adoption is superseded by the two-frame hysteresis with mid-FLIP hit-test
+exclusion; the uniform 4 px workspace padding is superseded on the vertical
+axis by 2 px (`--pm-home-pad-y`/`--pm-home-gap-y`); the wave-2 glass rail alpha
+of 88 percent and the scrollbar-track-margin exclusion are superseded by 84
+percent and the minimap-only code-pane scrollbar; and unconditional
+empty-section guidance is superseded by the truth-gated
+`data-pm-term-empty` projection.
+
+Superseded 2026-08-13 (wave 4): painted-stack drop-target resolution
+(elementsFromPoint) is superseded by latch-based geometric targeting with
+per-dock entry/exit bands frozen at pickup; HTML5 DnD tab reorder and the
+wave-3 attached-ghost Safari shim are superseded by the pointer-capture reorder
+gesture; and DOM-only browser-tab deactivation is superseded by model-first
+`deactivateBrowserProjection` (restoreOwnerRefs can no longer resurrect a stale
+browser-active flag).
 
 ### F3-501 - Home Workspace Model And Stable Identity
 
@@ -678,7 +742,18 @@ canonical_text: >-
   captures the hit-test for its preview growth. Row-axis docks add a full-width track
   handle driving the dock's thickness through the persisted size.cross_basis_px field
   (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
-  pair width transfer on the column dividers.
+  pair width transfer on the column dividers. Amended 2026-08-13 (wave 3) - target
+  adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing
+  (data-pm-home-flip), drag auto-scroll re-applies only on actual scroll or pointer
+  movement, the placeholder previews the dragged surface's proportional projected width
+  (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
+  during all Home gestures (move and workgroup join resize in the
+  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-13 (wave 4) - host targeting is
+  latch-based and purely geometric: buildDockLatch freezes per-dock entry and exit
+  bands at pickup (entry = the committed dock rect unioned with the 28 px edge strip;
+  exit = the anticipated opened track plus a 44 px slack), and elementsFromPoint is
+  fully retired from drop-target resolution; the wave-3 two-frame hysteresis remains
+  for slot flapping within a host.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -691,6 +766,8 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - The drag placeholder projects the target geometry (fair share of the destination host; full width plus the dock's track thickness in a row-axis dock), sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a host expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
 - The top and bottom docks resize on both axes; column dividers transfer width between the adjacent pair inside the row, and the full-width track handle changes the dock's rendered thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), with pre-field layouts migrating cross_basis_px from basis_px.
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
+- Host targeting reads only latched geometry; per-dock entry/exit bands freeze at pickup and no drop-target resolution reads the painted element stack, so approaching an occupied row dock produces exactly one host transition and one track opening per approach (wave 4, 2026-08-13).
 - A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
 - At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
 validation_surfaces:
@@ -712,6 +789,8 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: single-basis flex resize (which diluted a divider drag across non-adjacent siblings) and the full re-render on resize commit (settle flash) are retired; hard fixed minimums that could make a boundary unreachable are retired in favour of fair-share degradation; drag-to-window-exit floating is retired as invalid_target (see F3-HOME-002); treating loss of pointer capture alone as a cancellation vector was retired 2026-08-12 and this unit's criteria now reflect it."
 - "Amended 2026-08-13 (tweak wave): the same-day pickup-footprint drop preview is retired in favour of target-geometry projection with the pickup-band and preview-capture guards; single-axis row-dock sizing is retired in favour of the cross_basis_px track handle plus within-row pair transfer."
+- "Amended 2026-08-13 (wave 3): instant single-frame target adoption is retired in favour of the two-frame hysteresis; mid-FLIP surfaces are excluded from hit-testing; per-frame auto-scroll re-application is retired (actual movement only); the fair-share placeholder width is refined to the proportional projected width mirroring normalizeMainRowBases; PM_EDGE deferral widens from resize-only to all Home gestures."
+- "Amended 2026-08-13 (wave 4): painted-stack drop-target resolution (elementsFromPoint) is retired — reading painted geometry starved under its own preview (FLIP-marked surfaces and drop-active docks both skipped, falling through to home_main, collapsing and re-adopting the dock at roughly 9 Hz with ~120 px placeholder jumps); latch-based geometric targeting yields exactly one host transition and one track opening per approach into an occupied dock."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -812,7 +891,19 @@ canonical_text: >-
   syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at
   the same alpha - while the title-bar page tabs keep their sliding ink (the F3-464
   boundary is unchanged). The editor scrollbar is excluded from the frosted rail band
-  via a scrollbar-track margin.
+  via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the silhouette gains
+  theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
+  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline
+  with square inactive-tab rings; basic draws a 2 px
+  accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
+  and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired
+  with this dated disposition). Wave-3 follow-up (2026-08-13): the retro outline lives
+  on the ACTIVE TAB as a three-edge inset ring that snaps on arrival, not on the
+  travelling connected shape - the outline-on-the-travelling-shape rendering is retired
+  with this dated disposition. The editor minimap is the ONLY code-pane scrollbar -
+  native scrollbars are suppressed - and the minimap band aligns with the frosted rail
+  via margin rather than padding, retiring the wave-2 scrollbar-track-margin exclusion
+  with this dated disposition.
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
@@ -822,7 +913,9 @@ acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
 - "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
-- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, tabs start flush at the panel's left edge, and the editor scrollbar sits outside the frosted rail band."
+- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, and tabs start flush at the panel's left edge."
+- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the three-edge bevel at 84 percent rail alpha (wave 3, 2026-08-13)."
+- "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
@@ -853,6 +946,8 @@ stale_retired_dispositions:
 - "The prior active editor file tab treatment (surface-tinted tab plus a 2 px accent underline, with per-theme underline recolours) is retired for this surface; the silhouette is the active-tab chrome."
 - "Amended 2026-08-13: the opaque rail fill introduced with the silhouette is retired — it defeated the editor scroll-under frost; the rail is a translucent plate over backdrop blur. The ensure-before-measure mount order (which produced a dead, collapsed silhouette in the built artifact) and the strip-firstChild mount slot (which contended with the T20 grip) are retired."
 - "Amended 2026-08-13 (tweak wave): the 10 px canvas / 8 px cutout radius maxima and the JS-written per-corner radius properties are retired — the JS writes contact progress (--ed-lp/--ed-rp) and the CSS derives 12 px shoulder/canvas radii plus the theme-tunable --ed-top-radius crown; the editor-file-tabs-only scope is widened to include the dashboard tab strip."
+- "Amended 2026-08-13 (wave 3): the glass rail alpha of 88 percent is re-tuned to 84 percent, and the wave-2 scrollbar-track-margin exclusion is retired — the minimap is the only code-pane scrollbar (native bars suppressed), aligned with the frosted rail via margin."
+- "Wave-3 follow-up (2026-08-13): the retro hard outline on the travelling connected shape is retired — the outline renders on the active tab as a three-edge inset ring that snaps on arrival."
 owner_boundary_notes:
 - "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]
@@ -1152,7 +1247,8 @@ reference it, so the diagram's status-bar row and §3.2's status-bar zone carry
 this dated disposition for the PM7 shell; the status-bar chip inventory (F3-448)
 is not re-owned here and any future reinstatement must go through that owner.
 Spacing under the tweak wave: 4 px gaps between zones, 4 px outer margin, and no
-page gutter under Home.
+page gutter under Home. Wave 3 (2026-08-13) re-tunes the vertical axis to 2 px
+via the `--pm-home-pad-y`/`--pm-home-gap-y` tokens, keeping 4 px sides.
 
 ### 3.2 Structural Zones
 
@@ -4844,6 +4940,169 @@ owner_boundary_notes:
 - "FinalGUISpec.md owns these GUI specification sections."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+```
+
+## Shared Runtime Projection Addendum - 2026-08-13
+
+The GUI consumes shared runtime projections and owner-defined state; it does not
+become a lifecycle, policy, receipt, command, event, or persistence authority.
+Every runtime-backed surface carries freshness, exact object identity, disabled
+or wait reason when applicable, and canonical receipt/artifact routes. A stale or
+conflicted projection may remain inspectable, but it cannot silently authorize a
+mutation. Controls without complete Commands and production Wiring coverage are
+disabled with the owner-supplied reason or omitted.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/usage-feature.md
+
+### F3-506 - Thread Shell Detail And Reconnect Projection
+
+```yaml
+plan_unit_id: F3-506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Thread rails render lightweight ThreadShell rows, visibly pinned threads may render bounded PinnedSummary data,
+  and only the focused thread subscribes to ThreadDetail transcript, tool, and activity streams. Cached domain
+  state, durable outbox state, server continuation, reconnect replay or snapshot progress, buffered-live catch-up,
+  and stream-coalescing freshness remain visible without full-detail fanout, duplicate effects, fabricated
+  provider activity, or loss of immediate approval, failure, cancellation, completion, security, or lease-loss changes.
+gui_related: true
+gui_classification_reason: This unit defines visible thread-list density, focused detail, offline queueing, reconnect, catch-up, and stream presentation.
+depends_on: [ACD-445, SIR-004, SIR-005]
+unblocks: []
+acceptance_criteria:
+  - Large thread lists subscribe to ThreadShell only; pinning adds bounded PinnedSummary and focus alone adds ThreadDetail.
+  - The UI distinguishes cached, synchronizing, current, stale, and failed domain state from transport connectivity.
+  - Queued, waiting, retryable, cancelled, rejected-stale, and accepted outbox outcomes do not imply a provider call or invite an idempotency-bypassing resend.
+  - Reconnect shows epoch-fenced replay or snapshot plus buffered-live convergence, and coalescing never hides an owner-defined immediate transition.
+  - Client loss is shown as loss of observation or control connectivity, not cancellation of admitted server-owned work.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI thread shell-detail offline-reconnect and coalescing matrix]
+risk_class: gui_thread_projection_fanout_or_reconnect_drift
+reasoning_tier: high
+context_scope: shared_runtime_thread_projection
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: gui_thread_runtime_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md
+preserved_exact_tokens: [ThreadShell, PinnedSummary, ThreadDetail, continuing on the server]
+negative_constraints: [Do not subscribe every list row to full detail., Do not make client cache canonical., Do not treat disconnect as cancellation., Do not invent reconnect or outbox state in the GUI.]
+owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Shared_Integration_Runtime.md]
+```
+
+### F3-507 - Work Readiness Lease And Evidence Projection
+
+```yaml
+plan_unit_id: F3-507
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Runtime-backed GUI surfaces consume ObservableWork, InstallationResolver, installation lifecycle, authentication,
+  route readiness, RuntimeResourceGovernor admission, leases, and OperationalAwarenessService as separate read-only
+  projections. They show exact Host, Environment, and Source target; requested and effective state; freshness;
+  typed wait, conflict, pressure, disabled, and reevaluation reasons; and canonical receipt, log, and artifact
+  drill-through without collapsing discovery, installation, process exit, authentication, readiness, Usage, lease
+  possession, or awareness into one success indicator.
+gui_related: true
+gui_classification_reason: This unit defines visible work truth, setup and readiness disclosure, conflicts, waits, and evidence navigation.
+depends_on: [SIR-003, SIR-006, SIR-007, UF-091]
+unblocks: []
+acceptance_criteria:
+  - ObservableWork phase, typed wait reason, reevaluation condition, cancellation, and terminal outcome remain distinct from spinner or command-dispatch state.
+  - Provider setup exposes an explicit official-source action for the exact Host and Environment; first provider-CLI acquisition is never shown as automatic, baseline, preseeded, or silent.
+  - Installation evidence, authentication, account or route readiness, and Usage are separate rows or clearly separate axes, and unknown evidence never renders ready.
+  - Lease collision, stale holder or generation, cleanup pending, resource pressure, and awareness current, partial, stale, unavailable, or conflicted states retain owner-defined disabled and remediation reasons.
+  - Receipt, log, and artifact actions use canonical object routes and reveal no secret, raw registry, or protected AuthBrowserSession detail.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI ObservableWork installation-readiness lease-awareness and drill-through matrix]
+risk_class: gui_runtime_success_or_authority_conflation
+reasoning_tier: high
+context_scope: shared_runtime_work_readiness_projection
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Shared_Integration_Runtime.md, Plans/usage-feature.md]
+node_compile_hint: {mode: gui_work_readiness_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/01_T3_PROVIDER_INSTALLATION_AND_CAPABILITY_LIFECYCLE.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+preserved_exact_tokens: [ObservableWork, InstallationResolver, RuntimeResourceGovernor, OperationalAwarenessService]
+negative_constraints: [Do not infer readiness from PATH, version text, process exit, authentication, lease ownership, or awareness., Do not let a stale projection authorize mutation., Do not create GUI-local receipts or remediation state.]
+owner_hints: [Plans/FinalGUISpec.md, Plans/Shared_Integration_Runtime.md, Plans/Release_Supply_Chain.md, Plans/Multi-Account.md]
+```
+
+### F3-508 - BSD And Conditional Advice Presentation
+
+```yaml
+plan_unit_id: F3-508
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  BSD presentation consumes the independent Off, Auto, and On policy with effective default Off for this
+  implementation wave. Silent and duplicate-suppressed outcomes add no transcript item; material advice appears as
+  one compact attributable advisory note with freshness and receipt or Usage drill-through. Timeout, refusal,
+  quota, fallback loss, malformed output, or provider failure never blocks or changes primary-work outcome.
+  Time-Traveling conditional-rule effects appear only as bounded activity or receipt explanations and are not
+  rewind, restore, branch navigation, permission, approval, or mutation controls.
+gui_related: true
+gui_classification_reason: This unit defines user-visible BSD mode, advisory notes, silence, failures, and conditional-rule explanations.
+depends_on: [ACD-446, GRS-045, RM-050, SIR-010, UF-091]
+unblocks: []
+acceptance_criteria:
+  - Off shows no advisory provider call, Auto indicates only owner-defined risk or phase evaluation, and On indicates eligible-turn evaluation subject to quota.
+  - Silent or duplicate-suppressed advice produces no transcript message while retaining permitted operational and Usage evidence.
+  - Advice is visually distinct from system, assistant, approval, and safety authority and cannot expose an enabled mutation control.
+  - Missing command or production-wiring coverage leaves BSD mode mutation and affected Goal controls disabled or omitted; this owner mints no command ID.
+  - AuthBrowserSession, secrets, unredacted artifacts, tools, approval controls, and hidden memory are absent from advice and details.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI BSD silent-duplicate-failure-authority and conditional-rule matrix]
+risk_class: gui_advisory_authority_or_visibility_drift
+reasoning_tier: high
+context_scope: bsd_conditional_rule_presentation
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Goal_Runtime_System.md, Plans/Run_Modes.md]
+node_compile_hint: {mode: gui_bsd_advice_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+preserved_exact_tokens: [Off, Auto, On, effective default Off, AuthBrowserSession]
+negative_constraints: [Do not present advice as authority., Do not let advisory failure block primary work., Do not expose protected browser state., Do not imply Time-Traveling is rewind.]
+owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Run_Modes.md, Plans/usage-feature.md]
+```
+
+### F3-509 - Developer Session MCP And Protected Browser Projection
+
+```yaml
+plan_unit_id: F3-509
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Developer-service GUI consumes typed DebugSession, EvalSession, MCP lifecycle, and PM-native Browser Program
+  projections without merging their lifecycles. Debug and Eval views retain exact target, owner, lease, generation,
+  wait, output, artifact, restart, and cleanup state; MCP shows requested and effective availability, transport,
+  initialization, capability, authentication, epoch, retry, subscription, and rollback state; ordinary Browser
+  views show BrowserWorkspace, BrowserPage, controller lease, PageGeneration, and read-only observer status.
+  Protected AuthBrowserSession content and controls render only inside its foreground human-only surface; every
+  other GUI consumer may receive only policy-permitted redacted lifecycle or denial metadata.
+gui_related: true
+gui_classification_reason: This unit defines visible debug, evaluation, MCP, browser-session, controller, and protected human-auth boundaries.
+depends_on: [SIR-008, MI-040, SMPFS-139, SMPFS-140, SMPFS-141, SMPFS-142, SMPFS-143, SMPFS-144]
+unblocks: []
+acceptance_criteria:
+  - DebugSession and EvalSession views never collapse DAP frame evaluation into persistent kernels or imply a hidden global Eval session.
+  - MCP projections distinguish requested and effective axes, old-epoch state, the bounded one-retry rule, subscription rollback, and disabled reason without inventing server truth.
+  - Browser controller ownership, read-only observation, PageGeneration, lease conflict, and stale-action rejection are visible and focus or tab selection never implies mutation authority.
+  - The ordinary browser surface names only PM-native Browser Program and Expert Browser Program capabilities and exposes no PM Playwright facade, compatibility label, command, port, MCP route, package, or capture engine.
+  - AuthBrowserSession is human-only, ephemeral, domain-restricted, and redacted; agents, tools, BSD, awareness detail, recorders, DOM or PageRepresentation readers, screenshots, console, network capture, and storage export have zero visibility or control.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-030 through ATS-035 future executable matrices, future GUI developer-session MCP browser-boundary matrix]
+risk_class: gui_developer_session_or_protected_browser_boundary_escape
+reasoning_tier: high
+context_scope: developer_session_mcp_browser_projection
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md, Plans/MCP_Integration.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
+node_compile_hint: {mode: gui_developer_runtime_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+preserved_exact_tokens: [DebugSession, EvalSession, MCP, Browser Program, Expert Browser Program, AuthBrowserSession, PageGeneration, human-only]
+negative_constraints: [Do not merge developer-service lifecycles., Do not infer controller authority from focus., Do not expose a PM Playwright surface., Do not expose protected authentication content or controls outside the human-only surface.]
+owner_hints: [Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md, Plans/MCP_Integration.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
 ```
 
 ### F3-003 - Object-First Concern Search
@@ -28601,7 +28860,32 @@ canonical_text: >-
   Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
   retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
   semantics (sibling expansion, editor empty state) are unchanged - only the affordance
-  changed.
+  changed. Amended 2026-08-13 (wave 3) - the overflow chip always sits immediately left of
+  the strip's actions cluster, and overflow fitting runs LIVE on tab add and remove; a
+  newly opened tab that would overflow stays visible and instead displaces the
+  chip-adjacent non-active tab into the picker. Tab drag-reorder is animated: the native
+  drag ghost is suppressed, the dragged tab tracks the pointer transform-only while its
+  layout slot stays at the insertion position, neighbours FLIP over roughly 140 ms, and
+  reduced motion is instant; the connected silhouette stays glued to the insertion slot
+  throughout (see F3-505). Wave-3 follow-up (2026-08-13): ghost suppression is
+  Safari-compatible - an attached off-viewport ghost element backs setDragImage with a
+  -webkit-user-drag hint on the tab - and overflow fitters fit against the strip's
+  CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
+  reserve has a 44 px floor covering the kebab column and grip lane even when the
+  cluster is empty. Extended (final wave-3 build): the overflow condition itself is
+  content-box child-edge measurement at all three fitter sites
+  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
+  padding-right reserve, skipping the actions span, the shape layer, and
+  display:none children) - the naive scrollWidth comparison is retired with this
+  dated disposition because scrollWidth equals clientWidth on a non-overflowing
+  strip, which collapsed all tabs into the picker. Amended 2026-08-13 (wave 4) - the
+  HTML5 drag-and-drop reorder mechanism is retired (and with it the wave-3
+  attached-ghost Safari compatibility layer, now moot): reorder is a pointer-capture
+  gesture with gesture-scoped window listeners, a 4 px activation threshold, a 1:1
+  translateX glide, cached transform-free midpoint re-slotting, a 220 ms
+  cubic-bezier(.22,1,.36,1) neighbour FLIP, a 200 ms low-bounce settle, and the model
+  re-render deferred to settle-end; the dragged tab renders at .92 opacity and
+  z-index 40.
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
@@ -28614,6 +28898,8 @@ acceptance_criteria:
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
 - "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
 - "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
+- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -28639,6 +28925,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
 - "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
+- "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

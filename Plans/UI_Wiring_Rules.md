@@ -21,7 +21,7 @@ ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 0.1 GUI concept reconciliation input
 
-When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid, target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, the retired pane-close glyph, the removed app status bar, and the move-workgroup source reseed. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid, target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, the retired pane-close glyph, the removed app status bar, and the move-workgroup source reseed. Wave 3 (2026-08-13) additionally carries the right-edge vertical-dots kebab below the grip (out of the head rows), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-width placeholder, the live-fitting overflow chip beside the actions cluster with animated tab reorder, the theme-token silhouette skins with the minimap as the only code-pane scrollbar, 2 px vertical workspace padding, and the truth-gated terminal empty state. Wave 4 (2026-08-13) additionally carries latch-based geometric drop targeting (elementsFromPoint retired from resolution), the pointer-capture tab reorder (HTML5 DnD retired), and model-first browser-in-panel deactivation. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
 
 `Concepts/PuppetMasterDashComp.html` and `Concepts/PMConcept.html` are prior concept inputs retained as historical concept lineage when cited by a transfer source; the path tokens `/PuppetMasterDashComp.html` and `/PMConcept.html` remain evidence lineage for reconciliation targeting of their own packets and MUST NOT be copied verbatim into canon or treated as live owner paths.
 
@@ -676,3 +676,56 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
 
 §0.1 update: `Concepts/PMConcept7.html` remains the primary concept input for wiring review, now carrying the integrated Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts per `Plans/FinalGUISpec.md` F3-497) and the Debug & Run panel with its fleshed bottom Debug tab (Run & Debug Revival, F3-482..F3-496). `Plans/CozyShelves_PM7_Control_Reconciliation.json` preserves the historical 2026-07-29 integrated-panel census, but it is not currentness evidence after the PM6/PM7 rebaseline; a true re-census is required before restoring any 100% command-coverage claim. `Plans/CozyShelves_Control_Reconciliation.json` remains the concept-phase census of the source-lineage `Concepts/rail-concepts/**` files and is current at its relocated `QwenRailConcepts/**` paths. Independently of the deferred PM7 census, the catalog and wiring rows retain the named command dispositions: the `cmd.run_debug.*` family is registered in the Run & Debug Revival Addendum and wired in `Plans/Wiring_Matrix.production.json` (rows `catalog.run_debug_*`), and `cmd.chat.open` is recorded as a compatibility alias of `cmd.chat.open_thread` (exclusions-registered, no second primary row). This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+## Shared Runtime receipt/projection wiring addendum - 2026-08-13
+
+The 26 canonical shared-runtime command IDs owned by `Plans/Commands_System.md` CS-066 and registered by `Plans/UI_Command_Catalog.md` UCC-145 each have one production wiring row. Each row binds the exact sole handler, typed request/result pair, owner state selector, closed disabled-reason set, accessible pending/outcome behavior, and a receipt/projection-only effect. While Event Authority remains `UNKNOWN_OPEN`, every row has `expected_event_types: []`, carries `missing_event_registration`, and proves that no unregistered `EventRecord` is emitted. A command acknowledgement or accepted result is admission only, never terminal domain success.
+
+The compatibility tokens `cmd.lsp.server.restart`, `cmd.lsp.server.diagnose`, `cmd.debug.session.start`, `cmd.debug.session.stop`, `cmd.worktree.provision`, `cmd.worktree.release`, and `cmd.context.receipt.open` have exclusions only; their canonical targets retain their production rows. `cmd.debug.session.action` is rejected and also has no production row. `cmd.remote.reconnect` remains a production wrapper: it resolves an exact `ExecutionEnvironmentId`, calls `cmd.environment.reconnect` through `EnvironmentConnectionCommandRequest`, returns `EnvironmentConnectionCommandResult`, and owns neither a second connection lifecycle nor an event family. The former `remote.reconnect.requested` claim is retired because that family is not registered.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-066, ContractName:Plans/UI_Command_Catalog.md#UCC-145, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/DRY_Rules.md#DR-037, SchemaID:pm.shared_runtime.contracts.v1
+
+### UIW-011 - Shared Runtime Production Wiring Without Event Fabrication
+
+```yaml
+plan_unit_id: UIW-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  Exactly 26 new shared-runtime commands have production rows with exact handlers,
+  typed request and result contracts, projection selectors, closed disabled reasons,
+  accessibility and regression evidence, and receipt/projection-only effects carrying
+  missing_event_registration until individual Event Authority admission; compatibility
+  candidates do not become primary rows, and cmd.remote.reconnect remains an exact-
+  environment wrapper over cmd.environment.reconnect.
+gui_related: true
+gui_classification_reason: This unit owns visible command availability, disabled state, dispatch, progress, outcome, and accessibility wiring.
+split_recommended: false
+depends_on: [CS-066, UCC-145, DR-037, SIR-004, SIR-005, SIR-008, SIR-010]
+unblocks: []
+acceptance_criteria:
+  - Exactly 26 new canonical command IDs have one production row each and every row binds the CS-066 sole handler, typed request/result, selector, and closed disabled-reason set.
+  - Every new row has expected_event_types empty, effect_kind receipt, missing_event_registration evidence, and a test that rejects unexpected persisted events while Event Authority is UNKNOWN_OPEN.
+  - Seven compatibility candidate tokens and rejected cmd.debug.session.action have exclusions but no production rows; canonical target commands are not excluded.
+  - cmd.remote.reconnect resolves exact ExecutionEnvironmentId and delegates to cmd.environment.reconnect without remote.reconnect.requested or a second lifecycle.
+  - Keyboard and pointer activation are identical, focus remains deterministic, and disabled, pending, recovery, and terminal outcomes are announced without secret or raw-output disclosure.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+  - shared-runtime command row census, alias exclusion, exact-handler, receipt/projection, accessibility, restart, race, and no-unregistered-event fixtures
+risk_class: shared_runtime_wiring_or_event_authority_drift
+reasoning_tier: high
+context_scope: shared_runtime_ui_wiring
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json]
+node_compile_hint: {mode: shared_runtime_ui_wiring, create_worknodes: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/CANDIDATE_COMMAND_ID_REGISTER.json
+  - Plans/Shared_Integration_Runtime.md#15.3
+preserved_exact_tokens: [missing_event_registration, UNKNOWN_OPEN, cmd.remote.reconnect, cmd.environment.reconnect, ExecutionEnvironmentId, none_pending_event_authority]
+negative_constraints:
+  - Do not name or emit a new EventRecord family before individual Event Authority admission.
+  - Do not register compatibility candidates, the generic debug action, or surface-local command clones as primary production rows.
+  - Do not treat accepted dispatch or UI acknowledgement as terminal domain success.
+owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Shared_Integration_Runtime.md]
+```

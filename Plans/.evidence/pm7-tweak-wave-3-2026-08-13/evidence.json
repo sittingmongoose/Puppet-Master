@@ -1,0 +1,271 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-3-2026-08-13",
+  "created_at_utc": "2026-08-13T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Third same-day tweak wave over the 2026-08-13 canon, sealed with dated wave-3 dispositions: live-fitting overflow chip immediately left of the actions cluster with newly-opened-tab visibility, animated tab drag-reorder (transform-only tracking, ~140 ms neighbour FLIP, silhouette glued to the insertion slot), theme skin tokens for the silhouette (retro hard outline, basic accent-blue crown, glass bevel at 84 percent rail alpha re-tuned from 88), minimap as the only code-pane scrollbar (native bars suppressed, margin-aligned), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-projected-width placeholder, PM_EDGE deferral across all Home gestures, the vertical-dots 16x20 kebab at the surface's right edge below the grip (stray terminal control strip removed), 2 px vertical workspace padding via --pm-home-pad-y/--pm-home-gap-y, and truth-gated terminal empty-section guidance with restoreOwnerRefs never dropping section records. Artifact rebuilt at sha256 d13b91e9 on the repinned base adc713c5. No new command IDs; no storage shape changes; census unchanged at 56 home rows with the 14 kebab-anchored option rows re-worded. Four-fix follow-up (user-reported, same wave): Safari drag-image compatibility (attached off-viewport ghost backing setDragImage plus a -webkit-user-drag hint), the terminal repair generalized (any paneless live-workgroup ref reconstitutes a minimal pane - never nulled, and the empty block never renders over a live workgroup), overflow fitters fitting against the strip's content box with a 44 px actions-reserve floor covering the kebab column, and the retro outline moving to the active tab as a three-edge inset ring that snaps on arrival. Final artifact sha256 139c1f78 on the repinned base 6f5bdaec. Final wave-3 build (aacbaaf1 on repinned base 5142446d): the fitter overflow condition is content-box child-edge measurement at all three sites (edStripContentOverflows), retiring the naive scrollWidth comparison that collapsed all tabs on non-overflowing strips, and restoreOwnerRefs gained the anyLiveWorkgroup reseed - persisted-null corruption reseeds section 1 from the pristine terminal seed and heals the persisted domain-ref CSVs in the same pass.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against adc713c556b54f; gates_all_pass; output sha256 d13b91e9a860c49c3a133017fedbe2a587cf2435754a6dd14f191209a3907f36 (receipt generated 2026-08-13 21:19:40)"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 95 docs, 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; 1788 shards"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate && python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; plan_unit_count 5775"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; failures [] at 56 home rows"
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0,
+      "stdout_excerpt": "shard artifact rows rebuilt"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-3 four-fix follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 6f5bdaecd17b94; gates_all_pass; output sha256 139c1f78d14cbd298c35ae35cd78d062342451e5e3f84cca124a637f86cfe2ad (receipt generated 2026-08-13 21:35:41)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (final wave-3 build)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 5142446d25336588; gates_all_pass; output sha256 aacbaaf1e56b5b9a1981e94a224cd7caea3fea386e1fd217fdd409adb465cc59, 3578248 bytes (receipt generated 2026-08-13 21:42:22)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 14,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated wave-3 dispositions over the tweak-wave-2 canon; YAML PlanUnit structure preserved."
+    },
+    {
+      "tool_id": "wiring-matrix-mutator",
+      "count": 1,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "14 kebab-anchored option rows re-worded with the wave-3 kebab location/geometry; census unchanged at 56."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 3,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Spec_Lock refresh (2 pinned docs), one auto_decisions row, this bundle."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-13-pm7-tweak-wave-3",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-3:2026-08-13",
+        "note": "Jared directed the third same-day tweak set (chip placement and live fit, animated reorder, theme silhouette skins, minimap-only scrolling, drag hysteresis and guards, right-edge kebab, spacing, terminal truth-gating)."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20 (base repinned adc713c5)."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "canonical_ssot_hashes refreshed for the two edited pinned docs via the spec-lock update protocol."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-13-pm7-tweak-wave-3."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-002",
+    "PlanUnit:F3-HOME-003",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-503",
+    "PlanUnit:F3-505",
+    "PlanUnit:UIW-010",
+    "ContractName:Plans/FinalGUISpec.md",
+    "ContractName:Plans/UI_Wiring_Rules.md",
+    "ContractName:Plans/Wiring_Matrix.production.json"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (adc713c5), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Authored T20 source: right-edge kebab, drag hysteresis and FLIP hit-test exclusion, proportional placeholder, spacing tokens, truth-gated terminal empty state, restoreOwnerRefs repair.",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "1b4187e6ab8e050448dae1f36a9cec0585e8b94c20057fdbdbda393feba62d32"
+    },
+    {
+      "note": "Transform driver with the re-pinned BASE_SHA adc713c5.",
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "sha256": "32e0b9a09707f076f920715f70e57cc70cc86e1d334965a28fa97a43cb15f18a"
+    },
+    {
+      "note": "Live matrix as pinned at seal time (harness wave in progress; hash current at this seal).",
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "sha256": "a2a5294b486889745c34c8315ee9c437ee30dfe3a88c95382b255516567e25c5"
+    },
+    {
+      "note": "Generated concept artifact (never hand-edited).",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "aacbaaf1e56b5b9a1981e94a224cd7caea3fea386e1fd217fdd409adb465cc59"
+    },
+    {
+      "note": "Transform/gate receipt (base_pin_ok, 20/20 transforms, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "4e96ab9286b3d0e1c24934e78e6fa6ca0de7ddce471bd42e76b93596dcdfad51"
+    },
+    {
+      "note": "Production wiring at 56 home rows with the wave-3 kebab wording.",
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "a953a3e6f93d7c654adb420976487fe86f85e84dba528bcead6d408d6bf3c36b"
+    },
+    {
+      "note": "Reconciliation with the wave-3 interaction rules and refreshed hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "50f891087d157695b24fd8bcfe8011bd8378300f9f3b7991c6bce1ec3f28920c"
+    },
+    {
+      "note": "GUI owner carrying the wave-3 amendments and dated dispositions.",
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Concepts/pm7-tools/build_report.json records base_pin_ok against adc713c5, 20/20 transforms ok, and gates_all_pass for output sha256 d13b91e9."
+    },
+    {
+      "name": "plan-sharding-check",
+      "result": "PASS",
+      "details": "--generate and --check pass across 95 docs and 1,788 shards after the amendments."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "generate and validate pass with 5,775 PlanUnits; no units added or removed."
+    },
+    {
+      "name": "catalog-wiring-closure",
+      "result": "PASS",
+      "details": "validate-wiring-matrix passes at 56 home rows; the kebab re-wording changes locations only, so command closure is untouched and no new command IDs exist."
+    },
+    {
+      "name": "spec-lock-protocol-followed",
+      "result": "PASS",
+      "details": "canonical_ssot_hashes recomputed for every pinned file; exactly the two edited pinned docs changed (FinalGUISpec.md, 00-plans-index.md); one auto_decisions row appended; this bundle completes the Decision_Policy 5.2 sequence."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Every wave-3 reversal carries an explicit dated disposition: head-row kebab superseded by the right-edge vertical-dots control, single-frame target adoption superseded by the two-frame hysteresis, fair-share placeholder width refined to the proportional projection, uniform 4 px vertical padding superseded by 2 px tokens, glass rail alpha 88 superseded by 84, the scrollbar-track-margin exclusion superseded by the minimap-only scrollbar, and unconditional empty-section guidance superseded by the data-pm-term-empty truth gate."
+    },
+    {
+      "name": "shipped-facts-verified-in-source",
+      "result": "PASS",
+      "details": "Verified in the shipped sources before amendment: --pm-home-pad-y/--pm-home-gap-y tokens, data-pm-home-flip hit-test exclusion, the vertical-dots kebab comment, #bottomPanel[data-pm-term-empty] gating with restoreOwnerRefs, --ed-shape-outline/--ed-shape-crown(-h)/--ed-tab-inactive-ring tokens with the retro/basic/glass skins (glass --ed-rail-alpha: 84%), suppressed native scrollbars with the minimap system, and the drag hysteresis."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "storage-and-schema-unchanged",
+      "result": "PASS",
+      "details": "No storage shape changes in this wave; Plans/home_workspace_layout.schema.json is untouched (sha256 503cfcbd) and the wave-2 cross_basis_px field is unchanged."
+    },
+    {
+      "name": "wave-3-four-fix-follow-up",
+      "result": "PASS",
+      "details": "User-reported four-fix follow-up sealed into the same wave with dated dispositions in FinalGUISpec: (1) Safari drag-image compatibility - suppressed-ghost reorder works via an attached ghost element and -webkit-user-drag hint (verified in the 06 CSS part); (2) terminal repair generalized - any paneless live-workgroup reference reconstitutes a minimal pane, never nulled, and the guidance block never covers a live workgroup; (3) overflow fitters fit against the content box so padding reserve cannot be occupied, with the 44 px reserve floor covering the kebab column (verified at the floor-44 comment in the 29x part); (4) the retro outline renders on the active tab as a three-edge inset ring snapping on arrival, retiring the travelling-shape outline. Final rebuild receipt: base_pin_ok against 6f5bdaec, 20/20 transforms, gates_all_pass, output sha256 139c1f78."
+    },
+    {
+      "name": "final-wave-3-build-fixes",
+      "result": "PASS",
+      "details": "Two verified fixes close the wave: (1) edStripContentOverflows replaces the naive scrollWidth overflow test at all three fitter sites (verified: 4 occurrences in the 29x part) - rightmost in-flow child edge vs clientWidth minus the padding-right reserve, skipping the actions span, shape layer, and display:none children, so non-overflowing strips no longer collapse all tabs (scrollWidth === clientWidth); (2) restoreOwnerRefs anyLiveWorkgroup reseed (verified in the T20 source) - when no section holds a live workgroup id, section 1 reseeds from PRISTINE_TERMINAL_SECTION and the persisted domain_ref CSVs are healed in the same pass. Live verification reported by the verification wave against aacbaaf1: wide strips lay all tabs with no chip, narrow shows the chip with 89 px kebab clearance, drag-reorder works, terminal alive on fresh boot and on a baked-null persisted state, retro active-ring correct, and narrow-to-wide cycles do not reveal authored-hidden demo tabs. Receipt: base_pin_ok against 5142446d, 20/20 transforms, gates_all_pass, output aacbaaf1."
+    }
+  ]
+}

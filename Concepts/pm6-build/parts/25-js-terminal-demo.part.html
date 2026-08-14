@@ -732,82 +732,265 @@
            dashboard widget grid uses), every handler is delegated on document
            so it covers strips that do not exist yet, and the drop writes the
            new order back to the owning model before re-rendering. */
-        function getDragAfterElement(container, x) {
-            var tabs = Array.prototype.filter.call(container.querySelectorAll('.tab'), function (t) {
-                return !t.classList.contains('dragging') && t.style.display !== 'none';
-            });
-            return tabs.reduce(function(closest, child) {
-                var box = child.getBoundingClientRect();
-                var offset = x - box.left - box.width / 2;
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                }
-                return closest;
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        /* pointer-capture reorder: HTML5 DnD is retired for tab reorder.
+           WebKit made the old path invisible three ways at once: a dragover
+           stream that only ticks on native NSDragging updates (sparse), a
+           native opaque drag snapshot whenever the custom drag image is not
+           renderable (opacity:0 counts as not renderable), and macOS
+           reduce-motion gating. Pointer capture drives the same FLIP
+           machinery at full input rate with the REAL tab under the pointer:
+           no ghost bitmap, no dragover cadence, no OS drag session at all.
+           T07 note: move/up/cancel listeners ride the TAB element under
+           setPointerCapture -- document-level pointermove stays untouched. */
+        var edPD = null; /* one reorder gesture at a time */
+        function edMotionOK() {
+            return !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) &&
+                document.documentElement.getAttribute('data-motion') !== 'reduced';
+        }
+
+        function edReorderSlots(strip, dragging) {
+            /* transform-free midpoint cache -- callers guarantee every tab's
+               transform is '' at sample time, so live rects ARE layout */
+            var mids = [];
+            var tabs = strip.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                var t = tabs[i];
+                if (t === dragging || t.style.display === 'none') continue;
+                var r = t.getBoundingClientRect();
+                mids.push({ el: t, mid: r.left + r.width / 2 });
+            }
+            return mids;
+        }
+
+        function edDetachReorder() {
+            window.removeEventListener('pointermove', edReorderMove, true);
+            window.removeEventListener('pointerup', edReorderUp, true);
+            window.removeEventListener('pointercancel', edReorderCancel, true);
         }
 
         document.addEventListener('pointerdown', function (e) {
+            if (!e.isPrimary || e.button !== 0) return;
             var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
             if (!tab) return;
             if (e.target.closest('.tab-close-btn, .tab-close')) return; /* closing, not dragging */
-            tab.draggable = true;
+            var strip = tab.closest('.editor-tabs');
+            if (!strip || edPD) return;
+            edPD = { tab: tab, strip: strip, pid: e.pointerId, startX: e.clientX,
+                     grabX: 0, slotLeft: 0, slotW: 0, lastTx: 0, mids: null,
+                     motionOK: true, didDrag: false };
+            /* listeners live on WINDOW, not the tab: re-slotting the tab is
+               a DOM remove+insert, which releases pointer capture -- a
+               tab-scoped lostpointercapture would cancel the drag on the very
+               first re-slot (the same trap the workspace drag documents on
+               its grip handles). Capture is still taken as a stream nicety:
+               it suppresses hover churn and keeps events flowing while it
+               lasts; the window listeners simply do not care when it dies. */
+            window.addEventListener('pointermove', edReorderMove, true);
+            window.addEventListener('pointerup', edReorderUp, true);
+            window.addEventListener('pointercancel', edReorderCancel, true);
+            try { tab.setPointerCapture(e.pointerId); } catch (err) {}
         }, true);
 
-        document.addEventListener('dragstart', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (!tab) return;
-            tab.classList.add('dragging');
-            try {
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', tab.getAttribute('data-file') || '');
-            } catch (err) {}
-        });
-
-        document.addEventListener('dragend', function (e) {
-            var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab') : null;
-            if (tab) tab.classList.remove('dragging');
-        });
-
-        document.addEventListener('dragover', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
-            e.preventDefault();
-            try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-            var afterEl = getDragAfterElement(tabsContainer, e.clientX);
-            if (afterEl == null) {
-                tabsContainer.insertBefore(dragging, tabsContainer.querySelector('.pane-tabbar-actions'));
-            } else {
-                tabsContainer.insertBefore(dragging, afterEl);
+        function edReorderMove(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            if (!g.didDrag) {
+                if (Math.abs(e.clientX - g.startX) < 4) return; /* drag threshold */
+                g.didDrag = true;
+                g.motionOK = edMotionOK();
+                g.tab.classList.add('dragging');
+                var r0 = g.tab.getBoundingClientRect();
+                g.grabX = g.startX - r0.left;
+                g.slotLeft = r0.left;
+                g.slotW = r0.width;
+                g.mids = edReorderSlots(g.strip, g.tab);
+                if (window.getSelection) { try { getSelection().removeAllRanges(); } catch (err) {} }
             }
-        });
-
-        document.addEventListener('drop', function (e) {
-            var tabsContainer = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-            if (!tabsContainer) return;
-            var dragging = document.querySelector('.editor-tabs .tab.dragging');
-            if (!dragging) return;
             e.preventDefault();
-            dragging.classList.remove('dragging');
-            var filename = dragging.getAttribute('data-file');
-            var pane = tabsContainer.closest('.editor-pane');
-            tabsContainer.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-            dragging.classList.add('active');
-            /* persist the new order into whichever model owns this strip, so a
-               later re-render does not snap it back */
-            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
-                try { window.PM6_PERSIST_TAB_ORDER(tabsContainer); } catch (err) {}
+            /* insertion index from CACHED transform-free midpoints -- live
+               rects of mid-FLIP neighbours are transform-inclusive lies */
+            var center = e.clientX - g.grabX + g.slotW / 2;
+            var afterEl = null;
+            for (var mi = 0; mi < g.mids.length; mi++) {
+                if (center < g.mids[mi].mid) { afterEl = g.mids[mi].el; break; }
             }
+            /* end anchor: the overflow chip when present, else the pinned
+               actions cluster -- inserting before the cluster alone would
+               land the tab to the chip's RIGHT */
+            var ref = afterEl != null ? afterEl :
+                (g.strip.querySelector('.pm-ed-overflow') ||
+                 g.strip.querySelector('.pane-tabbar-actions'));
+            /* no-op guard: already directly before ref means the insert would
+               be pure churn (observer wakeups, FLIP restarts, zero layout) */
+            if (g.tab.nextElementSibling !== ref && g.tab !== ref) {
+                if (g.motionOK) {
+                    /* FLIP the displaced tabs. First rects are taken
+                       transform-INCLUSIVE so an interrupted slide continues
+                       from where it visually is instead of teleporting. */
+                    var firsts = [];
+                    var sibs = g.strip.querySelectorAll('.tab');
+                    var si, sTab, dx, lr;
+                    for (si = 0; si < sibs.length; si++) {
+                        sTab = sibs[si];
+                        if (sTab === g.tab || sTab.style.display === 'none') continue;
+                        firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                    }
+                    g.strip.insertBefore(g.tab, ref);
+                    var newMids = [];
+                    for (si = 0; si < firsts.length; si++) {
+                        sTab = firsts[si][0];
+                        sTab.style.transition = 'none';
+                        sTab.style.transform = '';
+                        lr = sTab.getBoundingClientRect();
+                        newMids.push({ el: sTab, mid: lr.left + lr.width / 2 });
+                        dx = firsts[si][1] - lr.left;
+                        if (dx >= 1 || dx <= -1) {
+                            sTab.style.transform = 'translateX(' + dx + 'px)';
+                            void sTab.offsetWidth; /* commit the offset frame */
+                            sTab.style.transition = 'transform 220ms cubic-bezier(.22,1,.36,1)';
+                            sTab.style.transform = '';
+                            sTab.addEventListener('transitionend', function onSlid(te) {
+                                if (te.propertyName !== 'transform') return;
+                                te.target.style.transition = '';
+                                te.target.style.transform = '';
+                                te.target.removeEventListener('transitionend', onSlid);
+                            });
+                        } else {
+                            sTab.style.transition = '';
+                            sTab.style.transform = '';
+                        }
+                    }
+                    newMids.sort(function (a, b) { return a.mid - b.mid; });
+                    g.mids = newMids;
+                    /* re-cache the dragged slot from its transform-free rect */
+                    var keepT = g.tab.style.transform;
+                    g.tab.style.transform = '';
+                    var dr = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr.left;
+                    g.slotW = dr.width;
+                    g.tab.style.transform = keepT;
+                } else {
+                    g.strip.insertBefore(g.tab, ref);
+                    g.mids = edReorderSlots(g.strip, g.tab);
+                    var dr2 = g.tab.getBoundingClientRect();
+                    g.slotLeft = dr2.left;
+                    g.slotW = dr2.width;
+                }
+            }
+            if (g.motionOK) {
+                /* 1:1 glide, transform ONLY. The layout position stays at the
+                   insertion slot, so the midpoint math and EDSHAPE's per-frame
+                   snap both keep seeing the truth. Soft rubber-band past the
+                   strip edges instead of a hard clamp. */
+                var sr = g.strip.getBoundingClientRect();
+                var tx = e.clientX - g.grabX - g.slotLeft;
+                var txMin = sr.left - g.slotLeft;
+                var txMax = sr.right - g.slotW - g.slotLeft;
+                if (tx < txMin) tx = txMin + (tx - txMin) * 0.35;
+                if (tx > txMax) tx = txMax + (tx - txMax) * 0.35;
+                g.lastTx = tx;
+                g.tab.style.transform = 'translateX(' + tx + 'px)';
+            }
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(g.strip, false); } catch (err) {} }
+        }
+
+        function edReorderUp(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            try { g.tab.releasePointerCapture(g.pid); } catch (err) {}
+            if (!g.didDrag) return; /* plain click: selection runs natively */
+            /* the trailing synthetic click can leak to whatever sits under
+               the release point in some engines -- swallow clicks for a beat,
+               then stand down */
+            var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); };
+            document.addEventListener('click', swallow, true);
+            setTimeout(function () { document.removeEventListener('click', swallow, true); }, 120);
+            edReorderSettle(g);
+        }
+
+        function edReorderCancel(e) {
+            var g = edPD;
+            if (!g || e.pointerId !== g.pid) return;
+            edPD = null;
+            edDetachReorder();
+            if (!g.didDrag) return;
+            /* system-cancel path (mirrors the old ESC handling): settle the
+               residue instantly and refit -- no persist, the next render may
+               snap the order back by design */
+            g.tab.style.transform = '';
+            var settle = g.strip.querySelectorAll('.tab');
+            for (var si = 0; si < settle.length; si++) {
+                settle[si].style.transition = '';
+                settle[si].style.transform = '';
+            }
+            g.tab.classList.remove('dragging');
             if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
-                try { window.PM6_FIT_EDITOR_TABS(tabsContainer); } catch (err) {}
+                try { window.PM6_FIT_EDITOR_TABS(g.strip); } catch (err) {}
             }
-            if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
-                var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
-                    (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
-                if (prefix) renderFileToPane(filename, prefix, true);
+        }
+
+        function edReorderSettle(g) {
+            var tab = g.tab, strip = g.strip;
+            /* final slot, transform-free (clear + measure + re-transform is
+               synchronous -- nothing paints in between) */
+            tab.style.transform = '';
+            var fr = tab.getBoundingClientRect();
+            var delta = g.slotLeft + g.lastTx - fr.left;
+            /* order + activation bookkeeping that reads NO layout runs now;
+               layout-reading work (fitters, model re-render) waits until the
+               settle transform is gone -- transforms poison their reads */
+            strip.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
+                try { window.PM6_PERSIST_TAB_ORDER(strip); } catch (err) {}
             }
-        });
+            /* the silhouette springs to the final slot while the tab glides
+               there -- selection-spring parity for a drag-activated tab */
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, true); } catch (err) {} }
+            var finished = false;
+            var finish = function (te) {
+                if (te && te.propertyName && te.propertyName !== 'transform') return;
+                if (finished) return;
+                finished = true;
+                tab.removeEventListener('transitionend', finish);
+                tab.style.transition = '';
+                tab.style.transform = '';
+                var residue = strip.querySelectorAll('.tab');
+                for (var ri = 0; ri < residue.length; ri++) {
+                    residue[ri].style.transition = '';
+                    residue[ri].style.transform = '';
+                }
+                tab.classList.remove('dragging');
+                var filename = tab.getAttribute('data-file');
+                var pane = strip.closest('.editor-pane');
+                if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
+                    try { window.PM6_FIT_EDITOR_TABS(strip); } catch (err) {}
+                }
+                /* model re-render LAST: for pane 1 this rebuilds the strip
+                   from state, which would tear the settling tab out of the
+                   DOM mid-animation */
+                if (pane && filename && typeof FILE_DATA !== 'undefined' && FILE_DATA[filename]) {
+                    var prefix = pane.getAttribute('data-pm-home-editor-prefix') ||
+                        (pane.id === 'editorPane1' ? 'pane1' : (pane.id === 'editorPane2' ? 'pane2' : null));
+                    if (prefix) renderFileToPane(filename, prefix, true);
+                }
+                if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, false); } catch (err) {} }
+            };
+            if (g.motionOK && (delta >= 1 || delta <= -1)) {
+                /* low-bounce settle into the slot */
+                tab.style.transition = 'none';
+                tab.style.transform = 'translateX(' + delta + 'px)';
+                void tab.offsetWidth;
+                tab.style.transition = 'transform 200ms cubic-bezier(.3,1.25,.45,1)';
+                tab.style.transform = 'translateX(0px)';
+                tab.addEventListener('transitionend', finish);
+                setTimeout(finish, 300); /* transitionend can be lost to a re-render */
+            } else {
+                finish();
+            }
+        }
 
         // init generic resizers
         setupResizer('leftPanelResizer', 'sidePanelSlot', 'editorView');

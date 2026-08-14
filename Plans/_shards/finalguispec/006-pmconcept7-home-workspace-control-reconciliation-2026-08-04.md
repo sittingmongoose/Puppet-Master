@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L262-L859
+Source lines: L262-L928
 
-Source SHA256: `08f4400cd12ad4bc3a881179aacffcd2c50ed22b15eed2710558f2ecea6fa097`
+Source SHA256: `b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684`
 
 ---
 
@@ -148,6 +148,17 @@ maximum cross basis among the dock's visible surfaces), clamped by the shared
 host-band table; layouts persisted before the field existed migrate it from
 `basis_px`.
 
+Amended 2026-08-13 (wave 3) — drag stability refinements. Target adoption carries
+a two-frame hysteresis (a candidate host/index must survive two consecutive
+resolved frames before the placeholder re-seats), surfaces that are mid-FLIP are
+excluded from hit-testing via `data-pm-home-flip` (an animating surface cannot
+steal the target), and drag auto-scroll re-applies only on actual scroll or
+pointer movement. The placeholder previews the dragged surface's PROPORTIONAL
+projected width, mirroring the `normalizeMainRowBases` re-sum the commit will
+run, so the preview and the committed layout agree. The PM_EDGE band geometry
+defers during ALL Home gestures — move and workgroup drags participate in the
+`pm-resizing`/`PM_DRAGEND` deferral alongside resize.
+
 ### F3-HOME-003 — Shell controls and capability envelope
 
 The Home title bar exposes one 28 by 28 inline-SVG `Home more options` button
@@ -214,6 +225,16 @@ right-edge margin instead of left padding. The surface kebab menus no longer
 carry a Placement section or placement hint — the grip is the sole movement
 affordance and the menus no longer restate it.
 
+Amended 2026-08-13 (wave 3) — the surface options button (kebab) is a vertical
+three-dot 16 by 20 control absolutely positioned at the surface's right edge,
+directly below the grip, uniform across editor panels, Dashboard, terminal
+sections, and Chat. It no longer lives in the surfaces' head rows — moving it
+out of the terminal head row also removed the stray control strip that rendered
+at the bottom of the terminal panel. Workspace spacing re-tunes to 2 px vertical
+padding through the new `--pm-home-pad-y` and `--pm-home-gap-y` tokens with 4 px
+sides; the tweak-wave uniform 4 px value is superseded for the vertical axis
+with this dated disposition.
+
 The bottom terminal's own collapse control is a toggle: an inline-SVG chevron at the
 right end of the terminal bar that collapses the section and, from the collapsed
 strip, expands it again. The collapsed strip keeps that control visible and
@@ -230,7 +251,20 @@ four-pane cap the source instead stays empty with a tidy guidance state rather
 than a broken shell. Reset reconstitutes a live workgroup: it prefers a section
 that still owns one and falls back to the pristine seed when none does. The
 move command payload records `source_reseeded`, and cancellation discards any
-reseeded workgroup with the rest of the draft.
+reseeded workgroup with the rest of the draft. Amended 2026-08-13 (wave 3) — the
+empty-section guidance state is truth-gated: it renders only while
+`#bottomPanel[data-pm-term-empty]` is stamped by the terminal runtime
+projection, so the guidance can never cover a live workgroup, and
+`restoreOwnerRefs` repairs paneless pristine workgroup references at boot
+instead of dropping them — section records are never discarded. Wave-3
+follow-up (2026-08-13): the repair generalizes to ANY paneless live-workgroup
+reference — a live workgroup that has lost its panes reconstitutes a minimal
+pane rather than being nulled, and the empty-section block never renders over a
+live workgroup. Extended (final wave-3 build): when NO terminal section holds a
+live workgroup id at all (persisted-null corruption), `restoreOwnerRefs` reseeds
+section 1 from the pristine terminal seed and heals the persisted domain-ref
+CSVs in the same pass — the empty-guidance block never renders over a
+recoverable state.
 
 Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
 movement, terminal section/workgroup movement, explicit empty-section state, and
@@ -316,6 +350,17 @@ the kebab Placement section/hint is retired; the equal-height three-column grid
 is superseded by the full-height `dock_right` template; the dedicated editor
 pane-close glyph is retired in favour of the kebab `Close Panel` row; and the
 app status bar is removed from the PM7 shell.
+
+Superseded 2026-08-13 (wave 3): the head-row kebab placement is superseded by
+the vertical-dots 16 by 20 control at the surface's right edge below the grip
+(removing the stray terminal control strip); instant single-frame drop-target
+adoption is superseded by the two-frame hysteresis with mid-FLIP hit-test
+exclusion; the uniform 4 px workspace padding is superseded on the vertical
+axis by 2 px (`--pm-home-pad-y`/`--pm-home-gap-y`); the wave-2 glass rail alpha
+of 88 percent and the scrollbar-track-margin exclusion are superseded by 84
+percent and the minimap-only code-pane scrollbar; and unconditional
+empty-section guidance is superseded by the truth-gated
+`data-pm-term-empty` projection.
 
 ### F3-501 - Home Workspace Model And Stable Identity
 
@@ -427,7 +472,13 @@ canonical_text: >-
   captures the hit-test for its preview growth. Row-axis docks add a full-width track
   handle driving the dock's thickness through the persisted size.cross_basis_px field
   (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
-  pair width transfer on the column dividers.
+  pair width transfer on the column dividers. Amended 2026-08-13 (wave 3) - target
+  adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing
+  (data-pm-home-flip), drag auto-scroll re-applies only on actual scroll or pointer
+  movement, the placeholder previews the dragged surface's proportional projected width
+  (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
+  during all Home gestures (move and workgroup join resize in the
+  pm-resizing/PM_DRAGEND deferral).
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -440,6 +491,7 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - The drag placeholder projects the target geometry (fair share of the destination host; full width plus the dock's track thickness in a row-axis dock), sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a host expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
 - The top and bottom docks resize on both axes; column dividers transfer width between the adjacent pair inside the row, and the full-width track handle changes the dock's rendered thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), with pre-field layouts migrating cross_basis_px from basis_px.
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
 - A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
 - At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
 validation_surfaces:
@@ -461,6 +513,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: single-basis flex resize (which diluted a divider drag across non-adjacent siblings) and the full re-render on resize commit (settle flash) are retired; hard fixed minimums that could make a boundary unreachable are retired in favour of fair-share degradation; drag-to-window-exit floating is retired as invalid_target (see F3-HOME-002); treating loss of pointer capture alone as a cancellation vector was retired 2026-08-12 and this unit's criteria now reflect it."
 - "Amended 2026-08-13 (tweak wave): the same-day pickup-footprint drop preview is retired in favour of target-geometry projection with the pickup-band and preview-capture guards; single-axis row-dock sizing is retired in favour of the cross_basis_px track handle plus within-row pair transfer."
+- "Amended 2026-08-13 (wave 3): instant single-frame target adoption is retired in favour of the two-frame hysteresis; mid-FLIP surfaces are excluded from hit-testing; per-frame auto-scroll re-application is retired (actual movement only); the fair-share placeholder width is refined to the proportional projected width mirroring normalizeMainRowBases; PM_EDGE deferral widens from resize-only to all Home gestures."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -561,7 +614,19 @@ canonical_text: >-
   syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at
   the same alpha - while the title-bar page tabs keep their sliding ink (the F3-464
   boundary is unchanged). The editor scrollbar is excluded from the frosted rail band
-  via a scrollbar-track margin.
+  via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the silhouette gains
+  theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
+  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline
+  with square inactive-tab rings; basic draws a 2 px
+  accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
+  and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired
+  with this dated disposition). Wave-3 follow-up (2026-08-13): the retro outline lives
+  on the ACTIVE TAB as a three-edge inset ring that snaps on arrival, not on the
+  travelling connected shape - the outline-on-the-travelling-shape rendering is retired
+  with this dated disposition. The editor minimap is the ONLY code-pane scrollbar -
+  native scrollbars are suppressed - and the minimap band aligns with the frosted rail
+  via margin rather than padding, retiring the wave-2 scrollbar-track-margin exclusion
+  with this dated disposition.
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
@@ -571,7 +636,9 @@ acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
 - "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
-- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, tabs start flush at the panel's left edge, and the editor scrollbar sits outside the frosted rail band."
+- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, and tabs start flush at the panel's left edge."
+- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the three-edge bevel at 84 percent rail alpha (wave 3, 2026-08-13)."
+- "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
@@ -602,6 +669,8 @@ stale_retired_dispositions:
 - "The prior active editor file tab treatment (surface-tinted tab plus a 2 px accent underline, with per-theme underline recolours) is retired for this surface; the silhouette is the active-tab chrome."
 - "Amended 2026-08-13: the opaque rail fill introduced with the silhouette is retired — it defeated the editor scroll-under frost; the rail is a translucent plate over backdrop blur. The ensure-before-measure mount order (which produced a dead, collapsed silhouette in the built artifact) and the strip-firstChild mount slot (which contended with the T20 grip) are retired."
 - "Amended 2026-08-13 (tweak wave): the 10 px canvas / 8 px cutout radius maxima and the JS-written per-corner radius properties are retired — the JS writes contact progress (--ed-lp/--ed-rp) and the CSS derives 12 px shoulder/canvas radii plus the theme-tunable --ed-top-radius crown; the editor-file-tabs-only scope is widened to include the dashboard tab strip."
+- "Amended 2026-08-13 (wave 3): the glass rail alpha of 88 percent is re-tuned to 84 percent, and the wave-2 scrollbar-track-margin exclusion is retired — the minimap is the only code-pane scrollbar (native bars suppressed), aligned with the frosted rail via margin."
+- "Wave-3 follow-up (2026-08-13): the retro hard outline on the travelling connected shape is retired — the outline renders on the active tab as a three-edge inset ring that snaps on arrival."
 owner_boundary_notes:
 - "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]

@@ -1,0 +1,190 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-4-2026-08-13",
+  "created_at_utc": "2026-08-13T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Fourth same-day wave: three user-reported defects fixed, live-reproduced before and re-verified after. (1) Model-first browser-in-panel deactivation (deactivateBrowserProjection; restoreOwnerRefs resurrection root cause recorded; mountActiveBrowser single-active enforcement). (2) Latch-based geometric drop targeting (buildDockLatch frozen entry/exit bands, DOCK_EXIT_SLACK_PX 44; elementsFromPoint retired from resolution; measured ~9 Hz starvation flapping reduced to one transition and one track opening per approach). (3) Pointer-capture tab reorder replacing HTML5 DnD and the wave-3 Safari shim (gesture-scoped listeners, 4 px threshold, 1:1 glide, 220 ms FLIP, 200 ms settle, deferred re-render; Safari cadence/snapshot and lostpointercapture-on-reparent root causes recorded). Final artifact sha256 f8aacc9f6580055855c44e4a03634feaa7310c309c0dbb385015cbd5bec71c6d (3,586,691 bytes) on repinned base 77fadeea; receipt ca3ec509 (base_pin_ok, 20/20 transforms, gates_all_pass). Sealed under concurrent interference: a parallel un-sealed wave was actively modifying 18 Spec_Lock-pinned files including verifier scripts and sharding_config.json during this seal, so the plans-gate tally could not be honestly brought to baseline by this wave; this bundle records exactly what this wave verified.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 77fadeea6bff73; gates_all_pass; output sha256 f8aacc9f6580055855c44e4a03634feaa7310c309c0dbb385015cbd5bec71c6d, 3586691 bytes (receipt sha256 ca3ec509, generated 2026-08-13 22:59:08)"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; failures [] (56 home rows unchanged; 26 concurrent foreign catalog.* additions present and passing closure)"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 9,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated wave-4 dispositions; YAML PlanUnit structure preserved; all shipped facts verified in sources before writing."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 2,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Selective Spec_Lock refresh (only this wave's two pinned docs) and one auto_decisions row; foreign in-flight staleness deliberately not absorbed."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-13-pm7-tweak-wave-4",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-4:2026-08-13",
+        "note": "Jared reported three defects (browser tab stuck active, dock-approach flapping, broken/Safari-hostile tab reorder) and directed the wave-4 fixes."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "Authored change in this wave (BASE_SHA repin)."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/25-js-terminal-demo.part.html",
+      "change_type": "modified",
+      "note": "Pointer-capture reorder below the frozen L723 anchor."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20 (base repinned 77fadeea)."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Selective canonical_ssot_hashes refresh: only this wave's two edited pinned docs; concurrent foreign staleness deliberately not absorbed."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-13-pm7-tweak-wave-4."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-001",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-503",
+    "ContractName:Plans/FinalGUISpec.md",
+    "ContractName:Plans/UI_Wiring_Rules.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (77fadeea), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Authored T20 source: deactivateBrowserProjection, buildDockLatch with DOCK_EXIT_SLACK_PX 44, elementsFromPoint retired from drop resolution (comment-documented).",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "4fa0a286632d4bd5fac761bd1e755b696cdc7ff31e3ffc53cd42fc42bbd0b1bb"
+    },
+    {
+      "note": "Generated concept artifact (never hand-edited); sha f8aacc9f, 3,586,691 bytes.",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "f8aacc9f6580055855c44e4a03634feaa7310c309c0dbb385015cbd5bec71c6d"
+    },
+    {
+      "note": "Transform/gate receipt (base_pin_ok against 77fadeea, 20/20 transforms, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "ca3ec50962c92738a439309613078dcce1f1a0d7335224ed0f3cbfb5cd0beff0"
+    },
+    {
+      "note": "Reconciliation with wave-4 interaction rules; census unchanged at 56 home rows.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "db51cbbfb63a84eda8244c7a34236d03c0937bfaa0986a4f83ed06522bd9db53"
+    },
+    {
+      "note": "GUI owner carrying the wave-4 amendments and dated dispositions.",
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Receipt ca3ec50962c92738a439309613078dcce1f1a0d7335224ed0f3cbfb5cd0beff0 records base_pin_ok against 77fadeea, 20/20 transforms ok, gates_all_pass for output f8aacc9f (3,586,691 bytes, verified on disk)."
+    },
+    {
+      "name": "shipped-facts-verified-in-source",
+      "result": "PASS",
+      "details": "Verified before amendment: deactivateBrowserProjection/buildDockLatch/DOCK_EXIT_SLACK_PX present (11 references), the only remaining elementsFromPoint mentions are comments documenting its retirement, 5 pointer-capture sites in part 25 below the frozen L723 anchor, .tab.dragging at .92 opacity/z-index 40, and no tab-scoped -webkit-user-drag rule remains."
+    },
+    {
+      "name": "catalog-wiring-closure",
+      "result": "PASS",
+      "details": "validate-wiring-matrix passes; this wave changed no wiring rows (56 home rows unchanged). 26 concurrent catalog.* rows from a parallel wave are present and pass closure; they are not this wave's content."
+    },
+    {
+      "name": "spec-lock-selective-refresh",
+      "result": "PASS",
+      "details": "canonical_ssot_hashes refreshed for exactly this wave's two edited pinned docs (FinalGUISpec.md, 00-plans-index.md). Eighteen concurrently modified pinned files (including Automated_Testing_System.md, UI_Command_Catalog.md, Contracts_V0.md, DRY_Rules.md, sharding_config.json, storage_value_registry.json, and verifier scripts) belong to an un-sealed parallel wave and were deliberately left stale rather than absorbed into this seal."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Wave-4 reversals carry dated dispositions: painted-stack drop resolution retired (F3-503 + superseded block), HTML5 DnD reorder and the wave-3 attached-ghost shim retired (F3-421 + superseded block), DOM-only browser deactivation superseded by the model-first path (F3-HOME-001 + superseded block)."
+    },
+    {
+      "name": "plans-gates-baseline",
+      "result": "FAIL",
+      "details": "Honest FAIL: The full run-gates baseline could not be honestly confirmed during this seal: a parallel un-sealed wave was actively editing Spec_Lock-pinned canon, verifier scripts (scripts/pm-plans-verify.py, scripts/pm-implementation-readiness.py, scripts/pm_pnc019_currentness.py), and Plans/sharding_config.json while gates ran; the shard generator errored under the in-flight config and check_shards/plan-index reported fail against it. This wave's own validators that do not depend on the in-flight files passed (wiring closure, build receipt, migration refresh). The parallel wave must seal its own changes, after which the standard mechanical cycle returns the tree to the 24/26 baseline. This FAIL is recorded deliberately instead of forcing a green tally."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    }
+  ]
+}

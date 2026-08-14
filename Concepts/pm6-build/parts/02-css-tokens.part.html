@@ -141,7 +141,7 @@
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
     .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
-    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list,
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
@@ -169,15 +169,16 @@
     .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content,
     .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty,
     .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream,
-    .sc-accordion-body, .sh-scroll, .sh-wtchips, .editor-code, .rs-panel-list,
+    .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list,
     .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock,
     .message-block .block-body pre, .pm-command-card.expanded pre,
     .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx,
     .activity-card-body, .pm6-gh-log, #bottomDebugHost .rd-console)::-webkit-scrollbar {
       width: var(--pm6-sb-size); height: var(--pm6-sb-size);
     }
-    /* keep the code pane's custom bar out of the frosted tab-rail band */
-    .editor-code::-webkit-scrollbar-track:vertical { margin-top: var(--pm6-editor-tabs-h, 40px); }
+    /* .editor-code left both opt-in lists and its track-margin rule is gone:
+       the minimap is the only code-pane scrollbar now, so the pane must not
+       paint a second vertical bar beside it */
     /* bar show/hide must not shift chat layout. Only the thumb's colour
        animates and the gutter is reserved the moment a pane overflows, so the
        newly-revealed panes cannot reflow and none of them needs this. */

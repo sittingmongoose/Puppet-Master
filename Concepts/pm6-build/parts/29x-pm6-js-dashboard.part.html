@@ -853,6 +853,11 @@
        (every fit re-triggered a reseat re-triggered a fit ...). Style and
        hidden-text writes below do not fire childList observers. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     edHidden = [];
     var all = strip.querySelectorAll('.tab');
@@ -860,7 +865,7 @@
     for (i = 0; i < all.length; i++) all[i].style.display = '';
     if (!strip.clientWidth) return; /* strip not laid out — refit runs on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = 0;
       for (i = 0; i < all.length; i++) { if (all[i].style.display !== 'none') visible++; }
       if (visible <= 1) break;
@@ -1148,6 +1153,11 @@
     /* Reuse the chip via display toggles instead of remove/recreate: childList
        mutations here ping-pong with the Home overlay's chrome observer. */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     /* restore only tabs THIS fitter previously hid (data-ed2-hidden). NEVER
        clear display on tabs hidden for other reasons (e.g. the static
@@ -1166,7 +1176,7 @@
     if (!strip.clientWidth) return;
     var i;
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       if (all.length <= 1) break;
       var pick = null;
       for (i = all.length - 1; i >= 0; i--) {
@@ -1475,12 +1485,41 @@
      `.editor-tabs` reserves room on its right for the absolutely-pinned
      `.pane-tabbar-actions` cluster. That reserve was a hard-coded 28px, which
      stopped being true once anything else joined the cluster, so measure it. */
+  /* True content-extent overflow test. scrollWidth CANNOT express "content
+     reached into the reserved right padding": for non-overflowing content
+     scrollWidth === clientWidth by definition, so subtracting the reserve
+     from clientWidth made the comparison ALWAYS true and collapsed every
+     tab. Measure the right edge of the last in-flow child instead and
+     compare it against the content-box limit (strip width minus the
+     reserved actions/kebab lane). */
+  function edStripContentOverflows(strip) {
+    var reserve = parseFloat(getComputedStyle(strip).paddingRight) || 0;
+    var rect = strip.getBoundingClientRect();
+    var limit = rect.left + strip.clientWidth - reserve;
+    var kids = strip.children;
+    var right = -Infinity;
+    for (var i = 0; i < kids.length; i++) {
+      var kid = kids[i];
+      if (!kid.classList || kid.classList.contains('pane-tabbar-actions') ||
+          kid.classList.contains('ed-tab-shape')) continue;
+      if (kid.style.display === 'none') continue;
+      var edge = kid.getBoundingClientRect().right;
+      if (edge > right) right = edge;
+    }
+    return right > limit + 1;
+  }
+
   function edMeasureActions(strip) {
     if (!strip) return;
     var actions = strip.querySelector('.pane-tabbar-actions');
     if (!actions) return;
-    var w = Math.ceil(actions.getBoundingClientRect().width);
-    strip.style.setProperty('--pm6-ed-actions-w', (w > 0 ? w + 14 : 28) + 'px');
+    /* Reserve = distance from the cluster's LEFT edge to the strip's RIGHT
+       edge (+8 gap), not the cluster's width alone: the cluster is pinned
+       with a right offset, so the reserve now covers that offset too and the
+       chip can never underlap right-edge chrome. */
+    var sr = strip.getBoundingClientRect(), ar = actions.getBoundingClientRect();
+    var w = ar.width ? Math.max(44, Math.ceil(sr.right - ar.left) + 8) : 44; /* floor 44: the kebab column (right:2, 16px wide) + grip live OUTSIDE the actions span now, so an empty span must still reserve their lane */
+    strip.style.setProperty('--pm6-ed-actions-w', w + 'px');
   }
 
   /* ---------- generic per-strip overflow fitter ---------------------------
@@ -1576,13 +1615,18 @@
     edReassertOrder(strip); /* DOM-owned strips re-apply persisted drag order */
     /* chip reuse via display toggles: see edFitOverflow for why */
     var chip = strip.querySelector('.pm-ed-overflow');
+    /* keep the chip immediately left of the actions cluster: a drag-reorder
+       insert can land a tab to the chip's right. Positional guard = zero
+       mutations in steady state, so no observer ping-pong. */
+    var actionsEl = strip.querySelector('.pane-tabbar-actions');
+    if (chip && actionsEl && chip.nextElementSibling !== actionsEl) strip.insertBefore(chip, actionsEl);
     if (chip) chip.style.display = 'none';
     strip._pmEdHidden = [];
     var all = Array.prototype.slice.call(strip.querySelectorAll('.tab'));
     all.forEach(function (t) { t.style.display = ''; });
     if (!strip.clientWidth) return; /* not laid out yet — refit fires on resize */
     var guard = all.length + 1;
-    while (strip.scrollWidth > strip.clientWidth + 1 && guard-- > 0) {
+    while (edStripContentOverflows(strip) && guard-- > 0) {
       var visible = all.filter(function (t) { return t.style.display !== 'none'; });
       if (visible.length <= 1) break;
       var pick = null;
@@ -1636,7 +1680,10 @@
     var differs = false;
     for (var i = 0; i < tabs.length; i++) { if (seq[i] !== tabs[i]) { differs = true; break; } }
     if (!differs) return;
-    var ref = tabs[tabs.length - 1].nextSibling; /* stays left of chip/actions */
+    /* anchor on the chip when present: after a drag lands a tab past the chip,
+       the last tab's nextSibling is the actions cluster, and re-inserting the
+       run there would leave the chip stranded mid-run */
+    var ref = strip.querySelector('.pm-ed-overflow') || tabs[tabs.length - 1].nextSibling;
     seq.forEach(function (t) { strip.insertBefore(t, ref); });
   }
 
@@ -1681,6 +1728,39 @@
       if (edStripObserved) edStripObserved.add(strip);
       if (typeof ResizeObserver !== 'undefined') {
         try { new ResizeObserver(function () { edFitStrip(strip); }).observe(strip); } catch (e) {}
+      }
+      /* childList companion to the RO: adding or closing a TAB does not
+         change the strip's own box, so the RO never fires and the overflow
+         chip goes stale until the next resize. Watch the strip's children for
+         tab adds/removes and refit. Chip (.pm-ed-overflow) reseats are
+         ignored -- they are fitter OUTPUT, and reacting to them would
+         ping-pong; ditto anything mid-drag (the drag's own inserts). */
+      if (typeof MutationObserver === 'function') {
+        try {
+          new MutationObserver(function (records) {
+            if (strip.querySelector('.tab.dragging')) return;
+            var hit = false;
+            for (var ri = 0; ri < records.length && !hit; ri++) {
+              var lists = [records[ri].addedNodes, records[ri].removedNodes];
+              for (var li = 0; li < 2 && !hit; li++) {
+                for (var ni = 0; ni < lists[li].length; ni++) {
+                  var n = lists[li][ni];
+                  if (n && n.nodeType === 1 && n.classList && n.classList.contains('tab')) { hit = true; break; }
+                }
+              }
+            }
+            if (!hit) return;
+            /* mirror edFitStrip's managed dispatch; the pane 1/2 schedulers
+               already rAF-coalesce, generic strips get a per-strip flag */
+            if (strip.closest('#editorPane1')) { edScheduleFit(); return; }
+            if (strip.closest('#editorPane2')) { ed2ScheduleFit(); return; }
+            if (strip._pmEdMoQueued) return;
+            strip._pmEdMoQueued = true;
+            var runMo = function () { strip._pmEdMoQueued = false; edFitStrip(strip); };
+            if (document.hidden) { setTimeout(runMo, 50); return; }
+            requestAnimationFrame(runMo);
+          }).observe(strip, { childList: true });
+        } catch (e) {}
       }
       edFitStrip(strip);
     });

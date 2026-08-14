@@ -1,27 +1,27 @@
 # Shard Index: Plans/GUI_Rebuild_Requirements_Checklist.md
 
-Generated: 2026-08-13T17:12:34Z
+Generated: 2026-08-13T21:55:46Z
 
-Source SHA256: `50d5242f1b9823eb6dde2e9e4139d12672e6dc12b74410da1042438eee457e49`
+Source SHA256: `d0879049aaf48ef2225e68247f601e362f55da4464a6bb7b5acb1a443eb4f296`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `dca77030a137ad5fc5cf4adb7b5b1d3fce9fddb598a2a55fbdf925b79fdb4ef6`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `8411c4eafef8d1aa3243d912ad9ca0dd5badf69841c7edb035c8357da36781e5`
-- [003 - Purpose](003-purpose.md) L20-L22 `724e08047253d0210ac5394b18829fba7b1608a8849e1d0736c0ecfc8afb2abd`
-- [004 - Concern lifecycle verification checklist](004-concern-lifecycle-verification-checklist.md) L24-L56 `0f054b6a5dfb5dccc30f7d4ac7393ee6f77d37b4ee720ef2052243fb9b549eb8`
-- [005 - Verification Table](005-verification-table.md) L58-L74 `77f3e178cde035ea4d7dddc7f3688c57a4933a523e62eb7c6b06e245d75b627a`
-- [006 - Command Catalog Coverage Check](006-command-catalog-coverage-check.md) L75-L91 `935853a8eba84b3f39283335acac06156029bfda00c8d43b83d29f01278f803e`
-- [007 - Completion Criteria](007-completion-criteria.md) L93-L97 `a891e245c6f9513e00df3b097664e6fa1af09f7d41b753988c5dd99a316aa0e3`
-- [008 - 2026-03-07 addendum — DockerHub / Unraid GUI requirements](008-2026-03-07-addendum-dockerhub-unraid-gui-requirements.md) L99-L118 `28a9016294a19b3a0e6d725aded19c794939cfe1b15a9d3eca8d8e9da403f40b`
-- [009 - Derived evidence regeneration](009-derived-evidence-regeneration.md) L120-L122 `94bab153affac6bee3dd56f3000b1c1c00e5747efdd2e745c74a2b8410aefaba`
-- [010 - 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage](010-2026-03-09-addendum-artifacts-panel-and-usage-ledger-linkage.md) L124-L129 `1cf3ccfe00876f7adf6e6eb44e2214cbbfc544729c9a5b9700e83f6e683fc4d8`
-- [011 - Concern lifecycle verification checklist](011-concern-lifecycle-verification-checklist.md) L131-L171 `d3878cfea47073b9fb73bc84be422336bfcc77e65604e232e01f583d6f2e123a`
-- [012 - Owner / Consumer Map](012-owner-consumer-map.md) L173-L177 `d85874f70c848beba207ca9b3c178fadc07ca9b07dfd3109c45ead8ecb1f3c40`
-- [013 - PlanUnits](013-planunits.md) L179-L1784 `0b6f5ce216d51fac7202d37848dbdd417804e1bf858f60973f7564309bdf21a4`
-- [014 - Migration Coverage](014-migration-coverage.md) L1786-L1796 `ac9b686094e63e9de0dcde1640a3a20671104d3051c22e16d5ca5bcbd099f657`
-- [015 - Ledger Compile Addendum - pldg-20260614-001](015-ledger-compile-addendum-pldg-20260614-001.md) L1798-L1905 `5491de66d1d784ad4130951b8247cbc5974b18ec9bfb96d7eac4baab2770da86`
-- [016 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1907-L1912 `36d30da0fb9b33957bbf709dc593fc29a5af9625056d554fbc164bdae03f7138`
-- [017 - PMConcept7 Home Workspace checklist — 2026-08-04](017-pmconcept7-home-workspace-checklist-2026-08-04.md) L1914-L1989 `88dab92b0b49c93c49c859befdd232efbcefe983614c10b0d25a2285c9dde66b`
+- [001 - Preamble](001-preamble.md) L1-L1 `3157a3ab66e530d156771067c453bec95ec36d6dd7f1e1c50511e82be7e12454`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `9a4bde158e6deff33348a176b28060e090603b6499dc943ecd13355825aedfd9`
+- [003 - Purpose](003-purpose.md) L20-L22 `cf574933bc6c61c6cc7bb149c6f195903cc068d1d0727dcc516faa0515921a6d`
+- [004 - Concern lifecycle verification checklist](004-concern-lifecycle-verification-checklist.md) L24-L56 `5984eac489c7d950baeaf60d857a09a8144dbbc0c6bc301537b7871eb229ef80`
+- [005 - Verification Table](005-verification-table.md) L58-L74 `24bb91b9043feb89ac5d92459d02a3e6acd43e9967162be366fdc055a9425e76`
+- [006 - Command Catalog Coverage Check](006-command-catalog-coverage-check.md) L75-L91 `2b05280f2498746c857b7ceb5ae4b40796d651a60f36f2458eb7f7addeef52ac`
+- [007 - Completion Criteria](007-completion-criteria.md) L93-L97 `f584ccc205db1f68733e535125115c50424a132c59fd31732b835c36ff87c216`
+- [008 - 2026-03-07 addendum — DockerHub / Unraid GUI requirements](008-2026-03-07-addendum-dockerhub-unraid-gui-requirements.md) L99-L118 `0e8995c0997ce6c2ee684d4e03556f6050e749265f603a5d9ae4ee7478a25aa3`
+- [009 - Derived evidence regeneration](009-derived-evidence-regeneration.md) L120-L122 `68782ed75dce288907d749d02d9d78ac2a55fcf978ebeb267598dac955bb7206`
+- [010 - 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage](010-2026-03-09-addendum-artifacts-panel-and-usage-ledger-linkage.md) L124-L129 `29ea0e6d327b5cb232dcdcf143a312ea9fe270f3ddc32659632f80cea7122356`
+- [011 - Concern lifecycle verification checklist](011-concern-lifecycle-verification-checklist.md) L131-L171 `f4efdda3a385b605019cbe295eebfbfb51a34b398addcae386cef6e41b8fd115`
+- [012 - Owner / Consumer Map](012-owner-consumer-map.md) L173-L177 `3df6baf2dc959b671e520281700cd0e994f483a2259fae17fb0d5fc75d53d82b`
+- [013 - PlanUnits](013-planunits.md) L179-L1784 `2f78beeadd0d4c11eee310ad51fd21a971acd43a6641d9a86c8bb3c91b632d56`
+- [014 - Migration Coverage](014-migration-coverage.md) L1786-L1796 `e7a0a5ee47b926229c8ffa8a8bfb1ccbcfa5d00753f0be6f6995eb6aa1b1b293`
+- [015 - Ledger Compile Addendum - pldg-20260614-001](015-ledger-compile-addendum-pldg-20260614-001.md) L1798-L1905 `e00172d9dce7537d1a985d55c4a730036f335d43edeed9cf33b6859997ae6060`
+- [016 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1907-L1912 `aff58f991cf3aa419587bf55e0aaa8fc61e5389a79d1d6de2d2db0433bb40e35`
+- [017 - PMConcept7 Home Workspace checklist — 2026-08-04](017-pmconcept7-home-workspace-checklist-2026-08-04.md) L1914-L2002 `94b433ab2a7e81bc5bff3f1063b306cce46c170ad2e8a80774eda531c434765f`

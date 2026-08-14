@@ -1555,7 +1555,7 @@
     /* measured (PM_FROST -> --pm6-editor-tabs-h): the bar's height is themed —
        friendly turns the tabs into top-rounded folder tabs with their own
        padding — so a static value would misalign on theme switch */
-    .editor-pane { --pm6-editor-tabs-h: 34px; }
+    .editor-pane { --pm6-editor-tabs-h: 40px; }
     /* The lift goes on .editor-area, NOT on its children. .editor-area is
        overflow:hidden, so lifting the gutter and code from inside it just fed
        the raised strip to that clip — the rects said "under the tabs" while
@@ -1564,12 +1564,16 @@
        inside then moves together, which also keeps the gutter/code alignment
        free rather than something to maintain. */
     .editor-pane > .editor-area {
-      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 34px));
+      margin-top: calc(-1 * var(--pm6-editor-tabs-h, 40px));
     }
     /* the minimap rides the lift too, so give it the height back or its canvas
-       starts behind the tab bar */
+       starts behind the tab bar. MARGIN, not padding: margin shrinks the
+       border box down to the visible band, so the absolutely-positioned
+       canvas/viewport children anchor to the visible area AND both
+       offsetHeight-based JS implementations read the true band height with
+       zero JS edits. */
     .editor-area > .editor-minimap {
-      padding-top: var(--pm6-editor-tabs-h, 34px);
+      margin-top: var(--pm6-editor-tabs-h, 40px);
     }
     /* glass blur budget: no nested backdrop-filter inside the pane */
     [data-theme^="glass"] .editor-tabs {
@@ -1769,7 +1773,7 @@
          out of scroll and the numbers would lag by up to a bar-height at the
          end of a file. Harmless when no bar is showing: the extra room is
          simply never reached. */
-      padding: calc(var(--pm6-editor-tabs-h, 34px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
+      padding: calc(var(--pm6-editor-tabs-h, 40px) + var(--sm)) 0 calc(var(--sm) + var(--pm6-sb-size));
       font-family: 'Consolas', monospace;
       font-size: 12px;
       color: var(--text-muted);

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28461-L28645
+Source lines: L28531-L28735
 
-Source SHA256: `08f4400cd12ad4bc3a881179aacffcd2c50ed22b15eed2710558f2ecea6fa097`
+Source SHA256: `b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684`
 
 ---
 
@@ -151,7 +151,25 @@ canonical_text: >-
   Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
   retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
   semantics (sibling expansion, editor empty state) are unchanged - only the affordance
-  changed.
+  changed. Amended 2026-08-13 (wave 3) - the overflow chip always sits immediately left of
+  the strip's actions cluster, and overflow fitting runs LIVE on tab add and remove; a
+  newly opened tab that would overflow stays visible and instead displaces the
+  chip-adjacent non-active tab into the picker. Tab drag-reorder is animated: the native
+  drag ghost is suppressed, the dragged tab tracks the pointer transform-only while its
+  layout slot stays at the insertion position, neighbours FLIP over roughly 140 ms, and
+  reduced motion is instant; the connected silhouette stays glued to the insertion slot
+  throughout (see F3-505). Wave-3 follow-up (2026-08-13): ghost suppression is
+  Safari-compatible - an attached off-viewport ghost element backs setDragImage with a
+  -webkit-user-drag hint on the tab - and overflow fitters fit against the strip's
+  CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
+  reserve has a 44 px floor covering the kebab column and grip lane even when the
+  cluster is empty. Extended (final wave-3 build): the overflow condition itself is
+  content-box child-edge measurement at all three fitter sites
+  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
+  padding-right reserve, skipping the actions span, the shape layer, and
+  display:none children) - the naive scrollWidth comparison is retired with this
+  dated disposition because scrollWidth equals clientWidth on a non-overflowing
+  strip, which collapsed all tabs into the picker.
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
@@ -164,6 +182,8 @@ acceptance_criteria:
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
 - "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
 - "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
+- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, neighbours FLIP (~140 ms), reduced motion is instant, and the silhouette stays at the insertion slot throughout."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
