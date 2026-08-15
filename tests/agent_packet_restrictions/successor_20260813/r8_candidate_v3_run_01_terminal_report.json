@@ -1,0 +1,170 @@
+{
+  "schema_id": "pw-r8-external-run-terminal-report-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-3",
+  "run_id": "PW-R8-C3-RUN-01-20260815",
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v3_freeze_manifest.json",
+    "storage_sha256": "e112692c2a9b29e70c4975f953a4cf47ebe2f95e815a8d3b37ed85a76eeb1695",
+    "storage_bytes": 8407,
+    "pre_subject_launch_commit": "97c52e7ba6fa1ea0f75ab3c25e298e93b822edee",
+    "prelaunch_checkpoint_containing_commit": "0d06837b8042eaa8c503b5a180f39711298930a5"
+  },
+  "terminal": {
+    "value": "CONTROLLER_INVALID_MATRIX_WITH_SUBJECT_FAILURES",
+    "qualification_clean_run_credit": 0,
+    "expected_subject_cells": 291,
+    "subject_call_attempt_count": 133,
+    "started_subject_calls": 131,
+    "completed_subject_calls": 131,
+    "pass_count": 130,
+    "fail_count": 1,
+    "invalid_count": 2,
+    "invalid_cell_count": 2,
+    "no_start_invalid_attempt_count": 2,
+    "after_start_invalid_attempt_count": 0,
+    "missing_count": 0,
+    "ineligible_count": 158,
+    "retry_count": 0,
+    "best_of_count": 0,
+    "replacement_count": 0,
+    "global_unique_thread_count": 131,
+    "global_unique_turn_count": 131
+  },
+  "durable_bindings": {
+    "matrix_terminal": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/matrix_terminal.json",
+      "payload_sha256": "7877e1a47f8c00d1a9b1fc604947d34fa511691073fee6d8aeed6cdb108118cc",
+      "payload_bytes": 3065,
+      "storage_sha256": "8e7a6884d98824e4d9575eff18edfb020f429a38b650206bc8578702b59e23b2",
+      "storage_bytes": 3066
+    },
+    "subject_call_accounting": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/subject_call_accounting.json",
+      "payload_sha256": "05bde6a3d36a1a34c09ccce32cd0de49ecd1f46492bfe11cf4986839c04ac059",
+      "payload_bytes": 731,
+      "storage_sha256": "987079b92c2bdce18afa1eb1477c2cac8f4873eb9f3480d4e1f100aa984b8aad",
+      "storage_bytes": 732
+    },
+    "artifact_manifest": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/artifact_manifest.json",
+      "artifact_count": 535,
+      "payload_sha256": "d27f2225cb6f308f775fef5567bac1c962682fdd138eeec2069e140510f55c16",
+      "payload_bytes": 87452,
+      "storage_sha256": "5d16ec4a59ff7295fd4cb7c116798d0b20ad8ce493507a937aa78370affe83ef",
+      "storage_bytes": 87453
+    },
+    "validation_report": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/validation_report.json",
+      "payload_sha256": "3ac397c190f362ba2426915ebdba83d77bc65e5f46eac1176f9fd0b195133f54",
+      "payload_bytes": 1332,
+      "storage_sha256": "19c3a52ac91c34d367d3a33331e4989c43dc334838c6c69585644844c595c4b9",
+      "storage_bytes": 1333
+    },
+    "external_reopen_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v3_run_01_reopen_receipt.json",
+      "status": "PASS"
+    }
+  },
+  "valid_subject_failure": {
+    "slot": "slot-bravo",
+    "requested_model": "gpt-5.4-mini",
+    "requested_thinking": "medium",
+    "cell": "S10B_EDGE_B-E03",
+    "ordered_index": 44,
+    "classification": [
+      "response_transport_multiplicity",
+      "model_response_conformance_failure"
+    ],
+    "semantic_payload_observation": "Both assistant final messages independently contain the exact expected semantic JSON payload, but candidate-v3 requires exactly one assistant final message and therefore the completed first attempt remains a permanent FAIL.",
+    "expected_payload_utf8": "{\"verdict\":\"supported\"}",
+    "expected_payload_sha256": "ad0d2424c0e7394761bf13cc6991a09899005082e328e5c2cf078ef559bddafc",
+    "assistant_final_message_count": 2,
+    "assistant_final_texts": [
+      "{\"verdict\":\"supported\"}",
+      "{\"verdict\":\"supported\"}"
+    ],
+    "assistant_final_messages_sha256": "71423c604616f7df3d2b89735296afe6d1f5d9cb2bd3c43f0fdaba99cc10331d",
+    "conformance_violations": [
+      "driver_conformance_observation:assistant_final_message_count_not_one",
+      "single_text_output_absent"
+    ],
+    "score": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/slot-bravo/scores/S10B_EDGE_B-E03.json",
+      "storage_sha256": "350c2a30551e58d1ce5fec1ef0bd8a50289c2c1d73d6061c89f774b99c745d10",
+      "storage_bytes": 976
+    },
+    "capture": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/slot-bravo/captures/S10B_EDGE_B-E03.json",
+      "storage_sha256": "e784ba8857a1af8ad9f47f14b36c40114adef6097e92d11a668e6cc5e028dec7",
+      "storage_bytes": 1447
+    },
+    "driver_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/direct_appserver_receipts/slot-bravo_S10B_EDGE_B-E03.json",
+      "storage_sha256": "dfddca35761cb24015198a3ab528ff65cb6e182cf474742bcbff2af5e1cbf52c",
+      "storage_bytes": 3178
+    },
+    "rollout_storage_sha256": "6621f6467651869aa3fffae84014699a7af947579e55dfd1698fa830b10c1fbe",
+    "thread_id": "01a003d6-2c48-7e50-b2ca-7eef62b8224e",
+    "turn_id": "01a003d6-33e8-74f3-90ed-accb9b403427",
+    "first_attempt_subject_call": true,
+    "subject_call_started": true,
+    "subject_call_completed": true,
+    "retry_count": 0,
+    "best_of": false,
+    "replacement_result": false,
+    "preservation_rule": "FAIL remains FAIL; no rescore, retry, replacement, or reinterpretation is permitted."
+  },
+  "controller_process_failure": {
+    "defect": "A slot worker persisted slot-bravo path_terminal immediately after its valid subject failure. The candidate-v3 closed-world admission gate treated any existing path terminal as a global run terminal and rejected the next otherwise-independent alpha and charlie dispatches before subject creation.",
+    "causal_effect": "Alpha and charlie each received exactly one controller-invalid no-start receipt; neither invalid attempt received empirical credit. The defect occurred after bravo's completed subject response and cannot cause, excuse, or invalidate bravo's prior subject failure.",
+    "alpha": {
+      "last_completed_cell": "S10A_EDGE_A-E01",
+      "completed_subject_calls": 38,
+      "pass_count": 38,
+      "blocked_next_cell": "S10A_EDGE_A-E04",
+      "invalid_receipt": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/controller_invalid/slot-alpha/S10A_EDGE_A-E04/attempt-0001.json",
+        "storage_sha256": "4250a6ed6bb31a9ef324a89c04d65e9ad8bd0d89281f1697e6d9cccab9aea72f",
+        "storage_bytes": 1172
+      },
+      "subject_call_started": false,
+      "recreation_eligible_under_same_frozen_candidate": true
+    },
+    "charlie": {
+      "last_completed_cell": "S10B_EDGE_B-E07",
+      "completed_subject_calls": 48,
+      "pass_count": 48,
+      "blocked_next_cell": "S10B_EDGE_B-E10",
+      "invalid_receipt": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v3_run_01/controller_invalid/slot-charlie/S10B_EDGE_B-E10/attempt-0001.json",
+        "storage_sha256": "544f650d9c64f7b059bf06cd682aa450b66d028dd5fc23533ace22d53ce6647c",
+        "storage_bytes": 1175
+      },
+      "subject_call_started": false,
+      "recreation_eligible_under_same_frozen_candidate": true
+    }
+  },
+  "path_terminal_ownership_correction": "Future revisions reserve path-terminal and matrix-terminal persistence to the root controller after all independently surviving paths have stopped; slot workers may stop and report but may not publish terminal artifacts.",
+  "evidence_driven_next_revision": {
+    "revision_required": true,
+    "reason": "Candidate-v3 scoring treats duplicate identical final messages as a permanent conformance failure even when every final contains one byte-identical valid payload. Changing that rule changes scoring semantics and therefore requires a new frozen candidate; candidate-v3 evidence remains immutable.",
+    "generic_change": "Add deterministic idempotent transport normalization only when every assistant final has exactly one text item, all final UTF-8 bytes are identical, prohibited activity is absent, and the sole conformance issue is final-message multiplicity. Preserve multiplicity diagnostics and an explicit normalization receipt. Differing bytes, whitespace differences, non-text content, additional conformance faults, or prohibited activity remain failures.",
+    "counterfactual_requirements": [
+      "one final remains unchanged",
+      "two identical valid finals normalize",
+      "three identical valid finals normalize",
+      "different final bytes fail",
+      "semantically equivalent but byte-different whitespace fails",
+      "duplicate finals with prohibited activity fail",
+      "non-text or mixed-content final fails"
+    ],
+    "overfitting_guard": "The transformation compares byte identity and structural conformance only; it cannot inspect or special-case the expected answer, frozen payload literal, cell ID, slot, route, or model."
+  },
+  "claims": {
+    "subject_model_success": false,
+    "qualification_credit": 0,
+    "production_readiness": false,
+    "current_plans_claim": false,
+    "frozen_fixture_only": true
+  }
+}
