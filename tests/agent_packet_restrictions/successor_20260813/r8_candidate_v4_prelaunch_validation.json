@@ -1,0 +1,70 @@
+{
+  "schema_id": "pw-r8-external-prelaunch-validation-v2",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-4",
+  "status": "PASS_READY_FOR_FIRST_SUBJECT_CALL",
+  "candidate_freeze_manifest": {
+    "path": "r8_candidate_v4_freeze_manifest.json",
+    "storage_sha256": "e27f7fc20593efbfccfa0385d3fc7419a268e1aea33c7f7d637c821127fc767f",
+    "storage_bytes": 9378,
+    "candidate_files_reopened": 11,
+    "runtime_dependencies_reopened": 22
+  },
+  "preseal_audit": {
+    "path": "model_retest_r8_candidate_v4/preseal_audit.json",
+    "storage_sha256": "b371c14b413be8326871d957c1896a23d4dd374b0c527ef0ebb99d9b0e5fa79e",
+    "storage_bytes": 4872,
+    "verdict": "PRESEAL_PASS",
+    "launch_ready": true,
+    "blockers": 0
+  },
+  "deterministic_preflight": {
+    "path": "model_retest_r8_candidate_v4/deterministic_preflight_report.json",
+    "storage_sha256": "a88e262c5b0f0d18ad899a3e0cce8265d4061285c642410cb357ef73b3df90c0",
+    "storage_bytes": 74630,
+    "status": "PASS",
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "frozen_bindings_checked": 22,
+    "holdouts_passed": 33,
+    "normalization_holdouts_passed": 7,
+    "decision_source_joins_passed": 36
+  },
+  "predeclared_runs": [
+    {
+      "run_id": "PW-R8-C4-RUN-01-20260815",
+      "qualification_sequence": 1,
+      "run_contract": {"path": "model_retest_r8_candidate_v4_run_01/run_contract.json", "storage_sha256": "0ac46a05b791ff1e09268b28f3bb2483139834ad42262ad754146582bca111b1", "storage_bytes": 539},
+      "ordered_schedule": {"path": "model_retest_r8_candidate_v4_run_01/ordered_schedule.json", "storage_sha256": "b8ba89913b8dcf48ebc75f133df6c78732d352dcf78518cdb5bc2e7a54dfaa1e", "storage_bytes": 1696}
+    },
+    {
+      "run_id": "PW-R8-C4-RUN-02-20260815",
+      "qualification_sequence": 2,
+      "predecessor_run_id": "PW-R8-C4-RUN-01-20260815",
+      "run_contract": {"path": "model_retest_r8_candidate_v4_run_02/run_contract.json", "storage_sha256": "12c85710464a2867eecbe3ec9d0820e593f5946df2416941fb2372083ff99ffa", "storage_bytes": 561},
+      "ordered_schedule": {"path": "model_retest_r8_candidate_v4_run_02/ordered_schedule.json", "storage_sha256": "ac952907dd604fd2751945fe291831394fdc79ba2af8a769514b3ec0de5c7d89", "storage_bytes": 1696}
+    }
+  ],
+  "initial_admission_checks": [
+    {"run_id": "PW-R8-C4-RUN-01-20260815", "slot": "slot-alpha", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"},
+    {"run_id": "PW-R8-C4-RUN-01-20260815", "slot": "slot-bravo", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"},
+    {"run_id": "PW-R8-C4-RUN-01-20260815", "slot": "slot-charlie", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"},
+    {"run_id": "PW-R8-C4-RUN-02-20260815", "slot": "slot-alpha", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"},
+    {"run_id": "PW-R8-C4-RUN-02-20260815", "slot": "slot-bravo", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"},
+    {"run_id": "PW-R8-C4-RUN-02-20260815", "slot": "slot-charlie", "cell": "S10A_DECISION_A01", "status": "ADMIT_ONE_FRESH_FIRST_ATTEMPT"}
+  ],
+  "provider_visible_prompt_identity": "97_OF_97_BYTE_IDENTICAL_TO_CANDIDATE_V3_PER_ROUTE",
+  "semantic_oracle_identity": "97_OF_97_BYTE_IDENTICAL_TO_CANDIDATE_V3",
+  "subject_calls_before_launch": 0,
+  "provider_calls_before_launch": 0,
+  "retry": false,
+  "best_of": false,
+  "replacement": false,
+  "live_plans_reads": 0,
+  "terminal_publication_authority": "root_controller_only_after_all_paths_stop",
+  "claim_boundary": "unfinished throwaway frozen-snapshot prompt-architecture experiment only",
+  "nonclaims": [
+    "Prelaunch validation is not empirical model success.",
+    "The frozen snapshot is not current-Plans evidence.",
+    "No production, release, or safety claim is made."
+  ]
+}

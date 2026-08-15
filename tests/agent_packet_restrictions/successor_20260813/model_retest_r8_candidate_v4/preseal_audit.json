@@ -1,0 +1,94 @@
+{
+  "schema_id": "pw-r8-independent-preseal-audit-v4",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-4",
+  "verdict": "PRESEAL_PASS",
+  "launch_ready": true,
+  "blockers": [],
+  "proof_counts": {
+    "candidate_hashes_matched": "10/10",
+    "json_files_parsed": "6/6",
+    "python_files_ast_parsed": "3/3",
+    "frozen_dependencies_matched": "22/22",
+    "provider_visible_prompts_equal_to_candidate_v3": "97/97",
+    "cross_route_prompt_comparisons_equal": "291/291",
+    "semantic_oracles_equal_to_candidate_v3": "97/97",
+    "deterministic_chain_stages_equal": "18/18",
+    "holdouts_passed": "33/33",
+    "normalization_holdouts_passed": "7/7",
+    "decision_source_joins_passed": "36/36",
+    "prompt_leakage_checks_passed": "93/93"
+  },
+  "schedule": {
+    "cells_per_route": 97,
+    "cells_per_matrix": 291,
+    "schedule_sha256": "f8738d6720a9a88cf3093f33a06377efdd3dee45fd2936a0d991ce1380551d93",
+    "routes_unchanged": true,
+    "ordered_schedule_unchanged": true
+  },
+  "normalization": {
+    "status": "PASS",
+    "accepted": [
+      "two byte-identical single-output_text finals",
+      "three byte-identical single-output_text finals"
+    ],
+    "permanent_subject_failures_confirmed": [
+      "different final bytes",
+      "whitespace-different bytes",
+      "mixed content",
+      "nontext content",
+      "multi-item finals",
+      "prohibited activity",
+      "additional conformance observations",
+      "zero finals"
+    ],
+    "binding": "Raw final arrays and hashes remain in the driver receipt and capture; the full typed normalization receipt is duplicated and independently recomputed; the score binds receipt/capture storage, final count, normalization status, and normalization-receipt hash; the manifest inventories all persisted receipt, capture, and score bytes.",
+    "special_case_scan": "No expected-answer, answer-literal, cell, slot, model, or route input or branch exists in any normalization function."
+  },
+  "controller": {
+    "slot_isolated_admission": "PASS",
+    "same_slot_downstream_after_failure": "PROHIBITED",
+    "other_slot_terminal_blocks_admission": false,
+    "root_terminal_artifact_blocks_admission": true,
+    "path_terminal_publication": "root-only after all three paths are derivably stopped",
+    "controller_invalid_accounting": "PASS",
+    "closed_world_terminal_chain": "CONSTRUCTIBLE",
+    "two_run_qualification": "CONSTRUCTIBLE_AND_FAIL_CLOSED"
+  },
+  "candidate_hashes": {
+    "README.md": "6d2d33654304d229badbc4b0b8b274ce6ff8f6a37b35337abda1e94acc55c448",
+    "architecture_contract.json": "eef8d5d9a21e2664fb0e75ce6c7b042072492d39c4a0c628a447a7cee382fd49",
+    "controller_contract.json": "df86657546f135954a46c12a2c0afecbd4a373554046ac0c48264c03d216f9ce",
+    "counterfactual_holdouts.json": "2d8bd73b552f2596526e41cc369da62f6fed289ced996e3145d2c83bc1188750",
+    "deterministic_preflight_report.json": "a88e262c5b0f0d18ad899a3e0cce8265d4061285c642410cb357ef73b3df90c0",
+    "r8_harness.py": "c9dc4e4ccc8f526db147822915c3597ec7f26f4980c96a68477f867bdfba8769",
+    "r8_run_verifier.py": "1dbff94159712d8d216d97edcba53fb39bd3625a52ccd63e1c4c7ba1041cc191",
+    "r8_subject_task_driver.py": "3243929288dc6033f8052917e706ee399e8d3fec873e1db55c492c939a7ee59f",
+    "revision_lineage.json": "0a7c308e345f0df5cb2192d93a084cbe1891093d554e8a1b701124b316daca6a",
+    "verifier_contract.json": "22d4db6678415ed6464e7eb097357093394304cb960837f43144a2b619f485df"
+  },
+  "preserved_v3_evidence": {
+    "freeze_manifest_sha256": "e112692c2a9b29e70c4975f953a4cf47ebe2f95e815a8d3b37ed85a76eeb1695",
+    "preseal_audit_sha256": "39bd7b0267dc6bce407ecb307a8c29f4aea41983adbcf8ac9161e287d5c78f58",
+    "run1_terminal_report_sha256": "7ae39cf48ce26670ce73f02fa3dd229898d4cebdc14ec590f81328cac137ab44",
+    "run1_reopen_receipt_sha256": "7b26287dce92b1f8cabfe9bc4bf0fe7d470b1918241133c09f661bd97c2fb828",
+    "first_attempt_failure_remains_failure": true,
+    "qualification_credit": 0
+  },
+  "residuals": [
+    "An external create-only freeze manifest must bind these exact candidate bytes before launch.",
+    "Rollout-path authenticity remains within the disposable trusted-controller boundary.",
+    "A separate provider-effective serving snapshot is unavailable.",
+    "The prohibited response-item enumeration remains finite and requires review if the app-server schema changes.",
+    "Root-only publication is a controller protocol plus all-path-stop verifier gate, not an operating-system capability boundary.",
+    "This static preseal result is not empirical model success, current-Plans coverage, production enforcement, release readiness, or safety certification."
+  ],
+  "attestation": {
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "live_plans_file_reads": 0,
+    "files_modified": 0,
+    "files_created": 0,
+    "temporary_files_created": 0,
+    "pycache_created": 0
+  }
+}
