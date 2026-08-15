@@ -1,0 +1,52 @@
+{
+  "schema_id": "pw-r8-subject-controller-contract-v8",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+  "status": "neutral_unsealed_candidate",
+  "claim_boundary": "unfinished throwaway frozen-snapshot prompt-architecture experiment only",
+  "baseline": "candidate-v9 controller, verifier, receipt-v4, capture-v3, semantic packets, oracles, scorers, schedule, and routes",
+  "driver": "r8_subject_task_driver.py",
+  "process_controller": "r8_process_controller.py",
+  "process_contract": "process_completion_contract.json",
+  "verifier": "r8_run_verifier.py",
+  "harness": "r8_harness.py",
+  "routes": {
+    "slot-alpha": {"requested_model": "gpt-5.4-mini", "requested_thinking": "xhigh"},
+    "slot-bravo": {"requested_model": "gpt-5.4-mini", "requested_thinking": "medium"},
+    "slot-charlie": {"requested_model": "gpt-5.6-luna", "requested_thinking": "medium"}
+  },
+  "driver_usage": "python3 -B r8_process_controller.py run --run-id <run-id> --execution-root <contained-run-root> --slot <slot> --cell <harness-declared-cell>",
+  "process_completion_gate": {
+    "child_requirement": "actual exit code zero plus full exact canonical completed receipt-v4 stdout",
+    "outer_requirement": "poll every yielded unified-exec session with write_stdin through actual exit code zero and fully reconstruct terminal-envelope stdout",
+    "persistence": "receipt and completion sidecar are create-only apply_patch writes after outer terminal admission",
+    "observation_path": "<execution_root>/invocation_completions/<slot>_<cell>.json",
+    "missing_empty_partial_unexited_nonzero": "reject before receipt admission, capture, semantic scoring, or schedule advance",
+    "controller_writes": false
+  },
+  "scoring_interface": {
+    "driver_receipt_schema": "pw-r8-direct-appserver-subject-receipt-v4",
+    "driver_receipt_exact_key_count": 55,
+    "capture_envelope_schema": "pw-r8-subject-capture-envelope-v3",
+    "capture_envelope_exact_key_count": 20,
+    "invocation_completion_schema": "pw-r8-invocation-completion-observation-v1",
+    "semantic_acceptance_changed": false
+  },
+  "semantic_identity": {
+    "provider_visible_packets": "byte-identical to candidate-v9 except outer candidate/run/dispatch bindings",
+    "oracles": "unchanged candidate-v9",
+    "scorers": "unchanged candidate-v9 after process admission",
+    "routes": "unchanged candidate-v9",
+    "answer_cell_model_specific_exceptions": false
+  },
+  "qualification": {
+    "matrices": 2,
+    "calls_per_matrix": 291,
+    "completed_pass_calls": 582,
+    "allowed_invalid_missing_ineligible_retry_best_of_replacement": 0,
+    "required_process_completion_observations": 582
+  },
+  "nonclaims": [
+    "No freeze, audit, launch, subject call, provider call, empirical qualification, production enforcement, release readiness, or safety certification is claimed.",
+    "Static adversarial proofs do not establish empirical model success."
+  ]
+}

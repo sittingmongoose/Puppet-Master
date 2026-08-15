@@ -1,0 +1,1019 @@
+{
+  "schema_id": "pw-r8-candidate-architecture-contract-v11",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+  "status": "CANDIDATE_BYTES_FROZEN_ONLY_BY_EXTERNAL_FREEZE_MANIFEST",
+  "freeze_rule": "An external create-only manifest may freeze the audited candidate bytes; this contract is never edited to claim frozen status.",
+  "frozen_fixture": {
+    "status": "UNFINISHED_THROWAWAY_TEST_FIXTURE",
+    "descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "provenance_manifest_path": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "live_plans_policy": "NEVER_READ"
+  },
+  "subject_contract": {
+    "fresh_task_per_cell": true,
+    "fresh_context_per_cell": true,
+    "first_attempt_only": true,
+    "retries": 0,
+    "best_of": false,
+    "replacement_results": false,
+    "stop_failed_path_before_downstream_calls": true,
+    "one_semantic_objective_per_call": true,
+    "response_shapes": {
+      "decision": {
+        "selected_choice": "one exact closed option"
+      },
+      "edge": {
+        "verdict": [
+          "supported",
+          "unsupported"
+        ]
+      },
+      "tension": {
+        "preserve_boundary": "JSON boolean true or false; strings are forbidden"
+      },
+      "audit": {
+        "selected_choice": "one exact closed option, chosen without seeing the candidate choice"
+      }
+    }
+  },
+  "capture_and_scoring": {
+    "capture_path": "<execution_root>/<slot>/captures/<cell>.json",
+    "driver_receipt_path": "<execution_root>/direct_appserver_receipts/<slot>_<cell>.json",
+    "caller_selected_capture_path_allowed": false,
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "driver_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "assistant_final_messages_binding": "canonical minified array bytes plus sha256 and byte count",
+    "single_text_output_binding": "exact UTF-8 string plus sha256 and byte count, or all three null",
+    "receipt_binding": "capture envelope binds the exact derived receipt storage sha256 and bytes; harness independently reopens and compares identity, final-message, text, prohibited-activity, and observation fields",
+    "completed_subject_conformance_failures": {
+      "exit_code": 1,
+      "permanent_first_attempt_failure": true,
+      "classes": [
+        "missing final content or rejected multiple-final content",
+        "non-text final content",
+        "prohibited activity",
+        "invalid JSON or extra content",
+        "noncanonical JSON",
+        "duplicate keys",
+        "extra or missing response keys",
+        "wrong type, shape, closed option, or enum",
+        "semantically incorrect canonical response"
+      ]
+    },
+    "controller_invalid": {
+      "exit_code": 2,
+      "classes": [
+        "missing or malformed envelope/receipt",
+        "identity mismatch",
+        "hash or byte mismatch",
+        "noncanonical envelope/receipt storage"
+      ]
+    },
+    "text_normalization_receipt_binding": "Harness independently recomputes a typed receipt from raw final messages, legacy single-text extraction, prohibited activity, and conformance observations; receipt is bound identically in capture and driver receipt.",
+    "idempotent_duplicate_final_policy": {
+      "scope": "transport-level response text selection only; semantic scoring remains unchanged",
+      "apply_if": [
+        "at least two assistant final messages",
+        "every final has exactly one output_text item",
+        "all exact UTF-8 text bytes are byte-identical",
+        "prohibited activity is empty",
+        "the sole conformance observation is assistant_final_message_count_not_one"
+      ],
+      "effect": "use the exact common UTF-8 bytes as scoring text while retaining raw final messages, count, hashes, observations, and an APPLIED_IDENTICAL_DUPLICATE_FINALS receipt",
+      "reject_if": [
+        "differing bytes including whitespace",
+        "mixed or nontext content",
+        "prohibited activity",
+        "any additional conformance defect"
+      ],
+      "forbidden_inputs": [
+        "expected answer",
+        "cell ID",
+        "slot",
+        "model",
+        "route",
+        "frozen answer literal"
+      ]
+    },
+    "process_completion_admission": {
+      "required_before_receipt_admission": true,
+      "observation_path": "<execution_root>/invocation_completions/<slot>_<cell>.json",
+      "observation_schema_id": "pw-r8-invocation-completion-observation-v1",
+      "fixed_process_contract_path": "process_completion_contract.json",
+      "controller_path": "r8_process_controller.py",
+      "completion_rule": "A receipt is admissible only after a persisted canonical observation proves the fixed driver process actually exited zero and its fully captured stdout is exactly the same canonical completed receipt-v4 storage.",
+      "fail_closed_classes": [
+        "missing_observation",
+        "unexited_driver",
+        "nonzero_driver_exit",
+        "empty_driver_stdout",
+        "partial_driver_stdout",
+        "stdout_receipt_mismatch"
+      ],
+      "forbidden_acceptance_inputs": [
+        "expected_answer",
+        "cell_specific_answer_logic",
+        "model_specific_logic",
+        "route_specific_logic"
+      ],
+      "bound_runtime_files": [
+        "model_retest_r8_candidate_v9/r8_subject_task_driver.py",
+        "model_retest_r8_candidate_v9/r8_run_verifier.py",
+        "model_retest_r8_candidate_v11/r8_subject_task_driver.py",
+        "model_retest_r8_candidate_v11/r8_process_controller.py",
+        "model_retest_r8_candidate_v11/r8_run_verifier.py",
+        "model_retest_r8_candidate_v11/controller_contract.json",
+        "model_retest_r8_candidate_v11/process_completion_contract.json"
+      ]
+    }
+  },
+  "runtime_dependency_closure": [
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/00-plans-index.md",
+      "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+      "bytes": 367909,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Automated_Testing_System.md",
+      "sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "bytes": 267313,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Plan_To_Node_Compilation.md",
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "bytes": 103867,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Ledger_System.md",
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "bytes": 70805,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Wizard.md",
+      "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "bytes": 93549,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Prompt_Pipeline.md",
+      "sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "bytes": 303738,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/assistant-chat-design.md",
+      "sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "bytes": 1150138,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/ledger_registry.json",
+      "sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "bytes": 61169,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "bytes": 8940,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "bytes": 9160,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "bytes": 20100,
+      "roles": [
+        "tension_source_revalidation",
+        "fixture_source"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+      "sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+      "bytes": 9327,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/integration_contract.json",
+      "sha256": "d0cace7ea9d62925084245d1160d574f8f4b49c420abe60c8892de2f2a762e1a",
+      "bytes": 4094,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/r4_harness.py",
+      "sha256": "29d330d4dbef05a9f4e26a3bd1958cd50734d46af0d830acda5071ce4347ec82",
+      "bytes": 279029,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/scorer_key.json",
+      "sha256": "5b4614bea59b3f3740864324d33e346be254bff012da4ab6476077d5e80c2912",
+      "bytes": 9429,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/templates/S10A.txt",
+      "sha256": "627b03177ed4aa23f15217ccca326cfc995f5720bcec4cf71489dd32c9860958",
+      "bytes": 1649,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/topic_a_capsule.json",
+      "sha256": "6a37b1ab477e98b87d85b5e9569617b456d4dcc0e8a19762effaeb6218d18b52",
+      "bytes": 51204,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/topic_b_capsule.json",
+      "sha256": "75ca7224c90d44d32a29f2e766402d9e9eccf8fda584073ee82ca4bad5a41c96",
+      "bytes": 72807,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v1/contract.json",
+      "sha256": "9bee0c39beb4982c4daac1656f9f7a1327d4d31b9244c0ceebb22f630765f4b1",
+      "bytes": 7482,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v1/r6_harness.py",
+      "sha256": "a9a2ad6d11979da96571603a2297f890cf4c2b5bfb84f1a3aaa2b7c27c4e07a0",
+      "bytes": 45927,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v2/contract.json",
+      "sha256": "fdafa86048249a3b4325a84ce6e8f14e8cbafa0cc4e40360be3490d17e46bde6",
+      "bytes": 6618,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v2/r6v2_harness.py",
+      "sha256": "0cfd8e25d06a12c7294a15c182af0da095da33848ae96ca62b93349579a90e34",
+      "bytes": 28103,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v3/contract.json",
+      "sha256": "4ea1bbe15c2828582ff670a281030be6d549542c491ab4ae726aff37e5a1c41d",
+      "bytes": 3074,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v3/r6v3_harness.py",
+      "sha256": "472e8aa0b50e0bdf1ff33d5d880b6f6355282590b7dcd7a6168093257e0917be",
+      "bytes": 15118,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v4/contract.json",
+      "sha256": "8e3ab005f1f7e2f52cd8abd9486ff594a60557f69f829bdefa510ac5d0b0733e",
+      "bytes": 3182,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v4/r6v4_harness.py",
+      "sha256": "33c30afcab4b6c2602481c3e1fb0c8c3b54f5e4c3a4588c283df1d19d2b2ba22",
+      "bytes": 34628,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v5/contract.json",
+      "sha256": "6cc660b51bc0dd390e71cd2bab48c3ef5ca8943bf254c9ca0e349d5cd53b7144",
+      "bytes": 1972,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v5/r6v5_harness.py",
+      "sha256": "82f9dbb66f810d526e9260304a0cbcca671df2840cb11ac403289eb97ce83acc",
+      "bytes": 23722,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v6/contract.json",
+      "sha256": "6452f78be024d61f4a3fe13f7c95ca9efee7943e82eefc25cba9efe9dc497a41",
+      "bytes": 3377,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v6/r6v6_harness.py",
+      "sha256": "b950d61ace51798c914db358eb4580aa79a0cbf475ccfc7560ef38cdf6cab4d0",
+      "bytes": 15014,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v7/contract.json",
+      "sha256": "79b84db9cf3081893d1f63d4fa1240dcc028f365ba47be00ce72ea27ce390137",
+      "bytes": 3902,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v7/r6v7_harness.py",
+      "sha256": "8638110bd1b0e40f4e9ed334f77b85bdeeb21648369929ea03125e0aa11c0a0f",
+      "bytes": 16975,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/controller_contract.json",
+      "sha256": "f3a4ef5eeed6833d9bdf987b3d930b1ec11771bd9393f6b190a763b2679bce92",
+      "bytes": 2944,
+      "roles": [
+        "candidate_v11_process_interface",
+        "contract"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/process_completion_contract.json",
+      "sha256": "0bec3fd862d6ad7247349e40821ff0dcd1bcc519c251ad24de4ef9a1a5a4d077",
+      "bytes": 5588,
+      "roles": [
+        "candidate_v11_process_interface",
+        "contract"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_process_controller.py",
+      "sha256": "a7e9f23e60534b0daa2297db920362046d6eaa098ce923de5eda95462cc31738",
+      "bytes": 22004,
+      "roles": [
+        "candidate_v11_process_interface",
+        "dynamic_import"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_run_verifier.py",
+      "sha256": "5286c461f8525343f1a53923e9150846903d1ac13a960469890f7b3eee0ad48c",
+      "bytes": 9037,
+      "roles": [
+        "candidate_v11_process_interface",
+        "verifier"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_subject_task_driver.py",
+      "sha256": "663645cb6cfbd5ef0d6bba5de91d63833593aa6e55d71c485e97ee6cad5f8abf",
+      "bytes": 1330,
+      "roles": [
+        "candidate_v11_process_interface",
+        "fixed_driver"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v3/deterministic_preflight_report.json",
+      "sha256": "bf8dfca3a0a6d9c282b3a29cfa2c6ee9b88955accf965828bd3a7c1fb173458f",
+      "bytes": 74229,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v4/deterministic_preflight_report.json",
+      "sha256": "a88e262c5b0f0d18ad899a3e0cce8265d4061285c642410cb357ef73b3df90c0",
+      "bytes": 74630,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v4/r8_harness.py",
+      "sha256": "c9dc4e4ccc8f526db147822915c3597ec7f26f4980c96a68477f867bdfba8769",
+      "bytes": 78223,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/counterfactual_holdouts.json",
+      "sha256": "d77a62c62e76de2d895aa1141d1ce75735e41945a5b3eef5ecf818e781c5faba",
+      "bytes": 37155,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/deterministic_preflight_report.json",
+      "sha256": "dce5e30deede76d91bc8d3a43fd6391d8688a8262277e437958c7591f96f20b3",
+      "bytes": 82907,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/r8_harness.py",
+      "sha256": "df620714978572aba79f3d0836d6fc61e433c4ca11d9bfd0b3d2ad242c7fd736",
+      "bytes": 105519,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/tension_decomposition.json",
+      "sha256": "b6e2443313b477f660daadccc48800c68162ada8f3ad84ad658dfd7b5ed48c26",
+      "bytes": 42515,
+      "roles": [
+        "v6_frozen_binding"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/architecture_contract.json",
+      "sha256": "60ae0c98fa305da395bd07e9ac809fa7d7d86b8191ad5cd34b89130c3c7367db",
+      "bytes": 14243,
+      "roles": [
+        "v6_preflight_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/counterfactual_holdouts.json",
+      "sha256": "6c6480920bc7e9e69cc20ee02c7b7a2fde936a81eadc0cc3a3f5d4801a00e7f1",
+      "bytes": 37376,
+      "roles": [
+        "v6_preflight_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/r8_harness.py",
+      "sha256": "ef5a239e995c96209bc67c2a6ec16cbf721f1cf6ea4368d8204c70b2e74119e5",
+      "bytes": 111710,
+      "roles": [
+        "semantic_harness_import"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/architecture_contract.json",
+      "sha256": "b309b0f372c34e183786869e97aa8082abc67baa51deb9be9f75442fec52c23d",
+      "bytes": 24518,
+      "roles": [
+        "facade_architecture_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/counterfactual_holdouts.json",
+      "sha256": "ef28d15b388c2a28fdf842cfa5662f38a6d4e2ba5bb9ada5dbe6e264f7ae7821",
+      "bytes": 44108,
+      "roles": [
+        "facade_holdout_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/deterministic_preflight_report.json",
+      "sha256": "c899f09642eb98d61a3518dba21789f53586be36f7157887c0e6c8ac3644499e",
+      "bytes": 91385,
+      "roles": [
+        "facade_deterministic_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/r8_harness.py",
+      "sha256": "08f4753658e2fea3c8e31d316b2aeb9691cea52b5b735058b06a6939ada57762",
+      "bytes": 20317,
+      "roles": [
+        "facade_dynamic_import"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/architecture_contract.json",
+      "sha256": "1c1ffdf8bdbc2bc0ee341fb0cb8903c442dc01df16a6e8cc34e44f0989362bb2",
+      "bytes": 27710,
+      "roles": [
+        "facade_architecture_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/counterfactual_holdouts.json",
+      "sha256": "489e58ec16ab6063d08187d813b8458049da85cf00fe03bdc6a6cfe820fb8c24",
+      "bytes": 44468,
+      "roles": [
+        "facade_holdout_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/deterministic_preflight_report.json",
+      "sha256": "cd1d832de9d26eb215ebccdf20fc02bbe7fea33b6e362cb26d2f889b5c70b868",
+      "bytes": 95055,
+      "roles": [
+        "facade_deterministic_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/r8_harness.py",
+      "sha256": "a59e958aa8f32ea49e48216493f772ccfd24413f37a452887048f9a8a9c85b02",
+      "bytes": 21637,
+      "roles": [
+        "facade_dynamic_import"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/architecture_contract.json",
+      "roles": [
+        "candidate_v9_frozen_facade"
+      ],
+      "sha256": "314c855aa354c7f8983454150c29f19124228db7cbf3adbf18eee42771f3aae7",
+      "bytes": 32248
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/counterfactual_holdouts.json",
+      "roles": [
+        "candidate_v9_frozen_facade"
+      ],
+      "sha256": "94e8c271ad939e3697b5253448de001aade2c36e81ed208939fa70012a3ea6e4",
+      "bytes": 46206
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/deterministic_preflight_report.json",
+      "roles": [
+        "candidate_v9_frozen_facade"
+      ],
+      "sha256": "96f73db70e85c392b092540d4acad7d97ba438544b4087d26455454e074e0613",
+      "bytes": 99510
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_harness.py",
+      "roles": [
+        "candidate_v9_frozen_facade"
+      ],
+      "sha256": "854af1c88d64992a86e8f319bbc506ddefce0913aed926a352fb235c4602a027",
+      "bytes": 41395
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_run_verifier.py",
+      "sha256": "cf6451f16fef37da6ea269769435cf08626d1ec88a9d4e927626cec41987ede7",
+      "bytes": 116215,
+      "roles": [
+        "candidate_v9_verifier_baseline",
+        "dynamic_import"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_subject_task_driver.py",
+      "sha256": "21a442cb2a5729e59577a3639ca46d003e67a06b377f6e29f71609a53615ddbb",
+      "bytes": 24872,
+      "roles": [
+        "candidate_v9_controller_baseline",
+        "dynamic_import"
+      ]
+    }
+  ],
+  "ownership": {
+    "model_owned": [
+      "one closed option choice per S10 decision",
+      "one semantic verdict per edge candidate",
+      "one preserve_boundary JSON boolean per all-claims-supported tension candidate",
+      "one answer-first closed option choice per non-direct S30 decision",
+      "unchanged R6-v7 S50 semantic edge verdicts",
+      "unchanged R6-v7 S60 role verdicts"
+    ],
+    "deterministic": [
+      "cell identity and source order",
+      "decision ID, evidence_record_ids lineage, authority, and fixed envelope fields",
+      "exact source joins and context selectors",
+      "source-blind complete-claim-support compilation, unsupported exclusion, resolved routing, and final projection",
+      "edge and tension IDs and ordering",
+      "S30 candidate choice hiding, comparison, verdict, finding shape, lineage, classification, and ordering",
+      "boolean versus string versus null type enforcement",
+      "S40, S45, S50 direct authority projection, S55, S60 joins, S70, S80, and S90"
+    ]
+  },
+  "decomposition": {
+    "s10_decisions": "one decision per subject call for both topics; provider returns selected_choice only",
+    "s10_edges": "one edge candidate per subject call for both topics; provider returns verdict only",
+    "s10_tensions": "source-blind fixture compilation excludes every candidate with any unsupported claim before rendering; every all-supported candidate gets one preserve_boundary boolean objective; true selects and false resolves/omits",
+    "s30": "one non-direct decision per answer-first subject call; candidate value is absent from provider bytes; reducer compares independently selected option to hidden candidate",
+    "s50_s60": "reuse frozen R6-v7 semantic design and deterministic reducers"
+  },
+  "tension_compiler": {
+    "fixture": "model_retest_r8_candidate_v5/tension_decomposition.json",
+    "fixture_sha256": "b6e2443313b477f660daadccc48800c68162ada8f3ad84ad658dfd7b5ed48c26",
+    "schedule_derivation": "generic fixture source order filtered only by complete boolean claim support",
+    "renderer_visible": [
+      "candidate text",
+      "atomic claim span text with source_supported true",
+      "stable declared source_record_ids with authority, source hash, path, and line binding",
+      "only relevant compact typed predecessor outputs reopened from this run",
+      "exact declared preserve_boundary question"
+    ],
+    "controller_only_source_revalidation": "Before each render, reopen every declared frozen source file, verify its full storage SHA-256 against source_catalog, extract the exact declared inclusive line range, and require byte identity with the bound capsule excerpt. Full source bodies and excerpt text remain controller-only after validation.",
+    "renderer_forbidden": [
+      "controller_only_adjudication object",
+      "expected boolean",
+      "disposition",
+      "selected tension IDs",
+      "scorer key",
+      "prior run outputs",
+      "sibling candidates",
+      "old ternary labels"
+    ],
+    "reducer": {
+      "excluded": "unsupported_claim",
+      "eligible_true": "selected",
+      "eligible_false": "resolved_and_omitted"
+    },
+    "expected_schedule_from_fixture_data": [
+      "S10A_TENSION_A-T01",
+      "S10A_TENSION_A-T02",
+      "S10B_TENSION_B-T02",
+      "S10B_TENSION_B-T01"
+    ],
+    "subject_cells_per_route": 97,
+    "subject_cells_per_matrix": 291,
+    "unaffected_v4_prompt_identity_cells": 93
+  },
+  "measurement": {
+    "per_packet": [
+      "packet_payload_sha256",
+      "packet_payload_bytes",
+      "admitted_source_bytes",
+      "instruction_line_count",
+      "instruction_word_count",
+      "semantic_objectives_per_call",
+      "model_owned_fields",
+      "deterministic_fields"
+    ],
+    "comparison": [
+      "r7_before_packet_bytes",
+      "r7_before_admitted_source_bytes"
+    ],
+    "diagnostic_capacity_ceilings": {
+      "new_s10_and_s30_packet_payload_bytes_max": 12000,
+      "new_s10_and_s30_admitted_source_bytes_max": 11000,
+      "new_s10_and_s30_instruction_line_count_max": 12,
+      "decision_packet_payload_bytes_max": 9000,
+      "decision_admitted_source_bytes_max": 8000,
+      "decision_instruction_line_count_max": 10
+    },
+    "interpretation": "diagnostic_only_not_a_predicted_model_budget_or_safety_profile"
+  },
+  "anti_overfit": {
+    "forbidden": [
+      "frozen answer literals outside the independent scorer/oracle",
+      "cell-specific control-flow branches for expected answers",
+      "model-specific or route-specific semantic exceptions",
+      "subject-visible scorer keys, expected payloads, prior outputs, or prior findings",
+      "acceptance weakening, retries, best-of, replacement, or hidden semantic repair"
+    ],
+    "required_holdouts": [
+      "renamed and reordered IDs",
+      "option permutations",
+      "eligibility pattern changes",
+      "clean and finding projections",
+      "boolean, string, and null typing",
+      "source binding mutation",
+      "instruction-like excluded siblings",
+      "missing and duplicate units",
+      "stable structural diff order",
+      "provider prompt oracle-leakage scan",
+      "missing, duplicate, overlapping, and gapped claim spans and source closure",
+      "source full-byte hash and exact line-range excerpt revalidation",
+      "excerpt tamper plus missing, extra, and reordered source projection rejection",
+      "last-claim false exclusion and supported true/false reduction",
+      "source-order canonicalization and domain-distinct true/false",
+      "slot, model, and route metamorphism",
+      "mutated or unbound candidate-v4 harness rejection before dynamic import",
+      "prose, pretty JSON, duplicate keys, extra content and keys",
+      "wrong type and enum, canonical semantic pass and fail",
+      "missing text and prohibited activity are permanent subject failures",
+      "single final behavior unchanged",
+      "two and three byte-identical output_text finals normalize",
+      "different and whitespace-different final bytes reject",
+      "prohibited activity and mixed content prevent normalization",
+      "runtime closure missing, extra, duplicate, and tampered row rejection",
+      "no live Plans runtime path",
+      "mutated candidate-v7 facade rejected by hash and byte binding before dynamic import",
+      "valid direct receipt v4 plus capture v3 cross-interface",
+      "stale v3 and unknown direct receipt schemas rejected",
+      "altered dispatch and actual receipt storage bindings rejected",
+      "generic semantic mismatch remains subject FAIL"
+    ]
+  },
+  "routes": [
+    {
+      "slot": "slot-alpha",
+      "requested_model": "gpt-5.4-mini",
+      "thinking": "xhigh"
+    },
+    {
+      "slot": "slot-bravo",
+      "requested_model": "gpt-5.4-mini",
+      "thinking": "medium"
+    },
+    {
+      "slot": "slot-charlie",
+      "requested_model": "gpt-5.6-luna",
+      "thinking": "medium"
+    }
+  ],
+  "qualification": {
+    "required_consecutive_clean_runs": 2,
+    "byte_identical_architecture_between_runs": true,
+    "all_three_routes_each_run": true,
+    "zero_subject_failures": true,
+    "zero_invalid_or_missing_cells": true,
+    "zero_retries_best_of_or_replacements": true,
+    "fresh_disjoint_subject_tasks_between_all_cells_and_runs": true
+  },
+  "nonclaims": [
+    "current Plans evidence",
+    "production runtime enforcement",
+    "complete planning-wizard audit proof",
+    "release readiness",
+    "safety certification",
+    "permission to compile Plans",
+    "general weak-model safety certification"
+  ],
+  "runtime_dependency_closure_contract": {
+    "derivation": "candidate-v9 exact 50-file runtime dependency closure union four candidate-v9 facade files, two transitively imported candidate-v9 driver/verifier baselines, and five candidate-v11 controller/process interface files; exact sorted deduplication by successor-relative path",
+    "external_files": 61,
+    "candidate_v9_inherited_closure_files": 50,
+    "candidate_v9_facade_files": 4,
+    "candidate_v9_transitive_controller_files": 2,
+    "candidate_v11_process_controller_files": 5,
+    "unique_frozen_fixture_source_files": 11,
+    "candidate_local_files_role": "the five controller/process files are explicit runtime dependencies; candidate-v11 facade/report/README bytes remain candidate-bundle custody",
+    "validation_order": "candidate-local architecture is parsed, then exact declared closure and every hash/byte binding validate before candidate-v9 or candidate-v11 process-controller dynamic import",
+    "missing_extra_duplicate_tampered": "fail_closed",
+    "live_plans_policy": "NEVER_READ",
+    "live_plans_paths": []
+  },
+  "semantic_inheritance": {
+    "baseline": "candidate-v9",
+    "provider_semantic_prompts": "byte_identical_97_of_97",
+    "semantic_oracles": "byte_identical_97_of_97",
+    "schedule": "byte_identical_97_of_97",
+    "reducers_fixture_scoring": "unchanged; process completion admission runs before candidate-v9 receipt-v4/capture-v3 transport validation and existing semantic assessment",
+    "deterministic_preflight_storage": "candidate-v9 baseline byte-identical before candidate-v11 identity, process-admission, closure, and custody projection",
+    "only_candidate_v11_change": "generic process-completion admission plus candidate/run/dispatch bindings"
+  },
+  "dispatch_binding_wrapper": {
+    "owner": "external controller",
+    "required_for_subject_dispatch": true,
+    "semantic_render_bytes_changed": false,
+    "placement": "constant typed opaque wrapper outside semantic input",
+    "predeclared_schedule_path": "<execution_root>/dispatch_schedule.json",
+    "binding_fields": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "dispatch_nonce",
+      "semantic_packet_sha256",
+      "semantic_packet_bytes",
+      "dispatch_schedule_sha256",
+      "dispatch_schedule_bytes"
+    ],
+    "nonce_encoding": "unique lowercase 64-hex",
+    "semantic_packet_and_full_model_visible_wrapper_measured_separately": true,
+    "answer_oracle_fixture_literals_forbidden": true
+  },
+  "audited_candidate_bundle_custody": {
+    "owner": "external controller",
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+    "excluded_path": "independent_preseal_audit.json",
+    "file_count": 12,
+    "exact_ordered_keys": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "exact_sorted_candidate_files": [
+      "README.md",
+      "architecture_contract.json",
+      "controller_contract.json",
+      "counterfactual_holdouts.json",
+      "deterministic_preflight_report.json",
+      "process_completion_contract.json",
+      "r8_harness.py",
+      "r8_process_controller.py",
+      "r8_run_verifier.py",
+      "r8_subject_task_driver.py",
+      "revision_lineage.json",
+      "verifier_contract.json"
+    ],
+    "file_row_exact_keys": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "aggregate_file_bytes_rule": "sum of current twelve non-audit storage byte counts",
+    "canonical_rows_rule": "canonical_rows_sha256 and canonical_rows_bytes bind minified UTF-8 JSON of files array only",
+    "external_freeze_manifest_v5_order_contract": "existing exact prefix through preseal_launch_ready, then audited_candidate_bundle, independent_preseal_audit, qualification_contract, candidate_file_count, candidate_files, runtime_dependency_count, runtime_dependencies",
+    "run_contract_v5_exact_order": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "routes",
+      "dispatch_schedule_path",
+      "dispatch_schedule_storage_sha256",
+      "dispatch_schedule_storage_bytes",
+      "candidate_freeze_manifest_path",
+      "candidate_freeze_manifest_storage_sha256",
+      "candidate_freeze_manifest_storage_bytes",
+      "audited_candidate_bundle",
+      "qualification_sequence",
+      "predecessor_run_id"
+    ],
+    "freeze_binding_exact_fields": [
+      "path",
+      "storage_sha256",
+      "storage_bytes",
+      "audited_candidate_bundle"
+    ],
+    "semantic_render_bytes_changed": false
+  },
+  "scoring_capture_interface": {
+    "adapter_kind": "generic transport-schema adapter before unchanged semantic assessment",
+    "accepted_direct_receipt_schema": "pw-r8-direct-appserver-subject-receipt-v4",
+    "rejected_direct_receipt_schemas": [
+      "pw-r8-direct-appserver-subject-receipt-v3",
+      "all unknown schemas"
+    ],
+    "capture_envelope_schema": "pw-r8-subject-capture-envelope-v3",
+    "receipt_exact_ordered_keys": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "execution_root",
+      "requested_model",
+      "requested_thinking",
+      "provider_effective_model",
+      "provider_effective_thinking",
+      "host_id",
+      "thread_id",
+      "turn_id",
+      "fresh_task_identity_basis",
+      "status",
+      "subject_call_started",
+      "fresh_context",
+      "first_attempt_subject_call",
+      "retry_count",
+      "best_of",
+      "replacement_result",
+      "admission",
+      "render_storage_sha256",
+      "render_storage_bytes",
+      "provider_visible_payload_sha256",
+      "provider_visible_payload_bytes",
+      "semantic_packet_sha256",
+      "semantic_packet_bytes",
+      "dispatch_schedule",
+      "dispatch_nonce",
+      "dispatch_binding",
+      "dispatch_wrapper_sha256",
+      "dispatch_wrapper_bytes",
+      "rollout_path",
+      "rollout_storage_sha256",
+      "rollout_storage_bytes",
+      "model_provider",
+      "turn_context_model",
+      "turn_context_effort",
+      "started_at_epoch_seconds",
+      "completed_at_epoch_seconds",
+      "duration_ms",
+      "assistant_final_messages",
+      "assistant_final_messages_sha256",
+      "assistant_final_messages_bytes",
+      "single_text_output_utf8",
+      "single_text_output_sha256",
+      "single_text_output_bytes",
+      "text_normalization_receipt",
+      "prohibited_activity_items",
+      "prohibited_activity_items_sha256",
+      "prohibited_activity_items_bytes",
+      "prohibited_activity_item_types",
+      "conformance_observations",
+      "identity_limitation"
+    ],
+    "dispatch_schedule_exact_ordered_keys": [
+      "path",
+      "storage_sha256",
+      "storage_bytes"
+    ],
+    "dispatch_binding_exact_ordered_keys": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "dispatch_nonce",
+      "semantic_packet_sha256",
+      "semantic_packet_bytes",
+      "dispatch_schedule_sha256",
+      "dispatch_schedule_bytes"
+    ],
+    "strict_identity_fields": [
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "execution_root",
+      "thread_id",
+      "turn_id"
+    ],
+    "actual_receipt_storage_binding": "capture envelope hash and bytes must equal exact canonical receipt storage including terminal LF",
+    "retained_bindings": [
+      "render storage",
+      "provider-visible semantic packet",
+      "semantic packet",
+      "dispatch schedule",
+      "dispatch nonce",
+      "dispatch binding",
+      "dispatch wrapper shape",
+      "final messages",
+      "single text",
+      "prohibited items",
+      "normalization"
+    ],
+    "semantic_acceptance": "unchanged; semantic mismatch remains permanent subject FAIL",
+    "cell_model_answer_special_cases": false
+  }
+}

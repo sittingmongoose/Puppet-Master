@@ -1,0 +1,117 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v7",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+  "status": "neutral_unsealed_candidate",
+  "predecessor_candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-10",
+  "predecessor_preseal_audit": {
+    "path": "model_retest_r8_candidate_v10/independent_preseal_audit.json",
+    "storage_sha256": "47a98352800f7b39f255ab8e05a4db9cb75a22af7b77e7ab97f16a62798f2c36",
+    "storage_bytes": 14593,
+    "schema_id": "pw-r8-candidate-v10-independent-preseal-audit-v1",
+    "terminal": "PRESEAL_FAIL",
+    "launch_ready": false,
+    "subject_calls": 0,
+    "provider_calls": 0
+  },
+  "predecessor_git_checkpoint": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v10_preseal_fail_git_checkpoint.json",
+    "checkpoint_phase": "PRESEAL_FAIL_DURABLY_COMMITTED_AND_PUSHED",
+    "commit": "c9f70c382e71b0aef174453bd515e29637dd38ca",
+    "branch": "main",
+    "remote": "origin/main"
+  },
+  "fixed_defect": {
+    "classification": "candidate_bundle_closed_world_incomplete",
+    "predecessor_expected_non_audit_file_count": 12,
+    "predecessor_observed_non_audit_file_count": 10,
+    "predecessor_missing_required_files": [
+      "revision_lineage.json",
+      "verifier_contract.json"
+    ],
+    "generic_repair": "Create and bind the two declared non-audit files so the exact sorted twelve-file audited candidate bundle is constructible and the verifier, architecture, preflight, README, and lineage describe the same closed world.",
+    "answer_or_cell_specific_repair": false,
+    "provider_semantic_repair": false,
+    "retry_or_replacement_repair": false,
+    "process_completion_repair": false
+  },
+  "preserved_semantics": {
+    "semantic_packet_schedule_identical_to_candidate_v10": true,
+    "semantic_oracles_identical_to_candidate_v10": true,
+    "ordered_schedule_identical_to_candidate_v10": true,
+    "subject_cells_per_route": 97,
+    "routes_per_matrix": 3,
+    "subject_calls_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "direct_subject_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "process_completion_observation_schema_id": "pw-r8-invocation-completion-observation-v1",
+    "driver_treats_subject_answer_as_opaque_text": true,
+    "harness_score_remains_authoritative": true,
+    "answer_specific_literals_or_exceptions": false,
+    "route_model_slot_cell_answer_exceptions": false
+  },
+  "preserved_process_holdouts": {
+    "total": 75,
+    "inherited_candidate_v9_scoring_and_process_cases": 71,
+    "candidate_v10_process_completion_cases": 4,
+    "case_range": "CF-R8-01 through CF-R8-75",
+    "answer_cell_model_specific_logic": false
+  },
+  "candidate_v11_changes": [
+    "create revision_lineage.json as a regular non-audit candidate file",
+    "create verifier_contract.json as a regular non-audit candidate file",
+    "rebind candidate identity, fixed freeze path, and the five candidate-local process/controller closure rows",
+    "make the exact sorted twelve-file non-audit bundle and thirteen-file freeze candidate inventory internally consistent"
+  ],
+  "audited_candidate_bundle_contract": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "candidate_file_count_excluding_audit": 12,
+    "audit_is_thirteenth_freeze_candidate_file": true,
+    "exact_keys": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "row_keys": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "row_order": "sorted exact non-audit candidate paths",
+    "canonical_hash_subject": "canonical minified UTF-8 files array"
+  },
+  "runtime_dependency_closure": {
+    "external_files": 61,
+    "validation_phase": "before candidate-v9 or candidate-v11 process-controller dynamic import",
+    "missing_extra_duplicate_tampered": "fail_closed",
+    "live_plans_policy": "NEVER_READ",
+    "live_plans_paths": []
+  },
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v11_freeze_manifest.json",
+    "storage_sha256": null,
+    "storage_bytes": null,
+    "status": "external_manifest_not_created",
+    "sealed": false,
+    "manifest_excludes_itself": true
+  },
+  "provider_semantic_packet_change_from_candidate_v10": false,
+  "provider_transport_wrapper_structure_change_from_candidate_v10": false,
+  "provider_transport_wrapper_bytes_change_from_candidate_v10": true,
+  "provider_transport_wrapper_bytes_change_reason": "The required candidate_id binding changes from candidate-10 to candidate-11; no wrapper field, placement, or semantic-ignore instruction changes.",
+  "route_change_from_candidate_v10": false,
+  "oracle_change_from_candidate_v10": false,
+  "ordered_schedule_change_from_candidate_v10": false,
+  "driver_receipt_schema_change_from_candidate_v10": false,
+  "capture_envelope_schema_change_from_candidate_v10": false,
+  "process_completion_contract_change_from_candidate_v10": false,
+  "scorer_or_reducer_change_from_candidate_v10": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "predecessor_qualification_credit": 0
+}

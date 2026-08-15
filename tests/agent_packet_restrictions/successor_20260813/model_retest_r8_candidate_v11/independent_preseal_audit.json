@@ -1,0 +1,355 @@
+{
+  "schema_id": "pw-r8-candidate-v11-independent-preseal-audit-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+  "audit_kind": "independent_adversarial_static_deterministic_preseal",
+  "status": "PRESEAL_PASS",
+  "launch_ready": true,
+  "empirical_model_success": false,
+  "qualification_achieved": false,
+  "blockers": [],
+  "residual_risks": [
+    {
+      "residual_id": "PRESEAL-RESIDUAL-001-EXTERNAL-COMPLETION-OBSERVATION-CUSTODY",
+      "classification": "trusted_external_controller_evidence_boundary",
+      "statement": "The persisted invocation-completion observation is typed, exact-key, receipt-bound evidence supplied by the external controller. The verifier can reject missing, malformed, nonterminal, nonzero, incomplete, non-apply-patch, early-persistence, and receipt-mismatched observations, but it cannot retrospectively authenticate the unified-exec service transcript or prove that apply_patch performed the persistence."
+    },
+    {
+      "residual_id": "PRESEAL-RESIDUAL-002-NOT-YET-FROZEN-OR-EMPIRICALLY-QUALIFIED",
+      "classification": "prelaunch_boundary",
+      "statement": "PRESEAL_PASS and launch_ready authorize only the separately controlled external freeze and launch boundary. No candidate-v11 freeze manifest, run artifact, subject call, provider call, clean matrix, or two-run qualification exists in this audit."
+    },
+    {
+      "residual_id": "PRESEAL-RESIDUAL-003-PRESERVED-PREDECESSOR-FAILURE",
+      "classification": "historical_failure_no_credit",
+      "statement": "Candidate-v9 run 01 remains controller-invalid at its one-byte LF receipt defect. Its 27 valid scored cells and semantically matching defective-cell final answer do not provide candidate-v11 qualification credit."
+    }
+  ],
+  "audit_scope": {
+    "candidate_root": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v11",
+    "inventory_basis": "exact on-disk bytes at independent audit start",
+    "exact_current_candidate_bytes": true,
+    "frozen_fixture_only": true,
+    "live_plans_read": false,
+    "output_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v11/independent_preseal_audit.json",
+    "subject_or_provider_calls_forbidden": true,
+    "temporary_or_cache_writes_forbidden": true,
+    "preserved_candidate_v9_controller_invalid_evidence_reopened": true,
+    "candidate_repairs_forbidden": true
+  },
+  "audited_candidate_bundle": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+    "excluded_path": "independent_preseal_audit.json",
+    "file_count": 12,
+    "aggregate_file_bytes": 273869,
+    "files": [
+      {
+        "path": "README.md",
+        "sha256": "7c4f67a8aef62feb2220d833e854b9883e7deb85709c083cca33999d9c876aed",
+        "bytes": 4295
+      },
+      {
+        "path": "architecture_contract.json",
+        "sha256": "de484022a029e14ea8072333415875a69e4ae38b142915ad1ae85c6547b2c661",
+        "bytes": 37181
+      },
+      {
+        "path": "controller_contract.json",
+        "sha256": "f3a4ef5eeed6833d9bdf987b3d930b1ec11771bd9393f6b190a763b2679bce92",
+        "bytes": 2944
+      },
+      {
+        "path": "counterfactual_holdouts.json",
+        "sha256": "4e4f9aa70e854ac92a9c6fd3b2b263e76450e3e292a3aab749fadde66677fc47",
+        "bytes": 47465
+      },
+      {
+        "path": "deterministic_preflight_report.json",
+        "sha256": "9e45d23d97584f74825dc51bd28b880729989a7b839e788467c8b4f826a1aa3a",
+        "bytes": 103697
+      },
+      {
+        "path": "process_completion_contract.json",
+        "sha256": "0bec3fd862d6ad7247349e40821ff0dcd1bcc519c251ad24de4ef9a1a5a4d077",
+        "bytes": 5588
+      },
+      {
+        "path": "r8_harness.py",
+        "sha256": "a4c8cd25e3990516adc580b87cac0170520b985691b89b9305adaa2945883c81",
+        "bytes": 25688
+      },
+      {
+        "path": "r8_process_controller.py",
+        "sha256": "a7e9f23e60534b0daa2297db920362046d6eaa098ce923de5eda95462cc31738",
+        "bytes": 22004
+      },
+      {
+        "path": "r8_run_verifier.py",
+        "sha256": "5286c461f8525343f1a53923e9150846903d1ac13a960469890f7b3eee0ad48c",
+        "bytes": 9037
+      },
+      {
+        "path": "r8_subject_task_driver.py",
+        "sha256": "663645cb6cfbd5ef0d6bba5de91d63833593aa6e55d71c485e97ee6cad5f8abf",
+        "bytes": 1330
+      },
+      {
+        "path": "revision_lineage.json",
+        "sha256": "7c7f3c9c343819f0e3bf2d6c9ef4ca74a1044e02e87eaf53836d902aca82a0fb",
+        "bytes": 5287
+      },
+      {
+        "path": "verifier_contract.json",
+        "sha256": "643f168038b51ef481b84908d5e0591daad6a640587801cfd86761b22a22f0eb",
+        "bytes": 9353
+      }
+    ],
+    "canonical_rows_sha256": "467cd32d55596d62cd118a19155dcef7234a27a2a8bb4a55cc26d4923223869d",
+    "canonical_rows_bytes": 1496
+  },
+  "candidate_v10_blocker_reaudit": {
+    "result": "PASS_FIXED",
+    "predecessor_blocker_id": "PRESEAL-BLOCKER-001-INCOMPLETE-AUDITED-CANDIDATE-BUNDLE",
+    "predecessor_audit_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v10/independent_preseal_audit.json",
+    "predecessor_audit_storage_sha256": "47a98352800f7b39f255ab8e05a4db9cb75a22af7b77e7ab97f16a62798f2c36",
+    "predecessor_audit_storage_bytes": 14593,
+    "required_non_audit_file_count": 12,
+    "observed_non_audit_file_count": 12,
+    "revision_lineage_present_regular_nonlink": true,
+    "verifier_contract_present_regular_nonlink": true,
+    "declared_exact_sorted_candidate_files_match_current_closed_world": true,
+    "matching_current_bundle_rows": "12/12",
+    "missing_required_files": [],
+    "extra_non_audit_files": [],
+    "current_bundle_constructible": true,
+    "audit_validation_binds_current_bundle": true,
+    "freeze_validation_binds_same_current_bundle": true,
+    "run_contract_validation_binds_same_freeze_bundle": true,
+    "candidate_bundle_mutation_attack_proofs": {
+      "total": 18,
+      "individual_non_audit_file_tamper_rejections": "12/12",
+      "revision_lineage_tamper_rejected": true,
+      "verifier_contract_tamper_rejected": true,
+      "stale_pass_audit_bundle_rejected": true,
+      "manifest_retag_rejected": true,
+      "row_reorder_rejected": true,
+      "extra_row_rejected": true,
+      "missing_row_rejected": true,
+      "run_contract_bundle_mismatch_rejected": true
+    }
+  },
+  "syntax_and_reproduction": {
+    "strict_json_files_checked": 7,
+    "duplicate_json_keys_found": 0,
+    "utf8_json_failures": 0,
+    "python_ast_files_checked": 4,
+    "python_ast_failures": 0,
+    "preflight_exit_code": 0,
+    "preflight_storage_byte_identical": true,
+    "preflight_storage_sha256": "9e45d23d97584f74825dc51bd28b880729989a7b839e788467c8b4f826a1aa3a",
+    "preflight_storage_bytes": 103697,
+    "preflight_stderr_bytes": 0,
+    "list_cells_exit_code": 0,
+    "list_cells_storage_sha256": "5e26703ad9102ee9ce23f61cfa03902a6bf239dde73de97d9dbeb6cce9c5d504",
+    "list_cells_storage_bytes": 1632,
+    "process_controller_self_test_exit_code": 0,
+    "process_controller_self_test_status": "PASS",
+    "process_controller_self_test_storage_sha256": "0b93723cb6ec8cbdfdbf793ca0f91242558f8efef79620d530034e504f0552de",
+    "process_controller_self_test_storage_bytes": 1128,
+    "run_verifier_self_test_exit_code": 0,
+    "run_verifier_self_test_status": "PASS",
+    "run_verifier_self_test_storage_sha256": "2a53042cc402f20c8ba990c0d17f28de124b5f6b6f67793bda88cd2c65536ada",
+    "run_verifier_self_test_storage_bytes": 8391,
+    "bytecode_cache_created": false
+  },
+  "process_completion_correctness_audit": {
+    "result": "PASS_STATIC_CONTRACT_AND_ADMISSION_PROOFS",
+    "controller_source_sha256": "a7e9f23e60534b0daa2297db920362046d6eaa098ce923de5eda95462cc31738",
+    "controller_filesystem_write_calls": 0,
+    "controller_self_test_filesystem_writes": 0,
+    "child_process_actual_exit_polled": true,
+    "child_process_exit_zero_required": true,
+    "child_stdout_fully_captured_before_validation": true,
+    "controller_stdout_withheld_until_valid_child_exit_zero": true,
+    "terminal_envelope_exact_key_count": 11,
+    "completion_observation_exact_key_count": 29,
+    "outer_exec_terminal_observed_required": true,
+    "outer_exec_exit_zero_required": true,
+    "outer_exec_stdout_fully_captured_required": true,
+    "live_outer_session_requires_nonempty_session_id_and_positive_poll_count": true,
+    "immediate_outer_terminal_without_live_session_allowed": true,
+    "persistence_method_required": "external_apply_patch_create_only",
+    "persisted_only_after_outer_exit_required": true,
+    "receipt_and_completion_observation_both_required_before_admission_capture_scoring_or_schedule_advance": true,
+    "independent_generic_admission_mutation_proofs": {
+      "cases": 16,
+      "all_expected_results_observed": true,
+      "admitted": [
+        "valid exact completed receipt and exact live-session completion observation",
+        "valid exact completed receipt and exact immediate-terminal non-live completion observation"
+      ],
+      "rejected": [
+        "empty receipt",
+        "partial receipt",
+        "child unexited",
+        "child nonzero",
+        "child stdout not fully captured",
+        "outer unexited",
+        "outer nonzero",
+        "outer stdout not fully captured",
+        "non-apply-patch persistence method",
+        "persisted before outer exit",
+        "live outer session with zero polls",
+        "receipt storage hash mismatch",
+        "completion observation with extra key",
+        "non-live outer observation with impossible session identity"
+      ]
+    },
+    "stored_process_holdouts": "4/4",
+    "delayed_process_self_test_cases": "4/4",
+    "answer_specific_acceptance_logic": false,
+    "cell_specific_acceptance_logic": false,
+    "model_specific_acceptance_logic": false,
+    "route_specific_acceptance_logic": false,
+    "trusted_boundary_residual": "The persisted completion observation remains trusted external-controller evidence; the verifier cannot retrospectively authenticate the unified-exec service transcript or apply_patch provenance."
+  },
+  "receipt_v4_capture_v3_interface_audit": {
+    "result": "PASS",
+    "direct_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "direct_receipt_exact_ordered_key_count": 55,
+    "controller_driver_verifier_and_architecture_key_order_identical": true,
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "capture_envelope_exact_ordered_key_count": 20,
+    "harness_and_verifier_capture_key_order_identical": true,
+    "actual_receipt_storage_hash_and_bytes_required": true,
+    "stale_direct_receipt_v3_rejected": true,
+    "unknown_direct_receipt_schema_rejected": true,
+    "semantic_mismatch_remains_permanent_subject_fail": true,
+    "receipt_interface_holdouts": "6/6"
+  },
+  "deterministic_semantic_identity_audit": {
+    "result": "PASS",
+    "subject_cells_per_route": 97,
+    "routes": 3,
+    "subject_cells_per_complete_matrix": 291,
+    "provider_visible_prompt_identity_to_candidate_v9_semantic_baseline": "97/97",
+    "semantic_oracle_identity_to_candidate_v9_semantic_baseline": "97/97",
+    "schedule_identity_to_candidate_v9_semantic_baseline": "97/97",
+    "candidate_v9_preflight_storage_sha256": "96f73db70e85c392b092540d4acad7d97ba438544b4087d26455454e074e0613",
+    "candidate_v9_preflight_storage_bytes": 99510,
+    "counterfactual_holdouts": "75/75",
+    "candidate_v9_holdout_object_identity": "71/71",
+    "answer_first_candidate_choice_hidden": true,
+    "one_semantic_objective_per_call": true,
+    "provider_visible_semantic_packets_changed_by_candidate_v11_bundle_fix": false,
+    "semantic_scoring_changed_by_candidate_v11_bundle_fix": false,
+    "answer_cell_model_route_specific_exceptions": false
+  },
+  "runtime_dependency_closure_audit": {
+    "result": "PASS",
+    "declared_external_files": 61,
+    "independently_reopened_hash_and_byte_matches": "61/61",
+    "sorted": true,
+    "unique": true,
+    "runtime_inventory_sha256": "75cee802661e2bcb26b18ea81760dc8c583c41fa6fd581b903c8dcb9aef8e2c6",
+    "runtime_inventory_canonical_bytes": 9641,
+    "closure_source_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v11/architecture_contract.json",
+    "closure_source_sha256": "de484022a029e14ea8072333415875a69e4ae38b142915ad1ae85c6547b2c661",
+    "candidate_v9_inherited_closure_and_facade_files": 56,
+    "candidate_v11_process_controller_files": 5,
+    "observed_external_open_paths": 61,
+    "observed_unbound_external_open_paths": [],
+    "live_plans_paths": [],
+    "live_plans_reads": 0,
+    "missing_extra_duplicate_tampered_rows_reject": true
+  },
+  "frozen_snapshot_audit": {
+    "result": "PASS",
+    "provenance_manifest_path": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "provenance_manifest_storage_bytes": 9327,
+    "manifest_file_bindings_reopened": "15/15",
+    "aggregate_descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "aggregate_descriptor_bytes": 1778,
+    "aggregate_descriptor_recomputed_match": true,
+    "runtime_unique_frozen_fixture_source_files": 11,
+    "live_plans_policy": "NEVER_READ",
+    "current_plans_claim": false
+  },
+  "predecessor_failure_reopen": {
+    "candidate_v9_controller_invalid_terminal": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v9_run_01_controller_invalid_terminal.json",
+      "storage_sha256": "eb914d3902ab9edfa4f132f0f88d0d1ab61efbb5e460212e96e92b6ac1c2dea3",
+      "storage_bytes": 3894,
+      "terminal": "CONTROLLER_INVALID_AFTER_STARTED_CALL_NO_QUALIFICATION_CREDIT",
+      "qualification_clean_run_credit": 0,
+      "classification": "controller_process_incomplete_session_polling"
+    },
+    "malformed_one_lf_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
+      "storage_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "storage_bytes": 1,
+      "exact_hex": "0a",
+      "empirical_credit": false
+    },
+    "primary_rollout": {
+      "path": "/home/sittingmongoose/.codex/sessions/2026/08/15/rollout-2026-08-15T11-14-12-01a00521-2257-7850-ab10-e04497c102aa.jsonl",
+      "storage_sha256": "602e31578c2e4c3588c00a47a10e94c761def104f146f266216ba4e6bad5ca01",
+      "storage_bytes": 94214,
+      "thread_id": "01a00521-2257-7850-ab10-e04497c102aa",
+      "turn_id": "01a00521-29c6-7f50-b35e-332558df5f1c"
+    },
+    "failure_disposition": "PRESERVED_FAILURE_NO_RETRY_NO_CREDIT"
+  },
+  "freeze_audit_bundle_constructibility": {
+    "result": "PASS",
+    "independent_audit_created": true,
+    "non_audit_candidate_files": 12,
+    "candidate_directory_files_after_audit": 13,
+    "revision_lineage_and_verifier_contract_included_in_bundle": true,
+    "external_freeze_manifest_v5_constructible": true,
+    "external_freeze_manifest_created": false,
+    "run_artifacts_created": false,
+    "launch_admissible_only_after_external_freeze_and_required_checkpoint": true
+  },
+  "terminal_and_qualification_honesty": {
+    "preseal_terminal": "PRESEAL_PASS",
+    "launch_ready": true,
+    "candidate_frozen": false,
+    "subject_calls_under_candidate_v11": 0,
+    "provider_calls_under_candidate_v11": 0,
+    "candidate_v11_empirical_model_success": false,
+    "two_consecutive_clean_runs_achieved": false,
+    "qualification_achieved": false,
+    "candidate_v9_controller_invalid_run_credit_carried_forward": false,
+    "candidate_v9_valid_cell_evidence_is_not_candidate_v11_qualification": true,
+    "release_readiness": false,
+    "production_enforcement": false,
+    "safety_certification": false,
+    "permission_to_compile_plans": false
+  },
+  "nonclaims": [
+    "current Plans evidence",
+    "production runtime enforcement",
+    "complete planning-wizard audit proof",
+    "release readiness",
+    "safety certification",
+    "permission to compile Plans",
+    "general weak-model safety certification",
+    "empirical candidate-v11 process completion",
+    "candidate-v11 qualification"
+  ],
+  "zero_call_attestation": {
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "network_calls": 0,
+    "live_plans_reads": 0,
+    "temporary_files_written": 0,
+    "cache_files_written": 0,
+    "candidate_files_modified": 0,
+    "candidate_repairs": 0,
+    "files_written": [
+      "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v11/independent_preseal_audit.json"
+    ]
+  }
+}
