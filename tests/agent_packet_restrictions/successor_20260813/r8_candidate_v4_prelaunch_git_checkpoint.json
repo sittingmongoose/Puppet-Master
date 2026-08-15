@@ -1,0 +1,17 @@
+{
+  "schema_id": "pw-r8-git-checkpoint-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-4",
+  "checkpoint": "PRE_SUBJECT_LAUNCH_FROZEN_CANDIDATE_AND_TWO_PREDECLARED_RUNS",
+  "candidate_freeze_sha256": "e27f7fc20593efbfccfa0385d3fc7419a268e1aea33c7f7d637c821127fc767f",
+  "prelaunch_validation_sha256": "f2f2d376440eeff77b4ddc9a036f81bb28fe6c91cd7978d429a3692111cb559f",
+  "committed_content_head": "0b5bd24005d7a66870e92b8de7cd3e5ad0c4ed49",
+  "fetched_origin_main": "0b5bd24005d7a66870e92b8de7cd3e5ad0c4ed49",
+  "local_remote_equal": true,
+  "tree_clean_after_push": true,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "preseal_terminal": "PRESEAL_PASS",
+  "prelaunch_validation": "PASS_READY_FOR_FIRST_SUBJECT_CALL",
+  "predeclared_run_ids": ["PW-R8-C4-RUN-01-20260815", "PW-R8-C4-RUN-02-20260815"],
+  "note": "This receipt records the pushed commit containing the immutable candidate-v4 bytes, independent audit, external freeze manifest, prelaunch validation, and both predeclared run contracts/schedules. Its own containing commit is bound by later durable run terminals to avoid self-reference."
+}
