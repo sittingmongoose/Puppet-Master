@@ -1,0 +1,202 @@
+{
+  "schema_id": "pw-r8-subject-controller-contract-v7",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-9",
+  "status": "neutral_unsealed_candidate",
+  "claim_boundary": "unfinished throwaway frozen-snapshot prompt-architecture experiment only",
+  "driver": "r8_subject_task_driver.py",
+  "verifier": "r8_run_verifier.py",
+  "harness": "r8_harness.py",
+  "routes": {
+    "slot-alpha": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "xhigh"
+    },
+    "slot-bravo": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "medium"
+    },
+    "slot-charlie": {
+      "requested_model": "gpt-5.6-luna",
+      "requested_thinking": "medium"
+    }
+  },
+  "driver_usage": "python3 -B r8_subject_task_driver.py --run-id <run-id> --execution-root <contained-run-root> --slot <slot> --cell <harness-declared-cell>",
+  "prelaunch_dispatch_schedule": {
+    "path": "<execution_root>/dispatch_schedule.json",
+    "schema_id": "pw-r8-dispatch-schedule-v1",
+    "creation_authority": "external root controller before the first subject call",
+    "creation_rule": "Create once with a cryptographically secure random generator, persist before launch, bind exact storage SHA-256 and bytes in run_contract.json, and include both files in the external prelaunch/Git checkpoint.",
+    "mutation_rule": "Any schedule or run-contract mutation after a receipt exists invalidates admission, completed receipts, terminalization, and qualification.",
+    "nonce_encoding": "lowercase-hex-256",
+    "entry_order": "exact slot-major order across the three routes and the 97-cell frozen schedule",
+    "entry_count_per_run": 291,
+    "entry_exact_keys": [
+      "slot",
+      "cell",
+      "dispatch_nonce"
+    ],
+    "global_nonce_uniqueness_per_run": true,
+    "driver_nonce_generation": false,
+    "receipt_time_nonce_generation": false
+  },
+  "audited_candidate_bundle": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "exact_fields_in_order": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "excluded_path": "independent_preseal_audit.json",
+    "file_count": 10,
+    "row_exact_fields_in_order": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "row_order": "exact sorted non-audit candidate paths",
+    "canonical_aggregate": "SHA-256 and byte count of canonical minified UTF-8 JSON for the exact files array",
+    "custody_chain": "The independent PASS audit, external freeze manifest, run contract, admissions, terminals, and qualification must carry the same exact bundle."
+  },
+  "run_contract_binding": {
+    "schema_id": "pw-r8-run-contract-v5",
+    "exact_fields": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "routes",
+      "dispatch_schedule_path",
+      "dispatch_schedule_storage_sha256",
+      "dispatch_schedule_storage_bytes",
+      "candidate_freeze_manifest_path",
+      "candidate_freeze_manifest_storage_sha256",
+      "candidate_freeze_manifest_storage_bytes",
+      "audited_candidate_bundle",
+      "qualification_sequence",
+      "predecessor_run_id"
+    ],
+    "dispatch_schedule_path": "dispatch_schedule.json",
+    "candidate_freeze_manifest_path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v9_freeze_manifest.json",
+    "freeze_identity": "Exact manifest path/hash/bytes plus the full current ten-file audited_candidate_bundle.",
+    "qualification_sequence": "Exactly 1 with null predecessor or exactly 2 naming a different valid predecessor run_id."
+  },
+  "dispatch_wrapper": {
+    "transport": "constant typed opaque block inside the app-server user-input wrapper because no caller-supplied non-model-visible metadata field is recorded in primary rollout JSONL",
+    "schema_id": "pw-r8-dispatch-binding-v1",
+    "exact_fields_in_order": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "dispatch_nonce",
+      "semantic_packet_sha256",
+      "semantic_packet_bytes",
+      "dispatch_schedule_sha256",
+      "dispatch_schedule_bytes"
+    ],
+    "semantic_instruction": "Opaque transport identity only; ignore it when answering the semantic input.",
+    "answer_or_oracle_fields": false,
+    "model_route_or_cell_answer_special_cases": false,
+    "semantic_packet_identity": "Exact harness render payload without its one storage LF.",
+    "full_wrapper_identity": "Exact UTF-8 wrapper SHA-256 and byte count, separately recorded from semantic_packet_sha256 and semantic_packet_bytes."
+  },
+  "pre_dispatch_gate": "Before app-server creation, obtain the exact render and verifier admission. Admission reopens the external freeze, run contract, ordered schedule, predeclared dispatch schedule, and same-slot causal evidence, then returns only the exact predeclared nonce for this slot/cell.",
+  "response_item_classification": {
+    "policy": "FAIL_CLOSED_SAFE_LIST",
+    "safe_non_tool_response_item_types": [
+      "message",
+      "reasoning"
+    ],
+    "all_other_current_or_unknown_types": "prohibited activity",
+    "explicit_current_prohibited_examples": [
+      "custom_tool_call",
+      "custom_tool_call_output",
+      "tool_search_call",
+      "tool_search_output",
+      "function_call",
+      "function_call_output",
+      "web_search_call",
+      "computer_tool_call",
+      "image_generation_call",
+      "local_shell_call",
+      "local_shell_call_output",
+      "mcp_tool_call",
+      "mcp_tool_call_output"
+    ],
+    "final_text_semantics": "Assistant final messages remain safe message items and retain the existing exact raw-final, single-text, and byte-identical duplicate-final normalization semantics."
+  },
+  "invariants": {
+    "fresh_app_server_per_invocation": true,
+    "thread_create_per_invocation": 1,
+    "fresh_thread_per_invocation": true,
+    "fresh_task_identity_basis": "thread_id",
+    "turns_per_thread": 1,
+    "first_attempts_per_invocation": 1,
+    "retry": false,
+    "best_of": false,
+    "replacement": false,
+    "fallback": false,
+    "evidence_writes": false,
+    "external_fanout": false
+  },
+  "completed_subject_evidence": {
+    "receipt_schema": "pw-r8-direct-appserver-subject-receipt-v4",
+    "independent_rollout_validation_schema": "pw-r8-independent-rollout-validation-v2",
+    "rule": "Every completed call is independently reopened from exact primary rollout bytes. The verifier reconstructs the predeclared schedule entry, dispatch object, wrapper, semantic packet, response-item classification, finals, timing, route, and lifecycle before credit.",
+    "historical_replay_rule": "Old-candidate, different-run, different-slot, different-cell, different-nonce, different-semantic-packet, or different-schedule rollout bytes cannot equal the independently reconstructed wrapper.",
+    "controller_invalid_only_for": [
+      "transport uncertainty",
+      "route or provider identity drift",
+      "rollout/capture ambiguity",
+      "missing unique task-started or task-complete terminal"
+    ]
+  },
+  "scoring_interface": {
+    "driver_receipt_schema": "pw-r8-direct-appserver-subject-receipt-v4",
+    "capture_envelope_schema": "pw-r8-subject-capture-envelope-v3",
+    "capture_v3_status": "current capture schema; it is distinct from the stale direct subject receipt v3",
+    "harness_acceptance": "The candidate-v9 scoring path accepts only the exact completed direct subject receipt v4 paired with the current byte-bound capture envelope v3.",
+    "stale_direct_subject_receipt_v3": "rejected before semantic scoring",
+    "driver_guard": "The driver checks its completed receipt against the exact 55-key ordered v4 interface before emitting it.",
+    "verifier_guard": "The same pure receipt/capture interface validator is exercised on real derived captures and generic in-memory synthetic evidence.",
+    "harness_preflight_holdout_count": 6,
+    "harness_preflight_holdouts": [
+      "valid v4 receipt/current capture accepts",
+      "stale direct receipt v3 rejects",
+      "unknown receipt schema rejects",
+      "altered dispatch binding rejects",
+      "altered actual receipt-storage binding rejects",
+      "semantic mismatch remains subject FAIL"
+    ]
+  },
+  "qualification": {
+    "matrices": 2,
+    "calls_per_matrix": 291,
+    "completed_pass_calls": 582,
+    "predeclared_dispatch_nonces": 582,
+    "unique_dispatch_nonces": 582,
+    "cross_run_nonce_sets_disjoint": true,
+    "independently_reopened_primary_rollouts": 582,
+    "fresh_thread_create_evidence_count": 582,
+    "unique_thread_count": 582,
+    "unique_turn_count": 582,
+    "allowed_invalid_missing_ineligible_retry_best_of_replacement": 0
+  },
+  "identity_limits": [
+    "Exact audited_candidate_bundle equality proves the audited subject bytes, not cryptographic auditor authorship; audit-file and repository custody remain trusted boundaries.",
+    "The verifier proves lowercase 256-bit shape and uniqueness, not the entropy source's historical quality; CSPRNG creation and prelaunch persistence remain external-controller/Git-checkpoint evidence.",
+    "A standalone run verifier cannot discover reuse of an abandoned run_id plus its entire predeclared schedule outside the supplied execution roots; the external controller must make run roots, run IDs, schedules, and checkpoints create-only and qualification proves only its two supplied roots are disjoint.",
+    "No separate platform task_id, direct thread-create invocation receipt, provider-effective model/thinking, or serving-snapshot attestation is exposed.",
+    "Rollout-path authenticity and immutability remain within the disposable trusted-controller/session-store boundary.",
+    "root_controller_only is a protocol label, not operating-system writer authentication."
+  ],
+  "nonclaims": [
+    "No freeze, audit, launch, subject call, provider call, empirical qualification, production enforcement, release readiness, or safety certification is claimed.",
+    "Static adversarial proofs do not establish empirical model success."
+  ]
+}

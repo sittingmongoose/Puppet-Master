@@ -1,0 +1,170 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v5",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-9",
+  "status": "neutral_unsealed_candidate",
+  "predecessor_candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-8",
+  "predecessor_preseal_audit_path": "model_retest_r8_candidate_v8/independent_preseal_audit.json",
+  "predecessor_preseal_audit_storage_sha256": "906c93de7622acfca40bf23215ce75432f06eff3e9aefce1cb83fb9bd91a6546",
+  "predecessor_preseal_audit_storage_bytes": 18928,
+  "predecessor_preseal_terminal": "PRESEAL_PASS",
+  "predecessor_launch_ready": true,
+  "predecessor_empirical_result": {
+    "execution_root": "model_retest_r8_candidate_v8_run_01",
+    "completed_subject_calls": 2,
+    "valid_scores": 0,
+    "scorer_invalid_count": 2,
+    "qualification_credit": 0,
+    "failure": "The direct driver and verifier emitted and required completed receipt v4, but the inherited harness scoring path still required direct receipt v3 and rejected both completed calls before semantic scoring.",
+    "slot_alpha_receipt": {
+      "path": "model_retest_r8_candidate_v8_run_01/direct_appserver_receipts/slot-alpha_S10A_DECISION_A01.json",
+      "storage_sha256": "14c7c2acbbdd8dfe9aedc005723610a22b60a5cd135565f2850d0f49698534bd",
+      "storage_bytes": 6801,
+      "schema_id": "pw-r8-direct-appserver-subject-receipt-v4"
+    },
+    "slot_alpha_capture": {
+      "path": "model_retest_r8_candidate_v8_run_01/slot-alpha/captures/S10A_DECISION_A01.json",
+      "storage_sha256": "34853d276ffd16a166651f800096a99b0a786c9968d33d63bdda779bab30fa76",
+      "storage_bytes": 1656,
+      "schema_id": "pw-r8-subject-capture-envelope-v3"
+    },
+    "slot_bravo_receipt": {
+      "path": "model_retest_r8_candidate_v8_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A01.json",
+      "storage_sha256": "36ddd4355682e2479fd6a5f4659751a72fc3661a49f5f2e5ccd5861fee6282c9",
+      "storage_bytes": 6803,
+      "schema_id": "pw-r8-direct-appserver-subject-receipt-v4"
+    },
+    "slot_bravo_capture": {
+      "path": "model_retest_r8_candidate_v8_run_01/slot-bravo/captures/S10A_DECISION_A01.json",
+      "storage_sha256": "ec2a9f3ed4e56e454b8406773001a7fe9d79abcc8f48c649a6e5c0a89b084012",
+      "storage_bytes": 1656,
+      "schema_id": "pw-r8-subject-capture-envelope-v3"
+    }
+  },
+  "fixed_defect": {
+    "classification": "driver_scorer_schema_interface",
+    "generic_repair": "Keep the completed direct subject receipt at exact v4 and the current capture envelope at v3; make the candidate-v9 harness scoring path accept that exact pair and reject stale direct subject receipt v3 before semantic scoring.",
+    "answer_or_cell_specific_repair": false,
+    "retry_or_replacement_repair": false
+  },
+  "preserved_provider_semantics": {
+    "semantic_packet_schedule_identical_to_candidate_v8": true,
+    "semantic_oracles_identical_to_candidate_v8": true,
+    "subject_cells_per_route": 97,
+    "subject_calls_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "driver_treats_subject_answer_as_opaque_text": true,
+    "harness_score_remains_authoritative": true,
+    "answer_specific_literals_or_exceptions": false,
+    "route_model_slot_cell_answer_exceptions": false
+  },
+  "preserved_controller_and_verifier_semantics": [
+    "predeclared globally unique dispatch nonces and historical replay rejection",
+    "candidate/run/slot/cell/semantic-packet primary wrapper binding",
+    "fail-closed message/reasoning response-item safe list",
+    "exact ten-file audited_candidate_bundle custody through audit, manifest, run, and terminal evidence",
+    "fresh app-server and thread per call",
+    "one turn and one first attempt",
+    "raw final and prohibited-item capture",
+    "identical-final normalization only",
+    "same-slot causal stopping and cross-slot isolation",
+    "root-only terminal publication",
+    "closed-world run inventory and invalid accounting",
+    "two consecutive clean-run qualification with disjoint nonce sets"
+  ],
+  "candidate_v9_changes": [
+    "candidate-v9 harness scoring path accepts exact completed direct subject receipt v4 with current capture envelope v3",
+    "stale direct subject receipt v3 rejects before semantic scoring even when its capture receipt-storage binding is recomputed",
+    "driver asserts the exact ordered 55-key v4 receipt interface before emission",
+    "verifier real capture derivation and generic synthetic proofs share one pure v4 receipt/current capture interface validator",
+    "external runtime closure is derived from the bundle-bound candidate-v9 architecture contract rather than a copied candidate-v8 row count",
+    "descriptive contracts distinguish current capture envelope v3 from stale direct subject receipt v3"
+  ],
+  "scoring_interface": {
+    "direct_subject_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "direct_subject_receipt_key_count": 55,
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "capture_envelope_key_count": 20,
+    "stale_direct_subject_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v3",
+    "stale_direct_subject_receipt_policy": "REJECT",
+    "verifier_generic_in_memory_interface_proofs": 2,
+    "harness_preflight_interface_holdouts": 6,
+    "harness_preflight_interface_case_ids": [
+      "CF-R8-66-valid-v4-receipt-capture-interface",
+      "CF-R8-67-stale-v3-receipt-schema-rejected",
+      "CF-R8-68-unknown-receipt-schema-rejected",
+      "CF-R8-69-altered-dispatch-binding-rejected",
+      "CF-R8-70-altered-actual-receipt-storage-binding-rejected",
+      "CF-R8-71-semantic-mismatch-remains-subject-fail"
+    ],
+    "semantic_scoring_change": false
+  },
+  "audited_candidate_bundle_contract": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "candidate_file_count_excluding_audit": 10,
+    "audit_is_eleventh_freeze_candidate_file": true,
+    "exact_keys": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "row_keys": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "row_order": "sorted exact non-audit candidate paths",
+    "canonical_hash_subject": "canonical minified UTF-8 files array"
+  },
+  "adversarial_static_proofs": {
+    "command": "python3 -B r8_run_verifier.py self-test",
+    "preserved_dispatch_replay_mutations_rejected": 7,
+    "preserved_response_item_classification_cases_passed": 6,
+    "scoring_interface_proofs": 2,
+    "generic_v4_receipt_current_capture_accepted": 1,
+    "fully_rebound_stale_v3_receipt_current_capture_rejected": 1,
+    "candidate_bundle_positive_proofs": 1,
+    "candidate_bundle_attacks_rejected": 16,
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "filesystem_reads_by_proof_function": 0,
+    "filesystem_writes": 0
+  },
+  "identity_boundary": {
+    "audited_subject_identity": "exact ten-file bundle shared by audit, manifest, run contracts, and freeze bindings",
+    "fresh_task_identity_basis": "thread_id",
+    "task_started_and_task_complete_identity": "turn_id",
+    "separate_platform_task_id_exposed": false,
+    "direct_thread_create_invocation_receipt_exposed": false,
+    "separate_provider_effective_model_or_thinking_exposed": false,
+    "separate_provider_effective_serving_snapshot_exposed": false,
+    "audit_authenticity_boundary": "Exact bundle equality proves subject identity, not an external cryptographic auditor signature; audit-file and repository custody remain trusted boundaries."
+  },
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v9_freeze_manifest.json",
+    "storage_sha256": null,
+    "storage_bytes": null,
+    "status": "external_manifest_not_created",
+    "sealed": false,
+    "manifest_excludes_itself": true
+  },
+  "provider_semantic_packet_change_from_candidate_v8": false,
+  "provider_transport_wrapper_structure_change_from_candidate_v8": false,
+  "provider_transport_wrapper_bytes_change_from_candidate_v8": true,
+  "provider_transport_wrapper_bytes_change_reason": "The required candidate_id binding changes from candidate-8 to candidate-9; no wrapper field, placement, or semantic-ignore instruction changes.",
+  "route_change_from_candidate_v8": false,
+  "oracle_change_from_candidate_v8": false,
+  "ordered_schedule_change_from_candidate_v8": false,
+  "driver_receipt_schema_change_from_candidate_v8": false,
+  "capture_envelope_schema_change_from_candidate_v8": false,
+  "harness_scoring_interface_change": true,
+  "controller_evidence_validation_change": true,
+  "freeze_contract_structure_change": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "predecessor_qualification_credit": 0
+}
